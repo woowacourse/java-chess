@@ -15,12 +15,16 @@ public abstract class Running implements GameState {
     private static final int START_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
-    private final ChessBoard chessBoard;
-    private final Color color;
+    protected final ChessBoard chessBoard;
+    protected final Color color;
 
     protected Running(ChessBoard chessBoard, Color color) {
         this.chessBoard = chessBoard;
         this.color = color;
+    }
+
+    protected Running(Running running) {
+        this(running.chessBoard, running.color);
     }
 
     public static Running createFirstTurnRunning(ChessBoard chessBoard) {
@@ -40,9 +44,17 @@ public abstract class Running implements GameState {
         if (matcher.find()) {
             movePieceByCommand(command);
             OutputView.printChessBoard(chessBoard.getPieces());
-            return otherState(this.chessBoard);
+            return changeNextState();
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
+    }
+
+    private Running changeNextState() {
+        if (chessBoard.isPromotionStatus(color)) {
+            OutputView.printPromotionGuide();
+            return new Promotion(this);
+        }
+        return otherState(this.chessBoard);
     }
 
     private void movePieceByCommand(final String command) {
