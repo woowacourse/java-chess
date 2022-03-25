@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.PieceKind;
 import chess.domain.board.strategy.CreateBoard;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Bishop;
@@ -254,4 +255,14 @@ class BoardTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("상대편 말은 욺직일 수 없습니다.");
     }
+
+    @DisplayName("특정 말의 갯수게 제대로 카운트 되는지 확인")
+    @Test
+    void count_Specific_Piece() {
+        Board board = new Board(new CreateBoard());
+        final int actualCount = board.countPiece(PieceKind.ROOK, Color.BLACK);
+
+        assertThat(actualCount).isEqualTo(2);
+    }
 }
+

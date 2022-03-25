@@ -41,4 +41,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
 }

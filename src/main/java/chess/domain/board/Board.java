@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.PieceKind;
 import chess.domain.board.strategy.BoardInitializeStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
@@ -16,14 +17,6 @@ public class Board {
     public Board(final BoardInitializeStrategy strategy) {
         pieces = new HashMap<>(strategy.createPieces());
     }
-
-    // public void move(final Position start, final Position target, final Color currentColor) {
-    //     final Piece movingPiece = pieces.get(start);
-    //     validatePieceExistIn(movingPiece, currentColor);
-    //     validateMoving(start, target);
-    //     pieces.put(target, movingPiece);
-    //     pieces.remove(start);
-    // }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
         final Piece movingPiece = get(start);
@@ -110,6 +103,13 @@ public class Board {
 
     private Piece get(final Position position) {
         return pieces.getOrDefault(position, new EmptySpace());
+    }
+
+    public int countPiece(PieceKind pieceKind, Color color) {
+        return (int)pieces.values()
+            .stream()
+            .filter(piece -> pieceKind.isSamePieceWith(piece) && piece.isSameColor(color))
+            .count();
     }
 
     public Map<Position, Piece> getPieces() {
