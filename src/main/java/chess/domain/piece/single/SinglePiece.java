@@ -14,7 +14,7 @@ public abstract class SinglePiece extends AbstractPiece {
 
     private final List<Direction> moveDirections;
 
-    protected SinglePiece(final Color color, final String name, List<Direction> moveDirections) {
+    protected SinglePiece(Color color, String name, List<Direction> moveDirections) {
         super(color, name);
         this.moveDirections = moveDirections;
     }
