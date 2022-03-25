@@ -24,10 +24,14 @@ public final class ChessBoard {
         checkCurrentTurn(source);
         checkAvailableTarget(target);
         checkGoThroughPosition(source, target);
-//        Piece sourcePiece = board.get(source);
-//        Piece targetPiece = board.get(target);
-//        board.put(source, null);
-//        board.put(source, sourcePiece);
+
+        movePiece(source, target);
+    }
+
+    private void movePiece(final Position source, final Position target) {
+        board.put(target, board.get(source));
+        board.put(source, null);
+
         changeTurn();
     }
 
