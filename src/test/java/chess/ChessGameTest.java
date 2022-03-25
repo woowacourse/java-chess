@@ -22,7 +22,7 @@ class ChessGameTest {
     void createChessBoard() {
         ChessGame chessGame = new ChessGame();
 
-        Collection<Square> squares = chessGame.getSquare();
+        Collection<Piece> squares = chessGame.getPieces();
 
         assertAll(() -> {
             assertThat(squares).hasSize(32);
@@ -30,40 +30,40 @@ class ChessGameTest {
         });
     }
 
-    private static void assertPieces(Collection<Square> squares) {
-        assertThat(squares).contains(
-            new Square(new Rook(Color.BLACK), new Position(A, EIGHT)),
-            new Square(new Knight(Color.BLACK), new Position(B, EIGHT)),
-            new Square(new Bishop(Color.BLACK), new Position(C, EIGHT)),
-            new Square(new Queen(Color.BLACK), new Position(D, EIGHT)),
-            new Square(new King(Color.BLACK), new Position(E, EIGHT)),
-            new Square(new Bishop(Color.BLACK), new Position(F, EIGHT)),
-            new Square(new Knight(Color.BLACK), new Position(G, EIGHT)),
-            new Square(new Rook(Color.BLACK), new Position(H, EIGHT)),
-            new Square(new Pawn(Color.BLACK), new Position(A, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(B, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(C, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(D, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(E, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(F, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(G, SEVEN)),
-            new Square(new Pawn(Color.BLACK), new Position(H, SEVEN)),
-            new Square(new Rook(Color.WHITE), new Position(A, ONE)),
-            new Square(new Knight(Color.WHITE), new Position(B, ONE)),
-            new Square(new Bishop(Color.WHITE), new Position(C, ONE)),
-            new Square(new Queen(Color.WHITE), new Position(D, ONE)),
-            new Square(new King(Color.WHITE), new Position(E, ONE)),
-            new Square(new Bishop(Color.WHITE), new Position(F, ONE)),
-            new Square(new Knight(Color.WHITE), new Position(G, ONE)),
-            new Square(new Rook(Color.WHITE), new Position(H, ONE)),
-            new Square(new Pawn(Color.WHITE), new Position(A, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(B, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(C, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(D, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(E, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(F, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(G, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(H, TWO)));
+    private static void assertPieces(Collection<Piece> pieces) {
+        assertThat(pieces).contains(
+            new Rook(Color.BLACK, new Position(A, EIGHT)),
+            new Knight(Color.BLACK, new Position(B, EIGHT)),
+            new Bishop(Color.BLACK, new Position(C, EIGHT)),
+            new Queen(Color.BLACK, new Position(D, EIGHT)),
+            new King(Color.BLACK, new Position(E, EIGHT)),
+            new Bishop(Color.BLACK, new Position(F, EIGHT)),
+            new Knight(Color.BLACK, new Position(G, EIGHT)),
+            new Rook(Color.BLACK, new Position(H, EIGHT)),
+            new Pawn(Color.BLACK, new Position(A, SEVEN)),
+            new Pawn(Color.BLACK, new Position(B, SEVEN)),
+            new Pawn(Color.BLACK, new Position(C, SEVEN)),
+            new Pawn(Color.BLACK, new Position(D, SEVEN)),
+            new Pawn(Color.BLACK, new Position(E, SEVEN)),
+            new Pawn(Color.BLACK, new Position(F, SEVEN)),
+            new Pawn(Color.BLACK, new Position(G, SEVEN)),
+            new Pawn(Color.BLACK, new Position(H, SEVEN)),
+            new Rook(Color.WHITE, new Position(A, ONE)),
+            new Knight(Color.WHITE, new Position(B, ONE)),
+            new Bishop(Color.WHITE, new Position(C, ONE)),
+            new Queen(Color.WHITE, new Position(D, ONE)),
+            new King(Color.WHITE, new Position(E, ONE)),
+            new Bishop(Color.WHITE, new Position(F, ONE)),
+            new Knight(Color.WHITE, new Position(G, ONE)),
+            new Rook(Color.WHITE, new Position(H, ONE)),
+            new Pawn(Color.WHITE, new Position(A, TWO)),
+            new Pawn(Color.WHITE, new Position(B, TWO)),
+            new Pawn(Color.WHITE, new Position(C, TWO)),
+            new Pawn(Color.WHITE, new Position(D, TWO)),
+            new Pawn(Color.WHITE, new Position(E, TWO)),
+            new Pawn(Color.WHITE, new Position(F, TWO)),
+            new Pawn(Color.WHITE, new Position(G, TWO)),
+            new Pawn(Color.WHITE, new Position(H, TWO)));
     }
 
     @Test
@@ -79,7 +79,7 @@ class ChessGameTest {
     @DisplayName("from과 to 위치가 동일한 경우 예외발생")
     void selectSameFromAndToPosition() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new Pawn(Color.BLACK), new Position(A, SEVEN))), Color.BLACK);
+            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessGame.move(new Position(A, SEVEN), new Position(A, SEVEN)))
             .isInstanceOf(java.lang.IllegalArgumentException.class);
@@ -89,7 +89,7 @@ class ChessGameTest {
     @DisplayName("움직일 수 없는 위치로 기물을 이동시킬 경우 예외 발생")
     void movePieceToUnmovablePosition() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new Pawn(Color.BLACK), new Position(A, SEVEN))), Color.BLACK);
+            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessGame.move(new Position(A, SEVEN), new Position(B, SEVEN)))
             .isInstanceOf(IllegalArgumentException.class);
@@ -99,17 +99,17 @@ class ChessGameTest {
     @DisplayName("같은 플레이어가 연속해서 기물을 움직일 경우 예외 발생")
     void throwExceptionWhenMoveSameColorPieceSubsequently() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new King(Color.WHITE), new Position(E, FIVE)),
-                new Square(new King(Color.BLACK), new Position(B, FIVE))), Color.WHITE);
+            List.of(new King(Color.WHITE, new Position(E, FIVE)),
+                new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
 
         chessGame.move(new Position(E, FIVE), new Position(E, SIX));
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessGame.move(new Position(E, SIX), new Position(E, FIVE)))
                 .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-                new Square(new King(Color.WHITE), new Position(E, SIX)),
-                new Square(new King(Color.BLACK), new Position(B, FIVE)));
+            assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(E, SIX)),
+                new King(Color.BLACK, new Position(B, FIVE)));
         });
 
     }
@@ -118,8 +118,8 @@ class ChessGameTest {
     @DisplayName("플레이어가 번갈아가며 기물을 움직인다.")
     void moveEachColorPieceSubsequently() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new King(Color.WHITE), new Position(E, FIVE)),
-                new Square(new King(Color.BLACK), new Position(B, FIVE))), Color.WHITE);
+            List.of(new King(Color.WHITE, new Position(E, FIVE)),
+                new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
 
         assertThatCode(() -> {
             chessGame.move(new Position(E, FIVE), new Position(E, SIX));
@@ -133,15 +133,15 @@ class ChessGameTest {
     @DisplayName("같은 색깔의 기물이 있는 위치로 이동 시 예외 발생")
     void throwExceptionWhenMovePieceToSameColorPiecePosition() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new King(Color.WHITE), new Position(E, FIVE)),
-                new Square(new Pawn(Color.WHITE), new Position(E, SIX))), Color.WHITE);
+            List.of(new King(Color.WHITE, new Position(E, FIVE)),
+                new Pawn(Color.WHITE, new Position(E, SIX))), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessGame.move(new Position(E, FIVE), new Position(E, SIX)))
                 .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-                new Square(new King(Color.WHITE), new Position(E, FIVE)),
-                new Square(new Pawn(Color.WHITE), new Position(E, SIX)));
+            assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(E, FIVE)),
+                new Pawn(Color.WHITE, new Position(E, SIX)));
         });
     }
 
@@ -150,15 +150,15 @@ class ChessGameTest {
     @DisplayName("움직일 때 장애물이 있을 경우 예외 발생")
     void throwExceptionWhenHasObstacleMoveToDestination(Position from, Position to,
         Position obstacle) {
-        ChessGame chessGame = new ChessGame(Set.of(new Square(new Queen(Color.WHITE), from),
-            new Square(new Pawn(Color.BLACK), obstacle)), Color.WHITE);
+        ChessGame chessGame = new ChessGame(List.of(new Queen(Color.WHITE, from),
+            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessGame.move(from, to))
                 .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-                new Square(new Queen(Color.WHITE), from),
-                new Square(new Pawn(Color.BLACK), obstacle));
+            assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+                new Queen(Color.WHITE, from),
+                new Pawn(Color.BLACK, obstacle));
         });
     }
 
@@ -179,14 +179,14 @@ class ChessGameTest {
     @MethodSource("provideOverObstacle")
     @DisplayName("나이트는 기물을 넘어서 이동 할 수 있다.")
     void moveKnightOverObstacle(Position from, Position to, Position obstacle) {
-        ChessGame chessGame = new ChessGame(Set.of(new Square(new Knight(Color.WHITE), from),
-            new Square(new Pawn(Color.BLACK), obstacle)), Color.WHITE);
+        ChessGame chessGame = new ChessGame(List.of(new Knight(Color.WHITE, from),
+            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
         assertAll(() -> {
             assertThatCode(() -> chessGame.move(from, to)).doesNotThrowAnyException();
-            assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-                new Square(new Knight(Color.WHITE), to),
-                new Square(new Pawn(Color.BLACK), obstacle));
+            assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+                new Knight(Color.WHITE, to),
+                new Pawn(Color.BLACK, obstacle));
         });
     }
 
@@ -202,15 +202,15 @@ class ChessGameTest {
     @Test
     @DisplayName("폰이 이동하는 위치에 기물이 있으면 예외 발생")
     void throwExceptionMovePawnAlreadyExistPiecePosition() {
-        ChessGame chessGame = new ChessGame(Set.of(new Square(new Pawn(Color.WHITE), new Position(D, FOUR)),
-            new Square(new Pawn(Color.BLACK), new Position(D, FIVE))), Color.WHITE);
+        ChessGame chessGame = new ChessGame(List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
+            new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessGame.move(new Position(D, FOUR), new Position(D, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-                new Square(new Pawn(Color.WHITE), new Position(D, FOUR)),
-                new Square(new Pawn(Color.BLACK), new Position(D, FIVE)));
+            assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+                new Pawn(Color.WHITE, new Position(D, FOUR)),
+                new Pawn(Color.BLACK, new Position(D, FIVE)));
         });
     }
 
@@ -219,12 +219,12 @@ class ChessGameTest {
     @DisplayName("폰을 제외한 기물이 이동하는 위치에 기물이 있으면 해당 기물을 제거")
     void removeTargetPieceByMove() {
         ChessGame chessGame = new ChessGame(
-            Set.of(new Square(new Queen(Color.WHITE), new Position(D, FOUR)),
-                new Square(new Pawn(Color.BLACK), new Position(D, FIVE))), Color.WHITE);
+            List.of(new Queen(Color.WHITE, new Position(D, FOUR)),
+                new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
 
         chessGame.move(new Position(D, FOUR), new Position(D, FIVE));
 
-        assertThat(chessGame.getSquare()).containsExactlyInAnyOrder(
-            new Square(new Queen(Color.WHITE), new Position(D, FIVE)));
+        assertThat(chessGame.getPieces()).containsExactlyInAnyOrder(
+            new Queen(Color.WHITE, new Position(D, FIVE)));
     }
 }

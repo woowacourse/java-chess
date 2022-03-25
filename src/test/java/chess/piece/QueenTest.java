@@ -17,9 +17,9 @@ class QueenTest {
     @MethodSource("provideInvalidMoveQueen")
     @DisplayName("퀸은 동일선상외에는 이동 시 예외 발생")
     void moveInvalidMoveQueen(Position from, Position to) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(Color.BLACK, from);
 
-        assertThat(queen.isPossibleMovement(from, to))
+        assertThat(queen.isPossibleMovement(to))
             .isFalse();
     }
 
@@ -36,9 +36,9 @@ class QueenTest {
     @MethodSource("provideValidMoveQueen")
     @DisplayName("퀸은 동일선상으로 이동")
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(Color.BLACK, from);
 
-        assertThat(queen.isPossibleMovement(from, to))
+        assertThat(queen.isPossibleMovement(to))
             .isTrue();
     }
 

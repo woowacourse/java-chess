@@ -4,12 +4,17 @@ import chess.position.Position;
 
 public class Rook extends Piece{
 
-    public Rook(Color color) {
-        super(color);
+    public Rook(Color color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean isPossibleMovement(Position from, Position to) {
-        return from.isVerticalWay(to) || from.isHorizontalWay(to);
+    protected Piece createNewPiece(Position to) {
+        return new Rook(getColor(), to);
+    }
+
+    @Override
+    public boolean isPossibleMovement(Position to) {
+        return getPosition().isVerticalWay(to) || getPosition().isHorizontalWay(to);
     }
 }

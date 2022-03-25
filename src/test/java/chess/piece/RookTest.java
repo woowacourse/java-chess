@@ -17,9 +17,9 @@ class RookTest {
     @MethodSource("provideMoveCollinearRook")
     @DisplayName("룩은 동일선상으로 제한 없이 이동")
     void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(Color.BLACK, from);
 
-        assertThat(rook.isPossibleMovement(from, to))
+        assertThat(rook.isPossibleMovement(to))
             .isTrue();
     }
 
@@ -36,9 +36,9 @@ class RookTest {
     @MethodSource("provideInvalidMoveRook")
     @DisplayName("룩이 전후양옆외의 방향으로 이동 시 예외 발생")
     void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(Color.BLACK, from);
 
-        assertThat(rook.isPossibleMovement(from, to))
+        assertThat(rook.isPossibleMovement(to))
             .isFalse();
     }
 

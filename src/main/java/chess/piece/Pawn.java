@@ -4,13 +4,18 @@ import chess.position.Position;
 
 public class Pawn extends Piece {
 
-    public Pawn(Color color) {
-        super(color);
+    public Pawn(Color color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean isPossibleMovement(Position from, Position to ) {
-        return from.isVerticalWay(to) && isForward(from, to) && isValidDistance(from, to);
+    protected Piece createNewPiece(Position to) {
+        return new Pawn(getColor(), to);
+    }
+
+    @Override
+    public boolean isPossibleMovement(Position to) {
+        return getPosition().isVerticalWay(to) && isForward(getPosition(), to) && isValidDistance(getPosition(), to);
     }
 
     @Override

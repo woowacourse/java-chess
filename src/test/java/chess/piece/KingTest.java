@@ -17,9 +17,9 @@ class KingTest {
     @MethodSource("provideInvalidMoveKing")
     @DisplayName("킹이 인접한 칸 외에 이동 시 예외 발생")
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
-        King king = new King(Color.BLACK);
+        King king = new King(Color.BLACK, from);
 
-        assertThat(king.isPossibleMovement(from, to)).isFalse();
+        assertThat(king.isPossibleMovement(to)).isFalse();
     }
 
     private static Stream<Arguments> provideInvalidMoveKing() {
@@ -36,9 +36,9 @@ class KingTest {
     @MethodSource("provideValidMoveKing")
     @DisplayName("킹은 인접한 칸으로만 이동할 수 있다.")
     void moveKingOneSquareToAdjacent(Position from, Position to) {
-        King king = new King(Color.BLACK);
+        King king = new King(Color.BLACK, from);
 
-        assertThat(king.isPossibleMovement(from, to)).isTrue();
+        assertThat(king.isPossibleMovement(to)).isTrue();
     }
 
     private static Stream<Arguments> provideValidMoveKing() {

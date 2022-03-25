@@ -4,12 +4,17 @@ import chess.position.Position;
 
 public class King extends Piece{
 
-    public King(Color color) {
-        super(color);
+    public King(Color color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean isPossibleMovement(Position from, Position to) {
-        return from.isAdjacent(to);
+    protected Piece createNewPiece(Position to) {
+        return new King(getColor(), to);
+    }
+
+    @Override
+    public boolean isPossibleMovement(Position to) {
+        return getPosition().isAdjacent(to);
     }
 }

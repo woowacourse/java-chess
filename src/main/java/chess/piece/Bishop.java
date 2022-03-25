@@ -4,12 +4,17 @@ import chess.position.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop(Color color) {
-        super(color);
+    public Bishop(Color color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean isPossibleMovement(Position from, Position to) {
-        return from.isDiagonalWay(to);
+    protected Piece createNewPiece(Position to) {
+        return new Bishop(getColor(), to);
+    }
+
+    @Override
+    public boolean isPossibleMovement(Position to) {
+        return getPosition().isDiagonalWay(to);
     }
 }

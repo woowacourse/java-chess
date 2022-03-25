@@ -17,9 +17,9 @@ class BishopTest {
     @MethodSource("provideInvalidMoveBishop")
     @DisplayName("비숍은 대각선외에는 움직일 수 없다.")
     void throwExceptionInvalidMoveBishop(Position from, Position to) {
-        Bishop bishop = new Bishop(Color.BLACK);
+        Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThat(bishop.isPossibleMovement(from, to)).isFalse();
+        assertThat(bishop.isPossibleMovement(to)).isFalse();
     }
 
     private static Stream<Arguments> provideInvalidMoveBishop() {
@@ -35,9 +35,9 @@ class BishopTest {
     @MethodSource("provideCrossMoveBishop")
     @DisplayName("비숍은 대각선으로 이동할 수 있다.")
     void moveCrossBishop(Position from, Position to) {
-        Bishop bishop = new Bishop(Color.BLACK);
+        Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThat(bishop.isPossibleMovement(from, to)).isTrue();
+        assertThat(bishop.isPossibleMovement(to)).isTrue();
     }
 
     private static Stream<Arguments> provideCrossMoveBishop() {

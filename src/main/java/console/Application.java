@@ -13,7 +13,7 @@ public class Application {
         while (true) {
             if (command.equals("start")) {
                 ChessGame chessGame = new ChessGame();
-                OutputView.printChessBoard(chessGame.getSquare());
+                OutputView.printChessBoard(chessGame.getPieces());
             }
 
             if (command.equals("end")) {

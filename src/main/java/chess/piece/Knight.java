@@ -4,14 +4,19 @@ import chess.position.Position;
 
 public class Knight extends Piece{
 
-    public Knight(Color color) {
-        super(color);
+    public Knight(Color color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean isPossibleMovement(Position from, Position to) {
-        int horizontalDistance = from.getHorizontalDistance(to);
-        int verticalDistance = from.getVerticalDistance(to);
+    protected Piece createNewPiece(Position to) {
+        return new Knight(getColor(), to);
+    }
+
+    @Override
+    public boolean isPossibleMovement(Position to) {
+        int horizontalDistance = getPosition().getHorizontalDistance(to);
+        int verticalDistance = getPosition().getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||
             (horizontalDistance == 2 && verticalDistance == 1);
     }

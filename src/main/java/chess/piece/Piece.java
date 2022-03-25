@@ -6,9 +6,15 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Color color;
+    private final Position position;
 
-    public Piece(Color color) {
+    public Piece(Color color, Position position) {
         this.color = color;
+        this.position = position;
+    }
+
+    public Piece transfer(Position to) {
+        return createNewPiece(to);
     }
 
     public boolean isSameColor(Color color) {
@@ -21,6 +27,14 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
     }
 
     @Override
@@ -47,5 +61,7 @@ public abstract class Piece {
             ", type=" + getClass().getSimpleName();
     }
 
-    public abstract boolean isPossibleMovement(Position from, Position to);
+    protected abstract Piece createNewPiece(Position to);
+
+    public abstract boolean isPossibleMovement(Position to);
 }
