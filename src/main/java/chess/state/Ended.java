@@ -18,6 +18,11 @@ public class Ended implements State {
     }
 
     @Override
+    public State status() {
+        return new Ended();
+    }
+
+    @Override
     public boolean isNotEnded() {
         return false;
     }

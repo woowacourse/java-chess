@@ -42,4 +42,12 @@ public class OutputView {
     public static void printTurnMessage(final String name) {
         System.out.println(name + "의 턴입니다.");
     }
+
+    public static void printResult(final String turn, final String result) {
+        System.out.println(turn + "은 " + result + "하셨습니다." + NEW_LINE);
+    }
+
+    public static void printScore(final String turn, final double score) {
+        System.out.println(turn + "은 " + score + "점 입니다.");
+    }
 }

@@ -25,6 +25,12 @@ public class Ready implements State {
     }
 
     @Override
+    public State status() {
+        OutputView.printErrorMessage("[ERROR] start를 하지 않아 status 할 수 없습니다.");
+        return new Ready();
+    }
+
+    @Override
     public boolean isNotEnded() {
         return true;
     }

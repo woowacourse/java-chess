@@ -8,6 +8,7 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
+    STATUS("status"),
     ;
 
     private final String command;
@@ -32,6 +33,9 @@ public enum Command {
         }
         if (this == END) {
             return state.end();
+        }
+        if (this == STATUS) {
+            return state.status();
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다.");
     }

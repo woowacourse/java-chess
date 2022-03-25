@@ -8,5 +8,7 @@ public interface State {
 
     State move(final String[] commands);
 
+    State status();
+
     boolean isNotEnded();
 }

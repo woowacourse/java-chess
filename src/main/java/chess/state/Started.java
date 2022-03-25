@@ -1,6 +1,8 @@
 package chess.state;
 
 import chess.domain.Board;
+import chess.domain.Result;
+import chess.domain.Score;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -37,6 +39,18 @@ public class Started implements State {
         }
     }
 
+    @Override
+    public State status() {
+        final Score myScore = new Score(board, turn);
+        final Score opponentScore = new Score(board, turn.getOpposite());
+
+        OutputView.printScore(turn.getName(), myScore.getValue());
+        OutputView.printScore(turn.getOpposite().getName(), opponentScore.getValue());
+        OutputView.printResult(turn.getName(), Result.decide(myScore, opponentScore).getName());
+
+        return new Started(turn, board);
+    }
+
     private State actualMove(final String[] commands) {
         final Position from = Position.create(commands[1]);
         final Position to = Position.create(commands[2]);
@@ -44,6 +58,7 @@ public class Started implements State {
         board.isMovable(from, to, turn);
 
         if (board.isCheckmate(to)) {
+            OutputView.printResult(turn.getName(), Result.WIN.getName());
             return new Ended();
         }
 
