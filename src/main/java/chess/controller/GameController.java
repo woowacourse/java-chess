@@ -3,6 +3,7 @@ package chess.controller;
 import static chess.view.InputView.requestValidMoveInput;
 import static chess.view.InputView.requestValidStartOrEndInput;
 import static chess.view.InputView.requestValidStatusOrEndInput;
+import static chess.view.OutputView.print;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
@@ -26,8 +27,17 @@ public class GameController {
     public void playGame(ChessGame game) {
         printBoardDisplay(game);
         while (!game.isEnd()) {
+            moveChessmen(game);
+        }
+    }
+
+    private void moveChessmen(ChessGame game) {
+        try {
             game.moveChessmen(requestValidMoveInput());
             printBoardDisplay(game);
+        } catch (IllegalArgumentException e) {
+            print(e.getMessage());
+            moveChessmen(game);
         }
     }
 

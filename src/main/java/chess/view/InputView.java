@@ -28,7 +28,7 @@ public class InputView {
 
     public static boolean requestValidStartOrEndInput() {
         try {
-        return requestStartOrEndInput();
+            return requestStartOrEndInput();
         } catch (IllegalArgumentException e) {
             print(e.getMessage());
         }
@@ -60,8 +60,7 @@ public class InputView {
         String[] input = readConsoleInput().split(COMMAND_INPUT_DELIMITER);
         validateMoveInput(input);
 
-        return new MovePositionCommandDto(
-                input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
+        return new MovePositionCommandDto(input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
     }
 
     private static void validateMoveInput(String[] input) {
