@@ -1,8 +1,8 @@
 package chess.domain.position;
 
-import static chess.domain.position.util.PositionUtil.RANKS_TOTAL_SIZE;
+import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 
-import chess.domain.position.util.PositionUtil;
+import chess.util.PositionUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

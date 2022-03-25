@@ -1,5 +1,6 @@
 package chess.controller;
 
+import static chess.util.PieceGeneratorUtil.initAllChessmen;
 import static chess.view.InputView.requestValidMoveInput;
 import static chess.view.InputView.requestValidStartOrEndInput;
 import static chess.view.InputView.requestValidStatusOrEndInput;
@@ -22,7 +23,7 @@ public class GameController {
         if (!requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new ChessGame(new ActivePieces());
+        return new ChessGame(new ActivePieces(initAllChessmen()));
     }
 
     public void playGame(ChessGame game) {

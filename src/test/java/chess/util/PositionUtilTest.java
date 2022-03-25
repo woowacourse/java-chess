@@ -1,4 +1,4 @@
-package chess.domain.position.util;
+package chess.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
