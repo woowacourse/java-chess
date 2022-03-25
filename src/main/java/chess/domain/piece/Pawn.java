@@ -1,12 +1,14 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Direction.NORTH;
 import static chess.domain.piece.Direction.NORTH_NORTH;
+import static chess.domain.piece.Direction.SOUTH;
 import static chess.domain.piece.Direction.SOUTH_SOUTH;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
-import chess.domain.position.Row;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.List;
 
 public class Pawn implements Piece {
@@ -57,6 +59,15 @@ public class Pawn implements Piece {
 
     @Override
     public Direction findDirection(Position from, Position to) {
-        return from.findDirection(to, true);
+        Direction direction = from.findDirection(to, true);
+
+        if (direction == NORTH_NORTH) {
+            return NORTH;
+        }
+        if (direction == SOUTH_SOUTH) {
+            return SOUTH;
+        }
+
+        return direction;
     }
 }

@@ -2,17 +2,12 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Queen;
-import chess.domain.piece.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import chess.domain.board.Board;
-import chess.view.OutputView;
 
 public class BoardTest {
 
@@ -82,16 +77,30 @@ public class BoardTest {
     @Test
     void move_false() {
         // given
-        Board board = new Board();
-        board.initBoard();
-
         Position fromQueen = new Position(Column.D, Row.ONE);
         Position toQueen = new Position(Column.E, Row.TWO);
-        // when
 
+        // when
         board.move(fromQueen, toQueen);
 
         // then
         assertThat(board.move(fromQueen, toQueen)).isFalse();
+    }
+
+    @DisplayName("폰의 2칸 이동")
+    @Test
+    void pawn_move() {
+        // given
+        Position knightFrom = new Position(Column.G, Row.ONE);
+        Position knightTo = new Position(Column.F, Row.THREE);
+
+        Position pawnFrom = new Position(Column.F, Row.TWO);
+        Position pawnTo = new Position(Column.F, Row.FOUR);
+
+        // when
+        board.move(knightFrom, knightTo);
+
+        // then
+        assertThat(board.move(pawnFrom, pawnTo)).isFalse();
     }
 }
