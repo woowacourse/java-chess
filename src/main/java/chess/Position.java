@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class Position {
 
@@ -79,38 +80,28 @@ public class Position {
         List<File> traceFileGroup = File.traceGroup(this.file, other.file);
         List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
 
-        ListIterator<File> fileListIterator = traceFileGroup.listIterator();
-        ListIterator<Rank> rankListIterator = traceRankGroup.listIterator();
-
-        return possiblePositions(rankListIterator, fileListIterator);
+        return possiblePositions(traceRankGroup.listIterator(), traceFileGroup.listIterator());
     }
 
     private List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
         List<Position> positions = new ArrayList<>();
 
         if (!rankIterator.hasNext()) {
-            while (fileIterator.hasNext()) {
-                positions.add(new Position(this.rank, fileIterator.next()));
-            }
+            fileIterator.forEachRemaining(file -> positions.add(new Position(this.rank, file)));
             return positions;
         }
 
         if (!fileIterator.hasNext()) {
-            while (rankIterator.hasNext()) {
-                positions.add(new Position(rankIterator.next(), this.file));
-            }
+            rankIterator.forEachRemaining(rank -> positions.add(new Position(rank, this.file)));
             return positions;
         }
 
         while (rankIterator.hasNext()) {
-            while (fileIterator.hasNext()) {
-                Position position = new Position(rankIterator.next(), fileIterator.next());
-                if (this.isAllDirectional(position)) {
-                    positions.add(position);
-                }
-            }
+            fileIterator.forEachRemaining(file -> positions.add(new Position(rankIterator.next(), file)));
         }
 
-        return positions;
+        return positions.stream()
+            .filter(this::isAllDirectional)
+            .collect(Collectors.toList());
     }
 }
