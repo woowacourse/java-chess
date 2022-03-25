@@ -5,6 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class PawnTest {
     @ParameterizedTest
     @ValueSource(strings = {"e6", "d7", "f7"})
@@ -13,7 +17,7 @@ class PawnTest {
         Position position = Position.from("e7");
         Pawn pawn = new Pawn(Team.WHITE, position);
         Assertions.assertThatThrownBy(() -> {
-                    pawn.validateIsPossible(Position.from(input));
+                    pawn.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -24,7 +28,7 @@ class PawnTest {
     void isPossibleByWhiteTeam(String input) {
         Position position = Position.from("e2");
         Pawn pawn = new Pawn(Team.WHITE, position);
-        pawn.validateIsPossible(Position.from(input));
+        pawn.findPath(Position.from(input));
     }
 
     @ParameterizedTest
@@ -34,7 +38,7 @@ class PawnTest {
         Position position = Position.from("c4");
         Pawn pawn = new Pawn(Team.BLACK, position);
         Assertions.assertThatThrownBy(() -> {
-                    pawn.validateIsPossible(Position.from(input));
+                    pawn.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -45,6 +49,26 @@ class PawnTest {
     void isPossibleByBlackTeam(String input) {
         Position position = Position.from("e7");
         Pawn pawn = new Pawn(Team.BLACK, position);
-        pawn.validateIsPossible(Position.from(input));
+        pawn.findPath(Position.from(input));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"d6", "e6", "f6"})
+    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    void findPathByBlack(String input) {
+        Position position = Position.from("e7");
+        Pawn pawn = new Pawn(Team.BLACK, position);
+        List<Position> path = pawn.findPath(Position.from(input));
+        assertThat(path).containsExactly(Position.from(input));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"d3", "e3", "f3"})
+    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    void findPathByWhite(String input) {
+        Position position = Position.from("e2");
+        Pawn pawn = new Pawn(Team.WHITE, position);
+        List<Position> path = pawn.findPath(Position.from(input));
+        assertThat(path).containsExactly(Position.from(input));
     }
 }
