@@ -69,9 +69,18 @@ class ChessBoardTest {
     @DisplayName("프로모션이 불가능할 때 예외발생")
     void promotionExceptionByStatus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a','2'), new WhitePawn()));
-        assertThatThrownBy(() -> chessBoard.promotion(WHITE))
+        assertThatThrownBy(() -> chessBoard.promotion(new Queen(WHITE), WHITE))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("프로모션 상태가 아닙니다.");
+                .hasMessage("프로모션 프로모션 가능한 기물이 없습니다.");
+    }
+
+    @Test
+    @DisplayName("프로모션 진행")
+    void promotion() {
+        Position position = Position.of('a', '8');
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, new WhitePawn()));
+        chessBoard.promotion(new Queen(WHITE), WHITE);
+        assertThat(chessBoard.pieceByPosition(position)).isInstanceOf(Queen.class);
     }
 
     @ParameterizedTest
@@ -148,10 +157,10 @@ class ChessBoardTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,8,true", "a,7,false"})
+    @CsvSource(value = {"a,8,WHITE,true", "a,7,WHITE,false", "a,8,BLACK,false"})
     @DisplayName("프로모션 상태 여부 확인")
-    void isPromotionStatus(char column, char row, boolean expected) {
+    void isPromotionStatus(char column, char row, Color color, boolean expected) {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of(column, row), new WhitePawn()));
-        assertThat(chessBoard.isPromotionStatus()).isEqualTo(expected);
+        assertThat(chessBoard.isPromotionStatus(color)).isEqualTo(expected);
     }
 }
