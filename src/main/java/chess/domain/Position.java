@@ -86,6 +86,10 @@ public class Position {
         return isColumnInRange((char) (column + columnAmount)) && isRowInRange((char) (row + rowAmount));
     }
 
+    public boolean isPromotionPosition() {
+        return row == MIN_ROW || row == MAX_ROW;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
