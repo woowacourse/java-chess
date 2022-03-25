@@ -16,7 +16,7 @@ public class OutputView {
     public static void printBoard(Board board) {
         System.out.println();
         System.out.printf("   [ %s팀의 차례입니다 ]%n", findTurn(board));
-        System.out.println("    a b c d e f g h");
+        System.out.println("흑  a b c d e f g h");
         System.out.println("  ┌-----------------┐");
         for (int i = 8; i > 0; i--) {
             String rankLine = board.getRank(i - 1).getPieces().stream()
@@ -26,7 +26,7 @@ public class OutputView {
             System.out.printf("%d | %s | %d%n", i, rankLine, i);
         }
         System.out.println("  └-----------------┘");
-        System.out.println("    a b c d e f g h");
+        System.out.println("백  a b c d e f g h");
         System.out.println();
     }
 

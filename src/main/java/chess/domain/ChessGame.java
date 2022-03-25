@@ -11,7 +11,7 @@ public class ChessGame {
     public void run() {
         OutputView.printStartView();
 
-        if (Command.firstCommand(InputView.requestCommand()) != Command.START) {
+        if (requestFirstCommand() != Command.START) {
             return;
         }
 
@@ -21,17 +21,36 @@ public class ChessGame {
         OutputView.printResult(board);
     }
 
+    private Command requestFirstCommand() {
+        try {
+            return Command.firstCommand(InputView.requestCommand());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return requestFirstCommand();
+        }
+    }
+
     private void playRound(Board board) {
         while (!board.isEnd()) {
             OutputView.printBoard(board);
+            executeTurn(board);
+        }
+    }
+
+    private void executeTurn(Board board) {
+        try {
             executeCommand(board);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println(e.getMessage());
+            OutputView.printBoard(board);
+            executeTurn(board);
         }
     }
 
     private void executeCommand(Board board) {
         List<String> input = List.of(InputView.requestCommand().split(" "));
 
-        if (Command.from(input.get(0)) == Command.END) {
+        if (Command.inGameCommand(input.get(0)) == Command.END) {
             board.terminate();
             return;
         }
