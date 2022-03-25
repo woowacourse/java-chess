@@ -45,25 +45,33 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
     }
 
-    public Board move(final Position sourcePosition, final Position targetPosition) {
+    public Board movePiece(final Position sourcePosition, final Position targetPosition) {
         final Piece sourcePiece = findPieceInPosition(sourcePosition);
+        final List<Piece> otherPieces = getOtherPieces(sourcePiece);
+        final Piece movedPiece = sourcePiece.move(otherPieces, targetPosition);
+
         if (hasPieceInPosition(targetPosition)) {
-            return moveToNotEmptyPosition(sourcePiece, targetPosition);
+            removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
         }
-        return moveToEmptyPosition(sourcePiece, targetPosition);
+
+        pieces.set(pieces.indexOf(sourcePiece), movedPiece);
+        return new Board(pieces);
     }
 
-    private Board moveToNotEmptyPosition(final Piece sourcePiece, final Position targetPosition) {
-        final Piece targetPositionPiece = findPieceInPosition(targetPosition);
-        if (sourcePiece.isSameTeam(targetPositionPiece)) {
+    private List<Piece> getOtherPieces(final Piece sourcePiece) {
+        return pieces.stream()
+                .filter(piece -> !sourcePiece.equals(piece))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private void removeTargetPositionPiece(final Piece targetPositionPiece, final Piece movedPiece) {
+        validateSameTeamTargetPositionPiece(movedPiece, targetPositionPiece);
+        pieces.remove(targetPositionPiece);
+    }
+
+    private void validateSameTeamTargetPositionPiece(final Piece movedPiece, final Piece targetPositionPiece) {
+        if (movedPiece.isSameTeam(targetPositionPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 같은 팀 기물이 있습니다.");
         }
-        pieces.remove(targetPositionPiece);
-        return moveToEmptyPosition(sourcePiece, targetPosition);
-    }
-
-    private Board moveToEmptyPosition(final Piece sourcePiece, final Position targetPosition) {
-        pieces.set(pieces.indexOf(sourcePiece), sourcePiece.move(targetPosition));
-        return new Board(pieces);
     }
 }
