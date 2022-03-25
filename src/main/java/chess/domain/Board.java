@@ -75,7 +75,12 @@ public class Board {
         }
     }
 
-    public void move(final Position from, final Position to, final Color color) {
+    public void move(final Position from, final Position to) {
+        board.put(to, board.get(from));
+        board.put(from, new EmptyPiece());
+    }
+
+    public void isMovable(Position from, Position to, Color color) {
         final Piece source = board.get(from);
         final Piece target = board.get(to);
 
@@ -85,9 +90,10 @@ public class Board {
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
         checkMove(from, to, color, source, target, direction);
+    }
 
-        board.put(from, new EmptyPiece());
-        board.put(to, source);
+    public boolean isCheckmate(final Position to) {
+        return board.get(to).isKing();
     }
 
     private void checkMove(final Position from, final Position to, final Color color,

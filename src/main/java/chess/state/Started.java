@@ -29,13 +29,18 @@ public class Started implements State {
 
     @Override
     public State move(final String[] commands) {
+        final Position from = Position.create(commands[1]);
+        final Position to = Position.create(commands[2]);
         try {
-            board.move(Position.create(commands[1]), Position.create(commands[2]), turn);
+            board.isMovable(from, to, turn);
         } catch (IllegalArgumentException | IllegalStateException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return new Started(turn, board);
         }
-
+        if (board.isCheckmate(to)) {
+            return new Ended();
+        }
+        board.move(from, to);
         OutputView.printBoard(board.getBoard());
         return new Started(turn.getOpposite(), board);
     }

@@ -104,7 +104,7 @@ public class BoardTest {
         Position to = Position.create("a3");
         Piece source = board.getBoard().get(from);
 
-        board.move(from, to, Color.WHITE);
+        board.move(from, to);
 
         assertAll(
             () -> assertThat(board.getBoard().get(from)).isEqualTo(new EmptyPiece()),
@@ -118,7 +118,7 @@ public class BoardTest {
         Position from = Position.create("c2");
         Position to = Position.create("c2");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
     }
@@ -129,7 +129,7 @@ public class BoardTest {
         Position from = Position.create("b2");
         Position to = Position.create("b3");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.BLACK))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.BLACK))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
     }
@@ -140,7 +140,7 @@ public class BoardTest {
         Position from = Position.create("a3");
         Position to = Position.create("a4");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] source 위치에 기물이 존재하지 않습니다.");
     }
@@ -151,7 +151,7 @@ public class BoardTest {
         Position from = Position.create("b1");
         Position to = Position.create("b3");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 행마법에 맞지 않는 이동입니다.");
     }
@@ -162,7 +162,7 @@ public class BoardTest {
         Position from = Position.create("a1");
         Position to = Position.create("a2");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
     }
@@ -173,7 +173,7 @@ public class BoardTest {
         Position from = Position.create("a1");
         Position to = Position.create("a7");
 
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
     }
