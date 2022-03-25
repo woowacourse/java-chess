@@ -30,7 +30,7 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
     }
 
-    public static List<Row> reverseColumns() {
+    public static List<Row> reverseRows() {
         List<Row> rows = Arrays.asList(values());
         rows.sort(Collections.reverseOrder());
         return rows;
