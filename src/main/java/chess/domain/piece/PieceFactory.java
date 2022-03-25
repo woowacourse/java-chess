@@ -26,34 +26,34 @@ public class PieceFactory {
 
     private static Map<Position, Piece> createNewBlackPieces() {
         Map<Position, Piece> blackPieces = new HashMap<>(Map.of(
-                new Position('a', '8'), new Rook(Color.BLACK),
-                new Position('b', '8'), new Knight(Color.BLACK),
-                new Position('c', '8'), new Bishop(Color.BLACK),
-                new Position('d', '8'), new Queen(Color.BLACK),
-                new Position('e', '8'), new King(Color.BLACK),
-                new Position('f', '8'), new Bishop(Color.BLACK),
-                new Position('g', '8'), new Knight(Color.BLACK),
-                new Position('h', '8'), new Rook(Color.BLACK)
+                Position.of('a', '8'), new Rook(Color.BLACK),
+                Position.of('b', '8'), new Knight(Color.BLACK),
+                Position.of('c', '8'), new Bishop(Color.BLACK),
+                Position.of('d', '8'), new Queen(Color.BLACK),
+                Position.of('e', '8'), new King(Color.BLACK),
+                Position.of('f', '8'), new Bishop(Color.BLACK),
+                Position.of('g', '8'), new Knight(Color.BLACK),
+                Position.of('h', '8'), new Rook(Color.BLACK)
         ));
         for (char i = 0; i < 8; i++) {
-            blackPieces.put(new Position((char) ('a' + i), '7'), new BlackPawn());
+            blackPieces.put(Position.of((char) ('a' + i), '7'), new BlackPawn());
         }
         return blackPieces;
     }
 
     private static Map<Position, Piece> createNewWhitePieces() {
         Map<Position, Piece> whitePieces = new HashMap<>(Map.of(
-                new Position('a', '1'), new Rook(Color.WHITE),
-                new Position('b', '1'), new Knight(Color.WHITE),
-                new Position('c', '1'), new Bishop(Color.WHITE),
-                new Position('d', '1'), new Queen(Color.WHITE),
-                new Position('e', '1'), new King(Color.WHITE),
-                new Position('f', '1'), new Bishop(Color.WHITE),
-                new Position('g', '1'), new Knight(Color.WHITE),
-                new Position('h', '1'), new Rook(Color.WHITE)
+                Position.of('a', '1'), new Rook(Color.WHITE),
+                Position.of('b', '1'), new Knight(Color.WHITE),
+                Position.of('c', '1'), new Bishop(Color.WHITE),
+                Position.of('d', '1'), new Queen(Color.WHITE),
+                Position.of('e', '1'), new King(Color.WHITE),
+                Position.of('f', '1'), new Bishop(Color.WHITE),
+                Position.of('g', '1'), new Knight(Color.WHITE),
+                Position.of('h', '1'), new Rook(Color.WHITE)
         ));
         for (char i = 0; i < 8; i++) {
-            whitePieces.put(new Position((char) ('a' + i), '2'), new WhitePawn());
+            whitePieces.put(Position.of((char) ('a' + i), '2'), new WhitePawn());
         }
         return whitePieces;
     }

@@ -24,7 +24,7 @@ class QueenTest {
     @BeforeEach
     void setUp() {
         queen = new Queen(Color.WHITE);
-        source = new Position('d', '4');
+        source = Position.of('d', '4');
     }
 
     @ParameterizedTest
@@ -38,7 +38,7 @@ class QueenTest {
     @CsvSource(value = {"a,7,true", "d,8,true", "h,8,true", "h,4,true", "e,6,false", "f,5,false", "a,8,false"})
     @DisplayName("목표 지점이 이동 가능 경로를 벗어났는지에 따른 이동 가능여부")
     void emptyDirection(char col, char row, boolean expected) {
-        Position target = new Position(col, row);
+        Position target = Position.of(col, row);
         ChessBoard chessBoard = new ChessBoard(Map.of(source, new Queen(WHITE)));
 
         assertThat(queen.isMovable(source, target, chessBoard)).isEqualTo(expected);
@@ -47,7 +47,7 @@ class QueenTest {
     @Test
     @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
     void isMovableToClearEmptyPosition() {
-        Position target = new Position('d', '8');
+        Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(source, new Queen(WHITE)));
 
         assertThat(queen.isMovable(source, target, chessBoard)).isTrue();
@@ -57,7 +57,7 @@ class QueenTest {
     @CsvSource(value = {"WHITE,false", "BLACK,true"})
     @DisplayName("가로막히지 않고 목표지점에 기물이 존재시 이동 가능 여부")
     void isMovableToClearPiecePosition(Color color, boolean expected) {
-        Position target = new Position('d', '8');
+        Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new Queen(WHITE),
                 target, new Queen(color)));
@@ -68,10 +68,10 @@ class QueenTest {
     @Test
     @DisplayName("가로막히고 목표지점이 비어 있으면 이동 불가능")
     void isMovableToNotClearEmptyPosition() {
-        Position target = new Position('d', '8');
+        Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new Queen(WHITE),
-                new Position('d', '7'), new Queen(BLACK)));
+                Position.of('d', '7'), new Queen(BLACK)));
 
         assertThat(queen.isMovable(source, target, chessBoard)).isFalse();
     }
@@ -80,10 +80,10 @@ class QueenTest {
     @EnumSource(Color.class)
     @DisplayName("가로막히고 목표지점에 기물이 존재시 이동 불가능")
     void isMovableToNotClearPiecePosition(Color color) {
-        Position target = new Position('d', '8');
+        Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new Queen(WHITE),
-                new Position('d', '7'), new Queen(BLACK),
+                Position.of('d', '7'), new Queen(BLACK),
                 target, new Queen(color)));
 
         assertThat(queen.isMovable(source, target, chessBoard)).isFalse();
