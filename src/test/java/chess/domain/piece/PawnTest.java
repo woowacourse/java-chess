@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Camp;
 import chess.domain.board.Board;
@@ -113,12 +115,25 @@ class PawnTest {
 
     @DisplayName("상대 진영의 기물을 잡는 경우에는 대각선 앞으로 1칸 이동할 수 있다.")
     @Test
-    void pawn_can_move_f6_g7_when_capturing() {
-//        Board board = new Board();
+    void pawn_can_capture_f6_g7() {
         Pawn pawn = new Pawn(Camp.WHITE);
         Position f6 = new Position(Column.F, Row.SIX);
         Position g7 = new Position(Column.G, Row.SEVEN);
 
-        assertThat(pawn.canMove(f6, g7)).isTrue();
+        assertThatNoException().isThrownBy(() -> pawn.capture(f6, g7, (piece -> {
+        })));
+    }
+
+    @DisplayName("상대 진영의 기물을 잡는 경우에는 앞으로 1칸 이동할 수 없다.")
+    @Test
+    void pawn_can_capture_f6_f7() {
+        Pawn pawn = new Pawn(Camp.WHITE);
+        Position f6 = new Position(Column.F, Row.SIX);
+        Position f7 = new Position(Column.F, Row.SEVEN);
+
+        assertThatThrownBy(() -> pawn.capture(f6, f7, (piece -> {
+        })))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다.");
     }
 }

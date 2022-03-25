@@ -99,7 +99,7 @@ public final class Board {
     }
 
     private boolean isCapturing(Piece piece, Position afterPosition) {
-        return piece.canCapture(value.get(afterPosition));
+        return !piece.isSameCampWith(value.get(afterPosition));
     }
 
     public Map<Position, Piece> getValue() {

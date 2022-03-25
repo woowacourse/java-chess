@@ -23,8 +23,8 @@ public abstract class Piece {
                                  Position afterPosition,
                                  Consumer<Piece> moveFunction);
 
-    public boolean canCapture(Piece targetPiece) {
-        return this.camp != targetPiece.camp;
+    public boolean isSameCampWith(Piece targetPiece) {
+        return this.camp == targetPiece.camp;
     }
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);

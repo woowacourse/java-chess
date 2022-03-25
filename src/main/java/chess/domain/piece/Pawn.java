@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public final class Pawn extends Piece {
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
-    private static final int MOVABLE_DISTANCE_AFTER_FIRST_TURN = 1;
+    private static final int MOVABLE_DISTANCE = 1;
 
     private boolean firstMove;
 
@@ -26,7 +26,17 @@ public final class Pawn extends Piece {
 
     @Override
     public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
+        if (!canCapture(beforePosition, afterPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        moveFunction.accept(this);
+        this.firstMove = false;
+    }
+
+    private boolean canCapture(Position beforePosition, Position afterPosition) {
+        int columnDistance = afterPosition.columnDistance(beforePosition);
+        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
+        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
     }
 
     @Override
@@ -37,13 +47,13 @@ public final class Pawn extends Piece {
             return false;
         }
         if (firstMove) {
-            return movableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
+            return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
-        return movableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AFTER_FIRST_TURN);
+        return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
 
     }
 
-    private boolean movableLimitByCamp(int distance, int movableDistance) {
+    private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
         if (this.isBlack()) {
             return -movableDistance <= distance && distance < 0;
         }
