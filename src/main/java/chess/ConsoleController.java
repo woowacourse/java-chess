@@ -12,16 +12,31 @@ public class ConsoleController {
 
     public void run() {
         OutputView.printStartMessage();
-
-        String input = InputView.requestStartOrEnd();
-        Command command = Command.of(input);
+        Command command = inputCommand();
 
         while (command.isStart()) {
             Map<Position, Piece> board = command.getBoard();
             OutputView.printBoard(board);
+            command = inputCommandAndExecute(command);
+        }
+    }
 
-            String commandInput = InputView.requestCommand();
-            command = command.execute(commandInput);
+    private Command inputCommand() {
+        try {
+            return Command.of(InputView.requestStartOrEnd());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputCommand();
+        }
+    }
+
+    private Command inputCommandAndExecute(Command command) {
+        try {
+            command = command.execute(InputView.requestCommand());
+            return command;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputCommandAndExecute(command);
         }
     }
 }
