@@ -41,6 +41,11 @@ public class Knight extends Piece {
 	}
 
 	@Override
+	public boolean isPawn() {
+		return false;
+	}
+
+	@Override
 	public Direction getDirection(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
 
@@ -54,5 +59,10 @@ public class Knight extends Piece {
 			}
 		}
 		throw new IllegalArgumentException(MOVEMENT_ERROR);
+	}
+
+	@Override
+	public double getScore() {
+		return 2.5;
 	}
 }

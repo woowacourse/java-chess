@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -21,6 +22,10 @@ public abstract class Piece {
 
 	public abstract boolean isBlank();
 
+	public abstract boolean isPawn();
+
+	public abstract double getScore();
+
 	public Direction getDirection(final Position source, final Position target) {
 		int differenceRow = target.subtractRow(source);
 		int differenceColumn = target.subtractColumn(source);
@@ -35,5 +40,26 @@ public abstract class Piece {
 		if (this.team == targetPiece.team) {
 			throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
 		}
+	}
+
+	public boolean isSameTeam(final Team team) {
+		return this.team == team;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final Piece piece = (Piece) o;
+		return Objects.equals(symbol, piece.symbol) && team == piece.team;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(symbol, team);
 	}
 }

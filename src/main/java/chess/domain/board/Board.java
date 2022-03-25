@@ -46,6 +46,41 @@ public class Board {
 		board.put(source, new Blank());
 	}
 
+	public double calculateScore(Team team) {
+		double score = 0;
+		for (int column = 1; column <= 8; column++) {
+			List<Piece> columnPieces = findColumnPieces(team, column);
+			score += calculateColumnScore(columnPieces);
+		}
+		return score;
+	}
+
+	private double calculateColumnScore(final List<Piece> columnPieces) {
+		double sum = 0;
+		long pawnCount = columnPieces.stream()
+				.filter(Piece::isPawn)
+				.count();
+		for (Piece piece : columnPieces) {
+			sum += piece.getScore();
+		}
+		if (pawnCount >= 2) {
+			sum -= 0.5 * pawnCount;
+		}
+
+		return sum;
+	}
+
+	private List<Piece> findColumnPieces(Team team, final int column) {
+		List<Piece> pieces = new ArrayList<>();
+		for (int row = 1; row <= 8; row++) {
+			Position position = Position.of(row, column);
+			if (board.get(position).isSameTeam(team)) {
+				pieces.add(board.get(position));
+			}
+		}
+		return pieces;
+	}
+
 	private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
 		if (checkPosition != target && !currentPiece.isBlank()) {
 			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");

@@ -27,4 +27,14 @@ public class Bishop extends Piece {
 	public boolean isBlank() {
 		return false;
 	}
+
+	@Override
+	public boolean isPawn() {
+		return false;
+	}
+
+	@Override
+	public double getScore() {
+		return 3;
+	}
 }
