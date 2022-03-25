@@ -46,4 +46,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(position);
     }
+
+    public double getScore() {
+        return state.getScore();
+    }
 }

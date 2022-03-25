@@ -76,15 +76,15 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("같은 세로줄에 존재하는 폰의 개수를 구한다.")
-    void calculatePawnCountsOfSameFile() {
+    @DisplayName("플레이어의 점수를 구한다.")
+    void calculateScore() {
         final Piece piece1 = new Pawn(new Position(2, 'a'));
         final Piece piece2 = new Pawn(new Position(4, 'a'));
         final Piece piece3 = new Pawn(new Position(4, 'b'));
         final Player player = new Player(List.of(piece1, piece2, piece3));
-        final int expected = 2;
+        final double expected = 2;
 
-        final int actual = player.calculatePluralPawnCountByFile();
+        final double actual = player.calculateScore();
 
         assertThat(actual).isEqualTo(expected);
     }

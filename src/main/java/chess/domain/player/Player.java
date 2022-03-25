@@ -53,12 +53,24 @@ public class Player {
                 .orElseThrow(() -> new IllegalArgumentException("체스말이 존재하지 않습니다."));
     }
 
-    public int calculatePluralPawnCountByFile() {
+    public double calculateScore() {
+        return calculateAllPieceScore() - calculateDuplicatePawnScore();
+    }
+
+    private double calculateAllPieceScore() {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private double calculateDuplicatePawnScore() {
+        final double DUPLICATE_PAWN_SCORE = 0.5;
+
         int pawnCountByFile = 0;
         for (char file = 'a'; file <= 'h'; file++) {
             pawnCountByFile += countPluralPawnByFile(file);
         }
-        return pawnCountByFile;
+        return DUPLICATE_PAWN_SCORE * pawnCountByFile;
     }
 
     private int countPluralPawnByFile(final char file) {
