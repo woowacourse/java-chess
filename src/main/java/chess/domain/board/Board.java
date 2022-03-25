@@ -1,13 +1,19 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
+
 import chess.domain.Color;
 import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -53,26 +59,47 @@ public class Board {
     }
 
     public Map<Color, Double> getScore() {
-        Map<Color, Double> scores = new HashMap<>();
+        List<Position> whitePawnPositions = getCollect(Piece::isWhite);
+        List<Position> blackPawnPositions = getCollect(Piece::isBlack);
 
-        double blackSum = board.values()
+        double scoreForWhitePawns = calculatePawnScore(whitePawnPositions);
+        double scoreForBlackPawns = calculatePawnScore(blackPawnPositions);
+
+        Map<Color, Double> chessScore = board.values()
                 .stream()
-                .filter(Piece::isBlack)
-                .mapToDouble(blackPiece -> Score.from(blackPiece))
-                .sum();
+                .filter(piece -> !(piece instanceof Pawn))
+                .collect(groupingBy(Color::from, summingDouble(Score::from)));
 
-        double whiteSum = board.values()
-                .stream()
-                .filter(Piece::isWhite)
-                .mapToDouble(whitePiece -> Score.from(whitePiece))
-                .sum();
+        chessScore.put(Color.WHITE, chessScore.getOrDefault(Color.WHITE, 0D) + scoreForWhitePawns);
+        chessScore.put(Color.BLACK, chessScore.getOrDefault(Color.BLACK, 0D) + scoreForBlackPawns);
 
-        scores.put(Color.BLACK, blackSum);
-        scores.put(Color.WHITE, whiteSum);
-
-        return scores;
+        return chessScore;
     }
 
+    private double calculatePawnScore(List<Position> pawnPositions) {
+        double pawnScore = pawnPositions.size();
+
+        for (File file : File.values()) {
+            long count = pawnPositions.stream()
+                    .filter(position -> position.isSameFile(file))
+                    .count();
+
+            if (count > 1) {
+                pawnScore -= count * 0.5;
+            }
+        }
+
+        return pawnScore;
+    }
+
+    private List<Position> getCollect(Predicate<Piece> condition) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() instanceof Pawn)
+                .filter(entry -> condition.test(entry.getValue()))
+                .map(Entry::getKey)
+                .collect(Collectors.toList());
+    }
 
     public Map<Position, Piece> getBoard() {
         return new LinkedHashMap<>(board);
