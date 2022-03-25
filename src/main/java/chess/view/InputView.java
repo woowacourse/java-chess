@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String DELIMITER = " ";
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static boolean inputInitialCommand() {
@@ -25,7 +27,7 @@ public class InputView {
     }
 
     public static List<String> inputProgressCommand() {
-        final List<String> input = Arrays.stream(scanner.nextLine().split(" "))
+        final List<String> input = Arrays.stream(scanner.nextLine().split(DELIMITER))
                 .map(value -> value.toLowerCase(Locale.ROOT))
                 .collect(toList());
         Command progressCommand = Command.of(input.get(0));
