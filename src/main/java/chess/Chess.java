@@ -64,7 +64,9 @@ public class Chess {
         Position start = Position.from(args[1]);
         Position target = Position.from(args[2]);
         Color currentColor = getCurrentColor();
-        board.move(start, target, currentColor);
+        if (board.move(start, target, currentColor).isSamePiece("king")) {
+            gameState = GameState.END;
+        }
         OutputView.printBoard(board.getPieces());
     }
 
