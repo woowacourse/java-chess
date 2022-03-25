@@ -43,4 +43,9 @@ public class OutputView {
     private static void printScoreStatus(Color color, Double score) {
         System.out.println(color + "의 점수는 " + score + "입니다.");
     }
+
+    public static void printPromotionGuide() {
+        System.out.println("폰이 프로모션에 도착했습니다. 프로모션을 진행해주세요.");
+        System.out.println("Q, R, B, N 중 하나를 입력해주세요.");
+    }
 }

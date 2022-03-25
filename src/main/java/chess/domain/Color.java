@@ -14,6 +14,13 @@ public enum Color {
         this.caseConverter = caseConvertor;
     }
 
+    public Color reverse() {
+        if (this == Color.WHITE) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
+
     public String convertToCase(String value) {
         return caseConverter.apply(value);
     }

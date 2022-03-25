@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Running implements Command {
+public class Running implements Command {
 
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("move [a-h][1-8] [a-h][1-8]");
     private static final int START_POSITION_INDEX = 1;
@@ -24,7 +24,7 @@ public abstract class Running implements Command {
     }
 
     public static Running createFirstTurnRunning(ChessBoard chessBoard) {
-        return new WhiteRunning(chessBoard);
+        return new Running(chessBoard, Color.WHITE);
     }
 
     @Override
@@ -40,9 +40,17 @@ public abstract class Running implements Command {
         if (matcher.find()) {
             movePieceByCommand(command);
             OutputView.printChessBoard(chessBoard.getPieces());
-            return otherCommand(this.chessBoard);
+            return moveNextCommand();
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
+    }
+
+    private Command moveNextCommand() {
+        if (chessBoard.isPromotionStatus(color)) {
+            OutputView.printPromotionGuide();
+            return new PromotionStatus(chessBoard, color);
+        }
+        return new Running(chessBoard, color.reverse());
     }
 
     private void movePieceByCommand(final String command) {
@@ -56,10 +64,12 @@ public abstract class Running implements Command {
         return Position.of(command.charAt(0), command.charAt(1));
     }
 
+    public Color color() {
+        return color;
+    }
+
     @Override
     public boolean isEnd() {
         return false;
     }
-
-    abstract protected Running otherCommand(ChessBoard chessBoard);
 }
