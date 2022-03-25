@@ -126,7 +126,17 @@ abcdefgh (file)
 
 - [x] KING
   - `target`까지의 길이가 `2^(1/2)` 이하여야 한다.
-킹
+
+- [ ] PAWN
+  - 기본적으로 한 칸만 이동 가능하다.
+  - 시작점인 경우 한 칸, 혹은 두 칸 이동 가능하다.
+  - white
+    - top 방향으로만 이동 가능하다.
+    - top-right, top-left 방향으로는 상대편 기물이 존재해야 이동 가능하다.
+  - black
+    - bottom 방향으로만 이동 가능하다.
+    - bottom-right, bottom-left 방향으로는 상대편 기물이 존재해야 이동 가능하다.
+
 #### Direction
 
 - [x] 방향 정보를 관리하기 위한 열거형이다.
