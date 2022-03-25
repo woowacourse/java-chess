@@ -14,16 +14,16 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
         }
 
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isHorizontalMovement() && countPiecesWhenHorizon(board, smallerPosition, distance) > 0) {
+        if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
             return false;
         }
-        if (distance.isVerticalMovement() && countPiecesWhenVertical(board, smallerPosition, distance) > 0) {
+        if (distance.isVerticalMovement() && isPieceExistWhenVertical(board, smallerPosition, distance)) {
             return false;
         }
-        if (distance.isPositiveDiagonal() && countPiecesWhenPositiveDiagonal(board, smallerPosition, distance) > 0) {
+        if (distance.isPositiveDiagonal() && isPieceExistWhenPositiveDiagonal(board, smallerPosition, distance)) {
             return false;
         }
-        if (distance.isNegativeDiagonal() && countPiecesWhenNegativeDiagonal(board, smallerPosition, distance) > 0) {
+        if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
             return false;
         }
 

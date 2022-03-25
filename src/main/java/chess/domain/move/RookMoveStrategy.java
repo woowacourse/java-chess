@@ -16,10 +16,10 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
         }
 
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isHorizontalMovement() && countPiecesWhenHorizon(board, smallerPosition, distance) > 0) {
+        if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
             return false;
         }
-        if (distance.isVerticalMovement() && countPiecesWhenVertical(board, smallerPosition, distance) > 0) {
+        if (distance.isVerticalMovement() && isPieceExistWhenVertical(board, smallerPosition, distance)) {
             return false;
         }
 
@@ -31,14 +31,14 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
     }
 
     @Override
-    protected int countPiecesWhenPositiveDiagonal(final Board board, final Position smallerPosition,
-                                                  final Distance distance) {
+    protected boolean isPieceExistWhenPositiveDiagonal(final Board board, final Position smallerPosition,
+                                                       final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected int countPiecesWhenNegativeDiagonal(final Board board, final Position smallerPosition,
-                                                  final Distance distance) {
+    protected boolean isPieceExistWhenNegativeDiagonal(final Board board, final Position smallerPosition,
+                                                       final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

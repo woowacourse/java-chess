@@ -20,12 +20,23 @@ public class RookMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("룩이 이동할 수 있다.")
-    void isMovable() {
+    @DisplayName("룩이 수직 이동할 수 있다.")
+    void isMovableVertical() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
 
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("a4");
+
+        assertThat(rookMoveStrategy.isMovable(board, source, target)).isTrue();
+    }
+
+    @Test
+    @DisplayName("룩이 수평 이동할 수 있다.")
+    void isMovableHorizon() {
+        board.movePiece(Position.valueOf("b8"), Position.valueOf("b6"));
+
+        Position source = Position.valueOf("a8");
+        Position target = Position.valueOf("b8");
 
         assertThat(rookMoveStrategy.isMovable(board, source, target)).isTrue();
     }

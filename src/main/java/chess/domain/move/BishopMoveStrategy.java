@@ -16,10 +16,10 @@ public class BishopMoveStrategy extends LinearMoveStrategy {
         }
 
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isPositiveDiagonal() && countPiecesWhenPositiveDiagonal(board, smallerPosition, distance) > 0) {
+        if (distance.isPositiveDiagonal() && isPieceExistWhenPositiveDiagonal(board, smallerPosition, distance)) {
             return false;
         }
-        if (distance.isNegativeDiagonal() && countPiecesWhenNegativeDiagonal(board, smallerPosition, distance) > 0) {
+        if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
             return false;
         }
 
@@ -31,12 +31,12 @@ public class BishopMoveStrategy extends LinearMoveStrategy {
     }
 
     @Override
-    protected int countPiecesWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
+    protected boolean isPieceExistWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected int countPiecesWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
+    protected boolean isPieceExistWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }
