@@ -27,40 +27,35 @@ public abstract class ChessPiece {
         final Stack<Position> routes = new Stack<>();
         final Direction direction = to.findDirection(from);
 
-        Position newFrom = Position.from(from.getValue());
-
-        while (!newFrom.equals(to)) {
-            final Position nextPosition = newFrom.toNextPosition(direction);
-            routes.add(Position.from(nextPosition.getValue()));
-            newFrom = nextPosition;
+        Position currentRoute = from.toNextPosition(direction);
+        while (!currentRoute.equals(to)) {
+            routes.add(currentRoute);
+            currentRoute = currentRoute.toNextPosition(direction);
         }
-
-        routes.pop();
-
         return routes;
     }
 
-    public boolean isBlack() {
+    public final boolean isBlack() {
         return color.isBlack();
     }
 
-    public boolean isSameColor(final ChessPiece chessPiece) {
-        return this.color == chessPiece.color;
+    public final boolean isSameColor(final ChessPiece chessPiece) {
+        return this.color.equals(chessPiece.color);
     }
 
-    public boolean isSameColor(final Color color) {
+    public final boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
 
-    public boolean isEnemyTurn(final Color color) {
-        return this.color != color;
+    public final boolean isEnemyTurn(final Color color) {
+        return !this.color.equals(color);
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public double getValue() {
+    public final double getValue() {
         return value;
     }
 }
