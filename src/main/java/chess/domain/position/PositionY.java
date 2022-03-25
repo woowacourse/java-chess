@@ -45,6 +45,7 @@ public enum PositionY {
 
     public boolean isFirstOrLastRank() {
         Comparator<PositionY> comparatorByCoordination = Comparator.comparingInt(positionY -> positionY.coordination);
+
         PositionY firstRank = Arrays.stream(values())
                 .min(comparatorByCoordination)
                 .orElseThrow(() -> new IllegalArgumentException("세로줄은 1개 이상 존재해야 합니다."));

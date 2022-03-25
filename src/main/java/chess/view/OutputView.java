@@ -6,6 +6,8 @@ import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 public class OutputView {
@@ -19,18 +21,23 @@ public class OutputView {
     }
 
     public void printBoard(Map<Position, Piece> board) {
-        for (int rank = 0; rank < 8; rank++) {
-            for (int column = 0; column < 8; column++) {
-                Position position = new Position(PositionX.of(column), PositionY.of(rank));
-                System.out.print(board.get(position).signature());
-            }
-            System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
-        }
+        Arrays.stream(PositionY.values())
+                .sorted(Comparator.reverseOrder())
+                .forEach(positionY -> printEachRank(board, positionY));
         System.out.println();
-        for (PositionX positionX : PositionX.values()) {
-            System.out.print(positionX.getName());
-        }
+
+        Arrays.stream(PositionX.values())
+                .map(PositionX::getName)
+                .forEach(System.out::print);
         System.out.println();
+    }
+
+    private void printEachRank(Map<Position, Piece> board, PositionY positionY) {
+        Arrays.stream(PositionX.values())
+                .map(positionX -> new Position(positionX, positionY))
+                .map(position -> board.get(position).signature())
+                .forEach(System.out::print);
+        System.out.println("\t(" + positionY.name() + ")");
     }
 
     public void printErrorMessage(String message) {

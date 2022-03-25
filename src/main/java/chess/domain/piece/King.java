@@ -61,4 +61,9 @@ public class King extends Piece {
     public boolean isRook() {
         return false;
     }
+
+    @Override
+    public boolean isEnPassantAvailable() {
+        return false;
+    }
 }

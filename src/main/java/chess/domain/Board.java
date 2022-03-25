@@ -2,10 +2,10 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.position.Position;
-import chess.domain.position.PositionY;
+import chess.domain.position.PositionX;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -74,6 +74,32 @@ public class Board {
         board.replace(target.displacedOf(3, 0), targetPiece.displaced());
     }
 
+    public boolean isEnPassantAvailable(Color turnColor, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+
+        return sourcePiece.isSameColor(turnColor)
+                && sourcePiece.isPawn()
+                && isEnPassant(target, turnColor);
+    }
+
+    private boolean isEnPassant(Position target, Color turnColor) {
+        Color enemyColor = turnColor.nextTurnColor();
+        Position enPassantPosition = target.displacedOf(0, enemyColor.direction());
+        Piece enPassantPiece = board.get(enPassantPosition);
+
+        return enPassantPiece.isSameColor(enemyColor) && enPassantPiece.isEnPassantAvailable();
+    }
+
+    public void doEnPassant(Color turnColor, Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Color enemyColor = turnColor.nextTurnColor();
+        Position enPassantPosition = target.displacedOf(0, enemyColor.direction());
+
+        board.replace(source, new Blank());
+        board.replace(target, sourcePiece.displaced());
+        board.replace(enPassantPosition, new Blank());
+    }
+
     public void validateMovement(Color turnColor, Position source, Position target) {
         validatePieceChoice(turnColor, source);
         validateTargetChoice(turnColor, target);
@@ -100,26 +126,27 @@ public class Board {
     }
 
     private void validatePawnMovable(Color turnColor, Position source, Position target) {
-        Piece targetPiece = board.get(target);
         Color enemyColor = turnColor.nextTurnColor();
         if (isStraightMove(source, target)) {
-            validateStraightMove(targetPiece, enemyColor);
+            validateStraightMove(target, enemyColor);
             return;
         }
-        validateDiagonalMove(targetPiece, enemyColor);
+        validateDiagonalMove(target, enemyColor);
     }
 
     private boolean isStraightMove(Position source, Position target) {
         return Math.abs(source.calculateDisplacementXTo(target)) == 0;
     }
 
-    private void validateStraightMove(Piece targetPiece, Color enemyColor) {
+    private void validateStraightMove(Position target, Color enemyColor) {
+        Piece targetPiece = board.get(target);
         if (targetPiece.isSameColor(enemyColor)) {
             throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
         }
     }
 
-    private void validateDiagonalMove(Piece targetPiece, Color enemyColor) {
+    private void validateDiagonalMove(Position target, Color enemyColor) {
+        Piece targetPiece = board.get(target);
         if (!targetPiece.isSameColor(enemyColor)) {
             throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
         }
@@ -135,9 +162,7 @@ public class Board {
     private void validateRoute(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         List<Position> route = sourcePiece.findRoute(source, target);
-        for (Position node : route) {
-            validateRouteNode(node);
-        }
+        route.forEach(this::validateRouteNode);
     }
 
     private void validateRouteNode(Position node) {
@@ -169,12 +194,12 @@ public class Board {
                 .mapToDouble(Piece::score)
                 .sum();
 
-        return score - 0.5 * countSameRankPawnsOf(color);
+        return score - 0.5 * countSameColumnPawnsOf(color);
     }
 
-    private long countSameRankPawnsOf(Color color) {
+    private long countSameColumnPawnsOf(Color color) {
         List<Position> pawnPositions = findPawnPositionsOf(color);
-        Map<PositionY, List<Position>> pawnGroup = Position.groupByPositionY(pawnPositions);
+        Map<PositionX, List<Position>> pawnGroup = Position.groupByPositionX(pawnPositions);
 
         return pawnGroup.values()
                 .stream()
@@ -202,6 +227,6 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
     }
 }

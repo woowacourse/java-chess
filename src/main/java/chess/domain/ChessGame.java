@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,40 +22,40 @@ public final class ChessGame {
     private Board initializeBoard() {
         Map<Position, Piece> pieces = new HashMap<>();
 
-        for (PositionY positionY : PositionY.values()) {
-            fillRankWithBlank(pieces, positionY);
-        }
+        Arrays.stream(PositionY.values())
+                .forEach(positionY -> fillRankWithBlank(pieces, positionY));
 
-        for (InitialPiece piece : InitialPiece.values()) {
-            pieces.replace(piece.getPosition(), piece.piece());
-        }
+        Arrays.stream(InitialPieces.values())
+                .forEach(piece -> piece.addTo(pieces));
 
         return new Board(pieces);
     }
 
     private void fillRankWithBlank(Map<Position, Piece> pieces, PositionY positionY) {
-        for (PositionX positionX : PositionX.values()) {
-            Position position = new Position(positionX, positionY);
-            pieces.put(position, new Blank());
-        }
+        Arrays.stream(PositionX.values())
+                .map(positionX -> new Position(positionX, positionY))
+                .forEach(position -> pieces.put(position, new Blank()));
     }
 
     public void movePiece(String sourceCommand, String targetCommand) {
         Position source = parseToPosition(sourceCommand);
         Position target = parseToPosition(targetCommand);
 
-        if(board.isCastable(currentTurnColor, source, target)){
+        if (board.isCastable(currentTurnColor, source, target)) {
             board.castle(source, target);
+            changeTurn();
+            return;
+        }
+
+        if (board.isEnPassantAvailable(currentTurnColor, source, target)) {
+            board.doEnPassant(currentTurnColor, source, target);
             changeTurn();
             return;
         }
 
         board.validateMovement(currentTurnColor, source, target);
         board.movePiece(source, target);
-
-        if(board.isPromotable(target)){
-            board.promoteTo(target, new Queen(currentTurnColor));
-        }
+        checkPromotion(target);
         changeTurn();
     }
 
@@ -64,6 +65,12 @@ public final class ChessGame {
 
     private void changeTurn() {
         currentTurnColor = currentTurnColor.nextTurnColor();
+    }
+
+    private void checkPromotion(Position target) {
+        if (board.isPromotable(target)) {
+            board.promoteTo(target, new Queen(currentTurnColor));
+        }
     }
 
     public boolean isRunning() {

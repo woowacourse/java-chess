@@ -3,7 +3,13 @@ package chess.domain;
 import java.util.Locale;
 
 public enum Color {
-    BLACK, WHITE, NONE;
+    BLACK(1), WHITE(-1), NONE(0);
+
+    private final int direction;
+
+    Color(int direction) {
+        this.direction = direction;
+    }
 
     public String correctSignature(String signature) {
         if (this == BLACK) {
@@ -23,5 +29,9 @@ public enum Color {
             return BLACK;
         }
         return NONE;
+    }
+
+    public int direction() {
+        return direction;
     }
 }

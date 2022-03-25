@@ -49,4 +49,9 @@ public class Blank extends Piece {
     public boolean isRook() {
         return false;
     }
+
+    @Override
+    public boolean isEnPassantAvailable() {
+        return false;
+    }
 }

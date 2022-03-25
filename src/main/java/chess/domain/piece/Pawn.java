@@ -31,10 +31,10 @@ public class Pawn extends Piece {
         if (displacementY == 1 && displacementX == 0) {
             return true;
         }
-        if(displacementY == 1 && Math.abs(displacementX) == 1){
+        if (displacementY == 1 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (displacementY == 2 && displacementX == 0){
+        if (displacementY == 2 && displacementX == 0) {
             return isNeverDisplaced();
         }
         return false;
@@ -44,10 +44,10 @@ public class Pawn extends Piece {
         if (displacementY == -1 && displacementX == 0) {
             return true;
         }
-        if(displacementY == -1 && Math.abs(displacementX) == 1){
+        if (displacementY == -1 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (displacementY == -2 && displacementX == 0){
+        if (displacementY == -2 && displacementX == 0) {
             return isNeverDisplaced();
         }
         return false;
@@ -81,6 +81,11 @@ public class Pawn extends Piece {
     @Override
     public boolean isRook() {
         return false;
+    }
+
+    @Override
+    public boolean isEnPassantAvailable() {
+        return moveCount == 1; // 2칸 움직인상태인지 체크 필요.
     }
 }
 

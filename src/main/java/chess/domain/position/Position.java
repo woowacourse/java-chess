@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,9 +15,9 @@ public final class Position {
         this.positionY = positionY;
     }
 
-    public static Map<PositionY, List<Position>> groupByPositionY(List<Position> pawnPositions) {
+    public static Map<PositionX, List<Position>> groupByPositionX(List<Position> pawnPositions) {
         return pawnPositions.stream()
-                .collect(groupingBy(position -> position.positionY));
+                .collect(groupingBy(position -> position.positionX));
     }
 
     public int calculateDisplacementXTo(Position position) {

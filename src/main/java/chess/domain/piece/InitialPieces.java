@@ -1,11 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
-public enum InitialPiece {
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public enum InitialPieces {
     WHITE_ROOK1(new Rook(Color.WHITE), new Position(PositionX.A, PositionY.RANK_1)),
     WHITE_KNIGHT1(new Knight(Color.WHITE), new Position(PositionX.B, PositionY.RANK_1)),
     WHITE_BISHOP1(new Bishop(Color.WHITE), new Position(PositionX.C, PositionY.RANK_1)),
@@ -45,16 +50,12 @@ public enum InitialPiece {
     private final Piece piece;
     private final Position position;
 
-    InitialPiece(Piece piece, Position position) {
+    InitialPieces(Piece piece, Position position) {
         this.piece = piece;
         this.position = position;
     }
 
-    public Piece piece() {
-        return piece;
-    }
-
-    public Position getPosition() {
-        return position;
+    public void addTo(Map<Position, Piece> pieces){
+        pieces.replace(position, piece);
     }
 }

@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class Piece {
     protected final Color color;
-    protected boolean isDisplaced;
+    protected int moveCount;
 
     public Piece(Color color) {
         this.color = color;
-        this.isDisplaced = false;
+        this.moveCount = 0;
     }
 
     public String signature() {
@@ -24,11 +24,11 @@ public abstract class Piece {
     }
 
     public boolean isNeverDisplaced() {
-        return !isDisplaced;
+        return moveCount == 0;
     }
 
     public Piece displaced() {
-        this.isDisplaced = true;
+        this.moveCount++;
         return this;
     }
 
@@ -36,15 +36,17 @@ public abstract class Piece {
         List<Position> route = new ArrayList<>();
 
         int routeLength = source.calculateMaxLinearLengthTo(target);
-        int xSlope = source.calculateXSlope(target, routeLength);
-        int ySlope = source.calculateYSlope(target, routeLength);
+        int xChangeRatio = source.calculateXSlope(target, routeLength);
+        int yChangeRatio = source.calculateYSlope(target, routeLength);
 
         for (int step = 1; step < routeLength; step++) {
-            Position routeNode = source.displacedOf(xSlope * step, ySlope * step);
+            Position routeNode = source.displacedOf(xChangeRatio * step, yChangeRatio * step);
             route.add(routeNode);
         }
         return route;
     }
+
+    public abstract boolean isEnPassantAvailable();
 
     protected abstract String baseSignature();
 

@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.view.InputView;
@@ -13,7 +14,6 @@ public class Application {
         OutputView outputView = new OutputView();
 
         outputView.printGameStartMessage();
-
         String startOrEndInput = inputView.getStartOrEndInput();
         if (startOrEndInput.equals("start")) {
             startGame(inputView, outputView);

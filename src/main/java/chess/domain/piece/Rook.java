@@ -58,4 +58,9 @@ public class Rook extends Piece {
     public boolean isRook() {
         return true;
     }
+
+    @Override
+    public boolean isEnPassantAvailable() {
+        return false;
+    }
 }
