@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Command {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private static final String ERROR_MESSAGE = "잘못된 명령입니다.";
 

@@ -15,8 +15,7 @@ public class ChessController {
 
     private void playTurn(ChessBoard chessBoard) {
         if (chessBoard.isEnd()) {
-            System.out.println("END!");
-            // todo : printScore
+            OutputView.printResult(chessBoard.calculateScore());
             return;
         }
 
@@ -27,7 +26,7 @@ public class ChessController {
         }
 
         if (command == Command.START) {
-            checkGameStatus(chessBoard);
+            runStartCommand(chessBoard);
             playTurn(chessBoard);
         }
 
@@ -38,11 +37,16 @@ public class ChessController {
             runMoveCommand(from, to, chessBoard);
             playTurn(chessBoard);
         }
+
+        if (command == Command.STATUS) {
+            runStatusCommand(chessBoard);
+            playTurn(chessBoard);
+        }
     }
 
-    private void checkGameStatus(ChessBoard chessBoard) {
+    private void runStartCommand(ChessBoard chessBoard) {
         try {
-            checkGameStart(chessBoard.isPlaying());
+            checkBeforeStart(chessBoard);
             chessBoard.start();
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
@@ -50,21 +54,34 @@ public class ChessController {
         }
     }
 
-    private void checkGameStart(boolean gameStarted) {
-        if (gameStarted) {
+    private void checkBeforeStart(ChessBoard chessBoard) {
+        if (chessBoard.isPlaying()) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
         }
     }
 
     private void runMoveCommand(String from, String to, ChessBoard chessBoard) {
         try {
-            if (chessBoard.isReady()) {
-                throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-            }
+            checkBeforePlaying(chessBoard);
             chessBoard.move(new Position(from), new Position(to));
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+        }
+    }
+
+    private void runStatusCommand(ChessBoard chessBoard) {
+        try {
+            checkBeforePlaying(chessBoard);
+            OutputView.printStatus(chessBoard.calculateScore());
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+        }
+    }
+
+    private void checkBeforePlaying(ChessBoard chessBoard) {
+        if (chessBoard.isReady()) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }
 }
