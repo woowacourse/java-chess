@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class Player {
 
+    private static final int DEFAULT_PLURAL_COUNT = 2;
+
     private final Set<Piece> pieces;
 
     public Player(List<Piece> pieces) {
@@ -49,5 +51,23 @@ public class Player {
                 .filter(piece -> piece.exist(current))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스말이 존재하지 않습니다."));
+    }
+
+    public int calculatePluralPawnCountByFile() {
+        int pawnCountByFile = 0;
+        for (char file = 'a'; file <= 'h'; file++) {
+            pawnCountByFile += countPluralPawnByFile(file);
+        }
+        return pawnCountByFile;
+    }
+
+    private int countPluralPawnByFile(final char file) {
+        final int count = (int) pieces.stream()
+                .filter(piece -> piece.isPawn() && piece.isSameFile(file))
+                .count();
+        if (count >= DEFAULT_PLURAL_COUNT) {
+            return count;
+        }
+        return 0;
     }
 }
