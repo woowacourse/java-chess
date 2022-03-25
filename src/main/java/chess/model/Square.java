@@ -33,11 +33,14 @@ public final class Square {
         }
         return this;
     }
+
     private Square move(Direction direction) {
+        //TODO: GETTER를 안쓸 순 없나?
         return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
     }
 
     private boolean canMove(Direction direction) {
+        //TODO: 갈 수 있는지를 움직여봐야 아는건가?
         try {
             move(direction);
             return true;

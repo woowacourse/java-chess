@@ -53,7 +53,7 @@ public abstract class Piece {
         return color.isEmpty();
     }
 
-    public Direction findDirection(Piece target) {
+    public Direction findDirectionTo(Piece target) {
         return this.square.findDirection(target.square);
     }
 

@@ -89,36 +89,31 @@ public final class Board {
         if (!sourcePiece.movable(targetPiece)) {
             throw new IllegalArgumentException("해당 칸으로 이동할 수 없습니다.");
         }
-        Direction direction = findDirection(sourceSquare, targetSquare);
+        Direction direction = sourceSquare.findDirection(targetSquare);
+        checkSquare(sourceSquare, targetSquare, direction);
+        updateBoard(sourceSquare, targetSquare, sourcePiece, targetPiece);
+    }
+
+    //TODO : 방향은 쉽게 구할 수 있으니까, 해당 방향으로 몇번 가야하는지를 알면 더 쉽게 만들 수 있을 듯
+    //TODO : 방향을 갈 수 있는지 + 해당 기물이 해당 방향으로 그 칸만큼 갈 수 있는지 -> 이걸 Piece에서 해결하면 좋을듯
+    //TODO : Piece를 거리 무제한(퀸,룩,비숍) vs 거리 제한(폰, 킹, 나이트) 로 나누면 어떨까?
+    private void checkSquare(Square sourceSquare, Square targetSquare, Direction direction) {
         Square tempSquare = sourceSquare;
         while (!tempSquare.equals(targetSquare)) {
             tempSquare = tempSquare.tryToMove(direction);
-            if (!findPieceBySquare(tempSquare).isEmpty() && !tempSquare.equals(targetSquare)) {
-                throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
-            }
+            checkHasPieceInSquare(targetSquare, tempSquare);
         }
+    }
+
+    private void checkHasPieceInSquare(Square targetSquare, Square tempSquare) {
+        if (!findPieceBySquare(tempSquare).isEmpty() && !tempSquare.equals(targetSquare)) {
+            throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
+        }
+    }
+
+    private void updateBoard(Square sourceSquare, Square targetSquare, Piece sourcePiece, Piece targetPiece) {
         board.set(board.indexOf(sourcePiece), new Empty(sourceSquare));
         board.set(board.indexOf(targetPiece), sourcePiece);
         sourcePiece.changeLocation(targetSquare);
-    }
-
-    private Direction findDirection(Square sourceSquare, Square targetSquare) {
-        for (Direction direction : Direction.getNonKnightDirection()) {
-            Square tempSquare = sourceSquare;
-            Square nowSquare;
-            do {
-                nowSquare = tempSquare;
-                tempSquare = nowSquare.tryToMove(direction);
-                if (tempSquare.equals(targetSquare)) {
-                    return direction;
-                }
-            } while (!tempSquare.equals(nowSquare));
-        }
-        for (Direction direction : Direction.getKnightDirection()) {
-            if (sourceSquare.tryToMove(direction).equals(targetSquare)) {
-                return direction;
-            }
-        }
-        throw new IllegalArgumentException("방향을 찾지 못했습니다.");
     }
 }

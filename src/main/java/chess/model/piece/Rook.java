@@ -21,7 +21,7 @@ public final class Rook extends Piece {
 
     private boolean canMoveTo(Piece target) {
         try {
-            return direction().contains(this.findDirection(target));
+            return direction().contains(this.findDirectionTo(target));
         } catch (IllegalArgumentException e) {
             return false;
         }

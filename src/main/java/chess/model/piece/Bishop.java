@@ -10,6 +10,7 @@ public final class Bishop extends Piece{
         super(color, square);
     }
 
+    //TODO: 이 부분 퀸, 룩, 비숍이 중복임.
     @Override
     public boolean movable(Piece targetPiece) {
         if (!targetPiece.isAlly(this) && canMoveTo(targetPiece)) {
@@ -20,7 +21,7 @@ public final class Bishop extends Piece{
 
     private boolean canMoveTo(Piece target) {
         try {
-            return direction().contains(this.findDirection(target));
+            return direction().contains(this.findDirectionTo(target));
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -31,6 +32,7 @@ public final class Bishop extends Piece{
         return "b";
     }
 
+    //TODO: 이 부분은 EMPTY를 제외한 모든 Piece가 가짐.
     private List<Direction> direction() {
         return List.of(Direction.SOUTHEAST, Direction.NORTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
     }
