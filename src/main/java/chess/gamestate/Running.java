@@ -49,10 +49,13 @@ public abstract class Running implements GameState {
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
     }
 
-    private Running changeNextState() {
+    private GameState changeNextState() {
         if (chessBoard.isPromotionStatus(color)) {
             OutputView.printPromotionGuide();
             return new Promotion(this);
+        }
+        if (chessBoard.isFinished()) {
+            return new End();
         }
         return otherState(this.chessBoard);
     }

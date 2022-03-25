@@ -1,9 +1,14 @@
 package chess.gamestate;
 
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
+import chess.domain.Position;
+import chess.domain.piece.single.King;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,5 +45,16 @@ class RunningTest {
     void runToEnd() {
         GameState gameState = new WhiteRunning(ChessBoard.createNewChessBoard()).run("end");
         assertThat(gameState).isInstanceOf(End.class);
+    }
+
+    @Test
+    @DisplayName("킹이 잡혀 게임 종료 시 End 상태로 변경")
+    void gameEnd() {
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                Position.of('a', '1'), new King(WHITE),
+                Position.of('a', '2'), new King(BLACK)
+        ));
+        GameState gameState = new WhiteRunning(chessBoard);
+        assertThat(gameState.run("move a1 a2")).isInstanceOf(End.class);
     }
 }

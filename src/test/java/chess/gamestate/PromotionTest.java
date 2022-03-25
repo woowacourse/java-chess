@@ -34,7 +34,7 @@ public class PromotionTest {
                 Position.of('a', '1'), new King(WHITE),
                 Position.of('a', '2'), new King(BLACK)
         ));
-        Running promotion = new Promotion(new WhiteRunning(chessBoard));
+        GameState promotion = new Promotion(new WhiteRunning(chessBoard));
 
         assertThat(promotion.run("Q")).isInstanceOf(BlackRunning.class);
     }
