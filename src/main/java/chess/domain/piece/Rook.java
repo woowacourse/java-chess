@@ -3,8 +3,12 @@ package chess.domain.piece;
 import chess.domain.board.Position;
 import chess.domain.piece.vo.TeamColor;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public class Rook extends Piece {
+
+    static final BiPredicate<Integer, Integer> invalidTargetCondition =
+            (rankDifference, fileDifference) -> fileDifference != 0 && rankDifference != 0;
 
     public Rook(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -12,10 +16,7 @@ public class Rook extends Piece {
 
     @Override
     public Piece move(final List<Piece> pieces, final Position targetPosition) {
-        final int rankDifference = position.calculateDifferenceOfRank(targetPosition);
-        final int fileDifference = position.calculateDifferenceOfFile(targetPosition);
-
-        validateTargetPositionToMove(fileDifference, rankDifference);
+        position.validateTargetPosition(targetPosition, invalidTargetCondition, false);
         checkOtherPiecesInPathToTarget(position, targetPosition, pieces);
 
         return new Rook(teamColor, targetPosition);
@@ -30,12 +31,6 @@ public class Rook extends Piece {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
         checkOtherPiecesInPathToTarget(currentPosition.nextPosition(targetPosition), targetPosition, pieces);
-    }
-
-    private void validateTargetPositionToMove(final int fileDifference, final int rankDifference) {
-        if (fileDifference != 0 && rankDifference != 0) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
     }
 }
 

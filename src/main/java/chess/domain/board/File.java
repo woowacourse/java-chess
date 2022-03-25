@@ -26,8 +26,12 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file 값입니다."));
     }
 
-    public int calculateDifference(final File anotherFile) {
-        return Math.abs(this.ordinal() - anotherFile.ordinal());
+    public int calculateDifference(final File anotherFile, final boolean absoluteFlag) {
+        final int difference = this.ordinal() - anotherFile.ordinal();
+        if (absoluteFlag) {
+            return Math.abs(difference);
+        }
+        return difference;
     }
 
     public File next(final File targetFile) {

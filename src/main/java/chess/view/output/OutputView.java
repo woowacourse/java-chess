@@ -5,6 +5,10 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -15,10 +19,17 @@ public class OutputView {
     }
 
     public static void printCurrentBoard(final Board board) {
-        for (Rank rank : Rank.values()) {
+        final List<Rank> reverseOrderRanks = getReverseOrderRanks();
+        for (Rank rank : reverseOrderRanks) {
             printCurrentBoard(board, rank);
             System.out.println();
         }
+    }
+
+    private static List<Rank> getReverseOrderRanks() {
+        return Arrays.stream(Rank.values())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
     }
 
     private static void printCurrentBoard(final Board board, final Rank rank) {

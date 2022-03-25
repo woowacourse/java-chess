@@ -14,6 +14,7 @@ import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.vo.TeamColor;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -24,7 +25,7 @@ public abstract class Piece {
                     E, King::new, F, Bishop::new, G, Knight::new, H, Rook::new);
 
     final TeamColor teamColor;
-    private final Position position;
+    final Position position;
 
     Piece(final TeamColor teamColor, final Position position) {
         this.teamColor = teamColor;
@@ -48,7 +49,7 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public Piece move(Position targetPosition) {
+    public Piece move(final List<Piece> pieces, final Position targetPosition) {
         return null;
     }
 

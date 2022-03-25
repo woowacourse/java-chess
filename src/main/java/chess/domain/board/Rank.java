@@ -3,14 +3,14 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Rank {
-    EIGHT("8"),
-    SEVEN("7"),
-    SIX("6"),
-    FIVE("5"),
-    FOUR("4"),
-    THREE("3"),
-    TWO("2"),
     ONE("1"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8"),
     ;
 
     private final String value;
@@ -30,8 +30,12 @@ public enum Rank {
         return rank == TWO || rank == SEVEN;
     }
 
-    public int calculateDifference(final Rank anotherRank) {
-        return Math.abs(this.ordinal() - anotherRank.ordinal());
+    public int calculateDifference(final Rank anotherRank, final boolean absoluteFlag) {
+        final int difference = this.ordinal() - anotherRank.ordinal();
+        if (absoluteFlag) {
+            return Math.abs(difference);
+        }
+        return difference;
     }
 
     public Rank next(final Rank targetRank) {

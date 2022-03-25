@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public class Position {
@@ -57,12 +58,15 @@ public class Position {
         }
     }
 
-    public int calculateDifferenceOfRank(final Position targetPosition) {
-        return this.rank.calculateDifference(targetPosition.rank);
-    }
+    public void validateTargetPosition(final Position targetPosition,
+                                       final BiPredicate<Integer, Integer> invalidTargetCondition,
+                                       final boolean absoluteFlag) {
+        final int differenceOfFile = this.file.calculateDifference(targetPosition.file, absoluteFlag);
+        final int differenceOfRank = this.rank.calculateDifference(targetPosition.rank, absoluteFlag);
 
-    public int calculateDifferenceOfFile(final Position targetPosition) {
-        return this.file.calculateDifference(targetPosition.file);
+        if (invalidTargetCondition.test(differenceOfFile, differenceOfRank)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
     }
 
     public Position nextPosition(final Position targetPosition) {
