@@ -43,6 +43,7 @@ public class Chess {
         }
         if (command == Command.MOVE && gameState.isRunning()) {
             move(args);
+            gameState = gameState.getOpposite();
             return;
         }
         if (command == Command.END) {

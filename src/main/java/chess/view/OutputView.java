@@ -7,6 +7,7 @@ import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.piece.Color;
+import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 
 public class OutputView {

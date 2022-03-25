@@ -1,9 +1,6 @@
-package chess.view;
+package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
-import chess.domain.piece.Piece;
 
 public class EmptySpace extends Piece {
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import chess.domain.board.strategy.BoardInitializeStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
+import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 
 public class Board {
@@ -16,16 +17,26 @@ public class Board {
         pieces = new HashMap<>(strategy.createPieces());
     }
 
-    public void move(final Position start, final Position target, final Color currentColor) {
-        final Piece movingPiece = pieces.get(start);
+    // public void move(final Position start, final Position target, final Color currentColor) {
+    //     final Piece movingPiece = pieces.get(start);
+    //     validatePieceExistIn(movingPiece, currentColor);
+    //     validateMoving(start, target);
+    //     pieces.put(target, movingPiece);
+    //     pieces.remove(start);
+    // }
+
+    public Piece move(final Position start, final Position target, final Color currentColor) {
+        final Piece movingPiece = get(start);
+        final Piece targetPiece = get(target);
         validatePieceExistIn(movingPiece, currentColor);
         validateMoving(start, target);
         pieces.put(target, movingPiece);
         pieces.remove(start);
+        return targetPiece;
     }
 
     private void validateMoving(Position start, Position target) {
-        final Piece movingPiece = pieces.get(start);
+        final Piece movingPiece = get(start);
         if (movingPiece.isSamePiece("knight")) {
             validateKnight(start, target);
             return;
@@ -38,41 +49,41 @@ public class Board {
     }
 
     private void validateCommonPiece(final Position start, final Position target) {
-        final Piece movingPiece = pieces.get(start);
+        final Piece movingPiece = get(start);
         validatePath(movingPiece, start, target);
 
-        final Piece targetPiece = pieces.get(target);
+        final Piece targetPiece = get(target);
         validateTarget(movingPiece, targetPiece);
     }
 
     private void validateKnight(final Position start, final Position target) {
-        final Piece movingPiece = pieces.get(start);
-        final Piece targetPiece = pieces.get(target);
+        final Piece movingPiece = get(start);
+        final Piece targetPiece = get(target);
         validateTarget(movingPiece, targetPiece);
     }
 
     private void validatePawn(final Position start, final Position target) {
-        final Piece movingPiece = pieces.get(start);
-        final Piece targetPiece = pieces.get(target);
+        final Piece movingPiece = get(start);
+        final Piece targetPiece = get(target);
         final Direction direction = movingPiece.findValidDirection(start, target);
         if (direction.isDiagonal()) {
             validatePawnDiagonalMove(movingPiece, targetPiece);
             return;
         }
         validatePath(movingPiece, start, target);
-        if (targetPiece != null) {
+        if (!targetPiece.equals(new EmptySpace())) {
             throw new IllegalArgumentException("다른 말이 존재해 이동할 수 없습니다.");
         }
     }
 
     private void validatePawnDiagonalMove(Piece movingPiece, Piece targetPiece) {
-        if (targetPiece == null || targetPiece.getColor() == movingPiece.getColor()) {
+        if (targetPiece.equals(new EmptySpace()) || targetPiece.getColor() == movingPiece.getColor()) {
             throw new IllegalArgumentException("폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
     }
 
     private void validatePieceExistIn(final Piece movingPiece, final Color color) {
-        if (movingPiece == null) {
+        if (movingPiece.equals(new EmptySpace())) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }
         if (movingPiece.getColor() != color) {
@@ -84,7 +95,7 @@ public class Board {
         final Direction direction = movingPiece.findValidDirection(start, target);
         Position current = start.move(direction);
         while (!current.equals(target)) {
-            if (pieces.get(current) != null) {
+            if (!get(current).equals(new EmptySpace())) {
                 throw new IllegalArgumentException("다른 말이 경로에 존재해 이동할 수 없습니다.");
             }
             current = current.move(direction);
@@ -92,9 +103,13 @@ public class Board {
     }
 
     private void validateTarget(final Piece movingPiece, final Piece targetPiece) {
-        if (targetPiece != null && movingPiece.getColor() == targetPiece.getColor()) {
+        if (!targetPiece.equals(new EmptySpace()) && movingPiece.getColor() == targetPiece.getColor()) {
             throw new IllegalArgumentException("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
         }
+    }
+
+    private Piece get(final Position position) {
+        return pieces.getOrDefault(position, new EmptySpace());
     }
 
     public Map<Position, Piece> getPieces() {

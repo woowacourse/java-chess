@@ -6,4 +6,14 @@ public enum GameState {
     public boolean isRunning() {
         return this == WHITE_RUNNING || this == BLACK_RUNNING;
     }
+
+    public GameState getOpposite() {
+        if (this == WHITE_RUNNING) {
+            return BLACK_RUNNING;
+        }
+        if (this == BLACK_RUNNING) {
+            return WHITE_RUNNING;
+        }
+        return this;
+    }
 }
