@@ -17,10 +17,13 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import java.util.stream.Collectors;
 
 public class Board {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
+
+    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
     private final Map<Position, Piece> values;
 
     private static final Function<PieceColor, List<Piece>> createPieceFunction = (PieceColor pieceColor) -> List.of(
@@ -45,7 +48,7 @@ public class Board {
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                result.put(new Position(rank, file), new EmptyPiece(PieceColor.EMPTY));
+                result.put(new Position(rank, file), EMPTY_PIECE);
             }
         }
     }
@@ -87,17 +90,24 @@ public class Board {
         }
 
         values.put(target, values.get(source));
-        values.put(source, new EmptyPiece(PieceColor.EMPTY));
+        values.put(source, EMPTY_PIECE);
     }
 
     private boolean isBlocked(Position source, Position target) {
-        List<Position> tracePositions = source.traceGroup(target);
+        if (values.get(source) instanceof Knight) {
+            return false;
+        }
 
+        for (Position position : source.positionsToMove(target)) {
+            if (!values.get(position).equals(EMPTY_PIECE)) {
+                return true;
+            }
+        }
         return false;
     }
 
     private void validateSourceNotEmpty(Position source) {
-        if (values.get(source).equals(new EmptyPiece(PieceColor.EMPTY))) {
+        if (values.get(source).equals(EMPTY_PIECE)) {
             throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
     }

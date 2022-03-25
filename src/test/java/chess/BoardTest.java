@@ -2,18 +2,23 @@ package chess;
 
 import static chess.Board.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.piece.Queen;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.piece.Pawn;
 import chess.piece.Piece;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class BoardTest {
 
@@ -45,12 +50,12 @@ public class BoardTest {
 
         // when & then
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Pawn(PieceColor.WHITE))
-            .collect(Collectors.toList());
+                .map(value -> new Pawn(PieceColor.WHITE))
+                .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
-            .collect(Collectors.toList());
+                .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
+                .collect(Collectors.toList());
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -63,12 +68,12 @@ public class BoardTest {
 
         //when
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Pawn(PieceColor.WHITE))
-            .collect(Collectors.toList());
+                .map(value -> new Pawn(PieceColor.WHITE))
+                .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
-            .collect(Collectors.toList());
+                .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
+                .collect(Collectors.toList());
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -78,8 +83,8 @@ public class BoardTest {
     @DisplayName("체스 말이 없는 곳에서 이동 시키면 예외를 던진다.")
     void move_exception() {
         assertThatThrownBy(() -> board.move(new Position(Rank.THREE, File.A), new Position(Rank.THREE, File.B)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
     }
 
     @Test
@@ -91,5 +96,24 @@ public class BoardTest {
 
         //then
         assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Pawn(PieceColor.WHITE));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:A", "THREE:C"}, delimiter = ':')
+    @DisplayName("퀸은 경로에 다른 기물 있으면 이동할 수 없다")
+    void isBlocked(Rank rank, File file) {
+        assertThatThrownBy(() ->
+                board.move(new Position(Rank.ONE, File.C), new Position(rank, file))
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource(value = {"TWO:D", "THREE:C"}, delimiter = ':')
+    @DisplayName("나이트는 경로에 다른 기물 있으면 이동할 수 있다")
+    void isNonBlocked(Rank rank, File file) {
+        assertDoesNotThrow(() ->
+                board.move(new Position(Rank.ONE, File.B), new Position(rank, file))
+        );
     }
 }

@@ -75,7 +75,7 @@ public class Position {
         return this.isDiagonal(other) || this.isCross(other);
     }
 
-    public List<Position> traceGroup(Position other) {
+    public List<Position> positionsToMove(Position other) {
         List<File> traceFileGroup = File.traceGroup(this.file, other.file);
         List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
 
@@ -85,7 +85,7 @@ public class Position {
         return possiblePositions(rankListIterator, fileListIterator);
     }
 
-    public List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
+    private List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
         List<Position> positions = new ArrayList<>();
 
         if (!rankIterator.hasNext()) {

@@ -37,7 +37,7 @@ public class PositionTest {
         Position source = new Position(Rank.ONE, File.A);
         Position target = new Position(Rank.FOUR, File.D);
 
-        List<Position> traceGroup = source.traceGroup(target);
+        List<Position> traceGroup = source.positionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(Rank.TWO, File.B), new Position(Rank.THREE, File.C));
@@ -50,7 +50,7 @@ public class PositionTest {
         Position source = new Position(Rank.ONE, File.A);
         Position target = new Position(Rank.ONE, File.D);
 
-        List<Position> traceGroup = source.traceGroup(target);
+        List<Position> traceGroup = source.positionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(Rank.ONE, File.B), new Position(Rank.ONE, File.C));
@@ -63,7 +63,7 @@ public class PositionTest {
         Position source = new Position(Rank.ONE, File.A);
         Position target = new Position(Rank.FOUR, File.A);
 
-        List<Position> traceGroup = source.traceGroup(target);
+        List<Position> traceGroup = source.positionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(Rank.TWO, File.A), new Position(Rank.THREE, File.A));
