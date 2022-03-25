@@ -100,7 +100,7 @@ public class Command {
         File file = File.toFile(token[index].charAt(0));
         Rank rank = Rank.toRank(token[index].charAt(1));
 
-        return new Position(file, rank);
+        return Position.of(file, rank);
     }
 
     private void checkMoveCommand() {

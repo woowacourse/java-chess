@@ -6,9 +6,13 @@ public class Position implements Comparable<Position> {
     private final Rank rank;
     private final File file;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(File file, Rank rank) {
+        return new Position(file, rank);
     }
 
     public boolean isSameRank(Position position) {

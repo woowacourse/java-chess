@@ -37,17 +37,17 @@ public class PieceFactory {
     private static Map<Position, Piece> whitePieces() {
         Map<Position, Piece> pieces = Arrays.stream(File.values())
                 .collect(toMap(
-                         file -> new Position(file, TWO), file -> new Pawn(WHITE, "p")
+                         file -> Position.of(file, TWO), file -> new Pawn(WHITE, "p")
                 ));
 
-        pieces.put(new Position(A, ONE), new Rook(WHITE, "r"));
-        pieces.put(new Position(B, ONE), new Knight(WHITE, "n"));
-        pieces.put(new Position(C, ONE), new Bishop(WHITE, "b"));
-        pieces.put(new Position(D, ONE), new Queen(WHITE, "q"));
-        pieces.put(new Position(E, ONE), new King(WHITE, "k"));
-        pieces.put(new Position(F, ONE), new Bishop(WHITE, "b"));
-        pieces.put(new Position(G, ONE), new Knight(WHITE, "n"));
-        pieces.put( new Position(H, ONE), new Rook(WHITE, "r"));
+        pieces.put(Position.of(A, ONE), new Rook(WHITE, "r"));
+        pieces.put(Position.of(B, ONE), new Knight(WHITE, "n"));
+        pieces.put(Position.of(C, ONE), new Bishop(WHITE, "b"));
+        pieces.put(Position.of(D, ONE), new Queen(WHITE, "q"));
+        pieces.put(Position.of(E, ONE), new King(WHITE, "k"));
+        pieces.put(Position.of(F, ONE), new Bishop(WHITE, "b"));
+        pieces.put(Position.of(G, ONE), new Knight(WHITE, "n"));
+        pieces.put(Position.of(H, ONE), new Rook(WHITE, "r"));
 
         return pieces;
     }
@@ -55,17 +55,17 @@ public class PieceFactory {
     private static Map<Position, Piece> blackPieces() {
         Map<Position, Piece> pieces = Arrays.stream(File.values())
                 .collect(toMap(
-                        file -> new Position(file, SEVEN), file -> new Pawn(BLACK, "P")
+                        file -> Position.of(file, SEVEN), file -> new Pawn(BLACK, "P")
                 ));
 
-        pieces.put(new Position(A, EIGHT), new Rook(BLACK, "R"));
-        pieces.put(new Position(B, EIGHT), new Knight(BLACK, "N"));
-        pieces.put(new Position(C, EIGHT), new Bishop(BLACK, "B"));
-        pieces.put(new Position(D, EIGHT), new Queen(BLACK, "Q"));
-        pieces.put(new Position(E, EIGHT), new King(BLACK, "K"));
-        pieces.put(new Position(F, EIGHT), new Bishop(BLACK, "B"));
-        pieces.put(new Position(G, EIGHT), new Knight(BLACK, "N"));
-        pieces.put(new Position(H,  EIGHT), new Rook(BLACK, "R"));
+        pieces.put(Position.of(A, EIGHT), new Rook(BLACK, "R"));
+        pieces.put(Position.of(B, EIGHT), new Knight(BLACK, "N"));
+        pieces.put(Position.of(C, EIGHT), new Bishop(BLACK, "B"));
+        pieces.put(Position.of(D, EIGHT), new Queen(BLACK, "Q"));
+        pieces.put(Position.of(E, EIGHT), new King(BLACK, "K"));
+        pieces.put(Position.of(F, EIGHT), new Bishop(BLACK, "B"));
+        pieces.put(Position.of(G, EIGHT), new Knight(BLACK, "N"));
+        pieces.put(Position.of(H,  EIGHT), new Rook(BLACK, "R"));
 
         return pieces;
     }

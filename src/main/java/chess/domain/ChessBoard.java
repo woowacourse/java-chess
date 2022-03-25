@@ -1,11 +1,17 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.toList;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ChessBoard {
 
@@ -41,5 +47,21 @@ public class ChessBoard {
         cells.remove(source);
 
         cells.put(target,piece);
+    }
+
+
+    public boolean isContainPiece(File file, List<Rank> ranks) {
+        List<Position> positions = ranks.stream()
+                .map(rank -> Position.of(file, rank))
+                .collect(toList());
+
+        for (Position position : positions) {
+            Set<Position> cellsKeySet = cells.keySet();
+            if (cellsKeySet.contains(position)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

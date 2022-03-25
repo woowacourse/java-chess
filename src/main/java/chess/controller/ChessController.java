@@ -21,7 +21,7 @@ public class ChessController {
 
     private static final List<Position> positions = stream(Rank.values())
             .flatMap(rank -> stream(File.values())
-                    .map(file -> new Position(file, rank)))
+                    .map(file -> Position.of(file, rank)))
             .collect(toList());
 
     private final InputView inputView;
