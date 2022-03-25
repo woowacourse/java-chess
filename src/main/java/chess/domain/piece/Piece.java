@@ -21,19 +21,19 @@ public abstract class Piece {
 
 	public abstract boolean isBlank();
 
-	//public abstract Direction getDirection(final Position source, final Position target);
-
 	public Direction getDirection(final Position source, final Position target) {
 		int differenceRow = target.subtractRow(source);
 		int differenceColumn = target.subtractColumn(source);
 		return Direction.find(differenceRow, differenceColumn);
 	}
 
-	public boolean isSameTeam(final Piece targetPiece) {
-		return this.team == targetPiece.team;
-	}
-
 	public String getSymbol() {
 		return symbol;
+	}
+
+	public void validateCatch(final Piece targetPiece, final Direction direction) {
+		if (this.team == targetPiece.team) {
+			throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
+		}
 	}
 }

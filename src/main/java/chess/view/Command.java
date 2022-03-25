@@ -3,18 +3,30 @@ package chess.view;
 import java.util.Arrays;
 
 public enum Command {
+
 	START("start"),
-	END("end");
+	END("end"),
+	MOVE("move");
 
 	private final String command;
 
 	Command(String command) {
 		this.command = command;
 	}
-
+	
 	public static boolean isEnd(final String requestGameStart) {
-		return requestGameStart.equalsIgnoreCase("end") && Arrays.stream(values())
-				.anyMatch(command -> command.getCommand().equalsIgnoreCase(requestGameStart));
+		return Arrays.stream(values())
+				.anyMatch(command -> command == END && command.getCommand().equalsIgnoreCase(requestGameStart));
+	}
+
+	public static boolean isStart(final String requestGameStart) {
+		return Arrays.stream(values())
+				.anyMatch(command -> command == START && command.getCommand().equalsIgnoreCase(requestGameStart));
+	}
+
+	public static boolean isMove(final String request) {
+		return Arrays.stream(values())
+				.anyMatch(command -> command == MOVE && command.getCommand().equalsIgnoreCase(request));
 	}
 
 	public String getCommand() {

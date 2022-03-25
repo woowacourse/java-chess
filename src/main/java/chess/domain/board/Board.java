@@ -27,32 +27,43 @@ public class Board {
 
 	public void move(Position source, Position target) {
 		Piece piece = board.get(source);
+		validateBlank(piece);
+
+		piece.validateMovement(source, target);
+
+		Direction direction = piece.getDirection(source, target);
+		Position checkPosition = source;
+
+		while (checkPosition != target) {
+			checkPosition = moveNextPosition(direction, checkPosition);
+			Piece currentPiece = board.get(checkPosition);
+			checkBlocking(target, checkPosition, currentPiece);
+
+			piece.validateCatch(currentPiece, direction);
+		}
+
+		board.put(target, piece);
+		board.put(source, new Blank());
+	}
+
+	private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
+		if (checkPosition != target && !currentPiece.isBlank()) {
+			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
+		}
+	}
+
+	private Position moveNextPosition(final Direction direction, Position checkPosition) {
+		Optional<Position> position = checkPosition.addDirection(direction);
+		if (position.isEmpty()) {
+			throw new IllegalArgumentException("체스 판의 범위를 벗어 났습니다.");
+		}
+		return position.get();
+	}
+
+	private void validateBlank(final Piece piece) {
 		if (piece.isBlank()) {
 			throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
 		}
-		Piece targetPiece = board.get(target);
-		if (piece.isSameTeam(targetPiece)) {
-			throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
-		}
-
-		piece.validateMovement(source, target);
-		Direction direction = piece.getDirection(source, target);
-
-		Position checkPosition = source;
-		while (checkPosition != target) {
-			Optional<Position> position = checkPosition.addDirection(direction);
-			if (position.isEmpty()) {
-				throw new IllegalArgumentException("체스 판의 범위를 벗어 났습니다.");
-			}
-			checkPosition = position.get();
-			Piece currentPiece = board.get(checkPosition);
-
-			if (checkPosition != target && !currentPiece.isBlank()) {
-				throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
-			}
-		}
-		board.put(target, piece);
-		board.put(source, new Blank());
 	}
 
 	private void initialBatchPiece() {

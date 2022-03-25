@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
+	
 	S(-1, 0),
 	W(0, -1),
 	N(1, 0),
@@ -37,18 +38,6 @@ public enum Direction {
 	}
 
 	public static List<Direction> getKingDirection() {
-		return List.of(E, W, S, N, NE, NW, SE, SW);
-	}
-
-	public static List<Direction> getRookDirection() {
-		return List.of(E, W, S, N);
-	}
-
-	public static List<Direction> getBishopDirection() {
-		return List.of(NE, NW, SE, SW);
-	}
-
-	public static List<Direction> getQueenDirection() {
 		return List.of(E, W, S, N, NE, NW, SE, SW);
 	}
 

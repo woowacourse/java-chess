@@ -14,6 +14,7 @@ public class OutputView {
 			System.out.print(boardInformation.get(position).getSymbol());
 			printBlank(position);
 		}
+		System.out.println();
 	}
 
 	private static void printBlank(final Position position) {

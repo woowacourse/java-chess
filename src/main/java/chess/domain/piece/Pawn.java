@@ -23,10 +23,11 @@ public class Pawn extends Piece {
 	@Override
 	public void validateMovement(final Position source, final Position target) {
 		List<Direction> directions = new ArrayList<>(Direction.getPawnByTeam(team));
+
 		if (source.isDefaultRow(team)) {
 			directions.add(Direction.getDefaultPawnByTeam(team));
 		}
-		
+
 		for (Direction direction : directions) {
 			Optional<Position> position = source.addDirection(direction);
 			if (position.isEmpty()) {
@@ -38,6 +39,15 @@ public class Pawn extends Piece {
 		}
 
 		throw new IllegalArgumentException(MOVEMENT_ERROR);
+	}
+
+	@Override
+	public void validateCatch(final Piece targetPiece, final Direction direction) {
+		super.validateCatch(targetPiece, direction);
+		if (!targetPiece.isBlank() && (direction == Direction.N | direction == Direction.NN | direction == Direction.S
+				| direction == Direction.SS)) {
+			throw new IllegalArgumentException("폰은 해당 위치의 기물을 잡을 수 없습니다.");
+		}
 	}
 
 	@Override
