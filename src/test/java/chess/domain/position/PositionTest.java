@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class PositionTest {
 
     @DisplayName("fileIdx와 rankIdx를 받는 of 메서드는 대응되는 문자열로 받는 of 메서드와 동일한 인스턴스를 반환한다.")
@@ -33,5 +35,43 @@ public class PositionTest {
         assertThatCode(() -> Position.of("z0"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
+    }
+
+    @DisplayName("oneStepToward 메서드는 대상 위치를 향해 1칸 움직인 위치를 반환한다.")
+    @Nested
+    class OneStepTowardTest {
+
+        @Test
+        void 상하() {
+            Position curPosition = Position.of(4, 4);
+            Position targetPosition = Position.of(4, 0);
+
+            Position actual = curPosition.oneStepToward(targetPosition);
+            Position expected = Position.of(4, 3);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 좌우() {
+            Position curPosition = Position.of(4, 4);
+            Position targetPosition = Position.of(0, 4);
+
+            Position actual = curPosition.oneStepToward(targetPosition);
+            Position expected = Position.of(3, 4);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 대각선() {
+            Position curPosition = Position.of(0, 0);
+            Position targetPosition = Position.of(5, 5);
+
+            Position actual = curPosition.oneStepToward(targetPosition);
+            Position expected = Position.of(1, 1);
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 }

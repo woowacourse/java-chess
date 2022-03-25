@@ -58,6 +58,24 @@ public class Position {
         return PositionCache.getCache(toFileIdx, toRankIdx);
     }
 
+    public Position oneStepToward(Position targetPosition) {
+        int nextFileIdx = getIncrementedToward(fileIdx, targetPosition.fileIdx);
+        int nextRankIdx = getIncrementedToward(rankIdx, targetPosition.rankIdx);
+
+        return PositionCache.getCache(nextFileIdx, nextRankIdx);
+    }
+
+    private int getIncrementedToward(int from, int to) {
+        int diff = to - from;
+        if (diff > 0) {
+            return from + 1;
+        }
+        if (diff < 0) {
+            return from - 1;
+        }
+        return from;
+    }
+
     public int getFileIdx() {
         return fileIdx;
     }
