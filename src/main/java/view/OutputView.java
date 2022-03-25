@@ -15,9 +15,10 @@ public class OutputView {
 
         for (YPosition y : yPositions) {
             for (XPosition x : XPosition.values()) {
-                System.out.print(chessBoard.symbol(new Position(x, y)));
+                System.out.print(chessBoard.symbol(Position.of(x, y)));
             }
             System.out.println();
         }
+        System.out.println();
     }
 }

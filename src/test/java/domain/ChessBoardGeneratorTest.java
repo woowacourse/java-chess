@@ -34,7 +34,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Pawn의 row 위치는 7이다")
     void checkPositionBlackPawn(XPosition x) {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.SEVEN));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(x, YPosition.SEVEN));
 
         assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
@@ -45,7 +45,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Pawn의 row 위치는 2이다")
     void checkPositionWhitePawn(XPosition x) {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(x, YPosition.TWO));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(x, YPosition.TWO));
 
         assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Pawn.class);
@@ -68,8 +68,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
     void checkPositionBlackRook() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.EIGHT));
-        Piece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.EIGHT));
+        Piece leftRook = chessBoardGenerator.generate().get(Position.of(XPosition.A, YPosition.EIGHT));
+        Piece rightRook = chessBoardGenerator.generate().get(Position.of(XPosition.H, YPosition.EIGHT));
 
         assertThat(leftRook.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(rightRook.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
@@ -81,8 +81,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
     void checkPositionWhiteRook() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftRook = chessBoardGenerator.generate().get(new Position(XPosition.A, YPosition.ONE));
-        Piece rightRook = chessBoardGenerator.generate().get(new Position(XPosition.H, YPosition.ONE));
+        Piece leftRook = chessBoardGenerator.generate().get(Position.of(XPosition.A, YPosition.ONE));
+        Piece rightRook = chessBoardGenerator.generate().get(Position.of(XPosition.H, YPosition.ONE));
 
         assertThat(leftRook.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(rightRook.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
@@ -94,8 +94,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Knight 위치는 Row 8, Column b, g이다.")
     void checkPositionBlackKnight() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.EIGHT));
-        Piece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.EIGHT));
+        Piece leftKnight = chessBoardGenerator.generate().get(Position.of(XPosition.B, YPosition.EIGHT));
+        Piece rightKnight = chessBoardGenerator.generate().get(Position.of(XPosition.G, YPosition.EIGHT));
 
         assertThat(leftKnight.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(rightKnight.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
@@ -107,8 +107,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Knight 위치는 Row 1, Column b, g이다.")
     void checkPositionWhiteKnight() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftKnight = chessBoardGenerator.generate().get(new Position(XPosition.B, YPosition.ONE));
-        Piece rightKnight = chessBoardGenerator.generate().get(new Position(XPosition.G, YPosition.ONE));
+        Piece leftKnight = chessBoardGenerator.generate().get(Position.of(XPosition.B, YPosition.ONE));
+        Piece rightKnight = chessBoardGenerator.generate().get(Position.of(XPosition.G, YPosition.ONE));
 
         assertThat(leftKnight.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(rightKnight.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
@@ -120,8 +120,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Row 8, Column c, f이다.")
     void checkPositionBlackBishop() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.EIGHT));
-        Piece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.EIGHT));
+        Piece leftBishop = chessBoardGenerator.generate().get(Position.of(XPosition.C, YPosition.EIGHT));
+        Piece rightBishop = chessBoardGenerator.generate().get(Position.of(XPosition.F, YPosition.EIGHT));
 
         assertThat(leftBishop.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(rightBishop.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
@@ -133,8 +133,8 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Row 1, Column c, f이다.")
     void checkPositionWhiteBishop() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece leftBishop = chessBoardGenerator.generate().get(new Position(XPosition.C, YPosition.ONE));
-        Piece rightBishop = chessBoardGenerator.generate().get(new Position(XPosition.F, YPosition.ONE));
+        Piece leftBishop = chessBoardGenerator.generate().get(Position.of(XPosition.C, YPosition.ONE));
+        Piece rightBishop = chessBoardGenerator.generate().get(Position.of(XPosition.F, YPosition.ONE));
 
         assertThat(leftBishop.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(rightBishop.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
@@ -146,7 +146,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 Queen 위치는 Row 8, Column d이다.")
     void checkPositionBlackQueen() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.EIGHT));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.D, YPosition.EIGHT));
 
         assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
@@ -156,7 +156,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 Queen 위치는 Row 1, Column d이다.")
     void checkPositionWhiteQueen() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.D, YPosition.ONE));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.D, YPosition.ONE));
 
         assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(Queen.class);
@@ -166,7 +166,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
     void checkPositionBlackKing() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.EIGHT));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.E, YPosition.EIGHT));
 
         assertThat(piece.checkSameTeamColor(TeamColor.BLACK)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);
@@ -176,7 +176,7 @@ class ChessBoardGeneratorTest {
     @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
     void checkPositionWhiteKing() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
-        Piece piece = chessBoardGenerator.generate().get(new Position(XPosition.E, YPosition.ONE));
+        Piece piece = chessBoardGenerator.generate().get(Position.of(XPosition.E, YPosition.ONE));
 
         assertThat(piece.checkSameTeamColor(TeamColor.WHITE)).isEqualTo(true);
         assertThat(piece).isInstanceOf(King.class);

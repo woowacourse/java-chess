@@ -25,7 +25,14 @@ public enum XPosition {
         return Arrays.stream(values())
                 .filter(value -> value.x == x)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 가로축이 잘못 입력되었습니다."));
+    }
+
+    public static XPosition of(final String symbol) {
+        return Arrays.stream(values())
+                .filter(value -> value.symbol.equals(symbol))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 가로축이 잘못 입력되었습니다."));
     }
 
     public static boolean checkRange(final int x) {

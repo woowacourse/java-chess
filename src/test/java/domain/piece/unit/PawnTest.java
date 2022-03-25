@@ -19,15 +19,15 @@ class PawnTest {
     void moveWhitePawn(Position target) {
         Piece piece = new Pawn(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
     }
 
     private static Stream<Position> availableWhitePositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.THREE),
-                new Position(XPosition.B, YPosition.THREE),
-                new Position(XPosition.C, YPosition.THREE)
+                Position.of(XPosition.A, YPosition.THREE),
+                Position.of(XPosition.B, YPosition.THREE),
+                Position.of(XPosition.C, YPosition.THREE)
         );
     }
 
@@ -37,16 +37,16 @@ class PawnTest {
     void moveWhitePawnUnablePositions(Position target) {
         Piece piece = new Pawn(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(false);
     }
 
     private static Stream<Position> unavailableWhitePositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.FOUR),
-                new Position(XPosition.C, YPosition.FOUR),
-                new Position(XPosition.A, YPosition.TWO),
-                new Position(XPosition.C, YPosition.TWO)
+                Position.of(XPosition.A, YPosition.FOUR),
+                Position.of(XPosition.C, YPosition.FOUR),
+                Position.of(XPosition.A, YPosition.TWO),
+                Position.of(XPosition.C, YPosition.TWO)
         );
     }
 
@@ -56,15 +56,15 @@ class PawnTest {
     void moveBlackPawn(Position target) {
         Piece piece = new Pawn(TeamColor.BLACK);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.SEVEN), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SEVEN), target))
                 .isEqualTo(true);
     }
 
     private static Stream<Position> availableBlackPositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.SIX),
-                new Position(XPosition.B, YPosition.SIX),
-                new Position(XPosition.C, YPosition.SIX)
+                Position.of(XPosition.A, YPosition.SIX),
+                Position.of(XPosition.B, YPosition.SIX),
+                Position.of(XPosition.C, YPosition.SIX)
         );
     }
 
@@ -74,16 +74,16 @@ class PawnTest {
     void moveBlackPawnUnablePositions(Position target) {
         Piece piece = new Pawn(TeamColor.BLACK);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.D, YPosition.FIVE), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FIVE), target))
                 .isEqualTo(false);
     }
 
     private static Stream<Position> unavailableBlackPositions() {
         return Stream.of(
-                new Position(XPosition.C, YPosition.FIVE),
-                new Position(XPosition.E, YPosition.FIVE),
-                new Position(XPosition.C, YPosition.THREE),
-                new Position(XPosition.E, YPosition.THREE)
+                Position.of(XPosition.C, YPosition.FIVE),
+                Position.of(XPosition.E, YPosition.FIVE),
+                Position.of(XPosition.C, YPosition.THREE),
+                Position.of(XPosition.E, YPosition.THREE)
         );
     }
 
@@ -93,8 +93,8 @@ class PawnTest {
     void moveBlackPawnFirst() {
         Piece piece = new Pawn(TeamColor.BLACK);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.SEVEN),
-                        new Position(XPosition.B, YPosition.FIVE)))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SEVEN),
+                        Position.of(XPosition.B, YPosition.FIVE)))
                 .isEqualTo(true);
     }
 
@@ -104,8 +104,8 @@ class PawnTest {
     void moveWhitePawnFirst() {
         Piece piece = new Pawn(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO),
-                        new Position(XPosition.B, YPosition.FOUR)))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO),
+                        Position.of(XPosition.B, YPosition.FOUR)))
                 .isEqualTo(true);
     }
 
@@ -114,8 +114,8 @@ class PawnTest {
     void moveWhitePawnNotFirst() {
         Piece piece = new Pawn(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.D, YPosition.THREE),
-                        new Position(XPosition.D, YPosition.FIVE)))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.THREE),
+                        Position.of(XPosition.D, YPosition.FIVE)))
                 .isEqualTo(false);
     }
 
@@ -124,8 +124,8 @@ class PawnTest {
     void moveBlackPawnNotFirst() {
         Piece piece = new Pawn(TeamColor.BLACK);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.SIX),
-                        new Position(XPosition.B, YPosition.FOUR)))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.SIX),
+                        Position.of(XPosition.B, YPosition.FOUR)))
                 .isEqualTo(false);
     }
 }

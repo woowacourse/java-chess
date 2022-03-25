@@ -7,9 +7,17 @@ public final class Position {
     private final XPosition x;
     private final YPosition y;
 
-    public Position(final XPosition x, final YPosition y) {
+    private Position(final XPosition x, final YPosition y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Position of(final XPosition xPosition, final YPosition yPosition) {
+        return new Position(xPosition, yPosition);
+    }
+
+    public static Position of(final String x, final String y) {
+        return Position.of(XPosition.of(x), YPosition.of(y));
     }
 
     public int getX() {

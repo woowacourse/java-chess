@@ -22,7 +22,7 @@ public abstract class CommonMovablePiece extends Piece {
         int y = source.getY() + direction.getY();
 
         while (checkOverRange(x, y)) {
-            positions.add(new Position(XPosition.of(x), YPosition.of(y)));
+            positions.add(Position.of(XPosition.of(x), YPosition.of(y)));
             x += direction.getX();
             y += direction.getY();
         }

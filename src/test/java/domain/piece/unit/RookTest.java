@@ -18,16 +18,16 @@ class RookTest {
     void moveRookUpDownRightLeft(Position target) {
         Piece piece = new Rook(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-            new Position(XPosition.B, YPosition.ONE),
-            new Position(XPosition.B, YPosition.EIGHT),
-            new Position(XPosition.A, YPosition.TWO),
-            new Position(XPosition.H, YPosition.TWO)
+            Position.of(XPosition.B, YPosition.ONE),
+            Position.of(XPosition.B, YPosition.EIGHT),
+            Position.of(XPosition.A, YPosition.TWO),
+            Position.of(XPosition.H, YPosition.TWO)
         );
     }
 }

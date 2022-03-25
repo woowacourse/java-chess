@@ -18,20 +18,20 @@ class QueenTest {
     void moveQueen(Position target) {
         Piece piece = new Queen(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-                new Position(XPosition.B, YPosition.ONE),
-                new Position(XPosition.B, YPosition.EIGHT),
-                new Position(XPosition.A, YPosition.TWO),
-                new Position(XPosition.H, YPosition.TWO),
-                new Position(XPosition.A, YPosition.ONE),
-                new Position(XPosition.H, YPosition.EIGHT),
-                new Position(XPosition.C, YPosition.ONE),
-                new Position(XPosition.A, YPosition.THREE)
+                Position.of(XPosition.B, YPosition.ONE),
+                Position.of(XPosition.B, YPosition.EIGHT),
+                Position.of(XPosition.A, YPosition.TWO),
+                Position.of(XPosition.H, YPosition.TWO),
+                Position.of(XPosition.A, YPosition.ONE),
+                Position.of(XPosition.H, YPosition.EIGHT),
+                Position.of(XPosition.C, YPosition.ONE),
+                Position.of(XPosition.A, YPosition.THREE)
         );
     }
 }

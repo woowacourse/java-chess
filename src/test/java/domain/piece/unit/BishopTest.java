@@ -18,15 +18,15 @@ class BishopTest {
     void moveBishop(Position target) {
         Piece piece = new Bishop(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.ONE),
-                new Position(XPosition.H, YPosition.EIGHT),
-                new Position(XPosition.C, YPosition.ONE),
-                new Position(XPosition.A, YPosition.THREE)
+                Position.of(XPosition.A, YPosition.ONE),
+                Position.of(XPosition.H, YPosition.EIGHT),
+                Position.of(XPosition.C, YPosition.ONE),
+                Position.of(XPosition.A, YPosition.THREE)
         );
     }
 }

@@ -22,7 +22,7 @@ public abstract class SpecificMovablePiece extends Piece {
         int y = source.getY() + direction.getY();
 
         if (checkOverRange(x, y)) {
-            positions.add(new Position(XPosition.of(x), YPosition.of(y)));
+            positions.add(Position.of(XPosition.of(x), YPosition.of(y)));
         }
 
         addDirectionalPosition(direction, positions);

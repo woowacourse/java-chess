@@ -18,20 +18,20 @@ class KingTest {
     void moveKing(Position target) {
         Piece piece = new King(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
         return Stream.of(
-                new Position(XPosition.A, YPosition.THREE),
-                new Position(XPosition.B, YPosition.THREE),
-                new Position(XPosition.C, YPosition.THREE),
-                new Position(XPosition.A, YPosition.TWO),
-                new Position(XPosition.C, YPosition.TWO),
-                new Position(XPosition.A, YPosition.ONE),
-                new Position(XPosition.B, YPosition.ONE),
-                new Position(XPosition.C, YPosition.ONE)
+                Position.of(XPosition.A, YPosition.THREE),
+                Position.of(XPosition.B, YPosition.THREE),
+                Position.of(XPosition.C, YPosition.THREE),
+                Position.of(XPosition.A, YPosition.TWO),
+                Position.of(XPosition.C, YPosition.TWO),
+                Position.of(XPosition.A, YPosition.ONE),
+                Position.of(XPosition.B, YPosition.ONE),
+                Position.of(XPosition.C, YPosition.ONE)
         );
     }
 
@@ -41,19 +41,19 @@ class KingTest {
     void dontMoveKing(Position target) {
         Piece piece = new King(TeamColor.WHITE);
 
-        Assertions.assertThat(piece.availableMove(new Position(XPosition.B, YPosition.TWO), target))
+        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target))
                 .isEqualTo(false);
     }
 
     private static Stream<Position> disablePositions() {
         return Stream.of(
-                new Position(XPosition.D, YPosition.ONE),
-                new Position(XPosition.D, YPosition.TWO),
-                new Position(XPosition.D, YPosition.THREE),
-                new Position(XPosition.D, YPosition.FOUR),
-                new Position(XPosition.A, YPosition.FOUR),
-                new Position(XPosition.B, YPosition.FOUR),
-                new Position(XPosition.C, YPosition.FOUR)
+                Position.of(XPosition.D, YPosition.ONE),
+                Position.of(XPosition.D, YPosition.TWO),
+                Position.of(XPosition.D, YPosition.THREE),
+                Position.of(XPosition.D, YPosition.FOUR),
+                Position.of(XPosition.A, YPosition.FOUR),
+                Position.of(XPosition.B, YPosition.FOUR),
+                Position.of(XPosition.C, YPosition.FOUR)
         );
     }
 }
