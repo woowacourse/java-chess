@@ -18,6 +18,31 @@ public abstract class Chessmen implements Piece {
     }
 
     @Override
+    public final void move(Position position, OccupiedChecker isOccupied) {
+        validateMovable(position);
+        validateClearPathTo(position, isOccupied);
+        this.position = position;
+    }
+
+    private void validateMovable(Position targetPosition) {
+        if (!canMoveTo(targetPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    abstract protected boolean canMoveTo(Position targetPosition);
+
+    private void validateClearPathTo(Position targetPosition, OccupiedChecker isOccupied) {
+        boolean isClear =  position.positionsBetween(targetPosition)
+                .stream()
+                .noneMatch(isOccupied::test);
+
+        if (!isClear) {
+            throw new IllegalArgumentException(BLOCKED_PATH_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Override
     public void kill(Piece targetPiece, OccupiedChecker isOccupied) {
         validateIsEnemy(targetPiece);
         attack(targetPiece.position(), isOccupied);
@@ -30,16 +55,6 @@ public abstract class Chessmen implements Piece {
     }
 
     abstract protected void attack(Position enemyPosition, OccupiedChecker isOccupied);
-
-    protected final void validateClearPathTo(Position targetPosition, OccupiedChecker isOccupied) {
-        boolean isClear =  position.positionsBetween(targetPosition)
-                .stream()
-                .noneMatch(isOccupied::test);
-
-        if (!isClear) {
-            throw new IllegalArgumentException(BLOCKED_PATH_EXCEPTION_MESSAGE);
-        }
-    }
 
     @Override
     public final boolean hasColorOf(Color color) {

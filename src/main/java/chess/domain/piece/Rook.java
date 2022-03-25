@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.strategy.OccupiedChecker;
 import java.util.Objects;
 
 public final class Rook extends Strongmen {
@@ -29,21 +28,9 @@ public final class Rook extends Strongmen {
     }
 
     @Override
-    public void move(Position position, OccupiedChecker isOccupied) {
-        validateMovable(position);
-        validateClearPathTo(position, isOccupied);
-        this.position = position;
-    }
-
-    private void validateMovable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private boolean isMovablePosition(Position toPosition) {
-        return position.isHorizontal(toPosition)
-                || position.isVertical(toPosition);
+    protected boolean canMoveTo(Position targetPosition) {
+        return position.isHorizontal(targetPosition)
+                || position.isVertical(targetPosition);
     }
 
     @Override

@@ -45,24 +45,12 @@ public final class Pawn extends Chessmen {
     }
 
     @Override
-    public void move(Position position, OccupiedChecker isOccupied) {
-        validateMovable(position);
-        validateClearPathTo(position, isOccupied);
-        this.position = position;
-    }
-
-    private void validateMovable(Position toPosition) {
-        if (!canMoveForwardOrJump(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private boolean canMoveForwardOrJump(Position toPosition) {
-        if (canJump() && toPosition == getMovablePosition(JUMP_RANK_COUNT)) {
+    protected boolean canMoveTo(Position targetPosition) {
+        if (canJump() && targetPosition == getMovablePosition(JUMP_RANK_COUNT)) {
             return true;
         }
         Position forwardPosition = getMovablePosition(FORWARD_RANK_COUNT);
-        return toPosition == forwardPosition;
+        return targetPosition == forwardPosition;
     }
 
     private Position getMovablePosition(int moveRankDiff) {

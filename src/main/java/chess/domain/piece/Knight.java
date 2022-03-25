@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.strategy.OccupiedChecker;
 import java.util.Objects;
 
 public final class Knight extends Strongmen {
@@ -32,20 +31,9 @@ public final class Knight extends Strongmen {
     }
 
     @Override
-    public void move(Position position, OccupiedChecker isOccupied) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    private void validateMovable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private boolean isMovablePosition(Position toPosition) {
-        int fileDifference = position.fileDifference(toPosition);
-        int rankDifference = position.rankDifference(toPosition);
+    protected boolean canMoveTo(Position targetPosition) {
+        int fileDifference = position.fileDifference(targetPosition);
+        int rankDifference = position.rankDifference(targetPosition);
 
         return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
                 || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);

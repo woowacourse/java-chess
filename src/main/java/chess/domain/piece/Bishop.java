@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.strategy.OccupiedChecker;
 import java.util.Objects;
 
 public final class Bishop extends Strongmen {
@@ -29,16 +28,8 @@ public final class Bishop extends Strongmen {
     }
 
     @Override
-    public void move(Position position, OccupiedChecker isOccupied) {
-        validateMovable(position);
-        validateClearPathTo(position, isOccupied);
-        this.position = position;
-    }
-
-    private void validateMovable(Position toPosition) {
-        if (!position.isDiagonal(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
+    protected boolean canMoveTo(Position targetPosition) {
+        return position.isDiagonal(targetPosition);
     }
 
     @Override
