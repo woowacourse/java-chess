@@ -27,26 +27,26 @@ public class InitialBoardGenerator implements BoardGenerator {
 
     private Map<Point, Piece> generateSpecialLine(int lineNumber, Color color) {
         Map<Point, Piece> pointPieces = new HashMap<>();
-        pointPieces.put(Point.of(lineNumber, 1), new Rook(color));
-        pointPieces.put(Point.of(lineNumber, 2), new Knight(color));
-        pointPieces.put(Point.of(lineNumber, 3), new Bishop(color));
-        pointPieces.put(Point.of(lineNumber, 4), new Queen(color));
-        pointPieces.put(Point.of(lineNumber, 5), new King(color));
-        pointPieces.put(Point.of(lineNumber, 6), new Bishop(color));
-        pointPieces.put(Point.of(lineNumber, 7), new Knight(color));
-        pointPieces.put(Point.of(lineNumber, 8), new Rook(color));
+        pointPieces.put(Point.of(1, lineNumber), new Rook(color));
+        pointPieces.put(Point.of(2, lineNumber), new Knight(color));
+        pointPieces.put(Point.of(3, lineNumber), new Bishop(color));
+        pointPieces.put(Point.of(4, lineNumber), new Queen(color));
+        pointPieces.put(Point.of(5, lineNumber), new King(color));
+        pointPieces.put(Point.of(6, lineNumber), new Bishop(color));
+        pointPieces.put(Point.of(7, lineNumber), new Knight(color));
+        pointPieces.put(Point.of(8, lineNumber), new Rook(color));
         return pointPieces;
     }
 
     private Map<Point, Piece> generatePawnLine(int lineNumber, Color color) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-                .mapToObj(i -> Point.of(lineNumber, i))
+                .mapToObj(i -> Point.of(i, lineNumber))
                 .collect(toMap(Function.identity(), it -> new Pawn(color)));
     }
 
     private Map<Point, Piece> generateEmptyLine(int lineNumber) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-                .mapToObj(i -> Point.of(lineNumber, i))
+                .mapToObj(i -> Point.of(i, lineNumber))
                 .collect(toMap(Function.identity(), it -> new Empty(Color.NONE)));
     }
 }

@@ -38,6 +38,6 @@ public enum PieceRepresentation {
         return Arrays.stream(values())
                 .filter(value -> value.pieceType == piece.getType())
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 타입이 없습니다."));
     }
 }

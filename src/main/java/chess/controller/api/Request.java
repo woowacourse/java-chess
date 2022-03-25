@@ -22,7 +22,7 @@ public class Request {
 
     private static List<String> toArguments(String[] split) {
         return Arrays.stream(split)
-                .skip(0)
+                .skip(1)
                 .collect(Collectors.toList());
     }
 

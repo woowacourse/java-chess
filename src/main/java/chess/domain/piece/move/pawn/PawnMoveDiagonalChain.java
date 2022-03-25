@@ -18,7 +18,7 @@ public class PawnMoveDiagonalChain extends PawnMoveChain {
                 isNotStartLine(from)) {
             return;
         }
-        throw new IllegalArgumentException("");
+        throw new IllegalArgumentException("[ERROR] 폰이 이동할 수 없는 위치입니다.");
     }
 
     private boolean isNotStartLine(Point from) {

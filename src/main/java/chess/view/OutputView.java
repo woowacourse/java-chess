@@ -14,14 +14,14 @@ public class OutputView {
     }
 
     public void printBoard(Map<Point, Piece> board) {
-        for (int i = LineNumber.MIN; i <= LineNumber.MAX; i++) {
+        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
             printBoardLine(board, i);
         }
     }
 
     private void printBoardLine(Map<Point, Piece> board, int i) {
         for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            Point point = Point.of(i, j);
+            Point point = Point.of(j, i);
             Piece piece = board.get(point);
             System.out.print(PieceRepresentation.convertType(piece));
         }
