@@ -14,16 +14,19 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        System.out.printf("%s팀의 차례입니다.%n", findTurn(board));
-        for (int i = 7; i >= 0; i--) {
-            String rankLine = board.getRank(i).getPieces().stream()
+        System.out.println();
+        System.out.printf("   [ %s팀의 차례입니다 ]%n", findTurn(board));
+        System.out.println("    a b c d e f g h");
+        System.out.println("  ┌-----------------┐");
+        for (int i = 8; i > 0; i--) {
+            String rankLine = board.getRank(i - 1).getPieces().stream()
                     .map(Piece::getSignature)
-                    .collect(Collectors.joining()) + " | " + (i + 1);
+                    .collect(Collectors.joining(" "));
 
-            System.out.println(rankLine);
+            System.out.printf("%d | %s | %d%n", i, rankLine, i);
         }
-        System.out.println("--------");
-        System.out.println("abcdefgh");
+        System.out.println("  └-----------------┘");
+        System.out.println("    a b c d e f g h");
         System.out.println();
     }
 

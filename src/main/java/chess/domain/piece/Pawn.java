@@ -23,17 +23,17 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Piece piece) {
-        if (isBlack() && isEnemy(piece.getSignature())) {
-            return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
-        }
-        if (!isBlack() && isEnemy(piece.getSignature())) {
-            return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
-        }
         if (isBlack() && piece.isBlank()) {
             return isInStraightRange(piece.getPosition(), Direction.SOUTH);
         }
         if (!isBlack() && piece.isBlank()) {
             return isInStraightRange(piece.getPosition(), Direction.NORTH);
+        }
+        if (isBlack() && isEnemy(piece.getSignature())) {
+            return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
+        }
+        if (!isBlack() && isEnemy(piece.getSignature())) {
+            return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
         }
         return false;
     }

@@ -13,7 +13,7 @@ public class BlankTest {
     void constructor() {
         Blank blank = new Blank(new Position("a1"));
 
-        assertThat(blank.getSignature()).isEqualTo(".");
+        assertThat(blank.getSignature()).isEqualTo("·");
     }
 
     @DisplayName("빈 칸에 이동 명령 호출 시 예외가 발생한다.")
