@@ -1,11 +1,16 @@
 package chess.piece;
 
+import chess.Board;
 import chess.Position;
 import chess.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class KnightTest {
 
@@ -23,5 +28,47 @@ class KnightTest {
         Knight knight = new Knight(Position.of('a', '1'), Team.WHITE);
 
         assertThat(knight.isMovable(Position.of('b', '2'))).isFalse();
+    }
+
+    @Test
+    @DisplayName("나이트의 target위치에 아군 말이 없으면 움직임에 성공한다")
+    void moveKingTest() {
+        List<Piece> pieces = List.of(
+                new Knight(Position.of('a', '8'), Team.BLACK),
+                new Pawn(Position.of('b', '6'), Team.WHITE)
+        );
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "b6");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("나이트가 target위치로 진행할때 방해물이 있으면 넘어서 진행한다.")
+    void moveKingTest2() {
+
+        Board board = Board.create(Pieces.create());
+        List<String> command = List.of("g1", "h3");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("나이트의 target위치에 아군 말이 있으면 예외처리")
+    void moveFailureKingTest() {
+        List<Piece> pieces = List.of(
+                new Knight(Position.of('a', '8'), Team.WHITE),
+                new Pawn(Position.of('c', '7'), Team.WHITE)
+        );
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "c7");
+
+        assertThatThrownBy(
+                () -> board.move(command)
+        ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
