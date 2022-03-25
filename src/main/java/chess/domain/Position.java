@@ -44,4 +44,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(col, row);
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "col=" + col +
+                ", row=" + row +
+                '}';
+    }
 }

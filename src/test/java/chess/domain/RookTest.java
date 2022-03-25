@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class RookTest {
 
     @ParameterizedTest
@@ -27,5 +31,14 @@ class RookTest {
         Position position = Position.from("f6");
         Rook rook = new Rook(Team.BLACK, position);
         rook.findDirection(Position.from(input));
+    }
+
+    @Test
+    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    void findPath() {
+        Position position = Position.from("f6");
+        Rook rook = new Rook(Team.BLACK, position);
+        List<Position> path = rook.findPath(Position.from("f8"));
+        assertThat(path).containsExactly(Position.from("f7"));
     }
 }

@@ -23,15 +23,17 @@ public class Bishop extends Piece {
     @Override
     public List<Position> findPath(Position destination) {
         Direction direction = findDirection(destination);
-        return getPath(destination, direction, position.getCol(), position.getRow());
+        return getPath(destination, direction,
+                position.getCol().plusColumn(direction.getXDegree()),
+                position.getRow().plusRow(direction.getYDegree()));
     }
 
-    private List<Position> getPath(Position destination, Direction direction, Column column, Row row) {
+    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
-        while(column != destination.getCol()) {
-            column = column.plusColumn(direction.getXDegree());
+        while(!(col == destination.getCol() && row == destination.getRow())) {
+            positions.add(new Position(col, row));
+            col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());
-            positions.add(new Position(column, row));
         }
         return positions;
     }

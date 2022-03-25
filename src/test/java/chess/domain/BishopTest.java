@@ -38,6 +38,6 @@ class BishopTest {
         Position position = Position.from("e4");
         Bishop bishop = new Bishop(Team.BLACK, position);
         List<Position> path = bishop.findPath(Position.from("h7"));
-        assertThat(path).containsExactly(Position.from("f5"), Position.from("g6"), Position.from("h7"));
+        assertThat(path).containsExactly(Position.from("f5"), Position.from("g6"));
     }
 }
