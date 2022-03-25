@@ -75,6 +75,16 @@ public class Position {
         return destination.rank - rank > 0;
     }
 
+    public int calculateDistance(final Position destination) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = Math.abs(rank - destination.rank);
+        return fileDistance + rankDistance;
+    }
+
+    public boolean isSameFile(final char file) {
+        return this.file == file;
+    }
+
     private List<Position> findBetweenLinearPosition(final Position destination) {
         final List<Position> positions = new ArrayList<>();
 
@@ -88,13 +98,13 @@ public class Position {
         return positions;
     }
 
-    private void addBetweenVerticalPosition(List<Position> positions, int startRank, int endRank) {
+    private void addBetweenVerticalPosition(final List<Position> positions, final int startRank, final int endRank) {
         for (int i = startRank + 1; i < endRank; i++) {
             positions.add(new Position(i, file));
         }
     }
 
-    private void addBetweenHorizonPosition(List<Position> positions, int startFile, int endFile) {
+    private void addBetweenHorizonPosition(final List<Position> positions, final int startFile, final int endFile) {
         for (int i = startFile + 1; i < endFile; i++) {
             positions.add(new Position(rank, (char) i));
         }
@@ -111,16 +121,11 @@ public class Position {
         return positions;
     }
 
-    private void addBetweenDiagonalPosition(List<Position> positions, int startRank, int startFile, int end) {
+    private void addBetweenDiagonalPosition(final List<Position> positions,
+            final int startRank, final int startFile, final int end) {
         for (int i = startRank + 1, j = startFile + 1; i < end; i++, j++) {
             positions.add(new Position(i, (char) j));
         }
-    }
-
-    public int calculateDistance(Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
-        return fileDistance + rankDistance;
     }
 
     @Override
