@@ -51,14 +51,19 @@ public class ChessGameController {
 
     private void showStatus(final ChessGame chessGame, final String commandMessage) {
         if (commandMessage.equals(STATUS_COMMAND_MESSAGE)) {
-            Score score = chessGame.calculateScore();
-            OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinColor().getValue());
+            printStatus(chessGame);
         }
     }
 
     private void endGame(final ChessGame chessGame, final String commandMessage) {
         if (commandMessage.equals(END_COMMAND_MESSAGE)) {
             chessGame.turnOff();
+            printStatus(chessGame);
         }
+    }
+
+    private void printStatus(final ChessGame chessGame) {
+        Score score = chessGame.calculateScore();
+        OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinColor().getValue());
     }
 }
