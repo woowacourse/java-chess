@@ -24,6 +24,10 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Position source, Position target);
 
+    public boolean isMyTeam(Piece other) {
+        return this.pieceColor == other.pieceColor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

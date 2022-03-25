@@ -1,6 +1,7 @@
 package chess;
 
 import static chess.Board.SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE;
+import static chess.File.A;
 import static chess.File.B;
 import static chess.File.C;
 import static chess.Rank.FOUR;
@@ -85,7 +86,7 @@ public class BoardTest {
     @Test
     @DisplayName("체스 말이 없는 곳에서 이동 시키면 예외를 던진다.")
     void move_exception() {
-        assertThatThrownBy(() -> board.move(new Position(Rank.THREE, File.A), new Position(Rank.THREE, B)))
+        assertThatThrownBy(() -> board.move(new Position(Rank.THREE, A), new Position(Rank.THREE, B)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
     }
@@ -94,11 +95,11 @@ public class BoardTest {
     @DisplayName("체스 말이 입력한 target으로 정상 이동했는지 확인한다.")
     void move_test() {
         //when
-        board.move(new Position(Rank.TWO, File.A), new Position(Rank.THREE, File.A));
+        board.move(new Position(Rank.TWO, A), new Position(Rank.THREE, A));
         Map<Position, Piece> piecesByPositions = board.getValues();
 
         //then
-        assertThat(piecesByPositions.get(new Position(Rank.THREE, File.A))).isEqualTo(new Pawn(PieceColor.WHITE));
+        assertThat(piecesByPositions.get(new Position(Rank.THREE, A))).isEqualTo(new Pawn(PieceColor.WHITE));
     }
 
     @ParameterizedTest
@@ -127,5 +128,21 @@ public class BoardTest {
         assertThatThrownBy(() ->
                 board.move(new Position(TWO, C), new Position(FOUR, C))
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("이동 하는 곳에 아군 기물이 있으면 이동이 불가능 하다")
+    @Test
+    void isMyTeam() {
+        assertThatThrownBy(() ->
+                board.move(new Position(ONE, A), new Position(TWO, A))
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰을 A2 에서 A4로 이동시켰다면 A4에는 폰이 있다")
+    @Test
+    void move_pawn_and_now_pawn_is_at_target_pos() {
+        board.move(new Position(TWO, A), new Position(FOUR, A));
+        Piece findPiece = board.getValues().get(new Position(FOUR, A));
+        assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 }

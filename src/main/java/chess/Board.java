@@ -85,11 +85,13 @@ public class Board {
     private void changePieces(Position source, Position target) {
 
         Piece sourcePiece = values.get(source);
-        if (!sourcePiece.isMovable(source, target) || isBlocked(source, target)) {
+        Piece targetPiece = values.get(target);
+
+        if (!sourcePiece.isMovable(source, target) || isBlocked(source, target) || targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
-        values.put(target, values.get(source));
+        values.put(target, sourcePiece);
         values.put(source, EMPTY_PIECE);
     }
 
