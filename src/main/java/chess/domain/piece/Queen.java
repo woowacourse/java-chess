@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Queen extends ChessPiece {
     private static final int NO_DIFFERENCE = 0;
@@ -45,5 +48,41 @@ public class Queen extends ChessPiece {
             throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
         }
         position = targetPosition;
+    }
+
+    @Override
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+        return isReachable(targetPosition) && isUnobstructed(targetPosition, chessMen);
+    }
+
+    private boolean isReachable(ChessBoardPosition targetPosition) {
+        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
+        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
+        return !isNotEightCardinalMovement(rowDistance, columnDistance);
+    }
+
+    private boolean isUnobstructed(ChessBoardPosition targetChessBoardPosition, ChessMen chessMen) {
+        return createPathPositions(targetChessBoardPosition)
+                .stream()
+                .noneMatch(chessMen::existChessPieceAt);
+    }
+
+    private List<ChessBoardPosition> createPathPositions(ChessBoardPosition targetChessBoardPosition) {
+        int rowUnitChange = calculateUnitChange(targetChessBoardPosition.getRow(), position.getRow());
+        int columnUnitChange = calculateUnitChange(targetChessBoardPosition.getColumn(), position.getColumn());
+        List<ChessBoardPosition> pathPositions = new ArrayList<>();
+        ChessBoardPosition currentBoardPosition = position.move(columnUnitChange, rowUnitChange);
+        while (!currentBoardPosition.equals(targetChessBoardPosition)) {
+            pathPositions.add(currentBoardPosition);
+            currentBoardPosition = currentBoardPosition.move(columnUnitChange, rowUnitChange);
+        }
+        return pathPositions;
+    }
+
+    private int calculateUnitChange(int source, int target) {
+        if (source == target) {
+            return 0;
+        }
+        return (source - target) / Math.abs(source - target);
     }
 }

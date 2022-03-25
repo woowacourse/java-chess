@@ -1,21 +1,26 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class QueenTest {
+class QueenTest {
 
     @ParameterizedTest(name = "{index}: {3}")
     @MethodSource("moveParameters")
     @DisplayName("퀸은 전후좌우, 대각선으로 칸수 제한 없이 움직인다.")
-    void initialMoveTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
+    void moveTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
         Queen queen = new Queen(team, initialPosition);
         queen.move(nextPosition);
         assertThat(queen.isSamePosition(nextPosition)).isTrue();
@@ -40,5 +45,38 @@ public class QueenTest {
                 Arguments.of(Team.BLACK, new ChessBoardPosition('e', 3),
                         new ChessBoardPosition('a', 3), "퀸이 끝까지 오른쪽으로 간다.")
         );
+    }
+
+    @Test
+    @DisplayName("퀸이 대각선 방향의 타겟위치로 갈 수 없으면 false를 반환")
+    void movableTest() {
+        ChessPiece queen = new Queen(Team.BLACK, new ChessBoardPosition('e', 3));
+        List<ChessPiece> blackChessPieces = List.of(queen,
+                new Knight(Team.BLACK, new ChessBoardPosition('d', 4)));
+        ChessMen chessMen = new ChessMen(blackChessPieces);
+        boolean result = queen.isMovable(new ChessBoardPosition('c', 5), chessMen);
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("퀸이 상하좌우 방향의 타겟위치로 갈 수 없으면 false를 반환")
+    void movableTest2() {
+        ChessPiece queen = new Queen(Team.BLACK, new ChessBoardPosition('e', 3));
+        List<ChessPiece> blackChessPieces = List.of(queen,
+                new Knight(Team.BLACK, new ChessBoardPosition('e', 4)));
+        ChessMen chessMen = new ChessMen(blackChessPieces);
+        boolean result = queen.isMovable(new ChessBoardPosition('e', 5), chessMen);
+        assertFalse(result);
+    }
+
+    @ParameterizedTest(name = "{index}: {3}")
+    @MethodSource("moveParameters")
+    @DisplayName("퀸이 타겟위치로 갈 수 있으면 true를 반환")
+    void movableTest2(Team team, ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessPiece queen = new Queen(team, sourcePosition);
+        List<ChessPiece> blackChessPieces = List.of(queen);
+        ChessMen chessMen = new ChessMen(blackChessPieces);
+        boolean result = queen.isMovable(targetPosition, chessMen);
+        assertTrue(result);
     }
 }
