@@ -16,11 +16,16 @@ public enum InputOption {
         this.regex = regex;
     }
 
-    public static InputOption from(String input) {
+    public static String from(String input) {
+        if(!isExistOption(input)) {
+            throw new IllegalArgumentException(NOT_EXIST_OPTION);
+        }
+        return input;
+    }
+
+    private static boolean isExistOption(String input) {
         return Arrays.stream(InputOption.values())
-            .filter(inputOption -> input.matches(inputOption.regex))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION));
+            .anyMatch(inputOption -> input.matches(inputOption.regex));
     }
 }
 
