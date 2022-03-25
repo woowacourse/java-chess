@@ -67,4 +67,12 @@ class PositionTest {
 
         assertThat(position.isMovable(columnAmount, rowAmount)).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,1,true", "b,2,false", "h,8,true"})
+    @DisplayName("프로모션 위치인지 확인")
+    void isPromotionPosition(char column, char row, boolean expected) {
+        Position position = Position.of(column, row);
+        assertThat(position.isPromotionPosition()).isEqualTo(expected);
+    }
 }

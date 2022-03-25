@@ -137,4 +137,12 @@ class ChessBoardTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,8,true", "a,7,false"})
+    @DisplayName("프로모션 상태 여부 확인")
+    void isPromotionStatus(char column, char row, boolean expected) {
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of(column, row), new WhitePawn()));
+        assertThat(chessBoard.isPromotionStatus()).isEqualTo(expected);
+    }
 }

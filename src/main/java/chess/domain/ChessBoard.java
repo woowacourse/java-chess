@@ -111,6 +111,16 @@ public class ChessBoard {
                 .count();
     }
 
+    public boolean isPromotionStatus() {
+        return pieces.entrySet()
+                .stream()
+                .anyMatch(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue()));
+    }
+
+    private boolean isPromotionPositionPawn(Position position, Piece piece) {
+        return position.isPromotionPosition() && piece.isPawn();
+    }
+
     public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }
