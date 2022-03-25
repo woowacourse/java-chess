@@ -19,7 +19,7 @@ public class InputOptionTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"test", "startt", "endd", "move a b", "move a1 b", "move", "move a9 a1",
-        "amove a1 a2"})
+        "amove a1 a2", "move a1b2", "move a1  b2"})
     @DisplayName("입력 형식이 아닌 값을 입력받았을 때, exception을 일으킨다")
     void incorrectInputCheck(String input) {
         assertThatThrownBy(() -> InputOption.from(input))
