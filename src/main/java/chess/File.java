@@ -33,8 +33,11 @@ public enum File {
             .collect(Collectors.toList());
     }
 
-    private boolean isBetween(File small, File big) {
-        return this.isBiggerThan(small) && big.isBiggerThan(this);
+    private boolean isBetween(File source, File target) {
+        if (source.compareTo(target) > 0) {
+            return this.isBiggerThan(target) && source.isBiggerThan(this);
+        }
+        return this.isBiggerThan(source) && target.isBiggerThan(this);
     }
 
     private boolean isBiggerThan(File other) {
