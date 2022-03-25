@@ -1,17 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import java.util.Objects;
 
-public class Rook implements Piece {
-
-    private final State state;
-
-    private Position position;
+public class Rook extends Piece {
 
     public Rook(Position position) {
-        this.state = State.ROOK;
-        this.position = position;
+        super(State.ROOK, position);
     }
 
     @Override
@@ -28,22 +22,5 @@ public class Rook implements Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Rook rook = (Rook) o;
-        return Objects.equals(position, rook.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position);
     }
 }

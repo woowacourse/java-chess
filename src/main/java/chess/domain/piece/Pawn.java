@@ -1,21 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import java.util.Objects;
 
-public class Pawn implements Piece {
+public class Pawn extends Piece {
 
     private static final int PAWN_DEFAULT_MOVE_DISTANCE = 1;
     private static final int PAWN_FIRST_MOVE_DISTANCE = 2;
     private static final int PAWN_DIAGONAL_MOVE_DISTANCE = 2;
 
-    private final State state;
-
-    private Position position;
-
     public Pawn(Position position) {
-        this.state = State.PAWN;
-        this.position = position;
+        super(State.PAWN, position);
     }
 
     @Override
@@ -60,19 +54,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Pawn pawn = (Pawn) o;
-        return Objects.equals(position, pawn.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position);
+    public boolean isPawn() {
+        return true;
     }
 }

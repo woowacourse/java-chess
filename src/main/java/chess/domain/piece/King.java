@@ -1,24 +1,18 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import java.util.Objects;
 
-public class King implements Piece {
+public class King extends Piece {
 
     private static final int KING_LINEAR_MOVE_DISTANCE = 1;
     private static final int KING_DIAGONAL_MOVE_DISTANCE = 2;
 
-    private final State state;
-
-    private Position position;
-
     public King(Position position) {
-        this.state = State.KING;
-        this.position = position;
+        super(State.KING, position);
     }
 
     @Override
-    public Position move(Position currentPosition, Position destinationPosition) {
+    public Position move(final Position currentPosition, final Position destinationPosition) {
         boolean isMoveLinear = currentPosition.isMoveLinear(destinationPosition);
         boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
 
@@ -41,22 +35,5 @@ public class King implements Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        King king = (King) o;
-        return Objects.equals(position, king.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position);
     }
 }

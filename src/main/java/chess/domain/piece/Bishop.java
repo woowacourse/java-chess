@@ -1,17 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import java.util.Objects;
 
-public class Bishop implements Piece {
-
-    private final State state;
-
-    private Position position;
+public class Bishop extends Piece {
 
     public Bishop(Position position) {
-        this.state = State.BISHOP;
-        this.position = position;
+        super(State.BISHOP, position);
     }
 
     @Override
@@ -28,22 +22,5 @@ public class Bishop implements Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Bishop bishop = (Bishop) o;
-        return Objects.equals(position, bishop.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position);
     }
 }
