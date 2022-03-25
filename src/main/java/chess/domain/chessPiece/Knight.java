@@ -9,7 +9,7 @@ public class Knight extends ChessPiece {
     private static final String NAME = "N";
     private static final Double VALUE = 2.5;
 
-    public Knight(Color color) {
+    public Knight(final Color color) {
         super(color, NAME, VALUE);
     }
 
@@ -24,9 +24,9 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
-        int fileDistance = Math.abs(from.fileDistance(to));
-        int rankDistance = Math.abs(from.rankDistance(to));
+    public void canMove(final Position from, final Position to) {
+        final int fileDistance = Math.abs(from.fileDistance(to));
+        final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (rankDistance + fileDistance != 3) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
@@ -38,7 +38,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public Stack<Position> findRoute(final Position from, Position to) {
+    public Stack<Position> findRoute(final Position from, final Position to) {
         return new Stack<>();
     }
 }

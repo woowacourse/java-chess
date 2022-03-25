@@ -22,26 +22,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ChessBoardTest {
 
-    ChessBoard chessBoard = new ChessBoard();
-
-    @Test
-    @DisplayName("체스판을 초기화하고 기물을 배치한다.")
-    void init() {
-        // when
-        int actual = chessBoard.countPiece();
-        int expected = 32;
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
+    final ChessBoard chessBoard = new ChessBoard();
 
     @ParameterizedTest
     @DisplayName("위치를 기반으로 기물을 찾는다.")
     @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
-    void findPiece(String position, String expected) {
+    void findPiece(final String position, final String expected) {
         // when
-        Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
-        ChessPiece actual = possiblePiece.get();
+        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
+        final ChessPiece actual = possiblePiece.get();
 
         // then
         assertThat(actual.getName()).isEqualTo(expected);
@@ -51,7 +40,7 @@ class ChessBoardTest {
     @DisplayName("위치에 기물이 있는지 확인한다.")
     void findPiece_Null() {
         // when
-        Optional<ChessPiece> actual = chessBoard.findPiece(new Position("a3"));
+        final Optional<ChessPiece> actual = chessBoard.findPiece(new Position("a3"));
 
         // then
         assertThat(actual.isEmpty()).isEqualTo(true);
@@ -61,11 +50,11 @@ class ChessBoardTest {
     @DisplayName("기물이 적인지 확인한다.")
     void enemyExist() {
         // given
-        ChessPiece me = new Pawn(Color.BLACK);
-        Position to = new Position("a1");
+        final ChessPiece me = new Pawn(Color.BLACK);
+        final Position to = new Position("a1");
 
         // when
-        boolean actual = chessBoard.enemyExist(me, to);
+        final boolean actual = chessBoard.enemyExist(me, to);
 
         // then
         assertThat(actual).isTrue();
@@ -137,20 +126,20 @@ class ChessBoardTest {
     @ParameterizedTest
     @DisplayName("폰이 같은 세로줄에 있는 경우의 점수를 구한다.")
     @CsvSource(value = {"BLACK:1.5", "WHITE:1"}, delimiter = ':')
-    void calculateScore_pawn(Color color, double expected) {
+    void calculateScore_pawn(final Color color, final double expected) {
         // given
-        Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(new Position("a1"), new Pawn(Color.BLACK));
         pieceByPosition.put(new Position("a3"), new Pawn(Color.BLACK));
         pieceByPosition.put(new Position("a5"), new Pawn(Color.BLACK));
 
         pieceByPosition.put(new Position("a2"), new Pawn(Color.WHITE));
 
-        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
         // when
-        Map<Color, Double> scoreByColor = chessBoard.calculateScore();
-        Double actual = scoreByColor.get(color);
+        final Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+        final Double actual = scoreByColor.get(color);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -159,9 +148,9 @@ class ChessBoardTest {
     @ParameterizedTest
     @DisplayName("체스판에 있는 기물의 총합을 색깔별로 구한다.")
     @CsvSource(value = {"BLACK:20.5", "WHITE:0"}, delimiter = ':')
-    void calculateScore_combination(Color color, double expected) {
+    void calculateScore_combination(final Color color, final double expected) {
         // given
-        Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(new Position("a1"), new King(Color.BLACK)); // 0
         pieceByPosition.put(new Position("a2"), new Queen(Color.BLACK)); // 9
         pieceByPosition.put(new Position("a3"), new Knight(Color.BLACK)); // 2.5
@@ -171,11 +160,11 @@ class ChessBoardTest {
 
         pieceByPosition.put(new Position("h2"), new King(Color.WHITE));
 
-        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+        final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
         // when
-        Map<Color, Double> scoreByColor = chessBoard.calculateScore();
-        Double actual = scoreByColor.get(color);
+        final Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+        final Double actual = scoreByColor.get(color);
 
         // then
         assertThat(actual).isEqualTo(expected);

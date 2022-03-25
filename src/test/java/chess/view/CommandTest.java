@@ -11,7 +11,7 @@ class CommandTest {
     @DisplayName("명령이 올바른 형식으로 들어오지 않았을 때 예외를 발생시킨다")
     void validate() {
         // given
-        String input = "s t a r t";
+        final String input = "s t a r t";
 
         // then
         assertThatThrownBy(() -> Command.validate(input))
@@ -23,7 +23,7 @@ class CommandTest {
     @DisplayName("이동 명령이 올바른 형식으로 들어오지 않았을 때 예외를 발생시킨다")
     void getFromPosition() {
         // given
-        String input = "move a2";
+        final String input = "move a2";
 
         // then
         assertThatThrownBy(() -> Command.getFromPosition(input))

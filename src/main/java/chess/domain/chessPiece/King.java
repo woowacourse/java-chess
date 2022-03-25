@@ -8,7 +8,7 @@ public class King extends ChessPiece {
     private static final String NAME = "K";
     private static final Double VALUE = 0.0;
 
-    public King(Color color) {
+    public King(final Color color) {
         super(color, NAME, VALUE);
     }
 
@@ -23,9 +23,9 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
-        int fileDistance = Math.abs(from.fileDistance(to));
-        int rankDistance = Math.abs(from.rankDistance(to));
+    public void canMove(final Position from, final Position to) {
+        final int fileDistance = Math.abs(from.fileDistance(to));
+        final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");

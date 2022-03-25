@@ -11,13 +11,13 @@ public class Pawn extends ChessPiece {
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
 
-    public Pawn(Color color) {
+    public Pawn(final Color color) {
         super(color, NAME, VALUE);
     }
 
     @Override
     public List<Position> getInitWhitePosition() {
-        List<Position> list = new ArrayList<>();
+        final List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
             list.add(new Position((char) i + WHITE_INIT_FILE));
         }
@@ -26,7 +26,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public List<Position> getInitBlackPosition() {
-        List<Position> list = new ArrayList<>();
+        final List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
             list.add(new Position((char) i + BLACK_INIT_FILE));
         }
@@ -34,7 +34,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
+    public void canMove(final Position from, final Position to) {
         if (from.isSameRank(to)) {
             if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
                 return;
@@ -49,8 +49,8 @@ public class Pawn extends ChessPiece {
         checkCrossMove(from, to);
     }
 
-    private boolean checkMove(Position from, Position to, int movableDistance, String initFile) {
-        int fileDistance = from.fileDistance(to);
+    private boolean checkMove(final Position from, final Position to, final int movableDistance, final String initFile) {
+        final int fileDistance = from.fileDistance(to);
         if (movableDistance == fileDistance && from.isSameRank(to)) {
             return true;
         }
@@ -60,8 +60,8 @@ public class Pawn extends ChessPiece {
         return false;
     }
 
-    public void checkCrossMove(Position from, Position to) {
-        int fileDistance = from.fileDistance(to);
+    public void checkCrossMove(final Position from, final Position to) {
+        final int fileDistance = from.fileDistance(to);
         if (Math.abs(from.rankDistance(to)) == 1) {
             if (isBlack() && fileDistance == 1) {
                 return;

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class InputView {
 
     private static String input() {
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
@@ -19,7 +19,7 @@ public class InputView {
     }
 
     private static String getCommand() {
-        String text = input().toLowerCase();
+        final String text = input().toLowerCase();
         validateNull(text);
 
         Command.validate(text);
@@ -27,7 +27,7 @@ public class InputView {
         return text;
     }
 
-    private static void validateNull(String text) {
+    private static void validateNull(final String text) {
         if (text == null) {
             throw new IllegalArgumentException("null은 허용되지 않습니다.");
         }

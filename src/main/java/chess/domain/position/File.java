@@ -15,22 +15,22 @@ public enum File {
 
     private final String value;
 
-    File(String value) {
+    File(final String value) {
         this.value = value;
     }
 
-    public static File of(String value) {
+    public static File of(final String value) {
         return Arrays.stream(File.values())
                 .filter((it) -> it.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public File add(int gap) {
+    public File add(final int gap) {
         return File.of(String.valueOf(Integer.parseInt(value) + gap));
     }
 
-    public int calculateDistance(File target) {
+    public int calculateDistance(final File target) {
         return Integer.parseInt(value) - Integer.parseInt(target.value);
     }
 

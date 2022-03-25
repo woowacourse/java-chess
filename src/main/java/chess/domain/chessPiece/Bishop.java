@@ -8,7 +8,7 @@ public class Bishop extends ChessPiece {
     private static final String NAME = "B";
     private static final Double VALUE = 3.0;
 
-    public Bishop(Color color) {
+    public Bishop(final Color color) {
         super(color, NAME, VALUE);
     }
 
@@ -23,9 +23,9 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
-        int rankDistance = Math.abs(from.rankDistance(to));
-        int fileDistance = Math.abs(from.fileDistance(to));
+    public void canMove(final Position from, final Position to) {
+        final int rankDistance = Math.abs(from.rankDistance(to));
+        final int fileDistance = Math.abs(from.fileDistance(to));
 
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");

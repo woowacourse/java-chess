@@ -14,13 +14,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BishopTest {
 
-    Position initialPosition = new Position("d5");
+    final Position initialPosition = new Position("d5");
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     void canMove_cantGo() {
         // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // then
         assertThatThrownBy(() -> bishop.canMove(initialPosition, new Position("d6")))
@@ -33,7 +33,7 @@ class BishopTest {
     @ValueSource(strings = {"b7", "f7", "f3", "b3"})
     void canMove_canGo() {
         // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // then
         Assertions.assertThatCode(() -> bishop.canMove(initialPosition, new Position("c4")))
@@ -45,11 +45,11 @@ class BishopTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute() {
         // given
-        ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // when
-        Stack<Position> actual = bishop.findRoute(initialPosition, new Position("h1"));
-        List<Position> expected = List.of(new Position("e4"), new Position("f3"), new Position("g2"));
+        final Stack<Position> actual = bishop.findRoute(initialPosition, new Position("h1"));
+        final List<Position> expected = List.of(new Position("e4"), new Position("f3"), new Position("g2"));
 
         // then
         assertThat(actual).containsAll(expected);

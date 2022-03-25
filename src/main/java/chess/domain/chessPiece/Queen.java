@@ -8,7 +8,7 @@ public class Queen extends ChessPiece {
     private static final String NAME = "Q";
     private static final Double VALUE = 9.0;
 
-    public Queen(Color color) {
+    public Queen(final Color color) {
         super(color, NAME, VALUE);
     }
 
@@ -23,12 +23,12 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
-        int fileDistance = Math.abs(from.fileDistance(to));
-        int rankDistance = Math.abs(from.rankDistance(to));
+    public void canMove(final Position from, final Position to) {
+        final int fileDistance = Math.abs(from.fileDistance(to));
+        final int rankDistance = Math.abs(from.rankDistance(to));
 
-        boolean sameFile = from.isSameFile(to);
-        boolean sameRank = from.isSameRank(to);
+        final boolean sameFile = from.isSameFile(to);
+        final boolean sameRank = from.isSameRank(to);
 
         if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");

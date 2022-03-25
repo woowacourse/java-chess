@@ -13,34 +13,34 @@ public enum Command {
 
     private final String value;
 
-    Command(String value) {
+    Command(final String value) {
         this.value = value;
     }
 
-    public static void validate(String input) {
+    public static void validate(final String input) {
         Arrays.stream(values())
                 .filter(it -> input.startsWith(it.value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
-    public static Command splitCommand(String text) {
-        String[] splitText = text.split(" ");
+    public static Command splitCommand(final String text) {
+        final String[] splitText = text.split(" ");
         return Arrays.stream(values())
                 .filter(it -> it.value.equals(splitText[0]))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
-    public static String getFromPosition(String text) {
-        String[] splitText = text.split(" ");
+    public static String getFromPosition(final String text) {
+        final String[] splitText = text.split(" ");
         if (splitText.length != 3) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
         return splitText[1];
     }
 
-    public static String getToPosition(String text) {
+    public static String getToPosition(final String text) {
         return text.split(" ")[2];
     }
 }

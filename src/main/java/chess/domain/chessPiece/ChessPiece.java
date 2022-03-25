@@ -11,7 +11,7 @@ public abstract class ChessPiece {
     private final String name;
     private final double value;
 
-    protected ChessPiece(Color color, String name, double value) {
+    protected ChessPiece(final Color color, final String name, final double value) {
         this.color = color;
         this.name = color.convertByColor(name);
         this.value = value;
@@ -21,16 +21,16 @@ public abstract class ChessPiece {
 
     public abstract List<Position> getInitBlackPosition();
 
-    public abstract void canMove(Position from, Position to);
+    public abstract void canMove(final Position from, final Position to);
 
-    public Stack<Position> findRoute(final Position from, Position to) {
-        Stack<Position> routes = new Stack<>();
-        Direction direction = to.findDirection(from);
+    public Stack<Position> findRoute(final Position from, final Position to) {
+        final Stack<Position> routes = new Stack<>();
+        final Direction direction = to.findDirection(from);
 
         Position newFrom = new Position(from.getValue());
 
         while (!newFrom.equals(to)) {
-            Position nextPosition = newFrom.toNextPosition(direction);
+            final Position nextPosition = newFrom.toNextPosition(direction);
             routes.add(new Position(nextPosition.getValue()));
             newFrom = nextPosition;
         }
@@ -44,15 +44,15 @@ public abstract class ChessPiece {
         return color.isBlack();
     }
 
-    public boolean isSameColor(ChessPiece chessPiece) {
+    public boolean isSameColor(final ChessPiece chessPiece) {
         return this.color == chessPiece.color;
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
 
-    public boolean isEnemyTurn(Color color) {
+    public boolean isEnemyTurn(final Color color) {
         return this.color != color;
     }
 

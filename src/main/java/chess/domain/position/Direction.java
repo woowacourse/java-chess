@@ -16,12 +16,12 @@ public enum Direction {
     private final int rankGap;
     private final int fileGap;
 
-    Direction(int rankGap, int fileGap) {
+    Direction(final int rankGap, final int fileGap) {
         this.rankGap = rankGap;
         this.fileGap = fileGap;
     }
 
-    public static Direction of(int rankDistance, int fileDistance) {
+    public static Direction of(final int rankDistance, final int fileDistance) {
         return Arrays.stream(values())
                 .filter(it -> it.rankGap == rankDistance)
                 .filter(it -> it.fileGap == fileDistance)

@@ -8,17 +8,17 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PositionTest {
 
-    Position position = new Position("a1");
+    final Position position = new Position("a1");
 
     @ParameterizedTest
     @DisplayName("포지션 간 세로줄을 비교한다.")
     @CsvSource(value = {"b1:true", "a2:false"}, delimiter = ':')
-    void isSameFile(String target, boolean expected) {
+    void isSameFile(final String target, final boolean expected) {
         //given
-        Position targetPosition = new Position(target);
+        final Position targetPosition = new Position(target);
 
         // when
-        boolean actual = position.isSameFile(targetPosition);
+        final boolean actual = position.isSameFile(targetPosition);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -27,9 +27,9 @@ class PositionTest {
     @ParameterizedTest
     @DisplayName("위치의 이름을 비교한다.")
     @CsvSource(value = {"1:true", "2:false"}, delimiter = ':')
-    void testIsSameFile(String target, boolean expected) {
+    void testIsSameFile(final String target, final boolean expected) {
         // when
-        boolean actual = position.isSameFile(target);
+        final boolean actual = position.isSameFile(target);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -38,12 +38,12 @@ class PositionTest {
     @ParameterizedTest
     @DisplayName("포지션 간 가로줄을 비교한다.")
     @CsvSource(value = {"a2:true", "b1:false"}, delimiter = ':')
-    void isSameRank(String target, boolean expected) {
+    void isSameRank(final String target, final boolean expected) {
         //given
-        Position targetPosition = new Position(target);
+        final Position targetPosition = new Position(target);
 
         // when
-        boolean actual = position.isSameRank(targetPosition);
+        final boolean actual = position.isSameRank(targetPosition);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -54,11 +54,11 @@ class PositionTest {
     @CsvSource(value = {"d7:N", "f7:NE", "f5:E", "f3:SE", "d3:S", "b3:SW", "b5:W", "b7:NW"}, delimiter = ':')
     void findDirection(String target, Direction expected) {
         // given
-        Position position = new Position("d5");
-        Position targetPosition = new Position(target);
+        final Position position = new Position("d5");
+        final Position targetPosition = new Position(target);
 
         // when
-        Direction actual = targetPosition.findDirection(position);
+        final Direction actual = targetPosition.findDirection(position);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -69,10 +69,10 @@ class PositionTest {
     @CsvSource(value = {"N:d6", "NE:e6", "E:e5", "SE:e4", "S:d4", "SW:c4", "W:c5", "NW:c6"}, delimiter = ':')
     void toNextPosition(Direction direction, String expected) {
         // given
-        Position position = new Position("d5");
+        final Position position = new Position("d5");
 
         // when
-        Position actual = position.toNextPosition(direction);
+        final Position actual = position.toNextPosition(direction);
 
         // then
         assertThat(actual.getValue()).isEqualTo(expected);

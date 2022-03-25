@@ -12,11 +12,11 @@ class RankTest {
     @DisplayName("문자열에 해당하는 Rank을 찾는다.")
     void of() {
         // given
-        String value = "a";
+        final String value = "a";
 
         // when
-        Rank rank = Rank.of(value);
-        String actual = rank.getValue();
+        final Rank rank = Rank.of(value);
+        final String actual = rank.getValue();
 
         // then
         assertThat(actual).isEqualTo(value);
@@ -26,7 +26,7 @@ class RankTest {
     @DisplayName("입력된 value가 유효하지 않은 범위이면 예외를 발생시킨다.")
     void of_exception() {
         // given
-        String value = "i";
+        final String value = "i";
 
         // then
         assertThatThrownBy(() -> File.of(value))

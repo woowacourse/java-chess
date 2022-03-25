@@ -8,7 +8,7 @@ public class Rook extends ChessPiece {
     private static final String NAME = "R";
     private static final Double VALUE = 5.0;
 
-    public Rook(Color color) {
+    public Rook(final Color color) {
         super(color, NAME, VALUE);
     }
 
@@ -23,9 +23,9 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
-        boolean sameFile = from.isSameFile(to);
-        boolean sameRank = from.isSameRank(to);
+    public void canMove(final Position from, final Position to) {
+        final boolean sameFile = from.isSameFile(to);
+        final boolean sameRank = from.isSameRank(to);
 
         if (!sameFile && !sameRank) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");

@@ -11,14 +11,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
 
-    Position initialPosition = new Position("d5");
+    final Position initialPosition = new Position("d5");
 
     @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     @CsvSource(value = {"BLACK:d6", "WHITE:d4"}, delimiter = ':')
-    void canMove_cantGo(Color color, String target) {
+    void canMove_cantGo(final Color color, final String target) {
         // given
-        ChessPiece pawn = new Pawn(color);
+        final ChessPiece pawn = new Pawn(color);
 
         // then
         assertThatThrownBy(() -> pawn.canMove(initialPosition, new Position(target)))
@@ -30,7 +30,7 @@ class PawnTest {
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     void canMove_canGo() {
         // given
-        ChessPiece pawn = new Pawn(Color.BLACK);
+        final ChessPiece pawn = new Pawn(Color.BLACK);
 
         // then
         Assertions.assertThatCode(() -> pawn.canMove(initialPosition, new Position("d4")))
@@ -41,9 +41,9 @@ class PawnTest {
     @ParameterizedTest
     @DisplayName("처음 위치에서 2칸 이동한다.")
     @CsvSource(value = {"BLACK:d7:d5", "WHITE:d2:d4"}, delimiter = ':')
-    void canMove_canGoInit(Color color, String from, String to) {
+    void canMove_canGoInit(final Color color, final String from, final String to) {
         // given
-        ChessPiece pawn = new Pawn(color);
+        final ChessPiece pawn = new Pawn(color);
 
         // then
         Assertions.assertThatCode(() -> pawn.canMove(new Position(from), new Position(to)))
@@ -53,12 +53,12 @@ class PawnTest {
     @ParameterizedTest
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     @CsvSource(value = {"BLACK:e4", "BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
-    void canCatch_canCatch(Color color, String target) {
+    void canCatch_canCatch(final Color color, final String target) {
         // given
-        ChessPiece pawn = new Pawn(color);
+        final Pawn pawn = new Pawn(color);
 
         // then
-        Assertions.assertThatCode(() -> ((Pawn) pawn).checkCrossMove(initialPosition, new Position(target)))
+        Assertions.assertThatCode(() -> pawn.checkCrossMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
     }
 }

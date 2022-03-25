@@ -9,7 +9,7 @@ public enum Color {
         return this.equals(BLACK);
     }
 
-    public String convertByColor(String name) {
+    public String convertByColor(final String name) {
         if (isBlack()) {
             return name.toUpperCase();
         }

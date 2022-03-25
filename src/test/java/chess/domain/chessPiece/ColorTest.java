@@ -6,15 +6,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-
 class ColorTest {
 
     @ParameterizedTest
     @DisplayName("기물의 색깔을 확인한다.")
     @CsvSource(value = {"BLACK:true", "WHITE:false"}, delimiter = ':')
-    void isBlack(Color color, boolean expected) {
+    void isBlack(final Color color, final boolean expected) {
         // when
-        boolean actual = color.isBlack();
+        final boolean actual = color.isBlack();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -23,9 +22,9 @@ class ColorTest {
     @ParameterizedTest
     @DisplayName("기물의 색깔에 맞는 이름으로 변환한다.")
     @CsvSource(value = {"BLACK:abc:ABC", "WHITE:ABC:abc"}, delimiter = ':')
-    void convertByColor(Color color, String name, String expected) {
+    void convertByColor(final Color color, final String name, final String expected) {
         // when
-        String actual = color.convertByColor(name);
+        final String actual = color.convertByColor(name);
 
         // then
         assertThat(actual).isEqualTo(expected);

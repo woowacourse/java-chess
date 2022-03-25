@@ -4,69 +4,70 @@ import java.util.Objects;
 
 public class Position {
 
-    private Rank rank;
-    private File file;
+    private final Rank rank;
+    private final File file;
 
-    public Position(String text) {
+    public Position(final String text) {
         this.rank = Rank.of(String.valueOf(text.charAt(0)));
         this.file = File.of(String.valueOf(text.charAt(1)));
     }
 
-    public Position(Rank rank, File file) {
+    public Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public int rankDistance(Position target) {
+    public int rankDistance(final Position target) {
         return rank.calculateDistance(target.rank);
     }
 
-    public int fileDistance(Position target) {
+    public int fileDistance(final Position target) {
         return file.calculateDistance(target.file);
     }
 
-    public boolean isSameRank(Position target) {
+    public boolean isSameRank(final Position target) {
         return rank.equals(target.rank);
     }
 
-    public boolean isSameFile(Position target) {
+    public boolean isSameFile(final Position target) {
         return file.equals(target.file);
     }
 
-    public boolean isSameFile(String target) {
+    public boolean isSameFile(final String target) {
         return file.equals(File.of(target));
     }
 
-    public Direction findDirection(Position target) {
-        int rankDistance = calculateRankGap(target);
-        int fileDistance = calculateFileGap(target);
+    public Direction findDirection(final Position target) {
+        final int rankDistance = calculateRankGap(target);
+        final int fileDistance = calculateFileGap(target);
 
         return Direction.of(rankDistance, fileDistance);
     }
 
-    private int calculateRankGap(Position target) {
+    private int calculateRankGap(final Position target) {
         return toGap(rankDistance(target));
     }
 
-    private int calculateFileGap(Position target) {
+    private int calculateFileGap(final Position target) {
         return toGap(fileDistance(target));
     }
 
-    private int toGap(int distance) {
+    private int toGap(final int distance) {
         if (distance > 0) {
-            distance = 1;
+            return 1;
         }
 
         if (distance < 0) {
-            distance = -1;
+            return -1;
         }
-        return distance;
+        return 0;
     }
 
-    public Position toNextPosition(Direction direction) {
-        this.rank = rank.add(direction.rankGap());
-        this.file = file.add(direction.fileGap());
-        return new Position(rank.getValue() + file.getValue());
+    public Position toNextPosition(final Direction direction) {
+        final Rank nextRank = rank.add(direction.rankGap());
+        final File nextFile = file.add(direction.fileGap());
+
+        return new Position(nextRank, nextFile);
     }
 
     public String getValue() {
@@ -74,14 +75,14 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position position = (Position) o;
+        final Position position = (Position) o;
         return rank == position.rank && file == position.file;
     }
 

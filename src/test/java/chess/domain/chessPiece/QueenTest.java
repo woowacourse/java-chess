@@ -14,8 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class QueenTest {
 
-    Position initialPosition = new Position("d5");
-    ChessPiece queen = new Queen(Color.BLACK);
+    final Position initialPosition = new Position("d5");
+    final ChessPiece queen = new Queen(Color.BLACK);
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
@@ -29,7 +29,7 @@ class QueenTest {
     @ParameterizedTest
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     @ValueSource(strings = {"b7", "b5", "d7", "f7", "f5", "f3", "d3", "b3"})
-    void canMove_canGo(String target) {
+    void canMove_canGo(final String target) {
         // then
         Assertions.assertThatCode(() -> queen.canMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
@@ -39,8 +39,8 @@ class QueenTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute_S() {
         // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("d1"));
-        List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
+        final Stack<Position> actual = queen.findRoute(initialPosition, new Position("d1"));
+        final List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
 
         // then
         assertThat(actual).containsAll(expected);
@@ -50,8 +50,8 @@ class QueenTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute_NW() {
         // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("a8"));
-        List<Position> expected = List.of(new Position("c6"), new Position("b7"));
+        final Stack<Position> actual = queen.findRoute(initialPosition, new Position("a8"));
+        final List<Position> expected = List.of(new Position("c6"), new Position("b7"));
 
         // then
         assertThat(actual).containsAll(expected);
@@ -61,7 +61,7 @@ class QueenTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute_SE() {
         // when
-        Stack<Position> actual = queen.findRoute(initialPosition, new Position("e4"));
+        final Stack<Position> actual = queen.findRoute(initialPosition, new Position("e4"));
 
         // then
         assertThat(actual).isEmpty();

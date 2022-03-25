@@ -30,17 +30,17 @@ public class OutputView {
         System.out.println(START_MESSAGE);
     }
 
-    public static void printChessBoard(ChessBoard chessBoard) {
+    public static void printChessBoard(final ChessBoard chessBoard) {
         for (int j = FILE_END; j >= FILE_START; j--) {
             printRank(chessBoard, j);
         }
     }
 
-    private static void printRank(ChessBoard chessBoard, int j) {
+    private static void printRank(final ChessBoard chessBoard, final int j) {
         for (int i = RANK_START; i <= RANK_END; i++) {
-            String position = (char) i + String.valueOf(j);
+            final String position = (char) i + String.valueOf(j);
 
-            Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
+            final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
             possiblePiece.ifPresentOrElse(
                     (piece) -> System.out.print(piece.getName()),
                     () -> System.out.print(EMPTY));
@@ -48,26 +48,26 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printStatus(Map<Color, Double> scoreByColor) {
+    public static void printStatus(final Map<Color, Double> scoreByColor) {
         System.out.println(STATUS);
         printTotalScore(scoreByColor);
     }
 
-    public static void printResult(Map<Color, Double> scoreByColor) {
+    public static void printResult(final Map<Color, Double> scoreByColor) {
         System.out.println(RESULT);
         printTotalScore(scoreByColor);
     }
 
-    private static void printTotalScore(Map<Color, Double> scoreByColor) {
-        for (Map.Entry<Color, Double> entry : scoreByColor.entrySet()) {
+    private static void printTotalScore(final Map<Color, Double> scoreByColor) {
+        for (final Map.Entry<Color, Double> entry : scoreByColor.entrySet()) {
             printScore(entry);
         }
     }
 
-    private static void printScore(Map.Entry<Color, Double> entry) {
+    private static void printScore(final Map.Entry<Color, Double> entry) {
         System.out.print(entry.getKey().name() + DELIMITER);
 
-        double score = entry.getValue();
+        final double score = entry.getValue();
         if (score == (int) score) {
             System.out.printf("%d%n", (int) score);
             return;
@@ -75,7 +75,7 @@ public class OutputView {
         System.out.printf("%s%n", score);
     }
 
-    public static void printError(String errorMessage) {
+    public static void printError(final String errorMessage) {
         System.out.println(ERROR + errorMessage);
     }
 }
