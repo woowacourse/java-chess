@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.fixture.StrategyFixture.NOT_OCCUPIED_STRATEGY;
+import static chess.fixture.StrategyFixture.CLEAR_PATH_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -26,7 +26,7 @@ public class KingTest {
     @Test
     void move() {
         King king = new King(WHITE, Position.of("e1"));
-        king.move(Position.of("d2"), NOT_OCCUPIED_STRATEGY);
+        king.move(Position.of("d2"), CLEAR_PATH_STRATEGY);
 
         King expected = new King(WHITE, Position.of("d2"));
 
@@ -38,7 +38,7 @@ public class KingTest {
     void move_exception() {
         King king = new King(WHITE, Position.of("e1"));
 
-        assertThatCode(() -> king.move(Position.of("c3"), NOT_OCCUPIED_STRATEGY))
+        assertThatCode(() -> king.move(Position.of("c3"), CLEAR_PATH_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }

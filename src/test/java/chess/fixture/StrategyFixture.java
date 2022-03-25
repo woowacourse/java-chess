@@ -4,5 +4,5 @@ import chess.strategy.OccupiedChecker;
 
 public class StrategyFixture {
 
-    public static OccupiedChecker NOT_OCCUPIED_STRATEGY = (p) -> false;
+    public static OccupiedChecker CLEAR_PATH_STRATEGY = (p) -> false;
 }

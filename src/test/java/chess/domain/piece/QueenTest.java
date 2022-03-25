@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.fixture.StrategyFixture.NOT_OCCUPIED_STRATEGY;
+import static chess.fixture.StrategyFixture.CLEAR_PATH_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -26,7 +26,7 @@ public class QueenTest {
     @Test
     void move_horizontal() {
         Queen queen = new Queen(WHITE, Position.of("d1"));
-        queen.move(Position.of("d8"), NOT_OCCUPIED_STRATEGY);
+        queen.move(Position.of("d8"), CLEAR_PATH_STRATEGY);
 
         Queen expected = new Queen(WHITE, Position.of("d8"));
 
@@ -37,7 +37,7 @@ public class QueenTest {
     @Test
     void move_diagonal() {
         Queen queen = new Queen(WHITE, Position.of("d1"));
-        queen.move(Position.of("a4"), NOT_OCCUPIED_STRATEGY);
+        queen.move(Position.of("a4"), CLEAR_PATH_STRATEGY);
 
         Queen expected = new Queen(WHITE, Position.of("a4"));
 
@@ -49,7 +49,7 @@ public class QueenTest {
     void move_exception() {
         Queen queen = new Queen(WHITE, Position.of("d1"));
 
-        assertThatCode(() -> queen.move(Position.of("e3"), NOT_OCCUPIED_STRATEGY))
+        assertThatCode(() -> queen.move(Position.of("e3"), CLEAR_PATH_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
     }
