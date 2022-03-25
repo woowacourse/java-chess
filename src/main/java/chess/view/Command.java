@@ -7,6 +7,8 @@ public enum Command {
     END("end"),
     MOVE("move");
 
+    private static final String ERROR_MESSAGE = "잘못된 명령입니다.";
+
     private String value;
 
     Command(String value) {
@@ -17,7 +19,7 @@ public enum Command {
         Arrays.stream(values())
                 .filter(it -> input.startsWith(it.value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
     public static Command splitCommand(String text) {
@@ -25,11 +27,15 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(it -> it.value.equals(splitText[0]))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
     public static String getFromPosition(String text) {
-        return text.split(" ")[1];
+        String[] splitText = text.split(" ");
+        if (splitText.length != 3) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
+        }
+        return splitText[1];
     }
 
     public static String getToPosition(String text) {
