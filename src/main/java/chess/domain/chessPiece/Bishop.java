@@ -1,15 +1,31 @@
 package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Bishop extends ChessPiece {
+public final class Bishop extends ChessPiece {
 
+    private static final Map<Color, Bishop> cache;
     private static final String NAME = "B";
     private static final Double VALUE = 3.0;
 
-    public Bishop(final Color color) {
+    static {
+        cache = Arrays.stream(Color.values())
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        Bishop::new));
+    }
+
+    private Bishop(final Color color) {
         super(color, NAME, VALUE);
+    }
+
+    public static Bishop from(final Color color) {
+        return cache.get(color);
     }
 
     @Override

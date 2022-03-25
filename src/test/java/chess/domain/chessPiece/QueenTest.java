@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class QueenTest {
 
     final Position initialPosition = Position.from("d5");
-    final ChessPiece queen = new Queen(Color.BLACK);
+    final ChessPiece queen = Queen.from(Color.BLACK);
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")

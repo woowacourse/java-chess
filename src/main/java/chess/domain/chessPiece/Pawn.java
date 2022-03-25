@@ -2,17 +2,33 @@ package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Pawn extends ChessPiece {
+public final class Pawn extends ChessPiece {
 
+    private static final Map<Color, Pawn> cache;
     private static final String NAME = "P";
     private static final Double VALUE = 1.0;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
 
-    public Pawn(final Color color) {
+    static {
+        cache = Arrays.stream(Color.values())
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        Pawn::new));
+    }
+
+    private Pawn(final Color color) {
         super(color, NAME, VALUE);
+    }
+
+    public static Pawn from(final Color color) {
+        return cache.get(color);
     }
 
     @Override

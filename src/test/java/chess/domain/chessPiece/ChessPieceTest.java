@@ -11,8 +11,8 @@ class ChessPieceTest {
     @DisplayName("기물끼리의 색깔을 비교한다.")
     void isSameColor() {
         // given
-        final ChessPiece me = new Pawn(Color.BLACK);
-        final ChessPiece target = new Pawn(Color.WHITE);
+        final ChessPiece me = Pawn.from(Color.BLACK);
+        final ChessPiece target = Pawn.from(Color.WHITE);
 
         // when
         final boolean actual = me.isSameColor(target);

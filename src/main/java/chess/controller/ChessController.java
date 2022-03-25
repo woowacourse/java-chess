@@ -46,7 +46,7 @@ public class ChessController {
             checkBeforeStart(chessBoard);
             chessBoard.start();
             OutputView.printChessBoard(chessBoard);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }
     }
@@ -63,7 +63,7 @@ public class ChessController {
             chessBoard.move(Position.from(Command.getFromPosition(inputText)),
                     Position.from(Command.getToPosition(inputText)));
             OutputView.printChessBoard(chessBoard);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }
     }
@@ -72,7 +72,7 @@ public class ChessController {
         try {
             checkBeforePlaying(chessBoard);
             OutputView.printStatus(chessBoard.calculateScore());
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }
     }

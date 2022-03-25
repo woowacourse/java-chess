@@ -18,7 +18,7 @@ class RookTest {
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     void canMove_cantGo() {
         // given
-        final ChessPiece rook = new Rook(Color.BLACK);
+        final ChessPiece rook = Rook.from(Color.BLACK);
 
         // then
         assertThatThrownBy(() -> rook.canMove(initialPosition, Position.from("c6")))
@@ -30,7 +30,7 @@ class RookTest {
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     void canMove_canGo() {
         // given
-        final ChessPiece rook = new Rook(Color.BLACK);
+        final ChessPiece rook = Rook.from(Color.BLACK);
 
         // then
         Assertions.assertThatCode(() -> rook.canMove(initialPosition, Position.from("c5")))
@@ -41,7 +41,7 @@ class RookTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute() {
         // given
-        final ChessPiece rook = new Rook(Color.BLACK);
+        final ChessPiece rook = Rook.from(Color.BLACK);
 
         // when
         final Stack<Position> actual = rook.findRoute(initialPosition, Position.from("d1"));

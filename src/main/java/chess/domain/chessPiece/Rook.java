@@ -1,15 +1,31 @@
 package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Rook extends ChessPiece {
+public final class Rook extends ChessPiece {
 
+    private static final Map<Color, Rook> cache;
     private static final String NAME = "R";
     private static final Double VALUE = 5.0;
 
-    public Rook(final Color color) {
+    static {
+        cache = Arrays.stream(Color.values())
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        Rook::new));
+    }
+
+    private Rook(final Color color) {
         super(color, NAME, VALUE);
+    }
+
+    public static Rook from(final Color color) {
+        return cache.get(color);
     }
 
     @Override

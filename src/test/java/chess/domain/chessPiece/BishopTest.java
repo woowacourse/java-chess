@@ -20,7 +20,7 @@ class BishopTest {
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     void canMove_cantGo() {
         // given
-        final ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
         assertThatThrownBy(() -> bishop.canMove(initialPosition, Position.from("d6")))
@@ -33,7 +33,7 @@ class BishopTest {
     @ValueSource(strings = {"b7", "f7", "f3", "b3"})
     void canMove_canGo(final String target) {
         // given
-        final ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
         assertThatCode(() -> bishop.canMove(initialPosition, Position.from(target)))
@@ -45,7 +45,7 @@ class BishopTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute() {
         // given
-        final ChessPiece bishop = new Bishop(Color.BLACK);
+        final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // when
         final Stack<Position> actual = bishop.findRoute(initialPosition, Position.from("h1"));

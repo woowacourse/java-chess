@@ -70,8 +70,8 @@ class ChessBoardTest {
         final Position to = Position.from("f4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Bishop(Color.WHITE));
-        pieceByPosition.put(to, new Rook(Color.BLACK));
+        pieceByPosition.put(from, Bishop.from(Color.WHITE));
+        pieceByPosition.put(to, Rook.from(Color.BLACK));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -114,8 +114,8 @@ class ChessBoardTest {
         final Position to = Position.from("b4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Pawn(Color.WHITE));
-        pieceByPosition.put(to, new Pawn(Color.BLACK));
+        pieceByPosition.put(from, Pawn.from(Color.WHITE));
+        pieceByPosition.put(to, Pawn.from(Color.BLACK));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -158,8 +158,8 @@ class ChessBoardTest {
         final Position to = Position.from("d6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Pawn(Color.WHITE));
-        pieceByPosition.put(to, new Pawn(Color.BLACK));
+        pieceByPosition.put(from, Pawn.from(Color.WHITE));
+        pieceByPosition.put(to, Pawn.from(Color.BLACK));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -177,8 +177,8 @@ class ChessBoardTest {
         final Position to = Position.from("a4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Pawn(Color.BLACK));
-        pieceByPosition.put(Position.from("a3"), new Pawn(Color.WHITE));
+        pieceByPosition.put(from, Pawn.from(Color.BLACK));
+        pieceByPosition.put(Position.from("a3"), Pawn.from(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
         chessBoard.move(Position.from("a3"), to);
@@ -197,8 +197,8 @@ class ChessBoardTest {
         final Position to = Position.from("c6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Pawn(Color.WHITE));
-        pieceByPosition.put(to, new Pawn(Color.WHITE));
+        pieceByPosition.put(from, Pawn.from(Color.WHITE));
+        pieceByPosition.put(to, Pawn.from(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -216,7 +216,7 @@ class ChessBoardTest {
         final Position to = Position.from("c6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Pawn(Color.WHITE));
+        pieceByPosition.put(from, Pawn.from(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -241,11 +241,11 @@ class ChessBoardTest {
     void calculateScore_pawn(final Color color, final double expected) {
         // given
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(Position.from("a1"), new Pawn(Color.BLACK));
-        pieceByPosition.put(Position.from("a3"), new Pawn(Color.BLACK));
-        pieceByPosition.put(Position.from("a5"), new Pawn(Color.BLACK));
+        pieceByPosition.put(Position.from("a1"), Pawn.from(Color.BLACK));
+        pieceByPosition.put(Position.from("a3"), Pawn.from(Color.BLACK));
+        pieceByPosition.put(Position.from("a5"), Pawn.from(Color.BLACK));
 
-        pieceByPosition.put(Position.from("a2"), new Pawn(Color.WHITE));
+        pieceByPosition.put(Position.from("a2"), Pawn.from(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -263,14 +263,14 @@ class ChessBoardTest {
     void calculateScore_combination(final Color color, final double expected) {
         // given
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(Position.from("a1"), new King(Color.BLACK)); // 0
-        pieceByPosition.put(Position.from("a2"), new Queen(Color.BLACK)); // 9
-        pieceByPosition.put(Position.from("a3"), new Knight(Color.BLACK)); // 2.5
-        pieceByPosition.put(Position.from("a4"), new Rook(Color.BLACK)); // 5
-        pieceByPosition.put(Position.from("a5"), new Bishop(Color.BLACK)); // 3
-        pieceByPosition.put(Position.from("a6"), new Pawn(Color.BLACK)); // 1
+        pieceByPosition.put(Position.from("a1"), King.from(Color.BLACK)); // 0
+        pieceByPosition.put(Position.from("a2"), Queen.from(Color.BLACK)); // 9
+        pieceByPosition.put(Position.from("a3"), Knight.from(Color.BLACK)); // 2.5
+        pieceByPosition.put(Position.from("a4"), Rook.from(Color.BLACK)); // 5
+        pieceByPosition.put(Position.from("a5"), Bishop.from(Color.BLACK)); // 3
+        pieceByPosition.put(Position.from("a6"), Pawn.from(Color.BLACK)); // 1
 
-        pieceByPosition.put(Position.from("h2"), new King(Color.WHITE));
+        pieceByPosition.put(Position.from("h2"), King.from(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -290,8 +290,8 @@ class ChessBoardTest {
         final Position to = Position.from("f4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(from, new Bishop(Color.WHITE));
-        pieceByPosition.put(to, new King(Color.BLACK));
+        pieceByPosition.put(from, Bishop.from(Color.WHITE));
+        pieceByPosition.put(to, King.from(Color.BLACK));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 

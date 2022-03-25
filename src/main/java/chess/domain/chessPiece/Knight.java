@@ -1,16 +1,32 @@
 package chess.domain.chessPiece;
 
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Knight extends ChessPiece {
+public final class Knight extends ChessPiece {
 
+    private static final Map<Color, Knight> cache;
     private static final String NAME = "N";
     private static final Double VALUE = 2.5;
 
-    public Knight(final Color color) {
+    static {
+        cache = Arrays.stream(Color.values())
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        Knight::new));
+    }
+
+    private Knight(final Color color) {
         super(color, NAME, VALUE);
+    }
+
+    public static Knight from(final Color color) {
+        return cache.get(color);
     }
 
     @Override

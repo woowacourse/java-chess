@@ -12,7 +12,7 @@ public class InputView {
     public static String requestCommand() {
         try {
             return getCommand();
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             System.out.println("[ERROR] : " + e.getMessage());
             return requestCommand();
         }

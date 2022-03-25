@@ -18,7 +18,7 @@ class PawnTest {
     @ValueSource(strings = {"c4", "d4", "e4"})
     void canMove(final String target) {
         // given
-        final ChessPiece pawn = new Pawn(Color.BLACK);
+        final ChessPiece pawn = Pawn.from(Color.BLACK);
 
         // then
         assertThatCode(() -> pawn.canMove(initialPosition, Position.from(target)))
@@ -31,7 +31,7 @@ class PawnTest {
     @CsvSource(value = {"BLACK:d6", "BLACK:d3", "BLACK:c3", "WHITE:d4", "WHITE:d7", "WHITE:c7"}, delimiter = ':')
     void canMove_exception(final Color color, final String target) {
         // given
-        final ChessPiece pawn = new Pawn(color);
+        final ChessPiece pawn = Pawn.from(color);
 
         // then
         assertThatThrownBy(() -> pawn.canMove(initialPosition, Position.from(target)))
@@ -44,7 +44,7 @@ class PawnTest {
     @CsvSource(value = {"BLACK:d7:d5", "WHITE:d2:d4"}, delimiter = ':')
     void canMove_initFile(final Color color, final String from, final String to) {
         // given
-        final ChessPiece pawn = new Pawn(color);
+        final ChessPiece pawn = Pawn.from(color);
 
         // then
         assertThatCode(() -> pawn.canMove(Position.from(from), Position.from(to)))
@@ -56,7 +56,7 @@ class PawnTest {
     @CsvSource(value = {"BLACK:d7:d4", "WHITE:d2:d5"}, delimiter = ':')
     void canMove_initFile_exception(final Color color, final String from, final String to) {
         // given
-        final ChessPiece pawn = new Pawn(color);
+        final ChessPiece pawn = Pawn.from(color);
 
         // then
         assertThatThrownBy(() -> pawn.canMove(Position.from(from), Position.from(to)))
@@ -69,7 +69,7 @@ class PawnTest {
     @CsvSource(value = {"BLACK:e4", "BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
     void checkCrossMove(final Color color, final String target) {
         // given
-        final Pawn pawn = new Pawn(color);
+        final Pawn pawn = Pawn.from(color);
 
         // then
         assertThatCode(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))
@@ -81,7 +81,7 @@ class PawnTest {
     @CsvSource(value = {"BLACK:f4", "BLACK:b4", "WHITE:b6", "WHITE:f6"}, delimiter = ':')
     void checkCrossMove_exception(final Color color, final String target) {
         // given
-        final Pawn pawn = new Pawn(color);
+        final Pawn pawn = Pawn.from(color);
 
         // then
         assertThatThrownBy(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))

@@ -38,14 +38,14 @@ public class ChessBoard {
     }
 
     private void init() {
-        for (final Color value : Color.values()) {
+        for (final Color color : Color.values()) {
             final List<ChessPiece> pieces = List.of(
-                    new King(value),
-                    new Queen(value),
-                    new Pawn(value),
-                    new Rook(value),
-                    new Bishop(value),
-                    new Knight(value));
+                    King.from(color),
+                    Queen.from(color),
+                    Pawn.from(color),
+                    Rook.from(color),
+                    Bishop.from(color),
+                    Knight.from(color));
 
             for (final ChessPiece chessPiece : pieces) {
                 initByPiece(chessPiece);
