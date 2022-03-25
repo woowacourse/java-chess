@@ -27,7 +27,7 @@ public enum File {
         this.order = order;
     }
 
-    public static File of(String value) {
+    public static File from(String value) {
         return Arrays.stream(values())
                 .filter(file -> file.value.equalsIgnoreCase(value))
                 .findAny()
