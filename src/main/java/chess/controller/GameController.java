@@ -9,6 +9,7 @@ import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
+import chess.domain.game.ActivePieces;
 import chess.domain.game.ChessGame;
 import chess.dto.BoardViewDto;
 
@@ -21,7 +22,7 @@ public class GameController {
         if (!requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new ChessGame();
+        return new ChessGame(new ActivePieces());
     }
 
     public void playGame(ChessGame game) {

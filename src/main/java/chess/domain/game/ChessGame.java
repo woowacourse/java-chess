@@ -14,8 +14,8 @@ public class ChessGame {
 
     private final ActivePieces chessmen;
 
-    public ChessGame() {
-        this.chessmen = new ActivePieces();
+    public ChessGame(ActivePieces chessmen) {
+        this.chessmen = chessmen;
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
