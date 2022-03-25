@@ -52,7 +52,7 @@ class KingTest {
     }
 
     @Test
-    @DisplayName("킹의 target위치에 아군 말이 없으면 움직임에 성공한다")
+    @DisplayName("킹의 target위치가 빈칸이면 움직임에 성공한다")
     void moveKingTest2() {
         List<Piece> pieces = List.of(
                 new King(Position.of('a', '8'), Team.BLACK),
@@ -79,5 +79,15 @@ class KingTest {
         assertThatThrownBy(
                 () -> board.move(command)
         ).isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("킹은 source와 target사이에 말들이 없다.")
+    void getIntervalPositionTest(){
+        Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
+        Piece king = new King(Position.of('e','8'),Team.BLACK);
+        List<Position> intervalPosition = king.getIntervalPosition(rook);
+
+        assertThat(intervalPosition.isEmpty()).isTrue();
     }
 }

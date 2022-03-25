@@ -36,4 +36,8 @@ public enum File {
     public File getNext(int distance) {
         return File.valueOf(index + distance);
     }
+
+    public int minus(File file) {
+        return index - file.index;
+    }
 }

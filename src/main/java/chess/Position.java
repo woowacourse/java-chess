@@ -32,6 +32,14 @@ public class Position {
         return rank.absMinus(position.rank) == file.absMinus(position.file);
     }
 
+    public boolean isPositiveDiagonal(Position position) {
+        return this.rank.minus(position.rank) == this.file.minus(position.file);
+    }
+
+    public boolean isNegativeDiagonal(Position position) {
+        return this.rank.minus(position.rank) == position.file.minus(this.file);
+    }
+
     public boolean isOneStepAway(Position position) {
         return isOneStepHorizontalOrVertical(position) || isOneStepDiagonal(position);
     }
@@ -108,5 +116,13 @@ public class Position {
 
     public Position getUpVerticalPosition(int distance) {
         return new Position(file, rank.getNext(distance));
+    }
+
+    public Position getPositiveDiagonalPosition(int distance) {
+        return new Position(file.getNext(distance), rank.getNext(distance));
+    }
+
+    public Position getNegativeDiagonalPosition(int distance) {
+        return new Position(file.getNext(distance), rank.getNext(-distance));
     }
 }
