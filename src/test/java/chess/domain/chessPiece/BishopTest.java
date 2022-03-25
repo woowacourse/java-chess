@@ -1,12 +1,12 @@
 package chess.domain.chessPiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,12 +31,12 @@ class BishopTest {
     @ParameterizedTest
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     @ValueSource(strings = {"b7", "f7", "f3", "b3"})
-    void canMove_canGo() {
+    void canMove_canGo(final String target) {
         // given
         final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> bishop.canMove(initialPosition, new Position("c4")))
+        assertThatCode(() -> bishop.canMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
 
     }

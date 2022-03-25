@@ -49,9 +49,10 @@ public class Pawn extends ChessPiece {
         checkCrossMove(from, to);
     }
 
-    private boolean checkMove(final Position from, final Position to, final int movableDistance, final String initFile) {
+    private boolean checkMove(final Position from, final Position to, final int movableDistance,
+                              final String initFile) {
         final int fileDistance = from.fileDistance(to);
-        if (movableDistance == fileDistance && from.isSameRank(to)) {
+        if (movableDistance == fileDistance) {
             return true;
         }
         if (from.isSameFile(initFile)) {

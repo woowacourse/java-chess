@@ -15,14 +15,15 @@ class KnightTest {
 
     final Position initialPosition = new Position("d5");
 
-    @Test
+    @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
-    void canMove_cantGo() {
+    @ValueSource(strings = {"c6", "d6", "e6", "e5", "e4", "d4", "c4", "c5", "d8", "a5"})
+    void canMove_cantGo(final String target) {
         // given
         final ChessPiece knight = new Knight(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> knight.canMove(initialPosition, new Position("d7")))
+        assertThatThrownBy(() -> knight.canMove(initialPosition, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
