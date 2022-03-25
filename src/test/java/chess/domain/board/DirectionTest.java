@@ -3,6 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -34,5 +35,14 @@ class DirectionTest {
                 new Position(fileA, rankA),
                 new Position(fileB, rankB)))
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("위치 두개로 방향 값을 가져올 수 있다.")
+    void getDirection() {
+        assertThat(Direction.of(new Position(File.A,Rank.ONE),
+                new Position(File.C, Rank.THREE)))
+                .isEqualTo(Direction.TOPRIGHT);
+
     }
 }

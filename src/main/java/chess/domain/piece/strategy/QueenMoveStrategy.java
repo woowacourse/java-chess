@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import java.util.List;
 
-public class QueenMoveStrategy implements MoveStrategy {
+public class QueenMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {

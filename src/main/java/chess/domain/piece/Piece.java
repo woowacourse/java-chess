@@ -27,6 +27,10 @@ public abstract class Piece {
         return name.getValue();
     }
 
+    public boolean isSameColor(Piece targetPiece) {
+        return this.color == targetPiece.color;
+    }
+
     public boolean isEmpty() {
         return false;
     }

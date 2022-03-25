@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BishopMoveStrategy implements MoveStrategy {
+public class BishopMoveStrategy extends MoveStrategy {
+
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = Direction.bishopDirection(color);

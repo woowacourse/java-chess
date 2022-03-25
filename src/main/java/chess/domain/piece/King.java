@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.KingMoveStrategy;
-import chess.domain.piece.strategy.MoveStrategy;
 
 public class King extends Piece {
     public King(Color color) {
@@ -12,7 +11,7 @@ public class King extends Piece {
 
     @Override
     public void canMove(Board board, Position from, Position to) {
-        MoveStrategy moveStrategy = new KingMoveStrategy();
+        KingMoveStrategy moveStrategy = new KingMoveStrategy();
         moveStrategy.isValidateCanMove(color, from, to);
     }
 }

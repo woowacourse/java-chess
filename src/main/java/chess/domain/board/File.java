@@ -22,6 +22,14 @@ public enum File {
         this.number = number;
     }
 
+    public static File numberOf(int number) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.number == number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 값을 찾을 수 없습니다."));
+
+    }
+
     public static File letterOf(String letter) {
         return Arrays.stream(File.values())
                 .filter(file -> file.letter.equals(letter))

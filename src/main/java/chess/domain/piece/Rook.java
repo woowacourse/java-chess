@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.RookMoveStrategy;
 
 public class Rook extends Piece {
@@ -12,7 +11,7 @@ public class Rook extends Piece {
 
     @Override
     public void canMove(Board board, Position from, Position to) {
-        MoveStrategy moveStrategy = new RookMoveStrategy();
+        RookMoveStrategy moveStrategy = new RookMoveStrategy();
         moveStrategy.isValidateCanMove(color, from, to);
     }
 }

@@ -6,7 +6,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import java.util.List;
 
-public class PawnMoveStrategy implements MoveStrategy {
+public class PawnMoveStrategy extends MoveStrategy {
     private static final int INIT_MAX_DISTANCE = 2;
 
     @Override

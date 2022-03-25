@@ -12,6 +12,13 @@ public class Position {
         this.rank = rank;
     }
 
+    public Position advancePosition(Direction direction) {
+        return new Position(
+                File.numberOf(file.getNumber() + direction.getX()),
+                Rank.numberOf(rank.getNumber() + direction.getY())
+        );
+    }
+
     public int getXDistance(Position to) {
         return to.file.getNumber() - this.file.getNumber();
     }
@@ -39,5 +46,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

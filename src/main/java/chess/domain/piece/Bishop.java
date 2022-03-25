@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.strategy.BishopMoveStrategy;
-import chess.domain.piece.strategy.MoveStrategy;
 
 public class Bishop extends Piece {
 
@@ -13,7 +12,7 @@ public class Bishop extends Piece {
 
     @Override
     public void canMove(Board board, Position from, Position to) {
-        MoveStrategy moveStrategy = new BishopMoveStrategy();
+        BishopMoveStrategy moveStrategy = new BishopMoveStrategy();
         moveStrategy.isValidateCanMove(color, from, to);
     }
 }

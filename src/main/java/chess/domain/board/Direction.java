@@ -32,6 +32,13 @@ public enum Direction {
 
     }
 
+    public static Direction of(Position from, Position to) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.isSameDirection(from, to))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 방향이 없습니다."));
+    }
+
     public static List<Direction> pawnDirection(Color color) {
         return getColorDirections(color, List.of(TOP, TOPLEFT, TOPRIGHT));
     }
