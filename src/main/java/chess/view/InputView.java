@@ -9,4 +9,8 @@ public class InputView {
     public static String requestStartOrEnd() {
         return scanner.nextLine();
     }
+
+    public static String requestCommand() {
+        return scanner.nextLine();
+    }
 }
