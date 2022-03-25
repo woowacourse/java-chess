@@ -17,15 +17,15 @@ public class OutputView {
     }
 
     public static void printChessBoard(Map<Position, Piece> pieces) {
-        for (char i = '8'; i >= '1'; i--) {
-            printColumnPieces(pieces, i);
+        for (char row = '8'; row >= '1'; row--) {
+            printColumnPieces(pieces, row);
             System.out.println();
         }
     }
 
-    private static void printColumnPieces(final Map<Position, Piece> pieces, final char i) {
-        for (char j = 'a'; j <= 'h'; j++) {
-            Position position = Position.of(j, i);
+    private static void printColumnPieces(Map<Position, Piece> pieces, char row) {
+        for (char column = 'a'; column <= 'h'; column++) {
+            Position position = Position.of(column, row);
             System.out.print(piecePrintName(pieces, position));
         }
     }
