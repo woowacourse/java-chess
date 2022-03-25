@@ -23,7 +23,7 @@ class RookMoveStrategyTest {
     @DisplayName("룩이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertDoesNotThrow(() -> new RookMoveStrategy()
-                .canMove(Color.WHITE,
+                .isValidateCanMove(Color.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 )
@@ -38,7 +38,7 @@ class RookMoveStrategyTest {
     @DisplayName("룩이 갈 수 위치가 아니면 에러가 발생해야 한다.")
     void canInvalidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertThatThrownBy(() -> new RookMoveStrategy()
-                .canMove(Color.WHITE,
+                .isValidateCanMove(Color.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 ))

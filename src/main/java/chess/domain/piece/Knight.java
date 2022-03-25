@@ -14,7 +14,7 @@ public class Knight extends Piece {
     @Override
     public void canMove(Board board, Position from, Position to) {
         MoveStrategy moveStrategy = new KnightMoveStrategy();
-        moveStrategy.canMove(color, from, to);
+        moveStrategy.isValidateCanMove(color, from, to);
 
     }
 }

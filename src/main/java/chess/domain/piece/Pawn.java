@@ -14,6 +14,6 @@ public class Pawn extends Piece {
     @Override
     public void canMove(Board board, Position from, Position to) {
         MoveStrategy moveStrategy = new PawnMoveStrategy();
-        moveStrategy.canMove(color, from, to);
+        moveStrategy.isValidateCanMove(color, from, to);
     }
 }

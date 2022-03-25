@@ -5,5 +5,7 @@ import chess.domain.piece.Color;
 
 public interface MoveStrategy {
 
-    void canMove(Color color, Position from, Position to);
+    boolean isValidateCanMove(Color color, Position from, Position to);
+
+//    List<Position> getRoute(Position from, Position to);
 }

@@ -13,6 +13,6 @@ public class Rook extends Piece {
     @Override
     public void canMove(Board board, Position from, Position to) {
         MoveStrategy moveStrategy = new RookMoveStrategy();
-        moveStrategy.canMove(color, from, to);
+        moveStrategy.isValidateCanMove(color, from, to);
     }
 }

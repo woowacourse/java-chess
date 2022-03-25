@@ -1,5 +1,6 @@
 package chess.domain.piece.strategy;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.File;
@@ -7,6 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -25,10 +27,28 @@ class PawnMoveStrategyTest {
     @DisplayName("폰이 갈 수 있는 위치 중 하나여야 한다.")
     void movePossibilityOfTrue(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertDoesNotThrow(() -> new PawnMoveStrategy()
-                .canMove(Color.WHITE,
+                .isValidateCanMove(Color.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 )
         );
+    }
+
+    @Test
+    @DisplayName("폰의 이동방향이 TOP, DOWN 일 경우에는 추가 검증을 해야한다.")
+    void canMoveAdditionalValidation() {
+        assertThat(new PawnMoveStrategy().isValidateCanMove(Color.WHITE,
+                        new Position(File.A, Rank.TWO),
+                        new Position(File.A, Rank.THREE)))
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("폰의 이동방향이 TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT 일 경우에는 검증이 필요없다.")
+    void canMoveAdditionalInValidation() {
+        assertThat(new PawnMoveStrategy().isValidateCanMove(Color.WHITE,
+                new Position(File.A, Rank.ONE),
+                new Position(File.B, Rank.TWO)))
+                .isTrue();
     }
 }

@@ -10,29 +10,27 @@ public class PawnMoveStrategy implements MoveStrategy {
     private static final int INIT_MAX_DISTANCE = 2;
 
     @Override
-    public void canMove(Color color, Position from, Position to) {
+    public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = Direction.pawnDirection(color);
-
-        if (isInitLine(color, from)) {
-            if (!isValidInitDirection(from, to, directions)) {
-                throw new IllegalArgumentException("폰이 최초 위치일 때 이동할 수 없는 위치입니다.");
-            }
-            return;
-        }
+        Direction nowDirection = Direction.of(from, to);
 
         if (!isValidDirection(from, to, directions)) {
-            throw new IllegalArgumentException("폰이 이동할 수 없는 위치입니다.");
+            validateInitDirection(color, from, to, directions);
         }
+
+        return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
+    }
+
+    private void validateInitDirection(Color color, Position from, Position to, List<Direction> directions) {
+        if (isInitLine(color, from) && isInitDistance(from, to, directions.get(0))) {
+            return;
+        }
+        throw new IllegalArgumentException("폰이 이동할 수 없는 위치입니다.");
     }
 
     private boolean isInitLine(Color color, Position from) {
         return (color == Color.BLACK && from.isEqualRank(Rank.SEVEN) ||
                 (color == Color.WHITE && from.isEqualRank(Rank.TWO)));
-    }
-
-    private boolean isValidInitDirection(Position from, Position to, List<Direction> directions) {
-        return isInitDistance(from, to, directions.get(0)) ||
-                isValidDirection(from, to, directions.subList(1, directions.size()));
     }
 
     private boolean isInitDistance(Position from, Position to, Direction direction) {
