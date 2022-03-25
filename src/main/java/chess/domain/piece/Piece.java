@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Name;
 import java.util.Locale;
 
 public abstract class Piece {
