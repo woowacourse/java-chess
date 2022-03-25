@@ -28,6 +28,10 @@ public abstract class Piece {
         return this.pieceColor == other.pieceColor;
     }
 
+    public boolean isSameColor(PieceColor otherPieceColor) {
+        return this.pieceColor == otherPieceColor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

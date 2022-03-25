@@ -3,6 +3,7 @@ package chess;
 import static chess.PieceColor.*;
 import static chess.Rank.*;
 
+import chess.turndecider.TurnDecider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,7 +18,6 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -26,13 +26,16 @@ public class Board {
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
     private final Map<Position, Piece> values;
 
+    private final TurnDecider turnDecider;
+
     private static final Function<PieceColor, List<Piece>> createPieceFunction = (PieceColor pieceColor) -> List.of(
         new Rook(pieceColor), new Knight(pieceColor), new Bishop(pieceColor),
         new Queen(pieceColor), new King(pieceColor), new Bishop(pieceColor),
         new Knight(pieceColor), new Rook(pieceColor));
 
-    public Board() {
+    public Board(TurnDecider turnDecider) {
         this.values = initBoard();
+        this.turnDecider = turnDecider;
     }
 
     private Map<Position, Piece> initBoard() {
@@ -78,12 +81,18 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
+        turnDecide(source);
         validateSourceNotEmpty(source);
         changePieces(source, target);
     }
 
-    private void changePieces(Position source, Position target) {
+    private void turnDecide(Position source) {
+        if (!turnDecider.isCorrectTurn(values.get(source))) {
+            throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
+        }
+    }
 
+    private void changePieces(Position source, Position target) {
         Piece sourcePiece = values.get(source);
         Piece targetPiece = values.get(target);
 

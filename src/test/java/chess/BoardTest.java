@@ -30,7 +30,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(new FixedTurnDecider());
     }
 
     @Test

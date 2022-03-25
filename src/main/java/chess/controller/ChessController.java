@@ -7,13 +7,14 @@ import chess.Command;
 import chess.dto.MoveRequest;
 import chess.dto.view.InputView;
 import chess.dto.view.OutputView;
+import chess.turndecider.AlternatingTurnDecider;
 
 public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
 
-        Board board = new Board();
+        Board board = new Board(new AlternatingTurnDecider());
         Command beginCommand = InputView.inputCommandInStart();
 
         if (beginCommand == END) {
