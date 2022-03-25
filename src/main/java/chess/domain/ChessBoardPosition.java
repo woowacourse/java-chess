@@ -7,6 +7,8 @@ public class ChessBoardPosition {
     private static final char MAXIMUM_COLUMN = 'h';
     private static final int MINIMUM_ROW = 1;
     private static final int MAXIMUM_ROW = 8;
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
     private static final String POSITION_OUT_OF_RANGE = "[ERROR] 체스판 범위를 벗어나는 위치가 입력되었습니다.";
 
     private final char column;
@@ -16,6 +18,20 @@ public class ChessBoardPosition {
         validateRange(column, row);
         this.column = column;
         this.row = row;
+    }
+
+    public static ChessBoardPosition of(String positionInput) {
+        char column = extractColumn(positionInput);
+        int row = extractRow(positionInput);
+        return new ChessBoardPosition(column, row);
+    }
+
+    private static char extractColumn(String positionInput) {
+        return positionInput.charAt(COLUMN_INDEX);
+    }
+
+    private static int extractRow(String positionInput) {
+        return Character.getNumericValue(positionInput.charAt(ROW_INDEX));
     }
 
     private void validateRange(char column, int row) {

@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final String CHESS_GAME_START_MESSAGE = "체스 게임을 시작합니다.";
-    private static final Map<Type, Character> chessPieceTypeToCharacter = new HashMap<>();
-    private static final char EMPTY_CHESS_BLOCK = '.';
-    private static final char ADJUST_COLUMN_INDEX = 'a';
     private static final int ADJUST_ROW_INDEX = 1;
     private static final int CHESSBOARD_SIZE = 8;
+    private static final char EMPTY_CHESS_BLOCK = '.';
+    private static final char ADJUST_COLUMN_INDEX = 'a';
     private static final String EMPTY_STRING = "";
+    private static final String CHESS_GAME_START_MESSAGE = "체스 게임을 시작합니다.";
+    private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
+    private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
+    private static final String GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final Map<Type, Character> chessPieceTypeToCharacter = new HashMap<>();
 
     static {
         chessPieceTypeToCharacter.put(Type.PAWN, 'p');
@@ -29,7 +32,15 @@ public class OutputView {
     }
 
     public static void printChessGameStart() {
-        System.out.println(CHESS_GAME_START_MESSAGE);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(CHESS_GAME_START_MESSAGE)
+                .append(System.lineSeparator())
+                .append(GAME_START_COMMAND_MESSAGE)
+                .append(System.lineSeparator())
+                .append(GAME_END_COMMAND_MESSAGE)
+                .append(System.lineSeparator())
+                .append(GAME_MOVE_COMMAND_MESSAGE);
+        System.out.println(stringBuilder);
     }
 
     public static void printCurrentChessBoard(ChessMenDto blackChessMenDto, ChessMenDto whiteChessMenDto) {
