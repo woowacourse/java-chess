@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static chess.domain.piece.move.Direction.*;
+import static chess.domain.piece.move.StraightDirection.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
@@ -16,7 +16,7 @@ class DirectionTest {
     @ParameterizedTest(name = "{index} {displayName} {2}")
     @DisplayName("출발지와 도착지로 직선 방향을 찾는다.")
     @MethodSource("methodProvider")
-    void findDirection(final Point from, final Point to, Direction direction) {
+    void findDirection(final Point from, final Point to, StraightDirection direction) {
         assertThat(find(from, to)).isEqualTo(direction);
     }
 
@@ -39,7 +39,7 @@ class DirectionTest {
     @ParameterizedTest(name = "{index} {displayName} {0}")
     @DisplayName("상하좌우 여부를 확인한다.")
     @MethodSource("isCrossProvider")
-    void isCrossTest(final Direction direction, final boolean result) {
+    void isCrossTest(final StraightDirection direction, final boolean result) {
         assertThat(direction.isCross()).isEqualTo(result);
     }
 

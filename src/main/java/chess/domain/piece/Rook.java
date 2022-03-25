@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.move.Direction;
+import chess.domain.piece.move.StraightDirection;
 
 public class Rook extends Piece {
 
@@ -12,7 +12,7 @@ public class Rook extends Piece {
 
     @Override
     public void move(Board board, Point from, Point to) {
-        Direction direction = findDirection(from, to);
+        StraightDirection direction = findDirection(from, to);
 
         Point next = from.next(direction);
         while (!next.equals(to)) {
@@ -21,13 +21,13 @@ public class Rook extends Piece {
         }
     }
 
-    private Direction findDirection(Point from, Point to) {
-        Direction direction = Direction.find(from, to);
+    private StraightDirection findDirection(Point from, Point to) {
+        StraightDirection direction = StraightDirection.find(from, to);
         validateDirection(direction);
         return direction;
     }
 
-    private void validateDirection(Direction direction) {
+    private void validateDirection(StraightDirection direction) {
         if (!direction.isCross()) {
             throw new IllegalArgumentException("[ERROR] 룩은 상하좌우로만 이동할 수 있습니다.");
         }

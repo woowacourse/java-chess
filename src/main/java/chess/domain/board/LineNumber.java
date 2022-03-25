@@ -26,9 +26,17 @@ public class LineNumber {
     }
 
     private static void validateRange(int number) {
-        if (number < MIN || MAX < number) {
+        if (!isInRange(number)) {
             throw new IllegalArgumentException(String.format("[ERROR] 위치는 %d ~ %d 까지 입력 가능합니다.", MIN, MAX));
         }
+    }
+
+    private static boolean isInRange(int number) {
+        return MIN <= number && number <= MAX;
+    }
+
+    public boolean isInRangeNext(int degree) {
+        return isInRange(number + degree);
     }
 
     public int subtract(LineNumber other) {

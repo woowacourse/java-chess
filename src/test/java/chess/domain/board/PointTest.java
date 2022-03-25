@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.move.Direction;
+import chess.domain.piece.move.StraightDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +60,7 @@ class PointTest {
     void goNextByDirection() {
         Point aPoint = Point.of("a1");
 
-        Point next = aPoint.next(Direction.NORTHEAST);
+        Point next = aPoint.next(StraightDirection.NORTHEAST);
 
         assertThat(next).isEqualTo(Point.of("b2"));
     }

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.move.Direction;
+import chess.domain.piece.move.StraightDirection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,10 @@ public class Point {
     public Point next(Direction direction) {
         return Point.of(horizontal.next(direction.getDx()),
                 vertical.next(direction.getDy()));
+    }
+
+    public boolean isInRangeNext(int dx, int dy) {
+        return horizontal.isInRangeNext(dx) && vertical.isInRangeNext(dy);
     }
 
     @Override
