@@ -21,7 +21,7 @@ public class ChessBoard {
         init();
     }
 
-    public ChessBoard(Map<Position, ChessPiece> chessBoard) {
+    ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
         this.gameStatus = GameStatus.READY;
     }
