@@ -7,6 +7,12 @@ import java.util.List;
 
 public class OutputView {
 
+    private static String START_ERROR = "[ERROR] ";
+
+    public static void printError(String message) {
+        System.out.println(START_ERROR + message);
+    }
+
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -18,10 +24,10 @@ public class OutputView {
         List<List<Piece>> board = chessboard.getBoard();
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
-                System.out.print(board.get(i).get(j).getType());
+                System.out.print(board.get(i).get(j).getSymbolByColor());
             }
             System.out.println();
         }
-
+        System.out.println();
     }
 }

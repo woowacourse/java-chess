@@ -2,6 +2,7 @@ package chess.piece;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static chess.utils.CheckerOfAllPossiblePosition.isMovableCoordinates;
@@ -34,6 +35,19 @@ public class Pawn extends Piece {
             return isMovableCoordinates(COORDINATES_OF_WHITE_DIAGONAL_MOVABLE, source, target);
         }
         return isMovableCoordinates(COORDINATES_OF_BLACK_DIAGONAL_MOVABLE, source, target);
+    }
+
+    @Override
+    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        if (isFirstTurn(color, source.getLeft())) {
+            if (color == Color.WHITE) {
+                return List.of(Pair.of(source.getLeft() - 1, source.getRight()));
+            }
+            if (color == Color.BLACK) {
+                return List.of(Pair.of(source.getLeft() + 1, source.getRight()));
+            }
+        }
+        return new ArrayList<>();
     }
 
     @Override

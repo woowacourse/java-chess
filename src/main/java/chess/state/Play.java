@@ -1,6 +1,7 @@
 package chess.state;
 
 import chess.Chessboard;
+import chess.Turn;
 import org.apache.commons.lang3.tuple.Pair;
 
 
@@ -12,14 +13,25 @@ public class Play implements State {
         this.chessboard = Chessboard.initializedChessboard();
     }
 
+    public Play(Chessboard chessboard) {
+        this.chessboard = chessboard;
+    }
+
     @Override
     public State start() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        throw new IllegalStateException();
+    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+        chessboard.movePiece(source, target, turn);
+        turn.nextTurn();
+        return new Play(chessboard);
+    }
+
+    @Override
+    public State end() {
+        return new Finish(chessboard);
     }
 
     @Override

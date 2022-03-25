@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class InputView {
 
     public static String inputCommand() {
-        System.out.println("input!!!!!!!!!!!!");
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }

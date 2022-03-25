@@ -2,8 +2,11 @@ package chess.piece;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -103,5 +106,21 @@ public class PawnTest {
     void checkPositionWhenBlackTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
         assertThat(pawn.isMovable(Pair.of(2, 6), Pair.of(2 + a, 6 + b))).isFalse();
+    }
+
+    @Test
+    @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환- white ")
+    void checkAllPositionOfPossibleWhite() {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.computeBetweenTwoPosition(Pair.of(6, 0), Pair.of(4, 0)))
+                .isEqualTo(List.of(Pair.of(5, 0)));
+    }
+
+    @Test
+    @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환 - black")
+    void checkAllPositionOfPossibleBlack() {
+        Pawn pawn = new Pawn(Color.BLACK);
+        assertThat(pawn.computeBetweenTwoPosition(Pair.of(1, 0), Pair.of(3, 0)))
+                .isEqualTo(List.of(Pair.of(2, 0)));
     }
 }

@@ -1,6 +1,7 @@
 package chess.state;
 
 import chess.Chessboard;
+import chess.Turn;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class Ready implements State {
@@ -17,8 +18,13 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public State end() {
+        return new Finish(chessboard);
     }
 
     @Override

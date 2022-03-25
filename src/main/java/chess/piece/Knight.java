@@ -3,6 +3,7 @@ package chess.piece;
 import chess.utils.CheckerOfAllPossiblePosition;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -20,6 +21,11 @@ public class Knight extends Piece {
 
     public Knight(Color color) {
         super(Type.KNIGHT, color);
+    }
+
+    @Override
+    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        return new ArrayList<>();
     }
 
     @Override

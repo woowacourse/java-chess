@@ -2,8 +2,11 @@ package chess.piece;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,5 +26,13 @@ class RookTest {
     void checkPositionWhenFalse(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
         assertThat(rook.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+    }
+
+    @Test
+    @DisplayName("source와 target 사이에 룩이 이동가능한 위치 리스트 반환")
+    void checkAllPositionOfPossible() {
+        Rook rook = new Rook(Color.WHITE);
+        assertThat(rook.computeBetweenTwoPosition(Pair.of(0, 0), Pair.of(0, 3)))
+                .isEqualTo(List.of(Pair.of(0, 1), Pair.of(0, 2)));
     }
 }

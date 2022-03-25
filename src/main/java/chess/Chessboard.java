@@ -44,21 +44,10 @@ public class Chessboard {
         return sourcePiece.isMovable(source, target);
     }
 
-    public List<List<Piece>> getBoard() {
-        return Collections.unmodifiableList(board);
-    }
-
-    private boolean checkPawn(Piece sourcePiece, Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (!sourcePiece.isSameType(Type.PAWN)) {
-            return false;
-        }
-        Pawn pawn = (Pawn) sourcePiece;
-
-        return pawn.isDiagonal(source, target);
-    }
-
-    private boolean isTherePiece(Pair<Integer, Integer> target) {
-        return !board.get(target.getLeft()).get(target.getRight()).isSameType(Type.BLANK);
+    public void movePiece(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+        validate(source, target, turn);
+        board.get(target.getLeft()).set(target.getRight(), board.get(source.getLeft()).get(source.getRight()));
+        board.get(source.getLeft()).set(source.getRight(), new Blank());
     }
 
     private void initializePieceWithoutPawn(Color color) {
@@ -88,5 +77,65 @@ public class Chessboard {
             line.add(new Blank());
         }
         board.add(line);
+    }
+
+    private boolean isTherePiece(Pair<Integer, Integer> target) {
+        return !board.get(target.getLeft()).get(target.getRight()).isSameType(Type.BLANK);
+    }
+
+    private boolean checkPawn(Piece sourcePiece, Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        if (!sourcePiece.isSameType(Type.PAWN)) {
+            return false;
+        }
+        Pawn pawn = (Pawn) sourcePiece;
+        return pawn.isDiagonal(source, target);
+    }
+
+    private void validate(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+        validateSamePosition(source, target);
+        validateBlank(source);
+        validateTurn(source, turn);
+        validateMovable(source, target);
+        validateMovableBetweenPosition(source, target);
+    }
+
+    private void validateSamePosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        if (source.getLeft() == target.getLeft() && source.getRight() == target.getRight()) {
+            throw new IllegalArgumentException("현재 위치와 같은 위치로 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateBlank(Pair<Integer, Integer> source) {
+        if (board.get(source.getLeft()).get(source.getRight()).getType() == Type.BLANK) {
+            throw new IllegalArgumentException("이동하려는 위치에 기물이 없습니다.");
+        }
+    }
+
+    private void validateTurn(Pair<Integer, Integer> source, Turn turn) {
+        if (!turn.isRightTurn(board.get(source.getLeft()).get(source.getRight()).getColor())) {
+            throw new IllegalArgumentException("상대편의 기물은 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        if (!isMovable(source, target)) {
+            throw new IllegalArgumentException("움직일 수 없는 기물입니다.");
+        }
+    }
+
+    private void validateMovableBetweenPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        List<Pair<Integer, Integer>> betweenPositions = board.get(source.getLeft()).get(source.getRight())
+                .computeBetweenTwoPosition(source, target);
+
+        for (Pair<Integer, Integer> position : betweenPositions) {
+            if (board.get(position.getLeft()).get(position.getRight()).getType() == Type.BLANK) {
+                continue;
+            }
+            throw new IllegalArgumentException("가로막는 기물이 있습니다.");
+        }
+    }
+
+    public List<List<Piece>> getBoard() {
+        return Collections.unmodifiableList(board);
     }
 }

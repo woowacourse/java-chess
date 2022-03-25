@@ -9,9 +9,11 @@ import org.apache.commons.lang3.tuple.Pair;
 public class ChessGame {
 
     private State state;
+    private Turn turn;
 
     public ChessGame() {
         this.state = new Ready();
+        this.turn = new Turn();
     }
 
     public void start() {
@@ -21,7 +23,7 @@ public class ChessGame {
     public void move(String source, String target) {
         Pair<Integer, Integer> parsedSource = PositionParser.parse(source.charAt(0), source.charAt(1));
         Pair<Integer, Integer> parsedTarget = PositionParser.parse(target.charAt(0), target.charAt(1));
-        state = state.move(parsedSource, parsedTarget);
+        state = state.move(parsedSource, parsedTarget, turn);
     }
 
     public void end() {
