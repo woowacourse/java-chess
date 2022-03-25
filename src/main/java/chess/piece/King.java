@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class King extends Piece{
 
@@ -9,7 +9,7 @@ public class King extends Piece{
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        return transition.isAdjacent();
+    public boolean isPossibleMovement(Position from, Position to) {
+        return from.isAdjacent(to);
     }
 }

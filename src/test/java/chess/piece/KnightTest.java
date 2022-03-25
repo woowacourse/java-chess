@@ -3,11 +3,8 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
-import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,7 @@ class KnightTest {
         Knight knight = new Knight(Color.BLACK);
 
         assertThat(
-            knight.isMovablePosition(new Transition(new Position(G, EIGHT), new Position(F, FIVE))))
+            knight.isPossibleMovement(new Position(G, EIGHT), new Position(F, FIVE)))
             .isFalse();
     }
 
@@ -33,7 +30,7 @@ class KnightTest {
     void moveKnightToValidPosition(Position from, Position to) {
         Knight knight = new Knight(Color.BLACK);
 
-        assertThat(knight.isMovablePosition(new Transition(from, to)))
+        assertThat(knight.isPossibleMovement(from, to))
             .isTrue();
     }
 

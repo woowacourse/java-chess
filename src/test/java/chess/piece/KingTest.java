@@ -3,11 +3,8 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
-import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +19,7 @@ class KingTest {
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
         King king = new King(Color.BLACK);
 
-        assertThat(king.isMovablePosition(new Transition(from, to))).isFalse();
+        assertThat(king.isPossibleMovement(from, to)).isFalse();
     }
 
     private static Stream<Arguments> provideInvalidMoveKing() {
@@ -41,7 +38,7 @@ class KingTest {
     void moveKingOneSquareToAdjacent(Position from, Position to) {
         King king = new King(Color.BLACK);
 
-        assertThat(king.isMovablePosition(new Transition(from, to))).isTrue();
+        assertThat(king.isPossibleMovement(from, to)).isTrue();
     }
 
     private static Stream<Arguments> provideValidMoveKing() {

@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class Knight extends Piece{
 
@@ -9,9 +9,9 @@ public class Knight extends Piece{
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        int horizontalDistance = transition.getHorizontalDistance();
-        int verticalDistance = transition.getVerticalDistance();
+    public boolean isPossibleMovement(Position from, Position to) {
+        int horizontalDistance = from.getHorizontalDistance(to);
+        int verticalDistance = from.getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||
             (horizontalDistance == 2 && verticalDistance == 1);
     }

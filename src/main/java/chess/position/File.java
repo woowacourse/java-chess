@@ -2,7 +2,6 @@ package chess.position;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public enum File {
 

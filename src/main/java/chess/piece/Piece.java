@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -47,5 +47,5 @@ public abstract class Piece {
             ", type=" + getClass().getSimpleName();
     }
 
-    public abstract boolean isMovablePosition(Transition to);
+    public abstract boolean isPossibleMovement(Position from, Position to);
 }

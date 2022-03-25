@@ -5,7 +5,6 @@ import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.position.Position;
-import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,9 +17,9 @@ class RookTest {
     @MethodSource("provideMoveCollinearRook")
     @DisplayName("룩은 동일선상으로 제한 없이 이동")
     void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
-        Piece rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(Color.BLACK);
 
-        assertThat(rook.isMovablePosition(new Transition(from, to)))
+        assertThat(rook.isPossibleMovement(from, to))
             .isTrue();
     }
 
@@ -37,9 +36,9 @@ class RookTest {
     @MethodSource("provideInvalidMoveRook")
     @DisplayName("룩이 전후양옆외의 방향으로 이동 시 예외 발생")
     void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
-        Piece rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(Color.BLACK);
 
-        assertThat(rook.isMovablePosition(new Transition(from, to)))
+        assertThat(rook.isPossibleMovement(from, to))
             .isFalse();
     }
 

@@ -45,34 +45,22 @@ public class ChessGame {
             new Square(new Pawn(Color.WHITE), new Position(E, TWO)),
             new Square(new Pawn(Color.WHITE), new Position(F, TWO)),
             new Square(new Pawn(Color.WHITE), new Position(G, TWO)),
-            new Square(new Pawn(Color.WHITE), new Position(H, TWO))));
+            new Square(new Pawn(Color.WHITE), new Position(H, TWO))), Color.WHITE);
         this.currentColor = Color.WHITE;
     }
 
     public ChessGame(Set<Square> squares, Color color) {
-        this.chessBoard = new ChessBoard(squares);
+        this.chessBoard = new ChessBoard(squares, color);
         this.currentColor = color;
     }
 
     public void move(Position from, Position to) {
-        if (isSamePosition(from, to)) {
-            throw new IllegalArgumentException(String.format(
-                "같은 위치(%s)로 기물을 이동할 수 없습니다.", from));
-        }
-
-        if (isUnmovablePieceColor(from)) {
-            throw new IllegalArgumentException(String.format(
-                "%s에 위치한 기물은 %s 색깔이 아닙니다.", from, currentColor));
-        }
-
         chessBoard.move(from, to);
-        currentColor = currentColor.reverse();
     }
 
     private boolean isUnmovablePieceColor(Position from) {
         return !chessBoard.isSameColorByPosition(from, currentColor);
     }
-
 
     private boolean isSamePosition(Position from, Position to) {
         return from.equals(to);

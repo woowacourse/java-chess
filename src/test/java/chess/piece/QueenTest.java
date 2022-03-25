@@ -5,7 +5,6 @@ import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.position.Position;
-import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,7 @@ class QueenTest {
     void moveInvalidMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK);
 
-        assertThat(queen.isMovablePosition(new Transition(from, to)))
+        assertThat(queen.isPossibleMovement(from, to))
             .isFalse();
     }
 
@@ -39,7 +38,7 @@ class QueenTest {
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK);
 
-        assertThat(queen.isMovablePosition(new Transition(from, to)))
+        assertThat(queen.isPossibleMovement(from, to))
             .isTrue();
     }
 

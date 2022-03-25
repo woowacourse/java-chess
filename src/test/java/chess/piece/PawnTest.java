@@ -4,11 +4,8 @@ import static chess.position.File.A;
 import static chess.position.File.B;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Position;
-import chess.position.Transition;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +19,9 @@ class PawnTest {
     @MethodSource("provideFirstMoveForwardPawn")
     @DisplayName("폰을 처음에 앞으로 한칸 또는 두칸을 움직일 수 있다.")
     void movePawn(Color color, Position from, Position to) {
-        Piece pawn = new Pawn(color);
+        Pawn pawn = new Pawn(color);
 
-        assertThat(pawn.isMovablePosition(new Transition(from, to)))
+        assertThat(pawn.isPossibleMovement(from, to))
             .isTrue();
     }
 
@@ -40,9 +37,9 @@ class PawnTest {
     @Test
     @DisplayName("폰은 처음에는 3칸 이상 이동 시 예외가 발생한다.")
     void throwExceptionMovePawnOverTwoSpaceWhenFirstMove() {
-        Piece pawn = new Pawn(Color.BLACK);
+        Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThat(pawn.isMovablePosition(new Transition(new Position(A, SEVEN), new Position(A, FOUR))))
+        assertThat(pawn.isPossibleMovement(new Position(A, SEVEN), new Position(A, FOUR)))
             .isFalse();
     }
 
@@ -50,9 +47,9 @@ class PawnTest {
     @MethodSource("provideInvalidMoveForwardPawn")
     @DisplayName("폰이 처음 움직인 이후 부터는 두칸 이상 이동시 예외 발생")
     void throwExceptionMovePawnOverOneSpaceAfterFirstMove(Color color, Position from, Position to) {
-        Piece pawn = new Pawn(color);
+        Pawn pawn = new Pawn(color);
 
-        assertThat(pawn.isMovablePosition(new Transition(from, to)))
+        assertThat(pawn.isPossibleMovement(from, to))
             .isFalse();
     }
 
@@ -67,9 +64,9 @@ class PawnTest {
     @MethodSource("provideMoveBackwardPawn")
     @DisplayName("폰은 뒤로 움직일 경우 예외가 발생한다.")
     void throwExceptionMovePawnBackward(Color color, Position from, Position to) {
-        Piece pawn = new Pawn(color);
+        Pawn pawn = new Pawn(color);
 
-        assertThat(pawn.isMovablePosition(new Transition(from, to)))
+        assertThat(pawn.isPossibleMovement(from, to))
             .isFalse();
     }
 
@@ -84,9 +81,9 @@ class PawnTest {
     @MethodSource("provideMoveSidePawn")
     @DisplayName("폰이 양옆으로 움직이려고 할 경우 예외 발생")
     void throwExceptionPawnMoveSide(Position from, Position to) {
-        Piece pawn = new Pawn(Color.WHITE);
+        Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThat(pawn.isMovablePosition(new Transition(from, to)))
+        assertThat(pawn.isPossibleMovement(from, to))
             .isFalse();
     }
 

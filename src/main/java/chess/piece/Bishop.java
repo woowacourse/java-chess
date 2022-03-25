@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class Bishop extends Piece {
 
@@ -9,7 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        return transition.isDiagonalWay();
+    public boolean isPossibleMovement(Position from, Position to) {
+        return from.isDiagonalWay(to);
     }
 }

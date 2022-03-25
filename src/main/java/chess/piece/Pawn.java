@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class Pawn extends Piece {
 
@@ -9,8 +9,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        return transition.isVerticalWay() && isForward(transition) && isValidDistance(transition);
+    public boolean isPossibleMovement(Position from, Position to ) {
+        return from.isVerticalWay(to) && isForward(from, to) && isValidDistance(from, to);
     }
 
     @Override
@@ -18,22 +18,22 @@ public class Pawn extends Piece {
         return true;
     }
 
-    private boolean isForward(Transition transition) {
-        return getColor().isForward(transition);
+    private boolean isForward(Position from, Position to) {
+        return getColor().isForward(from, to);
     }
 
-    private boolean isValidDistance(Transition transition) {
-        return transition.getVerticalDistance() <= movableDistance(transition);
+    private boolean isValidDistance(Position from, Position to) {
+        return from.getVerticalDistance(to) <= movableDistance(from);
     }
 
-    private int movableDistance(Transition transition) {
-        if (isStartPawnPosition(transition)) {
+    private int movableDistance(Position from) {
+        if (isStartPawnPosition(from)) {
             return 2;
         }
         return 1;
     }
 
-    private boolean isStartPawnPosition(Transition transition) {
-        return getColor().isStartPawnPosition(transition.getFrom());
+    private boolean isStartPawnPosition(Position from) {
+        return getColor().isStartPawnPosition(from);
     }
 }

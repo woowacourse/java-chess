@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class Queen extends Piece {
 
@@ -9,8 +9,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        return transition.isDiagonalWay() || transition.isVerticalWay()
-            || transition.isHorizontalWay();
+    public boolean isPossibleMovement(Position from, Position to) {
+        return from.isDiagonalWay(to) || from.isVerticalWay(to)
+            || from.isHorizontalWay(to);
     }
 }

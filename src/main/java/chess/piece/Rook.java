@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.Transition;
+import chess.position.Position;
 
 public class Rook extends Piece{
 
@@ -9,7 +9,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    public boolean isMovablePosition(Transition transition) {
-        return transition.isVerticalWay() || transition.isHorizontalWay();
+    public boolean isPossibleMovement(Position from, Position to) {
+        return from.isVerticalWay(to) || from.isHorizontalWay(to);
     }
 }
