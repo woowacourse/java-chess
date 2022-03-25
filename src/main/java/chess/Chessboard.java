@@ -19,6 +19,33 @@ public class Chessboard {
         return new Chessboard();
     }
 
+    public double computeScore(Color color) {
+        double score = 0;
+
+        for (List<Piece> list : board) {
+            score += list.stream()
+                    .filter(p -> p.getColor() == color)
+                    .mapToDouble(p -> p.getType().getScore())
+                    .sum();
+        }
+
+        for (int i = 0; i < 8; i++) {
+            int duplicatedPawn = computePawnCount(i, color);
+            if (computePawnCount(i, color) >= 2) {
+                score -= 0.5 * duplicatedPawn;
+            }
+        }
+        return score;
+    }
+
+    private int computePawnCount(int i, Color color) {
+        return (int) board.stream()
+                .map(l -> l.get(i))
+                .filter(p -> (p.getColor() == color) && p.isSameType(Type.PAWN))
+                .count();
+    }
+
+
     private Chessboard(List<List<Piece>> board) {
         this.board = board;
     }
@@ -44,10 +71,13 @@ public class Chessboard {
         return sourcePiece.isMovable(source, target);
     }
 
-    public void movePiece(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+    public boolean movePiece(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
         validate(source, target, turn);
+        boolean isKing = board.get(target.getLeft()).get(target.getRight()).isSameType(Type.KING);
         board.get(target.getLeft()).set(target.getRight(), board.get(source.getLeft()).get(source.getRight()));
         board.get(source.getLeft()).set(source.getRight(), new Blank());
+
+        return isKing;
     }
 
     private void initializePieceWithoutPawn(Color color) {
@@ -129,6 +159,7 @@ public class Chessboard {
 
         for (Pair<Integer, Integer> position : betweenPositions) {
             if (board.get(position.getLeft()).get(position.getRight()).getType() == Type.BLANK) {
+                System.out.println(board.get(position.getLeft()).get(position.getRight()).getType());
                 continue;
             }
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");

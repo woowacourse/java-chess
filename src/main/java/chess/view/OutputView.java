@@ -30,4 +30,10 @@ public class OutputView {
         }
         System.out.println();
     }
+
+    public static void printScore(double scoreOfBlack, double scoreOfWhite) {
+        System.out.println("\n획득 점수");
+        System.out.println("블랙 : " + scoreOfBlack);
+        System.out.println("화이트 : " + scoreOfWhite);
+    }
 }

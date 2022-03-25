@@ -2,6 +2,7 @@ package chess.state;
 
 import chess.Chessboard;
 import chess.Turn;
+import chess.piece.Color;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class Ready implements State {
@@ -35,5 +36,10 @@ public class Ready implements State {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public double computeScore(Color color) {
+        throw new UnsupportedOperationException();
     }
 }

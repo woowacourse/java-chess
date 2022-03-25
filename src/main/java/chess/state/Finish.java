@@ -2,6 +2,7 @@ package chess.state;
 
 import chess.Chessboard;
 import chess.Turn;
+import chess.piece.Color;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class Finish implements State {
@@ -23,7 +24,7 @@ public class Finish implements State {
     }
 
     @Override
-    public State end(){
+    public State end() {
         throw new UnsupportedOperationException();
     }
 
@@ -37,4 +38,8 @@ public class Finish implements State {
         return true;
     }
 
+    @Override
+    public double computeScore(Color color) {
+        return chessboard.computeScore(color);
+    }
 }

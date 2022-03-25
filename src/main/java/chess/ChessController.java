@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Color;
 import chess.view.OutputView;
 
 import java.util.StringTokenizer;
@@ -15,6 +16,7 @@ public class ChessController {
         while (!chessGame.isFinished()) {
             playTurn(chessGame);
         }
+        OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
     }
 
     private void playTurn(ChessGame chessGame) {
@@ -35,6 +37,9 @@ public class ChessController {
             String target = commands.nextToken();
             chessGame.move(source, target);
             OutputView.printBoard(chessGame.getChessBoard());
+        }
+        if (command.contains("status")) {
+            OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
         }
     }
 }

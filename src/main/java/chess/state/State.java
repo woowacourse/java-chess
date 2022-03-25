@@ -2,6 +2,7 @@ package chess.state;
 
 import chess.Chessboard;
 import chess.Turn;
+import chess.piece.Color;
 import org.apache.commons.lang3.tuple.Pair;
 
 public interface State {
@@ -15,4 +16,6 @@ public interface State {
     Chessboard getChessboard();
 
     boolean isFinished();
+
+    double computeScore(Color color);
 }

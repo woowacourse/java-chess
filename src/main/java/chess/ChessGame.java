@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Color;
 import chess.state.Finish;
 import chess.state.Ready;
 import chess.state.State;
@@ -37,4 +38,9 @@ public class ChessGame {
     public boolean isFinished() {
         return state.isFinished();
     }
+
+    public double computeScore(Color color){
+        return state.computeScore(color);
+    }
+
 }

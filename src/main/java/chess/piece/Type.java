@@ -6,7 +6,7 @@ public enum Type {
     QUEEN(9, "q"),
     ROOK(5, "r"),
     BISHOP(3, "b"),
-    KNIGHT(2, "n"),
+    KNIGHT(2.5, "n"),
     PAWN(1, "p"),
     BLANK(0, "."),
     ;
@@ -24,5 +24,9 @@ public enum Type {
             return symbol.toUpperCase();
         }
         return symbol;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
