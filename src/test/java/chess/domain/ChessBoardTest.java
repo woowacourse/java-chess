@@ -65,6 +65,15 @@ class ChessBoardTest {
                 .hasMessage("상대 진영의 기물을 움직일 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("프로모션이 불가능할 때 예외발생")
+    void promotionExceptionByStatus() {
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a','2'), new WhitePawn()));
+        assertThatThrownBy(() -> chessBoard.promotion(WHITE))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("프로모션 상태가 아닙니다.");
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"a,1,false", "a,2,true"})
     @DisplayName("해당 위치가 비어있는지 확인")

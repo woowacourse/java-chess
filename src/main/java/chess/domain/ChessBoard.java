@@ -45,6 +45,12 @@ public class ChessBoard {
         }
     }
 
+    public void promotion(Color color) {
+        if (!isPromotionStatus()) {
+            throw new IllegalStateException("프로모션 상태가 아닙니다.");
+        }
+    }
+
     public boolean isPositionEmpty(Position position) {
         return !pieces.containsKey(position);
     }
