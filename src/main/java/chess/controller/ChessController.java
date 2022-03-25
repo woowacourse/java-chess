@@ -10,11 +10,16 @@ public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-
-        playTurn(null);
+        playTurn(new ChessBoard());
     }
 
     private void playTurn(ChessBoard chessBoard) {
+        if (chessBoard.isEnd()) {
+            System.out.println("END!");
+            // todo : printScore
+            return;
+        }
+
         String text = InputView.requestCommand();
         Command command = Command.splitCommand(text);
         if (command == Command.END) {
@@ -22,7 +27,7 @@ public class ChessController {
         }
 
         if (command == Command.START) {
-            chessBoard = checkGameStatus(chessBoard);
+            checkGameStatus(chessBoard);
             playTurn(chessBoard);
         }
 
@@ -35,16 +40,14 @@ public class ChessController {
         }
     }
 
-    private ChessBoard checkGameStatus(ChessBoard chessBoard) {
+    private void checkGameStatus(ChessBoard chessBoard) {
         try {
-            checkGameStart(chessBoard != null);
-            chessBoard = new ChessBoard();
+            checkGameStart(chessBoard.isPlaying());
+            chessBoard.start();
             OutputView.printChessBoard(chessBoard);
-            return chessBoard;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }
-        return chessBoard;
     }
 
     private void checkGameStart(boolean gameStarted) {
@@ -55,7 +58,7 @@ public class ChessController {
 
     private void runMoveCommand(String from, String to, ChessBoard chessBoard) {
         try {
-            if (chessBoard == null) {
+            if (chessBoard.isReady()) {
                 throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
             }
             chessBoard.move(new Position(from), new Position(to));

@@ -13,14 +13,17 @@ public class ChessBoard {
 
     private Map<Position, ChessPiece> chessBoard;
     private Color currentTurn = Color.WHITE;
+    private GameStatus gameStatus;
 
     public ChessBoard() {
-        chessBoard = new HashMap<>();
+        this.chessBoard = new HashMap<>();
+        this.gameStatus = GameStatus.READY;
         init();
     }
 
-    ChessBoard(Map<Position, ChessPiece> chessBoard) {
+    public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
+        this.gameStatus = GameStatus.READY;
     }
 
     private void init() {
@@ -109,8 +112,9 @@ public class ChessBoard {
     }
 
     private void movePiece(Position from, Position to, ChessPiece me) {
-        // to : king ->
-//        if (me instanceof King && )
+        if (chessBoard.get(to) instanceof King) {
+            gameStatus = GameStatus.END;
+        }
         chessBoard.put(to, me);
         chessBoard.remove(from);
         currentTurn = currentTurn.toOpposite();
@@ -195,5 +199,21 @@ public class ChessBoard {
             return 1;
         }
         return pawnCount * 0.5;
+    }
+
+    public boolean isReady() {
+        return gameStatus.isReady();
+    }
+
+    public boolean isEnd() {
+        return gameStatus.isEnd();
+    }
+
+    public boolean isPlaying() {
+        return gameStatus.isPlaying();
+    }
+
+    public void start() {
+        gameStatus = GameStatus.PLAYING;
     }
 }
