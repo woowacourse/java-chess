@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class RookTest {
 
     @ParameterizedTest
@@ -17,7 +15,7 @@ class RookTest {
         Position position = Position.from("d4");
         Rook rook = new Rook(Team.BLACK, position);
         Assertions.assertThatThrownBy(() -> {
-                    rook.validateIsPossible(Position.from(input));
+                    rook.findDirection(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -28,6 +26,6 @@ class RookTest {
     void isPossible(String input) {
         Position position = Position.from("f6");
         Rook rook = new Rook(Team.BLACK, position);
-        rook.validateIsPossible(Position.from(input));
+        rook.findDirection(Position.from(input));
     }
 }

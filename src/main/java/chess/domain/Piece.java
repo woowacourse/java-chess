@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 public abstract class Piece {
 
     private Team team;
@@ -19,4 +21,6 @@ public abstract class Piece {
     public boolean isBlackTeam() {
         return team == Team.BLACK;
     }
+
+    public abstract List<Position> findPath(Position destination);
 }

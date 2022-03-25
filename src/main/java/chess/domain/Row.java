@@ -28,4 +28,8 @@ public enum Row {
     public int getDifference(Row row) {
         return this.value - row.value;
     }
+
+    public Row plusRow(int number) {
+        return find(value + number);
+    }
 }

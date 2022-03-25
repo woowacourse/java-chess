@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 public class Knight extends Piece {
 
     public Knight(Team team, Position position) {
@@ -14,5 +16,10 @@ public class Knight extends Piece {
             }
         }
         throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+    }
+
+    @Override
+    public List<Position> findPath(Position destination) {
+        return null;
     }
 }

@@ -28,4 +28,8 @@ public enum Column {
     public int getDifference(Column col) {
         return this.value - col.value;
     }
+
+    public Column plusColumn(int number) {
+        return find((char)(value + number));
+    }
 }
