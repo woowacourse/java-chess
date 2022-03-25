@@ -16,7 +16,7 @@ public abstract class CommonMovablePiece extends Piece {
     }
 
     @Override
-    protected void calculateAvailablePosition(final Position source, final Direction direction) {
+    protected void calculateAvailableDirectionalPositions(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
         int x = source.getX() + direction.getX();
         int y = source.getY() + direction.getY();

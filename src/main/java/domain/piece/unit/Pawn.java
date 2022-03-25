@@ -4,6 +4,7 @@ import domain.piece.property.PieceSymbol;
 import domain.piece.property.TeamColor;
 import domain.position.Position;
 import domain.utils.Direction;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends SpecificMovablePiece {
@@ -25,10 +26,10 @@ public final class Pawn extends SpecificMovablePiece {
 
     @Override
     public boolean availableMove(final Position source, final Position target) {
+        calculateAvailableDirectionalPositions(source);
         if (availableFirstStartPosition(source, target)) {
             return true;
         }
-        calculateAvailablePositions(source);
         return containsPosition(target);
     }
 
@@ -49,6 +50,31 @@ public final class Pawn extends SpecificMovablePiece {
         boolean checkWhiteColor = checkSameTeamColor(TeamColor.WHITE) && source.getY() == START_WHITE_LINE;
 
         return checkBlackColor || checkWhiteColor;
+    }
+
+    public boolean checkUpDownDirection(Position source, Position target) {
+         return directions().stream()
+                .filter(direction -> direction == Direction.SOUTH || direction == Direction.NORTH)
+                .map(direction -> directionalPositions.get(direction))
+                .anyMatch(positions -> positions.contains(target)) || checkFirstDistance(source, target);
+    }
+
+    public boolean checkMoveOneSpace(Position position) {
+        return directions().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .anyMatch(positions -> positions.contains(position));
+    }
+
+    public List<Position> calculateForwardRouteByPawn(Position position) {
+        List<Position> forwardPositions = new ArrayList<>();
+        Direction direction = directions().stream()
+                .filter(direct -> direct == Direction.SOUTH || direct == Direction.NORTH)
+                .findFirst()
+                .orElse(null);
+        forwardPositions.addAll(directionalPositions.get(direction)); // 첫번째
+        forwardPositions.add(position);
+
+        return forwardPositions;
     }
 
     @Override

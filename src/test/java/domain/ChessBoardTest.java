@@ -156,14 +156,7 @@ class ChessBoardTest {
                 new Position(XPosition.C, YPosition.THREE)
         );
     }
-    /*
-    1. 폰이 이동하는 경우
-        - 상대 말이 있을 때 - x
-        - 상대 말이 없을 때 - o
-    2. 폰이 공격하는 경우
-        - 상대 말이 있을 때 - o
-        - 상대 말이 없을 때 - x
-     */
+
     @ParameterizedTest
     @MethodSource("availableMovePawns")
     @DisplayName("Pawn은 상대 말이 없을 때 이동할 수 있다.")
@@ -191,26 +184,157 @@ class ChessBoardTest {
         );
     }
 
-//    @Test
-//    @DisplayName("Pawn은 이동 위치에 상대방의 말이 있다면 이동할 수 없다.")
-//    void checkPawnImmovableByOpponent() {
-//        Position source = new Position(XPosition.B, YPosition.TWO);
-//        Position target = new Position(XPosition.B, YPosition.THREE);
-//        Position otherTeam = new Position(XPosition.B, YPosition.THREE);
-//        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-//            @Override
-//            public Map<Position, Piece> generate() {
-//                Map<Position, Piece> board = new HashMap<>();
-//                Arrays.stream(XPosition.values())
-//                        .forEach(x -> Arrays.stream(YPosition.values())
-//                                .forEach(y -> board.put(new Position(x, y), null)));
-//                board.put(source, new Pawn(TeamColor.WHITE));
-//                board.put(otherTeam, new Pawn(TeamColor.BLACK));
-//                return board;
-//            }
-//        });
-//
-//        assertThatThrownBy(() -> chessBoard.move(source, target))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
+    @Test
+    @DisplayName("Pawn 은 이동 위치에 상대방의 말이 있다면 이동할 수 없다. 앞으로 한칸 이동한 경우")
+    void checkPawnImmovableByOpponent() {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        Position target = new Position(XPosition.B, YPosition.THREE);
+        Position waypoint = new Position(XPosition.B, YPosition.THREE);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(waypoint, new Pawn(TeamColor.BLACK));
+                return board;
+            }
+        });
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("immovableTwoSpace")
+    @DisplayName("Pawn 은 이동 위치에 상대방의 말이 있다면 이동할 수 없다. 앞으로 두칸 이동한 경우")
+    void checkPawnTwoSpaceImmovableByOpponent(Position waypoint) {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        Position target = new Position(XPosition.B, YPosition.FOUR);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(waypoint, new Pawn(TeamColor.BLACK));
+                return board;
+            }
+        });
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Position> immovableTwoSpace() {
+        return Stream.of(
+                new Position(XPosition.B, YPosition.THREE),
+                new Position(XPosition.B, YPosition.FOUR)
+        );
+    }
+
+    @Test
+    @DisplayName("Pawn 의 앞으로 이동은 앞으로 한칸, 시작시는 두칸 가능하다. (실패테스트)")
+    void checkPawnImmovablePositions() {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        Position target = new Position(XPosition.B, YPosition.FIVE);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                return board;
+            }
+        });
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("attackPawnPositions")
+    @DisplayName("Pawn 의 공격은 대각선 한칸이며, target이 존재해야 한다.")
+    void checkPawnAttackSucess(Position target) {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(target, new Pawn(TeamColor.BLACK));
+                return board;
+            }
+        });
+
+        assertDoesNotThrow(() -> chessBoard.move(source, target));
+    }
+
+    @ParameterizedTest
+    @MethodSource("attackPawnPositions")
+    @DisplayName("Pawn 의 공격은 대각선 한칸이며, target 이 없다면 실패한다.")
+    void checkPawnAttackFail(Position target) {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                return board;
+            }
+        });
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Position> attackPawnPositions() {
+        return Stream.of(
+                new Position(XPosition.A, YPosition.THREE),
+                new Position(XPosition.C, YPosition.THREE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("attackPawnImpossiblePositions")
+    @DisplayName("Pawn 의 공격은 대각선 한칸이다. (실패테스트)")
+    void checkPawnAttackFailByUnrelatedPositions (Position target) {
+        Position source = new Position(XPosition.B, YPosition.TWO);
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                Arrays.stream(XPosition.values())
+                        .forEach(x -> Arrays.stream(YPosition.values())
+                                .forEach(y -> board.put(new Position(x, y), null)));
+                board.put(source, new Pawn(TeamColor.WHITE));
+                board.put(target, new Pawn(TeamColor.BLACK));
+                return board;
+            }
+        });
+
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Position> attackPawnImpossiblePositions() {
+        return Stream.of(
+                new Position(XPosition.A, YPosition.FOUR),
+                new Position(XPosition.B, YPosition.THREE),
+                new Position(XPosition.B, YPosition.FOUR),
+                new Position(XPosition.C, YPosition.FOUR)
+        );
+    }
 }

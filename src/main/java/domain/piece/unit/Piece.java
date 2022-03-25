@@ -15,14 +15,14 @@ public abstract class Piece {
     private final TeamColor teamColor;
     private final PieceSymbol unit;
 
-    private Map<Direction, List<Position>> directionalPositions;
+    protected Map<Direction, List<Position>> directionalPositions;
 
     public Piece(final TeamColor teamColor, final PieceSymbol unit) {
         this.teamColor = teamColor;
         this.unit = unit;
     }
 
-    protected void initializePosition() {
+    protected void initializeDirectionalPositions() {
         directionalPositions = new HashMap<>();
     }
 
@@ -35,8 +35,21 @@ public abstract class Piece {
     }
 
     public boolean availableMove(final Position source, final Position target) {
-        calculateAvailablePositions(source);
+        calculateAvailableDirectionalPositions(source);
         return containsPosition(target);
+    }
+
+    protected void calculateAvailableDirectionalPositions(final Position source) {
+        initializeDirectionalPositions();
+        for (Direction direction : directions()) {
+            calculateAvailableDirectionalPositions(source, direction);
+        }
+    }
+
+    protected boolean containsPosition(final Position position) {
+        return directions().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .anyMatch(positions -> positions.contains(position));
     }
 
     public void addDirectionalPosition(final Direction direction, final List<Position> positions) {
@@ -51,20 +64,7 @@ public abstract class Piece {
                 .orElse(null);
     }
 
-    protected boolean containsPosition(final Position position) {
-        return directions().stream()
-                .map(direction -> directionalPositions.get(direction))
-                .anyMatch(positions -> positions.contains(position));
-    }
-
-    protected void calculateAvailablePositions(final Position source) {
-        initializePosition();
-        for (Direction direction : directions()) {
-            calculateAvailablePosition(source, direction);
-        }
-    }
-
-    protected abstract void calculateAvailablePosition(final Position source, final Direction direction);
+    protected abstract void calculateAvailableDirectionalPositions(final Position source, final Direction direction);
 
     protected abstract List<Direction> directions();
 
