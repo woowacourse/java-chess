@@ -5,9 +5,9 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class Pawn extends Piece {
-
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE_AFTER_FIRST_TURN = 1;
+
     private boolean firstMove;
 
     public Pawn(Camp camp) {
@@ -22,6 +22,11 @@ public final class Pawn extends Piece {
         }
         moveFunction.accept(this);
         this.firstMove = false;
+    }
+
+    @Override
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        this.move(beforePosition, afterPosition, moveFunction);
     }
 
     @Override

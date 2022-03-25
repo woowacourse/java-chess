@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Camp;
+import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -108,5 +109,16 @@ class PawnTest {
         Position e3 = new Position(Column.E, Row.THREE);
 
         assertThat(pawn.canMove(d2, e3)).isFalse();
+    }
+
+    @DisplayName("상대 진영의 기물을 잡는 경우에는 대각선 앞으로 1칸 이동할 수 있다.")
+    @Test
+    void pawn_can_move_f6_g7_when_capturing() {
+//        Board board = new Board();
+        Pawn pawn = new Pawn(Camp.WHITE);
+        Position f6 = new Position(Column.F, Row.SIX);
+        Position g7 = new Position(Column.G, Row.SEVEN);
+
+        assertThat(pawn.canMove(f6, g7)).isTrue();
     }
 }

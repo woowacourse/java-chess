@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class Bishop extends Piece {
 
@@ -11,11 +12,18 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+    public void move(Position beforePosition,
+                     Position afterPosition,
+                     Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
         moveFunction.accept(this);
+    }
+
+    @Override
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        this.move(beforePosition, afterPosition, moveFunction);
     }
 
     @Override

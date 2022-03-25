@@ -21,6 +21,11 @@ public final class Knight extends Piece {
     }
 
     @Override
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        this.move(beforePosition, afterPosition, moveFunction);
+    }
+
+    @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);

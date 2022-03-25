@@ -1,6 +1,8 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -127,16 +129,15 @@ public class BoardTest {
 
     @DisplayName("이동하려는 위치에 같은 팀 기물이 있으면 갈 수 없다")
     @Test
-    void move_b2_h2() {
+    void move_h1_h2() {
         Board board = new Board();
 
-        Position b2 = new Position(Column.B, Row.TWO);
+        Position h1 = new Position(Column.H, Row.ONE);
         Position h2 = new Position(Column.H, Row.TWO);
-        Piece piece = board.getValue().get(b2);
 
-        board.move(b2, h2);
-
-        assertThat(board.getValue().get(b2)).isEqualTo(piece);
+        assertThatThrownBy(() -> board.move(h1, h2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
     }
 
     @DisplayName("이동하려는 위치가 빈 칸이면 이동할 수 있다.")
@@ -146,11 +147,8 @@ public class BoardTest {
 
         Position a2 = new Position(Column.A, Row.TWO);
         Position a4 = new Position(Column.A, Row.FOUR);
-        Piece piece = board.getValue().get(a2);
 
-        board.move(a2, a4);
-
-        assertThat(board.getValue().get(a4)).isEqualTo(piece);
+        assertThatNoException().isThrownBy(() -> board.move(a2, a4));
     }
 
     @DisplayName("이동하려는 위치에 반대 진영 기물이 있으면 잡을 수 있다.")
@@ -160,11 +158,9 @@ public class BoardTest {
 
         Position h1 = new Position(Column.H, Row.ONE);
         Position h7 = new Position(Column.H, Row.SEVEN);
-        Piece attackingPiece = board.getValue().get(h1);
 
-        board.move(h1, h7);
+        assertThatNoException().isThrownBy(() -> board.move(h1, h7));
 
-        assertThat(board.getValue().get(h7)).isEqualTo(attackingPiece);
     }
 
     private static Stream<Arguments> provideRookPosition() {

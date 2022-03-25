@@ -73,16 +73,18 @@ public final class Board {
         }
     }
 
-    public Map<Position, Piece> getValue() {
-        return Collections.unmodifiableMap(value);
-    }
-
     public void move(Position beforePosition, Position afterPosition) {
-        if (!isMovable(beforePosition, afterPosition)) {
+        Piece piece = this.value.get(beforePosition);
+
+        if (isBlank(afterPosition)) {
+            piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
         }
-        Piece piece = this.value.get(beforePosition);
-        piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+        if (isCapturing(piece, afterPosition)) {
+            piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+            return;
+        }
+        throw new IllegalArgumentException("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
     }
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
@@ -92,10 +94,15 @@ public final class Board {
         };
     }
 
-    private boolean isMovable(Position beforePosition, Position afterPosition) {
-        if (value.get(afterPosition) == null) {
-            return true;
-        }
-        return value.get(beforePosition).isBlack() != value.get(afterPosition).isBlack();
+    private boolean isBlank(Position afterPosition) {
+        return value.get(afterPosition) == null;
+    }
+
+    private boolean isCapturing(Piece piece, Position afterPosition) {
+        return piece.canCapture(value.get(afterPosition));
+    }
+
+    public Map<Position, Piece> getValue() {
+        return Collections.unmodifiableMap(value);
     }
 }

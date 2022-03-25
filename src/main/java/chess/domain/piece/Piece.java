@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public abstract class Piece {
@@ -16,7 +15,17 @@ public abstract class Piece {
         return this.camp == Camp.BLACK;
     }
 
-    public abstract void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
+    public abstract void move(Position beforePosition,
+                              Position afterPosition,
+                              Consumer<Piece> moveFunction);
+
+    public abstract void capture(Position beforePosition,
+                                 Position afterPosition,
+                                 Consumer<Piece> moveFunction);
+
+    public boolean canCapture(Piece targetPiece) {
+        return this.camp != targetPiece.camp;
+    }
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
