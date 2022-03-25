@@ -89,4 +89,24 @@ class PawnTest {
 
         assertThat(pawn.canMove(a5, a4)).isTrue();
     }
+
+    @DisplayName("폰은 가로로 움직일 수 없다.")
+    @Test
+    void pawn_cant_move_d3_e3() {
+        Pawn pawn = new Pawn(Camp.BLACK);
+        Position d3 = new Position(Column.D, Row.THREE);
+        Position e3 = new Position(Column.E, Row.THREE);
+
+        assertThat(pawn.canMove(d3, e3)).isFalse();
+    }
+
+    @DisplayName("폰은 대각선으로 움직일 수 없다.")
+    @Test
+    void pawn_cant_move_d2_e3() {
+        Pawn pawn = new Pawn(Camp.WHITE);
+        Position d2 = new Position(Column.D, Row.TWO);
+        Position e3 = new Position(Column.E, Row.THREE);
+
+        assertThat(pawn.canMove(d2, e3)).isFalse();
+    }
 }
