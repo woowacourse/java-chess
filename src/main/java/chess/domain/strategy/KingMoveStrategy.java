@@ -3,12 +3,14 @@ package chess.domain.strategy;
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
 
-public class KingMoveStrategy implements MoveStrategy {
+public final class KingMoveStrategy extends CommonMovingStrategy {
 
     @Override
     public void isMovable(Position source, Position target, ChessBoard chessBoard) {
-        if (source.isSameFile(target) && source.isSameRank(target)) {
-            throw new IllegalStateException("제자리에 머무를 수 없습니다.");
+        if (source.calculateDistance(target) != 1) {
+            throw new IllegalArgumentException("한 칸만 이동 가능합니다.");
         }
+
+        checkCommonCondition(source, target, chessBoard);
     }
 }
