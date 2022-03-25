@@ -66,7 +66,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
         }
@@ -82,7 +82,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
 
-            board.move(start, target);
+            board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
 
             Assertions.assertAll(
@@ -104,7 +104,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
-            board.move(start, target);
+            board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
 
             Assertions.assertAll(
@@ -122,7 +122,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
@@ -138,7 +138,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 말이 경로에 존재해 이동할 수 없습니다.");
         }
@@ -153,7 +153,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 말이 존재해 이동할 수 없습니다.");
         }
@@ -166,7 +166,7 @@ class BoardTest {
             Position target = new Position(Row.FOURTH, Column.a);
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
-            board.move(start, target);
+            board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
             Assertions.assertAll(
                 () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
@@ -186,7 +186,7 @@ class BoardTest {
             Position start = new Position(Row.FIRST, Column.a);
             Position target = new Position(Row.SECOND, Column.b);
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치에 말이 존재하지 않습니다.");
         }
@@ -202,7 +202,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midpoint, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 말이 경로에 존재해 이동할 수 없습니다.");
         }
@@ -217,7 +217,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
-            assertThatThrownBy(() -> board.move(start, target))
+            assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
         }
@@ -231,7 +231,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
 
-            board.move(start, target);
+            board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
 
             Assertions.assertAll(
@@ -240,4 +240,18 @@ class BoardTest {
         }
     }
 
+    @DisplayName("상대방 말을 이동시키려 할 경우 예외를 반환한다.")
+    @Test
+    void same_Color_Piece_In_Target_Point() {
+        Piece startPiece = new Rook(Color.BLACK);
+        Piece existPiece = new Rook(Color.BLACK);
+        Position start = new Position(Row.FIRST, Column.a);
+        Position target = new Position(Row.THIRD, Column.a);
+
+        Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
+
+        assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("상대편 말은 욺직일 수 없습니다.");
+    }
 }

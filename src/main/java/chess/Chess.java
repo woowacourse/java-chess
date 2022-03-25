@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -37,10 +38,10 @@ public class Chess {
         Command command = Command.from(args[0]);
         if (command == Command.START && gameState == GameState.READY) {
             start();
-            gameState = GameState.RUNNING;
+            gameState = GameState.WHITE_RUNNING;
             return;
         }
-        if (command == Command.MOVE && gameState == GameState.RUNNING) {
+        if (command == Command.MOVE && gameState.isRunning()) {
             move(args);
             return;
         }
@@ -61,7 +62,15 @@ public class Chess {
         }
         Position start = Position.from(args[1]);
         Position target = Position.from(args[2]);
-        board.move(start, target);
+        Color currentColor = getCurrentColor();
+        board.move(start, target, currentColor);
         OutputView.printBoard(board.getPieces());
+    }
+
+    private Color getCurrentColor() {
+        if (gameState == GameState.BLACK_RUNNING) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 }

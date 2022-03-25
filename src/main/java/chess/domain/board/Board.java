@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.board.strategy.BoardInitializeStrategy;
+import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 
@@ -15,9 +16,9 @@ public class Board {
         pieces = new HashMap<>(strategy.createPieces());
     }
 
-    public void move(final Position start, final Position target) {
+    public void move(final Position start, final Position target, final Color currentColor) {
         final Piece movingPiece = pieces.get(start);
-        validatePieceExistIn(movingPiece);
+        validatePieceExistIn(movingPiece, currentColor);
         validateMoving(start, target);
         pieces.put(target, movingPiece);
         pieces.remove(start);
@@ -70,9 +71,12 @@ public class Board {
         }
     }
 
-    private void validatePieceExistIn(final Piece movingPiece) {
+    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
         if (movingPiece == null) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+        }
+        if (movingPiece.getColor() != color) {
+            throw new IllegalArgumentException("상대편 말은 욺직일 수 없습니다.");
         }
     }
 
