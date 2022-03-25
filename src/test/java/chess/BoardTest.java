@@ -19,4 +19,15 @@ class BoardTest {
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
     }
 
+    @ParameterizedTest(name = "moveCommand : {0}")
+    @ValueSource(strings = {"a1 a2", "g1 g2", "a7 a8", "g7 g8", "d2 d1", "d7 d8"})
+    @DisplayName("이동할 위치에 말이 존재하는지 검증한다.")
+    void existPieceInToPosition(final String actual) {
+        final Board board = Board.create();
+
+        assertThatThrownBy(() -> board.move(MoveCommand.of(actual)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 위치에 같은색의 말이 존재합니다.");
+    }
+
 }

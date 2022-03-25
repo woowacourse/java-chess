@@ -79,8 +79,14 @@ public class Board {
 
     public void move(final MoveCommand moveCommand) {
         final Position from = moveCommand.getFrom();
+        final Position to = moveCommand.getTo();
+
         if (!value.containsKey(from)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+        }
+
+        if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
+            throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
         }
     }
 }

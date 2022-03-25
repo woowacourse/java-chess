@@ -6,4 +6,9 @@ public enum Color {
     public boolean isBlack() {
         return this == BLACK;
     }
+
+    public boolean hasSameColor(final Color color) {
+        return this == color;
+    }
+
 }

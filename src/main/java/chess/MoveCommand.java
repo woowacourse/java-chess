@@ -28,4 +28,8 @@ public class MoveCommand {
     public Position getFrom() {
         return from;
     }
+
+    public Position getTo() {
+        return to;
+    }
 }

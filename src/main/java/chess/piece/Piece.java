@@ -5,4 +5,6 @@ public interface Piece {
     Name getName();
 
     Color getColor();
+
+    boolean isSameTeam(Piece piece);
 }

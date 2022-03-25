@@ -19,4 +19,9 @@ public abstract class AbstractPiece implements Piece {
     public Color getColor() {
         return color;
     }
+
+    @Override
+    public final boolean isSameTeam(final Piece other) {
+        return this.color.hasSameColor(other.getColor());
+    }
 }
