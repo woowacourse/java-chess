@@ -11,6 +11,7 @@ public final class Pawn extends ChessPiece {
     private static final Map<Color, Pawn> cache;
     private static final String NAME = "P";
     private static final Double VALUE = 1.0;
+    private static final Double VALUE_BY_SAME_RANK = 0.5;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
 
@@ -69,5 +70,12 @@ public final class Pawn extends ChessPiece {
         }
 
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+    }
+
+    public static double calculateScore(final int pawnCount) {
+        if (pawnCount == 1) {
+            return VALUE;
+        }
+        return VALUE_BY_SAME_RANK * pawnCount;
     }
 }

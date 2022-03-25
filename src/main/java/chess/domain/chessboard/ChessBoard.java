@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Stack;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -27,26 +28,23 @@ public class ChessBoard {
     }
 
     public void move(final Position from, final Position to) {
-        final ChessPiece me = findPiece(from)
+        final ChessPiece movablePiece = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
-        if (me.isEnemyTurn(currentTurn)) {
-            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
-        }
-
-        checkMove(from, to, me);
+        checkTurn(movablePiece);
+        checkCanMove(from, to, movablePiece);
 
         final Optional<ChessPiece> possibleTargetPiece = findPiece(to);
+        possibleTargetPiece.ifPresent(targetPiece -> {
+            checkEnemy(movablePiece, targetPiece);
+            checkPawnCrossMove(from, to, movablePiece);
+        });
+
         if (possibleTargetPiece.isEmpty()) {
-            checkPawnStraightMove(from, to, me);
-            movePiece(from, to, me);
-            return;
+            checkPawnStraightMove(from, to, movablePiece);
         }
 
-        final ChessPiece targetPiece = possibleTargetPiece.get();
-        checkEnemy(me, targetPiece);
-        checkPawnCrossMove(from, to, me);
-        movePiece(from, to, me);
+        movePiece(from, to, movablePiece);
     }
 
     public Optional<ChessPiece> findPiece(final Position position) {
@@ -58,9 +56,15 @@ public class ChessBoard {
         return Optional.of(piece);
     }
 
-    private void checkMove(final Position from, final Position to, final ChessPiece me) {
-        me.canMove(from, to);
-        final Stack<Position> routes = me.findRoute(from, to);
+    private void checkTurn(final ChessPiece movablePiece) {
+        if (movablePiece.isEnemyTurn(currentTurn)) {
+            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
+        }
+    }
+
+    private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
+        movablePiece.canMove(from, to);
+        final Stack<Position> routes = movablePiece.findRoute(from, to);
 
         while (!routes.isEmpty()) {
             checkHurdle(routes.pop());
@@ -73,37 +77,39 @@ public class ChessBoard {
         }
     }
 
-    private void checkPawnStraightMove(final Position from, final Position to, final ChessPiece me) {
-        if (me instanceof Pawn && isCross(from, to)) {
+    private void checkPawnStraightMove(final Position from, final Position to, final ChessPiece chessPiece) {
+        if (!(chessPiece instanceof Pawn)) {
+            return;
+        }
+
+        final Direction direction = to.findDirection(from);
+        if (!direction.equals(Direction.N) && !direction.equals(Direction.S)) {
             throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
         }
     }
 
-    private boolean isCross(final Position from, final Position to) {
-        return to.findDirection(from) != Direction.N && to.findDirection(from) != Direction.S;
-    }
-
-    private void checkPawnCrossMove(final Position from, final Position to, final ChessPiece me) {
-        if (me instanceof Pawn && isStraight(from, to)) {
-            throw new IllegalArgumentException("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
-        }
-    }
-
-    private boolean isStraight(final Position from, final Position to) {
-        return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
-    }
-
-    private void checkEnemy(final ChessPiece me, final ChessPiece targetPiece) {
-        if (targetPiece.isSameColor(me)) {
+    private void checkEnemy(final ChessPiece movablePiece, final ChessPiece targetPiece) {
+        if (targetPiece.isSameColor(movablePiece)) {
             throw new IllegalArgumentException("같은색 기물입니다.");
         }
     }
 
-    private void movePiece(final Position from, final Position to, final ChessPiece me) {
+    private void checkPawnCrossMove(final Position from, final Position to, final ChessPiece chessPiece) {
+        if (!(chessPiece instanceof Pawn)) {
+            return;
+        }
+
+        final Direction direction = to.findDirection(from);
+        if (direction.equals(Direction.N) || direction.equals(Direction.S)) {
+            throw new IllegalArgumentException("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
+        }
+    }
+
+    private void movePiece(final Position from, final Position to, final ChessPiece movablePiece) {
         if (chessBoard.get(to) instanceof King) {
             gameStatus = GameStatus.END;
         }
-        chessBoard.put(to, me);
+        chessBoard.put(to, movablePiece);
         chessBoard.remove(from);
         currentTurn = currentTurn.toOpposite();
     }
@@ -111,50 +117,33 @@ public class ChessBoard {
     public Map<Color, Double> calculateScore() {
         return Arrays.stream(Color.values())
                 .collect(Collectors.toMap(
-                        color -> color,
-                        this::getSum));
+                        Function.identity(),
+                        color -> sumScoreExceptPawn(color) + sumPawnScore(color)));
     }
 
-    private double getSum(final Color color) {
-        final double sumExceptPawnScore = chessBoard.values().stream()
-                .filter((chessPiece) -> chessPiece.isSameColor(color))
-                .filter((chessPiece) -> !(chessPiece instanceof Pawn))
+    private double sumScoreExceptPawn(final Color color) {
+        return chessBoard.values().stream()
+                .filter(chessPiece -> chessPiece.isSameColor(color))
+                .filter(chessPiece -> !(chessPiece instanceof Pawn))
                 .mapToDouble(ChessPiece::getValue)
                 .sum();
-
-        return sumExceptPawnScore + getSumPawn(color);
     }
 
-    private double getSumPawn(final Color color) {
-        double totalPawnScore = 0;
-        for (final Rank rank : Rank.values()) {
-            final double pawnCount = countSameRankPawn(color, rank);
-            totalPawnScore += sumPawnScore(pawnCount);
-        }
-        return totalPawnScore;
+    private double sumPawnScore(final Color color) {
+        return Arrays.stream(Rank.values())
+                .mapToInt(rank -> countSameRankPawn(color, rank))
+                .mapToDouble(Pawn::calculateScore)
+                .sum();
     }
 
-    private double countSameRankPawn(final Color color, final Rank rank) {
-        return Arrays.stream(File.values())
-                .map((file) -> findPiece(Position.of(rank, file)))
-                .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
+    private int countSameRankPawn(final Color color, final Rank rank) {
+        return (int) Arrays.stream(File.values())
+                .map(file -> findPiece(Position.of(rank, file)))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(chessPiece -> chessPiece instanceof Pawn)
+                .filter(pawn -> pawn.isSameColor(color))
                 .count();
-    }
-
-    private boolean isMyPawn(final Color color, final Optional<ChessPiece> possiblePiece) {
-        if (possiblePiece.isEmpty()) {
-            return false;
-        }
-
-        final ChessPiece chessPiece = possiblePiece.get();
-        return chessPiece instanceof Pawn && chessPiece.isSameColor(color);
-    }
-
-    private double sumPawnScore(final double pawnCount) {
-        if (pawnCount == 1) {
-            return 1;
-        }
-        return pawnCount * 0.5;
     }
 
     public boolean isReady() {
