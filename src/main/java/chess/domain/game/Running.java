@@ -28,7 +28,9 @@ public class Running extends Started {
 
     @Override
     public GameState move(List<String> arguments) {
-        board.move(arguments, turnColor);
-        return new Running(board, turnColor.toggle());
+        if (board.move(arguments, turnColor)) {
+            return new Running(board, turnColor.toggle());
+        }
+        return new Finished(board, turnColor);
     }
 }

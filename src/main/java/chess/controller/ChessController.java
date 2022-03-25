@@ -19,6 +19,7 @@ public class ChessController {
         Game game = new Game();
         outputView.printIntroduction();
         playGame(game);
+        outputView.printEnd();
     }
 
     private void playGame(Game game) {
