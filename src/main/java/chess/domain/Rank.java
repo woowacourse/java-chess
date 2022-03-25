@@ -31,7 +31,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.rank == toInteger(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 축은 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 rank축은 없습니다."));
     }
 
     private static int toInteger(String rank) {
@@ -47,7 +47,11 @@ public enum Rank {
         return String.valueOf(rank);
     }
 
-    public int computeDiff(Rank origin) {
-        return rank - origin.rank;
+    public int computeDiff(Rank target) {
+        return target.rank - rank;
+    }
+
+    public Rank add(int value) {
+        return Rank.of(String.valueOf(rank + value));
     }
 }

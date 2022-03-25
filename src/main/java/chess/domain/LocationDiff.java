@@ -19,9 +19,13 @@ public class LocationDiff {
         }
     }
 
-    public Direction getDirection() {
+    public Direction computeDirection() {
         int gcd = Math.abs(gcd(diffFile, diffRank));
         return Direction.of(diffFile / gcd, diffRank / gcd);
+    }
+
+    public int computeDistance() {
+        return Math.abs(gcd(diffFile, diffRank));
     }
 
     private int gcd(int a, int b) {

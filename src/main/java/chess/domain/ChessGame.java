@@ -35,7 +35,8 @@ public class ChessGame {
     private void move(String source, String target) {
         Location sourceLocation = Location.of(source);
         Location targetLocation = Location.of(target);
-        state.move(sourceLocation, targetLocation);
+        this.state = state.move(sourceLocation, targetLocation);
+        OutputView.printChessBoard(state.getBoard());
     }
 
     private void start() {

@@ -23,10 +23,16 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.file.equals(text))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 축은 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 file축은 없습니다."));
     }
 
-    public int computeDiff(File origin) {
-        return (int) file.charAt(0) - (int) origin.file.charAt(0);
+    public int computeDiff(File target) {
+        return (int) target.file.charAt(0) - (int) file.charAt(0);
+    }
+
+    public File add(int value) {
+        int ascii = (int) file.charAt(0) + value;
+        String string = String.valueOf((char) ascii);
+        return File.of(string);
     }
 }

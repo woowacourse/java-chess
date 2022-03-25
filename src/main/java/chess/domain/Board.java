@@ -67,4 +67,13 @@ public class Board {
     public Map<Location, Piece>  getBoard() {
         return chessBoard;
     }
+
+    public boolean isEmpty(Location location) {
+        return chessBoard.get(location).isEmpty();
+    }
+
+    public void move(Location source, Location target) {
+        chessBoard.put(target, chessBoard.get(source));
+        chessBoard.put(source, new EmptyPiece());
+    }
 }

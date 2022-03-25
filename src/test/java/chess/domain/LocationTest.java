@@ -49,9 +49,9 @@ class LocationTest {
 
     public static Stream<Arguments> fileDiffParameter() {
         return Stream.of(
-                Arguments.arguments(File.A, File.C, 2),
+                Arguments.arguments(File.A, File.C, -2),
                 Arguments.arguments(File.A, File.A, 0),
-                Arguments.arguments(File.D, File.C, -1)
+                Arguments.arguments(File.D, File.C, 1)
         );
     }
 
@@ -64,8 +64,8 @@ class LocationTest {
 
     public static Stream<Arguments> rankDiffParameter() {
         return Stream.of(
-                Arguments.arguments(Rank.ONE, Rank.THREE, 2),
-                Arguments.arguments(Rank.THREE, Rank.ONE, -2),
+                Arguments.arguments(Rank.ONE, Rank.THREE, -2),
+                Arguments.arguments(Rank.THREE, Rank.ONE, 2),
                 Arguments.arguments(Rank.EIGHT, Rank.EIGHT, 0)
         );
     }

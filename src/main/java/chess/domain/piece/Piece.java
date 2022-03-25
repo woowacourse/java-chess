@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.LocationDiff;
 import chess.domain.state.Direction;
-import java.util.List;
-import java.util.Map;
 
 public abstract class Piece {
     private final Team team;
@@ -30,5 +29,15 @@ public abstract class Piece {
         return team.isWhite();
     }
 
+    public boolean isEmpty() {
+        return team.isNone();
+    }
+
+    public boolean isPawn() {
+        return getClass() == Pawn.class;
+    }
+
     public abstract boolean isMovableDirection(Direction direction);
+
+    public abstract boolean isMovableDistance(LocationDiff locationDiff);
 }

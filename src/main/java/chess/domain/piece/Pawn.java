@@ -1,11 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.LocationDiff;
 import chess.domain.state.Direction;
 
 public class Pawn extends Piece {
 
+    private boolean isFirst;
+
     public Pawn(Team team) {
         super(team, Name.PAWN);
+        isFirst = true;
     }
 
     @Override
@@ -14,5 +18,16 @@ public class Pawn extends Piece {
             return Direction.isBlackPawnDirection(direction);
         }
         return Direction.isWhitePawnDirection(direction);
+    }
+
+    @Override
+    public boolean isMovableDistance(LocationDiff locationDiff) {
+        Direction direction = locationDiff.computeDirection();
+        int distance = locationDiff.computeDistance();
+
+        if ((direction == Direction.D || direction == Direction.U) && isFirst) {
+            return distance <= 2;
+        }
+        return distance <= 1;
     }
 }
