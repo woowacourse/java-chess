@@ -35,12 +35,12 @@ public class PositionTest {
     void traceGroupDiagonal() {
         //given
         Position source = new Position(Rank.ONE, File.A);
-        Position target = new Position(Rank.FOUR, File.C);
+        Position target = new Position(Rank.FOUR, File.D);
 
         List<Position> traceGroup = source.traceGroup(target);
 
         //then
-        assertThat(traceGroup).containsAnyOf(new Position(Rank.TWO, File.B), new Position(Rank.THREE, File.C));
+        assertThat(traceGroup).contains(new Position(Rank.TWO, File.B), new Position(Rank.THREE, File.C));
     }
 
     @Test
