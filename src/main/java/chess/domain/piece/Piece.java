@@ -7,4 +7,6 @@ public interface Piece {
     boolean movable(Position to, Position from);
 
     String getName();
+
+    Direction findDirection(Position from, Position to);
 }

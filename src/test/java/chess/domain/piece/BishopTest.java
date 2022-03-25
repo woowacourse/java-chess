@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -45,5 +46,20 @@ public class BishopTest {
 
         // then
         assertThat(bishop.getName()).isEqualTo(expect);
+    }
+
+    @DisplayName("비숍의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"c3,a1,SOUTH_WEST", "a1,c3,NORTH_EAST"})
+    void findDirection(Position from, Position to, Direction direction) {
+
+        // given
+        Bishop bishop = new Bishop(Team.WHITE);
+
+        // when
+        Direction find = bishop.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Direction;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -20,6 +21,34 @@ public class Board {
     public void initBoard() {
         initWhitePieces();
         initBlackPieces();
+    }
+
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
+
+    public boolean move(Position from, Position to) {
+        Piece piece = board.get(from);
+        // TODO - if piece.movable
+        if (piece.movable(from, to) && validPath(from, to, piece.findDirection(from, to))) {
+            board.put(to, piece);
+            board.remove(from);
+            return true;
+        }
+        return false;
+    }
+
+
+    private boolean validPath(Position from, Position to, Direction direction) {
+        Position current = from;
+        do {
+            current = current.move(direction);
+            if (board.get(current) != null) {
+                return false;
+            }
+        } while (!current.equals(to));
+        return true;
     }
 
     private void initBlackPieces() {
@@ -52,17 +81,6 @@ public class Board {
         for (Column column : Column.values()) {
             board.put(new Position(column, row), piece);
         }
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
-    public void move(Position beforePosition, Position afterPosition) {
-        Piece piece = board.get(beforePosition);
-        // TODO - if piece.movable
-        board.put(afterPosition, piece);
-        board.remove(beforePosition);
     }
 
     public boolean isEmpty() {

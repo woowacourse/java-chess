@@ -25,10 +25,21 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+    }
+
+    public static Column of(final int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.index == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
     }
 
     public int calculateIndex(Column column) {
         return column.index - this.index;
+    }
+
+    public Column move(int distance) {
+        return of(index + distance);
     }
 }

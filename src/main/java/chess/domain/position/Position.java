@@ -65,4 +65,16 @@ public class Position {
     public boolean isSameColumn(Row row) {
         return this.row == row;
     }
+
+    public Position move(Direction direction) {
+        return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
+    }
 }

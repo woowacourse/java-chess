@@ -13,8 +13,8 @@ public enum Direction {
     EAST(1, 0),
     WEST(-1, 0),
 
-    NORTH_NORTH(0,2),
-    SOUTH_SOUTH(0,-2),
+    NORTH_NORTH(0, 2),
+    SOUTH_SOUTH(0, -2),
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
@@ -29,15 +29,15 @@ public enum Direction {
     SSW(-1, -2),
     SSE(1, -2);
 
-    private final int row;
     private final int column;
+    private final int row;
 
-    Direction(int row, int column) {
-        this.row = row;
+    Direction(int column, int row) {
         this.column = column;
+        this.row = row;
     }
 
-    public static Direction of(int row, int column) {
+    public static Direction of(int column, int row) {
         return Arrays.stream(Direction.values())
                 .filter(it -> it.row == row && it.column == column)
                 .findAny()
@@ -68,5 +68,13 @@ public enum Direction {
 
     public static List<Direction> pullWhitePawnDirections() {
         return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST, NORTH_NORTH);
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }

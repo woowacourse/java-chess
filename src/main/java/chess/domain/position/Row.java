@@ -27,7 +27,14 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
+    }
+
+    public static Row of(final int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.index == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
     }
 
     public static List<Row> reverseRows() {
@@ -38,5 +45,9 @@ public enum Row {
 
     public int calculateIndex(Row row) {
         return row.index - this.index;
+    }
+
+    public Row move(int distance) {
+        return of(index + distance);
     }
 }

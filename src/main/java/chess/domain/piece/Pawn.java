@@ -54,4 +54,9 @@ public class Pawn implements Piece {
     public String getName() {
         return team.convert(name);
     }
+
+    @Override
+    public Direction findDirection(Position from, Position to) {
+        return from.findDirection(to, true);
+    }
 }

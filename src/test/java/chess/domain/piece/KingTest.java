@@ -46,4 +46,20 @@ class KingTest {
         // then
         assertThat(king.getName()).isEqualTo(expect);
     }
+
+
+    @DisplayName("킹의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a2,a1,SOUTH", "a1,a2,NORTH"})
+    void findDirection(Position from, Position to, Direction direction) {
+
+        // given
+        King king = new King(Team.BLACK);
+
+        // when
+        Direction find = king.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
+    }
 }

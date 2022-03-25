@@ -47,4 +47,18 @@ class RookTest {
         // then
         assertThat(rook.getName()).isEqualTo(expect);
     }
+
+    @DisplayName("룩의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a1,a3,NORTH", "a3,a1,SOUTH"})
+    void findDirection(Position from, Position to, Direction direction) {
+        // given
+        Rook rook = new Rook(Team.WHITE);
+
+        // when
+        Direction find = rook.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
+    }
 }

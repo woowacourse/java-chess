@@ -47,4 +47,18 @@ class QueenTest {
         // then
         assertThat(queen.getName()).isEqualTo(expect);
     }
+
+    @DisplayName("퀸의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a1,c3,NORTH_EAST", "c3,a1,SOUTH_WEST"})
+    void findDirection(Position from, Position to, Direction direction) {
+        // given
+        Queen queen = new Queen(Team.WHITE);
+
+        // when
+        Direction find = queen.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
+    }
 }

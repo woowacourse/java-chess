@@ -21,7 +21,7 @@ public class ColumnTest {
     void invalid(String input) {
         assertThatThrownBy(() -> Column.of(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바르지 않은 로우입니다.");
+                .hasMessage("올바르지 않은 컬럼입니다.");
     }
 
     @DisplayName("대소문자 구분 없이 유효한 Column")

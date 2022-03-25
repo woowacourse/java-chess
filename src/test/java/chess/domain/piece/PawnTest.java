@@ -75,4 +75,36 @@ public class PawnTest {
         // then
         assertThat(pawn.getName()).isEqualTo(expect);
     }
+
+    @DisplayName("화이트 폰의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a2,a3,NORTH", "a2,a4,NORTH_NORTH"})
+    void findDirection_white(Position fromValue, Position toValue, Direction direction) {
+        // given
+        Position from = fromValue;
+        Position to = toValue;
+        Pawn pawn = new Pawn(Team.WHITE);
+
+        // when
+        Direction find = pawn.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
+    }
+
+    @DisplayName("블랙 폰의 방향을 체크한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a2,a1,SOUTH", "a7,a5,SOUTH_SOUTH"})
+    void findDirection_black_while_direction(Position fromValue, Position toValue, Direction direction) {
+        // given
+        Position from = fromValue;
+        Position to = toValue;
+        Pawn pawn = new Pawn(Team.BLACK);
+
+        // when
+        Direction find = pawn.findDirection(from, to);
+
+        // then
+        assertThat(find).isEqualTo(direction);
+    }
 }
