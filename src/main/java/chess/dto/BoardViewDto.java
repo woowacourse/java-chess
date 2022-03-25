@@ -24,7 +24,6 @@ public class BoardViewDto {
 
     private static List<Piece> currentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
-                .findAll()
                 .stream()
                 .filter(piece -> piece.isAtRowIdxOf(rowIdx))
                 .collect(Collectors.toUnmodifiableList());

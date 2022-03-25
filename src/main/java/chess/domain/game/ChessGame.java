@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
+import java.util.List;
 
 public class ChessGame {
 
@@ -55,8 +56,8 @@ public class ChessGame {
         return new GameResultDto(whiteScore, blackScore);
     }
 
-    public ActivePieces getChessmen() {
-        return chessmen;
+    public List<Piece> getChessmen() {
+        return chessmen.findAll();
     }
 
     @Override

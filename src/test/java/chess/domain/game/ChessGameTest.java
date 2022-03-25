@@ -18,6 +18,9 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 class ChessGameTest {
 
+    private static final String WHITE_ROOK_POSITION = "h1";
+    private static final String BLACK_ROOK_POSITION = "h8";
+
     private ChessGame game;
 
     @BeforeEach
@@ -29,12 +32,12 @@ class ChessGameTest {
 
     @Test
     void 체스말_이동_가능() {
-        game.moveChessmen(new MovePositionCommandDto("h1", "h3"));
+        game.moveChessmen(new MovePositionCommandDto(WHITE_ROOK_POSITION, "h3"));
 
         Piece whiteRook = Rook.ofRight(WHITE);
         whiteRook.move(Position.of("h3"), CLEAR_PATH_STRATEGY);
 
-        List<Piece> actual = game.getChessmen().findAll();
+        List<Piece> actual = game.getChessmen();
         List<Piece> expected = List.of(whiteRook, Rook.ofRight(BLACK), new King(BLACK));
 
         assertThat(actual).isEqualTo(expected);
@@ -42,12 +45,12 @@ class ChessGameTest {
 
     @Test
     void 체스말로_다른_체스말_공격_가능() {
-        game.moveChessmen(new MovePositionCommandDto("h1", "h8"));
+        game.moveChessmen(new MovePositionCommandDto(WHITE_ROOK_POSITION, BLACK_ROOK_POSITION));
 
         Piece aliveRook = Rook.ofRight(WHITE);
-        aliveRook.move(Position.of("h8"), CLEAR_PATH_STRATEGY);
+        aliveRook.move(Position.of(BLACK_ROOK_POSITION), CLEAR_PATH_STRATEGY);
 
-        List<Piece> actual = game.getChessmen().findAll();
+        List<Piece> actual = game.getChessmen();
         List<Piece> expected = List.of(aliveRook, new King(BLACK));
 
         assertThat(actual).isEqualTo(expected);
