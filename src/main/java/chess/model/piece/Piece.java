@@ -1,6 +1,7 @@
 package chess.model.piece;
 
 import chess.model.Color;
+import chess.model.Direction;
 import chess.model.Square;
 import chess.model.File;
 import chess.model.Rank;
@@ -50,6 +51,10 @@ public abstract class Piece {
 
     public boolean isEmpty() {
         return color.isEmpty();
+    }
+
+    public Direction findDirection(Piece target) {
+        return this.square.findDirection(target.square);
     }
 
     @Override

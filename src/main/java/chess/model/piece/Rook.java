@@ -13,18 +13,18 @@ public final class Rook extends Piece {
 
     @Override
     public boolean movable(Piece targetPiece) {
-        Square nowSquare;
-        for (Direction direction : direction()) {
-            Square tempSquare = square();
-            do {
-                nowSquare = tempSquare;
-                tempSquare = nowSquare.tryToMove(direction);
-                if (tempSquare.equals(targetPiece.square()) && !this.isAlly(targetPiece)) {
-                    return true;
-                }
-            } while (!tempSquare.equals(nowSquare));
+        if (!targetPiece.isAlly(this) && canMoveTo(targetPiece)) {
+            return true;
         }
         return false;
+    }
+
+    private boolean canMoveTo(Piece target) {
+        try {
+            return direction().contains(this.findDirection(target));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     @Override
