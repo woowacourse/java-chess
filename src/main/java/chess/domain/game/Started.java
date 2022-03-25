@@ -21,4 +21,9 @@ public abstract class Started implements GameState {
     public final Map<Point, Piece> getPointPieces() {
         return board.getPointPieces();
     }
+
+    @Override
+    public Color getTurnColor() {
+        return turnColor;
+    }
 }

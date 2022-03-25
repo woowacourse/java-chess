@@ -18,11 +18,23 @@ public class ChessController {
     public void run() {
         Game game = new Game();
         outputView.printIntroduction();
+        playGame(game);
+    }
 
-        game.execute(Request.of(inputView.inputCommand()));
-        while (game.isRunnable()) {
-            outputView.printBoard(game.getPointPieces());
+    private void playGame(Game game) {
+        tryExecute(game);
+        if (!game.isRunnable()) {
+            return;
+        }
+        outputView.printBoard(game.getPointPieces(), game.getTurn());
+        playGame(game);
+    }
+
+    private void tryExecute(Game game) {
+        try {
             game.execute(Request.of(inputView.inputCommand()));
+        } catch (RuntimeException e) {
+            outputView.printException(e);
         }
     }
 }

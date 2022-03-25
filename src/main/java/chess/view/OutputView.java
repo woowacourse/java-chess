@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -13,10 +14,11 @@ public class OutputView {
                 "게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public void printBoard(Map<Point, Piece> board) {
+    public void printBoard(Map<Point, Piece> board, Color turnColor) {
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
             printBoardLine(board, i);
         }
+        System.out.println("현재 턴 : " + turnColor);
     }
 
     private void printBoardLine(Map<Point, Piece> board, int i) {
@@ -26,5 +28,9 @@ public class OutputView {
             System.out.print(PieceRepresentation.convertType(piece));
         }
         System.out.println();
+    }
+
+    public void printException(RuntimeException e) {
+        System.out.println(e.getMessage());
     }
 }

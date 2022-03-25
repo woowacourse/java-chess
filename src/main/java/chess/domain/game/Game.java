@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.controller.api.Request;
 import chess.domain.board.Point;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -25,5 +26,9 @@ public class Game {
 
     public Map<Point, Piece> getPointPieces() {
         return state.getPointPieces();
+    }
+
+    public Color getTurn() {
+        return state.getTurnColor();
     }
 }
