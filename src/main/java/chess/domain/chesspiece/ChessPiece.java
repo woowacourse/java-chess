@@ -16,7 +16,7 @@ public abstract class ChessPiece {
         this.value = value;
     }
 
-    public abstract void canMove(final Position from, final Position to);
+    public abstract void checkMovablePosition(final Position from, final Position to);
 
     public Stack<Position> findRoute(final Position from, final Position to) {
         final Stack<Position> routes = new Stack<>();

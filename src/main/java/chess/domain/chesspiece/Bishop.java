@@ -28,7 +28,7 @@ public final class Bishop extends ChessPiece {
     }
 
     @Override
-    public void canMove(final Position from, final Position to) {
+    public void checkMovablePosition(final Position from, final Position to) {
         final int rankDistance = Math.abs(from.rankDistance(to));
         final int fileDistance = Math.abs(from.fileDistance(to));
 

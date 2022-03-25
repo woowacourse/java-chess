@@ -30,8 +30,15 @@ public final class Pawn extends ChessPiece {
         return cache.get(color);
     }
 
+    public static double calculateScore(final int pawnCount) {
+        if (pawnCount == 1) {
+            return VALUE;
+        }
+        return VALUE_BY_SAME_RANK * pawnCount;
+    }
+
     @Override
-    public void canMove(final Position from, final Position to) {
+    public void checkMovablePosition(final Position from, final Position to) {
         if (from.isSameRank(to)) {
             if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
                 return;
@@ -70,12 +77,5 @@ public final class Pawn extends ChessPiece {
         }
 
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
-    }
-
-    public static double calculateScore(final int pawnCount) {
-        if (pawnCount == 1) {
-            return VALUE;
-        }
-        return VALUE_BY_SAME_RANK * pawnCount;
     }
 }

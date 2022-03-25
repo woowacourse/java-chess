@@ -21,7 +21,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(Color.BLACK);
 
         // then
-        assertThatCode(() -> pawn.canMove(initialPosition, Position.from(target)))
+        assertThatCode(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
 
     }
@@ -34,7 +34,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.canMove(initialPosition, Position.from(target)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -47,7 +47,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatCode(() -> pawn.canMove(Position.from(from), Position.from(to)))
+        assertThatCode(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -59,7 +59,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.canMove(Position.from(from), Position.from(to)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }

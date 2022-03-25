@@ -12,7 +12,6 @@ import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,26 +26,6 @@ public class ChessBoard {
         this.gameStatus = GameStatus.READY;
     }
 
-    public void move(final Position from, final Position to) {
-        final ChessPiece movablePiece = findPiece(from)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
-
-        checkTurn(movablePiece);
-        checkCanMove(from, to, movablePiece);
-
-        final Optional<ChessPiece> possibleTargetPiece = findPiece(to);
-        possibleTargetPiece.ifPresent(targetPiece -> {
-            checkEnemy(movablePiece, targetPiece);
-            checkPawnCrossMove(from, to, movablePiece);
-        });
-
-        if (possibleTargetPiece.isEmpty()) {
-            checkPawnStraightMove(from, to, movablePiece);
-        }
-
-        movePiece(from, to, movablePiece);
-    }
-
     public Optional<ChessPiece> findPiece(final Position position) {
         final ChessPiece piece = chessBoard.get(position);
         if (piece == null) {
@@ -56,25 +35,46 @@ public class ChessBoard {
         return Optional.of(piece);
     }
 
-    private void checkTurn(final ChessPiece movablePiece) {
+    public void move(final Position from, final Position to) {
+        final ChessPiece movablePiece = findPiece(from)
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
+
+        checkCanMove(from, to, movablePiece);
+        movePiece(from, to);
+    }
+
+    private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
+        checkCurrentTurn(movablePiece);
+        movablePiece.checkMovablePosition(from, to);
+        checkHurdle(from, to, movablePiece);
+        checkTargetPosition(from, to, movablePiece);
+    }
+
+    private void checkCurrentTurn(final ChessPiece movablePiece) {
         if (movablePiece.isEnemyTurn(currentTurn)) {
             throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
     }
 
-    private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
-        movablePiece.canMove(from, to);
-        final Stack<Position> routes = movablePiece.findRoute(from, to);
+    private void checkHurdle(final Position from, final Position to, final ChessPiece movablePiece) {
+        final boolean hurdleExist = movablePiece.findRoute(from, to).stream()
+                .map(this::findPiece)
+                .anyMatch(Optional::isPresent);
 
-        while (!routes.isEmpty()) {
-            checkHurdle(routes.pop());
+        if (hurdleExist) {
+            throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
         }
     }
 
-    private void checkHurdle(final Position position) {
-        if (findPiece(position).isPresent()) {
-            throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
+    private void checkTargetPosition(final Position from, final Position to, final ChessPiece movablePiece) {
+        final Optional<ChessPiece> possibleTargetPiece = findPiece(to);
+        if (possibleTargetPiece.isEmpty()) {
+            checkPawnStraightMove(from, to, movablePiece);
+            return;
         }
+
+        checkEnemy(movablePiece, possibleTargetPiece.get());
+        checkPawnCrossMove(from, to, movablePiece);
     }
 
     private void checkPawnStraightMove(final Position from, final Position to, final ChessPiece chessPiece) {
@@ -105,12 +105,13 @@ public class ChessBoard {
         }
     }
 
-    private void movePiece(final Position from, final Position to, final ChessPiece movablePiece) {
+    private void movePiece(final Position from, final Position to) {
         if (chessBoard.get(to) instanceof King) {
             gameStatus = GameStatus.END;
         }
+
+        final ChessPiece movablePiece = chessBoard.remove(from);
         chessBoard.put(to, movablePiece);
-        chessBoard.remove(from);
         currentTurn = currentTurn.toOpposite();
     }
 
