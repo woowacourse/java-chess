@@ -22,7 +22,7 @@ public class Position {
     public static Position of(String input) {
         return new Position(
                 Rank.of(input.substring(START_INDEX_FOR_COLUMN)),
-                File.of(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));
+                File.from(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));
     }
 
     public static Position of(Rank rank, File file) {
@@ -71,6 +71,10 @@ public class Position {
         }
 
         return positions;
+    }
+
+    public boolean isSameFile(File file) {
+        return this.file == file;
     }
 
     @Override
