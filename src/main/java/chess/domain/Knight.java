@@ -22,4 +22,9 @@ public class Knight extends Piece {
     public List<Position> findPath(Position destination) {
         return null;
     }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 }

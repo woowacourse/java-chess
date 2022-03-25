@@ -23,4 +23,25 @@ public abstract class Piece {
     }
 
     public abstract List<Position> findPath(Position destination);
+
+    public boolean isBlank() {
+        return false;
+    };
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public void move(Position destination) {
+        position = destination;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "team=" + team +
+                ", name='" + name + '\'' +
+                ", position=" + position +
+                '}';
+    }
 }

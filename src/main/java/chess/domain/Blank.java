@@ -1,9 +1,7 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Blank extends Piece {
 
@@ -17,5 +15,20 @@ public class Blank extends Piece {
             pawns.put(column, new Blank(team, new Position(column, Row.find(row))));
         }
         return pawns;
+    }
+
+    @Override
+    public List<Position> findPath(Position destination) {
+        return null;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
+    public void move(Position destination) {
+        throw new IllegalArgumentException("Blank는 움직일 수 없습니다.");
     }
 }

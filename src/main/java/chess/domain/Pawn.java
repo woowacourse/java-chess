@@ -54,4 +54,9 @@ public class Pawn extends Piece {
         }
         throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

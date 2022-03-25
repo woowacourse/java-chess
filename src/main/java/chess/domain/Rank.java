@@ -38,4 +38,8 @@ public class Rank {
     public Piece getPiece(Column column) {
         return pieces.get(column);
     }
+
+    public void changePiece(Column column, Piece piece) {
+        pieces.put(column, piece);
+    }
 }
