@@ -15,7 +15,7 @@ public enum Command {
     public static Command firstCommand(String input) {
         Command command = Command.from(input);
 
-        if (command == MOVE || command == null) {
+        if (command == MOVE) {
             throw new IllegalArgumentException(FIRST_MOVE_COMMAND_EXCEPTION_MESSAGE);
         }
         return command;
