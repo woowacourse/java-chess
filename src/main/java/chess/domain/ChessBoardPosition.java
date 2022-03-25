@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -67,6 +66,34 @@ public class ChessBoardPosition {
         return row;
     }
 
+    public boolean isDifferentColumn(ChessBoardPosition targetPosition) {
+        return column != targetPosition.column;
+    }
+
+    public List<Integer> ascendingRowRange(ChessBoardPosition other) {
+        if (row > other.row) {
+            return rangeClosed(other.row, row);
+        }
+        return rangeClosed(row, other.row);
+    }
+
+    public List<Integer> ascendingColumnRange(ChessBoardPosition other) {
+        if (column > other.column) {
+            return rangeClosed(other.column, column);
+        }
+        return rangeClosed(column, other.column);
+    }
+
+    private List<Integer> rangeClosed(int start, int end) {
+        return IntStream.rangeClosed(start, end)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+    public ChessBoardPosition move(int columnChange, int rowChange) {
+        return new ChessBoardPosition((char)(this.column + columnChange), this.row + rowChange);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,32 +109,5 @@ public class ChessBoardPosition {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
-    }
-
-    public boolean isDifferentColumn(ChessBoardPosition targetPosition) {
-        return column != targetPosition.column;
-    }
-
-    public List<ChessBoardPosition> createPathPositions(ChessBoardPosition other) {
-        List<Integer> rows = ascendingRange(this.row, other.getRow());
-        List<Integer> columns = ascendingRange(this.getColumn(), other.getColumn());
-        List<ChessBoardPosition> pathPositions = new ArrayList<>();
-        for (int i = 0; i < rows.size(); ++i) {
-            pathPositions.add(new ChessBoardPosition((char) (columns.get(i).intValue()), rows.get(i)));
-        }
-        return pathPositions;
-    }
-
-    private List<Integer> ascendingRange(int source, int target) {
-        if (source > target) {
-            return rangeClosed(target, source);
-        }
-        return rangeClosed(source, target);
-    }
-
-    private List<Integer> rangeClosed(int start, int end) {
-        return IntStream.rangeClosed(start, end)
-                .boxed()
-                .collect(Collectors.toList());
     }
 }
