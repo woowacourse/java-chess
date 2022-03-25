@@ -8,7 +8,7 @@ public class Promotion extends Running {
 
     private final Running beforeRunning;
 
-    protected Promotion(Running beforeRunning) {
+    public Promotion(Running beforeRunning) {
         super(beforeRunning);
         this.beforeRunning = beforeRunning;
     }
