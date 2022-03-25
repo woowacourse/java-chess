@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.strategy.OccupiedChecker;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Chessmen implements Piece {
@@ -32,7 +33,7 @@ public abstract class Chessmen implements Piece {
 
     abstract protected void attack(Position enemyPosition, OccupiedChecker isOccupied);
 
-    protected void validateClearPathTo(Position targetPosition, OccupiedChecker isOccupied) {
+    protected final void validateClearPathTo(Position targetPosition, OccupiedChecker isOccupied) {
         boolean isClear = positionsToPass(targetPosition).stream()
                 .noneMatch(isOccupied::test);
 
@@ -41,7 +42,15 @@ public abstract class Chessmen implements Piece {
         }
     }
 
-    abstract protected List<Position> positionsToPass(Position targetPosition);
+    private List<Position> positionsToPass(Position targetPosition) {
+        List<Position> positionsBetween = new ArrayList<>();
+        Position next = position.oneStepToward(targetPosition);
+        while (next != targetPosition) {
+            positionsBetween.add(next);
+            next = next.oneStepToward(targetPosition);
+        }
+        return positionsBetween;
+    }
 
     @Override
     public final boolean hasColorOf(Color color) {

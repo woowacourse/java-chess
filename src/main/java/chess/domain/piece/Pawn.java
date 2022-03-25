@@ -5,7 +5,6 @@ import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.position.Position;
 import chess.strategy.OccupiedChecker;
-import java.util.List;
 import java.util.Objects;
 
 public final class Pawn extends Chessmen {
@@ -68,15 +67,6 @@ public final class Pawn extends Chessmen {
 
     private Position getMovablePosition(int moveRankDiff) {
         return position.movedBy(MOVE_FILE_COUNT, moveRankDifference(moveRankDiff));
-    }
-
-    @Override
-    protected List<Position> positionsToPass(Position targetPosition) {
-        if (canJump()) {
-            Position positionBetween = position.movedBy(MOVE_FILE_COUNT, moveRankDifference(FORWARD_RANK_COUNT));
-            return List.of(positionBetween);
-        }
-        return List.of();
     }
 
     private int moveRankDifference(int moveCount) {
