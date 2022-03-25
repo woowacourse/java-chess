@@ -13,6 +13,7 @@ import static chess.Rank.*;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Player turn = BLACK;
 
     public Board() {
         board = new HashMap<>();
@@ -63,5 +64,14 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public void move(Position source, Position target) {
+        if (board.get(source).isSame(NONE)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
+        }
+        if (!board.get(source).isSame(turn)) {
+            throw new IllegalArgumentException("[ERROR] 상대편 기물은 선택 할 수 없습니다.");
+        }
     }
 }

@@ -16,4 +16,8 @@ public abstract class Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    public boolean isSame(Player player) {
+        return player.equals(this.player);
+    }
 }
