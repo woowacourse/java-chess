@@ -5,7 +5,6 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -13,19 +12,9 @@ public class ChessBoard {
     private final Map<Position, Piece> cells = new LinkedHashMap<>();
 
     public ChessBoard() {
-        List<Piece> blackPieces = PieceFactory.blackPieces();
-        List<Piece> whitePieces = PieceFactory.whitePieces();
-        init(blackPieces, whitePieces);
-    }
+        Map<Position, Piece> pieces = PieceFactory.createPieces();
 
-    private void init(List<Piece> blackPieces, List<Piece> whitePieces) {
-        for (Piece piece : blackPieces) {
-            cells.put(piece.getPosition(), piece);
-        }
-
-        for (Piece piece : whitePieces) {
-            cells.put(piece.getPosition(), piece);
-        }
+        cells.putAll(pieces);
     }
 
     public Map<Position, Piece> getCells() {
@@ -47,11 +36,10 @@ public class ChessBoard {
 
         Piece piece = cells.get(source);
 
-        piece.canMove(source, target);
+        piece.move(source, target, this);
 
         cells.remove(source);
 
-        cells.put(target, piece);
-
+        cells.put(target,piece);
     }
 }

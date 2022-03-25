@@ -14,53 +14,58 @@ import static chess.domain.position.Rank.EIGHT;
 import static chess.domain.position.Rank.ONE;
 import static chess.domain.position.Rank.SEVEN;
 import static chess.domain.position.Rank.TWO;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public class PieceFactory {
 
     private PieceFactory() {
     }
 
-    public static List<Piece> whitePieces() {
-        List<Piece> pieces = Arrays.stream(File.values())
-                .map(file -> new Pawn(WHITE, "p", new Position(file, TWO)))
-                .collect(toList());
+    public static Map<Position, Piece> createPieces() {
+        Map<Position, Piece> pieces = blackPieces();
 
-        pieces.add(new Rook(WHITE, "r", new Position(A, ONE)));
-        pieces.add(new Knight(WHITE, "n", new Position(B, ONE)));
-        pieces.add(new Bishop(WHITE, "b", new Position(C, ONE)));
-        pieces.add(new Queen(WHITE, "q", new Position(D, ONE)));
-        pieces.add(new King(WHITE, "k", new Position(E, ONE)));
-        pieces.add(new Bishop(WHITE, "b", new Position(F, ONE)));
-        pieces.add(new Knight(WHITE, "n", new Position(G, ONE)));
-        pieces.add(new Rook(WHITE, "r", new Position(H, ONE)));
+        pieces.putAll(whitePieces());
 
         return pieces;
     }
 
-    public static List<Piece> blackPieces() {
-        List<Piece> pieces = new ArrayList<>();
+    private static Map<Position, Piece> whitePieces() {
+        Map<Position, Piece> pieces = Arrays.stream(File.values())
+                .collect(toMap(
+                         file -> new Position(file, TWO), file -> new Pawn(WHITE, "p")
+                ));
 
-        pieces.add(new Rook(BLACK, "R", new Position(A, EIGHT)));
-        pieces.add(new Knight(BLACK, "N", new Position(B, EIGHT)));
-        pieces.add(new Bishop(BLACK, "B", new Position(C, EIGHT)));
-        pieces.add(new Queen(BLACK, "Q", new Position(D, EIGHT)));
-        pieces.add(new King(BLACK, "K", new Position(E, EIGHT)));
-        pieces.add(new Bishop(BLACK, "B", new Position(F, EIGHT)));
-        pieces.add(new Knight(BLACK, "N", new Position(G, EIGHT)));
-        pieces.add(new Rook(BLACK, "R", new Position(H,  EIGHT)));
+        pieces.put(new Position(A, ONE), new Rook(WHITE, "r"));
+        pieces.put(new Position(B, ONE), new Knight(WHITE, "n"));
+        pieces.put(new Position(C, ONE), new Bishop(WHITE, "b"));
+        pieces.put(new Position(D, ONE), new Queen(WHITE, "q"));
+        pieces.put(new Position(E, ONE), new King(WHITE, "k"));
+        pieces.put(new Position(F, ONE), new Bishop(WHITE, "b"));
+        pieces.put(new Position(G, ONE), new Knight(WHITE, "n"));
+        pieces.put( new Position(H, ONE), new Rook(WHITE, "r"));
 
-        pieces.addAll(
-                Arrays.stream(File.values())
-                .map(file -> new Pawn(BLACK, "P", new Position(file, SEVEN)))
-                .collect(toList())
-        );
+        return pieces;
+    }
+
+    private static Map<Position, Piece> blackPieces() {
+        Map<Position, Piece> pieces = Arrays.stream(File.values())
+                .collect(toMap(
+                        file -> new Position(file, SEVEN), file -> new Pawn(BLACK, "P")
+                ));
+
+        pieces.put(new Position(A, EIGHT), new Rook(BLACK, "R"));
+        pieces.put(new Position(B, EIGHT), new Knight(BLACK, "N"));
+        pieces.put(new Position(C, EIGHT), new Bishop(BLACK, "B"));
+        pieces.put(new Position(D, EIGHT), new Queen(BLACK, "Q"));
+        pieces.put(new Position(E, EIGHT), new King(BLACK, "K"));
+        pieces.put(new Position(F, EIGHT), new Bishop(BLACK, "B"));
+        pieces.put(new Position(G, EIGHT), new Knight(BLACK, "N"));
+        pieces.put(new Position(H,  EIGHT), new Rook(BLACK, "R"));
 
         return pieces;
     }

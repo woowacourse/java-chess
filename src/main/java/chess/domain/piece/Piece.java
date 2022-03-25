@@ -1,25 +1,20 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.strategy.MoveStrategy;
 
 public abstract class Piece {
     private final Team team;
-    private final Position position;
     private final MoveStrategy moveStrategy;
 
-    public Piece(Position position, MoveStrategy moveStrategy, Team team) {
-        this.position = position;
+    public Piece(MoveStrategy moveStrategy, Team team) {
         this.moveStrategy = moveStrategy;
         this.team = team;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void canMove(Position source, Position target) {
-        moveStrategy.isMovable(source, target);
+    public void move(Position source, Position target, ChessBoard chessBoard) {
+        moveStrategy.isMovable(source, target, chessBoard);
     }
 
     public abstract String getSymbol();
