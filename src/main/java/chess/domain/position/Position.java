@@ -15,6 +15,27 @@ public class Position implements Comparable<Position> {
         return new Position(file, rank);
     }
 
+    public int calculateDistance(Position position) {
+        File otherFile = position.getFile();
+        Rank otherRank = position.getRank();
+
+        int rankDifference = rank.calculateAbsoluteValue(otherRank);
+        int fileDifference = file.calculateAbsoluteValue(otherFile);
+
+        if (isDiagonal(position)) {
+            return rankDifference;
+        }
+
+        return rankDifference + fileDifference;
+    }
+
+    public Position toDirection(Direction direction) {
+        File newFile = File.toFile((char) (direction.getFile() + file.getFile()));
+        Rank newRank = Rank.toRank(direction.getRank() + rank.getRank());
+
+        return Position.of(newFile, newRank);
+    }
+
     public boolean isSameRank(Position position) {
         Rank rank = position.getRank();
 
