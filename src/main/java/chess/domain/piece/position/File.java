@@ -28,7 +28,7 @@ public enum File {
 
     public File getNext(int next) {
         if (value + next < 1 || value + next > 8) {
-            return this;
+            return Out;
         }
 
         return File.valueOf(value + next);

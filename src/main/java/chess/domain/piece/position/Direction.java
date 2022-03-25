@@ -13,6 +13,15 @@ public enum Direction {
     DownRight(1, -1),
     DownLeft(-1, -1),
     UpLeft(-1, 1),
+
+    UpUpRight(1, 2),
+    UpRightRight(2, 1),
+    DownRightRight(2, -1),
+    DownDownRight(1, -2),
+    DownDownLeft(-1, -2),
+    DownLeftLeft(-2, -1),
+    UpLeftLeft(-2, 1),
+    UpUpLeft(-1, 2),
     ;
 
     private final int file;
@@ -23,12 +32,7 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> knight(Position current) {
-        //현재 포지션에 따라서 갈수있는 방향이 달라지는거예요.
-        //up과 down, left, right의 속성들을 모두 분리해야할까?
-        //
-
-
+    public static List<Direction> knight() {
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.UpUpRight);
         directions.add(Direction.UpRightRight);
