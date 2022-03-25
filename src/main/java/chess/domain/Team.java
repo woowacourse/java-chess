@@ -11,4 +11,8 @@ public enum Team {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public boolean isSame(Team other) {
+        return this.equals(other);
+    }
 }

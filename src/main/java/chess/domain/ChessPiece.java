@@ -18,4 +18,8 @@ public class ChessPiece {
     public ChessBoardPosition getPosition() {
         return chessBoardPosition;
     }
+
+    public boolean isSamePosition(ChessBoardPosition position) {
+        return chessBoardPosition.equals(position);
+    }
 }

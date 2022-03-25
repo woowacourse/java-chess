@@ -10,6 +10,11 @@ public class ChessMen implements Iterable<ChessPiece> {
         this.chessPieces = chessPieces;
     }
 
+    public boolean existChessPieceInPosition(ChessBoardPosition position) {
+        return chessPieces.stream()
+                .anyMatch(it -> it.isSamePosition(position));
+    }
+
     @Override
     public Iterator<ChessPiece> iterator() {
         return chessPieces.iterator();

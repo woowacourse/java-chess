@@ -14,12 +14,15 @@ public class ChessGame {
     private static final char QUEEN_COLUMN = 'd';
     private static final char KING_COLUMN = 'e';
     private static final int PAIR_COLUMN_SUM = 'a' + 'h';
+
     private final ChessMen blackChessMen;
     private final ChessMen whiteChessMen;
+    private final Team turn;
 
     private ChessGame(ChessMen blackChessMen, ChessMen whiteChessMen) {
         this.blackChessMen = blackChessMen;
         this.whiteChessMen = whiteChessMen;
+        this.turn = Team.WHITE;
     }
 
     public static ChessGame create() {
@@ -52,6 +55,13 @@ public class ChessGame {
     private static void addPieces(List<ChessPiece> chessPieces, Team team, Type type, char column, int row) {
         chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition(column, row)));
         chessPieces.add(new ChessPiece(team, type, new ChessBoardPosition((char) (PAIR_COLUMN_SUM - column), row)));
+    }
+
+    public boolean existsAllyChessPiece(ChessBoardPosition position) {
+        if (turn.isWhite()) {
+            return whiteChessMen.existChessPieceInPosition(position);
+        }
+        return blackChessMen.existChessPieceInPosition(position);
     }
 
     public ChessMen getBlackChessMen() {
