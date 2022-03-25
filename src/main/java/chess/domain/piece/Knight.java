@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.piece.strategy.KnightMovingStrategy;
+import chess.domain.piece.strategy.LengthBasedMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Knight extends Piece {
 
     public Knight(Color color) {
         super(color);
-        this.movingStrategy = new KnightMovingStrategy();
+        this.movingStrategy = new LengthBasedMovingStrategy(number -> number != 5);
     }
 
     public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {

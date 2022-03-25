@@ -17,13 +17,12 @@ class RookTest {
 
     private static final Position RookSourcePosition = new Position("a1");
 
-    private static final Stream<Arguments> generatePossiblePositions() {
-        return List.of("a2" ,"a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1")
-                .stream()
+    private static Stream<Arguments> generatePossiblePositions() {
+        return Stream.of("a2" ,"a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1")
                 .map(Arguments::of);
     }
 
-    private static final Stream<Arguments> generateImpossiblePositions() {
+    private static Stream<Arguments> generateImpossiblePositions() {
         List<String> positions = List.of(
                 "b2", "c2", "d2", "e2", "f2", "g2", "h2",
                 "b3", "c3", "d3", "e3", "f3", "g3", "h3",

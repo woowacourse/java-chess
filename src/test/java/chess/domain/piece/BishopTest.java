@@ -17,13 +17,12 @@ public class BishopTest {
 
     private static final Position BishopSourcePosition = new Position("c1");
 
-    private static final Stream<Arguments> generatePossiblePositions() {
-        return List.of("b2", "a3", "d2", "e3", "f4", "g5", "h6")
-                .stream()
+    private static Stream<Arguments> generatePossiblePositions() {
+        return Stream.of("b2", "a3", "d2", "e3", "f4", "g5", "h6")
                 .map(Arguments::of);
     }
 
-    private static final Stream<Arguments> generateImpossiblePositions() {
+    private static Stream<Arguments> generateImpossiblePositions() {
         List<String> positions = List.of(
                 "a1", "b1", "d1", "e1", "f1", "g1", "h1", "a2", "c2", "e2",
                 "f2", "g2", "h2", "b3", "c3", "d3", "f3", "g3", "h3", "a4",

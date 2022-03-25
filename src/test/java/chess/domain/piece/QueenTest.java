@@ -17,7 +17,7 @@ class QueenTest {
 
     private static final Position queenSourcePosition = new Position("d1");
 
-    private static final Stream<Arguments> generatePossiblePositions() {
+    private static Stream<Arguments> generatePossiblePositions() {
         List<String> positions = List.of(
                 "a1", "b1", "c1", "e1", "f1", "g1", "h1",
                 "d2", "d3", "d4", "d5", "d6", "d7", "d8",
@@ -27,9 +27,8 @@ class QueenTest {
                 .map(Arguments::of);
     }
 
-    private static final Stream<Arguments> generateImpossiblePositions() {
-        return List.of("b2", "a2", "a3", "f2", "g2", "h2", "g3", "h3", "h4")
-                .stream()
+    private static Stream<Arguments> generateImpossiblePositions() {
+        return Stream.of("b2", "a2", "a3", "f2", "g2", "h2", "g3", "h3", "h4")
                 .map(Arguments::of);
     }
 

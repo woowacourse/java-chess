@@ -13,17 +13,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class KnightTest {
+public class KingTest {
 
-    private static final Position knightSourcePosition = new Position("d4");
+    private static final Position kingSourcePosition = new Position("d4");
 
     private static Stream<Arguments> generatePossiblePositions() {
-        return Stream.of("c2", "b3", "b5", "c6", "e6", "f5", "f3", "e2")
+        return Stream.of("c3", "d3", "e3", "c4", "e4", "c5", "d5", "e5")
                 .map(Arguments::of);
     }
 
     private static Stream<Arguments> generateImpossiblePositions() {
-        return Stream.of("c3", "d3", "e3", "c4", "e4", "c5", "d5", "e5", "b6", "d6", "f6", "b2", "d2", "f2", "b4", "f4")
+        return Stream.of("b2", "c2", "d2", "e2", "f2", "b3", "f3", "b4", "f4", "b5", "f5", "b6", "c6", "d6", "e6", "f6")
                 .map(Arguments::of);
     }
 
@@ -32,9 +32,9 @@ class KnightTest {
     @MethodSource("generatePossiblePositions")
     void 이동_가능한_경우_예외를_던지지_않는다(Position targetPosition) {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Knight knight = new Knight(Color.WHITE);
+        King king = new King(Color.WHITE);
 
-        assertDoesNotThrow(() -> knight.validateMove(board, knightSourcePosition, targetPosition));
+        assertDoesNotThrow(() -> king.validateMove(board, kingSourcePosition, targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
@@ -42,9 +42,9 @@ class KnightTest {
     @MethodSource("generateImpossiblePositions")
     void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
         List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Knight knight = new Knight(Color.WHITE);
+        King king = new King(Color.WHITE);
 
-        Assertions.assertThatThrownBy(() -> knight.validateMove(board, knightSourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> king.validateMove(board, kingSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

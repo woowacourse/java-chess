@@ -124,6 +124,9 @@ abcdefgh (file)
 - [x] KNIGHT
   - `target`까지의 길이가 `5^(1/2)`여야 한다.
 
+- [x] KING
+  - `target`까지의 길이가 `2^(1/2)` 이하여야 한다.
+킹
 #### Direction
 
 - [x] 방향 정보를 관리하기 위한 열거형이다.
