@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class KnightTest {
 
-    final Position initialPosition = new Position("d5");
+    final Position initialPosition = Position.from("d5");
 
     @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
@@ -23,7 +23,7 @@ class KnightTest {
         final ChessPiece knight = new Knight(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> knight.canMove(initialPosition, new Position(target)))
+        assertThatThrownBy(() -> knight.canMove(initialPosition, Position.from(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -36,7 +36,7 @@ class KnightTest {
         final ChessPiece knight = new Knight(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> knight.canMove(initialPosition, new Position(target)))
+        Assertions.assertThatCode(() -> knight.canMove(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
 
     }
@@ -48,7 +48,7 @@ class KnightTest {
         final ChessPiece knight = new Knight(Color.BLACK);
 
         // when
-        final Stack<Position> actual = knight.findRoute(initialPosition, new Position("b6"));
+        final Stack<Position> actual = knight.findRoute(initialPosition, Position.from("b6"));
 
         // then
         assertThat(actual).isEmpty();

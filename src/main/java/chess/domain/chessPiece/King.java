@@ -14,12 +14,12 @@ public class King extends ChessPiece {
 
     @Override
     public List<Position> getInitWhitePosition() {
-        return List.of(new Position("e1"));
+        return List.of(Position.from("e1"));
     }
 
     @Override
     public List<Position> getInitBlackPosition() {
-        return List.of(new Position("e8"));
+        return List.of(Position.from("e8"));
     }
 
     @Override

@@ -175,7 +175,7 @@ public class ChessBoard {
 
     private double countSameRankPawn(final Color color, final Rank rank) {
         return Arrays.stream(File.values())
-                .map((file) -> findPiece(new Position(rank, file)))
+                .map((file) -> findPiece(Position.of(rank, file)))
                 .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
                 .count();
     }

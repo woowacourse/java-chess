@@ -1,20 +1,40 @@
 package chess.domain.position;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Position {
+
+    private static final Map<String, Position> cache;
+
+    static {
+        cache = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new Position(rank, file))
+                        .collect(Collectors.toList())
+                        .stream())
+                .collect(Collectors.toMap(
+                        Position::getValue,
+                        Function.identity()));
+    }
 
     private final Rank rank;
     private final File file;
 
-    public Position(final String text) {
-        this.rank = Rank.of(String.valueOf(text.charAt(0)));
-        this.file = File.of(String.valueOf(text.charAt(1)));
-    }
-
-    public Position(final Rank rank, final File file) {
+    private Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public static Position from(final String value) {
+        return cache.get(value);
+    }
+
+    public static Position of(final Rank rank, final File file) {
+        final String key = rank.getValue() + file.getValue();
+        return cache.get(key);
     }
 
     public int rankDistance(final Position target) {
@@ -67,7 +87,7 @@ public class Position {
         final Rank nextRank = rank.add(direction.rankGap());
         final File nextFile = file.add(direction.fileGap());
 
-        return new Position(nextRank, nextFile);
+        return Position.of(nextRank, nextFile);
     }
 
     public String getValue() {
@@ -75,19 +95,10 @@ public class Position {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Position position = (Position) o;
-        return rank == position.rank && file == position.file;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, file);
+    public String toString() {
+        return "Position{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
     }
 }

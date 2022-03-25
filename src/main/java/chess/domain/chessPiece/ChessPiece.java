@@ -27,11 +27,11 @@ public abstract class ChessPiece {
         final Stack<Position> routes = new Stack<>();
         final Direction direction = to.findDirection(from);
 
-        Position newFrom = new Position(from.getValue());
+        Position newFrom = Position.from(from.getValue());
 
         while (!newFrom.equals(to)) {
             final Position nextPosition = newFrom.toNextPosition(direction);
-            routes.add(new Position(nextPosition.getValue()));
+            routes.add(Position.from(nextPosition.getValue()));
             newFrom = nextPosition;
         }
 

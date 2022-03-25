@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece {
     public List<Position> getInitWhitePosition() {
         final List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
-            list.add(new Position((char) i + WHITE_INIT_FILE));
+            list.add(Position.from((char) i + WHITE_INIT_FILE));
         }
         return list;
     }
@@ -28,7 +28,7 @@ public class Pawn extends ChessPiece {
     public List<Position> getInitBlackPosition() {
         final List<Position> list = new ArrayList<>();
         for (int i = 'a'; i <= 'h'; i++) {
-            list.add(new Position((char) i + BLACK_INIT_FILE));
+            list.add(Position.from((char) i + BLACK_INIT_FILE));
         }
         return list;
     }

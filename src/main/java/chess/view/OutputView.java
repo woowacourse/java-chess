@@ -40,7 +40,7 @@ public class OutputView {
         for (int i = RANK_START; i <= RANK_END; i++) {
             final String position = (char) i + String.valueOf(j);
 
-            final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
+            final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
             possiblePiece.ifPresentOrElse(
                     (piece) -> System.out.print(piece.getName()),
                     () -> System.out.print(EMPTY));

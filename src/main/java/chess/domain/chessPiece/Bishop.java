@@ -14,12 +14,12 @@ public class Bishop extends ChessPiece {
 
     @Override
     public List<Position> getInitWhitePosition() {
-        return List.of(new Position("c1"), new Position("f1"));
+        return List.of(Position.from("c1"), Position.from("f1"));
     }
 
     @Override
     public List<Position> getInitBlackPosition() {
-        return List.of(new Position("c8"), new Position("f8"));
+        return List.of(Position.from("c8"), Position.from("f8"));
     }
 
     @Override

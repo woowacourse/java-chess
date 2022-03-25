@@ -14,12 +14,12 @@ public class Rook extends ChessPiece {
 
     @Override
     public List<Position> getInitWhitePosition() {
-        return List.of(new Position("a1"), new Position("h1"));
+        return List.of(Position.from("a1"), Position.from("h1"));
     }
 
     @Override
     public List<Position> getInitBlackPosition() {
-        return List.of(new Position("a8"), new Position("h8"));
+        return List.of(Position.from("a8"), Position.from("h8"));
     }
 
     @Override

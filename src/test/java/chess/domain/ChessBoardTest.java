@@ -30,7 +30,7 @@ class ChessBoardTest {
     @CsvSource(value = {"a1:r", "a8:R"}, delimiter = ':')
     void findPiece(final String position, final String expected) {
         // when
-        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
+        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
         final ChessPiece actual = possiblePiece.get();
 
         // then
@@ -41,7 +41,7 @@ class ChessBoardTest {
     @DisplayName("위치에 기물이 있는지 확인한다.")
     void findPiece_Null() {
         // when
-        final Optional<ChessPiece> actual = chessBoard.findPiece(new Position("a3"));
+        final Optional<ChessPiece> actual = chessBoard.findPiece(Position.from("a3"));
 
         // then
         assertThat(actual.isEmpty()).isEqualTo(true);
@@ -51,8 +51,8 @@ class ChessBoardTest {
     @DisplayName("기물을 빈 위치로 이동시킨다.")
     void move_to_empty() {
         // given
-        final Position from = new Position("b1");
-        final Position to = new Position("c3");
+        final Position from = Position.from("b1");
+        final Position to = Position.from("c3");
 
         // when
         chessBoard.move(from, to);
@@ -66,8 +66,8 @@ class ChessBoardTest {
     @DisplayName("기물을 다른색의 기물이 있는 위치로 이동시킨다.")
     void move_to_enemy() {
         // given
-        final Position from = new Position("d2");
-        final Position to = new Position("f4");
+        final Position from = Position.from("d2");
+        final Position to = Position.from("f4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Bishop(Color.WHITE));
@@ -87,8 +87,8 @@ class ChessBoardTest {
     @DisplayName("이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
     void move_exception() {
         // given
-        final Position from = new Position("a1");
-        final Position to = new Position("a3");
+        final Position from = Position.from("a1");
+        final Position to = Position.from("a3");
 
         // then
         assertThatThrownBy(() -> chessBoard.move(from, to))
@@ -102,7 +102,7 @@ class ChessBoardTest {
         // when
 
         // then
-        assertThatCode(() -> chessBoard.move(new Position("a2"), new Position("a3")))
+        assertThatCode(() -> chessBoard.move(Position.from("a2"), Position.from("a3")))
                 .doesNotThrowAnyException();
     }
 
@@ -110,8 +110,8 @@ class ChessBoardTest {
     @DisplayName("폰으로 대각선에 있는 다른 색의 기물을 잡는다.")
     void move_pawn_cross() {
         // given
-        final Position from = new Position("a3");
-        final Position to = new Position("b4");
+        final Position from = Position.from("a3");
+        final Position to = Position.from("b4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Pawn(Color.WHITE));
@@ -128,11 +128,11 @@ class ChessBoardTest {
     @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
     void move_Pawn_Straight1() {
         // given
-        chessBoard.move(new Position("b1"), new Position("c3"));
-        chessBoard.move(new Position("a7"), new Position("a6"));
+        chessBoard.move(Position.from("b1"), Position.from("c3"));
+        chessBoard.move(Position.from("a7"), Position.from("a6"));
 
         // then
-        assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c3")))
+        assertThatThrownBy(() -> chessBoard.move(Position.from("c2"), Position.from("c3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은색 기물입니다.");
     }
@@ -141,11 +141,11 @@ class ChessBoardTest {
     @DisplayName("폰의 이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
     void move_Pawn_Straight2() {
         // given
-        chessBoard.move(new Position("b1"), new Position("c3"));
-        chessBoard.move(new Position("a7"), new Position("a6"));
+        chessBoard.move(Position.from("b1"), Position.from("c3"));
+        chessBoard.move(Position.from("a7"), Position.from("a6"));
 
         // then
-        assertThatThrownBy(() -> chessBoard.move(new Position("c2"), new Position("c4")))
+        assertThatThrownBy(() -> chessBoard.move(Position.from("c2"), Position.from("c4")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
     }
@@ -154,8 +154,8 @@ class ChessBoardTest {
     @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
     void move_Pawn_Straight3() {
         // given
-        final Position from = new Position("d5");
-        final Position to = new Position("d6");
+        final Position from = Position.from("d5");
+        final Position to = Position.from("d6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Pawn(Color.WHITE));
@@ -173,15 +173,15 @@ class ChessBoardTest {
     @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
     void move_Pawn_Straight4() {
         // given
-        final Position from = new Position("a5");
-        final Position to = new Position("a4");
+        final Position from = Position.from("a5");
+        final Position to = Position.from("a4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Pawn(Color.BLACK));
-        pieceByPosition.put(new Position("a3"), new Pawn(Color.WHITE));
+        pieceByPosition.put(Position.from("a3"), new Pawn(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
-        chessBoard.move(new Position("a3"), to);
+        chessBoard.move(Position.from("a3"), to);
 
         // then
         assertThatThrownBy(() -> chessBoard.move(from, to))
@@ -193,8 +193,8 @@ class ChessBoardTest {
     @DisplayName("폰의 대각선 방향에 같은색 기물이 있으면 예외를 발생시킵니다.")
     void move_Pawn_Cross1() {
         // given
-        final Position from = new Position("d5");
-        final Position to = new Position("c6");
+        final Position from = Position.from("d5");
+        final Position to = Position.from("c6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Pawn(Color.WHITE));
@@ -212,8 +212,8 @@ class ChessBoardTest {
     @DisplayName("폰의 대각선 방향에 기물이 없으면 예외를 발생시킵니다.")
     void move_Pawn_Cross2() {
         // given
-        final Position from = new Position("d5");
-        final Position to = new Position("c6");
+        final Position from = Position.from("d5");
+        final Position to = Position.from("c6");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Pawn(Color.WHITE));
@@ -230,7 +230,7 @@ class ChessBoardTest {
     @DisplayName("순서에 맞지않는 색의 기물을 이동시키면 예외를 발생시킵니다.")
     void chessBoard_turn() {
         // then
-        assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))
+        assertThatThrownBy(() -> chessBoard.move(Position.from("a7"), Position.from("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("WHITE의 차례입니다.");
     }
@@ -241,11 +241,11 @@ class ChessBoardTest {
     void calculateScore_pawn(final Color color, final double expected) {
         // given
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(new Position("a1"), new Pawn(Color.BLACK));
-        pieceByPosition.put(new Position("a3"), new Pawn(Color.BLACK));
-        pieceByPosition.put(new Position("a5"), new Pawn(Color.BLACK));
+        pieceByPosition.put(Position.from("a1"), new Pawn(Color.BLACK));
+        pieceByPosition.put(Position.from("a3"), new Pawn(Color.BLACK));
+        pieceByPosition.put(Position.from("a5"), new Pawn(Color.BLACK));
 
-        pieceByPosition.put(new Position("a2"), new Pawn(Color.WHITE));
+        pieceByPosition.put(Position.from("a2"), new Pawn(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -263,14 +263,14 @@ class ChessBoardTest {
     void calculateScore_combination(final Color color, final double expected) {
         // given
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
-        pieceByPosition.put(new Position("a1"), new King(Color.BLACK)); // 0
-        pieceByPosition.put(new Position("a2"), new Queen(Color.BLACK)); // 9
-        pieceByPosition.put(new Position("a3"), new Knight(Color.BLACK)); // 2.5
-        pieceByPosition.put(new Position("a4"), new Rook(Color.BLACK)); // 5
-        pieceByPosition.put(new Position("a5"), new Bishop(Color.BLACK)); // 3
-        pieceByPosition.put(new Position("a6"), new Pawn(Color.BLACK)); // 1
+        pieceByPosition.put(Position.from("a1"), new King(Color.BLACK)); // 0
+        pieceByPosition.put(Position.from("a2"), new Queen(Color.BLACK)); // 9
+        pieceByPosition.put(Position.from("a3"), new Knight(Color.BLACK)); // 2.5
+        pieceByPosition.put(Position.from("a4"), new Rook(Color.BLACK)); // 5
+        pieceByPosition.put(Position.from("a5"), new Bishop(Color.BLACK)); // 3
+        pieceByPosition.put(Position.from("a6"), new Pawn(Color.BLACK)); // 1
 
-        pieceByPosition.put(new Position("h2"), new King(Color.WHITE));
+        pieceByPosition.put(Position.from("h2"), new King(Color.WHITE));
 
         final ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
@@ -286,8 +286,8 @@ class ChessBoardTest {
     @DisplayName("킹을 잡으면 게임이 끝난다.")
     void game_end() {
         // given
-        final Position from = new Position("d2");
-        final Position to = new Position("f4");
+        final Position from = Position.from("d2");
+        final Position to = Position.from("f4");
 
         final Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
         pieceByPosition.put(from, new Bishop(Color.WHITE));

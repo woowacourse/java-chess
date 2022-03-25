@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
 
-    final Position initialPosition = new Position("d5");
+    final Position initialPosition = Position.from("d5");
 
     @ParameterizedTest
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
@@ -21,7 +21,7 @@ class PawnTest {
         final ChessPiece pawn = new Pawn(Color.BLACK);
 
         // then
-        assertThatCode(() -> pawn.canMove(initialPosition, new Position(target)))
+        assertThatCode(() -> pawn.canMove(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
 
     }
@@ -34,7 +34,7 @@ class PawnTest {
         final ChessPiece pawn = new Pawn(color);
 
         // then
-        assertThatThrownBy(() -> pawn.canMove(initialPosition, new Position(target)))
+        assertThatThrownBy(() -> pawn.canMove(initialPosition, Position.from(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -47,7 +47,7 @@ class PawnTest {
         final ChessPiece pawn = new Pawn(color);
 
         // then
-        assertThatCode(() -> pawn.canMove(new Position(from), new Position(to)))
+        assertThatCode(() -> pawn.canMove(Position.from(from), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -59,7 +59,7 @@ class PawnTest {
         final ChessPiece pawn = new Pawn(color);
 
         // then
-        assertThatThrownBy(() -> pawn.canMove(new Position(from), new Position(to)))
+        assertThatThrownBy(() -> pawn.canMove(Position.from(from), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -72,7 +72,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(color);
 
         // then
-        assertThatCode(() -> pawn.checkCrossMove(initialPosition, new Position(target)))
+        assertThatCode(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
     }
 
@@ -84,7 +84,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkCrossMove(initialPosition, new Position(target)))
+        assertThatThrownBy(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }

@@ -15,12 +15,12 @@ public class Knight extends ChessPiece {
 
     @Override
     public List<Position> getInitWhitePosition() {
-        return List.of(new Position("b1"), new Position("g1"));
+        return List.of(Position.from("b1"), Position.from("g1"));
     }
 
     @Override
     public List<Position> getInitBlackPosition() {
-        return List.of(new Position("b8"), new Position("g8"));
+        return List.of(Position.from("b8"), Position.from("g8"));
     }
 
     @Override

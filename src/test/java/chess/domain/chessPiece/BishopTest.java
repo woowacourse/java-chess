@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BishopTest {
 
-    final Position initialPosition = new Position("d5");
+    final Position initialPosition = Position.from("d5");
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
@@ -23,7 +23,7 @@ class BishopTest {
         final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> bishop.canMove(initialPosition, new Position("d6")))
+        assertThatThrownBy(() -> bishop.canMove(initialPosition, Position.from("d6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -36,7 +36,7 @@ class BishopTest {
         final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // then
-        assertThatCode(() -> bishop.canMove(initialPosition, new Position(target)))
+        assertThatCode(() -> bishop.canMove(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
 
     }
@@ -48,8 +48,8 @@ class BishopTest {
         final ChessPiece bishop = new Bishop(Color.BLACK);
 
         // when
-        final Stack<Position> actual = bishop.findRoute(initialPosition, new Position("h1"));
-        final List<Position> expected = List.of(new Position("e4"), new Position("f3"), new Position("g2"));
+        final Stack<Position> actual = bishop.findRoute(initialPosition, Position.from("h1"));
+        final List<Position> expected = List.of(Position.from("e4"), Position.from("f3"), Position.from("g2"));
 
         // then
         assertThat(actual).containsAll(expected);

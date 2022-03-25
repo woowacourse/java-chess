@@ -63,7 +63,7 @@ public class ChessController {
     private void runMoveCommand(final String from, final String to, final ChessBoard chessBoard) {
         try {
             checkBeforePlaying(chessBoard);
-            chessBoard.move(new Position(from), new Position(to));
+            chessBoard.move(Position.from(from), Position.from(to));
             OutputView.printChessBoard(chessBoard);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());

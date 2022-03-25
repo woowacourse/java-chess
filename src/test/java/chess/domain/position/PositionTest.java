@@ -8,14 +8,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PositionTest {
 
-    final Position position = new Position("a1");
+    final Position position = Position.from("a1");
 
     @ParameterizedTest
     @DisplayName("포지션 간 세로줄을 비교한다.")
     @CsvSource(value = {"b1:true", "a2:false"}, delimiter = ':')
     void isSameFile(final String target, final boolean expected) {
         //given
-        final Position targetPosition = new Position(target);
+        final Position targetPosition = Position.from(target);
 
         // when
         final boolean actual = position.isSameFile(targetPosition);
@@ -40,7 +40,7 @@ class PositionTest {
     @CsvSource(value = {"a2:true", "b1:false"}, delimiter = ':')
     void isSameRank(final String target, final boolean expected) {
         //given
-        final Position targetPosition = new Position(target);
+        final Position targetPosition = Position.from(target);
 
         // when
         final boolean actual = position.isSameRank(targetPosition);
@@ -54,8 +54,8 @@ class PositionTest {
     @CsvSource(value = {"d7:N", "f7:NE", "f5:E", "f3:SE", "d3:S", "b3:SW", "b5:W", "b7:NW"}, delimiter = ':')
     void findDirection(String target, Direction expected) {
         // given
-        final Position position = new Position("d5");
-        final Position targetPosition = new Position(target);
+        final Position position = Position.from("d5");
+        final Position targetPosition = Position.from(target);
 
         // when
         final Direction actual = targetPosition.findDirection(position);
@@ -69,7 +69,7 @@ class PositionTest {
     @CsvSource(value = {"N:d6", "NE:e6", "E:e5", "SE:e4", "S:d4", "SW:c4", "W:c5", "NW:c6"}, delimiter = ':')
     void toNextPosition(Direction direction, String expected) {
         // given
-        final Position position = new Position("d5");
+        final Position position = Position.from("d5");
 
         // when
         final Position actual = position.toNextPosition(direction);

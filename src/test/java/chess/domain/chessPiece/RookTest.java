@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class RookTest {
 
-    final Position initialPosition = new Position("d5");
+    final Position initialPosition = Position.from("d5");
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
@@ -21,7 +21,7 @@ class RookTest {
         final ChessPiece rook = new Rook(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> rook.canMove(initialPosition, new Position("c6")))
+        assertThatThrownBy(() -> rook.canMove(initialPosition, Position.from("c6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -33,7 +33,7 @@ class RookTest {
         final ChessPiece rook = new Rook(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> rook.canMove(initialPosition, new Position("c5")))
+        Assertions.assertThatCode(() -> rook.canMove(initialPosition, Position.from("c5")))
                 .doesNotThrowAnyException();
     }
 
@@ -44,8 +44,8 @@ class RookTest {
         final ChessPiece rook = new Rook(Color.BLACK);
 
         // when
-        final Stack<Position> actual = rook.findRoute(initialPosition, new Position("d1"));
-        final List<Position> expected = List.of(new Position("d4"), new Position("d3"), new Position("d2"));
+        final Stack<Position> actual = rook.findRoute(initialPosition, Position.from("d1"));
+        final List<Position> expected = List.of(Position.from("d4"), Position.from("d3"), Position.from("d2"));
 
         // then
         assertThat(actual).containsAll(expected);
