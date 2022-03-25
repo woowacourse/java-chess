@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 public enum InitialExecution {
     START("start", () -> new ChessController().start()),
     END("end", () -> System.out.println("프로그램을 종료합니다.")),
-    MOVE("move", () -> System.out.println("start 또는 end만 입력 가능합니다")),
     ;
 
     private static final String INITIAL_EXECUTION_ERROR = "start 또는 end만 입력 가능합니다";
@@ -30,5 +29,4 @@ public enum InitialExecution {
     public void run() {
         runnable.run();
     }
-
 }

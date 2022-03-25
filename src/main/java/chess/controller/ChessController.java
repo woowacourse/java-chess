@@ -1,41 +1,28 @@
 package chess.controller;
 
 import chess.domain.ChessExecution;
-import chess.domain.MoveResult;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.dto.BoardDto;
-import chess.dto.ScoreDto;
+import chess.state.Finished;
+import chess.state.Ready;
+import chess.state.State;
 import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ChessController {
+    private State state;
+
+    public ChessController() {
+        this.state = new Ready();
+    }
+
     public void start() {
-        OutputView outputView = OutputView.getInstance();
+        state = state.start();
+
         InputView inputView = InputView.getInstance();
-        Board board = BoardFactory.newInstance();
-        outputView.printBoard(BoardDto.from(board));
 
         String[] command = inputView.scanCommand().split(" ");
         ChessExecution execution = ChessExecution.from(command[0]);
 
-        while (execution != ChessExecution.END) {
-            if (execution == ChessExecution.MOVE) {
-                MoveResult move = board.move(command[1], command[2]);
-                outputView.printBoard(BoardDto.from(board));
-
-                if (move == MoveResult.ENDED) {
-                    outputView.printGameEnded(ScoreDto.from(board.getScore()));
-                    break;
-                }
-            }
-
-            if (execution == ChessExecution.STATUS) {
-                outputView.printScore(ScoreDto.from(board.getScore()));
-            }
-
-            command = inputView.scanCommand().split(" ");
-            execution = ChessExecution.from(command[0]);
+        while (!(state instanceof Finished)) {
+            state = ChessExecution.from(input).run(state, input);
         }
     }
 }
