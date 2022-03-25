@@ -19,7 +19,7 @@ class RookTest {
         Position position = Position.from("d4");
         Rook rook = new Rook(Team.BLACK, position);
         Assertions.assertThatThrownBy(() -> {
-                    rook.findDirection(Position.from(input));
+                    rook.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -30,7 +30,7 @@ class RookTest {
     void isPossible(String input) {
         Position position = Position.from("f6");
         Rook rook = new Rook(Team.BLACK, position);
-        rook.findDirection(Position.from(input));
+        rook.findPath(Position.from(input));
     }
 
     @Test

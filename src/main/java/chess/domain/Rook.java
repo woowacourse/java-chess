@@ -9,7 +9,7 @@ public class Rook extends Piece {
         super(team, Rook.class.getSimpleName(), position);
     }
 
-    public Direction findDirection(Position destination) {
+    private Direction findDirection(Position destination) {
         for (Direction direction : Direction.linearDirection()) {
             for (int i = 1; i <= 8; i++) {
                 if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree() * i
