@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
 
 public class Knight extends ChessPiece {
@@ -9,16 +10,6 @@ public class Knight extends ChessPiece {
 
     public Knight(Team team, ChessBoardPosition position) {
         super(NAME, team, position);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
-        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
-        if (!((rowDistance == 2 && columnDistance == 1) || (rowDistance == 1 && columnDistance == 2))) {
-            throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
-        }
-        position = targetPosition;
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
@@ -31,5 +22,17 @@ public class Knight extends ChessPiece {
 
     public boolean isSamePosition(ChessBoardPosition nextPosition) {
         return position.equals(nextPosition);
+    }
+
+    @Override
+    public void move(ChessBoardPosition targetPosition) {
+        position = targetPosition;
+    }
+
+    @Override
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
+        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
+        return (rowDistance == 2 && columnDistance == 1) || (rowDistance == 1 && columnDistance == 2);
     }
 }

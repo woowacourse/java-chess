@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoardPosition;
+import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,10 +17,12 @@ class KnightTest {
     @ParameterizedTest(name = "{index}: {3}")
     @MethodSource("moveParameters")
     @DisplayName("나이트는 상하좌우로 두 칸 전진한 상태에서 좌우로 한 칸 움직인다.")
-    void initialMoveTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
+    void movableTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
         Knight knight = new Knight(team, initialPosition);
-        knight.move(nextPosition);
-        assertThat(knight.isSamePosition(nextPosition)).isTrue();
+        List<ChessPiece> chessPieces = List.of(knight);
+        ChessMen chessMen = new ChessMen(chessPieces);
+        boolean result = knight.isMovable(nextPosition, chessMen);
+        assertTrue(result);
     }
 
     private static Stream<Arguments> moveParameters() {
