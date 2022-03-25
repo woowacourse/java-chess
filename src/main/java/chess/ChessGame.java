@@ -1,16 +1,16 @@
 package chess;
 
-import chess.command.Command;
-import chess.command.Ready;
+import chess.gamestate.GameState;
+import chess.gamestate.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
 
-    private Command command;
+    private GameState gameState;
 
     public ChessGame() {
-        this.command = new Ready();
+        this.gameState = new Ready();
     }
 
     public void run() {
@@ -19,8 +19,8 @@ public class ChessGame {
     }
 
     private void runGameUntilEnd() {
-        while (!command.isEnd()) {
-            command = command.run(InputView.requestGameCommand());
+        while (!gameState.isEnd()) {
+            gameState = gameState.run(InputView.requestGameCommand());
         }
     }
 }

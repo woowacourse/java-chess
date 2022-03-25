@@ -1,4 +1,4 @@
-package chess.command;
+package chess.gamestate;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
@@ -10,7 +10,7 @@ public class BlackRunning extends Running {
     }
 
     @Override
-    protected final Running otherCommand(final ChessBoard chessBoard) {
+    protected final Running otherState(final ChessBoard chessBoard) {
         return new WhiteRunning(chessBoard);
     }
 }

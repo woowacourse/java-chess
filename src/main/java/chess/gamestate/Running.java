@@ -1,4 +1,4 @@
-package chess.command;
+package chess.gamestate;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Running implements Command {
+public abstract class Running implements GameState {
 
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("move [a-h][1-8] [a-h][1-8]");
     private static final int START_POSITION_INDEX = 1;
@@ -28,7 +28,7 @@ public abstract class Running implements Command {
     }
 
     @Override
-    public Command run(String command) {
+    public GameState run(String command) {
         if (command.equals("end")) {
             return new End();
         }
@@ -40,7 +40,7 @@ public abstract class Running implements Command {
         if (matcher.find()) {
             movePieceByCommand(command);
             OutputView.printChessBoard(chessBoard.getPieces());
-            return otherCommand(this.chessBoard);
+            return otherState(this.chessBoard);
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
     }
@@ -61,5 +61,5 @@ public abstract class Running implements Command {
         return false;
     }
 
-    abstract protected Running otherCommand(ChessBoard chessBoard);
+    abstract protected Running otherState(ChessBoard chessBoard);
 }
