@@ -18,9 +18,9 @@ public interface Piece {
 
     double score();
 
-    Color color();
-
     boolean isPawn();
 
     boolean isKing();
+
+    Color color();
 }
