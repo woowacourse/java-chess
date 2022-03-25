@@ -8,6 +8,7 @@ public class InputView {
     public static final String START = "start";
     public static final String END = "end";
     public static final String MOVE = "move";
+    public static final String STATUS = "status";
     public static final String DELIMITER = " ";
 
     private static final Scanner sc = new Scanner(System.in);
@@ -21,6 +22,7 @@ public class InputView {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : " + START);
         System.out.println("> 게임 종료 : " + END);
+        System.out.println("> 게임 점수 : " + STATUS);
         System.out.println("> 게임 이동 : " + MOVE + " source위치 target위치 - 예. move b2 b3");
         String input = sc.nextLine();
         validateUserCommand(input);
@@ -57,8 +59,9 @@ public class InputView {
     }
 
     private static void validateNotAllowCommand(final String input) {
-        if (!(input.equals(END) || input.contains(MOVE))) {
-            throw new IllegalArgumentException("[ERROR] end, move 이외의 문자는 입력할 수 없습니다.");
+        if (!(input.equals(END) || input.contains(MOVE) || input.equals(STATUS))) {
+            String message = String.format("[ERROR] %s, %s, %s 이외의 문자는 입력할 수 없습니다.", END, MOVE, STATUS);
+            throw new IllegalArgumentException(message);
         }
     }
 
@@ -99,6 +102,7 @@ public class InputView {
     }
 
     private static String calculateMoveCommand(String[] moveCommand) {
-        return String.join(DELIMITER, Arrays.copyOfRange(moveCommand, SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1));
+        return String.join(DELIMITER,
+                Arrays.copyOfRange(moveCommand, SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1));
     }
 }

@@ -6,6 +6,7 @@ import static view.InputView.responseUserStartCommand;
 
 import domain.ChessBoard;
 import domain.ChessBoardGenerator;
+import domain.dto.StatusDto;
 import domain.position.Position;
 import view.OutputView;
 
@@ -34,7 +35,7 @@ public class ChessController {
         try {
             return responseUserStartCommand();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return playStart(input);
         }
     }
@@ -43,23 +44,45 @@ public class ChessController {
         try {
             interactUser(chessBoard);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             playTurn(chessBoard);
         }
     }
 
     private void interactUser(ChessBoard chessBoard) {
         String input = responseUserCommand();
-
-        while (!input.equals(END)) {
-            String[] positions = input.split(DELIMITER);
-            Position source = generatePosition(positions[SOURCE_INDEX]);
-            Position target = generatePosition(positions[TARGET_INDEX]);
-            chessBoard.move(source, target);
-
-            OutputView.printBoard(chessBoard);
-            input = responseUserCommand();
+        if (input.equals(END)) {
+            return;
         }
+        playStatus(input, chessBoard);
+        playMove(chessBoard, input);
+        if (!checkKingExist(chessBoard)) {
+            return;
+        }
+        interactUser(chessBoard);
+    }
+
+    private void playStatus(String input, ChessBoard chessBoard) {
+        if (input.equals(STATUS)) {
+            OutputView.printStatus(new StatusDto(chessBoard));
+            interactUser(chessBoard);
+        }
+    }
+
+    private void playMove(ChessBoard chessBoard, String input) {
+        String[] positions = input.split(DELIMITER);
+        Position source = generatePosition(positions[SOURCE_INDEX]);
+        Position target = generatePosition(positions[TARGET_INDEX]);
+        chessBoard.move(source, target);
+        OutputView.printBoard(chessBoard);
+    }
+
+    private boolean checkKingExist(ChessBoard chessBoard) {
+        if (!chessBoard.checkKingExist()) {
+            OutputView.printWinner(chessBoard.calculateWhoWinner());
+            return false;
+        }
+        return true;
     }
 
     private Position generatePosition(String value) {

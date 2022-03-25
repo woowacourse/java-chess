@@ -203,6 +203,10 @@ public final class ChessBoard {
         return Result.DRAW;
     }
 
+    public TeamColor calculateWhoWinner() {
+        return getOpponentTeam();
+    }
+
     public TeamColor getCurrentTurn() {
         return currentTurn;
     }
@@ -220,5 +224,12 @@ public final class ChessBoard {
         return "ChessBoard{" +
                 "board=" + board +
                 '}';
+    }
+
+    public boolean checkKingExist() {
+        return board.values().stream()
+                .filter(piece -> piece != null)
+                .filter(piece -> piece.symbol().equals("K"))
+                .count() == 2;
     }
 }
