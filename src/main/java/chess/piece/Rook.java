@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends Piece implements RookMovable {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
 
@@ -41,26 +41,6 @@ public class Rook extends Piece {
             return getVerticalPositions(positions, list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
-    }
-
-    private List<Position> getVerticalPositions(List<Position> positions, List<Piece> list) {
-        Piece up = list.get(0);
-        Piece down = list.get(1);
-        int distance = up.position.getRank().absMinus(down.position.getRank());
-        for (int i = 1; i < distance; i++) {
-            positions.add(down.position.getUpVerticalPosition(i));
-        }
-        return positions;
-    }
-
-    private List<Position> getHorizontalPositions(List<Position> positions, List<Piece> list) {
-        Piece left = list.get(0);
-        Piece right = list.get(1);
-        int distance = right.position.getFile().absMinus(left.position.getFile());
-        for (int i = 1; i < distance; i++) {
-            positions.add(left.position.getRightHorizontalPosition(i));
-        }
-        return positions;
     }
 
     private boolean isCorrectDirection(Position position) {

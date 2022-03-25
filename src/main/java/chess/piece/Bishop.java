@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Bishop extends Piece implements BishopMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
 
@@ -45,25 +45,5 @@ public class Bishop extends Piece {
             return getNegativeDiagonal(positions, list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
-    }
-
-    private List<Position> getPositiveDiagonal(List<Position> positions, List<Piece> list) {
-        Piece rightUpper = list.get(0);
-        Piece leftUnder = list.get(1);
-        int distance = rightUpper.position.getFile().absMinus(leftUnder.position.getFile());
-        for (int i = 1; i < distance; i++) {
-            positions.add(leftUnder.position.getPositiveDiagonalPosition(i));
-        }
-        return positions;
-    }
-
-    private List<Position> getNegativeDiagonal(List<Position> positions, List<Piece> list) {
-        Piece leftUpper = list.get(0);
-        Piece rightUnder = list.get(1);
-        int distance = rightUnder.position.getFile().absMinus(leftUpper.position.getFile());
-        for (int i = 1; i < distance; i++) {
-            positions.add(leftUpper.position.getNegativeDiagonalPosition(i));
-        }
-        return positions;
     }
 }

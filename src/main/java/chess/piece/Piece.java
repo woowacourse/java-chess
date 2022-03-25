@@ -36,6 +36,26 @@ public abstract class Piece implements Comparable<Piece> {
         return team.equals(targetPiece.team);
     }
 
+    public int getDistance(Piece other) {
+        return this.position.getFile().absMinus(other.position.getFile());
+    }
+
+    public Position getPositiveDiagonalPosition(int distance) {
+        return this.position.getPositiveDiagonalPosition(distance);
+    }
+
+    public Position getNegativeDiagonalPosition(int distance) {
+        return this.position.getNegativeDiagonalPosition(distance);
+    }
+
+    public Position getRightHorizontalPosition(int distance) {
+        return this.position.getRightHorizontalPosition(distance);
+    }
+
+    public Position getUpVerticalPosition(int distance) {
+        return this.position.getUpVerticalPosition(distance);
+    }
+
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
 
     public abstract boolean isMovable(Position position);
@@ -70,6 +90,5 @@ public abstract class Piece implements Comparable<Piece> {
     public int hashCode() {
         return Objects.hash(position, team);
     }
-
 
 }
