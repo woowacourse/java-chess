@@ -7,9 +7,10 @@ import java.util.List;
 public class Rook extends ChessPiece {
 
     private static final String NAME = "R";
+    private static final Double VALUE = 5.0;
 
     public Rook(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override

@@ -7,9 +7,10 @@ import java.util.List;
 public class Queen extends ChessPiece {
 
     private static final String NAME = "Q";
+    private static final Double VALUE = 9.0;
 
     public Queen(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override

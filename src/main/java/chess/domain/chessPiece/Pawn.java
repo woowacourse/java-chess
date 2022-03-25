@@ -9,11 +9,12 @@ import java.util.Optional;
 public class Pawn extends ChessPiece {
 
     private static final String NAME = "P";
+    private static final Double VALUE = 1.0;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
 
     public Pawn(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override

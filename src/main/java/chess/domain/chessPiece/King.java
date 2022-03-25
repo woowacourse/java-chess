@@ -7,9 +7,10 @@ import java.util.List;
 public class King extends ChessPiece {
 
     private static final String NAME = "K";
+    private static final Double VALUE = 0.0;
 
     public King(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override

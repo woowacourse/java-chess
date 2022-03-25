@@ -2,9 +2,12 @@ package chess.domain;
 
 import chess.domain.chessPiece.*;
 import chess.domain.position.Direction;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -14,6 +17,10 @@ public class ChessBoard {
     public ChessBoard() {
         chessBoard = new HashMap<>();
         init();
+    }
+
+    ChessBoard(Map<Position, ChessPiece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
     private void init() {
@@ -49,7 +56,7 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
         if (me.isEnemyTurn(currentTurn)) {
-            throw new IllegalArgumentException(currentTurn.name() +"의 차례입니다.");
+            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
 
         checkMove(from, to, me);
@@ -82,7 +89,7 @@ public class ChessBoard {
         }
     }
 
-    private boolean isStraight(Position from, Position to){
+    private boolean isStraight(Position from, Position to) {
         return to.findDirection(from) == Direction.N && to.findDirection(from) == Direction.S;
     }
 
@@ -95,13 +102,15 @@ public class ChessBoard {
         }
     }
 
-    private void checkHurdle(Position position){
+    private void checkHurdle(Position position) {
         if (findPiece(position).isPresent()) {
             throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
         }
     }
 
     private void movePiece(Position from, Position to, ChessPiece me) {
+        // to : king ->
+//        if (me instanceof King && )
         chessBoard.put(to, me);
         chessBoard.remove(from);
         currentTurn = currentTurn.toOpposite();
@@ -132,5 +141,59 @@ public class ChessBoard {
         }
 
         return true;
+    }
+
+    public Map<Color, Double> calculateScore() {
+        return Arrays.stream(Color.values())
+                .collect(Collectors.toMap(
+                        color -> color,
+                        this::getSum,
+                        (exist, replacement) -> exist));
+    }
+
+    private double getSum(Color color) {
+        double sumExceptPawnScore = chessBoard.values().stream()
+                .filter((chessPiece) -> chessPiece.isSameColor(color))
+                .filter((chessPiece) -> !(chessPiece instanceof Pawn))
+                .mapToDouble(ChessPiece::getValue)
+                .sum();
+
+        return sumExceptPawnScore + getSumPawn(color);
+    }
+
+    private double getSumPawn(Color color) {
+        double totalPawnScore = 0;
+        for (Rank rank : Rank.values()) {
+            double pawnCount = countSameRankPawn(color, rank);
+            totalPawnScore += sumPawnScore(pawnCount);
+        }
+        return totalPawnScore;
+    }
+
+    private double countSameRankPawn(Color color, Rank rank) {
+        return Arrays.stream(File.values())
+                .map((file) -> findPiece(new Position(rank, file)))
+                .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
+                .count();
+    }
+
+    private boolean isMyPawn(Color color, Optional<ChessPiece> possiblePiece) {
+        if (possiblePiece.isEmpty()) {
+            return false;
+        }
+
+        ChessPiece chessPiece = possiblePiece.get();
+        if (!(chessPiece instanceof Pawn) || !chessPiece.isSameColor(color)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private double sumPawnScore(double pawnCount) {
+        if (pawnCount == 1) {
+            return 1;
+        }
+        return pawnCount * 0.5;
     }
 }

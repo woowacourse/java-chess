@@ -8,3 +8,6 @@ public class ConsoleApplication {
         chessController.run();
     }
 }
+
+// TODO: 게임 종료 조건, 최종 점수 계산 (status)
+// TODO BONUS :  폰 테스트케이스 추가

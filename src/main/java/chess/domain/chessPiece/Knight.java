@@ -8,9 +8,10 @@ import java.util.Stack;
 public class Knight extends ChessPiece {
 
     private static final String NAME = "N";
+    private static final Double VALUE = 2.5;
 
     public Knight(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override

@@ -7,9 +7,10 @@ import java.util.List;
 public class Bishop extends ChessPiece {
 
     private static final String NAME = "B";
+    private static final Double VALUE = 3.0;
 
     public Bishop(Color color) {
-        super(color, NAME);
+        super(color, NAME, VALUE);
     }
 
     @Override
