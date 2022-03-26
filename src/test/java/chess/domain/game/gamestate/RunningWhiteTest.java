@@ -3,6 +3,7 @@ package chess.domain.game.gamestate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -14,7 +15,7 @@ class RunningWhiteTest {
     @Test
     void move_returnsRunningBlack() {
         // given
-        State state = new RunningWhite();
+        State state = new RunningWhite(Board.createInitializedBoard());
 
         // when
         State actual = state.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
@@ -27,7 +28,7 @@ class RunningWhiteTest {
     @Test
     void startGame_throwsException() {
         // given
-        State state = new RunningWhite();
+        State state = new RunningWhite(Board.createInitializedBoard());
 
         // when & then
         assertThatThrownBy(state::startGame)
@@ -39,7 +40,7 @@ class RunningWhiteTest {
     @Test
     void move_ifKillKingReturnsFinished() {
         // given
-        State state = new RunningWhite();
+        State state = new RunningWhite(Board.createInitializedBoard());
 
         // when
         state.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
@@ -48,19 +49,19 @@ class RunningWhiteTest {
         State actual = state.move(Position.from(XAxis.C, YAxis.SEVEN), Position.from(XAxis.E, YAxis.EIGHT));
 
         // then
-        assertThat(actual).isInstanceOf(Finished.class);
+        assertThat(actual).isInstanceOf(FinishedKing.class);
     }
 
     @DisplayName("showStatus를 호출하면 Finished가 반환된다.")
     @Test
     void showStatus_returnsFinished() {
         // given
-        State state = new RunningWhite();
+        State state = new RunningWhite(Board.createInitializedBoard());
 
         // when
         State actual = state.showStatus();
 
         // then
-        assertThat(actual).isInstanceOf(Finished.class);
+        assertThat(actual).isInstanceOf(FinishedKing.class);
     }
 }

@@ -61,6 +61,7 @@ public class Board {
     // TODO: 실패 원인을 클라이언트가 알 수 있게 개선
     public MoveResult executeCommand(Position from, Position to, PieceColor pieceColor) {
         AbstractPiece piece = value.get(from);
+
         if (Objects.isNull(piece)) {
             return MoveResult.EMPTY_CELL;
         }

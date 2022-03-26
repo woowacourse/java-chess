@@ -1,16 +1,17 @@
 package chess.domain.game.gamestate;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-class Finished extends AfterRunning {
-    @Override
-    public State startGame() {
-        return new RunningWhite();
+public class FinishedStatus extends BeforeRunning {
+
+    public FinishedStatus(Board board) {
+        super(board);
     }
 
     @Override
     public State endGame() {
-        throw new IllegalStateException("이미 게임이 끝난 상태입니다.");
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override
@@ -20,6 +21,7 @@ class Finished extends AfterRunning {
 
     @Override
     public State showStatus() {
-        throw new IllegalStateException("이미 게임이 끝난 상태입니다.");
+        // TODO: 점수를 출력하는 로직
+        return new Ready();
     }
 }

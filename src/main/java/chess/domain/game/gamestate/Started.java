@@ -6,8 +6,8 @@ abstract class Started implements State {
 
     private final Board board;
 
-    Started() {
-        this.board = Board.createInitializedBoard();
+    Started(Board board) {
+        this.board = board;
     }
 
     @Override

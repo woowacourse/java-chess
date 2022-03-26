@@ -3,6 +3,7 @@ package chess.domain.game.gamestate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -15,7 +16,7 @@ class FinishedTest {
     @Test
     void startReturnsRunningWhite() {
         // given
-        State state = new Finished();
+        State state = new FinishedKing(Board.createInitializedBoard());
 
         // when
         State actual = state.startGame();
@@ -28,7 +29,7 @@ class FinishedTest {
     @Test
     void endGame_throwsException() {
         // given
-        State state = new Finished();
+        State state = new FinishedKing(Board.createInitializedBoard());
 
         // when & then
         assertThatThrownBy(state::endGame)
@@ -40,7 +41,7 @@ class FinishedTest {
     @Test
     void move_throwsException() {
         // given
-        State state = new Finished();
+        State state = new FinishedKing(Board.createInitializedBoard());
 
         // when & then
         assertThatThrownBy(() -> state.move(Position.from(XAxis.B, YAxis.THREE), Position.from(XAxis.A, YAxis.FIVE)))
@@ -52,7 +53,7 @@ class FinishedTest {
     @Test
     void showStatus_throwsException() {
         // given
-        State state = new Finished();
+        State state = new FinishedKing(Board.createInitializedBoard());
 
         // when & then
         assertThatThrownBy(state::showStatus)

@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,6 +22,13 @@ public class Position {
                 .filter(position -> position.xAxis == xAxis && position.yAxis == yAxis)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("좌표가 존재하지 않습니다."));
+    }
+
+    public static Position from(String coordinate) {
+        XAxis xAxis = XAxis.valueOf(coordinate.substring(0, 1).toUpperCase(Locale.ROOT));
+        YAxis yAxis = YAxis.getByValue(Integer.parseInt(coordinate.substring(1, 2)));
+
+        return from(xAxis, yAxis);
     }
 
     public boolean isSameXAxis(Position other) {
@@ -129,6 +137,30 @@ public class Position {
                 "XAxis=" + xAxis +
                 ", YAxis=" + yAxis +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Position position = (Position) o;
+
+        if (xAxis != position.xAxis) {
+            return false;
+        }
+        return yAxis == position.yAxis;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = xAxis != null ? xAxis.hashCode() : 0;
+        result = 31 * result + (yAxis != null ? yAxis.hashCode() : 0);
+        return result;
     }
 
     private static class Cache {

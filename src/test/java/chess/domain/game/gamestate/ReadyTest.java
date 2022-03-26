@@ -34,7 +34,7 @@ class ReadyTest {
         State actual = state.endGame();
 
         // then
-        assertThat(actual).isInstanceOf(Finished.class);
+        assertThat(actual).isInstanceOf(FinishedKing.class);
     }
 
     @DisplayName("Ready에서 move 메소드를 호출하면 예외가 발생한다.")

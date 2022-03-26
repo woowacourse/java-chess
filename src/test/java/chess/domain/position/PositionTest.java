@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PositionTest {
 
@@ -18,6 +20,17 @@ class PositionTest {
 
         // when & then
         assertThat(position).isNotNull();
+    }
+
+    @DisplayName("from 메소드에 문자열 형태로 X좌표와 Y좌표를 전달하여 객체를 생성할 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a1", "b2", "h8"})
+    void from_withStringAxis(String input) {
+        // given
+        Position actual = Position.from(input);
+
+        // when & then
+        assertThat(actual).isNotNull();
     }
 
     @DisplayName("좌표 객체는 캐싱되어 한번만 생성된다.")

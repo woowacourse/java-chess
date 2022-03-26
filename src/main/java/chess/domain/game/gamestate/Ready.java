@@ -1,17 +1,17 @@
 package chess.domain.game.gamestate;
 
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public class Ready extends BeforeRunning {
 
-    @Override
-    public State startGame() {
-        return new RunningWhite();
+    public Ready() {
+        super(Board.createInitializedBoard());
     }
 
     @Override
     public State endGame() {
-        return new Finished();
+        return new FinishedKing(getBoard());
     }
 
     @Override
