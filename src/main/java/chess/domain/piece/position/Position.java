@@ -72,6 +72,10 @@ public class Position {
         return rankRawDifference(position) < 0;
     }
 
+    public boolean isSamePosition(Position position) {
+        return this == position;
+    }
+
     public Position movedBy(int fileDiff, int rankDiff) {
         int toFileIdx = fileIdx + fileDiff;
         int toRankIdx = rankIdx + rankDiff;

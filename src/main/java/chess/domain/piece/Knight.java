@@ -67,7 +67,7 @@ public class Knight extends Piece {
 
     @Override
     public String display() {
-        if (color == Color.BLACK) {
+        if (color.isBlack()) {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;

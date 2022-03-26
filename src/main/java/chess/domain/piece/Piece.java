@@ -17,22 +17,22 @@ public abstract class Piece {
     }
 
     public void kill(Piece targetPiece) {
-        if (color == targetPiece.color) {
+        if (isFriendly(targetPiece)) {
             throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
         }
         attack(targetPiece.position);
     }
 
-    public boolean isAt(Position position) {
-        return this.position == position;
+    public boolean isAt(Position targetPosition) {
+        return position.isSamePosition(targetPosition);
     }
 
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    public boolean isSameColor(Color targetColor) {
+        return color.isSameColor(targetColor);
     }
 
     public boolean isFriendly(Piece targetPiece) {
-        return this.color == targetPiece.color;
+        return color.isSameColor(targetPiece.color);
     }
 
     abstract public List<Position> getPositionsInPath(Position position);
