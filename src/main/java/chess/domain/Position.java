@@ -70,4 +70,8 @@ public class Position {
 
         return Position.valueOf(Abscissa.findAbscissa(newX), Ordinate.findOrdinate(newY));
     }
+
+    public Abscissa getAbscissa() {
+        return abscissa;
+    }
 }

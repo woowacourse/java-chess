@@ -1,8 +1,11 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -38,7 +41,7 @@ public class Board {
         Direction direction = Direction.judge(fromPosition, toPosition);
         while (initialPosition != toPosition) {
             initialPosition = Direction.step(initialPosition, direction);
-            validateRoute(initialPosition,toPosition);
+            validateRoute(initialPosition, toPosition);
         }
     }
 
@@ -49,7 +52,8 @@ public class Board {
     }
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
-        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition, toPosition)) {
+        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition,
+            toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
         }
     }
@@ -59,7 +63,7 @@ public class Board {
     }
 
     private void validateRoute(Position position, Position toPosition) {
-        if(position == toPosition) {
+        if (position == toPosition) {
             return;
         }
         if (board.containsKey(position)) {
@@ -71,7 +75,7 @@ public class Board {
         if (!board.containsKey(toPosition)) {
             return;
         }
-        if (piece.isSameColor(board.get(toPosition))) {
+        if (piece.isMyTeam(board.get(toPosition))) {
             throw new IllegalArgumentException(NON_CATCHABLE_PIECE);
         }
     }
@@ -82,5 +86,30 @@ public class Board {
             .filter(Piece::isKing)
             .map(piece -> 1)
             .reduce(0, Integer::sum) == 2;
+    }
+
+    public double calculateScore(Color color) {
+        return board.values().stream()
+            .filter(piece -> piece.isSameColor(color))
+            .map(Piece::getScore)
+            .reduce(0.0, Double::sum) - calculateSameLinePawnScore(color);
+    }
+
+    public boolean isSameLine(List<Position> pawnPositions, Position position) {
+        return pawnPositions.stream()
+            .filter(p -> p != position)
+            .anyMatch(p -> p.isSameAbscissa(position));
+    }
+
+    public double calculateSameLinePawnScore(Color color) {
+        List<Position> pawnPositions = board.keySet().stream()
+            .filter(position -> board.get(position).isSameColor(color))
+            .filter(position -> board.get(position).isPawn())
+            .collect(Collectors.toList());
+
+        return pawnPositions.stream()
+            .filter(position -> isSameLine(pawnPositions, position))
+            .map(position -> 0.5)
+            .reduce(0.0, Double::sum);
     }
 }
