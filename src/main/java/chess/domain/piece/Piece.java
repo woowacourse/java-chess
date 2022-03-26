@@ -33,6 +33,10 @@ public abstract class Piece {
         return name.getValue();
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public boolean isSameColor(Piece targetPiece) {
         return this.color == targetPiece.color;
     }

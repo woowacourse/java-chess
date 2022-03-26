@@ -15,4 +15,9 @@ public class King extends Piece {
     public boolean canMove(Board board, Position from, Position to) {
         return moveStrategy.isValidateCanMove(color, from, to);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

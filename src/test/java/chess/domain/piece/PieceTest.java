@@ -68,4 +68,16 @@ class PieceTest {
 
         assertThat(knight).isInstanceOf(Knight.class);
     }
+
+    @Test
+    @DisplayName("체스 말이 킹인지 확인할 수 있다.")
+    void testKingAlive() {
+        Piece piece = new King(Color.WHITE);
+        Piece rook = new Rook(Color.BLACK);
+
+        assertAll(
+                () -> assertThat(piece.isKing()).isTrue(),
+                () -> assertThat(rook.isKing()).isFalse()
+        );
+    }
 }
