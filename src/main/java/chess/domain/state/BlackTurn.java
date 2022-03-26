@@ -3,20 +3,10 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
-public class BlackTurn extends Started {
+public class BlackTurn extends Running {
 
     protected BlackTurn(ChessBoard chessBoard) {
         super(chessBoard);
-    }
-
-    @Override
-    public State start() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public State end() {
-        return new End(chessBoard);
     }
 
     @Override
@@ -32,15 +22,5 @@ public class BlackTurn extends Started {
         }
 
         return new WhiteTurn(chessBoard);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public ChessBoard chessBoard() {
-        return chessBoard;
     }
 }
