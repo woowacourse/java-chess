@@ -8,6 +8,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR] ";
+    private static final String NEW_LINE = System.lineSeparator();
 
     private OutputView() {
     }
@@ -20,7 +21,7 @@ public class OutputView {
     }
 
     public static void printErrorMessage(String message) {
-        System.out.println(ERROR_PREFIX + message);
+        System.out.println(ERROR_PREFIX + message + NEW_LINE);
     }
 
     public static void printChessBoard(List<List<Piece>> board) {

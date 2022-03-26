@@ -15,7 +15,7 @@ public class ConsoleApplication {
         OutputView.printStartMessage();
         startChess(chessBoard);
 
-        playChess(chessBoard);
+        repeatPlayChess(chessBoard);
     }
 
     private static void startChess(ChessBoard chessBoard) {
@@ -30,6 +30,15 @@ public class ConsoleApplication {
 
         OutputView.printErrorMessage("게임이 시작되지 않았습니다.");
         startChess(chessBoard);
+    }
+
+    private static void repeatPlayChess(ChessBoard chessBoard) {
+        try {
+            playChess(chessBoard);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            repeatPlayChess(chessBoard);
+        }
     }
 
     private static void playChess(ChessBoard chessBoard) {

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.generator.BoardGenerator;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
@@ -42,6 +43,11 @@ public class ChessBoard {
 
         Piece sourcePiece = findPiece(sourcePosition);
         validateTurn(sourcePiece);
+
+        sourcePiece.validateMove(board, sourcePosition, targetPosition);
+
+        board.get(sourcePosition.getRankIndex()).set(sourcePosition.getFileIndex(), new EmptyPiece());
+        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), sourcePiece);
 
         turn = turn.change();
     }
