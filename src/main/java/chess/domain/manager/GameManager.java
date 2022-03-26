@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.manager;
 
+import chess.domain.pieces.Piece;
+import chess.machine.Result;
+import chess.domain.pieces.Color;
 import chess.domain.position.Position;
 
 import java.util.*;

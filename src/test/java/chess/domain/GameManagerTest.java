@@ -1,7 +1,10 @@
 package chess.domain;
 
+import chess.domain.manager.BoardInitializer;
+import chess.domain.manager.GameManager;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Pawn;
+import chess.domain.pieces.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.Color.*;
+import static chess.domain.pieces.Color.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GameManagerTest {

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.machine;
 
 public enum Result {
 

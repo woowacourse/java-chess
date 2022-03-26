@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.machine;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Command;
+import chess.machine.Command;
 
 import java.util.Scanner;
 

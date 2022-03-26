@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.pieces;
 
 public enum Color {
 

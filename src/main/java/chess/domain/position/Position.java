@@ -19,9 +19,8 @@ public final class Position {
 
     public static Position of(final String value) {
         validateValue(value);
-        final var column = Column.of(value.substring(0, 1));
-        final var row = Row.of(value.substring(1));
-
+        final Column column = Column.of(value.substring(0, 1));
+        final Row row = Row.of(value.substring(1));
         return new Position(column, row);
     }
 

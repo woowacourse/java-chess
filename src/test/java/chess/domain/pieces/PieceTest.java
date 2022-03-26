@@ -1,7 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.Color;
-import chess.domain.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static chess.domain.Color.*;
+import static chess.domain.pieces.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
@@ -19,42 +17,42 @@ class PieceTest {
     @Test
     @DisplayName("말의 종류에 Pawn이 있다.")
     void piece_createWith_blackPawn() {
-        final var piece = new Piece(BLACK, new Pawn());
+        Piece piece = new Piece(BLACK, new Pawn());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 knight가 있다.")
     void piece_createWith_whiteKnight() {
-        final var piece = new Piece(WHITE, new Knight());
+        Piece piece = new Piece(WHITE, new Knight());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 bishop이 있다.")
     void piece_createWith_blackBishop() {
-        final var piece = new Piece(BLACK, new Bishop());
+        Piece piece = new Piece(BLACK, new Bishop());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 rook이 있다.")
     void piece_createWith_whiteRook() {
-        final var piece = new Piece(WHITE, new Rook());
+        Piece piece = new Piece(WHITE, new Rook());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 queen이 있다.")
     void piece_createWith_blackQueen() {
-        final var piece = new Piece(BLACK, new Queen());
+        Piece piece = new Piece(BLACK, new Queen());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 king이 있다.")
     void piece_createWith_whiteKing() {
-        final var piece = new Piece(WHITE, new King());
+        Piece piece = new Piece(WHITE, new King());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 

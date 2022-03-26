@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.GameMachine;
+import chess.machine.GameMachine;
 
 public class ConsoleApplication {
 

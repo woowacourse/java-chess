@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.manager;
 
+import chess.domain.pieces.Piece;
+import chess.machine.Result;
+import chess.domain.pieces.Color;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -10,6 +13,7 @@ import java.util.*;
 public final class Board {
 
     private static final double PAWN_PENALTY_SCORE = 0.5;
+    private static final int KING_TOTAL_COUNT = 2;
 
     private final Map<Position, Piece> pieces;
 
@@ -101,16 +105,19 @@ public final class Board {
         return pieces.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count() != 2;
+                .count() != KING_TOTAL_COUNT;
     }
 
     public double calculateScore(final Color color) {
-        double score = pieces.values()
+        return calculateDefaultScore(color) - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
+    }
+
+    private double calculateDefaultScore(Color color) {
+        return pieces.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(Piece::score)
                 .sum();
-        return score - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
     }
 
     private int countPawnsOnSameColumns(final Color color) {

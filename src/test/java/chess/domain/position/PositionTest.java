@@ -13,23 +13,23 @@ class PositionTest {
     @Test
     @DisplayName("열과 행을 갖는 Position을 생성")
     void position_createWithColumnAndRow() {
-        final var position = Position.of("a5");
+        Position position = Position.of("a5");
         assertThat(position).isInstanceOf(Position.class);
     }
 
     @Test
     @DisplayName("출발지와 목적지의 거리가 1인경우 반환된 경로는 비어있다")
     void calculate_ifDistanceIsOne_pathIsEmpty() {
-        final var source = Position.of("a5");
-        final var target = Position.of("a6");
+        Position source = Position.of("a5");
+        Position target = Position.of("a6");
         assertThat(source.calculatePath(target, VERTICAL)).isEmpty();
     }
 
     @Test
     @DisplayName("출발지와 목적지의 수직 거리가 1을 초과하면 경로를 반환한다")
     void calculate_verticalPathPositions() {
-        final var source = Position.of("a5");
-        final var target = Position.of("a8");
+        Position source = Position.of("a5");
+        Position target = Position.of("a8");
         assertThat(source.calculatePath(target, VERTICAL))
                 .containsExactly(Position.of("a6"), Position.of("a7"));
     }
@@ -37,8 +37,8 @@ class PositionTest {
     @Test
     @DisplayName("출발지와 목적지의 수평 거리가 1을 초과하면 경로를 반환한다")
     void calculate_horizontalPathPositions() {
-        final var source = Position.of("e5");
-        final var target = Position.of("b5");
+        Position source = Position.of("e5");
+        Position target = Position.of("b5");
         assertThat(source.calculatePath(target, HORIZONTAL))
                 .containsExactly(Position.of("d5"), Position.of("c5"));
     }
@@ -46,8 +46,8 @@ class PositionTest {
     @Test
     @DisplayName("출발지와 목적지의 대각선 거리가 1을 초과하면 경로를 반환한다")
     void calculate_diagonalPathPositions() {
-        final var source = Position.of("e5");
-        final var target = Position.of("b2");
+        Position source = Position.of("e5");
+        Position target = Position.of("b2");
         assertThat(source.calculatePath(target, DIAGONAL))
                 .containsExactly(Position.of("d4"), Position.of("c3"));
     }

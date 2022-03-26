@@ -20,7 +20,7 @@ public enum Direction {
         return Stream.of(values())
                 .filter(direction -> direction.directionCalculator.test(source, target))
                 .findFirst()
-                .orElse(IGNORE);
+                .orElseGet(() -> IGNORE);
     }
 
     public boolean isIgnore() {

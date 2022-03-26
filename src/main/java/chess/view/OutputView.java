@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.GameManager;
-import chess.domain.Color;
-import chess.domain.Piece;
-import chess.domain.Result;
+import chess.domain.manager.GameManager;
+import chess.domain.pieces.Color;
+import chess.domain.pieces.Piece;
+import chess.machine.Result;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -66,5 +66,9 @@ public class OutputView {
             return;
         }
         System.out.println("현재 무승부입니다.");
+    }
+
+    public static void announceCanNotRestart() {
+        System.out.println("게임을 종료하고 다시 시작해주세요.");
     }
 }
