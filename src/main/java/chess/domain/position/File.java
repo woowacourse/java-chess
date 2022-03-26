@@ -60,4 +60,8 @@ public enum File {
     String getFile() {
         return file;
     }
+
+    public int getOrder() {
+        return order;
+    }
 }

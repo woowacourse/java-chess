@@ -39,17 +39,26 @@ public class Board {
     }
 
     public boolean hasPieceInFile(final Position from, final Position to) {
+        int minRank = Math.min(from.getRankNumber(), to.getRankNumber());
+        int maxRank = Math.max(from.getRankNumber(), to.getRankNumber());
+
+//
         return value.keySet().stream()
                 .filter(position -> position.getFile().equals(from.getFile()))
-                .filter(position -> position.getRankNumber() > from.getRankNumber())
-                .anyMatch(position -> position.getRankNumber() < to.getRankNumber());
+                .filter(position -> position.getRankNumber() > minRank)
+                .anyMatch(position -> position.getRankNumber() < maxRank);
     }
 
     public boolean hasPieceInRank(final Position from, final Position to) {
+        int minFile = File.min(from.getFile(), to.getFile());
+        int maxFile = File.max(from.getFile(), to.getFile());
+
+//
+//                .anyMatch(position -> position.getFileChar() < to.getFileChar());
         return value.keySet().stream()
                 .filter(position -> position.getRankNumber() == from.getRankNumber())
-                .filter(position -> position.getFileChar() > from.getFileChar())
-                .anyMatch(position -> position.getFileChar() < to.getFileChar());
+                .filter(position -> position.getFileOrder() > minFile)
+                .anyMatch(position -> position.getFileOrder() < maxFile);
     }
 
     public void checkPieceInDiagonal(final Position from, final Position to) {

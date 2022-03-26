@@ -26,11 +26,11 @@ public class RookTest {
 
     @DisplayName("흰 룩 뒤로 이동")
     @ParameterizedTest
-    @ValueSource(strings = {"a7", "a1"})
+    @ValueSource(strings = {"e4", "e3"})
     void back(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("a8"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -46,11 +46,11 @@ public class RookTest {
 
     @DisplayName("흰 룩 왼쪽으로 이동")
     @ParameterizedTest
-    @ValueSource(strings = {"g1", "a1"})
+    @ValueSource(strings = {"d5", "a5"})
     void left(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("h1"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
