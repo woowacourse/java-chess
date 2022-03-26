@@ -74,6 +74,28 @@ public class PositionTest {
     }
 
     @Test
+    @DisplayName("화이트 기준 앞 방향으로 대각선으로 이동하는지 확인한다.")
+    void checkWhiteMoveForwardDiagonal() {
+        final Position currentPosition = new Position(2, 'b');
+        final Position destinationPosition = new Position(3, 'a');
+
+        final boolean actual = currentPosition.isMoveDiagonalForward(destinationPosition, Team.WHITE);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙 기준 앞 방향으로 대각선으로 이동하는지 확인한다.")
+    void checkBlackMoveForwardDiagonal() {
+        final Position currentPosition = new Position(8, 'a');
+        final Position destinationPosition = new Position(7, 'b');
+
+        final boolean actual = currentPosition.isMoveDiagonalForward(destinationPosition, Team.BLACK);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
     @DisplayName("목적지까지의 거리를 구한다.")
     void calculateDistance() {
         final Position currentPosition = new Position(2, 'a');

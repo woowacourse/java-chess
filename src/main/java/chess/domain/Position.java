@@ -82,13 +82,10 @@ public class Position {
     public boolean isMoveDiagonalForward(final Position destination, final Team team) {
         final int fileDistance = Math.abs(file - destination.file);
         final int rankDistance = destination.rank - rank;
-        if(fileDistance + rankDistance == 0) {
-            return false;
-        }
         if (team == Team.BLACK) {
-            return fileDistance == Math.abs(rankDistance);
+            return fileDistance > 0 && fileDistance == Math.abs(rankDistance);
         }
-        return fileDistance == rankDistance;
+        return fileDistance > 0 && fileDistance == rankDistance;
     }
 
     public int calculateDistance(final Position destination) {
