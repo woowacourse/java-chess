@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum File {
+
     A("a"),
     B("b"),
     C("c"),

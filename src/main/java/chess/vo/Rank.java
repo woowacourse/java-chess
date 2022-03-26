@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public enum Rank {
+
     ONE(1),
     TWO(2),
     THREE(3),

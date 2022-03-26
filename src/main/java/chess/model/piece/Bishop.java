@@ -7,7 +7,7 @@ import chess.vo.Position;
 public class Bishop extends Piece {
 
     private static final String EMBLEM = "B";
-    private static final double SCORE = 3f;
+    private static final double SCORE = 3;
 
     public Bishop(PieceColor pieceColor) {
         super(pieceColor);

@@ -7,7 +7,7 @@ import chess.vo.Position;
 public class Knight extends Piece {
 
     private static final String EMBLEM = "N";
-    private static final double SCORE = 2.5f;
+    private static final double SCORE = 2.5;
 
     public Knight(PieceColor pieceColor) {
         super(pieceColor);
