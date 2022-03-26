@@ -18,8 +18,9 @@ public class Bishop extends Piece {
         if (File.difference(from.getFile(), to.getFile()) != Rank.difference(from.getRankNumber(), to.getRankNumber())) {
             throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
         }
-        if (board.hasPieceInDiagonal(from, to)) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
+//        if (board.hasPieceInDiagonal(from, to)) {
+//            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+//        }
+        board.checkPieceInDiagonal(from, to);
     }
 }

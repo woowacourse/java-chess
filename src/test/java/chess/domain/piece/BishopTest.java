@@ -34,11 +34,11 @@ public class BishopTest {
 
     @DisplayName("비숍 이동 경로에 기물이 있을 경우 예외발생")
     @ParameterizedTest
-    @ValueSource(strings = {"a3", "e3"})
+    @ValueSource(strings = {"b8", "h8", "a1"})
     void invalid(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatThrownBy(() -> bishop.checkPieceMoveRange(new Board(), Position.from("c1"), Position.from(to)))
+        assertThatThrownBy(() -> bishop.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 기물이 존재합니다.");
     }

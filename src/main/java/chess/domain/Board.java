@@ -9,10 +9,10 @@ import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class Board {
 
+    private static final int NEXT = 1;
     private final Map<Position, Piece> value = new HashMap<>();
 
     public Board() {
@@ -52,20 +52,35 @@ public class Board {
                 .anyMatch(position -> position.getFileChar() < to.getFileChar());
     }
 
-    public boolean hasPieceInDiagonal(final Position from, final Position to) {
+    public void checkPieceInDiagonal(final Position from, final Position to) {
+        checkRisingDiagonal(from, to);
+        checkDescendingDiagonal(from, to);
+    }
+
+    private void checkRisingDiagonal(Position from, Position to) {
         int minFile = File.min(from.getFile(), to.getFile());
         int maxFile = File.max(from.getFile(), to.getFile());
         int minRank = Math.min(from.getRankNumber(), to.getRankNumber());
 
-        boolean hasPiece = false;
-        int rank = minRank + 1;
-        for (int file = minFile + 1; file < maxFile; file++, rank++) {
-            hasPiece = hasPiece(rank, file);
+        int rank = minRank + NEXT;
+        for (int file = minFile + NEXT; file < maxFile; file++, rank++) {
+            checkHasPiece(rank, file);
         }
-        return hasPiece;
     }
 
-    private boolean hasPiece(final int rank, final int file) {
-        return value.get(Position.of(File.from(file), Rank.from(rank))) != null;
+    private void checkHasPiece(int rank, int file) {
+        if (value.get(Position.of(File.from(file), Rank.from(rank))) != null) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+        }
+    }
+
+    private void checkDescendingDiagonal(Position from, Position to) {
+        int nextRank = Math.min(from.getRankNumber(), to.getRankNumber()) + NEXT;
+        int maxRank = Math.max(from.getRankNumber(), to.getRankNumber());
+        int file = File.max(from.getFile(), to.getFile()) - NEXT;
+
+        for (int rank = nextRank; rank < maxRank; rank++, file--) {
+            checkHasPiece(rank, file);
+        }
     }
 }
