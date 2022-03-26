@@ -72,7 +72,7 @@ class PawnTest {
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatCode(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))
+        assertThatCode(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
                 .doesNotThrowAnyException();
     }
 
@@ -84,7 +84,7 @@ class PawnTest {
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkCrossMove(initialPosition, Position.from(target)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }

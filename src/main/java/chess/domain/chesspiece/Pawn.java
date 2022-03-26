@@ -40,21 +40,24 @@ public final class Pawn extends ChessPiece {
     @Override
     public void checkMovablePosition(final Position from, final Position to) {
         if (from.isSameRank(to)) {
-            if (color.isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
-                return;
-            }
-
-            if (!color.isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
-                return;
-            }
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+            checkStraightMove(from, to);
+            return;
         }
-
         checkCrossMove(from, to);
     }
 
-    private boolean checkMove(final Position from, final Position to, final int movableDistance,
-                              final String initFile) {
+    private void checkStraightMove(final Position from, final Position to) {
+        if (color.isBlack() && isValidDistance(from, to, 1, BLACK_INIT_FILE)) {
+            return;
+        }
+        if (!color.isBlack() && isValidDistance(from, to, -1, WHITE_INIT_FILE)) {
+            return;
+        }
+        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+    }
+
+    private boolean isValidDistance(final Position from, final Position to, final int movableDistance,
+                                    final String initFile) {
         final int fileDistance = from.fileDistance(to);
         if (movableDistance == fileDistance) {
             return true;
@@ -65,15 +68,16 @@ public final class Pawn extends ChessPiece {
         return false;
     }
 
-    public void checkCrossMove(final Position from, final Position to) {
+    private void checkCrossMove(final Position from, final Position to) {
         final int fileDistance = from.fileDistance(to);
-        if (Math.abs(from.rankDistance(to)) == 1) {
-            if (color.isBlack() && fileDistance == 1) {
-                return;
-            }
-            if (!color.isBlack() && fileDistance == -1) {
-                return;
-            }
+        if (Math.abs(from.rankDistance(to)) != 1) {
+            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+        }
+        if (color.isBlack() && fileDistance == 1) {
+            return;
+        }
+        if (!color.isBlack() && fileDistance == -1) {
+            return;
         }
 
         throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
