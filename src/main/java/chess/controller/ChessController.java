@@ -40,7 +40,11 @@ public class ChessController {
 				StatusResult result = new StatusResult(blackScore, whiteScore);
 				OutputView.printScore(result);
 			}
+			if (board.isFinished()) {
+				break;
+			}
 			inputCommand = InputView.requestCommand();
 		}
+		OutputView.printWinner(board.getWinner());
 	}
 }

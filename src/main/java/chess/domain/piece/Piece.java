@@ -24,6 +24,8 @@ public abstract class Piece {
 
 	public abstract boolean isPawn();
 
+	public abstract boolean isKing();
+
 	public abstract double getScore();
 
 	public Direction getDirection(final Position source, final Position target) {

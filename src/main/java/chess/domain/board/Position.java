@@ -59,7 +59,7 @@ public class Position {
 	}
 
 	public boolean isDifferentDiagonal(Position position) {
-		return this.row - position.row != this.column - position.column;
+		return Math.abs(this.row - position.row) != Math.abs(this.column - position.column);
 	}
 
 	public int subtractRow(Position position) {

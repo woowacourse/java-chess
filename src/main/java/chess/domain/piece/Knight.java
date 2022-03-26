@@ -46,6 +46,11 @@ public class Knight extends Piece {
 	}
 
 	@Override
+	public boolean isKing() {
+		return false;
+	}
+
+	@Override
 	public Direction getDirection(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
 

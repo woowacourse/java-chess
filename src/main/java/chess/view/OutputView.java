@@ -32,6 +32,20 @@ public class OutputView {
 			System.out.println("무승부 입니다.");
 			return;
 		}
-		System.out.println("승리 팀은" + result.getWinner() + "입니다.");
+		printScoreWinner(result.getWinner());
+	}
+
+	public static void printScoreWinner(final Team winner) {
+		if (winner.isBlack()) {
+			System.out.println("Black 팀이 이기고 있습니다.");
+		}
+		System.out.println("White 팀이 이기고 있습니다.");
+	}
+
+	public static void printWinner(final Team winner) {
+		if (winner.isBlack()) {
+			System.out.println("KING을 잡아서 Black 팀이 승리했습니다.");
+		}
+		System.out.println("KING을 잡아서 White 팀이 승리했습니다.");
 	}
 }

@@ -8,6 +8,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class QueenTest {
 
@@ -23,10 +25,11 @@ public class QueenTest {
 		assertThat(queen.getSymbol()).isEqualTo("q");
 	}
 
-	@Test
-	void validateMovement() {
+	@ParameterizedTest
+	@CsvSource(value = {"4, 4, 8, 8", "4, 4, 3, 5", "4, 4, 3, 3", "4, 4, 5, 3"})
+	void validateMovement(int startRow, int startCol, int endRow, int endCol) {
 		Queen queen = new Queen(Team.BLACK);
-		assertDoesNotThrow(() -> queen.validateMovement(Position.of(1, 1), Position.of(8, 8)));
+		assertDoesNotThrow(() -> queen.validateMovement(Position.of(startRow, startCol), Position.of(endRow, endCol)));
 	}
 
 	@Test

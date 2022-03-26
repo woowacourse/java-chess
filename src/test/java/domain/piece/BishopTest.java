@@ -8,6 +8,8 @@ import chess.domain.board.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
 
@@ -23,10 +25,11 @@ class BishopTest {
 		assertThat(bishop.getSymbol()).isEqualTo("b");
 	}
 
-	@Test
-	void validateMovement() {
+	@ParameterizedTest
+	@CsvSource(value = {"4, 4, 8, 8", "4, 4, 3, 5", "4, 4, 3, 3", "4, 4, 5, 3"})
+	void validateMovement(int startRow, int startCol, int endRow, int endCol) {
 		Bishop bishop = new Bishop(Team.BLACK);
-		assertDoesNotThrow(() -> bishop.validateMovement(Position.of(3, 3), Position.of(2, 2)));
+		assertDoesNotThrow(() -> bishop.validateMovement(Position.of(startRow, startCol), Position.of(endRow, endCol)));
 	}
 
 	@Test
