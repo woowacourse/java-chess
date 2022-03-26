@@ -3,8 +3,11 @@ package chess.domain.board;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Score;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Board {
     private final Map<Position, Piece> squares;
@@ -53,6 +56,25 @@ public class Board {
                 throw new IllegalArgumentException("이동할 수 없다.");
             }
         }
+    }
+
+    public Map<Color, Double> getColorsTotalScore() {
+        Map<Color, Double> totalScore = new EnumMap<>(Color.class);
+        totalScore.put(Color.WHITE, getTotalScore(Color.WHITE));
+        totalScore.put(Color.BLACK, getTotalScore(Color.BLACK));
+
+        return totalScore;
+    }
+
+    private double getTotalScore(Color color) {
+        return squares.entrySet().stream()
+                .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
+                .mapToDouble(Board::scoreOfPiece)
+                .sum();
+    }
+
+    private static double scoreOfPiece(Entry<Position, Piece> positionPiece) {
+        return Score.valueOf(positionPiece.getValue()).getValue();
     }
 
 //    private boolean isOppositeColor(Piece sourcePiece, Piece targetPiece) {

@@ -12,6 +12,8 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.attribute.Color;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -60,9 +62,22 @@ class BoardTest {
     @Test
     @DisplayName("체스판의 말이 이동할 수 없는 경우 예외가 발생한다.")
     void canNotMovePiece() {
-        Board board =new ChessGame().getBoard();
+        Board board = new ChessGame().getBoard();
 
         assertThatThrownBy(() -> board.move(new Position(File.A, Rank.ONE), new Position(File.A, Rank.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("각 진영의 점수를 계산할 수 있다.")
+    void calculateScoreOfTeam() {
+        Board board = new ChessGame().getBoard();
+
+        Map<Color, Double> colorsTotalScore = board.getColorsTotalScore();
+
+        assertAll(
+                () -> assertThat(colorsTotalScore.get(Color.BLACK)).isEqualTo(38),
+                () -> assertThat(colorsTotalScore.get(Color.WHITE)).isEqualTo(38)
+        );
     }
 }
