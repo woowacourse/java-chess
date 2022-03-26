@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Board;
+import chess.domain.GameManager;
 import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.Result;
@@ -16,21 +16,21 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBoard(final Board board) {
+    public static void printBoard(final GameManager board) {
         for (int row : Row.valuesByDescending()) {
             printRow(board, row);
             System.out.println();
         }
     }
 
-    private static void printRow(Board board, int row) {
+    private static void printRow(GameManager board, int row) {
         for (Column column : Column.values()) {
             Position position = Position.of(column.name() + row);
             printSymbol(board, position);
         }
     }
 
-    private static void printSymbol(Board board, Position position) {
+    private static void printSymbol(GameManager board, Position position) {
         Optional<Piece> wrappedPiece = board.piece(position);
         if (wrappedPiece.isPresent()) {
             System.out.print(wrappedPiece.get().symbol());
@@ -51,7 +51,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printScore(Board board) {
+    public static void printScore(GameManager board) {
         for (Color color : Color.values()) {
             System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
         }

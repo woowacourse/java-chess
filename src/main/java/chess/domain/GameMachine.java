@@ -15,7 +15,7 @@ public class GameMachine {
 
     public void run() {
         InputView.announceStart();
-        Board board = null;
+        GameManager board = null;
         String command = "";
         do {
             command = InputView.requestCommand();
@@ -23,9 +23,9 @@ public class GameMachine {
         } while (!Command.isEnd(command) && !board.isEnd());
     }
 
-    private Board play(Board board, String command) {
+    private GameManager play(GameManager board, String command) {
         if (Command.isStart(command)) {
-            board = new Board(new BoardInitiator());
+            board = new GameManager(new BoardInitializer());
             OutputView.printBoard(board);
         }
         if (Command.isMove(command)) {
@@ -37,7 +37,7 @@ public class GameMachine {
         return board;
     }
 
-    private void movePiece(Board board, List<String> commands) {
+    private void movePiece(GameManager board, List<String> commands) {
         if (board == null) {
             OutputView.announceNotStarted();
             return;
@@ -50,7 +50,7 @@ public class GameMachine {
         OutputView.printBoard(board);
     }
 
-    private void movePieceOnBoard(Board board, List<String> commands) {
+    private void movePieceOnBoard(GameManager board, List<String> commands) {
         try {
             board.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         } catch (IllegalArgumentException e) {

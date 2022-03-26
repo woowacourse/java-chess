@@ -19,7 +19,7 @@ class BoardInitiatorTest {
     @MethodSource("rookPositions")
     @DisplayName("rook의 초기 위치를 확인")
     void rooks_initialPosition(final Position position, final Color color) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(position)).isEqualTo(new Piece(color, new Rook()));
     }
 
@@ -44,7 +44,7 @@ class BoardInitiatorTest {
     @MethodSource("knightPositions")
     @DisplayName("knight의 초기 위치를 확인")
     void knights_initialPosition(final Position position, final Color color) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(position)).isEqualTo(new Piece(color, new Knight()));
     }
 
@@ -69,7 +69,7 @@ class BoardInitiatorTest {
     @MethodSource("bishopPositions")
     @DisplayName("bishop의 초기 위치를 확인")
     void bishops_initialPosition(final Position position, final Color color) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(position)).isEqualTo(new Piece(color, new Bishop()));
     }
 
@@ -94,7 +94,7 @@ class BoardInitiatorTest {
     @MethodSource("queenPositions")
     @DisplayName("queen의 초기 위치를 확인")
     void queens_initialPosition(final Position position, final Color color) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(position)).isEqualTo(new Piece(color, new Queen()));
     }
 
@@ -113,7 +113,7 @@ class BoardInitiatorTest {
     @MethodSource("kingPositions")
     @DisplayName("king의 초기 위치를 확인")
     void king_initialPosition(final Position position, final Color color) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(position)).isEqualTo(new Piece(color, new King()));
     }
 
@@ -132,7 +132,7 @@ class BoardInitiatorTest {
     @ValueSource(strings = {"a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"})
     @DisplayName("흰색 pawn의 초기 위치를 확인")
     void whitePawn_initialPosition(final String rawPosition) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(Color.WHITE, new Pawn()));
     }
 
@@ -140,7 +140,7 @@ class BoardInitiatorTest {
     @ValueSource(strings = {"a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"})
     @DisplayName("검은색 pawn의 초기 위치를 확인")
     void blackPawn_initialPosition(final String rawPosition) {
-        Map<Position, Piece> pieces = new BoardInitiator().initiate();
+        Map<Position, Piece> pieces = new BoardInitializer().initialize();
         assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(Color.BLACK, new Pawn()));
     }
 

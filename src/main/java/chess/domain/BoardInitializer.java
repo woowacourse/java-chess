@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class BoardInitiator implements Initiator {
+public final class BoardInitializer implements Initializer {
 
-    public Map<Position, Piece> initiate() {
+    public Map<Position, Piece> initialize() {
         final Map<Position, Piece> pieces = new HashMap<>();
         initGame(pieces);
         return pieces;
