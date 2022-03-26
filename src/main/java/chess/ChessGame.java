@@ -10,36 +10,29 @@ import chess.view.OutputView;
 public class ChessGame {
     public void run() {
         OutputView.announceStart();
+
+        if (!InputView.isStart()) {
+            System.exit(0);
+        }
+
         Board board = new Board();
-        boolean start = false;
+        OutputView.showBoard(board.splitByRank());
 
-        while (true) {
-            List<String> input = InputView.requireCommand();
-            String command = input.get(0);
-            if ("start".equals(command)) {
-                start = true;
-                board = new Board();
-                OutputView.showBoard(board.splitByRank());
-            }
+        List<String> squares = InputView.requireCommand();
+        while (squares.size() != 0) {
+            movePiece(board, squares);
+            squares = InputView.requireCommand();
+        }
+    }
 
-            if (!start && "move".equals(command)) {
-                OutputView.printMessage("[ERROR] 게임이 시작되지 않았습니다\n");
-            }
-
-            if (start && "move".equals(command)) {
-                try {
-                    String source = input.get(1);
-                    String target = input.get(2);
-                    board.move(new Square(source), new Square(target));
-                    OutputView.showBoard(board.splitByRank());
-                } catch (IllegalArgumentException e) {
-                    OutputView.printMessage(e.getMessage());
-                }
-            }
-
-            if ("end".equals(command)) {
-                return;
-            }
+    private void movePiece(Board board, List<String> squares) {
+        try {
+            String source = squares.get(0);
+            String target = squares.get(1);
+            board.move(new Square(source), new Square(target));
+            OutputView.showBoard(board.splitByRank());
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
         }
     }
 }
