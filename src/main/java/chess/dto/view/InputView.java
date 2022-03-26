@@ -20,7 +20,13 @@ public class InputView {
     public static MoveRequest inputCommandInGaming() { // RequestDto
         String input = readLine();
         Command command = Command.endMove(input);
+        if (command == Command.END) {
+            return new MoveRequest(command);
+        }
 
+        if (command == Command.STATUS) {
+            return new MoveRequest(command);
+        }
         List<String> inputs = List.of(input.split(" "));
 
         Position source = new Position(inputs.get(1));

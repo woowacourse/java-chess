@@ -28,6 +28,11 @@ public class ChessController {
                 break;
             }
 
+            if (moveRequest.getCommand() == Command.STATUS) {
+                System.out.println(board.calculateScore());
+                continue;
+            }
+
             boolean isFinished = board.move(moveRequest.getSource(), moveRequest.getTarget());
             OutputView.printChessGameBoard(board.getValues());
 
