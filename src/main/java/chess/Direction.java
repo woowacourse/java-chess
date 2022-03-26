@@ -46,6 +46,10 @@ public enum Direction {
         return List.of(N, E, S, W);
     }
 
+    public static List<Direction> getKnightDirections() {
+        return List.of(NNE, ENE, ESE, SSE, SSW, WSW, WNW, NNW);
+    }
+
     public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == 2 && columnDistance == 0 && this == N && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance - 1);
