@@ -1,7 +1,6 @@
 package chess;
 
 import chess.piece.Color;
-import chess.state.Finish;
 import chess.state.Ready;
 import chess.state.State;
 import chess.utils.PositionParser;
@@ -32,7 +31,7 @@ public class ChessGame {
     }
 
     public void end() {
-        state = new Finish(getChessBoard());
+        state = state.end();
     }
 
     public boolean isFinished() {
