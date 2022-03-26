@@ -22,13 +22,24 @@ public class Board {
         return board.get(position.getRow()).getPiece(position.getCol());
     }
 
-    public void movePiece(String source, String destination, Team team) {
+    public void validateMovePiece(String source, String destination, Team team) {
         Piece piece = getPiece(Position.from(source));
         validateTeam(team, piece);
         List<Position> positions = piece.findPath(Position.from(destination));
         validateMovingPath(source, destination, piece, positions);
-        piece.move(Position.from(destination));
-        changePiece(Position.from(source), Position.from(destination), piece);
+    }
+
+    public boolean isKingDead(Piece piece) {
+        return piece.isKing();
+    }
+
+    public Piece movePiece(String source, String destination, Team team) {
+        Piece srcPiece = getPiece(Position.from(source));
+        Piece dstPiece = getPiece(Position.from(destination));
+        validateMovePiece(source, destination, team);
+        srcPiece.move(Position.from(destination));
+        changePiece(Position.from(source), Position.from(destination), srcPiece);
+        return dstPiece;
     }
 
     private void validateTeam(Team team, Piece piece) {

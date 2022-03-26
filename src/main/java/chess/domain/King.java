@@ -21,4 +21,9 @@ public class King extends Piece {
         validateIsPossible(destination);
         return List.of();
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

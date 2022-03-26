@@ -19,7 +19,16 @@ public class Application {
             input = InputView.requestCommand();
             command = Command.of(input.get(0));
             while (!command.isEnd()) {
-                board.movePiece(input.get(1), input.get(2), team);
+                if (command == Command.STATUS) {
+                    OutputView.printStatus(board.getTeamScore(Team.WHITE), board.getTeamScore(Team.BLACK));
+                    input = InputView.requestCommand();
+                    command = Command.of(input.get(0));
+                    continue;
+                }
+                if (board.isKingDead(board.movePiece(input.get(1), input.get(2), team))) {
+                    OutputView.printFinishedGame(board.getBoard(), team);
+                    break;
+                }
                 OutputView.printChessBoard(board.getBoard());
                 input = InputView.requestCommand();
                 command = Command.of(input.get(0));
