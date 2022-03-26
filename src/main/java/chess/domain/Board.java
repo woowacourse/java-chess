@@ -13,6 +13,7 @@ public class Board {
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
+    private static final String ALL_KING_EXIST = "[ERROR] 킹이 모두 살아 있어, 승자를 구할 수 없습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -95,13 +96,13 @@ public class Board {
             .reduce(0.0, Double::sum) - calculateSameLinePawnScore(color);
     }
 
-    public boolean isSameLine(List<Position> pawnPositions, Position position) {
+    private boolean isSameLine(List<Position> pawnPositions, Position position) {
         return pawnPositions.stream()
             .filter(p -> p != position)
             .anyMatch(p -> p.isSameAbscissa(position));
     }
 
-    public double calculateSameLinePawnScore(Color color) {
+    private double calculateSameLinePawnScore(Color color) {
         List<Position> pawnPositions = board.keySet().stream()
             .filter(position -> board.get(position).isSameColor(color))
             .filter(position -> board.get(position).isPawn())
@@ -111,5 +112,16 @@ public class Board {
             .filter(position -> isSameLine(pawnPositions, position))
             .map(position -> 0.5)
             .reduce(0.0, Double::sum);
+    }
+
+    public Color getWinnerTeamColor() {
+        if(isAllKingExist()) {
+            throw new IllegalArgumentException(ALL_KING_EXIST);
+        }
+        return board.values().stream()
+            .filter(Piece::isKing)
+            .findAny()
+            .get()
+            .getColor();
     }
 }

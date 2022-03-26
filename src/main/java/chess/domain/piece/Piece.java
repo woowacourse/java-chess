@@ -37,4 +37,8 @@ public abstract class Piece {
     public double getScore() {
         return score;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }
