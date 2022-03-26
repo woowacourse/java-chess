@@ -18,30 +18,31 @@ public class BoardDto {
 
     public BoardDto(ChessGame game) {
         boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
-                .mapToObj(rowIdx -> extractCurrentRowChessmen(game, rowIdx))
-                .map(BoardDto::initRowDisplay)
-                .collect(Collectors.toList());
+            .mapToObj(rowIdx -> extractCurrentRowChessmen(game, rowIdx))
+            .map(BoardDto::initRowDisplay)
+            .collect(Collectors.toList());
     }
 
     private static String initRowDisplay(List<Piece> existingChessMen) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
-                .mapToObj(fileIdx -> squareView(existingChessMen, fileIdx))
-                .collect(Collectors.joining());
+            .mapToObj(fileIdx -> squareView(existingChessMen, fileIdx))
+            .collect(Collectors.joining());
     }
 
     private static List<Piece> extractCurrentRowChessmen(ChessGame game, int rowIdx) {
         return game.getChessmen()
-                .stream()
-                .filter(piece -> toRowIdx(piece) == rowIdx)
-                .collect(Collectors.toUnmodifiableList());
+            .getPieces()
+            .stream()
+            .filter(piece -> toRowIdx(piece) == rowIdx)
+            .collect(Collectors.toUnmodifiableList());
     }
 
     private static String squareView(List<Piece> currentRowChessMen, int fileIdx) {
         return currentRowChessMen.stream()
-                .filter(piece -> extractFileIdx(piece) == fileIdx)
-                .map(Piece::display)
-                .findFirst()
-                .orElse(EMPTY_SQUARE_DISPLAY);
+            .filter(piece -> extractFileIdx(piece) == fileIdx)
+            .map(Piece::display)
+            .findFirst()
+            .orElse(EMPTY_SQUARE_DISPLAY);
     }
 
     private static int toRowIdx(Piece piece) {

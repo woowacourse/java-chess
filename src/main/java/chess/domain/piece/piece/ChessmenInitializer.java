@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class ChessmenInitializer {
 
-    public List<Piece> init() {
+    public Pieces init() {
         List<Piece> chessmen = new ArrayList<>(32);
 
         chessmen.addAll(initBlackStrongMen());
@@ -26,7 +26,7 @@ public class ChessmenInitializer {
         chessmen.addAll(initWhitePawns());
         chessmen.addAll(initWhiteStrongMen());
 
-        return chessmen;
+        return new Pieces(chessmen);
     }
 
     private List<Piece> initBlackStrongMen() {
