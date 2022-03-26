@@ -9,6 +9,7 @@ import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessGame;
+import chess.domain.piece.piece.ChessmenInitializer;
 import chess.dto.BoardDto;
 
 public class Application {
@@ -19,7 +20,10 @@ public class Application {
             return;
         }
 
-        ChessGame game = new ChessGame();
+        ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
+
+        ChessGame game = ChessGame.of(chessmenInitializer.init());
+
         printBoard(new BoardDto(game));
         while(!game.isEnd()) {
             game.moveChessmen(requestMoveInput());
