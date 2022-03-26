@@ -34,7 +34,7 @@ public abstract class Running implements GameState {
         }
         if (cmd.isMove()) {
             movePieceByCommand(cmd.movePosition(command));
-            return changeNextState();
+            return changeMoveNextState();
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
     }
@@ -44,7 +44,7 @@ public abstract class Running implements GameState {
         OutputView.printChessBoard(chessBoard.getPieces());
     }
 
-    private GameState changeNextState() {
+    private GameState changeMoveNextState() {
         if (chessBoard.isPromotionStatus(color)) {
             OutputView.printPromotionGuide();
             return new Promotion(this);
