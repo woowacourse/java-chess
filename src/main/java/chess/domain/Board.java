@@ -24,13 +24,17 @@ public class Board {
 
     public void movePiece(String source, String destination, Team team) {
         Piece piece = getPiece(Position.from(source));
-        if (piece.getTeam() != team) {
-            throw new IllegalArgumentException("다른 팀 말을 옮길 수 없습니다.");
-        }
+        validateTeam(team, piece);
         List<Position> positions = piece.findPath(Position.from(destination));
         validateMovingPath(source, destination, piece, positions);
         piece.move(Position.from(destination));
         changePiece(Position.from(source), Position.from(destination), piece);
+    }
+
+    private void validateTeam(Team team, Piece piece) {
+        if (piece.getTeam() != team) {
+            throw new IllegalArgumentException("다른 팀 말을 옮길 수 없습니다.");
+        }
     }
 
     private void changePiece(Position source, Position destination, Piece piece) {
@@ -70,5 +74,26 @@ public class Board {
 
     public Map<Row, Rank> getBoard() {
         return board;
+    }
+
+    public double getTeamScore(Team team) {
+        double totalScore = 0;
+        Map<Column, Integer> pawnNeighbors = new EnumMap<>(Column.class);
+        for (Row row : board.keySet()) {
+            totalScore += board.get(row).calculateWhiteTotalScore(team);
+            for (Column column : Column.values()) {
+                if (board.get(row).isPawn(team, column)) {
+                    pawnNeighbors.put(column, pawnNeighbors.getOrDefault(column, 0) + 1);
+                }
+            }
+        }
+
+        for (Column col : pawnNeighbors.keySet()) {
+            int pawnCount = pawnNeighbors.get(col);
+            if (pawnCount > 1) {
+                totalScore -= pawnCount * 0.5;
+            }
+        }
+        return totalScore;
     }
 }

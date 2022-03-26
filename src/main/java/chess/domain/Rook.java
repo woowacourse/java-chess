@@ -6,7 +6,7 @@ import java.util.List;
 public class Rook extends Piece {
 
     public Rook(Team team, Position position) {
-        super(team, Rook.class.getSimpleName(), position);
+        super(team, Rook.class.getSimpleName(), position, 5);
     }
 
     private Direction findDirection(Position destination) {

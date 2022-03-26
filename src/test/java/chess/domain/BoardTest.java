@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BoardTest {
 
     @ParameterizedTest
     @CsvSource(value = {"a1:Rook", "b1:Knight", "c8:Bishop", "d1:Queen", "e1:King", "a2:Pawn", "a3:Blank"}, delimiter = ':')
     void findPiece(String position, String symbol) {
         Board board = new Board();
-        Assertions.assertThat(board.getPiece(Position.from(position)).getClass().getSimpleName()).isEqualTo(symbol);
+        assertThat(board.getPiece(Position.from(position)).getClass().getSimpleName()).isEqualTo(symbol);
     }
 
     @Test
@@ -21,8 +23,8 @@ public class BoardTest {
         String source = "f2";
         String destination = "f4";
         board.movePiece(source, destination, Team.WHITE);
-        Assertions.assertThat(board.getPiece(Position.from(destination)).isPawn()).isTrue();
-        Assertions.assertThat(board.getPiece(Position.from(source)).isBlank()).isTrue();
+        assertThat(board.getPiece(Position.from(destination)).isPawn()).isTrue();
+        assertThat(board.getPiece(Position.from(source)).isBlank()).isTrue();
     }
 
     @Test
@@ -45,5 +47,19 @@ public class BoardTest {
         Assertions.assertThatThrownBy(() -> board.movePiece(source, destination, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 팀 말을 옮길 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("화이트팀 말 점수를 조회한다.")
+    void getWhiteTeamScore() {
+        Board board = new Board();
+        assertThat(board.getTeamScore(Team.WHITE)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("블랙팀 말 점수를 조회한다.")
+    void getBlackTeamScore() {
+        Board board = new Board();
+        assertThat(board.getTeamScore(Team.BLACK)).isEqualTo(38);
     }
 }

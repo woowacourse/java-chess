@@ -5,7 +5,7 @@ import java.util.List;
 public class King extends Piece {
 
     public King(Team team, Position position) {
-        super(team, King.class.getSimpleName(), position);
+        super(team, King.class.getSimpleName(), position, 0);
     }
 
     public void validateIsPossible(Position destination) {

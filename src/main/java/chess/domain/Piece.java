@@ -7,11 +7,13 @@ public abstract class Piece {
     private Team team;
     private final String name;
     protected Position position;
+    private double score;
 
-    public Piece(Team team, String name, Position position) {
+    public Piece(Team team, String name, Position position, double score) {
         this.team = team;
         this.name = name;
         this.position = position;
+        this.score = score;
     }
 
     public String getName() {
@@ -34,6 +36,10 @@ public abstract class Piece {
 
     public void move(Position destination) {
         position = destination;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override

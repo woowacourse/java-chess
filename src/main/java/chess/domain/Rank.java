@@ -1,5 +1,6 @@
 package chess.domain;
 
+import java.time.temporal.Temporal;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -41,5 +42,22 @@ public class Rank {
 
     public void changePiece(Column column, Piece piece) {
         pieces.put(column, piece);
+    }
+
+    public double calculateWhiteTotalScore(Team team) {
+        double totalScore = 0;
+        for (Column column : pieces.keySet()) {
+            if (pieces.get(column).getTeam() == team) {
+                totalScore += pieces.get(column).getScore();
+            }
+        }
+        return totalScore;
+    }
+
+    public boolean isPawn(Team team, Column column) {
+        if (pieces.get(column).getTeam() == team) {
+            return pieces.get(column).isPawn();
+        }
+        return false;
     }
 }
