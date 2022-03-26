@@ -42,6 +42,10 @@ public enum Direction {
         return List.of(N, NE, E, SE, S, SW, W, NW);
     }
 
+    public static List<Direction> getRookDirections() {
+        return List.of(N, E, S, W);
+    }
+
     public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == 2 && columnDistance == 0 && this == N && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance - 1);
