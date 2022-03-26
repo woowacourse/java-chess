@@ -37,9 +37,7 @@ public class ChessController {
 
         outputView.printAnnounce();
 
-        Command initCommand = Command.from(inputView.inputCommand());
-
-        if (!initCommand.isStart()) {
+        if (checkStart(chessGame)) {
             return;
         }
 
@@ -50,12 +48,24 @@ public class ChessController {
         outputView.printResult(teamScores);
     }
 
+    private boolean checkStart(ChessGame chessGame) {
+        Command command = Command.from(inputView.inputCommand());
+
+        if (command.isStart()) {
+            return true;
+        }
+
+        chessGame.progress(command);
+
+        return false;
+    }
+
     private void play(ChessGame chessGame) {
         while (!chessGame.isEnd()) {
             printChessBoard(chessGame);
 
             Command command = Command.from(inputView.inputCommand());
-            
+
             chessGame.progress(command);
         }
     }
@@ -76,9 +86,7 @@ public class ChessController {
 
     private String discriminate(ChessGame chessGame, Set<Position> piecePositions, Position position) {
         if (piecePositions.contains(position)) {
-            String type = chessGame.getSymbolByPosition(position);
-
-            return type;
+            return chessGame.getSymbolByPosition(position);
         }
 
         return ".";

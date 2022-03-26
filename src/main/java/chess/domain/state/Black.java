@@ -25,6 +25,8 @@ public class Black implements State {
 
         chessBoard.move(command);
 
+        System.out.println("black");
+
         return new White();
     }
 
