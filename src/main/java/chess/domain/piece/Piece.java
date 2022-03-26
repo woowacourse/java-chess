@@ -6,10 +6,12 @@ import chess.domain.state.Direction;
 public abstract class Piece {
     private final Team team;
     private final Name name;
+    private boolean isFirst;
 
     public Piece(Team team, Name name) {
         this.team = team;
         this.name = name;
+        isFirst = true;
     }
 
     public String getName() {
@@ -40,4 +42,12 @@ public abstract class Piece {
     public abstract boolean isMovableDirection(Direction direction);
 
     public abstract boolean isMovableDistance(LocationDiff locationDiff);
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void changeNotFirst() {
+        isFirst = false;
+    }
 }

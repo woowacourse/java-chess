@@ -64,7 +64,7 @@ public class Board {
     }
 
 
-    public Map<Location, Piece>  getBoard() {
+    public Map<Location, Piece> getBoard() {
         return chessBoard;
     }
 
@@ -73,7 +73,14 @@ public class Board {
     }
 
     public void move(Location source, Location target) {
+        checkIsFirst(chessBoard.get(source));
         chessBoard.put(target, chessBoard.get(source));
         chessBoard.put(source, new EmptyPiece());
+    }
+
+    private void checkIsFirst(Piece piece) {
+        if (piece.isFirst()) {
+            piece.changeNotFirst();
+        }
     }
 }
