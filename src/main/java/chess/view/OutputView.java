@@ -11,8 +11,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
-    private static final String INIT_MESSAGE = "체스 게임을 시작합니다." + SEPARATOR
-            + "게임 시작은 start, 종료는 end 명령을 입력하세요.";
+    private static final String ARROW = "> ";
+    private static final String INIT_MESSAGE =
+            ARROW + "체스 게임을 시작합니다." + SEPARATOR
+                    + ARROW + "게임 시작 : start" + SEPARATOR
+                    + ARROW + "게임 종료 : end" + SEPARATOR
+                    + ARROW + "게임 이동 : move source위치 target위치 - 예. move b2 b3";
 
     public static void printInitMessage() {
         System.out.println(INIT_MESSAGE);
