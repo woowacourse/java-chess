@@ -82,12 +82,13 @@ public class Chessboard {
     }
 
     private void validateMiddlePosition(Position position, Piece source) {
-        List<Pair<Integer, Integer>> middlePositions = source.computeMiddlePosition(position);
+        source.computeMiddlePosition(position).forEach(
+                middlePosition -> validateMiddleBlank(middlePosition)
+        );
+    }
 
-        for (Pair<Integer, Integer> middlePosition : middlePositions) {
-            if (findPiece(middlePosition.getLeft(), middlePosition.getRight()).isSameType(Type.BLANK)) {
-                continue;
-            }
+    private void validateMiddleBlank(Pair<Integer, Integer> position) {
+        if (!findPiece(position.getLeft(), position.getRight()).isSameType(Type.BLANK)) {
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");
         }
     }
@@ -100,22 +101,24 @@ public class Chessboard {
     }
 
     public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
-        double score = 0;
+        double score = computeTotalScore(color);
 
+        for (int i = 0; i < board.size(); i++) {
+            int duplicatedPawn = computePawnCount(i, color);
+            score -= computeMinusScore(duplicatedPawn, minusScoreOfSameColumnPawn);
+        }
+
+        return score;
+    }
+
+    private double computeTotalScore(Color color) {
+        double score = 0;
         for (List<Piece> list : board) {
             score += list.stream()
                     .filter(piece -> piece.isSameColor(color))
                     .mapToDouble(Piece::getScore)
                     .sum();
         }
-
-        for (int i = 0; i < board.size(); i++) {
-            int duplicatedPawn = computePawnCount(i, color);
-            if (duplicatedPawn > 1) {
-                score -= minusScoreOfSameColumnPawn * duplicatedPawn;
-            }
-        }
-
         return score;
     }
 
@@ -125,4 +128,12 @@ public class Chessboard {
                 .filter(piece -> piece.isSameColor(color) && piece.isSameType(Type.PAWN))
                 .count();
     }
+
+    private double computeMinusScore(int duplicatedPawn, double minusScoreOfSameColumnPawn) {
+        if (duplicatedPawn <= 1) {
+            return 0;
+        }
+        return duplicatedPawn * minusScoreOfSameColumnPawn;
+    }
+
 }

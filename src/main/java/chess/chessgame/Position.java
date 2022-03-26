@@ -56,12 +56,8 @@ public class Position {
     }
 
     public boolean isAnyPossible(List<Pair<Integer, Integer>> coordinates) {
-        for (Pair<Integer, Integer> coordinate : coordinates) {
-            if (fromX + coordinate.getLeft() == toX && fromY + coordinate.getRight() == toY) {
-                return true;
-            }
-        }
-        return false;
+        return coordinates.stream()
+                .anyMatch(this::isTarget);
     }
 
     public List<Pair<Integer, Integer>> computeLinearMiddle() {
@@ -137,5 +133,9 @@ public class Position {
             list.add(Pair.of(startX + i, startY + i));
         }
         return list;
+    }
+
+    private boolean isTarget(Pair<Integer, Integer> coordinate) {
+        return fromX + coordinate.getLeft() == toX && fromY + coordinate.getRight() == toY;
     }
 }
