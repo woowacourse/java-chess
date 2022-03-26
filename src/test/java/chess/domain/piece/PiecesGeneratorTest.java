@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.piece.NormalPiecesGenerator;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PiecesGenerator;
+import chess.domain.piece.generator.NormalPiecesGenerator;
+import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Position;
 import java.util.Map;
 import org.assertj.core.api.Assertions;

@@ -1,5 +1,13 @@
-package chess.domain.piece;
+package chess.domain.piece.generator;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;

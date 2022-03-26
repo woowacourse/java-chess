@@ -5,7 +5,7 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
-import chess.domain.piece.PiecesGenerator;
+import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
