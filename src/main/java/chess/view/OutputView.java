@@ -17,7 +17,7 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printInitChessBoard(List<String> symbols) {
+    public void printChessBoard(List<String> symbols) {
         int count = 0;
 
         for (String symbol : symbols) {

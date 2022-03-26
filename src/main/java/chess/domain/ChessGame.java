@@ -1,10 +1,14 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ChessGame {
 
@@ -46,8 +50,10 @@ public class ChessGame {
         return state.calculateWhiteScore(chessBoard);
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public Set<Position> getPiecePositions() {
+        Map<Position, Piece> cells = chessBoard.getCells();
+
+        return Collections.unmodifiableSet(cells.keySet());
     }
 
     public Map<Team, Double> calculateResult() {
@@ -63,5 +69,11 @@ public class ChessGame {
 
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    public String getSymbolByPosition(Position position) {
+        Piece piece = chessBoard.getPieceByPosition(position);
+
+        return piece.getSymbol();
     }
 }

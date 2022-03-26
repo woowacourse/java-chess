@@ -104,4 +104,8 @@ public class ChessBoard {
 
         return 0;
     }
+
+    public Piece getPieceByPosition(Position position) {
+        return cells.get(position);
+    }
 }
