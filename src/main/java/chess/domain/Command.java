@@ -4,7 +4,9 @@ public enum Command {
 
     START,
     MOVE,
-    END;
+    END,
+    STATUS,
+    ;
 
     private static final String FIRST_MOVE_COMMAND_EXCEPTION_MESSAGE = "체스판을 초기화한 후에 이동 명령을 내려주세요.";
     private static final String IN_GAME_COMMAND_EXCEPTION_MESSAGE = "게임이 이미 진행중입니다.";
