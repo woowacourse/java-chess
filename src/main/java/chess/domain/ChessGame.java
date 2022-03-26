@@ -130,4 +130,11 @@ public class ChessGame {
     public boolean isGameEnd() {
         return blackChessMen.isKingDead() || whiteChessMen.isKingDead();
     }
+
+    public Team judgeWinner() {
+        if (blackChessMen.calculateScore() > whiteChessMen.calculateScore()) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
+    }
 }
