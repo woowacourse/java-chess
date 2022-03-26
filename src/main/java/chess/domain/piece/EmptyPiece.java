@@ -21,4 +21,9 @@ public class EmptyPiece extends Piece{
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         throw new IllegalStateException("해당 자리에는 말이 존재하지 않습니다.");
     }
+
+    @Override
+    public double getPoint() {
+        return 0;
+    }
 }

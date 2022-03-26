@@ -31,4 +31,11 @@ public class KingTest {
         );
         assertThat(positions).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("킹은 0점이다.")
+    void getPoint() {
+        Piece king = new King(Color.BLACK);
+        assertThat(king.getPoint()).isEqualTo(0);
+    }
 }

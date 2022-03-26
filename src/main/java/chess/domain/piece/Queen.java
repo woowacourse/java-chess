@@ -39,4 +39,9 @@ public class Queen extends Piece {
         movable.get(direction).add(nextPosition);
         putMovablePositionsByDirection(movable, nextPosition, direction);
     }
+
+    @Override
+    public double getPoint() {
+        return 9;
+    }
 }

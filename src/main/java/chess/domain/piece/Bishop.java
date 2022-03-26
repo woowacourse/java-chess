@@ -40,4 +40,9 @@ public class Bishop extends Piece {
         movable.get(direction).add(nextPosition);
         putMovablePositionsByDirection(movable, nextPosition, direction);
     }
+
+    @Override
+    public double getPoint() {
+        return 3;
+    }
 }

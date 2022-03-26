@@ -40,4 +40,9 @@ public class Knight extends Piece {
         }
         movable.get(direction).add(nextPosition);
     }
+
+    @Override
+    public double getPoint() {
+        return 2.5;
+    }
 }

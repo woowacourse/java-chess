@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,5 +37,10 @@ public class King extends Piece {
             return;
         }
         movable.get(direction).add(nextPosition);
+    }
+
+    @Override
+    public double getPoint() {
+        return 0;
     }
 }

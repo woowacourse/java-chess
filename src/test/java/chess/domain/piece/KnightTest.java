@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -31,5 +30,12 @@ class KnightTest {
                 )
         );
         assertThat(positions).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("나이트는 2.5점이다.")
+    void getPoint() {
+        Piece knight = new Knight(Color.BLACK);
+        assertThat(knight.getPoint()).isEqualTo(2.5);
     }
 }

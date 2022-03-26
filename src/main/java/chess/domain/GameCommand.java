@@ -26,7 +26,7 @@ public class GameCommand {
     }
 
     private void validateCommand(String[] rawCommand) {
-        if (command == CommandType.MOVE && rawCommand.length != 3){
+        if (command == CommandType.MOVE && rawCommand.length != 3) {
             throw new IllegalArgumentException("해당 타입의 커맨드는 인자가 3개여야합니다.");
         }
         if (CommandType.isSingleCommand(command) && rawCommand.length > 1) {
@@ -34,16 +34,8 @@ public class GameCommand {
         }
     }
 
-    public boolean isStart() {
-        return command == CommandType.START;
-    }
-
-    public boolean isEnd() {
-        return command == CommandType.END;
-    }
-
-    public boolean isMove() {
-        return command == CommandType.MOVE;
+    public boolean isSameCommandType(CommandType commandType) {
+        return command == commandType;
     }
 
     public Position getFromPosition() {

@@ -35,4 +35,11 @@ public class BishopTest {
         );
         assertThat(positions).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("비숍은 3점이다.")
+    void getPoint() {
+        Piece bishop = new Bishop(Color.BLACK);
+        assertThat(bishop.getPoint()).isEqualTo(3);
+    }
 }

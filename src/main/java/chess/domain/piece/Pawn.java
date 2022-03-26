@@ -51,4 +51,9 @@ public class Pawn extends Piece {
         }
         movable.get(direction).add(nextPosition);
     }
+
+    @Override
+    public double getPoint() {
+        return 1;
+    }
 }

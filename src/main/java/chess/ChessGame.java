@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.CommandType;
 import chess.domain.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.NormalPiecesGenerator;
@@ -22,7 +23,7 @@ public class ChessGame {
         GameCommand gameCommand;
         do {
             gameCommand = requestCommand();
-        } while (!gameCommand.isEnd());
+        } while (!gameCommand.isSameCommandType(CommandType.END));
     }
 
     private GameCommand requestCommand() {
@@ -37,14 +38,18 @@ public class ChessGame {
     }
 
     private void playGameByCommand(GameCommand gameCommand) {
-        if (gameCommand.isStart()) {
+        if (gameCommand.isSameCommandType(CommandType.START)) {
             initChessBoard();
             return;
         }
-        if (gameCommand.isEnd()) {
+        if (gameCommand.isSameCommandType(CommandType.END)) {
             return;
         }
         validateInitBoard();
+        if (gameCommand.isSameCommandType(CommandType.STATUS)) {
+            System.out.println("Statsusjdlkfl");
+            return;
+        }
         doMovementByTurn(gameCommand);
     }
 

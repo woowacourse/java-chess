@@ -47,4 +47,11 @@ public class QueenTest {
         );
         assertThat(positions).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("퀸은 9점이다.")
+    void getPoint() {
+        Piece queen = new Queen(Color.BLACK);
+        assertThat(queen.getPoint()).isEqualTo(9);
+    }
 }

@@ -18,6 +18,8 @@ public abstract class Piece {
 
     public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
+    public abstract double getPoint();
+
     public String getName() {
         String symbol = name.getSymbol();
         if (color == Color.WHITE) {

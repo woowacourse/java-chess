@@ -35,4 +35,11 @@ public class RookTest {
         );
         assertThat(positions).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("룩은 5점이다.")
+    void getPoint() {
+        Piece rook = new Rook(Color.BLACK);
+        assertThat(rook.getPoint()).isEqualTo(5);
+    }
 }

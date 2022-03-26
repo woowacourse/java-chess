@@ -45,14 +45,14 @@ public class GameCommandTest {
     @DisplayName("Start 커맨드인지 확인한다.")
     void isStart() {
         GameCommand gameCommand = new GameCommand("start");
-        assertThat(gameCommand.isStart()).isTrue();
+        assertThat(gameCommand.isSameCommandType(CommandType.START)).isTrue();
     }
 
     @Test
     @DisplayName("End 커맨드인지 확인한다.")
     void isEnd() {
         GameCommand gameCommand = new GameCommand("end");
-        assertThat(gameCommand.isEnd()).isTrue();
+        assertThat(gameCommand.isSameCommandType(CommandType.END)).isTrue();
     }
 
 

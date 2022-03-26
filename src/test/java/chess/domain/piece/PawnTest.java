@@ -22,4 +22,11 @@ public class PawnTest {
                 Direction.NORTH, List.of(new Position("d5"), new Position("d6"))
         );
     }
+
+    @Test
+    @DisplayName("폰은 1점이다.")
+    void getPoint() {
+        Piece pawn = new Pawn(Color.BLACK);
+        assertThat(pawn.getPoint()).isEqualTo(1);
+    }
 }
