@@ -42,7 +42,6 @@ public class Board {
         int minRank = Math.min(from.getRankNumber(), to.getRankNumber());
         int maxRank = Math.max(from.getRankNumber(), to.getRankNumber());
 
-//
         return value.keySet().stream()
                 .filter(position -> position.getFile().equals(from.getFile()))
                 .filter(position -> position.getRankNumber() > minRank)
@@ -53,8 +52,6 @@ public class Board {
         int minFile = File.min(from.getFile(), to.getFile());
         int maxFile = File.max(from.getFile(), to.getFile());
 
-//
-//                .anyMatch(position -> position.getFileChar() < to.getFileChar());
         return value.keySet().stream()
                 .filter(position -> position.getRankNumber() == from.getRankNumber())
                 .filter(position -> position.getFileOrder() > minFile)
