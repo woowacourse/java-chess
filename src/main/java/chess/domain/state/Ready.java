@@ -3,12 +3,10 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.generator.InitBoardGenerator;
 
-public class Ready implements State {
-
-    private final ChessBoard chessBoard;
+public class Ready extends Started {
 
     public Ready() {
-        this.chessBoard = new ChessBoard(new InitBoardGenerator());
+        super(new ChessBoard(new InitBoardGenerator()));
     }
 
     @Override
@@ -29,10 +27,5 @@ public class Ready implements State {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public ChessBoard chessBoard() {
-        return chessBoard;
     }
 }

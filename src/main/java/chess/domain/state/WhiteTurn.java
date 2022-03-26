@@ -3,12 +3,10 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
-public class WhiteTurn implements State {
-
-    private final ChessBoard chessBoard;
+public class WhiteTurn extends Started {
 
     protected WhiteTurn(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+        super(chessBoard);
     }
 
     @Override
@@ -39,10 +37,5 @@ public class WhiteTurn implements State {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public ChessBoard chessBoard() {
-        return chessBoard;
     }
 }

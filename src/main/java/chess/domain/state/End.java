@@ -2,12 +2,10 @@ package chess.domain.state;
 
 import chess.domain.ChessBoard;
 
-public class End implements State {
-
-    private final ChessBoard chessBoard;
+public class End extends Started {
 
     protected End(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+      super(chessBoard);
     }
 
     @Override
@@ -28,10 +26,5 @@ public class End implements State {
     @Override
     public boolean isFinished() {
         return true;
-    }
-
-    @Override
-    public ChessBoard chessBoard() {
-        return chessBoard;
     }
 }

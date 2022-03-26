@@ -3,12 +3,10 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
-public class BlackTurn implements State {
-
-    private final ChessBoard chessBoard;
+public class BlackTurn extends Started {
 
     protected BlackTurn(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+        super(chessBoard);
     }
 
     @Override
