@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovable(MovingPosition movingPosition) {
         return false;
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+    public List<Position> computeMiddlePosition(MovingPosition movingPosition) {
         return new ArrayList<>();
     }
 }

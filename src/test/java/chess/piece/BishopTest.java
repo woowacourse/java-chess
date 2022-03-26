@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(String input) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovable(new Position("d5", input))).isTrue();
+        assertThat(bishop.isMovable(new MovingPosition("d5", input))).isTrue();
     }
 
     @ParameterizedTest
@@ -26,17 +26,18 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(String input) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovable(new Position("d5", input))).isFalse();
+        assertThat(bishop.isMovable(new MovingPosition("d5", input))).isFalse();
     }
 
     @Test
     @DisplayName("from과 to 사이에 비숍이 이동가능한 위치 리스트 반환")
     void checkMiddlePosition() {
         Bishop bishop = new Bishop(Color.WHITE);
-        assertThat(bishop.computeMiddlePosition(new Position("f7", "b3")))
+        assertThat(bishop.computeMiddlePosition(new MovingPosition("f7", "b3")))
                 .isEqualTo(List.of(
-                        Pair.of(4, 2),
-                        Pair.of(3, 3),
-                        Pair.of(2, 4)));
+                        new Position(4, 2),
+                        new Position(3, 3),
+                        new Position(2, 4))
+                );
     }
 }

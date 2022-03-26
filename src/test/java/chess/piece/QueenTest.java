@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ public class QueenTest {
     @DisplayName("queen 기물 대각선 이동 위치 검증 - true")
     void checkQueenPositionDiagonal(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(new Position("d5", input))).isTrue();
+        assertThat(queen.isMovable(new MovingPosition("d5", input))).isTrue();
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ public class QueenTest {
     @DisplayName("queen 기물 직선 이동 위치 검증 - true")
     void checkQueenPositionUpDownLeftRight(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(new Position("d5", input))).isTrue();
+        assertThat(queen.isMovable(new MovingPosition("d5", input))).isTrue();
     }
 
     @ParameterizedTest
@@ -34,29 +34,29 @@ public class QueenTest {
     @DisplayName("queen 기물 이동 위치 검증 - false")
     void checkBishopPositionWhenFalse(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(new Position("d5", input))).isFalse();
+        assertThat(queen.isMovable(new MovingPosition("d5", input))).isFalse();
     }
 
     @Test
     @DisplayName("from과 to 사이에 사이에 퀸이 이동가능한 위치 리스트 반환 - 대각선")
     void checkMiddlePositionCross() {
         Queen queen = new Queen(Color.WHITE);
-        assertThat(queen.computeMiddlePosition(new Position("f7", "b3")))
+        assertThat(queen.computeMiddlePosition(new MovingPosition("f7", "b3")))
                 .isEqualTo(List.of(
-                        Pair.of(4, 2),
-                        Pair.of(3, 3),
-                        Pair.of(2, 4)));
+                        new Position(4, 2),
+                        new Position(3, 3),
+                        new Position(2, 4)));
     }
 
     @Test
     @DisplayName("from과 to 사이에 사이에 퀸이 이동가능한 위치 리스트 반환 - 직선")
     void checkMiddlePositionLinear() {
         Queen queen = new Queen(Color.WHITE);
-        assertThat(queen.computeMiddlePosition(new Position("b5", "f5"))).isEqualTo(
+        assertThat(queen.computeMiddlePosition(new MovingPosition("b5", "f5"))).isEqualTo(
                 List.of(
-                        Pair.of(3, 2),
-                        Pair.of(3, 3),
-                        Pair.of(3, 4)
+                        new Position(3, 2),
+                        new Position(3, 3),
+                        new Position(3, 4)
                 )
         );
     }

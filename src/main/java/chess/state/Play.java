@@ -1,7 +1,7 @@
 package chess.state;
 
 import chess.chessgame.Chessboard;
-import chess.chessgame.Position;
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Turn;
 import chess.piece.Color;
 import chess.utils.InitializedChessboardGenerator;
@@ -25,8 +25,8 @@ public class Play implements State {
     }
 
     @Override
-    public State move(Position position, Turn turn) {
-        boolean isKing = chessboard.move(position, turn);
+    public State move(MovingPosition movingPosition, Turn turn) {
+        boolean isKing = chessboard.move(movingPosition, turn);
         if (isKing) {
             return new Finish(chessboard);
         }

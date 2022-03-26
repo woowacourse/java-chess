@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ class RookTest {
     @DisplayName("rook 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(String input) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(new Position("d5", input))).isTrue();
+        assertThat(rook.isMovable(new MovingPosition("d5", input))).isTrue();
     }
 
     @ParameterizedTest
@@ -26,18 +26,18 @@ class RookTest {
     @DisplayName("rook 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(String input) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(new Position("d5", input))).isFalse();
+        assertThat(rook.isMovable(new MovingPosition("d5", input))).isFalse();
     }
 
     @Test
     @DisplayName("from과 to 사이에 룩이 이동가능한 위치 리스트 반환")
     void checkMiddlePosition() {
         Rook rook = new Rook(Color.WHITE);
-        assertThat(rook.computeMiddlePosition(new Position("b5", "f5"))).isEqualTo(
+        assertThat(rook.computeMiddlePosition(new MovingPosition("b5", "f5"))).isEqualTo(
                 List.of(
-                        Pair.of(3, 2),
-                        Pair.of(3, 3),
-                        Pair.of(3, 4)
+                        new Position(3, 2),
+                        new Position(3, 3),
+                        new Position(3, 4)
                 )
         );
     }

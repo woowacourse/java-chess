@@ -1,5 +1,6 @@
 package chess.util;
 
+import chess.chessgame.Position;
 import chess.utils.PositionParser;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
@@ -28,9 +29,9 @@ public class PositionParserTest {
     @MethodSource("positionInput")
     @DisplayName("유효한 위치 입력시 입력을 올바른 인덱스 값으로 매핑하여 pair로 반환")
     void rightPositionInput(char x, char y, Pair<Integer, Integer> expected) {
-        Pair<Integer, Integer> position = PositionParser.parse(x, y);
-        assertThat(position.getRight()).isEqualTo(expected.getRight());
-        assertThat(position.getLeft()).isEqualTo(expected.getLeft());
+        Position position = PositionParser.parse(x, y);
+        assertThat(position.getX()).isEqualTo(expected.getRight());
+        assertThat(position.getY()).isEqualTo(expected.getLeft());
     }
 
     private static Stream<Arguments> positionInput() {

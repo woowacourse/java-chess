@@ -1,22 +1,22 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
 
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_MOVABLE = List.of(
-            Pair.of(0, 1),
-            Pair.of(0, -1),
-            Pair.of(1, 1),
-            Pair.of(1, 0),
-            Pair.of(1, -1),
-            Pair.of(-1, 1),
-            Pair.of(-1, 0),
-            Pair.of(-1, -1)
+    private static final List<Position> COORDINATES_OF_MOVABLE = List.of(
+            new Position(0, 1),
+            new Position(0, -1),
+            new Position(1, 1),
+            new Position(1, 0),
+            new Position(1, -1),
+            new Position(-1, 1),
+            new Position(-1, 0),
+            new Position(-1, -1)
     );
 
     public King(Color color) {
@@ -24,12 +24,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return position.isAnyPossible(COORDINATES_OF_MOVABLE);
+    public boolean isMovable(MovingPosition movingPosition) {
+        return movingPosition.isAnyPossible(COORDINATES_OF_MOVABLE);
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+    public List<Position> computeMiddlePosition(MovingPosition movingPosition) {
         return new ArrayList<>();
     }
 

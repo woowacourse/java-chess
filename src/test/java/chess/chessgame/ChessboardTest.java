@@ -52,7 +52,7 @@ public class ChessboardTest {
     @Test
     @DisplayName("이동하려는 위치에 기물이 없는 경우 예외 발생")
     void checkBlankTarget() {
-        assertThatThrownBy(() -> chessboard.move(new Position("c4", "c5"), new Turn()))
+        assertThatThrownBy(() -> chessboard.move(new MovingPosition("c4", "c5"), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동하려는 위치에 기물이 없습니다.");
     }
@@ -61,7 +61,7 @@ public class ChessboardTest {
     @DisplayName("상대편의 기물을 움직이려는 경우 예외 발생")
     void checkWrongTurn() {
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.move(new Position("a7", "a6"), turn))
+        assertThatThrownBy(() -> chessboard.move(new MovingPosition("a7", "a6"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물은 움직일 수 없습니다.");
     }
@@ -70,7 +70,7 @@ public class ChessboardTest {
     @DisplayName("같은편의 기물을 잡으려는 경우 예외 발생")
     void checkColor() {
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.move(new Position("a1", "a2"), turn))
+        assertThatThrownBy(() -> chessboard.move(new MovingPosition("a1", "a2"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물으로만 이동할 수 있습니다.");
     }
@@ -79,7 +79,7 @@ public class ChessboardTest {
     @DisplayName("주어진 좌표 후보들중에 기물이 있는 좌표가 있다면 예외 발생")
     void checkCandidatesOfPossibleCoordinates() {
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.move(new Position("a1", "a3"), turn))
+        assertThatThrownBy(() -> chessboard.move(new MovingPosition("a1", "a3"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("가로막는 기물이 있습니다.");
     }

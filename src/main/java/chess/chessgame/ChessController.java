@@ -34,7 +34,7 @@ public class ChessController {
             return;
         }
         if (command.equals("move")) {
-            chessGame.move(new Position(commands.nextToken(), commands.nextToken()));
+            chessGame.move(new MovingPosition(commands.nextToken(), commands.nextToken()));
             OutputView.printBoard(chessGame.getChessBoard());
             return;
         }

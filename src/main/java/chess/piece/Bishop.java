@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return position.isCross();
+    public boolean isMovable(MovingPosition movingPosition) {
+        return movingPosition.isCross();
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
-        return position.computeCrossMiddle();
+    public List<Position> computeMiddlePosition(MovingPosition movingPosition) {
+        return movingPosition.computeCrossMiddle();
     }
 }

@@ -1,7 +1,7 @@
 package chess.piece;
 
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean isMovable(Position position);
+    public abstract boolean isMovable(MovingPosition movingPosition);
 
-    public abstract List<Pair<Integer, Integer>> computeMiddlePosition(Position position);
+    public abstract List<Position> computeMiddlePosition(MovingPosition movingPosition);
 
     public boolean isSameType(Type type) {
         return this.type == type;

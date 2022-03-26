@@ -1,141 +1,42 @@
 package chess.chessgame;
 
-import chess.utils.PositionParser;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class Position {
 
-    private final int fromX;
-    private final int fromY;
-    private final int toX;
-    private final int toY;
+    private final int x;
+    private final int y;
 
-    public Position(String from, String to) {
-        validateSamePosition(from, to);
-        Pair<Integer, Integer> parsedFrom = PositionParser.parse(from.charAt(0), from.charAt(1));
-        Pair<Integer, Integer> parsedTo = PositionParser.parse(to.charAt(0), to.charAt(1));
-
-        fromX = parsedFrom.getLeft();
-        fromY = parsedFrom.getRight();
-        toX = parsedTo.getLeft();
-        toY = parsedTo.getRight();
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getFromX() {
-        return fromX;
+    public int getX() {
+        return x;
     }
 
-    public int getFromY() {
-        return fromY;
+    public int getY() {
+        return y;
     }
 
-    public int getToX() {
-        return toX;
-    }
-
-    public int getToY() {
-        return toY;
-    }
-
-
-    private void validateSamePosition(String from, String to) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("현재 위치와 같은 위치로 이동할 수 없습니다.");
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
         }
-    }
 
-    public boolean isLinear() {
-        return (fromX == toX) || (fromY == toY);
-    }
-
-    public boolean isCross() {
-        return Math.abs(fromX - toX) == Math.abs(fromY - toY);
-    }
-
-    public boolean isAnyPossible(List<Pair<Integer, Integer>> coordinates) {
-        return coordinates.stream()
-                .anyMatch(this::isTarget);
-    }
-
-    public List<Pair<Integer, Integer>> computeLinearMiddle() {
-        if (fromX == toX) {
-            return row();
+        if (!(o instanceof Position)) {
+            return false;
         }
-        if (fromY == toY) {
-            return col();
-        }
-        return new ArrayList<>();
+
+        Position compare = (Position) o;
+        return x == compare.x && y == compare.y;
     }
 
-    public List<Pair<Integer, Integer>> computeCrossMiddle() {
-        if ((fromX - toX) == (-1) * (fromY - toY)) {
-            return rightUp();
-        }
-        if ((fromX - toX) == (fromY - toY)) {
-            return rightDown();
-        }
-        return new ArrayList<>();
-    }
-
-    public List<Pair<Integer, Integer>> computeOneUp() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        if (fromX - 1 > toX) {
-            list.add(Pair.of(fromX - 1, fromY));
-        }
-        return list;
-    }
-
-    public List<Pair<Integer, Integer>> computeOneDown() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        if (fromX + 1 < toX) {
-            list.add(Pair.of(fromX + 1, fromY));
-        }
-        return list;
-    }
-
-
-    private List<Pair<Integer, Integer>> row() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        for (int i = Math.min(fromY, toY) + 1; i < Math.max(fromY, toY); i++) {
-            list.add(Pair.of(fromX, i));
-        }
-        return list;
-    }
-
-    private List<Pair<Integer, Integer>> col() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        for (int i = Math.min(fromX, toX) + 1; i < Math.max(fromX, toX); i++) {
-            list.add(Pair.of(i, fromY));
-        }
-        return list;
-    }
-
-    private List<Pair<Integer, Integer>> rightUp() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        int startX = Math.max(fromX, toX);
-        int startY = Math.min(fromY, toY);
-
-        for (int i = 1; i < Math.abs(fromX - toX); i++) {
-            list.add(Pair.of(startX - i, startY + i));
-        }
-        return list;
-    }
-
-    private List<Pair<Integer, Integer>> rightDown() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        int startX = Math.min(fromX, toX);
-        int startY = Math.min(fromY, toY);
-
-        for (int i = 1; i < Math.abs(fromX - toX); i++) {
-            list.add(Pair.of(startX + i, startY + i));
-        }
-        return list;
-    }
-
-    private boolean isTarget(Pair<Integer, Integer> coordinate) {
-        return fromX + coordinate.getLeft() == toX && fromY + coordinate.getRight() == toY;
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

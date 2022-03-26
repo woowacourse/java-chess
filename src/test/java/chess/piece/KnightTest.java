@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.chessgame.Position;
+import chess.chessgame.MovingPosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +14,7 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(String input) {
         Knight knight = new Knight(Color.BLACK);
-        assertThat(knight.isMovable(new Position("d5", input))).isTrue();
+        assertThat(knight.isMovable(new MovingPosition("d5", input))).isTrue();
     }
 
     @ParameterizedTest
@@ -22,6 +22,6 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(String input) {
         Knight knight = new Knight(Color.BLACK);
-        assertThat(knight.isMovable(new Position("d5", input))).isFalse();
+        assertThat(knight.isMovable(new MovingPosition("d5", input))).isFalse();
     }
 }

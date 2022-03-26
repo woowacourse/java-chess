@@ -2,7 +2,6 @@ package chess.chessgame;
 
 import chess.piece.*;
 import chess.utils.ChessboardGenerator;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,13 +14,13 @@ public class Chessboard {
         board = chessboardGenerator.generate();
     }
 
-    public boolean move(Position position, Turn turn) {
-        validate(position, turn);
+    public boolean move(MovingPosition movingPosition, Turn turn) {
+        validate(movingPosition, turn);
 
-        Piece target = findPiece(position.getToX(), position.getToY());
+        Piece target = findPiece(movingPosition.getToX(), movingPosition.getToY());
         boolean isKing = target.isSameType(Type.KING);
 
-        movePiece(position);
+        movePiece(movingPosition);
 
         return isKing;
     }
@@ -34,15 +33,15 @@ public class Chessboard {
         return board.get(x).get(y);
     }
 
-    private void validate(Position position, Turn turn) {
-        Piece source = findPiece(position.getFromX(), position.getFromY());
-        Piece target = findPiece(position.getToX(), position.getToY());
+    private void validate(MovingPosition movingPosition, Turn turn) {
+        Piece source = findPiece(movingPosition.getFromX(), movingPosition.getFromY());
+        Piece target = findPiece(movingPosition.getToX(), movingPosition.getToY());
 
         validateBlank(source);
         validateTurn(source, turn);
         validateColor(source, target);
-        validateMovable(position, source, target);
-        validateMiddlePosition(position, source);
+        validateMovable(movingPosition, source, target);
+        validateMiddlePosition(movingPosition, source);
     }
 
     private void validateBlank(Piece piece) {
@@ -63,41 +62,41 @@ public class Chessboard {
         }
     }
 
-    private void validateMovable(Position position, Piece source, Piece target) {
-        if (!target.isSameType(Type.BLANK) && isDiagonalPawn(position, source)) {
+    private void validateMovable(MovingPosition movingPosition, Piece source, Piece target) {
+        if (!target.isSameType(Type.BLANK) && isDiagonalPawn(movingPosition, source)) {
             return;
         }
-        if (source.isMovable(position)) {
+        if (source.isMovable(movingPosition)) {
             return;
         }
         throw new IllegalArgumentException("움직일 수 없는 기물입니다.");
     }
 
-    private boolean isDiagonalPawn(Position position, Piece source) {
+    private boolean isDiagonalPawn(MovingPosition movingPosition, Piece source) {
         if (!source.isSameType(Type.PAWN)) {
             return false;
         }
         Pawn pawn = (Pawn) source;
-        return pawn.isDiagonal(position);
+        return pawn.isDiagonal(movingPosition);
     }
 
-    private void validateMiddlePosition(Position position, Piece source) {
-        source.computeMiddlePosition(position).forEach(
+    private void validateMiddlePosition(MovingPosition movingPosition, Piece source) {
+        source.computeMiddlePosition(movingPosition).forEach(
                 middlePosition -> validateMiddleBlank(middlePosition)
         );
     }
 
-    private void validateMiddleBlank(Pair<Integer, Integer> position) {
-        if (!findPiece(position.getLeft(), position.getRight()).isSameType(Type.BLANK)) {
+    private void validateMiddleBlank(Position position) {
+        if (!findPiece(position.getX(), position.getY()).isSameType(Type.BLANK)) {
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");
         }
     }
 
-    private void movePiece(Position position) {
-        Piece source = findPiece(position.getFromX(), position.getFromY());
+    private void movePiece(MovingPosition movingPosition) {
+        Piece source = findPiece(movingPosition.getFromX(), movingPosition.getFromY());
 
-        board.get(position.getToX()).set(position.getToY(), source);
-        board.get(position.getFromX()).set(position.getFromY(), new Blank());
+        board.get(movingPosition.getToX()).set(movingPosition.getToY(), source);
+        board.get(movingPosition.getFromX()).set(movingPosition.getFromY(), new Blank());
     }
 
     public double computeScore(Color color, double minusScoreOfSameColumnPawn) {

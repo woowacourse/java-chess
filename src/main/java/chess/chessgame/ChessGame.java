@@ -22,8 +22,8 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void move(Position position) {
-        state = state.move(position, turn);
+    public void move(MovingPosition movingPosition) {
+        state = state.move(movingPosition, turn);
     }
 
     public void end() {

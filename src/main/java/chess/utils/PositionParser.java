@@ -1,6 +1,6 @@
 package chess.utils;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.chessgame.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +31,11 @@ public class PositionParser {
         files.put('1', 7);
     }
 
-    public static Pair<Integer, Integer> parse(char x, char y) {
+    public static Position parse(char x, char y) {
         if (!ranks.containsKey(x) || !files.containsKey(y)) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
 
-        return Pair.of(files.get(y), ranks.get(x));
+        return new Position(files.get(y), ranks.get(x));
     }
 }

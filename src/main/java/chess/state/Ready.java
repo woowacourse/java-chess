@@ -1,7 +1,7 @@
 package chess.state;
 
 import chess.chessgame.Chessboard;
-import chess.chessgame.Position;
+import chess.chessgame.MovingPosition;
 import chess.chessgame.Turn;
 import chess.piece.Color;
 
@@ -21,7 +21,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(Position position, Turn turn) {
+    public State move(MovingPosition movingPosition, Turn turn) {
         throw new UnsupportedOperationException();
     }
 
