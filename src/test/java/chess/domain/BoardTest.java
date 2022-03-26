@@ -15,6 +15,7 @@ import chess.domain.position.Square;
 
 public class BoardTest {
     private static final Piece WHITE_QUEEN = Piece.from(File.D, Rank.ONE);
+    private static final Piece BLACK_QUEEN = Piece.from(File.D, Rank.EIGHT);
 
     @Test
     @DisplayName("목표하는 위치에 같은 팀의 말이 있으면 에러를 반환한다")
@@ -49,6 +50,30 @@ public class BoardTest {
         assertThatThrownBy(() -> chessBoard.move(new Square(File.C, Rank.THREE), new Square(File.E, Rank.FIVE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 가는 길에 다른 피스가 있습니다");
+    }
+
+    @Test
+    @DisplayName("흰 말로 시작하지 않으면 에러를 반환한다")
+    void errorTurn_Start() {
+        Map<Square, Piece> board = createBoard();
+        board.put(new Square(File.C, Rank.THREE), WHITE_QUEEN);
+        board.put(new Square(File.D, Rank.FOUR), BLACK_QUEEN);
+        Board chessBoard = new Board(board);
+        assertThatThrownBy(() -> chessBoard.move(new Square(File.D, Rank.FOUR), new Square(File.E, Rank.FIVE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 순서 지키시지?!");
+    }
+
+    @Test
+    @DisplayName("흰 말 다음 검은 말 순서로 진행하지 않으면 에러를 반환한다")
+    void errorTurn() {
+        Map<Square, Piece> board = createBoard();
+        board.put(new Square(File.C, Rank.THREE), WHITE_QUEEN);
+        Board chessBoard = new Board(board);
+        chessBoard.move(new Square(File.C, Rank.THREE), new Square(File.D, Rank.FOUR));
+        assertThatThrownBy(() -> chessBoard.move(new Square(File.D, Rank.FOUR), new Square(File.E, Rank.FIVE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 순서 지키시지?!");
     }
 
     private Map<Square, Piece> createBoard() {

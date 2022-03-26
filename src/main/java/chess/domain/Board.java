@@ -18,8 +18,10 @@ import chess.domain.position.Square;
 public class Board {
     private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 이동할 수 없는 위치입니다.";
     private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 가는 길에 다른 피스가 있습니다";
+    private static final String ERROR_MESSAGE_TURN = "[ERROR] 순서 지키시지?!";
 
     private final Map<Square, Piece> board;
+    private Color turn;
 
     public Board() {
         this(createBoard());
@@ -27,6 +29,7 @@ public class Board {
 
     public Board(Map<Square, Piece> board) {
         this.board = new LinkedHashMap<>(board);
+        this.turn = Color.WHITE;
     }
 
     private static Map<Square, Piece> createBoard() {
@@ -62,11 +65,20 @@ public class Board {
         Piece targetPiece = board.get(target);
         Direction direction = source.getGap(target);
 
+        checkTurn(sourcePiece);
         checkCapablePosition(direction, sourcePiece, targetPiece);
         checkCapableDirection(source, target, direction);
 
+        turn = switchTurn();
+
         board.put(target, sourcePiece);
         board.put(source, new None(Color.NONE));
+    }
+
+    private void checkTurn(Piece sourcePiece) {
+        if(!sourcePiece.isSameColor(turn)){
+            throw new IllegalArgumentException(ERROR_MESSAGE_TURN);
+        }
     }
 
     private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
@@ -81,7 +93,7 @@ public class Board {
 
         while (!road.equals(target)) {
             checkNone(board.get(road));
-            road.add(unitDirection);
+            road = road.add(unitDirection);
         }
     }
 
@@ -91,4 +103,10 @@ public class Board {
         }
     }
 
+    private Color switchTurn() {
+        if(turn == Color.WHITE){
+            return Color.BLACK;
+        }
+        return Color.WHITE;
+    }
 }

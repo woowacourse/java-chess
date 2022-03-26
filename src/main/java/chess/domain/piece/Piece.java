@@ -30,4 +30,8 @@ public abstract class Piece {
     public boolean isNone() {
         return false;
     }
+
+    public boolean isSameColor(Color turn) {
+        return turn == this.color;
+    }
 }
