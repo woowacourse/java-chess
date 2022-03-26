@@ -8,12 +8,11 @@ import chess.domain.piece.strategy.RookMoveStrategy;
 
 public class Rook extends Piece {
     public Rook(Color color) {
-        super(new Name("R"), color);
+        super(new Name("R"), color, new RookMoveStrategy());
     }
 
     @Override
-    public void canMove(Board board, Position from, Position to) {
-        RookMoveStrategy moveStrategy = new RookMoveStrategy();
-        moveStrategy.isValidateCanMove(color, from, to);
+    public boolean canMove(Board board, Position from, Position to) {
+        return moveStrategy.isValidateCanMove(color, from, to);
     }
 }

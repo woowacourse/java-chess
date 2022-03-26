@@ -9,12 +9,11 @@ import chess.domain.piece.strategy.PawnMoveStrategy;
 public class Pawn extends Piece {
 
     public Pawn(Color color) {
-        super(new Name("P"), color);
+        super(new Name("P"), color, new PawnMoveStrategy());
     }
 
     @Override
-    public void canMove(Board board, Position from, Position to) {
-        PawnMoveStrategy moveStrategy = new PawnMoveStrategy();
-        moveStrategy.isValidateCanMove(color, from, to);
+    public boolean canMove(Board board, Position from, Position to) {
+        return moveStrategy.isValidateCanMove(color, from, to);
     }
 }

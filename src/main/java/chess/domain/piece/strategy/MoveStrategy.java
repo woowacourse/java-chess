@@ -8,9 +8,9 @@ import java.util.List;
 
 public abstract class MoveStrategy {
 
-    abstract boolean isValidateCanMove(Color color, Position from, Position to);
+    public abstract boolean isValidateCanMove(Color color, Position from, Position to);
 
-    protected List<Position> getRoute(Position from, Position to) {
+    public List<Position> getRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> positions = new ArrayList<>();
         Position movedPosition = from.advancePosition(direction);

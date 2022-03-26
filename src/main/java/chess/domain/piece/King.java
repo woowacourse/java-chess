@@ -8,12 +8,11 @@ import chess.domain.piece.strategy.KingMoveStrategy;
 
 public class King extends Piece {
     public King(Color color) {
-        super(new Name("K"), color);
+        super(new Name("K"), color, new KingMoveStrategy());
     }
 
     @Override
-    public void canMove(Board board, Position from, Position to) {
-        KingMoveStrategy moveStrategy = new KingMoveStrategy();
-        moveStrategy.isValidateCanMove(color, from, to);
+    public boolean canMove(Board board, Position from, Position to) {
+        return moveStrategy.isValidateCanMove(color, from, to);
     }
 }

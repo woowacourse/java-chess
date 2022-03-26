@@ -9,12 +9,11 @@ import chess.domain.piece.strategy.BishopMoveStrategy;
 public class Bishop extends Piece {
 
     public Bishop(Color color) {
-        super(new Name("B"), color);
+        super(new Name("B"), color, new BishopMoveStrategy());
     }
 
     @Override
-    public void canMove(Board board, Position from, Position to) {
-        BishopMoveStrategy moveStrategy = new BishopMoveStrategy();
-        moveStrategy.isValidateCanMove(color, from, to);
+    public boolean canMove(Board board, Position from, Position to) {
+        return moveStrategy.isValidateCanMove(color, from, to);
     }
 }

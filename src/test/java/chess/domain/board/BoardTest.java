@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Bishop;
@@ -53,5 +54,14 @@ class BoardTest {
                 () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE)))
                         .isInstanceOf(Pawn.class)
         );
+    }
+
+    @Test
+    @DisplayName("체스판의 말이 이동할 수 없는 경우 예외가 발생한다.")
+    void canNotMovePiece() {
+        Board board = new Board();
+
+        assertThatThrownBy(() -> board.move(new Position(File.A, Rank.ONE), new Position(File.A, Rank.THREE)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

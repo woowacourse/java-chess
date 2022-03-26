@@ -7,11 +7,11 @@ import chess.domain.piece.attribute.Name;
 
 public class EmptyPiece extends Piece {
     public EmptyPiece() {
-        super(new Name("."), Color.NONE);
+        super(new Name("."), Color.NONE, null);
     }
 
     @Override
-    public void canMove(Board board, Position from, Position to) {
+    public boolean canMove(Board board, Position from, Position to) {
         throw new IllegalArgumentException("해당 칸에는 움직일 기물이 없습니다.");
     }
 

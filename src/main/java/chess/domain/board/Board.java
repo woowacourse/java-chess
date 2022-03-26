@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -9,7 +8,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.attribute.Color;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -60,13 +61,41 @@ public class Board {
         return squares.get(position);
     }
 
-
     public void move(Position from, Position to) {
         Piece sourcePiece = squares.get(from);
+        Piece targetPiece = squares.get(to);
 
-        sourcePiece.canMove(this, from, to);
+        // (테스트 필요)이동할 위치가 같은 색깔이 아님을 검증한다.
+        validateNotSameColor(sourcePiece, targetPiece);
+
+        if (!sourcePiece.canMove(this, from, to) && !sourcePiece.isEmpty()) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+
+        // 장애물이 없음을 검증한다
+        validateNotHurdle(from, to);
 
         squares.replace(to, sourcePiece);
         squares.replace(from, new EmptyPiece());
     }
+
+    private void validateNotSameColor(Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateNotHurdle(Position from, Position to) {
+        List<Position> route = findByPosition(from).getRoute(from, to);
+
+        for (Position position : route) {
+            if (!findByPosition(position).isEmpty()) {
+                throw new IllegalArgumentException("이동할 수 없다.");
+            }
+        }
+    }
+
+//    private boolean isOppositeColor(Piece sourcePiece, Piece targetPiece) {
+//        return !targetPiece.isEmpty() && !sourcePiece.isSameColor(targetPiece);
+//    }
 }

@@ -3,6 +3,7 @@ package chess.domain.piece.strategy;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public class KnightMoveStrategy extends MoveStrategy {
@@ -16,6 +17,11 @@ public class KnightMoveStrategy extends MoveStrategy {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Position> getRoute(Position from, Position to) {
+        return new ArrayList<>();
     }
 
     private boolean isValidDistance(Position from, Position to, List<Direction> directions) {
