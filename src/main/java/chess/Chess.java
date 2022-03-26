@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
@@ -21,6 +22,7 @@ public class Chess {
         while (gameState != GameState.END) {
             repeatTurn();
         }
+        OutputView.printStatus(new Status(board));
     }
 
     private void repeatTurn() {
@@ -48,6 +50,10 @@ public class Chess {
         }
         if (command == Command.END) {
             gameState = GameState.END;
+            return;
+        }
+        if (command == Command.STATUS && gameState.isRunning()) {
+            OutputView.printStatus(new Status(board));
             return;
         }
         throw new IllegalArgumentException("현재 실행할 수 없는 명령입니다.");
