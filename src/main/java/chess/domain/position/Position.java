@@ -16,7 +16,7 @@ public class Position {
                         .collect(Collectors.toList())
                         .stream())
                 .collect(Collectors.toMap(
-                        Position::getValue,
+                        position -> position.rank.value() + position.file.value(),
                         Function.identity()));
     }
 
@@ -36,7 +36,7 @@ public class Position {
     }
 
     public static Position of(final Rank rank, final File file) {
-        final String key = rank.getValue() + file.getValue();
+        final String key = rank.value() + file.value();
         return cache.get(key);
     }
 
@@ -84,10 +84,6 @@ public class Position {
         final File nextFile = file.add(direction.fileGap());
 
         return Position.of(nextRank, nextFile);
-    }
-
-    public String getValue() {
-        return rank.getValue() + file.getValue();
     }
 
     @Override

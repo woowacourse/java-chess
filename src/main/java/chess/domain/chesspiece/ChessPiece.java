@@ -36,7 +36,7 @@ public abstract class ChessPiece {
         return this.color.equals(color);
     }
 
-    public final String getName() {
+    public final String name() {
         return name;
     }
 

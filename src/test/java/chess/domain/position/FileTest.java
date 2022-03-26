@@ -16,7 +16,7 @@ class FileTest {
 
         // when
         final File file = File.of(value);
-        final String actual = file.getValue();
+        final String actual = file.value();
 
         // then
         assertThat(actual).isEqualTo(value);

@@ -34,7 +34,7 @@ class ChessBoardTest {
         final ChessPiece actual = possiblePiece.get();
 
         // then
-        assertThat(actual.getName()).isEqualTo(expected);
+        assertThat(actual.name()).isEqualTo(expected);
     }
 
     @Test
@@ -59,7 +59,7 @@ class ChessBoardTest {
         final ChessPiece actual = chessBoard.findPiece(to).get();
 
         // then
-        assertThat(actual.getName()).isEqualTo("n");
+        assertThat(actual.name()).isEqualTo("n");
     }
 
     @Test
@@ -80,7 +80,7 @@ class ChessBoardTest {
         final ChessPiece actual = chessBoard.findPiece(to).get();
 
         // then
-        assertThat(actual.getName()).isEqualTo("b");
+        assertThat(actual.name()).isEqualTo("b");
     }
 
     @Test

@@ -34,7 +34,7 @@ public enum Rank {
         return value.charAt(0) - target.value.charAt(0);
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 }

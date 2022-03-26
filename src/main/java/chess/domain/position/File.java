@@ -34,7 +34,7 @@ public enum File {
         return Integer.parseInt(value) - Integer.parseInt(target.value);
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 }

@@ -16,7 +16,7 @@ class RankTest {
 
         // when
         final Rank rank = Rank.of(value);
-        final String actual = rank.getValue();
+        final String actual = rank.value();
 
         // then
         assertThat(actual).isEqualTo(value);

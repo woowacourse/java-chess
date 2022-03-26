@@ -79,14 +79,15 @@ class PositionTest {
     @ParameterizedTest
     @DisplayName("현재 위치의 주변 좌표를 탐색한다.")
     @CsvSource(value = {"N:d6", "NE:e6", "E:e5", "SE:e4", "S:d4", "SW:c4", "W:c5", "NW:c6"}, delimiter = ':')
-    void toNextPosition(final Direction direction, final String expected) {
+    void toNextPosition(final Direction direction, final String expectedPosition) {
         // given
         final Position position = Position.from("d5");
+        final Position expected = Position.from(expectedPosition);
 
         // when
         final Position actual = position.toNextPosition(direction);
 
         // then
-        assertThat(actual.getValue()).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 }

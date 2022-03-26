@@ -42,7 +42,7 @@ public class OutputView {
 
             final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
             possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.print(piece.getName()),
+                    (piece) -> System.out.print(piece.name()),
                     () -> System.out.print(EMPTY));
         }
         System.out.println();
