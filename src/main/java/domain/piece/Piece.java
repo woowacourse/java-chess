@@ -51,6 +51,14 @@ public abstract class Piece {
             .orElse(new ArrayList<>());
     }
 
+    public Direction getDirection(Position target) {
+        return availableMovePosition.keySet().stream()
+            .filter(direction -> availableMovePosition.get(direction) != null)
+            .filter(direction -> availableMovePosition.get(direction).contains(target))
+            .findFirst()
+            .orElse(null);
+    }
+
     private void generateAvailablePosition(Position source) {
         for (Direction direction : availableMovePosition.keySet()) {
             availableMovePosition.put(direction, calculateAvailablePosition(source, direction));

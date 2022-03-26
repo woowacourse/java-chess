@@ -16,7 +16,9 @@ public enum Direction {
     NORTHEAST_EAST(1, 2),
     SOUTHEAST_EAST(-1, 2),
     SOUTHEAST_SOUTH(-2, 1),
-    SOUTHWEST_SOUTH(-2, -1);
+    SOUTHWEST_SOUTH(-2, -1),
+    SOUTH_SOUTH(-2, 0),
+    NORTH_NORTH(2, 0);
 
     private final int row;
     private final int column;

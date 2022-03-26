@@ -15,6 +15,7 @@ public class WhitePawnDirections implements DirectionsGenerator {
         directions.add(Direction.NORTHEAST);
         directions.add(Direction.NORTHWEST);
         directions.add(Direction.NORTH);
+        directions.add(Direction.NORTH_NORTH);
         return directions;
     }
 }

@@ -15,6 +15,7 @@ public class BlackPawnDirections implements DirectionsGenerator {
         directions.add(Direction.SOUTHWEST);
         directions.add(Direction.SOUTHEAST);
         directions.add(Direction.SOUTH);
+        directions.add(Direction.SOUTH_SOUTH);
         return directions;
     }
 }

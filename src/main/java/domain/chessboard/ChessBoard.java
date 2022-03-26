@@ -1,11 +1,15 @@
 package domain.chessboard;
 
+import domain.directions.Direction;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
+
+    private static final int BLACK_PAWN_START_LINE = 7;
+    private static final int WHITE_PAWN_START_LINE = 2;
 
     Map<Position, Piece> board;
 
@@ -21,43 +25,87 @@ public class ChessBoard {
         return piece.symbol();
     }
 
-    // 이동 명령 (출발지, 목적지)
-    // 기본
-    public void move(final Position source, final Position target) {
-        // 1. 기물별로 Target이 갈 수 있는지 검증하는 기능
-        validateTargetPosition(source, target);
-        // 2-1. Panw외의 기물들이 Target으로 이동할 수 있는지 검증하는 기능
-        validateTargetRoute(source, target);
-        // 2-2. Pawn이 Target으로 이동할 수 있는지 검증하는 기능
+    public Piece getPieceOf(final Position position) {
+        return board.get(position);
+    }
 
+    public void move(final Position source, final Position target) {
+        validateTargetPosition(source, target);
+        if (isPawn(source)) {
+            validateTargetRouteForPawn(source, target);
+            movePiece(source, target);
+            return;
+        }
+        validateMoveRoute(source, target);
         movePiece(source, target);
     }
 
-    // 1. 기물별로 Target이 갈 수 있는지 검증하는 기능
     private void validateTargetPosition(final Position source, final Position target) {
         if (!board.get(source).isAvailableMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 위치입니다.");
         }
     }
 
-    // 2-1. Panw외의 기물들이 Target으로 이동할 수 있는지 검증하는 기능
-    private void validateTargetRoute(Position source, Position target) {
+    private boolean isPawn(Position source) {
+        return board.get(source).symbol().toLowerCase().equals("p");
+    }
+
+    private void validateTargetRouteForPawn(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
-        // 2-1-1. 목적지의 Piece가 다른 색이거나 공백이어야 한다.
-        if (targetPiece != null && targetPiece.isSamePlayer(sourcePiece)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치는 같은 색 기물이 위치하여 이동할 수 없습니다.");
-        }
-        // 2-1-2. 목적지까지 가는 길은 null 이어야한다.
-        List<Position> availablePosition = sourcePiece.getAvailablePositions(target);
+        Direction moveDirection = sourcePiece.getDirection(target);
 
-        for (Position position : availablePosition) {
-            if (position.equals(target)) {
-                return;
-            }
-            if (board.get(position) != null) {
-                throw new IllegalArgumentException("[ERROR] 선택한 위치는 다른 기물에 의해 이동할 수 없습니다.");
-            }
+        if (isPawnMoveDirection(moveDirection)) {
+            validatePawnMove(target, sourcePiece);
+            return;
+        }
+        validatePawnAttack(sourcePiece, targetPiece);
+    }
+
+    private boolean isPawnMoveDirection(Direction moveDirection) {
+        return moveDirection.equals(Direction.NORTH_NORTH) || moveDirection.equals(
+            Direction.SOUTH_SOUTH) || moveDirection.equals(Direction.NORTH) || moveDirection.equals(
+            Direction.SOUTH);
+    }
+
+    private void validatePawnMove(Position target, Piece sourcePiece) {
+        List<Position> positions = sourcePiece.getAvailablePositions(target);
+        positions.forEach(this::validateNullPosition);
+    }
+
+    private void validatePawnAttack(Piece sourcePiece, Piece targetPiece) {
+        if (targetPiece == null || sourcePiece.isSamePlayer(targetPiece)) {
+            throw new IllegalArgumentException("[ERROR] Pawn은 상대편 말이 있을 경우에만 대각선으로 이동할 수 있습니다.");
+        }
+    }
+
+    private void validateMoveRoute(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+        validateTargetPiece(sourcePiece, targetPiece);
+        validatePieceMove(target, sourcePiece);
+    }
+
+    private void validatePieceMove(Position target, Piece sourcePiece) {
+        List<Position> availablePosition = sourcePiece.getAvailablePositions(target);
+        List<Position> availableRoute = createMoveRouteList(availablePosition, target);
+        availableRoute.forEach(this::validateNullPosition);
+    }
+
+    private List<Position> createMoveRouteList(List<Position> positions, Position target) {
+        int index = positions.indexOf(target);
+        return positions.subList(0, index);
+    }
+
+    private void validateNullPosition(Position position) {
+        if (board.get(position) != null) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치는 다른 기물에 의해 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateTargetPiece(Piece sourcePiece, Piece targetPiece) {
+        if (targetPiece != null && sourcePiece.isSamePlayer(targetPiece)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치는 같은 색 기물이 위치하여 이동할 수 없습니다.");
         }
     }
 
