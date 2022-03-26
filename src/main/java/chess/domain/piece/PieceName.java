@@ -16,6 +16,7 @@ public enum PieceName {
         this.symbol = symbol;
     }
 
+
     public String getSymbol() {
         return symbol;
     }

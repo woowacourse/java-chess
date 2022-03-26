@@ -47,6 +47,5 @@ public class ConsoleApplication {
         if (gameCommand.isEnd()) {
             return;
         }
-//        chessBoard.move(gameCommand.getFromPosition(), gameCommand.getToPosition());
     }
 }

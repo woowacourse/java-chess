@@ -27,12 +27,10 @@ public class Pawn extends Piece {
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         Map<Direction, List<Position>> movable = new HashMap<>();
         if (color == Color.BLACK) {
-            // 아래로
             movable.put(BLACK_DIRECTION, new ArrayList<>());
             putFirstMovablePositionByDirection(movable, position, BLACK_DIRECTION);
         }
         if (color == Color.WHITE) {
-            // 위로
             movable.put(WHITE_DIRECTION, new ArrayList<>());
             putFirstMovablePositionByDirection(movable, position, WHITE_DIRECTION);
         }

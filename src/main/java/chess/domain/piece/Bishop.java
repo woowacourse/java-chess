@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
-    public final static List<Direction> DIRECTIONS = List.of(
+    private final static List<Direction> DIRECTIONS = List.of(
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
     public static List<Position> BLACK_INIT_LOCATIONS = List.of(
