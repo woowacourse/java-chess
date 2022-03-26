@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Color;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,10 @@ public class Board {
 
         squares.replace(to, sourcePiece);
         squares.replace(from, new EmptyPiece());
+    }
+
+    public boolean isSameColor(Position position, Color color) {
+        return findByPosition(position).getColor() == color;
     }
 
     private void validateNotSameColor(Piece sourcePiece, Piece targetPiece) {

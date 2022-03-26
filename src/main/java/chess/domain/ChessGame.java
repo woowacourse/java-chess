@@ -18,9 +18,22 @@ import java.util.Map;
 
 public class ChessGame {
     private final Board board;
+    private Color turn = Color.WHITE;
 
     public ChessGame() {
         this.board = new Board(createBoard());
+    }
+
+    public void play(Position from, Position to) {
+        if (!isThatTurn(from)) {
+            throw new IllegalArgumentException("해당 진영의 차례가 아닙니다");
+        }
+        board.move(from, to);
+        turn = turn.oppositeColor();
+    }
+
+    private boolean isThatTurn(Position position) {
+        return board.isSameColor(position, turn);
     }
 
     private Map<Position, Piece> createBoard() {

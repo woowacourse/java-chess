@@ -1,13 +1,14 @@
 package chess.domain.piece.attribute;
 
 public enum Color {
-    BLACK("B"),
-    WHITE("W"),
-    NONE("N");
+    BLACK,
+    WHITE,
+    NONE;
 
-    private final String value;
-
-    Color(String value) {
-        this.value = value;
+    public Color oppositeColor() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
     }
 }
