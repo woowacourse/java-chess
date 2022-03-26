@@ -32,9 +32,12 @@ class AlternatingTurnDeciderTest {
     @DisplayName("처음 턴은 백이고 다음 턴은 블랙이다, 세번째 턴은 백이다")
     @Test
     void when_first_turn_white_is_ok_then_next_turn_black_is_black() {
-
         assertThat(turnDecider.isCorrectTurn(new Pawn(WHITE))).isTrue();
+
+        turnDecider.nextState();
         assertThat(turnDecider.isCorrectTurn(new Pawn(BLACK))).isTrue();
+
+        turnDecider.nextState();
         assertThat(turnDecider.isCorrectTurn(new Pawn(WHITE))).isTrue();
     }
 }
