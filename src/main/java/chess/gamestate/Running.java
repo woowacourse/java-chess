@@ -6,7 +6,6 @@ import chess.domain.Position;
 import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Running implements GameState {
@@ -41,14 +40,19 @@ public abstract class Running implements GameState {
             OutputView.printChessBoardStatus(chessBoard.calcualteScoreStatus());
             return this;
         }
-
-        Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
-        if (matcher.find()) {
+        if (cmd.isMove()) {
             movePieceByCommand(command);
-            OutputView.printChessBoard(chessBoard.getPieces());
             return changeNextState();
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
+    }
+
+    private void movePieceByCommand(String command) {
+        List<String> values = Arrays.asList(command.split(" "));
+        Position source = position(values.get(START_POSITION_INDEX));
+        Position target = position(values.get(TARGET_POSITION_INDEX));
+        chessBoard.movePiece(source, target, color);
+        OutputView.printChessBoard(chessBoard.getPieces());
     }
 
     private GameState changeNextState() {
@@ -60,13 +64,6 @@ public abstract class Running implements GameState {
             return new End();
         }
         return otherState(this.chessBoard);
-    }
-
-    private void movePieceByCommand(String command) {
-        List<String> values = Arrays.asList(command.split(" "));
-        Position source = position(values.get(START_POSITION_INDEX));
-        Position target = position(values.get(TARGET_POSITION_INDEX));
-        chessBoard.movePiece(source, target, color);
     }
 
     private Position position(String command) {
