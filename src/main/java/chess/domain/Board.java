@@ -5,11 +5,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import chess.domain.direction.DiagonalDirection;
 import chess.domain.direction.Direction;
-import chess.domain.direction.DirectionGenerator;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceInitializer;
 
 public class Board {
 
@@ -23,44 +20,63 @@ public class Board {
 		this.pieces = new HashMap<>(pieces);
 	}
 
+	public Optional<Piece> findPiece(Position position) {
+		return pieces.entrySet().stream()
+			.filter(entry -> entry.getKey().equals(position))
+			.map(Map.Entry::getValue)
+			.findFirst();
+	}
+
 	public void movePiece(Position from, Position to) {
-		Optional<Piece> piece = findPiece(from);
-		validateEmpty(piece);
-		Piece fromPiece = piece.get();
-
-		validateMovable(fromPiece, from, to);
-
-		Direction direction = DirectionGenerator.generateOfWhitePawn(from, to).get();
-
-		piece = findPiece(to);
-		if (piece.isEmpty()) {
-			move(from, to, fromPiece);
-			return;
-		}
-
-		Piece toPiece = piece.get();
-		validateSameColor(fromPiece, toPiece);
-
-		validateDiagonalEnemy(fromPiece, toPiece, direction);
+		Piece fromPiece = checkFromPieceEmpty(from);
+		Direction direction = fromPiece.matchDirection(from, to);
+		searchPiece(from, to, direction);
+		checkTargetPosition(to, fromPiece, direction);
 
 		move(from, to, fromPiece);
 	}
 
-	private void validateEmpty(Optional<Piece> piece) {
+	private Piece checkFromPieceEmpty(Position from) {
+		Optional<Piece> piece = findPiece(from);
 		if (piece.isEmpty()) {
 			throw new NoSuchElementException();
 		}
+		return piece.get();
 	}
 
-	private void validateMovable(Piece piece, Position from, Position to) {
-		if (!piece.isMovable(from, to)) {
+	private void searchPiece(Position from, Position to, Direction direction) {
+		Position step = from.convert(new UnitPosition(0, 0));
+		while (!step.equals(to)) {
+			step = step.convert(direction.getUnitPosition());
+			validateExistPiece(to, step);
+		}
+	}
+
+	private void validateExistPiece(Position to, Position step) {
+		if (findPiece(step).isPresent() && !step.equals(to)) {
 			throw new IllegalArgumentException();
+		}
+	}
+
+	private void checkTargetPosition(Position to, Piece fromPiece, Direction direction) {
+		Optional<Piece> piece;
+		piece = findPiece(to);
+		if (piece.isPresent()) {
+			Piece toPiece = piece.get();
+			validateSameColor(fromPiece, toPiece);
+			checkPieceIsPawn(fromPiece, direction, toPiece);
 		}
 	}
 
 	private void validateSameColor(Piece fromPiece, Piece toPiece) {
 		if (fromPiece.isSameColor(toPiece)) {
 			throw new IllegalArgumentException();
+		}
+	}
+
+	private void checkPieceIsPawn(Piece fromPiece, Direction direction, Piece toPiece) {
+		if (fromPiece.isPawn()) {
+			validateDiagonalEnemy(fromPiece, toPiece, direction);
 		}
 	}
 
@@ -73,12 +89,5 @@ public class Board {
 	private void move(Position from, Position to, Piece piece) {
 		this.pieces.remove(from);
 		this.pieces.put(to, piece);
-	}
-
-	public Optional<Piece> findPiece(Position position) {
-		return pieces.entrySet().stream()
-			.filter(entry -> entry.getKey().equals(position))
-			.map(Map.Entry::getValue)
-			.findFirst();
 	}
 }
