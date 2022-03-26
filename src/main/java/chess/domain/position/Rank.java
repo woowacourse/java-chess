@@ -15,7 +15,7 @@ public enum Rank {
 
     private final int value;
 
-    Rank(int value) {
+    Rank(final int value) {
         this.value = value;
     }
 
@@ -24,6 +24,18 @@ public enum Rank {
             .filter(rank -> rank.getValue() == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다."));
+    }
+
+    public static Rank of(final String value) {
+        return Rank.of(toRankValue(value));
+    }
+
+    private static int toRankValue(final String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다.");
+        }
     }
 
     public int calculateDistance(final Rank rank) {
