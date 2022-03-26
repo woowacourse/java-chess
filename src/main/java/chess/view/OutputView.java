@@ -18,6 +18,9 @@ public class OutputView {
     private static final String MOVE_COMMAND_MESSAGE = "> 체스 말 이동 : move source target (예. move b2 b3)";
     private static final String STATUS_COMMAND_MESSAGE = "> 게임 결과 조회 : status";
 
+    private static final String CHESS_GAME_INIT_MESSAGE = "게임을 초기화합니다.";
+    private static final String FORCE_END_MESSAGE = "게임을 강제 종료하셨습니다.";
+
     private static final String WINNER_ANNOUNCEMENT_TEXT = " 플레이어가 승리하였습니다!" + BLANK_LINE;
     private static final String SCORE_DISPLAY_FORMAT = "%s 플레이어 점수 : %2.1f점" + BLANK_LINE;
 
@@ -29,6 +32,14 @@ public class OutputView {
                 + MOVE_COMMAND_MESSAGE;
 
         print(instructionMessage);
+    }
+
+    public static void printChessGameInitInstruction() {
+        print(CHESS_GAME_INIT_MESSAGE);
+    }
+
+    public static void printForceEndInstruction() {
+        print(FORCE_END_MESSAGE);
     }
 
     public static void printBoard(BoardDto dto) {
