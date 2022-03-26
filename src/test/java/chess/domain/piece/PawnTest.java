@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +23,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
 
         // then
-        assertThat(pawn.movable(to, from)).isTrue();
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
     }
 
     @DisplayName("흰색 팀일 때 이동 불가 확인")
@@ -35,7 +37,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
 
         // then
-        assertThat(pawn.movable(to, from)).isFalse();
+        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
     }
 
     @DisplayName("검은 팀일 때 이동 가능 확인")
@@ -49,7 +51,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
 
         // then
-        assertThat(pawn.movable(to, from)).isTrue();
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
     }
 
     @DisplayName("검은 팀일 때 이동 불가 확인")
@@ -62,7 +64,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
 
         // then
-        assertThat(pawn.movable(to, from)).isFalse();
+        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
     }
 
     @DisplayName("이름")

@@ -28,35 +28,29 @@ public class Board {
         return board;
     }
 
-    public boolean move(Position from, Position to) {
+    public void move(Position from, Position to) {
         Piece piece = board.get(from);
-        // TODO - if piece.movable
-        if (piece.movable(from, to)
-                && validPath(from, to, piece.findDirection(from, to))
-                && validArrive(piece, board.get(to))) {
-            board.put(to, piece);
-            board.remove(from);
-            return true;
-        }
-        return false;
+        validArrive(piece, board.get(to));
+        piece.movable(from, to);
+        validPath(from, to, piece.findDirection(from, to));
+        board.put(to, piece);
+        board.remove(from);
     }
 
-    private boolean validPath(Position from, Position to, Direction direction) {
+    private void validPath(Position from, Position to, Direction direction) {
         Position current = from;
         do {
             current = current.move(direction);
             if (board.get(current) != null) {
-                return false;
+                throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
             }
         } while (!current.equals(to));
-        return true;
     }
 
-    private boolean validArrive(Piece from, Piece to) {
-        if (Objects.isNull(to)) {
-            return true;
+    private void validArrive(Piece from, Piece to) {
+        if (Objects.nonNull(to) && from.isSameTeam(to)) {
+            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
         }
-        return from.isNotSameTeam(to);
     }
 
     private void initBlackPieces() {

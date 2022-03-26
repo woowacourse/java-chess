@@ -12,7 +12,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean movable(Position to, Position from);
+    public abstract void movable(Position to, Position from);
 
     public abstract Direction findDirection(Position from, Position to);
 
@@ -20,7 +20,7 @@ public abstract class Piece {
         return team.convert(name);
     }
 
-    public boolean isNotSameTeam(Piece piece) {
+    public boolean isSameTeam(Piece piece) {
         return piece.team != this.team;
     }
 

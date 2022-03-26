@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +23,7 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
 
         // then
-        assertThat(queen.movable(to, from)).isTrue();
+        assertThatNoException().isThrownBy(() -> queen.movable(to, from));
     }
 
     @DisplayName("이동 불가 확인")
@@ -34,7 +36,7 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
 
         // then
-        assertThat(queen.movable(to, from)).isFalse();
+        assertThatThrownBy(() -> queen.movable(to, from)).hasMessageContaining("Queen");
     }
 
     @DisplayName("이름")

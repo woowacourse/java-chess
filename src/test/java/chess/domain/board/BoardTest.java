@@ -1,6 +1,8 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -25,9 +27,8 @@ public class BoardTest {
     void empty_board() {
         // given
         board = new Board();
-        // when
-        assertThat(board.isEmpty()).isTrue();
         // then
+        assertThat(board.isEmpty()).isTrue();
     }
 
     @DisplayName("체스판이 초기화 되었는지 확인한다.")
@@ -37,7 +38,7 @@ public class BoardTest {
         board = new Board();
         board.initBoard();
 
-        // when
+        // then
         assertThat(board.isEmpty()).isFalse();
     }
 
@@ -55,7 +56,8 @@ public class BoardTest {
         // when
         board.move(fromPawn, toPawn);
 
-        assertThat(board.move(fromQueen, toQueen)).isTrue();
+        // then
+        assertThatNoException().isThrownBy(() -> board.move(fromQueen, toQueen));
     }
 
     @Test
@@ -70,7 +72,8 @@ public class BoardTest {
         // when
         board.move(fromPawn, toPawn);
 
-        assertThat(board.move(fromQueen, toQueen)).isTrue();
+        // then
+        assertThatNoException().isThrownBy(() -> board.move(fromQueen, toQueen));
     }
 
     @DisplayName("이동 경로에 말이 있으면 이동 할 수 없다,.")
@@ -80,11 +83,8 @@ public class BoardTest {
         Position fromQueen = new Position(Column.D, Row.ONE);
         Position toQueen = new Position(Column.E, Row.TWO);
 
-        // when
-        board.move(fromQueen, toQueen);
-
         // then
-        assertThat(board.move(fromQueen, toQueen)).isFalse();
+        assertThatThrownBy(() -> board.move(fromQueen, toQueen)).hasMessageContaining("이동 경로");
     }
 
     @DisplayName("폰의 2칸 이동")
@@ -101,6 +101,6 @@ public class BoardTest {
         board.move(knightFrom, knightTo);
 
         // then
-        assertThat(board.move(pawnFrom, pawnTo)).isFalse();
+        assertThatThrownBy(() -> board.move(pawnFrom, pawnTo)).hasMessageContaining("이동 경로");
     }
 }

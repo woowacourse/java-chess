@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +22,7 @@ class KingTest {
         King king = new King(Team.BLACK);
 
         // then
-        assertThat(king.movable(to, from)).isTrue();
+        assertThatNoException().isThrownBy(() -> king.movable(to, from));
     }
 
     @DisplayName("올바르지 않은 이동")
@@ -33,7 +35,7 @@ class KingTest {
         King king = new King(Team.BLACK);
 
         // then
-        assertThat(king.movable(to, from)).isFalse();
+        assertThatThrownBy(() -> king.movable(to, from)).hasMessageContaining("King");
     }
 
     @DisplayName("이름")
@@ -52,7 +54,6 @@ class KingTest {
     @ParameterizedTest
     @CsvSource(value = {"a2,a1,SOUTH", "a1,a2,NORTH"})
     void findDirection(Position from, Position to, Direction direction) {
-
         // given
         King king = new King(Team.BLACK);
 

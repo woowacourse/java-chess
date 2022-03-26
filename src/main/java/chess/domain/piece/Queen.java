@@ -13,9 +13,11 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean movable(Position from, Position to) {
+    public void movable(Position from, Position to) {
         Direction direction = from.findDirection(to, false);
-        return directions.contains(direction);
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException("Queen 이 움직일 수 있는 방향이 아닙니다.");
+        }
     }
 
     @Override
