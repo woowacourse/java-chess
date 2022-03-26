@@ -1,11 +1,7 @@
 package chess.domain.game;
 
-import chess.controller.api.Request;
-import chess.domain.board.Point;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-
-import java.util.Map;
+import chess.dto.Request;
+import chess.dto.Response;
 
 public class Game {
 
@@ -24,11 +20,7 @@ public class Game {
         return state.isRunnable();
     }
 
-    public Map<Point, Piece> getPointPieces() {
-        return state.getPointPieces();
-    }
-
-    public Color getTurn() {
-        return state.getTurnColor();
+    public Response getResponse() {
+        return state.getResponse();
     }
 }

@@ -5,7 +5,10 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Board {
 
