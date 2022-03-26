@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.Position;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -16,6 +17,8 @@ public abstract class Piece {
     }
 
     abstract public void move(Position position);
+
+    abstract public List<Position> getPositionsInPath(Position position);
 
     public void kill(Piece targetPiece) {
         if (color == targetPiece.color) {
@@ -41,4 +44,10 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public boolean isFriendly(Piece targetPiece) {
+        return this.color == targetPiece.color;
+    }
+
+    abstract public void checkReachable(Position toPosition);
 }

@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.piece.position.Position;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Knight extends Piece {
@@ -34,6 +36,10 @@ public class Knight extends Piece {
         }
     }
 
+    public List<Position> getPositionsInPath(Position toPosition) {
+        return new ArrayList<>();
+    }
+
     private boolean isMovablePosition(Position toPosition) {
         int fileDifference = position.fileDifference(toPosition);
         int rankDifference = position.rankDifference(toPosition);
@@ -63,6 +69,13 @@ public class Knight extends Piece {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;
+    }
+
+    @Override
+    public void checkReachable(Position toPosition) {
+        if (!isMovablePosition(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
     }
 
     @Override

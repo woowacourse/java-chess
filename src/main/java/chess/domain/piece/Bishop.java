@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.Direction;
 import chess.domain.piece.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public class Bishop extends Piece {
@@ -25,11 +27,23 @@ public class Bishop extends Piece {
         move(enemyPosition);
     }
 
+    public void checkReachable(Position toPosition) {
+        if (!position.isDiagonal(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
     private void validateMovable(Position toPosition) {
         if (!position.isDiagonal(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
     }
+
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findDiagonalDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
 
     @Override
     public boolean isPawn() {
@@ -64,7 +78,7 @@ public class Bishop extends Piece {
         }
         Bishop bishop = (Bishop) o;
         return color == bishop.color
-                && position == bishop.position;
+            && position == bishop.position;
     }
 
     @Override
@@ -75,8 +89,8 @@ public class Bishop extends Piece {
     @Override
     public String toString() {
         return "Bishop{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
 }

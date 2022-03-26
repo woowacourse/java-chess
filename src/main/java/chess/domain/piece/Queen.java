@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.Direction;
 import chess.domain.piece.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public class Queen extends Piece {
@@ -25,6 +27,11 @@ public class Queen extends Piece {
         move(enemyPosition);
     }
 
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findAllDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
     private void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
@@ -33,8 +40,8 @@ public class Queen extends Piece {
 
     private boolean isMovablePosition(Position toPosition) {
         return position.isHorizontal(toPosition)
-                || position.isVertical(toPosition)
-                || position.isDiagonal(toPosition);
+            || position.isVertical(toPosition)
+            || position.isDiagonal(toPosition);
     }
 
     @Override
@@ -61,6 +68,13 @@ public class Queen extends Piece {
     }
 
     @Override
+    public void checkReachable(Position toPosition) {
+        if (!isMovablePosition(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -70,7 +84,7 @@ public class Queen extends Piece {
         }
         Queen queen = (Queen) o;
         return color == queen.color
-                && position == queen.position;
+            && position == queen.position;
     }
 
     @Override
@@ -81,9 +95,9 @@ public class Queen extends Piece {
     @Override
     public String toString() {
         return "Queen{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
 }
 

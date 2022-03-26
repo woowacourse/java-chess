@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static chess.domain.piece.position.PositionUtil.isMappedRankIdx;
 
+import chess.domain.piece.direction.Direction;
 import chess.domain.piece.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public final class Pawn extends Piece {
@@ -35,6 +37,11 @@ public final class Pawn extends Piece {
         if (!canMoveForwardOrJump(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
+    }
+
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findCrossDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
     }
 
     private boolean canMoveForwardOrJump(Position toPosition) {
@@ -86,8 +93,8 @@ public final class Pawn extends Piece {
         int rankRawDifference = position.rankRawDifference(enemyPosition);
 
         return position.isDiagonal(enemyPosition) &&
-                fileDifference == 1
-                && rankRawDifference == moveRankDifference(1);
+            fileDifference == 1
+            && rankRawDifference == moveRankDifference(1);
     }
 
     @Override
@@ -114,6 +121,13 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public void checkReachable(Position toPosition) {
+        if (!canMoveForwardOrJump(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -123,7 +137,7 @@ public final class Pawn extends Piece {
         }
         Pawn pawn = (Pawn) o;
         return color == pawn.color
-                && position == pawn.position;
+            && position == pawn.position;
     }
 
     @Override
@@ -134,8 +148,8 @@ public final class Pawn extends Piece {
     @Override
     public String toString() {
         return "Pawn{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
 }

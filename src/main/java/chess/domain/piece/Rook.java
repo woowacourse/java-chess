@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.direction.Direction;
 import chess.domain.piece.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public class Rook extends Piece {
@@ -33,7 +35,13 @@ public class Rook extends Piece {
 
     private boolean isMovablePosition(Position toPosition) {
         return position.isHorizontal(toPosition)
-                || position.isVertical(toPosition);
+            || position.isVertical(toPosition);
+    }
+
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findCrossDirection(position, toPosition);
+        System.out.println(direction);
+        return direction.findPositionsInPath(position, toPosition);
     }
 
     @Override
@@ -60,6 +68,13 @@ public class Rook extends Piece {
     }
 
     @Override
+    public void checkReachable(Position toPosition) {
+        if (!isMovablePosition(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -69,7 +84,7 @@ public class Rook extends Piece {
         }
         Rook rook = (Rook) o;
         return color == rook.color
-                && position == rook.position;
+            && position == rook.position;
     }
 
     @Override
@@ -80,8 +95,8 @@ public class Rook extends Piece {
     @Override
     public String toString() {
         return "Rook{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
 }
