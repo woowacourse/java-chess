@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -57,12 +58,19 @@ public class Board {
         return Optional.ofNullable(value.get(position));
     }
 
-    public boolean executeCommand(Position from, Position to) {
+    // TODO: 실패 원인을 클라이언트가 알 수 있게 개선
+    public MoveResult executeCommand(Position from, Position to, PieceColor pieceColor) {
         AbstractPiece piece = value.get(from);
+        if (Objects.isNull(piece)) {
+            return MoveResult.EMPTY_CELL;
+        }
+        if (!piece.isPieceColor(pieceColor)) {
+            return MoveResult.INVALID_TURN;
+        }
         AbstractPiece otherPiece = value.get(to);
 
         if (!piece.isAbleToJump() && hasObstacle(from, to)) {
-            return false;
+            return MoveResult.HAS_OBSTACLE;
         }
 
         if (otherPiece == null) {
@@ -94,30 +102,43 @@ public class Board {
                 .anyMatch(position -> !Objects.isNull(position));
     }
 
-    private boolean move(Position from, Position to) {
+    private MoveResult move(Position from, Position to) {
         AbstractPiece piece = value.get(from);
         AbstractPiece otherPiece = value.get(to);
 
-        if (piece.isMovable(from, to) && !isExistingSameTeam(piece, otherPiece)) {
-            value.put(to, piece);
-            value.remove(from);
-            return true;
+        if (!piece.isMovable(from, to)) {
+            return MoveResult.INVALID_MOVE_STRATEGY;
         }
 
-        return false;
+        if (isExistingSameTeam(piece, otherPiece)) {
+            return MoveResult.EXISTING_SAME_TEAM;
+        }
+
+        value.put(to, piece);
+        value.remove(from);
+        return MoveResult.MOVE_SUCCESS;
     }
 
-    private boolean attack(Position from, Position to) {
+    private MoveResult attack(Position from, Position to) {
         AbstractPiece piece = value.get(from);
         AbstractPiece otherPiece = value.get(to);
 
-        if (piece.isAbleToAttack(from, to) && !isExistingSameTeam(piece, otherPiece)) {
-            value.put(to, piece);
-            value.remove(from);
-            return true;
+        if (!piece.isAbleToAttack(from, to)) {
+            return MoveResult.INVALID_MOVE_STRATEGY;
         }
 
-        return false;
+        if (isExistingSameTeam(piece, otherPiece)) {
+            return MoveResult.EXISTING_SAME_TEAM;
+        }
+
+        value.put(to, piece);
+        value.remove(from);
+
+        if (otherPiece.isPieceType(PieceType.KING)) {
+            return MoveResult.KILL_KING;
+        }
+
+        return MoveResult.KILL_ENEMY;
     }
 
     private boolean isExistingSameTeam(AbstractPiece piece, AbstractPiece otherPiece) {

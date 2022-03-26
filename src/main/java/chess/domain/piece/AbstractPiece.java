@@ -43,4 +43,8 @@ public abstract class AbstractPiece {
     public boolean isPieceColor(PieceColor pieceColor) {
         return this.pieceColor == pieceColor;
     }
+
+    public boolean isPieceType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
 }
