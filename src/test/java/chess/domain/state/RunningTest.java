@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.command.End;
-import chess.domain.command.Move;
 import chess.domain.command.Start;
 
 public class RunningTest {

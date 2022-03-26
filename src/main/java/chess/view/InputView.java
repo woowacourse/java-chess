@@ -4,51 +4,39 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import chess.domain.Position;
-
 public class InputView {
 
-	private static final String INVALID_INPUT = "start와 end만 가능합니다.";
-	private static final String PREFIX_MOVE = "이동하려면 MOVE를 입력해야 합니다.";
+	private static final String INVALID_INPUT = "유효하지 않은 입력입니다.";
 
 	private static final String START = "start";
 	private static final String END = "end";
 	private static final String MOVE = "move";
 
 	private static final Scanner scanner = new Scanner(System.in);
-	public static final String INVALID_COMMAND = "move a1 a2의 형식으로 입력하세요";
 
-	public String askCommand() {
-		System.out.println("체스 게임을 시작합니다.");
-		System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-
+	public List<String> askCommand() {
 		String input = scanner.nextLine();
 		validateInput(input);
-		return input;
+		return Arrays.asList(input.split(" "));
 	}
 
 	private void validateInput(String input) {
-		if (!input.equalsIgnoreCase(START) && !input.equalsIgnoreCase(END)) {
+		List<String> command = Arrays.asList(input.split(" "));
+		if (command.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+
+		if (!isStartOrEnd(command) && !isMove(command)) {
 			throw new IllegalArgumentException(INVALID_INPUT);
 		}
 	}
 
-	public List<String> askMoveCommand() {
-		String input = scanner.nextLine();
-		validateTwoPositions(input);
-		return Arrays.asList(input.split(" ")).subList(1, 3);
+	private boolean isStartOrEnd(List<String> command) {
+		String headCommand = command.get(0);
+		return (headCommand.equals(START) || headCommand.equals(END)) && command.size() == 1;
 	}
 
-	private void validateTwoPositions(String input) {
-		if (input.startsWith(MOVE)) {
-			throw new IllegalArgumentException(PREFIX_MOVE);
-		}
-		List<String> splitInput = Arrays.asList(input.split(" "));
-		if (splitInput.size() != 3) {
-			throw new IllegalArgumentException(INVALID_COMMAND);
-		}
-		if (splitInput.get(1).length() != 2 || splitInput.get(2).length() != 2) {
-			throw new IllegalArgumentException(INVALID_COMMAND);
-		}
+	private boolean isMove(List<String> command) {
+		return command.get(0).equals(MOVE) && command.size() == 3;
 	}
 }

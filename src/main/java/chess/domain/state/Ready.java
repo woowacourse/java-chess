@@ -9,10 +9,6 @@ import chess.domain.piece.Piece;
 
 public class Ready extends State {
 
-	protected Ready() {
-		this.board = new Board();
-	}
-
 	protected Ready(Map<Position, Piece> board) {
 		this.board = new Board(board);
 	}
@@ -25,6 +21,11 @@ public class Ready extends State {
 		if (command.isStart()) {
 			return new RunningWhiteTurn(board.getPieces());
 		}
-		return new Finished();
+		return new Finished(board.getPieces());
+	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
 	}
 }

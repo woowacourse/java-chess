@@ -3,6 +3,7 @@ package chess.domain.state;
 import java.util.Map;
 
 import chess.domain.Board;
+import chess.domain.PieceInitializer;
 import chess.domain.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
@@ -12,7 +13,7 @@ public abstract class State {
 	protected Board board;
 
 	public static State create() {
-		return new Ready();
+		return new Ready(PieceInitializer.generate());
 	}
 
 	public static State create(Map<Position, Piece> board) {
@@ -24,4 +25,6 @@ public abstract class State {
 	public Board getBoard() {
 		return board;
 	}
+
+	public abstract boolean isFinished();
 }

@@ -16,10 +16,15 @@ public abstract class Running extends State {
 	@Override
 	public abstract State proceed(Command command);
 
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
+
 	protected State checkFinished(Command command) {
 		if (command.isStart()) {
 			throw new IllegalArgumentException();
 		}
-		return new Finished();
+		return new Finished(board.getPieces());
 	}
 }
