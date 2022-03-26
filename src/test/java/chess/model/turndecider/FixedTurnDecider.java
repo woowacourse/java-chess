@@ -6,7 +6,7 @@ public class FixedTurnDecider implements TurnDecider {
 
     private final State currentState = new WhiteState();
 
-    public boolean isCorrectTurn(Piece sourcePiece) {
+    public boolean isTurnOf(Piece Piece) {
         return true;
     }
 

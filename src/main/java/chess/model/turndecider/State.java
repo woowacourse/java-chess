@@ -4,7 +4,7 @@ import chess.model.piece.Piece;
 
 public interface State {
 
-    boolean isSameColor(Piece sourcePiece);
+    boolean isSameColor(Piece Piece);
 
     State nextState();
 }

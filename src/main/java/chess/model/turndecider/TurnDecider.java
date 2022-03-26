@@ -4,7 +4,7 @@ import chess.model.piece.Piece;
 
 public interface TurnDecider {
 
-    boolean isCorrectTurn(Piece sourcePiece);
+    boolean isTurnOf(Piece Piece);
 
     void nextState();
 }

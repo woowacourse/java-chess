@@ -5,11 +5,11 @@ import chess.vo.PieceColor;
 
 public class BlackState implements State {
 
-    private final PieceColor pieceColor = PieceColor.BLACK;
+    private final PieceColor black = PieceColor.BLACK;
 
     @Override
-    public boolean isSameColor(Piece sourcePiece) {
-        return sourcePiece.isSameColor(pieceColor);
+    public boolean isSameColor(Piece Piece) {
+        return Piece.isSameColor(black);
     }
 
     @Override
