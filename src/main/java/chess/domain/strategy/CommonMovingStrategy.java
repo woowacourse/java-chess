@@ -1,6 +1,7 @@
 package chess.domain.strategy;
 
 import chess.domain.ChessBoard;
+import chess.domain.piece.Team;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
 
     protected void checkCommonCondition(Position source, Position target, ChessBoard chessBoard) {
         checkStay(source, target);
+        checkTargetPosition(source, target, chessBoard);
         checkPath(source, target, chessBoard);
     }
 
@@ -32,7 +34,18 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
             paths.add(currentPosition);
         }
 
+        paths.remove(target);
+
         if (chessBoard.isContainPiece(paths)) {
+            throw new IllegalStateException("경로상에 말이 존재합니다.");
+        }
+    }
+
+    private void checkTargetPosition(Position source, Position target, ChessBoard chessBoard) {
+        Team sourceTeam = chessBoard.findTeam(source);
+        Team targetTeam = chessBoard.findTeam(target);
+
+        if (sourceTeam == targetTeam) {
             throw new IllegalStateException("경로상에 말이 존재합니다.");
         }
     }
