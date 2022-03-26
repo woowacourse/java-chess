@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.BasicDirection;
 import chess.domain.direction.DiagonalDirection;
 import chess.domain.direction.Direction;

@@ -2,8 +2,8 @@ package chess.domain.direction;
 
 import java.util.function.BiPredicate;
 
-import chess.domain.Position;
-import chess.domain.UnitPosition;
+import chess.domain.position.Position;
+import chess.domain.position.UnitPosition;
 
 public enum DiagonalDirection implements Direction {
 

@@ -1,10 +1,9 @@
 package chess.domain.direction;
 
 import java.util.function.BiPredicate;
-import java.util.function.IntPredicate;
 
-import chess.domain.Position;
-import chess.domain.UnitPosition;
+import chess.domain.position.Position;
+import chess.domain.position.UnitPosition;
 
 public enum BasicDirection implements Direction {
 

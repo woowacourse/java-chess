@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.RookDirectionStrategy;
 
 public class Rook extends Piece {
+
+	private static final String INVALID_DIRECTION_ROOK = "Rook이 갈 수 없는 방향입니다.";
 
 	private final String symbol;
 
@@ -28,7 +29,7 @@ public class Rook extends Piece {
 	public Direction matchDirection(Position from, Position to) {
 		Optional<? extends Direction> direction = new RookDirectionStrategy().find(from, to);
 		if (direction.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_DIRECTION_ROOK);
 		}
 		return direction.get();
 	}

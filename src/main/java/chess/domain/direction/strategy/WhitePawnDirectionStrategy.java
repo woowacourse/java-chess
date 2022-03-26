@@ -3,7 +3,7 @@ package chess.domain.direction.strategy;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.BasicDirection;
 import chess.domain.direction.DiagonalDirection;
 import chess.domain.direction.Direction;

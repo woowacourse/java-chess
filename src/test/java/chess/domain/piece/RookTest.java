@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.BasicDirection;
 import chess.domain.direction.Direction;
 

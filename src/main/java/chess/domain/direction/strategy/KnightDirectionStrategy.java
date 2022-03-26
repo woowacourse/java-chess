@@ -3,7 +3,7 @@ package chess.domain.direction.strategy;
 import java.util.Arrays;
 import java.util.Optional;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.KnightDirection;
 

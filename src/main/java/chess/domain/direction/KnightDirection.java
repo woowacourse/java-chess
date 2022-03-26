@@ -1,7 +1,7 @@
 package chess.domain.direction;
 
-import chess.domain.Position;
-import chess.domain.UnitPosition;
+import chess.domain.position.Position;
+import chess.domain.position.UnitPosition;
 
 public enum KnightDirection implements Direction {
 	NORTH_NORTH_EAST(new UnitPosition(2, 1)),

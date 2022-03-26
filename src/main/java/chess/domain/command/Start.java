@@ -1,17 +1,14 @@
 package chess.domain.command;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public class Start implements Command {
+
+	private static final String CANNOT_HAVE_POSITION = "END 커맨드에선 위치 정보를 불러올 수 없습니다.";
 
 	@Override
 	public boolean isStart() {
 		return true;
-	}
-
-	@Override
-	public boolean isEnd() {
-		return false;
 	}
 
 	@Override
@@ -21,11 +18,11 @@ public class Start implements Command {
 
 	@Override
 	public Position getFromPosition() {
-		throw new IllegalStateException();
+		throw new IllegalStateException(CANNOT_HAVE_POSITION);
 	}
 
 	@Override
 	public Position getToPosition() {
-		throw new IllegalStateException();
+		throw new IllegalStateException(CANNOT_HAVE_POSITION);
 	}
 }

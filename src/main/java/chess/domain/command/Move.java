@@ -1,8 +1,12 @@
 package chess.domain.command;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public class Move implements Command {
+
+	private static final String INVALID_LENGTH = "좌표는 2글자여야 합니다.";
+	private static final String INVALID_RANK = "행은 a~h여야 합니다.";
+	private static final String INVALID_FILE = "열은 1~8이어야 합니다.";
 
 	private static final String RANKS = "abcdefgh";
 	private static final String FILE = "12345678";
@@ -19,13 +23,13 @@ public class Move implements Command {
 
 	private void validateCommand(String from, String to) {
 		if (!(from.length() == COMMAND_LENGTH) || !(to.length() == COMMAND_LENGTH)) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_LENGTH);
 		}
 		if (!RANKS.contains(from.substring(0, 1)) || !RANKS.contains(to.substring(0, 1))) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_RANK);
 		}
 		if (!FILE.contains(from.substring(1, 2)) || !FILE.contains(to.substring(1, 2))) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_FILE);
 		}
 	}
 
@@ -39,11 +43,6 @@ public class Move implements Command {
 
 	@Override
 	public boolean isStart() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnd() {
 		return false;
 	}
 

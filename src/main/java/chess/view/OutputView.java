@@ -2,8 +2,8 @@ package chess.view;
 
 import java.util.Optional;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import chess.domain.board.Board;
+import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 
 public class OutputView {

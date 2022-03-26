@@ -2,13 +2,13 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.QueenDirectionStrategy;
 
 public class Queen extends Piece {
 
+	public static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
 	private final String symbol;
 
 	private Queen(Color color, String symbol) {
@@ -33,7 +33,7 @@ public class Queen extends Piece {
 	public Direction matchDirection(Position from, Position to) {
 		Optional<? extends Direction> direction = new QueenDirectionStrategy().find(from, to);
 		if (direction.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_DIRECTION_QUEEN);
 		}
 		return direction.get();
 	}

@@ -1,11 +1,10 @@
 package chess.domain.command;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public interface Command {
 
 	boolean isStart();
-	boolean isEnd();
 	boolean isMove();
 	Position getFromPosition();
 	Position getToPosition();

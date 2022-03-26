@@ -1,7 +1,7 @@
 package chess.domain.direction;
 
-import chess.domain.Position;
-import chess.domain.UnitPosition;
+import chess.domain.position.Position;
+import chess.domain.position.UnitPosition;
 
 public interface Direction {
 

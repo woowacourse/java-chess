@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.util.Objects;
 
 public class Position {
 
-	private static final String INVALID_RANGE_ERROR = "유효한 범위가 아닙니다.";
+	private static final String INVALID_RANGE_ERROR = "행과 열은 각각 1이상 8이하의 수여야 합니다.";
+
 	private static final int MIN = 1;
 	private static final int MAX = 8;
 

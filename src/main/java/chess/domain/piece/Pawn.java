@@ -2,8 +2,7 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
-import chess.domain.Color;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.BlackPawnDirectionStrategy;
 import chess.domain.direction.strategy.DirectionStrategy;
@@ -11,8 +10,11 @@ import chess.domain.direction.strategy.WhitePawnDirectionStrategy;
 
 public class Pawn extends Piece {
 
-	public static final int BLACK_PAWN_INITIAL_ROW = 7;
-	public static final int WHITE_PAWN_INITIAL_ROW = 2;
+	private static final String INVALID_DIRECTION_PAWN = "Pawn이 갈 수 없는 방향입니다.";
+	private static final String INVALID_DISTANCE_PAWN = "Pawn이 갈 수 없는 거리입니다.";
+
+	private static final int BLACK_PAWN_INITIAL_ROW = 7;
+	private static final int WHITE_PAWN_INITIAL_ROW = 2;
 
 	private final String symbol;
 
@@ -43,14 +45,14 @@ public class Pawn extends Piece {
 	public Direction matchDirection(Position from, Position to) {
 		Optional<? extends Direction> findDirection = findStrategy().find(from, to);
 		if (findDirection.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(INVALID_DIRECTION_PAWN);
 		}
 
 		Direction direction = findDirection.get();
 		if (checkFirstMove(from, to, direction) || checkMove(from, to, direction)) {
 			return direction;
 		}
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException(INVALID_DISTANCE_PAWN);
 	}
 
 	private boolean checkFirstMove(Position from, Position to, Direction direction) {

@@ -2,8 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 
@@ -20,7 +19,7 @@ public class RunningBlackTurn extends Running {
 		}
 
 		if (board.isWhite(command.getFromPosition())) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
 		}
 
 		board.movePiece(command.getFromPosition(), command.getToPosition());
