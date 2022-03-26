@@ -41,7 +41,7 @@ public class Ready implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
+    public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
         throw new UnsupportedOperationException();
     }
 }

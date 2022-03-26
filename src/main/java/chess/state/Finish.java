@@ -39,7 +39,7 @@ public class Finish implements State {
     }
 
     @Override
-    public double computeScore(Color color) {
-        return chessboard.computeScore(color);
+    public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
+        return chessboard.computeScore(color, minusScoreOfSameColumnPawn);
     }
 }

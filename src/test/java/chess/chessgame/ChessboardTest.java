@@ -94,7 +94,7 @@ public class ChessboardTest {
                 new Knight(Color.BLACK),
                 new Pawn(Color.BLACK)
         )));
-        assertThat(chessboard.computeScore(Color.BLACK))
+        assertThat(chessboard.computeScore(Color.BLACK, 0.5))
                 .isEqualTo(20.5);
     }
 
@@ -106,7 +106,7 @@ public class ChessboardTest {
                 List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE)),
                 List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE))
         ));
-        assertThat(chessboard.computeScore(Color.BLACK))
+        assertThat(chessboard.computeScore(Color.BLACK, 0.5))
                 .isEqualTo(1.5);
     }
 

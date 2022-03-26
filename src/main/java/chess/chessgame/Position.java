@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Position {
+
     private final int fromX;
     private final int fromY;
     private final int toX;

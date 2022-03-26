@@ -99,7 +99,7 @@ public class Chessboard {
         board.get(position.getFromX()).set(position.getFromY(), new Blank());
     }
 
-    public double computeScore(Color color) {
+    public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
         double score = 0;
 
         for (List<Piece> list : board) {
@@ -111,8 +111,8 @@ public class Chessboard {
 
         for (int i = 0; i < board.size(); i++) {
             int duplicatedPawn = computePawnCount(i, color);
-            if (computePawnCount(i, color) >= 2) {
-                score -= 0.5 * duplicatedPawn;
+            if (duplicatedPawn > 1) {
+                score -= minusScoreOfSameColumnPawn * duplicatedPawn;
             }
         }
 

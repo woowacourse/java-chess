@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class PositionParser {
     private static final String WRONG_POSITION = "올바르지 않은 위치 정보입니다.";
-    static Map<Character, Integer> ranks = new HashMap<>();
-    static Map<Character, Integer> files = new HashMap<>();
+
+    private static final Map<Character, Integer> ranks = new HashMap<>();
+    private static final Map<Character, Integer> files = new HashMap<>();
 
     static {
-
         ranks.put('a', 0);
         ranks.put('b', 1);
         ranks.put('c', 2);

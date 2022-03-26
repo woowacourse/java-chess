@@ -3,7 +3,7 @@ package chess.chessgame;
 import chess.piece.Color;
 
 public class Turn {
-    Color color;
+    private Color color;
 
     public Turn() {
         this.color = Color.WHITE;

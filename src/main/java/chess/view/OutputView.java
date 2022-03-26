@@ -22,12 +22,8 @@ public class OutputView {
     }
 
     public static void printBoard(Chessboard chessboard) {
-        List<List<Piece>> board = chessboard.getBoard();
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
-                System.out.print(board.get(i).get(j).getSymbolByColor());
-            }
-            System.out.println();
+        for (List<Piece> line : chessboard.getBoard()) {
+            printBoardLine(line);
         }
         System.out.println();
     }
@@ -37,5 +33,12 @@ public class OutputView {
         System.out.println("Black : " + score.getBlack());
         System.out.println("White : " + score.getWhite());
         System.out.println("승리 : " + score.getWinner());
+    }
+
+    private static void printBoardLine(List<Piece> line) {
+        for (Piece piece : line) {
+            System.out.print(piece.getSymbolByColor());
+        }
+        System.out.println();
     }
 }

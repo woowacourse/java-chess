@@ -17,5 +17,6 @@ public interface State {
 
     boolean isFinished();
 
-    double computeScore(Color color);
+    double computeScore(Color color, double minusScoreOfSameColumnPawn);
+
 }

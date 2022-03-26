@@ -8,8 +8,10 @@ import chess.state.State;
 
 public class ChessGame {
 
-    private State state;
+    private static final double MINUS_SCORE_OF_SAME_COLUMN_PAWN = 0.5;
+
     private final Turn turn;
+    private State state;
 
     public ChessGame() {
         this.state = new Ready();
@@ -37,8 +39,8 @@ public class ChessGame {
     }
 
     public ScoreDto computeScore() {
-        double scoreOfBlack = state.computeScore(Color.BLACK);
-        double scoreOfWhite = state.computeScore(Color.WHITE);
+        double scoreOfBlack = state.computeScore(Color.BLACK, MINUS_SCORE_OF_SAME_COLUMN_PAWN);
+        double scoreOfWhite = state.computeScore(Color.WHITE, MINUS_SCORE_OF_SAME_COLUMN_PAWN);
 
         if (scoreOfBlack > scoreOfWhite) {
             return new ScoreDto(scoreOfBlack, scoreOfWhite, Color.BLACK);
