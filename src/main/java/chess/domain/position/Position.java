@@ -18,13 +18,17 @@ public final class Position {
     }
 
     public static Position of(final String value) {
-        if (value.length() != 2) {
-            throw new IllegalArgumentException("[ERROR] 위치는 열과 행으로 이루어져야 합니다.");
-        }
+        validateValue(value);
         final var column = Column.of(value.substring(0, 1));
         final var row = Row.of(value.substring(1));
 
         return new Position(column, row);
+    }
+
+    private static void validateValue(String value) {
+        if (value.length() != 2) {
+            throw new IllegalArgumentException("[ERROR] 위치는 열과 행으로 이루어져야 합니다.");
+        }
     }
 
     public static Position valueOf(final Column column, final Row row) {

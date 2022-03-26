@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Command {
+
     START("start"),
     END("end"),
     MOVE("move"),
