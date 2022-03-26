@@ -7,15 +7,28 @@ import view.OutputView;
 
 public class ChessController {
 
-    public void play() {
+    public void start() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
-        String input = InputView.responseUserCommand();
+        String input = InputView.startCommand();
 
         if (input.equals(InputView.START)) {
             OutputView.printBoard(chessBoard);
+            play(chessBoard);
         }
+    }
 
-        if (input.equals(InputView.END)) {
+    private void play(ChessBoard chessBoard) {
+        try{
+            String input = InputView.playCommand();
+            if(input.equals(InputView.END)){
+                System.out.println("종료되었습니다.");
+                return;
+            }
+            OutputView.printBoard(chessBoard);
+            play(chessBoard);
+        }catch (IllegalArgumentException exception){
+            System.out.println(exception.getMessage());
+            play(chessBoard);
         }
     }
 }
