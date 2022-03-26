@@ -2,12 +2,14 @@ package chess.view;
 
 import chess.dto.ChessMenDto;
 import chess.dto.ChessPieceDto;
+import chess.dto.ChessStatusDto;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     private static final int ADJUST_ROW_INDEX = 1;
@@ -20,6 +22,8 @@ public class OutputView {
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
     private static final String GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
+    private static final String TEAM_SCORE_DELIMITER = ": ";
+    private static final String WINNER_FORMAT = "우승 팀: %s\n";
 
     static {
         chessPieceNameToCharacter.put("PAWN", 'p');
@@ -89,5 +93,12 @@ public class OutputView {
 
     private static Character chessTypeToUpperCase(Character type) {
         return Character.toUpperCase(type);
+    }
+
+    public static void printStatus(ChessStatusDto chessStatusDto) {
+        for (Entry<String, Double> entry : chessStatusDto.getTeamScore().entrySet()) {
+            System.out.println(entry.getKey() + TEAM_SCORE_DELIMITER + entry.getValue());
+        }
+        System.out.printf(WINNER_FORMAT, chessStatusDto.getWinner());
     }
 }

@@ -33,6 +33,12 @@ public class InputView {
         return !START_COMMAND.equals(input) && !END_COMMAND.equals(input);
     }
 
+    public static List<String> requestMoveOrStatus() {
+        String input = scanner.nextLine();
+        return Arrays.stream(input.split(COMMAND_DELIMITER))
+                .collect(Collectors.toList());
+    }
+
     public static List<String> requestMove() {
         System.out.println();
         String input = scanner.nextLine();
