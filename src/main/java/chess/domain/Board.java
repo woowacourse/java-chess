@@ -9,8 +9,11 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Location, Piece> chessBoard;
@@ -82,5 +85,42 @@ public class Board {
         if (piece.isFirst()) {
             piece.changeNotFirst();
         }
+    }
+
+    public double computeTotalScore(Team team) {
+        double score = 0;
+        for (File file : File.values()) {
+            List<Piece> pieceList = collectFilePieceByTeam(file, team);
+            score += computeScore(pieceList);
+            score -= computeDuplicatePawnScore(pieceList);
+        }
+        return score;
+    }
+
+    private List<Piece> collectFilePieceByTeam(File file, Team team) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> Location.of(file, rank))
+                .map(chessBoard::get)
+                .filter(piece -> piece.isSameTeam(team))
+                .collect(Collectors.toList());
+    }
+
+    private double computeDuplicatePawnScore(List<Piece> pieceList) {
+        if (countPawn(pieceList) > 1) {
+            return countPawn(pieceList) * 0.5;
+        }
+        return 0;
+    }
+
+    private long countPawn(List<Piece> pieceList) {
+        return pieceList.stream()
+                .filter(Piece::isPawn)
+                .count();
+    }
+
+    private double computeScore(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 }

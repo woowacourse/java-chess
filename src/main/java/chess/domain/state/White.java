@@ -3,7 +3,9 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.domain.Location;
 import chess.domain.LocationDiff;
+import chess.domain.TeamScore;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 public class White extends Running {
 
@@ -36,9 +38,16 @@ public class White extends Running {
         getBoard().move(source, target);
 
         if (targetPiece.isKing()) {
+            System.out.println("화이트가 이김");
             return end();
         }
         return new Black(getBoard());
+    }
+
+    @Override
+    public TeamScore getScore() {
+        double score = getBoard().computeTotalScore(Team.WHITE);
+        return new TeamScore(Team.WHITE, score);
     }
 
     private void checkSourceColor(Piece piece) {
@@ -60,8 +69,9 @@ public class White extends Running {
     }
 
     private void checkRoute(Location source, LocationDiff locationDiff) {
+        Location routeLocation = source.copyOf();
         for (int i = 0; i < locationDiff.computeDistance() - 1; i++) {
-            Location routeLocation = source.add(locationDiff.computeDirection());
+            routeLocation = routeLocation.add(locationDiff.computeDirection());
             if (!getBoard().isEmpty(routeLocation)) {
                 throw new IllegalArgumentException("[ERROR] 해당 경로를 지나갈 수 없습니다. ");
             }

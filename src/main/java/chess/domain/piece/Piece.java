@@ -43,6 +43,10 @@ public abstract class Piece {
         return getClass() == King.class;
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
     public boolean isFirst() {
         return isFirst;
     }
@@ -54,4 +58,6 @@ public abstract class Piece {
     public abstract boolean isMovableDirection(Direction direction);
 
     public abstract boolean isMovableDistance(LocationDiff locationDiff);
+
+    public abstract double getScore();
 }

@@ -14,6 +14,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -64,5 +65,12 @@ public class BoardTest {
                 Arguments.arguments(G, SEVEN, new Pawn(BLACK)),
                 Arguments.arguments(H, SEVEN, new Pawn(BLACK))
         );
+    }
+
+    @Test
+    @DisplayName("점수 계산하는 로직 확인")
+    void getScore() {
+        Board board = new Board();
+        assertThat(board.computeTotalScore(WHITE)).isEqualTo(38);
     }
 }

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum GameCommand {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
 
@@ -32,7 +33,7 @@ public enum GameCommand {
         return GameCommand.of(command) == GameCommand.MOVE;
     }
 
-    private String getCommand() {
-        return command;
+    public static boolean isStatus(String command) {
+        return GameCommand.of(command) == STATUS;
     }
 }

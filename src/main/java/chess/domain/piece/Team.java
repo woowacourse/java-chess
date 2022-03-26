@@ -1,7 +1,13 @@
 package chess.domain.piece;
 
 public enum Team {
-    BLACK, WHITE, NONE;
+    BLACK("Black"), WHITE("White"), NONE("None");
+
+    private final String name;
+
+    Team(String name) {
+        this.name = name;
+    }
 
     public boolean isBlack() {
         return this == BLACK;
@@ -13,5 +19,9 @@ public enum Team {
 
     public boolean isNone() {
         return this == NONE;
+    }
+
+    public String getTeamName() {
+        return name;
     }
 }
