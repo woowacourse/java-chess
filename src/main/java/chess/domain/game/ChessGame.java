@@ -5,6 +5,7 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Running;
+import chess.domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,14 @@ public class ChessGame {
 
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    public double calculateScore(Color color) {
+        return board.calculateScore(color);
+    }
+
+    public Color judgeWinner() {
+        return board.getWinnerTeamColor();
     }
 
     public Board getBoard() {

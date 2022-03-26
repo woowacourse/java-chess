@@ -6,7 +6,8 @@ public enum InputOption {
 
     START("^start$"),
     END("^end$"),
-    MOVE("^move\\s[a-h][1-8]\\s[a-h][1-8]$");
+    MOVE("^move\\s[a-h][1-8]\\s[a-h][1-8]$"),
+    STATUS("^status$");
 
     private static final String NOT_EXIST_OPTION = "[ERROR] 지원하지 않는 옵션입니다";
 
