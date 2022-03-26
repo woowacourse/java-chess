@@ -17,6 +17,12 @@ public enum Color {
         return this == BLACK;
     }
 
+    public Color nextTurn() {
+        if (this.isWhite()) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
 
 
