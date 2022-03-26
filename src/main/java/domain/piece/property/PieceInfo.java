@@ -1,6 +1,6 @@
 package domain.piece.property;
 
-public class PieceInfo {
+public final class PieceInfo {
 
     private Team team;
     private PieceSymbol pieceSymbol;
