@@ -2,6 +2,7 @@ package domain.piece.unit;
 
 import static domain.utils.Direction.allDirections;
 
+import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.Team;
 import domain.utils.Direction;
@@ -15,8 +16,8 @@ public final class King extends SpecificMovablePiece {
         directions = allDirections();
     }
 
-    public King(final Team Team) {
-        super(Team, PieceSymbol.King);
+    public King(final Team team) {
+        super(new PieceInfo(team, PieceSymbol.King));
     }
 
     @Override

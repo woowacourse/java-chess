@@ -1,7 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.PieceSymbol;
-import domain.piece.property.Team;
+import domain.piece.property.PieceInfo;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
@@ -11,8 +10,8 @@ import java.util.List;
 
 public abstract class SpecificMovablePiece extends AbstractPiece {
 
-    public SpecificMovablePiece(final Team Team, final PieceSymbol unit) {
-        super(Team, unit);
+    public SpecificMovablePiece(final PieceInfo pieceInfo) {
+        super(pieceInfo);
     }
 
     @Override

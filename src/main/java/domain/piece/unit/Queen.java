@@ -2,6 +2,7 @@ package domain.piece.unit;
 
 import static domain.utils.Direction.allDirections;
 
+import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.Team;
 import domain.utils.Direction;
@@ -15,8 +16,8 @@ public final class Queen extends CommonMovablePiece {
         directions = allDirections();
     }
 
-    public Queen(final Team Team) {
-        super(Team, PieceSymbol.Queen);
+    public Queen(final Team team) {
+        super(new PieceInfo(team, PieceSymbol.Queen));
     }
 
     @Override

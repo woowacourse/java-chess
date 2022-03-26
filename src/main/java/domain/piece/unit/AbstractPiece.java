@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import domain.piece.property.PieceSymbol;
+import domain.piece.property.PieceInfo;
 import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
@@ -12,22 +12,20 @@ import java.util.Map;
 
 public abstract class AbstractPiece implements Piece {
 
-    private final Team Team;
-    private final PieceSymbol unit;
+    private final PieceInfo pieceInfo;
 
     protected Map<Direction, List<Position>> directionalPositions;
 
-    public AbstractPiece(final Team Team, final PieceSymbol unit) {
-        this.Team = Team;
-        this.unit = unit;
+    public AbstractPiece(final PieceInfo pieceInfo) {
+        this.pieceInfo = pieceInfo;
     }
 
     protected boolean checkOverRange(final int x, final int y) {
         return XPosition.checkRange(x) && YPosition.checkRange(y);
     }
 
-    public boolean checkSameTeam(final Team Team) {
-        return this.Team == Team;
+    public boolean checkSameTeam(final Team team) {
+        return pieceInfo.checkSameTeam(team);
     }
 
     public boolean availableMove(final Position source, final Position target) {
@@ -67,20 +65,20 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public String getSymbolByTeam() {
-        return unit.symbol(Team);
+        return pieceInfo.getSymbolByTeam();
     }
 
     public String symbol() {
-        return unit.symbol();
+        return pieceInfo.symbol();
     }
 
     protected abstract List<Direction> directions();
 
     @Override
     public String toString() {
-        return "Piece{" +
-                "Team=" + Team +
-                ", unit=" + unit +
+        return "AbstractPiece{" +
+                "pieceInfo=" + pieceInfo +
+                ", directionalPositions=" + directionalPositions +
                 '}';
     }
 }

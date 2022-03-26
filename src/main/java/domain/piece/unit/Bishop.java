@@ -2,6 +2,7 @@ package domain.piece.unit;
 
 import static domain.utils.Direction.*;
 
+import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceSymbol;
 import domain.piece.property.Team;
 import domain.utils.Direction;
@@ -15,8 +16,8 @@ public final class Bishop extends CommonMovablePiece {
         directions = crossDirections();
     }
 
-    public Bishop(final Team Team) {
-        super(Team, PieceSymbol.Bishop);
+    public Bishop(final Team team) {
+        super(new PieceInfo(team, PieceSymbol.Bishop));
     }
 
     @Override
