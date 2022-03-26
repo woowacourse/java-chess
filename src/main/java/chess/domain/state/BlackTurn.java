@@ -43,6 +43,6 @@ public class BlackTurn implements State {
 
     @Override
     public ChessBoard chessBoard() {
-        return null;
+        return chessBoard;
     }
 }

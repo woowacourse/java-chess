@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.view.Command;
+import chess.controller.Command;
 import java.util.List;
 
 public class CommandRequest {
