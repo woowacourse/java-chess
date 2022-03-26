@@ -12,6 +12,7 @@ public final class Board {
     private static final double PAWN_PENALTY_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
+    private Color turn = Color.WHITE;
 
     public Board(final Initiator initiator) {
         pieces = initiator.initiate();
@@ -36,11 +37,19 @@ public final class Board {
     }
 
     private void movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
+        validateCorrectTurn(piece);
         if (piece.isMovable(sourcePosition, targetPosition)) {
             checkPawnMovement(sourcePosition, targetPosition, piece);
             validatePathEmpty(sourcePosition, targetPosition);
             pieces.remove(sourcePosition);
             pieces.put(targetPosition, piece);
+            turn = Color.opposite(turn);
+        }
+    }
+
+    private void validateCorrectTurn(Piece piece) {
+        if (!piece.isSameColor(turn)) {
+            throw new IllegalArgumentException("[ERROR] 지금은 " + turn.value() + "의 턴입니다.");
         }
     }
 

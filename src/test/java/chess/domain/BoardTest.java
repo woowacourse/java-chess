@@ -340,4 +340,24 @@ class BoardTest {
 
         assertThat(board.calculateScore(Color.WHITE)).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("수를 번갈아가면서 두어야 한다")
+    void turnNotChanged_throwException() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new King()));
+            pieces.put(Position.of("a1"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.of("a5"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b4"), new Piece(Color.WHITE, new Pawn()));
+            return pieces;
+        });
+
+        board.move("a5", "a6");
+        assertThatThrownBy(() -> board.move("a4", "a5"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 지금은 검은말의 턴입니다.");
+    }
 }
