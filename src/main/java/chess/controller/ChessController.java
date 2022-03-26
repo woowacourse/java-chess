@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -37,8 +38,20 @@ public class ChessController {
 
         outputView.printAnnounce();
 
+        play(chessGame);
+
+        Map<Team, Double> teamScores = chessGame.calculateResult();
+
+        outputView.printResult(teamScores);
+    }
+
+    private void play(ChessGame chessGame) {
         while (true) {
             Command command = Command.from(inputView.inputCommand());
+
+            if (chessGame.isEnd()) {
+                break;
+            }
 
             chessGame.progress(command);
 
