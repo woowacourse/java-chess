@@ -3,27 +3,19 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Queen implements Piece {
+public class Queen extends Piece {
 
     private static final String name = "Q";
-
-    private final List<Direction> directions;
-    private final Team team;
+    private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public Queen(Team team) {
-        this.team = team;
-        directions = Direction.pullAllBasicDirections();
+        super(name, team);
     }
 
     @Override
     public boolean movable(Position from, Position to) {
         Direction direction = from.findDirection(to, false);
         return directions.contains(direction);
-    }
-
-    @Override
-    public String getName() {
-        return team.convert(name);
     }
 
     @Override

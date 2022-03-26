@@ -3,27 +3,19 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Rook implements Piece {
+public class Rook extends Piece {
 
     private static final String name = "R";
-
-    private final List<Direction> directions;
-    private final Team team;
+    private static final List<Direction> directions = Direction.pullStraightDirections();
 
     public Rook(Team team) {
-        this.team = team;
-        directions = Direction.pullStraightDirections();
+        super(name, team);
     }
 
     @Override
     public boolean movable(Position from, Position to) {
         Direction gap = from.findDirection(to, false);
         return directions.contains(gap);
-    }
-
-    @Override
-    public String getName() {
-        return team.convert(name);
     }
 
     @Override

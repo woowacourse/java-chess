@@ -11,15 +11,14 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
 
-public class Pawn implements Piece {
+public class Pawn extends Piece {
 
     private static final String name = "P";
 
     private final List<Direction> directions;
-    private final Team team;
 
     public Pawn(Team team) {
-        this.team = team;
+        super(name, team);
         directions = selectDirections(team);
     }
 
@@ -44,17 +43,12 @@ public class Pawn implements Piece {
         return directions.contains(direction);
     }
 
-    private boolean isWhiteStart(Position position) { // 여기 컬럼 반대로 되어있었음
-        return team == WHITE && position.isSameColumn(Row.TWO);
+    private boolean isWhiteStart(Position position) {
+        return super.isSameTeam(WHITE) && position.isSameColumn(Row.TWO);
     }
 
-    private boolean isBlackStart(Position position) { // 여기 커럼 반대로 되어있었음
-        return (team == BLACK && position.isSameColumn(Row.SEVEN));
-    }
-
-    @Override
-    public String getName() {
-        return team.convert(name);
+    private boolean isBlackStart(Position position) {
+        return super.isSameTeam(BLACK) && position.isSameColumn(Row.SEVEN);
     }
 
     @Override

@@ -14,6 +14,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
     private final Map<Position, Piece> board = new HashMap<>();
@@ -23,7 +24,6 @@ public class Board {
         initBlackPieces();
     }
 
-
     public Map<Position, Piece> getBoard() {
         return board;
     }
@@ -31,14 +31,15 @@ public class Board {
     public boolean move(Position from, Position to) {
         Piece piece = board.get(from);
         // TODO - if piece.movable
-        if (piece.movable(from, to) && validPath(from, to, piece.findDirection(from, to))) {
+        if (piece.movable(from, to)
+                && validPath(from, to, piece.findDirection(from, to))
+                && validArrive(piece, board.get(to))) {
             board.put(to, piece);
             board.remove(from);
             return true;
         }
         return false;
     }
-
 
     private boolean validPath(Position from, Position to, Direction direction) {
         Position current = from;
@@ -49,6 +50,13 @@ public class Board {
             }
         } while (!current.equals(to));
         return true;
+    }
+
+    private boolean validArrive(Piece from, Piece to) {
+        if (Objects.isNull(to)) {
+            return true;
+        }
+        return from.isNotSameTeam(to);
     }
 
     private void initBlackPieces() {
