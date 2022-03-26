@@ -1,18 +1,23 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.Board;
 import chess.model.GameStartCommand;
 import java.util.List;
 
-public interface Status {
+public class Status extends Running {
 
-//    private final Board board;
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 
-    Status changeStatus(GameStartCommand command);
+    @Override
+    public GameState execute(ChessService service, List<String> sqaures) {
+        return this;
+    }
 
-    boolean isEnd();
-
-    Status execute(ChessService service, List<String> sqaures);
-
+    @Override
+    public boolean isStatus() {
+        return true;
+    }
 }

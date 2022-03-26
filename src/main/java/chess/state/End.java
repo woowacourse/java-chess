@@ -1,14 +1,13 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.Board;
 import chess.model.GameStartCommand;
 import java.util.List;
 
-public class End implements Status {
+public class End implements GameState {
 
     @Override
-    public Status changeStatus(GameStartCommand command) {
+    public GameState changeStatus(GameStartCommand command) {
         throw new IllegalArgumentException();
     }
 
@@ -18,7 +17,12 @@ public class End implements Status {
     }
 
     @Override
-    public Status execute(ChessService service, List<String> squares) {
+    public GameState execute(ChessService service, List<String> squares) {
         return this;
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
     }
 }

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum GameStartCommand {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String commandLine;
 
@@ -30,5 +31,9 @@ public enum GameStartCommand {
 
     public boolean isMove() {
         return this.equals(MOVE);
+    }
+
+    public boolean isStatus() {
+        return this.equals(STATUS);
     }
 }

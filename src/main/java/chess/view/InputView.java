@@ -19,7 +19,7 @@ public final class InputView {
     }
 
     private static void checkCommandValue(final String inputCommand) {
-        if (!inputCommand.equals("start") && !inputCommand.equals("end") && !inputCommand.contains("move")) {
+        if (!inputCommand.equals("start") && !inputCommand.equals("end") && !inputCommand.contains("move") && !inputCommand.contains("status")) {
             throw new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", inputCommand));
         }
     }

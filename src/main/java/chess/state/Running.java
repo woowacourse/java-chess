@@ -1,17 +1,19 @@
 package chess.state;
 
-import chess.model.Board;
 import chess.model.GameStartCommand;
 
-public abstract class Running implements Status {
+public abstract class Running implements GameState {
 
     @Override
-    public Status changeStatus(GameStartCommand command) {
+    public GameState changeStatus(GameStartCommand command) {
         if (command.isStart()) {
             return new Start();
         }
         if (command.isMove()) {
             return new Move();
+        }
+        if (command.isStatus()) {
+            return new Status();
         }
         return new End();
     }

@@ -1,15 +1,14 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.Board;
 import chess.model.GameStartCommand;
 import java.util.List;
 
 
-public class Ready implements Status {
+public class Ready implements GameState {
 
     @Override
-    public Status changeStatus(GameStartCommand command) {
+    public GameState changeStatus(GameStartCommand command) {
         if (command.isStart()) {
             return new Start();
         }
@@ -24,7 +23,12 @@ public class Ready implements Status {
         return false;
     }
 
-    public Status execute(ChessService service, List<String> sqaures) {
+    public GameState execute(ChessService service, List<String> sqaures) {
         return this;
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
     }
 }

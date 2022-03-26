@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.List;
+
 public enum Color {
 
     WHITE, BLACK, NOTHING;
@@ -24,5 +26,9 @@ public enum Color {
 
     public boolean isEmpty() {
         return this.equals(Color.NOTHING);
+    }
+
+    public static List<Color> getPlayerColors() {
+        return List.of(WHITE, BLACK);
     }
 }
