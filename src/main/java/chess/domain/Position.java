@@ -11,17 +11,12 @@ public class Position {
     private static final char MIN_ROW = '1';
     private static final char MAX_ROW = '8';
 
+    private static final int POSITION_FORMAT_LENGTH = 2;
+
     private static final List<Position> CACHE = createCache();
 
     private final char column;
     private final char row;
-
-    private Position(char column, char row) {
-        validateColumnInRange(column);
-        validateRowInRange(row);
-        this.column = column;
-        this.row = row;
-    }
 
     private static List<Position> createCache() {
         List<Position> cache = new ArrayList<>();
@@ -37,11 +32,11 @@ public class Position {
         }
     }
 
-    public static Position of(char column, char row) {
-        return CACHE.stream()
-                .filter(position -> position.column == column && position.row == row)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Position범위에 맞지 않는 입력값입니다."));
+    private Position(char column, char row) {
+        validateColumnInRange(column);
+        validateRowInRange(row);
+        this.column = column;
+        this.row = row;
     }
 
     private void validateColumnInRange(char column) {
@@ -64,6 +59,20 @@ public class Position {
 
     private boolean isRowInRange(char row) {
         return MIN_ROW <= row && row <= MAX_ROW;
+    }
+
+    public static Position of(char column, char row) {
+        return CACHE.stream()
+                .filter(position -> position.column == column && position.row == row)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Position범위에 맞지 않는 입력값입니다."));
+    }
+
+    public static Position from(String position) {
+        if (position.length() != POSITION_FORMAT_LENGTH) {
+            throw new IllegalArgumentException(String.format("Position format은 %d글자입니다.", POSITION_FORMAT_LENGTH));
+        }
+        return Position.of(position.charAt(0), position.charAt(1));
     }
 
     public boolean equalsColumnOrRow(Position position) {

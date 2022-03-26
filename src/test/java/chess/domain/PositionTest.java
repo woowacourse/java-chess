@@ -21,6 +21,21 @@ class PositionTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = {"a", "aa1"})
+    @DisplayName("from 2글자 입력 아닐때 예외발생")
+    void createPositionFormatException(String position) {
+        assertThatThrownBy(() -> Position.from(position))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Position format은 2글자입니다.");
+    }
+
+    @Test
+    @DisplayName("2글자 position받아 생성")
+    void createPositionFormat() {
+        assertThat(Position.from("a1")).isEqualTo(Position.of('a', '1'));
+    }
+
+    @ParameterizedTest
     @CsvSource(value = {"b,2,false", "b,1,true", "a,2,true"})
     @DisplayName("행 또는 열 일치 여부 확인")
     void equalsColumnOrRow(char row, char col, boolean expected) {
