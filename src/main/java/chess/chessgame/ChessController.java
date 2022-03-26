@@ -1,7 +1,5 @@
-package chess;
+package chess.chessgame;
 
-import chess.chessgame.ChessGame;
-import chess.chessgame.Position;
 import chess.piece.Color;
 import chess.view.OutputView;
 
@@ -29,18 +27,23 @@ public class ChessController {
         if (command.equals("start")) {
             chessGame.start();
             OutputView.printBoard(chessGame.getChessBoard());
+            return;
         }
         if (command.equals("end")) {
             chessGame.end();
             OutputView.printBoard(chessGame.getChessBoard());
+            return;
         }
         if (command.equals("move")) {
-            chessGame.move(new Position(commands.nextToken(),commands.nextToken()));
+            chessGame.move(new Position(commands.nextToken(), commands.nextToken()));
             OutputView.printBoard(chessGame.getChessBoard());
+            return;
         }
         if (command.equals("status")) {
             OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            return;
         }
+        throw new IllegalArgumentException("올바른 명령어를 입력해주세요");
     }
 
 }

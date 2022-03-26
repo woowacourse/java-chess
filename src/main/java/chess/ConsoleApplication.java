@@ -1,5 +1,7 @@
 package chess;
 
+import chess.chessgame.ChessController;
+
 import static chess.view.OutputView.printError;
 
 public class ConsoleApplication {
