@@ -18,6 +18,9 @@ import java.util.Map;
 
 public class ChessBoardFactory {
 
+    private ChessBoardFactory() {
+    }
+
     public static ChessBoard createChessBoard() {
         final Map<Position, ChessPiece> map = new HashMap<>();
 
