@@ -6,7 +6,7 @@ import chess.domain.state.State;
 
 import java.util.Map;
 
-public final class Start extends Command {
+public class Start extends Command {
 
     private static final String MOVE = "move";
     private static final String DELIMITER = " ";
@@ -15,7 +15,7 @@ public final class Start extends Command {
     private static final int DESTINATION_INDEX = 2;
     private static final int MOVE_COMMAND_SIZE = 3;
 
-    private State state;
+    protected State state;
 
     public Start(State state) {
         this.state = state;
@@ -24,6 +24,11 @@ public final class Start extends Command {
     @Override
     public boolean isStart() {
         return true;
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
     }
 
     @Override
@@ -38,11 +43,20 @@ public final class Start extends Command {
             return new End();
         }
 
+        if (command.equals("status")) {
+            return new Status(state);
+        }
+
         throw new IllegalArgumentException(MOVE + " 혹은 " + END + "를 입력해주세요");
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
+    }
+
+    @Override
+    public StatusResult getStatus() {
+        throw new UnsupportedOperationException();
     }
 }

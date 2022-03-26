@@ -12,12 +12,22 @@ public final class End extends Command {
     }
 
     @Override
+    public boolean isStatus() {
+        return false;
+    }
+
+    @Override
     public Command execute(String command) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StatusResult getStatus() {
         throw new UnsupportedOperationException();
     }
 }

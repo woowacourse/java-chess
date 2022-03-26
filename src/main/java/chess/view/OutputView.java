@@ -2,7 +2,9 @@ package chess.view;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
+import chess.domain.board.Result;
 import chess.domain.board.Row;
+import chess.domain.command.StatusResult;
 import chess.domain.piece.Piece;
 
 import java.util.Map;
@@ -25,5 +27,24 @@ public class OutputView {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public static void printStatus(StatusResult status) {
+        System.out.println("블랙 진영의 점수는 " + status.getBlackScore() + "입니다.");
+        System.out.println("화이트 진영의 점수는 " + status.getWhiteScore() + "입니다.");
+
+        printWinner(status.getResult());
+    }
+
+    private static void printWinner(Result result) {
+        if (result.equals(Result.BLACK_WIN)) {
+            System.out.println("블랙 진영이 이기고 있습니다.");
+        }
+        if (result.equals(Result.WHITE_WIN)) {
+            System.out.println("화이트 진영이 이기고 있습니다.");
+        }
+        if (result.equals(Result.DRAW)) {
+            System.out.println("무승부입니다.");
+        }
     }
 }

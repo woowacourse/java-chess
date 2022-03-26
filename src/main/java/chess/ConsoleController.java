@@ -18,6 +18,9 @@ public class ConsoleController {
             Map<Position, Piece> board = command.getBoard();
             OutputView.printBoard(board);
             command = inputCommandAndExecute(command);
+            if (command.isStatus()) {
+                OutputView.printStatus(command.getStatus());
+            }
         }
     }
 

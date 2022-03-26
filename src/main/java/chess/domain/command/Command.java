@@ -24,7 +24,11 @@ public abstract class Command {
 
     public abstract boolean isStart();
 
+    public abstract boolean isStatus();
+
     public abstract Command execute(String command);
 
     public abstract Map<Position, Piece> getBoard();
+
+    public abstract StatusResult getStatus();
 }
