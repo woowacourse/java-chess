@@ -18,4 +18,9 @@ public class Knight extends Piece {
         int width = fromPosition.getAbscissaDifference(toPosition);
         return Math.pow(height, 2) + Math.pow(width, 2) == 5;
     }
+
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
 }

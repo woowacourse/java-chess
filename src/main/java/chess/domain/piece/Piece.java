@@ -19,4 +19,10 @@ public abstract class Piece {
     public boolean isKing() {
         return false;
     }
+
+    public boolean isKnight() {return false;}
+
+    public boolean isSameColor(Piece piece) {
+        return color == piece.color;
+    }
 }

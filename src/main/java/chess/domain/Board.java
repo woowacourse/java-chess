@@ -9,6 +9,7 @@ public class Board {
     private static final String NOT_EXIST_PIECE = "[ERROR] 입력한 위치에 말이 존재하지 않습니다.";
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
+    private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
 
     private final Map<Position, Piece> board;
 
@@ -24,7 +25,10 @@ public class Board {
         validateExistPiecePosition(fromPosition);
         Piece piece = board.get(fromPosition);
         validateMovablePosition(piece, fromPosition, toPosition);
-        checkRoute(fromPosition, toPosition);
+        if (!piece.isKnight()) {
+            checkRoute(fromPosition, toPosition);
+        }
+        validateMyTeam(piece,toPosition);
         board.remove(fromPosition);
         board.put(toPosition, piece);
     }
@@ -32,7 +36,7 @@ public class Board {
     private void checkRoute(Position fromPosition, Position toPosition) {
         Position initialPosition = fromPosition;
         Direction direction = Direction.judge(fromPosition, toPosition);
-        while(initialPosition!= toPosition) {
+        while (initialPosition != toPosition) {
             initialPosition = Direction.step(initialPosition, direction);
             validateRoute(initialPosition);
         }
@@ -53,6 +57,15 @@ public class Board {
     private void validateRoute(Position position) {
         if (board.containsKey(position)) {
             throw new IllegalArgumentException(NON_MOVABLE_ROUTE);
+        }
+    }
+
+    private void validateMyTeam(Piece piece, Position toPosition) {
+        if (!board.containsKey(toPosition)) {
+            return;
+        }
+        if (piece.isSameColor(board.get(toPosition))) {
+            throw new IllegalArgumentException(NON_CATCHABLE_PIECE);
         }
     }
 
