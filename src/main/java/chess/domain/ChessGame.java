@@ -24,7 +24,7 @@ public class ChessGame {
 
     private final ChessMen blackChessMen;
     private final ChessMen whiteChessMen;
-    private final Team turn;
+    private Team turn;
 
     private ChessGame(ChessMen blackChessMen, ChessMen whiteChessMen) {
         this.blackChessMen = blackChessMen;
@@ -103,6 +103,7 @@ public class ChessGame {
         }
 
         chessPiece.move(targetPosition);
+        turn = turn.reverse();
     }
 
     private ChessMen getMyTeam() {
