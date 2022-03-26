@@ -16,4 +16,14 @@ public final class Rook extends Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    @Override
+    public double getScore() {
+        return 5;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

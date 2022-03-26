@@ -16,4 +16,14 @@ public final class Queen extends Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    @Override
+    public double getScore() {
+        return 9;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

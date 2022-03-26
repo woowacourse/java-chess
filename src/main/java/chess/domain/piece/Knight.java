@@ -17,4 +17,14 @@ public final class Knight extends Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    @Override
+    public double getScore() {
+        return 2.5;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

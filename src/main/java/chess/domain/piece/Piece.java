@@ -22,4 +22,8 @@ public abstract class Piece {
     public Team getTeam() {
         return team;
     }
+
+    public abstract double getScore();
+
+    public abstract boolean isPawn();
 }

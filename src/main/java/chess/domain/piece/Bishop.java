@@ -14,4 +14,14 @@ public final class Bishop extends Piece {
     public String getSymbol() {
         return symbol;
     }
+
+    @Override
+    public double getScore() {
+        return 3;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
