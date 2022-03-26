@@ -20,7 +20,7 @@ public final class King extends ChessPiece {
     }
 
     private King(final Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     public static King from(final Color color) {
@@ -35,5 +35,10 @@ public final class King extends ChessPiece {
         if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public double value() {
+        return VALUE;
     }
 }

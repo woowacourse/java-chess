@@ -23,7 +23,7 @@ public final class Pawn extends ChessPiece {
     }
 
     private Pawn(final Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     public static Pawn from(final Color color) {
@@ -40,11 +40,11 @@ public final class Pawn extends ChessPiece {
     @Override
     public void checkMovablePosition(final Position from, final Position to) {
         if (from.isSameRank(to)) {
-            if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
+            if (color.isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
                 return;
             }
 
-            if (!isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
+            if (!color.isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
                 return;
             }
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
@@ -68,14 +68,19 @@ public final class Pawn extends ChessPiece {
     public void checkCrossMove(final Position from, final Position to) {
         final int fileDistance = from.fileDistance(to);
         if (Math.abs(from.rankDistance(to)) == 1) {
-            if (isBlack() && fileDistance == 1) {
+            if (color.isBlack() && fileDistance == 1) {
                 return;
             }
-            if (!isBlack() && fileDistance == -1) {
+            if (!color.isBlack() && fileDistance == -1) {
                 return;
             }
         }
 
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+    }
+
+    @Override
+    public double value() {
+        return VALUE;
     }
 }

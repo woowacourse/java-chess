@@ -76,14 +76,7 @@ public class Position {
     }
 
     private int toGap(final int distance) {
-        if (distance > 0) {
-            return 1;
-        }
-
-        if (distance < 0) {
-            return -1;
-        }
-        return 0;
+        return Integer.compare(distance, 0);
     }
 
     public Position toNextPosition(final Direction direction) {

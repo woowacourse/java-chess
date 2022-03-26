@@ -19,7 +19,7 @@ public class ChessBoard {
 
     private final Map<Position, ChessPiece> chessBoard;
     private GameStatus gameStatus;
-    private Color currentTurn = Color.WHITE;
+    private Color currentTurnColor = Color.WHITE;
 
     ChessBoard(final Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
@@ -51,8 +51,8 @@ public class ChessBoard {
     }
 
     private void checkCurrentTurn(final ChessPiece movablePiece) {
-        if (movablePiece.isEnemyTurn(currentTurn)) {
-            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
+        if (!movablePiece.isSameColor(currentTurnColor)) {
+            throw new IllegalArgumentException(currentTurnColor.name() + "의 차례입니다.");
         }
     }
 
@@ -112,7 +112,7 @@ public class ChessBoard {
 
         final ChessPiece movablePiece = chessBoard.remove(from);
         chessBoard.put(to, movablePiece);
-        currentTurn = currentTurn.toOpposite();
+        currentTurnColor = currentTurnColor.toOpposite();
     }
 
     public Map<Color, Double> calculateScore() {
@@ -126,7 +126,7 @@ public class ChessBoard {
         return chessBoard.values().stream()
                 .filter(chessPiece -> chessPiece.isSameColor(color))
                 .filter(chessPiece -> !(chessPiece instanceof Pawn))
-                .mapToDouble(ChessPiece::getValue)
+                .mapToDouble(ChessPiece::value)
                 .sum();
     }
 

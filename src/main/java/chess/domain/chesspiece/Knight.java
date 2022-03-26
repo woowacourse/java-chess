@@ -21,7 +21,7 @@ public final class Knight extends ChessPiece {
     }
 
     private Knight(final Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     public static Knight from(final Color color) {
@@ -45,5 +45,10 @@ public final class Knight extends ChessPiece {
     @Override
     public Stack<Position> findRoute(final Position from, final Position to) {
         return new Stack<>();
+    }
+
+    @Override
+    public double value() {
+        return VALUE;
     }
 }

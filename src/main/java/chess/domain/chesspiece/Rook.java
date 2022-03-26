@@ -20,7 +20,7 @@ public final class Rook extends ChessPiece {
     }
 
     private Rook(final Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     public static Rook from(final Color color) {
@@ -35,5 +35,10 @@ public final class Rook extends ChessPiece {
         if (!sameFile && !sameRank) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public double value() {
+        return VALUE;
     }
 }

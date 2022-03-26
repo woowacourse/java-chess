@@ -20,7 +20,7 @@ public final class Queen extends ChessPiece {
     }
 
     private Queen(final Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     public static Queen from(final Color color) {
@@ -38,5 +38,10 @@ public final class Queen extends ChessPiece {
         if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public double value() {
+        return VALUE;
     }
 }
