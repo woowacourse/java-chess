@@ -60,6 +60,8 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return this.position.getUpVerticalPosition(distance);
     }
 
+    public abstract double getScore();
+
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
 
     public abstract boolean isMovable(Position position);
@@ -67,6 +69,10 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
     public abstract String getName();
 
     public boolean isKing(){
+        return false;
+    }
+
+    public boolean isPawn(){
         return false;
     }
     @Override

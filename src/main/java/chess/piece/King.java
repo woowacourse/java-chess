@@ -9,9 +9,15 @@ import java.util.List;
 public class King extends Piece {
     private static final String BLACK_NAME = "K";
     private static final String WHITE_NAME = "k";
+    private static final double SCORE = 0D;
 
     public King(Position position, Team team) {
         super(position, team);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

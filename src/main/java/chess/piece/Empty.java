@@ -8,6 +8,7 @@ import java.util.List;
 public class Empty extends Piece{
 
     private static final String NAME = ".";
+    private static final double SCORE = 0D;
 
     public Empty(Position position) {
         super(position, Team.NONE);
@@ -21,6 +22,11 @@ public class Empty extends Piece{
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

@@ -10,9 +10,15 @@ import java.util.List;
 public class Bishop extends Piece implements BishopMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
+    private static final double SCORE = 3D;
 
     public Bishop(Position position, Team team) {
         super(position, team);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

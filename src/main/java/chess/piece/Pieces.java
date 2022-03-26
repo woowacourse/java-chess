@@ -1,10 +1,16 @@
 package chess.piece;
 
+import chess.File;
 import chess.Position;
 import chess.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.counting;
 
 public class Pieces {
     private final List<Piece> pieces;
@@ -13,7 +19,7 @@ public class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public static Pieces of(List<Piece> pieces){
+    public static Pieces of(List<Piece> pieces) {
         return new Pieces(pieces);
     }
 
@@ -64,11 +70,36 @@ public class Pieces {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
     }
 
-    public long countOfKing(){
+    public long countOfKing() {
         return pieces.stream()
                 .filter(Piece::isKing)
                 .count();
     }
+
+    public double getTotalScore(Team team) {
+        double scoreExcludingPawn = pieces.stream()
+                .filter(piece -> !piece.isPawn())
+                .filter(piece -> piece.team.equals(team))
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        return scoreExcludingPawn + pawnScore(team);
+    }
+
+    private double pawnScore(Team team) {
+        Map<File, Long> collect = pieces.stream()
+                .filter(Piece::isPawn)
+                .filter(pawn -> pawn.team.equals(team))
+                .collect(Collectors.groupingBy(pawn -> pawn.position.getFile(), counting()));
+
+        return pieces.stream()
+                .filter(Piece::isPawn)
+                .filter(pawn -> pawn.team.equals(team))
+                .map(piece -> new Pawn(piece.position, piece.team))
+                .mapToDouble(pawn -> pawn.getScore(collect.get(pawn.position.getFile())))
+                .sum();
+    }
+
     public void remove(Piece piece) {
         pieces.remove(piece);
     }

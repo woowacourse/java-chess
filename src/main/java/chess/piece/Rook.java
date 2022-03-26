@@ -10,9 +10,15 @@ import java.util.List;
 public class Rook extends Piece implements RookMovable {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
+    private static final double SCORE = 5D;
 
     public Rook(Position position, Team team) {
         super(position, team);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

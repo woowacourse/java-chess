@@ -9,9 +9,15 @@ import java.util.List;
 public class Knight extends Piece {
     private static final String BLACK_NAME = "N";
     private static final String WHITE_NAME = "n";
+    private static final double SCORE = 2.5D;
 
     public Knight(Position position, Team team) {
         super(position, team);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

@@ -10,9 +10,15 @@ import java.util.List;
 public class Queen extends Piece implements RookMovable, BishopMovable {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
+    private static final double SCORE = 9D;
 
     public Queen(Position position, Team team) {
         super(position, team);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
