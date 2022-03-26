@@ -2,6 +2,7 @@ package chess.view;
 
 import static java.util.stream.Collectors.joining;
 
+import chess.domain.Result;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -43,5 +44,14 @@ public class OutputView {
         System.out.println("BLACK SCORE: " + blackScore);
 
         System.out.println();
+    }
+
+    public static void printResultMessage(Result result) {
+        if (result.isDraw()) {
+            System.out.println("무승부입니다.");
+            return;
+        }
+
+        System.out.println(result + "가 승리 하였습니다.");
     }
 }

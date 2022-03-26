@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
+import chess.domain.Result;
 import chess.domain.generator.InitBoardGenerator;
 
 public class Ready extends Started {
@@ -27,5 +28,10 @@ public class Ready extends Started {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Result winner() {
+        throw new UnsupportedOperationException();
     }
 }

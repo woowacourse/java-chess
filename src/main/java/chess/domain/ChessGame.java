@@ -34,6 +34,10 @@ public class ChessGame {
         return chessBoard.calculateScore(color);
     }
 
+    public Result result() {
+        return state.winner();
+    }
+
     public List<List<Piece>> board() {
         ChessBoard chessBoard = state.chessBoard();
         return chessBoard.getBoard();

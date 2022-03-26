@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.ChessBoard;
+import chess.domain.Result;
 
 public interface State {
 
@@ -11,6 +12,8 @@ public interface State {
     State move(String source, String target);
 
     boolean isFinished();
+
+    Result winner();
 
     ChessBoard chessBoard();
 }
