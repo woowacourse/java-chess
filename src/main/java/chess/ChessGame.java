@@ -7,6 +7,8 @@ import chess.state.State;
 import chess.utils.PositionParser;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 public class ChessGame {
 
     private State state;
@@ -21,9 +23,13 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void move(String source, String target) {
-        Pair<Integer, Integer> parsedSource = PositionParser.parse(source.charAt(0), source.charAt(1));
-        Pair<Integer, Integer> parsedTarget = PositionParser.parse(target.charAt(0), target.charAt(1));
+    public void move(String command) {
+        List<String> moveInfo = List.of(command.split(" "));
+        String[] source = moveInfo.get(1).split("");
+        String[] target = moveInfo.get(2).split("");
+
+        Pair<Integer, Integer> parsedSource = PositionParser.parse(source[0], source[1]);
+        Pair<Integer, Integer> parsedTarget = PositionParser.parse(target[0], target[1]);
         state = state.move(parsedSource, parsedTarget, turn);
     }
 

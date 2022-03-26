@@ -3,8 +3,7 @@ package chess;
 import chess.piece.Color;
 import chess.view.OutputView;
 
-import java.util.StringTokenizer;
-
+import static chess.Command.*;
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printStartMessage;
 
@@ -20,26 +19,21 @@ public class ChessController {
     }
 
     private void playTurn(ChessGame chessGame) {
-        String input = inputCommand();
-        StringTokenizer commands = new StringTokenizer(input);
-        String command = commands.nextToken();
-
-        if (command.equals("start")) {
+        String command = inputCommand();
+        if (START.isValue(command)) {
             chessGame.start();
             OutputView.printBoard(chessGame.getChessBoard());
         }
-        if (command.equals("end")) {
+        if (MOVE.isValue(command)) {
+            chessGame.move(command);
+            OutputView.printBoard(chessGame.getChessBoard());
+        }
+        if (STATUS.isValue(command)) {
+            OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+        }
+        if (END.isValue(command)) {
             chessGame.end();
             OutputView.printBoard(chessGame.getChessBoard());
-        }
-        if (command.contains("move")) {
-            String source = commands.nextToken();
-            String target = commands.nextToken();
-            chessGame.move(source, target);
-            OutputView.printBoard(chessGame.getChessBoard());
-        }
-        if (command.contains("status")) {
-            OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
         }
     }
 }

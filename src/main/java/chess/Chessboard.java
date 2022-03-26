@@ -45,7 +45,6 @@ public class Chessboard {
                 .count();
     }
 
-
     private Chessboard(List<List<Piece>> board) {
         this.board = board;
     }
