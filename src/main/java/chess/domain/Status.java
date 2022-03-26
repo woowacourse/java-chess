@@ -16,26 +16,38 @@ public class Status {
     }
 
     public double calculateScore(Color color) {
-        double sum = 0;
-
         List<Map.Entry<Square, Piece>> survives = board.filterBy(color);
+        return adjustmentSum(getSum(survives), survives);
+    }
 
+    private double getSum(List<Map.Entry<Square, Piece>> survives) {
+        double sum = 0;
         for (Map.Entry<Square, Piece> survive : survives) {
             Piece piece = survive.getValue();
             sum = piece.addScore(sum);
         }
+        return sum;
+    }
 
+    private double adjustmentSum(double sum, List<Map.Entry<Square, Piece>> survives) {
         for (File file : File.values()) {
-            int count = (int)survives.stream()
-                    .filter(entry -> entry.getValue().isPawn())
-                    .filter(entry -> entry.getKey().checkFile(file))
-                    .count();
-
-            if (count > 1) {
-                sum -= 0.5 * count;
-            }
+            int count = countPawnInSameFile(survives, file);
+            sum = subtractPawnInSameFile(sum, count);
         }
+        return sum;
+    }
 
+    private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
+        return (int)survives.stream()
+                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getKey().checkFile(file))
+                .count();
+    }
+
+    private double subtractPawnInSameFile(double sum, int count) {
+        if (count > 1) {
+            sum -= 0.5 * count;
+        }
         return sum;
     }
 }
