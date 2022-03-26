@@ -20,7 +20,7 @@ public class OutputView {
     public void printBoard(Map<Position, Piece> board) {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                Piece piece = board.get(new Position(rank, file));
+                Piece piece = board.get(Position.of(rank, file));
                 System.out.print(piece.getSymbol());
             }
             System.out.println();

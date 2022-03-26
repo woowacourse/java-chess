@@ -14,12 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {
 
-    @DisplayName("target 위치로 움직일 수 있으면 false를 반환한다.")
+    @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_false() {
         Map<Position, Piece> board = new Board().getBoard();
-        Piece king = board.get(new Position(Rank.EIGHT, File.E));
-        Boolean actual = king.canMove(new Position(Rank.EIGHT, File.E), new Position(Rank.SEVEN, File.E), board);
+        Piece king = board.get(Position.of(Rank.EIGHT, File.E));
+        Boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), board);
 
         assertThat(actual).isFalse();
     }
@@ -30,7 +30,7 @@ public class KingTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece king = new King(Player.BLACK, "K");
-        Boolean actual = king.canMove(new Position(Rank.FIVE, File.D), new Position(rank, file), board);
+        Boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

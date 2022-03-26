@@ -30,35 +30,35 @@ public class Board {
 
     private void createBlankIn(Rank rank) {
         for (File file : File.values()) {
-            board.put(new Position(rank, file), new Blank(NONE, "."));
+            board.put(Position.of(rank, file), new Blank(NONE, "."));
         }
     }
 
     private void createBlackPieces() {
-        board.put(new Position(EIGHT, A), new Rook(BLACK, "R"));
-        board.put(new Position(EIGHT, B), new Knight(BLACK, "N"));
-        board.put(new Position(EIGHT, C), new Bishop(BLACK, "B"));
-        board.put(new Position(EIGHT, D), new Queen(BLACK, "Q"));
-        board.put(new Position(EIGHT, E), new King(BLACK, "K"));
-        board.put(new Position(EIGHT, F), new Bishop(BLACK, "B"));
-        board.put(new Position(EIGHT, G), new Knight(BLACK, "N"));
-        board.put(new Position(EIGHT, H), new Rook(BLACK, "R"));
+        board.put(Position.of(EIGHT, A), new Rook(BLACK, "R"));
+        board.put(Position.of(EIGHT, B), new Knight(BLACK, "N"));
+        board.put(Position.of(EIGHT, C), new Bishop(BLACK, "B"));
+        board.put(Position.of(EIGHT, D), new Queen(BLACK, "Q"));
+        board.put(Position.of(EIGHT, E), new King(BLACK, "K"));
+        board.put(Position.of(EIGHT, F), new Bishop(BLACK, "B"));
+        board.put(Position.of(EIGHT, G), new Knight(BLACK, "N"));
+        board.put(Position.of(EIGHT, H), new Rook(BLACK, "R"));
         for (File file : File.values()) {
-            board.put(new Position(SEVEN, file), new Pawn(BLACK, "P"));
+            board.put(Position.of(SEVEN, file), new Pawn(BLACK, "P"));
         }
     }
 
     private void createWhitePieces() {
-        board.put(new Position(ONE, A), new Rook(WHITE, "r"));
-        board.put(new Position(ONE, B), new Knight(WHITE, "n"));
-        board.put(new Position(ONE, C), new Bishop(WHITE, "b"));
-        board.put(new Position(ONE, D), new Queen(WHITE, "q"));
-        board.put(new Position(ONE, E), new King(WHITE, "k"));
-        board.put(new Position(ONE, F), new Bishop(WHITE, "b"));
-        board.put(new Position(ONE, G), new Knight(WHITE, "n"));
-        board.put(new Position(ONE, H), new Rook(WHITE, "r"));
+        board.put(Position.of(ONE, A), new Rook(WHITE, "r"));
+        board.put(Position.of(ONE, B), new Knight(WHITE, "n"));
+        board.put(Position.of(ONE, C), new Bishop(WHITE, "b"));
+        board.put(Position.of(ONE, D), new Queen(WHITE, "q"));
+        board.put(Position.of(ONE, E), new King(WHITE, "k"));
+        board.put(Position.of(ONE, F), new Bishop(WHITE, "b"));
+        board.put(Position.of(ONE, G), new Knight(WHITE, "n"));
+        board.put(Position.of(ONE, H), new Rook(WHITE, "r"));
         for (File file : File.values()) {
-            board.put(new Position(TWO, file), new Pawn(WHITE, "p"));
+            board.put(Position.of(TWO, file), new Pawn(WHITE, "p"));
         }
     }
 
@@ -73,7 +73,7 @@ public class Board {
         if (!board.get(source).isSame(turn)) {
             throw new IllegalArgumentException("[ERROR] 상대편 기물은 선택 할 수 없습니다.");
         }
-        if(board.get(source).canMove(source, target, board)){
+        if (board.get(source).canMove(source, target, board)) {
             throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
         }
     }

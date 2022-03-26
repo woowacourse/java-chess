@@ -7,13 +7,16 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-
-    public Position(Rank rank, File file) {
+    private Position(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public boolean isMovablePosition(Direction direction) {
+    public static Position of(Rank rank, File file) {
+        return new Position(rank, file);
+    }
+
+    public boolean isInBoardAfterMoved(Direction direction) {
         return direction.isMovablePosition(rank, file);
     }
 

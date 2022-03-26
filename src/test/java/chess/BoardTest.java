@@ -25,7 +25,7 @@ public class BoardTest {
     void move_none_exception() {
         Board board = new Board();
 
-        assertThatThrownBy(() -> board.move(new Position(Rank.THREE, File.D), new Position(Rank.FOUR, File.D)))
+        assertThatThrownBy(() -> board.move(Position.of(Rank.THREE, File.D), Position.of(Rank.FOUR, File.D)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 선택한 위치에 기물이 없습니다.");
     }
@@ -35,7 +35,7 @@ public class BoardTest {
     void move_other_exception() {
         Board board = new Board();
 
-        assertThatThrownBy(() -> board.move(new Position(Rank.TWO, File.D), new Position(Rank.FOUR, File.D)))
+        assertThatThrownBy(() -> board.move(Position.of(Rank.TWO, File.D), Position.of(Rank.FOUR, File.D)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 상대편 기물은 선택 할 수 없습니다.");
     }

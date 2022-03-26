@@ -31,7 +31,7 @@ class DirectionTest {
 
     @Test
     void createMovablePosition() {
-        Position position = new Position(Rank.FOUR, File.D);
+        Position position = Position.of(Rank.FOUR, File.D);
         Position movedPosition = NORTH.createMovablePosition(Rank.THREE, File.D);
 
         assertThat(movedPosition).isEqualTo(position);

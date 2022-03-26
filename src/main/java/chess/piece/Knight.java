@@ -20,7 +20,7 @@ public class Knight extends Piece {
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         List<Direction> directions = getDirection();
         List<Position> positions = directions.stream()
-                .filter(source::isMovablePosition)
+                .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
                 .filter(position -> !board.get(position).isSame(player))
                 .collect(Collectors.toUnmodifiableList());
