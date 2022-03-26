@@ -29,7 +29,7 @@ public class ChessGame {
         try {
             String source = squares.get(0);
             String target = squares.get(1);
-            board.move(new Square(source), new Square(target));
+            board = board.move(new Square(source), new Square(target));
             OutputView.showBoard(board.splitByRank());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());

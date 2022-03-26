@@ -21,6 +21,7 @@ public final class Pawn extends Piece {
     Pawn(Color color) {
         super(color);
         this.start = true;
+        this.score = 1;
     }
 
     @Override
@@ -46,6 +47,11 @@ public final class Pawn extends Piece {
         checkCanAttack(direction, target, directions);
         checkIsStart(directions);
         return direction.hasSame(directions);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     private void checkCanAttack(Direction direction, Piece target, List<Direction> directions) {

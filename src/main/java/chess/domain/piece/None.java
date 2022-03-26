@@ -7,6 +7,7 @@ public final class None extends Piece {
 
     public None(Color color) {
         super(color);
+        this.score = 0;
     }
 
     @Override

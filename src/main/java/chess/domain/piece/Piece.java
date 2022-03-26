@@ -8,9 +8,11 @@ public abstract class Piece {
     private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 아군의 말이 있는 곳으로는 이동할 수 없습니다.";
 
     protected final Color color;
+    protected double score;
 
     Piece(Color color) {
         this.color = color;
+        this.score = 0;
     }
 
     public static Piece from(File file, Rank rank) {
@@ -33,5 +35,14 @@ public abstract class Piece {
 
     public boolean isSameColor(Color turn) {
         return turn == this.color;
+    }
+
+    public double addScore(double sum) {
+        return sum + score;
+    }
+
+
+    public boolean isPawn() {
+        return false;
     }
 }

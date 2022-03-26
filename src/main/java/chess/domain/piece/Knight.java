@@ -24,6 +24,7 @@ public final class Knight extends Piece {
 
     Knight(Color color) {
         super(color);
+        this.score = 2.5;
     }
 
     @Override

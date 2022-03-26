@@ -24,6 +24,7 @@ public final class Queen extends Piece {
 
     Queen(Color color) {
         super(color);
+        this.score = 9;
     }
 
     @Override

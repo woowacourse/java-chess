@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
@@ -24,12 +25,12 @@ public class Board {
     private Color turn;
 
     public Board() {
-        this(createBoard());
+        this(createBoard(), Color.WHITE);
     }
 
-    public Board(Map<Square, Piece> board) {
+    public Board(Map<Square, Piece> board, Color color) {
         this.board = new LinkedHashMap<>(board);
-        this.turn = Color.WHITE;
+        this.turn = color;
     }
 
     private static Map<Square, Piece> createBoard() {
@@ -60,7 +61,7 @@ public class Board {
         return result;
     }
 
-    public void move(Square source, Square target) {
+    public Board move(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         Direction direction = source.getGap(target);
@@ -69,14 +70,15 @@ public class Board {
         checkCapablePosition(direction, sourcePiece, targetPiece);
         checkCapableDirection(source, target, direction);
 
-        turn = switchTurn();
+        turn = turn.switchColor();
 
         board.put(target, sourcePiece);
         board.put(source, new None(Color.NONE));
+        return new Board(board,turn);
     }
 
     private void checkTurn(Piece sourcePiece) {
-        if(!sourcePiece.isSameColor(turn)){
+        if (!sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_TURN);
         }
     }
@@ -103,10 +105,28 @@ public class Board {
         }
     }
 
-    private Color switchTurn() {
-        if(turn == Color.WHITE){
-            return Color.BLACK;
+    public double getStatus(Color color) {
+        double sum = 0;
+        List<Map.Entry<Square, Piece>> survives = board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .collect(Collectors.toList());
+
+        for (Map.Entry<Square, Piece> survive : survives) {
+            Piece piece = survive.getValue();
+            sum = piece.addScore(sum);
         }
-        return Color.WHITE;
+
+        for (File file : File.values()) {
+            int count = (int)survives.stream()
+                    .filter(entry -> entry.getValue().isPawn())
+                    .filter(entry -> entry.getKey().checkFile(file))
+                    .count();
+
+            if (count > 1) {
+                sum -= 0.5 * count;
+            }
+        }
+
+        return sum;
     }
 }

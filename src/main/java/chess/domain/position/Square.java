@@ -25,6 +25,10 @@ public class Square {
         return direction.add(file, rank);
     }
 
+    public boolean checkFile(File file) {
+        return this.file == file;
+    }
+
     public String getName() {
         return file.getValue() + rank.getValue();
     }
@@ -45,4 +49,5 @@ public class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
 }
