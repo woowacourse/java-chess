@@ -3,11 +3,11 @@ package chess.domain.state;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 
-public class WhiteTurn implements State {
+public class BlackTurn implements State {
 
     private final ChessBoard chessBoard;
 
-    protected WhiteTurn(ChessBoard chessBoard) {
+    protected BlackTurn(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
@@ -23,17 +23,17 @@ public class WhiteTurn implements State {
 
     @Override
     public State move(String source, String target) {
-        if (!chessBoard.isTurn(source, Color.WHITE)) {
-            throw new IllegalArgumentException("black 진영의 차례가 아닙니다.");
+        if (!chessBoard.isTurn(source, Color.BLACK)) {
+            throw new IllegalArgumentException("white 진영의 차례가 아닙니다.");
         }
 
         chessBoard.move(source, target);
 
         if (chessBoard.isFinished()) {
-            return new WhiteWin(chessBoard);
+            return new BlackWin(chessBoard);
         }
 
-        return new BlackTurn(chessBoard);
+        return new WhiteTurn(chessBoard);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class WhiteTurn implements State {
 
     @Override
     public ChessBoard chessBoard() {
-        return chessBoard;
+        return null;
     }
 }
