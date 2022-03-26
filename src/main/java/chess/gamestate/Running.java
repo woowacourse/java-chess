@@ -50,6 +50,7 @@ public abstract class Running implements GameState {
             return new Promotion(this);
         }
         if (chessBoard.isFinished()) {
+            OutputView.printWinnerAndGameEnd(chessBoard.winner());
             return new End();
         }
         return otherState(this.chessBoard);

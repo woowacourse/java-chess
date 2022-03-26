@@ -54,4 +54,8 @@ public class OutputView {
         System.out.println("현재 폰이 프로모션 위치에 도착했습니다.");
         System.out.println("Q, R, B, N 중 하나를 입력하여 변경할 기물을 선택하세요.");
     }
+
+    public static void printWinnerAndGameEnd(Color color) {
+        System.out.printf("%s가 이겨 게임이 종료됩니다.", color);
+    }
 }
