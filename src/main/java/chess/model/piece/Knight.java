@@ -24,6 +24,11 @@ public final class Knight extends Piece{
         return "n";
     }
 
+    @Override
+    public Point getPoint() {
+        return Point.KNIGHT;
+    }
+
     private List<Direction> direction() {
         return Direction.getKnightDirection();
     }

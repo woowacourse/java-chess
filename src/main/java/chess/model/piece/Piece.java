@@ -2,9 +2,9 @@ package chess.model.piece;
 
 import chess.model.Color;
 import chess.model.Direction;
-import chess.model.Square;
 import chess.model.File;
 import chess.model.Rank;
+import chess.model.Square;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -56,6 +56,8 @@ public abstract class Piece {
     public Direction findDirectionTo(Piece target) {
         return this.square.findDirection(target.square);
     }
+
+    public abstract Point getPoint();
 
     @Override
     public boolean equals(Object o) {

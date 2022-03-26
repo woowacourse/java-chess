@@ -19,6 +19,11 @@ public final class Bishop extends Piece{
         return false;
     }
 
+    @Override
+    public Point getPoint() {
+        return Point.BISHOP;
+    }
+
     private boolean canMoveTo(Piece target) {
         try {
             return direction().contains(this.findDirectionTo(target));

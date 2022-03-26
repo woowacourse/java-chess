@@ -19,6 +19,11 @@ public final class Rook extends Piece {
         return false;
     }
 
+    @Override
+    public Point getPoint() {
+        return Point.ROOK;
+    }
+
     private boolean canMoveTo(Piece target) {
         try {
             return direction().contains(this.findDirectionTo(target));

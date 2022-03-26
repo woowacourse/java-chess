@@ -6,6 +6,7 @@ import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.piece.Point;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 import java.util.ArrayList;
@@ -115,5 +116,11 @@ public final class Board {
         board.set(board.indexOf(sourcePiece), new Empty(sourceSquare));
         board.set(board.indexOf(targetPiece), sourcePiece);
         sourcePiece.changeLocation(targetSquare);
+    }
+
+    public boolean aliveTwoKings() {
+        return board.stream()
+                .filter(piece -> piece.getPoint().equals(Point.KING))
+                .count() == 2;
     }
 }

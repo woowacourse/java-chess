@@ -23,6 +23,11 @@ public final class Queen extends Piece {
         return "q";
     }
 
+    @Override
+    public Point getPoint() {
+        return Point.QUEEN;
+    }
+
     private boolean canMoveTo(Piece target) {
         try {
             return direction().contains(this.findDirectionTo(target));

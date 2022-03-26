@@ -37,6 +37,11 @@ public final class Pawn extends Piece {
         return false;
     }
 
+    @Override
+    public Point getPoint() {
+        return Point.PAWN;
+    }
+
     private boolean firstLocation() {
         return square().isPawnFirstSquare(color());
     }
