@@ -49,13 +49,14 @@ public class Board {
     }
 
     private void validPath(Position from, Position to, Direction direction) {
-        Position current = from;
-        do {
-            current = current.move(direction);
+        Position current = from.move(direction);
+
+        while (!current.equals(to)) {
             if (board.get(current) != null) {
                 throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
             }
-        } while (!current.equals(to));
+            current = current.move(direction);
+        }
     }
 
     private void initBlackPieces() {
