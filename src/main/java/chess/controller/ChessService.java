@@ -15,4 +15,12 @@ public class ChessService {
         board.move(Square.of(from), Square.of(to));
         return board;
     }
+
+    public boolean checkKingsAlive() {
+        return board.aliveTwoKings();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
 }

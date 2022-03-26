@@ -2,8 +2,9 @@ package chess.controller;
 
 import chess.model.Board;
 import chess.model.GameStartCommand;
-import chess.model.Square;
 import chess.model.piece.Piece;
+import chess.state.Ready;
+import chess.state.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.ArrayList;
@@ -17,33 +18,27 @@ public final class ChessController {
         this.service = service;
     }
 
-    public void game() {
+    public void playGame() {
         OutputView.startGame();
-        GameStartCommand command;
-        do {
+        Status status = new Ready();
+        while (!status.isEnd()) {
             List<String> request = InputView.inputStartOrEndGame();
-            command = GameStartCommand.findCommand(request.get(0));
+            GameStartCommand command = GameStartCommand.findCommand(request.get(0));
+            status = status.changeStatus(command);
             request.remove(0);
-            execute(command,request);
-        } while (command.isNotEnd());
-    }
-
-    private void execute(GameStartCommand command, List<String> sqaures) {
-        if (command.isStart()) {
-            initGame();
-        }
-        if (command.isMove()) {
-            move(sqaures.get(0), sqaures.get(1));
+            status = status.execute(service, request);
+            outputBy(status, service.getBoard());
         }
     }
 
-    private void initGame() {
-        OutputView.startGameBoard(new BoardDto(toDto(service.initBoard())));
-    }
-
-    private void move(String from, String to) {
-        Board movedBoard = service.move(from, to);
-        OutputView.startGameBoard(new BoardDto(toDto(movedBoard)));
+    private void outputBy(Status status, Board board) {
+        if (status.isEnd()) {
+            return;
+        }
+//        if (status.isStatus()) {
+//            OutputView.점수()
+//        }
+        OutputView.startGameBoard(new BoardDto(toDto(board)));
     }
 
     private List<String> toDto(final Board board) {
