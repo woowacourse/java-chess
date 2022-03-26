@@ -16,12 +16,16 @@ public class ChessController {
         ChessGame chessGame = new ChessGame();
         while (true) {
             String commend = InputView.inputCommend();
+            try {
+                if ((commend.contains("move"))) {
+                    String[] positions = commend.substring(5).split(" ");
+                    chessGame.play(Position.from(positions[0]), Position.from(positions[1]));
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
             if (commend.equals("end")) {
                 break;
-            }
-            if (commend.contains("move")) {
-                String[] positions = commend.substring(5).split(" ");
-                chessGame.play(Position.from(positions[0]), Position.from(positions[1]));
             }
             if (commend.equals("status")) {
                 OutputView.printStatus(chessGame.getStatus());
