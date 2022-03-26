@@ -4,8 +4,10 @@ import chess.domain.Position;
 
 public class Knight extends Piece {
 
+    private static final double KNIGHT_SCORE = 2.5;
+
     public Knight(Color color) {
-        super(color);
+        super(color, KNIGHT_SCORE);
     }
 
     @Override

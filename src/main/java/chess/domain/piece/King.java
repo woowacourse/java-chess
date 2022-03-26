@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
-public class King extends Piece{
+public class King extends Piece {
 
     private static final int SCOPE_DIFFERENCE = 1;
+    private static final double KING_SCORE = 0;
 
     public King(Color color) {
-        super(color);
+        super(color, KING_SCORE);
     }
 
     @Override
@@ -17,24 +18,24 @@ public class King extends Piece{
     }
 
     private boolean isSameRowOrColAndOneDifference(Position fromPosition, Position toPosition) {
-        return isSameColAndOneDifference(fromPosition,toPosition)
-            || isSameRowAndOneDifference(fromPosition,toPosition);
+        return isSameColAndOneDifference(fromPosition, toPosition)
+            || isSameRowAndOneDifference(fromPosition, toPosition);
     }
 
     private boolean isSameColAndOneDifference(Position fromPosition, Position toPosition) {
         return fromPosition.isSameAbscissa(toPosition)
-            &&  Math.abs(fromPosition.getOrdinateDifference(toPosition)) == SCOPE_DIFFERENCE;
+            && Math.abs(fromPosition.getOrdinateDifference(toPosition)) == SCOPE_DIFFERENCE;
     }
 
     private boolean isSameRowAndOneDifference(Position fromPosition, Position toPosition) {
         return fromPosition.isSameOrdinate(toPosition)
-            &&  Math.abs(fromPosition.getAbscissaDifference(toPosition)) == SCOPE_DIFFERENCE;
+            && Math.abs(fromPosition.getAbscissaDifference(toPosition)) == SCOPE_DIFFERENCE;
     }
 
     private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
         int height = fromPosition.getOrdinateDifference(toPosition);
         int width = fromPosition.getAbscissaDifference(toPosition);
-        return Math.pow(height,2) + Math.pow(width,2) == 2;
+        return Math.pow(height, 2) + Math.pow(width, 2) == 2;
     }
 
     @Override

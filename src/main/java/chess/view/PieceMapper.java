@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -31,7 +32,7 @@ public class PieceMapper {
 
     public static String from(Piece piece) {
         String letter = MAPPER.get(piece.getClass().getName());
-        if(piece.isWhite()) {
+        if(piece.isSameColor(Color.WHITE)) {
             return letter;
         }
         return letter.toUpperCase();

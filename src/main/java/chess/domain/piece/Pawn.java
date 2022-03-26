@@ -6,9 +6,10 @@ import chess.domain.Position;
 public class Pawn extends Piece {
 
     private static final int ABSCISSA_DIFFERENCE = 1;
+    private static final double PAWN_SCORE = 1;
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PAWN_SCORE);
     }
 
     public boolean isInitialPosition(Position fromPosition) {
@@ -48,5 +49,10 @@ public class Pawn extends Piece {
         int height = fromPosition.getOrdinateDifference(toPosition);
         int width = fromPosition.getAbscissaDifference(toPosition);
         return Math.pow(height,2) + Math.pow(width,2) == 2;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }
