@@ -18,27 +18,40 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target, MoveType moveType) {
-        // MoveType == ENEMY
         if (moveType == MoveType.ENEMY) {
-            if (pieceColor == WHITE) {
-                return source.isDiagonal(target) && source.rankDisplacement(target) == 1
-                    && source.fileDistance(target) == 1;
-            }
+            return isCaptureMoving(source, target);
+        }
 
-            return source.isDiagonal(target) && target.rankDisplacement(source) == 1
+        if (pieceColor == WHITE) {
+            return isForwardWhite(source, target);
+        }
+
+        return isForwardBlack(source, target);
+    }
+
+    private boolean isCaptureMoving(Position source, Position target) {
+        if (pieceColor == WHITE) {
+            return source.isDiagonal(target) && source.rankDisplacement(target) == 1
                 && source.fileDistance(target) == 1;
         }
+        return source.isDiagonal(target) && target.rankDisplacement(source) == 1
+            && source.fileDistance(target) == 1;
+    }
 
-        // MoveType == EMPTY
-        if (pieceColor == WHITE) {
-            if (source.isRankOf(Rank.TWO)) {
-                return isForward(source, target, 2);
-            }
-
-            return isForward(source, target, 1);
+    private boolean isForwardWhite(Position source, Position target) {
+        if (isFirstMove(source)) {
+            return isForward(source, target, 2);
         }
 
-        if (source.isRankOf(Rank.SEVEN)) {
+        return isForward(source, target, 1);
+    }
+
+    private boolean isFirstMove(Position source) {
+        return source.isRankOf(Rank.TWO) || source.isRankOf(Rank.SEVEN);
+    }
+
+    private boolean isForwardBlack(Position source, Position target) {
+        if (isFirstMove(source)) {
             return isForward(target, source, 2);
         }
 
@@ -46,8 +59,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isForward(Position source, Position target, int amount) {
-        return source.rankDisplacement(target) > 0 && source.rankDisplacement(target) <= amount && source.isSameFile(
-            target);
+        return source.rankDisplacement(target) > 0
+            && source.rankDisplacement(target) <= amount && source.isSameFile(target);
     }
 
     @Override
