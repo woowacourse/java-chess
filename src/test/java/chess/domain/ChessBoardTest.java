@@ -81,6 +81,7 @@ class ChessBoardTest {
         Position position = Position.of('a', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new WhitePawn()));
         chessBoard.promotion(PromotionPiece.QUEEN, WHITE);
+
         assertThat(chessBoard.pieceByPosition(position)).isInstanceOf(Queen.class);
     }
 
@@ -149,11 +150,9 @@ class ChessBoardTest {
                 Arguments.of(
                         new ChessBoard(Map.of(
                                 Position.of('e', '1'), new King(WHITE),
-                                Position.of('e', '8'), new King(BLACK))), false
-                ),
+                                Position.of('e', '8'), new King(BLACK))), false),
                 Arguments.of(
-                        new ChessBoard(Map.of(Position.of('e', '1'), new King(WHITE))), true
-                )
+                        new ChessBoard(Map.of(Position.of('e', '1'), new King(WHITE))), true)
         );
     }
 

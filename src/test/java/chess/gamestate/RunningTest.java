@@ -52,6 +52,7 @@ class RunningTest {
                 Position.of('a', '2'), new King(BLACK)
         ));
         GameState gameState = new WhiteRunning(chessBoard);
+
         assertThat(gameState.run("move a1 a2")).isInstanceOf(End.class);
     }
 }

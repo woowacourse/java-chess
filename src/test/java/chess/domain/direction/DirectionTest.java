@@ -16,8 +16,8 @@ class DirectionTest {
     void route(char column, char row, int expected) {
         Position position = Position.of('d', '4');
         Position movePosition = Position.of(column, row);
-
         List<Position> directions = Direction.UP.route(position, movePosition);
+
         assertThat(directions).hasSize(expected);
     }
 }
