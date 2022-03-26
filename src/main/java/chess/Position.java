@@ -1,7 +1,5 @@
 package chess;
 
-import chess.piece.Piece;
-
 import java.util.Objects;
 
 public class Position {
@@ -10,7 +8,6 @@ public class Position {
     private final File file;
 
     private Position(File file, Rank rank) {
-        //validate()
         this.file = file;
         this.rank = rank;
     }

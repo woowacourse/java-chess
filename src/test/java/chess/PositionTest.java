@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PositionTest {
 
@@ -32,5 +33,12 @@ class PositionTest {
         Position target = Position.of('f', '6');
 
         assertThat(source.isDiagonal(target)).isTrue();
+    }
+
+    @Test
+    @DisplayName("체스판을 벗어나는 position이 주어지면 예외가 발생한다.")
+    void outOfRangePositionTest() {
+        assertThatThrownBy(() -> Position.of('a', '9'))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
