@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final int INITIAL_KING_COUNT = 2;
+    public static final double SAME_COLUMN_PAWN_SUBTRACT = 0.5;
+
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -194,7 +197,7 @@ public class Board {
                 .mapToDouble(Piece::score)
                 .sum();
 
-        return score - 0.5 * countSameColumnPawnsOf(color);
+        return score - SAME_COLUMN_PAWN_SUBTRACT * countSameColumnPawnsOf(color);
     }
 
     private long countSameColumnPawnsOf(Color color) {
@@ -216,7 +219,7 @@ public class Board {
     }
 
     public boolean isBothKingsAlive() {
-        return countKingsOnBoard() == 2;
+        return countKingsOnBoard() == INITIAL_KING_COUNT;
     }
 
     private long countKingsOnBoard() {

@@ -20,16 +20,15 @@ public class King extends Piece {
         int distanceX = Math.abs(source.calculateDisplacementXTo(target));
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 
-        if (distanceY == 1 && distanceX == 0) {
-            return true;
-        }
-        if (distanceY == 0 && distanceX == 1) {
-            return true;
-        }
-        if (distanceY == 1 && distanceX == 1) {
-            return true;
-        }
-        return false;
+        return isDisplaced(distanceX, distanceY) && isOnlySingleMovePerDirection(distanceX, distanceY);
+    }
+
+    private boolean isDisplaced(int distanceX, int distanceY) {
+        return distanceX + distanceY > 0;
+    }
+
+    private boolean isOnlySingleMovePerDirection(int distanceX, int distanceY) {
+        return Math.max(distanceX, distanceY) == 1;
     }
 
     @Override

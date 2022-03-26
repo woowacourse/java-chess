@@ -21,36 +21,14 @@ public class Pawn extends Piece {
         int displacementX = source.calculateDisplacementXTo(target);
         int displacementY = source.calculateDisplacementYTo(target);
 
-        if (color == Color.BLACK) {
-            return isBlackMovable(displacementX, displacementY);
-        }
-        return isWhiteMovable(displacementX, displacementY);
+        return pawnMovable(color, displacementX, displacementY);
     }
 
-    private boolean isBlackMovable(int displacementX, int displacementY) {
-        if (displacementY == 1 && displacementX == 0) {
-            return true;
-        }
-        if (displacementY == 1 && Math.abs(displacementX) == 1) {
-            return true;
-        }
-        if (displacementY == 2 && displacementX == 0) {
+    private boolean pawnMovable(Color color, int displacementX, int displacementY) {
+        if (displacementY == 2 * color.direction() && displacementX == 0) {
             return isNeverDisplaced();
         }
-        return false;
-    }
-
-    private boolean isWhiteMovable(int displacementX, int displacementY) {
-        if (displacementY == -1 && displacementX == 0) {
-            return true;
-        }
-        if (displacementY == -1 && Math.abs(displacementX) == 1) {
-            return true;
-        }
-        if (displacementY == -2 && displacementX == 0) {
-            return isNeverDisplaced();
-        }
-        return false;
+        return displacementY == color.direction() && Math.abs(displacementX) <= 1;
     }
 
     @Override
@@ -85,7 +63,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isEnPassantAvailable() {
-        return moveCount == 1; // 2칸 움직인상태인지 체크 필요.
+        return moveCount == 1;
     }
 }
 

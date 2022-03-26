@@ -20,10 +20,15 @@ public class Bishop extends Piece {
         int distanceX = Math.abs(source.calculateDisplacementXTo(target));
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 
-        if (distanceY >= 1 && distanceX == distanceY) {
-            return true;
-        }
-        return false;
+        return isDisplaced(distanceX, distanceY) && isDiagonalMove(distanceX, distanceY);
+    }
+
+    private boolean isDisplaced(int distanceX, int distanceY) {
+        return Math.max(distanceX, distanceY) > 0;
+    }
+
+    private boolean isDiagonalMove(int distanceX, int distanceY) {
+        return distanceX == distanceY;
     }
 
     @Override

@@ -21,13 +21,11 @@ public class Knight extends Piece {
         int distanceX = Math.abs(source.calculateDisplacementXTo(target));
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 
-        if (distanceY == 1 && distanceX == 2) {
-            return true;
-        }
-        if (distanceY == 2 && distanceX == 1) {
-            return true;
-        }
-        return false;
+        return isKnightMove(distanceX, distanceY);
+    }
+
+    private boolean isKnightMove(int distanceX, int distanceY) {
+        return (distanceY == 1 && distanceX == 2) || (distanceY == 2 && distanceX == 1);
     }
 
     @Override
