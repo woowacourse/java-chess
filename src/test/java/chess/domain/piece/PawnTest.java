@@ -129,28 +129,30 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("(흰색 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 없다.")
-    void moveNotDiagonalWhite() {
+    @DisplayName("(흰색 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 있다.")
+    void moveDiagonalFromStartLineWhite() {
         Piece piece = new Pawn(Color.WHITE);
 
         Point from = Point.of("a2");
         Point to = Point.of("b3");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.create(
+                Map.of(to, new Rook(Color.BLACK)));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        assertThatCode(() -> piece.move(board, from, to))
+                .doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("(검정 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 없다.")
-    void moveNotDiagonalBlack() {
+    @DisplayName("(검정 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 있다.")
+    void moveDiagonalFromStartLineBlack() {
         Piece piece = new Pawn(Color.BLACK);
 
         Point from = Point.of("a7");
         Point to = Point.of("b6");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.create(
+                Map.of(to, new Rook(Color.WHITE)));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        assertThatCode(() -> piece.move(board, from, to))
+                .doesNotThrowAnyException();
     }
 }
