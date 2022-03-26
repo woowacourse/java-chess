@@ -9,7 +9,7 @@ import domain.utils.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SpecificMovablePiece extends Piece {
+public abstract class SpecificMovablePiece extends AbstractPiece {
 
     public SpecificMovablePiece(final Team Team, final PieceSymbol unit) {
         super(Team, unit);
