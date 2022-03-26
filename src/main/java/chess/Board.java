@@ -79,7 +79,6 @@ public class Board {
     }
 
     public boolean move(Position source, Position target) {
-
         turnDecide(source);
         validateSourceNotEmpty(source);
         boolean isFinished = values.get(target) instanceof King;
@@ -130,7 +129,23 @@ public class Board {
             .stream()
             .filter(turnDecider::isCorrectTurn)
             .mapToDouble(Piece::getScore)
-            .sum();
+            .sum() - adjustPawnScore();
+    }
+
+    public double adjustPawnScore() {
+        int adjustingScore = 0;
+        for (File file : File.values()) {
+            long count = reverseValues().stream()
+                .map(rank -> new Position(rank, file))
+                .filter(position -> values.get(position) instanceof Pawn
+                    && turnDecider.isCorrectTurn(values.get(position)))
+                .count();
+
+            if (count > 1) {
+                adjustingScore += count * 0.5;
+            }
+        }
+        return adjustingScore;
     }
 
     public Map<Position, Piece> getValues() {
