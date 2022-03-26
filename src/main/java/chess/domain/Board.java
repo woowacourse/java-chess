@@ -33,29 +33,35 @@ public final class Board {
         Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
 
-        movePiece(sourcePosition, targetPosition, piece);
+        checkMovableAndMovePiece(sourcePosition, targetPosition, piece);
     }
 
-    private void movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
+    private Piece findPiece(Position sourcePosition) {
+        Optional<Piece> wrappedPiece = piece(sourcePosition);
+        if (wrappedPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
+        }
+        return wrappedPiece.get();
+    }
+
+    private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
+        if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
+            throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+        }
+    }
+
+    private void checkMovableAndMovePiece(Position sourcePosition, Position targetPosition, Piece piece) {
         validateCorrectTurn(piece);
         if (piece.isMovable(sourcePosition, targetPosition)) {
             checkPawnMovement(sourcePosition, targetPosition, piece);
             validatePathEmpty(sourcePosition, targetPosition);
-            pieces.remove(sourcePosition);
-            pieces.put(targetPosition, piece);
-            turn = Color.opposite(turn);
+            movePiece(sourcePosition, targetPosition, piece);
         }
     }
 
     private void validateCorrectTurn(Piece piece) {
         if (!piece.isSameColor(turn)) {
             throw new IllegalArgumentException("[ERROR] 지금은 " + turn.value() + "의 턴입니다.");
-        }
-    }
-
-    private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
-        if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
-            throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
         }
     }
 
@@ -68,24 +74,22 @@ public final class Board {
         }
     }
 
-    private void checkPawnTargetNotExist(Position targetPosition) {
-        if (pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
-        }
-    }
-
     private void checkPawnTargetExist(Position targetPosition) {
         if (!pieces.containsKey(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
         }
     }
 
-    private Piece findPiece(Position sourcePosition) {
-        Optional<Piece> wrappedPiece = piece(sourcePosition);
-        if (wrappedPiece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
+    private void checkPawnTargetNotExist(Position targetPosition) {
+        if (pieces.containsKey(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
         }
-        return wrappedPiece.get();
+    }
+
+    private void movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
+        pieces.remove(sourcePosition);
+        pieces.put(targetPosition, piece);
+        turn = Color.opposite(turn);
     }
 
     private void validateNotEquals(Position sourcePosition, Position targetPosition) {
