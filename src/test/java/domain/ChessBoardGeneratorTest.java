@@ -58,7 +58,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
+    @DisplayName("흰색 플레이어의 초기 Rook 위치는 A1, H1이다.")
     void checkPositionWhiteRook() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftRook = chessBoardGenerator.generate().get(A1);
@@ -71,7 +71,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
+    @DisplayName("검은색 플레이어의 초기 Rook 위치는 A8, H8이다.")
     void checkPositionBlackRook() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftRook = chessBoardGenerator.generate().get(A8);
@@ -84,7 +84,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Knight 위치는 Row 1, Column b, g이다.")
+    @DisplayName("흰색 플레이어의 초기 Knight 위치는 B1, G1이다.")
     void checkPositionWhiteKnight() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftKnight = chessBoardGenerator.generate().get(B1);
@@ -97,7 +97,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Knight 위치는 Row 8, Column b, g이다.")
+    @DisplayName("검은색 플레이어의 초기 Knight 위치는 B8, G8이다.")
     void checkPositionBlackKnight() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftKnight = chessBoardGenerator.generate().get(B8);
@@ -110,7 +110,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Row 1, Column c, f이다.")
+    @DisplayName("흰색 플레이어의 초기 Bishop 위치는 C1, F1이다.")
     void checkPositionWhiteBishop() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftBishop = chessBoardGenerator.generate().get(C1);
@@ -123,7 +123,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Row 8, Column c, f이다.")
+    @DisplayName("검은색 플레이어의 초기 Bishop 위치는 C8, F8이다.")
     void checkPositionBlackBishop() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece leftBishop = chessBoardGenerator.generate().get(C8);
@@ -136,7 +136,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Queen 위치는 Row 1, Column d이다.")
+    @DisplayName("흰색 플레이어의 초기 Queen 위치는 D1이다.")
     void checkPositionWhiteQueen() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(D1);
@@ -146,7 +146,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Queen 위치는 Row 8, Column d이다.")
+    @DisplayName("검은색 플레이어의 초기 Queen 위치는 D8이다.")
     void checkPositionBlackQueen() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(D8);
@@ -156,7 +156,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
+    @DisplayName("흰색 플레이어의 초기 King 위치는 E1이다.")
     void checkPositionWhiteKing() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(E1);
@@ -166,7 +166,7 @@ class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
+    @DisplayName("검은색 플레이어의 초기 King 위치는 E8이다.")
     void checkPositionBlackKing() {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(E8);
