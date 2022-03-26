@@ -27,7 +27,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new FixedTurnDecider());
+        board = new Board(new FixedTurnDecider(), new defaultInitializer());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {
-        Board board = new Board(new AlternatingTurnDecider());
+        Board board = new Board(new AlternatingTurnDecider(), new defaultInitializer());
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }
@@ -170,7 +170,7 @@ public class BoardTest {
     @Test
     @DisplayName("폰이 같은 File에 두 개 이상 있을 경우 각 0.5점으로 계산한다.")
     void when_pawns_in_same_file() {
-        Board board = new Board(new AlternatingTurnDecider());
+        Board board = new Board(new AlternatingTurnDecider(), new defaultInitializer());
 
         board.move(new Position(TWO, A), new Position(FOUR, A));
         board.move(new Position(SEVEN, B), new Position(FIVE, B));

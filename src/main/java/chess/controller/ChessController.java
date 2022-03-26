@@ -3,6 +3,7 @@ package chess.controller;
 import static chess.Command.*;
 
 import chess.Board;
+import chess.defaultInitializer;
 import chess.dto.Request;
 import chess.turndecider.AlternatingTurnDecider;
 import chess.view.InputView;
@@ -12,7 +13,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        Board board = new Board(new AlternatingTurnDecider());
+        Board board = new Board(new AlternatingTurnDecider(), new defaultInitializer());
 
         if (InputView.inputCommandInStart() == END) {
             return;
