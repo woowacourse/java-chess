@@ -10,7 +10,7 @@ public class PieceInfo {
         this.pieceSymbol = pieceSymbol;
     }
 
-    public boolean checkSameTeam(Team team) {
+    public boolean checkSameTeam(final Team team) {
         return this.team == team;
     }
 
