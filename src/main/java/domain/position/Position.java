@@ -4,16 +4,20 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Row row;
-    private final Column column;
+    private final Rank rank;
+    private final File file;
 
-    public Position(final Row row, final Column column) {
-        this.row = row;
-        this.column = column;
+    private Position(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(String row, String column) {
-        return new Position(Row.of(row), Column.of(column));
+    public static Position of(File file, Rank rank) {
+        return new Position(file, rank);
+    }
+
+    public static Position of(String file, String rank) {
+        return new Position(File.of(file), Rank.of(rank));
     }
 
     @Override
@@ -25,27 +29,27 @@ public class Position {
             return false;
         }
         final Position position = (Position) o;
-        return row == position.row && column == position.column;
+        return rank == position.rank && file == position.file;
     }
 
-    public int getRow() {
-        return row.getIndex();
+    public int getRank() {
+        return rank.getIndex();
     }
 
-    public int getColumn() {
-        return column.getIndex();
+    public int getFile() {
+        return file.getIndex();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(rank, file);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-            "row=" + row +
-            ", column=" + column +
+            "row=" + rank +
+            ", column=" + file +
             '}';
     }
 }

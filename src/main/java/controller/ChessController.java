@@ -44,6 +44,6 @@ public class ChessController {
 
     private Position generatePosition(String value) {
         String[] position = value.split("");
-        return Position.of(position[1], position[0]);
+        return Position.of(position[0], position[1]);
     }
 }

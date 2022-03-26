@@ -3,9 +3,9 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Player;
-import domain.position.Column;
+import domain.position.Rank;
+import domain.position.File;
 import domain.position.Position;
-import domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +15,8 @@ public class RookTest {
     @DisplayName("Rook 은 상하좌우로 이동할 수 있다.")
     void moveRookUpDownRightLeft() {
         Piece piece = new Rook(Player.WHITE);
-        Position source = new Position(Row.TWO, Column.B);
-        Position target = new Position(Row.THREE, Column.B);
+        Position source = Position.of(File.B, Rank.TWO);
+        Position target = Position.of(File.B, Rank.THREE);
 
         assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
@@ -25,8 +25,8 @@ public class RookTest {
     @DisplayName("Rook은 Target을 상하좌우로 움직일 수 있다.")
     void moveRookUpDownRightLeftTarget() {
         Piece piece = new Rook(Player.WHITE);
-        Position source = new Position(Row.TWO, Column.B);
-        Position target = new Position(Row.SEVEN, Column.B);
+        Position source = Position.of(File.B, Rank.TWO);
+        Position target = Position.of(File.B, Rank.SEVEN);
 
         assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }

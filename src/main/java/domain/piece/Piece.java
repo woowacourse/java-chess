@@ -3,9 +3,9 @@ package domain.piece;
 import domain.Player;
 import domain.directions.Direction;
 import domain.directions.DirectionsGenerator;
-import domain.position.Column;
+import domain.position.File;
 import domain.position.Position;
-import domain.position.Row;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +66,7 @@ public abstract class Piece {
     }
 
     protected boolean checkOverRange(final int row, final int column) {
-        return Row.isRowRange(row) && Column.isColumnRange(column);
+        return Rank.isRankRange(row) && File.isFileRange(column);
     }
 
     public boolean isSamePlayer(Player player) {

@@ -11,9 +11,9 @@ import domain.piece.BlackPawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
 import domain.piece.WhitePawn;
-import domain.position.Column;
+import domain.position.Rank;
+import domain.position.File;
 import domain.position.Position;
-import domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -26,8 +26,8 @@ public class ChessBoardTest {
     void runExceptionSameTargetSameColor() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
-        Position source = new Position(Row.ONE, Column.A);
-        Position target = new Position(Row.TWO, Column.A);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.A, Rank.TWO);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -40,14 +40,14 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.ONE, Column.A), new Rook(Player.WHITE));
-                board.put(new Position(Row.SEVEN, Column.A), new BlackPawn(Player.BLACK));
+                board.put(Position.of(File.A, Rank.ONE), new Rook(Player.WHITE));
+                board.put(Position.of(File.A, Rank.SEVEN), new BlackPawn(Player.BLACK));
                 return board;
             }
         });
 
-        Position source = new Position(Row.ONE, Column.A);
-        Position target = new Position(Row.SEVEN, Column.A);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.A, Rank.SEVEN);
 
         chessBoard.move(source, target);
 
@@ -60,8 +60,8 @@ public class ChessBoardTest {
     void canNotMoveMore() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
-        Position source = new Position(Row.ONE, Column.A);
-        Position target = new Position(Row.SEVEN, Column.A);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.A, Rank.SEVEN);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -72,8 +72,8 @@ public class ChessBoardTest {
     void jumpPiece_Knight() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
-        Position source = new Position(Row.ONE, Column.B);
-        Position target = new Position(Row.THREE, Column.C);
+        Position source = Position.of(File.B, Rank.ONE);
+        Position target = Position.of(File.C, Rank.THREE);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -85,12 +85,12 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.THREE, Column.C);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.THREE);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -102,13 +102,13 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
-                board.put(new Position(Row.THREE, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.THREE, Column.C);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.THREE);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -121,13 +121,13 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
-                board.put(new Position(Row.THREE, Column.D), new BlackPawn(Player.BLACK));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.D, Rank.THREE), new BlackPawn(Player.BLACK));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.THREE, Column.D);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.D, Rank.THREE);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -139,12 +139,12 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.THREE, Column.D);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.D, Rank.THREE);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -157,12 +157,12 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.FOUR, Column.C);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.FOUR);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -174,13 +174,13 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
-                board.put(new Position(Row.FOUR, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.FOUR), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.FOUR, Column.C);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.FOUR);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -193,13 +193,13 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(new Position(Row.TWO, Column.C), new WhitePawn(Player.WHITE));
-                board.put(new Position(Row.THREE, Column.C), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
                 return board;
             }
         });
-        Position source = new Position(Row.TWO, Column.C);
-        Position target = new Position(Row.FOUR, Column.C);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.FOUR);
 
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);

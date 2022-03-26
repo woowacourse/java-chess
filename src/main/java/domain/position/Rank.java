@@ -2,7 +2,7 @@ package domain.position;
 
 import java.util.Arrays;
 
-public enum Row {
+public enum Rank {
     ONE(1),
     TWO(2),
     THREE(3),
@@ -14,22 +14,22 @@ public enum Row {
 
     private final int index;
 
-    Row(final int index) {
+    Rank(final int index) {
         this.index = index;
     }
 
-    public static Row of(int index) {
+    public static Rank of(int index) {
         return Arrays.stream(values())
             .filter(value -> value.index == index)
             .findFirst()
-            .orElseThrow(()-> new IllegalArgumentException("[ERROR] 올바르지 않은 File입니다.(1 ~ 8)"));
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바르지 않은 Rank입니다.(1 ~ 8)"));
     }
 
-    public static Row of(String index) {
-        return Row.of(Integer.parseInt(index));
+    public static Rank of(String index) {
+        return Rank.of(Integer.parseInt(index));
     }
 
-    public static boolean isRowRange(int index) {
+    public static boolean isRankRange(int index) {
         return ONE.index <= index && index <= EIGHT.index;
     }
 

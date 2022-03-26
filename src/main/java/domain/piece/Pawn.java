@@ -3,9 +3,9 @@ package domain.piece;
 import domain.Player;
 import domain.directions.Direction;
 import domain.directions.DirectionsGenerator;
-import domain.position.Column;
+import domain.position.File;
 import domain.position.Position;
-import domain.position.Row;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,17 +29,17 @@ public class Pawn extends SpecificLocationPiece {
         if (isTwoSpaceMoveDirection(direction)) {
             calculatePawnTwoSpaceMove(positions, source, direction);
         }
-        int row = source.getRow() + direction.getRow();
-        int column = source.getColumn() + direction.getColumn();
+        int file = source.getFile() + direction.getFile();
+        int rank = source.getRank() + direction.getRank();
 
-        if (checkOverRange(row, column)) {
-            positions.add(new Position(Row.of(row), Column.of(column)));
+        if (checkOverRange(file, rank)) {
+            positions.add(Position.of(File.of(file), Rank.of(rank)));
         }
         return positions;
     }
 
     private boolean isFirstMove(Position source) {
-        return source.getRow() == startLine;
+        return source.getRank() == startLine;
     }
 
     private boolean isTwoSpaceMoveDirection(Direction direction) {
@@ -50,10 +50,10 @@ public class Pawn extends SpecificLocationPiece {
         Direction direction) {
         Direction addDirection = generateAddDirection(direction);
         if (addDirection != null) {
-            int row = source.getRow() + addDirection.getRow();
-            int column = source.getColumn() + addDirection.getColumn();
-            if (checkOverRange(row, column)) {
-                positions.add(new Position(Row.of(row), Column.of(column)));
+            int file = source.getFile() + direction.getFile();
+            int rank = source.getRank() + direction.getRank();
+            if (checkOverRange(file, rank)) {
+                positions.add(Position.of(File.of(file), Rank.of(rank)));
             }
         }
     }

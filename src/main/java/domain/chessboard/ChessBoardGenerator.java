@@ -5,14 +5,13 @@ import domain.piece.Bishop;
 import domain.piece.BlackPawn;
 import domain.piece.King;
 import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.WhitePawn;
-import domain.position.Column;
+import domain.position.Rank;
+import domain.position.File;
 import domain.position.Position;
-import domain.position.Row;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,14 +29,14 @@ public class ChessBoardGenerator implements BoardGenerator {
 
 
     private void createInitialize(Map<Position, Piece> board) {
-        for (Row row : Row.values()) {
-            initializeByRow(board, row);
+        for (Rank rank : Rank.values()) {
+            initializeByRow(board, rank);
         }
     }
 
-    private void initializeByRow(Map<Position, Piece> board, Row row) {
-        for (Column column : Column.values()) {
-            board.put(new Position(row, column), null);
+    private void initializeByRow(Map<Position, Piece> board, Rank rank) {
+        for (File file : File.values()) {
+            board.put(Position.of(file, rank), null);
         }
     }
 
@@ -52,58 +51,60 @@ public class ChessBoardGenerator implements BoardGenerator {
 
     private void createInitPawn(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            Arrays.stream(Column.values())
+            Arrays.stream(File.values())
                 .forEach(
-                    column -> board.put(new Position(Row.SEVEN, column), new BlackPawn(Player.BLACK)));
+                    column -> board.put(Position.of(column, Rank.SEVEN),
+                        new BlackPawn(Player.BLACK)));
             return;
         }
-        Arrays.stream(Column.values())
-            .forEach(column -> board.put(new Position(Row.TWO, column), new WhitePawn(Player.WHITE)));
+        Arrays.stream(File.values())
+            .forEach(
+                column -> board.put(Position.of(column, Rank.TWO), new WhitePawn(Player.WHITE)));
     }
 
     private void createInitRook(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            board.put(new Position(Row.EIGHT, Column.A), new Rook(Player.BLACK));
-            board.put(new Position(Row.EIGHT, Column.H), new Rook(Player.BLACK));
+            board.put(Position.of(File.A, Rank.EIGHT), new Rook(Player.BLACK));
+            board.put(Position.of(File.H, Rank.EIGHT), new Rook(Player.BLACK));
             return;
         }
-        board.put(new Position(Row.ONE, Column.A), new Rook(Player.WHITE));
-        board.put(new Position(Row.ONE, Column.H), new Rook(Player.WHITE));
+        board.put(Position.of(File.A, Rank.ONE), new Rook(Player.WHITE));
+        board.put(Position.of(File.H, Rank.ONE), new Rook(Player.WHITE));
     }
 
     private void createInitKnight(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            board.put(new Position(Row.EIGHT, Column.B), new Knight(Player.BLACK));
-            board.put(new Position(Row.EIGHT, Column.G), new Knight(Player.BLACK));
+            board.put(Position.of(File.B, Rank.EIGHT), new Knight(Player.BLACK));
+            board.put(Position.of(File.G, Rank.EIGHT), new Knight(Player.BLACK));
             return;
         }
-        board.put(new Position(Row.ONE, Column.B), new Knight(Player.WHITE));
-        board.put(new Position(Row.ONE, Column.G), new Knight(Player.WHITE));
+        board.put(Position.of(File.B, Rank.ONE), new Knight(Player.WHITE));
+        board.put(Position.of(File.G, Rank.ONE), new Knight(Player.WHITE));
     }
 
     private void createInitBishop(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            board.put(new Position(Row.EIGHT, Column.C), new Bishop(Player.BLACK));
-            board.put(new Position(Row.EIGHT, Column.F), new Bishop(Player.BLACK));
+            board.put(Position.of(File.C, Rank.EIGHT), new Bishop(Player.BLACK));
+            board.put(Position.of(File.F, Rank.EIGHT), new Bishop(Player.BLACK));
             return;
         }
-        board.put(new Position(Row.ONE, Column.C), new Bishop(Player.WHITE));
-        board.put(new Position(Row.ONE, Column.F), new Bishop(Player.WHITE));
+        board.put(Position.of(File.C, Rank.ONE), new Bishop(Player.WHITE));
+        board.put(Position.of(File.F, Rank.ONE), new Bishop(Player.WHITE));
     }
 
     private void createInitQueen(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            board.put(new Position(Row.EIGHT, Column.D), new Queen(Player.BLACK));
+            board.put(Position.of(File.D, Rank.EIGHT), new Queen(Player.BLACK));
             return;
         }
-        board.put(new Position(Row.ONE, Column.D), new Queen(Player.WHITE));
+        board.put(Position.of(File.D, Rank.ONE), new Queen(Player.WHITE));
     }
 
     private void createInitKing(Map<Position, Piece> board, Player player) {
         if (player == Player.BLACK) {
-            board.put(new Position(Row.EIGHT, Column.E), new King(Player.BLACK));
+            board.put(Position.of(File.E, Rank.EIGHT), new King(Player.BLACK));
             return;
         }
-        board.put(new Position(Row.ONE, Column.E), new King(Player.WHITE));
+        board.put(Position.of(File.E, Rank.ONE), new King(Player.WHITE));
     }
 }
