@@ -65,7 +65,7 @@ public class ChessGame {
         List<List<Piece>> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateColumns(piecesOnColumns);
-        System.out.println(color.name() + ":" + score);
+        ResultView.printStatus(color, score);
     }
 
     private void initChessBoard() {
@@ -87,7 +87,7 @@ public class ChessGame {
         chessBoard.move(gameCommand);
         ResultView.printChessBoard(chessBoard.getPieces());
         if (chessBoard.isEnd()) {
-            System.out.println(turn.name() + "팀이 이겼습니다.");
+            ResultView.printWinner(turn);
             turn = Color.EMPTY;
         }
         turn = turn.getReverseColor();
