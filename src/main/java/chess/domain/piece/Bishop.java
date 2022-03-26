@@ -43,14 +43,23 @@ public class Bishop extends ChessPiece {
                 .noneMatch(chessMen::existChessPieceAt);
     }
 
-    public List<ChessBoardPosition> createPathPositions(ChessBoardPosition other) {
-        List<Integer> rows = position.ascendingRowRange(other);
-        List<Integer> columns = position.ascendingColumnRange(other);
+    private List<ChessBoardPosition> createPathPositions(ChessBoardPosition targetChessBoardPosition) {
+        int rowUnitChange = calculateUnitChange(targetChessBoardPosition.getRow(), position.getRow());
+        int columnUnitChange = calculateUnitChange(targetChessBoardPosition.getColumn(), position.getColumn());
         List<ChessBoardPosition> pathPositions = new ArrayList<>();
-        for (int i = 0; i < rows.size(); ++i) {
-            pathPositions.add(new ChessBoardPosition((char) (columns.get(i).intValue()), rows.get(i)));
+        ChessBoardPosition currentBoardPosition = position.move(columnUnitChange, rowUnitChange);
+        while (!currentBoardPosition.equals(targetChessBoardPosition)) {
+            pathPositions.add(currentBoardPosition);
+            currentBoardPosition = currentBoardPosition.move(columnUnitChange, rowUnitChange);
         }
         return pathPositions;
+    }
+
+    private int calculateUnitChange(int source, int target) {
+        if (source == target) {
+            return 0;
+        }
+        return (source - target) / Math.abs(source - target);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
