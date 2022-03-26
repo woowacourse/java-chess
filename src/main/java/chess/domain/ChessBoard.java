@@ -45,7 +45,7 @@ public class ChessBoard {
 
     private void validateEmptyPiece(Piece piece) {
         if (piece.isEmpty()) {
-            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
+            throw new IllegalArgumentException("source 위치에 기물이 존재하지 않습니다.");
         }
     }
 
