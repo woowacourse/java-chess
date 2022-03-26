@@ -7,10 +7,12 @@ import java.util.List;
 
 public abstract class Piece {
 
+    private final PieceType pieceType;
     private final Color color;
     private final MovingStrategy movingStrategy;
 
-    protected Piece(Color color, MovingStrategy movingStrategy) {
+    protected Piece(PieceType pieceType, Color color, MovingStrategy movingStrategy) {
+        this.pieceType = pieceType;
         this.color = color;
         this.movingStrategy = movingStrategy;
     }
@@ -35,5 +37,15 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract String getNotation();
+    public String getNotation() {
+        return pieceType.getNotation(color);
+    }
+
+    public double getScore() {
+        return pieceType.getScore();
+    }
+
+    public boolean isSamePieceType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
 }

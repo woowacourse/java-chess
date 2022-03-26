@@ -7,10 +7,8 @@ import chess.domain.piece.strategy.WhitePawnMovingStrategy;
 
 public class Pawn extends Piece {
 
-    private static final String NOTATION = "P";
-
     public Pawn(Color color) {
-        super(color, getMovingStrategy(color));
+        super(PieceType.PAWN, color, getMovingStrategy(color));
     }
 
     private static MovingStrategy getMovingStrategy(Color color) {
@@ -19,14 +17,5 @@ public class Pawn extends Piece {
         }
 
         return new WhitePawnMovingStrategy();
-    }
-
-    @Override
-    public String getNotation() {
-        if (isBlack()) {
-            return NOTATION;
-        }
-
-        return NOTATION.toLowerCase();
     }
 }

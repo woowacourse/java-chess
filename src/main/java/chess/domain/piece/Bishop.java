@@ -13,18 +13,8 @@ import java.util.List;
 public class Bishop extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
-    private static final String NOTATION = "B";
 
     public Bishop(Color color) {
-        super(color, new LinearMovingStrategy(DIRECTIONS));
-    }
-
-    @Override
-    public String getNotation() {
-        if (isBlack()) {
-            return NOTATION;
-        }
-
-        return NOTATION.toLowerCase();
+        super(PieceType.BISHOP, color, new LinearMovingStrategy(DIRECTIONS));
     }
 }

@@ -6,10 +6,8 @@ import java.util.List;
 
 public class EmptyPiece extends Piece {
 
-    private static final String NOTATION = ".";
-
     public EmptyPiece() {
-        super(Color.NONE, null);
+        super(PieceType.EMPTY, Color.NONE, null);
     }
 
     @Override
@@ -25,10 +23,5 @@ public class EmptyPiece extends Piece {
     @Override
     public boolean isEmpty() {
         return true;
-    }
-
-    @Override
-    public String getNotation() {
-        return NOTATION;
     }
 }
