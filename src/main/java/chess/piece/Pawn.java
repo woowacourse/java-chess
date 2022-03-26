@@ -21,10 +21,12 @@ public class Pawn extends Piece {
         // MoveType == ENEMY
         if (moveType == MoveType.ENEMY) {
             if (pieceColor == WHITE) {
-                return source.isDiagonal(target) && source.rankDisplacement(target) == 1 && source.fileDistance(target) == 1;
+                return source.isDiagonal(target) && source.rankDisplacement(target) == 1
+                    && source.fileDistance(target) == 1;
             }
 
-            return source.isDiagonal(target) && target.rankDisplacement(source) == 1 && source.fileDistance(target) == 1;
+            return source.isDiagonal(target) && target.rankDisplacement(source) == 1
+                && source.fileDistance(target) == 1;
         }
 
         // MoveType == EMPTY

@@ -166,4 +166,18 @@ public class BoardTest {
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }
+
+    @Test
+    @DisplayName("폰이 같은 File에 두 개 이상 있을 경우 각 0.5점으로 계산한다.")
+    void when_pawns_in_same_file() {
+        Board board = new Board(new AlternatingTurnDecider());
+
+        board.move(new Position(TWO, A), new Position(FOUR, A));
+        board.move(new Position(SEVEN, B), new Position(FIVE, B));
+        board.move(new Position(FOUR, A), new Position(FIVE, B));
+
+        //then
+        double actual = board.calculateScore();
+        assertThat(actual).isEqualTo(37.0);
+    }
 }
