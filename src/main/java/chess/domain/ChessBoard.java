@@ -55,7 +55,8 @@ public class ChessBoard {
         movePiece(from, to, piece);
     }
 
-    private void refinePawnMovablePositions(Position from, Piece piece, Map<Direction, List<Position>> movablePositions) {
+    private void refinePawnMovablePositions(Position from, Piece piece,
+                                            Map<Direction, List<Position>> movablePositions) {
         if (!isFirstMovePawn(from) && piece.isSamePieceName(PieceName.PAWN)) {
             removeSecondMove(piece, movablePositions);
         }
@@ -104,7 +105,7 @@ public class ChessBoard {
     }
 
     private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
-        if(positions.size() != 0){
+        if (positions.size() != 0) {
             int cutIndex = getCutIndex(piece, positions);
             result.addAll(positions.subList(0, cutIndex));
         }
@@ -167,5 +168,24 @@ public class ChessBoard {
 
     public Map<Position, Piece> getPieces() {
         return Collections.unmodifiableMap(pieces);
+    }
+
+    public List<Piece> getPiecesOnColumn(Column column, Color color) {
+        List<Piece> result = new ArrayList<>();
+        for (Row row : Row.values()) {
+            result.add(pieces.get(new Position(column, row)));
+        }
+        return result.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .collect(Collectors.toList());
+    }
+
+    public List<List<Piece>> getPiecesOnColumns(Color color) {
+        List<List<Piece>> result = new ArrayList<>();
+        for (Column column : Column.values()) {
+            result.add(getPiecesOnColumn(column, color));
+        }
+
+        return result;
     }
 }

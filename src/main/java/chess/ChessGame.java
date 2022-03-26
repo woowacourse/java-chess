@@ -1,13 +1,16 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.ScoreCalculator;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
 import chess.domain.piece.Color;
 import chess.domain.piece.NormalPiecesGenerator;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PiecesGenerator;
 import chess.view.InputView;
 import chess.view.ResultView;
+import java.util.List;
 
 public class ChessGame {
 
@@ -47,10 +50,18 @@ public class ChessGame {
         }
         validateInitBoard();
         if (gameCommand.isSameCommandType(CommandType.STATUS)) {
-            System.out.println("Statsusjdlkfl");
+            printStatusByColor(Color.WHITE);
+            printStatusByColor(Color.BLACK);
             return;
         }
         doMovementByTurn(gameCommand);
+    }
+
+    private void printStatusByColor(Color color) {
+        List<List<Piece>> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
+        ScoreCalculator calculator = ScoreCalculator.getInstance();
+        double score = calculator.calculateColumns(piecesOnColumns);
+        System.out.println(color.name() + ":" + score);
     }
 
     private void initChessBoard() {

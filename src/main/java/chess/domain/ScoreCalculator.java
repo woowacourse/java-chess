@@ -4,7 +4,16 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
 import java.util.List;
 
-public class ChessScore {
+public class ScoreCalculator {
+
+    private static final ScoreCalculator scoreCalculator = new ScoreCalculator();
+
+    private ScoreCalculator() {
+    }
+
+    public static ScoreCalculator getInstance() {
+        return scoreCalculator;
+    }
 
     public double calculateColumns(List<List<Piece>> pieces) {
         return pieces.stream()
