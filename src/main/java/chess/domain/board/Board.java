@@ -21,6 +21,7 @@ public class Board {
 
     private static final double PAWN_SUBTRACT_UNIT = 0.5;
     private static final double DEFAULT_SCORE = 0D;
+
     private final Map<Position, Piece> board;
 
     Board(Map<Position, Piece> board) {
@@ -34,31 +35,29 @@ public class Board {
         Piece pieceAtFrom = board.getOrDefault(fromPosition, InvalidPiece.getInstance());
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
 
-        // 출발 좌표에 기물이 없으면 false다
-        if (pieceAtFrom.isInValid()) {
+        if (isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
             return MoveResult.FAIL;
         }
 
-        // 출발 좌표에 있는 기물이 목적지로 이동이 불가하면 false다
-        boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition),
-            pieceAtTo);
-        if (!movable) {
-            return MoveResult.FAIL;
-        }
+        movePiece(fromPosition, toPosition, pieceAtFrom);
+        return getMoveResult(pieceAtTo);
+    }
 
-        // 이동 경로 내 다른 기물이 있을 경우 false다
-        if (!pieceAtFrom.isKnight() && isPieceOnTheWay(fromPosition, toPosition)) {
-            return MoveResult.FAIL;
-        }
+    private boolean isInValidMove(Position from, Position to, Piece pieceAtFrom, Piece pieceAtTo) {
+        return isInvalidFrom(pieceAtFrom) || isNotMovable(from, to, pieceAtFrom, pieceAtTo)
+            || canNotGoOnTheWay(from, to, pieceAtFrom);
+    }
 
-        board.put(toPosition, pieceAtFrom);
-        board.remove(fromPosition);
+    private boolean isInvalidFrom(Piece pieceAtFrom) {
+        return pieceAtFrom.isInValid();
+    }
 
-        if (pieceAtTo instanceof King) {
-            return MoveResult.ENDED;
-        }
+    private boolean isNotMovable(Position from, Position to, Piece pieceAtFrom, Piece pieceAtTo) {
+        return !pieceAtFrom.movable(from.calculateDistance(to), pieceAtTo);
+    }
 
-        return MoveResult.SUCCESS;
+    private boolean canNotGoOnTheWay(Position from, Position to, Piece pieceAtFrom) {
+        return !pieceAtFrom.isKnight() && isPieceOnTheWay(from, to);
     }
 
     private boolean isPieceOnTheWay(Position fromPosition, Position toPosition) {
@@ -66,6 +65,18 @@ public class Board {
 
         return positionsOnTheWay.stream()
             .anyMatch(board::containsKey);
+    }
+
+    private void movePiece(Position from, Position to, Piece pieceAtFrom) {
+        board.put(to, pieceAtFrom);
+        board.remove(from);
+    }
+
+    private MoveResult getMoveResult(Piece pieceAtTo) {
+        if (pieceAtTo instanceof King) {
+            return MoveResult.ENDED;
+        }
+        return MoveResult.SUCCESS;
     }
 
     public Map<Color, Double> getScore() {
