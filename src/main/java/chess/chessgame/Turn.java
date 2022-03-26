@@ -23,7 +23,4 @@ public class Turn {
         }
     }
 
-    public Color getColor() {
-        return color;
-    }
 }
