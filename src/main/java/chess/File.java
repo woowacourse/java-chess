@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum File {
 
     A(1),
@@ -15,5 +17,20 @@ public enum File {
 
     File(int value) {
         this.value = value;
+    }
+
+    public File add(int file) {
+        return File.of(value + file);
+    }
+
+    public boolean canAdd(int file) {
+        return value + file >= A.value && value + file <= H.value;
+    }
+
+    public static File of(int otherValue) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == otherValue)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
     }
 }

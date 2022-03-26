@@ -13,6 +13,14 @@ public class Position {
         this.file = file;
     }
 
+    public boolean isMovablePosition(Direction direction) {
+        return direction.isMovablePosition(rank, file);
+    }
+
+    public Position createMovablePosition(Direction direction) {
+        return direction.createMovablePosition(rank, file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

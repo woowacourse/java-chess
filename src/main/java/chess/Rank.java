@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Rank {
 
     EIGHT(8),
@@ -16,5 +18,20 @@ public enum Rank {
 
     Rank(int value) {
         this.value = value;
+    }
+
+    public Rank add(int row) {
+        return Rank.of(value + row);
+    }
+
+    public boolean canAdd(int row) {
+        return value + row >= ONE.value && value + row <= EIGHT.value;
+    }
+
+    public static Rank of(int otherValue) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.value == otherValue)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
     }
 }

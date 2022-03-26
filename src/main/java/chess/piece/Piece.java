@@ -1,10 +1,15 @@
 package chess.piece;
 
+import chess.Direction;
 import chess.Player;
+import chess.Position;
+
+import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
 
-    private final Player player;
+    protected final Player player;
     private final String symbol;
 
 
@@ -19,5 +24,13 @@ public abstract class Piece {
 
     public boolean isSame(Player player) {
         return player.equals(this.player);
+    }
+
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+        return true;
+    }
+
+    protected List<Direction> getDirection() {
+        return null;
     }
 }

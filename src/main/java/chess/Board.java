@@ -73,5 +73,8 @@ public class Board {
         if (!board.get(source).isSame(turn)) {
             throw new IllegalArgumentException("[ERROR] 상대편 기물은 선택 할 수 없습니다.");
         }
+        if(board.get(source).canMove(source, target, board)){
+            throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
+        }
     }
 }
