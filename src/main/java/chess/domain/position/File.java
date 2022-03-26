@@ -25,6 +25,10 @@ public enum File {
         this.order = order;
     }
 
+    public static File from(final int other) {
+        return File.from(getFileName(other));
+    }
+
     public static File from(final String other) {
         return Arrays.stream(File.values())
                 .filter(file -> file.file.equals(other))
@@ -32,16 +36,9 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
 
-    public static File from(final int other) {
-        return Arrays.stream(File.values())
-                .filter(file -> file.order == other)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
-    }
-
     public static List<File> sorted() {
         return Arrays.stream(File.values())
-                .sorted(Comparator.comparing(File::getFile))
+                .sorted(Comparator.comparing(File::getOrder))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -57,11 +54,15 @@ public enum File {
         return Math.max(from.order, to.order);
     }
 
-    String getFile() {
-        return file;
-    }
-
     public int getOrder() {
         return order;
+    }
+
+    private static String getFileName(final int order) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.order == order)
+                .findFirst()
+                .map(file -> file.file)
+                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
 }

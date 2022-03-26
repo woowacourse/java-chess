@@ -31,7 +31,7 @@ public class WhiteTurnTest {
 
         assertThatThrownBy(() -> whiteTurn.move(Position.from("a7"), Position.from("a8")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("흰색 말을 선택하세요.");
+                .hasMessageContaining("자신의 말을 선택하세요.");
     }
 
     @Test

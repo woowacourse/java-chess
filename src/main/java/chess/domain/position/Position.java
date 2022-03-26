@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -25,10 +28,22 @@ public class Position {
     }
 
     public static Position from(final String position) {
-        File file = File.from(position.substring(0, 1));
-        Rank rank = Rank.from(Integer.parseInt(position.substring(1)));
+        File file = File.from(position.substring(FILE_INDEX, RANK_INDEX));
+        Rank rank = Rank.from(Integer.parseInt(position.substring(RANK_INDEX)));
 
         return Position.of(file, rank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public int getFileOrder() {
+        return file.getOrder();
+    }
+
+    public int getRank() {
+        return rank.getRank();
     }
 
     @Override
@@ -45,18 +60,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public int getRankNumber() {
-        return rank.getRank();
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-
-    public int getFileOrder() {
-        return file.getOrder();
     }
 }

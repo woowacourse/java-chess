@@ -52,7 +52,7 @@ public class PawnTest {
 
         assertThatThrownBy(() -> pawn.checkPieceMoveRange(mockBoard, Position.from("a2"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도착 지점에 기물이 존재합니다.");
+                .hasMessage("이동 경로에 기물이 존재합니다.");
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PawnTest {
 
         assertThatThrownBy(() -> pawn.checkPieceMoveRange(mockBoard, Position.from("a2"), Position.from("a4")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도착 지점에 기물이 존재합니다.");
+                .hasMessage("이동 경로에 기물이 존재합니다.");
     }
 
     @Test

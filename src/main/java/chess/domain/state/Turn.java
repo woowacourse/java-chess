@@ -1,0 +1,39 @@
+package chess.domain.state;
+
+import chess.domain.board.Board;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
+
+public abstract class Turn extends State {
+
+    Turn(final Board board) {
+        this.board = board;
+    }
+
+    protected void checkValidPosition(final Position from, final Position to, final Color color) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("출발 지점과 도착 지점 위치가 동일합니다.");
+        }
+        if (board.isMatchedColor(from, color.reversed())) {
+            throw new IllegalArgumentException("자신의 말을 선택하세요.");
+        }
+        if (board.hasPiece(to) && board.isMatchedColor(to, color)) {
+            throw new IllegalArgumentException("도착 지점에 나의 말이 존재합니다.");
+        }
+    }
+
+    @Override
+    public State start() {
+        throw new IllegalStateException("게임이 이미 시작되었습니다.");
+    }
+
+    @Override
+    public State end() {
+        return new End();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
+}

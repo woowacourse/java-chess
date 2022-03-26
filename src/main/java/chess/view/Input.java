@@ -5,10 +5,10 @@ public final class Input {
     private Input() {
     }
 
-    public static String[] inputCommand(final Enterable enterable) {
+    public static String inputCommand(final Enterable enterable) {
         final String command = enterable.enter();
         checkBlank(command);
-        return command.split(" ");
+        return command;
     }
 
     private static void checkBlank(final String command) {

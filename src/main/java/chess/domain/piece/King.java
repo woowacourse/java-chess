@@ -13,7 +13,7 @@ public class King extends Piece {
 
     @Override
     public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (isLeftAndRightOneStep(from, to) || isTopAndBottomOneStep(from, to) || isDiagonalOneStep(from, to)) {
+        if (isBothSidesOneStep(from, to) || isUpAndDownOneStep(from, to) || isDiagonalOneStep(from, to)) {
             return;
         }
         throw new IllegalArgumentException("킹은 모든 방향으로 한 칸 이동 가능합니다.");

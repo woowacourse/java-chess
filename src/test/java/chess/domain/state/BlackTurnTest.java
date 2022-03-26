@@ -29,7 +29,7 @@ public class BlackTurnTest {
 
         assertThatThrownBy(() ->  blackTurn.move(Position.from("a1"), Position.from("a2")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("검은색 말을 선택하세요.");
+                .hasMessageContaining("자신의 말을 선택하세요.");
     }
 
     @Test

@@ -30,10 +30,10 @@ public class Pawn extends Piece {
 
     private boolean isValidDirection(final Position from, final Position to) {
         if (color == Color.WHITE) {
-            return from.getRankNumber() < to.getRankNumber();
+            return from.getRank() < to.getRank();
         }
         if (color == Color.BLACK) {
-            return from.getRankNumber() > to.getRankNumber();
+            return from.getRank() > to.getRank();
         }
         throw new IllegalStateException("잘못된 색상 정보 입니다.");
     }
@@ -52,8 +52,8 @@ public class Pawn extends Piece {
         }
 
         int initRank = getInitRank();
-        int start = from.getRankNumber();
-        int rankDistance = Rank.difference(from.getRankNumber(), to.getRankNumber());
+        int start = from.getRank();
+        int rankDistance = Rank.difference(from.getRank(), to.getRank());
 
         return isInitForward(start, initRank, rankDistance) || isDefaultForward(start, initRank, rankDistance);
     }

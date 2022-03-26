@@ -9,6 +9,10 @@ import java.util.Locale;
 
 public abstract class Piece {
 
+    private static final int ZERO_STEP = 0;
+    public static final int ONE_STEP = 1;
+    public static final int TWO_STEP = 2;
+
     private final String name;
     protected final Color color;
 
@@ -26,32 +30,32 @@ public abstract class Piece {
     }
 
     public boolean isVertical(final Position from, final Position to) {
-        return File.difference(from.getFile(), to.getFile()) == 0;
+        return File.difference(from.getFile(), to.getFile()) == ZERO_STEP;
     }
 
     public boolean isHorizontal(final Position from, final Position to) {
-        return Rank.difference(from.getRankNumber(), to.getRankNumber()) == 0;
+        return Rank.difference(from.getRank(), to.getRank()) == ZERO_STEP;
     }
 
     public boolean isDiagonal(final Position from, final Position to) {
-        return File.difference(from.getFile(), to.getFile()) == Rank.difference(from.getRankNumber(), to.getRankNumber());
+        return File.difference(from.getFile(), to.getFile()) == Rank.difference(from.getRank(), to.getRank());
     }
 
-    public boolean isLeftAndRightOneStep(final Position from, final Position to) {
-        return File.difference(from.getFile(), to.getFile()) == 0 && Rank.difference(from.getRankNumber(), to.getRankNumber()) == 1;
+    public boolean isBothSidesOneStep(final Position from, final Position to) {
+        return File.difference(from.getFile(), to.getFile()) == ZERO_STEP && Rank.difference(from.getRank(), to.getRank()) == ONE_STEP;
     }
 
-    public boolean isTopAndBottomOneStep(final Position from, final Position to) {
-        return Rank.difference(from.getRankNumber(), to.getRankNumber()) == 0 && File.difference(from.getFile(), to.getFile()) == 1;
+    public boolean isUpAndDownOneStep(final Position from, final Position to) {
+        return Rank.difference(from.getRank(), to.getRank()) == ZERO_STEP && File.difference(from.getFile(), to.getFile()) == ONE_STEP;
     }
 
     public boolean isDiagonalOneStep(final Position from, final Position to) {
-        return File.difference(from.getFile(), to.getFile()) == 1 && Rank.difference(from.getRankNumber(), to.getRankNumber()) == 1;
+        return File.difference(from.getFile(), to.getFile()) == ONE_STEP && Rank.difference(from.getRank(), to.getRank()) == ONE_STEP;
     }
 
     public boolean isKnightMoving(final Position from, final Position to) {
-        return Rank.difference(from.getRankNumber(), to.getRankNumber()) == 1 && File.difference(from.getFile(), to.getFile()) == 2 ||
-                File.difference(from.getFile(), to.getFile()) == 1 && Rank.difference(from.getRankNumber(), to.getRankNumber()) == 2;
+        return Rank.difference(from.getRank(), to.getRank()) == ONE_STEP && File.difference(from.getFile(), to.getFile()) == TWO_STEP ||
+                File.difference(from.getFile(), to.getFile()) == ONE_STEP && Rank.difference(from.getRank(), to.getRank()) == TWO_STEP;
     }
 
     public boolean isSameColor(final Color other) {

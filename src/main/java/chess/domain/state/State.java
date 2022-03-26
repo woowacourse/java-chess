@@ -13,13 +13,13 @@ public abstract class State {
 
     public abstract State start();
 
+    public abstract State move(final Position from, final Position to);
+
     public abstract State end();
+
+    public abstract boolean isRunning();
 
     public final Map<Position, Piece> getBoard() {
         return board.toMap();
     }
-
-    public abstract boolean isRunning();
-
-    public abstract State move(final Position from, final Position to);
 }
