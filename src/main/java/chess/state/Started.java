@@ -1,9 +1,9 @@
 package chess.state;
 
 import chess.domain.Board;
-import chess.domain.Move;
 import chess.domain.Result;
 import chess.domain.Score;
+import chess.domain.move.Move;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -50,7 +50,6 @@ public class Started implements State {
         if (move.isCheckmate(to)) {
             return runCheckmate();
         }
-
         return runMovePiece(from, to);
     }
 

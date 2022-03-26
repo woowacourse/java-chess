@@ -4,8 +4,10 @@ import chess.domain.position.Position;
 
 public final class EmptyPiece extends Piece {
 
+    private static final String NAME = ".";
+
     public EmptyPiece() {
-        super(Color.NONE, ".");
+        super(Color.NONE, NAME);
     }
 
     @Override

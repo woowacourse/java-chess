@@ -1,9 +1,12 @@
 package chess.domain.position;
 
-import chess.domain.position.movestrategy.MoveStrategy;
+import chess.domain.move.movestrategy.MoveStrategy;
 import java.util.Objects;
 
 public class Position {
+
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final File file;
     private final Rank rank;
@@ -14,8 +17,8 @@ public class Position {
     }
 
     public static Position create(final String position) {
-        final File file = File.of(position.charAt(0));
-        final Rank rank = Rank.of(position.substring(1));
+        final File file = File.of(position.charAt(FILE_INDEX));
+        final Rank rank = Rank.of(position.substring(RANK_INDEX));
         return new Position(file, rank);
     }
 

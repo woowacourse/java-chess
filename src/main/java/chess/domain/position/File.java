@@ -21,7 +21,7 @@ public enum File {
 
     public static File of(final char value) {
         return Arrays.stream(File.values())
-            .filter(file -> file.getValue() == value)
+            .filter(file -> file.value == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 File 값 입니다."));
     }
@@ -45,9 +45,5 @@ public enum File {
             return null;
         }
 
-    }
-
-    public char getValue() {
-        return value;
     }
 }

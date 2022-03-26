@@ -1,9 +1,9 @@
-package chess.domain;
+package chess.domain.move;
 
+import chess.domain.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Move {

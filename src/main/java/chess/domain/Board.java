@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 
 public class Board {
 
+    private static final int INITIAL_CAPACITY = 64;
+
     private final Map<Position, Piece> board;
 
     private Board(final Map<Position, Piece> board) {
@@ -28,7 +30,7 @@ public class Board {
     }
 
     public static Board create() {
-        final Map<Position, Piece> board = new LinkedHashMap<>(64);
+        final Map<Position, Piece> board = new LinkedHashMap<>(INITIAL_CAPACITY);
 
         initialPositions(board);
         initialPieces(board);

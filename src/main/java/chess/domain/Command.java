@@ -19,7 +19,7 @@ public enum Command {
 
     public static Command of(final String command) {
         return Arrays.stream(Command.values())
-            .filter(value -> value.getCommand().equals(command))
+            .filter(value -> value.command.equals(command))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
     }
@@ -38,9 +38,5 @@ public enum Command {
             return state.status();
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다.");
-    }
-
-    public String getCommand() {
-        return command;
     }
 }

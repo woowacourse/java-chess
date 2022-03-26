@@ -1,29 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.position.Direction;
+import chess.domain.move.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PawnPiece extends Piece {
 
     private static final String NAME = "P";
-
-    private final List<Direction> movableDirections;
+    private static final int LIMIT_DISTANCE = 2;
 
     public PawnPiece(final Color color) {
         super(color, NAME);
-        this.movableDirections = decideMovableDirections(color);
-    }
-
-    private List<Direction> decideMovableDirections(final Color color) {
-        if (color == Color.WHITE) {
-            return new ArrayList<>(
-                List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST));
-        }
-        return new ArrayList<>(
-            List.of(Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST));
     }
 
     @Override
@@ -33,30 +20,40 @@ public class PawnPiece extends Piece {
 
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
-        if (isInitialPositionAndMoveTwice(from, fileDistance, rankDistance)) {
-            return true;
-        }
-
-        if ((direction == Direction.NORTH || direction == Direction.SOUTH) && !isEmptyTarget) {
-            return false;
-        }
-
-        if (direction != Direction.NORTH && direction != Direction.SOUTH && isEmptyTarget) {
-            return false;
-        }
-
-        return movableDirections.contains(direction) &&
-            Math.abs(fileDistance) < 2 && Math.abs(rankDistance) < 2;
+        return isInitialForwardMove(direction, from, rankDistance) ||
+            isForwardMove(direction, isEmptyTarget, rankDistance) ||
+            isDiagonalMove(direction, isEmptyTarget, rankDistance, fileDistance);
     }
 
-    private boolean isInitialPositionAndMoveTwice(final Position from, final int fileDistance,
+    private boolean isInitialForwardMove(final Direction direction, final Position from,
         final int rankDistance) {
-        if (super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) && fileDistance == 0
-            && rankDistance == -2) {
-            return true;
-        }
-        return super.isSameColor(Color.WHITE) && from.isSameRank(Rank.TWO) && fileDistance == 0
-            && rankDistance == 2;
+        return (super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) &&
+            direction == Direction.SOUTH && Math.abs(rankDistance) <= LIMIT_DISTANCE) ||
+            (super.isSameColor(Color.WHITE) && from.isSameRank(Rank.TWO) &&
+                direction == Direction.NORTH && Math.abs(rankDistance) <= LIMIT_DISTANCE);
+    }
+
+    private boolean isForwardMove(final Direction direction, final Boolean isEmptyTarget,
+        final int rankDistance) {
+        return isForward(direction) && isEmptyTarget && Math.abs(rankDistance) < LIMIT_DISTANCE;
+    }
+
+    private boolean isForward(final Direction direction) {
+        return (super.isSameColor(Color.WHITE) && direction == Direction.NORTH) ||
+            (super.isSameColor(Color.BLACK) && direction == Direction.SOUTH);
+    }
+
+    private boolean isDiagonalMove(final Direction direction, final boolean isEmptyTarget,
+        final int rankDistance, final int fileDistance) {
+        return isDiagonal(direction) && !isEmptyTarget && Math.abs(fileDistance) < LIMIT_DISTANCE
+            && Math.abs(rankDistance) < LIMIT_DISTANCE;
+    }
+
+    private boolean isDiagonal(final Direction direction) {
+        return (super.isSameColor(Color.WHITE) &&
+            (direction == Direction.NORTH_EAST || direction == Direction.NORTH_WEST)) ||
+            (super.isSameColor(Color.BLACK) &&
+                (direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST));
     }
 
 }

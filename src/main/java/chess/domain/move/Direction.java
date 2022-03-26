@@ -1,15 +1,16 @@
-package chess.domain.position;
+package chess.domain.move;
 
-import chess.domain.position.movestrategy.East;
-import chess.domain.position.movestrategy.MoveStrategy;
-import chess.domain.position.movestrategy.None;
-import chess.domain.position.movestrategy.North;
-import chess.domain.position.movestrategy.NorthEast;
-import chess.domain.position.movestrategy.NorthWest;
-import chess.domain.position.movestrategy.South;
-import chess.domain.position.movestrategy.SouthEast;
-import chess.domain.position.movestrategy.SouthWest;
-import chess.domain.position.movestrategy.West;
+import chess.domain.move.movestrategy.East;
+import chess.domain.move.movestrategy.MoveStrategy;
+import chess.domain.move.movestrategy.None;
+import chess.domain.move.movestrategy.North;
+import chess.domain.move.movestrategy.NorthEast;
+import chess.domain.move.movestrategy.NorthWest;
+import chess.domain.move.movestrategy.South;
+import chess.domain.move.movestrategy.SouthEast;
+import chess.domain.move.movestrategy.SouthWest;
+import chess.domain.move.movestrategy.West;
+import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

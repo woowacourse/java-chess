@@ -40,14 +40,14 @@ public class OutputView {
     }
 
     public static void printTurnMessage(final String name) {
-        System.out.println(name + "의 턴입니다.");
+        System.out.printf("%s의 턴입니다.%n", name);
     }
 
     public static void printResult(final String turn, final String result) {
-        System.out.println(turn + "은 " + result + "하셨습니다." + NEW_LINE);
+        System.out.printf("%s은 %s하셨습니다.%n", turn, result);
     }
 
     public static void printScore(final String turn, final double score) {
-        System.out.println(turn + "은 " + score + "점 입니다.");
+        System.out.printf("%s은 %.1f점 입니다.%n", turn, score);
     }
 }

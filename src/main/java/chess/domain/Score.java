@@ -13,6 +13,16 @@ import java.util.Map;
 
 public class Score {
 
+    private static final double QUEEN_SCORE = 9.0;
+    private static final double ROOK_SCORE = 5.0;
+    private static final double BISHOP_SCORE = 3.0;
+    private static final double KNIGHT_SCORE = 2.5;
+    private static final int PAWN_INITIAL_SCORE = 1;
+    private static final double PAWN_DUPLICATE_SCORE = 0.5;
+    private static final int GRATER = 1;
+    private static final int LESS = -1;
+    private static final int EQUAL = 0;
+
     private final double value;
 
     public Score(final Board board, final Color color) {
@@ -30,10 +40,10 @@ public class Score {
 
     private Map<Piece, Double> initializeScoreRuleWithoutPawn(final Color color) {
         return Map.of(
-            new QueenPiece(color), 9.0,
-            new RookPiece(color), 5.0,
-            new BishopPiece(color), 3.0,
-            new KnightPiece(color), 2.5
+            new QueenPiece(color), QUEEN_SCORE,
+            new RookPiece(color), ROOK_SCORE,
+            new BishopPiece(color), BISHOP_SCORE,
+            new KnightPiece(color), KNIGHT_SCORE
         );
     }
 
@@ -53,20 +63,19 @@ public class Score {
     }
 
     private double decidePawnScoreRule(final int count) {
-        if (count == 1) {
+        if (count == PAWN_INITIAL_SCORE) {
             return count;
         }
-        return count * 0.5;
+        return count * PAWN_DUPLICATE_SCORE;
     }
 
     public int decideResultValue(Score score) {
         if (value > score.value) {
-            return 1;
+            return GRATER;
+        } else if (value < score.value) {
+            return LESS;
         }
-        else if (value < score.value) {
-            return -1;
-        }
-        return 0;
+        return EQUAL;
     }
 
     public double getValue() {

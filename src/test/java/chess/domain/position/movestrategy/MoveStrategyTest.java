@@ -2,6 +2,15 @@ package chess.domain.position.movestrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.move.movestrategy.East;
+import chess.domain.move.movestrategy.MoveStrategy;
+import chess.domain.move.movestrategy.North;
+import chess.domain.move.movestrategy.NorthEast;
+import chess.domain.move.movestrategy.NorthWest;
+import chess.domain.move.movestrategy.South;
+import chess.domain.move.movestrategy.SouthEast;
+import chess.domain.move.movestrategy.SouthWest;
+import chess.domain.move.movestrategy.West;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

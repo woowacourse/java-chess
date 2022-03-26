@@ -13,7 +13,7 @@ public class Ended implements State {
     }
 
     @Override
-    public State move(String[] commands) {
+    public State move(final String[] commands) {
         return new Ended();
     }
 
