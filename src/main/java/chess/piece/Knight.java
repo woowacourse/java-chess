@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 
@@ -18,7 +19,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Position source, Position target, MoveType moveType) {
         return source.rankDistance(target) == 2 && source.fileDistance(target) == 1 ||
             source.rankDistance(target) == 1 && source.fileDistance(target) == 2;
     }

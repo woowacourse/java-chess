@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.File;
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
@@ -25,7 +26,7 @@ class BishopTest {
         Position target = new Position(rank, file);
 
         //when
-        boolean actual = bishop.isMovable(source, target);
+        boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -41,7 +42,7 @@ class BishopTest {
         Position target = new Position(rank, file);
 
         //when
-        boolean actual = bishop.isMovable(source, target);
+        boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

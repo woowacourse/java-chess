@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.File;
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
@@ -22,7 +24,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(TWO, A);
         Position target = new Position(rank, A);
-        boolean actual = pawn.isMovable(source, target);
+        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -32,7 +34,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(FOUR, A);
         Position target = new Position(SIX, A);
-        boolean actual = pawn.isMovable(source, target);
+        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
         assertThat(actual).isFalse();
     }
 
@@ -42,7 +44,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(FOUR, A);
         Position target = new Position(THREE, A);
-        boolean actual = pawn.isMovable(source, target);
+        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
 
         assertThat(actual).isFalse();
     }
@@ -53,8 +55,21 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK);
         Position source = new Position(FIVE, A);
         Position target = new Position(SIX, A);
-        boolean actual = pawn.isMovable(source, target);
+        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
 
         assertThat(actual).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:true", "A:false"}, delimiter = ':')
+    @DisplayName("폰은 대각선으로만 공격할 수 있다")
+    void when_pawn_can_attack_diagonal(File file, boolean expected) {
+        Pawn pawn = new Pawn(PieceColor.WHITE);
+
+        Position source = new Position(FOUR, A);
+        Position target = new Position(FIVE, file);
+
+        boolean actual = pawn.isMovable(source, target, MoveType.ENEMY);
+        assertThat(actual).isEqualTo(expected);
     }
 }

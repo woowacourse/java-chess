@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.File;
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
@@ -21,7 +22,7 @@ public class KingTest {
         King king = new King(PieceColor.WHITE);
 
         //when
-        boolean actual = king.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file));
+        boolean actual = king.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -35,7 +36,7 @@ public class KingTest {
         King king = new King(PieceColor.WHITE);
 
         //when
-        boolean actual = king.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file));
+        boolean actual = king.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

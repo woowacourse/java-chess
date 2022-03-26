@@ -1,5 +1,8 @@
 package chess.piece;
 
+import static chess.PieceColor.*;
+
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
@@ -14,8 +17,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        if (pieceColor == PieceColor.WHITE) {
+    public boolean isMovable(Position source, Position target, MoveType moveType) {
+        // MoveType == ENEMY
+        if (moveType == MoveType.ENEMY) {
+            if (pieceColor == WHITE) {
+                return source.isDiagonal(target) && source.rankDisplacement(target) == 1 && source.fileDistance(target) == 1;
+            }
+
+            return source.isDiagonal(target) && target.rankDisplacement(source) == 1 && source.fileDistance(target) == 1;
+        }
+
+        // MoveType == EMPTY
+        if (pieceColor == WHITE) {
             if (source.isRankOf(Rank.TWO)) {
                 return isForward(source, target, 2);
             }

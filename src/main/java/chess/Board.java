@@ -97,12 +97,24 @@ public class Board {
         Piece sourcePiece = values.get(source);
         Piece targetPiece = values.get(target);
 
-        if (!sourcePiece.isMovable(source, target) || isBlocked(source, target) || targetPiece.isMyTeam(sourcePiece)) {
+        MoveType moveType = decideMoveType(targetPiece);
+        if (!sourcePiece.isMovable(source, target, moveType) || isBlocked(source, target) || targetPiece.isMyTeam(
+            sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
         values.put(target, sourcePiece);
         values.put(source, EMPTY_PIECE);
+    }
+
+    private MoveType decideMoveType(Piece targetPiece) {
+        if (targetPiece.equals(EMPTY_PIECE)) {
+            return MoveType.EMPTY;
+        }
+        if (turnDecider.isCorrectTurn(targetPiece)) {
+            return MoveType.FRIENDLY;
+        }
+        return MoveType.ENEMY;
     }
 
     private boolean isBlocked(Position source, Position target) {

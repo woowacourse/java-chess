@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.File;
+import chess.MoveType;
 import chess.PieceColor;
 import chess.Position;
 import chess.Rank;
@@ -22,7 +23,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file));
+        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -36,7 +37,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file));
+        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();
