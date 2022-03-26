@@ -5,6 +5,8 @@ import chess.domain.board.Position;
 
 public final class Pawn extends Piece {
 
+    private static final double POINT = 1.0;
+
     private final AbstractPawnMovePattern pattern;
 
     public Pawn(Color color) {
@@ -20,5 +22,10 @@ public final class Pawn extends Piece {
     @Override
     public Direction findDirection(Position src, Position dest) {
         return pattern.findDirection(src, dest);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

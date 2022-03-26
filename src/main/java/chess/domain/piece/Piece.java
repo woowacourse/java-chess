@@ -26,4 +26,6 @@ public abstract class Piece {
     public abstract boolean canMove(Position src, Position dest);
 
     public abstract Direction findDirection(Position src, Position dest);
+
+    public abstract double getPoint();
 }

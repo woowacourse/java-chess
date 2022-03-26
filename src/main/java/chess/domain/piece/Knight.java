@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
+    private static final double POINT = 2.5;
+
     public Knight(Color color) {
         super(color);
     }
@@ -28,5 +30,10 @@ public final class Knight extends Piece {
             }
         }
         return null;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

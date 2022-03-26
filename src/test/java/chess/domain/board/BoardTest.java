@@ -466,4 +466,78 @@ class BoardTest {
         assertThat(board.findPieceBy(src).isEmpty()).isTrue();
         assertThat(board.findPieceBy(dest).get()).isEqualTo(pawn);
     }
+
+    @DisplayName("흰 말의 점수를 계산한다.")
+    @Test
+    void testCalculateWhiteScore() {
+        Board board = Board.getInstance();
+
+        double score = board.calculateScore(Color.WHITE);
+
+        assertThat(score).isEqualTo(38.0);
+    }
+
+    @DisplayName("같은 file에 여러 pawn이 있으면 0.5점으로 점수를 계산한다.")
+    @Test
+    void testCalculateScoreSameLinePawn() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("b2"), new Pawn(Color.WHITE));
+        value.put(Position.of("b3"), new Pawn(Color.WHITE));
+        value.put(Position.of("b4"), new Pawn(Color.WHITE));
+        value.put(Position.of("a2"), new Pawn(Color.WHITE));
+
+        Board board = new Board(value);
+
+        double score = board.calculateScore(Color.WHITE);
+
+        assertThat(score).isEqualTo(2.5);
+    }
+
+    @DisplayName("검은 말의 점수를 계산한다.")
+    @Test
+    void testCalculateBlackScore() {
+        Board board = Board.getInstance();
+
+        double score = board.calculateScore(Color.BLACK);
+
+        assertThat(score).isEqualTo(38.0);
+    }
+
+    @DisplayName("현재 이기고 있는 진영을 계산한다")
+    @Test
+    void testCalculateCurrentWinner() {
+        Board board = Board.getInstance();
+
+        Result result = board.calculateCurrentWinner();
+
+        assertThat(result).isEqualTo(Result.DRAW);
+    }
+
+    @DisplayName("진영의 점수를 계산하여 백이 이기는 경우")
+    @Test
+    void testCalculateCurrentWinnerWhite() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("a2"), new Pawn(Color.WHITE));
+        value.put(Position.of("b3"), new Knight(Color.WHITE));
+        value.put(Position.of("a7"), new Pawn(Color.BLACK));
+        Board board = new Board(value);
+
+        Result result = board.calculateCurrentWinner();
+
+        assertThat(result).isEqualTo(Result.WHITE_WIN);
+    }
+
+    @DisplayName("진영의 점수를 계산하여 흑이 이기는 경우")
+    @Test
+    void testCalculateCurrentWinnerBlack() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("a2"), new Pawn(Color.BLACK));
+        value.put(Position.of("b3"), new Knight(Color.BLACK));
+        value.put(Position.of("a7"), new Pawn(Color.WHITE));
+        Board board = new Board(value);
+
+        Result result = board.calculateCurrentWinner();
+
+        assertThat(result).isEqualTo(Result.BLACK_WIN);
+    }
 }

@@ -2,10 +2,8 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -128,6 +126,59 @@ public class Board {
         if (findPieceBy(src).isPresent()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
+    }
+
+    public double calculateScore(Color color) {
+        return Arrays.stream(Column.values())
+                .map(this::getColumns)
+                .mapToDouble(positions -> calculateScoreByColumn(positions, color))
+                .sum();
+    }
+
+    private double calculateScoreByColumn(List<Position> columns, Color color) {
+        double result = 0.0;
+
+        for (Position column : columns) {
+            Optional<Piece> optionalPiece = findPieceBy(column);
+            if (optionalPiece.isPresent() && optionalPiece.get().isSameColor(color)) {
+                result += optionalPiece.get().getPoint();
+            }
+        }
+
+        int pawnCount = countPawn(columns, color);
+        if (pawnCount > 1) {
+            result -= pawnCount * 0.5;
+        }
+
+        return result;
+    }
+
+    private int countPawn(List<Position> columns, Color color) {
+        return (int) columns.stream()
+                .map(this::get)
+                .filter(Objects::nonNull)
+                .filter(piece -> piece.isSameColor(color))
+                .filter(piece -> piece.isSameType(Pawn.class))
+                .count();
+    }
+
+    private List<Position> getColumns(Column column) {
+        return Arrays.stream(Row.values())
+                .map(row -> new Position(column, row))
+                .collect(Collectors.toList());
+    }
+
+    public Result calculateCurrentWinner() {
+        double whiteScore = calculateScore(Color.WHITE);
+        double blackScore = calculateScore(Color.BLACK);
+
+        if (whiteScore > blackScore) {
+            return Result.WHITE_WIN;
+        }
+        if (whiteScore < blackScore) {
+            return Result.BLACK_WIN;
+        }
+        return Result.DRAW;
     }
 
     public Map<Position, Piece> getValue() {

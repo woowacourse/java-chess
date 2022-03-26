@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Bishop extends Piece {
 
+    private static final double POINT = 3.0;
+
     private final AbstractStraightMovePattern pattern = new AbstractStraightMovePattern() {
         @Override
         public List<Direction> getDirections() {
@@ -26,5 +28,10 @@ public final class Bishop extends Piece {
     @Override
     public Direction findDirection(Position src, Position dest) {
         return pattern.findDirection(src, dest);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }
