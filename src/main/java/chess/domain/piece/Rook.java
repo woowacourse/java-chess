@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import java.util.Optional;
+
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.strategy.RookMovingStrategy;
+import chess.domain.direction.Direction;
+import chess.domain.direction.strategy.RookDirectionStrategy;
 
 public class Rook extends Piece {
 
@@ -22,8 +25,12 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(Position from, Position to) {
-		return new RookMovingStrategy().check(from, to);
+	public Direction matchDirection(Position from, Position to) {
+		Optional<? extends Direction> direction = new RookDirectionStrategy().find(from, to);
+		if (direction.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		return direction.get();
 	}
 
 	@Override

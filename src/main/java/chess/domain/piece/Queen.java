@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import java.util.Optional;
+
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.strategy.QueenMovingStrategy;
+import chess.domain.direction.Direction;
+import chess.domain.direction.strategy.QueenDirectionStrategy;
 
 public class Queen extends Piece {
 
@@ -27,8 +30,12 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(Position from, Position to) {
-		return new QueenMovingStrategy().check(from, to);
+	public Direction matchDirection(Position from, Position to) {
+		Optional<? extends Direction> direction = new QueenDirectionStrategy().find(from, to);
+		if (direction.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		return direction.get();
 	}
 
 	@Override

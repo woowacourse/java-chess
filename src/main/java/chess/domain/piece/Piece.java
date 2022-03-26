@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.direction.Direction;
 
 public abstract class Piece {
 
@@ -11,7 +12,7 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	public abstract boolean isMovable(Position from, Position to);
+	public abstract Direction matchDirection(Position from, Position to);
 
 	public abstract String getSymbol();
 

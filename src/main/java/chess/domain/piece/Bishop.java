@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import java.util.Optional;
+
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.piece.strategy.BishopMovingStrategy;
+import chess.domain.direction.Direction;
+import chess.domain.direction.strategy.BishopDirectionStrategy;
 
 public class Bishop extends Piece {
 
@@ -22,8 +25,12 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(Position from, Position to) {
-		return new BishopMovingStrategy().check(from, to);
+	public Direction matchDirection(Position from, Position to) {
+		Optional<? extends Direction> direction = new BishopDirectionStrategy().find(from, to);
+		if (direction.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		return direction.get();
 	}
 
 	@Override
