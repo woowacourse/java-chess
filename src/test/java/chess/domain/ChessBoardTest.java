@@ -163,4 +163,21 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of(column, row), new WhitePawn()));
         assertThat(chessBoard.isPromotionStatus(color)).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("종료되지 않은 게임의 우승자 반환 시 예외발생")
+    void winnerExceptionByNotFinishedGame() {
+        ChessBoard chessBoard = ChessBoard.createNewChessBoard();
+
+        assertThatThrownBy(() -> chessBoard.winner())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("경기가 종료되지 않아 우승자를 계산할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("우승자 반환")
+    void winner() {
+        ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('e', '1'), new King(WHITE)));
+        assertThat(chessBoard.winner()).isEqualTo(WHITE);
+    }
 }

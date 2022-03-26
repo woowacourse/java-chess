@@ -122,6 +122,18 @@ public class ChessBoard {
                 .count();
     }
 
+    public Color winner() {
+        if (!isFinished()) {
+            throw new IllegalStateException("경기가 종료되지 않아 우승자를 계산할 수 없습니다.");
+        }
+        return pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .map(Piece::color)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 존재하지 않아 우승자를 계산할 수 없습니다."));
+    }
+
     public boolean isPromotionStatus(Color color) {
         return pieces.entrySet()
                 .stream()
