@@ -79,4 +79,20 @@ public abstract class Piece {
     public void changeLocation(Square targetSquare) {
         this.square = targetSquare;
     }
+
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
+    }
+
+    public boolean isPawn() {
+        return this.getPoint().equals(Point.PAWN);
+    }
+
+    public boolean isKing() {
+        return this.getPoint().equals(Point.KING);
+    }
+
+    public boolean isSameFile(Piece other) {
+        return this.square.isSameFile(other.square);
+    }
 }

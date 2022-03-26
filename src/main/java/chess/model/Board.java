@@ -6,13 +6,11 @@ import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
-import chess.model.piece.Point;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public final class Board {
 
@@ -42,10 +40,10 @@ public final class Board {
                 new Rook(color, new Square(File.A, rank)),
                 new Knight(color, new Square(File.B, rank)),
                 new Bishop(color, new Square(File.C, rank)),
-                new Queen(color, new Square(File.D, rank)), 
+                new Queen(color, new Square(File.D, rank)),
                 new King(color, new Square(File.E, rank)),
-                new Bishop(color, new Square(File.F, rank)), 
-                new Knight(color, new Square(File.G, rank)), 
+                new Bishop(color, new Square(File.F, rank)),
+                new Knight(color, new Square(File.G, rank)),
                 new Rook(color, new Square(File.H, rank))
         );
     }
@@ -120,7 +118,27 @@ public final class Board {
 
     public boolean aliveTwoKings() {
         return board.stream()
-                .filter(piece -> piece.getPoint().equals(Point.KING))
+                .filter(Piece::isKing)
                 .count() == 2;
+    }
+
+    public double calculatePoint(Color color) {
+        return board.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(this::calculateEachPoint)
+                .sum();
+    }
+
+    private double calculateEachPoint(Piece piece) {
+        if (piece.isPawn() && isPawnInSameFile(piece)) {
+            return piece.getPoint().getValue() / 2;
+        }
+        return piece.getPoint().getValue();
+    }
+
+    private boolean isPawnInSameFile(Piece other) {
+        return board.stream()
+                .filter(piece -> piece.isPawn() && piece.isAlly(other))
+                .anyMatch(piece -> piece.isSameFile(other) && !piece.equals(other));
     }
 }

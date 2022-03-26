@@ -44,4 +44,24 @@ public class BoardTest {
         assertThat(a3Piece).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.THREE)));
         assertThat(e3).isEqualTo(new Pawn(Color.WHITE, Square.of("e3")));
     }
+
+    @Test
+    void point() {
+        Board board = new Board();
+        double score = board.calculatePoint(Color.WHITE);
+        assertThat(score).isEqualTo(38);
+    }
+
+    @Test
+    void pointWithPawn() {
+        Board board = new Board();
+        board.move(Square.of("b8"), Square.of("c6"));
+        board.move(Square.of("c6"), Square.of("b4"));
+        board.move(Square.of("b4"), Square.of("d3"));
+        board.move(Square.of("c2"), Square.of("d3"));
+        double score = board.calculatePoint(Color.WHITE);
+        double blackScore = board.calculatePoint(Color.BLACK);
+        assertThat(score).isEqualTo(37);
+        assertThat(blackScore).isEqualTo(35.5);
+    }
 }

@@ -85,4 +85,8 @@ public final class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public boolean isSameFile(Square other) {
+        return this.file.equals(other.file);
+    }
 }
