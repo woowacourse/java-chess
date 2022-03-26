@@ -92,7 +92,19 @@ public class ChessGame {
         if (!chessPiece.isMovable(targetPosition, whiteChessMen, blackChessMen)) {
             throw new IllegalArgumentException("[ERROR] 경로에 다른 체스가 있어 이동할 수 없습니다.");
         }
+
+        if (chessPiece.myTeamExistsInTargetPosition(targetPosition, getMyTeam())) {
+            throw new IllegalArgumentException("[ERROR] 도착 위치에 우리 팀 체스피스가 있어 이동할 수 없습니다.");
+        }
+
         chessPiece.move(targetPosition);
+    }
+
+    private ChessMen getMyTeam() {
+        if (turn.isWhite()) {
+            return whiteChessMen;
+        }
+        return blackChessMen;
     }
 
     private ChessPiece getChessPiece(ChessBoardPosition sourcePosition) {

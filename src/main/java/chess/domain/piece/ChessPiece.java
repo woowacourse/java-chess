@@ -31,4 +31,7 @@ public abstract class ChessPiece {
         return position.equals(other);
     }
 
+    public boolean myTeamExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen myTeamChessMen) {
+        return myTeamChessMen.existChessPieceAt(targetPosition);
+    }
 }
