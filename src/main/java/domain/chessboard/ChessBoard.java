@@ -12,10 +12,12 @@ public class ChessBoard {
     private static final int BLACK_PAWN_START_LINE = 7;
     private static final int WHITE_PAWN_START_LINE = 2;
 
+    private Player currentPlayer;
     Map<Position, Piece> board;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
+        this.currentPlayer = Player.WHITE;
     }
 
     public String getSymbol(final Position position) {
@@ -31,6 +33,7 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
+        validateTurn(source);
         validateTargetPosition(source, target);
         if (isPawn(source)) {
             validateTargetRouteForPawn(source, target);
@@ -39,6 +42,12 @@ public class ChessBoard {
         }
         validateMoveRoute(source, target);
         movePiece(source, target);
+    }
+
+    private void validateTurn(Position source) {
+        if (!board.get(source).isSamePlayer(currentPlayer)) {
+            throw new IllegalArgumentException("[ERROR] 상대방의 기물을 움직일 수 없습니다.");
+        }
     }
 
     private void validateTargetPosition(final Position source, final Position target) {
@@ -114,5 +123,14 @@ public class ChessBoard {
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.put(source, null);
+        changeTurn();
+    }
+
+    private void changeTurn() {
+        if (currentPlayer.equals(Player.WHITE)) {
+            this.currentPlayer = Player.BLACK;
+            return;
+        }
+        this.currentPlayer = Player.WHITE;
     }
 }
