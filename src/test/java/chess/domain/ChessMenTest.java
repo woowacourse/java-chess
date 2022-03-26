@@ -1,8 +1,11 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,5 +27,24 @@ class ChessMenTest {
         ChessBoardPosition targetPosition = ChessBoardPosition.of("d5");
         chessMen.removeChessPieceAt(targetPosition);
         assertThat(chessMen).containsOnly(rook1);
+    }
+
+    @Test
+    @DisplayName("킹이 존재하는 경우 true 반환한다.")
+    void isKingDead() {
+        Team team = Team.BLACK;
+        King king = new King(team, ChessBoardPosition.of("c3"));
+        List<ChessPiece> chessPieces = new ArrayList<>();
+        chessPieces.add(king);
+        ChessMen chessMen = new ChessMen(chessPieces);
+        assertFalse(chessMen.isKingDead());
+    }
+
+    @Test
+    @DisplayName("킹이 없는 경우 false 반환한다.")
+    void isKingDead2() {
+        List<ChessPiece> chessPieces = new ArrayList<>();
+        ChessMen chessMen = new ChessMen(chessPieces);
+        assertTrue(chessMen.isKingDead());
     }
 }

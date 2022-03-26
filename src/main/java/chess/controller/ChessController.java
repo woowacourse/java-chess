@@ -24,12 +24,15 @@ public class ChessController {
         ChessGame chessGame = ChessGame.create();
         OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
                 ChessMenDto.of(chessGame.getWhiteChessMen()));
-        List<String> moveInput = InputView.requestMove();
-        ChessBoardPosition sourcePosition = ChessBoardPosition.of(moveInput.get(SOURCE_POSITION_INDEX));
-        ChessBoardPosition targetPosition = ChessBoardPosition.of(moveInput.get(TARGET_POSITION_INDEX));
 
-        chessGame.move(sourcePosition, targetPosition);
-        OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
-                ChessMenDto.of(chessGame.getWhiteChessMen()));
+        while (!chessGame.isGameEnd()) {
+            List<String> moveInput = InputView.requestMove();
+            ChessBoardPosition sourcePosition = ChessBoardPosition.of(moveInput.get(SOURCE_POSITION_INDEX));
+            ChessBoardPosition targetPosition = ChessBoardPosition.of(moveInput.get(TARGET_POSITION_INDEX));
+
+            chessGame.move(sourcePosition, targetPosition);
+            OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
+                    ChessMenDto.of(chessGame.getWhiteChessMen()));
+        }
     }
 }

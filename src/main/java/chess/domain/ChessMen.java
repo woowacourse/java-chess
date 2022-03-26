@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
+import chess.domain.piece.King;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class ChessMen implements Iterable<ChessPiece> {
 
     public void removeChessPieceAt(ChessBoardPosition position) {
         chessPieces.removeIf(chessPiece -> chessPiece.isSamePosition(position));
+    }
+
+    public boolean isKingDead() {
+        return chessPieces.stream()
+                .noneMatch(King.class::isInstance);
     }
 
     @Override
