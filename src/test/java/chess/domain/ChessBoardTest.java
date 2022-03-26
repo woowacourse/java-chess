@@ -383,4 +383,38 @@ public class ChessBoardTest {
                 List.of(c)
         );
     }
+
+    @Test
+    @DisplayName("킹이 1개일 때, 게임은 끝난다.")
+    void isEndTrue() {
+        Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+                Map.entry(new Position("a1"), new King(Color.WHITE)),
+                Map.entry(new Position("b3"), new Pawn(Color.WHITE)),
+                Map.entry(new Position("c4"), new Pawn(Color.WHITE)),
+                Map.entry(new Position("a4"), new Pawn(Color.BLACK)),
+                Map.entry(new Position("a7"), new Pawn(Color.BLACK)),
+                Map.entry(new Position("c5"), new Pawn(Color.BLACK)),
+                Map.entry(new Position("b8"), new Pawn(Color.BLACK))
+        ));
+        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+
+        assertThat(chessBoard.isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 2개일 때, 게임은 끝나지 않는다.")
+    void isEndFalse() {
+        Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+                Map.entry(new Position("a1"), new King(Color.WHITE)),
+                Map.entry(new Position("b3"), new Pawn(Color.WHITE)),
+                Map.entry(new Position("c4"), new Pawn(Color.WHITE)),
+                Map.entry(new Position("a4"), new King(Color.BLACK)),
+                Map.entry(new Position("a7"), new Pawn(Color.BLACK)),
+                Map.entry(new Position("c5"), new Pawn(Color.BLACK)),
+                Map.entry(new Position("b8"), new Pawn(Color.BLACK))
+        ));
+        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+
+        assertThat(chessBoard.isEnd()).isFalse();
+    }
 }

@@ -188,4 +188,11 @@ public class ChessBoard {
 
         return result;
     }
+
+    public boolean isEnd() {
+        long kingCount = pieces.values().stream()
+                .filter(p -> p.isSamePieceName(PieceName.KING))
+                .count();
+        return kingCount != 2;
+    }
 }

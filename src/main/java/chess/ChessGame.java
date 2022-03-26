@@ -43,12 +43,16 @@ public class ChessGame {
     private void playGameByCommand(GameCommand gameCommand) {
         if (gameCommand.isSameCommandType(CommandType.START)) {
             initChessBoard();
+            turn = Color.WHITE;
             return;
         }
         if (gameCommand.isSameCommandType(CommandType.END)) {
             return;
         }
         validateInitBoard();
+        if (turn == Color.EMPTY) {
+            throw new IllegalArgumentException("현재 판이 종료되서 더 이상 진행할 수 없습니다.");
+        }
         if (gameCommand.isSameCommandType(CommandType.STATUS)) {
             printStatusByColor(Color.WHITE);
             printStatusByColor(Color.BLACK);
@@ -81,7 +85,11 @@ public class ChessGame {
             throw new IllegalArgumentException("당신의 차례가 아닙니다.");
         }
         chessBoard.move(gameCommand);
-        turn = turn.getReverseColor();
         ResultView.printChessBoard(chessBoard.getPieces());
+        if (chessBoard.isEnd()) {
+            System.out.println(turn.name() + "팀이 이겼습니다.");
+            turn = Color.EMPTY;
+        }
+        turn = turn.getReverseColor();
     }
 }
