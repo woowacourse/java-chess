@@ -45,4 +45,8 @@ public abstract class Piece {
     public boolean isSamePieceName(PieceName pieceName) {
         return this.name == pieceName;
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -154,6 +155,10 @@ public class ChessBoard {
         if (!targetPiece.isSameColor(piece) && !targetPiece.isEmpty()) {
             result.add(position);
         }
+    }
+
+    public Color getColor(Position position) {
+        return selectPiece(position).getColor();
     }
 
     public Piece selectPiece(Position position) {
