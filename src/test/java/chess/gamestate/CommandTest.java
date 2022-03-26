@@ -1,9 +1,11 @@
 package chess.gamestate;
 
 import static chess.gamestate.Command.MOVE;
+import static chess.gamestate.Command.START;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,5 +35,22 @@ class CommandTest {
     void toCommand() {
         Command command = Command.toCommand("move a2 c5");
         assertThat(command).isEqualTo(MOVE);
+    }
+
+    @Test
+    @DisplayName("MOVE 커맨드가 아닌데 moveposition계산 시 예외발생")
+    void movePoisitonExceptionByNotCommand() {
+        assertThatThrownBy(() -> START.movePosition("move a2 c5"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("position을 계산할 수 있는 Command가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("MovePosition 계산")
+    void movePosition() {
+        MovePosition movePosition = MOVE.movePosition("move a2 c5");
+        MovePosition expected = new MovePosition(Position.from("a2"), Position.from("c5"));
+
+        assertThat(movePosition).isEqualTo(expected);
     }
 }
