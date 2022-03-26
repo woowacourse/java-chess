@@ -13,8 +13,8 @@ public class Promotion extends Running {
     }
 
     @Override
-    public GameState run(String command) {
-        chessBoard.promotion(PromotionPiece.createPromotionPiece(command), color);
+    public GameState run(String requestCommand) {
+        chessBoard.promotion(PromotionPiece.createPromotionPiece(requestCommand), color);
         return beforeRunning.otherState(chessBoard);
     }
 

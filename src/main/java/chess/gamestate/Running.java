@@ -23,17 +23,17 @@ public abstract class Running implements GameState {
     }
 
     @Override
-    public GameState run(String command) {
-        Command cmd = Command.toCommand(command);
-        if (cmd.isEnd()) {
+    public GameState run(String requestCommand) {
+        Command command = Command.toCommand(requestCommand);
+        if (command.isEnd()) {
             return new End();
         }
-        if (cmd.isStatus()) {
+        if (command.isStatus()) {
             OutputView.printChessBoardStatus(chessBoard.calcualteScoreStatus());
             return this;
         }
-        if (cmd.isMove()) {
-            movePieceByCommand(cmd.movePosition(command));
+        if (command.isMove()) {
+            movePieceByCommand(command.movePosition(requestCommand));
             return changeMoveNextState();
         }
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
