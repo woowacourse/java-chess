@@ -3,6 +3,7 @@ package chess.model;
 import static chess.vo.PieceColor.*;
 import static chess.vo.Rank.*;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import chess.model.boardinitializer.BoardInitializer;
@@ -105,15 +106,11 @@ public class Board {
     }
 
     public double adjustPawnScore() {
-        int adjustingScore = 0;
-        for (File file : File.values()) {
-            long count = getPawnCountInOneFile(file);
-
-            if (count > 1) {
-                adjustingScore += count * 0.5;
-            }
-        }
-        return adjustingScore;
+        return Arrays.stream(File.values())
+            .map(this::getPawnCountInOneFile)
+            .filter(count -> count > 1)
+            .mapToDouble(count -> count * 0.5)
+            .sum();
     }
 
     private long getPawnCountInOneFile(File file) {
