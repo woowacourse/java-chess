@@ -1,8 +1,8 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
-import static chess.domain.piece.position.PositionUtil.charToMatchingInt;
-import static chess.domain.piece.position.PositionUtil.fileToIdx;
-import static chess.domain.piece.position.PositionUtil.rankToIdx;
+import static chess.domain.position.PositionUtil.charToMatchingInt;
+import static chess.domain.position.PositionUtil.fileToIdx;
+import static chess.domain.position.PositionUtil.rankToIdx;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,13 @@
-package chess.domain.piece;
+package chess.domain;
 
-import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.piece.ChessmenInitializer;
-import chess.domain.piece.piece.Pieces;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.ChessmenInitializer;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +27,7 @@ public class ScoreCalculatorTest {
     @DisplayName("초기 상태의 점수 합은 38이다.")
     @Test
     void init_score() {
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 38.0;
@@ -38,7 +40,7 @@ public class ScoreCalculatorTest {
     void no_queen_score() {
         Piece queen = chessmen.extractPiece(Position.of("d1"));
         chessmen.remove(queen);
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 29.0;
@@ -51,7 +53,7 @@ public class ScoreCalculatorTest {
     void no_rook_score() {
         Piece rook = chessmen.extractPiece(Position.of("a1"));
         chessmen.remove(rook);
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 33.0;
@@ -64,7 +66,7 @@ public class ScoreCalculatorTest {
     void no_bishop_score() {
         Piece bishop = chessmen.extractPiece(Position.of("c1"));
         chessmen.remove(bishop);
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 35.0;
@@ -77,7 +79,7 @@ public class ScoreCalculatorTest {
     void no_night_score() {
         Piece night = chessmen.extractPiece(Position.of("b1"));
         chessmen.remove(night);
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 35.5;
@@ -90,7 +92,7 @@ public class ScoreCalculatorTest {
     void no_king_score() {
         Piece king = chessmen.extractPiece(Position.of("e1"));
         chessmen.remove(king);
-        List<Piece> pieces = chessmen.extractPiecesOf(WHITE);
+        List<Piece> pieces = chessmen.extractPiecesOf(Color.WHITE);
 
         double actual = scoreCalculator.calculate(pieces);
         double expected = 38;
@@ -102,8 +104,8 @@ public class ScoreCalculatorTest {
     @Test
     void pawn_score_no_sameFilePawn() {
         List<Piece> pawnPieces = List.of(
-            new Pawn(WHITE,Position.of("a1")),
-            new Pawn(WHITE, Position.of("b1")));
+            new Pawn(Color.WHITE,Position.of("a1")),
+            new Pawn(Color.WHITE, Position.of("b1")));
 
         double actual = scoreCalculator.calculate(pawnPieces);
         double expected = 2;
@@ -115,8 +117,8 @@ public class ScoreCalculatorTest {
     @Test
     void pawn_score_on_sameFilePawn() {
         List<Piece> pawnPieces = List.of(
-            new Pawn(WHITE,Position.of("a1")),
-            new Pawn(WHITE, Position.of("a2")));
+            new Pawn(Color.WHITE,Position.of("a1")),
+            new Pawn(Color.WHITE, Position.of("a2")));
 
         double actual = scoreCalculator.calculate(pawnPieces);
         double expected = 1.0;

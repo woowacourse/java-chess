@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.piece.direction.Direction;
-import chess.domain.piece.position.Position;
+import chess.domain.direction.Direction;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.Objects;
 

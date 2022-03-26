@@ -1,12 +1,9 @@
 package chess.domain;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
-
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.ScoreCalculator;
-import chess.domain.piece.piece.Pieces;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.Pieces;
+import chess.domain.position.Position;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.List;
@@ -78,8 +75,8 @@ public class ChessGame {
     public GameResultDto calculateGameResult() {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
-        double whiteScore = scoreCalculator.calculate(chessmen.extractPiecesOf(WHITE));
-        double blackScore = scoreCalculator.calculate(chessmen.extractPiecesOf(BLACK));
+        double whiteScore = scoreCalculator.calculate(chessmen.extractPiecesOf(Color.WHITE));
+        double blackScore = scoreCalculator.calculate(chessmen.extractPiecesOf(Color.BLACK));
 
         return new GameResultDto(whiteScore, blackScore);
     }

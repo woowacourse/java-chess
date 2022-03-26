@@ -1,8 +1,9 @@
-package chess.domain.piece.direction;
+package chess.domain.direction;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.position.Position;
+import chess.domain.direction.Direction;
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.position.PositionUtil.isMappedRankIdx;
-
-import chess.domain.piece.direction.Direction;
-import chess.domain.piece.position.Position;
+import chess.domain.direction.Direction;
+import chess.domain.position.Position;
+import chess.domain.position.PositionUtil;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,11 +70,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color == Color.WHITE && isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return color == Color.WHITE && PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
     }
 
     private boolean isBlackJump(int curRankIdx) {
-        return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return color == Color.BLACK && PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
     }
 
     @Override

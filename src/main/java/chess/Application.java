@@ -9,7 +9,7 @@ import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.piece.ChessmenInitializer;
+import chess.domain.piece.ChessmenInitializer;
 import chess.dto.BoardDto;
 
 public class Application {
