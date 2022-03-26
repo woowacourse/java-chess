@@ -119,6 +119,19 @@ public class ChessBoard {
         return 0;
     }
 
+    public boolean isFinished() {
+        long count = board.stream()
+                .flatMap(List::stream)
+                .filter(piece -> piece.isSamePieceType(PieceType.KING))
+                .count();
+
+        return count != 2;
+    }
+
+    public Color getTurn() {
+        return turn;
+    }
+
     public List<List<Piece>> getBoard() {
         return Collections.unmodifiableList(board);
     }

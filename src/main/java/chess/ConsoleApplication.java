@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.ChessBoard;
+import chess.domain.Color;
 import chess.domain.generator.EmptyBoardGenerator;
 import chess.dto.CommandRequest;
 import chess.view.Command;
@@ -54,8 +55,22 @@ public class ConsoleApplication {
             return;
         }
 
+        if (command.isStatus()) {
+            double whiteScore = chessBoard.calculateScore(Color.WHITE);
+            double blackScore = chessBoard.calculateScore(Color.BLACK);
+            OutputView.printStatusMessage(whiteScore, blackScore);
+            playChess(chessBoard);
+        }
+
         chessBoard.move(commandRequest.getSource(), commandRequest.getTarget());
         OutputView.printChessBoard(chessBoard.getBoard());
+
+        if (chessBoard.isFinished()) {
+            Color winner = chessBoard.getTurn();
+            System.out.println(winner + "가 승리하였습니다.");
+            return;
+        }
+
         playChess(chessBoard);
     }
 }

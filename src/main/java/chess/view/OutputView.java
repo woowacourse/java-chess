@@ -37,4 +37,11 @@ public class OutputView {
                 .map(Piece::getNotation)
                 .collect(joining());
     }
+
+    public static void printStatusMessage(double blackScore, double whiteScore) {
+        System.out.println("WHITE SCORE: " + whiteScore);
+        System.out.println("BLACK SCORE: " + blackScore);
+
+        System.out.println();
+    }
 }
