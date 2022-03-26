@@ -27,7 +27,11 @@ public class Position {
     }
 
     public int fileDifference(Position targetPosition) {
-        return Math.abs(fileIdx - targetPosition.fileIdx);
+        return Math.abs(fileRawDifference(targetPosition));
+    }
+
+    public int fileRawDifference(Position targetPosition) {
+        return targetPosition.fileIdx - fileIdx;
     }
 
     public int rankDifference(Position targetPosition) {
@@ -39,23 +43,43 @@ public class Position {
     }
 
     public boolean isHorizontal(Position toPosition) {
-        return fileDifference(toPosition) == 0
-                && rankDifference(toPosition) > 0;
+        return rankDifference(toPosition) == 0
+                && fileDifference(toPosition) > 0;
     }
 
     public boolean isVertical(Position toPosition) {
-        return fileDifference(toPosition) > 0
-                && rankDifference(toPosition) == 0;
+        return rankDifference(toPosition) > 0
+                && fileDifference(toPosition) == 0;
     }
 
     public boolean isDiagonal(Position toPosition) {
         return fileDifference(toPosition) == rankDifference(toPosition);
     }
 
+    public boolean isLeftSide(Position position) {
+        return fileRawDifference(position) < 0;
+    }
+
+    public boolean isRightSide(Position position) {
+        return fileRawDifference(position) > 0;
+    }
+
+    public boolean isUpSide(Position position) {
+        return rankRawDifference(position) > 0;
+    }
+
+    public boolean isDownSide(Position position) {
+        return rankRawDifference(position) < 0;
+    }
+
     public Position movedBy(int fileDiff, int rankDiff) {
         int toFileIdx = fileIdx + fileDiff;
         int toRankIdx = rankIdx + rankDiff;
         return PositionCache.getCache(toFileIdx, toRankIdx);
+    }
+
+    public static Position from(int fileIdx, int rankIdx) {
+        return PositionCache.getCache(fileIdx, rankIdx);
     }
 
     public int getFileIdx() {
