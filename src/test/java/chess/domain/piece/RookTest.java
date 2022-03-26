@@ -77,6 +77,6 @@ public class RookTest {
 
         assertThatThrownBy(() -> rook.checkPieceMoveRange(mockBoard, Position.from("a1"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("룩의 이동 경로에 기물이 존재합니다.");
+                .hasMessageContaining("이동 경로에 기물이 존재합니다.");
     }
 }

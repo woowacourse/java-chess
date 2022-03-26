@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 public class Bishop extends Piece {
 
@@ -15,7 +13,7 @@ public class Bishop extends Piece {
 
     @Override
     public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (File.difference(from.getFile(), to.getFile()) != Rank.difference(from.getRankNumber(), to.getRankNumber())) {
+        if (!isDiagonal(from, to)) {
             throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
         }
         board.checkPieceInDiagonal(from, to);
