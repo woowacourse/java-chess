@@ -17,9 +17,9 @@ public enum Color {
     }
 
     public Color toOpposite() {
-        if (this == WHITE) {
-            return BLACK;
+        if (isBlack()) {
+            return WHITE;
         }
-        return WHITE;
+        return BLACK;
     }
 }

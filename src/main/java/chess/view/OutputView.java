@@ -19,9 +19,9 @@ public class OutputView {
     private static final char RANK_END = 'h';
     private static final String EMPTY = ".";
     private static final String DELIMITER = " : ";
-    private static final String ERROR = "[ERROR] : ";
-    private static final String STATUS = "## 중간점수 ##";
-    private static final String RESULT = "## 최종결과 ##";
+    private static final String ERROR_PREFIX = "[ERROR] : ";
+    private static final String STATUS_PREFIX = "## 중간점수 ##";
+    private static final String RESULT_PREFIX = "## 최종결과 ##";
 
     private OutputView() {
     }
@@ -31,30 +31,30 @@ public class OutputView {
     }
 
     public static void printChessBoard(final ChessBoard chessBoard) {
-        for (int j = FILE_END; j >= FILE_START; j--) {
-            printRank(chessBoard, j);
+        for (int file = FILE_END; file >= FILE_START; file--) {
+            printRank(chessBoard, file);
         }
     }
 
-    private static void printRank(final ChessBoard chessBoard, final int j) {
-        for (int i = RANK_START; i <= RANK_END; i++) {
-            final String position = (char) i + String.valueOf(j);
+    private static void printRank(final ChessBoard chessBoard, final int file) {
+        for (int rank = RANK_START; rank <= RANK_END; rank++) {
+            final String position = (char) rank + String.valueOf(file);
 
             final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
             possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.print(piece.name()),
+                    piece -> System.out.print(piece.name()),
                     () -> System.out.print(EMPTY));
         }
         System.out.println();
     }
 
     public static void printStatus(final Map<Color, Double> scoreByColor) {
-        System.out.println(STATUS);
+        System.out.println(STATUS_PREFIX);
         printTotalScore(scoreByColor);
     }
 
     public static void printResult(final Map<Color, Double> scoreByColor) {
-        System.out.println(RESULT);
+        System.out.println(RESULT_PREFIX);
         printTotalScore(scoreByColor);
     }
 
@@ -76,6 +76,6 @@ public class OutputView {
     }
 
     public static void printError(final String errorMessage) {
-        System.out.println(ERROR + errorMessage);
+        System.out.println(ERROR_PREFIX + errorMessage);
     }
 }

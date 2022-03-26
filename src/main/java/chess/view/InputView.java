@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static String input() {
-        final Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+    private static final Scanner SCANNER = new Scanner(System.in);
+
+    private InputView() {
     }
 
     public static String requestCommand() {
@@ -19,17 +19,11 @@ public class InputView {
     }
 
     private static String getCommand() {
-        final String text = input().toLowerCase();
-        validateNull(text);
+        final String input = SCANNER.nextLine();
+        final String text = input.toLowerCase();
 
         Command.validate(text);
 
         return text;
-    }
-
-    private static void validateNull(final String text) {
-        if (text == null) {
-            throw new IllegalArgumentException("null은 허용되지 않습니다.");
-        }
     }
 }

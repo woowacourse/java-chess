@@ -23,6 +23,8 @@ public final class Pawn extends ChessPiece {
     private static final Double VALUE_BY_SAME_RANK = 0.5;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
+    private static final int BLACK_MOVABLE_MAX_DISTANCE = 2;
+    private static final int WHITE_MOVABLE_MAX_DISTANCE = -2;
 
     static {
         cache = Arrays.stream(Color.values())
@@ -81,7 +83,7 @@ public final class Pawn extends ChessPiece {
         if (!from.isSameFile(BLACK_INIT_FILE)) {
             return false;
         }
-        return from.fileDistance(to) == 2;
+        return from.fileDistance(to) <= BLACK_MOVABLE_MAX_DISTANCE;
     }
 
     private boolean isWhiteInitPosition(final Position from, final Position to) {
@@ -91,7 +93,7 @@ public final class Pawn extends ChessPiece {
         if (!from.isSameFile(WHITE_INIT_FILE)) {
             return false;
         }
-        return from.fileDistance(to) == -2;
+        return from.fileDistance(to) >= WHITE_MOVABLE_MAX_DISTANCE;
     }
 
     @Override
