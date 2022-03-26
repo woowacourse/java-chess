@@ -22,7 +22,11 @@ public enum Row {
         return Arrays.stream(values())
             .filter(value -> value.index == index)
             .findFirst()
-            .orElse(null);
+            .orElseThrow(()-> new IllegalArgumentException("[ERROR] 올바르지 않은 File입니다.(1 ~ 8)"));
+    }
+
+    public static Row of(String index) {
+        return Row.of(Integer.parseInt(index));
     }
 
     public static boolean isRowRange(int index) {

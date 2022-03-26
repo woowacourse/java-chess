@@ -27,13 +27,16 @@ public enum Column {
             .orElse(null);
     }
 
+    public static Column of(final String symbol) {
+        return Arrays.stream(values())
+            .filter(value -> value.symbol.equals(symbol))
+            .findFirst()
+            .orElseThrow(()-> new IllegalArgumentException("[ERROR] 올바르지 않은 Rank입니다.(a ~ h)"));
+    }
+
     public int getIndex() {
         return index;
     }
-
-//    public Column move(int moveIndex) {
-//        return indexOf(moveIndex);
-//    }
 
     public static boolean isColumnRange(int index) {
         return A.index <= index && index <= H.index;

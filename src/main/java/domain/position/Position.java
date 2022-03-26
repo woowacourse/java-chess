@@ -12,6 +12,10 @@ public class Position {
         this.column = column;
     }
 
+    public static Position of(String row, String column) {
+        return new Position(Row.of(row), Column.of(column));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

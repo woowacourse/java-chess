@@ -1,5 +1,6 @@
 package domain.chessboard;
 
+import domain.Player;
 import domain.directions.Direction;
 import domain.piece.Piece;
 import domain.position.Position;
