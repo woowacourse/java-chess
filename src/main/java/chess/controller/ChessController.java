@@ -4,7 +4,7 @@ import static chess.Command.*;
 
 import chess.Board;
 import chess.Command;
-import chess.dto.MoveRequest;
+import chess.dto.Request;
 import chess.dto.view.InputView;
 import chess.dto.view.OutputView;
 import chess.turndecider.AlternatingTurnDecider;
@@ -23,17 +23,17 @@ public class ChessController {
 
         OutputView.printChessGameBoard(board.getValues());
         while (true) {
-            MoveRequest moveRequest = InputView.inputCommandInGaming();
-            if (moveRequest.getCommand() == END) {
+            Request request = InputView.inputCommandInGaming();
+            if (request.getCommand() == END) {
                 break;
             }
 
-            if (moveRequest.getCommand() == Command.STATUS) {
+            if (request.getCommand() == Command.STATUS) {
                 System.out.println(board.calculateScore());
                 continue;
             }
 
-            boolean isFinished = board.move(moveRequest.getSource(), moveRequest.getTarget());
+            boolean isFinished = board.move(request.getSource(), request.getTarget());
             OutputView.printChessGameBoard(board.getValues());
 
             if (isFinished) {

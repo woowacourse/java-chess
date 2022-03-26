@@ -7,6 +7,8 @@ import java.util.List;
 import chess.Command;
 import chess.Position;
 import chess.dto.MoveRequest;
+import chess.dto.NotMoveRequest;
+import chess.dto.Request;
 
 public class InputView {
 
@@ -17,15 +19,15 @@ public class InputView {
         return Command.startEnd(readLine());
     }
 
-    public static MoveRequest inputCommandInGaming() { // RequestDto
+    public static Request inputCommandInGaming() { // RequestDto
         String input = readLine();
         Command command = Command.endMove(input);
         if (command == Command.END) {
-            return new MoveRequest(command);
+            return new NotMoveRequest(command);
         }
 
         if (command == Command.STATUS) {
-            return new MoveRequest(command);
+            return new NotMoveRequest(command);
         }
         List<String> inputs = List.of(input.split(" "));
 

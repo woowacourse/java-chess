@@ -3,16 +3,12 @@ package chess.dto;
 import chess.Command;
 import chess.Position;
 
-public class MoveRequest implements Request {
+public class NotMoveRequest implements Request {
 
     private final Command command;
-    private final Position source;
-    private final Position target;
 
-    public MoveRequest(Command command, Position source, Position target) {
+    public NotMoveRequest(Command command) {
         this.command = command;
-        this.source = source;
-        this.target = target;
     }
 
     @Override
@@ -22,11 +18,11 @@ public class MoveRequest implements Request {
 
     @Override
     public Position getSource() {
-        return source;
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 기능입니다.");
     }
 
     @Override
     public Position getTarget() {
-        return target;
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 기능입니다.");
     }
 }
