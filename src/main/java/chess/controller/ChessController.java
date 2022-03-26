@@ -20,12 +20,14 @@ public class ChessController {
         Pieces pieces = Pieces.create();
         Board board = Board.create(pieces);
         command = command.turnState(input);
-        while (!command.isEnd()){
+        while (!command.isEnd() || board.isDeadKing()){
             if(command.isMove()){
                 board.move(command.getCommandPosition());
             }
             OutputView.printBoard(board.getBoard());
             command = command.turnState(InputView.inputCommand());
         }
+        //command.turnState(InputView.inputCommand());
+        //if(command.)
     }
 }

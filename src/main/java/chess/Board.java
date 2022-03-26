@@ -56,5 +56,11 @@ public class Board {
                 commandPosition.get(1).charAt(1)
         );
     }
+
+    public boolean isDeadKing() {
+        return pieces.countOfKing() == 1;
+    }
+
+
 }
 

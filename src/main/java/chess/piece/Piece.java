@@ -66,6 +66,9 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
 
     public abstract String getName();
 
+    public boolean isKing(){
+        return false;
+    }
     @Override
     public int compareTo(Piece piece) {
         if (this.position.isLessRankThan(piece.position)) {
@@ -94,5 +97,4 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
     public int hashCode() {
         return Objects.hash(position, team);
     }
-
 }

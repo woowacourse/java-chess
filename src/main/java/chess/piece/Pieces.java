@@ -64,6 +64,11 @@ public class Pieces {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
     }
 
+    public long countOfKing(){
+        return pieces.stream()
+                .filter(Piece::isKing)
+                .count();
+    }
     public void remove(Piece piece) {
         pieces.remove(piece);
     }
