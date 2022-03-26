@@ -23,7 +23,7 @@ class BishopTest {
 
     @BeforeEach
     void setUp() {
-        bishop = new Bishop(Color.WHITE);
+        bishop = new Bishop(WHITE);
         source = Position.of('d', '4');
     }
 

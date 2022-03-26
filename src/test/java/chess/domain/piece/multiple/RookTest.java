@@ -23,7 +23,7 @@ class RookTest {
 
     @BeforeEach
     void setUp() {
-        rook = new Rook(Color.WHITE);
+        rook = new Rook(WHITE);
         source = Position.of('d', '4');
     }
 

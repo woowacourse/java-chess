@@ -1,12 +1,13 @@
 package chess.gamestate;
 
+import static chess.domain.Color.BLACK;
+
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 
 public class BlackRunning extends Running {
 
     public BlackRunning(ChessBoard chessBoard) {
-        super(chessBoard, Color.BLACK);
+        super(chessBoard, BLACK);
     }
 
     @Override

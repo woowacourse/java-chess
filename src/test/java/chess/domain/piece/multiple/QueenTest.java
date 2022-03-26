@@ -23,7 +23,7 @@ class QueenTest {
 
     @BeforeEach
     void setUp() {
-        queen = new Queen(Color.WHITE);
+        queen = new Queen(WHITE);
         source = Position.of('d', '4');
     }
 

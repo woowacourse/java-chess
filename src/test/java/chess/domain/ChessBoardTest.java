@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -45,7 +46,7 @@ class ChessBoardTest {
     void movePieceException() {
         Position position = Position.of('a', '1');
         Position target = Position.of('a', '2');
-        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(WHITE)));
 
         assertThatThrownBy(() -> chessBoard.movePiece(position, target, WHITE))
                 .isInstanceOf(IllegalStateException.class)
@@ -57,10 +58,10 @@ class ChessBoardTest {
     void moveOtherTeamPieceException() {
         Position position = Position.of('a', '1');
         Position target = Position.of('a', '2');
-        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(Color.WHITE),
-                Position.of('e', '8'), new King(Color.BLACK)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(position, new King(WHITE),
+                Position.of('e', '8'), new King(BLACK)));
 
-        assertThatThrownBy(() -> chessBoard.movePiece(position, target, Color.BLACK))
+        assertThatThrownBy(() -> chessBoard.movePiece(position, target, BLACK))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("상대 진영의 기물을 움직일 수 없습니다.");
     }
@@ -122,16 +123,16 @@ class ChessBoardTest {
                 Position.of('a', '2'), new WhitePawn(),
                 Position.of('a', '3'), new WhitePawn(),
                 Position.of('c', '3'), new WhitePawn(),
-                Position.of('b', '1'), new Knight(Color.WHITE),
-                Position.of('d', '1'), new Queen(Color.WHITE),
-                Position.of('e', '1'), new King(Color.WHITE),
+                Position.of('b', '1'), new Knight(WHITE),
+                Position.of('d', '1'), new Queen(WHITE),
+                Position.of('e', '1'), new King(WHITE),
 
                 Position.of('a', '7'), new BlackPawn(),
-                Position.of('c', '8'), new Bishop(Color.BLACK),
-                Position.of('h', '8'), new Rook(Color.BLACK),
-                Position.of('e', '8'), new King(Color.BLACK)
+                Position.of('c', '8'), new Bishop(BLACK),
+                Position.of('h', '8'), new Rook(BLACK),
+                Position.of('e', '8'), new King(BLACK)
         ));
-        Map<Color, Double> expected = Map.of(Color.WHITE, 13.5, Color.BLACK, 9.0);
+        Map<Color, Double> expected = Map.of(WHITE, 13.5, BLACK, 9.0);
 
         assertThat(chessBoard.calcualteScoreStatus()).isEqualTo(expected);
     }
@@ -147,11 +148,11 @@ class ChessBoardTest {
         return Stream.of(
                 Arguments.of(
                         new ChessBoard(Map.of(
-                                Position.of('e', '1'), new King(Color.WHITE),
-                                Position.of('e', '8'), new King(Color.BLACK))), false
+                                Position.of('e', '1'), new King(WHITE),
+                                Position.of('e', '8'), new King(BLACK))), false
                 ),
                 Arguments.of(
-                        new ChessBoard(Map.of(Position.of('e', '1'), new King(Color.WHITE))), true
+                        new ChessBoard(Map.of(Position.of('e', '1'), new King(WHITE))), true
                 )
         );
     }

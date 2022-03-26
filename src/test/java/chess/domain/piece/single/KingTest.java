@@ -21,7 +21,7 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
-        king = new King(Color.WHITE);
+        king = new King(WHITE);
         source = Position.of('a', '1');
     }
 

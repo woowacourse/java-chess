@@ -21,7 +21,7 @@ class KnightTest {
 
     @BeforeEach
     void setUp() {
-        knight = new Knight(Color.WHITE);
+        knight = new Knight(WHITE);
         source = Position.of('a', '1');
     }
 

@@ -1,5 +1,6 @@
 package chess.domain.piece.pawn;
 
+import static chess.domain.Color.WHITE;
 import static chess.domain.direction.Direction.UP;
 import static chess.domain.direction.Direction.UP_LEFT;
 import static chess.domain.direction.Direction.UP_RIGHT;
@@ -17,7 +18,7 @@ public final class WhitePawn extends Pawn {
     private static final int FIRST_MOVABLE_COUNT = 2;
     private static final int NORMAL_MOVABLE_COUNT = 1;
 
-    private static final Color WHITE_PAWN_COLOR = Color.WHITE;
+    private static final Color WHITE_PAWN_COLOR = WHITE;
     private static final Direction MOVE_DIRECTION = UP;
     private static final List<Direction> MOVE_DIRECTION_TO_ENEMY = Arrays.asList(UP_RIGHT, UP_LEFT);
 

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +41,7 @@ class PromotionPieceTest {
     @DisplayName("색상을 받아 piece 생성")
     void createPiece() {
         PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece("N");
-        Piece piece = promotionPiece.createPiece(Color.WHITE);
+        Piece piece = promotionPiece.createPiece(WHITE);
 
         assertThat(piece).isInstanceOf(Knight.class);
     }
