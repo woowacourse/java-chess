@@ -4,6 +4,13 @@ import chess.domain.Board;
 import chess.domain.Location;
 
 public class End implements State {
+
+    private final Board board;
+
+    public End(Board board) {
+        this.board = board;
+    }
+
     @Override
     public State start() {
         throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
@@ -21,7 +28,7 @@ public class End implements State {
 
     @Override
     public Board getBoard() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        return board;
     }
 
     @Override

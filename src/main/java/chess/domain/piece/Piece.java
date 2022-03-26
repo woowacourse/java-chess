@@ -39,9 +39,9 @@ public abstract class Piece {
         return getClass() == Pawn.class;
     }
 
-    public abstract boolean isMovableDirection(Direction direction);
-
-    public abstract boolean isMovableDistance(LocationDiff locationDiff);
+    public boolean isKing() {
+        return getClass() == King.class;
+    }
 
     public boolean isFirst() {
         return isFirst;
@@ -50,4 +50,8 @@ public abstract class Piece {
     public void changeNotFirst() {
         isFirst = false;
     }
+
+    public abstract boolean isMovableDirection(Direction direction);
+
+    public abstract boolean isMovableDistance(LocationDiff locationDiff);
 }

@@ -28,9 +28,7 @@ public class ChessGame {
 
         if (GameCommand.isMove(commandList.get(0))) {
             move(commandList.get(1), commandList.get(2));
-
         }
-
     }
 
     private void move(String source, String target) {

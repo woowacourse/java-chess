@@ -34,6 +34,10 @@ public class White extends Running {
         }
 
         getBoard().move(source, target);
+
+        if (targetPiece.isKing()) {
+            return end();
+        }
         return new Black(getBoard());
     }
 
