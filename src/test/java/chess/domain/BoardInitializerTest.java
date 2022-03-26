@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static chess.domain.pieces.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BoardInitiatorTest {
+class BoardInitializerTest {
 
     @ParameterizedTest
     @MethodSource("rookPositions")
