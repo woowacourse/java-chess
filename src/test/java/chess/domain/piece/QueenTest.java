@@ -26,7 +26,7 @@ public class QueenTest {
         Point from = Point.of(1, 1);
         Point to = Point.of(1, 7);
         Piece piece = new Queen(Color.WHITE);
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -38,7 +38,7 @@ public class QueenTest {
         Point from = Point.of("c1");
         Point to = Point.of("g5");
         Piece piece = new Queen(Color.WHITE);
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -50,7 +50,7 @@ public class QueenTest {
         Point from = Point.of(1, 1);
         Point to = Point.of(2, 7);
         Piece piece = new Queen(Color.WHITE);
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> piece.move(board, from, to));

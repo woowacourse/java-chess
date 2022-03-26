@@ -27,7 +27,7 @@ public class PawnTest {
 
         Point from = Point.of("a2");
         Point to = Point.of("a3");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -40,7 +40,7 @@ public class PawnTest {
 
         Point from = Point.of("b7");
         Point to = Point.of("b6");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -53,7 +53,7 @@ public class PawnTest {
 
         Point from = Point.of("a2");
         Point to = Point.of("a4");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -66,7 +66,7 @@ public class PawnTest {
 
         Point from = Point.of("b7");
         Point to = Point.of("b5");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();

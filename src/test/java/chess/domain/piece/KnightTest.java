@@ -26,7 +26,7 @@ public class KnightTest {
         Piece piece = new Knight(Color.WHITE);
         Point from = Point.of("b1");
         Point to = Point.of("c3");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -38,7 +38,7 @@ public class KnightTest {
         Piece piece = new Knight(Color.WHITE);
         Point from = Point.of("b1");
         Point to = Point.of("c4");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> piece.move(board, from, to));

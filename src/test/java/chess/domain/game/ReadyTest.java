@@ -3,7 +3,10 @@ package chess.domain.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ReadyTest {
 
@@ -29,5 +32,15 @@ class ReadyTest {
         GameState gameState = new Ready();
 
         assertThat(gameState.finish()).isInstanceOf(Finished.class);
+    }
+
+    @Test
+    @DisplayName("준비상태에서는 이동할 수 없다.")
+    void throwsExceptionWithTryingToMove() {
+        List<String> ignored = List.of("a1", "a2");
+        GameState state = new Ready();
+
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+                .isThrownBy(() -> state.move(ignored));
     }
 }

@@ -26,7 +26,7 @@ class RookTest {
         Point from = Point.of(1, 1);
         Point to = Point.of(1, 7);
         Piece piece = new Rook(Color.WHITE);
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -52,7 +52,7 @@ class RookTest {
         Point from = Point.of(1, 1);
         Point to = Point.of(3, 3);
         Piece piece = new Rook(Color.WHITE);
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> piece.move(board, from, to));

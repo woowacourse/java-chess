@@ -12,15 +12,11 @@ public class Board {
     private final Map<Point, Piece> pointPieces;
 
     private Board(Map<Point, Piece> pointPieces) {
-        this.pointPieces = pointPieces;
+        this.pointPieces = new HashMap<>(pointPieces);
     }
 
     public static Board of(BoardGenerator generator) {
         return new Board(generator.generate());
-    }
-
-    public Map<Point, Piece> getPointPieces() {
-        return Map.copyOf(pointPieces);
     }
 
     public boolean move(List<String> arguments, Color turnColor) {
@@ -68,5 +64,9 @@ public class Board {
         map.put(Color.WHITE, PieceType.calculateScore(pointPieces, Color.WHITE));
         map.put(Color.BLACK, PieceType.calculateScore(pointPieces, Color.BLACK));
         return map;
+    }
+
+    public Map<Point, Piece> getPointPieces() {
+        return Map.copyOf(pointPieces);
     }
 }

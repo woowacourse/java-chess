@@ -25,7 +25,7 @@ public class KingTest {
 
         Point from = Point.of("e1");
         Point to = Point.of("e2");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -38,7 +38,7 @@ public class KingTest {
 
         Point from = Point.of("e1");
         Point to = Point.of("d2");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -51,7 +51,7 @@ public class KingTest {
 
         Point from = Point.of("e1");
         Point to = Point.of("d1");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
                 .doesNotThrowAnyException();
@@ -64,7 +64,7 @@ public class KingTest {
 
         Point from = Point.of("e1");
         Point to = Point.of("d4");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> piece.move(board, from, to));

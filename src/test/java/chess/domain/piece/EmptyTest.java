@@ -25,7 +25,7 @@ class EmptyTest {
         Piece piece = new Empty();
         Point from = Point.of("a3");
         Point to = Point.of("a4");
-        Board board = BoardFixtures.EMPTY_BOARD;
+        Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(() -> piece.move(board, from, to));
