@@ -25,13 +25,16 @@ public class OutputView {
 
     public static void printChessGameBoard(Map<Position, Piece> piecesByPositions) {
         for (Rank rank : Rank.reverseValues()) {
-            for (File file : File.values()) {
-                Position searchPosition = new Position(rank, file);
-                Piece piece = piecesByPositions.get(searchPosition);
-                out.print(piece.getEmblem());
-            }
-            out.println();
+            printPiecesInOneRank(piecesByPositions, rank);
         }
+    }
+
+    private static void printPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
+        StringBuilder builder = new StringBuilder();
+        for (File file : File.values()) {
+            builder.append(piecesByPositions.get(new Position(rank, file)).getEmblem());
+        }
+        out.println(builder);
     }
 
     public static void printScore(double score) {
