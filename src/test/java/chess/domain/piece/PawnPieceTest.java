@@ -11,15 +11,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnPieceTest {
 
-    // 전진 ->  블랙: south, 화이트: north
-    // 대각선 -> 블랙: south east, west
-    //
-    // rank 2에서 출발할때는 1칸 또는 2칸 가능
+    @ParameterizedTest
+    @CsvSource({"d2, d3", "h2, h3"})
+    @DisplayName("target에 기물이 없는 경우 앞으로 move 할 수 있는지 확인한다.")
+    void canMoveForwardWhite(String source, String target) {
+        Piece pawn = new PawnPiece(Color.WHITE);
+        Position from = Position.create(source);
+        Position to = Position.create(target);
+
+        assertTrue(pawn.isMovable(from, to, true));
+    }
 
     @ParameterizedTest
-    @CsvSource({"d2, d3", "d2, e3", "d2, c3"})
-    @DisplayName("move 할 수 있는지 확인한다.")
-    void canMoveWhite(String source, String target) {
+    @CsvSource({"d2, e3", "d2, c3"})
+    @DisplayName("target에 기물이 있는 경우 대각선으로 move 할 수 있는지 확인한다.")
+    void canMoveDiagonalWhite(String source, String target) {
         Piece pawn = new PawnPiece(Color.WHITE);
         Position from = Position.create(source);
         Position to = Position.create(target);
@@ -28,9 +34,20 @@ class PawnPieceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"d7, d6", "d7, e6", "d7, c6"})
-    @DisplayName("move 할 수 있는지 확인한다.")
-    void canMoveBlack(String source, String target) {
+    @CsvSource({"d7, d6", "h7, h6"})
+    @DisplayName("target에 기물이 없는 경우 앞으로 move 할 수 있는지 확인한다.")
+    void canMoveForwardBlack(String source, String target) {
+        Piece pawn = new PawnPiece(Color.BLACK);
+        Position from = Position.create(source);
+        Position to = Position.create(target);
+
+        assertTrue(pawn.isMovable(from, to, true));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"d7, e6", "d7, c6"})
+    @DisplayName("target에 기물이 있는 경우 대각선으로 move 할 수 있는지 확인한다.")
+    void canMoveDiagonalBlack(String source, String target) {
         Piece pawn = new PawnPiece(Color.BLACK);
         Position from = Position.create(source);
         Position to = Position.create(target);
@@ -88,5 +105,15 @@ class PawnPieceTest {
         Position to = Position.create("c6");
 
         assertFalse(pawn.isMovable(from, to, true));
+    }
+
+    @Test
+    @DisplayName("폰은 target 위치에 기물이 있을 때 앞으로 이동할 수 없다.")
+    void cantMoveForwardWhenTarget() {
+        Piece pawn = new PawnPiece(Color.BLACK);
+        Position from = Position.create("b7");
+        Position to = Position.create("b6");
+
+        assertFalse(pawn.isMovable(from, to, false));
     }
 }
