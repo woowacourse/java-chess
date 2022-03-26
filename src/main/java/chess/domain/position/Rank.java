@@ -26,15 +26,15 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public Rank add(final int gap) {
+    Rank add(final int gap) {
         return Rank.of(String.valueOf((char) (value.charAt(0) + gap)));
     }
 
-    public int calculateDistance(final Rank target) {
+    int calculateDistance(final Rank target) {
         return value.charAt(0) - target.value.charAt(0);
     }
 
-    public String value() {
+    String value() {
         return value;
     }
 }

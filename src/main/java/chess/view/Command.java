@@ -23,7 +23,7 @@ public enum Command {
         this.value = value;
     }
 
-    public static void validate(final String input) {
+    static void validate(final String input) {
         if (Objects.isNull(input)) {
             throw new IllegalArgumentException("null은 허용되지 않습니다.");
         }
@@ -34,7 +34,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
-    public static Command splitCommand(final String text) {
+    public static Command from(final String text) {
         final String[] splitText = text.split(SPLIT_DELIMITER);
         return Arrays.stream(values())
                 .filter(it -> it.value.equals(splitText[COMMAND_INDEX]))

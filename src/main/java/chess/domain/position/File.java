@@ -26,15 +26,15 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public File add(final int gap) {
+    File add(final int gap) {
         return File.of(String.valueOf(Integer.parseInt(value) + gap));
     }
 
-    public int calculateDistance(final File target) {
+    int calculateDistance(final File target) {
         return Integer.parseInt(value) - Integer.parseInt(target.value);
     }
 
-    public String value() {
+    String value() {
         return value;
     }
 }

@@ -21,7 +21,7 @@ public enum Direction {
         this.fileGap = fileGap;
     }
 
-    public static Direction of(final int rankDistance, final int fileDistance) {
+    static Direction of(final int rankDistance, final int fileDistance) {
         return Arrays.stream(values())
                 .filter(it -> it.rankGap == rankDistance)
                 .filter(it -> it.fileGap == fileDistance)
@@ -29,11 +29,11 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    public int rankGap() {
+    int rankGap() {
         return rankGap;
     }
 
-    public int fileGap() {
+    int fileGap() {
         return fileGap;
     }
 }

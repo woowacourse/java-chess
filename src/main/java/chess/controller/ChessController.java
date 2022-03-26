@@ -22,7 +22,7 @@ public class ChessController {
             return;
         }
         final String commandText = InputView.requestCommand();
-        final Command command = Command.splitCommand(commandText);
+        final Command command = Command.from(commandText);
         if (command.equals(Command.END)) {
             return;
         }
@@ -30,7 +30,7 @@ public class ChessController {
     }
 
     private void executeCommand(final ChessBoard chessBoard, final String commandText) {
-        final Command command = Command.splitCommand(commandText);
+        final Command command = Command.from(commandText);
         if (command.equals(Command.START)) {
             runStartCommand(chessBoard);
         }

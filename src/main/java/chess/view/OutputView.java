@@ -38,14 +38,18 @@ public class OutputView {
 
     private static void printRank(final ChessBoard chessBoard, final int file) {
         for (int rank = RANK_START; rank <= RANK_END; rank++) {
-            final String position = (char) rank + String.valueOf(file);
-
-            final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
-            possiblePiece.ifPresentOrElse(
-                    piece -> System.out.print(piece.name()),
-                    () -> System.out.print(EMPTY));
+            printPosition(chessBoard, (char) rank, file);
         }
         System.out.println();
+    }
+
+    private static void printPosition(final ChessBoard chessBoard, final char rank, final int file) {
+        final String position = rank + String.valueOf(file);
+
+        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
+        possiblePiece.ifPresentOrElse(
+                piece -> System.out.print(piece.name()),
+                () -> System.out.print(EMPTY));
     }
 
     public static void printStatus(final Map<Color, Double> scoreByColor) {
