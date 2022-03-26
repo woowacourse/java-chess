@@ -74,6 +74,10 @@ public class InputView {
             throw new IllegalArgumentException(ERROR_MESSAGE_COMMAND);
         }
 
+        validateCommand(commands, command);
+    }
+
+    private static void validateCommand(List<String> commands, String command) {
         if (START.equals(command) || END.equals(command)) {
             validateInformationCount(commands, COMMAND_NOT_MOVE_FORMAT_SIZE);
         }
