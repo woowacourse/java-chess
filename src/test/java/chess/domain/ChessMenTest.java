@@ -66,4 +66,17 @@ class ChessMenTest {
         double score = chessMen.calculateScore();
         assertThat(score).isEqualTo(20.5);
     }
+
+    @Test
+    @DisplayName("체스 피스의 점수 합을 구한다")
+    void scoreSum2() {
+        List<ChessPiece> chessPieces = new ArrayList<>();
+        chessPieces.add(new Pawn(Team.BLACK, ChessBoardPosition.of("a1")));
+        chessPieces.add(new Pawn(Team.BLACK, ChessBoardPosition.of("a2")));
+        chessPieces.add(new Pawn(Team.BLACK, ChessBoardPosition.of("a3")));
+        chessPieces.add(new Pawn(Team.BLACK, ChessBoardPosition.of("b1")));
+        ChessMen chessMen = new ChessMen(chessPieces);
+        double score = chessMen.calculateScore();
+        assertThat(score).isEqualTo(2.5);
+    }
 }
