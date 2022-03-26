@@ -9,4 +9,10 @@ public interface State {
     State stop();
 
     State changeTurn(Command command, ChessBoard chessBoard);
+
+    double calculateBlackScore(ChessBoard chessBoard);
+
+    double calculateWhiteScore(ChessBoard chessBoard);
+
+    boolean isEnd();
 }

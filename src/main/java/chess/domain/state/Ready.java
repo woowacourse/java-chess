@@ -18,4 +18,19 @@ public final class Ready implements State {
     public State changeTurn(Command command, ChessBoard chessBoard) {
         return new Ready();
     }
+
+    @Override
+    public double calculateBlackScore(ChessBoard chessBoard) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public double calculateWhiteScore(ChessBoard chessBoard) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }

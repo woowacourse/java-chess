@@ -29,6 +29,21 @@ public class White implements State {
         return new Black();
     }
 
+    @Override
+    public double calculateBlackScore(ChessBoard chessBoard) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public double calculateWhiteScore(ChessBoard chessBoard) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
     private void checkTeam(Command command, ChessBoard chessBoard) {
         Map<String, Position> positions = command.makePosition();
 
