@@ -17,7 +17,19 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findAllDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
+    }
+
+    @Override
+    public void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -27,18 +39,6 @@ public class Queen extends Piece {
         return position.isHorizontal(toPosition)
             || position.isVertical(toPosition)
             || position.isDiagonal(toPosition);
-    }
-
-
-    @Override
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findAllDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
-    }
-
-    @Override
-    public void move(Position position) {
-        this.position = position;
     }
 
     @Override

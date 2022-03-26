@@ -20,7 +20,18 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
+    public List<Position> getPositionsInPath(Position toPosition) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
+    }
+
+    @Override
+    public void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -32,16 +43,6 @@ public class Knight extends Piece {
 
         return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
             || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
-    }
-
-    @Override
-    public List<Position> getPositionsInPath(Position toPosition) {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public void move(Position position) {
-        this.position = position;
     }
 
     @Override

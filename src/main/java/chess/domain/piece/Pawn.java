@@ -28,7 +28,19 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findCrossDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
+    }
+
+    @Override
+    public void validateMovable(Position toPosition) {
         if (!canMoveForwardOrJump(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -64,17 +76,6 @@ public final class Pawn extends Piece {
 
     private boolean isBlackJump(int curRankIdx) {
         return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
-    }
-
-    @Override
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findCrossDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
-    }
-
-    @Override
-    public void move(Position position) {
-        this.position = position;
     }
 
     @Override

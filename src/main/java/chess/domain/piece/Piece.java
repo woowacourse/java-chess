@@ -35,11 +35,11 @@ public abstract class Piece {
         return this.color == targetPiece.color;
     }
 
-    abstract public void checkReachable(Position toPosition);
-
     abstract public List<Position> getPositionsInPath(Position position);
 
     abstract public void move(Position position);
+
+    abstract public void validateMovable(Position toPosition);
 
     abstract protected void attack(Position enemyPosition);
 

@@ -17,13 +17,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
-        if (!position.isDiagonal(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    @Override
     public List<Position> getPositionsInPath(Position toPosition) {
         Direction direction = Direction.findDiagonalDirection(position, toPosition);
         return direction.findPositionsInPath(position, toPosition);
@@ -31,7 +24,14 @@ public class Bishop extends Piece {
 
     @Override
     public void move(Position position) {
+        validateMovable(position);
         this.position = position;
+    }
+
+    public void validateMovable(Position toPosition) {
+        if (!position.isDiagonal(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
     }
 
     @Override

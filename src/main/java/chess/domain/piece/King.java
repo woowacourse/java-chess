@@ -18,7 +18,18 @@ public class King extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
+    public List<Position> getPositionsInPath(Position toPosition) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
+    }
+
+    @Override
+    public void validateMovable(Position toPosition) {
         if (!canMoveOneStep(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -30,16 +41,6 @@ public class King extends Piece {
 
         return fileDifference <= MAX_MOVE_DIFFERENCE
             && rankDifference <= MAX_MOVE_DIFFERENCE;
-    }
-
-    @Override
-    public List<Position> getPositionsInPath(Position toPosition) {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public void move(Position position) {
-        this.position = position;
     }
 
     @Override

@@ -16,8 +16,19 @@ public class Rook extends Piece {
         super(color, position);
     }
 
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findCrossDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
     @Override
-    public void checkReachable(Position toPosition) {
+    public void move(Position position) {
+        validateMovable(position);
+        this.position = position;
+    }
+
+    @Override
+    public void validateMovable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -26,16 +37,6 @@ public class Rook extends Piece {
     private boolean isMovablePosition(Position toPosition) {
         return position.isHorizontal(toPosition)
             || position.isVertical(toPosition);
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findCrossDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
-    }
-
-    @Override
-    public void move(Position position) {
-        this.position = position;
     }
 
     @Override
