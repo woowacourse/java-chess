@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,8 +19,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.model.boardinitializer.defaultInitializer;
+import chess.model.piece.King;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.piece.Rook;
 import chess.model.turndecider.AlternatingTurnDecider;
 import chess.model.turndecider.FixedTurnDecider;
 import chess.vo.File;
@@ -151,19 +154,15 @@ public class BoardTest {
     @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
     @Test
     void move_return_true_when_king_captured() {
-        // Board board = new Board(new AlternatingTurnDecider(), new defaultInitializer());
-        // board.move(new Position(ONE, B), new Position(THREE, C));
-        // board.move(new Position(TWO, F), new Position(THREE, F));
-        //
-        // board.move(new Position(THREE, C), new Position(FOUR, E));
-        // board.move(new Position(TWO, G), new Position(THREE, G));
-        //
-        // board.move(new Position(FOUR, E), new Position(SIX, D));
-        // board.move(new Position(TWO, H), new Position(THREE, H));
-        //
-        // boolean isFinished = board.move(new Position(SIX, D), new Position(EIGHT, E));
-        //
-        // assertThat(isFinished).isTrue();
+        Board board = new Board(new AlternatingTurnDecider(), () -> {
+            Map<Position, Piece> boardMap = new LinkedHashMap<>();
+            boardMap.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
+            boardMap.put(new Position(THREE, A), new King(PieceColor.BLACK));
+            return boardMap;
+        });
+
+        boolean isFinished = board.move(new Position(TWO, A), new Position(THREE, A));
+        assertThat(isFinished).isTrue();
     }
 
     @Test
