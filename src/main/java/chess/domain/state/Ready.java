@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.Location;
+import chess.domain.TeamScore;
 
 public class Ready implements State {
 
@@ -28,5 +29,11 @@ public class Ready implements State {
     @Override
     public State move(Location source, Location target) {
         throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public TeamScore getScore() {
+        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+
     }
 }

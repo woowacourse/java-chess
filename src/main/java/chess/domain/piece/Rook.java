@@ -4,6 +4,7 @@ import chess.domain.LocationDiff;
 import chess.domain.state.Direction;
 
 public class Rook extends Piece{
+    private static final double SCORE = 5;
 
     public Rook(Team team) {
         super(team, Name.ROOK);
@@ -17,5 +18,10 @@ public class Rook extends Piece{
     @Override
     public boolean isMovableDistance(LocationDiff locationDiff) {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

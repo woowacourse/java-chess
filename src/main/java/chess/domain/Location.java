@@ -46,4 +46,8 @@ public class Location {
     public Location add(Direction direction) {
         return Location.of(file.add(direction.getX()), rank.add(direction.getY()));
     }
+
+    public Location copyOf() {
+        return Location.of(file, rank);
+    }
 }

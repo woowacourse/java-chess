@@ -4,6 +4,7 @@ import chess.domain.LocationDiff;
 import chess.domain.state.Direction;
 
 public class Pawn extends Piece {
+    private static final double SCORE = 1;
 
     public Pawn(Team team) {
         super(team, Name.PAWN);
@@ -26,5 +27,10 @@ public class Pawn extends Piece {
             return distance <= 2;
         }
         return distance <= 1;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
