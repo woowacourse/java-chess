@@ -11,4 +11,11 @@ public enum Team {
         }
         return value.toLowerCase();
     }
+
+    public Team change() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

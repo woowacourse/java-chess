@@ -17,7 +17,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Board {
+
     private final Map<Position, Piece> board = new HashMap<>();
+    private Team turn = Team.WHITE;
 
     public void initBoard() {
         initWhitePieces();
@@ -30,11 +32,27 @@ public class Board {
 
     public void move(Position from, Position to) {
         Piece piece = board.get(from);
-        validArrive(piece, board.get(to));
+
+        validNowTurn(piece);
         piece.movable(from, to);
+        validArrive(piece, board.get(to));
         validPath(from, to, piece.findDirection(from, to));
+
         board.put(to, piece);
         board.remove(from);
+        turn = turn.change();
+    }
+
+    private void validNowTurn(Piece piece) {
+        if (!piece.isSameTeam(turn)) {
+            throw new IllegalArgumentException("현재 차례는 " + turn + "입니다.");
+        }
+    }
+
+    private void validArrive(Piece from, Piece to) {
+        if (Objects.nonNull(to) && from.isSameTeam(to)) {
+            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
+        }
     }
 
     private void validPath(Position from, Position to, Direction direction) {
@@ -45,12 +63,6 @@ public class Board {
                 throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
             }
         } while (!current.equals(to));
-    }
-
-    private void validArrive(Piece from, Piece to) {
-        if (Objects.nonNull(to) && from.isSameTeam(to)) {
-            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
-        }
     }
 
     private void initBlackPieces() {

@@ -21,10 +21,18 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Piece piece) {
-        return piece.team != this.team;
+        return piece.team == this.team;
     }
 
-    protected boolean isSameTeam(Team team) {
+    public boolean isSameTeam(Team team) {
         return team == this.team;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "name='" + name + '\'' +
+                ", team=" + team +
+                '}';
     }
 }

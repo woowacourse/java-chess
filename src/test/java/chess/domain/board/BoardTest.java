@@ -42,65 +42,51 @@ public class BoardTest {
         assertThat(board.isEmpty()).isFalse();
     }
 
-
-    @DisplayName("말이 없으면 보드가 이동한다.")
+    @DisplayName("무사히 이동됨")
     @Test
     void move() {
         // given
-        Position fromPawn = new Position(Column.E, Row.TWO);
-        Position toPawn = new Position(Column.E, Row.THREE);
-
-        Position fromQueen = new Position(Column.D, Row.ONE);
-        Position toQueen = new Position(Column.E, Row.TWO);
-
-        // when
-        board.move(fromPawn, toPawn);
+        Position from = new Position(Column.E, Row.TWO);
+        Position to = new Position(Column.E, Row.THREE);
 
         // then
-        assertThatNoException().isThrownBy(() -> board.move(fromQueen, toQueen));
+        assertThatNoException()
+                .isThrownBy(() -> board.move(from, to));
     }
 
+    @DisplayName("이동 경로에 말이 있으면 이동 할 수 없다.")
     @Test
-    void move_queen() {
+    void valid_path() {
         // given
-        Position fromPawn = new Position(Column.E, Row.TWO);
-        Position toPawn = new Position(Column.E, Row.THREE);
-
-        Position fromQueen = new Position(Column.D, Row.ONE);
-        Position toQueen = new Position(Column.H, Row.FIVE);
-
-        // when
-        board.move(fromPawn, toPawn);
+        Position from = new Position(Column.D, Row.ONE);
+        Position to = new Position(Column.F, Row.THREE);
 
         // then
-        assertThatNoException().isThrownBy(() -> board.move(fromQueen, toQueen));
+        assertThatThrownBy(() -> board.move(from, to))
+                .hasMessage("이동 경로에 말이 있습니다.");
     }
 
-    @DisplayName("이동 경로에 말이 있으면 이동 할 수 없다,.")
+    @DisplayName("도착 지점에 같은 팀의 말이 있는 경우")
     @Test
-    void move_false() {
+    void valid_arrive() {
         // given
-        Position fromQueen = new Position(Column.D, Row.ONE);
-        Position toQueen = new Position(Column.E, Row.TWO);
+        Position from = new Position(Column.D, Row.ONE);
+        Position to = new Position(Column.E, Row.TWO);
 
         // then
-        assertThatThrownBy(() -> board.move(fromQueen, toQueen)).hasMessageContaining("이동 경로");
+        assertThatThrownBy(() -> board.move(from, to))
+                .hasMessage("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
     }
 
-    @DisplayName("폰의 2칸 이동")
+    @DisplayName("자신의 차례인지 검증")
     @Test
-    void pawn_move() {
+    void valid_turn() {
         // given
-        Position knightFrom = new Position(Column.G, Row.ONE);
-        Position knightTo = new Position(Column.F, Row.THREE);
-
-        Position pawnFrom = new Position(Column.F, Row.TWO);
-        Position pawnTo = new Position(Column.F, Row.FOUR);
-
-        // when
-        board.move(knightFrom, knightTo);
+        Position from = new Position(Column.A, Row.SEVEN);
+        Position to = new Position(Column.A, Row.SIX);
 
         // then
-        assertThatThrownBy(() -> board.move(pawnFrom, pawnTo)).hasMessageContaining("이동 경로");
+        assertThatThrownBy(() -> board.move(from, to))
+                .hasMessage("현재 차례는 WHITE입니다.");
     }
 }
