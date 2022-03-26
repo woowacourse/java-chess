@@ -23,8 +23,8 @@ public abstract class Piece {
         return state.getMovablePositions(source, board);
     }
 
-    public boolean isSameColor(Piece piece) {
-        return color == piece.getColor();
+    public boolean isSameColor(Color other) {
+        return color.isSameColor(other);
     }
 
     public String getName() {

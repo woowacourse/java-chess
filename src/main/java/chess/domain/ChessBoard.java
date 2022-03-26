@@ -15,17 +15,21 @@ public class ChessBoard {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        validateExist(sourcePiece);
+        validateExist(source);
         validateMove(source, target);
 
         changeState(sourcePiece, targetPiece);
         changePosition(source, target);
     }
 
-    private void validateExist(Piece piece) {
-        if (!isExist(piece)) {
+    public void validateExist(Position position) {
+        if (!isExist(getPiece(position))) {
             throw new IllegalArgumentException("해당 위치에 체스말이 존재하지 않습니다.");
         }
+    }
+
+    private boolean isExist(Piece piece) {
+        return piece != null;
     }
 
     private void validateMove(Position source, Position target) {
@@ -54,7 +58,7 @@ public class ChessBoard {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        return isFilled(target) && !sourcePiece.isSameColor(targetPiece);
+        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
     }
 
     private void changeState(Piece sourcePiece, Piece targetPiece) {
@@ -66,10 +70,6 @@ public class ChessBoard {
         if (isExist(piece)) {
             piece.killed();
         }
-    }
-
-    private boolean isExist(Piece piece) {
-        return piece != null;
     }
 
     private void changePosition(Position source, Position target) {

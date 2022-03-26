@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,6 +30,58 @@ public class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         Map<Position, Piece> start = chessGame.start();
         assertThat(start.get(position)).isInstanceOf(piece);
+    }
+
+    @Test
+    @DisplayName("첫 턴에는 화이트의 말만 움직일 수 있다")
+    void turnTest() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        Position source = Position.of(File.a, Rank.Two);
+        Position target = Position.of(File.a, Rank.Three);
+
+        assertThatCode(() -> chessGame.move(source, target))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("첫 턴에는 블랙의 말은 움직일 수 없다")
+    void turnTest1() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        Position source = Position.of(File.a, Rank.Seven);
+        Position target = Position.of(File.a, Rank.Six);
+
+        assertThatThrownBy(() -> chessGame.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("첫 턴이 지나면 두번째 턴에서는 블랙의 말만 움직일 수 있다.")
+    void move1() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        chessGame.move(Position.of(File.a, Rank.Two), Position.of(File.a, Rank.Three));
+
+        Position source = Position.of(File.a, Rank.Seven);
+        Position target = Position.of(File.a, Rank.Six);
+
+        assertThatCode(() -> chessGame.move(source, target))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("첫 턴이 지나면 두번째 턴에서는 화이트의 말은 움직일 수 없다.")
+    void move2() {
+        ChessGame chessGame = new ChessGame();
+        chessGame.start();
+        chessGame.move(Position.of(File.a, Rank.Two), Position.of(File.a, Rank.Three));
+
+        Position source = Position.of(File.a, Rank.Three);
+        Position target = Position.of(File.a, Rank.Four);
+
+        assertThatThrownBy(() -> chessGame.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> invalidParameters() {

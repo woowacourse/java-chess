@@ -24,4 +24,8 @@ public enum Color {
     public Direction forward() {
         return forward;
     }
+
+    public boolean isSameColor(Color color) {
+        return this == color;
+    }
 }
