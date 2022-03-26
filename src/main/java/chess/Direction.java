@@ -1,0 +1,56 @@
+package chess;
+
+import java.util.List;
+
+public enum Direction {
+
+    N(0, 1),
+    NE(1, 1),
+    E(1, 0),
+    SE(1, -1),
+    S(0, -1),
+    SW(-1, -1),
+    W(-1, 0),
+    NW(-1, 1),
+
+    NNE(1, 2),
+    ENE(2, 1),
+    ESE(2, -1),
+    SSE(1, -2),
+    SSW(-1, -2),
+    WSW(-2, -1),
+    WNW(-2, 1),
+    NNW(-1, 2);
+
+    private final int column;
+    private final int row;
+
+    Direction(final int column, final int row) {
+        this.column = column;
+        this.row = row;
+    }
+
+    public static List<Direction> getWhitePawnDirections() {
+        return List.of(N, NW, NE);
+    }
+
+    public static List<Direction> getBlackPawnDirections() {
+        return List.of(S, SW, SE);
+    }
+
+    public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
+        if (rowDistance == 2 && columnDistance == 0 && this == N && pawnAtInitial) {
+            return column == columnDistance && row == rowDistance - 1;
+        }
+        return column == columnDistance && row == rowDistance;
+    }
+
+    public boolean canBlackPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
+        if (rowDistance == -2 && columnDistance == 0 && this == S && pawnAtInitial) {
+            return column == columnDistance && row == rowDistance + 1;
+        }
+        return column == columnDistance && row == rowDistance;
+    }
+
+}
+

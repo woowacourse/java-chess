@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.MoveCommand;
+
 public interface Piece {
 
     Name getName();
@@ -7,4 +9,8 @@ public interface Piece {
     Color getColor();
 
     boolean isSameTeam(Piece piece);
+
+    boolean canMove(MoveCommand command);
+
+    boolean isPawn();
 }

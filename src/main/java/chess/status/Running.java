@@ -30,7 +30,7 @@ public class Running implements State {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-
+        board.move(moveCommand);
     }
 
     @Override

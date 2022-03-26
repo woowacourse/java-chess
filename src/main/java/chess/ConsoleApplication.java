@@ -18,6 +18,7 @@ public class ConsoleApplication {
 
         while (game.isRunning()) {
             run(game);
+            OutputView.printBoard(state.getBoard());
         }
     }
 

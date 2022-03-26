@@ -81,12 +81,39 @@ public class Board {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
 
-        if (!value.containsKey(from)) {
+        validatePieceExist(from);
+        validateSameTeam(from, to);
+
+        final Piece piece = value.get(from);
+        validatePawnMove(moveCommand, from, to, piece);
+
+        if (piece.canMove(moveCommand)) {
+            value.put(to, piece);
+            value.remove(from);
+        }
+    }
+
+    private void validatePawnMove(final MoveCommand moveCommand, final Position from, final Position to, final Piece piece) {
+        if (piece.isPawn() && piece.canMove(moveCommand)) {
+            validatePawnForwardMove(from, to);
+        }
+    }
+
+    private void validatePieceExist(final Position position) {
+        if (!value.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
         }
+    }
 
+    private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
+        }
+    }
+
+    private void validatePawnForwardMove(final Position from, final Position to) {
+        if (from.isSameColumn(to) && value.containsKey(to)) {
+            throw new IllegalArgumentException("폰은 상대말이 있을 때 직진할 수 없습니다.");
         }
     }
 }

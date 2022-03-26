@@ -70,4 +70,20 @@ public class Position {
                 ", row=" + row +
                 '}';
     }
+
+    public int getColumnDistance(final Position to) {
+        return this.column.getDistance(to.column);
+    }
+
+    public int getRowDistance(final Position to) {
+        return this.row.getDistance(to.row);
+    }
+
+    public boolean isPawnInitial() {
+        return row.isPawnRow();
+    }
+
+    public boolean isSameColumn(final Position other) {
+        return column == other.column;
+    }
 }

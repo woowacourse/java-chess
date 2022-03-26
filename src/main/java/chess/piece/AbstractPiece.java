@@ -1,5 +1,7 @@
 package chess.piece;
 
+import chess.MoveCommand;
+
 public abstract class AbstractPiece implements Piece {
 
     private final Name name;
@@ -24,4 +26,16 @@ public abstract class AbstractPiece implements Piece {
     public final boolean isSameTeam(final Piece other) {
         return this.color.hasSameColor(other.getColor());
     }
+
+    @Override
+    public boolean canMove(MoveCommand command) {
+        // todo: abstract로 수정할 것
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
 }

@@ -3,6 +3,7 @@ package chess;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -28,6 +29,19 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(MoveCommand.of(actual)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 위치에 같은색의 말이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("폰은 상대말이 가로막고 있을 때 전진할 수 없다.")
+    void pawnCannotAttackForward() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("a2 a4"));
+        board.move(MoveCommand.of("a4 a5"));
+        board.move(MoveCommand.of("a5 a6"));
+
+        assertThatThrownBy(() -> board.move(MoveCommand.of("a6 a7")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 상대말이 있을 때 직진할 수 없습니다.");
     }
 
 }

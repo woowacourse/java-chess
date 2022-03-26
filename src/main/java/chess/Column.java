@@ -25,4 +25,15 @@ public enum Column {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
+
+    public static Column of(final int value) {
+        return Arrays.stream(values())
+                .filter(it -> it.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+    }
+
+    public int getDistance(final Column other) {
+        return this.value - other.value;
+    }
 }

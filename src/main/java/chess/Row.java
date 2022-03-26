@@ -31,4 +31,16 @@ public enum Row {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
+
+    public Row increment(final int row) {
+        return Row.of(value + row);
+    }
+
+    public int getDistance(final Row other) {
+        return this.value - other.value;
+    }
+
+    public boolean isPawnRow() {
+        return this == TWO || this == SEVEN;
+    }
 }
