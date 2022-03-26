@@ -16,16 +16,30 @@ public abstract class Piece {
         this.position = position;
     }
 
-    abstract public void move(Position position);
-
-    abstract public List<Position> getPositionsInPath(Position position);
-
     public void kill(Piece targetPiece) {
         if (color == targetPiece.color) {
             throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
         }
         attack(targetPiece.position);
     }
+
+    public boolean isAt(Position position) {
+        return this.position == position;
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    public boolean isFriendly(Piece targetPiece) {
+        return this.color == targetPiece.color;
+    }
+
+    abstract public void checkReachable(Position toPosition);
+
+    abstract public List<Position> getPositionsInPath(Position position);
+
+    abstract public void move(Position position);
 
     abstract protected void attack(Position enemyPosition);
 
@@ -45,9 +59,4 @@ public abstract class Piece {
         return color;
     }
 
-    public boolean isFriendly(Piece targetPiece) {
-        return this.color == targetPiece.color;
-    }
-
-    abstract public void checkReachable(Position toPosition);
 }

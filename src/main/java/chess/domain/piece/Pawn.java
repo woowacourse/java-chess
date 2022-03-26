@@ -28,20 +28,10 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    private void validateMovable(Position toPosition) {
+    public void checkReachable(Position toPosition) {
         if (!canMoveForwardOrJump(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findCrossDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
     }
 
     private boolean canMoveForwardOrJump(Position toPosition) {
@@ -74,6 +64,17 @@ public final class Pawn extends Piece {
 
     private boolean isBlackJump(int curRankIdx) {
         return color == Color.BLACK && isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+    }
+
+    @Override
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findCrossDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
+    public void move(Position position) {
+        this.position = position;
     }
 
     @Override
@@ -121,13 +122,6 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
-        if (!canMoveForwardOrJump(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -152,4 +146,5 @@ public final class Pawn extends Piece {
             ", position=" + position +
             '}';
     }
+
 }

@@ -18,24 +18,10 @@ public class King extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
-    private void validateMovable(Position toPosition) {
+    public void checkReachable(Position toPosition) {
         if (!canMoveOneStep(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        return new ArrayList<>();
     }
 
     private boolean canMoveOneStep(Position toPosition) {
@@ -43,7 +29,22 @@ public class King extends Piece {
         int rankDifference = position.rankDifference(toPosition);
 
         return fileDifference <= MAX_MOVE_DIFFERENCE
-                && rankDifference <= MAX_MOVE_DIFFERENCE;
+            && rankDifference <= MAX_MOVE_DIFFERENCE;
+    }
+
+    @Override
+    public List<Position> getPositionsInPath(Position toPosition) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
     }
 
     @Override
@@ -70,13 +71,6 @@ public class King extends Piece {
     }
 
     @Override
-    public void checkReachable(Position toPosition) {
-        if (!canMoveOneStep(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -86,7 +80,7 @@ public class King extends Piece {
         }
         King king = (King) o;
         return color == king.color
-                && position == king.position;
+            && position == king.position;
 
     }
 
@@ -98,9 +92,9 @@ public class King extends Piece {
     @Override
     public String toString() {
         return "King{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
-}
 
+}

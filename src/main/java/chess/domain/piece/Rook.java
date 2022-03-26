@@ -17,17 +17,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
-    private void validateMovable(Position toPosition) {
+    public void checkReachable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -40,8 +30,17 @@ public class Rook extends Piece {
 
     public List<Position> getPositionsInPath(Position toPosition) {
         Direction direction = Direction.findCrossDirection(position, toPosition);
-        System.out.println(direction);
         return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
     }
 
     @Override
@@ -65,13 +64,6 @@ public class Rook extends Piece {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;
-    }
-
-    @Override
-    public void checkReachable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
     }
 
     @Override

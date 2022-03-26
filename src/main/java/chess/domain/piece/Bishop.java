@@ -17,8 +17,20 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public void checkReachable(Position toPosition) {
+        if (!position.isDiagonal(toPosition)) {
+            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
+        }
+    }
+
+    @Override
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findDiagonalDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
     public void move(Position position) {
-        validateMovable(position);
         this.position = position;
     }
 
@@ -26,24 +38,6 @@ public class Bishop extends Piece {
     protected void attack(Position enemyPosition) {
         move(enemyPosition);
     }
-
-    public void checkReachable(Position toPosition) {
-        if (!position.isDiagonal(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void validateMovable(Position toPosition) {
-        if (!position.isDiagonal(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findDiagonalDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
-    }
-
 
     @Override
     public boolean isPawn() {
@@ -93,4 +87,5 @@ public class Bishop extends Piece {
             ", position=" + position +
             '}';
     }
+
 }

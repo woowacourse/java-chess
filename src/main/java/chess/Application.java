@@ -31,7 +31,7 @@ public class Application {
         }
         printGameOverInstructions();
         while(requestStatusOrEndInput()) {
-            printStatus(game.getGameResult());
+            printStatus(game.calculateGameResult());
         }
     }
 }

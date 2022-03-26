@@ -37,12 +37,11 @@ public class ChessGame {
         moveOrKill(sourcePiece, toPosition);
     }
 
-    private void moveOrKill(Piece sourcePiece, Position toPosition) {
-        if (isOccupied(toPosition)) {
-            killEnemy(sourcePiece, toPosition);
-            return;
-        }
-        sourcePiece.move(toPosition);
+    private Piece extractPiece(Position position) {
+        return chessmen.stream()
+            .filter(piece -> piece.isAt(position))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당위치에는 말이 없습니다."));
     }
 
     private void checkMovable(Piece sourcePiece, Position toPosition) {
@@ -53,6 +52,11 @@ public class ChessGame {
         }
 
         checkPath(sourcePiece, toPosition);
+    }
+
+    private boolean isOccupied(Position position) {
+        return chessmen.stream()
+            .anyMatch(piece -> piece.isAt(position));
     }
 
     private void checkOccupiedByFriendly(Piece sourcePiece, Position toPosition) {
@@ -68,34 +72,28 @@ public class ChessGame {
         if (isAnyPieceExistInPath(positions)) {
             throw new IllegalArgumentException("가는 길목에 다른 말이 있어 이동할 수 없습니다.");
         }
-
     }
 
     private boolean isAnyPieceExistInPath(List<Position> positions) {
         for (Position position : positions) {
             return chessmen.stream()
-                .anyMatch(piece -> piece.getPosition() == position);
+                .anyMatch(piece -> piece.isAt(position));
         }
         return false;
+    }
+
+    private void moveOrKill(Piece sourcePiece, Position toPosition) {
+        if (isOccupied(toPosition)) {
+            killEnemy(sourcePiece, toPosition);
+            return;
+        }
+        sourcePiece.move(toPosition);
     }
 
     private void killEnemy(Piece sourcePiece, Position toPosition) {
         Piece targetPiece = extractPiece(toPosition);
         sourcePiece.kill(targetPiece);
         chessmen.remove(targetPiece);
-    }
-
-    private Piece extractPiece(Position position) {
-        return chessmen.stream()
-            .filter(piece -> piece.getPosition() == position)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("해당위치에는 말이 없습니다."));
-    }
-
-    private boolean isOccupied(Position position) {
-        return chessmen.stream()
-            //TODO getter
-            .anyMatch(piece -> piece.getPosition() == position);
     }
 
     public boolean isEnd() {
@@ -106,7 +104,7 @@ public class ChessGame {
         return kingCount < TOTAL_KING_COUNT;
     }
 
-    public GameResultDto getGameResult() {
+    public GameResultDto calculateGameResult() {
         double whiteScore = calculateScore(WHITE);
         double blackScore = calculateScore(BLACK);
 
@@ -133,7 +131,7 @@ public class ChessGame {
 
     private List<Piece> extractPiecesOf(Color color) {
         return chessmen.stream()
-            .filter(piece -> piece.getColor() == color)
+            .filter(piece -> piece.isSameColor(color))
             .collect(Collectors.toUnmodifiableList());
     }
 
@@ -158,4 +156,5 @@ public class ChessGame {
     public String toString() {
         return "ChessGame{" + "chessmen=" + chessmen + '}';
     }
+
 }

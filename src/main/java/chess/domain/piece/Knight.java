@@ -20,24 +20,10 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
-    private void validateMovable(Position toPosition) {
+    public void checkReachable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        return new ArrayList<>();
     }
 
     private boolean isMovablePosition(Position toPosition) {
@@ -45,7 +31,22 @@ public class Knight extends Piece {
         int rankDifference = position.rankDifference(toPosition);
 
         return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
-                || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
+            || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
+    }
+
+    @Override
+    public List<Position> getPositionsInPath(Position toPosition) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
     }
 
     @Override
@@ -69,13 +70,6 @@ public class Knight extends Piece {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;
-    }
-
-    @Override
-    public void checkReachable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
     }
 
     @Override
@@ -103,4 +97,5 @@ public class Knight extends Piece {
                 ", position=" + position +
                 '}';
     }
+
 }

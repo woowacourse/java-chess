@@ -17,22 +17,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void move(Position position) {
-        validateMovable(position);
-        this.position = position;
-    }
-
-    @Override
-    protected void attack(Position enemyPosition) {
-        move(enemyPosition);
-    }
-
-    public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findAllDirection(position, toPosition);
-        return direction.findPositionsInPath(position, toPosition);
-    }
-
-    private void validateMovable(Position toPosition) {
+    public void checkReachable(Position toPosition) {
         if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
@@ -42,6 +27,23 @@ public class Queen extends Piece {
         return position.isHorizontal(toPosition)
             || position.isVertical(toPosition)
             || position.isDiagonal(toPosition);
+    }
+
+
+    @Override
+    public List<Position> getPositionsInPath(Position toPosition) {
+        Direction direction = Direction.findAllDirection(position, toPosition);
+        return direction.findPositionsInPath(position, toPosition);
+    }
+
+    @Override
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    @Override
+    protected void attack(Position enemyPosition) {
+        move(enemyPosition);
     }
 
     @Override
@@ -65,13 +67,6 @@ public class Queen extends Piece {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;
-    }
-
-    @Override
-    public void checkReachable(Position toPosition) {
-        if (!isMovablePosition(toPosition)) {
-            throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
-        }
     }
 
     @Override
@@ -100,4 +95,3 @@ public class Queen extends Piece {
             '}';
     }
 }
-
