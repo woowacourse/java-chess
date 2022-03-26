@@ -1,13 +1,14 @@
 package chess.view;
 
 import chess.chessgame.Chessboard;
+import chess.dto.ScoreDto;
 import chess.piece.Piece;
 
 import java.util.List;
 
 public class OutputView {
 
-    private static String START_ERROR = "[ERROR] ";
+    private static final String START_ERROR = "[ERROR] ";
 
     public static void printError(String message) {
         System.out.println(START_ERROR + message);
@@ -31,9 +32,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScore(double scoreOfBlack, double scoreOfWhite) {
+    public static void printScore(ScoreDto score) {
         System.out.println("\n획득 점수");
-        System.out.println("블랙 : " + scoreOfBlack);
-        System.out.println("화이트 : " + scoreOfWhite);
+        System.out.println("Black : " + score.getBlack());
+        System.out.println("White : " + score.getWhite());
+        System.out.println("승리 : " + score.getWinner());
     }
 }

@@ -4,7 +4,6 @@ import chess.piece.*;
 import chess.utils.ChessboardGenerator;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,16 +11,8 @@ public class Chessboard {
 
     private final List<List<Piece>> board;
 
-    private Chessboard(List<List<Piece>> board) {
-        this.board = board;
-    }
-
-    public static Chessboard emptyChessboard() {
-        return new Chessboard(new ArrayList<>());
-    }
-
-    public static Chessboard initializedChessboard() {
-        return new Chessboard(ChessboardGenerator.generate());
+    public Chessboard(ChessboardGenerator chessboardGenerator) {
+        board = chessboardGenerator.generate();
     }
 
     public boolean move(Position position, Turn turn) {
@@ -114,22 +105,23 @@ public class Chessboard {
         for (List<Piece> list : board) {
             score += list.stream()
                     .filter(piece -> piece.isSameColor(color))
-                    .mapToDouble(piece -> piece.getScore())
+                    .mapToDouble(Piece::getScore)
                     .sum();
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < board.size(); i++) {
             int duplicatedPawn = computePawnCount(i, color);
             if (computePawnCount(i, color) >= 2) {
                 score -= 0.5 * duplicatedPawn;
             }
         }
+
         return score;
     }
 
-    private int computePawnCount(int row, Color color) {
+    private int computePawnCount(int col, Color color) {
         return (int) board.stream()
-                .map(l -> l.get(row))
+                .map(pieces -> pieces.get(col))
                 .filter(piece -> piece.isSameColor(color) && piece.isSameType(Type.PAWN))
                 .count();
     }

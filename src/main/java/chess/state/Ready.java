@@ -5,12 +5,14 @@ import chess.chessgame.Position;
 import chess.chessgame.Turn;
 import chess.piece.Color;
 
+import java.util.ArrayList;
+
 public class Ready implements State {
 
     private final Chessboard chessboard;
 
     public Ready() {
-        chessboard = Chessboard.emptyChessboard();
+        chessboard = new Chessboard(() -> new ArrayList<>());
     }
 
     @Override

@@ -4,6 +4,7 @@ import chess.chessgame.Chessboard;
 import chess.chessgame.Position;
 import chess.chessgame.Turn;
 import chess.piece.Color;
+import chess.utils.InitializedChessboardGenerator;
 
 
 public class Play implements State {
@@ -11,7 +12,7 @@ public class Play implements State {
     private final Chessboard chessboard;
 
     public Play() {
-        this.chessboard = Chessboard.initializedChessboard();
+        this.chessboard = new Chessboard(new InitializedChessboardGenerator());
     }
 
     public Play(Chessboard chessboard) {

@@ -1,12 +1,7 @@
-package chess;
+package chess.chessgame;
 
-import chess.chessgame.Chessboard;
-import chess.chessgame.Position;
-import chess.chessgame.Turn;
-import chess.piece.Color;
-import chess.piece.Piece;
-import chess.piece.Type;
-import chess.utils.ChessboardGenerator;
+import chess.piece.*;
+import chess.utils.InitializedChessboardGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,17 +18,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessboardTest {
 
-    private List<List<Piece>> board;
+    private Chessboard chessboard;
 
     @BeforeEach
     void setUp() {
-        board = ChessboardGenerator.generate();
+        chessboard = new Chessboard(new InitializedChessboardGenerator());
     }
 
     @Test
     @DisplayName("체스판 row 사이즈 확인")
     void checkSizeOfChessboard() {
-        assertThat(board.size()).isEqualTo(8);
+        assertThat(chessboard.getBoard().size()).isEqualTo(8);
     }
 
     @ParameterizedTest
@@ -41,14 +36,14 @@ public class ChessboardTest {
     @DisplayName("체스판 column 사이즈 확인")
     void checkSizeOfChessboard(int col) {
 
-        assertThat(board.get(col).size()).isEqualTo(8);
+        assertThat(chessboard.getBoard().get(col).size()).isEqualTo(8);
     }
 
     @ParameterizedTest
     @MethodSource("pieces")
     @DisplayName("초기 기물 위치 확인")
     void checkPiece(int x, int y, Type type, Color color) {
-        Piece piece = board.get(x).get(y);
+        Piece piece = chessboard.getBoard().get(x).get(y);
 
         assertThat(piece.isSameType(type)).isTrue();
         assertThat(piece.isSameColor(color)).isTrue();
@@ -57,8 +52,6 @@ public class ChessboardTest {
     @Test
     @DisplayName("이동하려는 위치에 기물이 없는 경우 예외 발생")
     void checkBlankTarget() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
-
         assertThatThrownBy(() -> chessboard.move(new Position("c4", "c5"), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동하려는 위치에 기물이 없습니다.");
@@ -67,7 +60,6 @@ public class ChessboardTest {
     @Test
     @DisplayName("상대편의 기물을 움직이려는 경우 예외 발생")
     void checkWrongTurn() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.move(new Position("a7", "a6"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -77,7 +69,6 @@ public class ChessboardTest {
     @Test
     @DisplayName("같은편의 기물을 잡으려는 경우 예외 발생")
     void checkColor() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.move(new Position("a1", "a2"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -87,11 +78,36 @@ public class ChessboardTest {
     @Test
     @DisplayName("주어진 좌표 후보들중에 기물이 있는 좌표가 있다면 예외 발생")
     void checkCandidatesOfPossibleCoordinates() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.move(new Position("a1", "a3"), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("가로막는 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("올바르게 점수를 계산하는지 확인")
+    void computeScore() {
+        chessboard = new Chessboard(() -> List.of(List.of(
+                new Queen(Color.BLACK),
+                new Rook(Color.BLACK),
+                new Bishop(Color.BLACK),
+                new Knight(Color.BLACK),
+                new Pawn(Color.BLACK)
+        )));
+        assertThat(chessboard.computeScore(Color.BLACK))
+                .isEqualTo(20.5);
+    }
+
+    @Test
+    @DisplayName("같은 세로줄에 같은 폰이 있는 경우 0.5점으로 계산하는지 확인")
+    void computeScorePawn() {
+        chessboard = new Chessboard(() -> List.of(
+                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE)),
+                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE)),
+                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE))
+        ));
+        assertThat(chessboard.computeScore(Color.BLACK))
+                .isEqualTo(1.5);
     }
 
     private static Stream<Arguments> pieces() {

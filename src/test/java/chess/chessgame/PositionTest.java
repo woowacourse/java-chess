@@ -1,4 +1,4 @@
-package chess;
+package chess.chessgame;
 
 import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;

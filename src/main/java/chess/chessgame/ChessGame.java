@@ -1,5 +1,6 @@
 package chess.chessgame;
 
+import chess.dto.ScoreDto;
 import chess.piece.Color;
 import chess.state.Finish;
 import chess.state.Ready;
@@ -8,7 +9,7 @@ import chess.state.State;
 public class ChessGame {
 
     private State state;
-    private Turn turn;
+    private final Turn turn;
 
     public ChessGame() {
         this.state = new Ready();
@@ -35,8 +36,18 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public double computeScore(Color color) {
-        return state.computeScore(color);
+    public ScoreDto computeScore() {
+        double scoreOfBlack = state.computeScore(Color.BLACK);
+        double scoreOfWhite = state.computeScore(Color.WHITE);
+
+        if (scoreOfBlack > scoreOfWhite) {
+            return new ScoreDto(scoreOfBlack, scoreOfWhite, Color.BLACK);
+        }
+        if (scoreOfBlack < scoreOfWhite) {
+            return new ScoreDto(scoreOfBlack, scoreOfWhite, Color.WHITE);
+        }
+
+        return new ScoreDto(scoreOfBlack, scoreOfWhite);
     }
 
 }

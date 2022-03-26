@@ -1,6 +1,5 @@
 package chess.chessgame;
 
-import chess.piece.Color;
 import chess.view.OutputView;
 
 import java.util.StringTokenizer;
@@ -16,7 +15,7 @@ public class ChessController {
         while (!chessGame.isFinished()) {
             playTurn(chessGame);
         }
-        OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+        OutputView.printScore(chessGame.computeScore());
     }
 
     private void playTurn(ChessGame chessGame) {
@@ -40,7 +39,7 @@ public class ChessController {
             return;
         }
         if (command.equals("status")) {
-            OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            OutputView.printScore(chessGame.computeScore());
             return;
         }
         throw new IllegalArgumentException("올바른 명령어를 입력해주세요");
