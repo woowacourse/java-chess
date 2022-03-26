@@ -4,13 +4,13 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
+import chess.domain.piece.PiecesGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,8 +20,8 @@ public class ChessBoard {
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn = new ArrayList<>();
 
-    public ChessBoard(Map<Position, Piece> pieces) {
-        this.pieces = new HashMap<>(pieces);
+    public ChessBoard(PiecesGenerator piecesGenerator) {
+        this.pieces = piecesGenerator.generate();
         initFirstPositionsOfPawn();
         fillEmptyPieceIfAbsent();
     }
@@ -45,29 +45,49 @@ public class ChessBoard {
 
     public void move(GameCommand gameCommand) {
         Position from = gameCommand.getFromPosition();
+        Position to = gameCommand.getToPosition();
         Piece piece = selectPiece(from);
         Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        if (!isFirstMovePawn(piece, from)) {
-            removeSecondMove(piece, movablePositions);
-        }
-        List<Position> positions = generateMovablePositionsWithBlock(from, piece, movablePositions);
+        refinePawnMovablePositions(from, piece, movablePositions);
+        List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
+        checkMovable(to, finalMovablePositions);
+        movePiece(from, to, piece);
     }
 
-    public boolean isFirstMovePawn(Piece piece, Position position) {
-        if (firstPositionsOfPawn.contains(position) && piece.isSamePieceName(PieceName.PAWN)) {
+    private void refinePawnMovablePositions(Position from, Piece piece, Map<Direction, List<Position>> movablePositions) {
+        if (!isFirstMovePawn(from) && piece.isSamePieceName(PieceName.PAWN)) {
+            removeSecondMove(piece, movablePositions);
+        }
+    }
+
+    public boolean isFirstMovePawn(Position position) {
+        if (firstPositionsOfPawn.contains(position)) {
             return true;
         }
         return false;
     }
 
     private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {
+        List<Position> positions = movablePositions.get(Direction.NORTH);
         if (piece.isBlack()) {
-            List<Position> positions = movablePositions.get(Direction.SOUTH);
+            positions = movablePositions.get(Direction.SOUTH);
+        }
+        if (positions.size() == 2) {
             positions.remove(1);
         }
-        if (piece.isWhite()) {
-            List<Position> positions = movablePositions.get(Direction.NORTH);
-            positions.remove(1);
+    }
+
+    private void checkMovable(Position to, List<Position> finalMovablePositions) {
+        if (!finalMovablePositions.contains(to)) {
+            throw new IllegalArgumentException("해당 말은 입력한 위치로 이동할 수 없습니다.");
+        }
+    }
+
+    private void movePiece(Position from, Position to, Piece piece) {
+        pieces.put(to, piece);
+        pieces.put(from, EmptyPiece.getInstance());
+        if (piece.isSamePieceName(PieceName.PAWN) && firstPositionsOfPawn.contains(from)) {
+            firstPositionsOfPawn.remove(from);
         }
     }
 
@@ -76,11 +96,17 @@ public class ChessBoard {
         List<Position> result = new ArrayList<>();
         for (Direction direction : movablePositions.keySet()) {
             List<Position> positions = movablePositions.get(direction);
-            int cutIndex = getCutIndex(piece, positions);
-            result.addAll(positions.subList(0, cutIndex));
+            addMovablePositionsWithBlock(piece, result, positions);
         }
         addDiagonalMoveForPawn(nowPosition, piece, result);
         return Collections.unmodifiableList(result);
+    }
+
+    private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
+        if(positions.size() != 0){
+            int cutIndex = getCutIndex(piece, positions);
+            result.addAll(positions.subList(0, cutIndex));
+        }
     }
 
     private int getCutIndex(Piece nowPiece, List<Position> positions) {

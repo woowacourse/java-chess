@@ -38,7 +38,7 @@ public class ConsoleApplication {
     private static void playGameByCommand(GameCommand gameCommand) {
         if (gameCommand.isStart()) {
             PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-            chessBoard = new ChessBoard(piecesGenerator.generate());
+            chessBoard = new ChessBoard(piecesGenerator);
             ResultView.printChessBoard(chessBoard.getPieces());
         }
         if (gameCommand.isMove() && chessBoard == null) {
