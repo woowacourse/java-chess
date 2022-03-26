@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.domain.game.Game;
+import chess.domain.game.Command;
+import chess.domain.game.GameState;
+import chess.domain.game.Ready;
 import chess.dto.Request;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,26 +18,27 @@ public class ChessController {
     }
 
     public void run() {
-        Game game = new Game();
         outputView.printIntroduction();
-        playGame(game);
+        playGame();
         outputView.printEnd();
     }
 
-    private void playGame(Game game) {
-        tryExecute(game);
-        if (!game.isRunnable()) {
-            return;
+    private void playGame() {
+        GameState gameState = new Ready();
+        while (gameState.isRunnable()) {
+            gameState = tryExecute(gameState);
+            outputView.printResponse(gameState.getResponse());
         }
-        outputView.printResponse(game.getResponse());
-        playGame(game);
     }
 
-    private void tryExecute(Game game) {
+    private GameState tryExecute(GameState gameState) {
         try {
-            game.execute(Request.of(inputView.inputCommand()));
+            Request request = Request.of(inputView.inputCommand());
+            Command command = Command.find(request.getCommand());
+            return command.execute(gameState, request.getArguments());
         } catch (RuntimeException e) {
             outputView.printException(e);
+            return tryExecute(gameState);
         }
     }
 }
