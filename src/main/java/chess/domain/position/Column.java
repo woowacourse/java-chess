@@ -57,7 +57,7 @@ public enum Column {
 
     private Column find(int value) {
         return Arrays.stream(values())
-                .filter(it -> it.value == value)
+                .filter(column -> column.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 컬럼입니다."));
     }

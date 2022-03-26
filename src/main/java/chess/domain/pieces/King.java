@@ -7,11 +7,6 @@ public class King implements Type {
     public static final int MOVEMENT_LIMIT = 1;
 
     @Override
-    public String getSymbol() {
-        return "K";
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return source.columnGap(target) <= MOVEMENT_LIMIT && source.rowGap(target) <= MOVEMENT_LIMIT;
     }
@@ -29,5 +24,10 @@ public class King implements Type {
     @Override
     public double score() {
         return 0;
+    }
+
+    @Override
+    public String symbol() {
+        return "K";
     }
 }

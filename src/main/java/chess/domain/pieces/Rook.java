@@ -5,11 +5,6 @@ import chess.domain.position.Position;
 public class Rook implements Type {
 
     @Override
-    public String getSymbol() {
-        return "R";
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return source.isStraight(target);
     }
@@ -27,5 +22,10 @@ public class Rook implements Type {
     @Override
     public double score() {
         return 5;
+    }
+
+    @Override
+    public String symbol() {
+        return "R";
     }
 }

@@ -4,8 +4,6 @@ import chess.domain.position.Position;
 
 public interface Type {
 
-    String getSymbol();
-
     boolean isMovable(Position source, Position target);
 
     boolean isPawn();
@@ -13,4 +11,6 @@ public interface Type {
     boolean isKing();
 
     double score();
+
+    String symbol();
 }

@@ -43,7 +43,7 @@ public class GameMachine {
             return;
         }
         if (commands.size() != MOVE_COMMAND_SIZE) {
-            OutputView.announceWrongMoveCommand();
+            OutputView.announceBadMoveCommand();
             return;
         }
         movePieceOnBoard(board, commands);

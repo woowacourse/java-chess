@@ -1,23 +1,26 @@
 package chess.domain.position;
 
+import java.util.function.BiPredicate;
+import java.util.stream.Stream;
+
 public enum Direction {
 
-    VERTICAL,
-    HORIZONTAL,
-    DIAGONAL,
-    IGNORE;
+    VERTICAL(Position::isVertical),
+    HORIZONTAL(Position::isHorizontal),
+    DIAGONAL(Position::isDiagonal),
+    IGNORE((source, target) -> true);
+
+    private final BiPredicate<Position, Position> directionCalculator;
+
+    Direction(BiPredicate<Position, Position> directionCalculator) {
+        this.directionCalculator = directionCalculator;
+    }
 
     public static Direction calculate(Position source, Position target) {
-        if (source.isVertical(target)) {
-            return VERTICAL;
-        }
-        if (source.isHorizontal(target)) {
-            return HORIZONTAL;
-        }
-        if (source.isDiagonal(target)) {
-            return DIAGONAL;
-        }
-        return IGNORE;
+        return Stream.of(values())
+                .filter(direction -> direction.directionCalculator.test(source, target))
+                .findFirst()
+                .orElse(IGNORE);
     }
 
     public boolean isIgnore() {

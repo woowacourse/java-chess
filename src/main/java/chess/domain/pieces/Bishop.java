@@ -5,11 +5,6 @@ import chess.domain.position.Position;
 public class Bishop implements Type {
 
     @Override
-    public String getSymbol() {
-        return "B";
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return source.isDiagonal(target);
     }
@@ -27,5 +22,10 @@ public class Bishop implements Type {
     @Override
     public double score() {
         return 3;
+    }
+
+    @Override
+    public String symbol() {
+        return "B";
     }
 }

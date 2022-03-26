@@ -10,11 +10,6 @@ public final class Pawn implements Type {
     public static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
 
     @Override
-    public String getSymbol() {
-        return "P";
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         int rowGap = source.rowGap(target);
         int columnGap = source.columnGap(target);
@@ -58,5 +53,10 @@ public final class Pawn implements Type {
     @Override
     public double score() {
         return 1;
+    }
+
+    @Override
+    public String symbol() {
+        return "P";
     }
 }

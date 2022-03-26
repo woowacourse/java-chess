@@ -8,11 +8,6 @@ public class Knight implements Type {
     private static final int SECOND_MOVEMENT_LIMIT = 1;
 
     @Override
-    public String getSymbol() {
-        return "N";
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         int columnGap = source.columnGap(target);
         int rowGap = source.rowGap(target);
@@ -40,5 +35,10 @@ public class Knight implements Type {
     @Override
     public double score() {
         return 2.5;
+    }
+
+    @Override
+    public String symbol() {
+        return "N";
     }
 }
