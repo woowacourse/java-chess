@@ -1,9 +1,14 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,5 +61,47 @@ public class ChessBoard {
         }
 
         return false;
+    }
+
+    public double calculateByTeam(Team team) {
+        Map<Position, Piece> pawns = getPawnByTeam(team);
+
+        File[] values = File.values();
+
+        int twoPawnCount = Arrays.stream(values)
+                .mapToInt(file -> countPawn(pawns, file))
+                .sum();
+
+        double decrease = twoPawnCount * 0.5;
+
+        System.out.println("decrease = " + decrease);
+
+        double sum = cells.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        return sum - decrease;
+    }
+
+    private Map<Position, Piece> getPawnByTeam(Team team) {
+        return cells.keySet()
+                .stream()
+                .filter(position -> cells.get(position).isPawn() && cells.get(position).getTeam() == team)
+                .collect(toMap(position -> position, cells::get));
+    }
+
+    private int countPawn(Map<Position, Piece> pawns, File file) {
+        List<Position> collect = pawns.keySet()
+                .stream()
+                .filter(position -> position.getFile() == file)
+                .collect(toList());
+
+        if (collect.size() >= 2) {
+            return collect.size();
+        }
+
+        return 0;
     }
 }
