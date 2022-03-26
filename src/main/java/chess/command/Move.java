@@ -28,6 +28,13 @@ public class Move extends Command {
         throw new IllegalArgumentException("command has only move or end ");
     }
 
+    public Command turnFinalState(String input) {
+        if ("status".equals(input)) {
+            return new Status(input);
+        }
+        return new End(input);
+    }
+
     @Override
     public boolean isEnd() {
         return false;

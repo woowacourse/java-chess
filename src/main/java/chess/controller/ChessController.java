@@ -1,15 +1,11 @@
 package chess.controller;
 
 import chess.Board;
-import chess.Position;
 import chess.command.Command;
 import chess.command.Init;
-import chess.command.Move;
 import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
 
 public class ChessController {
     public void run() {
@@ -24,10 +20,13 @@ public class ChessController {
             if(command.isMove()){
                 board.move(command.getCommandPosition());
             }
-            OutputView.printBoard(board.getBoard());
+            OutputView.printBoard(board.getPieces());
             command = command.turnState(InputView.inputCommand());
         }
-        //command.turnState(InputView.inputCommand());
-        //if(command.)
+        OutputView.printFinishMessage();
+        command = command.turnFinalState(InputView.inputCommand());
+        if(command.isStatus()) {
+            OutputView.printFinalResult(board.getWinTeam(), board.getWhiteTeamScore(), board.getBlackTeamScore());
+        }
     }
 }

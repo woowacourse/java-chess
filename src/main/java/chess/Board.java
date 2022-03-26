@@ -1,6 +1,8 @@
 package chess;
 
-import chess.piece.*;
+import chess.piece.Empty;
+import chess.piece.Piece;
+import chess.piece.Pieces;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class Board {
         return new Board(pieces);
     }
 
-    public Pieces getBoard() {
+    public Pieces getPieces() {
         return pieces;
     }
 
@@ -26,7 +28,7 @@ public class Board {
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         Piece targetPiece = pieces.findByPosition(targetPosition);
-        if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece) )|| sourcePiece.isKill(targetPiece)) {
+        if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) || sourcePiece.isKill(targetPiece)) {
             sourcePiece.moveTo(targetPiece);
             pieces.remove(targetPiece);
             pieces.add(new Empty(sourcePosition));
@@ -61,6 +63,22 @@ public class Board {
         return pieces.countOfKing() == 1;
     }
 
+    public double getWhiteTeamScore() {
+        return pieces.getTotalScore(Team.WHITE);
+    }
 
+    public double getBlackTeamScore() {
+        return pieces.getTotalScore(Team.BLACK);
+    }
+
+    public Team getWinTeam() {
+        if (getWhiteTeamScore() > getBlackTeamScore()) {
+            return Team.WHITE;
+        }
+        if(getBlackTeamScore() > getWhiteTeamScore()){
+            return Team.BLACK;
+        }
+        return Team.NONE;
+    }
 }
 

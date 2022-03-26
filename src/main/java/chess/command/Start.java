@@ -22,9 +22,4 @@ public class Start extends Command {
         return false;
     }
 
-    @Override
-    public boolean isMove() {
-        return false;
-    }
-
 }
