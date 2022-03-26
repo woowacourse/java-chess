@@ -14,6 +14,10 @@ public class ChessGame {
         this.blackPlayer = blackPlayer;
     }
 
+    public ChessMap createMap() {
+        return ChessMap.of(whitePlayer.findAll(), blackPlayer.findAll());
+    }
+
     public List<Piece> move(final Player currentPlayer, final Player opponentPlayer,
             final Position currentPosition, final Position destinationPosition) {
         validateMovable(currentPlayer, currentPosition, destinationPosition);

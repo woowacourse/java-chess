@@ -8,6 +8,7 @@ import chess.domain.generator.CustomGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.player.Player;
+import chess.domain.player.Team;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +22,8 @@ class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        currentPlayer = new Player(new CustomGenerator());
-        opponentPlayer = new Player(new BlackGenerator());
+        currentPlayer = new Player(new CustomGenerator(), Team.WHITE);
+        opponentPlayer = new Player(new BlackGenerator(), Team.BLACK);
         chessGame = new ChessGame(currentPlayer, opponentPlayer);
     }
 
