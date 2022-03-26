@@ -68,7 +68,7 @@ public class Board {
         // (테스트 필요)이동할 위치가 같은 색깔이 아님을 검증한다.
         validateNotSameColor(sourcePiece, targetPiece);
 
-        if (!sourcePiece.canMove(this, from, to) && !sourcePiece.isEmpty()) {
+        if (!sourcePiece.canMove(this, from, to) && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
 
