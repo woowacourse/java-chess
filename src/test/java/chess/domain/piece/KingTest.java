@@ -31,7 +31,8 @@ class KingTest {
                 Arguments.of(Position.of("d3"), Position.of("e4")),
                 Arguments.of(Position.of("d3"), Position.of("e2")),
                 Arguments.of(Position.of("d3"), Position.of("c4")),
-                Arguments.of(Position.of("d3"), Position.of("c2"))
+                Arguments.of(Position.of("d3"), Position.of("c2")),
+                Arguments.of(Position.of("e8"), Position.of("e7"))
         );
     }
 

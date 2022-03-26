@@ -23,9 +23,7 @@ public final class King extends Piece {
         List<Direction> directions = Direction.getKingDirections();
 
         for (Direction direction : directions) {
-            int x = direction.getX();
-            int y = direction.getY();
-            if (dest.equals(src.move(x, y))) {
+            if (src.canMoveByTime(direction, dest, 1)) {
                 return direction;
             }
         }
