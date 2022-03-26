@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;

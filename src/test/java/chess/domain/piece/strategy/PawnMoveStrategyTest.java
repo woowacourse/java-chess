@@ -38,8 +38,8 @@ class PawnMoveStrategyTest {
     @DisplayName("폰의 이동방향이 TOP, DOWN 일 경우에는 추가 검증을 해야한다.")
     void canMoveAdditionalValidation() {
         assertThat(new PawnMoveStrategy().isValidateCanMove(Color.WHITE,
-                        new Position(File.A, Rank.TWO),
-                        new Position(File.A, Rank.THREE)))
+                new Position(File.A, Rank.TWO),
+                new Position(File.A, Rank.THREE)))
                 .isFalse();
     }
 

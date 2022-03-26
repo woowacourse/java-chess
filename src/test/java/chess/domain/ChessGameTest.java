@@ -1,7 +1,7 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;

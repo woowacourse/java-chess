@@ -7,6 +7,7 @@ import chess.domain.piece.attribute.Name;
 import chess.domain.piece.strategy.QueenMoveStrategy;
 
 public class Queen extends Piece {
+
     public Queen(Color color) {
         super(new Name("Q"), color, new QueenMoveStrategy());
     }

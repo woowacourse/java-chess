@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.game.ChessGame;
 import chess.domain.board.Position;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 

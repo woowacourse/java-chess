@@ -16,6 +16,10 @@ public class Board {
         this.squares = squares;
     }
 
+    private static double scoreOfPiece(Entry<Position, Piece> positionPiece) {
+        return Score.valueOf(positionPiece.getValue()).getValue();
+    }
+
     public Piece findByPosition(Position position) {
         return squares.get(position);
     }
@@ -71,10 +75,6 @@ public class Board {
                 .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
-    }
-
-    private static double scoreOfPiece(Entry<Position, Piece> positionPiece) {
-        return Score.valueOf(positionPiece.getValue()).getValue();
     }
 
 //    private boolean isOppositeColor(Piece sourcePiece, Piece targetPiece) {

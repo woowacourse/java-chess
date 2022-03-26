@@ -12,8 +12,7 @@ public enum Score {
     BISHOP_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("b"), 3),
     KNIGHT_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("n"), 2.5),
     PAWN_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("p"), 1),
-    KING_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("k"), 0)
-    ;
+    KING_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("k"), 0);
 
     private final Predicate<Piece> piecePredicate;
     private final double value;

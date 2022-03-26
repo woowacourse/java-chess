@@ -64,6 +64,6 @@ class BishopMoveStrategyTest {
                 List.of(new Position(File.D, Rank.TWO),
                         new Position(File.E, Rank.THREE),
                         new Position(File.F, Rank.FOUR)
-        ));
+                ));
     }
 }
