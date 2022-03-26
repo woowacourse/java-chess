@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.attribute.Color;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,7 +31,7 @@ class DirectionTest {
             "B,ONE,A,THREE,TTL"
     })
     @DisplayName("체스 말이 거리가 같은지 확인할 수 있다.")
-    void isSameDirection(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
+    void isSameDistance(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
 
         assertThat(direction.isSameDistance(
                 new Position(fileA, rankA),
@@ -40,9 +42,34 @@ class DirectionTest {
     @Test
     @DisplayName("위치 두개로 방향 값을 가져올 수 있다.")
     void getDirection() {
-        assertThat(Direction.of(new Position(File.A,Rank.ONE),
+        assertThat(Direction.of(new Position(File.A, Rank.ONE),
                 new Position(File.C, Rank.THREE)))
                 .isEqualTo(Direction.TOPRIGHT);
 
+    }
+
+    @Test
+    @DisplayName("진영에 따라서 말의 이동방향이 뒤집힌다.")
+    void pieceDirectionReversed() {
+        List<Direction> directions = Direction.pawnDirection(Color.BLACK);
+
+        assertThat(directions).containsAll(
+                List.of(Direction.DOWN, Direction.DOWNLEFT, Direction.DOWNRIGHT)
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "A,TWO,A,THREE,TOP",
+            "A,SEVEN,A,SIX,DOWN",
+            "A,TWO,B,TWO,RIGHT",
+            "B,TWO,A,TWO,LEFT"
+    })
+    @DisplayName("체스 말이 해당 방향으로 가는지 확인할 수 있다.")
+    void isSameDirection(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
+        assertThat(direction.isSameDirection(
+                new Position(fileA, rankA),
+                new Position(fileB, rankB)))
+                .isTrue();
     }
 }

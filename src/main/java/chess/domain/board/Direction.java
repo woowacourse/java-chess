@@ -74,6 +74,9 @@ public enum Direction {
         if (y == 0) {
             return from.getYDistance(to) == 0 && from.getXDistance(to) * x > 0;
         }
+        if (x == 0) {
+            return from.getXDistance(to) == 0 && from.getYDistance(to) * y > 0;
+        }
         return (double) from.getXDistance(to) / from.getYDistance(to) == (double) x / y;
     }
 
