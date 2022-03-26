@@ -1,6 +1,7 @@
 package chess.state;
 
 import chess.domain.Board;
+import chess.domain.Move;
 import chess.domain.Result;
 import chess.domain.Score;
 import chess.domain.piece.Color;
@@ -32,11 +33,36 @@ public class Started implements State {
     @Override
     public State move(final String[] commands) {
         try {
-            return actualMove(commands);
+            return movePiece(commands);
         } catch (IllegalArgumentException | IllegalStateException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return new Started(turn, board);
         }
+    }
+
+    private State movePiece(final String[] commands) {
+        final Position from = Position.create(commands[1]);
+        final Position to = Position.create(commands[2]);
+
+        Move move = new Move(board, turn);
+        move.isMovable(from, to);
+
+        if (move.isCheckmate(to)) {
+            return runCheckmate();
+        }
+
+        return runMovePiece(from, to);
+    }
+
+    private State runCheckmate() {
+        OutputView.printResult(turn.getName(), Result.WIN.getName());
+        return new Ended();
+    }
+
+    private State runMovePiece(final Position from, final Position to) {
+        board.move(from, to);
+        OutputView.printBoard(board.getBoard());
+        return new Started(turn.getOpposite(), board);
     }
 
     @Override
@@ -49,22 +75,6 @@ public class Started implements State {
         OutputView.printResult(turn.getName(), Result.decide(myScore, opponentScore).getName());
 
         return new Started(turn, board);
-    }
-
-    private State actualMove(final String[] commands) {
-        final Position from = Position.create(commands[1]);
-        final Position to = Position.create(commands[2]);
-
-        board.isMovable(from, to, turn);
-
-        if (board.isCheckmate(to)) {
-            OutputView.printResult(turn.getName(), Result.WIN.getName());
-            return new Ended();
-        }
-
-        board.move(from, to);
-        OutputView.printBoard(board.getBoard());
-        return new Started(turn.getOpposite(), board);
     }
 
     @Override

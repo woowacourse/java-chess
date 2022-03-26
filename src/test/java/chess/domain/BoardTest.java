@@ -1,7 +1,6 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -112,72 +111,6 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("source 위치와 target 위치가 같은 경우 예외를 발생시킨다.")
-    void exceptionSamePosition() {
-        Position from = Position.create("c2");
-        Position to = Position.create("c2");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] source 위치와 target 위치가 같을 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("자신의 기물이 아닐 경우 예외를 발생시킨다.")
-    void exceptionTurn() {
-        Position from = Position.create("b2");
-        Position to = Position.create("b3");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.BLACK))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 자신의 기물만 이동시킬 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("source 위치에 기물이 없는 경우 예외를 발생시킨다.")
-    void exceptionEmptySource() {
-        Position from = Position.create("a3");
-        Position to = Position.create("a4");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] source 위치에 기물이 존재하지 않습니다.");
-    }
-
-    @Test
-    @DisplayName("기물이 행마법에 맞지 않을 경우 예외를 발생시킨다.")
-    void exceptionIllegalMovement() {
-        Position from = Position.create("b1");
-        Position to = Position.create("b3");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 행마법에 맞지 않는 이동입니다.");
-    }
-
-    @Test
-    @DisplayName("target 위치의 기물이 자신의 기물일 경우 예외를 발생시킨다.")
-    void exceptionTargetColor() {
-        Position from = Position.create("a1");
-        Position to = Position.create("a2");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 자신의 기물이 있는 곳으로 이동시킬 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("이동 경로에 기물이 있으면 예외를 발생시킨다.")
-    void exceptionBlockedMove() {
-        Position from = Position.create("a1");
-        Position to = Position.create("a7");
-
-        assertThatThrownBy(() -> board.isMovable(from, to, Color.WHITE))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("Pawn의 개수를 구한다.")
     void countPawn() {
         assertThat(board.countPiece(new PawnPiece(Color.WHITE))).isEqualTo(8);
@@ -199,9 +132,4 @@ public class BoardTest {
 
         assertThat(board.countPieceOnSameFile(new PawnPiece(Color.WHITE), File.B)).isEqualTo(2);
     }
-
-    // calculate
-    // 퀸 : 9, 룩 : 5, 비숍 : 3, 나이트 : 2.5
-    // 폰 : 1, 같은 파일의 폰은 모두 0.5로 계산
-    // 폰 : 파일은 a~h까지 돌면서 각 파일에 개수를 구하고 1 -> 1, count > 1 * 0.5
 }
