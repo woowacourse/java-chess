@@ -24,6 +24,14 @@ public class Running extends Started {
     }
 
     @Override
+    public GameState move(List<String> arguments) {
+        if (!board.move(arguments, turnColor)) {
+            return new Running(board, turnColor.toggle());
+        }
+        return new Finished(board, turnColor);
+    }
+
+    @Override
     public GameState status() {
         return new Status(board, turnColor);
     }
@@ -31,14 +39,6 @@ public class Running extends Started {
     @Override
     public boolean isRunnable() {
         return true;
-    }
-
-    @Override
-    public GameState move(List<String> arguments) {
-        if (!board.move(arguments, turnColor)) {
-            return new Running(board, turnColor.toggle());
-        }
-        return new Finished(board, turnColor);
     }
 
     @Override

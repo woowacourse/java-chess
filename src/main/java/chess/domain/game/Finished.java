@@ -24,22 +24,22 @@ public class Finished extends Started {
     }
 
     @Override
-    public boolean isRunnable() {
-        return false;
-    }
-
-    @Override
     public GameState move(List<String> arguments) {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 
     @Override
-    public Response getResponse() {
-        return new EmptyResponse();
+    public GameState status() {
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 
     @Override
-    public GameState status() {
-        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+    public boolean isRunnable() {
+        return false;
+    }
+
+    @Override
+    public Response getResponse() {
+        return new EmptyResponse();
     }
 }

@@ -2,13 +2,15 @@ package chess.domain.game;
 
 import chess.domain.board.BoardFixtures;
 import chess.domain.piece.Color;
+import chess.dto.EmptyResponse;
+import chess.dto.Response;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FinishedTest {
 
@@ -40,5 +42,35 @@ class FinishedTest {
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(() -> state.move(ignored));
+    }
+
+    @Test
+    @DisplayName("종료상태에서는 점수를 확인할 수 없다.")
+    void throwsExceptionWithTryingToStatus() {
+        GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
+
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+                .isThrownBy(state::status);
+    }
+
+    @Test
+    @DisplayName("종료상태는 진행 불가능한 상태이다.")
+    void isRunnableIsFalse() {
+        GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
+
+        boolean isRunnable = state.isRunnable();
+
+        assertThat(isRunnable).isFalse();
+    }
+
+
+    @Test
+    @DisplayName("종료 상태에서 비어있는 응답을 반환한다.")
+    void getEmptyResponse() {
+        GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
+
+        Response response = state.getResponse();
+
+        assertThat(response).isInstanceOf(EmptyResponse.class);
     }
 }
