@@ -33,7 +33,7 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
-        validateTurn(source);
+        validateSourcePosition(source);
         validateTargetPosition(source, target);
         if (isPawn(source)) {
             validateTargetRouteForPawn(source, target);
@@ -42,6 +42,17 @@ public class ChessBoard {
         }
         validateMoveRoute(source, target);
         movePiece(source, target);
+    }
+
+    private void validateSourcePosition(Position source) {
+        validateSourceNotNull(source);
+        validateTurn(source);
+    }
+
+    private void validateSourceNotNull(Position source) {
+        if (board.get(source) == null) {
+            throw new IllegalArgumentException("[ERROR] 비어있는 곳은 출발 위치가 될 수 없습니다.");
+        }
     }
 
     private void validateTurn(Position source) {
