@@ -1,7 +1,16 @@
 package chess.domain.chesspiece;
 
+import static chess.domain.position.Direction.N;
+import static chess.domain.position.Direction.NE;
+import static chess.domain.position.Direction.NW;
+import static chess.domain.position.Direction.S;
+import static chess.domain.position.Direction.SE;
+import static chess.domain.position.Direction.SW;
+
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -39,48 +48,50 @@ public final class Pawn extends ChessPiece {
 
     @Override
     public void checkMovablePosition(final Position from, final Position to) {
-        if (from.isSameRank(to)) {
-            checkStraightMove(from, to);
+        if (isMovablePosition(from, to)) {
             return;
         }
-        checkCrossMove(from, to);
-    }
-
-    private void checkStraightMove(final Position from, final Position to) {
-        if (color.isBlack() && isValidDistance(from, to, 1, BLACK_INIT_FILE)) {
+        if (isBlackInitPosition(from, to)) {
             return;
         }
-        if (!color.isBlack() && isValidDistance(from, to, -1, WHITE_INIT_FILE)) {
+        if (isWhiteInitPosition(from, to)) {
             return;
         }
         throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
     }
 
-    private boolean isValidDistance(final Position from, final Position to, final int movableDistance,
-                                    final String initFile) {
-        final int fileDistance = from.fileDistance(to);
-        if (movableDistance == fileDistance) {
-            return true;
-        }
-        if (from.isSameFile(initFile)) {
-            return fileDistance == movableDistance * 2;
-        }
-        return false;
+    private boolean isMovablePosition(final Position from, final Position to) {
+        return pawnMovableDirections(color)
+                .stream()
+                .map(from::toNextPosition)
+                .anyMatch(position -> position.equals(to));
     }
 
-    private void checkCrossMove(final Position from, final Position to) {
-        final int fileDistance = from.fileDistance(to);
-        if (Math.abs(from.rankDistance(to)) != 1) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+    private List<Direction> pawnMovableDirections(final Color color) {
+        if (color.isBlack()) {
+            return List.of(S, SE, SW);
         }
-        if (color.isBlack() && fileDistance == 1) {
-            return;
-        }
-        if (!color.isBlack() && fileDistance == -1) {
-            return;
-        }
+        return List.of(N, NE, NW);
+    }
 
-        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+    private boolean isBlackInitPosition(final Position from, final Position to) {
+        if (!color.isBlack()) {
+            return false;
+        }
+        if (!from.isSameFile(BLACK_INIT_FILE)) {
+            return false;
+        }
+        return from.fileDistance(to) == 2;
+    }
+
+    private boolean isWhiteInitPosition(final Position from, final Position to) {
+        if (color.isBlack()) {
+            return false;
+        }
+        if (!from.isSameFile(WHITE_INIT_FILE)) {
+            return false;
+        }
+        return from.fileDistance(to) == -2;
     }
 
     @Override
