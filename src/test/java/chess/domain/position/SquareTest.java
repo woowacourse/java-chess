@@ -9,7 +9,7 @@ public class SquareTest {
     @Test
     @DisplayName("세로가 a이고 가로가 1이면 이름이 a1 이다")
     void squareName_a1() {
-        Square square = new Square(File.A, Rank.ONE);
+        Square square = new Square("a1");
 
         assertThat(square.getName()).isEqualTo("a1");
     }
@@ -17,7 +17,7 @@ public class SquareTest {
     @Test
     @DisplayName("세로가 h이고 가로가 3이면 이름이 h3 이다")
     void squareName_h3() {
-        Square square = new Square(File.H, Rank.THREE);
+        Square square = new Square("h3");
 
         assertThat(square.getName()).isEqualTo("h3");
     }
@@ -25,8 +25,8 @@ public class SquareTest {
     @Test
     @DisplayName("같은 파일과 같은 랭크를 가진 스퀘어들은 동등하다")
     void equals() {
-        Square square1 = new Square(File.H, Rank.THREE);
-        Square square2 = new Square(File.H, Rank.THREE);
+        Square square1 = new Square("h3");
+        Square square2 = new Square("h3");
         assertThat(square1.equals(square2)).isTrue();
     }
 

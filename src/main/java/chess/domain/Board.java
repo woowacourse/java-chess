@@ -105,28 +105,9 @@ public class Board {
         }
     }
 
-    public double getStatus(Color color) {
-        double sum = 0;
-        List<Map.Entry<Square, Piece>> survives = board.entrySet().stream()
+    public List<Map.Entry<Square, Piece>> filterBy(Color color) {
+        return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toList());
-
-        for (Map.Entry<Square, Piece> survive : survives) {
-            Piece piece = survive.getValue();
-            sum = piece.addScore(sum);
-        }
-
-        for (File file : File.values()) {
-            int count = (int)survives.stream()
-                    .filter(entry -> entry.getValue().isPawn())
-                    .filter(entry -> entry.getKey().checkFile(file))
-                    .count();
-
-            if (count > 1) {
-                sum -= 0.5 * count;
-            }
-        }
-
-        return sum;
     }
 }
