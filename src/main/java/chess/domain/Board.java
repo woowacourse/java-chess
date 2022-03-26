@@ -5,10 +5,7 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public final class Board {
 
@@ -139,10 +136,14 @@ public final class Board {
                 .count();
     }
 
-    public Color whoIsWin() {
-        if (calculateScore(Color.WHITE) >= calculateScore(Color.BLACK)) {
-            return Color.WHITE;
+    public Map<Result, Color> whoIsWin() {
+        Map<Result, Color> gameResult = new HashMap<>();
+        if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
+            gameResult.put(Result.WIN, Color.WHITE);
         }
-        return Color.BLACK;
+        if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
+            gameResult.put(Result.WIN, Color.WHITE);
+        }
+        return gameResult;
     }
 }

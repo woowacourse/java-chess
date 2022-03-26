@@ -3,10 +3,12 @@ package chess.view;
 import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Piece;
+import chess.domain.Result;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class OutputView {
@@ -37,7 +39,6 @@ public class OutputView {
         System.out.print(".");
     }
 
-
     public static void announceNotStarted() {
         System.out.println("게임을 먼저 start 해주세요.");
     }
@@ -54,6 +55,14 @@ public class OutputView {
         for (Color color : Color.values()) {
             System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
         }
-        System.out.println(board.whoIsWin().value() + "이 이기고 있습니다.");
+        printResult(board.whoIsWin());
+    }
+
+    private static void printResult(Map<Result, Color> gameResult) {
+        if (gameResult.containsKey(Result.WIN)) {
+            System.out.println(gameResult.get(Result.WIN).value() + "이 이기고 있습니다.");
+            return;
+        }
+        System.out.println("현재 무승부입니다.");
     }
 }
