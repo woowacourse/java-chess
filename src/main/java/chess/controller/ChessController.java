@@ -37,6 +37,12 @@ public class ChessController {
 
         outputView.printAnnounce();
 
+        Command initCommand = Command.from(inputView.inputCommand());
+
+        if (!initCommand.isStart()) {
+            return;
+        }
+
         play(chessGame);
 
         Map<Team, Double> teamScores = chessGame.calculateResult();
@@ -45,16 +51,12 @@ public class ChessController {
     }
 
     private void play(ChessGame chessGame) {
-        while (true) {
+        while (!chessGame.isEnd()) {
+            printChessBoard(chessGame);
+
             Command command = Command.from(inputView.inputCommand());
             
-            if (chessGame.isEnd()) {
-                break;
-            }
-            
             chessGame.progress(command);
-
-            printChessBoard(chessGame);
         }
     }
 
