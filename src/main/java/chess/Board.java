@@ -3,8 +3,6 @@ package chess;
 import static chess.PieceColor.*;
 import static chess.Rank.*;
 
-import chess.turndecider.AlternatingTurnDecider;
-import chess.turndecider.TurnDecider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -19,6 +17,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.turndecider.TurnDecider;
 
 public class Board {
 
@@ -31,7 +30,6 @@ public class Board {
 
     private final Map<Position, Piece> values;
     private final TurnDecider turnDecider;
-
 
     public Board(TurnDecider turnDecider) {
         this.values = initBoard();
@@ -86,6 +84,7 @@ public class Board {
         validateSourceNotEmpty(source);
         boolean isFinished = values.get(target) instanceof King;
         changePieces(source, target);
+        turnDecider.nextState();
         return isFinished;
     }
 
@@ -126,11 +125,12 @@ public class Board {
         }
     }
 
-    public double calculateScore(PieceColor color) {
-        return values.values().stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::getScore)
-                .sum();
+    public double calculateScore() {
+        return values.values()
+            .stream()
+            .filter(turnDecider::isCorrectTurn)
+            .mapToDouble(Piece::getScore)
+            .sum();
     }
 
     public Map<Position, Piece> getValues() {

@@ -15,6 +15,12 @@ public class MoveRequest {
         this.target = target;
     }
 
+    public MoveRequest(Command command) {
+        this.command = command;
+        this.source = null;
+        this.target = null;
+    }
+
     public Command getCommand() {
         return command;
     }

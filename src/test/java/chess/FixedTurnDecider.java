@@ -5,16 +5,16 @@ import chess.turndecider.State;
 import chess.turndecider.TurnDecider;
 import chess.turndecider.WhiteState;
 
-public class FixedTurnDecider implements TurnDecider{
+public class FixedTurnDecider implements TurnDecider {
 
-    private State currentState = new WhiteState();
-
-    public void setState(State state) {
-
-    }
+    private final State currentState = new WhiteState();
 
     public boolean isCorrectTurn(Piece sourcePiece) {
         return true;
+    }
+
+    @Override
+    public void nextState() {
     }
 }
 

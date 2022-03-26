@@ -3,7 +3,7 @@ package chess.turndecider;
 import chess.PieceColor;
 import chess.piece.Piece;
 
-public class BlackState implements State{
+public class BlackState implements State {
 
     private final PieceColor pieceColor = PieceColor.BLACK;
 

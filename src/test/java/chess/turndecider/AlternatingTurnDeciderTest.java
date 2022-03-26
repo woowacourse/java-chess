@@ -1,16 +1,16 @@
 package chess.turndecider;
 
-import static chess.PieceColor.BLACK;
-import static chess.PieceColor.WHITE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static chess.PieceColor.*;
+import static org.assertj.core.api.Assertions.*;
 
-import chess.PieceColor;
-import chess.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import chess.PieceColor;
+import chess.piece.Pawn;
 
 class AlternatingTurnDeciderTest {
 
@@ -28,7 +28,6 @@ class AlternatingTurnDeciderTest {
 
         assertThat(turnDecider.isCorrectTurn(new Pawn(pieceColor))).isEqualTo(expected);
     }
-
 
     @DisplayName("처음 턴은 백이고 다음 턴은 블랙이다, 세번째 턴은 백이다")
     @Test

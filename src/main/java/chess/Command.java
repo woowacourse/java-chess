@@ -7,10 +7,11 @@ public enum Command {
 
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status");
 
     private static final String regexStartEnd = "(start)|(end)";
-    private static final String regexEndMove = "(end)|(move [a-h][1-8] [a-h][1-8])";
+    private static final String regexEndMove = "(end)|(status)|(move [a-h][1-8] [a-h][1-8])";
 
     public static final Pattern PATTERN_START_END = Pattern.compile(regexStartEnd);
     public static final Pattern PATTERN_END_MOVE = Pattern.compile(regexEndMove);

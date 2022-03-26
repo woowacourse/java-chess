@@ -8,7 +8,6 @@ public class Bishop extends Piece {
     private static final String EMBLEM = "B";
     private static final double SCORE = 3f;
 
-
     public Bishop(PieceColor pieceColor) {
         super(pieceColor);
     }

@@ -6,21 +6,17 @@ public class AlternatingTurnDecider implements TurnDecider {
 
     private State currentState = new WhiteState();
 
-    public void setState(State state) {
-        this.currentState = state;
+    @Override
+    public boolean isCorrectTurn(Piece sourcePiece) {
+        return isSameColor(sourcePiece);
+    }
+
+    @Override
+    public void nextState() {
+        currentState = currentState.nextState();
     }
 
     private boolean isSameColor(Piece sourcePiece) {
         return currentState.isSameColor(sourcePiece);
-    }
-
-    public boolean isCorrectTurn(Piece sourcePiece) {
-        boolean isCorrectTurn = isSameColor(sourcePiece);
-        nextState();
-        return isCorrectTurn;
-    }
-
-    private void nextState() {
-        currentState = currentState.nextState();
     }
 }
