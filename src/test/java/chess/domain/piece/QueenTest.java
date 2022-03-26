@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class QueenTest {
     @DisplayName("상하좌우, 대각선 중 한 방향으로 칸수 제한없이 이동 가능하다.")
     @MethodSource("provideDestinationPosition")
     void move(final Position expected) {
-        final Position actual = queen.move(currentPosition, expected);
+        final Position actual = queen.move(currentPosition, expected, Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -43,7 +44,7 @@ class QueenTest {
     void moveException() {
         final Position nextDiagonalPosition = new Position(5, 'b');
 
-        assertThatThrownBy(() -> queen.move(currentPosition, nextDiagonalPosition))
+        assertThatThrownBy(() -> queen.move(currentPosition, nextDiagonalPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 상하좌우, 대각선 중 한 방향으로 이동해야 합니다.");
     }

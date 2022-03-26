@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 
 public class Queen extends Piece {
 
@@ -9,7 +10,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Position move(final Position currentPosition, final Position destinationPosition) {
+    public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
         final boolean isMoveLinear = currentPosition.isMoveLinear(destinationPosition);
         final boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
 

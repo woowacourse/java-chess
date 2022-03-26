@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ public class RookTest {
     void move(final int rank, final char file, final char direction) {
         final Position expected = new Position(rank, file);
 
-        final Position actual = rook.move(currentPosition, expected);
+        final Position actual = rook.move(currentPosition, expected, Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -30,7 +31,7 @@ public class RookTest {
     void moveException() {
         final Position nextDiagonalPosition = new Position(6, 'f');
 
-        assertThatThrownBy(() -> rook.move(currentPosition, nextDiagonalPosition))
+        assertThatThrownBy(() -> rook.move(currentPosition, nextDiagonalPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("룩은 상하좌우 중 한 방향으로만 이동해야 합니다.");
     }

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 
 public class Pawn extends Piece {
 
@@ -13,8 +14,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Position move(final Position currentPosition, final Position destinationPosition) {
-        if (!currentPosition.isMoveForward(destinationPosition)) {
+    public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
+        if (!currentPosition.isMoveForward(destinationPosition, team)) {
             throw new IllegalArgumentException("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
         }
         if (!position.isFirstTurnOfPawn()) {
@@ -38,11 +39,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Position capture(final Position currentPosition, final Position destinationPosition) {
-        final boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
+    public Position capture(final Position currentPosition, final Position destinationPosition, final Team team) {
+        final boolean isMoveForwardDiagonal = currentPosition.isMoveDiagonalForward(destinationPosition, team);
         final int moveDistance = currentPosition.calculateDistance(destinationPosition);
 
-        if (!isMoveDiagonal || moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
+        if (!isMoveForwardDiagonal || moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
             throw new IllegalArgumentException("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
         }
         return position = destinationPosition;

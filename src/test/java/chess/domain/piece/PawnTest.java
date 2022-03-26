@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class PawnTest {
         final int currentRank = 2;
         final Position nextPosition = new Position(currentRank, 'd');
 
-        assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition))
+        assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
     }
@@ -31,7 +32,7 @@ class PawnTest {
         final int currentRank = 2;
         final Position nextPosition = new Position(currentRank + 3, 'g');
 
-        assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition))
+        assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 첫번째 턴에는 1칸 또는 2칸만 이동할 수 있습니다.");
     }
@@ -41,7 +42,7 @@ class PawnTest {
     void moveFirstTurn() {
         final Position expected = new Position(3, 'g');
 
-        final Position actual = pawn.move(currentPosition, new Position(3, 'g'));
+        final Position actual = pawn.move(currentPosition, new Position(3, 'g'), Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -52,7 +53,7 @@ class PawnTest {
     void capture(final int rank, final char file) {
         final Position expected = new Position(rank, file);
 
-        final Position actual = pawn.capture(currentPosition, new Position(rank, file));
+        final Position actual = pawn.capture(currentPosition, new Position(rank, file), Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -63,7 +64,7 @@ class PawnTest {
         final int currentRank = 2;
         final Position nextPosition = new Position(currentRank + 2, 'e');
 
-        assertThatThrownBy(() -> pawn.capture(currentPosition, nextPosition))
+        assertThatThrownBy(() -> pawn.capture(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
     }
@@ -73,7 +74,7 @@ class PawnTest {
     void move() {
         final Position expected = new Position(3, 'g');
 
-        final Position actual = pawn.move(currentPosition, expected);
+        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -85,7 +86,7 @@ class PawnTest {
         final Pawn pawnNotFirstTurn = new Pawn(currentPositionNotFirstTurn);
         final Position nextPosition = new Position(5, 'g');
 
-        assertThatThrownBy(() -> pawnNotFirstTurn.move(currentPositionNotFirstTurn, nextPosition))
+        assertThatThrownBy(() -> pawnNotFirstTurn.move(currentPositionNotFirstTurn, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 앞으로 1칸만 이동할 수 있습니다.");
     }

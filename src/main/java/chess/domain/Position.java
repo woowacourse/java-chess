@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.player.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -68,11 +69,26 @@ public class Position {
         return fileDistance != 0 && rankDistance != 0;
     }
 
-    public boolean isMoveForward(final Position destination) {
+    public boolean isMoveForward(final Position destination, final Team team) {
         if (file != destination.file) {
             return false;
         }
+        if (team == Team.BLACK) {
+            return rank - destination.rank > 0;
+        }
         return destination.rank - rank > 0;
+    }
+
+    public boolean isMoveDiagonalForward(final Position destination, final Team team) {
+        final int fileDistance = Math.abs(file - destination.file);
+        final int rankDistance = destination.rank - rank;
+        if(fileDistance + rankDistance == 0) {
+            return false;
+        }
+        if (team == Team.BLACK) {
+            return fileDistance == Math.abs(rankDistance);
+        }
+        return fileDistance == rankDistance;
     }
 
     public int calculateDistance(final Position destination) {
@@ -143,5 +159,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public int getFile() {
+        return file - 'a';
     }
 }

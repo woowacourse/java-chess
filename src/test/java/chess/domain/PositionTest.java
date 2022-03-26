@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.player.Team;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -40,12 +41,23 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("전진으로 이동하는지 확인한다.")
-    void checkMoveForward() {
+    @DisplayName("화이트 기준 전진으로 이동하는지 확인한다.")
+    void checkWhiteMoveForward() {
         final Position currentPosition = new Position(2, 'b');
         final Position destinationPosition = new Position(3, 'b');
 
-        final boolean actual = currentPosition.isMoveForward(destinationPosition);
+        final boolean actual = currentPosition.isMoveForward(destinationPosition, Team.WHITE);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙 기준 전진으로 이동하는지 확인한다.")
+    void checkBlackMoveForward() {
+        final Position currentPosition = new Position(7, 'b');
+        final Position destinationPosition = new Position(5, 'b');
+
+        final boolean actual = currentPosition.isMoveForward(destinationPosition, Team.BLACK);
 
         assertThat(actual).isTrue();
     }

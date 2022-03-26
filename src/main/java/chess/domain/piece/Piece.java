@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -14,15 +15,19 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public abstract Position move(Position currentPosition, Position destinationPosition);
+    public abstract Position move(Position currentPosition, Position destinationPosition, Team team);
 
     public abstract boolean exist(Position checkingPosition);
 
-    public Position capture(Position currentPosition, Position destinationPosition) {
-        return move(currentPosition, destinationPosition);
+    public Position capture(Position currentPosition, Position destinationPosition, Team team) {
+        return move(currentPosition, destinationPosition, team);
     }
 
     public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isKing() {
         return false;
     }
 
@@ -49,5 +54,13 @@ public abstract class Piece {
 
     public double getScore() {
         return state.getScore();
+    }
+
+    public char getName() {
+        return state.getName();
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

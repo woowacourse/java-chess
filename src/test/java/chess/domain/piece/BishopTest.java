@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class BishopTest {
     void move(final int rank, final char file, final String direction) {
         final Position expected = new Position(rank, file);
 
-        final Position actual = bishop.move(currentPosition, expected);
+        final Position actual = bishop.move(currentPosition, expected, Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -30,7 +31,7 @@ class BishopTest {
     void moveException() {
         final Position nextLinearPosition = new Position(3, 'f');
 
-        assertThatThrownBy(() -> bishop.move(currentPosition, nextLinearPosition))
+        assertThatThrownBy(() -> bishop.move(currentPosition, nextLinearPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("비숍은 대각선으로 이동해야 합니다.");
     }

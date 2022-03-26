@@ -19,7 +19,7 @@ class PlayerTest {
     void checkHasPiece() {
         Piece piece1 = new Pawn(new Position(2, 'a'));
         Piece piece2 = new Pawn(new Position(3, 'b'));
-        Player player = new Player(List.of(piece1, piece2));
+        Player player = new Player(List.of(piece1, piece2), Team.WHITE);
 
         assertThat(player.hasPiece(new Position(3, 'b'))).isTrue();
     }
@@ -30,7 +30,7 @@ class PlayerTest {
         final Piece piece1 = new Pawn(new Position(2, 'b'));
         final Piece piece2 = new Rook(new Position(1, 'a'));
         final Piece piece3 = new King(new Position(1, 'e'));
-        final Player player = new Player(List.of(piece1, piece2, piece3));
+        final Player player = new Player(List.of(piece1, piece2, piece3), Team.WHITE);
 
         assertThat(player.findAll()).contains(piece1, piece2, piece3);
     }
@@ -41,7 +41,7 @@ class PlayerTest {
         final Position currentPosition = new Position(2, 'a');
         final Position expected = new Position(4, 'a');
         final Piece piece = new Pawn(currentPosition);
-        final Player player = new Player(List.of(piece));
+        final Player player = new Player(List.of(piece), Team.WHITE);
 
         final Position actual = player.move(currentPosition, expected);
 
@@ -54,7 +54,7 @@ class PlayerTest {
         final Position currentPosition = new Position(2, 'a');
         final Position expected = new Position(3, 'b');
         final Piece piece = new Pawn(currentPosition);
-        final Player player = new Player(List.of(piece));
+        final Player player = new Player(List.of(piece), Team.WHITE);
 
         final Position actual = player.capture(currentPosition, expected);
 
@@ -66,7 +66,7 @@ class PlayerTest {
     void removePiece() {
         final Position position = new Position(2, 'a');
         final Piece piece = new Pawn(position);
-        final Player player = new Player(List.of(piece));
+        final Player player = new Player(List.of(piece), Team.WHITE);
 
         player.remove(position);
 
@@ -79,9 +79,9 @@ class PlayerTest {
     @DisplayName("플레이어의 점수를 구한다.")
     void calculateScore() {
         final Piece piece1 = new Pawn(new Position(2, 'a'));
-        final Piece piece2 = new Pawn(new Position(4, 'a'));
         final Piece piece3 = new Pawn(new Position(4, 'b'));
-        final Player player = new Player(List.of(piece1, piece2, piece3));
+        final Piece piece2 = new Pawn(new Position(4, 'a'));
+        final Player player = new Player(List.of(piece1, piece2, piece3), Team.WHITE);
         final double expected = 2;
 
         final double actual = player.calculateScore();

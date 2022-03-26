@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 
 public class King extends Piece {
 
@@ -12,7 +13,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Position move(final Position currentPosition, final Position destinationPosition) {
+    public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
         boolean isMoveLinear = currentPosition.isMoveLinear(destinationPosition);
         boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
 
@@ -35,5 +36,10 @@ public class King extends Piece {
     @Override
     public boolean exist(final Position checkingPosition) {
         return position.equals(checkingPosition);
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

@@ -13,13 +13,15 @@ public class Player {
     private static final int DEFAULT_PLURAL_COUNT = 2;
 
     private final Set<Piece> pieces;
+    private final Team team;
 
-    public Player(List<Piece> pieces) {
+    public Player(List<Piece> pieces, Team team) {
         this.pieces = new HashSet<>(pieces);
+        this.team = team;
     }
 
-    public Player(Generator generator) {
-        this(generator.generate());
+    public Player(Generator generator, Team team) {
+        this(generator.generate(), team);
     }
 
     public boolean hasPiece(final Position position) {
@@ -34,12 +36,12 @@ public class Player {
 
     public Position move(final Position current, final Position destination) {
         return findPiece(current)
-                .move(current, destination);
+                .move(current, destination, team);
     }
 
     public Position capture(final Position current, final Position destination) {
         return findPiece(current)
-                .capture(current, destination);
+                .capture(current, destination, team);
     }
 
     public void remove(final Position position) {
@@ -81,5 +83,10 @@ public class Player {
             return count;
         }
         return 0;
+    }
+
+    public boolean hasKing() {
+        return pieces.stream()
+                .anyMatch(Piece::isKing);
     }
 }

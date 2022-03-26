@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.player.Team;
 
 public class Rook extends Piece {
 
@@ -9,7 +10,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Position move(final Position currentPosition, final Position destinationPosition) {
+    public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
         if (!currentPosition.isMoveLinear(destinationPosition)) {
             throw new IllegalArgumentException("룩은 상하좌우 중 한 방향으로만 이동해야 합니다.");
         }
