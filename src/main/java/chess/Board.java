@@ -83,7 +83,9 @@ public class Board {
         validateSourceNotEmpty(source);
         boolean isFinished = values.get(target) instanceof King;
         changePieces(source, target);
-        turnDecider.nextState();
+        if (!isFinished) {
+            turnDecider.nextState();
+        }
         return isFinished;
     }
 

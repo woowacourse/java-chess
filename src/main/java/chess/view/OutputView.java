@@ -1,4 +1,4 @@
-package chess.dto.view;
+package chess.view;
 
 import static java.lang.System.*;
 
@@ -32,5 +32,9 @@ public class OutputView {
             }
             out.println();
         }
+    }
+
+    public static void printScore(double score) {
+        out.println("플레이어의 점수는 " + score + "점 입니다.");
     }
 }

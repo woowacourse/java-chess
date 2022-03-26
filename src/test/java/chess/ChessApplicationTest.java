@@ -53,6 +53,7 @@ public class ChessApplicationTest extends NsTest {
                     + "pppppppp" + NEXT_LINE
                     + "rnbqkbnr");
         });
+
     }
 
     @Override
