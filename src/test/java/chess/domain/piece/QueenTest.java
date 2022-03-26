@@ -1,16 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QueenTest {
+
+    private static final Board emptyBoard = new Board(HashMap::new);
 
     @DisplayName("퀸은 상하좌우 대각선 방향으로 이동 가능")
     @ParameterizedTest
@@ -18,7 +23,7 @@ public class QueenTest {
     void move(String to) {
         Piece queen = new Queen(Color.WHITE);
 
-        assertThatCode(() -> queen.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from(to)))
+        assertThatCode(() -> queen.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -27,18 +32,29 @@ public class QueenTest {
     void invalidMove() {
         Piece queen = new Queen(Color.WHITE);
 
-        assertThatThrownBy(() -> queen.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from("f7")))
+        assertThatThrownBy(() -> queen.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("f7")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @DisplayName("퀸의 이동 경로에 다른 기물이 있을 경우 예외 발생")
     @ParameterizedTest
-    @ValueSource(strings = {"e8", "e1", "b8", "h8", "a1"})
+    @ValueSource(strings = {"e8", "e1", "a5", "h5", "b8", "h8", "a1", "h2"})
     void invalid(String to) {
-        Piece queen = new Queen(Color.WHITE);
+        Map<Position, Piece> pieceExistBoard = new HashMap<>();
+        final Piece other = new Queen(Color.WHITE);
+        pieceExistBoard.put(Position.from("e6"), other);
+        pieceExistBoard.put(Position.from("e4"), other);
+        pieceExistBoard.put(Position.from("d5"), other);
+        pieceExistBoard.put(Position.from("f5"), other);
+        pieceExistBoard.put(Position.from("d6"), other);
+        pieceExistBoard.put(Position.from("f6"), other);
+        pieceExistBoard.put(Position.from("b2"), other);
+        pieceExistBoard.put(Position.from("f4"), other);
+        final Board mockBoard = new Board(() -> pieceExistBoard);
 
-        assertThatThrownBy(() -> queen.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from(to)))
+        Piece queen = new Queen(Color.WHITE);
+        assertThatThrownBy(() -> queen.checkPieceMoveRange(mockBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 기물이 존재합니다.");
     }

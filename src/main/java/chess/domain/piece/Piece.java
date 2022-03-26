@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 import java.util.Locale;

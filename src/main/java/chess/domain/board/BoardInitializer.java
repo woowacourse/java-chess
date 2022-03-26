@@ -1,20 +1,14 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public final class BoardInitializer {
+public final class BoardInitializer implements Initializable {
 
     private BoardInitializer() {
     }
@@ -23,6 +17,17 @@ public final class BoardInitializer {
         initPawn(value);
         initOtherPiece(value, Rank.EIGHT, Color.BLACK);
         initOtherPiece(value, Rank.ONE, Color.WHITE);
+    }
+
+    @Override
+    public Map<Position, Piece> init() {
+        Map<Position, Piece> initialBoard = new HashMap<>();
+
+        initPawn(initialBoard);
+        initOtherPiece(initialBoard, Rank.EIGHT, Color.BLACK);
+        initOtherPiece(initialBoard, Rank.ONE, Color.WHITE);
+
+        return initialBoard;
     }
 
     private static void initPawn(final Map<Position, Piece> value) {

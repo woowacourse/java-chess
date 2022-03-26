@@ -1,17 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RookTest {
 
+    private static final Board emptyBoard = new Board(HashMap::new);
     private static final Board board = new Board();
 
     @DisplayName("흰 룩 앞으로 전진")
@@ -20,7 +23,7 @@ public class RookTest {
     void forward(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("a3"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -30,7 +33,7 @@ public class RookTest {
     void back(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("e5"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -40,7 +43,7 @@ public class RookTest {
     void right(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("a3"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -50,7 +53,7 @@ public class RookTest {
     void left(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(board, Position.from("e5"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -65,12 +68,15 @@ public class RookTest {
                 .hasMessageContaining("룩은 대각선으로 이동할 수 없습니다.");
     }
 
-    @Test
     @DisplayName("룩 이동거리 사이에 기물이 있는 경우 예외")
+    @ParameterizedTest
+    @ValueSource(strings = {"e5", "c5", "c3", "e3"})
     void invalid() {
+        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a2"), new Rook(Color.WHITE))));
+
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatThrownBy(() -> rook.checkPieceMoveRange(board, Position.from("a1"), Position.from("a3")))
+        assertThatThrownBy(() -> rook.checkPieceMoveRange(mockBoard, Position.from("a1"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("룩의 이동 경로에 기물이 존재합니다.");
     }

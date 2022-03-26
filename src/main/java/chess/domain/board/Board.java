@@ -1,7 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -14,7 +13,13 @@ import java.util.Map;
 public class Board {
 
     private static final int NEXT = 1;
-    private final Map<Position, Piece> value = new HashMap<>();
+//    private final Map<Position, Piece> value = new HashMap<>();
+    private Map<Position, Piece> value = new HashMap<>();
+//    private final Map<Position, Piece> value;
+
+    public Board(final Initializable initializable) {
+        value = initializable.init();
+    }
 
     public Board() {
         BoardInitializer.init(value);

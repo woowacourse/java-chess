@@ -1,15 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.HashMap;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
+
+    private static final Board emptyBoard = new Board(HashMap::new);
 
     @DisplayName("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동 가능")
     @ParameterizedTest
@@ -17,7 +21,7 @@ class KnightTest {
     void move(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatCode(() -> knight.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from(to)))
+        assertThatCode(() -> knight.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -27,7 +31,7 @@ class KnightTest {
     void invalidMove(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatThrownBy(() -> knight.checkPieceMoveRange(new Board(), Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> knight.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
     }
