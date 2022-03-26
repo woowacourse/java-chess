@@ -1,6 +1,11 @@
 package chess.view;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+
+import chess.domain.piece.Team;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     private static final int SIZE = 8;
@@ -28,5 +33,25 @@ public class OutputView {
 
     private void printNextLine() {
         System.out.println();
+    }
+
+    public void printResult(Map<Team, Double> teamScores) {
+        Double whiteScore = teamScores.get(WHITE);
+        Double blackScore = teamScores.get(BLACK);
+
+        if (whiteScore > blackScore) {
+            System.out.println("승리: 흰팀");
+        }
+
+        if (blackScore > whiteScore) {
+            System.out.println("승리: 검은팀");
+        }
+
+        if (blackScore == whiteScore) {
+            System.out.println("무승부");
+        }
+
+        System.out.println("흰팀 점수: " + whiteScore);
+        System.out.println("검은팀 점수: " + blackScore);
     }
 }
