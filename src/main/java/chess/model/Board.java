@@ -45,7 +45,7 @@ public class Board {
     }
 
     private void turnDecide(Position source) {
-        if (!turnDecider.isCorrectTurn(pieceAt(source))) {
+        if (!turnDecider.isTurnOf(pieceAt(source))) {
             throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
         }
     }
@@ -59,9 +59,11 @@ public class Board {
     private void changePieces(Position source, Position target) {
         Piece sourcePiece = pieceAt(source);
         Piece targetPiece = pieceAt(target);
+        MoveType moveType = moveType(targetPiece);
 
-        if (!sourcePiece.isMovable(new Path(source, target), MoveType(targetPiece)) || isBlocked(source, target)
-            || targetPiece.isMyTeam(sourcePiece)) {
+        if (!sourcePiece.isMovable(new Path(source, target), moveType) || isBlocked(source, target)
+            || isFriendly(moveType)) {
+            System.out.println(moveType);
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
@@ -69,11 +71,15 @@ public class Board {
         values.put(source, EMPTY_PIECE);
     }
 
-    private MoveType MoveType(Piece targetPiece) {
+    private boolean isFriendly(MoveType moveType) {
+        return moveType == MoveType.FRIENDLY;
+    }
+
+    private MoveType moveType(Piece targetPiece) {
         if (isEmptyPiece(targetPiece)) {
             return MoveType.EMPTY;
         }
-        if (turnDecider.isCorrectTurn(targetPiece)) {
+        if (turnDecider.isTurnOf(targetPiece)) {
             return MoveType.FRIENDLY;
         }
         return MoveType.ENEMY;
@@ -101,7 +107,7 @@ public class Board {
     public double calculateScore() {
         return values.values()
             .stream()
-            .filter(turnDecider::isCorrectTurn)
+            .filter(turnDecider::isTurnOf)
             .mapToDouble(Piece::getScore)
             .sum() - adjustPawnScore();
     }
@@ -118,7 +124,7 @@ public class Board {
         return reverseValues().stream()
             .map(rank -> new Position(rank, file))
             .filter(position -> pieceAt(position) instanceof Pawn
-                && turnDecider.isCorrectTurn(pieceAt(position)))
+                && turnDecider.isTurnOf(pieceAt(position)))
             .count();
     }
 
