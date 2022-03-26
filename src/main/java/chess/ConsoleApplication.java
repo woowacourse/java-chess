@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.ChessBoard;
 import chess.domain.Color;
-import chess.domain.generator.EmptyBoardGenerator;
+import chess.domain.generator.InitBoardGenerator;
 import chess.dto.CommandRequest;
 import chess.view.Command;
 import chess.view.InputView;
@@ -11,7 +11,7 @@ import chess.view.OutputView;
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
+        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
 
         OutputView.printStartMessage();
         startChess(chessBoard);
@@ -24,7 +24,6 @@ public class ConsoleApplication {
         Command command = commandRequest.getCommand();
 
         if (command.isStart()) {
-            chessBoard.init();
             OutputView.printChessBoard(chessBoard.getBoard());
             return;
         }

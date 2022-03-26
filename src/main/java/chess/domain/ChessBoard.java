@@ -18,25 +18,6 @@ public class ChessBoard {
         this.turn = Color.WHITE;
     }
 
-    public void init() {
-        for (BoardSetting boardSetting : BoardSetting.values()) {
-            fillPieces(boardSetting);
-        }
-    }
-
-    private void fillPieces(BoardSetting boardSetting) {
-        Piece piece = boardSetting.getPiece();
-        List<Position> positions = boardSetting.getPositions();
-
-        for (Position position : positions) {
-            fillPiece(piece, position);
-        }
-    }
-
-    private void fillPiece(Piece piece, Position position) {
-        board.get(position.getRankIndex()).set(position.getFileIndex(), piece);
-    }
-
     public void move(String source, String target) {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
@@ -91,7 +72,7 @@ public class ChessBoard {
     }
 
     private double getPawnScore(Color color) {
-        int pawnScore = 0;
+        double pawnScore = 0;
         for (int i = 0; i < 8; i++) {
             int pawnCount = getPawnCount(color, i);
             if (getPawnCount(color, i) > 1) {

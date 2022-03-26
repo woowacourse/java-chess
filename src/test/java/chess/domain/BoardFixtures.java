@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.generator.EmptyBoardGenerator;
+import chess.domain.generator.InitBoardGenerator;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;
@@ -12,8 +13,7 @@ public class BoardFixtures {
     }
 
     public static ChessBoard generateInitChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
-        chessBoard.init();
+        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
 
         return chessBoard;
     }
