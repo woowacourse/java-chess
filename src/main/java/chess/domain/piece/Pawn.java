@@ -37,18 +37,19 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
+    public boolean canMove(Direction direction, Piece target) {
         if (color == Color.BLACK) {
             direction = direction.flipAboutX();
         }
+        checkSameTeam(target);
         List<Direction> directions = new ArrayList<>(DIRECTIONS);
-        checkCanAttack(direction, directions);
+        checkCanAttack(direction, target, directions);
         checkIsStart(directions);
         return direction.hasSame(directions);
     }
 
-    private void checkCanAttack(Direction direction, List<Direction> directions) {
-        if (direction.hasSame(ATTACK_DIRECTIONS)) {
+    private void checkCanAttack(Direction direction, Piece target, List<Direction> directions ) {
+        if (direction.hasSame(ATTACK_DIRECTIONS)&&!target.equals(new None(Color.NONE))) {
             directions.addAll(ATTACK_DIRECTIONS);
         }
     }
@@ -58,10 +59,5 @@ public final class Pawn extends Piece {
             this.start = false;
             directions.add(new Direction(0, 2));
         }
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 }

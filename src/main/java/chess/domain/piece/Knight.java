@@ -40,12 +40,8 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
+    public boolean canMove(Direction direction, Piece target) {
+        checkSameTeam(target);
         return direction.hasSame(DIRECTIONS);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 }

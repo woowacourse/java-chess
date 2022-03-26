@@ -16,7 +16,6 @@ import chess.domain.position.Square;
 public class Board {
     private static final Piece NONE = Piece.from(File.A, Rank.THREE);
     private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 이동할 수 없는 위치입니다.";
-    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 아군의 말이 있는 곳으로는 이동할 수 없습니다.";
 
     private final Map<Square, Piece> board;
 
@@ -61,22 +60,15 @@ public class Board {
         Piece targetPiece = board.get(target);
         Direction direction = source.getGap(target);
 
-        checkSameTeamPosition(sourcePiece, targetPiece);
-        checkCapablePosition(direction, sourcePiece);
+        checkCapablePosition(direction, sourcePiece, targetPiece);
 
         board.put(target, sourcePiece);
         board.put(source, NONE);
     }
 
-    private void checkCapablePosition(Direction direction, Piece sourcePiece) {
-        if (!sourcePiece.canMove(direction)) {
+    private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
+        if (!sourcePiece.canMove(direction, targetPiece)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_INCAPABLE);
-        }
-    }
-
-    private void checkSameTeamPosition(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
         }
     }
 }

@@ -25,6 +25,7 @@ public class ChessGame {
             if(!start && "move".equals(command)){
                 OutputView.printMessage("[ERROR] 게임이 시작되지 않았습니다\n");
             }
+
             if (start && "move".equals(command)) {
                 try {
                     String source = input.get(1);

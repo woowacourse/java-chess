@@ -36,12 +36,8 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
+    public boolean canMove(Direction direction,Piece target) {
+        checkSameTeam(target);
         return direction.hasMultiple(DIRECTIONS);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 }

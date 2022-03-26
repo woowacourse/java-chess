@@ -15,12 +15,7 @@ public final class None extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
+    public boolean canMove(Direction direction, Piece target) {
         return false;
     }
 }
