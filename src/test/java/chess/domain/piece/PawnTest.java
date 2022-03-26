@@ -25,6 +25,18 @@ class PawnTest {
         assertDoesNotThrow(() -> pawn.validateMove(board, new Position("b2"), new Position(target)));
     }
 
+    @DisplayName("white pawn이 시작점일 때 세 칸 이상 움직이는 경우 예외가 발생한다.")
+    @Test
+    void whitePawn이_시작점일때_세칸이상_이동한_경우_예외가_발생한다() {
+        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Position sourcePosition = new Position("c2");
+        Position targetPosition = new Position("c5");
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        assertThatThrownBy(() -> pawn.validateMove(board, sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("white pawn이 시작점에서 두 칸 이동할 때 경로에 기물이 있는 경우 예외가 발생한다.")
     @Test
     void whitePawn이_시작점에서_이동할때_경로에_기물이_있는_경우_예외가_발생한다() {

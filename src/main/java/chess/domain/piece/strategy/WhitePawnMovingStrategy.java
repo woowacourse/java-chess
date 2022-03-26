@@ -39,6 +39,9 @@ public class WhitePawnMovingStrategy implements MovingStrategy {
         if (source.getRankIndex() == RANK_INDEX_STARTING_POINT && rankLength == 2) {
             validateExistPieceInPath(board, source, direction);
         }
+        if (source.getRankIndex() == RANK_INDEX_STARTING_POINT && rankLength > 2) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
+        }
     }
 
     private void validateExistPieceInPath(List<List<Piece>> board, Position source, Direction direction) {
