@@ -5,27 +5,17 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BishopPiece extends FullPiece {
+public final class BishopPiece extends Piece {
 
-    private static final String WHITE_NAME = "b";
-    private static final String BLACK_NAME = "B";
+    private static final String NAME = "B";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public BishopPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = new ArrayList<>(
             List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
                 Direction.SOUTH_WEST));
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override
@@ -36,10 +26,5 @@ public class BishopPiece extends FullPiece {
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
         return movableDirections.contains(direction);
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }

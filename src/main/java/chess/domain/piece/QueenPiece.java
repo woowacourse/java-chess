@@ -5,29 +5,18 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueenPiece extends FullPiece {
+public class QueenPiece extends Piece {
 
-    private static final String WHITE_NAME = "q";
-    private static final String BLACK_NAME = "Q";
+    private static final String NAME = "Q";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public QueenPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = new ArrayList<>(
             List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH,
                 Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
                 Direction.SOUTH_WEST));
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-
-        }
-        return BLACK_NAME;
     }
 
     @Override
@@ -38,11 +27,6 @@ public class QueenPiece extends FullPiece {
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
         return movableDirections.contains(direction);
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
 }

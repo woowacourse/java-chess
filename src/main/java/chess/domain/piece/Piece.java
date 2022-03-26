@@ -1,16 +1,59 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.Objects;
 
-public interface Piece {
+public abstract class Piece {
 
-    boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget);
+    private final Color color;
+    private final String name;
 
-    boolean isSameColor(final Color color);
+    protected Piece(final Color color, final String name) {
+        this.color = color;
+        this.name = decideName(name);
+    }
 
-    boolean isJumpable();
+    private String decideName(final String name) {
+        if (color == Color.WHITE) {
+            return name.toLowerCase();
+        }
+        return name;
+    }
 
-    boolean isKing();
+    public abstract boolean isMovable(final Position from, final Position to,
+        final boolean isEmptyTarget);
 
-    String getName();
+    public boolean isSameColor(final Color color) {
+        return this.color.equals(color);
+    }
+
+    public boolean isJumpable() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return Objects.equals(name, piece.name) && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, color);
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

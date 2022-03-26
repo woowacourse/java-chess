@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class FullPieceTest {
+public class PieceTest {
 
     @Test
     @DisplayName("백기물일 경우 소문자로 표시한다.")

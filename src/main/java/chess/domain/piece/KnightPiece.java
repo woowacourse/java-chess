@@ -5,30 +5,20 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnightPiece extends FullPiece {
+public class KnightPiece extends Piece {
 
-    private static final String WHITE_NAME = "n";
-    private static final String BLACK_NAME = "N";
+    private static final String NAME = "N";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public KnightPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = new ArrayList<>(
             List.of(Direction.KNIGHT_EAST_LEFT, Direction.KNIGHT_EAST_RIGHT,
                 Direction.KNIGHT_WEST_LEFT, Direction.KNIGHT_WEST_RIGHT,
                 Direction.KNIGHT_NORTH_LEFT, Direction.KNIGHT_NORTH_RIGHT,
                 Direction.KNIGHT_SOUTH_LEFT,
                 Direction.KNIGHT_SOUTH_RIGHT));
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override
@@ -46,8 +36,4 @@ public class KnightPiece extends FullPiece {
         return true;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
 }

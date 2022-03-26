@@ -5,28 +5,18 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KingPiece extends FullPiece {
+public class KingPiece extends Piece {
 
-    private static final String WHITE_NAME = "k";
-    private static final String BLACK_NAME = "K";
+    private static final String NAME = "K";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public KingPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = new ArrayList<>(
             List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH,
                 Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
                 Direction.SOUTH_WEST));
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override
@@ -43,10 +33,5 @@ public class KingPiece extends FullPiece {
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }

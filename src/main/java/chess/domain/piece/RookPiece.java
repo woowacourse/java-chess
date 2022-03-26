@@ -5,26 +5,16 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RookPiece extends FullPiece {
+public class RookPiece extends Piece {
 
-    private static final String WHITE_NAME = "r";
-    private static final String BLACK_NAME = "R";
+    private static final String NAME = "R";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public RookPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = new ArrayList<>(
             List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH));
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     @Override
@@ -37,8 +27,4 @@ public class RookPiece extends FullPiece {
         return movableDirections.contains(direction);
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
 }

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.FullPiece;
 import chess.domain.piece.KingPiece;
 import chess.domain.piece.KnightPiece;
 import chess.domain.piece.PawnPiece;
@@ -53,7 +52,7 @@ public class BoardTest {
     @ParameterizedTest
     @MethodSource("initialPieces")
     @DisplayName("Piece들이 규칙에 맞게 잘 들어갔는지 확인한다.")
-    void initialPieces(Position position, FullPiece piece) {
+    void initialPieces(Position position, Piece piece) {
         assertThat(board.getBoard().get(position)).isEqualTo(piece);
     }
 

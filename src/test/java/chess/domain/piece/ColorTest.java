@@ -10,7 +10,7 @@ public class ColorTest {
     @Test
     @DisplayName("Color에 흑,백이 있는지 확인한다.")
     void containBlackAndWhite() {
-        assertThat(Color.values()).containsOnly(Color.BLACK, Color.WHITE);
+        assertThat(Color.values()).containsOnly(Color.BLACK, Color.WHITE, Color.NONE);
     }
 
     @Test

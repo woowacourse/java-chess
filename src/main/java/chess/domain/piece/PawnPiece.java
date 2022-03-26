@@ -6,25 +6,15 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PawnPiece extends FullPiece {
+public class PawnPiece extends Piece {
 
-    private static final String WHITE_NAME = "p";
-    private static final String BLACK_NAME = "P";
+    private static final String NAME = "P";
 
-    private final String name;
     private final List<Direction> movableDirections;
 
     public PawnPiece(final Color color) {
-        super(color);
-        this.name = decideName(color);
+        super(color, NAME);
         this.movableDirections = decideMovableDirections(color);
-    }
-
-    private String decideName(final Color color) {
-        if (color == Color.WHITE) {
-            return WHITE_NAME;
-        }
-        return BLACK_NAME;
     }
 
     private List<Direction> decideMovableDirections(final Color color) {
@@ -61,16 +51,12 @@ public class PawnPiece extends FullPiece {
 
     private boolean isInitialPositionAndMoveTwice(final Position from, final int fileDistance,
         final int rankDistance) {
-        if (super.getColor() == Color.BLACK && from.isSameRank(Rank.SEVEN) && fileDistance == 0
+        if (super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) && fileDistance == 0
             && rankDistance == -2) {
             return true;
         }
-        return super.getColor() == Color.WHITE && from.isSameRank(Rank.TWO) && fileDistance == 0
+        return super.isSameColor(Color.WHITE) && from.isSameRank(Rank.TWO) && fileDistance == 0
             && rankDistance == 2;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
 }
