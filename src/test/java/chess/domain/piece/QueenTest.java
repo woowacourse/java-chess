@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -57,5 +58,13 @@ public class QueenTest {
         assertThatThrownBy(() -> queen.checkPieceMoveRange(mockBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 기물이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("킹인지 확인")
+    void isKing() {
+        Piece queen = new Queen(Color.WHITE);
+
+        assertThat(queen.isKing()).isFalse();
     }
 }

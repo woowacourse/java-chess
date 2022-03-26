@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -155,5 +156,13 @@ public class PawnTest {
 
         assertThatCode(() -> pawn.checkPieceMoveRange(mockBoard, Position.from("d7"), Position.from("c6")))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("킹인지 확인")
+    void isKing() {
+        Piece pawn = new Pawn(Color.WHITE);
+
+        assertThat(pawn.isKing()).isFalse();
     }
 }

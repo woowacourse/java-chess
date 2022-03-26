@@ -22,6 +22,10 @@ public abstract class Turn extends State {
         }
     }
 
+    protected boolean isEnded(final Color color) {
+        return !board.hasKing(color.reversed());
+    }
+
     @Override
     public State start() {
         throw new IllegalStateException("게임이 이미 시작되었습니다.");

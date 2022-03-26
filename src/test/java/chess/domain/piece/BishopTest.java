@@ -5,12 +5,14 @@ import chess.domain.board.Initializable;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -62,5 +64,13 @@ public class BishopTest {
         assertThatThrownBy(() -> bishop.checkPieceMoveRange(board, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 기물이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("킹인지 확인")
+    void isKing() {
+        Piece bishop = new Bishop(Color.WHITE);
+
+        assertThat(bishop.isKing()).isFalse();
     }
 }

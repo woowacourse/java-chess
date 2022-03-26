@@ -18,4 +18,9 @@ public class King extends Piece {
         }
         throw new IllegalArgumentException("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

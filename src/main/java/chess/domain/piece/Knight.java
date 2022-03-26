@@ -18,4 +18,9 @@ public class Knight extends Piece {
         }
         throw new IllegalArgumentException("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

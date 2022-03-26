@@ -24,6 +24,11 @@ public class Pawn extends Piece {
         throw new IllegalArgumentException("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     private boolean isForwardDiagonal(final Board board, final Position from, final Position to) {
         return isValidDirection(from, to) && isDiagonal(from, to) && board.hasPiece(to);
     }

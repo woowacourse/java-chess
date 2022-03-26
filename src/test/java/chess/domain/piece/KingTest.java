@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class KingTest {
@@ -59,5 +60,13 @@ public class KingTest {
         assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("a1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
+    }
+
+    @Test
+    @DisplayName("킹인지 확인")
+    void isKing() {
+        Piece king = new King(Color.WHITE);
+
+        assertThat(king.isKing()).isTrue();
     }
 }

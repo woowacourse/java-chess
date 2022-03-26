@@ -23,6 +23,8 @@ public abstract class Piece {
 
     public abstract void checkPieceMoveRange(final Board board, final Position from, final Position to);
 
+    public abstract boolean isKing();
+
     public void checkAnyPiece(final Board board, final Position from, final Position to) {
         if (board.hasPieceInFile(from, to) || board.hasPieceInRank(from, to)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");

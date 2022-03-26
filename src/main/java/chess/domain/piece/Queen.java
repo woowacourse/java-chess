@@ -24,4 +24,9 @@ public class Queen extends Piece {
         }
         board.checkPieceInDiagonal(from, to);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

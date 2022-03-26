@@ -3,11 +3,13 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -34,5 +36,13 @@ class KnightTest {
         assertThatThrownBy(() -> knight.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("킹인지 확인")
+    void isKing() {
+        Piece knight = new Knight(Color.WHITE);
+
+        assertThat(knight.isKing()).isFalse();
     }
 }

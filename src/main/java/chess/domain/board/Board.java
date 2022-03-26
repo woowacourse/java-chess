@@ -85,6 +85,12 @@ public class Board {
         }
     }
 
+    public boolean hasKing(final Color color) {
+        return value.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .anyMatch(Piece::isKing);
+    }
+
     public boolean hasPiece(final Position position) {
         return value.get(position) != null;
     }

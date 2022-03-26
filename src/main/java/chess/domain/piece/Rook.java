@@ -19,4 +19,9 @@ public class Rook extends Piece {
         }
         throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -16,6 +16,10 @@ public class WhiteTurn extends Turn {
     public State move(final Position from, final Position to) {
         checkValidPosition(from, to, color);
         board.move(from, to);
+
+        if (isEnded(color)) {
+            return new End();
+        }
         return new BlackTurn(board);
     }
 }

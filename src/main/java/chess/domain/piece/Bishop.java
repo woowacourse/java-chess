@@ -18,4 +18,9 @@ public class Bishop extends Piece {
         }
         board.checkPieceInDiagonal(from, to);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
