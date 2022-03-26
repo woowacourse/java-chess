@@ -11,9 +11,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class InputOptionTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"start:START", "end:END", "move a1 a2:MOVE"}, delimiter = ':')
-    @DisplayName("입력 형식에 바른 값을 입력받았을 때, InputOption의 Enum 값을 반환한다")
-    void correctInputCheck(String input, InputOption result) {
+    @CsvSource(value = {"start:start", "end:end", "move a1 a2:move a1 a2"}, delimiter = ':')
+    @DisplayName("입력 형식에 바른 값을 입력받았을 때, 입력 형식을 검증 후, 입력한 값을 반환한다")
+    void correctInputCheck(String input, String result) {
         assertThat(InputOption.from(input)).isEqualTo(result);
     }
 
