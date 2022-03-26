@@ -18,7 +18,14 @@ public class OutputView {
 
     private static final OutputView OUTPUT_VIEW = new OutputView();
     private static final int ONE_LINE_AMOUNT = 8;
-    private static final int LINE_SEPARATE_CRITERIA = 7;
+    public static final String CHESS_GAME_START = "> 체스 게임을 시작합니다.";
+    public static final String CHESS_COMMAND_START = "> 게임 시작 : start";
+    public static final String CHESS_COMMAND_END = "> 게임 종료 : end";
+    public static final String CHESS_COMMAND_MOVE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    public static final String SCORE_NOW_MESSAGE = "---- 현재 점수 ----";
+    public static final String BLACK_MESSAGE = "BLACK : ";
+    public static final String WHITE_MESSAGE = "WHITE : ";
+    public static final String END_BY_KING = "KING이 잡혀 게임이 끝났습니다.";
 
     private OutputView() {
     }
@@ -27,49 +34,51 @@ public class OutputView {
         return OUTPUT_VIEW;
     }
 
-    private static Function<Rank, Stream<? extends Position>> getPositionStream() {
-        return rank ->
-                Arrays.stream(File.values())
-                        .map(file -> Position.of(rank, file));
-    }
 
     public void initialPrint() {
-        System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
-        System.out.println("> 게임 종료 : end");
-        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println(CHESS_GAME_START);
+        System.out.println(CHESS_COMMAND_START);
+        System.out.println(CHESS_COMMAND_END);
+        System.out.println(CHESS_COMMAND_MOVE);
     }
 
     public void printBoard(BoardDto boardDto) {
         Map<Position, Piece> board = boardDto.getBoard();
 
-        List<Position> collect = Arrays.stream(Rank.values())
-                .flatMap(getPositionStream())
-                .collect(Collectors.toList());
+        List<Position> positions = Arrays.stream(Rank.values())
+            .flatMap(getPositionWithRankAndFIle())
+            .collect(Collectors.toList());
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < collect.size(); i++) {
-            Piece piece = board.get(collect.get(i));
-            stringBuilder.append(PieceMapper.getByPiece(piece));
+        printBoardMessage(board, positions);
+    }
 
-            if (i % ONE_LINE_AMOUNT == LINE_SEPARATE_CRITERIA) {
-                stringBuilder.append(System.lineSeparator());
-            }
+    private Function<Rank, Stream<? extends Position>> getPositionWithRankAndFIle() {
+        return rank ->
+            Arrays.stream(File.values())
+                .map(file -> Position.of(rank, file));
+    }
+
+    private void printBoardMessage(Map<Position, Piece> board, List<Position> positions) {
+        String fullBoard = positions.stream()
+            .map(position -> board.get(position))
+            .map(PieceMapper::getByPiece)
+            .collect(Collectors.joining());
+
+        for (int i = 0; i < positions.size(); i += ONE_LINE_AMOUNT) {
+            System.out.println(fullBoard.substring(i, i + ONE_LINE_AMOUNT));
         }
-
-        System.out.println(stringBuilder);
     }
 
     public void printScore(ScoreDto scoreDto) {
         Map<Color, Double> score = scoreDto.getScore();
 
-        System.out.println("---- 현재 점수 ----");
-        System.out.println("BLACK : " + score.get(Color.BLACK));
-        System.out.println("WHITE : " + score.get(Color.WHITE));
+        System.out.println(SCORE_NOW_MESSAGE);
+        System.out.println(BLACK_MESSAGE + score.get(Color.BLACK));
+        System.out.println(WHITE_MESSAGE + score.get(Color.WHITE));
     }
 
     public void printGameEnded(ScoreDto scoreDto) {
-        System.out.println("KING이 잡혀 게임이 끝났습니다.");
+        System.out.println(END_BY_KING);
         printScore(scoreDto);
     }
 }
