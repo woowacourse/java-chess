@@ -1,10 +1,11 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -13,114 +14,112 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PawnTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"-1:-1", "-1:1"}, delimiter = ':')
+    @ValueSource(strings = {"b5", "d5"})
     @DisplayName("white pawn 대각선 위치 검증 - true")
-    void checkDiagonalWhenWhiteTrue(int a, int b) {
+    void checkDiagonalWhenWhiteTrue(String input) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isDiagonal(new Position("c4", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"1:-1", "1:1", "2:3"}, delimiter = ':')
-    @DisplayName("white pawn 대각선 위치 검증 - false")
-    void checkDiagonalWhenWhiteFalse(int a, int b) {
-        Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"1:-1", "1:1"}, delimiter = ':')
+    @ValueSource(strings = {"f5", "h5"})
     @DisplayName("black pawn 대각선 위치 검증 - true")
-    void checkDiagonalWhenBlackTrue(int a, int b) {
+    void checkDiagonalWhenBlackTrue(String input) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isDiagonal(new Position("g6", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"-1:-1", "-1:1", "2:3"}, delimiter = ':')
+    @ValueSource(strings = {"c5", "b3", "d3"})
+    @DisplayName("white pawn 대각선 위치 검증 - false")
+    void checkDiagonalWhenWhiteFalse(String input) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.isDiagonal(new Position("c4", input))).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"g5", "f7", "h7"})
     @DisplayName("black pawn 대각선 위치 검증 - false")
-    void checkDiagonalWhenBlackFalse(int a, int b) {
+    void checkDiagonalWhenBlackFalse(String input) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isDiagonal(new Position("g6", input))).isFalse();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"-1:0", "-2:0"}, delimiter = ':')
+    @ValueSource(strings = {"b3", "b4"})
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> true")
-    void checkPositionWhenWhiteFirstTurnTrue(int a, int b) {
+    void checkPositionWhenWhiteFirstTurnTrue(String input) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(6, 6), Pair.of(6 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position("b2", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"-3:0", "3:0"}, delimiter = ':')
-    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> false")
-    void checkPositionWhenWhiteFirstTurnFalse(int a, int b) {
-        Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(6, 6), Pair.of(6 + a, 6 + b))).isFalse();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"1:0", "2:0"}, delimiter = ':')
+    @ValueSource(strings = {"f6", "f5"})
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> true")
-    void checkPositionWhenBlackFirstTurnTrue(int a, int b) {
+    void checkPositionWhenBlackFirstTurnTrue(String input) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(1, 1), Pair.of(1 + a, 1 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position("f7", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"-3:0", "3:0"}, delimiter = ':')
+    @ValueSource(strings = {"b5", "c3", "f6", "f5"})
+    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> false")
+    void checkPositionWhenWhiteFirstTurnFalse(String input) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.isMovable(new Position("b2", input))).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"f4", "c7", "b3", "b4"})
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> false")
-    void checkPositionWhenBlackFirstTurnFalse(int a, int b) {
+    void checkPositionWhenBlackFirstTurnFalse(String input) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(1, 1), Pair.of(1 + a, 1 + b))).isFalse();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"-1:0"}, delimiter = ':')
-    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> true")
-    void checkPositionWhenWhiteTurnTrue(int a, int b) {
-        Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(7, 6), Pair.of(7 + a, 6 + b))).isTrue();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"-2:0", "2:0"}, delimiter = ':')
-    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> false")
-    void checkPositionWhenWhiteTurnFalse(int a, int b) {
-        Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(7, 6), Pair.of(7 + a, 6 + b))).isFalse();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"1:0"}, delimiter = ':')
-    @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> true")
-    void checkPositionWhenBlackTurnTrue(int a, int b) {
-        Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(2, 6), Pair.of(2 + a, 6 + b))).isTrue();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"-2:0", "2:0"}, delimiter = ':')
-    @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> false")
-    void checkPositionWhenBlackTurnFalse(int a, int b) {
-        Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(2, 6), Pair.of(2 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovable(new Position("f7", input))).isFalse();
     }
 
     @Test
-    @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환- white ")
+    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> true")
+    void checkPositionWhenWhiteTurnTrue() {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.isMovable(new Position("b2", "b3"))).isTrue();
+    }
+
+    @Test
+    @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> true")
+    void checkPositionWhenBlackTurnTrue() {
+        Pawn pawn = new Pawn(Color.BLACK);
+        assertThat(pawn.isMovable(new Position("f7", "f6"))).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"b3", "h4", "f6", "f5"})
+    @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> false")
+    void checkPositionWhenWhiteTurnFalse(String input) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        assertThat(pawn.isMovable(new Position("b4", input))).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"b3", "h4", "f6", "a5"})
+    @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> false")
+    void checkPositionWhenBlackTurnTrue(String input) {
+        Pawn pawn = new Pawn(Color.BLACK);
+        assertThat(pawn.isMovable(new Position("f5", input))).isFalse();
+    }
+
+    @Test
+    @DisplayName("from과 to 사이에 폰이 이동가능한 위치 리스트 반환 - white")
     void checkAllPositionOfPossibleWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.computeBetweenTwoPosition(Pair.of(6, 0), Pair.of(4, 0)))
-                .isEqualTo(List.of(Pair.of(5, 0)));
+        assertThat(pawn.computeMiddlePosition(new Position("c2", "c4")))
+                .isEqualTo(List.of(Pair.of(5, 2)));
     }
 
     @Test
-    @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환 - black")
+    @DisplayName("from과 to 사이에 폰이 이동가능한 위치 리스트 반환 - black")
     void checkAllPositionOfPossibleBlack() {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.computeBetweenTwoPosition(Pair.of(1, 0), Pair.of(3, 0)))
-                .isEqualTo(List.of(Pair.of(2, 0)));
+        assertThat(pawn.computeMiddlePosition(new Position("e7", "e5")))
+                .isEqualTo(List.of(Pair.of(2, 4)));
     }
 }

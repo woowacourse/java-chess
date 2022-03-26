@@ -1,5 +1,7 @@
 package chess;
 
+import chess.chessgame.ChessGame;
+import chess.chessgame.Position;
 import chess.piece.Color;
 import chess.view.OutputView;
 
@@ -16,7 +18,7 @@ public class ChessController {
         while (!chessGame.isFinished()) {
             playTurn(chessGame);
         }
-        OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
+        OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
     }
 
     private void playTurn(ChessGame chessGame) {
@@ -32,14 +34,13 @@ public class ChessController {
             chessGame.end();
             OutputView.printBoard(chessGame.getChessBoard());
         }
-        if (command.contains("move")) {
-            String source = commands.nextToken();
-            String target = commands.nextToken();
-            chessGame.move(source, target);
+        if (command.equals("move")) {
+            chessGame.move(new Position(commands.nextToken(),commands.nextToken()));
             OutputView.printBoard(chessGame.getChessBoard());
         }
-        if (command.contains("status")) {
-            OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
+        if (command.equals("status")) {
+            OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
         }
     }
+
 }

@@ -1,10 +1,11 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -13,26 +14,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RookTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"1:0", "-1:0", "0:1", "0:-2"}, delimiter = ':')
+    @ValueSource(strings = {"d8", "d7", "d6", "d4", "d3", "d2", "d1", "a5", "b5", "c5", "e5", "f5", "g5", "h5"})
     @DisplayName("rook 기물 이동 위치 검증 - true")
-    void checkPositionWhenTrue(int a, int b) {
+    void checkPositionWhenTrue(String input) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(rook.isMovable(new Position("d5", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"2:3", "1:2", "2:-1", "-1:-3"}, delimiter = ':')
+    @ValueSource(strings = {"c6", "e6", "e4", "c4"})
     @DisplayName("rook 기물 이동 위치 검증 - false")
-    void checkPositionWhenFalse(int a, int b) {
+    void checkPositionWhenFalse(String input) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(rook.isMovable(new Position("d5", input))).isFalse();
     }
 
     @Test
-    @DisplayName("source와 target 사이에 룩이 이동가능한 위치 리스트 반환")
-    void checkAllPositionOfPossible() {
+    @DisplayName("from과 to 사이에 룩이 이동가능한 위치 리스트 반환")
+    void checkMiddlePosition() {
         Rook rook = new Rook(Color.WHITE);
-        assertThat(rook.computeBetweenTwoPosition(Pair.of(0, 0), Pair.of(0, 3)))
-                .isEqualTo(List.of(Pair.of(0, 1), Pair.of(0, 2)));
+        assertThat(rook.computeMiddlePosition(new Position("b5", "f5"))).isEqualTo(
+                List.of(
+                        Pair.of(3, 2),
+                        Pair.of(3, 3),
+                        Pair.of(3, 4)
+                )
+        );
     }
 }

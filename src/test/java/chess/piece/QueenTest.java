@@ -1,56 +1,64 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QueenTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"1:1", "1:-1", "-1:1", "-1:-1"}, delimiter = ':')
+    @ValueSource(strings = {"a8", "b7", "c6", "e4", "f3", "g2", "h1", "g8", "f7", "e6", "c4", "b3", "a2"})
     @DisplayName("queen 기물 대각선 이동 위치 검증 - true")
-    void checkQueenPositionDiagonal(int a, int b) {
+    void checkQueenPositionDiagonal(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovable(new Position("d5", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"0:1", "0:-1", "1:0", "-1:-0"}, delimiter = ':')
-    @DisplayName("queen 기물 상하좌우 이동 위치 검증 - true")
-    void checkQueenPositionUpDownLeftRight(int a, int b) {
+    @ValueSource(strings = {"d8", "d7", "d6", "d4", "d3", "d2", "d1", "a5", "b5", "c5", "e5", "f5", "g5", "h5"})
+    @DisplayName("queen 기물 직선 이동 위치 검증 - true")
+    void checkQueenPositionUpDownLeftRight(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovable(new Position("d5", input))).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"2:3", "1:2", "2:-1", "-1:-2"}, delimiter = ':')
+    @ValueSource(strings = {"b6", "c8", "e7", "f6", "g3", "e2", "b1", "a6"})
     @DisplayName("queen 기물 이동 위치 검증 - false")
-    void checkBishopPositionWhenFalse(int a, int b) {
+    void checkBishopPositionWhenFalse(String input) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(queen.isMovable(new Position("d5", input))).isFalse();
     }
 
-    @ParameterizedTest
-    @MethodSource("possiblePositionOfQueen")
-    @DisplayName("source와 target 사이에 퀸이 이동가능한 위치 리스트 반환")
-    void checkAllPositionOfPossible(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Pair<Integer, Integer> coordinate) {
+    @Test
+    @DisplayName("from과 to 사이에 사이에 퀸이 이동가능한 위치 리스트 반환 - 대각선")
+    void checkMiddlePositionCross() {
         Queen queen = new Queen(Color.WHITE);
-        assertThat(queen.computeBetweenTwoPosition(source, target))
-                .isEqualTo(List.of(coordinate));
+        assertThat(queen.computeMiddlePosition(new Position("f7", "b3")))
+                .isEqualTo(List.of(
+                        Pair.of(4, 2),
+                        Pair.of(3, 3),
+                        Pair.of(2, 4)));
     }
 
-    static Stream<Arguments> possiblePositionOfQueen() {
-        return Stream.of(
-                Arguments.of(Pair.of(7, 2), Pair.of(5, 4), Pair.of(6, 3)),
-                Arguments.of(Pair.of(0, 0), Pair.of(0, 2), Pair.of(0, 1))
+    @Test
+    @DisplayName("from과 to 사이에 사이에 퀸이 이동가능한 위치 리스트 반환 - 직선")
+    void checkMiddlePositionLinear() {
+        Queen queen = new Queen(Color.WHITE);
+        assertThat(queen.computeMiddlePosition(new Position("b5", "f5"))).isEqualTo(
+                List.of(
+                        Pair.of(3, 2),
+                        Pair.of(3, 3),
+                        Pair.of(3, 4)
+                )
         );
     }
+
 }

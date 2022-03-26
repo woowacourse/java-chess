@@ -1,11 +1,9 @@
-package chess;
+package chess.chessgame;
 
 import chess.piece.Color;
 import chess.state.Finish;
 import chess.state.Ready;
 import chess.state.State;
-import chess.utils.PositionParser;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class ChessGame {
 
@@ -21,10 +19,8 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void move(String source, String target) {
-        Pair<Integer, Integer> parsedSource = PositionParser.parse(source.charAt(0), source.charAt(1));
-        Pair<Integer, Integer> parsedTarget = PositionParser.parse(target.charAt(0), target.charAt(1));
-        state = state.move(parsedSource, parsedTarget, turn);
+    public void move(Position position) {
+        state = state.move(position, turn);
     }
 
     public void end() {
@@ -39,7 +35,7 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public double computeScore(Color color){
+    public double computeScore(Color color) {
         return state.computeScore(color);
     }
 

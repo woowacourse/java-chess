@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.utils.CheckerOfAllPossiblePosition;
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.List;
 public class Knight extends Piece {
 
     private static final List<Pair<Integer, Integer>> COORDINATES_OF_MOVABLE = List.of(
+            Pair.of(-1, -2),
+            Pair.of(-2, -1),
             Pair.of(-2, 1),
             Pair.of(-1, 2),
             Pair.of(1, 2),
-            Pair.of(1, 1),
-            Pair.of(-2, -1),
-            Pair.of(1, -2),
-            Pair.of(-1, -2),
-            Pair.of(-2, -1)
+            Pair.of(2, 1),
+            Pair.of(2, -1),
+            Pair.of(1, -2)
     );
 
     public Knight(Color color) {
@@ -24,12 +24,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return new ArrayList<>();
+    public boolean isMovable(Position position) {
+        return position.isAnyPossible(COORDINATES_OF_MOVABLE);
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return CheckerOfAllPossiblePosition.isMovableCoordinates(COORDINATES_OF_MOVABLE, source, target);
+    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+        return new ArrayList<>();
     }
+
 }

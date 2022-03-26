@@ -1,11 +1,10 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static chess.utils.CheckerOfAllPossiblePosition.isMovableCoordinates;
 
 public class Pawn extends Piece {
 
@@ -30,51 +29,52 @@ public class Pawn extends Piece {
         super(Type.PAWN, color);
     }
 
-    public boolean isDiagonal(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (color == Color.WHITE) {
-            return isMovableCoordinates(COORDINATES_OF_WHITE_DIAGONAL_MOVABLE, source, target);
-        }
-        return isMovableCoordinates(COORDINATES_OF_BLACK_DIAGONAL_MOVABLE, source, target);
-    }
-
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (isFirstTurn(color, source.getLeft())) {
-            if (color == Color.WHITE) {
-                return List.of(Pair.of(source.getLeft() - 1, source.getRight()));
-            }
-            if (color == Color.BLACK) {
-                return List.of(Pair.of(source.getLeft() + 1, source.getRight()));
-            }
-        }
-        return new ArrayList<>();
-    }
-
-    @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public boolean isMovable(Position position) {
         if (color == Color.WHITE) {
-            return isMovableWhenWhite(source, target);
+            return isMovableWhenWhite(position);
         }
 
         if (color == Color.BLACK) {
-            return isMovableWhenBlack(source, target);
+            return isMovableWhenBlack(position);
         }
         return false;
     }
 
-    private boolean isMovableWhenWhite(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (isFirstTurn(color, source.getLeft())) {
-            return isMovableCoordinates(COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE, source, target);
+    @Override
+    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+        if (color == Color.WHITE && isFirstTurn(color, position.getFromX())) {
+            return position.computeOneUp();
         }
-        return isMovableCoordinates(COORDINATES_OF_WHITE_TURN_MOVABLE, source, target);
+        if (color == Color.BLACK && isFirstTurn(color, position.getFromX())) {
+            return position.computeOneDown();
+        }
+        return new ArrayList<>();
     }
 
-    private boolean isMovableWhenBlack(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (isFirstTurn(color, source.getLeft())) {
-            return isMovableCoordinates(COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE, source, target);
+    public boolean isDiagonal(Position position) {
+        if (color == Color.WHITE) {
+            return position.isAnyPossible(COORDINATES_OF_WHITE_DIAGONAL_MOVABLE);
+        }
+        if (color == Color.BLACK) {
+            return position.isAnyPossible(COORDINATES_OF_BLACK_DIAGONAL_MOVABLE);
+        }
+        return false;
+    }
+
+    private boolean isMovableWhenWhite(Position position) {
+        if (isFirstTurn(color, position.getFromX())) {
+            return position.isAnyPossible(COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE);
+        }
+        return position.isAnyPossible(COORDINATES_OF_WHITE_TURN_MOVABLE);
+    }
+
+    private boolean isMovableWhenBlack(Position position) {
+        if (isFirstTurn(color, position.getFromX())) {
+            return position.isAnyPossible(COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE);
         }
 
-        return isMovableCoordinates(COORDINATES_OF_BLACK_TURN_MOVABLE, source, target);
+        return position.isAnyPossible(COORDINATES_OF_BLACK_TURN_MOVABLE);
     }
 
     private boolean isFirstTurn(Color color, int index) {

@@ -1,12 +1,10 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static chess.utils.MovingBetweenPositions.*;
-import static chess.utils.MovingBetweenPositions.computeLeftUpRightDown;
 
 public class Queen extends Piece {
 
@@ -15,32 +13,17 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return Math.abs(source.getRight() - target.getRight()) == Math.abs(source.getLeft() - target.getLeft())
-                || isSameLine(source, target);
+    public boolean isMovable(Position position) {
+        return position.isCross() || position.isLinear();
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        if (source.getLeft() == target.getLeft()) {
-            result.addAll(computeBetweenPositionsOfRow(source, target));
-        }
-        if (source.getRight() == target.getRight()) {
-            result.addAll(computeBetweenPositionsOfColumn(source, target));
-        }
+    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+        List<Pair<Integer, Integer>> list = new ArrayList<>();
+        list.addAll(position.computeLinearMiddle());
+        list.addAll(position.computeCrossMiddle());
 
-        if ((source.getLeft() - target.getLeft()) == (-1) * (source.getRight() - target.getRight())) {
-            result.addAll(computeLeftDownRightUp(source, target));
-        }
-        if ((source.getLeft() - target.getLeft()) == (source.getRight() - target.getRight())) {
-            result.addAll(computeLeftUpRightDown(source, target));
-        }
-
-        return result;
+        return list;
     }
 
-    private boolean isSameLine(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return (source.getRight() == target.getRight() || source.getLeft() == target.getLeft());
-    }
 }

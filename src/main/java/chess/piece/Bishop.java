@@ -1,12 +1,9 @@
 package chess.piece;
 
+import chess.chessgame.Position;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static chess.utils.MovingBetweenPositions.computeLeftDownRightUp;
-import static chess.utils.MovingBetweenPositions.computeLeftUpRightDown;
 
 public class Bishop extends Piece {
 
@@ -15,18 +12,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if ((source.getLeft() - target.getLeft()) == (-1) * (source.getRight() - target.getRight())) {
-            return computeLeftDownRightUp(source, target);
-        }
-        if ((source.getLeft() - target.getLeft()) == (source.getRight() - target.getRight())) {
-            return computeLeftUpRightDown(source, target);
-        }
-        return new ArrayList<>();
+    public boolean isMovable(Position position) {
+        return position.isCross();
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return Math.abs(source.getRight() - target.getRight()) == Math.abs(source.getLeft() - target.getLeft());
+    public List<Pair<Integer, Integer>> computeMiddlePosition(Position position) {
+        return position.computeCrossMiddle();
     }
 }

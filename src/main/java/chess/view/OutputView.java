@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.Chessboard;
+import chess.chessgame.Chessboard;
 import chess.piece.Piece;
 
 import java.util.List;
