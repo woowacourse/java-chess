@@ -6,10 +6,11 @@ import java.util.List;
 public class Queen extends Piece {
 
     private static final String name = "Q";
+    private static final float score = 9.0f;
     private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public Queen(Team team) {
-        super(name, team);
+        super(name, score, team);
     }
 
     @Override

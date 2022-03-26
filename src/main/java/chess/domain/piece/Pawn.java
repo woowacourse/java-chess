@@ -15,11 +15,11 @@ import java.util.Objects;
 public class Pawn extends Piece {
 
     private static final String name = "P";
-
+    private static final float score = 1.0f;
     private final List<Direction> directions;
 
     public Pawn(Team team) {
-        super(name, team);
+        super(name, score, team);
         directions = selectDirections(team);
     }
 
@@ -48,11 +48,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isWhiteStart(Position position) {
-        return super.isSameTeam(WHITE) && position.isSameColumn(Row.TWO);
+        return super.isSameTeam(WHITE) && position.isSameRow(Row.TWO);
     }
 
     private boolean isBlackStart(Position position) {
-        return super.isSameTeam(BLACK) && position.isSameColumn(Row.SEVEN);
+        return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
     }
 
     @Override

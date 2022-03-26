@@ -94,4 +94,8 @@ public class Board {
     public boolean isEmpty() {
         return board.isEmpty();
     }
+
+    public Score createResult() {
+        return new Score(board);
+    }
 }

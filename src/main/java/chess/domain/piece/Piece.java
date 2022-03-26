@@ -6,10 +6,12 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final String name;
+    private final float score;
     protected final Team team;
 
-    public Piece(String name, Team team) {
+    public Piece(String name, float score, Team team) {
         this.name = name;
+        this.score = score;
         this.team = team;
     }
 
@@ -27,6 +29,10 @@ public abstract class Piece {
 
     public final boolean isSameTeam(Team team) {
         return team == this.team;
+    }
+
+    public float getScore() {
+        return score;
     }
 
     public void validArrive(Piece to, Direction direction) {
