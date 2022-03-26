@@ -1,5 +1,7 @@
 package chess;
 
+import chess.piece.Piece;
+
 import java.util.Objects;
 
 public class Position {
@@ -128,5 +130,9 @@ public class Position {
 
     public Position getNegativeDiagonalPosition(int distance) {
         return new Position(file.getNext(distance), rank.getNext(-distance));
+    }
+
+    public boolean isOneStepDiagonal(Position position, int forwardDirection) {
+        return position.rank.minus(rank) == forwardDirection && file.absMinus(position.file) == 1;
     }
 }

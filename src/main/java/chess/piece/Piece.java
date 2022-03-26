@@ -6,7 +6,7 @@ import chess.Team;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Comparable<Piece> {
+public abstract class Piece implements Comparable<Piece>, KillStrategy {
     protected Position position;
     protected final Team team;
 
@@ -34,6 +34,10 @@ public abstract class Piece implements Comparable<Piece> {
 
     public boolean isSameTeam(Piece targetPiece) {
         return team.equals(targetPiece.team);
+    }
+
+    public boolean isOtherTeam(Piece targetPiece){
+        return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
     public int getDistance(Piece other) {

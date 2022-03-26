@@ -16,6 +16,11 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
     }
 
     @Override
+    public boolean isKill(Piece piece) {
+        return false;
+    }
+
+    @Override
     public boolean isMovable(Position position) {
         return isCorrectDirection(position);
     }

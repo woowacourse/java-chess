@@ -31,4 +31,9 @@ public class Knight extends Piece {
     public List<Position> getIntervalPosition(Piece targetPiece) {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean isKill(Piece piece) {
+        return false;
+    }
 }

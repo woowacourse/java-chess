@@ -47,4 +47,9 @@ public class Pawn extends Piece {
         }
         return position.isInitPawnPosition(Rank.TWO);
     }
+
+    @Override
+    public boolean isKill(Piece other) {
+        return this.position.isOneStepDiagonal(other.position, team.getForwardDirection()) && isOtherTeam(other);
+    }
 }

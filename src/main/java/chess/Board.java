@@ -26,7 +26,7 @@ public class Board {
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         Piece targetPiece = pieces.findByPosition(targetPosition);
-        if (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) {
+        if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece) )|| sourcePiece.isKill(targetPiece)) {
             sourcePiece.moveTo(targetPiece);
             pieces.remove(targetPiece);
             pieces.add(new Empty(sourcePosition));

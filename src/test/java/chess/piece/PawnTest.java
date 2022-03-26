@@ -145,4 +145,68 @@ class PawnTest {
                 () -> board.move(command)
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("블랙팀 폰이 대각선의 상대 말을 잡아먹는다.")
+    void killBlackPawnTest() {
+        List<Piece> pieces = List.of(
+                new Pawn(Position.of('a', '8'), Team.BLACK),
+                new Knight(Position.of('b', '7'), Team.WHITE)
+        );
+
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "b7");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("하얀팀 폰이 대각선의 상대 말을 잡아먹는다.")
+    void killWhitePawnTest() {
+        List<Piece> pieces = List.of(
+                new Pawn(Position.of('a', '2'), Team.WHITE),
+                new Knight(Position.of('b', '3'), Team.BLACK)
+        );
+
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a2", "b3");
+
+        assertDoesNotThrow(
+                () -> board.move(command)
+        );
+    }
+
+    @Test
+    @DisplayName("폰이 대각선에 아군 말이 있으면 잡아먹지않는다.")
+    void killFailureWhenOurTeamTest() {
+        List<Piece> pieces = List.of(
+                new Pawn(Position.of('a', '8'), Team.BLACK),
+                new Knight(Position.of('b', '7'), Team.BLACK)
+        );
+
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("a8", "b7");
+
+        assertThatThrownBy(
+                () -> board.move(command)
+        ).isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰이 대각선 뒤의 상대 말은 잡아먹을수 없다.")
+    void killFailureWhenBackStepTest() {
+        List<Piece> pieces = List.of(
+                new Pawn(Position.of('b', '7'), Team.BLACK),
+                new Knight(Position.of('a', '8'), Team.WHITE)
+        );
+
+        Board board = Board.create(Pieces.of(pieces));
+        List<String> command = List.of("b7", "a8");
+
+        assertThatThrownBy(
+                () -> board.move(command)
+        ).isExactlyInstanceOf(IllegalArgumentException.class);
+    }
 }
