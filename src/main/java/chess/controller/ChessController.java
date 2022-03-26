@@ -2,6 +2,8 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.Team;
+import chess.domain.result.StatusResult;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -31,6 +33,12 @@ public class ChessController {
 				Position target = PositionConvertor.to(inputCommand.get(2));
 				board.move(source, target);
 				OutputView.printBoard(board);
+			}
+			if (Command.isStatus(inputCommand.get(0))) {
+				double blackScore = board.calculateScore(Team.BLACK);
+				double whiteScore = board.calculateScore(Team.WHITE);
+				StatusResult result = new StatusResult(blackScore, whiteScore);
+				OutputView.printScore(result);
 			}
 			inputCommand = InputView.requestCommand();
 		}
