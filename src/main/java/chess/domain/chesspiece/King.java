@@ -11,6 +11,7 @@ public final class King extends ChessPiece {
     private static final Map<Color, King> cache;
     private static final String NAME = "K";
     private static final Double VALUE = 0.0;
+    private static final int MOVING_DISTANCE = 1;
 
     static {
         cache = Arrays.stream(Color.values())
@@ -32,7 +33,7 @@ public final class King extends ChessPiece {
         final int fileDistance = Math.abs(from.fileDistance(to));
         final int rankDistance = Math.abs(from.rankDistance(to));
 
-        if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
+        if (Math.abs(fileDistance) > MOVING_DISTANCE || Math.abs(rankDistance) > MOVING_DISTANCE) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
     }

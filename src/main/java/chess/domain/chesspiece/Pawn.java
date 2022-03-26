@@ -25,6 +25,7 @@ public final class Pawn extends ChessPiece {
     private static final String BLACK_INIT_FILE = "7";
     private static final int BLACK_MOVABLE_MAX_DISTANCE = 2;
     private static final int WHITE_MOVABLE_MAX_DISTANCE = -2;
+    private static final int DEFAULT_PANW_COUNT = 1;
 
     static {
         cache = Arrays.stream(Color.values())
@@ -42,7 +43,7 @@ public final class Pawn extends ChessPiece {
     }
 
     public static double calculateScore(final int pawnCount) {
-        if (pawnCount == 1) {
+        if (pawnCount == DEFAULT_PANW_COUNT) {
             return VALUE;
         }
         return VALUE_BY_SAME_RANK * pawnCount;

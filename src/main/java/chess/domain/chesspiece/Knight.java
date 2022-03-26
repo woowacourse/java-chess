@@ -12,6 +12,7 @@ public final class Knight extends ChessPiece {
     private static final Map<Color, Knight> cache;
     private static final String NAME = "N";
     private static final Double VALUE = 2.5;
+    private static final int MOVING_DISTANCE = 3;
 
     static {
         cache = Arrays.stream(Color.values())
@@ -33,7 +34,7 @@ public final class Knight extends ChessPiece {
         final int fileDistance = Math.abs(from.fileDistance(to));
         final int rankDistance = Math.abs(from.rankDistance(to));
 
-        if (rankDistance + fileDistance != 3) {
+        if (rankDistance + fileDistance != MOVING_DISTANCE) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
 
