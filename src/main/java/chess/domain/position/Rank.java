@@ -18,9 +18,6 @@ public enum Rank {
     EIGHT(8),
     ;
 
-    private static final int FORWARD = 1;
-    private static final int BACK = -1;
-
     private final int rank;
 
     Rank(final int rank) {
@@ -40,12 +37,8 @@ public enum Rank {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static boolean isForward(final Rank from, final Rank to) {
-        return to.rank - from.rank == FORWARD;
-    }
-
-    public static boolean isBack(final Rank from, final Rank to) {
-        return to.rank - from.rank == BACK;
+    public static int difference(int from, int to) {
+        return Math.abs(from - to);
     }
 
     public int getRank() {

@@ -16,8 +16,7 @@ public class RookTest {
 
     @DisplayName("흰 룩 앞으로 전진")
     @ParameterizedTest
-    // TODO: a7 추가
-    @ValueSource(strings = {"a4", "a6"})
+    @ValueSource(strings = {"a4", "a7"})
     void forward(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
