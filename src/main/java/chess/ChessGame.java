@@ -22,7 +22,7 @@ public class ChessGame {
                 OutputView.showBoard(board.splitByRank());
             }
 
-            if(!start && "move".equals(command)){
+            if (!start && "move".equals(command)) {
                 OutputView.printMessage("[ERROR] 게임이 시작되지 않았습니다\n");
             }
 
@@ -30,14 +30,14 @@ public class ChessGame {
                 try {
                     String source = input.get(1);
                     String target = input.get(2);
-                    board.move(new Square(source),new Square(target));
+                    board.move(new Square(source), new Square(target));
                     OutputView.showBoard(board.splitByRank());
                 } catch (IllegalArgumentException e) {
                     OutputView.printMessage(e.getMessage());
                 }
             }
 
-            if ("end".equals(command)){
+            if ("end".equals(command)) {
                 return;
             }
         }

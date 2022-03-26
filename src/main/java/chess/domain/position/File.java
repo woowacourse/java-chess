@@ -12,6 +12,7 @@ public enum File {
     G("g", 7),
     H("h", 8);
 
+    private static final String ERROR_MESSAGE_BOUND = "[ERROR] 체스판 범위를 벗어났습니다.";
     private final String value;
     private final int index;
 
@@ -24,7 +25,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 체스판 범위를 벗어났습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
     }
 
     public int getGap(File target) {
@@ -33,5 +34,12 @@ public enum File {
 
     public String getValue() {
         return value;
+    }
+
+    public File add(int dFile) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == this.index + dFile)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
     }
 }

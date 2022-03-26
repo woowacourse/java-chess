@@ -21,6 +21,10 @@ public class Square {
         return new Direction(gapOfFile, gapOfRank);
     }
 
+    public Square add(Direction direction) {
+        return direction.add(file, rank);
+    }
+
     public String getName() {
         return file.getValue() + rank.getValue();
     }

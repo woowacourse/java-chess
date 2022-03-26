@@ -9,17 +9,17 @@ public final class Knight extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 나이트는 색상을 가져야합니다.";
     private static final String BLACK_KNIGHT = "♞";
     private static final String WHITE_KNIGHT = "♘";
-    private static final List<Direction> DIRECTIONS = new ArrayList<>();
+    private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
 
     static {
-        DIRECTIONS.add(new Direction(1, 2));
-        DIRECTIONS.add(new Direction(1, -2));
-        DIRECTIONS.add(new Direction(-1, 2));
-        DIRECTIONS.add(new Direction(-1, -2));
-        DIRECTIONS.add(new Direction(2, 1));
-        DIRECTIONS.add(new Direction(2, -1));
-        DIRECTIONS.add(new Direction(-2, -1));
-        DIRECTIONS.add(new Direction(-2, 1));
+        MOVABLE_DIRECTIONS.add(new Direction(1, 2));
+        MOVABLE_DIRECTIONS.add(new Direction(1, -2));
+        MOVABLE_DIRECTIONS.add(new Direction(-1, 2));
+        MOVABLE_DIRECTIONS.add(new Direction(-1, -2));
+        MOVABLE_DIRECTIONS.add(new Direction(2, 1));
+        MOVABLE_DIRECTIONS.add(new Direction(2, -1));
+        MOVABLE_DIRECTIONS.add(new Direction(-2, -1));
+        MOVABLE_DIRECTIONS.add(new Direction(-2, 1));
     }
 
     Knight(Color color) {
@@ -42,6 +42,6 @@ public final class Knight extends Piece {
     @Override
     public boolean canMove(Direction direction, Piece target) {
         checkSameTeam(target);
-        return direction.hasSame(DIRECTIONS);
+        return direction.hasSame(MOVABLE_DIRECTIONS);
     }
 }

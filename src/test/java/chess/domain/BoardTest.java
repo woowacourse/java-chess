@@ -18,7 +18,7 @@ public class BoardTest {
 
     @Test
     @DisplayName("목표하는 위치에 같은 팀의 말이 있으면 에러를 반환한다")
-    public void errorPosition_SameTeam() {
+    void errorPosition_SameTeam() {
         Map<Square, Piece> board = createBoard();
         board.put(new Square(File.C, Rank.THREE), WHITE_QUEEN);
         board.put(new Square(File.D, Rank.FOUR), WHITE_QUEEN);
@@ -30,13 +30,25 @@ public class BoardTest {
 
     @Test
     @DisplayName("목표한 위치가 이동할 수 없는 곳이면 에러를 반환한다")
-    public void errorPosition_Incapable() {
+    void errorPosition_Incapable() {
         Map<Square, Piece> board = createBoard();
         board.put(new Square(File.C, Rank.THREE), WHITE_QUEEN);
         Board chessBoard = new Board(board);
         assertThatThrownBy(() -> chessBoard.move(new Square(File.C, Rank.THREE), new Square(File.E, Rank.FOUR)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이동할 수 없는 위치입니다.");
+    }
+
+    @Test
+    @DisplayName("가는 길에 다른 피스가 있으면 에러를 반환한다")
+    void errorDirection_Blocked() {
+        Map<Square, Piece> board = createBoard();
+        board.put(new Square(File.C, Rank.THREE), WHITE_QUEEN);
+        board.put(new Square(File.D, Rank.FOUR), WHITE_QUEEN);
+        Board chessBoard = new Board(board);
+        assertThatThrownBy(() -> chessBoard.move(new Square(File.C, Rank.THREE), new Square(File.E, Rank.FIVE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 가는 길에 다른 피스가 있습니다");
     }
 
     private Map<Square, Piece> createBoard() {

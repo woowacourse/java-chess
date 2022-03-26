@@ -5,7 +5,7 @@ import chess.domain.position.Direction;
 public final class None extends Piece {
     private static final String NONE = "·";
 
-    None(Color color) {
+    public None(Color color) {
         super(color);
     }
 
@@ -17,5 +17,10 @@ public final class None extends Piece {
     @Override
     public boolean canMove(Direction direction, Piece target) {
         return false;
+    }
+
+    @Override
+    public boolean isNone() {
+        return true;
     }
 }

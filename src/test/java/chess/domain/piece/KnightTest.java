@@ -21,7 +21,7 @@ public class KnightTest {
     @DisplayName("나이트를 오른쪽으로 두칸, 위쪽으로 한칸 이동 가능하다")
     void canMove_a1_c2() {
         Knight knight = new Knight(Color.BLACK);
-        Boolean canMove = knight.canMove(new Direction(2, 1),new None(Color.NONE));
+        Boolean canMove = knight.canMove(new Direction(2, 1), new None(Color.NONE));
 
         assertThat(canMove).isTrue();
     }
@@ -30,7 +30,7 @@ public class KnightTest {
     @DisplayName("나이트는 오른쪽으로 2칸 위로 2칸 이동 불가능하다")
     void canMove_a1_c3() {
         Knight knight = new Knight(Color.BLACK);
-        Boolean canMove = knight.canMove(new Direction(2, 2),new None(Color.NONE));
+        Boolean canMove = knight.canMove(new Direction(2, 2), new None(Color.NONE));
 
         assertThat(canMove).isFalse();
     }

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.None;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
@@ -14,8 +16,8 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class Board {
-    private static final Piece NONE = Piece.from(File.A, Rank.THREE);
     private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 이동할 수 없는 위치입니다.";
+    private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 가는 길에 다른 피스가 있습니다";
 
     private final Map<Square, Piece> board;
 
@@ -61,9 +63,10 @@ public class Board {
         Direction direction = source.getGap(target);
 
         checkCapablePosition(direction, sourcePiece, targetPiece);
+        checkCapableDirection(source, target, direction);
 
         board.put(target, sourcePiece);
-        board.put(source, NONE);
+        board.put(source, new None(Color.NONE));
     }
 
     private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
@@ -71,4 +74,21 @@ public class Board {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_INCAPABLE);
         }
     }
+
+    private void checkCapableDirection(Square source, Square target, Direction direction) {
+        Direction unitDirection = direction.getUnitDirection();
+        Square road = source.add(unitDirection);
+
+        while (!road.equals(target)) {
+            checkNone(board.get(road));
+            road.add(unitDirection);
+        }
+    }
+
+    private void checkNone(Piece roadPiece) {
+        if (!roadPiece.isNone()) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_DIRECTION_INCAPABLE);
+        }
+    }
+
 }

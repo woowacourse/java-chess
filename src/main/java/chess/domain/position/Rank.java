@@ -12,6 +12,7 @@ public enum Rank {
     SEVEN("7", 7),
     EIGHT("8", 8);
 
+    private static final String ERROR_MESSAGE_BOUND = "[ERROR] 체스판 범위를 벗어났습니다.";
     private final String value;
     private final int index;
 
@@ -24,7 +25,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 체스판 범위를 벗어났습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
     }
 
     public int getGap(Rank target) {
@@ -33,5 +34,12 @@ public enum Rank {
 
     public String getValue() {
         return value;
+    }
+
+    public Rank add(int dRank) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == this.index + dRank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
     }
 }

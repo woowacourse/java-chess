@@ -9,17 +9,17 @@ public final class Queen extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 퀸은 색상을 가져야합니다.";
     private static final String BLACK_QUEEN = "♛";
     private static final String WHITE_QUEEN = "♕";
-    private static final List<Direction> DIRECTIONS = new ArrayList<>();
+    private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
 
     static {
-        DIRECTIONS.add(new Direction(0, 1));
-        DIRECTIONS.add(new Direction(0, -1));
-        DIRECTIONS.add(new Direction(1, 0));
-        DIRECTIONS.add(new Direction(1, -1));
-        DIRECTIONS.add(new Direction(1, 1));
-        DIRECTIONS.add(new Direction(-1, 0));
-        DIRECTIONS.add(new Direction(-1, -1));
-        DIRECTIONS.add(new Direction(-1, 1));
+        MOVABLE_DIRECTIONS.add(new Direction(0, 1));
+        MOVABLE_DIRECTIONS.add(new Direction(0, -1));
+        MOVABLE_DIRECTIONS.add(new Direction(1, 0));
+        MOVABLE_DIRECTIONS.add(new Direction(1, -1));
+        MOVABLE_DIRECTIONS.add(new Direction(1, 1));
+        MOVABLE_DIRECTIONS.add(new Direction(-1, 0));
+        MOVABLE_DIRECTIONS.add(new Direction(-1, -1));
+        MOVABLE_DIRECTIONS.add(new Direction(-1, 1));
     }
 
     Queen(Color color) {
@@ -40,8 +40,8 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction,Piece target) {
+    public boolean canMove(Direction direction, Piece target) {
         checkSameTeam(target);
-        return direction.hasMultiple(DIRECTIONS);
+        return direction.hasMultiple(MOVABLE_DIRECTIONS);
     }
 }
