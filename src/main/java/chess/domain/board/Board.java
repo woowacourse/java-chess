@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final double PAWN_SUBTRACT_UNIT = 0.5;
+    private static final double DEFAULT_SCORE = 0D;
     private final Map<Position, Piece> board;
 
     Board(Map<Position, Piece> board) {
@@ -38,7 +40,8 @@ public class Board {
         }
 
         // 출발 좌표에 있는 기물이 목적지로 이동이 불가하면 false다
-        boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition), pieceAtTo);
+        boolean movable = pieceAtFrom.movable(fromPosition.calculateDistance(toPosition),
+            pieceAtTo);
         if (!movable) {
             return MoveResult.FAIL;
         }
@@ -62,50 +65,63 @@ public class Board {
         List<Position> positionsOnTheWay = fromPosition.getPositionBetween(toPosition);
 
         return positionsOnTheWay.stream()
-                .anyMatch(board::containsKey);
+            .anyMatch(board::containsKey);
     }
 
     public Map<Color, Double> getScore() {
-        List<Position> whitePawnPositions = getCollect(Piece::isWhite);
-        List<Position> blackPawnPositions = getCollect(Piece::isBlack);
+        List<Position> whitePawnPositions = getPawnPositionsByColor(Piece::isWhite);
+        List<Position> blackPawnPositions = getPawnPositionsByColor(Piece::isBlack);
 
-        double scoreForWhitePawns = calculatePawnScore(whitePawnPositions);
-        double scoreForBlackPawns = calculatePawnScore(blackPawnPositions);
+        double whitePawnScore = calculatePawnScore(whitePawnPositions);
+        double blackPawnScore = calculatePawnScore(blackPawnPositions);
 
-        Map<Color, Double> chessScore = board.values()
-                .stream()
-                .filter(piece -> !(piece instanceof Pawn))
-                .collect(groupingBy(Color::from, summingDouble(Score::from)));
+        return calculateChessScore(whitePawnScore, blackPawnScore);
+    }
 
-        chessScore.put(Color.WHITE, chessScore.getOrDefault(Color.WHITE, 0D) + scoreForWhitePawns);
-        chessScore.put(Color.BLACK, chessScore.getOrDefault(Color.BLACK, 0D) + scoreForBlackPawns);
-
-        return chessScore;
+    private List<Position> getPawnPositionsByColor(Predicate<Piece> condition) {
+        return board.entrySet()
+            .stream()
+            .filter(entry -> entry.getValue() instanceof Pawn)
+            .filter(entry -> condition.test(entry.getValue()))
+            .map(Entry::getKey)
+            .collect(Collectors.toList());
     }
 
     private double calculatePawnScore(List<Position> pawnPositions) {
         double pawnScore = pawnPositions.size();
-
         for (File file : File.values()) {
             long count = pawnPositions.stream()
-                    .filter(position -> position.isSameFile(file))
-                    .count();
+                .filter(position -> position.isSameFile(file))
+                .count();
 
-            if (count > 1) {
-                pawnScore -= count * 0.5;
-            }
+            pawnScore = subtractPawnScore(pawnScore, count);
         }
-
         return pawnScore;
     }
 
-    private List<Position> getCollect(Predicate<Piece> condition) {
-        return board.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() instanceof Pawn)
-                .filter(entry -> condition.test(entry.getValue()))
-                .map(Entry::getKey)
-                .collect(Collectors.toList());
+    private double subtractPawnScore(double pawnScore, long count) {
+        if (count > 1) {
+            pawnScore -= count * PAWN_SUBTRACT_UNIT;
+        }
+        return pawnScore;
+    }
+
+    private Map<Color, Double> calculateChessScore(double whitePawnScore, double blackPawnScore) {
+        Map<Color, Double> chessScore = getChessScoreWithoutPawn();
+
+        chessScore.put(Color.WHITE,
+            chessScore.getOrDefault(Color.WHITE, DEFAULT_SCORE) + whitePawnScore);
+        chessScore.put(Color.BLACK,
+            chessScore.getOrDefault(Color.BLACK, DEFAULT_SCORE) + blackPawnScore);
+
+        return chessScore;
+    }
+
+    private Map<Color, Double> getChessScoreWithoutPawn() {
+        return board.values()
+            .stream()
+            .filter(piece -> !(piece instanceof Pawn))
+            .collect(groupingBy(Color::from, summingDouble(Score::from)));
     }
 
     public Map<Position, Piece> getBoard() {
