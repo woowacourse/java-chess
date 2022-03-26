@@ -25,6 +25,6 @@ public abstract class Running implements State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(getBoard());
     }
 }
