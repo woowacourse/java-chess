@@ -65,8 +65,8 @@ public abstract class Piece {
         }
     }
 
-    protected boolean checkOverRange(final int row, final int column) {
-        return Rank.isRankRange(row) && File.isFileRange(column);
+    protected boolean checkOverRange(final int file, final int rank) {
+        return File.isFileRange(file) && Rank.isRankRange(rank);
     }
 
     public boolean isSamePlayer(Player player) {

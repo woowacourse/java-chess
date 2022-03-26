@@ -22,7 +22,7 @@ public class SpecificLocationPiece extends Piece {
         int file = source.getFile() + direction.getFile();
         int rank = source.getRank() + direction.getRank();
 
-        if (checkOverRange(file, rank)) {
+        if (checkOverRange(rank,file)) {
             positions.add(Position.of(File.of(file),Rank.of(rank)));
         }
         return positions;

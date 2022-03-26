@@ -35,6 +35,7 @@ public class Pawn extends SpecificLocationPiece {
         if (checkOverRange(file, rank)) {
             positions.add(Position.of(File.of(file), Rank.of(rank)));
         }
+        System.out.println(positions);
         return positions;
     }
 
@@ -46,13 +47,12 @@ public class Pawn extends SpecificLocationPiece {
         return direction.equals(Direction.SOUTH_SOUTH) || direction.equals(Direction.NORTH_NORTH);
     }
 
-    private void calculatePawnTwoSpaceMove(List<Position> positions, Position source,
-        Direction direction) {
+    private void calculatePawnTwoSpaceMove(List<Position> positions, Position source, Direction direction) {
         Direction addDirection = generateAddDirection(direction);
         if (addDirection != null) {
-            int file = source.getFile() + direction.getFile();
-            int rank = source.getRank() + direction.getRank();
-            if (checkOverRange(file, rank)) {
+            int file = source.getFile() + addDirection.getFile();
+            int rank = source.getRank() + addDirection.getRank();
+            if (checkOverRange(rank,file)) {
                 positions.add(Position.of(File.of(file), Rank.of(rank)));
             }
         }

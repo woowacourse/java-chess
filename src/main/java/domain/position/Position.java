@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
     private Position(final File file, final Rank rank) {
         this.file = file;
@@ -21,15 +21,20 @@ public class Position {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Position position = (Position) o;
+        Position position = (Position) o;
         return rank == position.rank && file == position.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, file);
     }
 
     public int getRank() {
@@ -41,15 +46,10 @@ public class Position {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(rank, file);
-    }
-
-    @Override
     public String toString() {
         return "Position{" +
-            "row=" + rank +
-            ", column=" + file +
+            "file=" + file +
+            ", rank=" + rank +
             '}';
     }
 }
