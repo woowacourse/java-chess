@@ -6,6 +6,8 @@ import java.util.Stack;
 
 public abstract class ChessPiece {
 
+    protected static final String CHECK_POSITION_ERROR_MESSAGE = "해당 기물이 갈 수 없는 위치입니다.";
+
     protected final Color color;
     private final String name;
 

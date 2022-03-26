@@ -47,7 +47,7 @@ public final class Pawn extends ChessPiece {
             if (!color.isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
                 return;
             }
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
 
         checkCrossMove(from, to);
@@ -76,7 +76,7 @@ public final class Pawn extends ChessPiece {
             }
         }
 
-        throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
     }
 
     @Override

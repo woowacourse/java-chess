@@ -33,7 +33,7 @@ public final class King extends ChessPiece {
         final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
     }
 

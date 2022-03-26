@@ -34,11 +34,11 @@ public final class Knight extends ChessPiece {
         final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (rankDistance + fileDistance != 3) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
 
         if (from.isSameFile(to) || from.isSameRank(to)) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
     }
 
