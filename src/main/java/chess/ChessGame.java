@@ -45,7 +45,11 @@ public class ChessGame {
             OutputView.printMessage("체스 게임을 시작해야 합니다.");
             return;
         }
-        board.move(command.getBeforePosition(), command.getAfterPosition());
-        OutputView.printBoard(board.getBoard());
+        try {
+            board.move(command.getBeforePosition(), command.getAfterPosition());
+            OutputView.printBoard(board.getBoard());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 }

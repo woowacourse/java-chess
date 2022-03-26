@@ -16,6 +16,10 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
+    public static void printErrorMessage(String message) {
+        System.out.printf("[ERROR] %s %n", message);
+    }
+
     public static void printBoard(Map<Position, Piece> board) {
         for (Row row : Row.reverseRows()) {
             printColumnWithRow(board, row);
