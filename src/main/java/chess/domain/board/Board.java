@@ -62,4 +62,11 @@ public class Board {
         Piece piece = pointPieces.get(point);
         return piece.isSameType(PieceType.EMPTY);
     }
+
+    public Map<Color, Double> calculateScore() {
+        Map<Color, Double> map = new LinkedHashMap<>();
+        map.put(Color.WHITE, PieceType.calculateScore(pointPieces, Color.WHITE));
+        map.put(Color.BLACK, PieceType.calculateScore(pointPieces, Color.BLACK));
+        return map;
+    }
 }

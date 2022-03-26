@@ -13,4 +13,15 @@ class BoardTest {
         Board board = Board.of(new InitialBoardGenerator());
         assertThat(board).isNotNull();
     }
+
+    @Test
+    @DisplayName("팀별 점수를 계산할 수 있다.")
+    void calculateScoreTest() {
+        double initialTotalScore = 38;
+
+        Board board = Board.of(new InitialBoardGenerator());
+
+        assertThat(board.calculateScore().values())
+                .containsExactly(initialTotalScore, initialTotalScore);
+    }
 }

@@ -21,8 +21,8 @@ public abstract class Piece {
         return this.type == type;
     }
 
-    public double getPoint() {
-        return this.type.getPoint();
+    public double getScore() {
+        return this.type.getScore();
     }
 
     public abstract void move(Board board, Point from, Point to);
