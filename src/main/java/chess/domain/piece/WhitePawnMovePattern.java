@@ -16,14 +16,12 @@ public final class WhitePawnMovePattern extends AbstractPawnMovePattern {
 
         // TODO 상태를 이용해서 리펙터링이 가능할 것 같다
         for (Direction direction : directions) {
-            if (src.isStartRow(WHITE_PAWN_START_ROW) && direction.equals(Direction.NORTH)) {
-                if (src.canMoveByTime(direction, dest, 1)) {
-                    return direction;
-                }
-                if (src.canMoveByTime(direction, dest, 2)) {
-                    return direction;
-                }
-            } else if (src.canMoveByTime(direction, dest, 1)) {
+            if (src.canMoveByTime(direction, dest, 1)) {
+                return direction;
+            }
+
+            if (src.isSameRow(WHITE_PAWN_START_ROW) && direction.equals(Direction.NORTH)
+                    && src.canMoveByTime(direction, dest, 2)) {
                 return direction;
             }
         }

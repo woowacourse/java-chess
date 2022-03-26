@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     private final AbstractPawnMovePattern pattern;
 
