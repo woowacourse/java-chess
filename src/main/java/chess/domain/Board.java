@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -88,5 +89,17 @@ public class Board {
         for (int rank = nextRank; rank < maxRank; rank++, file--) {
             checkHasPiece(rank, file);
         }
+    }
+
+    public void initEmpty() {
+        value.clear();
+    }
+
+    public void setPiece(final Position position, final Piece piece) {
+        value.put(position, piece);
+    }
+
+    public boolean hasPiece(final Position position) {
+        return value.get(position) != null;
     }
 }

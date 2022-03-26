@@ -26,7 +26,5 @@ public abstract class Piece {
         return color == other;
     }
 
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to){
-
-    }
+    public abstract void checkPieceMoveRange(final Board board, final Position from, final Position to);
 }

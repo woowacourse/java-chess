@@ -36,8 +36,38 @@ public class PawnTest {
     void forwardWhiteTwo() {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatCode(() -> pawn.checkPieceMoveRange(board, Position.from("a2"), Position.from("a3")))
+        assertThatCode(() -> pawn.checkPieceMoveRange(board, Position.from("a2"), Position.from("a4")))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 앞으로 한 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
+    void forwardWhiteOneStep() {
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        Board board = new Board();
+        board.initEmpty();
+        board.setPiece(Position.from("e3"), new Pawn(Color.BLACK));
+        board.setPiece(Position.from("e2"), pawn);
+
+        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("e2"), Position.from("e3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로에 기물이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 앞으로 두 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
+    void forwardWhiteTwoStep() {
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        Board board = new Board();
+        board.initEmpty();
+        board.setPiece(Position.from("e4"), new Pawn(Color.BLACK));
+        board.setPiece(Position.from("e2"), pawn);
+
+        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("e2"), Position.from("e4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 경로에 기물이 존재합니다.");
     }
 
     @Test
@@ -45,7 +75,7 @@ public class PawnTest {
     void backWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a2"), Position.from("a1")))
+        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a4"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
@@ -55,9 +85,13 @@ public class PawnTest {
     void forwardWhiteDiagonal() {
         Pawn pawn = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a2"), Position.from("b3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 대각선으로 움직일 수 없습니다.");
+        Board board = new Board();
+        board.initEmpty();
+        board.setPiece(Position.from("a2"), new Pawn(Color.BLACK));
+        board.setPiece(Position.from("b3"), pawn);
+
+        assertThatCode(() -> pawn.checkPieceMoveRange(board, Position.from("a2"), Position.from("b3")))
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -102,7 +136,7 @@ public class PawnTest {
     void backBlack() {
         Pawn pawn = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a7"), Position.from("a8")))
+        assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a5"), Position.from("a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
@@ -114,7 +148,7 @@ public class PawnTest {
 
         assertThatThrownBy(() -> pawn.checkPieceMoveRange(board, Position.from("a7"), Position.from("b6")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 대각선으로 움직일 수 없습니다.");
+                .hasMessageContaining("폰은 앞으로 한 칸만 이동할 수 있습니다.");
     }
 
     @Test
