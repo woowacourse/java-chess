@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.File;
@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
+
     private final Board board;
     private Color turn = Color.WHITE;
 
@@ -34,6 +35,10 @@ public class ChessGame {
 
     private boolean isThatTurn(Position position) {
         return board.isSameColor(position, turn);
+    }
+
+    public Status getStatus() {
+        return new Status(board.getColorsTotalScore());
     }
 
     private Map<Position, Piece> createBoard() {

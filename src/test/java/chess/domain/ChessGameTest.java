@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
