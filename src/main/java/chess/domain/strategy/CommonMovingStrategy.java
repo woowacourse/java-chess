@@ -42,6 +42,12 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
     }
 
     private void checkTargetPosition(Position source, Position target, ChessBoard chessBoard) {
+        if (chessBoard.isExist(target)) {
+            checkSameTeamTargetPosition(source, target, chessBoard);
+        }
+    }
+
+    private void checkSameTeamTargetPosition(Position source, Position target, ChessBoard chessBoard) {
         Team sourceTeam = chessBoard.findTeam(source);
         Team targetTeam = chessBoard.findTeam(target);
 

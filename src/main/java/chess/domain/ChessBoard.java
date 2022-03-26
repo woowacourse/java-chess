@@ -108,4 +108,12 @@ public class ChessBoard {
     public Piece getPieceByPosition(Position position) {
         return cells.get(position);
     }
+
+    public boolean isExist(Position target) {
+        if (cells.containsKey(target)) {
+            return true;
+        }
+
+        return false;
+    }
 }
