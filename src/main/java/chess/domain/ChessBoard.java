@@ -54,10 +54,12 @@ public class ChessBoard {
     public boolean isContainPiece(List<Position> paths) {
         Set<Position> cellsKeySet = cells.keySet();
 
-        for (Position path : paths) {
-            if (cellsKeySet.contains(path)) {
-                return true;
-            }
+        long count = paths.stream()
+                .filter(cellsKeySet::contains)
+                .count();
+
+        if (count > 0) {
+            return true;
         }
 
         return false;
@@ -73,8 +75,6 @@ public class ChessBoard {
                 .sum();
 
         double decrease = twoPawnCount * 0.5;
-
-        System.out.println("decrease = " + decrease);
 
         double sum = cells.values()
                 .stream()
