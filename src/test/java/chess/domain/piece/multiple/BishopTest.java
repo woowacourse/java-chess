@@ -45,15 +45,6 @@ class BishopTest {
         assertThat(bishop.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("가로막히지 않고 목표지점이 비어 있으면 이동 가능")
-    void isMovableToClearEmptyPosition() {
-        Position target = Position.of('b', '6');
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Bishop(WHITE)));
-
-        assertThat(bishop.isMovable(source, target, chessBoard)).isTrue();
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"WHITE,false", "BLACK,true"})
     @DisplayName("가로막히지 않고 목표지점에 기물이 존재시 이동 가능 여부")
