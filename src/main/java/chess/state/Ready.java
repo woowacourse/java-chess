@@ -34,4 +34,5 @@ public class Ready implements State {
     public boolean isNotEnded() {
         return true;
     }
+
 }

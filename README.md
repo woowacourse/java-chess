@@ -125,4 +125,4 @@
 - [x]  매직 넘버 상수화
 - [x]  메서드 10줄 넘지 않도록 수정
 - [x]  outputView를 위한 getter말고 다른 getter가 있는지 확인하기
-- [ ]  state test
+- [x]  state test

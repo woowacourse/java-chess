@@ -26,4 +26,5 @@ public class Ended implements State {
     public boolean isNotEnded() {
         return false;
     }
+
 }

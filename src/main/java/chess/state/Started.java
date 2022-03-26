@@ -80,4 +80,5 @@ public class Started implements State {
     public boolean isNotEnded() {
         return true;
     }
+
 }
