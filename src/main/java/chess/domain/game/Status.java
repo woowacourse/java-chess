@@ -36,7 +36,7 @@ public class Status extends Started {
     @Override
     public GameState move(List<String> arguments) {
         board.move(arguments, turnColor);
-        return new Running(board, turnColor);
+        return new Running(board, turnColor.toggle());
     }
 
     @Override
