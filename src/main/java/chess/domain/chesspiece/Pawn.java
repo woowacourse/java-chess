@@ -63,10 +63,14 @@ public final class Pawn extends ChessPiece {
     }
 
     private boolean isMovablePosition(final Position from, final Position to) {
-        return pawnMovableDirections(color)
-                .stream()
-                .map(from::toNextPosition)
-                .anyMatch(position -> position.equals(to));
+        try {
+            return pawnMovableDirections(color)
+                    .stream()
+                    .map(from::toNextPosition)
+                    .anyMatch(position -> position.equals(to));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private List<Direction> pawnMovableDirections(final Color color) {

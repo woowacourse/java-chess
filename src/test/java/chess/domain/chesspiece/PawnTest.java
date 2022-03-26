@@ -41,7 +41,7 @@ class PawnTest {
 
     @ParameterizedTest
     @DisplayName("처음 위치에서 2칸 이동한다.")
-    @CsvSource(value = {"BLACK:d7:d5", "WHITE:d2:d4"}, delimiter = ':')
+    @CsvSource(value = {"BLACK:a7:a5", "BLACK:h7:h5", "WHITE:a2:a4", "WHITE:h2:h4"}, delimiter = ':')
     void canMove_initFile(final Color color, final String from, final String to) {
         // given
         final ChessPiece pawn = Pawn.from(color);
