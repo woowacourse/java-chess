@@ -2,6 +2,8 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.dto.BoardResponse;
+import chess.dto.Response;
 
 import java.util.List;
 
@@ -22,6 +24,11 @@ public class Running extends Started {
     }
 
     @Override
+    public GameState status() {
+        return new Status(board, turnColor);
+    }
+
+    @Override
     public boolean isRunnable() {
         return true;
     }
@@ -32,5 +39,10 @@ public class Running extends Started {
             return new Running(board, turnColor.toggle());
         }
         return new Finished(board, turnColor);
+    }
+
+    @Override
+    public Response getResponse() {
+        return BoardResponse.of(board.getPointPieces(), turnColor);
     }
 }

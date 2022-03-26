@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
 import chess.domain.piece.Color;
+import chess.dto.Response;
 
 import java.util.List;
 
@@ -29,6 +30,16 @@ public class Ready extends Started {
 
     @Override
     public GameState move(List<String> arguments) {
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
+    }
+
+    @Override
+    public Response getResponse() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public GameState status() {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 }
