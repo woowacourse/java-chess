@@ -24,6 +24,10 @@ public class ChessMen implements Iterable<ChessPiece> {
                 .anyMatch(it -> it.isSamePosition(position));
     }
 
+    public void removeChessPieceAt(ChessBoardPosition position) {
+        chessPieces.removeIf(chessPiece -> chessPiece.isSamePosition(position));
+    }
+
     @Override
     public Iterator<ChessPiece> iterator() {
         return chessPieces.iterator();

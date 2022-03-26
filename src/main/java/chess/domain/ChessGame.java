@@ -97,6 +97,11 @@ public class ChessGame {
             throw new IllegalArgumentException("[ERROR] 도착 위치에 우리 팀 체스피스가 있어 이동할 수 없습니다.");
         }
 
+        ChessMen enemy = getEnemy();
+        if (chessPiece.enemyExistsInTargetPosition(targetPosition, enemy)) {
+            enemy.removeChessPieceAt(targetPosition);
+        }
+
         chessPiece.move(targetPosition);
     }
 
@@ -105,6 +110,13 @@ public class ChessGame {
             return whiteChessMen;
         }
         return blackChessMen;
+    }
+
+    private ChessMen getEnemy() {
+        if (turn.isWhite()) {
+            return blackChessMen;
+        }
+        return whiteChessMen;
     }
 
     private ChessPiece getChessPiece(ChessBoardPosition sourcePosition) {

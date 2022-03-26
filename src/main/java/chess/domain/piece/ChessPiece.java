@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.Objects;
 
 public abstract class ChessPiece {
     protected final String name;
@@ -33,5 +34,27 @@ public abstract class ChessPiece {
 
     public boolean myTeamExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen myTeamChessMen) {
         return myTeamChessMen.existChessPieceAt(targetPosition);
+    }
+
+    public boolean enemyExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen enemyChessMen) {
+        return enemyChessMen.existChessPieceAt(targetPosition);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessPiece that = (ChessPiece) o;
+        return Objects.equals(name, that.name) && team == that.team && Objects.equals(position,
+                that.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, team, position);
     }
 }
