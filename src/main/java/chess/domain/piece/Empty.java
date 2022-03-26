@@ -5,8 +5,8 @@ import chess.domain.board.Point;
 
 public class Empty extends Piece {
 
-    public Empty(Color color) {
-        super(color, PieceType.EMPTY);
+    public Empty() {
+        super(Color.NONE, PieceType.EMPTY);
     }
 
     @Override

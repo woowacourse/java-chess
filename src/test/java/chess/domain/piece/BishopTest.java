@@ -33,6 +33,18 @@ public class BishopTest {
     }
 
     @Test
+    @DisplayName("대각선이 아닌곳은 이동이 불가능하다.")
+    void throwsExceptionWithNotDiagonalDirection() {
+        Point from = Point.of("c1");
+        Point to = Point.of("a2");
+        Piece piece = new Bishop(Color.WHITE);
+        Board board = BoardFixtures.EMPTY_BOARD;
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> piece.move(board, from, to));
+    }
+
+    @Test
     @DisplayName("장애물이 있을 경우 이동할 수 없다.")
     void notMovableWithObstacle() {
         Point from = Point.of("c1");

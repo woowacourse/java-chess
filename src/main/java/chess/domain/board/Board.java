@@ -5,10 +5,7 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Board {
 
@@ -38,7 +35,7 @@ public class Board {
 
         fromPiece.move(this, from, to);
         pointPieces.put(to, fromPiece);
-        pointPieces.put(from, new Empty(Color.NONE));
+        pointPieces.put(from, new Empty());
 
         return toPiece.isSameType(PieceType.KING);
     }

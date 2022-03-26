@@ -45,6 +45,18 @@ public class QueenTest {
     }
 
     @Test
+    @DisplayName("퀸은 직선으로만 이동할 수 있다.")
+    void notMovableWithoutStraight() {
+        Point from = Point.of(1, 1);
+        Point to = Point.of(2, 7);
+        Piece piece = new Queen(Color.WHITE);
+        Board board = BoardFixtures.EMPTY_BOARD;
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> piece.move(board, from, to));
+    }
+
+    @Test
     @DisplayName("장애물이 있을 경우 상하좌우로 이동할 수 없다.")
     void notMovableWithCrossObstacle() {
         Point from = Point.of(1, 1);
