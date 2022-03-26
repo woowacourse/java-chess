@@ -1,7 +1,7 @@
 package chess.piece;
 
-import static chess.File.*;
-import static chess.Rank.*;
+import static chess.vo.File.*;
+import static chess.vo.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.File;
-import chess.MoveType;
-import chess.PieceColor;
-import chess.Position;
-import chess.Rank;
+import chess.model.piece.Pawn;
+import chess.vo.File;
+import chess.vo.MoveType;
+import chess.vo.PieceColor;
+import chess.vo.Position;
+import chess.vo.Rank;
 
 class PawnTest {
 

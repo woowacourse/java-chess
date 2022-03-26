@@ -1,7 +1,7 @@
 package chess.dto;
 
-import chess.Command;
-import chess.Position;
+import chess.vo.Command;
+import chess.vo.Position;
 
 public class MoveRequest implements Request {
 

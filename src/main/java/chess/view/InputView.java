@@ -4,11 +4,11 @@ import static camp.nextstep.edu.missionutils.Console.*;
 
 import java.util.List;
 
-import chess.Command;
-import chess.Position;
 import chess.dto.MoveRequest;
 import chess.dto.NotMoveRequest;
 import chess.dto.Request;
+import chess.vo.Command;
+import chess.vo.Position;
 
 public class InputView {
 
@@ -21,7 +21,7 @@ public class InputView {
 
     public static Request inputCommandInGaming() { // RequestDto
         String input = readLine();
-        Command command = Command.endMove(input);
+        Command command = Command.MoveStatusEnd(input);
         if (command == Command.END) {
             return new NotMoveRequest(command);
         }

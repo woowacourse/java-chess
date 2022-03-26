@@ -6,11 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.File;
-import chess.MoveType;
-import chess.PieceColor;
-import chess.Position;
-import chess.Rank;
+import chess.model.piece.Rook;
+import chess.vo.File;
+import chess.vo.MoveType;
+import chess.vo.PieceColor;
+import chess.vo.Position;
+import chess.vo.Rank;
 
 public class RookTest {
 

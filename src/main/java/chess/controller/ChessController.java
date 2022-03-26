@@ -1,11 +1,11 @@
 package chess.controller;
 
-import static chess.Command.*;
+import static chess.vo.Command.*;
 
-import chess.Board;
-import chess.defaultInitializer;
 import chess.dto.Request;
-import chess.turndecider.AlternatingTurnDecider;
+import chess.model.Board;
+import chess.model.boardinitializer.defaultInitializer;
+import chess.model.turndecider.AlternatingTurnDecider;
 import chess.view.InputView;
 import chess.view.OutputView;
 
