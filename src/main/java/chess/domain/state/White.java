@@ -31,7 +31,6 @@ public class White extends Running {
             if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
                 throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
             }
-
         }
 
         getBoard().move(source, target);

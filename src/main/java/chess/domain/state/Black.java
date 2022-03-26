@@ -43,7 +43,6 @@ public class Black extends Running {
         }
     }
 
-
     private void checkDirection(Piece piece, Direction direction) {
         if (!piece.isMovableDirection(direction)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");

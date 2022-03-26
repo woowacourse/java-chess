@@ -11,11 +11,11 @@ public class Rook extends Piece{
 
     @Override
     public boolean isMovableDirection(Direction direction) {
-        return false;
+        return Direction.isRookDirection(direction);
     }
 
     @Override
     public boolean isMovableDistance(LocationDiff locationDiff) {
-        return false;
+        return true;
     }
 }
