@@ -22,7 +22,7 @@ public enum PieceKind {
         return piece.isSamePiece(pieceName);
     }
 
-    public double calculateScore(final int count) {
+    public double calculateScore(final double count) {
         return score * count;
     }
 }

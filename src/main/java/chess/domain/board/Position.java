@@ -43,6 +43,10 @@ public class Position {
         return row;
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof Position)) {

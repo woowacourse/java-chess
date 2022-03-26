@@ -260,9 +260,9 @@ class BoardTest {
     @Test
     void count_Specific_Piece() {
         Board board = new Board(new CreateBoard());
-        final int actualCount = board.countPiece(PieceKind.ROOK, Color.BLACK);
+        final double actualCount = board.countPiece(PieceKind.ROOK, Color.BLACK);
 
-        assertThat(actualCount).isEqualTo(2);
+        assertThat(actualCount).isEqualTo(2.0);
     }
 }
 

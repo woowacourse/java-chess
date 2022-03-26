@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,11 +106,27 @@ public class Board {
         return pieces.getOrDefault(position, new EmptySpace());
     }
 
-    public int countPiece(PieceKind pieceKind, Color color) {
-        return (int)pieces.values()
+    public double countPiece(PieceKind pieceKind, Color color) {
+        return (double)pieces.values()
             .stream()
             .filter(piece -> pieceKind.isSamePieceWith(piece) && piece.isSameColor(color))
             .count();
+    }
+
+    public int countDeductedPawns(Color color) {
+        return (int)pieces.entrySet()
+            .stream()
+            .filter(piece -> PieceKind.PAWN.isSamePieceWith(piece.getValue())
+                && piece.getValue().isSameColor(color))
+            .filter(this::hasAnotherPawnInSameColumn)
+            .count();
+    }
+
+    private boolean hasAnotherPawnInSameColumn(Map.Entry<Position, Piece> piece) {
+        return Arrays.stream(Row.values())
+            .map(row -> new Position(row, piece.getKey().getColumn()))
+            .anyMatch(position -> !piece.getKey().equals(position)
+                && get(position).equals(piece.getValue()));
     }
 
     public Map<Position, Piece> getPieces() {

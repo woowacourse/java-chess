@@ -15,6 +15,7 @@ import chess.domain.board.Row;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 
@@ -44,5 +45,21 @@ class StatusTest {
         Status status = new Status(board);
 
         assertThat(status.getBlackScore()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("폰이 같은 열에 있으면 폰 하나를 0.5점으로 계산한다")
+    void pawns_Score() {
+        Piece pawn = new Pawn(Color.BLACK);
+        Position p1 = new Position(Row.FIRST, Column.a);
+        Position p2 = new Position(Row.THIRD, Column.a);
+        Piece king = new King(Color.BLACK);
+        Position p3 = new Position(Row.FOURTH, Column.a);
+        Map<Position, Piece> pieces = Map.of(p1, pawn, p2, pawn, p3, king);
+        Board board = new Board(new CreateMockBoardStrategy(pieces));
+
+        Status status = new Status(board);
+
+        assertThat(status.getBlackScore()).isEqualTo(1.0);
     }
 }
