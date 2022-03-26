@@ -59,4 +59,11 @@ class PositionTest {
 
         assertThat(src.canCrossMovingStraight(Direction.NORTH, dest)).isFalse();
     }
+
+    @DisplayName("파라미터로 넘어온 Row와 같은지 확인한다")
+    @Test
+    void testIsStartRow() {
+        Position src = Position.of("a2");
+        assertThat(src.isSameRow(Row.RANK_2)).isTrue();
+    }
 }

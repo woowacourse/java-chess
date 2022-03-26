@@ -40,8 +40,7 @@ public class Position {
         return new Position(column.move(x), row.move(y));
     }
 
-    // TODO 테스트없음
-    public boolean isStartRow(Row rank) {
+    public boolean isSameRow(Row rank) {
         return row == rank;
     }
 
