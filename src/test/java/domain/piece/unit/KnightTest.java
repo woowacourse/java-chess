@@ -1,9 +1,9 @@
 package domain.piece.unit;
 
-import domain.piece.property.Team;
+import static domain.PositionFixtures.*;
+import static domain.piece.property.Team.*;
+
 import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,45 +16,25 @@ class KnightTest {
     @MethodSource("availablePositions")
     @DisplayName("Knight 는 상하좌우로 이동할 수 있다.")
     void moveKnight(Position target) {
-        Piece piece = new Knight(Team.WHITE);
+        Piece piece = new Knight(WHITE);
 
-        Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FOUR), target))
-                .isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(D4, target)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
-        return Stream.of(
-                Position.of(XPosition.E, YPosition.SIX),
-                Position.of(XPosition.C, YPosition.SIX),
-                Position.of(XPosition.B, YPosition.FIVE),
-                Position.of(XPosition.F, YPosition.FIVE),
-                Position.of(XPosition.B, YPosition.THREE),
-                Position.of(XPosition.F, YPosition.THREE),
-                Position.of(XPosition.C, YPosition.TWO),
-                Position.of(XPosition.E, YPosition.TWO)
-        );
+        return Stream.of(B3, B5, C2, C6, E2, E6, F3, F5);
     }
 
     @ParameterizedTest
     @MethodSource("disablePositions")
     @DisplayName("Knight 는 상하좌우 L자 이외로 이동할 수 없다.")
     void nonMoveKnight(Position target) {
-        Piece piece = new Knight(Team.WHITE);
+        Piece piece = new Knight(WHITE);
 
-        Assertions.assertThat(piece.availableMove(Position.of(XPosition.D, YPosition.FOUR), target))
-                .isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(D4, target)).isEqualTo(false);
     }
 
     private static Stream<Position> disablePositions() {
-        return Stream.of(
-                Position.of(XPosition.D, YPosition.FIVE),
-                Position.of(XPosition.E, YPosition.FOUR),
-                Position.of(XPosition.C, YPosition.FOUR),
-                Position.of(XPosition.D, YPosition.THREE),
-                Position.of(XPosition.B, YPosition.FOUR),
-                Position.of(XPosition.D, YPosition.TWO),
-                Position.of(XPosition.F, YPosition.FOUR),
-                Position.of(XPosition.D, YPosition.SIX)
-        );
+        return Stream.of(D4, E4, C4, D3, B4, D2, F4, D6);
     }
 }

@@ -1,9 +1,9 @@
 package domain.piece.unit;
 
-import domain.piece.property.Team;
+import static domain.PositionFixtures.*;
+import static domain.piece.property.Team.*;
+
 import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,17 +16,12 @@ class BishopTest {
     @MethodSource("availablePositions")
     @DisplayName("Bishop 은 대각선으로 이동할 수 있다.")
     void moveBishop(Position target) {
-        Piece piece = new Bishop(Team.WHITE);
+        Piece piece = new Bishop(WHITE);
 
-        Assertions.assertThat(piece.availableMove(Position.of(XPosition.B, YPosition.TWO), target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
-        return Stream.of(
-                Position.of(XPosition.A, YPosition.ONE),
-                Position.of(XPosition.H, YPosition.EIGHT),
-                Position.of(XPosition.C, YPosition.ONE),
-                Position.of(XPosition.A, YPosition.THREE)
-        );
+        return Stream.of(A1, A3, C1, H8);
     }
 }
