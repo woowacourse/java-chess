@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ChessController {
     public void run() {
-        InputView.startGame();
+        OutputView.startGame();
 
         String input = InputView.inputCommand();
         Command command = new Init(input);
