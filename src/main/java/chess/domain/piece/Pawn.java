@@ -119,35 +119,35 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         if (!isBlackInitialPosition() && !isWhiteInitialPosition()) {
             return true;
         }
         if (team.isWhite()) {
-            return isWhiteMovable(targetPosition, chessMen);
+            return isWhiteMovable(targetPosition, whiteChessMen, blackChessMen);
         }
-        return isBlackMovable(targetPosition, chessMen);
+        return isBlackMovable(targetPosition, whiteChessMen, blackChessMen);
     }
 
-    private boolean isWhiteMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+    private boolean isWhiteMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
         if (rowDistance != DEFAULT_DISTANCE && rowDistance != DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
             return false;
         }
-        return rowDistance != 2 || isUnobstructed(chessMen, -DEFAULT_DISTANCE);
+        return rowDistance != 2 || isUnobstructed(whiteChessMen, blackChessMen, -DEFAULT_DISTANCE);
     }
 
-    private boolean isBlackMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+    private boolean isBlackMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
         if (rowDistance != DEFAULT_DISTANCE && rowDistance != DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
             return false;
         }
-        return rowDistance != 2 || isUnobstructed(chessMen, DEFAULT_DISTANCE);
+        return rowDistance != 2 || isUnobstructed(whiteChessMen, blackChessMen, DEFAULT_DISTANCE);
     }
 
-    private boolean isUnobstructed(ChessMen chessMen, int forwardDirection) {
+    private boolean isUnobstructed(ChessMen whiteChessMen, ChessMen blackChessMen, int forwardDirection) {
         ChessBoardPosition pathPosition = new ChessBoardPosition(position.getColumn(),
                 position.getRow() + forwardDirection);
-        return chessMen.existChessPieceAt(pathPosition);
+        return !whiteChessMen.existChessPieceAt(pathPosition) && !blackChessMen.existChessPieceAt(pathPosition);
     }
 }

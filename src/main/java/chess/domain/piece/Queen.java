@@ -51,8 +51,8 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
-        return isReachable(targetPosition) && isUnobstructed(targetPosition, chessMen);
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
+        return isReachable(targetPosition) && isUnobstructed(targetPosition, whiteChessMen, blackChessMen);
     }
 
     private boolean isReachable(ChessBoardPosition targetPosition) {
@@ -61,7 +61,13 @@ public class Queen extends ChessPiece {
         return !isNotEightCardinalMovement(rowDistance, columnDistance);
     }
 
-    private boolean isUnobstructed(ChessBoardPosition targetChessBoardPosition, ChessMen chessMen) {
+    private boolean isUnobstructed(ChessBoardPosition targetChessBoardPosition, ChessMen whiteChessMen,
+                                   ChessMen blackChessMen) {
+        return noChessMenInPath(targetChessBoardPosition, whiteChessMen)
+                && noChessMenInPath(targetChessBoardPosition, blackChessMen);
+    }
+
+    private boolean noChessMenInPath(ChessBoardPosition targetChessBoardPosition, ChessMen chessMen) {
         return createPathPositions(targetChessBoardPosition)
                 .stream()
                 .noneMatch(chessMen::existChessPieceAt);

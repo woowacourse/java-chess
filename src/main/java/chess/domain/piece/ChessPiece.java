@@ -15,7 +15,7 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
-    public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen);
+    public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen);
 
     public abstract void move(ChessBoardPosition targetPosition);
 

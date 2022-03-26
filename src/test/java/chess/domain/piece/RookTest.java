@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -44,8 +45,9 @@ class RookTest {
         ChessPiece rook = new Rook(Team.BLACK, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(rook,
                 new Knight(Team.BLACK, new ChessBoardPosition('e', 5)));
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = rook.isMovable(new ChessBoardPosition('e', 7), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(Arrays.asList());
+        boolean result = rook.isMovable(new ChessBoardPosition('e', 7), whiteChessMen, blackChessMen);
         assertFalse(result);
     }
 
@@ -54,8 +56,9 @@ class RookTest {
     void movableTest2() {
         ChessPiece rook = new Rook(Team.WHITE, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(rook);
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = rook.isMovable(new ChessBoardPosition('e', 5), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(Arrays.asList());
+        boolean result = rook.isMovable(new ChessBoardPosition('e', 5), whiteChessMen, blackChessMen);
         assertTrue(result);
     }
 }

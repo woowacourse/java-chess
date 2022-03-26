@@ -23,8 +23,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
-        return isReachable(targetPosition) && isUnobstructed(targetPosition, chessMen);
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
+        return isReachable(targetPosition) && isUnobstructed(targetPosition, whiteChessMen, blackChessMen);
     }
 
     private boolean isReachable(ChessBoardPosition targetPosition) {
@@ -33,7 +33,11 @@ public class Bishop extends ChessPiece {
         return rowDistance == columnDistance;
     }
 
-    private boolean isUnobstructed(ChessBoardPosition targetPosition, ChessMen chessMen) {
+    private boolean isUnobstructed(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
+        return noChessPieceInPath(targetPosition, whiteChessMen) && noChessPieceInPath(targetPosition, blackChessMen);
+    }
+
+    private boolean noChessPieceInPath(ChessBoardPosition targetPosition, ChessMen chessMen) {
         return createPathPositions(targetPosition)
                 .stream()
                 .noneMatch(chessMen::existChessPieceAt);

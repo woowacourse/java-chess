@@ -30,7 +30,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen chessMen) {
+    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
         int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
         return (rowDistance == 2 && columnDistance == 1) || (rowDistance == 1 && columnDistance == 2);

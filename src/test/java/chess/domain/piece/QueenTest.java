@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -53,8 +54,9 @@ class QueenTest {
         ChessPiece queen = new Queen(Team.BLACK, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(queen,
                 new Knight(Team.BLACK, new ChessBoardPosition('d', 4)));
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = queen.isMovable(new ChessBoardPosition('c', 5), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(Arrays.asList());
+        boolean result = queen.isMovable(new ChessBoardPosition('c', 5), whiteChessMen, blackChessMen);
         assertFalse(result);
     }
 
@@ -64,8 +66,9 @@ class QueenTest {
         ChessPiece queen = new Queen(Team.BLACK, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(queen,
                 new Knight(Team.BLACK, new ChessBoardPosition('e', 4)));
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = queen.isMovable(new ChessBoardPosition('e', 5), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(Arrays.asList());
+        boolean result = queen.isMovable(new ChessBoardPosition('e', 5), whiteChessMen, blackChessMen);
         assertFalse(result);
     }
 
@@ -75,8 +78,9 @@ class QueenTest {
     void movableTest2(Team team, ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessPiece queen = new Queen(team, sourcePosition);
         List<ChessPiece> blackChessPieces = List.of(queen);
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = queen.isMovable(targetPosition, chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(Arrays.asList());
+        boolean result = queen.isMovable(targetPosition, whiteChessMen, blackChessMen);
         assertTrue(result);
     }
 }

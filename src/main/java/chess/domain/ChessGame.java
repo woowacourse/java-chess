@@ -88,19 +88,11 @@ public class ChessGame {
 
     public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessPiece chessPiece = getChessPiece(sourcePosition);
-        ChessMen allyChessMen = getAlly();
 
-        if (!chessPiece.isMovable(targetPosition, allyChessMen)) {
+        if (!chessPiece.isMovable(targetPosition, whiteChessMen, blackChessMen)) {
             throw new IllegalArgumentException("[ERROR] 경로에 다른 체스가 있어 이동할 수 없습니다.");
         }
         chessPiece.move(targetPosition);
-    }
-
-    private ChessMen getAlly() {
-        if (turn.isWhite()) {
-            return whiteChessMen;
-        }
-        return blackChessMen;
     }
 
     private ChessPiece getChessPiece(ChessBoardPosition sourcePosition) {

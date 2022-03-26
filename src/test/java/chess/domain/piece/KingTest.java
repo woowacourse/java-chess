@@ -20,8 +20,9 @@ class KingTest {
     void movableTest(Team team, ChessBoardPosition initialPosition, ChessBoardPosition nextPosition) {
         King king = new King(team, initialPosition);
         List<ChessPiece> chessPieces = List.of(king);
-        ChessMen chessMen = new ChessMen(chessPieces);
-        boolean result = king.isMovable(nextPosition, chessMen);
+        ChessMen blackChessMen = new ChessMen(chessPieces);
+        ChessMen whiteChessMen = new ChessMen(List.of());
+        boolean result = king.isMovable(nextPosition, whiteChessMen, blackChessMen);
         assertTrue(result);
     }
 

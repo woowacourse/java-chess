@@ -44,8 +44,9 @@ class BishopTest {
         ChessPiece bishop = new Bishop(Team.BLACK, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(bishop,
                 new Knight(Team.BLACK, new ChessBoardPosition('d', 4)));
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(List.of());
+        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), whiteChessMen, blackChessMen);
         assertFalse(result);
     }
 
@@ -54,8 +55,9 @@ class BishopTest {
     void movableTest2() {
         ChessPiece bishop = new Bishop(Team.WHITE, new ChessBoardPosition('e', 3));
         List<ChessPiece> blackChessPieces = List.of(bishop);
-        ChessMen chessMen = new ChessMen(blackChessPieces);
-        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), chessMen);
+        ChessMen blackChessMen = new ChessMen(blackChessPieces);
+        ChessMen whiteChessMen = new ChessMen(List.of());
+        boolean result = bishop.isMovable(new ChessBoardPosition('c', 5), whiteChessMen, blackChessMen);
         assertTrue(result);
     }
 }

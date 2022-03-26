@@ -72,19 +72,19 @@ public class ChessBoardPosition {
 
     public List<Integer> ascendingRowRange(ChessBoardPosition other) {
         if (row > other.row) {
-            return rangeClosed(other.row, row);
+            return range(other.row, row);
         }
-        return rangeClosed(row, other.row);
+        return range(row, other.row);
     }
 
     public List<Integer> ascendingColumnRange(ChessBoardPosition other) {
         if (column > other.column) {
-            return rangeClosed(other.column, column);
+            return range(other.column, column);
         }
-        return rangeClosed(column, other.column);
+        return range(column, other.column);
     }
 
-    private List<Integer> rangeClosed(int start, int end) {
+    private List<Integer> range(int start, int end) {
         return IntStream.rangeClosed(start, end)
                 .boxed()
                 .collect(Collectors.toList());
