@@ -16,6 +16,9 @@ public final class Pawn extends Piece {
     private static final int MOVE_FILE_COUNT = 0;
     private static final int FORWARD_RANK_COUNT = 1;
     private static final int JUMP_RANK_COUNT = 2;
+    private static final int BLACK_MOVE_RANK_DIFFERENCE = -1;
+    private static final int ATTACKABLE_FILE_DIFFERENCE = 1;
+    private static final int MOVABLE_RANK_DIFFERENCE = 1;
 
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
@@ -46,11 +49,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean canMoveForwardOrJump(Position toPosition) {
-        if (canJump() && toPosition == getMovablePosition(JUMP_RANK_COUNT)) {
+        if (canJump() && toPosition.isSamePosition(getMovablePosition(JUMP_RANK_COUNT))) {
             return true;
         }
         Position forwardPosition = getMovablePosition(FORWARD_RANK_COUNT);
-        return toPosition == forwardPosition;
+        return toPosition.isSamePosition(forwardPosition);
     }
 
     private Position getMovablePosition(int moveRankDiff) {
@@ -59,7 +62,7 @@ public final class Pawn extends Piece {
 
     private int moveRankDifference(int moveCount) {
         if (color == Color.BLACK) {
-            return moveCount * -1;
+            return moveCount * BLACK_MOVE_RANK_DIFFERENCE;
         }
         return moveCount;
     }
@@ -70,11 +73,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color == Color.WHITE && PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return color.isWhite() && PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
     }
 
     private boolean isBlackJump(int curRankIdx) {
-        return color == Color.BLACK && PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return color.isBlack() && PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
     }
 
     @Override
@@ -93,9 +96,9 @@ public final class Pawn extends Piece {
         int fileDifference = position.fileDifference(enemyPosition);
         int rankRawDifference = position.rankRawDifference(enemyPosition);
 
-        return position.isDiagonal(enemyPosition) &&
-            fileDifference == 1
-            && rankRawDifference == moveRankDifference(1);
+        return position.isDiagonal(enemyPosition)
+            && fileDifference == ATTACKABLE_FILE_DIFFERENCE
+            && rankRawDifference == moveRankDifference(MOVABLE_RANK_DIFFERENCE);
     }
 
     @Override
@@ -115,7 +118,7 @@ public final class Pawn extends Piece {
 
     @Override
     public String display() {
-        if (color == Color.BLACK) {
+        if (color.isBlack()) {
             return BLACK_DISPLAY;
         }
         return WHITE_DISPLAY;
