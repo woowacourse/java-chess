@@ -8,10 +8,10 @@ import java.util.List;
 
 public class GameMachine {
 
-    public static final String MOVE_DELIMITER = " ";
-    public static final int MOVE_COMMAND_SIZE = 3;
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
+    private static final String MOVE_DELIMITER = " ";
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     public void run() {
         InputView.announceStart();
@@ -29,8 +29,10 @@ public class GameMachine {
             OutputView.printBoard(board);
         }
         if (Command.isMove(command)) {
-            List<String> commands = Arrays.asList(command.split(MOVE_DELIMITER));
-            movePiece(board, commands);
+            movePiece(board, Arrays.asList(command.split(MOVE_DELIMITER)));
+        }
+        if (Command.isStatus(command)) {
+            OutputView.printScore(board);
         }
         return board;
     }

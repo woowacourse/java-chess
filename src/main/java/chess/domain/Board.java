@@ -138,4 +138,11 @@ public final class Board {
                 .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))
                 .count();
     }
+
+    public Color whoIsWin() {
+        if (calculateScore(Color.WHITE) >= calculateScore(Color.BLACK)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
 }

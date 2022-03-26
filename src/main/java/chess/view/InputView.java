@@ -1,11 +1,10 @@
 package chess.view;
 
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.Command;
+
 import java.util.Scanner;
 
 public class InputView {
-    private static final List<String> COMMANDS = List.of("start", "end", "move");
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +21,7 @@ public class InputView {
     }
 
     private static void validateCommand(String command) {
-        if (!COMMANDS.contains(command)) {
+        if (!Command.words().contains(command)) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다");
         }
     }

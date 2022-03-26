@@ -2,7 +2,18 @@ package chess.domain;
 
 public enum Color {
 
-    BLACK, WHITE;
+    BLACK("검은말"), 
+    WHITE("흰말");
+
+    private final String name;
+
+    Color(String name) {
+        this.name = name;
+    }
+
+    public String value() {
+        return name;
+    }
 
     public boolean isBlack() {
         return this == BLACK;

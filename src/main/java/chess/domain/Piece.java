@@ -16,23 +16,10 @@ public final class Piece {
     }
 
     public String symbol() {
-        if (color == Color.WHITE) {
+        if (color.isWhite()) {
             return type.getSymbol().toLowerCase();
         }
         return type.getSymbol();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Piece)) return false;
-        Piece piece = (Piece) o;
-        return color == piece.color && piece.type.getClass() == type.getClass();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, type);
     }
 
     public boolean isMovable(Position source, Position target) {
@@ -68,5 +55,18 @@ public final class Piece {
 
     public double score() {
         return type.score();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Piece)) return false;
+        Piece piece = (Piece) o;
+        return color == piece.color && piece.type.getClass() == type.getClass();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, type);
     }
 }

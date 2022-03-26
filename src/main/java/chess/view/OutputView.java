@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.Color;
 import chess.domain.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -47,5 +48,12 @@ public class OutputView {
 
     public static void announceBadMovement(String message) {
         System.out.println(message);
+    }
+
+    public static void printScore(Board board) {
+        for (Color color : Color.values()) {
+            System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
+        }
+        System.out.println(board.whoIsWin().value() + "이 이기고 있습니다.");
     }
 }
