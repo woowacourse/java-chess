@@ -2,14 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
+import chess.domain.LocationDiff;
+import chess.domain.state.Direction;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,6 +33,75 @@ public class PieceTest {
                 Arguments.arguments(new Knight(Team.WHITE), "n"),
                 Arguments.arguments(new Queen(Team.BLACK), "Q"),
                 Arguments.arguments(new Queen(Team.WHITE), "q")
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("기물별로 이동할 수 있는 방향인지 확인한다.")
+    @MethodSource("movableDirectionParameter")
+    void checkMovableDirection(Piece piece, Direction direction) {
+        assertThat(piece.isMovableDirection(direction)).isTrue();
+    }
+
+    private static Stream<Arguments> movableDirectionParameter() {
+        return Stream.of(
+                Arguments.arguments(new Rook(Team.WHITE), Direction.U),
+                Arguments.arguments(new Knight(Team.WHITE), Direction.UUR),
+                Arguments.arguments(new Bishop(Team.WHITE), Direction.UR),
+                Arguments.arguments(new Queen(Team.WHITE), Direction.U),
+                Arguments.arguments(new Queen(Team.BLACK), Direction.DL),
+                Arguments.arguments(new King(Team.WHITE), Direction.UR),
+                Arguments.arguments(new King(Team.WHITE), Direction.R)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("기물별로 이동할 수 있는 방향인지 확인한다.")
+    @MethodSource("notMovableDirectionParameter")
+    void checkNotMovableDirection(Piece piece, Direction direction) {
+        assertThat(piece.isMovableDirection(direction)).isFalse();
+    }
+
+    private static Stream<Arguments> notMovableDirectionParameter() {
+        return Stream.of(
+                Arguments.arguments(new Rook(Team.WHITE), Direction.UR),
+                Arguments.arguments(new Knight(Team.WHITE), Direction.U),
+                Arguments.arguments(new Bishop(Team.WHITE), Direction.D),
+                Arguments.arguments(new Queen(Team.WHITE), Direction.UUR),
+                Arguments.arguments(new Queen(Team.BLACK), Direction.DLL),
+                Arguments.arguments(new King(Team.WHITE), Direction.UUR),
+                Arguments.arguments(new King(Team.WHITE), Direction.DDL)
+        );
+    }
+
+    @DisplayName("기물별로 이동할 수 있는 거리인지 확인한다.")
+    @ParameterizedTest
+    @MethodSource("checkMovableDistanceParameter")
+    void checkMovableDistance(Piece piece, LocationDiff locationDiff) {
+        assertThat(piece.isMovableDistance(locationDiff)).isTrue();
+    }
+
+    private static Stream<Arguments> checkMovableDistanceParameter() {
+        return Stream.of(
+                Arguments.arguments(new Rook(Team.WHITE), new LocationDiff(1, 1)),
+                Arguments.arguments(new Knight(Team.WHITE), new LocationDiff(2, 1)),
+                Arguments.arguments(new Bishop(Team.WHITE), new LocationDiff(7, 7)),
+                Arguments.arguments(new Queen(Team.WHITE), new LocationDiff(0, 7)),
+                Arguments.arguments(new King(Team.WHITE), new LocationDiff(-1, 1))
+        );
+    }
+
+    @DisplayName("기물별로 이동할 수 있는 거리인지 확인한다.")
+    @ParameterizedTest
+    @MethodSource("notMovableDistanceParameter")
+    void checkNotMovableDistance(Piece piece, LocationDiff locationDiff) {
+        assertThat(piece.isMovableDistance(locationDiff)).isFalse();
+    }
+
+    private static Stream<Arguments> notMovableDistanceParameter() {
+        return Stream.of(
+                Arguments.arguments(new Knight(Team.WHITE), new LocationDiff(4,2)),
+                Arguments.arguments(new King(Team.WHITE), new LocationDiff(-2,-2))
         );
     }
 

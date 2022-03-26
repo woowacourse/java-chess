@@ -4,13 +4,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
+    U(0, 1),
     D(0, -1),
+    R(1, 0),
+    L(-1, 0),
+
+    UR(1, 1),
+    UL(-1, 1),
     DR(1, -1),
     DL(-1, -1),
 
-    U(0, 1),
-    UR(1, 1),
-    UL(-1, 1);
+    UUR(1, 2),
+    UUL(-1, 2),
+    URR(2, 1),
+    ULL(-2, 1),
+
+    DDR(1, -2),
+    DDL(-1, -2),
+    DRR(2, -1),
+    DLL(-2, -1);
 
     private final int x;
     private final int y;
@@ -26,6 +38,38 @@ public enum Direction {
 
     public static boolean isWhitePawnDirection(Direction direction) {
         return List.of(U, UR, UL).contains(direction);
+    }
+
+    public static boolean isRookDirection(Direction direction) {
+        return isCardinalDirection(direction);
+    }
+
+    public static boolean isKnightDirection(Direction direction) {
+        return List.of(UUR, UUL, URR, ULL, DDR, DDL, DRR, DLL).contains(direction);
+    }
+
+    public static boolean isBishopDirection(Direction direction) {
+        return isDiagonalDirection(direction);
+    }
+
+    public static boolean isQueenDirection(Direction direction) {
+        return isEveryDirection(direction);
+    }
+
+    public static boolean isKingDirection(Direction direction) {
+        return isEveryDirection(direction);
+    }
+
+    private static boolean isEveryDirection(Direction direction) {
+        return isDiagonalDirection(direction) || isCardinalDirection(direction);
+    }
+
+    private static boolean isDiagonalDirection(Direction direction) {
+        return List.of(UR, UL, DR, DL).contains(direction);
+    }
+
+    private static boolean isCardinalDirection(Direction direction) {
+        return List.of(U, D, R, L).contains(direction);
     }
 
     public static Direction of(int x, int y) {

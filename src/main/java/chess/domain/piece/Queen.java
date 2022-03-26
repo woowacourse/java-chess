@@ -11,11 +11,11 @@ public class Queen extends Piece{
 
     @Override
     public boolean isMovableDirection(Direction direction) {
-        return false;
+        return Direction.isQueenDirection(direction);
     }
 
     @Override
     public boolean isMovableDistance(LocationDiff locationDiff) {
-        return false;
+        return true;
     }
 }

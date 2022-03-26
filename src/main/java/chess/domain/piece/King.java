@@ -11,11 +11,11 @@ public class King extends Piece{
 
     @Override
     public boolean isMovableDirection(Direction direction) {
-        return false;
+        return Direction.isKingDirection(direction);
     }
 
     @Override
     public boolean isMovableDistance(LocationDiff locationDiff) {
-        return false;
+        return locationDiff.computeDistance() == 1;
     }
 }
