@@ -8,11 +8,11 @@ public class InputView {
     public static final String END = "end";
     public static final String MOVE = "move";
     public static final String DELIMITER = " ";
-    private static final String EMPTY_STRING = "";
+    public static final String EMPTY_STRING = "";
+    public static final int SOURCE_INDEX = 0;
+    public static final int TARGET_INDEX = 1;
     private static final int POSITIONS_COUNT = 2;
     private static final int POSITION_SIZE = 2;
-    private static final int SOURCE_INDEX = 0;
-    private static final int TARGET_INDEX = 1;
     private static final Scanner sc = new Scanner(System.in);
 
     public static String startCommand() {

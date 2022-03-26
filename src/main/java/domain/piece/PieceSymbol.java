@@ -17,8 +17,9 @@ public enum PieceSymbol {
     }
 
     public String symbol(Player player) {
-        if (player == Player.BLACK)
+        if (player == Player.BLACK) {
             return symbol;
+        }
         return symbol.toLowerCase();
     }
 }

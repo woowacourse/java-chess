@@ -8,6 +8,4 @@ public class King extends SpecificLocationPiece {
     public King(final Player player) {
         super(player, PieceSymbol.King, new KingDirections());
     }
-
-
 }

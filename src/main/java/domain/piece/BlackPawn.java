@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.directions.BlackPawnDirections;
 import domain.Player;
+import domain.directions.BlackPawnDirections;
 
 public class BlackPawn extends Pawn {
 

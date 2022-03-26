@@ -1,11 +1,10 @@
 package domain.directions;
 
-import domain.directions.Direction;
-import domain.directions.DirectionsGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BishopDirections implements DirectionsGenerator {
+
     private List<Direction> directions;
 
     public BishopDirections() {

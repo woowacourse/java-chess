@@ -8,6 +8,9 @@ import view.OutputView;
 
 public class ChessController {
 
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+
     public void start() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         String input = InputView.startCommand();
@@ -22,7 +25,7 @@ public class ChessController {
         try {
             String input = InputView.playCommand();
             if (input.equals(InputView.END)) {
-                System.out.println("종료되었습니다.");
+                OutputView.printExitMessage();
                 return;
             }
 
@@ -36,14 +39,14 @@ public class ChessController {
 
     private void move(String input, ChessBoard chessBoard) {
         String[] positions = input.split(InputView.DELIMITER);
-        Position source = generatePosition(positions[0]);
-        Position target = generatePosition(positions[1]);
+        Position source = generatePosition(positions[InputView.SOURCE_INDEX]);
+        Position target = generatePosition(positions[InputView.TARGET_INDEX]);
         chessBoard.move(source, target);
         OutputView.printBoard(chessBoard);
     }
 
     private Position generatePosition(String value) {
-        String[] position = value.split("");
-        return Position.of(position[0], position[1]);
+        String[] position = value.split(InputView.EMPTY_STRING);
+        return Position.of(position[FILE_INDEX], position[RANK_INDEX]);
     }
 }

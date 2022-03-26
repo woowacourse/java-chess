@@ -23,7 +23,7 @@ public enum Direction {
     private final int file;
     private final int rank;
 
-    Direction(int file, int rank) {
+    Direction(final int file, final int rank) {
         this.file = file;
         this.rank = rank;
     }

@@ -34,7 +34,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         }
     }
 
-    private void initializeByRow(Map<Position, Piece> board, Rank rank) {
+    private void initializeByRow(Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
             board.put(Position.of(file, rank), null);
         }
@@ -49,7 +49,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         createInitKing(board, player);
     }
 
-    private void createInitPawn(Map<Position, Piece> board, Player player) {
+    private void createInitPawn(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             Arrays.stream(File.values())
                 .forEach(
@@ -62,7 +62,7 @@ public class ChessBoardGenerator implements BoardGenerator {
                 column -> board.put(Position.of(column, Rank.TWO), new WhitePawn(Player.WHITE)));
     }
 
-    private void createInitRook(Map<Position, Piece> board, Player player) {
+    private void createInitRook(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             board.put(Position.of(File.A, Rank.EIGHT), new Rook(Player.BLACK));
             board.put(Position.of(File.H, Rank.EIGHT), new Rook(Player.BLACK));
@@ -72,7 +72,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(Position.of(File.H, Rank.ONE), new Rook(Player.WHITE));
     }
 
-    private void createInitKnight(Map<Position, Piece> board, Player player) {
+    private void createInitKnight(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             board.put(Position.of(File.B, Rank.EIGHT), new Knight(Player.BLACK));
             board.put(Position.of(File.G, Rank.EIGHT), new Knight(Player.BLACK));
@@ -82,7 +82,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(Position.of(File.G, Rank.ONE), new Knight(Player.WHITE));
     }
 
-    private void createInitBishop(Map<Position, Piece> board, Player player) {
+    private void createInitBishop(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             board.put(Position.of(File.C, Rank.EIGHT), new Bishop(Player.BLACK));
             board.put(Position.of(File.F, Rank.EIGHT), new Bishop(Player.BLACK));
@@ -92,7 +92,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(Position.of(File.F, Rank.ONE), new Bishop(Player.WHITE));
     }
 
-    private void createInitQueen(Map<Position, Piece> board, Player player) {
+    private void createInitQueen(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             board.put(Position.of(File.D, Rank.EIGHT), new Queen(Player.BLACK));
             return;
@@ -100,7 +100,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         board.put(Position.of(File.D, Rank.ONE), new Queen(Player.WHITE));
     }
 
-    private void createInitKing(Map<Position, Piece> board, Player player) {
+    private void createInitKing(Map<Position, Piece> board, final Player player) {
         if (player == Player.BLACK) {
             board.put(Position.of(File.E, Rank.EIGHT), new King(Player.BLACK));
             return;

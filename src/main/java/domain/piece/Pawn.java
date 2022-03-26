@@ -21,7 +21,6 @@ public class Pawn extends SpecificLocationPiece {
 
     @Override
     List<Position> calculateAvailablePosition(Position source, Direction direction) {
-        // 첫 이동이다
         if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
             return null;
         }
@@ -47,12 +46,13 @@ public class Pawn extends SpecificLocationPiece {
         return direction.equals(Direction.SOUTH_SOUTH) || direction.equals(Direction.NORTH_NORTH);
     }
 
-    private void calculatePawnTwoSpaceMove(List<Position> positions, Position source, Direction direction) {
+    private void calculatePawnTwoSpaceMove(List<Position> positions, Position source,
+        Direction direction) {
         Direction addDirection = generateAddDirection(direction);
         if (addDirection != null) {
             int file = source.getFile() + addDirection.getFile();
             int rank = source.getRank() + addDirection.getRank();
-            if (checkOverRange(rank,file)) {
+            if (checkOverRange(rank, file)) {
                 positions.add(Position.of(File.of(file), Rank.of(rank)));
             }
         }

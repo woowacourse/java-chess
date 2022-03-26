@@ -3,7 +3,8 @@ package domain.directions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KingDirections implements DirectionsGenerator{
+public class KingDirections implements DirectionsGenerator {
+
     private List<Direction> directions;
 
     public KingDirections() {

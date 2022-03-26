@@ -23,7 +23,7 @@ public class MovableRangePiece extends Piece {
         int file = source.getFile() + direction.getFile();
 
         while (checkOverRange(rank, file)) {
-            positions.add(Position.of( File.of(file),Rank.of(rank)));
+            positions.add(Position.of(File.of(file), Rank.of(rank)));
             rank += direction.getRank();
             file += direction.getFile();
         }

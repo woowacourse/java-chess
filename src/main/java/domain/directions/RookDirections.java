@@ -1,7 +1,5 @@
 package domain.directions;
 
-import domain.directions.Direction;
-import domain.directions.DirectionsGenerator;
 import java.util.ArrayList;
 import java.util.List;
 

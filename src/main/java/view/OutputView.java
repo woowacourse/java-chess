@@ -20,4 +20,7 @@ public class OutputView {
         }
         System.out.println();
     }
+    public static void printExitMessage() {
+        System.out.println("종료되었습니다.");
+    }
 }
