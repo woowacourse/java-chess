@@ -12,14 +12,10 @@ public final class King extends Piece {
 
     @Override
     public boolean movable(Piece targetPiece) {
-        for (Direction direction : direction()) {
-            Square tempSquare = square();
-            tempSquare = tempSquare.tryToMove(direction);
-            if (tempSquare.equals(targetPiece.square()) && !this.isAlly(targetPiece)) {
-                return true;
-            }
-        }
-        return false;
+        Direction directionTo = findDirectionTo(targetPiece);
+        return direction().contains(directionTo) &&
+                targetPiece.isAt(square().tryToMove(directionTo)) &&
+                !targetPiece.isAlly(this);
     }
 
     @Override
