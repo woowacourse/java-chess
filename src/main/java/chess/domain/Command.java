@@ -13,23 +13,23 @@ public enum Command {
 
     private final String value;
 
-    Command(String value) {
+    Command(final String value) {
         this.value = value;
     }
 
-    public static boolean isEnd(String command) {
+    public static boolean isEnd(final String command) {
         return Command.END.value.equals(command);
     }
 
-    public static boolean isStart(String command) {
+    public static boolean isStart(final String command) {
         return Command.START.value.equals(command);
     }
 
-    public static boolean isMove(String command) {
+    public static boolean isMove(final String command) {
         return command.startsWith(Command.MOVE.value);
     }
 
-    public static boolean isStatus(String command) {
+    public static boolean isStatus(final String command) {
         return Command.STATUS.value.equals(command);
     }
 

@@ -15,30 +15,30 @@ public class GameMachine {
 
     public void run() {
         InputView.announceStart();
-        GameManager board = null;
+        GameManager gameManager = null;
         String command = "";
         do {
             command = InputView.requestCommand();
-            board = play(board, command);
-        } while (!Command.isEnd(command) && !board.isEnd());
+            gameManager = play(gameManager, command);
+        } while (!Command.isEnd(command) && !gameManager.isEnd());
     }
 
-    private GameManager play(GameManager board, String command) {
+    private GameManager play(GameManager gameManager, final String command) {
         if (Command.isStart(command)) {
-            board = new GameManager(new BoardInitializer());
-            OutputView.printBoard(board);
+            gameManager = new GameManager(new BoardInitializer());
+            OutputView.printBoard(gameManager);
         }
         if (Command.isMove(command)) {
-            movePiece(board, Arrays.asList(command.split(MOVE_DELIMITER)));
+            movePiece(gameManager, Arrays.asList(command.split(MOVE_DELIMITER)));
         }
         if (Command.isStatus(command)) {
-            OutputView.printScore(board);
+            OutputView.printScore(gameManager);
         }
-        return board;
+        return gameManager;
     }
 
-    private void movePiece(GameManager board, List<String> commands) {
-        if (board == null) {
+    private void movePiece(GameManager gameManager, final List<String> commands) {
+        if (gameManager == null) {
             OutputView.announceNotStarted();
             return;
         }
@@ -46,11 +46,11 @@ public class GameMachine {
             OutputView.announceBadMoveCommand();
             return;
         }
-        movePieceOnBoard(board, commands);
-        OutputView.printBoard(board);
+        movePieceOnBoard(gameManager, commands);
+        OutputView.printBoard(gameManager);
     }
 
-    private void movePieceOnBoard(GameManager board, List<String> commands) {
+    private void movePieceOnBoard(GameManager board, final List<String> commands) {
         try {
             board.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         } catch (IllegalArgumentException e) {

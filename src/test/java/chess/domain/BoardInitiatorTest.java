@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static chess.domain.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardInitiatorTest {
@@ -26,16 +27,16 @@ class BoardInitiatorTest {
     private static Stream<Arguments> rookPositions() {
         return Stream.of(
                 Arguments.of(
-                        Position.of("a1"), Color.WHITE
+                        Position.of("a1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("h1"), Color.WHITE
+                        Position.of("h1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("a8"), Color.BLACK
+                        Position.of("a8"), BLACK
                 ),
                 Arguments.of(
-                        Position.of("h8"), Color.BLACK
+                        Position.of("h8"), BLACK
                 )
         );
     }
@@ -51,16 +52,16 @@ class BoardInitiatorTest {
     private static Stream<Arguments> knightPositions() {
         return Stream.of(
                 Arguments.of(
-                        Position.of("b1"), Color.WHITE
+                        Position.of("b1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("g1"), Color.WHITE
+                        Position.of("g1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("b8"), Color.BLACK
+                        Position.of("b8"), BLACK
                 ),
                 Arguments.of(
-                        Position.of("g8"), Color.BLACK
+                        Position.of("g8"), BLACK
                 )
         );
     }
@@ -76,16 +77,16 @@ class BoardInitiatorTest {
     private static Stream<Arguments> bishopPositions() {
         return Stream.of(
                 Arguments.of(
-                        Position.of("c1"), Color.WHITE
+                        Position.of("c1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("f1"), Color.WHITE
+                        Position.of("f1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("c8"), Color.BLACK
+                        Position.of("c8"), BLACK
                 ),
                 Arguments.of(
-                        Position.of("f8"), Color.BLACK
+                        Position.of("f8"), BLACK
                 )
         );
     }
@@ -101,10 +102,10 @@ class BoardInitiatorTest {
     private static Stream<Arguments> queenPositions() {
         return Stream.of(
                 Arguments.of(
-                        Position.of("d1"), Color.WHITE
+                        Position.of("d1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("d8"), Color.BLACK
+                        Position.of("d8"), BLACK
                 )
         );
     }
@@ -120,10 +121,10 @@ class BoardInitiatorTest {
     private static Stream<Arguments> kingPositions() {
         return Stream.of(
                 Arguments.of(
-                        Position.of("e1"), Color.WHITE
+                        Position.of("e1"), WHITE
                 ),
                 Arguments.of(
-                        Position.of("e8"), Color.BLACK
+                        Position.of("e8"), BLACK
                 )
         );
     }
@@ -133,7 +134,7 @@ class BoardInitiatorTest {
     @DisplayName("흰색 pawn의 초기 위치를 확인")
     void whitePawn_initialPosition(final String rawPosition) {
         Map<Position, Piece> pieces = new BoardInitializer().initialize();
-        assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(Color.WHITE, new Pawn()));
+        assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(WHITE, new Pawn()));
     }
 
     @ParameterizedTest
@@ -141,7 +142,7 @@ class BoardInitiatorTest {
     @DisplayName("검은색 pawn의 초기 위치를 확인")
     void blackPawn_initialPosition(final String rawPosition) {
         Map<Position, Piece> pieces = new BoardInitializer().initialize();
-        assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(Color.BLACK, new Pawn()));
+        assertThat(pieces.get(Position.of(rawPosition))).isEqualTo(new Piece(BLACK, new Pawn()));
     }
 
 }

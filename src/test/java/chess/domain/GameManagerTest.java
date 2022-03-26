@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.domain.Color.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GameManagerTest {
@@ -27,10 +28,10 @@ public class GameManagerTest {
     void turnNotChanged_throwException() {
         GameManager board = new GameManager(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new King()));
-            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new King()));
-            pieces.put(Position.of("a5"), new Piece(Color.WHITE, new Pawn()));
-            pieces.put(Position.of("a4"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("g7"), new Piece(BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(WHITE, new King()));
+            pieces.put(Position.of("a5"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(WHITE, new Pawn()));
             return pieces;
         });
 

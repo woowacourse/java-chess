@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static chess.domain.position.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
@@ -21,7 +22,7 @@ class PositionTest {
     void calculate_ifDistanceIsOne_pathIsEmpty() {
         final var source = Position.of("a5");
         final var target = Position.of("a6");
-        assertThat(source.calculatePath(target, Direction.VERTICAL)).isEmpty();
+        assertThat(source.calculatePath(target, VERTICAL)).isEmpty();
     }
 
     @Test
@@ -29,7 +30,7 @@ class PositionTest {
     void calculate_verticalPathPositions() {
         final var source = Position.of("a5");
         final var target = Position.of("a8");
-        assertThat(source.calculatePath(target, Direction.VERTICAL))
+        assertThat(source.calculatePath(target, VERTICAL))
                 .containsExactly(Position.of("a6"), Position.of("a7"));
     }
 
@@ -38,7 +39,7 @@ class PositionTest {
     void calculate_horizontalPathPositions() {
         final var source = Position.of("e5");
         final var target = Position.of("b5");
-        assertThat(source.calculatePath(target, Direction.HORIZONTAL))
+        assertThat(source.calculatePath(target, HORIZONTAL))
                 .containsExactly(Position.of("d5"), Position.of("c5"));
     }
 
@@ -47,7 +48,7 @@ class PositionTest {
     void calculate_diagonalPathPositions() {
         final var source = Position.of("e5");
         final var target = Position.of("b2");
-        assertThat(source.calculatePath(target, Direction.DIAGONAL))
+        assertThat(source.calculatePath(target, DIAGONAL))
                 .containsExactly(Position.of("d4"), Position.of("c3"));
     }
 }

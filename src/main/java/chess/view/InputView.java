@@ -14,13 +14,13 @@ public class InputView {
     }
 
     public static String requestCommand() {
-        String command = scanner.nextLine().trim();
-        String firstWord = command.split(" ")[0];
+        final String command = scanner.nextLine().trim();
+        final String firstWord = command.split(" ")[0];
         validateCommand(firstWord);
         return command;
     }
 
-    private static void validateCommand(String command) {
+    private static void validateCommand(final String command) {
         if (!Command.words().contains(command)) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다");
         }

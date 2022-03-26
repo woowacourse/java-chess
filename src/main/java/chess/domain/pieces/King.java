@@ -2,12 +2,12 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class King implements Type {
+public final class King implements Type {
 
     public static final int MOVEMENT_LIMIT = 1;
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(final Position source, final Position target) {
         return source.columnGap(target) <= MOVEMENT_LIMIT && source.rowGap(target) <= MOVEMENT_LIMIT;
     }
 

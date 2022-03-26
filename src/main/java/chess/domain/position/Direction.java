@@ -16,7 +16,7 @@ public enum Direction {
         this.directionCalculator = directionCalculator;
     }
 
-    public static Direction calculate(Position source, Position target) {
+    public static Direction calculate(final Position source, final Position target) {
         return Stream.of(values())
                 .filter(direction -> direction.directionCalculator.test(source, target))
                 .findFirst()

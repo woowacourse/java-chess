@@ -25,15 +25,15 @@ public class OutputView {
         }
     }
 
-    private static void printRow(GameManager board, int row) {
+    private static void printRow(final GameManager board, final int row) {
         for (Column column : Column.values()) {
             Position position = Position.of(column.name() + row);
             printSymbol(board, position);
         }
     }
 
-    private static void printSymbol(GameManager board, Position position) {
-        Optional<Piece> wrappedPiece = board.piece(position);
+    private static void printSymbol(final GameManager board, final Position position) {
+        final Optional<Piece> wrappedPiece = board.piece(position);
         if (wrappedPiece.isPresent()) {
             System.out.print(wrappedPiece.get().symbol());
             return;
@@ -49,18 +49,18 @@ public class OutputView {
         System.out.println("목적지와 출발지가 둘 다 필요합니다.");
     }
 
-    public static void announceBadMovement(String message) {
+    public static void announceBadMovement(final String message) {
         System.out.println(message);
     }
 
-    public static void printScore(GameManager board) {
+    public static void printScore(final GameManager board) {
         for (Color color : Color.values()) {
             System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
         }
         printResult(board.whoIsWin());
     }
 
-    private static void printResult(Map<Result, Color> gameResult) {
+    private static void printResult(final Map<Result, Color> gameResult) {
         if (gameResult.containsKey(Result.WIN)) {
             System.out.println(gameResult.get(Result.WIN).value() + "이 이기고 있습니다.");
             return;

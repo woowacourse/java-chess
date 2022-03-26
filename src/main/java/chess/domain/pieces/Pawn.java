@@ -10,33 +10,33 @@ public final class Pawn implements Type {
     public static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        int rowGap = source.rowGap(target);
-        int columnGap = source.columnGap(target);
+    public boolean isMovable(final Position source, final Position target) {
+        final int rowGap = source.rowGap(target);
+        final int columnGap = source.columnGap(target);
         return isVerticalOneOrTwoSteps(source, rowGap, columnGap) || isDiagonalOneStep(rowGap, columnGap);
     }
 
-    private boolean isVerticalOneOrTwoSteps(Position source, int rowGap, int columnGap) {
+    private boolean isVerticalOneOrTwoSteps(final Position source, final int rowGap, final int columnGap) {
         return isVerticalMove(columnGap) && (isOneStep(rowGap) || isTwoStepOnStart(source, rowGap));
     }
 
-    private boolean isVerticalMove(int columnGap) {
+    private boolean isVerticalMove(final int columnGap) {
         return columnGap == HORIZONTAL_MOVEMENT_LIMIT;
     }
 
-    private boolean isTwoStepOnStart(Position source, int rowGap) {
+    private boolean isTwoStepOnStart(final Position source, final int rowGap) {
         return rowGap == VERTICAL_MOVEMENT_LIMIT_ON_START && checkPawnOnStartPoint(source);
     }
 
-    private boolean isOneStep(int rowGap) {
+    private boolean isOneStep(final int rowGap) {
         return rowGap == DEFAULT_MOVEMENT_LIMIT;
     }
 
-    private boolean isDiagonalOneStep(int rowGap, int columnGap) {
+    private boolean isDiagonalOneStep(final int rowGap, final int columnGap) {
         return rowGap == DEFAULT_MOVEMENT_LIMIT && columnGap == DEFAULT_MOVEMENT_LIMIT;
     }
 
-    private boolean checkPawnOnStartPoint(Position source) {
+    private boolean checkPawnOnStartPoint(final Position source) {
         return source.isSameRow(Row.TWO) || source.isSameRow(Row.SEVEN);
     }
 

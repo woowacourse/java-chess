@@ -12,7 +12,7 @@ public final class Position {
     private final Column column;
     private final Row row;
 
-    private Position(Column column, Row row) {
+    private Position(final Column column, final Row row) {
         this.column = column;
         this.row = row;
     }
@@ -25,7 +25,7 @@ public final class Position {
         return new Position(column, row);
     }
 
-    private static void validateValue(String value) {
+    private static void validateValue(final String value) {
         if (value.length() != 2) {
             throw new IllegalArgumentException("[ERROR] 위치는 열과 행으로 이루어져야 합니다.");
         }
@@ -35,52 +35,52 @@ public final class Position {
         return new Position(column, row);
     }
 
-    public boolean isStraight(Position target) {
+    public boolean isStraight(final Position target) {
         return isVertical(target) || isHorizontal(target);
     }
 
-    public boolean isVertical(Position target) {
+    public boolean isVertical(final Position target) {
         return column.isSame(target.column);
     }
 
-    public boolean isHorizontal(Position target) {
+    public boolean isHorizontal(final Position target) {
         return row.isSame(target.row);
     }
 
-    public boolean isDiagonal(Position target) {
+    public boolean isDiagonal(final Position target) {
         int columnGap = column.gap(target.column);
         int rowGap = row.gap(target.row);
         return columnGap == rowGap;
     }
 
-    public int columnGap(Position target) {
+    public int columnGap(final Position target) {
         return column.gap(target.column);
     }
 
-    public int rowGap(Position target) {
+    public int rowGap(final Position target) {
         return row.gap(target.row);
     }
 
-    public boolean isAbove(Position target) {
+    public boolean isAbove(final Position target) {
         return row.isGreaterThan(target.row);
     }
 
-    public boolean isBelow(Position target) {
+    public boolean isBelow(final Position target) {
         return row.isSmallerThan(target.row);
     }
 
-    public boolean isSameRow(Row row) {
+    public boolean isSameRow(final Row row) {
         return this.row.isSame(row);
     }
 
-    public List<Position> calculatePath(Position target, Direction direction) {
+    public List<Position> calculatePath(final Position target, final Direction direction) {
         if (rowGap(target) <= AROUND_DISTANCE && columnGap(target) <= AROUND_DISTANCE) {
             return Collections.emptyList();
         }
         return calculateByDirection(target, direction);
     }
 
-    private List<Position> calculateByDirection(Position target, Direction direction) {
+    private List<Position> calculateByDirection(final Position target, final Direction direction) {
         if (direction.isVertical()) {
             return verticalPaths(target);
         }
@@ -93,26 +93,26 @@ public final class Position {
         return Collections.emptyList();
     }
 
-    private List<Position> verticalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
+    private List<Position> verticalPaths(final Position target) {
+        final List<Position> positions = new ArrayList<>();
         for (Row row : row.rowPaths(target.row)) {
             positions.add(Position.valueOf(this.column, row));
         }
         return positions;
     }
 
-    private List<Position> horizontalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
+    private List<Position> horizontalPaths(final Position target) {
+        final List<Position> positions = new ArrayList<>();
         for (Column column : column.columnPaths(target.column)) {
             positions.add(Position.valueOf(column, this.row));
         }
         return positions;
     }
 
-    private List<Position> diagonalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
-        List<Column> columns = column.columnPaths(target.column);
-        List<Row> rows = row.rowPaths(target.row);
+    private List<Position> diagonalPaths(final Position target) {
+        final List<Position> positions = new ArrayList<>();
+        final List<Column> columns = column.columnPaths(target.column);
+        final List<Row> rows = row.rowPaths(target.row);
         for (int i = 0; i < columns.size(); i++) {
             positions.add(Position.valueOf(columns.get(i), rows.get(i)));
         }

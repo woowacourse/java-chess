@@ -18,7 +18,7 @@ public enum Column {
 
     private final int value;
 
-    Column(int value) {
+    Column(final int value) {
         this.value = value;
     }
 
@@ -29,16 +29,16 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 컬럼입니다."));
     }
 
-    public boolean isSame(Column column) {
+    public boolean isSame(final Column column) {
         return this == column;
     }
 
-    public int gap(Column column) {
+    public int gap(final Column column) {
         return Math.abs(this.value - column.value);
     }
 
-    public List<Column> columnPaths(Column targetColumn) {
-        int gap = gap(targetColumn);
+    public List<Column> columnPaths(final Column targetColumn) {
+        final int gap = gap(targetColumn);
         if (targetColumn.value > this.value) {
             return upperColumnsRange(this.value, gap);
         }
@@ -47,15 +47,15 @@ public enum Column {
         return columns;
     }
 
-    private List<Column> upperColumnsRange(int startValue, int gap) {
-        List<Column> columns = new ArrayList<>();
+    private List<Column> upperColumnsRange(final int startValue, final int gap) {
+        final List<Column> columns = new ArrayList<>();
         for (int i = 1; i < gap; i++) {
             columns.add(find(startValue + i));
         }
         return columns;
     }
 
-    private Column find(int value) {
+    private Column find(final int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)
                 .findAny()

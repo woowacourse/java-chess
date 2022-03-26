@@ -11,8 +11,8 @@ public enum Color {
         this.name = name;
     }
 
-    public static Color opposite(Color turn) {
-        if (turn.isWhite()) {
+    public static Color opposite(final Color color) {
+        if (color.isWhite()) {
             return Color.BLACK;
         }
         return Color.WHITE;

@@ -13,7 +13,7 @@ public final class Board {
 
     private final Map<Position, Piece> pieces;
 
-    public Board(Initializer initiator) {
+    public Board(final Initializer initiator) {
         pieces = initiator.initialize();
     }
 
@@ -24,29 +24,29 @@ public final class Board {
         return Optional.empty();
     }
 
-    public boolean move(Position sourcePosition, Position targetPosition) {
-        Piece piece = findPiece(sourcePosition);
+    public boolean move(final Position sourcePosition, final Position targetPosition) {
+        final Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
 
         return movePiece(sourcePosition, targetPosition, piece);
     }
 
-    private Piece findPiece(Position sourcePosition) {
-        Optional<Piece> wrappedPiece = piece(sourcePosition);
+    private Piece findPiece(final Position sourcePosition) {
+        final Optional<Piece> wrappedPiece = piece(sourcePosition);
         if (wrappedPiece.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
         }
         return wrappedPiece.get();
     }
 
-    private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
+    private void validateTargetNotSameColor(final Position targetPosition, final Piece piece) {
         if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
             throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
         }
     }
 
-    private boolean movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
-        boolean movable = piece.isMovable(sourcePosition, targetPosition);
+    private boolean movePiece(final Position sourcePosition, final Position targetPosition, final Piece piece) {
+        final boolean movable = piece.isMovable(sourcePosition, targetPosition);
         if (movable) {
             checkPawnMovement(sourcePosition, targetPosition, piece);
             validatePathEmpty(sourcePosition, targetPosition);
@@ -56,27 +56,27 @@ public final class Board {
         return movable;
     }
 
-    private void validatePathEmpty(Position source, Position target) {
-        Direction direction = Direction.calculate(source, target);
+    private void validatePathEmpty(final Position source, final Position target) {
+        final Direction direction = Direction.calculate(source, target);
         if (!direction.isIgnore()) {
             List<Position> positions = source.calculatePath(target, direction);
             validatePiecesNotExistOnPath(positions);
         }
     }
 
-    private void validatePiecesNotExistOnPath(List<Position> positions) {
+    private void validatePiecesNotExistOnPath(final List<Position> positions) {
         for (Position position : positions) {
             validatePieceNotExist(position);
         }
     }
 
-    private void validatePieceNotExist(Position position) {
+    private void validatePieceNotExist(final Position position) {
         if (pieces.containsKey(position)) {
             throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
         }
     }
 
-    private void checkPawnMovement(Position sourcePosition, Position targetPosition, Piece piece) {
+    private void checkPawnMovement(final Position sourcePosition, final Position targetPosition, final Piece piece) {
         if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.DIAGONAL) {
             checkPawnTargetExist(targetPosition);
         }
@@ -85,13 +85,13 @@ public final class Board {
         }
     }
 
-    private void checkPawnTargetExist(Position targetPosition) {
+    private void checkPawnTargetExist(final Position targetPosition) {
         if (!pieces.containsKey(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
         }
     }
 
-    private void checkPawnTargetNotExist(Position targetPosition) {
+    private void checkPawnTargetNotExist(final Position targetPosition) {
         if (pieces.containsKey(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
         }
@@ -104,7 +104,7 @@ public final class Board {
                 .count() != 2;
     }
 
-    public double calculateScore(Color color) {
+    public double calculateScore(final Color color) {
         double score = pieces.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
@@ -113,14 +113,14 @@ public final class Board {
         return score - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
     }
 
-    private int countPawnsOnSameColumns(Color color) {
+    private int countPawnsOnSameColumns(final Color color) {
         return Arrays.stream(Column.values())
                 .mapToInt(column -> countPawnsOnSameColumn(column, color))
                 .filter(count -> count > 1)
                 .sum();
     }
 
-    private int countPawnsOnSameColumn(Column column, Color color) {
+    private int countPawnsOnSameColumn(final Column column, final Color color) {
         return (int) Arrays.stream(Row.values())
                 .map(row -> piece(Position.valueOf(column, row)))
                 .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))

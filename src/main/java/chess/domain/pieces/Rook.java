@@ -2,10 +2,10 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class Rook implements Type {
+public final class Rook implements Type {
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(final Position source, final Position target) {
         return source.isStraight(target);
     }
 

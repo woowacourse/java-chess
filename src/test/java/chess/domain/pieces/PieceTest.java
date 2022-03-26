@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.domain.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
@@ -18,42 +19,42 @@ class PieceTest {
     @Test
     @DisplayName("말의 종류에 Pawn이 있다.")
     void piece_createWith_blackPawn() {
-        final var piece = new Piece(Color.BLACK, new Pawn());
+        final var piece = new Piece(BLACK, new Pawn());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 knight가 있다.")
     void piece_createWith_whiteKnight() {
-        final var piece = new Piece(Color.WHITE, new Knight());
+        final var piece = new Piece(WHITE, new Knight());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 bishop이 있다.")
     void piece_createWith_blackBishop() {
-        final var piece = new Piece(Color.BLACK, new Bishop());
+        final var piece = new Piece(BLACK, new Bishop());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 rook이 있다.")
     void piece_createWith_whiteRook() {
-        final var piece = new Piece(Color.WHITE, new Rook());
+        final var piece = new Piece(WHITE, new Rook());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 queen이 있다.")
     void piece_createWith_blackQueen() {
-        final var piece = new Piece(Color.BLACK, new Queen());
+        final var piece = new Piece(BLACK, new Queen());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
     @Test
     @DisplayName("말의 종류에 king이 있다.")
     void piece_createWith_whiteKing() {
-        final var piece = new Piece(Color.WHITE, new King());
+        final var piece = new Piece(WHITE, new King());
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
@@ -61,7 +62,7 @@ class PieceTest {
     @MethodSource("blackPawnMovement")
     @DisplayName("폰이 블랙이면 아래로만 이동한다")
     void blackPawn_moveBelow(Position source, Position target, boolean result) {
-        Piece piece = new Piece(Color.BLACK, new Pawn());
+        Piece piece = new Piece(BLACK, new Pawn());
         assertThat(piece.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -83,7 +84,7 @@ class PieceTest {
     @MethodSource("whitePawnMovement")
     @DisplayName("폰이 흰색이면 아래로만 이동한다")
     void whitePawn_moveAbove(Position source, Position target, boolean result) {
-        Piece piece = new Piece(Color.WHITE, new Pawn());
+        Piece piece = new Piece(WHITE, new Pawn());
         assertThat(piece.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -105,23 +106,23 @@ class PieceTest {
     @MethodSource("pawnFirstMovement")
     @DisplayName("폰은 초기에만 두 칸 움직일 수 있다")
     void pawn_firstMove_allowTwoSteps() {
-        Piece piece = new Piece(Color.WHITE, new Pawn());
+        Piece piece = new Piece(WHITE, new Pawn());
         assertThat(piece.isMovable(Position.of("a3"), Position.of("a5"))).isFalse();
     }
 
     private static Stream<Arguments> pawnFirstMovement() {
         return Stream.of(
                 Arguments.of(
-                        Color.WHITE, Position.of("a2"), Position.of("a4"), true
+                        WHITE, Position.of("a2"), Position.of("a4"), true
                 ),
                 Arguments.of(
-                        Color.WHITE, Position.of("a7"), Position.of("a5"), false
+                        WHITE, Position.of("a7"), Position.of("a5"), false
                 ),
                 Arguments.of(
-                        Color.BLACK, Position.of("a7"), Position.of("a5"), true
+                        BLACK, Position.of("a7"), Position.of("a5"), true
                 ),
                 Arguments.of(
-                        Color.BLACK, Position.of("a2"), Position.of("a4"), false
+                        BLACK, Position.of("a2"), Position.of("a4"), false
                 )
         );
     }
@@ -130,7 +131,7 @@ class PieceTest {
     @MethodSource("blackPawnDiagonalMovement")
     @DisplayName("폰이 블랙이면 대각 아래로만 이동한다")
     void blackPawn_moveDiagonalBelow(Position source, Position target, boolean result) {
-        Piece piece = new Piece(Color.BLACK, new Pawn());
+        Piece piece = new Piece(BLACK, new Pawn());
         assertThat(piece.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -155,7 +156,7 @@ class PieceTest {
     @MethodSource("whitePawnDiagonalMovement")
     @DisplayName("폰이 흰색이면 대각 위로만 이동한다")
     void whitePawn_moveDiagonalAbove(Position source, Position target, boolean result) {
-        Piece piece = new Piece(Color.WHITE, new Pawn());
+        Piece piece = new Piece(WHITE, new Pawn());
         assertThat(piece.isMovable(source, target)).isEqualTo(result);
     }
 

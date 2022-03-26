@@ -19,7 +19,7 @@ public enum Row {
 
     private final int value;
 
-    Row(int value) {
+    Row(final int value) {
         this.value = value;
     }
 
@@ -41,7 +41,7 @@ public enum Row {
     private static int convertValue(final String value) {
         try {
             return Integer.parseInt(value);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 헹은 숫자로 입력되어야 합니다.");
         }
     }
@@ -50,23 +50,23 @@ public enum Row {
         return value;
     }
 
-    public boolean isSame(Row row) {
+    public boolean isSame(final Row row) {
         return this == row;
     }
 
-    public int gap(Row row) {
+    public int gap(final Row row) {
         return Math.abs(this.value - row.value);
     }
 
-    public boolean isGreaterThan(Row row) {
+    public boolean isGreaterThan(final Row row) {
         return row.value < this.value;
     }
 
-    public boolean isSmallerThan(Row row) {
+    public boolean isSmallerThan(final Row row) {
         return this.value < row.value;
     }
 
-    public List<Row> rowPaths(Row targetRow) {
+    public List<Row> rowPaths(final Row targetRow) {
         int gap = gap(targetRow);
         if (targetRow.value > this.value) {
             return upperRowsRange(this.value, gap);
@@ -76,7 +76,7 @@ public enum Row {
         return rows;
     }
 
-    private List<Row> upperRowsRange(int startValue, int gap) {
+    private List<Row> upperRowsRange(final int startValue, final int gap) {
         List<Row> rows = new ArrayList<>();
         for (int i = 1; i < gap; i++) {
             rows.add(find(startValue + i));
@@ -84,7 +84,7 @@ public enum Row {
         return rows;
     }
 
-    private Row find(int value) {
+    private Row find(final int value) {
         return Arrays.stream(values())
                 .filter(it -> it.value == value)
                 .findAny()

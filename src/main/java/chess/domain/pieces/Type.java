@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public interface Type {
 
-    boolean isMovable(Position source, Position target);
+    boolean isMovable(final Position source, final Position target);
 
     boolean isPawn();
 

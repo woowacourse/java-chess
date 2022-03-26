@@ -10,7 +10,7 @@ public final class Piece {
     private final Color color;
     private final Type type;
 
-    public Piece(Color color, Type type) {
+    public Piece(final Color color, final Type type) {
         this.color = color;
         this.type = type;
     }
@@ -22,15 +22,15 @@ public final class Piece {
         return type.symbol();
     }
 
-    public boolean isMovable(Position source, Position target) {
-        boolean movable = type.isMovable(source, target);
+    public boolean isMovable(final Position source, final Position target) {
+        final boolean movable = type.isMovable(source, target);
         if (movable && type.isPawn()) {
             return checkPawnDirection(source, target);
         }
         return movable;
     }
 
-    private boolean checkPawnDirection(Position source, Position target) {
+    private boolean checkPawnDirection(final Position source, final Position target) {
         if (color.isBlack()) {
             return source.isAbove(target);
         }
@@ -41,11 +41,11 @@ public final class Piece {
         return type.isPawn();
     }
 
-    public boolean isSameColorPiece(Piece piece) {
+    public boolean isSameColorPiece(final Piece piece) {
         return color == piece.color;
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return this.color == color;
     }
 
