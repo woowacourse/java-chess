@@ -49,6 +49,7 @@ public class Chessboard {
 
         validateBlank(source);
         validateTurn(source, turn);
+        validateColor(source, target);
         validateMovable(position, source, target);
         validateMiddlePosition(position, source);
     }
@@ -60,8 +61,14 @@ public class Chessboard {
     }
 
     private void validateTurn(Piece source, Turn turn) {
-        if (!source.isRightTurn(turn)) {
+        if (!turn.isRightTurn(source.getColor())) {
             throw new IllegalArgumentException("상대편의 기물은 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateColor(Piece source, Piece target) {
+        if (source.isSameColor(target.getColor())) {
+            throw new IllegalArgumentException("상대편의 기물으로만 이동할 수 있습니다.");
         }
     }
 

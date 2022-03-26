@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.chessgame.Position;
-import chess.chessgame.Turn;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -35,8 +34,7 @@ public abstract class Piece {
         return type.getScore();
     }
 
-    public boolean isRightTurn(Turn turn) {
-        return turn.isRightTurn(color);
+    public Color getColor(){
+        return color;
     }
-
 }

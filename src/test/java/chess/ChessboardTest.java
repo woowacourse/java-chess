@@ -75,6 +75,16 @@ public class ChessboardTest {
     }
 
     @Test
+    @DisplayName("같은편의 기물을 잡으려는 경우 예외 발생")
+    void checkColor() {
+        Chessboard chessboard = Chessboard.initializedChessboard();
+        Turn turn = new Turn();
+        assertThatThrownBy(() -> chessboard.move(new Position("a1", "a2"), turn))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("상대편의 기물으로만 이동할 수 있습니다.");
+    }
+
+    @Test
     @DisplayName("주어진 좌표 후보들중에 기물이 있는 좌표가 있다면 예외 발생")
     void checkCandidatesOfPossibleCoordinates() {
         Chessboard chessboard = Chessboard.initializedChessboard();
