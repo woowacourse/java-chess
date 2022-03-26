@@ -20,9 +20,8 @@ public class KingTest {
     void moveKingAnyPositionOneSpace(Position target) {
         Piece piece = new King(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     private static Stream<Position> targetPosition() {
@@ -44,10 +43,8 @@ public class KingTest {
     void moveKingAnyPositionOneSpace_overRange(Position target) {
         Piece piece = new King(Player.WHITE);
         Position source = new Position(Row.ONE, Column.B);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.size()).isEqualTo(5);
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     private static Stream<Position> targetPosition_overRage() {

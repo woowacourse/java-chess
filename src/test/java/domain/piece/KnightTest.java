@@ -6,7 +6,6 @@ import domain.Player;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,9 +19,8 @@ public class KnightTest {
     void moveKingDiagonally(Position target) {
         Piece piece = new Knight(Player.WHITE);
         Position source = new Position(Row.FOUR, Column.C);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     private static Stream<Position> targetPosition() {

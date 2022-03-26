@@ -6,7 +6,6 @@ import domain.Player;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +17,8 @@ public class RookTest {
         Piece piece = new Rook(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
         Position target = new Position(Row.THREE, Column.B);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     @Test

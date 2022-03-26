@@ -19,9 +19,9 @@ public class PawnTest {
     void moveBlackPawnMove(Position target) {
         Piece piece = new BlackPawn(Player.BLACK);
         Position source = new Position(Row.SEVEN, Column.B);
-        List<Position> positions = piece.availableMovePositions(source);
+//        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     private static Stream<Position> blackPawnTarget() {
@@ -38,9 +38,8 @@ public class PawnTest {
     void moveWhitePawnMove(Position target) {
         Piece piece = new WhitePawn(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 
     private static Stream<Position> whitePawnTarget() {

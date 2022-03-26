@@ -18,8 +18,7 @@ public class BishopTest {
         Piece piece = new Bishop(Player.WHITE);
         Position source = new Position(Row.TWO, Column.B);
         Position target = new Position(Row.THREE, Column.C);
-        List<Position> positions = piece.availableMovePositions(source);
 
-        assertThat(positions.contains(target)).isEqualTo(true);
+        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
     }
 }
