@@ -31,7 +31,6 @@ public class Pieces {
             .anyMatch(piece -> piece.isAt(position));
     }
 
-
     public void remove(Piece targetPiece) {
         pieces.remove(targetPiece);
     }
@@ -61,4 +60,12 @@ public class Pieces {
     public List<Piece> getPieces() {
         return pieces;
     }
+
+    @Override
+    public String toString() {
+        return "Pieces{" +
+            "pieces=" + pieces +
+            '}';
+    }
+
 }

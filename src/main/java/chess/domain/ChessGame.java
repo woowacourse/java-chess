@@ -2,17 +2,14 @@ package chess.domain;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static chess.domain.piece.position.PositionUtil.FILES_TOTAL_SIZE;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.ScoreCalculator;
 import chess.domain.piece.piece.Pieces;
 import chess.domain.piece.position.Position;
 import chess.dto.GameResultDto;
 import chess.dto.MovePositionCommandDto;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ChessGame {
 
@@ -53,7 +50,6 @@ public class ChessGame {
         }
     }
 
-
     private void checkPath(Piece sourcePiece, Position toPosition) {
         List<Position> positions = sourcePiece.getPositionsInPath(toPosition);
         if (chessmen.isAnyPieceExistInPositions(positions)) {
@@ -80,41 +76,12 @@ public class ChessGame {
     }
 
     public GameResultDto calculateGameResult() {
-        double whiteScore = calculateScore(WHITE);
-        double blackScore = calculateScore(BLACK);
+        ScoreCalculator scoreCalculator = new ScoreCalculator();
+
+        double whiteScore = scoreCalculator.calculate(chessmen.extractPiecesOf(WHITE));
+        double blackScore = scoreCalculator.calculate(chessmen.extractPiecesOf(BLACK));
 
         return new GameResultDto(whiteScore, blackScore);
-    }
-
-    private double calculateScore(Color color) {
-        List<Piece> sameColorPieces = chessmen.extractPiecesOf(color);
-        List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
-
-        double defaultScore = sameColorPieces.stream()
-            .map(Piece::score)
-            .reduce(0.0, Double::sum);
-
-        return defaultScore - (calculateSameFilePawnCount(pawnPositions) / 2);
-    }
-
-    private double calculateSameFilePawnCount(List<Position> pawnPositions) {
-        return IntStream.range(0, FILES_TOTAL_SIZE)
-            .map(fileIdx -> extractSameFilePositionCount(pawnPositions, fileIdx))
-            .filter(count -> count > 1)
-            .reduce(0, Integer::sum);
-    }
-
-    private List<Position> extractPawnPositions(List<Piece> sameColorPieces) {
-        return sameColorPieces.stream()
-            .filter(Piece::isPawn)
-            .map(Piece::getPosition)
-            .collect(Collectors.toUnmodifiableList());
-    }
-
-    private int extractSameFilePositionCount(List<Position> positions, int fileIdx) {
-        return (int) positions.stream()
-            .filter(position -> position.hasSameFileIdx(fileIdx))
-            .count();
     }
 
     public Pieces getChessmen() {
