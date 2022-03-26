@@ -48,20 +48,24 @@ public class Board {
 
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
-            for (File file : File.values()) {
-                result.put(new Position(rank, file), EMPTY_PIECE);
-            }
+            putEmptyPiecesInOneRank(result, rank);
         }
     }
 
-    private void putWhitePieces(Map<Position, Piece> result) {
-        putPawns(result, WHITE, TWO);
-        putRemainPiecesExceptPawn(result, WHITE, ONE);
+    private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
+        for (File file : File.values()) {
+            result.put(new Position(rank, file), EMPTY_PIECE);
+        }
     }
 
     private void putBlackPieces(Map<Position, Piece> result) {
         putPawns(result, BLACK, SEVEN);
         putRemainPiecesExceptPawn(result, BLACK, EIGHT);
+    }
+
+    private void putWhitePieces(Map<Position, Piece> result) {
+        putPawns(result, WHITE, TWO);
+        putRemainPiecesExceptPawn(result, WHITE, ONE);
     }
 
     private void putRemainPiecesExceptPawn(Map<Position, Piece> result, PieceColor color, Rank rank) {
@@ -81,8 +85,10 @@ public class Board {
     public boolean move(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
-        boolean isFinished = values.get(target) instanceof King;
+        boolean isFinished = pieceAt(target) instanceof King;
+
         changePieces(source, target);
+
         if (!isFinished) {
             turnDecider.nextState();
         }
@@ -90,18 +96,23 @@ public class Board {
     }
 
     private void turnDecide(Position source) {
-        if (!turnDecider.isCorrectTurn(values.get(source))) {
+        if (!turnDecider.isCorrectTurn(pieceAt(source))) {
             throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
         }
     }
 
-    private void changePieces(Position source, Position target) {
-        Piece sourcePiece = values.get(source);
-        Piece targetPiece = values.get(target);
+    private void validateSourceNotEmpty(Position source) {
+        if (isEmptyPiece(pieceAt(source))) {
+            throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
+        }
+    }
 
-        MoveType moveType = decideMoveType(targetPiece);
-        if (!sourcePiece.isMovable(source, target, moveType) || isBlocked(source, target) || targetPiece.isMyTeam(
-            sourcePiece)) {
+    private void changePieces(Position source, Position target) {
+        Piece sourcePiece = pieceAt(source);
+        Piece targetPiece = pieceAt(target);
+
+        if (!sourcePiece.isMovable(source, target, MoveType(targetPiece)) || isBlocked(source, target)
+            || targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
@@ -109,8 +120,8 @@ public class Board {
         values.put(source, EMPTY_PIECE);
     }
 
-    private MoveType decideMoveType(Piece targetPiece) {
-        if (targetPiece.equals(EMPTY_PIECE)) {
+    private MoveType MoveType(Piece targetPiece) {
+        if (isEmptyPiece(targetPiece)) {
             return MoveType.EMPTY;
         }
         if (turnDecider.isCorrectTurn(targetPiece)) {
@@ -120,22 +131,22 @@ public class Board {
     }
 
     private boolean isBlocked(Position source, Position target) {
-        if (values.get(source) instanceof Knight) {
+        if (pieceAt(source) instanceof Knight) {
             return false;
         }
 
         for (Position position : source.positionsToMove(target)) {
-            if (!values.get(position).equals(EMPTY_PIECE)) {
-                return true;
-            }
+            return !isEmptyPiece(pieceAt(position));
         }
         return false;
     }
 
-    private void validateSourceNotEmpty(Position source) {
-        if (values.get(source).equals(EMPTY_PIECE)) {
-            throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
-        }
+    private boolean isEmptyPiece(Piece piece) {
+        return piece.equals(EMPTY_PIECE);
+    }
+
+    private Piece pieceAt(Position position) {
+        return values.get(position);
     }
 
     public double calculateScore() {
@@ -149,17 +160,21 @@ public class Board {
     public double adjustPawnScore() {
         int adjustingScore = 0;
         for (File file : File.values()) {
-            long count = reverseValues().stream()
-                .map(rank -> new Position(rank, file))
-                .filter(position -> values.get(position) instanceof Pawn
-                    && turnDecider.isCorrectTurn(values.get(position)))
-                .count();
+            long count = getPawnCountInOneFile(file);
 
             if (count > 1) {
                 adjustingScore += count * 0.5;
             }
         }
         return adjustingScore;
+    }
+
+    private long getPawnCountInOneFile(File file) {
+        return reverseValues().stream()
+            .map(rank -> new Position(rank, file))
+            .filter(position -> pieceAt(position) instanceof Pawn
+                && turnDecider.isCorrectTurn(pieceAt(position)))
+            .count();
     }
 
     public Map<Position, Piece> getValues() {
