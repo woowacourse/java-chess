@@ -21,26 +21,24 @@ public class ChessController {
             OutputView.printResult(chessBoard.calculateScore());
             return;
         }
-
-        final String text = InputView.requestCommand();
-        final Command command = Command.splitCommand(text);
-        if (command == Command.END) {
+        final String commandText = InputView.requestCommand();
+        final Command command = Command.splitCommand(commandText);
+        if (command.equals(Command.END)) {
             return;
         }
+        executeCommand(chessBoard, commandText);
+    }
 
-        if (command == Command.START) {
+    private void executeCommand(final ChessBoard chessBoard, final String commandText) {
+        final Command command = Command.splitCommand(commandText);
+        if (command.equals(Command.START)) {
             runStartCommand(chessBoard);
-            playTurn(chessBoard);
         }
-
-        if (command == Command.MOVE) {
-            runMoveCommand(text, chessBoard);
-            playTurn(chessBoard);
+        if (command.equals(Command.MOVE)) {
+            runMoveCommand(commandText, chessBoard);
         }
-
-        if (command == Command.STATUS) {
+        if (command.equals(Command.STATUS)) {
             runStatusCommand(chessBoard);
-            playTurn(chessBoard);
         }
     }
 
@@ -49,8 +47,10 @@ public class ChessController {
             checkBeforeStart(chessBoard);
             chessBoard.start();
             OutputView.printChessBoard(chessBoard);
+            playTurn(chessBoard);
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+            playTurn(chessBoard);
         }
     }
 
@@ -63,11 +63,14 @@ public class ChessController {
     private void runMoveCommand(final String inputText, final ChessBoard chessBoard) {
         try {
             checkBeforePlaying(chessBoard);
-            chessBoard.move(Position.from(Command.getFromPosition(inputText)),
+            chessBoard.move(
+                    Position.from(Command.getFromPosition(inputText)),
                     Position.from(Command.getToPosition(inputText)));
             OutputView.printChessBoard(chessBoard);
+            playTurn(chessBoard);
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+            playTurn(chessBoard);
         }
     }
 
@@ -75,8 +78,10 @@ public class ChessController {
         try {
             checkBeforePlaying(chessBoard);
             OutputView.printStatus(chessBoard.calculateScore());
+            playTurn(chessBoard);
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
+            playTurn(chessBoard);
         }
     }
 
