@@ -26,7 +26,14 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 값을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
+    }
+
+    public static Rank conditionOf(String value) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.condition.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
     }
 
     public String getCondition() {

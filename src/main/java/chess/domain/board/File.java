@@ -26,7 +26,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 값을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
 
     }
 
@@ -34,7 +34,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.letter.equals(letter))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 값을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
     }
 
     public int getNumber() {

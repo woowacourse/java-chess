@@ -12,6 +12,17 @@ public class Position {
         this.rank = rank;
     }
 
+    public static Position from(String position) {
+        String[] attribute = position.split("");
+        if (attribute.length != 2) {
+            throw new IllegalArgumentException("잘못된 위치 값 입니다.");
+        }
+        File file = File.letterOf(attribute[0]);
+        Rank rank = Rank.conditionOf(attribute[1]);
+
+        return new Position(file, rank);
+    }
+
     public Position advancePosition(Direction direction) {
         return new Position(
                 File.numberOf(file.getNumber() + direction.getX()),
