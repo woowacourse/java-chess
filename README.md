@@ -100,3 +100,13 @@
 - 각자 모르는게 있을 때, 이해가 될 때까지 토론한다.
 - 도메인 용어를 최대한 사용한다.
 - 도메인 커버리지를 100%로 목표로 한다.
+
+## 리펙토링 목록
+- [ ]  Board class에서 move를 새로운 클래스로 분리
+- [ ]  empty Piece를 없애고 비어 있는 칸을 null로 대체하기
+- [ ]  인터페이드 Piece를 없애고 추상 클래스인 FullPiece를 Piece로 대체하여 사용하기
+- [ ]  position에 `toRankValue` 를 랭크 안에서 하도록 수정
+- [ ]  매직 넘버 상수화
+- [ ]  메서드 10줄 넘지 않도록 수정
+- [ ]  outputView를 위한 getter말고 다른 getter가 있는지 확인하기
+- [ ]  state test
