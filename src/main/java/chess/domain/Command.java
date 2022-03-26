@@ -27,7 +27,7 @@ public class Command {
     }
 
     private static void checkStartOrEnd(String command) {
-        if (!command.equals("start") && !command.equals("end")) {
+        if (!command.equals("start") && !command.equals("end") && !command.equals("status")) {
             checkMove(command);
         }
     }
@@ -55,7 +55,7 @@ public class Command {
     }
 
     public boolean isEnd() {
-        if (command.equals("end")) {
+        if (command.equals("end") || command.equals("status")) {
             return true;
         }
 
