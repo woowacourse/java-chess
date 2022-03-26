@@ -9,12 +9,7 @@ import java.util.List;
 public class Knight extends Piece {
 
     public Knight(Color color) {
-        super(color);
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.KNIGHT;
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
@@ -23,10 +18,5 @@ public class Knight extends Piece {
         if (!candidates.contains(to)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 경로입니다.");
         }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }

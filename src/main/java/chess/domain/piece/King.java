@@ -7,12 +7,7 @@ import chess.domain.piece.move.StraightDirection;
 public class King extends Piece {
 
     public King(Color color) {
-        super(color);
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.KING;
+        super(color, PieceType.KING);
     }
 
     @Override
@@ -22,10 +17,5 @@ public class King extends Piece {
         if (!next.equals(to)) {
             throw new IllegalArgumentException("[ERROR] 킹은 한 칸만 이동할 수 있습니다.");
         }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }

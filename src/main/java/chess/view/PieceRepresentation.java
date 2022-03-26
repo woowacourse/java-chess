@@ -28,7 +28,7 @@ public enum PieceRepresentation {
 
     public static String convertType(Piece piece) {
         PieceRepresentation representation = findMatchingType(piece);
-        if (piece.getColor() == Color.WHITE) {
+        if (piece.isSameColor(Color.WHITE)) {
             return representation.whiteColor;
         }
         return representation.blackColor;
@@ -36,7 +36,7 @@ public enum PieceRepresentation {
 
     private static PieceRepresentation findMatchingType(Piece piece) {
         return Arrays.stream(values())
-                .filter(value -> value.pieceType == piece.getType())
+                .filter(value -> piece.isSameType(value.pieceType))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 타입이 없습니다."));
     }

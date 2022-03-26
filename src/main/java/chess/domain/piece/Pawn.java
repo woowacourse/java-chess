@@ -9,18 +9,7 @@ import chess.domain.piece.move.pawn.PawnSupport;
 public class Pawn extends Piece {
 
     public Pawn(Color color) {
-        super(color);
-    }
-
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.PAWN;
+        super(color, PieceType.PAWN);
     }
 
     @Override
@@ -29,6 +18,4 @@ public class Pawn extends Piece {
         PawnMoveChain chain = new PawnMoveForwardChain(support);
         chain.move(board, from, to);
     }
-
-
 }

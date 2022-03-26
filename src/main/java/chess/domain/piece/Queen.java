@@ -7,7 +7,7 @@ import chess.domain.piece.move.StraightDirection;
 public class Queen extends Piece {
 
     public Queen(Color color) {
-        super(color);
+        super(color, PieceType.QUEEN);
     }
 
     @Override
@@ -42,15 +42,5 @@ public class Queen extends Piece {
         if (!board.isEmpty(point)) {
             throw new IllegalArgumentException("[ERROR] 이동 과정 중에 장애물이 있습니다.");
         }
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.QUEEN;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }

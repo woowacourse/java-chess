@@ -7,7 +7,7 @@ import chess.domain.piece.move.StraightDirection;
 public class Bishop extends Piece {
 
     public Bishop(Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override
@@ -44,15 +44,5 @@ public class Bishop extends Piece {
         if (!board.isEmpty(point)) {
             throw new IllegalArgumentException("[ERROR] 이동 과정 중에 장애물이 있습니다.");
         }
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.BISHOP;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }

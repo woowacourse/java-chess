@@ -7,7 +7,7 @@ import chess.domain.piece.move.StraightDirection;
 public class Rook extends Piece {
 
     public Rook(Color color) {
-        super(color);
+        super(color, PieceType.ROOK);
     }
 
     @Override
@@ -37,16 +37,6 @@ public class Rook extends Piece {
         if (!board.isEmpty(point)) {
             throw new IllegalArgumentException("[ERROR] 이동 과정 중에 장애물이 있습니다.");
         }
-    }
-
-    @Override
-    public PieceType getType() {
-        return PieceType.ROOK;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 }
 

@@ -5,8 +5,10 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 
@@ -38,7 +40,7 @@ public class Board {
         pointPieces.put(to, fromPiece);
         pointPieces.put(from, new Empty(Color.NONE));
 
-        return toPiece.getType() != PieceType.KING;
+        return toPiece.isSameType(PieceType.KING);
     }
 
     private void validateArgumentSize(List<String> arguments) {
@@ -61,6 +63,6 @@ public class Board {
 
     public boolean isEmpty(Point point) {
         Piece piece = pointPieces.get(point);
-        return piece.isEmpty();
+        return piece.isSameType(PieceType.EMPTY);
     }
 }
