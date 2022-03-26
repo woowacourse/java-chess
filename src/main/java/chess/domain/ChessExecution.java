@@ -1,13 +1,13 @@
 package chess.domain;
 
-import chess.state.State;
+import chess.state.ChessGameState;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 
 public enum ChessExecution {
     START("start", (state, input) -> state.start()),
-    MOVE("move", (state, input) -> state.move(input)),
+    MOVE("move", (state, input) -> state.move(input[1], input[2])),
     STATUS("status", (state, input) -> state.status()),
     END("end", (state, input) -> state.end()),
     ;
@@ -15,9 +15,9 @@ public enum ChessExecution {
     private static final String NO_COMMAND_FIND = "게임 실행중 명령어는 end만 입력할 수 있습니다.";
 
     private final String value;
-    private final BiFunction<State, String, State> runnable;
+    private final BiFunction<ChessGameState, String[], ChessGameState> runnable;
 
-    ChessExecution(String value, BiFunction<State, String, State> runnable) {
+    ChessExecution(String value, BiFunction<ChessGameState, String[], ChessGameState> runnable) {
         this.value = value;
         this.runnable = runnable;
     }
@@ -29,7 +29,7 @@ public enum ChessExecution {
                 .orElseThrow(() -> new NoSuchElementException(NO_COMMAND_FIND));
     }
 
-    public State run(State state, String input) {
-        return runnable.apply(state, input);
+    public ChessGameState run(ChessGameState chessGameState, String[] input) {
+        return runnable.apply(chessGameState, input);
     }
 }

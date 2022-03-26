@@ -5,11 +5,11 @@ import chess.domain.board.BoardFactory;
 import chess.dto.BoardDto;
 import chess.view.OutputView;
 
-public class Ready implements State {
-    private OutputView outputView = OutputView.getInstance();
+public class Ready implements ChessGameState {
+    private final OutputView outputView = OutputView.getInstance();
 
     @Override
-    public State start() {
+    public ChessGameState start() {
         Board board = BoardFactory.newInstance();
         outputView.printBoard(BoardDto.from(board));
 
@@ -17,21 +17,26 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(String from, String to) {
+    public ChessGameState move(String from, String to) {
         return alertReady();
     }
 
     @Override
-    public State status() {
+    public ChessGameState status() {
         return alertReady();
     }
 
     @Override
-    public State end() {
+    public ChessGameState end() {
         return new Finished();
     }
 
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
+
     private Ready alertReady() {
-        throw new IllegalStateException("게임 시작 전엔 start 또는 end만 가능합니다.");
+        throw new IllegalStateException("게임 시작 전에는 start 또는 end만 가능합니다.");
     }
 }

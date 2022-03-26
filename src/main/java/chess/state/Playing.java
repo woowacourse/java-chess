@@ -6,7 +6,7 @@ import chess.dto.BoardDto;
 import chess.dto.ScoreDto;
 import chess.view.OutputView;
 
-public class Playing implements State {
+public class Playing implements ChessGameState {
     private final OutputView outputView = OutputView.getInstance();
     private final Board board;
 
@@ -15,13 +15,13 @@ public class Playing implements State {
     }
 
     @Override
-    public State start() {
+    public ChessGameState start() {
         System.out.println("이미 실행중입니다");
         return this;
     }
 
     @Override
-    public State move(String from, String to) {
+    public ChessGameState move(String from, String to) {
         MoveResult move = board.move(from, to);
         outputView.printBoard(BoardDto.from(board));
 
@@ -34,13 +34,18 @@ public class Playing implements State {
     }
 
     @Override
-    public State status() {
+    public ChessGameState status() {
         outputView.printScore(ScoreDto.from(board.getScore()));
         return this;
     }
 
     @Override
-    public State end() {
+    public ChessGameState end() {
         return new Finished();
+    }
+
+    @Override
+    public boolean isEnded() {
+        return false;
     }
 }

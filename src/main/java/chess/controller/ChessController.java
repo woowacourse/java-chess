@@ -1,28 +1,25 @@
 package chess.controller;
 
 import chess.domain.ChessExecution;
-import chess.state.Finished;
 import chess.state.Ready;
-import chess.state.State;
+import chess.state.ChessGameState;
 import chess.view.InputView;
 
 public class ChessController {
-    private State state;
+
+    private ChessGameState chessGameState;
 
     public ChessController() {
-        this.state = new Ready();
+        this.chessGameState = new Ready();
     }
 
     public void start() {
-        state = state.start();
+        chessGameState = chessGameState.start();
 
-        InputView inputView = InputView.getInstance();
-
-        String[] command = inputView.scanCommand().split(" ");
-        ChessExecution execution = ChessExecution.from(command[0]);
-
-        while (!(state instanceof Finished)) {
-            state = ChessExecution.from(input).run(state, input);
+        while (!chessGameState.isEnded()) {
+            InputView inputView = InputView.getInstance();
+            String[] command = inputView.scanCommand().split(" ");
+            chessGameState = ChessExecution.from(command[0]).run(chessGameState, command);
         }
     }
 }

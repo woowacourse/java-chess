@@ -1,28 +1,34 @@
 package chess.state;
 
-public class Finished implements State {
+public class Finished implements ChessGameState {
 
     @Override
-    public State start() {
+    public ChessGameState start() {
         return alertFinished();
     }
 
     @Override
-    public State move(String from, String to) {
+    public ChessGameState move(String from, String to) {
         return alertFinished();
     }
 
     @Override
-    public State status() {
+    public ChessGameState status() {
         return alertFinished();
     }
 
     @Override
-    public State end() {
+    public ChessGameState end() {
         return alertFinished();
+    }
+
+    @Override
+    public boolean isEnded() {
+        return true;
     }
 
     private Finished alertFinished() {
         throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
+
 }
