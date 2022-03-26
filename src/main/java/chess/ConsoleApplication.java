@@ -12,7 +12,6 @@ public class ConsoleApplication {
     static ChessBoard chessBoard;
 
     public static void main(String[] args) {
-
         ResultView.printStartMessage();
         playGame();
     }
@@ -40,12 +39,15 @@ public class ConsoleApplication {
             PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             chessBoard = new ChessBoard(piecesGenerator);
             ResultView.printChessBoard(chessBoard.getPieces());
-        }
-        if (gameCommand.isMove() && chessBoard == null) {
-            throw new IllegalStateException("체스판이 초기화되지 않았습니다.");
+            return;
         }
         if (gameCommand.isEnd()) {
             return;
         }
+        if (chessBoard == null) {
+            throw new IllegalStateException("체스판이 초기화되지 않았습니다.");
+        }
+        chessBoard.move(gameCommand);
+        ResultView.printChessBoard(chessBoard.getPieces());
     }
 }

@@ -19,6 +19,6 @@ public class EmptyPiece extends Piece{
 
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return null;
+        throw new IllegalStateException("해당 자리에는 말이 존재하지 않습니다.");
     }
 }
