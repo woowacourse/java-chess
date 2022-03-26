@@ -19,7 +19,7 @@ public class InputView {
         return Command.startEnd(readLine());
     }
 
-    public static Request inputCommandInGaming() { // RequestDto
+    public static Request inputCommandInGaming() {
         String input = readLine();
         Command command = Command.MoveStatusEnd(input);
         if (command == Command.END) {

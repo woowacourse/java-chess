@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.model.piece.Queen;
 import chess.vo.File;
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
 import chess.vo.Position;
 import chess.vo.Rank;
@@ -24,7 +25,8 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = queen.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+            MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -38,7 +40,8 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = queen.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+            MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

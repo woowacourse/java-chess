@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.model.piece.Bishop;
 import chess.vo.File;
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
 import chess.vo.Position;
 import chess.vo.Rank;
@@ -27,7 +28,7 @@ class BishopTest {
         Position target = new Position(rank, file);
 
         //when
-        boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = bishop.isMovable(new Path(source, target), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -43,7 +44,7 @@ class BishopTest {
         Position target = new Position(rank, file);
 
         //when
-        boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = bishop.isMovable(new Path(source, target), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

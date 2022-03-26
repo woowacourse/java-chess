@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.model.piece.Pawn;
 import chess.vo.File;
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
 import chess.vo.Position;
 import chess.vo.Rank;
@@ -25,7 +26,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(TWO, A);
         Position target = new Position(rank, A);
-        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.EMPTY);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -35,7 +36,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(FOUR, A);
         Position target = new Position(SIX, A);
-        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.EMPTY);
         assertThat(actual).isFalse();
     }
 
@@ -45,7 +46,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Position source = new Position(FOUR, A);
         Position target = new Position(THREE, A);
-        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.EMPTY);
 
         assertThat(actual).isFalse();
     }
@@ -56,7 +57,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceColor.BLACK);
         Position source = new Position(FIVE, A);
         Position target = new Position(SIX, A);
-        boolean actual = pawn.isMovable(source, target, MoveType.EMPTY);
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.EMPTY);
 
         assertThat(actual).isFalse();
     }
@@ -70,7 +71,7 @@ class PawnTest {
         Position source = new Position(FOUR, A);
         Position target = new Position(FIVE, file);
 
-        boolean actual = pawn.isMovable(source, target, MoveType.ENEMY);
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.ENEMY);
         assertThat(actual).isEqualTo(expected);
     }
 }

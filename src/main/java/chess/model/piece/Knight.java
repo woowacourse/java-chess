@@ -1,8 +1,8 @@
 package chess.model.piece;
 
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
-import chess.vo.Position;
 
 public class Knight extends Piece {
 
@@ -19,9 +19,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
-        return source.rankDistance(target) == 2 && source.fileDistance(target) == 1 ||
-            source.rankDistance(target) == 1 && source.fileDistance(target) == 2;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.rankDistance() == 2 && path.fileDistance() == 1 ||
+            path.rankDistance() == 1 && path.fileDistance() == 2;
     }
 
     @Override

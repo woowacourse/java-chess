@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.model.piece.Rook;
 import chess.vo.File;
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
 import chess.vo.Position;
 import chess.vo.Rank;
@@ -23,7 +24,8 @@ public class RookTest {
         Rook rook = new Rook(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+            MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -37,7 +39,8 @@ public class RookTest {
         Rook rook = new Rook(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+            MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

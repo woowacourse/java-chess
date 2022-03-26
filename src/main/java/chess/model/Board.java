@@ -15,6 +15,7 @@ import chess.model.piece.Piece;
 import chess.model.turndecider.TurnDecider;
 import chess.vo.File;
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.Position;
 
 public class Board {
@@ -59,7 +60,7 @@ public class Board {
         Piece sourcePiece = pieceAt(source);
         Piece targetPiece = pieceAt(target);
 
-        if (!sourcePiece.isMovable(source, target, MoveType(targetPiece)) || isBlocked(source, target)
+        if (!sourcePiece.isMovable(new Path(source, target), MoveType(targetPiece)) || isBlocked(source, target)
             || targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }

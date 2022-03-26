@@ -3,8 +3,8 @@ package chess.model.piece;
 import static chess.vo.PieceColor.*;
 
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
-import chess.vo.Position;
 import chess.vo.Rank;
 
 public class Pawn extends Piece {
@@ -17,50 +17,43 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
+    public boolean isMovable(Path path, MoveType moveType) {
         if (moveType == MoveType.ENEMY) {
-            return isCaptureMoving(source, target);
+            return isCaptureMoving(path);
         }
 
         if (pieceColor == WHITE) {
-            return isForwardWhite(source, target);
+            return isForwardWhite(path);
         }
 
-        return isForwardBlack(source, target);
+        return isForwardBlack(path);
     }
 
-    private boolean isCaptureMoving(Position source, Position target) {
+    private boolean isCaptureMoving(Path path) {
         if (pieceColor == WHITE) {
-            return source.isDiagonal(target) && source.rankDisplacement(target) == 1
-                && source.fileDistance(target) == 1;
+            return path.isUpDiagonal();
         }
-        return source.isDiagonal(target) && target.rankDisplacement(source) == 1
-            && source.fileDistance(target) == 1;
+        return path.isDownDiagonal();
     }
 
-    private boolean isForwardWhite(Position source, Position target) {
-        if (isFirstMove(source)) {
-            return isForward(source, target, 2);
+    private boolean isForwardWhite(Path path) {
+        if (isFirstMove(path)) {
+            return path.isUpStraight(2);
         }
 
-        return isForward(source, target, 1);
+        return path.isUpStraight(1);
     }
 
-    private boolean isFirstMove(Position source) {
-        return source.isRankOf(Rank.TWO) || source.isRankOf(Rank.SEVEN);
+    private boolean isFirstMove(Path path) {
+        return path.isSourceRankOf(Rank.TWO) || path.isSourceRankOf(Rank.SEVEN);
     }
 
-    private boolean isForwardBlack(Position source, Position target) {
-        if (isFirstMove(source)) {
-            return isForward(target, source, 2);
+    private boolean isForwardBlack(Path path) {
+        if (isFirstMove(path)) {
+            return path.isDownStraight(2);
         }
 
-        return isForward(target, source, 1);
-    }
-
-    private boolean isForward(Position source, Position target, int amount) {
-        return source.rankDisplacement(target) > 0
-            && source.rankDisplacement(target) <= amount && source.isSameFile(target);
+        return path.isDownStraight(1);
     }
 
     @Override

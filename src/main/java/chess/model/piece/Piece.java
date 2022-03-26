@@ -3,8 +3,8 @@ package chess.model.piece;
 import java.util.Objects;
 
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
-import chess.vo.Position;
 
 public abstract class Piece {
 
@@ -23,7 +23,7 @@ public abstract class Piece {
 
     public abstract String getConcreteEmblem();
 
-    public abstract boolean isMovable(Position source, Position target, MoveType moveType);
+    public abstract boolean isMovable(Path path, MoveType moveType);
 
     public boolean isMyTeam(Piece other) {
         return this.pieceColor == other.pieceColor;

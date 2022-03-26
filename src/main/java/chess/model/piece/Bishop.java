@@ -1,8 +1,8 @@
 package chess.model.piece;
 
 import chess.vo.MoveType;
+import chess.vo.Path;
 import chess.vo.PieceColor;
-import chess.vo.Position;
 
 public class Bishop extends Piece {
 
@@ -19,8 +19,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
-        return source.isDiagonal(target);
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.isDiagonal();
     }
 
     @Override
