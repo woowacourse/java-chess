@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Abscissa {
     a(1),
     b(2),
@@ -18,5 +20,12 @@ public enum Abscissa {
 
     public int getCoordinate() {
         return coordinate;
+    }
+
+    public static Abscissa findAbscissa(int value) {
+        return Arrays.stream(Abscissa.values())
+            .filter(abscissa -> abscissa.coordinate == value)
+            .findAny()
+            .orElseThrow();
     }
 }

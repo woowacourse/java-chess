@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -35,5 +36,29 @@ public class DirectionTest {
                 Position.valueOf(Abscissa.a, Ordinate.TWO), Direction.LEFTUP),
             Arguments.of(Position.valueOf(Abscissa.b, Ordinate.TWO),
                 Position.valueOf(Abscissa.a, Ordinate.ONE), Direction.LEFTDOWN));
+    }
+
+    @Test
+    @DisplayName("출발 Position에서 목적지 position으로 가는 경로 중 오른 쪽 위로 한칸 움직인 Position을 반환한다")
+    void moveRightUpOneStep() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.ONE);
+        Position to = Position.valueOf(Abscissa.c, Ordinate.THREE);
+        Direction direction = Direction.judge(from, to);
+
+        Position stepPosition = Direction.step(from, direction);
+
+        assertThat(stepPosition).isEqualTo(Position.valueOf(Abscissa.b, Ordinate.TWO));
+    }
+
+    @Test
+    @DisplayName("출발 Position에서 목적지 position으로 가는 경로 중 위로 한칸 움직인 Position을 반환한다")
+    void moveUpOneStep() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.ONE);
+        Position to = Position.valueOf(Abscissa.a, Ordinate.THREE);
+        Direction direction = Direction.judge(from, to);
+
+        Position stepPosition = Direction.step(from, direction);
+
+        assertThat(stepPosition).isEqualTo(Position.valueOf(Abscissa.a, Ordinate.TWO));
     }
 }

@@ -8,6 +8,7 @@ public class Board {
 
     private static final String NOT_EXIST_PIECE = "[ERROR] 입력한 위치에 말이 존재하지 않습니다.";
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
+    private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -23,8 +24,18 @@ public class Board {
         validateExistPiecePosition(fromPosition);
         Piece piece = board.get(fromPosition);
         validateMovablePosition(piece, fromPosition, toPosition);
+        checkRoute(fromPosition, toPosition);
         board.remove(fromPosition);
         board.put(toPosition, piece);
+    }
+
+    private void checkRoute(Position fromPosition, Position toPosition) {
+        Position initialPosition = fromPosition;
+        Direction direction = Direction.judge(fromPosition, toPosition);
+        while(initialPosition!= toPosition) {
+            initialPosition = Direction.step(initialPosition, direction);
+            validateRoute(initialPosition);
+        }
     }
 
     private void validateExistPiecePosition(Position position) {
@@ -36,6 +47,12 @@ public class Board {
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
         if (!piece.isMovable(fromPosition, toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
+        }
+    }
+
+    private void validateRoute(Position position) {
+        if (board.containsKey(position)) {
+            throw new IllegalArgumentException(NON_MOVABLE_ROUTE);
         }
     }
 

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Ordinate {
 
     EIGHT("8"),
@@ -23,5 +25,12 @@ public enum Ordinate {
 
     public int getCoordinate() {
         return Integer.parseInt(value);
+    }
+
+    public static Ordinate findOrdinate(int value) {
+        return Arrays.stream(Ordinate.values())
+            .filter(ordinate -> Integer.parseInt(ordinate.value) == value)
+            .findAny()
+            .orElseThrow();
     }
 }

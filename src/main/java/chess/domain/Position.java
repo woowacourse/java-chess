@@ -24,7 +24,8 @@ public class Position {
 
     private static void savePosition(final Abscissa abscissa) {
         Arrays.stream(Ordinate.values())
-            .forEach(ordinate -> CACHE.put(makeKey(abscissa,ordinate), new Position(abscissa, ordinate)));
+            .forEach(ordinate -> CACHE.put(makeKey(abscissa, ordinate),
+                new Position(abscissa, ordinate)));
     }
 
     private static String makeKey(final Abscissa abscissaValue, final Ordinate ordinateValue) {
@@ -40,7 +41,7 @@ public class Position {
     }
 
     public static Position valueOf(final Abscissa abscissa, final Ordinate ordinate) {
-        return valueOf(makeKey(abscissa,ordinate));
+        return valueOf(makeKey(abscissa, ordinate));
     }
 
     public boolean isSameAbscissa(Position position) {
@@ -57,5 +58,12 @@ public class Position {
 
     public int getAbscissaDifference(Position position) {
         return abscissa.getCoordinate() - position.abscissa.getCoordinate();
+    }
+
+    public Position getIncreasedOneStepPosition(int xDifference, int yDifference) {
+        int newX = abscissa.getCoordinate() + xDifference;
+        int newY = ordinate.getCoordinate() + yDifference;
+
+        return Position.valueOf(Abscissa.findAbscissa(newX), Ordinate.findOrdinate(newY));
     }
 }

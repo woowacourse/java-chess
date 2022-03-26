@@ -34,4 +34,10 @@ public enum Direction {
             .findAny()
             .get();
     }
+
+    public static Position step(Position from, Direction direction) {
+        int xDifference = direction.xPoint;
+        int yDifference = direction.yPoint;
+        return from.getIncreasedOneStepPosition(xDifference, yDifference);
+    }
 }
