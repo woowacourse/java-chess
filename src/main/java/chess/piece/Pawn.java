@@ -35,7 +35,10 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        return null;
+        if (this.position.isTwoStepAway(targetPiece.position)) {
+            return List.of(targetPiece.position, this.position.getUpVerticalPosition(team.getForwardDirection()));
+        }
+        return List.of(targetPiece.position);
     }
 
     private boolean isInitPosition() {

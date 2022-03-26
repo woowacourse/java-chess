@@ -92,6 +92,10 @@ public class Position {
         return file.equals(File.H);
     }
 
+    public boolean isTwoStepAway(Position position) {
+        return rank.absMinus(position.rank) == 2;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
