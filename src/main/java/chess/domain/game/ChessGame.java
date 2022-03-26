@@ -41,6 +41,10 @@ public class ChessGame {
         return new Status(board.getColorsTotalScore());
     }
 
+    public boolean isGameNext(Position to) {
+        return board.isKingAlive(to);
+    }
+
     private Map<Position, Piece> createBoard() {
         Map<Position, Piece> squares = new HashMap<>();
 
