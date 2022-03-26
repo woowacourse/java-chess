@@ -4,18 +4,21 @@ import chess.domain.board.Position;
 
 public class Blank extends Piece {
 
+	private static final String SYMBOL = ".";
+	private static final String CAN_NOT_MOVE_ERROR = "빈 곳은 이동이 불가능 합니다.";
+
 	public Blank() {
 		super(Team.NEUTRALITY);
 	}
 
 	@Override
 	protected String createSymbol(final Team team) {
-		return ".";
+		return SYMBOL;
 	}
 
 	@Override
 	public void validateMovement(final Position source, final Position target) {
-		throw new IllegalArgumentException("빈 곳은 이동이 불가능 합니다.");
+		throw new IllegalArgumentException(CAN_NOT_MOVE_ERROR);
 	}
 
 	@Override

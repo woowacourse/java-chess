@@ -8,6 +8,8 @@ public abstract class Piece {
 
 	protected static final String MOVEMENT_ERROR = "해당 기물은 그곳으로 이동할 수 없습니다.";
 
+	private static final String CAN_NOT_CATCH_SAME_TEAM_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
+
 	private final String symbol;
 	protected final Team team;
 
@@ -15,18 +17,6 @@ public abstract class Piece {
 		this.symbol = createSymbol(team);
 		this.team = team;
 	}
-
-	protected abstract String createSymbol(final Team team);
-
-	public abstract void validateMovement(Position source, Position target);
-
-	public abstract boolean isBlank();
-
-	public abstract boolean isPawn();
-
-	public abstract boolean isKing();
-
-	public abstract double getScore();
 
 	public Direction getDirection(final Position source, final Position target) {
 		int differenceRow = target.subtractRow(source);
@@ -40,7 +30,7 @@ public abstract class Piece {
 
 	public void validateCatch(final Piece targetPiece, final Direction direction) {
 		if (this.team == targetPiece.team) {
-			throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
+			throw new IllegalArgumentException(CAN_NOT_CATCH_SAME_TEAM_ERROR);
 		}
 	}
 
@@ -48,6 +38,18 @@ public abstract class Piece {
 		return this.team == team;
 	}
 
+	protected abstract String createSymbol(final Team team);
+
+	public abstract void validateMovement(Position source, Position target);
+
+	public abstract boolean isBlank();
+
+	public abstract boolean isPawn();
+
+	public abstract boolean isKing();
+
+	public abstract double getScore();
+	
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {

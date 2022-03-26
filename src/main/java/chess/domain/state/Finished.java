@@ -5,6 +5,8 @@ import chess.domain.piece.Team;
 
 public abstract class Finished implements State {
 
+	private static final String GAME_PLAY_ERROR = "현재는 게임을 진행할 수 없습니다.";
+	
 	private final Team winner;
 
 	public Finished(final Team winner) {
@@ -18,7 +20,7 @@ public abstract class Finished implements State {
 
 	@Override
 	public final State play(Piece source, Piece target) {
-		throw new IllegalArgumentException("현재는 게임을 진행할 수 없습니다.");
+		throw new IllegalArgumentException(GAME_PLAY_ERROR);
 	}
 
 	@Override

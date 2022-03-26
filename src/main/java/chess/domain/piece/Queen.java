@@ -4,6 +4,9 @@ import chess.domain.board.Position;
 
 public class Queen extends Piece {
 
+	private static final String BLACK_SYMBOL = "Q";
+	private static final String WHITE_SYMBOL = "q";
+
 	public Queen(final Team team) {
 		super(team);
 	}
@@ -11,9 +14,9 @@ public class Queen extends Piece {
 	@Override
 	protected String createSymbol(final Team team) {
 		if (team.isBlack()) {
-			return "Q";
+			return BLACK_SYMBOL;
 		}
-		return "q";
+		return WHITE_SYMBOL;
 	}
 
 	@Override

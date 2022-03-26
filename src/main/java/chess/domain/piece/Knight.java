@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public class Knight extends Piece {
 
+	private static final String BLACK_SYMBOL = "N";
+	private static final String WHITE_SYMBOL = "n";
+
 	public Knight(final Team team) {
 		super(team);
 	}
@@ -14,25 +17,25 @@ public class Knight extends Piece {
 	@Override
 	protected String createSymbol(final Team team) {
 		if (team.isBlack()) {
-			return "N";
+			return BLACK_SYMBOL;
 		}
-		return "n";
+		return WHITE_SYMBOL;
 	}
 
 	@Override
 	public void validateMovement(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
-
-		for (Direction direction : directions) {
-			Optional<Position> position = source.addDirection(direction);
-			if (position.isEmpty()) {
-				continue;
-			}
-			if (position.get() == target) {
-				return;
-			}
+		if (!canMove(source, target, directions)) {
+			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
-		throw new IllegalArgumentException(MOVEMENT_ERROR);
+	}
+
+	private boolean canMove(final Position source, final Position target, final List<Direction> directions) {
+		return directions.stream()
+				.map(source::addDirection)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.anyMatch(position -> position.equals(target));
 	}
 
 	@Override

@@ -11,7 +11,6 @@ public class OutputView {
 
 	public static void printBoard(final Board board) {
 		final Map<Position, Piece> boardInformation = board.getBoard();
-
 		for (Position position : Position.getReversePositions()) {
 			System.out.print(boardInformation.get(position).getSymbol());
 			printBlank(position);

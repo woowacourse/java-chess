@@ -3,9 +3,10 @@ package chess.domain.board;
 import chess.domain.piece.Team;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public enum Direction {
-	
+
 	S(-1, 0),
 	W(0, -1),
 	N(1, 0),
@@ -25,6 +26,8 @@ public enum Direction {
 	WWN(1, -2),
 	WWS(-1, -2);
 
+	private static final String NOT_SEARCH_DIRECTION_ERROR = "해당 방향이 없습니다.";
+	
 	private final int rowMovement;
 	private final int columnMovement;
 
@@ -59,7 +62,7 @@ public enum Direction {
 		return Arrays.stream(values())
 				.filter(value -> value.rowMovement == differenceRow && value.columnMovement == differenceColumn)
 				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException("해당 방향이 없습니다."));
+				.orElseThrow(() -> new NoSuchElementException(NOT_SEARCH_DIRECTION_ERROR));
 	}
 
 	public int addRow(final int row) {

@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public class Position {
 
+	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
+
 	private final int row;
 	private final int column;
 
@@ -28,9 +30,13 @@ public class Position {
 	}
 
 	private static void validateRange(final int row, final int column) {
-		if (row < 1 || row > 8 || column < 1 || column > 8) {
-			throw new IllegalArgumentException("체스판 범위를 벗어나는 입력입니다.");
+		if (isOverRange(row, column)) {
+			throw new IllegalArgumentException(OVER_RANGE_ERROR);
 		}
+	}
+
+	private static boolean isOverRange(final int row, final int column) {
+		return row < 1 || row > 8 || column < 1 || column > 8;
 	}
 
 	public static List<Position> getPositions() {
@@ -44,7 +50,7 @@ public class Position {
 	public Optional<Position> addDirection(Direction direction) {
 		int row = direction.addRow(this.row);
 		int column = direction.addColumn(this.column);
-		if (row < 1 || row > 8 || column < 1 || column > 8) {
+		if (isOverRange(row, column)) {
 			return Optional.empty();
 		}
 		return Optional.of(Position.of(row, column));
@@ -86,6 +92,17 @@ public class Position {
 		return positions;
 	}
 
+	public boolean isEndColumn() {
+		return column == 8;
+	}
+
+	public boolean isDefaultRow(final Team team) {
+		if (team.isBlack()) {
+			return this.row == 7;
+		}
+		return this.row == 2;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {
@@ -101,16 +118,5 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(row, column);
-	}
-
-	public boolean isEndColumn() {
-		return column == 8;
-	}
-
-	public boolean isDefaultRow(final Team team) {
-		if (team.isBlack()) {
-			return this.row == 7;
-		}
-		return this.row == 2;
 	}
 }

@@ -20,6 +20,11 @@ import java.util.Optional;
 
 public class Board {
 
+	private static final String BLOCK_ERROR = "해당 위치로 기물을 옮길 수 없습니다.";
+	private static final String BOARD_RANGE_ERROR = "체스 판의 범위를 벗어 났습니다.";
+	private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
+	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
+
 	private final Map<Position, Piece> board;
 	private State state;
 
@@ -31,24 +36,47 @@ public class Board {
 
 	public void move(Position source, Position target) {
 		Piece piece = board.get(source);
+		validateMove(source, target, piece);
+		state = state.play(piece, board.get(target));
+		board.put(target, piece);
+		board.put(source, new Blank());
+	}
+
+	private void validateMove(final Position source, final Position target, final Piece piece) {
 		validateBlank(piece);
-
 		piece.validateMovement(source, target);
+		validateBlocking(source, target, piece);
+	}
 
+	private void validateBlocking(final Position source, final Position target, final Piece piece) {
 		Direction direction = piece.getDirection(source, target);
 		Position checkPosition = source;
-
 		while (checkPosition != target) {
 			checkPosition = moveNextPosition(direction, checkPosition);
 			Piece currentPiece = board.get(checkPosition);
 			checkBlocking(target, checkPosition, currentPiece);
 			piece.validateCatch(currentPiece, direction);
 		}
+	}
 
-		state = state.play(piece, board.get(target));
+	private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
+		if (checkPosition != target && !currentPiece.isBlank()) {
+			throw new IllegalArgumentException(BLOCK_ERROR);
+		}
+	}
 
-		board.put(target, piece);
-		board.put(source, new Blank());
+	private Position moveNextPosition(final Direction direction, Position checkPosition) {
+		Optional<Position> position = checkPosition.addDirection(direction);
+		if (position.isEmpty()) {
+			throw new IllegalArgumentException(BOARD_RANGE_ERROR);
+		}
+		return position.get();
+	}
+
+	private void validateBlank(final Piece piece) {
+		if (piece.isBlank()) {
+			throw new IllegalArgumentException(BLANK_ERROR);
+		}
 	}
 
 	public boolean isFinished() {
@@ -89,27 +117,7 @@ public class Board {
 		}
 		return pieces;
 	}
-
-	private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
-		if (checkPosition != target && !currentPiece.isBlank()) {
-			throw new IllegalArgumentException("해당 위치로 기물을 옮길 수 없습니다.");
-		}
-	}
-
-	private Position moveNextPosition(final Direction direction, Position checkPosition) {
-		Optional<Position> position = checkPosition.addDirection(direction);
-		if (position.isEmpty()) {
-			throw new IllegalArgumentException("체스 판의 범위를 벗어 났습니다.");
-		}
-		return position.get();
-	}
-
-	private void validateBlank(final Piece piece) {
-		if (piece.isBlank()) {
-			throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
-		}
-	}
-
+	
 	private void initialBatchPiece() {
 		for (Position position : Position.getPositions()) {
 			board.put(position, new Blank());
@@ -151,6 +159,6 @@ public class Board {
 		if (state.isFinished()) {
 			return state.getTeam();
 		}
-		throw new IllegalArgumentException("아직 종료되지 않은 게임입니다.");
+		throw new IllegalArgumentException(NOT_FINISHED_ERROR);
 	}
 }

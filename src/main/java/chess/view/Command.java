@@ -1,7 +1,5 @@
 package chess.view;
 
-import java.util.Arrays;
-
 public enum Command {
 
 	START("start"),
@@ -15,27 +13,19 @@ public enum Command {
 		this.command = command;
 	}
 
-	public static boolean isEnd(final String requestGameStart) {
-		return Arrays.stream(values())
-				.anyMatch(command -> command == END && command.getCommand().equalsIgnoreCase(requestGameStart));
+	public static boolean isEnd(final String request) {
+		return request.equalsIgnoreCase(END.command);
 	}
 
-	public static boolean isStart(final String requestGameStart) {
-		return Arrays.stream(values())
-				.anyMatch(command -> command == START && command.getCommand().equalsIgnoreCase(requestGameStart));
+	public static boolean isStart(final String request) {
+		return request.equalsIgnoreCase(START.command);
 	}
 
 	public static boolean isMove(final String request) {
-		return Arrays.stream(values())
-				.anyMatch(command -> command == MOVE && command.getCommand().equalsIgnoreCase(request));
+		return request.equalsIgnoreCase(MOVE.command);
 	}
 
 	public static boolean isStatus(final String request) {
-		return Arrays.stream(values())
-				.anyMatch(command -> command == STATUS && command.getCommand().equalsIgnoreCase(request));
-	}
-
-	public String getCommand() {
-		return command;
+		return request.equalsIgnoreCase(STATUS.command);
 	}
 }
