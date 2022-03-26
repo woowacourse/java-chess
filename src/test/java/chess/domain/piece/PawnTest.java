@@ -64,4 +64,40 @@ public class PawnTest {
 
         assertThat(whitePawn.isMovable(from, to)).isFalse();
     }
+
+    @Test
+    @DisplayName("흰 색 Pawn은 대각선 위로 움직여 말을 잡을 수 있다.")
+    void isWhitePawnCatchablePosition() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.THREE);
+        Position to = Position.valueOf(Abscissa.b, Ordinate.FOUR);
+
+        assertThat(whitePawn.isCatchable(from, to)).isTrue();
+    }
+
+    @Test
+    @DisplayName("흰 색 Pawn은 대각선 아래로 움직여 말을 잡을 수 없다.")
+    void isNotWhitePawnCatchablePosition() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.THREE);
+        Position to = Position.valueOf(Abscissa.b, Ordinate.TWO);
+
+        assertThat(whitePawn.isCatchable(from, to)).isFalse();
+    }
+
+    @Test
+    @DisplayName("검은색 Pawn은 대각선 아래로 움직여 말을 잡을 수 있다.")
+    void isBlackPawnCatchablePosition() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.SIX);
+        Position to = Position.valueOf(Abscissa.b, Ordinate.FIVE);
+
+        assertThat(blackPawn.isCatchable(from, to)).isTrue();
+    }
+
+    @Test
+    @DisplayName("검은색 Pawn은 대각선 위로 움직여 말을 잡을 수 없다.")
+    void isBlackPawnNonCatchablePosition() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.SIX);
+        Position to = Position.valueOf(Abscissa.b, Ordinate.SEVEN);
+
+        assertThat(blackPawn.isCatchable(from, to)).isFalse();
+    }
 }

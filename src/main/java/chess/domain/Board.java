@@ -28,7 +28,7 @@ public class Board {
         if (!piece.isKnight()) {
             checkRoute(fromPosition, toPosition);
         }
-        validateMyTeam(piece,toPosition);
+        validateMyTeam(piece, toPosition);
         board.remove(fromPosition);
         board.put(toPosition, piece);
     }
@@ -38,7 +38,7 @@ public class Board {
         Direction direction = Direction.judge(fromPosition, toPosition);
         while (initialPosition != toPosition) {
             initialPosition = Direction.step(initialPosition, direction);
-            validateRoute(initialPosition);
+            validateRoute(initialPosition,toPosition);
         }
     }
 
@@ -49,12 +49,19 @@ public class Board {
     }
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
-        if (!piece.isMovable(fromPosition, toPosition)) {
+        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition, toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
         }
     }
 
-    private void validateRoute(Position position) {
+    private boolean isCatchable(Piece piece, Position fromPosition, Position toPosition) {
+        return board.containsKey(toPosition) && piece.isCatchable(fromPosition, toPosition);
+    }
+
+    private void validateRoute(Position position, Position toPosition) {
+        if(position == toPosition) {
+            return;
+        }
         if (board.containsKey(position)) {
             throw new IllegalArgumentException(NON_MOVABLE_ROUTE);
         }

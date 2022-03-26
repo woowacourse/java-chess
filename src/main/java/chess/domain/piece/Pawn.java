@@ -33,4 +33,20 @@ public class Pawn extends Piece {
         return fromPosition.isSameAbscissa(toPosition)
             && fromPosition.getOrdinateDifference(toPosition) == difference;
     }
+
+    @Override
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        if (color == Color.WHITE) {
+            return isOneDifferenceDiagonal(fromPosition, toPosition)
+                && toPosition.getOrdinateDifference(fromPosition) > 0;
+        }
+        return isOneDifferenceDiagonal(fromPosition, toPosition)
+            && toPosition.getOrdinateDifference(fromPosition) < 0;
+    }
+
+    private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
+        int height = fromPosition.getOrdinateDifference(toPosition);
+        int width = fromPosition.getAbscissaDifference(toPosition);
+        return Math.pow(height,2) + Math.pow(width,2) == 2;
+    }
 }

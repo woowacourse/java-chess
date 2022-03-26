@@ -25,4 +25,8 @@ public abstract class Piece {
     public boolean isSameColor(Piece piece) {
         return color == piece.color;
     }
+
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        return isMovable(fromPosition, toPosition);
+    }
 }
