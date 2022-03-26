@@ -38,19 +38,26 @@ public enum Direction {
         return List.of(S, SW, SE);
     }
 
+    public static List<Direction> getKingDirections() {
+        return List.of(N, NE, E, SE, S, SW, W, NW);
+    }
+
     public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == 2 && columnDistance == 0 && this == N && pawnAtInitial) {
-            return column == columnDistance && row == rowDistance - 1;
+            return isEqualTo(columnDistance, rowDistance - 1);
         }
-        return column == columnDistance && row == rowDistance;
+        return isEqualTo(columnDistance, rowDistance);
     }
 
     public boolean canBlackPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == -2 && columnDistance == 0 && this == S && pawnAtInitial) {
-            return column == columnDistance && row == rowDistance + 1;
+            return isEqualTo(columnDistance, rowDistance + 1);
         }
-        return column == columnDistance && row == rowDistance;
+        return isEqualTo(columnDistance, rowDistance);
     }
 
+    public boolean isEqualTo(final int columnDistance, final int rowDistance) {
+        return column == columnDistance && row == rowDistance;
+    }
 }
 
