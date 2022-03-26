@@ -1,6 +1,8 @@
 package chess.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.generator.EmptyBoardGenerator;
@@ -52,5 +54,19 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move("b8", "b8"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("source 위치와 target 위치는 같을 수 없습니다.");
+    }
+
+    @DisplayName("체스 보드의 진영별 점수를 계산하여 반환한다")
+    @Test
+    void 체스보드_점수_계산() {
+        ChessBoard chessBoard = BoardFixtures.generatePawnChessBoard();
+
+        double blackResult = chessBoard.calculateScore(Color.BLACK);
+        double whiteResult = chessBoard.calculateScore(Color.WHITE);
+
+        assertAll(
+                () -> assertThat(blackResult).isEqualTo(1.5),
+                () -> assertThat(whiteResult).isEqualTo(0)
+        );
     }
 }
