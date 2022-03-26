@@ -36,6 +36,9 @@ public class Start extends Command {
         String[] commands = command.split(DELIMITER);
         if (commands[COMMAND_INDEX].equals(MOVE) && commands.length == MOVE_COMMAND_SIZE) {
             state = state.movePiece(Position.of(commands[SOURCE_INDEX]), Position.of(commands[DESTINATION_INDEX]));
+            if (state.isFinished()) {
+                return new End();
+            }
             return new Start(state);
         }
 

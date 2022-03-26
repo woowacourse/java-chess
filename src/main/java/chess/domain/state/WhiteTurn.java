@@ -13,6 +13,9 @@ final class WhiteTurn extends Running {
     @Override
     public State movePiece(Position src, Position dest) {
         board.move(src, dest, Color.WHITE);
+        if (!board.hasKing(Color.BLACK)) {
+            return new WhiteWin();
+        }
         return new BlackTurn(board);
     }
 }

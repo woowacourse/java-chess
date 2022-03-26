@@ -540,4 +540,24 @@ class BoardTest {
 
         assertThat(result).isEqualTo(Result.BLACK_WIN);
     }
+
+    @DisplayName("보드에 블랙 킹이 있으면 참을 반환한다.")
+    @Test
+    void testHasKing() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("a7"), new King(Color.BLACK));
+        Board board = new Board(value);
+
+        assertThat(board.hasKing(Color.BLACK)).isTrue();
+    }
+
+    @DisplayName("보드에 블랙 킹이 없으면 거짓을 반환한다")
+    @Test
+    void testHasNotKing() {
+        HashMap<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("a7"), new Pawn(Color.BLACK));
+        Board board = new Board(value);
+
+        assertThat(board.hasKing(Color.BLACK)).isFalse();
+    }
 }

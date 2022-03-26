@@ -184,4 +184,8 @@ public class Board {
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
     }
+
+    public boolean hasKing(Color color) {
+        return value.containsValue(new King(color));
+    }
 }

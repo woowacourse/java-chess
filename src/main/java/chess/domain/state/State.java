@@ -16,4 +16,6 @@ public interface State {
     Map<Color, Double> getScore();
 
     Result getResult();
+
+    boolean isFinished();
 }

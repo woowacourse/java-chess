@@ -29,6 +29,11 @@ abstract class Running extends Ready {
     }
 
     @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
     public final Result getResult() {
         return board.calculateCurrentWinner();
     }

@@ -2,10 +2,12 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -51,5 +53,21 @@ class BlackTurnTest {
         assertThatThrownBy(() -> blackTurn.movePiece(src, dest))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("기물이 존재하지 않습니다");
+    }
+
+    @DisplayName("화이트 왕이 죽으면 블랙이 이긴다")
+    @Test
+    void testBlackWin() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("d5"), new King(Color.WHITE));
+        value.put(Position.of("d4"), new Queen(Color.BLACK));
+        value.put(Position.of("a4"), new King(Color.BLACK));
+        Board board = new Board(value);
+
+        State whiteTurn = Ready.start(board);
+        State state = whiteTurn.movePiece(Position.of("d5"), Position.of("d6"));
+        state = state.movePiece(Position.of("d4"), Position.of("d6"));
+
+        assertThat(state).isInstanceOf(BlackWin.class);
     }
 }
