@@ -6,9 +6,10 @@ import chess.domain.Team;
 
 public class King extends ChessPiece {
     private static final String NAME = "KING";
+    private static final double SCORE = 0;
 
     public King(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {

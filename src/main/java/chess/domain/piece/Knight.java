@@ -6,10 +6,10 @@ import chess.domain.Team;
 
 public class Knight extends ChessPiece {
     private static final String NAME = "KNIGHT";
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 나이트가 이동할 수 없는 위치입니다.";
+    private static final double SCORE = 2.5;
 
     public Knight(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {

@@ -11,9 +11,10 @@ public class Pawn extends ChessPiece {
     private static final int WHITE_INITIAL_ROW_POSITION = 7;
     private static final int BLACK_INITIAL_ROW_POSITION = 2;
     private static final String NAME = "PAWN";
+    private static final double SCORE = 1;
 
     public Pawn(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     private boolean isWhiteInitialPosition() {

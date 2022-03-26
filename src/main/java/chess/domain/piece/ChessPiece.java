@@ -7,11 +7,13 @@ import java.util.Objects;
 
 public abstract class ChessPiece {
     protected final String name;
+    protected final double score;
     protected final Team team;
     protected ChessBoardPosition position;
 
-    protected ChessPiece(String name, Team team, ChessBoardPosition position) {
+    protected ChessPiece(String name, double score, Team team, ChessBoardPosition position) {
         this.name = name;
+        this.score = score;
         this.team = team;
         this.position = position;
     }
@@ -56,5 +58,9 @@ public abstract class ChessPiece {
     @Override
     public int hashCode() {
         return Objects.hash(name, team, position);
+    }
+
+    public double getScore() {
+        return score;
     }
 }

@@ -4,8 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +50,20 @@ class ChessMenTest {
         List<ChessPiece> chessPieces = new ArrayList<>();
         ChessMen chessMen = new ChessMen(chessPieces);
         assertTrue(chessMen.isKingDead());
+    }
+
+    @Test
+    @DisplayName("체스 피스의 점수 합을 구한다")
+    void scoreSum() {
+        List<ChessPiece> chessPieces = new ArrayList<>();
+        chessPieces.add(new Pawn(Team.BLACK, ChessBoardPosition.of("a1")));
+        chessPieces.add(new Queen(Team.BLACK, ChessBoardPosition.of("b2")));
+        chessPieces.add(new Rook(Team.BLACK, ChessBoardPosition.of("c3")));
+        chessPieces.add(new Bishop(Team.BLACK, ChessBoardPosition.of("d4")));
+        chessPieces.add(new Knight(Team.BLACK, ChessBoardPosition.of("e1")));
+        chessPieces.add(new King(Team.BLACK, ChessBoardPosition.of("f1")));
+        ChessMen chessMen = new ChessMen(chessPieces);
+        double score = chessMen.calculateScore();
+        assertThat(score).isEqualTo(20.5);
     }
 }

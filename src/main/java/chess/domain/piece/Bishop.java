@@ -8,9 +8,10 @@ import java.util.List;
 
 public class Bishop extends ChessPiece {
     private static final String NAME = "BISHOP";
+    private static final double SCORE = 3.0;
 
     public Bishop(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     public boolean isSamePosition(ChessBoardPosition nextPosition) {

@@ -9,10 +9,10 @@ import java.util.List;
 public class Rook extends ChessPiece {
     private static final int NO_DIFFERENCE = 0;
     private static final String NAME = "ROOK";
-    private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 룩이 이동할 수 없는 위치입니다.";
+    private static final double SCORE = 5.0;
 
     public Rook(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     public boolean isSamePosition(ChessBoardPosition nextPosition) {

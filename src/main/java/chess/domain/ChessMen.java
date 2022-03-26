@@ -34,6 +34,12 @@ public class ChessMen implements Iterable<ChessPiece> {
                 .noneMatch(King.class::isInstance);
     }
 
+    public double calculateScore() {
+        return chessPieces.stream()
+                .mapToDouble(ChessPiece::getScore)
+                .sum();
+    }
+
     @Override
     public Iterator<ChessPiece> iterator() {
         return chessPieces.iterator();

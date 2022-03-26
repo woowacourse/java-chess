@@ -11,8 +11,10 @@ public class Queen extends ChessPiece {
     private static final String NAME = "QUEEN";
     private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 퀸이 이동할 수 없는 위치입니다.";
 
+    private static final double SCORE = 9.0;
+
     public Queen(Team team, ChessBoardPosition position) {
-        super(NAME, team, position);
+        super(NAME, SCORE, team, position);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
