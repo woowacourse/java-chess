@@ -3,6 +3,7 @@ package chess;
 import chess.state.Finish;
 import chess.state.Play;
 import chess.state.Ready;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class StateTest {
     @Test
     @DisplayName("play -> finish")
     void playToFinish() {
-        Play play = new Play();
+        Play play = new Play(new Turn());
 
         assertThat(play.end()).isInstanceOf(Finish.class);
     }

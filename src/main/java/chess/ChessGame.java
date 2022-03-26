@@ -12,11 +12,9 @@ import java.util.List;
 public class ChessGame {
 
     private State state;
-    private Turn turn;
 
     public ChessGame() {
         this.state = new Ready();
-        this.turn = new Turn();
     }
 
     public void start() {
@@ -30,15 +28,11 @@ public class ChessGame {
 
         Pair<Integer, Integer> parsedSource = PositionParser.parse(source[0], source[1]);
         Pair<Integer, Integer> parsedTarget = PositionParser.parse(target[0], target[1]);
-        state = state.move(parsedSource, parsedTarget, turn);
+        state = state.move(parsedSource, parsedTarget);
     }
 
     public void end() {
         state = new Finish(getChessBoard());
-    }
-
-    public Chessboard getChessBoard() {
-        return state.getChessboard();
     }
 
     public boolean isFinished() {
@@ -49,4 +43,7 @@ public class ChessGame {
         return state.computeScore(color);
     }
 
+    public Chessboard getChessBoard() {
+        return state.getChessboard();
+    }
 }

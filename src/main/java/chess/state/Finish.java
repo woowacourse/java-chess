@@ -1,7 +1,6 @@
 package chess.state;
 
 import chess.Chessboard;
-import chess.Turn;
 import chess.piece.Color;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -19,18 +18,13 @@ public class Finish implements State {
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public State end() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Chessboard getChessboard() {
-        return chessboard;
     }
 
     @Override
@@ -41,5 +35,10 @@ public class Finish implements State {
     @Override
     public double computeScore(Color color) {
         return chessboard.computeScore(color);
+    }
+
+    @Override
+    public Chessboard getChessboard() {
+        return chessboard;
     }
 }

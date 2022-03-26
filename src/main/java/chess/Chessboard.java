@@ -158,7 +158,6 @@ public class Chessboard {
 
         for (Pair<Integer, Integer> position : betweenPositions) {
             if (board.get(position.getLeft()).get(position.getRight()).getType() == Type.BLANK) {
-                System.out.println(board.get(position.getLeft()).get(position.getRight()).getType());
                 continue;
             }
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");

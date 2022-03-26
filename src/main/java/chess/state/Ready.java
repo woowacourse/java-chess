@@ -8,29 +8,26 @@ import org.apache.commons.lang3.tuple.Pair;
 public class Ready implements State {
 
     private final Chessboard chessboard;
+    private final Turn turn;
 
     public Ready() {
         chessboard = Chessboard.emptyChessboard();
+        turn = new Turn();
     }
 
     @Override
     public State start() {
-        return new Play();
+        return new Play(turn);
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public State end() {
         return new Finish(chessboard);
-    }
-
-    @Override
-    public Chessboard getChessboard() {
-        return chessboard;
     }
 
     @Override
@@ -41,5 +38,10 @@ public class Ready implements State {
     @Override
     public double computeScore(Color color) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Chessboard getChessboard() {
+        return chessboard;
     }
 }
