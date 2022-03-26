@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private static void printScoreStatus(Color color, Double score) {
-        System.out.printf("%s의 점수는 %.f입니다.%n", color, score);
+        System.out.printf("%s의 점수는 %.1f입니다.%n", color, score);
     }
 
     public static void printPromotionGuide() {
