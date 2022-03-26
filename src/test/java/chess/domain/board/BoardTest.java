@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.ChessGame;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -19,7 +20,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판 중 Pawn을 제외한 기물을 생성할 수 있다.")
     void createBoardOfExcludePawn() {
-        Board board = new Board();
+        Board board = new ChessGame().getBoard();
 
         assertAll(
                 () -> assertThat(board.findByPosition(new Position(File.A, Rank.ONE))).isInstanceOf(Rook.class),
@@ -36,7 +37,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판 중 Pawn 기물을 생성할 수 있다.")
     void createBoardOfPawn() {
-        Board board = new Board();
+        Board board = new ChessGame().getBoard();
 
         assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
     }
@@ -44,7 +45,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판의 말을 이동할 수 있다.")
     void movePiece() {
-        Board board = new Board();
+        Board board = new ChessGame().getBoard();
 
         board.move(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
 
@@ -59,7 +60,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판의 말이 이동할 수 없는 경우 예외가 발생한다.")
     void canNotMovePiece() {
-        Board board = new Board();
+        Board board =new ChessGame().getBoard();
 
         assertThatThrownBy(() -> board.move(new Position(File.A, Rank.ONE), new Position(File.A, Rank.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
