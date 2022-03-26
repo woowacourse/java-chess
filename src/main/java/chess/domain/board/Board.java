@@ -14,7 +14,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Board {
 
@@ -32,11 +31,11 @@ public class Board {
 
     public void move(Position from, Position to) {
         Piece piece = board.get(from);
-
+        Direction direction = piece.findDirection(from, to);
         validNowTurn(piece);
         piece.movable(from, to);
-        validArrive(piece, board.get(to));
-        validPath(from, to, piece.findDirection(from, to));
+        piece.validArrive(board.get(to), direction);
+        validPath(from, to, direction);
 
         board.put(to, piece);
         board.remove(from);
@@ -46,12 +45,6 @@ public class Board {
     private void validNowTurn(Piece piece) {
         if (!piece.isSameTeam(turn)) {
             throw new IllegalArgumentException("현재 차례는 " + turn + "입니다.");
-        }
-    }
-
-    private void validArrive(Piece from, Piece to) {
-        if (Objects.nonNull(to) && from.isSameTeam(to)) {
-            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
         }
     }
 

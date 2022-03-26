@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -16,16 +17,22 @@ public abstract class Piece {
 
     public abstract Direction findDirection(Position from, Position to);
 
-    public String getName() {
+    public final String getName() {
         return team.convert(name);
     }
 
-    public boolean isSameTeam(Piece piece) {
+    public final boolean isSameTeam(Piece piece) {
         return piece.team == this.team;
     }
 
-    public boolean isSameTeam(Team team) {
+    public final boolean isSameTeam(Team team) {
         return team == this.team;
+    }
+
+    public void validArrive(Piece to, Direction direction) {
+        if (Objects.nonNull(to) && isSameTeam(to)) {
+            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
+        }
     }
 
     @Override

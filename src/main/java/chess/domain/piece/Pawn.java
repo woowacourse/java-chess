@@ -10,6 +10,7 @@ import static chess.domain.piece.Team.WHITE;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
+import java.util.Objects;
 
 public class Pawn extends Piece {
 
@@ -66,5 +67,17 @@ public class Pawn extends Piece {
         }
 
         return direction;
+    }
+
+    @Override
+    public void validArrive(Piece to, Direction direction) {
+        if ((direction == NORTH || direction == SOUTH) && Objects.nonNull(to)) {
+            throw new IllegalArgumentException("도착 지점에 말이 있어 이동이 불가능합니다.");
+        }
+
+        if (Direction.pullDiagonalDirections().contains(direction)
+                && (Objects.isNull(to) || this.isSameTeam(to))) {
+            throw new IllegalArgumentException("Pawn 의 대각선 이동은 상대편의 말을 잡을 때만 가능합니다.");
+        }
     }
 }
