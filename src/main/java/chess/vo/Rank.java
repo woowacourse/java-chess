@@ -1,10 +1,10 @@
 package chess.vo;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.*;
+
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Rank {
     ONE(1),
@@ -16,37 +16,37 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
-    private final int index;
+    private final int value;
 
-    Rank(int index) {
-        this.index = index;
+    Rank(int value) {
+        this.value = value;
     }
 
     public static Rank of(String input) {
         return Arrays.stream(values())
-            .filter(rank -> rank.index == Integer.parseInt(input))
+            .filter(rank -> rank.value == Integer.parseInt(input))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
     }
 
     public static List<Rank> reverseValues() {
-        List<Rank> list = new ArrayList<>(List.of(values()));
-        Collections.reverse(list);
-        return list;
-    }
-
-    public int displacement(Rank other) {
-        return other.index - this.index;
+        return Arrays.stream(values())
+            .sorted(Comparator.reverseOrder())
+            .collect(toUnmodifiableList());
     }
 
     public static List<Rank> traceGroup(Rank source, Rank target) {
         return Arrays.stream(values())
             .filter(rank -> rank.isBetween(source, target))
-            .collect(Collectors.toList());
+            .collect(toUnmodifiableList());
+    }
+
+    public int displacement(Rank other) {
+        return other.value - this.value;
     }
 
     private boolean isBetween(Rank source, Rank target) {
-        if (source.compareTo(target) > 0) {
+        if (source.isBiggerThan(target)) {
             return this.isBiggerThan(target) && source.isBiggerThan(this);
         }
         return this.isBiggerThan(source) && target.isBiggerThan(this);

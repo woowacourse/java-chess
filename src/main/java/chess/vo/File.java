@@ -1,8 +1,9 @@
 package chess.vo;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum File {
     A("a"),
@@ -30,11 +31,11 @@ public enum File {
     public static List<File> traceGroup(File source, File target) {
         return Arrays.stream(values())
             .filter(file -> file.isBetween(source, target))
-            .collect(Collectors.toList());
+            .collect(toUnmodifiableList());
     }
 
     private boolean isBetween(File source, File target) {
-        if (source.compareTo(target) > 0) {
+        if (source.isBiggerThan(target)) {
             return this.isBiggerThan(target) && source.isBiggerThan(this);
         }
         return this.isBiggerThan(source) && target.isBiggerThan(this);
