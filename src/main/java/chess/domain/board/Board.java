@@ -7,22 +7,15 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
 
     private static final int NEXT = 1;
-//    private final Map<Position, Piece> value = new HashMap<>();
-    private Map<Position, Piece> value = new HashMap<>();
-//    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> value;
 
     public Board(final Initializable initializable) {
         value = initializable.init();
-    }
-
-    public Board() {
-        BoardInitializer.init(value);
     }
 
     public Map<Position, Piece> toMap() {
@@ -30,18 +23,22 @@ public class Board {
     }
 
     public void move(final Position from, final Position to) {
-        Piece piece = value.get(from);
+        final Piece piece = getPiece(from);
         piece.checkPieceMoveRange(this, from, to);
-        value.put(to, piece);
+        value.put(to, value.remove(from));
     }
 
-    public boolean isMatchingColor(final Position from, final Color color) {
-        Piece piece = value.get(from);
+    public boolean isMatchingColor(final Position target, final Color color) {
+        Piece piece = getPiece(target);
         return piece.isSameColor(color);
     }
 
     public Piece getPiece(final Position position) {
-        return value.get(position);
+        final Piece piece = value.get(position);
+        if (piece != null) {
+            return piece;
+        }
+        throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
     }
 
     public boolean hasPieceInFile(final Position from, final Position to) {
@@ -96,15 +93,13 @@ public class Board {
         }
     }
 
-    public void initEmpty() {
-        value.clear();
-    }
-
-    public void setPiece(final Position position, final Piece piece) {
-        value.put(position, piece);
-    }
-
     public boolean hasPiece(final Position position) {
         return value.get(position) != null;
+    }
+
+    public void checkHasPiece(final Position to) {
+        if (value.get(to) != null) {
+            throw new IllegalArgumentException("도착 지점에 기물이 존재합니다.");
+        }
     }
 }

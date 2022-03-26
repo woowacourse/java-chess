@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.Initializable;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 

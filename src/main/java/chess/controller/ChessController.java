@@ -25,7 +25,7 @@ public class ChessController {
         try {
             Command.execute(Input.inputCommand(enterable), chessGame);
             printBoard(chessGame);
-        } catch (IllegalStateException exception) {
+        } catch (IllegalStateException | IllegalArgumentException exception) {
             Output.printExceptionMessage(exception.getMessage());
         }
     }

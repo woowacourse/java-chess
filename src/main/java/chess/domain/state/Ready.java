@@ -1,13 +1,14 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.position.Position;
 
 public class Ready extends State {
 
     @Override
     public State start() {
-        return new WhiteTurn(new Board());
+        return new WhiteTurn(new Board(new BoardInitializer()));
     }
 
     @Override

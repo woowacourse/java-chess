@@ -32,14 +32,14 @@ public class WhiteTurn extends State {
         return new BlackTurn(board);
     }
 
-    private void checkValidPosition(Position from, Position to) {
+    private void checkValidPosition(final Position from, final Position to) {
         if (from.equals(to)) {
             throw new IllegalArgumentException("출발 지점과 도착 지점 위치가 동일합니다.");
         }
         if (board.isMatchingColor(from, Color.BLACK)) {
             throw new IllegalArgumentException("흰색 말을 선택하세요.");
         }
-        if (board.isMatchingColor(to, Color.WHITE)) {
+        if (board.hasPiece(to) && board.isMatchingColor(to, Color.WHITE)) {
             throw new IllegalArgumentException("도착 지점에 나의 말이 존재합니다.");
         }
     }

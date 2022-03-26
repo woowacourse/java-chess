@@ -46,7 +46,7 @@ public class Pawn extends Piece {
         if (!isValidDirection(from, to) || !isForward(from, to)) {
             return false;
         }
-        checkHasPiece(board.getPiece(to));
+        board.checkHasPiece(to);
         return true;
     }
 
@@ -79,12 +79,6 @@ public class Pawn extends Piece {
 
     private boolean isDefaultForward(final int start, final int initRank, final int distance) {
         return start != initRank && distance == DEFAULT_FORWARD;
-    }
-
-    private void checkHasPiece(final Piece target) {
-        if (target != null) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
     }
 }
 

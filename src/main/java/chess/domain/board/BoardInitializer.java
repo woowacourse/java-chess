@@ -10,15 +10,6 @@ import java.util.Map;
 
 public final class BoardInitializer implements Initializable {
 
-    private BoardInitializer() {
-    }
-
-    public static void init(final Map<Position, Piece> value) {
-        initPawn(value);
-        initOtherPiece(value, Rank.EIGHT, Color.BLACK);
-        initOtherPiece(value, Rank.ONE, Color.WHITE);
-    }
-
     @Override
     public Map<Position, Piece> init() {
         Map<Position, Piece> initialBoard = new HashMap<>();

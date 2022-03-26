@@ -28,4 +28,10 @@ public enum Command {
                 .operate
                 .accept(input, chessGame);
     }
+
+    private void checkMoveCommandLength(final String[] command) {
+        if (command.length != 3) {
+            throw new IllegalArgumentException("'move source위치 target위치' 의 형식으로 입력해주세요.");
+        }
+    }
 }

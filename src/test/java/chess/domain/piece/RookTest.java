@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class RookTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
-    private static final Board board = new Board();
 
     @DisplayName("흰 룩 앞으로 전진")
     @ParameterizedTest
@@ -63,7 +62,7 @@ public class RookTest {
     void diagonal(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatThrownBy(() -> rook.checkPieceMoveRange(board, Position.from("d4"), Position.from(toPosition)))
+        assertThatThrownBy(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("d4"), Position.from(toPosition)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("룩은 대각선으로 이동할 수 없습니다.");
     }

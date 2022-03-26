@@ -30,4 +30,37 @@ class CommandTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임이 이미 시작되었습니다.");
     }
+
+//    @Test
+//    @DisplayName("move 명령어 입력 시 위치 입력을 안할 경우 예외 처리")
+//    void onlyMoveCommand() {
+//        ChessGame chessGame = new ChessGame();
+//        Command.execute(new String[]{"start"}, chessGame);
+//
+//        assertThatThrownBy(() -> Command.execute(new String[]{"move"}, chessGame))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessageContaining("'move source위치 target위치' 의 형식으로 입력해주세요.");
+//    }
+//
+//    @Test
+//    @DisplayName("move 명령어 입력 시 출발 위치만 입력할 경우 예외 처리")
+//    void onlyStartPosition() {
+//        ChessGame chessGame = new ChessGame();
+//        Command.execute(new String[]{"start"}, chessGame);
+//
+//        assertThatThrownBy(() -> Command.execute(new String[]{"move", "a1"}, chessGame))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessageContaining("'move source위치 target위치' 의 형식으로 입력해주세요.");
+//    }
+//
+//    @Test
+//    @DisplayName("move 명령어 입력 시 출발 위치만 입력할 경우 예외 처리")
+//    void hasThreePosition() {
+//        ChessGame chessGame = new ChessGame();
+//        Command.execute(new String[]{"start"}, chessGame);
+//
+//        assertThatThrownBy(() -> Command.execute(new String[]{"move", "a1", "a2", "a3"}, chessGame))
+//                .isInstanceOf(IllegalArgumentException.class)
+//                .hasMessageContaining("'move source위치 target위치' 의 형식으로 입력해주세요.");
+//    }
 }

@@ -29,17 +29,17 @@ public class BlackTurn extends State {
     public State move(final Position from, final Position to) {
         checkValidPosition(from, to);
         board.move(from, to);
-        return new BlackTurn(board);
+        return new WhiteTurn(board);
     }
 
-    private void checkValidPosition(Position from, Position to) {
+    private void checkValidPosition(final Position from, final Position to) {
         if (from.equals(to)) {
             throw new IllegalArgumentException("출발 지점과 도착 지점 위치가 동일합니다.");
         }
         if (board.isMatchingColor(from, Color.WHITE)) {
             throw new IllegalArgumentException("검은색 말을 선택하세요.");
         }
-        if (board.isMatchingColor(to, Color.BLACK)) {
+        if (board.hasPiece(to) && board.isMatchingColor(to, Color.BLACK)) {
             throw new IllegalArgumentException("도착 지점에 나의 말이 존재합니다.");
         }
     }
