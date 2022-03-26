@@ -30,20 +30,11 @@ public enum File {
         return value - file.value;
     }
 
-    public File plus() {
+    public File move(final int distance) {
         try {
-            return of((char) (value + (char) 1));
+            return of((char) (value + (char) distance));
         } catch (IllegalArgumentException exception) {
             return null;
         }
-    }
-
-    public File minus() {
-        try {
-            return of((char) (value - (char) 1));
-        } catch (IllegalArgumentException exception) {
-            return null;
-        }
-
     }
 }

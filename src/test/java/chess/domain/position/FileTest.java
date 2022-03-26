@@ -33,14 +33,14 @@ public class FileTest {
     @DisplayName("File을 1 증가시킨다.")
     void plus() {
         File file = File.of('b');
-        assertThat(file.plus()).isEqualTo(File.C);
+        assertThat(file.move(1)).isEqualTo(File.C);
     }
 
     @Test
     @DisplayName("File을 1 감소시킨다.")
     void minus() {
         File file = File.of('b');
-        assertThat(file.minus()).isEqualTo(File.A);
+        assertThat(file.move(-1)).isEqualTo(File.A);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class FileTest {
     void plusOutOfBounds() {
         File file = File.of('h');
 
-        assertThat(file.plus()).isNull();
+        assertThat(file.move(1)).isNull();
     }
 
     @Test
@@ -56,6 +56,6 @@ public class FileTest {
     void minusOutOfBounds() {
         File file = File.of('a');
 
-        assertThat(file.minus()).isNull();
+        assertThat(file.move(-1)).isNull();
     }
 }

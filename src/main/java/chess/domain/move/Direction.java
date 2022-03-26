@@ -1,47 +1,40 @@
 package chess.domain.move;
 
-import chess.domain.move.movestrategy.East;
-import chess.domain.move.movestrategy.MoveStrategy;
-import chess.domain.move.movestrategy.None;
-import chess.domain.move.movestrategy.North;
-import chess.domain.move.movestrategy.NorthEast;
-import chess.domain.move.movestrategy.NorthWest;
-import chess.domain.move.movestrategy.South;
-import chess.domain.move.movestrategy.SouthEast;
-import chess.domain.move.movestrategy.SouthWest;
-import chess.domain.move.movestrategy.West;
-import chess.domain.position.Position;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Direction {
 
-    EAST(((file, rank) -> file > 0 && rank == 0), new East()),
-    WEST(((file, rank) -> file < 0 && rank == 0), new West()),
-    NORTH(((file, rank) -> file == 0 && rank > 0), new North()),
-    SOUTH(((file, rank) -> file == 0 && rank < 0), new South()),
-    NORTH_EAST(((file, rank) -> file > 0 && rank > 0 && file == rank), new NorthEast()),
-    NORTH_WEST(((file, rank) -> file < 0 && rank > 0 && -file == rank), new NorthWest()),
-    SOUTH_EAST(((file, rank) -> file > 0 && rank < 0 && -file == rank), new SouthEast()),
-    SOUTH_WEST(((file, rank) -> file < 0 && rank < 0 && file == rank), new SouthWest()),
-    KNIGHT_EAST_LEFT(((file, rank) -> file == 2 && rank == 1), new None()),
-    KNIGHT_EAST_RIGHT(((file, rank) -> file == 2 && rank == -1), new None()),
-    KNIGHT_WEST_LEFT(((file, rank) -> file == -2 && rank == -1), new None()),
-    KNIGHT_WEST_RIGHT(((file, rank) -> file == -2 && rank == 1), new None()),
-    KNIGHT_NORTH_LEFT(((file, rank) -> file == -1 && rank == 2), new None()),
-    KNIGHT_NORTH_RIGHT(((file, rank) -> file == 1 && rank == 2), new None()),
-    KNIGHT_SOUTH_LEFT(((file, rank) -> file == 1 && rank == -2), new None()),
-    KNIGHT_SOUTH_RIGHT(((file, rank) -> file == -1 && rank == -2), new None()),
-    NONE(((file, rank) -> false), new None()),
+    EAST(((file, rank) -> file > 0 && rank == 0), 1, 0),
+    WEST(((file, rank) -> file < 0 && rank == 0), -1, 0),
+    NORTH(((file, rank) -> file == 0 && rank > 0), 0, 1),
+    SOUTH(((file, rank) -> file == 0 && rank < 0), 0, -1),
+    NORTH_EAST(((file, rank) -> file > 0 && rank > 0 && file == rank), 1, 1),
+    NORTH_WEST(((file, rank) -> file < 0 && rank > 0 && -file == rank), -1, 1),
+    SOUTH_EAST(((file, rank) -> file > 0 && rank < 0 && -file == rank), 1, -1),
+    SOUTH_WEST(((file, rank) -> file < 0 && rank < 0 && file == rank), -1, -1),
+    KNIGHT_EAST_LEFT(((file, rank) -> file == 2 && rank == 1), 2, 1),
+    KNIGHT_EAST_RIGHT(((file, rank) -> file == 2 && rank == -1), 2, -1),
+    KNIGHT_WEST_LEFT(((file, rank) -> file == -2 && rank == -1), -2, 1),
+    KNIGHT_WEST_RIGHT(((file, rank) -> file == -2 && rank == 1), -2, -1),
+    KNIGHT_NORTH_LEFT(((file, rank) -> file == -1 && rank == 2), -1, 2),
+    KNIGHT_NORTH_RIGHT(((file, rank) -> file == 1 && rank == 2), 1, 2),
+    KNIGHT_SOUTH_LEFT(((file, rank) -> file == 1 && rank == -2), 1, -2),
+    KNIGHT_SOUTH_RIGHT(((file, rank) -> file == -1 && rank == -2), -1, -2),
+    NONE(((file, rank) -> false), 0, 0),
     ;
 
     private final BiPredicate<Integer, Integer> condition;
-    private final MoveStrategy moveStrategy;
+    private final int fileDistance;
+    private final int rankDistance;
 
     Direction(final BiPredicate<Integer, Integer> condition,
-        final MoveStrategy moveStrategy) {
+        final int fileDistance, final int rankDistance) {
         this.condition = condition;
-        this.moveStrategy = moveStrategy;
+        this.fileDistance = fileDistance;
+        this.rankDistance = rankDistance;
     }
 
     public static Direction of(final int fileDistance, final int rankDistance) {
@@ -51,7 +44,11 @@ public enum Direction {
             .orElse(NONE);
     }
 
-    public Position move(final Position from) {
-        return from.move(moveStrategy);
+    public File moveFile(final File file) {
+        return file.move(fileDistance);
+    }
+
+    public Rank moveRank(final Rank rank) {
+        return rank.move(rankDistance);
     }
 }

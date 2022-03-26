@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.move.movestrategy.MoveStrategy;
+import chess.domain.move.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -22,8 +22,8 @@ public class Position {
         return new Position(file, rank);
     }
 
-    public Position move(final MoveStrategy moveStrategy) {
-        return moveStrategy.move(file, rank);
+    public Position move(final Direction direction) {
+        return new Position(direction.moveFile(file), direction.moveRank(rank));
     }
 
     public boolean isSameRank(final Rank rank) {

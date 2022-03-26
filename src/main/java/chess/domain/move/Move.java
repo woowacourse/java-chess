@@ -75,7 +75,7 @@ public class Move {
     }
 
     private boolean isBlocked(final Direction direction, final Position from, final Position to) {
-        final Position next = direction.move(from);
+        final Position next = from.move(direction);
         if (next.equals(to)) {
             return false;
         }

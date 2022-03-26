@@ -42,19 +42,12 @@ public enum Rank {
         return value - rank.value;
     }
 
-    public Rank plus() {
+    public Rank move(final int distance) {
         try {
-            return of(value + 1);
+            return of(value + distance);
         } catch (IllegalArgumentException exception) {
             return null;
         }
     }
 
-    public Rank minus() {
-        try {
-            return of(value - 1);
-        } catch (IllegalArgumentException exception) {
-            return null;
-        }
-    }
 }

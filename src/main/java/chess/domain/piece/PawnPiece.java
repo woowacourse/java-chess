@@ -20,17 +20,18 @@ public class PawnPiece extends Piece {
 
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
-        return isInitialForwardMove(direction, from, rankDistance) ||
+        return isInitialForwardMove(direction, isEmptyTarget, from, rankDistance) ||
             isForwardMove(direction, isEmptyTarget, rankDistance) ||
             isDiagonalMove(direction, isEmptyTarget, rankDistance, fileDistance);
     }
 
-    private boolean isInitialForwardMove(final Direction direction, final Position from,
+    private boolean isInitialForwardMove(final Direction direction, final boolean isEmptyTarget,
+        final Position from,
         final int rankDistance) {
-        return (super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) &&
+        return isEmptyTarget && ((super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) &&
             direction == Direction.SOUTH && Math.abs(rankDistance) <= LIMIT_DISTANCE) ||
             (super.isSameColor(Color.WHITE) && from.isSameRank(Rank.TWO) &&
-                direction == Direction.NORTH && Math.abs(rankDistance) <= LIMIT_DISTANCE);
+                direction == Direction.NORTH && Math.abs(rankDistance) <= LIMIT_DISTANCE));
     }
 
     private boolean isForwardMove(final Direction direction, final Boolean isEmptyTarget,
@@ -55,5 +56,4 @@ public class PawnPiece extends Piece {
             (super.isSameColor(Color.BLACK) &&
                 (direction == Direction.SOUTH_EAST || direction == Direction.SOUTH_WEST));
     }
-
 }

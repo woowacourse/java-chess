@@ -62,7 +62,7 @@ class PawnPieceTest {
         Position from = Position.create("a2");
         Position to = Position.create("a4");
 
-        assertTrue(pawn.isMovable(from, to, false));
+        assertTrue(pawn.isMovable(from, to, true));
     }
 
     @Test
@@ -72,7 +72,7 @@ class PawnPieceTest {
         Position from = Position.create("a7");
         Position to = Position.create("a5");
 
-        assertTrue(pawn.isMovable(from, to, false));
+        assertTrue(pawn.isMovable(from, to, true));
     }
 
     @ParameterizedTest

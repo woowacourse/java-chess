@@ -33,29 +33,29 @@ public class RankTest {
     @DisplayName("Rank를 1 증가시킨다.")
     void plus() {
         Rank rank = Rank.of(5);
-        assertThat(rank.plus()).isEqualTo(Rank.SIX);
+        assertThat(rank.move(1)).isEqualTo(Rank.SIX);
     }
 
     @Test
     @DisplayName("Rank를 1 감소시킨다.")
     void minus() {
         Rank rank = Rank.of(5);
-        assertThat(rank.minus()).isEqualTo(Rank.FOUR);
+        assertThat(rank.move(-1)).isEqualTo(Rank.FOUR);
     }
 
     @Test
     @DisplayName("Rank를 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
     void plusOutOfBounds() {
-        Rank rank = Rank.of(8);
+        Rank rank = Rank.of(7);
 
-        assertThat(rank.plus()).isNull();
+        assertThat(rank.move(2)).isNull();
     }
 
     @Test
     @DisplayName("Rank를 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
     void minusOutOfBounds() {
-        Rank rank = Rank.of(1);
+        Rank rank = Rank.of(2);
 
-        assertThat(rank.minus()).isNull();
+        assertThat(rank.move(-2)).isNull();
     }
 }
