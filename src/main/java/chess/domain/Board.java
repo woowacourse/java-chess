@@ -36,6 +36,10 @@ public class Board {
 		move(from, to, fromPiece);
 	}
 
+	public boolean isWhite(Position position) {
+		return checkFromPieceEmpty(position).isWhite();
+	}
+
 	private Piece checkFromPieceEmpty(Position from) {
 		Optional<Piece> piece = findPiece(from);
 		if (piece.isEmpty()) {
@@ -89,5 +93,9 @@ public class Board {
 	private void move(Position from, Position to, Piece piece) {
 		this.pieces.remove(from);
 		this.pieces.put(to, piece);
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return new HashMap<>(pieces);
 	}
 }

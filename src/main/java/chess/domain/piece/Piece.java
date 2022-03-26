@@ -21,4 +21,8 @@ public abstract class Piece {
 	}
 
 	public abstract boolean isPawn();
+
+	public boolean isWhite() {
+		return this.color == Color.WHITE;
+	}
 }

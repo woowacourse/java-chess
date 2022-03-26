@@ -1,6 +1,5 @@
 package chess;
 
-import chess.domain.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -10,8 +9,16 @@ public class ChessController {
 	private final OutputView outputView = new OutputView();
 
 	public void run() {
-		if (inputView.askIfStart()) {
-			outputView.displayChessBoard(new Board());
+
+	}
+
+	private String some() {
+		try {
+			return inputView.askCommand();
+		}
+		catch (IllegalArgumentException exception) {
+			System.out.println(exception.getMessage());
+			return some();
 		}
 	}
 }
