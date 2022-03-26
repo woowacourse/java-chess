@@ -52,6 +52,10 @@ public class Position {
         return ordinate == position.ordinate;
     }
 
+    public boolean isSameOrdinate(final Ordinate ordinate) {
+        return this.ordinate == ordinate;
+    }
+
     public int getOrdinateDifference(Position position) {
         return ordinate.getCoordinate() - position.ordinate.getCoordinate();
     }

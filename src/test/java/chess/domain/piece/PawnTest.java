@@ -46,4 +46,22 @@ public class PawnTest {
 
         assertThat(whitePawn.isMovable(from, to));
     }
+
+    @Test
+    @DisplayName("초기 위치에서 Pawn이 움직일 수 있는지 여부를 확인한다.")
+    void isInitialPositionWhiteMovableTest() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.TWO);
+        Position to = Position.valueOf(Abscissa.a, Ordinate.FOUR);
+
+        assertThat(whitePawn.isMovable(from, to)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Pawn은 초기 위치가 아니면 2칸 이동 할 수 없다.")
+    void isWhiteNotMovableTwoStepTest() {
+        Position from = Position.valueOf(Abscissa.a, Ordinate.THREE);
+        Position to = Position.valueOf(Abscissa.a, Ordinate.FIVE);
+
+        assertThat(whitePawn.isMovable(from, to)).isFalse();
+    }
 }
