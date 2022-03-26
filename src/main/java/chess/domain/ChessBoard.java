@@ -11,11 +11,9 @@ import java.util.List;
 public class ChessBoard {
 
     private final List<List<Piece>> board;
-    private Color turn;
 
     public ChessBoard(BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
-        this.turn = Color.WHITE;
     }
 
     public void move(String source, String target) {
@@ -24,14 +22,10 @@ public class ChessBoard {
         validateSamePosition(sourcePosition, targetPosition);
 
         Piece sourcePiece = findPiece(sourcePosition);
-        validateTurn(sourcePiece);
-
         sourcePiece.validateMove(board, sourcePosition, targetPosition);
 
         board.get(sourcePosition.getRankIndex()).set(sourcePosition.getFileIndex(), new EmptyPiece());
         board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), sourcePiece);
-
-        turn = turn.change();
     }
 
     private void validateSamePosition(Position sourcePosition, Position targetPosition) {
@@ -52,12 +46,6 @@ public class ChessBoard {
     private void validateEmptyPiece(Piece piece) {
         if (piece.isEmpty()) {
             throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
-        }
-    }
-
-    private void validateTurn(Piece sourcePiece) {
-        if (!sourcePiece.isSameColor(turn)) {
-            throw new IllegalArgumentException("source 위치의 기물이 본인의 기물이 아닙니다.");
         }
     }
 
@@ -100,6 +88,11 @@ public class ChessBoard {
         return 0;
     }
 
+    public boolean isTurn(String source, Color color) {
+        Piece sourcePiece = findPiece(new Position(source));
+        return sourcePiece.isSameColor(color);
+    }
+
     public boolean isFinished() {
         long count = board.stream()
                 .flatMap(List::stream)
@@ -107,10 +100,6 @@ public class ChessBoard {
                 .count();
 
         return count != 2;
-    }
-
-    public Color getTurn() {
-        return turn;
     }
 
     public List<List<Piece>> getBoard() {
