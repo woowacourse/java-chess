@@ -2,7 +2,6 @@ package chess.gamestate;
 
 import chess.domain.ChessBoard;
 import chess.domain.PromotionPiece;
-import chess.domain.piece.Piece;
 
 public class Promotion extends Running {
 
@@ -15,8 +14,7 @@ public class Promotion extends Running {
 
     @Override
     public GameState run(String command) {
-        Piece promotionPiece = PromotionPiece.createPromotionPiece(command, color);
-        chessBoard.promotion(promotionPiece, color);
+        chessBoard.promotion(PromotionPiece.createPromotionPiece(command), color);
         return beforeRunning.otherState(chessBoard);
     }
 

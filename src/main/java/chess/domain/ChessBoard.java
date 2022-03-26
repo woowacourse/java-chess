@@ -46,14 +46,14 @@ public class ChessBoard {
         }
     }
 
-    public void promotion(Piece piece, Color color) {
+    public void promotion(PromotionPiece promotionPiece, Color color) {
         Position position = pieces.entrySet()
                 .stream()
                 .filter(entry -> isPromotionPositionPawn(entry.getKey(), entry.getValue(), color))
                 .map(Entry::getKey)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("프로모션 프로모션 가능한 기물이 없습니다."));
-        pieces.put(position, piece);
+        pieces.put(position, promotionPiece.createPiece(color));
     }
 
     public boolean isPositionEmpty(Position position) {

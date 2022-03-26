@@ -69,7 +69,7 @@ class ChessBoardTest {
     @DisplayName("프로모션이 불가능할 때 예외발생")
     void promotionExceptionByStatus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a','2'), new WhitePawn()));
-        assertThatThrownBy(() -> chessBoard.promotion(new Queen(WHITE), WHITE))
+        assertThatThrownBy(() -> chessBoard.promotion(PromotionPiece.QUEEN, WHITE))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("프로모션 프로모션 가능한 기물이 없습니다.");
     }
@@ -79,7 +79,7 @@ class ChessBoardTest {
     void promotion() {
         Position position = Position.of('a', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(position, new WhitePawn()));
-        chessBoard.promotion(new Queen(WHITE), WHITE);
+        chessBoard.promotion(PromotionPiece.QUEEN, WHITE);
         assertThat(chessBoard.pieceByPosition(position)).isInstanceOf(Queen.class);
     }
 

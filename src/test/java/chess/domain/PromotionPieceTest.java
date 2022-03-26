@@ -12,11 +12,19 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PromotionPieceTest {
 
+    @Test
+    @DisplayName("Promotion 기물 생성 시 null입력 예외발생")
+    void createPromotionPieceNullException() {
+        assertThatThrownBy(() -> PromotionPiece.createPromotionPiece(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("input은 null이 들어올 수 없습니다.");
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"q", "r", "p", "k"})
     @DisplayName("Promotion 기물 생성 시 잘못된 입력값이 들어올 경우 예외발생")
     void cretePromotionPieceException(String input) {
-        assertThatThrownBy(() -> PromotionPiece.createPromotionPiece(input, Color.WHITE))
+        assertThatThrownBy(() -> PromotionPiece.createPromotionPiece(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 프로모션 기물 이름입니다.");
     }
@@ -24,7 +32,16 @@ class PromotionPieceTest {
     @Test
     @DisplayName("입력값에 따른 기물 생성")
     void createPromotionPiece() {
-        Piece piece = PromotionPiece.createPromotionPiece("N", Color.WHITE);
+        PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece("N");
+        assertThat(promotionPiece).isEqualTo(PromotionPiece.KNIGHT);
+    }
+
+    @Test
+    @DisplayName("색상을 받아 piece 생성")
+    void createPiece() {
+        PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece("N");
+        Piece piece = promotionPiece.createPiece(Color.WHITE);
+
         assertThat(piece).isInstanceOf(Knight.class);
     }
 }

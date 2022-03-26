@@ -2,8 +2,8 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.multiple.Bishop;
+import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.multiple.Rook;
-import chess.domain.piece.single.King;
 import chess.domain.piece.single.Knight;
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public enum PromotionPiece {
 
-    QUEEN("Q", King::new),
+    QUEEN("Q", Queen::new),
     ROOK("R", Rook::new),
     BISHOP("B", Bishop::new),
     KNIGHT("N", Knight::new),
@@ -25,13 +25,15 @@ public enum PromotionPiece {
         this.createPieceFunction = createPieceFunction;
     }
 
-    public static Piece createPromotionPiece(String input, Color color) {
+    public static PromotionPiece createPromotionPiece(String input) {
         Objects.requireNonNull(input, "input은 null이 들어올 수 없습니다.");
-        Objects.requireNonNull(color, "color는 null이 들어올 수 없습니다.");
         return Arrays.stream(values())
                 .filter(promotion -> promotion.value.equals(input))
-                .map(promotion -> promotion.createPieceFunction.apply(color))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("불가능한 프로모션 기물 이름입니다."));
+    }
+
+    public Piece createPiece(Color color) {
+        return createPieceFunction.apply(color);
     }
 }
