@@ -36,4 +36,8 @@ public class ChessGame {
 
         state = state.move(from, to);
     }
+
+    public void status() {
+        state.status();
+    }
 }

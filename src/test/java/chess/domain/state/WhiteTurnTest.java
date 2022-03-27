@@ -22,7 +22,7 @@ public class WhiteTurnTest {
 
     @Test
     @DisplayName("출발 지점과 도착 지점이 같을 경우 예외 발생")
-    void moveToEqualsPosition() {
+    void moveToEqualsPositionException() {
         State whiteTurn = new WhiteTurn(board);
 
         assertThatThrownBy(() -> whiteTurn.move(Position.from("a1"), Position.from("a1")))
@@ -52,7 +52,7 @@ public class WhiteTurnTest {
 
     @Test
     @DisplayName("킹을 잡을 경우 게임 종료")
-    void end() {
+    void isRunningFalse() {
         Map<Position, Piece> catchKingBoard = new HashMap<>();
         catchKingBoard.put(Position.from("a1"), new Queen(Color.WHITE));
         catchKingBoard.put(Position.from("a2"), new King(Color.BLACK));

@@ -20,6 +20,11 @@ public class End extends State {
     }
 
     @Override
+    public void status() {
+        throw new IllegalStateException("게임이 종료됐습니다.");
+    }
+
+    @Override
     public boolean isRunning() {
         return false;
     }

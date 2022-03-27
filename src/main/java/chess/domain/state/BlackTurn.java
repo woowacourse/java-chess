@@ -18,8 +18,13 @@ public class BlackTurn extends Turn {
         board.move(from, to);
 
         if (isEnded(color)) {
-            return new End();
+            return new Ready(board);
         }
         return new WhiteTurn(board);
+    }
+
+    @Override
+    public void status() {
+        throw new IllegalStateException("게임이 종료된 이후 점수 조회가 가능합니다.");
     }
 }

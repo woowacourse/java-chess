@@ -11,6 +11,7 @@ public enum Command {
         checkMoveCommandLength(input);
         chessGame.move(input);
     }),
+    STATUS("status", (input, chessGame) -> chessGame.status()),
     ;
 
     private static final int COMMAND_LOCATION = 0;

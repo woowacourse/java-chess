@@ -17,6 +17,8 @@ public abstract class State {
 
     public abstract State end();
 
+    public abstract void status();
+
     public abstract boolean isRunning();
 
     public final Map<Position, Piece> getBoard() {
