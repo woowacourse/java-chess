@@ -31,6 +31,10 @@ public abstract class Piece {
         return team == this.team;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public float getScore() {
         return score;
     }

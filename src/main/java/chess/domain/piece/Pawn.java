@@ -30,6 +30,14 @@ public class Pawn extends Piece {
         return Direction.pullBlackPawnDirections();
     }
 
+    private boolean isWhiteStart(Position position) {
+        return super.isSameTeam(WHITE) && position.isSameRow(Row.TWO);
+    }
+
+    private boolean isBlackStart(Position position) {
+        return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
+    }
+
     @Override
     public void movable(Position from, Position to) {
         Direction direction = from.findDirection(to, true);
@@ -47,12 +55,9 @@ public class Pawn extends Piece {
         }
     }
 
-    private boolean isWhiteStart(Position position) {
-        return super.isSameTeam(WHITE) && position.isSameRow(Row.TWO);
-    }
-
-    private boolean isBlackStart(Position position) {
-        return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

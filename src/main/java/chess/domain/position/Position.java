@@ -45,6 +45,18 @@ public class Position {
         return target == 0 || target == 1 || target == -1;
     }
 
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+
+    public boolean isSameColumn(Position position) {
+        return this.column == position.column;
+    }
+
+    public Position move(Direction direction) {
+        return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,14 +72,6 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
-    }
-
-    public boolean isSameRow(Row row) {
-        return this.row == row;
-    }
-
-    public Position move(Direction direction) {
-        return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
     }
 
     @Override
