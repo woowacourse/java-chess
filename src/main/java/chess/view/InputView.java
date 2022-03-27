@@ -47,7 +47,11 @@ public class InputView {
     }
 
     private static void validateGameCommand(final String command) {
-        if (!PATTERN.matcher(command).matches() && !command.equals("status") && !command.equals("end")) {
+        final boolean isMoveCommand = PATTERN.matcher(command).matches();
+        final boolean isStatusCommand = command.equals("status");
+        final boolean isEndCommand = command.equals("end");
+
+        if (!isMoveCommand && !isStatusCommand && !isEndCommand) {
             throw new IllegalArgumentException("올바르지 않은 명령어를 입력하셨습니다.");
         }
     }
