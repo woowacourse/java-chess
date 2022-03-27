@@ -35,7 +35,7 @@ public class Board {
 
 	private void validateMove(final Position source, final Position target, final Piece piece) {
 		validateBlank(piece);
-		piece.validateMovement(source, target);
+		piece.validateMovement(source, target, board.get(target));
 		validateBlocking(source, target, piece);
 	}
 
@@ -46,7 +46,6 @@ public class Board {
 			checkPosition = checkPosition.addDirection(direction);
 			Piece currentPiece = board.get(checkPosition);
 			checkBlocking(target, checkPosition, currentPiece);
-			piece.validateCatch(currentPiece, direction);
 		}
 	}
 

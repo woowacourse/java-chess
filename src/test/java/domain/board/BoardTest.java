@@ -110,7 +110,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(whitePawn, Position.of(5, 4)))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("폰은 해당 위치의 기물을 잡을 수 없습니다.");
+				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}
 
 	@Test

@@ -5,7 +5,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,28 +17,49 @@ public class PawnTest {
 
 	@Test
 	void checkBlackTeamSymbol() {
-		Pawn pawn = new Pawn(Team.BLACK);
+		Piece pawn = new Pawn(Team.BLACK);
 		assertThat(pawn.getSymbol()).isEqualTo("P");
 	}
 
 	@Test
 	void checkWhiteTeamSymbol() {
-		Pawn pawn = new Pawn(Team.WHITE);
+		Piece pawn = new Pawn(Team.WHITE);
 		assertThat(pawn.getSymbol()).isEqualTo("p");
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"3, 3, BLACK", "3, 4, BLACK", "3, 5, BLACK", "5, 3, WHITE", "5, 4, WHITE", "5, 5, WHITE"})
-	void validateMovement(int targetRow, int targetColumn, Team team) {
-		Pawn pawn = new Pawn(team);
-		assertDoesNotThrow(() -> pawn.validateMovement(Position.of(4, 4), Position.of(targetRow, targetColumn)));
+	@CsvSource(value = {"3, 4, BLACK, WHITE", "5, 4, WHITE, BLACK"})
+	void validateMovement(int targetRow, int targetColumn, Team ally, Team enemy) {
+		Position source = Position.of(4, 4);
+		Piece sourcePawn = new Pawn(ally);
+		Position target = Position.of(targetRow, targetColumn);
+		Piece blank = new Blank();
+
+		assertDoesNotThrow(
+				() -> sourcePawn.validateMovement(source, target, blank));
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"3, 3, BLACK, WHITE", "3, 5, BLACK, WHITE", "5, 3, WHITE, BLACK", "5, 5, WHITE, BLACK"})
+	void validateAttackMovement(int targetRow, int targetColumn, Team ally, Team enemy) {
+		Position source = Position.of(4, 4);
+		Piece sourcePawn = new Pawn(ally);
+		Position target = Position.of(targetRow, targetColumn);
+		Piece targetPawn = new Pawn(enemy);
+
+		assertDoesNotThrow(
+				() -> sourcePawn.validateMovement(source, target, targetPawn));
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {"3, 3, WHITE", "3, 4, WHITE", "3, 5, WHITE", "5, 3, BLACK", "5, 4, BLACK", "5, 5, BLACK"})
-	void validateMovementException(int targetRow, int targetColumn, Team team) {
-		Pawn pawn = new Pawn(team);
-		assertThatThrownBy(() -> pawn.validateMovement(Position.of(4, 4), Position.of(targetRow, targetColumn)))
+	void validateNotAttackDirection(int targetRow, int targetColumn, Team ally) {
+		Position source = Position.of(4, 4);
+		Piece sourcePawn = new Pawn(ally);
+		Position target = Position.of(targetRow, targetColumn);
+		Piece targetPawn = new Blank();
+
+		assertThatThrownBy(() -> sourcePawn.validateMovement(source, target, targetPawn))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

@@ -8,7 +8,7 @@ public abstract class Piece {
 
 	protected static final String MOVEMENT_ERROR = "해당 기물은 그곳으로 이동할 수 없습니다.";
 
-	private static final String CAN_NOT_CATCH_SAME_TEAM_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
+	private static final String CAN_NOT_CATCH_Ally_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
 
 	private final String symbol;
 	protected final Team team;
@@ -28,9 +28,14 @@ public abstract class Piece {
 		return symbol;
 	}
 
-	public void validateCatch(final Piece targetPiece, final Direction direction) {
+	public final void validateMovement(final Position source, final Position target, final Piece targetPiece) {
+		validateCatchAlly(targetPiece);
+		validateDirection(source, target, targetPiece);
+	}
+
+	private void validateCatchAlly(final Piece targetPiece) {
 		if (this.team == targetPiece.team) {
-			throw new IllegalArgumentException(CAN_NOT_CATCH_SAME_TEAM_ERROR);
+			throw new IllegalArgumentException(CAN_NOT_CATCH_Ally_ERROR);
 		}
 	}
 
@@ -40,7 +45,7 @@ public abstract class Piece {
 
 	protected abstract String createSymbol(final Team team);
 
-	public abstract void validateMovement(Position source, Position target);
+	protected abstract void validateDirection(final Position source, final Position target, final Piece targetPiece);
 
 	public abstract boolean isBlank();
 

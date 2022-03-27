@@ -27,7 +27,7 @@ public enum Direction {
 	WWS(-1, -2);
 
 	private static final String NOT_SEARCH_DIRECTION_ERROR = "해당 방향이 없습니다.";
-	
+
 	private final int rowMovement;
 	private final int columnMovement;
 
@@ -44,11 +44,17 @@ public enum Direction {
 		return List.of(E, W, S, N, NE, NW, SE, SW);
 	}
 
-	public static List<Direction> getPawnByTeam(Team team) {
-		if (team.isBlack()) {
-			return List.of(S, SE, SW);
+	public static List<Direction> getPawnDirection(Team team, boolean isAttack) {
+		if (team.isBlack() && isAttack) {
+			return List.of(SE, SW);
 		}
-		return List.of(N, NE, NW);
+		if (team.isBlack()) {
+			return List.of(S);
+		}
+		if (isAttack) {
+			return List.of(NE, NW);
+		}
+		return List.of(N);
 	}
 
 	public static Direction getDefaultPawnByTeam(final Team team) {

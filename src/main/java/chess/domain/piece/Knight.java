@@ -22,7 +22,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void validateMovement(final Position source, final Position target) {
+	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		List<Direction> directions = Direction.getKnightDirection();
 		List<Position> movablePositions = source.calculateMovableByDirection(directions);
 		if (!movablePositions.contains(target)) {

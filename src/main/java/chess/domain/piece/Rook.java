@@ -20,7 +20,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public void validateMovement(final Position source, final Position target) {
+	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		if (!target.isLinerMove(source)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}

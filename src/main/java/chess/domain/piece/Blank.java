@@ -17,7 +17,7 @@ public class Blank extends Piece {
 	}
 
 	@Override
-	public void validateMovement(final Position source, final Position target) {
+	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		throw new IllegalArgumentException(CAN_NOT_MOVE_ERROR);
 	}
 
