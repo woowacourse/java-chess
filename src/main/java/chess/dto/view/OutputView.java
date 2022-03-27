@@ -33,4 +33,8 @@ public class OutputView {
             out.println();
         }
     }
+
+    public static void printCurrentTeamGameScore(double score) {
+        out.println("현재 팀의 스코어는 " + score + " 입니다.");
+    }
 }

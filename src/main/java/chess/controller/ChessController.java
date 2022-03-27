@@ -15,7 +15,7 @@ public class ChessController {
         OutputView.printInitMessage();
 
         Board board = new Board(new AlternatingTurnDecider());
-        Command beginCommand = InputView.inputCommandInStart();
+        Command beginCommand = InputView.inputStartCommand();
 
         if (beginCommand == END) {
             return;
@@ -29,7 +29,7 @@ public class ChessController {
             }
 
             if (request.getCommand() == Command.STATUS) {
-                System.out.println(board.calculateScore());
+                OutputView.printCurrentTeamGameScore(board.calculateScore());
                 continue;
             }
 

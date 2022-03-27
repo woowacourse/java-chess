@@ -16,7 +16,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static Command inputCommandInStart() {
+    public static Command inputStartCommand() {
         return Command.startEnd(SCANNER.nextLine());
     }
 
