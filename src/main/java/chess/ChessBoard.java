@@ -20,7 +20,7 @@ public class ChessBoard {
     public void move(Position from, Position to) {
         if (!isCurrentColorPiece(from)) {
             throw new IllegalArgumentException(String.format(
-                "%s 색깔의 기물을 움직일 수 없습니다.", currentColor));
+                "%s 색깔의 기물을 움직일 수 있습니다.", currentColor));
         }
         movePickedPiece(from, to);
     }
