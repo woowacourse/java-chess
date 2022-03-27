@@ -11,11 +11,6 @@ public class Position {
         this.file = File.of(String.valueOf(text.charAt(1)));
     }
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
-        this.file = file;
-    }
-
     public int fileDistance(Position target) {
         return file.calculateDistance(target.file);
     }
