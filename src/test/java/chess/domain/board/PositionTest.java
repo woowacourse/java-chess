@@ -1,14 +1,15 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import chess.domain.piece.Direction;
 
 @DisplayName("Position 테스트")
 class PositionTest {
@@ -48,9 +49,9 @@ class PositionTest {
         void outOfBound() {
             Position current = new Position(Row.FIRST, Column.a);
             assertThatThrownBy(
-                () -> current.move(Direction.SW)
+                    () -> current.move(Direction.SW)
             ).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("올바르지 않은 위치입니다.");
+                    .hasMessageContaining("올바르지 않은 위치입니다.");
 
         }
 

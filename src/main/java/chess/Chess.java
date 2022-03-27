@@ -37,7 +37,7 @@ public class Chess {
 
     private void operateOnce() {
         String[] args = InputView.input()
-            .split(" ", -1);
+                .split(" ", -1);
         Command command = Command.from(args[0]);
         if (command == Command.START && gameState == GameState.READY) {
             start();

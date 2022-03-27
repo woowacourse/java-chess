@@ -1,9 +1,8 @@
 package chess.domain;
 
-import java.util.Arrays;
-
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import java.util.Arrays;
 
 public class Status {
 
@@ -21,8 +20,8 @@ public class Status {
         }
 
         double score = Arrays.stream(PieceType.values())
-            .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
-            .sum();
+                .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
+                .sum();
         return score - board.countDeductedPawns(color) * 0.5;
     }
 

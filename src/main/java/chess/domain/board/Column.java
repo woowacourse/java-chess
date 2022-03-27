@@ -21,9 +21,9 @@ public enum Column {
 
     public static Column from(int value) {
         return Arrays.stream(values())
-            .filter(column -> column.value == value)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
+                .filter(column -> column.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
     public int calculateDifference(Column target) {

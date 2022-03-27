@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static java.lang.Math.*;
+import static java.lang.Math.abs;
 
 import java.util.Arrays;
 
@@ -32,9 +32,9 @@ public enum Direction {
 
     public static Direction of(final int row, final int column) {
         return Arrays.stream(Direction.values())
-            .filter(direction -> direction.row == row && direction.column == column)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
+                .filter(direction -> direction.row == row && direction.column == column)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
     public static Direction calculate(int rowDifference, int columnDifference) {

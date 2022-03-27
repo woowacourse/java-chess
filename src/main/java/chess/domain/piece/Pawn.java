@@ -1,12 +1,16 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.Direction.*;
-
-import java.util.List;
+import static chess.domain.piece.Direction.N;
+import static chess.domain.piece.Direction.NE;
+import static chess.domain.piece.Direction.NW;
+import static chess.domain.piece.Direction.S;
+import static chess.domain.piece.Direction.SE;
+import static chess.domain.piece.Direction.SW;
 
 import chess.domain.PieceType;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -68,7 +72,7 @@ public class Pawn extends Piece {
 
     private boolean isFirstMove(final Row row) {
         return (row == WHITE_INITIAL_ROW && getColor() == Color.WHITE)
-            || (row == BLACK_INITIAL_ROW && getColor() == Color.BLACK);
+                || (row == BLACK_INITIAL_ROW && getColor() == Color.BLACK);
     }
 
     private void validateRange(int rowDifference, int columnDifference) {

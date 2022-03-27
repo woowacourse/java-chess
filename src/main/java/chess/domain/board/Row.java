@@ -21,9 +21,9 @@ public enum Row {
 
     public static Row from(int value) {
         return Arrays.stream(values())
-            .filter(row -> row.value == value)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
+                .filter(row -> row.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
     public static Row from(String row) {

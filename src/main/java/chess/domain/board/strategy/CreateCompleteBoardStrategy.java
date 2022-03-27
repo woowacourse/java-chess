@@ -1,14 +1,7 @@
 package chess.domain.board.strategy;
 
-import static java.util.Map.*;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import static java.util.Map.Entry;
+import static java.util.Map.entry;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
@@ -21,6 +14,13 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
@@ -31,7 +31,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     public Map<Position, Piece> createPieces() {
         Map<Position, Piece> pieces = new HashMap<>();
         final List<Map.Entry<Row, Color>> rowAndColors = List.of(entry(Row.SECOND, Color.WHITE),
-            entry(Row.SEVENTH, Color.BLACK));
+                entry(Row.SEVENTH, Color.BLACK));
         for (Entry<Row, Color> rowAndColor : rowAndColors) {
             pieces.putAll(fillRowWith(rowAndColor));
         }
@@ -43,15 +43,15 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
         return Arrays.stream(Column.values())
-            .map(column -> new Position(row, column))
-            .collect(Collectors.toMap(Function.identity(), p -> new Pawn(color)));
+                .map(column -> new Position(row, column))
+                .collect(Collectors.toMap(Function.identity(), p -> new Pawn(color)));
     }
 
     private Map<Position, Piece> createPiecesWithoutPawn() {
         return Stream.of(entry(Row.FIRST, Color.WHITE), entry(Row.EIGHTH, Color.BLACK))
-            .map(this::createLineOf)
-            .flatMap(line -> line.entrySet().stream())
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .map(this::createLineOf)
+                .flatMap(line -> line.entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private Map<Position, Piece> createLineOf(final Entry<Row, Color> rowAndColor) {

@@ -1,10 +1,7 @@
 package chess.domain.board;
 
-import static chess.domain.PieceType.*;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import static chess.domain.PieceType.KNIGHT;
+import static chess.domain.PieceType.PAWN;
 
 import chess.domain.PieceType;
 import chess.domain.board.strategy.CreateBoardStrategy;
@@ -12,6 +9,9 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
@@ -109,26 +109,26 @@ public class Board {
     }
 
     public double countPiece(PieceType pieceType, Color color) {
-        return (double)pieces.values()
-            .stream()
-            .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
-            .count();
+        return (double) pieces.values()
+                .stream()
+                .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
+                .count();
     }
 
     public int countDeductedPawns(Color color) {
-        return (int)pieces.entrySet()
-            .stream()
-            .filter(entry -> entry.getValue().isSamePiece(PAWN)
-                && entry.getValue().isSameColor(color))
-            .filter(this::hasAnotherPawnInSameColumn)
-            .count();
+        return (int) pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSamePiece(PAWN)
+                        && entry.getValue().isSameColor(color))
+                .filter(this::hasAnotherPawnInSameColumn)
+                .count();
     }
 
     private boolean hasAnotherPawnInSameColumn(Map.Entry<Position, Piece> piece) {
         return Arrays.stream(Row.values())
-            .map(row -> new Position(row, piece.getKey().getColumn()))
-            .anyMatch(position -> !piece.getKey().equals(position)
-                && get(position).equals(piece.getValue()));
+                .map(row -> new Position(row, piece.getKey().getColumn()))
+                .anyMatch(position -> !piece.getKey().equals(position)
+                        && get(position).equals(piece.getValue()));
     }
 
     public Map<Position, Piece> getPieces() {

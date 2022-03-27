@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import java.util.Objects;
-
 import chess.domain.PieceType;
 import chess.domain.board.Position;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -34,7 +33,7 @@ public abstract class Piece {
         if (o == null || !(o instanceof Piece)) {
             return false;
         }
-        Piece piece = (Piece)o;
+        Piece piece = (Piece) o;
         return Objects.equals(pieceType, piece.pieceType) && Objects.equals(color, piece.color);
     }
 

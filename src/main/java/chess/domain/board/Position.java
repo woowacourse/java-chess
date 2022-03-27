@@ -1,8 +1,7 @@
 package chess.domain.board;
 
-import java.util.Objects;
-
 import chess.domain.piece.Direction;
+import java.util.Objects;
 
 public class Position {
 
@@ -52,7 +51,7 @@ public class Position {
         if (o == null || !(o instanceof Position)) {
             return false;
         }
-        Position position = (Position)o;
+        Position position = (Position) o;
         return Objects.equals(row, position.row) && Objects.equals(column, position.column);
     }
 

@@ -16,8 +16,8 @@ public enum Command {
 
     public static Command from(String value) {
         return Arrays.stream(values())
-            .filter(command -> command.value.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령입니다."));
+                .filter(command -> command.value.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령입니다."));
     }
 }
