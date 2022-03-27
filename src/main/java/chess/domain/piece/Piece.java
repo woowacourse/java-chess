@@ -43,6 +43,8 @@ public abstract class Piece {
                 .apply(teamColor, Position.of(file, rank));
     }
 
+    public abstract Piece move(final List<Piece> otherPieces, final Position targetPosition);
+
     public final boolean hasPosition(final Position position) {
         return this.position == position;
     }
@@ -51,9 +53,7 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public abstract Piece move(final List<Piece> otherPieces, final Position targetPosition);
-
-    List<Position> convertToPositions(final List<Piece> pieces) {
+    final List<Position> convertToPositions(final List<Piece> pieces) {
         return pieces.stream()
                 .map(piece -> piece.position)
                 .collect(Collectors.toList());
@@ -62,6 +62,16 @@ public abstract class Piece {
     public final boolean isSameTeam(final Piece anotherPiece) {
         return this.teamColor == anotherPiece.teamColor;
     }
+
+    public final boolean isTypeOf(final Class<? extends Piece> pieceType) {
+        return this.getClass().equals(pieceType);
+    }
+
+    public final boolean isTeamOf(final TeamColor teamColor) {
+        return this.teamColor == teamColor;
+    }
+
+    public abstract double getScore();
 
     @Override
     public boolean equals(final Object o) {
@@ -78,13 +88,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(teamColor, position);
-    }
-
-    public boolean isTypeOf(final Class<? extends Piece> pieceType) {
-        return this.getClass().equals(pieceType);
-    }
-
-    public final boolean isTeamOf(final TeamColor teamColor) {
-        return this.teamColor == teamColor;
     }
 }

@@ -7,6 +7,7 @@ import java.util.function.BiPredicate;
 
 public class Queen extends Piece {
 
+    private static final double SCORE = 9;
     private static final BiPredicate<Integer, Integer> movingCondition =
             Bishop.movingCondition.or(Rook.movingCondition);
 
@@ -20,5 +21,10 @@ public class Queen extends Piece {
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Queen(teamColor, targetPosition);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

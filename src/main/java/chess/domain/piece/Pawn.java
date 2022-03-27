@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.piece.vo.TeamColor.BLACK;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
+import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.piece.vo.TeamColor;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
+    private static final double SCORE = 1;
     private static final Map<TeamColor, Integer> DIRECTION_VALUE_BY_TEAM = Map.of(BLACK, 1, WHITE, -1);
 
     private boolean isFirstMove = true;
@@ -33,6 +35,11 @@ public class Pawn extends Piece {
             validateCatch(targetPosition, otherPieces);
         }
         return new Pawn(teamColor, targetPosition, isFirstMove);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     private void validateMove(final Position targetPosition, final List<Piece> otherPieces) {
@@ -74,5 +81,9 @@ public class Pawn extends Piece {
                 .noneMatch(enemyPosition -> enemyPosition == targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
+    }
+
+    public boolean isInFile(final File file) {
+        return position.isInFile(file);
     }
 }

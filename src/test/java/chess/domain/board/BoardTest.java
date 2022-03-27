@@ -5,10 +5,14 @@ import static chess.domain.board.Rank.ONE;
 import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.SIX;
 import static chess.domain.board.Rank.TWO;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.vo.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardTest {
 
@@ -48,5 +52,21 @@ class BoardTest {
         assertThatThrownBy(() -> board.movePiece(blackTeamSourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("다른 팀 기물은 이동시킬 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @DisplayName("팀의 점수를 반환한다.")
+    @CsvSource({"WHITE, 37", "BLACK, 37"})
+    void getTotalScore(final TeamColor teamColor, final double expected) {
+        //given
+        Board board = new Board();
+        board = board.movePiece(Position.from("a2"), Position.from("a4"));
+        board = board.movePiece(Position.from("b7"), Position.from("b5"));
+        board = board.movePiece(Position.from("a4"), Position.from("b5"));
+
+        //when
+        double actual = board.getTotalPoint(teamColor);
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -7,6 +7,7 @@ import java.util.function.BiPredicate;
 
 public class King extends Piece {
 
+    private static final double SCORE = 0;
     private static final BiPredicate<Integer, Integer> movingCondition =
             (rankDifference, fileDifference) -> rankDifference <= 1 && fileDifference <= 1;
 
@@ -18,5 +19,10 @@ public class King extends Piece {
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         position.validateTargetPosition(targetPosition, movingCondition, true);
         return new King(teamColor, targetPosition);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

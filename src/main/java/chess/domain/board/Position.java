@@ -88,4 +88,8 @@ public class Position {
         Rank nextRank = rank.next(targetPosition.rank);
         return Position.of(nextFile, nextRank);
     }
+
+    public boolean isInFile(final File file) {
+        return this.file == file;
+    }
 }

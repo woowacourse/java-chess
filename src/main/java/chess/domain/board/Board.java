@@ -7,6 +7,7 @@ import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
 import java.util.Arrays;
@@ -92,5 +93,37 @@ public class Board {
         return pieces.stream()
                 .filter(piece -> piece.isTypeOf(King.class))
                 .count() != 2;
+    }
+
+    public double getTotalPoint(TeamColor teamColor) {
+        double totalPoint = pieces.stream()
+                .filter(piece -> piece.isTeamOf(teamColor))
+                .mapToDouble(Piece::getScore)
+                .sum();
+        final List<Pawn> pawns = findPawns(teamColor);
+
+        for (File file : File.values()) {
+            totalPoint -= countSameFilePawn(pawns, file) * 0.5;
+        }
+        return totalPoint;
+    }
+
+    private int countSameFilePawn(final List<Pawn> pawns, final File file) {
+        final int sameFilePawnCount = (int) pawns.stream()
+                .map(Pawn.class::cast)
+                .filter(pawn -> pawn.isInFile(file))
+                .count();
+        if (sameFilePawnCount > 1) {
+            return sameFilePawnCount;
+        }
+        return 0;
+    }
+
+    private List<Pawn> findPawns(final TeamColor teamColor) {
+        return pieces.stream()
+                .filter(piece -> piece.isTeamOf(teamColor))
+                .filter(piece -> piece.isTypeOf(Pawn.class))
+                .map(Pawn.class::cast)
+                .collect(Collectors.toList());
     }
 }
