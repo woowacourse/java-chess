@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface Game {
 
+    Game init();
+
     Game moveChessmen(MoveCommandDto dto);
 
     boolean isEnd();

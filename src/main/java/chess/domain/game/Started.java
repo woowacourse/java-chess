@@ -7,12 +7,17 @@ import chess.domain.piece.Piece;
 import chess.dto.GameResultDto;
 import java.util.List;
 
-public abstract class Started implements Game {
+abstract class Started implements Game {
 
     protected final ActivePieces chessmen;
 
     protected Started(ActivePieces chessmen) {
         this.chessmen = chessmen;
+    }
+
+    @Override
+    public final Game init() {
+        return new NewGame().init();
     }
 
     public final List<Piece> getChessmen() {

@@ -1,6 +1,5 @@
 package chess.controller;
 
-import static chess.util.PieceGeneratorUtil.initAllChessmen;
 import static chess.view.InputView.requestValidMoveInput;
 import static chess.view.InputView.requestValidStartOrEndInput;
 import static chess.view.InputView.requestValidStatusOrEndInput;
@@ -9,9 +8,8 @@ import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
 
-import chess.domain.game.ActivePieces;
 import chess.domain.game.Game;
-import chess.domain.game.WhiteTurn;
+import chess.domain.game.NewGame;
 import chess.dto.BoardViewDto;
 import chess.view.OutputView;
 
@@ -24,7 +22,7 @@ public class GameController {
         if (!requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new WhiteTurn(new ActivePieces(initAllChessmen()));
+        return new NewGame().init();
     }
 
     public Game playGame(Game game) {
