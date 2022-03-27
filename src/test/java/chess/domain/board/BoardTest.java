@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -100,6 +103,43 @@ public class BoardTest {
         board.initBoard(new WhiteCheckBoardGenerator());
 
         // then
-        assertThatThrownBy(() -> board.check()).hasMessage("현재 Check 상황입니다.");
+        assertThatNoException()
+                .isThrownBy(() -> board.check());
+    }
+
+    @DisplayName("폰이 이동할 수 없는 대각선 위치에 왕이 존재하는 경우 check 확인")
+    @Test
+    void valid_pawn_move_fail() {
+        // given
+        Position blackPawnPosition = new Position("a1");
+        Position whiteKingPosition = new Position("b2");
+
+        TestBoardGenerator boardGenerator = new TestBoardGenerator();
+        boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
+        boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
+
+        board.initBoard(boardGenerator);
+
+        // then
+        assertThatNoException()
+                .isThrownBy(() -> board.check());
+    }
+
+    @DisplayName("폰이 이동 가능한 위치에 왕이 존재하는 경우 check 확인")
+    @Test
+    void valid_pawn_move_ok() {
+        // given
+        Position blackPawnPosition = new Position("a3");
+        Position whiteKingPosition = new Position("b2");
+
+        TestBoardGenerator boardGenerator = new TestBoardGenerator();
+        boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
+        boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
+
+        board.initBoard(boardGenerator);
+
+        // then
+        assertThatThrownBy(() -> board.check())
+                .hasMessage("현재 Check 상황입니다.");
     }
 }

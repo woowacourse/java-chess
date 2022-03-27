@@ -56,8 +56,9 @@ public class Board {
             fromPiece.movable(from, to);
             validPath(from, to, fromPiece.findDirection(from, to));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("현재 Check 상황입니다.");
+            return;
         }
+        throw new IllegalArgumentException("현재 Check 상황입니다.");
     }
 
     public void move(Position from, Position to) {
