@@ -8,23 +8,44 @@
 
 - 체스판을 초기화한다.
 
-### 객체 설계
+## 2단계 체스 말 이동
+- "move {source 위치} {target 위치}" 형식으로 입력받는다.
+  - 가로 위치는 a~h, 세로 위치는 1~8 사이로 입력 받는다.
+- 기물을 각 이동 규칙에 따라 움직이게 한다.
+
+## 3단계 승패 및 점수
+- "status"를 입력 받아 각 진영의 점수를 출력한다.
+- King이 잡혔을 때 게임을 종료해야 한다.
+
+
+## 도메인 설계
+###체스판
 - Board
-  - Piece
-    - Color(Black, White)
-    - Position(row, column)
-    - King, Queen, Knight, Bishop, Rook, Pawn
-- PieceInitializer
-
-- InputView
-- OutputView
-
-### 말 이동
+- BoardInitializer
+### 명령어
+  - Command
+  - End
+  - Move
+  - Start
+  - Status
+### 방향
+  - 전략
+  - DirectionStrategy
+    - \+ 모든 말의 DirectionStrategy
+  - Direction
+  - BasicDirection
+  - DiagonalDirection
+  - KnightDirection
+### 기물
+- Color(Black, White)
+- King, Queen, Knight, Bishop, Rook, Pawn
+### 위치
 - Position
-  - 이동
-    - 8x8 검증
-- Piece
-  - 자기가 갈 수 있는 범위를 확인
-- Board
-  - 이 말을 여기서 저기로 이동시켜라
-    - 다른 말이 있는지 확인
+- UnitPosition
+### 상태
+- State
+- Ready
+- Running
+- RunningBlackTurn
+- RunningWhiteTurn
+- Finished
