@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
+import chess.domain.piece.movepattern.AbstractPawnMovePattern;
 
 public final class Pawn extends Piece {
 

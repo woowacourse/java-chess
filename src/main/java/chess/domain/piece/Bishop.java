@@ -2,19 +2,14 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-
-import java.util.List;
+import chess.domain.piece.movepattern.AbstractStraightMovePattern;
+import chess.domain.piece.movepattern.BishopMovePattern;
 
 public final class Bishop extends Piece {
 
     private static final double POINT = 3.0;
 
-    private final AbstractStraightMovePattern pattern = new AbstractStraightMovePattern() {
-        @Override
-        public List<Direction> getDirections() {
-            return Direction.getBishopDirections();
-        }
-    };
+    private final AbstractStraightMovePattern pattern = new BishopMovePattern();
 
     public Bishop(Color color) {
         super(color);
