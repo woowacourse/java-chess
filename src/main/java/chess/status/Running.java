@@ -36,14 +36,16 @@ public class Running implements State {
     @Override
     public void move(final MoveCommand moveCommand) {
         board.move(moveCommand, color);
-        reverseColor(color);
+        reverseColor(this.color);
     }
 
     private void reverseColor(final Color color) {
+        if (WHITE == color) {
+            this.color = BLACK;
+        }
         if (BLACK == color) {
             this.color = WHITE;
         }
-        this.color = BLACK;
     }
 
     @Override
@@ -54,5 +56,16 @@ public class Running implements State {
     @Override
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        return board.isKingDead();
+    }
+
+    @Override
+    public Color getColor() {
+        reverseColor(color);
+        return color;
     }
 }

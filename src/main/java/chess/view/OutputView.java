@@ -18,6 +18,11 @@ public class OutputView {
         printBoardRow(board.getValue());
     }
 
+    public static void printGameEnd(final Color winColor) {
+        System.out.println("게임이 종료되었습니다.");
+        System.out.println(winColor + "(이)가 승리했습니다.");
+    }
+
     private static void printBoardRow(final Map<Position, Piece> board) {
         final List<Row> rows = Arrays.asList(Row.values());
         Collections.reverse(rows);

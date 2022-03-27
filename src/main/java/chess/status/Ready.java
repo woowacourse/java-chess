@@ -2,6 +2,7 @@ package chess.status;
 
 import chess.Board;
 import chess.MoveCommand;
+import chess.piece.Color;
 import chess.view.Command;
 
 public final class Ready implements State {
@@ -44,5 +45,15 @@ public final class Ready implements State {
     @Override
     public Board getBoard() {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        return false;
+    }
+
+    @Override
+    public Color getColor() {
+        throw new IllegalStateException();
     }
 }

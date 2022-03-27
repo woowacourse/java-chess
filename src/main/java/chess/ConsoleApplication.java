@@ -20,6 +20,8 @@ public class ConsoleApplication {
             run(game);
             OutputView.printBoard(state.getBoard());
         }
+
+        OutputView.printGameEnd(game.getWinColor());
     }
 
     private static void run(final Game game) {

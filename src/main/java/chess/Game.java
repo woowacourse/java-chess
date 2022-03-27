@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Color;
 import chess.status.State;
 import chess.view.Command;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.List;
 public class Game {
 
     private State state;
+    private Color winColor;
 
     public Game(final State state) {
         this.state = state;
@@ -22,9 +24,14 @@ public class Game {
         final Command command = Command.of(inputs.get(0));
         validate(command, inputs);
 
-        this.state = state.turn(command);
+        state = state.turn(command);
         if (state.canMove()) {
             state.move(MoveCommand.of(inputs.get(1) + " " + inputs.get(2)));
+        }
+
+        if (state.isGameEnd()) {
+            winColor = state.getColor();
+            state = state.turn(Command.END);
         }
     }
 
@@ -36,5 +43,9 @@ public class Game {
         if (!command.isMove() && input.size() != 1) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public Color getWinColor() {
+        return winColor;
     }
 }

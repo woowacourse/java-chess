@@ -72,4 +72,6 @@ class RunningTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("WHITE가 둘 차례입니다.");
     }
+
+
 }

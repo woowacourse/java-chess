@@ -58,5 +58,4 @@ class BoardTest {
 
         assertThat(board.getValue().get(Position.of("d7"))).isInstanceOf(Rook.class);
     }
-
 }

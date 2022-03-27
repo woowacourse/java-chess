@@ -25,4 +25,9 @@ public class King extends AbstractPiece {
 
         return direction.isEqualTo(columnDistance, rowDistance);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

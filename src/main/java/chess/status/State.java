@@ -2,6 +2,7 @@ package chess.status;
 
 import chess.Board;
 import chess.MoveCommand;
+import chess.piece.Color;
 import chess.view.Command;
 
 public interface State {
@@ -15,4 +16,8 @@ public interface State {
     boolean canMove();
 
     Board getBoard();
+
+    boolean isGameEnd();
+
+    Color getColor();
 }

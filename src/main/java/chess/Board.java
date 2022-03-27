@@ -95,6 +95,14 @@ public class Board {
         }
     }
 
+    public boolean isKingDead() {
+        int kingCount = (int) value.values().stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return kingCount == 1;
+    }
+
     private void validatePiece(final Position from, final Position to, final Piece piece) {
         if (!piece.isKnight()) {
             validatePieceBlock(from, to, piece);
