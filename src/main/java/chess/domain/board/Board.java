@@ -72,7 +72,7 @@ public class Board {
         checkPawnMoveForwardToCatch(src, dest, piece);
         checkPawnMoveDiagonallyWithoutCatching(src, dest, piece);
         checkSameColorInDestination(piece, dest);
-        checkObstacleInPath(src, dest);
+        checkObstacleInPath(src, dest, piece);
 
         value.put(dest, piece);
         value.remove(src);
@@ -105,10 +105,7 @@ public class Board {
         }
     }
 
-    private void checkObstacleInPath(Position src, Position dest) {
-        Piece piece = findPieceBy(src)
-                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
-
+    private void checkObstacleInPath(Position src, Position dest, Piece piece) {
         Direction direction = piece.findDirection(src, dest);
         checkObstacle(src, dest, direction);
     }
