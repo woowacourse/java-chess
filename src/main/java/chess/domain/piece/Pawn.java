@@ -12,6 +12,7 @@ public class Pawn extends Piece {
     private static final String BLACK_SYMBOL = "P";
     private static final String WHITE_SYMBOL = "p";
     private static final String CAN_NOT_CATCH_ERROR = "폰은 해당 위치의 기물을 잡을 수 없습니다.";
+    private static final String INVALID_DIRECTION_MOVEMENT_ERROR = "폰은 해당 위치로 이동할 수 없습니다.";
 
     public Pawn(final Team team) {
         super(team);
@@ -51,6 +52,15 @@ public class Pawn extends Piece {
         if (isWrongCatchDirection(targetPiece, direction)) {
             throw new IllegalArgumentException(CAN_NOT_CATCH_ERROR);
         }
+        if (isWrongMovementDirection(targetPiece, direction)) {
+            throw new IllegalArgumentException(INVALID_DIRECTION_MOVEMENT_ERROR);
+        }
+    }
+
+    private boolean isWrongMovementDirection(final Piece targetPiece, final Direction direction) {
+        return targetPiece.isBlank() && (direction == Direction.NE || direction == Direction.SE
+                || direction == Direction.SW
+                || direction == Direction.NW);
     }
 
     private boolean isWrongCatchDirection(final Piece targetPiece, final Direction direction) {

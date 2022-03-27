@@ -25,19 +25,21 @@ public class Board {
 
     public void move(Position source, Position target) {
         Piece piece = board.get(source);
-        validateMove(source, target, piece);
+        validateMove(source, target);
         state = state.play(piece, board.get(target));
         board.put(target, piece);
         board.put(source, new Blank());
     }
 
-    private void validateMove(final Position source, final Position target, final Piece piece) {
+    private void validateMove(final Position source, final Position target) {
+        Piece piece = board.get(source);
         validateBlank(piece);
         piece.validateMovement(source, target);
-        validateBlocking(source, target, piece);
+        validateBlocking(source, target);
     }
 
-    private void validateBlocking(final Position source, final Position target, final Piece piece) {
+    private void validateBlocking(final Position source, final Position target) {
+        Piece piece = board.get(source);
         Direction direction = piece.getDirection(source, target);
         Position checkPosition = source;
         while (checkPosition != target) {
