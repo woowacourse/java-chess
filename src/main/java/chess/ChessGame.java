@@ -21,6 +21,9 @@ public class ChessGame {
         boolean play = true;
 
         while (play) {
+            if (board.check()) {
+                OutputView.printMessage("현재 check 상황입니다.");
+            }
             Command command = InputView.inputCommand();
             play = convert(command);
         }
@@ -29,7 +32,7 @@ public class ChessGame {
     private boolean convert(Command command) {
         Menu menu = command.getMenu();
 
-        if (menu.isEnd()) {
+        if (menu.isEnd() || board.checkmate()) {
             return false;
         }
         if (menu.isStart()) {

@@ -74,6 +74,7 @@ public class Board {
 
     public void move(Position from, Position to) {
         Piece piece = board.get(from);
+        Piece toPiece = board.get(to);
         Direction direction = piece.findDirection(from, to);
 
         validNowTurn(piece);
@@ -83,7 +84,16 @@ public class Board {
 
         board.put(to, piece);
         board.remove(from);
+        validCheckAfterMove(from, to, piece, toPiece);
         turn = turn.change();
+    }
+
+    private void validCheckAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
+        if (check()) {
+            board.put(to, toPiece);
+            board.put(from, piece);
+            throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
+        }
     }
 
     private void validNowTurn(Piece piece) {

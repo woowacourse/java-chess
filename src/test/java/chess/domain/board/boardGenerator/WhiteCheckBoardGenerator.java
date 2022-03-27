@@ -4,6 +4,7 @@ import chess.domain.board.BoardGenerator;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -17,6 +18,7 @@ public class WhiteCheckBoardGenerator implements BoardGenerator {
 
     @Override
     public Map<Position, Piece> create() {
+        board.put(new Position(Column.A, Row.EIGHT), new Rook(Team.WHITE));
         board.put(new Position(Column.D, Row.EIGHT), new King(Team.WHITE));
         board.put(new Position(Column.B, Row.SIX), new Bishop(Team.BLACK));
         return Map.copyOf(board);

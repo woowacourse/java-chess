@@ -163,4 +163,26 @@ public class BoardTest {
         // then
         assertThat(board.checkmate()).isFalse();
     }
+
+    @DisplayName("체크인 상황에서 벗어나지 않을 경우")
+    @Test
+    void valid_black_check_move() {
+        // given
+        board.initBoard(new WhiteCheckBoardGenerator());
+
+        // then
+        assertThatThrownBy(() -> board.move(new Position("a8"), new Position("a7")))
+                .hasMessage("체크 상황을 벗어나야 합니다.");
+    }
+
+    @DisplayName("체크인 상황에서 벗어남")
+    @Test
+    void valid_black_check_move_false() {
+        // given
+        board.initBoard(new WhiteCheckBoardGenerator());
+
+        // then
+        assertThatNoException()
+                .isThrownBy(() -> board.move(new Position("d8"), new Position("d7")));
+    }
 }
