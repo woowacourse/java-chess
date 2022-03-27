@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ChessGame {
-
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
 
     private final Board board;
@@ -74,9 +73,13 @@ public final class ChessGame {
 
     private void initEmptyPieces(Map<Position, Piece> squares) {
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                squares.put(new Position(file, rank), new EmptyPiece());
-            }
+            initRankEmpty(squares, file);
+        }
+    }
+
+    private void initRankEmpty(Map<Position, Piece> squares, File file) {
+        for (Rank rank : Rank.values()) {
+            squares.put(new Position(file, rank), new EmptyPiece());
         }
     }
 
