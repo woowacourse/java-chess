@@ -1,5 +1,7 @@
 package chess.dto.view;
 
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+
 import java.util.List;
 
 import chess.constant.Command;
@@ -8,21 +10,37 @@ import chess.dto.MoveRequest;
 import chess.dto.NotMoveRequest;
 import chess.dto.Request;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
+    private static final Pattern START_END_PATTERN = Pattern.compile("(start)|(end)", CASE_INSENSITIVE);
+    private static final Pattern END_MOVE_PATTERN =
+            Pattern.compile("(end)|(status)|(move [a-h][1-8] [a-h][1-8])", CASE_INSENSITIVE);
+    static final String NOT_SUPPORT_OPERATION_MESSAGE = "[ERROR] 현재 명령은 허용되지 않습니다";
+    static final String NOT_SUPPORT_OPERATION_MESSAGE_FORMAT = NOT_SUPPORT_OPERATION_MESSAGE + ": <%s>";
+
     private InputView() {
     }
 
     public static Command inputStartCommand() {
-        return Command.startEnd(SCANNER.nextLine());
+        String input = SCANNER.nextLine();
+        validateStartCommand(input);
+        return Command.from(input);
+    }
+
+    static void validateStartCommand(String input) {
+        if (!START_END_PATTERN.matcher(input).matches()) {
+            throw new UnsupportedOperationException(String.format(NOT_SUPPORT_OPERATION_MESSAGE_FORMAT, input));
+        }
     }
 
     public static Request inputCommandInGaming() {
         String input = SCANNER.nextLine();
-        Command command = Command.endMove(input);
+        validateCommandInGaming(input);
+        Command command = Command.from(input);
         if (command == Command.END) {
             return new NotMoveRequest(command);
         }
@@ -35,6 +53,12 @@ public class InputView {
         Position source = new Position(inputs.get(1));
         Position target = new Position(inputs.get(2));
         return new MoveRequest(command, source, target);
+    }
+
+    public static void validateCommandInGaming(String input) {
+        if (!END_MOVE_PATTERN.matcher(input).matches()) {
+            throw new UnsupportedOperationException(String.format(NOT_SUPPORT_OPERATION_MESSAGE_FORMAT, input));
+        }
     }
 
 }
