@@ -16,7 +16,7 @@ public class BoardFactoryTest {
 
     @BeforeEach
     void init() {
-        board = BoardFactory.getInitialPieces();
+        board = BoardFactory.getInitialPieces().getBoard();
     }
 
     @Test

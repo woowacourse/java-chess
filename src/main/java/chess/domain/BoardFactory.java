@@ -8,12 +8,19 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
 
-    public static Map<Position, Piece> getInitialPieces() {
+    private static final Map<Position, Piece> EMPTY_MAP = Collections.emptyMap();
+
+    public static Board getEmptyBoard() {
+        return new Board(EMPTY_MAP);
+    }
+
+    public static Board getInitialPieces() {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.putAll(getInitialBishops());
         pieces.putAll(getInitialKings());
@@ -21,7 +28,7 @@ public class BoardFactory {
         pieces.putAll(getInitialPawns());
         pieces.putAll(getInitialRooks());
         pieces.putAll(getInitialQueens());
-        return pieces;
+        return new Board(pieces);
     }
 
     private static Map<Position, Pawn> getInitialPawns() {
@@ -70,7 +77,7 @@ public class BoardFactory {
     }
 
     private static Map<Position, King> getInitialKings() {
-        Map<Position, King> king =new HashMap<>();
+        Map<Position, King> king = new HashMap<>();
         king.put(Position.valueOf(Abscissa.e, Ordinate.ONE), new King(Color.WHITE));
         king.put(Position.valueOf(Abscissa.e, Ordinate.EIGHT), new King(Color.BLACK));
 

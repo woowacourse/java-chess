@@ -19,7 +19,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(BoardFactory.getInitialPieces());
+        board = BoardFactory.getInitialPieces();
     }
 
     @Test
