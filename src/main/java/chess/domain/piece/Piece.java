@@ -51,9 +51,7 @@ public abstract class Piece {
         return teamColor.isBlack();
     }
 
-    public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        return null;
-    }
+    public abstract Piece move(final List<Piece> otherPieces, final Position targetPosition);
 
     List<Position> convertToPositions(final List<Piece> pieces) {
         return pieces.stream()
@@ -80,5 +78,13 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(teamColor, position);
+    }
+
+    public boolean isTypeOf(final Class<? extends Piece> pieceType) {
+        return this.getClass().equals(pieceType);
+    }
+
+    public final boolean isTeamOf(final TeamColor teamColor) {
+        return this.teamColor == teamColor;
     }
 }

@@ -1,6 +1,9 @@
 package chess.view.input;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -10,8 +13,8 @@ public class InputView {
         throw new AssertionError();
     }
 
-    public static Command inputCommand() {
-        System.out.println("체스 게임을 시작합니다.\n 게임 시작은 start, 종료는 end 명령을 입력하세요.");
-        return Command.from(scanner.nextLine());
+    public static List<String> inputCommand() {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .collect(Collectors.toList());
     }
 }
