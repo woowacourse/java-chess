@@ -28,4 +28,8 @@ public enum File {
     public char getName() {
         return name;
     }
+
+    public int calculateAbsoluteValue(File file) {
+        return Math.abs(name - file.getName());
+    }
 }

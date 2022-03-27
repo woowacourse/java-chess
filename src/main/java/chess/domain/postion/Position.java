@@ -40,4 +40,9 @@ public class Position {
     public boolean isSameFile(Position other) {
         return file.equals(other.file);
     }
+
+    public boolean isDiagonal(Position other) {
+        return (file.calculateAbsoluteValue(other.file)
+                == rank.calculateAbsoluteValue(other.rank));
+    }
 }

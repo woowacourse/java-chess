@@ -28,4 +28,8 @@ public enum Rank {
     public int getNumber() {
         return number;
     }
+
+    public int calculateAbsoluteValue(Rank rank) {
+        return Math.abs(number - rank.getNumber());
+    }
 }
