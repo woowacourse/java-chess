@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.MoveCommandDto;
@@ -7,7 +8,6 @@ import chess.dto.MoveCommandDto;
 abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
-    protected static final String INVALID_TURN_EXCEPTION_FORMAT = "%s 진영이 움직일 차례입니다!";
 
     Running(ActivePieces chessmen) {
         super(chessmen);
@@ -36,7 +36,14 @@ abstract class Running extends Started {
         return continueGame();
     }
 
-    abstract protected void validateTurn(Piece sourcePiece);
+    private void validateTurn(Piece sourcePiece) {
+        Color currentColor = currentTurnColor();
+        if (!sourcePiece.hasColorOf(currentColor)) {
+            throw new IllegalArgumentException(currentColor + " 진영이 움직일 차례입니다!");
+        }
+    }
+
+    abstract protected Color currentTurnColor();
 
     abstract protected Game continueGame();
 
