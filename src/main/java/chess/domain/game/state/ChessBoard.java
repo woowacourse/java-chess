@@ -51,6 +51,22 @@ public class ChessBoard {
         return movablePaths.contains(target);
     }
 
+    private void changeState(Piece sourcePiece, Piece targetPiece) {
+        kill(targetPiece);
+        sourcePiece.updateState();
+    }
+
+    private void kill(Piece piece) {
+        if (isExist(piece)) {
+            piece.killed();
+        }
+    }
+
+    private void changePosition(Position source, Position target) {
+        board.put(target, getPiece(source));
+        board.remove(source);
+    }
+
     public boolean canMoveOrKillByOneStep(Position source, Direction direction) {
         Position target = source.getNext(direction);
         if (source.isBlocked(direction)) {
@@ -69,6 +85,10 @@ public class ChessBoard {
         return !isFilled(target);
     }
 
+    public boolean isFilled(Position target) {
+        return board.containsKey(target);
+    }
+
     public boolean canKill(Position source, Position target) {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
@@ -76,28 +96,8 @@ public class ChessBoard {
         return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
     }
 
-    private void changeState(Piece sourcePiece, Piece targetPiece) {
-        kill(targetPiece);
-        sourcePiece.updateState();
-    }
-
-    private void kill(Piece piece) {
-        if (isExist(piece)) {
-            piece.killed();
-        }
-    }
-
-    private void changePosition(Position source, Position target) {
-        board.put(target, getPiece(source));
-        board.remove(source);
-    }
-
     public void putPiece(Position position, Piece piece) {
         board.put(position, piece);
-    }
-
-    public boolean isFilled(Position target) {
-        return board.containsKey(target);
     }
 
     public Piece getPiece(Position target) {

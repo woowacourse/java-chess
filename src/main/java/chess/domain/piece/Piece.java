@@ -52,6 +52,11 @@ public abstract class Piece {
         pieceState = pieceState.killed();
     }
 
+    public boolean isKing() {
+        return new King(Color.White).isSame(this)
+            || new King(Color.Black).isSame(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -67,10 +72,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
-    }
-
-    public boolean isKing() {
-        return new King(Color.White).isSame(this)
-            || new King(Color.Black).isSame(this);
     }
 }

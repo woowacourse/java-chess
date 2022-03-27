@@ -35,6 +35,15 @@ public class StartedPawn extends Started {
         return positions;
     }
 
+    public List<Position> getKillablePositions(Position source, ChessBoard board) {
+        return Direction.leftRight()
+            .stream()
+            .map(source::getNext)
+            .map(position -> position.getNext(forward))
+            .filter(direction -> board.canKill(source, direction))
+            .collect(Collectors.toList());
+    }
+
     @Override
     public PieceState updateState() {
         return new MovedPawn(forward);
@@ -43,14 +52,5 @@ public class StartedPawn extends Started {
     private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {
         Position next = source.getNext(direction);
         return board.canOnlyMoveByOneStep(source, forward) && board.canOnlyMoveByOneStep(next, forward);
-    }
-
-    public List<Position> getKillablePositions(Position source, ChessBoard board) {
-        return Direction.leftRight()
-            .stream()
-            .map(source::getNext)
-            .map(position -> position.getNext(forward))
-            .filter(direction -> board.canKill(source, direction))
-            .collect(Collectors.toList());
     }
 }
