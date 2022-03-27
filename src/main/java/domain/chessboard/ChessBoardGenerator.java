@@ -27,7 +27,6 @@ public class ChessBoardGenerator implements BoardGenerator {
         return board;
     }
 
-
     private void createInitialize(Map<Position, Piece> board) {
         for (Rank rank : Rank.values()) {
             initializeByRow(board, rank);

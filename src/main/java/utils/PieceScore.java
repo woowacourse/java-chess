@@ -12,8 +12,8 @@ public enum PieceScore {
 
     public static final double DUPLICATE_PAWN = 0.5;
 
-    private double score;
-    private String symbol;
+    private final double score;
+    private final String symbol;
 
     PieceScore(final double score, final String symbol) {
         this.score = score;
@@ -30,16 +30,4 @@ public enum PieceScore {
     public double score() {
         return this.score;
     }
-
-//    public static Double createScore(String symbol, boolean duplicatedPawn) {
-//        Double score =  Arrays.stream(PieceScore.values())
-//            .filter(pieceScore -> pieceScore.symbol.equals(symbol))
-//            .map(pieceScore -> pieceScore.score)
-//            .findFirst()
-//            .orElse(null);
-//        if(duplicatedPawn && score == Pawn.score){
-//            return DUPLICATE_PAWN;
-//        }
-//        return score;
-//    }
 }
