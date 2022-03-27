@@ -52,7 +52,6 @@ public class Board {
     private static void initialPieces(Map<Position, Piece> board) {
         initialPiecesWithoutPawn(board, Rank.EIGHT, Color.BLACK);
         initialPawns(board, Rank.SEVEN, Color.BLACK);
-
         initialPiecesWithoutPawn(board, Rank.ONE, Color.WHITE);
         initialPawns(board, Rank.TWO, Color.WHITE);
     }
@@ -76,6 +75,10 @@ public class Board {
         }
     }
 
+    public Piece findPiece(final Position position) {
+        return board.get(position);
+    }
+
     public void move(final Position from, final Position to) {
         board.put(to, board.get(from));
         board.put(from, new EmptyPiece());
@@ -93,10 +96,6 @@ public class Board {
             .filter(entry -> entry.getKey().isSameFile(file))
             .filter(entry -> entry.getValue().equals(piece))
             .count();
-    }
-
-    public Piece findPiece(final Position position) {
-        return board.get(position);
     }
 
     public Map<Position, Piece> getBoard() {

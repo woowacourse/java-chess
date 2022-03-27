@@ -23,8 +23,8 @@ public class Ended implements State {
     }
 
     @Override
-    public boolean isNotEnded() {
-        return false;
+    public boolean isEnded() {
+        return true;
     }
 
 }

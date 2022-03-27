@@ -31,8 +31,8 @@ public class Ready implements State {
     }
 
     @Override
-    public boolean isNotEnded() {
-        return true;
+    public boolean isEnded() {
+        return false;
     }
 
 }

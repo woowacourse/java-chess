@@ -16,10 +16,8 @@ public class ChessGame {
     }
 
     public void run() {
-        state = runCommand();
-
-        if (state.isNotEnded()) {
-            run();
+        while (!state.isEnded()) {
+            state = runCommand();
         }
     }
 

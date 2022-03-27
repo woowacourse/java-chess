@@ -6,17 +6,17 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public class Move {
+public class MoveChecker {
 
     private final Board board;
     private final Color turn;
 
-    public Move(final Board board, final Color turn) {
+    public MoveChecker(final Board board, final Color turn) {
         this.board = board;
         this.turn = turn;
     }
 
-    public void isMovable(final Position from, final Position to) {
+    public void checkMovable(final Position from, final Position to) {
         final Piece source = board.findPiece(from);
         final Piece target = board.findPiece(to);
         final Direction direction = decideDirection(from, to);

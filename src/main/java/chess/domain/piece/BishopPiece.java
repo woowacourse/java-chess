@@ -14,8 +14,8 @@ public final class BishopPiece extends Piece {
     public BishopPiece(final Color color) {
         super(color, NAME);
         this.movableDirections = new ArrayList<>(
-            List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
-                Direction.SOUTH_WEST));
+            List.of(Direction.NORTH_EAST, Direction.NORTH_WEST,
+                Direction.SOUTH_EAST, Direction.SOUTH_WEST));
     }
 
     @Override
