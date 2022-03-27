@@ -14,7 +14,7 @@ public abstract class Command {
 
     public static Command of(String input) {
         if (input.equals(START)) {
-            return new Start(Ready.start(Board.getInstance()));
+            return new Start(Ready.start(Board.getInitializedInstance()));
         }
         if (input.equals(END)) {
             return new End();

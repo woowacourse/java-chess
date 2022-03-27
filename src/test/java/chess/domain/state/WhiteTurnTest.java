@@ -17,7 +17,7 @@ class WhiteTurnTest {
     @DisplayName("말을 움직인다")
     @Test
     void test() {
-        Board board = Board.getInstance();
+        Board board = Board.getInitializedInstance();
         State whiteTurn = Ready.start(board);
 
         Position src = Position.of("a2");
@@ -31,7 +31,7 @@ class WhiteTurnTest {
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")
     @Test
     void testMoveError() {
-        Board board = Board.getInstance();
+        Board board = Board.getInitializedInstance();
         State whiteTurn = Ready.start(board);
 
         Position src = Position.of("a7");
@@ -45,7 +45,7 @@ class WhiteTurnTest {
     @DisplayName("빈 곳을 움직이면 에러가 발생한다")
     @Test
     void testBlankMoveError() {
-        Board board = Board.getInstance();
+        Board board = Board.getInitializedInstance();
         State whiteTurn = Ready.start(board);
 
         Position src = Position.of("d5");

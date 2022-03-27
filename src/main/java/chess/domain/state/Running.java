@@ -35,6 +35,6 @@ abstract class Running extends Ready {
 
     @Override
     public final Result getResult() {
-        return board.calculateCurrentWinner();
+        return board.calculateCurrentResult();
     }
 }
