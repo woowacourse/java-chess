@@ -37,19 +37,17 @@ public enum Direction {
     }
 
     public static List<Direction> getBishopDirection() {
-        return null;
+        return List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
     }
 
-    public static List<Direction> getQueenDirection() {
-        return null;
-    }
-
-    public static List<Direction> getKingDirection() {
-        return null;
+    public static List<Direction> getAllDirection() {
+        List<Direction> directions = getRookDirection();
+        directions.addAll(getBishopDirection());
+        return directions;
     }
 
     public static List<Direction> getKnightDirection() {
-        return null;
+        return List.of(TTR, TTL, BBR, BBL, RRT, RRB, LLT, LLB);
     }
 
     public static List<Direction> getWhitePawnDirection() {
