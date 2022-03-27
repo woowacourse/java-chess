@@ -227,4 +227,16 @@ public class ChessBoardTest {
         });
         assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("King을 공격했을 때 게임이 종료된다.")
+    void attackKingTest() {
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+        chessBoard.move(Position.of(File.B, Rank.ONE), Position.of(File.C, Rank.THREE));
+        chessBoard.move(Position.of(File.E, Rank.SEVEN), Position.of(File.E, Rank.SIX));
+        chessBoard.move(Position.of(File.C, Rank.THREE), Position.of(File.D, Rank.FIVE));
+        chessBoard.move(Position.of(File.E, Rank.EIGHT), Position.of(File.E, Rank.SEVEN));
+        chessBoard.move(Position.of(File.D, Rank.FIVE), Position.of(File.E, Rank.SEVEN));
+        assertThat(chessBoard.isKingOnlyOne()).isEqualTo(true);
+    }
 }

@@ -203,4 +203,12 @@ public class ChessBoard {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public boolean isKingOnlyOne() {
+        long kingCount = board.values().stream()
+            .filter(piece -> piece != null)
+            .filter(piece -> piece.symbol().equals(PieceSymbol.King.symbol()))
+            .count();
+        return kingCount != 2;
+    }
 }

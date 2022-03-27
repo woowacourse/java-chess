@@ -38,6 +38,11 @@ public class ChessController {
             }
             System.out.println("this is move command");
             move(input, chessBoard);
+            if(chessBoard.isKingOnlyOne()){
+                System.out.println(chessBoard.getCurrentPlayer()+"의 King이 공격당하였습니다.");
+                System.out.println("게임이 종료되었습니다.");
+                return;
+            }
             play(chessBoard);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
