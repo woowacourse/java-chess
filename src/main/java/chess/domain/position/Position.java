@@ -16,13 +16,6 @@ public class Position {
         this.column = column;
         this.row = row;
     }
-//
-//    public Position(String value) {
-//        validateBlank(value);
-//        validateLength(value);
-//        this.column = Column.of(value.substring(0, 1));
-//        this.row = Row.of(Integer.parseInt(value.substring(1, 2)));
-//    }
 
     public static Position of(Column column, Row row) {
         String value = column.name().toLowerCase(Locale.ROOT) + row.getValue();
