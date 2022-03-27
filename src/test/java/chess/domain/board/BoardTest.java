@@ -62,8 +62,8 @@ class BoardTest {
         void same_Color_Piece_In_Target_Point() {
             Piece startPiece = new Knight(Color.BLACK);
             Piece existPiece = new Knight(Color.BLACK);
-            Position start = new Position(Column.a, Row.FIRST);
-            Position target = new Position(Column.b, Row.THIRD);
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.b3;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
@@ -72,14 +72,14 @@ class BoardTest {
                     .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
         }
 
-        @DisplayName("경로에 말 존재 엽주와 관련 없이 말이 이동한다.")
+        @DisplayName("경로에 말 존재 여부와 관련 없이 말이 이동한다.")
         @Test
         void success_Move() {
             Piece startPiece = new Knight(Color.BLACK);
             Piece existPiece = new Knight(Color.BLACK);
-            Position start = new Position(Column.a, Row.FIRST);
-            Position midPoint = new Position(Column.a, Row.SECOND);
-            Position target = new Position(Column.b, Row.THIRD);
+            Position start = CachedPosition.a1;
+            Position midPoint = CachedPosition.a2;
+            Position target = CachedPosition.b3;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
 
@@ -100,8 +100,8 @@ class BoardTest {
         void move_Diagonal_To_Catch_Enemy() {
             Piece startPiece = new Pawn(Color.WHITE);
             Piece existPiece = new Knight(Color.BLACK);
-            Position start = new Position(Column.a, Row.FIRST);
-            Position target = new Position(Column.b, Row.SECOND);
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.b2;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
@@ -118,8 +118,8 @@ class BoardTest {
         void same_Color_Piece_In_Diagonal() {
             Piece startPiece = new Pawn(Color.WHITE);
             Piece existPiece = new Knight(Color.WHITE);
-            Position start = new Position(Column.a, Row.FIRST);
-            Position target = new Position(Column.b, Row.SECOND);
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.b2;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
@@ -133,9 +133,9 @@ class BoardTest {
         void other_Piece_In_Path() {
             Piece startPiece = new Pawn(Color.WHITE);
             Piece existPiece = new Knight(Color.WHITE);
-            Position start = new Position(Column.a, Row.SECOND);
-            Position midPoint = new Position(Column.a, Row.THIRD);
-            Position target = new Position(Column.a, Row.FOURTH);
+            Position start = CachedPosition.a2;
+            Position midPoint = CachedPosition.a3;
+            Position target = CachedPosition.a4;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
 
@@ -149,8 +149,8 @@ class BoardTest {
         void other_Piece_In_Destination() {
             Piece startPiece = new Pawn(Color.WHITE);
             Piece existPiece = new Knight(Color.WHITE);
-            Position start = new Position(Column.a, Row.THIRD);
-            Position target = new Position(Column.a, Row.FOURTH);
+            Position start = CachedPosition.a3;
+            Position target = CachedPosition.a4;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
@@ -163,8 +163,8 @@ class BoardTest {
         @Test
         void move_Success() {
             Piece startPiece = new Pawn(Color.WHITE);
-            Position start = new Position(Column.a, Row.THIRD);
-            Position target = new Position(Column.a, Row.FOURTH);
+            Position start = CachedPosition.a3;
+            Position target = CachedPosition.a4;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
             board.move(start, target, Color.WHITE);
@@ -184,8 +184,8 @@ class BoardTest {
         @Test
         void designate_Empty_Space() {
             Board board = new Board(new CreateMockBoardStrategy(new HashMap<>()));
-            Position start = new Position(Column.a, Row.FIRST);
-            Position target = new Position(Column.b, Row.SECOND);
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.b2;
 
             assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
