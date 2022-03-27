@@ -9,7 +9,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
-import chess.dto.MovePositionCommandDto;
+import chess.dto.MoveCommandDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +32,7 @@ class ChessGameTest {
 
     @Test
     void 체스말_이동_가능() {
-        game.moveChessmen(new MovePositionCommandDto(WHITE_ROOK_POSITION, "h3"));
+        game.moveChessmen(new MoveCommandDto(WHITE_ROOK_POSITION, "h3"));
 
         Piece whiteRook = Rook.ofRight(WHITE);
         whiteRook.move(Position.of("h3"), CLEAR_PATH_STRATEGY);
@@ -45,7 +45,7 @@ class ChessGameTest {
 
     @Test
     void 체스말로_다른_체스말_공격_가능() {
-        game.moveChessmen(new MovePositionCommandDto(WHITE_ROOK_POSITION, BLACK_ROOK_POSITION));
+        game.moveChessmen(new MoveCommandDto(WHITE_ROOK_POSITION, BLACK_ROOK_POSITION));
 
         Piece aliveRook = Rook.ofRight(WHITE);
         aliveRook.move(Position.of(BLACK_ROOK_POSITION), CLEAR_PATH_STRATEGY);

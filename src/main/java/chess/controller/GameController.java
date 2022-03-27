@@ -8,12 +8,12 @@ import static chess.view.OutputView.print;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
-import static chess.view.OutputView.printStatus;
 
 import chess.domain.game.ActivePieces;
 import chess.domain.game.Game;
 import chess.domain.game.Running;
 import chess.dto.BoardViewDto;
+import chess.view.OutputView;
 
 public class GameController {
 
@@ -50,10 +50,10 @@ public class GameController {
         printBoard(new BoardViewDto(game));
     }
 
-    public void endGame(Game game) {
+    public void printGameOver(Game game) {
         printGameOverInstructions();
         while (requestValidStatusOrEndInput()) {
-            printStatus(game.getGameResult());
+            OutputView.printStatus(game.getGameResult());
         }
     }
 }

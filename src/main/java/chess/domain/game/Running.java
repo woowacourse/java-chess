@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.dto.MovePositionCommandDto;
+import chess.dto.MoveCommandDto;
 
 public class Running extends Started {
 
@@ -13,7 +13,7 @@ public class Running extends Started {
     }
 
     @Override
-    public Game moveChessmen(MovePositionCommandDto dto) {
+    public Game moveChessmen(MoveCommandDto dto) {
         Piece sourcePiece = chessmen.findByPosition(sourcePositionOf(dto));
         Position targetPosition = targetPositionOf(dto);
 
@@ -24,12 +24,12 @@ public class Running extends Started {
         return new Running(chessmen);
     }
 
-    private Position sourcePositionOf(MovePositionCommandDto dto) {
+    private Position sourcePositionOf(MoveCommandDto dto) {
         String source = dto.source();
         return Position.of(source);
     }
 
-    private Position targetPositionOf(MovePositionCommandDto dto) {
+    private Position targetPositionOf(MoveCommandDto dto) {
         String target = dto.target();
         return Position.of(target);
     }

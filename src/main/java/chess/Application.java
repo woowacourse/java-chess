@@ -10,6 +10,6 @@ public class Application {
     public static void main(String[] args) {
         Game game = controller.startGame();
         game = controller.playGame(game);
-        controller.endGame(game);
+        controller.printGameOver(game);
     }
 }

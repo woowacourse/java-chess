@@ -1,11 +1,11 @@
 package chess.dto;
 
-public class MovePositionCommandDto {
+public class MoveCommandDto {
 
     private final String from;
     private final String to;
 
-    public MovePositionCommandDto(String from, String to) {
+    public MoveCommandDto(String from, String to) {
         this.from = from;
         this.to = to;
     }

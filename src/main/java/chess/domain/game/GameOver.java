@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.dto.MovePositionCommandDto;
+import chess.dto.MoveCommandDto;
 
 public class GameOver extends Started {
 
@@ -9,7 +9,7 @@ public class GameOver extends Started {
     }
 
     @Override
-    public Game moveChessmen(MovePositionCommandDto dto) {
+    public Game moveChessmen(MoveCommandDto dto) {
         throw new UnsupportedOperationException("이미 종료된 게임입니다.");
     }
 

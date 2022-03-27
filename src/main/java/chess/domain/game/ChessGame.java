@@ -6,7 +6,7 @@ import static chess.domain.piece.Color.WHITE;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.GameResultDto;
-import chess.dto.MovePositionCommandDto;
+import chess.dto.MoveCommandDto;
 import java.util.List;
 
 public class ChessGame {
@@ -19,7 +19,7 @@ public class ChessGame {
         this.chessmen = chessmen;
     }
 
-    public void moveChessmen(MovePositionCommandDto dto) {
+    public void moveChessmen(MoveCommandDto dto) {
         Piece sourcePiece = chessmen.findByPosition(sourcePositionOf(dto));
         Position targetPosition = targetPositionOf(dto);
 
@@ -30,12 +30,12 @@ public class ChessGame {
         sourcePiece.move(targetPosition, chessmen::isOccupied);
     }
 
-    private Position sourcePositionOf(MovePositionCommandDto dto) {
+    private Position sourcePositionOf(MoveCommandDto dto) {
         String source = dto.source();
         return Position.of(source);
     }
 
-    private Position targetPositionOf(MovePositionCommandDto dto) {
+    private Position targetPositionOf(MoveCommandDto dto) {
         String target = dto.target();
         return Position.of(target);
     }
