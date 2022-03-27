@@ -15,6 +15,16 @@ public class Finished implements State {
     }
 
     @Override
+    public State end() {
+        return this;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
     public Board getBoard() {
         return this.board;
     }

@@ -18,4 +18,12 @@ public class ChessGame {
     public Board getBoard() {
         return this.state.getBoard();
     }
+
+    public boolean isRunning() {
+        return this.state.isRunning();
+    }
+
+    public void end() {
+        this.state = this.state.end();
+    }
 }

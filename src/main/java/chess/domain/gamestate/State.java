@@ -6,5 +6,9 @@ public interface State {
 
     State start();
 
+    State end();
+
+    boolean isRunning();
+
     Board getBoard();
 }

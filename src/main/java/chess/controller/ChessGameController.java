@@ -17,15 +17,19 @@ public class ChessGameController {
     public void run() {
         outputView.printStartMessage();
         ChessGame chessGame = new ChessGame();
-        while (inputView.inputStartCommand()) {
-            chessGame.start();
 
-            outputView.printBoard(chessGame.getBoard().getValue());
+        while (true) {
+            String command = inputView.inputCommand();
+            if ("start".equals(command)) {
+                chessGame.start();
+                outputView.printBoard(chessGame.getBoard().getValue());
+            }
+            if ("end".equals(command)) {
+                if (!chessGame.isRunning()) {
+                    break;
+                }
+                chessGame.end();
+            }
         }
-
-    }
-
-    public boolean isRunning() {
-        return inputView.inputStartCommand();
     }
 }

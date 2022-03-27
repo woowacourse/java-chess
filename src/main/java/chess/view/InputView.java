@@ -10,6 +10,10 @@ public class InputView {
     private static final String START_COMMAND_EXCEPTION_MESSAGE =
             "명령어는 " + START_COMMAND + "와 " + END_COMMAND + "만 입력하실 수 있습니다.";
 
+    public String inputCommand() {
+        return SCANNER.nextLine();
+    }
+
     public boolean inputStartCommand() {
         String rawStartCommand = SCANNER.nextLine();
         try {

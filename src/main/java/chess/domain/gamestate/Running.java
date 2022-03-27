@@ -15,6 +15,16 @@ public class Running implements State {
     }
 
     @Override
+    public State end() {
+        return new Finished(this.board);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
     public Board getBoard() {
         return this.board;
     }
