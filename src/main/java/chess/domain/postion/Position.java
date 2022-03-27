@@ -45,4 +45,19 @@ public class Position {
         return (file.calculateAbsoluteValue(other.file)
                 == rank.calculateAbsoluteValue(other.rank));
     }
+
+    public boolean isInOneSquare(Position other) {
+        int fileAbsoluteValue = file.calculateAbsoluteValue(other.file);
+        int rankAbsoluteValue = rank.calculateAbsoluteValue(other.rank);
+
+        if (fileAbsoluteValue + rankAbsoluteValue == 1) {
+            return true;
+        }
+
+        if (fileAbsoluteValue == 1 && rankAbsoluteValue == 1) {
+            return true;
+        }
+
+        return false;
+    }
 }
