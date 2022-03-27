@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.command.Command;
+import chess.domain.command.MoveCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -43,10 +44,9 @@ public class Application {
         }
     }
 
-    private static void playTurn(String moveCommand, ChessGame game) {
+    private static void playTurn(String command, ChessGame game) {
         try {
-            String[] commands = moveCommand.split(" ");
-            game.movePiece(commands[1], commands[2]);
+            game.movePiece(MoveCommand.of(command));
             OutputView.printBoard(game.getBoard());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());

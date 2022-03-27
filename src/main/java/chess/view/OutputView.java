@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public static void printPlayingCommandMessage() {
-        System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 게임 이동 : move source 위치 target 위치 (예. move b2 b3)");
         System.out.println("> 게임 현황 : status");
         System.out.println("> 게임 종료 : end");
     }
@@ -53,7 +53,7 @@ public class OutputView {
             System.out.println("동점입니다.");
             return;
         }
-        System.out.println(winningColor.name() + "진영이 이기고 있습니다.");
+        System.out.println(winningColor.name() + " 진영이 이기고 있습니다.");
         System.out.println();
     }
 }

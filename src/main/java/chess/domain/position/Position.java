@@ -16,9 +16,15 @@ public final class Position {
         this.positionY = positionY;
     }
 
+    public static Position of(String value) {
+        PositionX positionX = PositionX.of(value.substring(0, 1));
+        PositionY positionY = PositionY.of(value.substring(1));
+        return new Position(positionX, positionY);
+    }
+
     public static Map<PositionY, List<Position>> groupByPositionY(List<Position> pawnPositions) {
         return pawnPositions.stream()
-                .collect(groupingBy(position->position.positionY));
+            .collect(groupingBy(position -> position.positionY));
     }
 
     public int calculateDisplacementXTo(Position position) {
@@ -47,9 +53,11 @@ public final class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Position position = (Position)o;
         return positionX == position.positionX && positionY == position.positionY;
     }
 

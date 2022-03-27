@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import chess.domain.command.MoveCommand;
 import chess.domain.piece.Blank;
 import chess.domain.piece.InitialPiece;
 import chess.domain.piece.Piece;
@@ -42,23 +43,10 @@ public final class ChessGame {
         }
     }
 
-    public void movePiece(String sourceCommand, String targetCommand) {
-        Position source = parseToPosition(sourceCommand);
-        Position target = parseToPosition(targetCommand);
-
-        if(board.isCastable(currentTurnColor, source, target)){
-            board.castle(source, target);
-            changeTurn();
-            return;
-        }
-
-        board.validateMovement(currentTurnColor, source, target);
-        board.movePiece(source, target);
+    public void movePiece(MoveCommand moveCommand) {
+        board.validateMovement(currentTurnColor, moveCommand);
+        board.movePiece(moveCommand);
         changeTurn();
-    }
-
-    private Position parseToPosition(String command) {
-        return new Position(PositionX.of(command.substring(0, 1)), PositionY.of(command.substring(1)));
     }
 
     private void changeTurn() {

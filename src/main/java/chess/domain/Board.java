@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.command.MoveCommand;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -17,74 +18,24 @@ public class Board {
         this.board = board;
     }
 
-    public boolean isCastable(Color turnColor, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-
-        return isCastablePieces(turnColor, sourcePiece, targetPiece) && isEmptyBetween(source, target);
-    }
-
-    private boolean isCastablePieces(Color turnColor, Piece sourcePiece, Piece targetPiece) {
-        return isCastableSourcePiece(turnColor, sourcePiece) && isCastableTargetPiece(turnColor, targetPiece);
-    }
-
-    private boolean isCastableSourcePiece(Color turnColor, Piece sourcePiece) {
-        return sourcePiece.isSameColor(turnColor) && sourcePiece.isKing() && sourcePiece.isNeverDisplaced();
-    }
-
-    private boolean isCastableTargetPiece(Color turnColor, Piece targetPiece) {
-        return targetPiece.isSameColor(turnColor) && targetPiece.isRook() && targetPiece.isNeverDisplaced();
-    }
-
-    private boolean isEmptyBetween(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        List<Position> route = sourcePiece.findRoute(source, target);
-
-        return route.stream()
-                .allMatch(node -> board.get(node).isBlank());
-    }
-
-    public void castle(Position source, Position target) {
-        if (source.calculateDisplacementXTo(target) > 0) {
-            castleToKingSide(source, target);
-            return;
-        }
-        castleToQueenSide(source, target);
-    }
-
-    private void castleToKingSide(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-
-        board.replace(source, new Blank());
-        board.replace(source.displacedOf(2, 0), sourcePiece.displaced());
-
-        board.replace(target, new Blank());
-        board.replace(target.displacedOf(-2, 0), targetPiece.displaced());
-    }
-
-    private void castleToQueenSide(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-
-        board.replace(source, new Blank());
-        board.replace(source.displacedOf(-2, 0), sourcePiece.displaced());
-
-        board.replace(target, new Blank());
-        board.replace(target.displacedOf(3, 0), targetPiece.displaced());
-    }
-
-    public void validateMovement(Color turnColor, Position source, Position target) {
-        validatePieceChoice(turnColor, source);
-        validateTargetChoice(turnColor, target);
-        validateMovable(turnColor, source, target);
-        validateRoute(source, target);
+    public void validateMovement(Color turnColor, MoveCommand command) {
+        validatePieceChoice(turnColor, command.from());
+        validateTargetChoice(turnColor, command.to());
+        validateMovable(turnColor, command.from(), command.to());
+        validateRoute(command.from(), command.to());
     }
 
     private void validatePieceChoice(Color turnColor, Position source) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
+        }
+    }
+
+    private void validateTargetChoice(Color turnColor, Position target) {
+        Piece targetPiece = board.get(target);
+        if (targetPiece.isSameColor(turnColor)) {
+            throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
         }
     }
 
@@ -125,13 +76,6 @@ public class Board {
         }
     }
 
-    private void validateTargetChoice(Color turnColor, Position target) {
-        Piece targetPiece = board.get(target);
-        if (targetPiece.isSameColor(turnColor)) {
-            throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
-        }
-    }
-
     private void validateRoute(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         List<Position> route = sourcePiece.findRoute(source, target);
@@ -147,18 +91,18 @@ public class Board {
         }
     }
 
-    public void movePiece(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        board.replace(source, new Blank());
-        board.replace(target, sourcePiece.displaced());
+    public void movePiece(MoveCommand command) {
+        Piece sourcePiece = board.get(command.from());
+        board.replace(command.from(), new Blank());
+        board.replace(command.to(), sourcePiece.displaced());
     }
 
     public double calculateScoreOf(Color color) {
         double score = board.values()
-                .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::score)
-                .sum();
+            .stream()
+            .filter(piece -> piece.isSameColor(color))
+            .mapToDouble(Piece::score)
+            .sum();
 
         return score - 0.5 * countSameRankPawnsOf(color);
     }
@@ -168,17 +112,17 @@ public class Board {
         Map<PositionY, List<Position>> pawnGroup = Position.groupByPositionY(pawnPositions);
 
         return pawnGroup.values()
-                .stream()
-                .filter(list -> list.size() > 1)
-                .mapToInt(List::size)
-                .sum();
+            .stream()
+            .filter(list -> list.size() > 1)
+            .mapToInt(List::size)
+            .sum();
     }
 
     private List<Position> findPawnPositionsOf(Color color) {
         return board.keySet().stream()
-                .filter(position -> board.get(position).isSameColor(color))
-                .filter(position -> board.get(position).isPawn())
-                .collect(Collectors.toList());
+            .filter(position -> board.get(position).isSameColor(color))
+            .filter(position -> board.get(position).isPawn())
+            .collect(Collectors.toList());
     }
 
     public boolean isBothKingsAlive() {
@@ -187,9 +131,9 @@ public class Board {
 
     private long countKingsOnBoard() {
         return board.values()
-                .stream()
-                .filter(Piece::isKing)
-                .count();
+            .stream()
+            .filter(Piece::isKing)
+            .count();
     }
 
     public Map<Position, Piece> getBoard() {
