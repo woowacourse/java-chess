@@ -1,12 +1,17 @@
 package chess.status;
 
+import static chess.piece.Color.BLACK;
+import static chess.piece.Color.WHITE;
+
 import chess.Board;
 import chess.MoveCommand;
+import chess.piece.Color;
 import chess.view.Command;
 
 public class Running implements State {
 
     private final Board board;
+    private Color color = WHITE;
 
     Running() {
         this.board = Board.create();
@@ -30,7 +35,15 @@ public class Running implements State {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand);
+        board.move(moveCommand, color);
+        reverseColor(color);
+    }
+
+    private void reverseColor(final Color color) {
+        if (BLACK == color) {
+            this.color = WHITE;
+        }
+        this.color = BLACK;
     }
 
     @Override

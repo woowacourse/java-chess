@@ -77,7 +77,7 @@ public class Board {
                 '}';
     }
 
-    public void move(final MoveCommand moveCommand) {
+    public void move(final MoveCommand moveCommand, Color color) {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
 
@@ -85,6 +85,7 @@ public class Board {
         validateSameTeam(from, to);
 
         final Piece piece = value.get(from);
+        validateColor(piece, color);
         validatePawnMove(moveCommand, from, to, piece);
 
         if (piece.canMove(moveCommand)) {
@@ -108,6 +109,12 @@ public class Board {
         while (!movedPosition.equals(to)) {
             validateBlock(movedPosition);
             movedPosition = movedPosition.shift(direction);
+        }
+    }
+
+    private void validateColor(final Piece piece, Color color) {
+        if (piece.getColor() != color) {
+            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
         }
     }
 

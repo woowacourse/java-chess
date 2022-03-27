@@ -3,6 +3,7 @@ package chess.status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.MoveCommand;
 import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,5 +50,26 @@ class RunningTest {
         final State running = new Running();
 
         assertThat(running.canMove()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Black 차례에 White가 움직일 경우 예외를 발생한다.")
+    void blackTurn() {
+        final State running = new Running();
+        running.move(MoveCommand.of("a2 a4"));
+
+        assertThatThrownBy(() -> running.move(MoveCommand.of("a4 a6")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("BLACK가 둘 차례입니다.");
+    }
+
+    @Test
+    @DisplayName("White 차례에 Black이 움직일 경우 예외를 발생한다.")
+    void whiteTurn() {
+        final State running = new Running();
+
+        assertThatThrownBy(() -> running.move(MoveCommand.of("a7 a5")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("WHITE가 둘 차례입니다.");
     }
 }

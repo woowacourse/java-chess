@@ -3,6 +3,7 @@ package chess;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.piece.Color;
 import chess.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class BoardTest {
     void existPieceInFromPosition(final String actual) {
         final Board board = Board.create();
 
-        assertThatThrownBy(() -> board.move(MoveCommand.of(actual)))
+        assertThatThrownBy(() -> board.move(MoveCommand.of(actual), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
     }
@@ -28,7 +29,7 @@ class BoardTest {
     void existPieceInToPosition(final String actual) {
         final Board board = Board.create();
 
-        assertThatThrownBy(() -> board.move(MoveCommand.of(actual)))
+        assertThatThrownBy(() -> board.move(MoveCommand.of(actual), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 위치에 같은색의 말이 존재합니다.");
     }
@@ -37,11 +38,11 @@ class BoardTest {
     @DisplayName("폰은 상대말이 가로막고 있을 때 전진할 수 없다.")
     void pawnCannotAttackForward() {
         final Board board = Board.create();
-        board.move(MoveCommand.of("a2 a4"));
-        board.move(MoveCommand.of("a4 a5"));
-        board.move(MoveCommand.of("a5 a6"));
+        board.move(MoveCommand.of("a2 a4"), Color.WHITE);
+        board.move(MoveCommand.of("a4 a5"), Color.WHITE);
+        board.move(MoveCommand.of("a5 a6"), Color.WHITE);
 
-        assertThatThrownBy(() -> board.move(MoveCommand.of("a6 a7")))
+        assertThatThrownBy(() -> board.move(MoveCommand.of("a6 a7"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 상대말이 있을 때 직진할 수 없습니다.");
     }
@@ -50,10 +51,10 @@ class BoardTest {
     @DisplayName("룩이 전진해서 상대 말을 잡는다.")
     void rookAttackForward() {
         final Board board = Board.create();
-        board.move(MoveCommand.of("a2 a4"));
-        board.move(MoveCommand.of("a1 a3"));
-        board.move(MoveCommand.of("a3 d3"));
-        board.move(MoveCommand.of("d3 d7"));
+        board.move(MoveCommand.of("a2 a4"), Color.WHITE);
+        board.move(MoveCommand.of("a1 a3"), Color.WHITE);
+        board.move(MoveCommand.of("a3 d3"), Color.WHITE);
+        board.move(MoveCommand.of("d3 d7"), Color.WHITE);
 
         assertThat(board.getValue().get(Position.of("d7"))).isInstanceOf(Rook.class);
     }
