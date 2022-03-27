@@ -98,10 +98,14 @@ public class Board {
         final Direction direction = movingPiece.findValidDirection(start, target);
         Position current = start.move(direction);
         while (!current.equals(target)) {
-            if (!get(current).equals(new EmptySpace())) {
-                throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
-            }
+            validateEmpty(current);
             current = current.move(direction);
+        }
+    }
+
+    private void validateEmpty(Position current) {
+        if (!get(current).equals(new EmptySpace())) {
+            throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
         }
     }
 
