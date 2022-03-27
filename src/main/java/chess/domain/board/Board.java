@@ -145,4 +145,33 @@ public class Board {
     private boolean isExistingSameTeam(AbstractPiece piece, AbstractPiece otherPiece) {
         return !Objects.isNull(otherPiece) && otherPiece.isSameTeam(piece);
     }
+
+    public double calculateScore(PieceColor pieceColor) {
+        return value.values()
+                .stream()
+                .filter(piece -> piece.isPieceColor(pieceColor))
+                .mapToDouble(AbstractPiece::getScore)
+                .sum() - adjustPawnScore(pieceColor);
+    }
+
+    private double adjustPawnScore(PieceColor pieceColor) {
+        int duplicatedPawnCount = 0;
+        for (XAxis xAxis : XAxis.values()) {
+            int count = 0;
+            for (YAxis yAxis : YAxis.values()) {
+                Position position = Position.from(xAxis, yAxis);
+                if (!Objects.isNull(value.get(position))) {
+                    if (value.get(position).isPieceColor(pieceColor) && value.get(position)
+                            .isPieceType(PieceType.PAWN)) {
+                        count += 1;
+                    }
+                }
+            }
+            if (count >= 2) {
+                duplicatedPawnCount += count;
+            }
+        }
+
+        return duplicatedPawnCount * 0.5;
+    }
 }

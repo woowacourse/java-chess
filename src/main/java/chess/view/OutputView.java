@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
+import chess.domain.piece.PieceColor;
 import chess.view.dto.BoardDto;
 
 public class OutputView {
@@ -17,5 +18,10 @@ public class OutputView {
     public static void printBoard(Board board) {
         BoardDto boardDto = new BoardDto(board);
         System.out.println(boardDto.getBoardText());
+    }
+
+    public static void printScore(Board board) {
+        System.out.println("흰색팀 점수 : " + board.calculateScore(PieceColor.WHITE));
+        System.out.println("검정색팀 점수 : " + board.calculateScore(PieceColor.BLACK));
     }
 }

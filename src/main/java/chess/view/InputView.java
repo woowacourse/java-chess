@@ -9,7 +9,7 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private static final String COMMAND_DELIMITER = " ";
-    private static final List<String> COMMANDS = List.of("move", "start", "end");
+    private static final List<String> COMMANDS = List.of("move", "start", "end", "status");
 
     public static List<String> inputCommand() {
         List<String> commands = Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));

@@ -292,4 +292,48 @@ class BoardTest {
         // then
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("초기화된 상태의 보드에서 흰색팀의 총 점수를 계산한다.")
+    @Test
+    void calculateScore_withWhite() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        double actual = board.calculateScore(PieceColor.WHITE);
+
+        // then
+        assertThat(actual).isEqualTo(38);
+    }
+
+    @DisplayName("초기화된 상태의 보드에서 검정색팀의 총 점수를 계산한다.")
+    @Test
+    void calculateScore_withBlack() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        double actual = board.calculateScore(PieceColor.BLACK);
+
+        // then
+        assertThat(actual).isEqualTo(38);
+    }
+
+    @DisplayName("폰이 같은 열에 있을 경우 해당 열의 모든 폰은 0.5점으로 계산된다.")
+    @Test
+    void calculateScore_withWhitePawnSameColumn() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.B, YAxis.SEVEN), Position.from(XAxis.B, YAxis.FIVE), PieceColor.BLACK);
+        board.executeCommand(Position.from(XAxis.B, YAxis.FIVE), Position.from(XAxis.B, YAxis.FOUR), PieceColor.BLACK);
+        board.executeCommand(Position.from(XAxis.B, YAxis.FOUR), Position.from(XAxis.B, YAxis.THREE), PieceColor.BLACK);
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE), PieceColor.WHITE);
+
+        double actual = board.calculateScore(PieceColor.WHITE);
+
+        // then
+        assertThat(actual).isEqualTo(37);
+    }
 }

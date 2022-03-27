@@ -47,4 +47,8 @@ public abstract class AbstractPiece {
     public boolean isPieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
+
+    public double getScore() {
+        return this.pieceType.getScore();
+    }
 }

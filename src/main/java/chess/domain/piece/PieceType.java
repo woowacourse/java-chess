@@ -4,16 +4,18 @@ import chess.domain.position.Position;
 import java.util.function.BiPredicate;
 
 public enum PieceType {
-    PAWN(PieceType::getPawnStrategy),
-    ROOK(PieceType::getRookStrategy),
-    KNIGHT(PieceType::getKnightStrategy),
-    BISHOP(PieceType::getBishopStrategy),
-    QUEEN(PieceType::getQueenStrategy),
-    KING(PieceType::getKingStrategy);
+    PAWN(1, PieceType::getPawnStrategy),
+    ROOK(5, PieceType::getRookStrategy),
+    KNIGHT(2.5, PieceType::getKnightStrategy),
+    BISHOP(3, PieceType::getBishopStrategy),
+    QUEEN(9, PieceType::getQueenStrategy),
+    KING(0, PieceType::getKingStrategy);
 
+    private final double score;
     private final BiPredicate<Position, Position> strategy;
 
-    PieceType(BiPredicate<Position, Position> strategy) {
+    PieceType(double score, BiPredicate<Position, Position> strategy) {
+        this.score = score;
         this.strategy = strategy;
     }
 
@@ -50,5 +52,9 @@ public enum PieceType {
 
     public boolean isMovable(Position from, Position to) {
         return strategy.test(from, to);
+    }
+
+    public double getScore() {
+        return score;
     }
 }

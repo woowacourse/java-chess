@@ -19,10 +19,7 @@ public class ChessController {
 
             if (command.equals("start")) {
                 chessGame.startGame();
-            }
-
-            if (command.equals("end")) {
-                chessGame.endGame();
+                OutputView.printBoard(chessGame.getBoard());
             }
 
             if (command.equals("move")) {
@@ -30,9 +27,17 @@ public class ChessController {
                 Position toPosition = Position.from(commands.get(2));
 
                 chessGame.movePiece(fromPosition, toPosition);
+                OutputView.printBoard(chessGame.getBoard());
             }
 
-            OutputView.printBoard(chessGame.getBoard());
+            if (command.equals("status")) {
+                chessGame.showStatus();
+                OutputView.printScore(chessGame.getBoard());
+            }
+
+            if (command.equals("end")) {
+                chessGame.endGame();
+            }
         }
     }
 }
