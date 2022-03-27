@@ -40,7 +40,7 @@ public class ChessMap {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank();
             final int file = position.getFile();
-            chessMap[rank][file] = piece.getName();
+            chessMap[rank][file] = Character.toLowerCase(piece.getName());
         }
     }
 
@@ -49,7 +49,7 @@ public class ChessMap {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank();
             final int file = position.getFile();
-            chessMap[rank][file] = Character.toLowerCase(piece.getName());
+            chessMap[rank][file] = piece.getName();
         }
     }
 

@@ -88,4 +88,8 @@ public class Player {
         return pieces.stream()
                 .anyMatch(Piece::isKing);
     }
+
+    public String getTeamName() {
+        return team.getName();
+    }
 }
