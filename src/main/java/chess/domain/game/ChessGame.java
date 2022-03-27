@@ -93,16 +93,8 @@ public class ChessGame {
         gameStatus = GameStatus.PLAYING;
     }
 
-    public boolean isReady() {
-        return gameStatus == GameStatus.READY;
-    }
-
     public boolean isPlaying() {
         return gameStatus == GameStatus.PLAYING;
-    }
-
-    public boolean isEnd() {
-        return gameStatus == GameStatus.END;
     }
 
     public Board getBoard() {

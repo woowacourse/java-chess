@@ -61,4 +61,8 @@ public class OutputView {
         }
         System.out.printf(WINNER_TEAM, winnerColor.name());
     }
+
+    public static void printError(String string) {
+        System.out.println(string);
+    }
 }

@@ -1,6 +1,9 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position {
 
@@ -21,6 +24,13 @@ public class Position {
         Rank rank = Rank.conditionOf(attribute[1]);
 
         return new Position(file, rank);
+    }
+
+    public static List<Position> inputToPositions(String input) {
+        return Arrays.stream(input.substring(5)
+                        .split(" "))
+                .map(Position::from)
+                .collect(Collectors.toList());
     }
 
     public Position advancePosition(Direction direction) {
