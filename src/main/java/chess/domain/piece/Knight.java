@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 
 public final class Knight extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 나이트는 색상을 가져야합니다.";
-    private static final String BLACK_KNIGHT = "♞";
-    private static final String WHITE_KNIGHT = "♘";
+    private static final String BLACK_KNIGHT = "♘";
+    private static final String WHITE_KNIGHT = "♞";
     private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
 
     static {

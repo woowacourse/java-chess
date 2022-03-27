@@ -7,8 +7,8 @@ import chess.domain.position.Direction;
 
 public final class Pawn extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";
-    private static final String BLACK_PAWN = "♟";
-    private static final String WHITE_PAWN = "♙";
+    private static final String WHITE_PAWN = "♟";
+    private static final String BLACK_PAWN = "♙";
     private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
     private static final List<Direction> ATTACK_DIRECTIONS = List.of(new Direction(1, 1), new Direction(-1, 1));
     private static final List<Direction> START_DIRECTIONS = List.of(new Direction(0, 2));
