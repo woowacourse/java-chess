@@ -88,8 +88,8 @@ public class ChessBoard {
                 .sum();
     }
 
-    private int countDuplicatedColumnPawn(Color color) {
-        return (int) pieces.entrySet()
+    private long countDuplicatedColumnPawn(Color color) {
+        return pieces.entrySet()
                 .stream()
                 .filter(entry -> isSameColorPawn(color, entry.getValue()))
                 .filter(entry -> existSameColorPawnInColumn(entry.getKey(), color))
@@ -115,8 +115,8 @@ public class ChessBoard {
         return countKing() == FINISHED_GAME_KING_COUNT;
     }
 
-    private int countKing() {
-        return (int) pieces.values()
+    private long countKing() {
+        return pieces.values()
                 .stream()
                 .filter(Piece::isKing)
                 .count();
