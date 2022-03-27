@@ -18,6 +18,10 @@ public class ChessGame {
         return ChessMap.of(whitePlayer.findAll(), blackPlayer.findAll());
     }
 
+    public boolean isRunning() {
+        return whitePlayer.hasKing() && blackPlayer.hasKing();
+    }
+
     public List<Piece> move(final Player currentPlayer, final Player opponentPlayer,
             final Position currentPosition, final Position destinationPosition) {
         validateMovable(currentPlayer, currentPosition, destinationPosition);
@@ -28,6 +32,7 @@ public class ChessGame {
         }
         if (hasPieceOfOpponentPlayer) {
             currentPlayer.capture(currentPosition, destinationPosition);
+            opponentPlayer.remove(destinationPosition);
         }
         return currentPlayer.findAll();
     }
