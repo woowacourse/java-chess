@@ -143,7 +143,7 @@ public class ChessBoard {
     }
 
     public Optional<ChessPiece> findPiece(Position position) {
-       return Optional.ofNullable(chessBoard.get(position));
+        return Optional.ofNullable(chessBoard.get(position));
     }
 
     public boolean enemyExist(ChessPiece me, Position to) {

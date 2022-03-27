@@ -125,9 +125,9 @@ class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard(pieceByPosition);
 
-        assertThatThrownBy(() -> chessBoard.move(new Position("a4"),new Position("a5")))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
+        assertThatThrownBy(() -> chessBoard.move(new Position("a4"), new Position("a5")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
 
     }
 

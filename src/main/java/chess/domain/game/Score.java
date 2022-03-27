@@ -50,13 +50,13 @@ public class Score {
 
     private double countSameRankPawn(Color color, Rank rank) {
         return Arrays.stream(File.values())
-                .map((file) -> searchPieceInFile(rank,file))
+                .map((file) -> searchPieceInFile(rank, file))
                 .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
                 .count();
     }
 
-    private Optional<ChessPiece> searchPieceInFile(Rank rank, File file){
-         return Optional.ofNullable(currentChessboard.get(new Position(convertToString(rank, file))));
+    private Optional<ChessPiece> searchPieceInFile(Rank rank, File file) {
+        return Optional.ofNullable(currentChessboard.get(new Position(convertToString(rank, file))));
     }
 
     private String convertToString(Rank rank, File file) {
