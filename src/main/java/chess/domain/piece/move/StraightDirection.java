@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum StraightDirection implements Direction {
+
     NORTH(0, 1),
     SOUTH(0, -1),
     WEST(-1, 0),
@@ -29,7 +30,7 @@ public enum StraightDirection implements Direction {
         int v = to.subtractVertical(from);
         int dx = toDegree(h);
         int dy = toDegree(v);
-        return of(dx,dy);
+        return of(dx, dy);
     }
 
     private static int toDegree(int number) {
