@@ -108,7 +108,7 @@ public class Board {
         }
     }
 
-    public boolean isGameOver() {
+    public boolean isKingDie() {
         return turn == Color.NONE;
     }
 
