@@ -44,6 +44,10 @@ public class Position {
         return row == rank;
     }
 
+    public boolean isSameFile(Position position) {
+        return this.column.equals(position.column);
+    }
+
     public boolean canCrossMovingStraight(Direction direction, Position dest) {
         return moveToNextPositionCheckingDestination(this, dest, direction.getX(), direction.getY());
     }

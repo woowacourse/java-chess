@@ -76,7 +76,20 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("아군");
+                .hasMessageContaining("폰은 직진으로 기물을 잡을 수 없습니다");
+    }
+
+    @DisplayName("폰은 한 칸 앞에 적은 잡을 수 없다")
+    @Test
+    void pawnCannotCatchFront() {
+        Map<Position, Piece> value = new HashMap<>();
+        value.put(Position.of("a2"), new Pawn(Color.WHITE));
+        value.put(Position.of("a3"), new Pawn(Color.BLACK));
+        Board board = new Board(value);
+
+        assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폰은 직진으로 기물을 잡을 수 없습니다");
     }
 
     @DisplayName("화이트 폰이 두칸 전진하는데 중간에 말이 있으면 에러가 발생한다.")

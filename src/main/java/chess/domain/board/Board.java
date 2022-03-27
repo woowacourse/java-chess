@@ -59,8 +59,16 @@ public class Board {
     }
 
     private void checkCanMove(Piece piece, Position src, Position dest) {
+        validatePawnCatchFront(piece, src, dest);
         if (!piece.canMove(src, dest)) {
             throw new IllegalArgumentException("이동할 수 없습니다");
+        }
+    }
+
+    private void validatePawnCatchFront(Piece piece, Position src, Position dest) {
+        boolean destHasPiece = findPieceBy(dest).isPresent();
+        if (piece.isSameType(Pawn.class) && destHasPiece && src.isSameFile(dest)) {
+            throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
         }
     }
 
@@ -105,6 +113,7 @@ public class Board {
         double result = positions.stream()
                 .map(value::get)
                 .filter(Objects::nonNull)
+                .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(Piece::getPoint)
                 .sum();
 
