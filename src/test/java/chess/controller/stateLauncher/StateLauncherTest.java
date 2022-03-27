@@ -6,12 +6,12 @@ import chess.domain.Fixtures;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Team;
 import chess.domain.game.stateLauncher.KingGo;
 import chess.domain.game.stateLauncher.Play;
 import chess.domain.game.stateLauncher.StateLauncher;
 import chess.domain.game.stateLauncher.Status;
+import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Team;
 import chess.view.OutputView;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -22,14 +22,14 @@ class StateLauncherTest {
     @Test
     void goEnd() {
         String boardString =
-                  "........ "
-                + "........ "
-                + "........ "
-                + "........ "
-                + ".......K "
-                + "........ "
-                + "........ "
-                + ".......q";
+                "........ "
+                        + "........ "
+                        + "........ "
+                        + "........ "
+                        + ".......K "
+                        + "........ "
+                        + "........ "
+                        + ".......q";
 
         Map<Position, Piece> stringPieceMap = Fixtures.stringToBoard(boardString);
         OutputView.printChessBoard(new Board(stringPieceMap));
