@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.position.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,57 @@ public class QueenTest {
         assertThatCode(() -> queen.move(Position.of("e3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("퀸은 attack시 move와 같은 방향으로 이동한다.")
+    @Test
+    void attack_likeMove() {
+        Queen queen = new Queen(Color.WHITE, Position.of("d1"));
+        queen.attack(Position.of("a4"));
+
+        Queen expected = new Queen(Color.WHITE, Position.of("a4"));
+
+        assertThat(queen).isEqualTo(expected);
+    }
+
+    @DisplayName("퀸이 d1에서 a4로 이동할 시, 사이에 있는 position은 c2, b3이다.")
+    @Test
+    void getPositionsInPath() {
+        Queen queen = new Queen(Color.WHITE, Position.of("d1"));
+
+        List<Position> actual = queen.getPositionsInPath(Position.of("a4"));
+        List<Position> expected = List.of(Position.of("c2"), Position.of("b3"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("퀸은 King이 아니다.")
+    @Test
+    void isKing_false() {
+        Queen queen = new Queen(Color.WHITE, Position.of("a1"));
+
+        boolean actual = queen.isKing();
+        boolean expected = false;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("흑색의 퀸의 display는 ♕이다.")
+    @Test
+    void display_black() {
+        String actual = new Queen(Color.BLACK, Position.of("a1")).display();
+        String expected = "♕";
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("백색의 퀸의 display는 ♛이다.")
+    @Test
+    void display_white() {
+        String actual = new Queen(Color.WHITE, Position.of("a1")).display();
+        String expected = "♛";
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("색과 위치가 동일한 Queen 인스턴스는 서로 동일하다고 간주된다.")

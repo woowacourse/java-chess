@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.position.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,57 @@ public class KingTest {
         assertThatCode(() -> king.move(Position.of("c3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("킹은 attack시 move와 같은 방향으로 이동한다.")
+    @Test
+    void attack_likeMove() {
+        King king = new King(Color.WHITE, Position.of("d1"));
+        king.attack(Position.of("d2"));
+
+        King expected = new King(Color.WHITE, Position.of("d2"));
+
+        assertThat(king).isEqualTo(expected);
+    }
+
+    @DisplayName("킹은 이동시 Path를 가지고 있지 않다.")
+    @Test
+    void getPositionsInPath() {
+        King king = new King(Color.WHITE, Position.of("d1"));
+
+        List<Position> actual = king.getPositionsInPath(Position.of("d2"));
+        List<Position> expected = List.of();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("킹은 King이다.")
+    @Test
+    void isKing_false() {
+        King king = new King(Color.WHITE, Position.of("a1"));
+
+        boolean actual = king.isKing();
+        boolean expected = true;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("흑색의 킹의 display는 ♔이다.")
+    @Test
+    void display_black() {
+        String actual = new King(Color.BLACK, Position.of("a1")).display();
+        String expected = "♔";
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("백색의 킹의 display는 ♚이다.")
+    @Test
+    void display_white() {
+        String actual = new King(Color.WHITE, Position.of("a1")).display();
+        String expected = "♚";
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("색과 위치가 동일한 King 인스턴스는 서로 동일하다고 간주된다.")

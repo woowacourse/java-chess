@@ -30,6 +30,46 @@ public class RookTest {
                 .hasMessage("이동할 수 없는 위치입니다.");
     }
 
+    @DisplayName("룩은 attack시 move와 같은 방향으로 이동한다.")
+    @Test
+    void attack_exception() {
+        Rook rook = new Rook(Color.WHITE, Position.of("a1"));
+        rook.attack(Position.of("a8"));
+
+        Rook expected = new Rook(Color.WHITE, Position.of("a8"));
+
+        assertThat(rook).isEqualTo(expected);
+    }
+
+    @DisplayName("룩은 King이 아니다.")
+    @Test
+    void isKing_false() {
+        Rook rook = new Rook(Color.WHITE, Position.of("a1"));
+
+        boolean actual = rook.isKing();
+        boolean expected = false;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("흑색의 룩의 display는 ♖이다.")
+    @Test
+    void display_black() {
+        String actual = new Rook(Color.BLACK, Position.of("a1")).display();
+        String expected = "♖";
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("백색의 룩의 display는 ♜이다.")
+    @Test
+    void display_white() {
+        String actual = new Rook(Color.WHITE, Position.of("a1")).display();
+        String expected = "♜";
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("색과 위치가 동일한 Rook 인스턴스는 서로 동일하다고 간주된다.")
     @Test
     void equals_sameOnSameColorAndPosition() {

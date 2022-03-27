@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.position.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +14,10 @@ public class PawnTest {
     @DisplayName("백색 폰은 앞으로 한칸 전진할 수 있다.")
     @Test
     void move_whiteForward() {
-        Pawn pawn = new Pawn(Color.WHITE, Position.of("a2"));
+        Pawn pawn = new Pawn(WHITE, Position.of("a2"));
         pawn.move(Position.of("a3"));
 
-        Pawn expected = new Pawn(Color.WHITE, Position.of("a3"));
+        Pawn expected = new Pawn(WHITE, Position.of("a3"));
 
         assertThat(pawn).isEqualTo(expected);
     }
@@ -34,30 +36,30 @@ public class PawnTest {
     @DisplayName("폰이 후진하려는 경우, 예외가 발생한다.")
     @Test
     void move_exceptionOnMovingBackwards() {
-        Pawn pawn = new Pawn(Color.WHITE, Position.of("a4"));
+        Pawn pawn = new Pawn(WHITE, Position.of("a4"));
 
         assertThatCode(() -> pawn.move(Position.of("a3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("폰이 직진 이외의 방향으로 이동하려는 경우, 예외가 발생한다.")
     @Test
     void move_exceptionOnMovingToDifferentFile() {
-        Pawn pawn = new Pawn(Color.WHITE, Position.of("a3"));
+        Pawn pawn = new Pawn(WHITE, Position.of("a3"));
 
         assertThatCode(() -> pawn.move(Position.of("b4")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("초기화된 위치에서는 두칸 전진할 수 있다.")
     @Test
     void move_canJumpOnInitialPosition() {
-        Pawn pawn = new Pawn(Color.WHITE, Position.of("a2"));
+        Pawn pawn = new Pawn(WHITE, Position.of("a2"));
         pawn.move(Position.of("a4"));
 
-        Pawn expected = new Pawn(Color.WHITE, Position.of("a4"));
+        Pawn expected = new Pawn(WHITE, Position.of("a4"));
 
         assertThat(pawn).isEqualTo(expected);
     }
@@ -65,25 +67,94 @@ public class PawnTest {
     @DisplayName("초기화된 위치가 아닌 경우 두칸 전진하려는 경우 예외가 발생한다.")
     @Test
     void move_exceptionOnJumpingAtNonInitialPosition() {
-        Pawn pawn = new Pawn(Color.WHITE, Position.of("a3"));
+        Pawn pawn = new Pawn(WHITE, Position.of("a3"));
 
         assertThatCode(() -> pawn.move(Position.of("a5")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
-//    @DisplayName("폰이 초기화된 위치에서는 두칸 전진하려는 경우 사이에 다른 말이 있으면 예외가 발생한다.")
-//    @Test
-//    void move_exceptionOnJumpingOnInitialPositionAndHavingObstacle() {
-//        Pawn pawn = new Pawn(WHITE, Position.of("a2"));
-//        Pawn obstacle = new Pawn(WHITE, Position.of("a3"));
-//        List<Piece> chessmen = List.of(pawn, obstacle);
-//
-//
-//        assertThatCode(() -> pawn.move(Position.of("a4")))
-//            .isInstanceOf(IllegalArgumentException.class)
-//            .hasMessage("가는 길목에 다른 말이 있어 이동할 수 없습니다.");
-//    }
+    @DisplayName("white폰은 attack시 대각선 위 방향으로 한칸 이동할 수 있다.")
+    @Test
+    void attack_likeMoveWhite() {
+        Pawn pawn = new Pawn(Color.WHITE, Position.of("a2"));
+        pawn.attack(Position.of("b3"));
+
+        Pawn expected = new Pawn(Color.WHITE, Position.of("b3"));
+
+        assertThat(pawn).isEqualTo(expected);
+    }
+
+    @DisplayName("white폰은 attack시 대각선 아래 방향으로 한칸이 아닌 곳으로 이동할 시 예외가 발생한다.")
+    @Test
+    void attack_likeMoveExceptionWhite() {
+        Pawn pawn = new Pawn(Color.WHITE, Position.of("a2"));
+
+        assertThatCode(() -> pawn.attack(Position.of("b1")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("공격할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("black폰은 attack시 대각선 아래 방향으로 한칸 이동할 수 있다.")
+    @Test
+    void attack_likeMoveBlack() {
+        Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
+        pawn.attack(Position.of("b6"));
+
+        Pawn expected = new Pawn(Color.BLACK, Position.of("b6"));
+
+        assertThat(pawn).isEqualTo(expected);
+    }
+
+    @DisplayName("black폰은 attack시 대각선 방향으로 한칸이 아닌 곳으로 이동할 시 예외가 발생한다.")
+    @Test
+    void attack_likeMoveExceptionBlack() {
+        Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
+
+        assertThatCode(() -> pawn.attack(Position.of("b8")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("공격할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("폰이 a2에서 a4로 이동할 시, 사이에 있는 position은 a3이다.")
+    @Test
+    void getPositionsInPath() {
+        Queen queen = new Queen(Color.WHITE, Position.of("a2"));
+
+        List<Position> actual = queen.getPositionsInPath(Position.of("a4"));
+        List<Position> expected = List.of(Position.of("a3"));
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("폰은 King이 아니다.")
+    @Test
+    void isKing_false() {
+        Pawn pawn = new Pawn(Color.WHITE, Position.of("a1"));
+
+        boolean actual = pawn.isKing();
+        boolean expected = false;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("흑색의 폰의 display는 ♗이다.")
+    @Test
+    void display_black() {
+        String actual = new Pawn(Color.BLACK, Position.of("a1")).display();
+        String expected = "♗";
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("백색의 폰의 display는 ♝이다.")
+    @Test
+    void display_white() {
+        String actual = new Pawn(Color.WHITE, Position.of("a1")).display();
+        String expected = "♝";
+
+        assertThat(actual).isEqualTo(expected);
+    }
 
     @DisplayName("색과 위치가 동일한 Pawn 인스턴스는 서로 동일하다고 간주된다.")
     @Test
