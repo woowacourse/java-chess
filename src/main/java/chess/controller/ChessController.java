@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.controller.commendexcuter.Start;
+import chess.controller.commendlauncher.Start;
 import chess.view.OutputView;
 
 public class ChessController {

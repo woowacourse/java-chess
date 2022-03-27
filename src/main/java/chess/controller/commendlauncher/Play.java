@@ -1,4 +1,4 @@
-package chess.controller.commendexcuter;
+package chess.controller.commendlauncher;
 
 import static chess.domain.board.Position.inputToPositions;
 
@@ -9,7 +9,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class Play extends CommendExecute {
+public class Play extends CommendLauncher {
     ChessGame chessGame;
 
     public Play(ChessGame chessGame) {

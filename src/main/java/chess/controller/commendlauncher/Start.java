@@ -1,9 +1,9 @@
-package chess.controller.commendexcuter;
+package chess.controller.commendlauncher;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
 
-public class Start extends CommendExecute {
+public class Start extends CommendLauncher {
 
 
     public Start() {
