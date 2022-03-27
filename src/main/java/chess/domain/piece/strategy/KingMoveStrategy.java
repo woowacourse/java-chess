@@ -9,7 +9,7 @@ public class KingMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
-        List<Direction> directions = Direction.everyDirection(color);
+        List<Direction> directions = Direction.royalDirection(color);
 
         if (isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException("킹이 이동할 수 없는 위치입니다.");

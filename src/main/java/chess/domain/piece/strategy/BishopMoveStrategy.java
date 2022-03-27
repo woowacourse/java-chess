@@ -20,6 +20,6 @@ public class BishopMoveStrategy extends MoveStrategy {
     }
 
     public static List<Direction> bishopDirection(Color color) {
-        return Direction.getColorDirections(color, List.of(Direction.TOPLEFT, Direction.TOPRIGHT, Direction.DOWNLEFT, Direction.DOWNRIGHT));
+        return Direction.getColorDirections(color, List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT));
     }
 }

@@ -10,10 +10,10 @@ public enum Direction {
     DOWN(0, -1),
     LEFT(-1, 0),
     RIGHT(1, 0),
-    TOPLEFT(-1, 1),
-    TOPRIGHT(1, 1),
-    DOWNLEFT(-1, -1),
-    DOWNRIGHT(1, -1),
+    TOP_LEFT(-1, 1),
+    TOP_RIGHT(1, 1),
+    DOWN_LEFT(-1, -1),
+    DOWN_RIGHT(1, -1),
     TTR(1, 2),
     RRT(2, 1),
     RRD(2, -1),
@@ -34,14 +34,14 @@ public enum Direction {
 
     public static Direction of(Position from, Position to) {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.isSameDirection(from, to))
+                .filter(value -> value.isSameDirection(from, to))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 방향이 없습니다."));
     }
 
-    public static List<Direction> everyDirection(Color color) {
+    public static List<Direction> royalDirection(Color color) {
         return getColorDirections(color, List.of(TOP, LEFT, DOWN, RIGHT,
-                TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
+                TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
     }
 
     public static List<Direction> getColorDirections(Color color, List<Direction> directions) {
@@ -54,14 +54,7 @@ public enum Direction {
     }
 
     public boolean isSameDirection(Position from, Position to) {
-        if (y == 0) {
-            return from.getYDistance(to) == 0 && from.getXDistance(to) * x > 0;
-        }
-        if (x == 0) {
-            return from.getXDistance(to) == 0 && from.getYDistance(to) * y > 0;
-        }
-        return (double) from.getXDistance(to) / from.getYDistance(to) == (double) x / y
-                && from.getXDistance(to) * x > 0;
+        return Math.atan2(from.getYDistance(to), from.getXDistance(to)) == Math.atan2(y, x);
     }
 
     public boolean isSameDistance(Position from, Position to) {
@@ -70,10 +63,9 @@ public enum Direction {
 
     private Direction toReversed() {
         return Arrays.stream(Direction.values())
-                .filter(direction ->
-                        direction.getX() == (-1) * this.getX() &&
-                                direction.getY() == (-1) * this.getY()
-                ).findFirst()
+                .filter(value -> value.getX() == (-1) * x)
+                .filter(value -> value.getY() == (-1) * y)
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 방향의 반대 방향이 없습니다."));
     }
 

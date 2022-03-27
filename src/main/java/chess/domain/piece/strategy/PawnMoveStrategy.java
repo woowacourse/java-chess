@@ -31,7 +31,7 @@ public class PawnMoveStrategy extends MoveStrategy {
     }
 
     public static List<Direction> pawnDirection(Color color) {
-        return Direction.getColorDirections(color, List.of(Direction.TOP, Direction.TOPLEFT, Direction.TOPRIGHT));
+        return Direction.getColorDirections(color, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
     }
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {

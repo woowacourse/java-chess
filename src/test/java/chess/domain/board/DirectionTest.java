@@ -45,7 +45,7 @@ class DirectionTest {
     void getDirection() {
         assertThat(Direction.of(new Position(File.A, Rank.ONE),
                 new Position(File.C, Rank.THREE)))
-                .isEqualTo(Direction.TOPRIGHT);
+                .isEqualTo(Direction.TOP_RIGHT);
 
     }
 
@@ -55,7 +55,7 @@ class DirectionTest {
         List<Direction> directions = PawnMoveStrategy.pawnDirection(Color.BLACK);
 
         assertThat(directions).containsAll(
-                List.of(Direction.DOWN, Direction.DOWNLEFT, Direction.DOWNRIGHT)
+                List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT)
         );
     }
 
