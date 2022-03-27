@@ -13,6 +13,7 @@ public class OutputView {
     private static final String MESSAGE_INPUT_MOVE = "> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3";
     private static final String MESSAGE_INPUT_STATUS = "> 결과 출력 : status";
     private static final String RESULT_FORMAT = "%s : %.1f점%n";
+    private static final String MESSAGE_GAME_END = "king 잡았다!";
 
     public static void announceStart() {
         System.out.println(MESSAGE_START);
@@ -37,5 +38,9 @@ public class OutputView {
 
     public static void showScore(Status status, Color color) {
         System.out.printf(RESULT_FORMAT, color.getName(), status.calculateScore(color));
+    }
+
+    public static void printKingDieMessage() {
+        System.out.println(MESSAGE_GAME_END);
     }
 }
