@@ -1,10 +1,5 @@
 package chess.domain.board.strategy;
 
-import static chess.domain.PieceType.BISHOP;
-import static chess.domain.PieceType.KING;
-import static chess.domain.PieceType.KNIGHT;
-import static chess.domain.PieceType.QUEEN;
-import static chess.domain.PieceType.ROOK;
 import static chess.domain.board.Column.a;
 import static chess.domain.board.Column.b;
 import static chess.domain.board.Column.c;
@@ -13,16 +8,21 @@ import static chess.domain.board.Column.e;
 import static chess.domain.board.Column.f;
 import static chess.domain.board.Column.g;
 import static chess.domain.board.Column.h;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
 import static java.util.Map.Entry;
 import static java.util.Map.entry;
 
-import chess.domain.PieceType;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.factory.PieceFactory;
 import java.util.Arrays;
 import java.util.HashMap;

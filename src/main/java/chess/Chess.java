@@ -1,10 +1,11 @@
 package chess;
 
-import chess.domain.PieceType;
+import chess.domain.GameState;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import chess.view.InputView;
 import chess.view.OutputView;
 

@@ -5,7 +5,6 @@ import static chess.domain.piece.Direction.N;
 import static chess.domain.piece.Direction.S;
 import static chess.domain.piece.Direction.W;
 
-import chess.domain.PieceType;
 import chess.domain.board.Position;
 import java.util.List;
 

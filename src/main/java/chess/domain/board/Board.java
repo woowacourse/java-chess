@@ -1,14 +1,14 @@
 package chess.domain.board;
 
-import static chess.domain.PieceType.KNIGHT;
-import static chess.domain.PieceType.PAWN;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.PieceType;
 import chess.domain.board.strategy.CreateBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

@@ -7,7 +7,6 @@ import static chess.domain.piece.Direction.S;
 import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 
-import chess.domain.PieceType;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import java.util.List;

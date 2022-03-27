@@ -3,7 +3,6 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.PieceType;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Bishop;
@@ -12,6 +11,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;

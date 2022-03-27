@@ -1,19 +1,19 @@
 package chess.domain.piece.factory;
 
-import static chess.domain.PieceType.BISHOP;
-import static chess.domain.PieceType.KING;
-import static chess.domain.PieceType.KNIGHT;
-import static chess.domain.PieceType.PAWN;
-import static chess.domain.PieceType.QUEEN;
-import static chess.domain.PieceType.ROOK;
+import static chess.domain.piece.PieceType.BISHOP;
+import static chess.domain.piece.PieceType.KING;
+import static chess.domain.piece.PieceType.KNIGHT;
+import static chess.domain.piece.PieceType.PAWN;
+import static chess.domain.piece.PieceType.QUEEN;
+import static chess.domain.piece.PieceType.ROOK;
 
-import chess.domain.PieceType;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;

@@ -9,7 +9,6 @@ import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 import static chess.domain.piece.Direction.W;
 
-import chess.domain.PieceType;
 import chess.domain.board.Position;
 import java.util.List;
 

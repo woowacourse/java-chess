@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.PieceType;
 import chess.domain.board.Position;
 
 public class EmptySpace extends Piece {
