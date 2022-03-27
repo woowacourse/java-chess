@@ -26,8 +26,8 @@ public class ChessGame {
         return state.getBoard();
     }
 
-    public boolean isRunning() {
-        return state.isRunning();
+    public boolean isEnded() {
+        return state.isEnded();
     }
 
     public void move(final String[] positions) {

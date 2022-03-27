@@ -40,4 +40,9 @@ public abstract class Turn extends State {
     public boolean isRunning() {
         return true;
     }
+
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
 }

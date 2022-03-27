@@ -41,4 +41,9 @@ public class Ready extends State {
     public boolean isRunning() {
         return false;
     }
+
+    @Override
+    public boolean isEnded() {
+        return false;
+    }
 }

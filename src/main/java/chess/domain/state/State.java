@@ -21,6 +21,8 @@ public abstract class State {
 
     public abstract boolean isRunning();
 
+    public abstract boolean isEnded();
+
     public final Map<Position, Piece> getBoard() {
         return board.toMap();
     }
