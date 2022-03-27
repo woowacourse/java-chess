@@ -123,4 +123,11 @@ public class Board {
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
+
+    public List<Piece> collectRankPiece(Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Location.of(file, rank))
+                .map(chessBoard::get)
+                .collect(Collectors.toList());
+    }
 }
