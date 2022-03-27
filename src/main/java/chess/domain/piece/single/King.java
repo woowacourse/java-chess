@@ -14,7 +14,7 @@ import chess.domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public final class King extends SinglePiece {
+public final class King extends SingleMovePiece {
 
     private static final String KING_NAME = "K";
     private static final double KING_SCORE = 0;

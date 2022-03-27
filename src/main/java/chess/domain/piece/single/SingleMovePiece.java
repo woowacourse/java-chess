@@ -8,13 +8,13 @@ import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public abstract class SinglePiece extends AbstractPiece {
+public abstract class SingleMovePiece extends AbstractPiece {
 
     private static final int MOVABLE_COUNT = 1;
 
     private final List<Direction> moveDirections;
 
-    protected SinglePiece(Color color, String name, List<Direction> moveDirections) {
+    protected SingleMovePiece(Color color, String name, List<Direction> moveDirections) {
         super(color, name);
         this.moveDirections = moveDirections;
     }

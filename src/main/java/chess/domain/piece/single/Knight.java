@@ -14,7 +14,7 @@ import chess.domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Knight extends SinglePiece {
+public final class Knight extends SingleMovePiece {
 
     private static final String KNIGHT_NAME = "N";
     private static final double KNIGHT_SCORE = 2.5;
