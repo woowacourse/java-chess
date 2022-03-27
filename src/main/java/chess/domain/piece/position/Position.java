@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Position {
+    private static final Map<String, Position> POOL = new HashMap<>();
+
     private final File file;
     private final Rank rank;
-
-    private static final Map<String, Position> pool = new HashMap<>();
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -15,7 +15,7 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
-        return pool.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
+        return POOL.computeIfAbsent(file.name() + rank.name(), ignored -> new Position(file, rank));
     }
 
     public boolean isBlocked(Direction direction) {
