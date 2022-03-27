@@ -1,10 +1,10 @@
 package chess.vo;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.*;
+
+import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Position {
 
@@ -60,44 +60,25 @@ public class Position {
         return Math.abs(file.displacement(other.file));
     }
 
-    public boolean isDiagonal(Position other) {
-        return this.fileDistance(other) == this.rankDistance(other);
+    public List<Position> between(Position other) {
+        return Rank.reverseValues()
+            .stream()
+            .flatMap(rank -> betweenOneFile(other, rank).stream())
+            .collect(toList());
     }
 
-    public boolean isCross(Position other) {
-        return this.isSameRank(other) || this.isSameFile(other);
+    private List<Position> betweenOneFile(Position other, Rank rank) {
+        return Arrays.stream(File.values())
+            .filter(file -> rank.isBetween(this.rank, other.rank) && file.isBetween(this.file, other.file))
+            .map(file -> new Position(rank, file))
+            .collect(toList());
     }
 
-    public boolean isAllDirectional(Position other) {
-        return this.isDiagonal(other) || this.isCross(other);
-    }
-
-    public List<Position> positionsToMove(Position other) {
-        List<File> traceFileGroup = File.traceGroup(this.file, other.file);
-        List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
-
-        return possiblePositions(traceRankGroup.listIterator(), traceFileGroup.listIterator());
-    }
-
-    private List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
-        List<Position> positions = new ArrayList<>();
-
-        if (!rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(this.rank, file)));
-            return positions;
-        }
-
-        if (!fileIterator.hasNext()) {
-            rankIterator.forEachRemaining(rank -> positions.add(new Position(rank, this.file)));
-            return positions;
-        }
-
-        while (rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(rankIterator.next(), file)));
-        }
-
-        return positions.stream()
-            .filter(this::isAllDirectional)
-            .collect(Collectors.toList());
+    @Override
+    public String toString() {
+        return "Position{" +
+            "rank=" + rank +
+            ", file=" + file +
+            '}';
     }
 }

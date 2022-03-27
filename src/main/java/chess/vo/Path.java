@@ -1,5 +1,8 @@
 package chess.vo;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Path {
 
     private final Position source;
@@ -28,7 +31,6 @@ public class Path {
             && source.fileDistance(target) == 1;
     }
 
-
     private boolean isForward(Position source, Position target, int amount) {
         return source.rankDisplacement(target) > 0
             && source.rankDisplacement(target) <= amount && source.isSameFile(target);
@@ -36,14 +38,6 @@ public class Path {
 
     public boolean isSourceRankOf(Rank sourceRank) {
         return source.isRankOf(sourceRank);
-    }
-
-    public boolean isDiagonal() {
-        return source.isDiagonal(target);
-    }
-
-    public boolean isAllDirectional() {
-        return source.isAllDirectional(target);
     }
 
     public int fileDistance() {
@@ -54,7 +48,21 @@ public class Path {
         return source.rankDistance(target);
     }
 
+    public boolean isDiagonal() {
+        return fileDistance() == rankDistance();
+    }
+
     public boolean isCross() {
-        return source.isCross(target);
+        return source.isSameRank(target) || source.isSameFile(target);
+    }
+
+    public boolean isAllDirectional() {
+        return isDiagonal() || isCross();
+    }
+
+    public List<Position> possiblePositions() {
+        return source.between(target).stream()
+            .filter(position -> isAllDirectional())
+            .collect(Collectors.toUnmodifiableList());
     }
 }

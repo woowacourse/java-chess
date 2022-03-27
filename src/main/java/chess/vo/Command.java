@@ -15,6 +15,7 @@ public enum Command {
     private static final String REGEX_MOVE_STATUS_END = "(end)|(status)|(move [a-h][1-8] [a-h][1-8])";
     private static final Pattern PATTERN_START_END = Pattern.compile(REGEX_START_END);
     private static final Pattern PATTERN_END_MOVE = Pattern.compile(REGEX_MOVE_STATUS_END);
+
     private final String name;
 
     Command(String name) {

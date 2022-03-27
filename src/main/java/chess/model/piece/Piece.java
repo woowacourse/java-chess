@@ -25,10 +25,6 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Path path, MoveType moveType);
 
-    public boolean isMyTeam(Piece other) {
-        return this.pieceColor == other.pieceColor;
-    }
-
     public boolean isSameColor(PieceColor otherPieceColor) {
         return this.pieceColor == otherPieceColor;
     }

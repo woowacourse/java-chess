@@ -35,11 +35,11 @@ public enum File {
             .collect(toUnmodifiableList());
     }
 
-    private boolean isBetween(File source, File target) {
+    public boolean isBetween(File source, File target) {
         if (source.isBiggerThan(target)) {
-            return this.isBiggerThan(target) && source.isBiggerThan(this);
+            return this.isBiggerThan(target) && source.isBiggerThan(this) || source == target;
         }
-        return this.isBiggerThan(source) && target.isBiggerThan(this);
+        return this.isBiggerThan(source) && target.isBiggerThan(this) || source == target;
     }
 
     private boolean isBiggerThan(File other) {

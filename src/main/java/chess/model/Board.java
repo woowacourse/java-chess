@@ -36,7 +36,7 @@ public class Board {
         validateSourceNotEmpty(source);
         boolean isFinished = pieceAt(target) instanceof King;
 
-        changePieces(source, target);
+        changePiecePositions(source, target);
 
         if (!isFinished) {
             turnDecider.nextState();
@@ -56,19 +56,21 @@ public class Board {
         }
     }
 
-    private void changePieces(Position source, Position target) {
+    private void changePiecePositions(Position source, Position target) {
         Piece sourcePiece = pieceAt(source);
         Piece targetPiece = pieceAt(target);
-        MoveType moveType = moveType(targetPiece);
 
-        if (!sourcePiece.isMovable(new Path(source, target), moveType) || isBlocked(source, target)
-            || isFriendly(moveType)) {
-            System.out.println(moveType);
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
-        }
+        validateChangeable(source, target, moveType(targetPiece));
 
         values.put(target, sourcePiece);
         values.put(source, EMPTY_PIECE);
+    }
+
+    private void validateChangeable(Position source, Position target, MoveType moveType) {
+        if (!pieceAt(source).isMovable(new Path(source, target), moveType) || isBlocked(source, target)
+            || isFriendly(moveType)) {
+            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+        }
     }
 
     private boolean isFriendly(MoveType moveType) {
@@ -90,10 +92,8 @@ public class Board {
             return false;
         }
 
-        for (Position position : source.positionsToMove(target)) {
-            return !isEmptyPiece(pieceAt(position));
-        }
-        return false;
+        return new Path(source, target).possiblePositions().stream()
+            .anyMatch(position -> !isEmptyPiece(pieceAt(position)));
     }
 
     private boolean isEmptyPiece(Piece piece) {

@@ -46,11 +46,11 @@ public enum Rank {
         return other.value - this.value;
     }
 
-    private boolean isBetween(Rank source, Rank target) {
+    public boolean isBetween(Rank source, Rank target) {
         if (source.isBiggerThan(target)) {
-            return this.isBiggerThan(target) && source.isBiggerThan(this);
+            return this.isBiggerThan(target) && source.isBiggerThan(this) || source == target;
         }
-        return this.isBiggerThan(source) && target.isBiggerThan(this);
+        return this.isBiggerThan(source) && target.isBiggerThan(this) || source == target;
     }
 
     private boolean isBiggerThan(Rank other) {
