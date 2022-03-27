@@ -32,10 +32,6 @@ public enum Rank {
         return target.index - this.index;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public Rank add(int dRank) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == this.index + dRank)

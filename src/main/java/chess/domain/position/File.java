@@ -32,10 +32,6 @@ public enum File {
         return target.index - this.index;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public File add(int dFile) {
         return Arrays.stream(values())
                 .filter(file -> file.index == this.index + dFile)

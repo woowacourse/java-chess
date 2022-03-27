@@ -29,10 +29,6 @@ public class Square {
         return this.file == file;
     }
 
-    public String getName() {
-        return file.getValue() + rank.getValue();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
