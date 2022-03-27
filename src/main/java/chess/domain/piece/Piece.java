@@ -33,7 +33,7 @@ public abstract class Piece {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || !(o instanceof Piece)) {
+        if (!(o instanceof Piece)) {
             return false;
         }
         Piece piece = (Piece) o;
