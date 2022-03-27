@@ -3,20 +3,19 @@ package chess.domain.player;
 import chess.domain.Position;
 import chess.domain.generator.Generator;
 import chess.domain.piece.Piece;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Player {
 
     private static final int DEFAULT_PLURAL_COUNT = 2;
 
-    private final Set<Piece> pieces;
+    private final List<Piece> pieces;
     private final Team team;
 
     public Player(List<Piece> pieces, Team team) {
-        this.pieces = new HashSet<>(pieces);
+        this.pieces = new ArrayList<>(pieces);
         this.team = team;
     }
 
@@ -48,9 +47,9 @@ public class Player {
         pieces.remove(findPiece(position));
     }
 
-    private Piece findPiece(final Position current) {
+    private Piece findPiece(final Position position) {
         return pieces.stream()
-                .filter(piece -> piece.exist(current))
+                .filter(piece -> piece.exist(position))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스말이 존재하지 않습니다."));
     }
