@@ -10,6 +10,7 @@ public class King extends Piece {
 
 	private static final String INVALID_DIRECTION_KING = "King이 갈 수 없는 방향입니다.";
 	private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
+	private static final double KING_SCORE = 0;
 
 	private final String symbol;
 
@@ -34,6 +35,11 @@ public class King extends Piece {
 	@Override
 	public boolean isPawn() {
 		return false;
+	}
+
+	@Override
+	public double getScore() {
+		return KING_SCORE;
 	}
 
 	@Override

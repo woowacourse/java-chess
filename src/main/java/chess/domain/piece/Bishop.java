@@ -9,6 +9,7 @@ import chess.domain.direction.strategy.BishopDirectionStrategy;
 public class Bishop extends Piece {
 
 	private static final String INVALID_DIRECTION_BISHOP = "비숍이 갈 수 없는 방향입니다.";
+	public static final double BISHOP_SCORE = 3.0;
 
 	private final String symbol;
 
@@ -42,5 +43,10 @@ public class Bishop extends Piece {
 	@Override
 	public boolean isPawn() {
 		return false;
+	}
+
+	@Override
+	public double getScore() {
+		return BISHOP_SCORE;
 	}
 }

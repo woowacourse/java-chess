@@ -51,6 +51,10 @@ public class Position {
 		return this.row == row;
 	}
 
+	public boolean isSameColumn(int column) {
+		return this.column == column;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -60,9 +64,9 @@ public class Position {
 		Position position = (Position)o;
 		return row == position.row && column == position.column;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(row, column);
 	}
-
 }

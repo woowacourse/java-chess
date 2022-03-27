@@ -9,6 +9,8 @@ import chess.domain.direction.strategy.QueenDirectionStrategy;
 public class Queen extends Piece {
 
 	public static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
+	private static final double QUEEN_SCORE = 9.0;
+
 	private final String symbol;
 
 	private Queen(Color color, String symbol) {
@@ -41,5 +43,10 @@ public class Queen extends Piece {
 	@Override
 	public boolean isPawn() {
 		return false;
+	}
+
+	@Override
+	public double getScore() {
+		return QUEEN_SCORE;
 	}
 }

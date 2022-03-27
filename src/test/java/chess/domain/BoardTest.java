@@ -401,4 +401,37 @@ class BoardTest {
 		Piece piece = board.findPiece(new Position(row, column)).get();
 		assertThat(piece).isInstanceOf(King.class);
 	}
+
+	@Test
+	@DisplayName("남아있는 말들의 점수를 계산한다.")
+	void score() {
+		Map<Position, Piece> pieces = Map.of(
+			new Position(1, 1), Pawn.createWhite(),
+			new Position(2, 2), King.createWhite(),
+			new Position(3, 3), Queen.createWhite(),
+			new Position(4, 4), Rook.createWhite(),
+			new Position(5, 5), Bishop.createWhite(),
+			new Position(6, 6), Knight.createWhite()
+		);
+		Board board = new Board(pieces);
+
+		ChessScore chessScore = board.calculateScore();
+
+		assertThat(chessScore.equals(new ChessScore(20.5, 0))).isTrue();
+	}
+
+	@Test
+	@DisplayName("한 세로줄에 있는 폰들은 0.5점으로 계산한다.")
+	void scorePawn() {
+		Map<Position, Piece> pieces = Map.of(
+			new Position(1, 1), Pawn.createWhite(),
+			new Position(2, 1), Pawn.createWhite(),
+			new Position(3, 2), Pawn.createWhite()
+		);
+		Board board = new Board(pieces);
+
+		ChessScore chessScore = board.calculateScore();
+
+		assertThat(chessScore.equals(new ChessScore(2.0, 0))).isTrue();
+	}
 }
