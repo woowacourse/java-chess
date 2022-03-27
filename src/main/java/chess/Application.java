@@ -9,37 +9,34 @@ import chess.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        OutputView outputView = new OutputView();
-
-        outputView.printGameStartMessage();
-
+        OutputView.printGameStartMessage();
         String startOrEndInput = InputView.getStartOrEndInput();
         if (startOrEndInput.equals("start")) {
-            startGame(outputView);
+            startGame();
         }
     }
 
-    private static void startGame(OutputView outputView) {
+    private static void startGame() {
         ChessGame game = new ChessGame();
-        outputView.printBoard(game.getBoard());
+        OutputView.printBoard(game.getBoard());
         while (game.isRunning()) {
-            play(outputView, game);
-            outputView.printBoard(game.getBoard());
+            play(game);
+            OutputView.printBoard(game.getBoard());
         }
     }
 
-    private static void play(OutputView outputView, ChessGame game) {
+    private static void play(ChessGame game) {
         try {
             String command = InputView.getCommand();
             if (command.startsWith("move")) {
                 playTurn(command, game);
             }
             if (command.startsWith("status")) {
-                showStatus(outputView, game);
+                showStatus(game);
             }
         } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            play(outputView, game);
+            OutputView.printErrorMessage(e.getMessage());
+            play(game);
         }
     }
 
@@ -48,7 +45,7 @@ public class Application {
         game.movePiece(commands[1], commands[2]);
     }
 
-    private static void showStatus(OutputView outputView, ChessGame game) {
+    private static void showStatus(ChessGame game) {
         Map<Color, Double> scores = game.calculateScore();
         Color winningColor = Color.NONE;
         double blackScore = scores.get(Color.BLACK);
@@ -59,6 +56,6 @@ public class Application {
         if (blackScore < whiteScore) {
             winningColor = Color.WHITE;
         }
-        outputView.printStatus(scores, winningColor);
+        OutputView.printStatus(scores, winningColor);
     }
 }
