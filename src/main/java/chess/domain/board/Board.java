@@ -91,11 +91,11 @@ public class Board {
     }
 
     private void checkObstacle(Position src, Position dest, Direction direction) {
-        Position nextPosition = src.move(direction.getX(), direction.getY());
+        Position nextPosition = src.moveTo(direction.getX(), direction.getY());
 
         while (!nextPosition.equals(dest)) {
             checkObstacleIn(nextPosition);
-            nextPosition = nextPosition.move(direction.getX(), direction.getY());
+            nextPosition = nextPosition.moveTo(direction.getX(), direction.getY());
         }
     }
 

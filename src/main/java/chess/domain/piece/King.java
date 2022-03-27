@@ -23,7 +23,7 @@ public final class King extends Piece {
         List<Direction> directions = Direction.getKingDirections();
 
         for (Direction direction : directions) {
-            if (src.canMoveByTime(direction, dest, 1)) {
+            if (src.canReachByMovingTo(direction, dest, 1)) {
                 return direction;
             }
         }

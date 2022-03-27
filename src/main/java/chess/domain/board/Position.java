@@ -24,6 +24,32 @@ public class Position {
         return new Position(Column.of(values[COLUMN_INDEX]), Row.of(values[ROW_INDEX]));
     }
 
+    public Position moveTo(int x, int y) {
+        return new Position(column.move(x), row.move(y));
+    }
+
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+
+    public boolean isCrossByMovingTo(Direction direction, Position dest) {
+        return moveToNextPositionCheckingCrossed(this, dest, direction.getX(), direction.getY());
+    }
+
+    public boolean canReachByMovingTo(Direction direction, Position dest, int times) {
+        int x = direction.getX();
+        int y = direction.getY();
+
+        Position nextPosition = this;
+        for (int i = 0; i < times; i++) {
+            if (!nextPosition.canMove(x, y)) {
+                return false;
+            }
+            nextPosition = nextPosition.moveTo(x, y);
+        }
+        return dest.equals(nextPosition);
+    }
+
     private static void validateBlank(String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("포지션은 빈값일 수 없습니다.");
@@ -36,41 +62,15 @@ public class Position {
         }
     }
 
-    public Position move(int x, int y) {
-        return new Position(column.move(x), row.move(y));
-    }
-
-    public boolean isSameRow(Row rank) {
-        return row == rank;
-    }
-
-    public boolean canCrossMovingStraight(Direction direction, Position dest) {
-        return moveToNextPositionCheckingDestination(this, dest, direction.getX(), direction.getY());
-    }
-
-    private boolean moveToNextPositionCheckingDestination(Position start, Position dest, int x, int y) {
+    private boolean moveToNextPositionCheckingCrossed(Position start, Position dest, int x, int y) {
         if (!start.canMove(x, y)) {
             return false;
         }
-        Position nextPosition = start.move(x, y);
+        Position nextPosition = start.moveTo(x, y);
         if (nextPosition.equals(dest)) {
             return true;
         }
-        return moveToNextPositionCheckingDestination(nextPosition, dest, x, y);
-    }
-
-    public boolean canMoveByTime(Direction direction, Position dest, int time) {
-        int x = direction.getX();
-        int y = direction.getY();
-
-        Position nextPosition = this;
-        for (int i = 0; i < time; i++) {
-            if (!nextPosition.canMove(x, y)) {
-                return false;
-            }
-            nextPosition = nextPosition.move(x, y);
-        }
-        return dest.equals(nextPosition);
+        return moveToNextPositionCheckingCrossed(nextPosition, dest, x, y);
     }
 
     private boolean canMove(int x, int y) {

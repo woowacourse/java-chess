@@ -13,7 +13,6 @@ public final class Knight extends Piece {
         super(color);
     }
 
-    // TODO 좀 더 나은 리팩터링 방법을 찾을 수 있을 것 같다
     @Override
     public boolean canMove(Position src, Position dest) {
         return findDirection(src, dest) != null;
@@ -23,7 +22,7 @@ public final class Knight extends Piece {
     public Direction findDirection(Position src, Position dest) {
         List<Direction> directions = Direction.getKnightDirections();
         for (Direction direction : directions) {
-            if (src.canMoveByTime(direction, dest, 1)) {
+            if (src.canReachByMovingTo(direction, dest, 1)) {
                 return direction;
             }
         }

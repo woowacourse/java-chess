@@ -14,14 +14,13 @@ public final class BlackPawnMovePattern extends AbstractPawnMovePattern {
     public Direction findDirection(Position src, Position dest) {
         List<Direction> directions = getDirections();
 
-        // TODO 상태를 이용해서 리펙터링이 가능할 것 같다
         for (Direction direction : directions) {
-            if (src.canMoveByTime(direction, dest, 1)) {
+            if (src.canReachByMovingTo(direction, dest, 1)) {
                 return direction;
             }
 
             if (src.isSameRow(BLACK_PAWN_START_ROW) && direction.equals(Direction.SOUTH)
-                    && src.canMoveByTime(direction, dest, 2)) {
+                    && src.canReachByMovingTo(direction, dest, 2)) {
                 return direction;
             }
         }
