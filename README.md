@@ -1,5 +1,12 @@
 # java-chess
 
+> 체스 미션 저장소 ♔♕♖♗♘♙
+
+## Contributors
+
+- [@RIANAEH](https://github.com/RIANAEH)
+- [@jurlring](https://github.com/jurlring)
+
 ## 기능 목록
 
 - [x] 사용자가 start를 입력하면 체스판을 초기화 한다.
