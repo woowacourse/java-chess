@@ -1,4 +1,4 @@
-package chess.view.input;
+package chess.game;
 
 import static chess.view.output.OutputView.printScore;
 

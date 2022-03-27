@@ -1,12 +1,11 @@
-package chess;
+package chess.game;
 
-import static chess.view.input.CommandType.END;
-import static chess.view.input.CommandType.START;
+import static chess.game.CommandType.END;
+import static chess.game.CommandType.START;
 import static chess.view.output.OutputView.printCurrentBoard;
 import static chess.view.output.OutputView.printStartMessage;
 
 import chess.domain.board.Board;
-import chess.view.input.CommandType;
 import chess.view.input.InputView;
 import java.util.List;
 
@@ -40,6 +39,6 @@ public class ChessGame {
             commandType = findCommandType(inputCommand);
             board = commandType.play(board, inputCommand);
         }
-        while (commandType != END && !board.isCheckMate());
+        while (commandType != END && !board.hasOneKing());
     }
 }

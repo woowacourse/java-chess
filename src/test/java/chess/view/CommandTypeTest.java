@@ -2,7 +2,7 @@ package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.view.input.CommandType;
+import chess.game.CommandType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
