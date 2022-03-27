@@ -6,7 +6,6 @@ import chess.position.File;
 import chess.position.Position;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
@@ -14,8 +13,8 @@ public class ChessBoard {
     private Map<Position, Piece> board;
     private Color currentColor;
 
-    public ChessBoard(List<Piece> squares, Color currentColor) {
-        this.board = squares.stream()
+    public ChessBoard(List<Piece> pieces, Color currentColor) {
+        this.board = pieces.stream()
             .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
         this.currentColor = currentColor;
     }
@@ -47,6 +46,16 @@ public class ChessBoard {
         board.remove(from);
         board.put(to, transferredPiece);
         currentColor = currentColor.reverse();
+    }
+
+    public boolean isFinished() {
+        return !hasKingByColor(Color.WHITE) || !hasKingByColor(Color.BLACK);
+    }
+
+    private boolean hasKingByColor(Color color) {
+        return getPieces().stream()
+            .filter(Piece::isKing)
+            .anyMatch(piece -> piece.isSameColor(color));
     }
 
     public List<Piece> getPieces() {
@@ -81,5 +90,15 @@ public class ChessBoard {
             .filter(piece -> piece.isSameColor(color))
             .filter(piece -> piece.isSameFile(file))
             .count();
+    }
+
+    public Color getWinner() {
+        if (!isFinished()) {
+            throw new IllegalStateException("체스 게임이 종료되지 않았습니다.");
+        }
+        if (hasKingByColor(Color.WHITE)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
     }
 }

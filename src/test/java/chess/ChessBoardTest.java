@@ -217,4 +217,16 @@ class ChessBoardTest {
             assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(new BigDecimal("2.0"));
         });
     }
+
+    @Test
+    @DisplayName("상대방 킹이 없다면 게임 종료")
+    void gameEndWhenKingCaptured() {
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new King(Color.WHITE, new Position(D, FOUR))), Color.WHITE);
+
+        assertAll(() -> {
+            assertThat(chessBoard.isFinished()).isTrue();
+            assertThat(chessBoard.getWinner()).isEqualTo(Color.WHITE);
+        });
+    }
 }
