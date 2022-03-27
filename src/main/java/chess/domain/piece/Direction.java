@@ -52,6 +52,14 @@ public enum Direction {
         return Arrays.asList(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     }
 
+    public static List<Direction> pullWhiteDiagonalDirections() {
+        return Arrays.asList(NORTH_EAST, NORTH_WEST);
+    }
+
+    public static List<Direction> pullBlackDiagonalDirections() {
+        return Arrays.asList(SOUTH_EAST, SOUTH_WEST);
+    }
+
     public static List<Direction> pullStraightDirections() {
         return Arrays.asList(NORTH, SOUTH, EAST, WEST);
     }

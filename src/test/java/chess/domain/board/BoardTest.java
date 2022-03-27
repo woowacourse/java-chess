@@ -100,6 +100,6 @@ public class BoardTest {
         board.initBoard(new WhiteCheckBoardGenerator());
 
         // then
-        assertThat(board.check()).isTrue();
+        assertThatThrownBy(() -> board.check()).hasMessage("현재 Check 상황입니다.");
     }
 }

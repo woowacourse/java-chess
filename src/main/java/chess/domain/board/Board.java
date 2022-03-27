@@ -23,17 +23,25 @@ public class Board {
         return board;
     }
 
-
-    public boolean check() {
+    public void check() {
         List<Entry<Position, Piece>> entries = findSameTeamPieces(turn.change());
-        Position kingPosition = findKingPosition(turn);
+        Position to = findKingPosition(turn);
 
         for (Entry<Position, Piece> entry : entries) {
-            if (entry.getValue().isMovablePath(entry.getKey(), kingPosition)) {
-                return true;
-            }
+            Piece fromPiece = entry.getValue();
+            Position from = entry.getKey();
+
+            validCheck(from, to, fromPiece);
         }
-        return false;
+    }
+
+    private void validCheck(Position from, Position to, Piece fromPiece) {
+        try {
+            fromPiece.movable(from, to);
+            validPath(from, to, fromPiece.findDirection(from, to));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("현재 Check 상황입니다.");
+        }
     }
 
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
