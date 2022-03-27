@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
-import java.util.Optional;
 
 public class Knight extends Piece {
 
@@ -25,17 +24,10 @@ public class Knight extends Piece {
 	@Override
 	public void validateMovement(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
-		if (!canMove(source, target, directions)) {
+		List<Position> movablePositions = source.calculateMovableByDirection(directions);
+		if (!movablePositions.contains(target)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
-	}
-
-	private boolean canMove(final Position source, final Position target, final List<Direction> directions) {
-		return directions.stream()
-				.map(source::addDirection)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.anyMatch(position -> position.equals(target));
 	}
 
 	@Override
@@ -55,18 +47,9 @@ public class Knight extends Piece {
 
 	@Override
 	public Direction getDirection(final Position source, final Position target) {
-		List<Direction> directions = Direction.getKnightDirection();
-
-		for (Direction direction : directions) {
-			Optional<Position> position = source.addDirection(direction);
-			if (position.isEmpty()) {
-				continue;
-			}
-			if (position.get() == target) {
-				return direction;
-			}
-		}
-		throw new IllegalArgumentException(MOVEMENT_ERROR);
+		int rowDifference = target.subtractRow(source);
+		int columnDifference = target.subtractColumn(source);
+		return Direction.find(rowDifference, columnDifference);
 	}
 
 	@Override

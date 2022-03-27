@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
-import java.util.Optional;
 
 public class King extends Piece {
 
@@ -25,17 +24,10 @@ public class King extends Piece {
 	@Override
 	public void validateMovement(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKingDirection();
-		if (!canMove(source, target, directions)) {
+		List<Position> movablePositions = source.calculateMovableByDirection(directions);
+		if (!movablePositions.contains(target)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
-	}
-
-	private boolean canMove(final Position source, final Position target, final List<Direction> directions) {
-		return directions.stream()
-				.map(source::addDirection)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.anyMatch(position -> position.equals(target));
 	}
 
 	@Override

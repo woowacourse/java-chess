@@ -19,8 +19,8 @@ public abstract class Piece {
 	}
 
 	public Direction getDirection(final Position source, final Position target) {
-		int differenceRow = target.subtractRow(source);
-		int differenceColumn = target.subtractColumn(source);
+		int differenceRow = target.calculateRowDifference(source);
+		int differenceColumn = target.calculateColumnDifference(source);
 		return Direction.find(differenceRow, differenceColumn);
 	}
 
@@ -49,7 +49,7 @@ public abstract class Piece {
 	public abstract boolean isKing();
 
 	public abstract double getScore();
-	
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) {

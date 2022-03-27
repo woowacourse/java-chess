@@ -21,7 +21,7 @@ public class Bishop extends Piece {
 
 	@Override
 	public void validateMovement(final Position source, final Position target) {
-		if (target.isDifferentDiagonal(source)) {
+		if (!target.isDiagonalMove(source)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
 	}

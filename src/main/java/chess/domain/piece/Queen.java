@@ -21,7 +21,7 @@ public class Queen extends Piece {
 
 	@Override
 	public void validateMovement(final Position source, final Position target) {
-		if (target.isDifferentDiagonal(source) && target.isDifferentRow(source) && target.isDifferentColumn(source)) {
+		if (!target.isDiagonalMove(source) && !target.isLinerMove(source)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
 	}

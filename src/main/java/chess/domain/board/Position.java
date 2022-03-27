@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Position {
 
+	private static final int MIN_POSITION = 1;
+	private static final int MAX_POSITION = 8;
 	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
 
 	private final int row;
@@ -18,67 +20,92 @@ public class Position {
 	private static final Map<Integer, Map<Integer, Position>> cachedPositions = new HashMap<>();
 
 	private Position(final int row, final int column) {
+		validateRange(row, column);
 		this.row = row;
 		this.column = column;
 	}
 
 	public static Position of(final int row, final int column) {
-		validateRange(row, column);
 		cachedPositions.putIfAbsent(row, new HashMap<>());
 		cachedPositions.get(row).putIfAbsent(column, new Position(row, column));
 		return cachedPositions.get(row).get(column);
 	}
 
-	private static void validateRange(final int row, final int column) {
+	private void validateRange(final int row, final int column) {
 		if (isOverRange(row, column)) {
 			throw new IllegalArgumentException(OVER_RANGE_ERROR);
 		}
 	}
 
-	private static boolean isOverRange(final int row, final int column) {
-		return row < 1 || row > 8 || column < 1 || column > 8;
+	private boolean isOverRange(final int row, final int column) {
+		return row < MIN_POSITION || row > MAX_POSITION || column < MIN_POSITION || column > MAX_POSITION;
+	}
+
+	public Position addDirection(Direction direction) {
+		int row = direction.addRow(this.row);
+		int column = direction.addColumn(this.column);
+		return Position.of(row, column);
+	}
+
+	public boolean isLinerMove(Position position) {
+		return this.row == position.row || this.column == position.column;
+	}
+
+	public boolean isDiagonalMove(Position position) {
+		return Math.abs(this.row - position.row) == Math.abs(this.column - position.column);
+	}
+
+	public List<Position> calculateMovableByDirection(List<Direction> directions) {
+		return directions.stream()
+				.filter(this::canMoveToDirection)
+				.map(this::addDirection)
+				.collect(Collectors.toList());
+	}
+
+	private boolean canMoveToDirection(Direction direction) {
+		int row = direction.addRow(this.row);
+		int column = direction.addColumn(this.column);
+		return !isOverRange(row, column);
+	}
+
+	public int calculateRowDifference(Position position) {
+		return Integer.compare(this.row, position.row);
+	}
+
+	public int calculateColumnDifference(Position position) {
+		return Integer.compare(this.column, position.column);
+	}
+
+	public int subtractRow(Position position) {
+		return this.row - position.row;
+	}
+
+	public int subtractColumn(Position position) {
+		return this.column - position.column;
+	}
+
+	public boolean isEndColumn() {
+		return column == MAX_POSITION;
+	}
+
+	public boolean isInitialPawnRow(final Team team) {
+		if (team.isBlack()) {
+			return this.row == InitialBoard.INITIAL_BLACK_PAWN_ROW;
+		}
+		return this.row == InitialBoard.INITIAL_WHITE_PAWN_ROW;
 	}
 
 	public static List<Position> getPositions() {
 		List<Position> positions = new ArrayList<>();
-		for (int i = 1; i < 9; i++) {
+		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
 			positions.addAll(createRowPositions(i));
 		}
 		return positions;
 	}
 
-	public Optional<Position> addDirection(Direction direction) {
-		int row = direction.addRow(this.row);
-		int column = direction.addColumn(this.column);
-		if (isOverRange(row, column)) {
-			return Optional.empty();
-		}
-		return Optional.of(Position.of(row, column));
-	}
-
-	public boolean isDifferentRow(Position position) {
-		return this.row != position.row;
-	}
-
-	public boolean isDifferentColumn(Position position) {
-		return this.column != position.column;
-	}
-
-	public boolean isDifferentDiagonal(Position position) {
-		return Math.abs(this.row - position.row) != Math.abs(this.column - position.column);
-	}
-
-	public int subtractRow(Position position) {
-		return Integer.compare(this.row, position.row);
-	}
-
-	public int subtractColumn(Position position) {
-		return Integer.compare(this.column, position.column);
-	}
-
 	private static List<Position> createRowPositions(final int row) {
 		List<Position> rowPositions = new ArrayList<>();
-		for (int j = 1; j < 9; j++) {
+		for (int j = MIN_POSITION; j <= MAX_POSITION; j++) {
 			rowPositions.add(Position.of(row, j));
 		}
 		return rowPositions;
@@ -86,21 +113,10 @@ public class Position {
 
 	public static List<Position> getReversePositions() {
 		List<Position> positions = new ArrayList<>();
-		for (int i = 8; i >= 1; i--) {
+		for (int i = MAX_POSITION; i >= MIN_POSITION; i--) {
 			positions.addAll(createRowPositions(i));
 		}
 		return positions;
-	}
-
-	public boolean isEndColumn() {
-		return column == 8;
-	}
-
-	public boolean isDefaultRow(final Team team) {
-		if (team.isBlack()) {
-			return this.row == 7;
-		}
-		return this.row == 2;
 	}
 
 	@Override

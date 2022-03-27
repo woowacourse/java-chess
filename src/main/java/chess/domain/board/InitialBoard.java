@@ -16,6 +16,9 @@ import java.util.Map;
 
 public class InitialBoard {
 
+	public static final int INITIAL_BLACK_PAWN_ROW = 7;
+	public static final int INITIAL_WHITE_PAWN_ROW = 2;
+
 	private InitialBoard() {
 		throw new AssertionError();
 	}
@@ -31,10 +34,10 @@ public class InitialBoard {
 		List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
 		for (int i = 0; i < 8; i++) {
 			board.put(Position.of(8, i + 1), blackSpecials.get(i));
-			board.put(Position.of(7, i + 1), new Pawn(Team.BLACK));
+			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i + 1), new Pawn(Team.BLACK));
 
 			board.put(Position.of(1, i + 1), whiteSpecials.get(i));
-			board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
+			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i + 1), new Pawn(Team.WHITE));
 		}
 		return board;
 	}

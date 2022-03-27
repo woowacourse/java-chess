@@ -4,7 +4,6 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Pawn extends Piece {
 
@@ -27,21 +26,13 @@ public class Pawn extends Piece {
 	@Override
 	public void validateMovement(final Position source, final Position target) {
 		List<Direction> directions = new ArrayList<>(Direction.getPawnByTeam(team));
-		if (source.isDefaultRow(team)) {
+		if (source.isInitialPawnRow(team)) {
 			directions.add(Direction.getDefaultPawnByTeam(team));
 		}
-
-		if (!canMove(source, target, directions)) {
+		List<Position> movablePositions = source.calculateMovableByDirection(directions);
+		if (!movablePositions.contains(target)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
-	}
-
-	private boolean canMove(final Position source, final Position target, final List<Direction> directions) {
-		return directions.stream()
-				.map(source::addDirection)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.anyMatch(position -> position.equals(target));
 	}
 
 	@Override
