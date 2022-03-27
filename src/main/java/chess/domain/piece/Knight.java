@@ -4,6 +4,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Knight extends Piece {
 
@@ -56,16 +57,10 @@ public class Knight extends Piece {
 	@Override
 	public Direction getDirection(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
-
-		for (Direction direction : directions) {
-			Optional<Position> position = source.addDirection(direction);
-			if (position.isEmpty()) {
-				continue;
-			}
-			if (position.get() == target) {
-				return direction;
-			}
+		if (canMove(source, target, directions)) {
+			return Direction.find(target.subtractRow(source), target.subtractColumn(source));
 		}
+
 		throw new IllegalArgumentException(MOVEMENT_ERROR);
 	}
 

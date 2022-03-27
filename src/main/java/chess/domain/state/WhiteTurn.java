@@ -9,7 +9,7 @@ public final class WhiteTurn extends Running {
 	}
 
 	@Override
-	protected State getNextTurn() {
+	protected State next() {
 		return new BlackTurn();
 	}
 }

@@ -5,9 +5,9 @@ import chess.domain.piece.Team;
 
 public interface State {
 
-	boolean isFinished();
+    boolean isFinished();
 
-	State play(Piece source, Piece target);
+    State play(Piece source, Piece target);
 
-	Team getTeam();
+    Team getTeam();
 }

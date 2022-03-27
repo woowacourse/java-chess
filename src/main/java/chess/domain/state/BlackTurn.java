@@ -4,12 +4,12 @@ import chess.domain.piece.Team;
 
 public final class BlackTurn extends Running {
 
-	BlackTurn() {
-		super(Team.BLACK);
-	}
+    BlackTurn() {
+        super(Team.BLACK);
+    }
 
-	@Override
-	protected State getNextTurn() {
-		return new WhiteTurn();
-	}
+    @Override
+    protected State next() {
+        return new WhiteTurn();
+    }
 }
