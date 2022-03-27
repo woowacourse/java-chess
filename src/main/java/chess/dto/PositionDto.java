@@ -26,11 +26,11 @@ public class PositionDto {
         return new PositionDto(newX, newY);
     }
 
-    public int getX() {
+    private int getX() {
         return x;
     }
 
-    public int getY() {
+    private int getY() {
         return y;
     }
 
