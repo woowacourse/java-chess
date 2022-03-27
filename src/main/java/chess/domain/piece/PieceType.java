@@ -15,6 +15,8 @@ public enum PieceType {
     PAWN(1),
     EMPTY(0);
 
+    private static final int PAWN_SCORE_REDUCTION_STANDARD = 1;
+    private static final double PAWN_REDUCTION_SCORE = 0.5;
     private final double score;
 
     PieceType(double score) {
@@ -58,8 +60,8 @@ public enum PieceType {
     }
 
     private static double adjustPawnScore(double totalScore, int pawnCount) {
-        if (pawnCount > 1) {
-            totalScore -= (pawnCount * 0.5);
+        if (pawnCount > PAWN_SCORE_REDUCTION_STANDARD) {
+            totalScore -= (pawnCount * PAWN_REDUCTION_SCORE);
         }
         return totalScore;
     }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class Request {
 
+    public static final String ARGUMENT_SEPARATOR = " ";
     private final String command;
     private final List<String> arguments;
 
@@ -15,7 +16,7 @@ public class Request {
     }
 
     public static Request of(String input) {
-        String[] split = input.split(" ");
+        String[] split = input.split(ARGUMENT_SEPARATOR);
         List<String> arguments = toArguments(split);
         return new Request(split[0], arguments);
     }

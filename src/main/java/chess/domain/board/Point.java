@@ -9,7 +9,10 @@ import java.util.Objects;
 public class Point {
 
     private static final Map<Integer, Point> POINT_CACHE = new HashMap<>();
-    public static final int DECIMAL = 10;
+    private static final int DECIMAL = 10;
+    private static final int VERTICAL_POSITION_START = 1;
+    private static final int VERTICAL_POSITION_END = 2;
+    public static final int HORIZONTAL_POSITION = 0;
 
     private final LineNumber horizontal;
     private final LineNumber vertical;
@@ -30,8 +33,8 @@ public class Point {
     }
 
     public static Point of(String argument) {
-        return Point.of(argument.charAt(0) - 'a' + 1,
-                Integer.parseInt(argument.substring(1, 2)));
+        return Point.of(argument.charAt(HORIZONTAL_POSITION) - 'a' + 1,
+                Integer.parseInt(argument.substring(VERTICAL_POSITION_START, VERTICAL_POSITION_END)));
     }
 
     public int subtractHorizontal(Point other) {
