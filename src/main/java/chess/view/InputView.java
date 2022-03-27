@@ -10,14 +10,23 @@ public class InputView {
     private static final Pattern PATTERN = Pattern.compile(MOVE_COMMAND_REGEX);
 
     public static String requestStartCommand() {
+        try {
+            guideChessGame();
+
+            final String command = SCANNER.nextLine();
+            validateStartCommand(command);
+            return command;
+        } catch (final IllegalArgumentException e) {
+            OutputView.printException(e);
+            return requestStartCommand();
+        }
+    }
+
+    private static void guideChessGame() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작 : start");
         System.out.println("게임 종료 : end");
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
-
-        final String command = SCANNER.nextLine();
-        validateStartCommand(command);
-        return command;
     }
 
     private static void validateStartCommand(final String command) {

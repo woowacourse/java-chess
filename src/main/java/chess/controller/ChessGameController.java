@@ -29,13 +29,8 @@ public class ChessGameController {
     }
 
     private ChessGame initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
-        try {
-            InputView.requestStartCommand();
-            return new ChessGame(whitePlayer, blackPlayer);
-        } catch (final IllegalArgumentException e) {
-            OutputView.printException(e);
-            return initializeChessGame(whitePlayer, blackPlayer);
-        }
+        InputView.requestStartCommand();
+        return new ChessGame(whitePlayer, blackPlayer);
     }
 
     private void showMap(final ChessMap chessMap) {
