@@ -33,7 +33,7 @@ public class OutputView {
 	private void displaySymbol(Board board, int i, int j) {
 		Optional<Piece> nullablePiece = board.findPiece(new Position(i, j));
 		if (nullablePiece.isPresent()) {
-			System.out.print(nullablePiece.get().getSymbol());
+			System.out.print(PieceView.from(nullablePiece.get()));
 			return;
 		}
 		System.out.print("ꕤ");
@@ -44,7 +44,7 @@ public class OutputView {
 	}
 
 	public void displayScore(ChessScore chessScore) {
-		System.out.println("흰색 팀 점수 : " + chessScore.getWhiteScore());
 		System.out.println("검은색 팀 점수 : " + chessScore.getBlackScore());
+		System.out.println("흰색 팀 점수 : " + chessScore.getWhiteScore());
 	}
 }

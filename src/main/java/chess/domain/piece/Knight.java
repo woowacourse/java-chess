@@ -8,17 +8,14 @@ import chess.domain.direction.strategy.KnightDirectionStrategy;
 
 public class Knight extends Piece {
 
-	private static final String INVALID_DIRECTION_KNIGHT = "Knight갈 수 없는 방향입니다.";
+	private static final String INVALID_DIRECTION_KNIGHT = "Knight가 갈 수 없는 방향입니다.";
 	private static final double KNIGHT_SCORE = 2.5;
 
-	private static final Knight whiteKing = new Knight(Color.WHITE, "♞");
-	private static final Knight blackKing = new Knight(Color.BLACK, "♘");
+	private static final Knight whiteKing = new Knight(Color.WHITE);
+	private static final Knight blackKing = new Knight(Color.BLACK);
 
-	private final String symbol;
-
-	private Knight(Color color, String symbol) {
+	private Knight(Color color) {
 		super(color);
-		this.symbol = symbol;
 	}
 
 	public static Knight createWhite() {
@@ -27,11 +24,6 @@ public class Knight extends Piece {
 
 	public static Knight createBlack() {
 		return blackKing;
-	}
-
-	@Override
-	public String getSymbol() {
-		return this.symbol;
 	}
 
 	@Override

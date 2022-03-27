@@ -11,14 +11,11 @@ public class Bishop extends Piece {
 	private static final String INVALID_DIRECTION_BISHOP = "비숍이 갈 수 없는 방향입니다.";
 	private static final double BISHOP_SCORE = 3.0;
 
-	private static final Bishop whiteBishop = new Bishop(Color.WHITE, "♝");
-	private static final Bishop blackBishop = new Bishop(Color.BLACK , "♗");
+	private static final Bishop whiteBishop = new Bishop(Color.WHITE);
+	private static final Bishop blackBishop = new Bishop(Color.BLACK);
 
-	private final String symbol;
-
-	private Bishop(Color color, String symbol) {
+	private Bishop(Color color) {
 		super(color);
-		this.symbol = symbol;
 	}
 
 	public static Bishop createWhite() {
@@ -36,11 +33,6 @@ public class Bishop extends Piece {
 			throw new IllegalArgumentException(INVALID_DIRECTION_BISHOP);
 		}
 		return direction.get();
-	}
-
-	@Override
-	public String getSymbol() {
-		return this.symbol;
 	}
 
 	@Override

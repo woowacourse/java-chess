@@ -13,8 +13,6 @@ public abstract class Piece {
 
 	public abstract Direction matchDirection(Position from, Position to);
 
-	public abstract String getSymbol();
-
 	public boolean isSameColor(Piece piece) {
 		return this.color == piece.color;
 	}
@@ -29,7 +27,7 @@ public abstract class Piece {
 		return this.color == Color.WHITE;
 	}
 
-	public abstract double getScore();
-
 	public abstract boolean isKing();
+
+	public abstract double getScore();
 }

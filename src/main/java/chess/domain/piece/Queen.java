@@ -11,14 +11,11 @@ public class Queen extends Piece {
 	private static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
 	private static final double QUEEN_SCORE = 9.0;
 
-	private static final Queen whiteQueen = new Queen(Color.WHITE, "♛");
-	private static final Queen blackQueen = new Queen(Color.BLACK, "♕");
+	private static final Queen whiteQueen = new Queen(Color.WHITE);
+	private static final Queen blackQueen = new Queen(Color.BLACK);
 
-	private final String symbol;
-
-	private Queen(Color color, String symbol) {
+	private Queen(Color color) {
 		super(color);
-		this.symbol = symbol;
 	}
 
 	public static Queen createWhite() {
@@ -27,11 +24,6 @@ public class Queen extends Piece {
 
 	public static Queen createBlack() {
 		return blackQueen;
-	}
-
-	@Override
-	public String getSymbol() {
-		return this.symbol;
 	}
 
 	@Override

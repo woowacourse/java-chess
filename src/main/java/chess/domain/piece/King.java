@@ -14,14 +14,11 @@ public class King extends Piece {
 	private static final double KING_SCORE = 0;
 	private static final int KING_MAX_DISTANCE = 1;
 
-	private static final King whiteKing = new King(Color.WHITE, "♚");
-	private static final King blackKing = new King(Color.BLACK, "♔");
+	private static final King whiteKing = new King(Color.WHITE);
+	private static final King blackKing = new King(Color.BLACK);
 
-	private final String symbol;
-
-	private King(Color color, String symbol) {
+	private King(Color color) {
 		super(color);
-		this.symbol = symbol;
 	}
 
 	public static King createWhite() {
@@ -30,11 +27,6 @@ public class King extends Piece {
 
 	public static King createBlack() {
 		return blackKing;
-	}
-
-	@Override
-	public String getSymbol() {
-		return this.symbol;
 	}
 
 	@Override

@@ -25,8 +25,8 @@ public class ChessController {
 		try {
 			Command command = Command.from(inputView.askCommand());
 			state = state.proceed(command);
-			checkScore(state, command);
 			outputView.displayChessBoard(state.getBoard());
+			checkScore(state, command);
 		} catch (IllegalArgumentException | IllegalStateException | NoSuchElementException exception){
 			outputView.displayErrorMessage(exception);
 		}
