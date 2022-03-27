@@ -8,8 +8,11 @@ import chess.domain.direction.strategy.QueenDirectionStrategy;
 
 public class Queen extends Piece {
 
-	public static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
+	private static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
 	private static final double QUEEN_SCORE = 9.0;
+
+	private static final Queen whiteQueen = new Queen(Color.WHITE, "♛");
+	private static final Queen blackQueen = new Queen(Color.BLACK, "♕");
 
 	private final String symbol;
 
@@ -19,11 +22,11 @@ public class Queen extends Piece {
 	}
 
 	public static Queen createWhite() {
-		return new Queen(Color.WHITE, "♛");
+		return whiteQueen;
 	}
 
 	public static Queen createBlack() {
-		return new Queen(Color.BLACK, "♕");
+		return blackQueen;
 	}
 
 	@Override

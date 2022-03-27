@@ -20,6 +20,9 @@ public class Pawn extends Piece {
 	private static final int PAWN_INITIAL_DISTANCE = 2;
 	private static final int PAWN_BASIC_DISTANCE = 1;
 
+	private static final Pawn whitePawn = new Pawn(Color.WHITE, "♟");
+	private static final Pawn blackPawn = new Pawn(Color.BLACK, "♙");
+
 	private final String symbol;
 
 	public Pawn(Color color, String symbol) {
@@ -28,11 +31,11 @@ public class Pawn extends Piece {
 	}
 
 	public static Pawn createWhite() {
-		return new Pawn(Color.WHITE, "♟");
+		return whitePawn;
 	}
 
 	public static Pawn createBlack() {
-		return new Pawn(Color.BLACK, "♙");
+		return blackPawn;
 	}
 
 	@Override

@@ -9,7 +9,10 @@ import chess.domain.direction.strategy.BishopDirectionStrategy;
 public class Bishop extends Piece {
 
 	private static final String INVALID_DIRECTION_BISHOP = "비숍이 갈 수 없는 방향입니다.";
-	public static final double BISHOP_SCORE = 3.0;
+	private static final double BISHOP_SCORE = 3.0;
+
+	private static final Bishop whiteBishop = new Bishop(Color.WHITE, "♝");
+	private static final Bishop blackBishop = new Bishop(Color.BLACK , "♗");
 
 	private final String symbol;
 
@@ -19,11 +22,11 @@ public class Bishop extends Piece {
 	}
 
 	public static Bishop createWhite() {
-		return new Bishop(Color.WHITE, "♝");
+		return whiteBishop;
 	}
 
 	public static Bishop createBlack() {
-		return new Bishop(Color.BLACK , "♗");
+		return blackBishop;
 	}
 
 	@Override

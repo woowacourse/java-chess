@@ -11,6 +11,9 @@ public class Knight extends Piece {
 	private static final String INVALID_DIRECTION_KNIGHT = "Knight갈 수 없는 방향입니다.";
 	private static final double KNIGHT_SCORE = 2.5;
 
+	private static final Knight whiteKing = new Knight(Color.WHITE, "♞");
+	private static final Knight blackKing = new Knight(Color.BLACK, "♘");
+
 	private final String symbol;
 
 	private Knight(Color color, String symbol) {
@@ -19,11 +22,11 @@ public class Knight extends Piece {
 	}
 
 	public static Knight createWhite() {
-		return new Knight(Color.WHITE, "♞");
+		return whiteKing;
 	}
 
 	public static Knight createBlack() {
-		return new Knight(Color.BLACK, "♘");
+		return blackKing;
 	}
 
 	@Override
