@@ -10,6 +10,8 @@ import chess.view.OutputView;
 
 public class Started implements State {
 
+    private static final int MOVE_COMMAND_FORMAT_SIZE = 3;
+
     private final Color turn;
     private final Board board;
 
@@ -32,15 +34,7 @@ public class Started implements State {
 
     @Override
     public State move(final String[] commands) {
-        try {
-            return movePiece(commands);
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            OutputView.printErrorMessage(exception.getMessage());
-            return new Started(turn, board);
-        }
-    }
-
-    private State movePiece(final String[] commands) {
+        checkMoveCommands(commands);
         final Position from = Position.create(commands[1]);
         final Position to = Position.create(commands[2]);
 
@@ -51,6 +45,12 @@ public class Started implements State {
             return runCheckmate();
         }
         return runMovePiece(from, to);
+    }
+
+    private void checkMoveCommands(final String[] commands) {
+        if (commands.length != MOVE_COMMAND_FORMAT_SIZE) {
+            throw new IllegalArgumentException("[ERROR] move command는 source와 target이 필요합니다.");
+        }
     }
 
     private State runCheckmate() {
