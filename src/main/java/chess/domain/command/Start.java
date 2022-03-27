@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class Start implements Command {
 
-	private static final String CANNOT_HAVE_POSITION = "END 커맨드에선 위치 정보를 불러올 수 없습니다.";
+	private static final String CANNOT_HAVE_POSITION = "START 커맨드에선 위치 정보를 불러올 수 없습니다.";
 
 	@Override
 	public boolean isStart() {
