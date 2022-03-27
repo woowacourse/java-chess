@@ -9,17 +9,17 @@ public class RookMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
-        List<Direction> directions = Direction.rookDirection(color);
+        List<Direction> directions = rookDirection(color);
 
-        if (!isValidDirection(from, to, directions)) {
+        if (isInvalidDirection(from, to, directions)) {
             throw new IllegalArgumentException("룩이 이동할 수 없는 위치입니다.");
         }
 
         return true;
     }
 
-    private boolean isValidDirection(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .anyMatch(direction -> direction.isSameDirection(from, to));
+    public static List<Direction> rookDirection(Color color) {
+        return Direction.getColorDirections(color, List.of(
+                Direction.TOP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
     }
 }

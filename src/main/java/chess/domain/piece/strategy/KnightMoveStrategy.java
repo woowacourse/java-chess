@@ -10,9 +10,9 @@ public class KnightMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
-        List<Direction> directions = Direction.knightDirection(color);
+        List<Direction> directions = knightDirection(color);
 
-        if (!isValidDistance(from, to, directions)) {
+        if (isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException("나이트가 이동할 수 없는 위치입니다.");
         }
 
@@ -24,8 +24,8 @@ public class KnightMoveStrategy extends MoveStrategy {
         return new ArrayList<>();
     }
 
-    private boolean isValidDistance(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .anyMatch(direction -> direction.isSameDistance(from, to));
+    public static List<Direction> knightDirection(Color color) {
+        return Direction.getColorDirections(color, List.of(Direction.TTR, Direction.RRT, Direction.RRD, Direction.DDR,
+                Direction.DDL, Direction.LLD, Direction.LLT, Direction.TTL));
     }
 }

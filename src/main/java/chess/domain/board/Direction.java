@@ -39,34 +39,17 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 방향이 없습니다."));
     }
 
-    public static List<Direction> pawnDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, TOPLEFT, TOPRIGHT));
-    }
-
-    public static List<Direction> rookDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, DOWN, LEFT, RIGHT));
-    }
-
-    public static List<Direction> bishopDirection(Color color) {
-        return getColorDirections(color, List.of(TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
-    }
-
     public static List<Direction> everyDirection(Color color) {
         return getColorDirections(color, List.of(TOP, LEFT, DOWN, RIGHT,
                 TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
     }
 
-    public static List<Direction> knightDirection(Color color) {
-        return getColorDirections(color, List.of(TTR, RRT, RRD, DDR,
-                DDL, LLD, LLT, TTL));
-    }
-
-    private static List<Direction> getColorDirections(Color color, List<Direction> directions) {
+    public static List<Direction> getColorDirections(Color color, List<Direction> directions) {
         if (color == Color.WHITE) {
             return directions;
         }
         return directions.stream()
-                .map(direction -> direction.toReversed())
+                .map(Direction::toReversed)
                 .collect(Collectors.toList());
     }
 

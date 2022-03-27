@@ -12,10 +12,10 @@ public class PawnMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Piece targetPiece, Position from, Position to) {
-        List<Direction> directions = Direction.pawnDirection(color);
+        List<Direction> directions = pawnDirection(color);
         Direction nowDirection = Direction.of(from, to);
 
-        if (!isValidDirection(from, to, directions)) {
+        if (isInvalidDirection(from, to, directions)) {
             validateInitDirection(color, from, to, directions);
         }
         if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeColor(color)) {
@@ -28,6 +28,10 @@ public class PawnMoveStrategy extends MoveStrategy {
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         throw new IllegalArgumentException("상대방 기물을 알 수 없으면 이동할 수 없습니다.");
+    }
+
+    public static List<Direction> pawnDirection(Color color) {
+        return Direction.getColorDirections(color, List.of(Direction.TOP, Direction.TOPLEFT, Direction.TOPRIGHT));
     }
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {
@@ -51,9 +55,9 @@ public class PawnMoveStrategy extends MoveStrategy {
                 && direction.getY() * from.getYDistance(to) <= INIT_MAX_DISTANCE;
     }
 
-    protected boolean isValidDirection(Position from, Position to, List<Direction> directions) {
+    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
         return directions.stream()
-                .anyMatch(direction -> direction.isSameDistance(from, to));
+                .noneMatch(direction -> direction.isSameDistance(from, to));
     }
 
 }

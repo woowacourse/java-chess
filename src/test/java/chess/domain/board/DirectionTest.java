@@ -3,6 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.attribute.Color;
+import chess.domain.piece.strategy.PawnMoveStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class DirectionTest {
     @Test
     @DisplayName("진영에 따라서 말의 이동방향이 뒤집힌다.")
     void pieceDirectionReversed() {
-        List<Direction> directions = Direction.pawnDirection(Color.BLACK);
+        List<Direction> directions = PawnMoveStrategy.pawnDirection(Color.BLACK);
 
         assertThat(directions).containsAll(
                 List.of(Direction.DOWN, Direction.DOWNLEFT, Direction.DOWNRIGHT)

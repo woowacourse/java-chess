@@ -11,15 +11,10 @@ public class KingMoveStrategy extends MoveStrategy {
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = Direction.everyDirection(color);
 
-        if (!isValidDistance(from, to, directions)) {
+        if (isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException("킹이 이동할 수 없는 위치입니다.");
         }
 
         return true;
-    }
-
-    private boolean isValidDistance(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .anyMatch(direction -> direction.isSameDistance(from, to));
     }
 }

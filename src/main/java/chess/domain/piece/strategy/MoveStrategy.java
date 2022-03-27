@@ -15,6 +15,16 @@ public abstract class MoveStrategy {
         return true;
     }
 
+    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
+        return directions.stream()
+                .noneMatch(direction -> direction.isSameDirection(from, to));
+    }
+
+    protected boolean isInvalidDistance(Position from, Position to, List<Direction> directions) {
+        return directions.stream()
+                .noneMatch(direction -> direction.isSameDistance(from, to));
+    }
+
     public List<Position> getRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> positions = new ArrayList<>();

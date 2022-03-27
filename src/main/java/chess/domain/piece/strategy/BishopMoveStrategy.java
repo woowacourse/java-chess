@@ -10,17 +10,16 @@ public class BishopMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
-        List<Direction> directions = Direction.bishopDirection(color);
+        List<Direction> directions = bishopDirection(color);
 
-        if (!isValidDirection(from, to, directions)) {
+        if (isInvalidDirection(from, to, directions)) {
             throw new IllegalArgumentException("비숍이 이동할 수 없는 위치입니다.");
         }
 
         return true;
     }
 
-    private boolean isValidDirection(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .anyMatch(direction -> direction.isSameDirection(from, to));
+    public static List<Direction> bishopDirection(Color color) {
+        return Direction.getColorDirections(color, List.of(Direction.TOPLEFT, Direction.TOPRIGHT, Direction.DOWNLEFT, Direction.DOWNRIGHT));
     }
 }
