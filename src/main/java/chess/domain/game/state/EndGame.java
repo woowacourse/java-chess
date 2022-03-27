@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
@@ -30,7 +31,7 @@ public class EndGame implements GameState {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        return new HashMap<>();
     }
 
     @Override

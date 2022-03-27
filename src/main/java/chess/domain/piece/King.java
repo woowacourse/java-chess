@@ -10,4 +10,8 @@ public final class King extends Piece {
     public King(Color color) {
         super(color, NAME, SCORE, new StartedKing());
     }
+
+    public boolean isSame(Piece piece) {
+        return this.equals(piece);
+    }
 }

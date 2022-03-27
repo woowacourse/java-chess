@@ -68,4 +68,9 @@ public abstract class Piece {
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
     }
+
+    public boolean isKing() {
+        return new King(Color.White).isSame(this)
+            || new King(Color.Black).isSame(this);
+    }
 }

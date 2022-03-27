@@ -16,7 +16,6 @@ import chess.dto.GameResult;
 
 public class Command {
     private static final Map<Pattern, BiFunction<ChessGame, List<String>, GameResult>> commands = new HashMap<>();
-    private static final Map<Pattern, BiFunction<ChessGame, List<String>, GameResult>> commands1 = new HashMap<>();
 
     static {
         commands.put(Pattern.compile("^(status)$"), (chessGame, ignored) -> GameResult.ofScore(chessGame.status()));
@@ -34,8 +33,6 @@ public class Command {
             .orElseThrow(() -> new NoSuchElementException("명령어를 올바르게 입력해 주세요."));
 
         return commands.get(command).apply(chessGame, Arrays.asList(input.split(" ")));
-
-        // status 명령어의 결과가 반환타입이 다른 문제.
     }
 
     private static Position getPosition(String input) {
