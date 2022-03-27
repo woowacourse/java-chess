@@ -10,7 +10,7 @@ public class Position {
     private final Column column;
     private final Row row;
 
-    private static Map<String, Position> CACHE = new HashMap<>(64);
+    private static final Map<String, Position> CACHE = new HashMap<>(64);
 
     private Position(Column column, Row row) {
         this.column = column;

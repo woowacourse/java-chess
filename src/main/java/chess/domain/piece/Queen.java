@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class Queen extends StraightMovablePiece {
 
-    public final static List<Direction> DIRECTIONS = List.of(
+    public static final Position BLACK_INIT_LOCATION = Position.of("d8");
+    public static final Position WHITE_INIT_LOCATION = Position.of("d1");
+
+    private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
-
-    public static Position BLACK_INIT_LOCATION = Position.of("d8");
-    public static Position WHITE_INIT_LOCATION = Position.of("d1");
 
     public Queen(Color color) {
         super(color, PieceName.QUEEN);

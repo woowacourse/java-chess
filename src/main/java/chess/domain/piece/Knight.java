@@ -7,14 +7,14 @@ import java.util.Map;
 
 public class Knight extends FixedMovablePiece {
 
-    public final static List<Direction> DIRECTIONS = List.of(
+    public static final List<Position> BLACK_INIT_LOCATIONS = List.of(
+            Position.of("b8"), Position.of("g8"));
+    public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
+            Position.of("b1"), Position.of("g1"));
+
+    private static final List<Direction> DIRECTIONS = List.of(
             Direction.SSE, Direction.SSW, Direction.NNE, Direction.NNW,
             Direction.EES, Direction.EEN, Direction.WWS, Direction.WWN);
-
-    public static List<Position> BLACK_INIT_LOCATIONS = List.of(
-            Position.of("b8"), Position.of("g8"));
-    public static List<Position> WHITE_INIT_LOCATIONS = List.of(
-            Position.of("b1"), Position.of("g1"));
 
     public Knight(Color color) {
         super(color, PieceName.KNIGHT);

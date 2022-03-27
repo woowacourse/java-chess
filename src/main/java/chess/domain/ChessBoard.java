@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
+    private static final int SECOND_MOVE_INDEX = 1;
+    private static final int SECOND_MOVE_SIZE = 2;
+
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn = new ArrayList<>();
 
@@ -63,10 +66,7 @@ public class ChessBoard {
     }
 
     public boolean isFirstMovePawn(Position position) {
-        if (firstPositionsOfPawn.contains(position)) {
-            return true;
-        }
-        return false;
+        return firstPositionsOfPawn.contains(position);
     }
 
     private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {
@@ -74,8 +74,8 @@ public class ChessBoard {
         if (piece.isBlack()) {
             positions = movablePositions.get(Direction.SOUTH);
         }
-        if (positions.size() == 2) {
-            positions.remove(1);
+        if (positions.size() == SECOND_MOVE_SIZE) {
+            positions.remove(SECOND_MOVE_INDEX);
         }
     }
 
@@ -158,18 +158,6 @@ public class ChessBoard {
         }
     }
 
-    public Color getColor(Position position) {
-        return selectPiece(position).getColor();
-    }
-
-    public Piece selectPiece(Position position) {
-        return pieces.get(position);
-    }
-
-    public Map<Position, Piece> getPieces() {
-        return Collections.unmodifiableMap(pieces);
-    }
-
     public List<Piece> getPiecesOnColumn(Column column, Color color) {
         List<Piece> result = new ArrayList<>();
         for (Row row : Row.values()) {
@@ -194,5 +182,17 @@ public class ChessBoard {
                 .filter(p -> p.isSamePieceName(PieceName.KING))
                 .count();
         return kingCount != 2;
+    }
+
+    public Color getColor(Position position) {
+        return selectPiece(position).getColor();
+    }
+
+    public Piece selectPiece(Position position) {
+        return pieces.get(position);
+    }
+
+    public Map<Position, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }

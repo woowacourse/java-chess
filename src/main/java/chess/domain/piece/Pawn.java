@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    public static Direction BLACK_DIRECTION = Direction.SOUTH;
-    public static Direction WHITE_DIRECTION = Direction.NORTH;
-
-    public static List<Position> BLACK_INIT_LOCATIONS = List.of(
+    public static final List<Position> BLACK_INIT_LOCATIONS = List.of(
             Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),
             Position.of("e7"), Position.of("f7"), Position.of("g7"), Position.of("h7"));
-    public static List<Position> WHITE_INIT_LOCATIONS = List.of(
+    public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
             Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
             Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
+
+    private static final Direction BLACK_DIRECTION = Direction.SOUTH;
+    private static final Direction WHITE_DIRECTION = Direction.NORTH;
 
     public Pawn(Color color) {
         super(color, PieceName.PAWN);
