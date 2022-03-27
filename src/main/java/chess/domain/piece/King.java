@@ -4,6 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.List;
 
+import chess.domain.PieceType;
 import chess.domain.board.Position;
 
 public class King extends Piece {
@@ -12,7 +13,7 @@ public class King extends Piece {
     private static final int POSSIBLE_DISTANCE = 1;
 
     public King(final Color color) {
-        super("king", color);
+        super(PieceType.KING, color);
     }
 
     @Override

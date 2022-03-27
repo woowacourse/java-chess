@@ -4,13 +4,14 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.List;
 
+import chess.domain.PieceType;
 import chess.domain.board.Position;
 
 public class Bishop extends Piece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(NE, SE, SW, NW);
 
     public Bishop(final Color color) {
-        super("bishop", color);
+        super(PieceType.BISHOP, color);
     }
 
     @Override

@@ -22,9 +22,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
-public class CreateBoard implements BoardInitializeStrategy {
+public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
-    public CreateBoard() {
+    public CreateCompleteBoardStrategy() {
     }
 
     @Override

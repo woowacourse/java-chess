@@ -41,11 +41,11 @@ public class OutputView {
     }
 
     private static String convertToSymbol(final Piece piece) {
-        final Symbol symbol = Symbol.valueOf(piece.getName().toUpperCase(Locale.ROOT));
+        final String symbol = piece.getPieceType().getSymbol();
         if (piece.getColor() == Color.BLACK) {
-            return symbol.getValue().toUpperCase(Locale.ROOT);
+            return symbol.toUpperCase(Locale.ROOT);
         }
-        return symbol.getValue();
+        return symbol;
     }
 
     public static void printStatus(Status status) {

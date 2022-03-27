@@ -14,8 +14,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.PieceKind;
-import chess.domain.board.strategy.CreateBoard;
+import chess.domain.PieceType;
+import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -33,7 +33,7 @@ class BoardTest {
     @ParameterizedTest(name = "{index} {displayName} piece={0} count={1}")
     @MethodSource("providePieceAndExpectedCount")
     void valid_Count(final Piece piece, final int expected) {
-        Board board = new Board(new CreateBoard());
+        Board board = new Board(new CreateCompleteBoardStrategy());
         Map<Position, Piece> pieces = board.getPieces();
         final int actual = (int)pieces.values()
             .stream()
@@ -259,8 +259,8 @@ class BoardTest {
     @DisplayName("특정 말의 갯수게 제대로 카운트 되는지 확인")
     @Test
     void count_Specific_Piece() {
-        Board board = new Board(new CreateBoard());
-        final double actualCount = board.countPiece(PieceKind.ROOK, Color.BLACK);
+        Board board = new Board(new CreateCompleteBoardStrategy());
+        final double actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
 
         assertThat(actualCount).isEqualTo(2.0);
     }

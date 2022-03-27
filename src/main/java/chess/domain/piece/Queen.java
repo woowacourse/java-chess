@@ -4,6 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.List;
 
+import chess.domain.PieceType;
 import chess.domain.board.Position;
 
 public class Queen extends Piece {
@@ -11,7 +12,7 @@ public class Queen extends Piece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E, NE, SE, SW, NW);
 
     public Queen(Color color) {
-        super("queen", color);
+        super(PieceType.QUEEN, color);
     }
 
     @Override

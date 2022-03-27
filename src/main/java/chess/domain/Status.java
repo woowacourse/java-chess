@@ -16,11 +16,11 @@ public class Status {
     }
 
     private double calculateScore(Board board, Color color) {
-        if (board.countPiece(PieceKind.KING, color) == 0) {
+        if (board.countPiece(PieceType.KING, color) == 0) {
             return -1;
         }
 
-        double score = Arrays.stream(PieceKind.values())
+        double score = Arrays.stream(PieceType.values())
             .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
             .sum();
         return score - board.countDeductedPawns(color) * 0.5;

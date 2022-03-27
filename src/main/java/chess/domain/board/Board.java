@@ -1,11 +1,13 @@
 package chess.domain.board;
 
+import static chess.domain.PieceType.*;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.PieceKind;
-import chess.domain.board.strategy.BoardInitializeStrategy;
+import chess.domain.PieceType;
+import chess.domain.board.strategy.CreateBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
@@ -15,7 +17,7 @@ public class Board {
 
     private final Map<Position, Piece> pieces;
 
-    public Board(final BoardInitializeStrategy strategy) {
+    public Board(final CreateBoardStrategy strategy) {
         pieces = new HashMap<>(strategy.createPieces());
     }
 
@@ -31,11 +33,11 @@ public class Board {
 
     private void validateMoving(Position start, Position target) {
         final Piece movingPiece = get(start);
-        if (movingPiece.isSamePiece("knight")) {
+        if (movingPiece.isSamePiece(KNIGHT)) {
             validateKnight(start, target);
             return;
         }
-        if (movingPiece.isSamePiece("pawn")) {
+        if (movingPiece.isSamePiece(PAWN)) {
             validatePawn(start, target);
             return;
         }
@@ -106,18 +108,18 @@ public class Board {
         return pieces.getOrDefault(position, new EmptySpace());
     }
 
-    public double countPiece(PieceKind pieceKind, Color color) {
+    public double countPiece(PieceType pieceType, Color color) {
         return (double)pieces.values()
             .stream()
-            .filter(piece -> pieceKind.isSamePieceWith(piece) && piece.isSameColor(color))
+            .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
             .count();
     }
 
     public int countDeductedPawns(Color color) {
         return (int)pieces.entrySet()
             .stream()
-            .filter(piece -> PieceKind.PAWN.isSamePieceWith(piece.getValue())
-                && piece.getValue().isSameColor(color))
+            .filter(entry -> entry.getValue().isSamePiece(PAWN)
+                && entry.getValue().isSameColor(color))
             .filter(this::hasAnotherPawnInSameColumn)
             .count();
     }

@@ -5,7 +5,7 @@ import java.util.Map;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 
-public class CreateMockBoardStrategy implements BoardInitializeStrategy {
+public class CreateMockBoardStrategy implements CreateBoardStrategy {
     private final Map<Position, Piece> pieces;
 
     public CreateMockBoardStrategy(final Map<Position, Piece> pieces) {

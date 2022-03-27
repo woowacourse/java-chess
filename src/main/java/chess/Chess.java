@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.PieceType;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -70,7 +71,7 @@ public class Chess {
         Position start = Position.from(args[1]);
         Position target = Position.from(args[2]);
         Color currentColor = getCurrentColor();
-        if (board.move(start, target, currentColor).isSamePiece("king")) {
+        if (board.move(start, target, currentColor).isSamePiece(PieceType.KING)) {
             gameState = GameState.END;
         }
         OutputView.printBoard(board.getPieces());

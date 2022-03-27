@@ -4,6 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.List;
 
+import chess.domain.PieceType;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 
@@ -17,7 +18,7 @@ public class Pawn extends Piece {
     private static final Row BLACK_INITIAL_ROW = Row.SEVENTH;
 
     public Pawn(final Color color) {
-        super("pawn", color);
+        super(PieceType.PAWN, color);
     }
 
     @Override

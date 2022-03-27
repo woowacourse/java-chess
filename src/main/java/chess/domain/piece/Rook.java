@@ -4,6 +4,7 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.List;
 
+import chess.domain.PieceType;
 import chess.domain.board.Position;
 
 public class Rook extends Piece {
@@ -11,7 +12,7 @@ public class Rook extends Piece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E);
 
     public Rook(Color color) {
-        super("rook", color);
+        super(PieceType.ROOK, color);
     }
 
     @Override

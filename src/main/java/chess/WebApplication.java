@@ -1,7 +1,7 @@
 package chess;
 
 import chess.domain.board.Board;
-import chess.domain.board.strategy.CreateBoard;
+import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 
 public class WebApplication {
     public static void main(String[] args) {
@@ -10,7 +10,7 @@ public class WebApplication {
         //     return render(model, "index.html");
         // });
 
-        Chess chess = new Chess(new Board(new CreateBoard()));
+        Chess chess = new Chess(new Board(new CreateCompleteBoardStrategy()));
         chess.run();
     }
 
