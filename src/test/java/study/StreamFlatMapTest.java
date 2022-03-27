@@ -17,7 +17,7 @@ public class StreamFlatMapTest {
         List<int[]> pairs = numbers1.stream()
                 .flatMap(this::streamAndMap)
                 .collect(toList());
-        pairs.forEach(pair -> System.out.printf("(%d, %d)", pair[0], pair[1]));
+//        pairs.forEach(pair -> System.out.printf("(%d, %d)", pair[0], pair[1]));
     }
 
     private Stream<int[]> streamAndMap(Integer i) {
@@ -33,7 +33,7 @@ public class StreamFlatMapTest {
         List<int[]> pairs = numbers1.stream()
                 .flatMap(this::streamFilterAndMap)
                 .collect(toList());
-        pairs.forEach(pair -> System.out.printf("(%d, %d)", pair[0], pair[1]));
+//        pairs.forEach(pair -> System.out.printf("(%d, %d)", pair[0], pair[1]));
     }
 
     private Stream<int[]> streamFilterAndMap(Integer i) {

@@ -29,7 +29,7 @@ public class StreamSlicingTest {
         List<Dish> filteredMenu = specialMenu.stream()
                 .filter(dish -> dish.getCalories() < 320)
                 .collect(toList());
-        filteredMenu.forEach(System.out::println);
+//        filteredMenu.forEach(System.out::println);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class StreamSlicingTest {
         List<Dish> slicedMenu1 = specialMenu.stream()
                 .takeWhile(dish -> dish.getCalories() < 320)
                 .collect(toList());
-        slicedMenu1.forEach(System.out::println);
+//        slicedMenu1.forEach(System.out::println);
         assertThat(slicedMenu1.size()).isEqualTo(2);
     }
 
@@ -46,7 +46,7 @@ public class StreamSlicingTest {
         List<Dish> reversedMenu1 = reversedMenu.stream()
                 .takeWhile(dish -> dish.getCalories() < 320)
                 .collect(toList());
-        reversedMenu1.forEach(System.out::println);
+//        reversedMenu1.forEach(System.out::println);
         assertThat(reversedMenu1.size()).isEqualTo(0);
     }
 
@@ -55,7 +55,7 @@ public class StreamSlicingTest {
         List<Dish> slicedMenu2 = specialMenu.stream()
                 .dropWhile(dish -> dish.getCalories() < 320)
                 .collect(toList());
-        slicedMenu2.forEach(System.out::println);
+//        slicedMenu2.forEach(System.out::println);
         assertThat(slicedMenu2.size()).isEqualTo(3);
     }
 
@@ -64,7 +64,7 @@ public class StreamSlicingTest {
         List<Dish> reversedMenu2 = reversedMenu.stream()
                 .dropWhile(dish -> dish.getCalories() < 320)
                 .collect(toList());
-        reversedMenu2.forEach(System.out::println);
+//        reversedMenu2.forEach(System.out::println);
         assertThat(reversedMenu2.size()).isEqualTo(5);
     }
 
