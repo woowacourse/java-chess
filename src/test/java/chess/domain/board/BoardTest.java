@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import static chess.domain.board.File.A;
 import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.SIX;
 import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -33,5 +35,18 @@ class BoardTest {
         assertThatThrownBy(() -> board.movePiece(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동하려는 위치에 같은 팀 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("턴에 맞지 않은 기물을 이동시키려 하면 예외를 발생시킨다.")
+    void moveExceptionByInvalidTurnPiece() {
+        //given
+        final Board board = new Board();
+        final Position blackTeamSourcePosition = Position.of(A, SEVEN);
+        final Position targetPosition = Position.of(A, SIX);
+        //when, then
+        assertThatThrownBy(() -> board.movePiece(blackTeamSourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("다른 팀 기물은 이동시킬 수 없습니다.");
     }
 }

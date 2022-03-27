@@ -4,8 +4,11 @@ import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
 import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
+import static chess.domain.piece.vo.TeamColor.WHITE;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.vo.TeamColor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +18,11 @@ public class Board {
     private static final List<Rank> INITIAL_PIECES_RANKS = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
 
     private final List<Piece> pieces;
+    private TeamColor currentTurnTeamColor;
 
-    private Board(final List<Piece> pieces) {
+    private Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
         this.pieces = pieces;
+        this.currentTurnTeamColor = currentTurnTeamColor;
     }
 
     public Board() {
@@ -25,6 +30,7 @@ public class Board {
                 .map(this::generateOf)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
+        currentTurnTeamColor = WHITE;
     }
 
     private List<Piece> generateOf(final Rank rank) {
@@ -47,6 +53,7 @@ public class Board {
 
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
         final Piece sourcePiece = findPieceInPosition(sourcePosition);
+        validateTurn(sourcePiece);
         final List<Piece> otherPieces = getOtherPieces(sourcePiece);
         final Piece movedPiece = sourcePiece.move(otherPieces, targetPosition);
 
@@ -55,7 +62,13 @@ public class Board {
         }
 
         pieces.set(pieces.indexOf(sourcePiece), movedPiece);
-        return new Board(pieces);
+        return new Board(pieces, currentTurnTeamColor.nextTurn());
+    }
+
+    private void validateTurn(final Piece sourcePiece) {
+        if (!sourcePiece.isTeamOf(currentTurnTeamColor)) {
+            throw new IllegalArgumentException("다른 팀 기물은 이동시킬 수 없습니다.");
+        }
     }
 
     private List<Piece> getOtherPieces(final Piece sourcePiece) {
@@ -73,5 +86,11 @@ public class Board {
         if (movedPiece.isSameTeam(targetPositionPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 같은 팀 기물이 있습니다.");
         }
+    }
+
+    public boolean isCheckMate() {
+        return pieces.stream()
+                .filter(piece -> piece.isTypeOf(King.class))
+                .count() != 2;
     }
 }
