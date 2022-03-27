@@ -40,7 +40,7 @@ public class ChessBoard {
 
     private void fillEmptyPieceInColumn(Column column) {
         for (Row row : Row.values()) {
-            this.pieces.computeIfAbsent(new Position(column, row), value -> EmptyPiece.getInstance());
+            this.pieces.computeIfAbsent(Position.of(column, row), value -> EmptyPiece.getInstance());
         }
     }
 
@@ -173,7 +173,7 @@ public class ChessBoard {
     public List<Piece> getPiecesOnColumn(Column column, Color color) {
         List<Piece> result = new ArrayList<>();
         for (Row row : Row.values()) {
-            result.add(pieces.get(new Position(column, row)));
+            result.add(pieces.get(Position.of(column, row)));
         }
         return result.stream()
                 .filter(piece -> piece.isSameColor(color))

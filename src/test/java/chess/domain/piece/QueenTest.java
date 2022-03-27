@@ -16,33 +16,33 @@ public class QueenTest {
     @DisplayName("퀸이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByRook() {
         Queen queen = new Queen(Color.BLACK);
-        Map<Direction, List<Position>> positions = queen.getMovablePositions(new Position("d4"));
+        Map<Direction, List<Position>> positions = queen.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.EAST, List.of(
-                                new Position("e4"), new Position("f4"),
-                                new Position("g4"), new Position("h4"))),
+                                Position.of("e4"), Position.of("f4"),
+                                Position.of("g4"), Position.of("h4"))),
                         Map.entry(Direction.WEST, List.of(
-                                new Position("c4"), new Position("b4"),
-                                new Position("a4"))),
+                                Position.of("c4"), Position.of("b4"),
+                                Position.of("a4"))),
                         Map.entry(Direction.NORTH, List.of(
-                                new Position("d5"), new Position("d6"),
-                                new Position("d7"), new Position("d8"))),
+                                Position.of("d5"), Position.of("d6"),
+                                Position.of("d7"), Position.of("d8"))),
                         Map.entry(Direction.SOUTH, List.of(
-                                new Position("d3"), new Position("d2"),
-                                new Position("d1"))),
+                                Position.of("d3"), Position.of("d2"),
+                                Position.of("d1"))),
                         Map.entry(Direction.NORTH_EAST, List.of(
-                                new Position("e5"), new Position("f6"),
-                                new Position("g7"), new Position("h8"))),
+                                Position.of("e5"), Position.of("f6"),
+                                Position.of("g7"), Position.of("h8"))),
                         Map.entry(Direction.NORTH_WEST, List.of(
-                                new Position("c5"), new Position("b6"),
-                                new Position("a7"))),
+                                Position.of("c5"), Position.of("b6"),
+                                Position.of("a7"))),
                         Map.entry(Direction.SOUTH_EAST, List.of(
-                                new Position("e3"), new Position("f2"),
-                                new Position("g1"))),
+                                Position.of("e3"), Position.of("f2"),
+                                Position.of("g1"))),
                         Map.entry(Direction.SOUTH_WEST, List.of(
-                                new Position("c3"), new Position("b2"),
-                                new Position("a1")))
+                                Position.of("c3"), Position.of("b2"),
+                                Position.of("a1")))
                 )
         );
         assertThat(positions).isEqualTo(expected);

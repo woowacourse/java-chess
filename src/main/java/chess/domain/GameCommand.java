@@ -20,8 +20,8 @@ public class GameCommand {
         command = CommandType.of(rawCommand[RAW_COMMAND_TYPE_INDEX]);
         validateCommand(rawCommand);
         if (command == CommandType.MOVE) {
-            movePositions.add(new Position(rawCommand[FROM_PARAMETER_INDEX]));
-            movePositions.add(new Position(rawCommand[TO_PARAMETER_INDEX]));
+            movePositions.add(Position.of(rawCommand[FROM_PARAMETER_INDEX]));
+            movePositions.add(Position.of(rawCommand[TO_PARAMETER_INDEX]));
         }
     }
 

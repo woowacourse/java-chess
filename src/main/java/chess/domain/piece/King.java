@@ -13,8 +13,8 @@ public class King extends Piece {
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static Position BLACK_INIT_LOCATION = new Position("e8");
-    public static Position WHITE_INIT_LOCATION = new Position("e1");
+    public static Position BLACK_INIT_LOCATION = Position.of("e8");
+    public static Position WHITE_INIT_LOCATION = Position.of("e1");
 
     public King(Color color) {
         super(color, PieceName.KING);

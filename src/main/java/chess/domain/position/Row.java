@@ -44,4 +44,8 @@ public enum Row {
         }
         return of(indexAfterMove);
     }
+
+    public String getValue() {
+        return Integer.toString(this.value);
+    }
 }

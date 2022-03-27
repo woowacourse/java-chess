@@ -13,9 +13,9 @@ public class Rook extends Piece {
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
 
     public final static List<Position> BLACK_INIT_LOCATIONS = List.of(
-            new Position("a8"), new Position("h8"));
+            Position.of("a8"), Position.of("h8"));
     public final static List<Position> WHITE_INIT_LOCATIONS = List.of(
-            new Position("a1"), new Position("h1"));
+            Position.of("a1"), Position.of("h1"));
 
     public Rook(Color color) {
         super(color, PieceName.ROOK);

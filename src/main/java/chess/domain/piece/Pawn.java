@@ -13,11 +13,11 @@ public class Pawn extends Piece {
     public static Direction WHITE_DIRECTION = Direction.NORTH;
 
     public static List<Position> BLACK_INIT_LOCATIONS = List.of(
-            new Position("a7"), new Position("b7"), new Position("c7"), new Position("d7"),
-            new Position("e7"), new Position("f7"), new Position("g7"), new Position("h7"));
+            Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),
+            Position.of("e7"), Position.of("f7"), Position.of("g7"), Position.of("h7"));
     public static List<Position> WHITE_INIT_LOCATIONS = List.of(
-            new Position("a2"), new Position("b2"), new Position("c2"), new Position("d2"),
-            new Position("e2"), new Position("f2"), new Position("g2"), new Position("h2"));
+            Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
+            Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
 
     public Pawn(Color color) {
         super(color, PieceName.PAWN);

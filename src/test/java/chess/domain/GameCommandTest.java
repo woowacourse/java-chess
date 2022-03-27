@@ -60,7 +60,7 @@ public class GameCommandTest {
     @DisplayName("이동할 말의 위치를 반환한다.")
     void getFromPosition() {
         GameCommand gameCommand = new GameCommand("move", "a1", "a2");
-        assertThat(gameCommand.getFromPosition()).isEqualTo(new Position("a1"));
+        assertThat(gameCommand.getFromPosition()).isEqualTo(Position.of("a1"));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class GameCommandTest {
     @DisplayName("말의 이동할 위치를 반환한다.")
     void getToPosition() {
         GameCommand gameCommand = new GameCommand("move", "a1", "a2");
-        assertThat(gameCommand.getToPosition()).isEqualTo(new Position("a2"));
+        assertThat(gameCommand.getToPosition()).isEqualTo(Position.of("a2"));
     }
 
     @Test

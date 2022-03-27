@@ -16,21 +16,21 @@ public class BishopTest {
     @DisplayName("비숍이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByRook() {
         Bishop bishop = new Bishop(Color.BLACK);
-        Map<Direction, List<Position>> positions = bishop.getMovablePositions(new Position("d4"));
+        Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.NORTH_EAST, List.of(
-                                new Position("e5"), new Position("f6"),
-                                new Position("g7"), new Position("h8"))),
+                                Position.of("e5"), Position.of("f6"),
+                                Position.of("g7"), Position.of("h8"))),
                         Map.entry(Direction.NORTH_WEST, List.of(
-                                new Position("c5"), new Position("b6"),
-                                new Position("a7"))),
+                                Position.of("c5"), Position.of("b6"),
+                                Position.of("a7"))),
                         Map.entry(Direction.SOUTH_EAST, List.of(
-                                new Position("e3"), new Position("f2"),
-                                new Position("g1"))),
+                                Position.of("e3"), Position.of("f2"),
+                                Position.of("g1"))),
                         Map.entry(Direction.SOUTH_WEST, List.of(
-                                new Position("c3"), new Position("b2"),
-                                new Position("a1")))
+                                Position.of("c3"), Position.of("b2"),
+                                Position.of("a1")))
                 )
         );
         assertThat(positions).isEqualTo(expected);

@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class NormalPiecesGenerator implements PiecesGenerator {
 
-    public static final  Map<Position, Piece> pieces = new HashMap<>();
+    public static final  Map<Position, Piece> pieces = new HashMap<>(32);
 
     static {
         createKing(pieces);

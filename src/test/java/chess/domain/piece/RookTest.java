@@ -16,21 +16,21 @@ public class RookTest {
     @DisplayName("룩이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByRook() {
         Rook rook = new Rook(Color.BLACK);
-        Map<Direction, List<Position>> positions = rook.getMovablePositions(new Position("d4"));
+        Map<Direction, List<Position>> positions = rook.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.EAST, List.of(
-                                new Position("e4"), new Position("f4"),
-                                new Position("g4"), new Position("h4"))),
+                                Position.of("e4"), Position.of("f4"),
+                                Position.of("g4"), Position.of("h4"))),
                         Map.entry(Direction.WEST, List.of(
-                                new Position("c4"), new Position("b4"),
-                                new Position("a4"))),
+                                Position.of("c4"), Position.of("b4"),
+                                Position.of("a4"))),
                         Map.entry(Direction.NORTH, List.of(
-                                new Position("d5"), new Position("d6"),
-                                new Position("d7"), new Position("d8"))),
+                                Position.of("d5"), Position.of("d6"),
+                                Position.of("d7"), Position.of("d8"))),
                         Map.entry(Direction.SOUTH, List.of(
-                                new Position("d3"), new Position("d2"),
-                                new Position("d1")))
+                                Position.of("d3"), Position.of("d2"),
+                                Position.of("d1")))
                 )
         );
         assertThat(positions).isEqualTo(expected);

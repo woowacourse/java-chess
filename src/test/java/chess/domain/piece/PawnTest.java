@@ -15,11 +15,11 @@ public class PawnTest {
     @DisplayName("폰은 2칸 움직일 수 있다.")
     void firstMove() {
         Pawn pawn = new Pawn(Color.WHITE);
-        Position position = new Position("d4");
+        Position position = Position.of("d4");
         Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
         System.out.println(positions);
         assertThat(positions).containsEntry(
-                Direction.NORTH, List.of(new Position("d5"), new Position("d6"))
+                Direction.NORTH, List.of(Position.of("d5"), Position.of("d6"))
         );
     }
 

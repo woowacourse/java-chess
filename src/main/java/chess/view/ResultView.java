@@ -30,7 +30,7 @@ public class ResultView {
 
     private static void printBoardInRow(Map<Position, Piece> board, Row row) {
         for (Column column : Column.values()) {
-            System.out.print(board.get(new Position(column, row))
+            System.out.print(board.get(Position.of(column, row))
                     .getName());
         }
     }
