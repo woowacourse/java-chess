@@ -1,5 +1,7 @@
 package chess.domain.postion;
 
+import java.util.Arrays;
+
 public enum File {
     A('a'),
     B('b'),
@@ -14,5 +16,16 @@ public enum File {
 
     File(char name) {
         this.name = name;
+    }
+
+    public static File from(char candidate) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.getName() == candidate)
+                .findAny()
+                .orElse(null);
+    }
+
+    public char getName() {
+        return name;
     }
 }

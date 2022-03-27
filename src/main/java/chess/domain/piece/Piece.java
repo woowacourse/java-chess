@@ -1,11 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.postion.Position;
+
+import java.util.List;
 
 public abstract class Piece {
     private final Team team;
     private final MoveStrategy moveStrategy;
+
+    public abstract String symbol();
 
     public Piece(final Team team, final MoveStrategy moveStrategy) {
         this.team = team;
@@ -16,5 +21,5 @@ public abstract class Piece {
        moveStrategy.isMovable(source, target);
     }
 
-    abstract String symbol();
+    public abstract List<Direction> possibleDirections();
 }

@@ -1,5 +1,7 @@
 package chess.domain.postion;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(1),
     TWO(2),
@@ -14,5 +16,16 @@ public enum Rank {
 
     Rank(int number) {
         this.number = number;
+    }
+
+    public static Rank from(int candidate) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.getNumber() == candidate)
+                .findAny()
+                .orElse(null);
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
