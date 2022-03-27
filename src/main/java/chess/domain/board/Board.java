@@ -18,8 +18,8 @@ public class Board {
         value = initializable.init();
     }
 
-    public Map<Position, Piece> toMap() {
-        return Collections.unmodifiableMap(value);
+    public boolean isInitialized(final Initializable initializable) {
+        return value.equals(initializable.init());
     }
 
     public void move(final Position from, final Position to) {
@@ -101,5 +101,9 @@ public class Board {
             return piece;
         }
         throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+    }
+
+    public Map<Position, Piece> toMap() {
+        return Collections.unmodifiableMap(value);
     }
 }

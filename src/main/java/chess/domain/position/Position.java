@@ -47,14 +47,13 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Position)) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof Position)) return false;
 
-        Position position = (Position) o;
+        Position position = (Position) other;
 
-        if (file != position.file) return false;
-        return rank == position.rank;
+        return file == position.file && rank == position.rank;
     }
 
     @Override

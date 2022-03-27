@@ -22,8 +22,8 @@ public final class BoardInitializer implements Initializable {
     }
 
     private static void initPawn(final Map<Position, Piece> value) {
-        final var blackPawnRank = Rank.SEVEN;
-        final var whitePawnRank = Rank.TWO;
+        Rank blackPawnRank = Rank.SEVEN;
+        Rank whitePawnRank = Rank.TWO;
 
         initPawn(value, whitePawnRank, Color.WHITE);
         initPawn(value, blackPawnRank, Color.BLACK);

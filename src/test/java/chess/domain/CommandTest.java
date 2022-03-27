@@ -76,13 +76,13 @@ class CommandTest {
     }
 
     @Test
-    @DisplayName("ready 상태일 때 status 명령어 입력 시 점수 및 결과 출력")
-    void readyStatus() {
+    @DisplayName("게임 시작 전 status 명령어 입력 시 예외 처리")
+    void beforeEndStatus() {
         ChessGame chessGame = new ChessGame();
 
-        // TODO: 결과 메시지 포함으로 수정
-        assertThatCode(() -> Command.execute("status", chessGame))
-                .doesNotThrowAnyException();
+        assertThatThrownBy(() -> Command.execute("status", chessGame))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임을 시작해주세요.");
     }
 
     @Test

@@ -17,7 +17,7 @@ public class BlackTurn extends Turn {
         checkValidPosition(from, to, color);
         board.move(from, to);
 
-        if (isEnded(color)) {
+        if (isGameOver(color)) {
             return new Ready(board);
         }
         return new WhiteTurn(board);

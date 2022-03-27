@@ -22,7 +22,7 @@ public abstract class Turn extends State {
         }
     }
 
-    protected boolean isEnded(final Color color) {
+    protected boolean isGameOver(final Color color) {
         return !board.hasKing(color.reversed());
     }
 

@@ -31,10 +31,10 @@ public class Ready extends State {
 
     @Override
     public void status() {
-        // TODO: 점수 및 결과 출력
-        // TODO: 게임 시작 전이면 점수 출력할 수 없다고 안내
-
-        // TODO: 게임 종료 후에는 점수 출력
+        if (board.isInitialized(new BoardInitializer())) {
+            throw new IllegalStateException("게임을 시작해주세요.");
+        }
+//        board.showStatus();
     }
 
     @Override

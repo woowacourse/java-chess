@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -69,5 +70,20 @@ public abstract class Piece {
             return name.toUpperCase(Locale.ROOT);
         }
         return name;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof Piece)) return false;
+
+        Piece piece = (Piece) other;
+
+        return name.equals(piece.name) && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, color);
     }
 }
