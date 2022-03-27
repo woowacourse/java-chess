@@ -39,6 +39,11 @@ public enum Column {
         return column.index - this.index;
     }
 
+    public boolean movable(int distance) {
+        int moveIndex = this.index + distance;
+        return moveIndex <= H.index && moveIndex >= A.index;
+    }
+
     public Column move(int distance) {
         return of(index + distance);
     }

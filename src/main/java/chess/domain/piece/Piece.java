@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -18,6 +19,8 @@ public abstract class Piece {
     public abstract void movable(Position from, Position to);
 
     public abstract Direction findDirection(Position from, Position to);
+
+    public abstract List<Position> findMovablePosition(Position now);
 
     public final String getName() {
         return team.convert(name);

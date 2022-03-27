@@ -23,16 +23,27 @@ public class Board {
         return board;
     }
 
-    public void check() {
-        List<Entry<Position, Piece>> entries = findSameTeamPieces(turn.change());
+    public boolean check() {
         Position to = findKingPosition(turn);
+        return checkAnyMatch(to);
+    }
 
-        for (Entry<Position, Piece> entry : entries) {
-            Piece fromPiece = entry.getValue();
-            Position from = entry.getKey();
+    public boolean checkmate() {
+        Position kingPosition = findKingPosition(turn);
+        List<Position> kingPaths = board.get(kingPosition).findMovablePosition(kingPosition);
 
-            validCheck(from, to, fromPiece);
+        for (Position to : kingPaths) {
+            if (!checkAnyMatch(to)) {
+                return false;
+            }
         }
+        return true;
+    }
+
+    private boolean checkAnyMatch(Position to) {
+        return findSameTeamPieces(turn.change())
+                .stream()
+                .anyMatch(entry -> validCheck(entry.getKey(), to, entry.getValue()));
     }
 
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
@@ -51,14 +62,14 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
     }
 
-    private void validCheck(Position from, Position to, Piece fromPiece) {
+    private boolean validCheck(Position from, Position to, Piece fromPiece) {
         try {
             fromPiece.movable(from, to);
             validPath(from, to, fromPiece.findDirection(from, to));
         } catch (IllegalArgumentException e) {
-            return;
+            return false;
         }
-        throw new IllegalArgumentException("현재 Check 상황입니다.");
+        return true;
     }
 
     public void move(Position from, Position to) {

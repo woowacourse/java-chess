@@ -11,6 +11,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
@@ -84,5 +85,13 @@ public class Pawn extends Piece {
                 && (Objects.isNull(to) || this.isSameTeam(to))) {
             throw new IllegalArgumentException("Pawn 의 대각선 이동은 상대편의 말을 잡을 때만 가능합니다.");
         }
+    }
+
+    @Override
+    public List<Position> findMovablePosition(Position now) {
+        return directions.stream()
+                .filter(now::movable)
+                .map(now::move)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

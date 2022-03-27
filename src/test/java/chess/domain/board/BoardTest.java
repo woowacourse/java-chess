@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.boardGenerator.CheckmateBoardGenerator;
+import chess.domain.board.boardGenerator.NotCheckmateBoardGenerator;
+import chess.domain.board.boardGenerator.TestBoardGenerator;
+import chess.domain.board.boardGenerator.WhiteCheckBoardGenerator;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
@@ -96,18 +100,17 @@ public class BoardTest {
                 .hasMessage("현재 차례는 WHITE입니다.");
     }
 
-    @DisplayName("블랙이 체크인 상황")
+    @DisplayName("체크인 상황")
     @Test
     void valid_black_check() {
         // given
         board.initBoard(new WhiteCheckBoardGenerator());
 
         // then
-        assertThatNoException()
-                .isThrownBy(() -> board.check());
+        assertThat(board.check()).isTrue();
     }
 
-    @DisplayName("폰이 이동할 수 없는 대각선 위치에 왕이 존재하는 경우 check 확인")
+    @DisplayName("폰이 이동할 수 없는 대각선 위치에 왕이 존재하는 경우 check 아님")
     @Test
     void valid_pawn_move_fail() {
         // given
@@ -121,11 +124,10 @@ public class BoardTest {
         board.initBoard(boardGenerator);
 
         // then
-        assertThatNoException()
-                .isThrownBy(() -> board.check());
+        assertThat(board.check()).isFalse();
     }
 
-    @DisplayName("폰이 이동 가능한 위치에 왕이 존재하는 경우 check 확인")
+    @DisplayName("폰이 이동 가능한 위치에 왕이 존재하는 경우 check")
     @Test
     void valid_pawn_move_ok() {
         // given
@@ -139,7 +141,26 @@ public class BoardTest {
         board.initBoard(boardGenerator);
 
         // then
-        assertThatThrownBy(() -> board.check())
-                .hasMessage("현재 Check 상황입니다.");
+        assertThat(board.check()).isTrue();
+    }
+
+    @DisplayName("체크메이트")
+    @Test
+    void checkmate() {
+        // given
+        board.initBoard(new CheckmateBoardGenerator());
+
+        // then
+        assertThat(board.checkmate()).isTrue();
+    }
+
+    @DisplayName("체크메이트 아닌 경우")
+    @Test
+    void checkmate_failed() {
+        // given
+        board.initBoard(new NotCheckmateBoardGenerator());
+
+        // then
+        assertThat(board.checkmate()).isFalse();
     }
 }

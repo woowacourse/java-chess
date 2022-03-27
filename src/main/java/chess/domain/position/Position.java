@@ -53,6 +53,10 @@ public class Position {
         return this.column == position.column;
     }
 
+    public boolean movable(Direction direction) {
+        return column.movable(direction.getColumn()) && row.movable(direction.getRow());
+    }
+
     public Position move(Direction direction) {
         return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
     }
