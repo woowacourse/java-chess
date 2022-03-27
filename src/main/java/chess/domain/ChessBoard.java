@@ -144,12 +144,7 @@ public class ChessBoard {
     }
 
     public Optional<ChessPiece> findPiece(Position position) {
-        ChessPiece piece = chessBoard.get(position);
-        if (piece == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(piece);
+       return Optional.ofNullable(chessBoard.get(position));
     }
 
     public boolean enemyExist(ChessPiece me, Position to) {
@@ -167,61 +162,8 @@ public class ChessBoard {
     }
 
     public Map<Color, Double> calculateScore() {
-        return Arrays.stream(Color.values())
-                .collect(Collectors.toMap(
-                        color -> color,
-                        this::getSum,
-                        (exist, replacement) -> exist));
-    }
-
-    private double getSum(Color color) {
-        double sumExceptPawnScore = chessBoard.values().stream()
-                .filter((chessPiece) -> chessPiece.isSameColor(color))
-                .filter((chessPiece) -> !(chessPiece instanceof Pawn))
-                .mapToDouble(ChessPiece::getValue)
-                .sum();
-
-        return sumExceptPawnScore + getSumPawn(color);
-    }
-
-    private double getSumPawn(Color color) {
-        double totalPawnScore = 0;
-        for (Rank rank : Rank.values()) {
-            double pawnCount = countSameRankPawn(color, rank);
-            totalPawnScore += sumPawnScore(pawnCount);
-        }
-        return totalPawnScore;
-    }
-
-    private double countSameRankPawn(Color color, Rank rank) {
-        return Arrays.stream(File.values())
-                .map((file) -> findPiece(new Position(rank, file)))
-                .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
-                .count();
-    }
-
-    private boolean isMyPawn(Color color, Optional<ChessPiece> possiblePiece) {
-        if (possiblePiece.isEmpty()) {
-            return false;
-        }
-
-        ChessPiece chessPiece = possiblePiece.get();
-        if (!(chessPiece instanceof Pawn) || !chessPiece.isSameColor(color)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private double sumPawnScore(double pawnCount) {
-        if (isOnlyPawnInFile(pawnCount)) {
-            return 1;
-        }
-        return pawnCount * 0.5;
-    }
-
-    private boolean isOnlyPawnInFile(double pawnCount) {
-        return pawnCount == 1;
+        Score score = new Score(chessBoard);
+        return score.calculateScore();
     }
 
     public boolean isReady() {
