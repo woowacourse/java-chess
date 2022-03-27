@@ -1,11 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
-import java.util.List;
-
-public abstract class AbstractPawnMovePattern {
+public abstract class AbstractPawnMovePattern implements MovePattern {
 
     public static AbstractPawnMovePattern of(Color color) {
         if (color == Color.BLACK) {
@@ -17,11 +14,8 @@ public abstract class AbstractPawnMovePattern {
         throw new IllegalArgumentException("error");
     }
 
+    @Override
     public final boolean canMove(Position src, Position dest) {
         return findDirection(src, dest) != null;
     }
-
-    public abstract Direction findDirection(Position src, Position dest);
-
-    public abstract List<Direction> getDirections();
 }

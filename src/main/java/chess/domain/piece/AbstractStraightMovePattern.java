@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public abstract class AbstractStraightMovePattern {
+public abstract class AbstractStraightMovePattern implements MovePattern {
 
     public boolean canMove(Position src, Position dest) {
         return findDirection(src, dest) != null;

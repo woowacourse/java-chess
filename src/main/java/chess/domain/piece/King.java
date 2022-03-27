@@ -9,25 +9,25 @@ public final class King extends Piece {
 
     private static final double POINT = 0.0;
 
+    private final AbstractSingleMovePattern pattern = new AbstractSingleMovePattern() {
+        @Override
+        public List<Direction> getDirections() {
+            return Direction.getKingDirections();
+        }
+    };
+
     public King(Color color) {
         super(color);
     }
 
     @Override
     public boolean canMove(Position src, Position dest) {
-        return findDirection(src, dest) != null;
+        return pattern.canMove(src, dest);
     }
 
     @Override
     public Direction findDirection(Position src, Position dest) {
-        List<Direction> directions = Direction.getKingDirections();
-
-        for (Direction direction : directions) {
-            if (src.canReachByMovingTo(direction, dest, 1)) {
-                return direction;
-            }
-        }
-        return null;
+        return pattern.findDirection(src, dest);
     }
 
     @Override
