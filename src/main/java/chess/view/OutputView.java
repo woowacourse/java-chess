@@ -17,7 +17,7 @@ public class OutputView {
 	}
 
 	public void displayChessBoard(Board board) {
-		for (int i = 8; i > 0; i--) {
+		for (int i = Position.MAX; i >= Position.MIN; i--) {
 			displayLine(board, i);
 			System.out.println();
 		}
@@ -25,7 +25,7 @@ public class OutputView {
 	}
 
 	private void displayLine(Board board, int i) {
-		for (int j = 1; j <= 8; j++) {
+		for (int j = Position.MIN; j <= Position.MAX; j++) {
 			displaySymbol(board, i, j);
 		}
 	}

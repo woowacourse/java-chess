@@ -119,7 +119,7 @@ public class Board {
 	public ChessScore calculateScore() {
 		double whiteScore = 0;
 		double blackScore = 0;
-		for (int column = 1; column <= 8; column++) {
+		for (int column = Position.MIN; column <= Position.MAX; column++) {
 			whiteScore += calculateColumn(column, (Piece::isWhite));
 			blackScore += calculateColumn(column, (piece -> !piece.isWhite()));
 		}

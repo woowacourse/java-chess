@@ -10,7 +10,9 @@ public class King extends Piece {
 
 	private static final String INVALID_DIRECTION_KING = "King이 갈 수 없는 방향입니다.";
 	private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
+
 	private static final double KING_SCORE = 0;
+	private static final int KING_MAX_DISTANCE = 1;
 
 	private final String symbol;
 
@@ -54,7 +56,7 @@ public class King extends Piece {
 			throw new IllegalArgumentException(INVALID_DIRECTION_KING);
 		}
 		Direction direction = findDirection.get();
-		if (from.canReach(to, direction.getUnitPosition(), 1)) {
+		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
 			return direction;
 		}
 		throw new IllegalArgumentException(INVALID_DISTANCE_KING);

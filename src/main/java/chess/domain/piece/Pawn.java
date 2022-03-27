@@ -17,6 +17,9 @@ public class Pawn extends Piece {
 	private static final int BLACK_PAWN_INITIAL_ROW = 7;
 	private static final int WHITE_PAWN_INITIAL_ROW = 2;
 
+	private static final int PAWN_INITIAL_DISTANCE = 2;
+	private static final int PAWN_BASIC_DISTANCE = 1;
+
 	private final String symbol;
 
 	public Pawn(Color color, String symbol) {
@@ -69,14 +72,14 @@ public class Pawn extends Piece {
 	private boolean checkFirstMove(Position from, Position to, Direction direction) {
 		if (this.color == Color.BLACK) {
 			return from.isSameRow(BLACK_PAWN_INITIAL_ROW) && !direction.isDiagonal()
-				&& from.canReach(to, direction.getUnitPosition(), 2);
+				&& from.canReach(to, direction.getUnitPosition(), PAWN_INITIAL_DISTANCE);
 		}
 		return from.isSameRow(WHITE_PAWN_INITIAL_ROW) && !direction.isDiagonal()
-			&& from.canReach(to, direction.getUnitPosition(), 2);
+			&& from.canReach(to, direction.getUnitPosition(), PAWN_INITIAL_DISTANCE);
 	}
 
 	private boolean checkMove(Position from, Position to, Direction direction) {
-		return from.canReach(to, direction.getUnitPosition(), 1);
+		return from.canReach(to, direction.getUnitPosition(), PAWN_BASIC_DISTANCE);
 	}
 
 	private DirectionStrategy findStrategy() {

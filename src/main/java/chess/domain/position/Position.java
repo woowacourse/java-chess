@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public class Position {
 
-	private static final String INVALID_RANGE_ERROR = "행과 열은 각각 1이상 8이하의 수여야 합니다.";
+	public static final int MIN = 1;
+	public static final int MAX = 8;
 
-	private static final int MIN = 1;
-	private static final int MAX = 8;
+	private static final String INVALID_RANGE_ERROR = "행과 열은 각각 1이상 8이하의 수여야 합니다.";
 
 	private final int row;
 	private final int column;
