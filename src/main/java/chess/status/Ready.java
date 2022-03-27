@@ -20,7 +20,7 @@ public final class Ready implements State {
             return new Finished();
         }
 
-        throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
     }
 
     @Override
