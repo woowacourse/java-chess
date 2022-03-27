@@ -4,7 +4,7 @@ import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.List;
 
 public final class PawnMoveStrategy extends MoveStrategy {
@@ -14,14 +14,14 @@ public final class PawnMoveStrategy extends MoveStrategy {
     private static final int INIT_MAX_DISTANCE = 2;
 
     @Override
-    public boolean isValidateCanMove(Color color, Piece targetPiece, Position from, Position to) {
-        List<Direction> directions = pawnDirection(color);
+    public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
+        List<Direction> directions = pawnDirection(team);
         Direction nowDirection = Direction.of(from, to);
 
         if (isInvalidDirection(from, to, directions)) {
-            validateInitDirection(color, from, to, directions);
+            validateInitDirection(team, from, to, directions);
         }
-        if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeColor(color)) {
+        if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeColor(team)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
 
@@ -29,28 +29,28 @@ public final class PawnMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public boolean isValidateCanMove(Color color, Position from, Position to) {
+    public boolean isValidateCanMove(Team team, Position from, Position to) {
         throw new IllegalArgumentException(NO_MOVE_MESSAGE_TARGET);
     }
 
-    public static List<Direction> pawnDirection(Color color) {
-        return Direction.getColorDirections(color, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
+    public static List<Direction> pawnDirection(Team team) {
+        return Direction.getAbsoluteDirections(team, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
     }
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {
         return now == directions.get(1) || now == directions.get(2);
     }
 
-    private void validateInitDirection(Color color, Position from, Position to, List<Direction> directions) {
-        if (isInitLine(color, from) && isInitDistance(from, to, directions.get(0))) {
+    private void validateInitDirection(Team team, Position from, Position to, List<Direction> directions) {
+        if (isInitLine(team, from) && isInitDistance(from, to, directions.get(0))) {
             return;
         }
         throw new IllegalArgumentException(NO_MOVE_MESSAGE);
     }
 
-    private boolean isInitLine(Color color, Position from) {
-        return (color == Color.BLACK && from.isEqualRank(Rank.SEVEN) ||
-                (color == Color.WHITE && from.isEqualRank(Rank.TWO)));
+    private boolean isInitLine(Team team, Position from) {
+        return (team == Team.BLACK && from.isEqualRank(Rank.SEVEN) ||
+                (team == Team.WHITE && from.isEqualRank(Rank.TWO)));
     }
 
     private boolean isInitDistance(Position from, Position to, Direction direction) {

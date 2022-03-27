@@ -35,7 +35,6 @@ class PositionTest {
     @DisplayName("잘못된 위치를 입력한 경우 예외가 발생한다")
     void createInvalidStringToPosition(String value) {
         assertThatThrownBy(() -> Position.from(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 위치 값 입니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,4 +1,4 @@
-package chess.controller.commendlauncher;
+package chess.controller.cotroller;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;

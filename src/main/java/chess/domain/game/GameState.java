@@ -1,7 +1,7 @@
 package chess.domain.game;
 
-public enum GameStatus {
+public enum GameState {
     READY,
     PLAYING,
-    END;
+    END
 }

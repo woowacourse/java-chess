@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class BishopMoveStrategyTest {
     @DisplayName("비숍이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertDoesNotThrow(() -> new BishopMoveStrategy()
-                .isValidateCanMove(Color.WHITE,
+                .isValidateCanMove(Team.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 )
@@ -44,7 +44,7 @@ class BishopMoveStrategyTest {
     @DisplayName("비숍이 갈 수 있는 위치가 아니면 에러가 발생해야 한다.")
     void canInvalidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertThatThrownBy(() -> new BishopMoveStrategy()
-                .isValidateCanMove(Color.WHITE,
+                .isValidateCanMove(Team.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 ))

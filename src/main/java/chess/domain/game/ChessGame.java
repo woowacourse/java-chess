@@ -12,55 +12,56 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class ChessGame {
 
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
+
     private final Board board;
-    private GameStatus gameStatus;
-    private Color turn = Color.WHITE;
+    private GameState gameState;
+    private Team turn = Team.WHITE;
 
     public ChessGame() {
         this.board = new Board(createBoard());
-        this.gameStatus = GameStatus.READY;
+        this.gameState = GameState.READY;
     }
 
     public void play(Position from, Position to) {
-        if (!isThatTurn(from)) {
+        if (!isTurn(from)) {
             throw new IllegalArgumentException(NO_TURN_MESSAGE);
         }
 
-        boolean isToNotKing = isKingAlive(to);
+        boolean isKing = isKing(to);
         board.move(from, to);
-        if (!isToNotKing) {
-            gameStatus = GameStatus.END;
+        if (isKing) {
+            gameState = GameState.END;
         }
         turn = turn.oppositeColor();
     }
 
-    private boolean isThatTurn(Position position) {
+    private boolean isTurn(Position position) {
         return board.isSameColor(position, turn);
     }
 
     public Status getStatus() {
-        return new Status(board.getColorsTotalScore());
+        return new Status(board.getTotalStatus());
     }
 
-    public boolean isKingAlive(Position to) {
-        return board.isKingAlive(to);
+    public boolean isKing(Position to) {
+        return board.isKing(to);
     }
 
     private Map<Position, Piece> createBoard() {
         Map<Position, Piece> squares = new HashMap<>();
 
         initEmptyPieces(squares);
-        initNotPawnSquares(squares, Rank.ONE, Color.WHITE);
-        initPawnPieces(squares, Rank.TWO, Color.WHITE);
-        initPawnPieces(squares, Rank.SEVEN, Color.BLACK);
-        initNotPawnSquares(squares, Rank.EIGHT, Color.BLACK);
+        initNotPawnSquares(squares, Rank.ONE, Team.WHITE);
+        initPawnPieces(squares, Rank.TWO, Team.WHITE);
+        initPawnPieces(squares, Rank.SEVEN, Team.BLACK);
+        initNotPawnSquares(squares, Rank.EIGHT, Team.BLACK);
 
         return squares;
     }
@@ -73,29 +74,29 @@ public final class ChessGame {
         }
     }
 
-    private void initPawnPieces(Map<Position, Piece> squares, Rank rank, Color color) {
+    private void initPawnPieces(Map<Position, Piece> squares, Rank rank, Team team) {
         for (File file : File.values()) {
-            squares.replace(new Position(file, rank), new Pawn(color));
+            squares.replace(new Position(file, rank), new Pawn(team));
         }
     }
 
-    private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Color color) {
-        squares.replace(new Position(File.A, rank), new Rook(color));
-        squares.replace(new Position(File.B, rank), new Knight(color));
-        squares.replace(new Position(File.C, rank), new Bishop(color));
-        squares.replace(new Position(File.D, rank), new Queen(color));
-        squares.replace(new Position(File.E, rank), new King(color));
-        squares.replace(new Position(File.F, rank), new Bishop(color));
-        squares.replace(new Position(File.G, rank), new Knight(color));
-        squares.replace(new Position(File.H, rank), new Rook(color));
+    private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Team team) {
+        squares.replace(new Position(File.A, rank), new Rook(team));
+        squares.replace(new Position(File.B, rank), new Knight(team));
+        squares.replace(new Position(File.C, rank), new Bishop(team));
+        squares.replace(new Position(File.D, rank), new Queen(team));
+        squares.replace(new Position(File.E, rank), new King(team));
+        squares.replace(new Position(File.F, rank), new Bishop(team));
+        squares.replace(new Position(File.G, rank), new Knight(team));
+        squares.replace(new Position(File.H, rank), new Rook(team));
     }
 
     public void start() {
-        gameStatus = GameStatus.PLAYING;
+        gameState = GameState.PLAYING;
     }
 
     public boolean isPlaying() {
-        return gameStatus == GameStatus.PLAYING;
+        return gameState == GameState.PLAYING;
     }
 
     public Board getBoard() {

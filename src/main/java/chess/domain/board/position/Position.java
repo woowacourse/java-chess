@@ -10,6 +10,7 @@ public final class Position {
     private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
     private static final int POSITION_BEGIN_INDEX = 5;
     private static final String SEPARATOR = " ";
+    private static final int ATTRIBUTE_SIZE = 2;
     private final File file;
     private final Rank rank;
 
@@ -20,7 +21,7 @@ public final class Position {
 
     public static Position from(String position) {
         String[] attribute = position.split("");
-        if (attribute.length != 2) {
+        if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
         File file = File.letterOf(attribute[0]);

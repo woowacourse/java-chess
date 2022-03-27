@@ -5,7 +5,7 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -44,22 +44,22 @@ public final class OutputView {
     }
 
     public static void printStatus(Status status) {
-        printColorsTotalScore(status.getColorsTotalScore());
-        printGameResult(status.getWinnerColor());
+        printColorsTotalScore(status.getTotalStatus());
+        printGameResult(status.getWinner());
     }
 
-    private static void printColorsTotalScore(Map<Color, Double> colorsTotalScore) {
-        for (Entry<Color, Double> entry : colorsTotalScore.entrySet()) {
+    private static void printColorsTotalScore(Map<Team, Double> colorsTotalScore) {
+        for (Entry<Team, Double> entry : colorsTotalScore.entrySet()) {
             System.out.printf(TEAM_STATUS, entry.getKey().name(), entry.getValue());
         }
     }
 
-    private static void printGameResult(Color winnerColor) {
-        if (winnerColor.equals(Color.NONE)) {
+    private static void printGameResult(Team winnerTeam) {
+        if (winnerTeam.equals(Team.NONE)) {
             System.out.println(DRAW);
             return;
         }
-        System.out.printf(WINNER_TEAM, winnerColor.name());
+        System.out.printf(WINNER_TEAM, winnerTeam.name());
     }
 
     public static void printError(String string) {

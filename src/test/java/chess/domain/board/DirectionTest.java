@@ -6,7 +6,7 @@ import chess.domain.board.position.Direction;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import chess.domain.piece.strategy.PawnMoveStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -22,10 +22,10 @@ class DirectionTest {
             "A,SEVEN,A,SIX,DOWN",
             "A,TWO,B,TWO,RIGHT",
             "B,TWO,A,TWO,LEFT",
-            "A,TWO,B,THREE,TOPRIGHT",
-            "B,TWO,A,THREE,TOPLEFT",
-            "A,SEVEN,B,SIX,DOWNRIGHT",
-            "B,SEVEN,A,SIX,DOWNLEFT",
+            "A,TWO,B,THREE,TOP_RIGHT",
+            "B,TWO,A,THREE,TOP_LEFT",
+            "A,SEVEN,B,SIX,DOWN_RIGHT",
+            "B,SEVEN,A,SIX,DOWN_LEFT",
             "B,ONE,C,THREE,TTR",
             "B,ONE,D,TWO,RRT",
             "B,TWO,D,ONE,RRD",
@@ -56,7 +56,7 @@ class DirectionTest {
     @Test
     @DisplayName("진영에 따라서 말의 이동방향이 뒤집힌다.")
     void pieceDirectionReversed() {
-        List<Direction> directions = PawnMoveStrategy.pawnDirection(Color.BLACK);
+        List<Direction> directions = PawnMoveStrategy.pawnDirection(Team.BLACK);
 
         assertThat(directions).containsAll(
                 List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT)

@@ -15,7 +15,7 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,11 +76,11 @@ class BoardTest {
     void calculateScoreOfTeam() {
         Board board = new ChessGame().getBoard();
 
-        Map<Color, Double> colorsTotalScore = board.getColorsTotalScore();
+        Map<Team, Double> colorsTotalScore = board.getTotalStatus();
 
         assertAll(
-                () -> assertThat(colorsTotalScore.get(Color.BLACK)).isEqualTo(38),
-                () -> assertThat(colorsTotalScore.get(Color.WHITE)).isEqualTo(38)
+                () -> assertThat(colorsTotalScore.get(Team.BLACK)).isEqualTo(38),
+                () -> assertThat(colorsTotalScore.get(Team.WHITE)).isEqualTo(38)
         );
     }
 }

@@ -1,4 +1,4 @@
-package chess.controller.commendlauncher;
+package chess.controller.cotroller;
 
 import static chess.domain.board.position.Position.inputToPositions;
 

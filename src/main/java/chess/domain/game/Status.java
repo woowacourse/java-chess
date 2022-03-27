@@ -1,33 +1,33 @@
 package chess.domain.game;
 
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.Map;
 
 public final class Status {
 
-    private final Map<Color, Double> colorsTotalScore;
-    private final Color winnerColor;
+    private final Map<Team, Double> TotalStatus;
+    private final Team winner;
 
-    public Status(Map<Color, Double> colorsTotalScore) {
-        this.colorsTotalScore = colorsTotalScore;
-        this.winnerColor = judgeWinner(colorsTotalScore);
+    public Status(Map<Team, Double> TotalStatus) {
+        this.TotalStatus = TotalStatus;
+        this.winner = judgeWinner(TotalStatus);
     }
 
-    private Color judgeWinner(Map<Color, Double> colorsTotalScore) {
-        if (colorsTotalScore.get(Color.BLACK) < colorsTotalScore.get(Color.WHITE)) {
-            return Color.WHITE;
+    private Team judgeWinner(Map<Team, Double> totalStatus) {
+        if (totalStatus.get(Team.BLACK) < totalStatus.get(Team.WHITE)) {
+            return Team.WHITE;
         }
-        if (colorsTotalScore.get(Color.BLACK) > colorsTotalScore.get(Color.WHITE)) {
-            return Color.BLACK;
+        if (totalStatus.get(Team.BLACK) > totalStatus.get(Team.WHITE)) {
+            return Team.BLACK;
         }
-        return Color.NONE;
+        return Team.NONE;
     }
 
-    public Map<Color, Double> getColorsTotalScore() {
-        return colorsTotalScore;
+    public Map<Team, Double> getTotalStatus() {
+        return TotalStatus;
     }
 
-    public Color getWinnerColor() {
-        return winnerColor;
+    public Team getWinner() {
+        return winner;
     }
 }

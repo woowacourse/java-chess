@@ -1,6 +1,6 @@
 package chess.domain.board.position;
 
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,13 +41,13 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_MESSAGE));
     }
 
-    public static List<Direction> royalDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, LEFT, DOWN, RIGHT,
+    public static List<Direction> royalDirection(Team team) {
+        return getAbsoluteDirections(team, List.of(TOP, LEFT, DOWN, RIGHT,
                 TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
     }
 
-    public static List<Direction> getColorDirections(Color color, List<Direction> directions) {
-        if (color == Color.WHITE) {
+    public static List<Direction> getAbsoluteDirections(Team team, List<Direction> directions) {
+        if (team == Team.WHITE) {
             return directions;
         }
         return directions.stream()

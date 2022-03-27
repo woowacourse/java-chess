@@ -15,6 +15,7 @@ public enum File {
     ;
 
     private static final String NO_NUMBER_ERROR_MESSAGE = "잘못된 위치 값 입니다.";
+
     private final String letter;
     private final int number;
 

@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import chess.domain.piece.attribute.Score;
 import java.util.EnumMap;
 import java.util.List;
@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 public final class Board {
     private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
+
     private final Map<Position, Piece> squares;
 
     public Board(Map<Position, Piece> squares) {
@@ -30,7 +31,7 @@ public final class Board {
         Piece sourcePiece = squares.get(from);
         Piece targetPiece = squares.get(to);
 
-        validateNotSameColor(sourcePiece, targetPiece);
+        validateNotSameTeam(sourcePiece, targetPiece);
 
         if (!sourcePiece.canMove(targetPiece, from, to) && targetPiece.isPiece()) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
@@ -42,12 +43,12 @@ public final class Board {
         squares.replace(from, new EmptyPiece());
     }
 
-    public boolean isSameColor(Position position, Color color) {
-        return findByPosition(position).getColor() == color;
+    public boolean isSameColor(Position position, Team team) {
+        return findByPosition(position).getColor() == team;
     }
 
-    private void validateNotSameColor(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isSameColor(targetPiece)) {
+    private void validateNotSameTeam(Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isSameTeam(targetPiece)) {
             throw new IllegalArgumentException();
         }
     }
@@ -62,22 +63,22 @@ public final class Board {
         }
     }
 
-    public Map<Color, Double> getColorsTotalScore() {
-        Map<Color, Double> totalScore = new EnumMap<>(Color.class);
-        totalScore.put(Color.WHITE, getTotalScore(Color.WHITE));
-        totalScore.put(Color.BLACK, getTotalScore(Color.BLACK));
+    public Map<Team, Double> getTotalStatus() {
+        Map<Team, Double> totalScore = new EnumMap<>(Team.class);
+        totalScore.put(Team.WHITE, getScore(Team.WHITE));
+        totalScore.put(Team.BLACK, getScore(Team.BLACK));
 
         return totalScore;
     }
 
-    private double getTotalScore(Color color) {
+    private double getScore(Team team) {
         return squares.entrySet().stream()
-                .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
+                .filter(positionPiece -> isSameColor(positionPiece.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
     }
 
-    public boolean isKingAlive(Position to) {
-        return !findByPosition(to).isKing();
+    public boolean isKing(Position to) {
+        return findByPosition(to).isKing();
     }
 }

@@ -1,11 +1,11 @@
 package chess.domain.piece.attribute;
 
-public enum Color {
+public enum Team {
     BLACK,
     WHITE,
     NONE;
 
-    public Color oppositeColor() {
+    public Team oppositeColor() {
         if (this == BLACK) {
             return WHITE;
         }

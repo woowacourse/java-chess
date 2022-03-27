@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,7 +27,7 @@ class QueenMoveStrategyTest {
     @DisplayName("퀸이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertDoesNotThrow(() -> new QueenMoveStrategy()
-                .isValidateCanMove(Color.WHITE,
+                .isValidateCanMove(Team.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 )
@@ -42,7 +42,7 @@ class QueenMoveStrategyTest {
     @DisplayName("퀸이 갈 수 있는 위치가 아니면 에러가 발생한다.")
     void canInvalidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
         assertThatThrownBy(() -> new QueenMoveStrategy()
-                .isValidateCanMove(Color.WHITE,
+                .isValidateCanMove(Team.WHITE,
                         new Position(fileA, rankA),
                         new Position(fileB, rankB)
                 ))

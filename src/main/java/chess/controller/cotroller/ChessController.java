@@ -1,4 +1,4 @@
-package chess.controller.commendlauncher;
+package chess.controller.cotroller;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
@@ -25,4 +25,3 @@ public abstract class ChessController {
 
     protected abstract void execute(ChessGame chessGame);
 }
-
