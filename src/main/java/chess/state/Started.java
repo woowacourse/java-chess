@@ -32,19 +32,10 @@ public class Started implements State {
 
     @Override
     public State move(final String[] commands) {
-        try {
-            return movePiece(commands);
-        } catch (IllegalArgumentException | IllegalStateException exception) {
-            OutputView.printErrorMessage(exception.getMessage());
-            return new Started(turn, board);
-        }
-    }
-
-    private State movePiece(final String[] commands) {
         final Position from = Position.create(commands[1]);
         final Position to = Position.create(commands[2]);
 
-        Move move = new Move(board, turn);
+        final Move move = new Move(board, turn);
         move.isMovable(from, to);
 
         if (move.isCheckmate(to)) {

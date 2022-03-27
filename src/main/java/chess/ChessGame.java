@@ -3,6 +3,7 @@ package chess;
 import chess.domain.Command;
 import chess.state.State;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessGame {
 
@@ -13,13 +14,20 @@ public class ChessGame {
     }
 
     public void run() {
-        final String[] commands = InputView.requestCommands();
-        final Command command = Command.of(commands[0]);
+        OutputView.printStartMessage();
+        do {
+            play();
+        } while (state.isNotEnded());
+    }
 
-        state = command.run(state, commands);
+    public void play() {
+        try {
+            final String[] commands = InputView.requestCommands();
+            final Command command = Command.of(commands[0]);
 
-        if (state.isNotEnded()) {
-            run();
+            state = command.run(state, commands);
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
         }
     }
 }
