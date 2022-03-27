@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.game.MoveCommand;
 import chess.game.Command;
+import chess.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Map;
 
 class RunningTest {
 
@@ -53,6 +55,15 @@ class RunningTest {
     }
 
     @Test
+    @DisplayName("한 번 움직이고 나면 화이트 턴에서 블랙 턴으로 변경된다.")
+    void blackColor() {
+        final State running = new Running();
+        running.move(MoveCommand.of("b1 a3"));
+
+        assertThat(running.getColor()).isEqualTo(Color.BLACK);
+    }
+
+    @Test
     @DisplayName("Black 차례에 White가 움직일 경우 예외를 발생한다.")
     void blackTurn() {
         final State running = new Running();
@@ -73,5 +84,12 @@ class RunningTest {
                 .hasMessage("WHITE가 둘 차례입니다.");
     }
 
+    @Test
+    @DisplayName("게임 진행중에 점수를 계산할 수 있다.")
+    void score() {
+        final State running = new Running();
+        final Map<Color, Double> score = running.score();
 
+        assertThat(score).containsValues(38.0, 38.0);
+    }
 }

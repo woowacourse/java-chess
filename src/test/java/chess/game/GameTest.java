@@ -22,6 +22,6 @@ class GameTest {
 
         assertThatThrownBy(() -> game.run("move h4 h3"))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 이미 종료되었습니다.");
+                .hasMessage("게임이 종료되었습니다.");
     }
 }

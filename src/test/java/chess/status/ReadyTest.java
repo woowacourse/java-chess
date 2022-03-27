@@ -13,7 +13,7 @@ class ReadyTest {
     @DisplayName("준비 상태에서 말을 움직일 수 없다.")
     void readyCannotMove() {
         assertThatThrownBy(() -> Ready.start(Command.MOVE))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
 

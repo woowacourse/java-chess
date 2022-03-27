@@ -1,19 +1,32 @@
 package chess.status;
 
 import chess.game.Board;
+import chess.game.Command;
 import chess.game.MoveCommand;
 import chess.piece.Color;
-import chess.game.Command;
+import java.util.Collections;
 import java.util.Map;
 
 public final class Finished implements State {
+
+    private static final String FINISHED_GAME = "게임이 종료되었습니다.";
 
     Finished() {
     }
 
     @Override
+    public void move(final MoveCommand moveCommand) {
+        throw new IllegalStateException(FINISHED_GAME);
+    }
+
+    @Override
     public State turn(final Command command) {
-        throw new IllegalStateException("게임이 이미 종료되었습니다.");
+        throw new IllegalStateException(FINISHED_GAME);
+    }
+
+    @Override
+    public Map<Color, Double> score() {
+        return Collections.emptyMap();
     }
 
     @Override
@@ -22,18 +35,8 @@ public final class Finished implements State {
     }
 
     @Override
-    public void move(final MoveCommand moveCommand) {
-        throw new IllegalStateException("게임이 종료되어 말을 움직일 수 없습니다.");
-    }
-
-    @Override
     public boolean canMove() {
         return false;
-    }
-
-    @Override
-    public Board getBoard() {
-        throw new IllegalStateException("게임이 종료되어 체스판을 불러올 수 없습니다.");
     }
 
     @Override
@@ -42,12 +45,12 @@ public final class Finished implements State {
     }
 
     @Override
-    public Color getColor() {
-        throw new IllegalStateException();
+    public Board getBoard() {
+        throw new IllegalStateException(FINISHED_GAME);
     }
 
     @Override
-    public Map<Color, Double> getStatus() {
-        throw new IllegalStateException();
+    public Color getColor() {
+        throw new IllegalStateException(FINISHED_GAME);
     }
 }

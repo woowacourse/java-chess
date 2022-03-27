@@ -17,7 +17,7 @@ class FinishedTest {
 
         assertThatThrownBy(() -> state.turn(Command.START))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 이미 종료되었습니다.");
+                .hasMessage("게임이 종료되었습니다.");
     }
 
     @Test
@@ -35,7 +35,7 @@ class FinishedTest {
 
         assertThatThrownBy(() -> state.move(MoveCommand.of("a1 a2")))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 종료되어 말을 움직일 수 없습니다.");
+                .hasMessage("게임이 종료되었습니다.");
     }
 
     @Test
@@ -46,4 +46,39 @@ class FinishedTest {
         assertThat(state.canMove()).isFalse();
     }
 
+    @Test
+    @DisplayName("게임이 종료된 상태에서 체스판을 조회할 경우 예외를 발생한다.")
+    void getBoards() {
+        final State state = new Finished();
+
+        assertThatThrownBy(state::getBoard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료되었습니다.");
+    }
+
+    @Test
+    @DisplayName("게임이 종료된 상태인지 확인한다.")
+    void endGame() {
+        final State state = new Finished();
+
+        assertThat(state.isGameEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("게임이 종료된 상태에서 색깔을 조회할 경우 예외를 발생한다.")
+    void color() {
+        final State state = new Finished();
+
+        assertThatThrownBy(state::getColor)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료되었습니다.");
+    }
+
+    @Test
+    @DisplayName("게임이 종료된 상태에서 점수를 조회할 경우 빈 결과를 반환한다.")
+    void score() {
+        final State state = new Finished();
+
+        assertThat(state.score()).isEmpty();
+    }
 }

@@ -1,6 +1,6 @@
 package chess.game;
 
-import static chess.piece.Color.NONE;
+import static chess.piece.Color.*;
 
 import chess.piece.Color;
 import chess.status.State;
@@ -30,7 +30,7 @@ public class Game {
         state = state.turn(command);
 
         if (command.isStatus()) {
-            return state.getStatus();
+            return state.score();
         }
 
         if (state.canMove()) {
@@ -38,7 +38,7 @@ public class Game {
         }
 
         if (state.isGameEnd()) {
-            winColor = state.getColor();
+            winColor = reversColor(state.getColor());
             state = state.turn(Command.END);
         }
 
@@ -61,5 +61,12 @@ public class Game {
 
     public Board getBoard() {
         return state.getBoard();
+    }
+
+    private Color reversColor(final Color color) {
+        if (color == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
     }
 }

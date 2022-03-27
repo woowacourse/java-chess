@@ -8,19 +8,19 @@ import java.util.Map;
 
 public interface State {
 
+    void move(MoveCommand moveCommand);
+
     State turn(Command command);
+
+    Map<Color, Double> score();
 
     boolean isRunning();
 
-    void move(MoveCommand moveCommand);
-
     boolean canMove();
-
-    Board getBoard();
 
     boolean isGameEnd();
 
-    Color getColor();
+    Board getBoard();
 
-    Map<Color, Double> getStatus();
+    Color getColor();
 }

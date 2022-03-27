@@ -19,6 +19,12 @@ public class Running implements State {
     }
 
     @Override
+    public void move(final MoveCommand moveCommand) {
+        board.move(moveCommand, color);
+        reverseColor(color);
+    }
+
+    @Override
     public State turn(final Command command) {
         if (command.isStart()) {
             throw new IllegalStateException("이미 게임이 시작된 상태입니다.");
@@ -31,14 +37,33 @@ public class Running implements State {
     }
 
     @Override
+    public Map<Color, Double> score() {
+        return board.getBoardScore();
+    }
+
+    @Override
     public boolean isRunning() {
         return true;
     }
 
     @Override
-    public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand, color);
-        reverseColor(this.color);
+    public boolean canMove() {
+        return true;
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        return board.isKingDead();
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
     }
 
     private void reverseColor(final Color color) {
@@ -48,31 +73,5 @@ public class Running implements State {
         if (BLACK == color) {
             this.color = WHITE;
         }
-    }
-
-    @Override
-    public boolean canMove() {
-        return true;
-    }
-
-    @Override
-    public Board getBoard() {
-        return board;
-    }
-
-    @Override
-    public boolean isGameEnd() {
-        return board.isKingDead();
-    }
-
-    @Override
-    public Color getColor() {
-        reverseColor(color);
-        return color;
-    }
-
-    @Override
-    public Map<Color, Double> getStatus() {
-        return board.getBoardScore();
     }
 }
