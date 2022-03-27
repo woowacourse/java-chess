@@ -17,7 +17,7 @@ public class Status {
         if (colorsTotalScore.get(Color.BLACK) < colorsTotalScore.get(Color.WHITE)) {
             return Color.WHITE;
         }
-        if (colorsTotalScore.get(Color.BLACK) < colorsTotalScore.get(Color.WHITE)) {
+        if (colorsTotalScore.get(Color.BLACK) > colorsTotalScore.get(Color.WHITE)) {
             return Color.BLACK;
         }
         return Color.NONE;
