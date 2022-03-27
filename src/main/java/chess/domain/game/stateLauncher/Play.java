@@ -1,53 +1,45 @@
-package chess.controller.cotroller;
-
-import static chess.domain.board.position.Position.inputToPositions;
+package chess.domain.game.stateLauncher;
 
 import chess.controller.Command;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
-import chess.view.InputView;
-import chess.view.OutputView;
 import java.util.List;
 
-public final class Play extends ChessController {
+public final class Play extends StateLauncher {
     private static final String INVALID_COMMEND_MESSAGE = "end, move 만 입력할 수 있습니다.";
 
     public Play(ChessGame chessGame) {
-        go(chessGame);
+        super(chessGame);
     }
 
     @Override
-    protected void execute(ChessGame chessGame) {
-        OutputView.printChessBoard(chessGame.getBoard());
-
-        String input = InputView.inputCommend();
+    protected StateLauncher execute(String input) {
         Command command = Command.from(input);
 
         if (command == Command.END) {
-            new End(chessGame);
-            return;
+            return new End(chessGame);
         }
         if (command == Command.MOVE) {
             move(input, chessGame);
-            playOrEnd(chessGame);
-            return;
+            return playOrEnd(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
     private void move(String input, ChessGame chessGame) {
-        List<Position> positions = inputToPositions(input);
+        List<Position> positions = Position.inputToPositions(input);
         chessGame.play(positions.get(0), positions.get(1));
     }
 
-    private void playOrEnd(ChessGame chessGame) {
+    private StateLauncher playOrEnd(ChessGame chessGame) {
         if (chessGame.isPlaying()) {
-            new Play(chessGame);
-            return;
+            return new Play(chessGame);
         }
-        new End(chessGame);
+        return new KingGo(chessGame);
     }
 
     @Override
-    public void start() {}
+    public boolean isPlay() {
+        return true;
+    }
 }

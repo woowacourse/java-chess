@@ -24,4 +24,3 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException(NO_COMMEND_MESSAGE));
     }
 }
-

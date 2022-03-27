@@ -8,19 +8,9 @@ public final class Status {
     private final Map<Team, Double> TotalStatus;
     private final Team winner;
 
-    public Status(Map<Team, Double> TotalStatus) {
+    public Status(Map<Team, Double> TotalStatus, Team team) {
         this.TotalStatus = TotalStatus;
-        this.winner = judgeWinner(TotalStatus);
-    }
-
-    private Team judgeWinner(Map<Team, Double> totalStatus) {
-        if (totalStatus.get(Team.BLACK) < totalStatus.get(Team.WHITE)) {
-            return Team.WHITE;
-        }
-        if (totalStatus.get(Team.BLACK) > totalStatus.get(Team.WHITE)) {
-            return Team.BLACK;
-        }
-        return Team.NONE;
+        this.winner = team;
     }
 
     public Map<Team, Double> getTotalStatus() {

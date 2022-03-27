@@ -13,6 +13,10 @@ public final class PawnMoveStrategy extends MoveStrategy {
     private static final String NO_MOVE_MESSAGE_TARGET = "상대방 기물을 알 수 없으면 이동할 수 없습니다.";
     private static final int INIT_MAX_DISTANCE = 2;
 
+    public static List<Direction> pawnDirection(Team team) {
+        return Direction.getAbsoluteDirections(team, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
+    }
+
     @Override
     public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = pawnDirection(team);
@@ -31,10 +35,6 @@ public final class PawnMoveStrategy extends MoveStrategy {
     @Override
     public boolean isValidateCanMove(Team team, Position from, Position to) {
         throw new IllegalArgumentException(NO_MOVE_MESSAGE_TARGET);
-    }
-
-    public static List<Direction> pawnDirection(Team team) {
-        return Direction.getAbsoluteDirections(team, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
     }
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {

@@ -9,6 +9,11 @@ public final class RookMoveStrategy extends MoveStrategy {
 
     private static final String NO_MOVE_MESSAGE = "룩이 이동할 수 없는 위치입니다.";
 
+    public static List<Direction> rookDirection(Team team) {
+        return Direction.getAbsoluteDirections(team, List.of(
+                Direction.TOP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
+    }
+
     @Override
     public boolean isValidateCanMove(Team team, Position from, Position to) {
         List<Direction> directions = rookDirection(team);
@@ -18,10 +23,5 @@ public final class RookMoveStrategy extends MoveStrategy {
         }
 
         return true;
-    }
-
-    public static List<Direction> rookDirection(Team team) {
-        return Direction.getAbsoluteDirections(team, List.of(
-                Direction.TOP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
     }
 }

@@ -24,6 +24,11 @@ public final class ChessGame {
     private GameState gameState;
     private Team turn = Team.WHITE;
 
+    public ChessGame(Board board) {
+        this.board = board;
+        this.gameState = GameState.READY;
+    }
+
     public ChessGame() {
         this.board = new Board(createBoard());
         this.gameState = GameState.READY;
@@ -38,6 +43,7 @@ public final class ChessGame {
         board.move(from, to);
         if (isKing) {
             gameState = GameState.END;
+            return;
         }
         turn = turn.oppositeColor();
     }
@@ -47,7 +53,7 @@ public final class ChessGame {
     }
 
     public Status getStatus() {
-        return new Status(board.getTotalStatus());
+        return new Status(board.getTotalStatus(), turn);
     }
 
     public boolean isKing(Position to) {
