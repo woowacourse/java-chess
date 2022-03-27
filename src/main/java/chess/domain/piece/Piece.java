@@ -18,8 +18,6 @@ public interface Piece {
 
     boolean isAt(Position position);
 
-    boolean isAtFileOrColumnIdxOf(int idx);
-
     Position position();
 
     String display();

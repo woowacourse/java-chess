@@ -46,7 +46,7 @@ public class ActivePieces {
 
     public double calculateScore(Color color) {
         double defaultScore = defaultScore(color);
-        int sameFilePawnCount = sameFilePawnCount(color);
+        int sameFilePawnCount = countAllSameFilePawns(color);
 
         return defaultScore - (sameFilePawnCount * SAME_FILE_PAWN_DISADVANTAGE);
     }
@@ -58,7 +58,7 @@ public class ActivePieces {
                 .sum();
     }
 
-    private int sameFilePawnCount(Color color) {
+    private int countAllSameFilePawns(Color color) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
                 .map(fileIdx -> countPawnsOfSameFile(color, fileIdx))
                 .filter(sameFilePawnCount -> sameFilePawnCount > 1)
@@ -69,7 +69,8 @@ public class ActivePieces {
         return (int) pieces.stream()
                 .filter(Piece::isPawn)
                 .filter(piece -> piece.hasColorOf(color))
-                .filter(piece -> piece.isAtFileOrColumnIdxOf(fileIdx))
+                .map(Piece::position)
+                .filter(position -> position.hasFileIdxOf(fileIdx))
                 .count();
     }
 

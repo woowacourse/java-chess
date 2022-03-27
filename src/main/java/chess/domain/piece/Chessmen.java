@@ -66,12 +66,6 @@ public abstract class Chessmen implements Piece {
     }
 
     @Override
-    public final boolean isAtFileOrColumnIdxOf(int idx) {
-        int fileOrColumnIdx = position.getFileIdx();
-        return fileOrColumnIdx == idx;
-    }
-
-    @Override
     public final Position position() {
         return position;
     }

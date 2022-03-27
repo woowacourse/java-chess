@@ -90,8 +90,8 @@ public class Position {
         return from + Integer.compare(to, from);
     }
 
-    public int getFileIdx() {
-        return fileIdx;
+    public boolean hasFileIdxOf(int fileIdx) {
+        return this.fileIdx == fileIdx;
     }
 
     public boolean hasRankIdxOf(int rankIdx) {
