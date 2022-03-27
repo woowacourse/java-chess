@@ -22,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Direction findValidDirection(Position current, Position target) {
+    public Direction findValidDirection(final Position current, final Position target) {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
@@ -31,19 +31,19 @@ public class King extends Piece {
         return direction;
     }
 
-    private void validateDirection(Direction direction) {
+    private void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }
     }
 
-    private void validateRange(int rowDifference, int columnDifference) {
+    private void validateRange(final int rowDifference, final int columnDifference) {
         if (isInvalidRange(rowDifference, columnDifference)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
     }
 
-    private boolean isInvalidRange(int rowDifference, int columnDifference) {
+    private boolean isInvalidRange(final int rowDifference, final int columnDifference) {
         return Math.abs(rowDifference) > POSSIBLE_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
     }
 }

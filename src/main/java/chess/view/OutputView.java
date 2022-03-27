@@ -35,10 +35,10 @@ public class OutputView {
         }
     }
 
-    private static void printRow(final Map<Position, Piece> pieces, int rawRow) {
+    private static void printRow(final Map<Position, Piece> pieces, final int rawRow) {
         for (int i = BOARD_ROW_MIN_POSITION; i <= BOARD_ROW_MAX_POSITION; i++) {
-            Position position = new Position(Column.from(i), Row.from(rawRow));
-            Piece piece = pieces.getOrDefault(position, new EmptySpace());
+            final Position position = new Position(Column.from(i), Row.from(rawRow));
+            final Piece piece = pieces.getOrDefault(position, new EmptySpace());
             System.out.print(convertToSymbol(piece));
         }
     }
@@ -51,7 +51,7 @@ public class OutputView {
         return symbol;
     }
 
-    public static void printStatus(Status status) {
+    public static void printStatus(final Status status) {
         final double blackScore = status.getBlackScore();
         final double whiteScore = status.getWhiteScore();
         if (blackScore == KING_CAUGHT_AND_LOST || whiteScore == KING_CAUGHT_AND_LOST) {
@@ -61,14 +61,14 @@ public class OutputView {
         printCurrentScore(blackScore, whiteScore);
     }
 
-    private static void printCurrentScore(double blackScore, double whiteScore) {
+    private static void printCurrentScore(final double blackScore, final double whiteScore) {
         System.out.println("현재 까지의 스코어:");
         System.out.println("=======================");
         System.out.println("블랙 스코어: " + blackScore);
         System.out.println("화이트 스코어: " + whiteScore);
     }
 
-    private static void printWinner(double blackScore) {
+    private static void printWinner(final double blackScore) {
         if (blackScore == KING_CAUGHT_AND_LOST) {
             System.out.println("화이트의 승리입니다");
         }

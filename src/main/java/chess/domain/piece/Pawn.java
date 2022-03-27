@@ -25,7 +25,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Direction findValidDirection(Position current, Position target) {
+    public Direction findValidDirection(final Position current, final Position target) {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
@@ -38,17 +38,17 @@ public class Pawn extends Piece {
         return direction;
     }
 
-    private void validateInitialRange(int rowDifference, int columnDifference) {
+    private void validateInitialRange(final int rowDifference, final int columnDifference) {
         if (isValidInitialRange(rowDifference, columnDifference)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
     }
 
-    private boolean isValidInitialRange(int rowDifference, int columnDifference) {
+    private boolean isValidInitialRange(final int rowDifference, final int columnDifference) {
         return Math.abs(rowDifference) > POSSIBLE_INITIAL_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
     }
 
-    private void validateDirection(Direction direction) {
+    private void validateDirection(final Direction direction) {
         if (isInvalidDirection(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }
@@ -61,11 +61,11 @@ public class Pawn extends Piece {
         return isInvalidWhiteDirection(direction);
     }
 
-    private boolean isInvalidBlackDirection(Direction direction) {
+    private boolean isInvalidBlackDirection(final Direction direction) {
         return !BLACK_POSSIBLE_DIRECTIONS.contains(direction);
     }
 
-    private boolean isInvalidWhiteDirection(Direction direction) {
+    private boolean isInvalidWhiteDirection(final Direction direction) {
         return !WHITE_POSSIBLE_DIRECTIONS.contains(direction);
     }
 
@@ -74,13 +74,13 @@ public class Pawn extends Piece {
                 || (row == BLACK_INITIAL_ROW && getColor() == Color.BLACK);
     }
 
-    private void validateRange(int rowDifference, int columnDifference) {
+    private void validateRange(final int rowDifference, final int columnDifference) {
         if (isInvalidRange(rowDifference, columnDifference)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
     }
 
-    private boolean isInvalidRange(int rowDifference, int columnDifference) {
+    private boolean isInvalidRange(final int rowDifference, final int columnDifference) {
         return Math.abs(rowDifference) > POSSIBLE_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
     }
 

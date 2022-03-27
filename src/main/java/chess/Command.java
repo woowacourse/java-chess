@@ -10,11 +10,11 @@ public enum Command {
 
     private final String value;
 
-    Command(String value) {
+    Command(final String value) {
         this.value = value;
     }
 
-    public static Command from(String value) {
+    public static Command from(final String value) {
         return Arrays.stream(values())
                 .filter(command -> command.value.equals(value))
                 .findFirst()

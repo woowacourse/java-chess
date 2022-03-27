@@ -21,7 +21,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Direction findValidDirection(Position current, Position target) {
+    public Direction findValidDirection(final Position current, final Position target) {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
@@ -29,7 +29,7 @@ public class Knight extends Piece {
         return direction;
     }
 
-    private void validateDirection(Direction direction) {
+    private void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

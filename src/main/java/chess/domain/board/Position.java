@@ -20,16 +20,16 @@ public class Position {
         this.row = row;
     }
 
-    public Position(String rowString, String columnString) {
+    public Position(final String rowString, final String columnString) {
         this(Column.valueOf(columnString), Row.from(rowString));
     }
 
-    public static Position from(String rawPosition) {
+    public static Position from(final String rawPosition) {
         if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
-        Row row = Row.from(rawPosition.substring(ROW_POSITION_FROM, ROW_POSITION_TO));
-        Column column = Column.valueOf(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
+        final Row row = Row.from(rawPosition.substring(ROW_POSITION_FROM, ROW_POSITION_TO));
+        final Column column = Column.valueOf(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
         return new Position(column, row);
     }
 

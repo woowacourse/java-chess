@@ -38,7 +38,7 @@ public class Board {
         return targetPiece;
     }
 
-    private void validateMoving(Position start, Position target) {
+    private void validateMoving(final Position start, final Position target) {
         final Piece movingPiece = get(start);
         if (movingPiece.isSamePiece(KNIGHT)) {
             validateKnight(start, target);
@@ -79,7 +79,7 @@ public class Board {
         }
     }
 
-    private void validatePawnDiagonalMove(Piece movingPiece, Piece targetPiece) {
+    private void validatePawnDiagonalMove(final Piece movingPiece, final Piece targetPiece) {
         if (targetPiece.equals(new EmptySpace()) || targetPiece.getColor() == movingPiece.getColor()) {
             throw new IllegalArgumentException(PAWN_CANNOT_MOVE_DIAGONAL);
         }
@@ -115,14 +115,14 @@ public class Board {
         return pieces.getOrDefault(position, new EmptySpace());
     }
 
-    public double countPiece(PieceType pieceType, Color color) {
+    public double countPiece(final PieceType pieceType, final Color color) {
         return (double) pieces.values()
                 .stream()
                 .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
                 .count();
     }
 
-    public int countDeductedPawns(Color color) {
+    public int countDeductedPawns(final Color color) {
         return (int) pieces.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSamePiece(PAWN)
@@ -131,7 +131,7 @@ public class Board {
                 .count();
     }
 
-    private boolean hasAnotherPawnInSameColumn(Map.Entry<Position, Piece> piece) {
+    private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece) {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(piece.getKey().getColumn(), row))
                 .anyMatch(position -> !piece.getKey().equals(position)

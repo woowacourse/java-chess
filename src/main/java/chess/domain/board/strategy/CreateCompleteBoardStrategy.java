@@ -44,7 +44,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
     @Override
     public Map<Position, Piece> createPieces() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        final Map<Position, Piece> pieces = new HashMap<>();
         final List<Map.Entry<Row, Color>> rowAndColors = List.of(entry(Row.SECOND, Color.WHITE),
                 entry(Row.SEVENTH, Color.BLACK));
         for (Entry<Row, Color> rowAndColor : rowAndColors) {
@@ -54,7 +54,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
         return pieces;
     }
 
-    private Map<Position, Piece> fillRowWith(Entry<Row, Color> rowAndColor) {
+    private Map<Position, Piece> fillRowWith(final Entry<Row, Color> rowAndColor) {
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
         return Arrays.stream(Column.values())

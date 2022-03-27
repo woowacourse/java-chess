@@ -45,9 +45,9 @@ public class Chess {
     }
 
     private void operateOnce() {
-        String[] args = InputView.input()
+        final String[] args = InputView.input()
                 .split(COMMAND_DISTRIBUTOR, -1);
-        Command command = Command.from(args[COMMAND]);
+        final Command command = Command.from(args[COMMAND]);
         if (command == Command.START && gameState == GameState.READY) {
             start();
             return;
@@ -76,9 +76,9 @@ public class Chess {
         if (args.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(INVALID_MOVING_COMMAND);
         }
-        Position start = Position.from(args[STARTING_POINT]);
-        Position target = Position.from(args[DESTINATION]);
-        Color currentColor = getCurrentColor();
+        final Position start = Position.from(args[STARTING_POINT]);
+        final Position target = Position.from(args[DESTINATION]);
+        final Color currentColor = getCurrentColor();
         if (board.move(start, target, currentColor).isSamePiece(PieceType.KING)) {
             gameState = GameState.END;
         }

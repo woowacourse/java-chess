@@ -15,22 +15,22 @@ public enum Column {
 
     private final int value;
 
-    Column(int value) {
+    Column(final int value) {
         this.value = value;
     }
 
-    public static Column from(int value) {
+    public static Column from(final int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
-    public int calculateDifference(Column target) {
+    public int calculateDifference(final Column target) {
         return this.value - target.value;
     }
 
-    public Column move(int columnDifference) {
+    public Column move(final int columnDifference) {
         return from(value + columnDifference);
     }
 }

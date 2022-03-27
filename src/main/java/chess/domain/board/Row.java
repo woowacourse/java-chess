@@ -15,18 +15,18 @@ public enum Row {
 
     private final int value;
 
-    Row(int value) {
+    Row(final int value) {
         this.value = value;
     }
 
-    public static Row from(int value) {
+    public static Row from(final int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
-    public static Row from(String row) {
+    public static Row from(final String row) {
         try {
             return from(Integer.parseInt(row));
         } catch (NumberFormatException e) {
@@ -34,11 +34,11 @@ public enum Row {
         }
     }
 
-    public int calculateDifference(Row target) {
+    public int calculateDifference(final Row target) {
         return this.value - target.value;
     }
 
-    public Row move(int rowDifference) {
+    public Row move(final int rowDifference) {
         return from(value + rowDifference);
     }
 }

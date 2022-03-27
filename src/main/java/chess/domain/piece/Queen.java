@@ -16,12 +16,12 @@ public class Queen extends Piece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E, NE, SE, SW, NW);
 
-    public Queen(Color color) {
+    public Queen(final Color color) {
         super(PieceType.QUEEN, color);
     }
 
     @Override
-    public Direction findValidDirection(Position current, Position target) {
+    public Direction findValidDirection(final Position current, final Position target) {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
@@ -29,7 +29,7 @@ public class Queen extends Piece {
         return direction;
     }
 
-    private void validateDirection(Direction direction) {
+    private void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

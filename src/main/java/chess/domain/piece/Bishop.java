@@ -9,6 +9,7 @@ import chess.domain.board.Position;
 import java.util.List;
 
 public class Bishop extends Piece {
+
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(NE, SE, SW, NW);
 
     public Bishop(final Color color) {

@@ -14,17 +14,17 @@ public class Status {
     private final double whiteScore;
     private final double blackScore;
 
-    public Status(Board board) {
+    public Status(final Board board) {
         whiteScore = calculateScore(board, Color.WHITE);
         blackScore = calculateScore(board, Color.BLACK);
     }
 
-    private double calculateScore(Board board, Color color) {
+    private double calculateScore(final Board board, final Color color) {
         if (board.countPiece(PieceType.KING, color) == NO_KING_EXIST) {
             return TERMINATE_GAME;
         }
 
-        double score = Arrays.stream(PieceType.values())
+        final double score = Arrays.stream(PieceType.values())
                 .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
                 .sum();
         return score - board.countDeductedPawns(color) * PAWN_MINUS_SCORE;

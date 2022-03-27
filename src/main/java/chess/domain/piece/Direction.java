@@ -26,7 +26,7 @@ public enum Direction {
     private final int row;
     private final int column;
 
-    Direction(int row, int column) {
+    Direction(final int row, final int column) {
         this.row = row;
         this.column = column;
     }
@@ -38,7 +38,7 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
-    public static Direction calculate(int rowDifference, int columnDifference) {
+    public static Direction calculate(final int rowDifference, final int columnDifference) {
         if (abs(rowDifference) == abs(columnDifference)) {
             return Direction.of(rowDifference / abs(rowDifference), columnDifference / abs(columnDifference));
         }
