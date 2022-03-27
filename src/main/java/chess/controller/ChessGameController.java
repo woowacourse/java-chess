@@ -39,23 +39,23 @@ public class ChessGameController {
     }
 
     private void progressGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
-        if (!runCurrentPlayerTurn(chessGame, whitePlayer, blackPlayer)) {
+        if (finishCurrentPlayerTurn(chessGame, whitePlayer, blackPlayer)) {
             return;
         }
-        if (!runCurrentPlayerTurn(chessGame, blackPlayer, whitePlayer)) {
+        if (finishCurrentPlayerTurn(chessGame, blackPlayer, whitePlayer)) {
             return;
         }
         progressGame(chessGame, whitePlayer, blackPlayer);
     }
 
-    private boolean runCurrentPlayerTurn(final ChessGame chessGame,
-                                         final Player currentPlayer, final Player opponentPlayer) {
+    private boolean finishCurrentPlayerTurn(final ChessGame chessGame,
+                                            final Player currentPlayer, final Player opponentPlayer) {
         final boolean isEndTurn = turn(chessGame, currentPlayer, opponentPlayer);
         if (!isRunningChessGame(isEndTurn, chessGame)) {
-            return false;
+            return true;
         }
         showMap(chessGame.createMap());
-        return true;
+        return false;
     }
 
     private boolean turn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
