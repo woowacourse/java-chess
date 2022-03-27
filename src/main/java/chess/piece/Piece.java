@@ -14,6 +14,16 @@ public abstract class Piece {
     }
 
     public Piece transfer(Position to) {
+        if (getPosition().equals(to)) {
+            throw new IllegalArgumentException("동일한 위치로 기물을 움직일 수 없습니다.");
+
+        }
+
+        if (!isPossibleMovement(to)) {
+            throw new IllegalArgumentException(String.format(
+                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
+        }
+
         return createNewPiece(to);
     }
 
@@ -63,5 +73,5 @@ public abstract class Piece {
 
     protected abstract Piece createNewPiece(Position to);
 
-    public abstract boolean isPossibleMovement(Position to);
+    protected abstract boolean isPossibleMovement(Position to);
 }

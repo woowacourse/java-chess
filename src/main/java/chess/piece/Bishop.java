@@ -14,7 +14,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isPossibleMovement(Position to) {
+    protected boolean isPossibleMovement(Position to) {
         return getPosition().isDiagonalWay(to);
     }
 }

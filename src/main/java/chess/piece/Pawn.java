@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPossibleMovement(Position to) {
+    protected boolean isPossibleMovement(Position to) {
         return getPosition().isVerticalWay(to) && isForward(getPosition(), to) && isValidDistance(getPosition(), to);
     }
 

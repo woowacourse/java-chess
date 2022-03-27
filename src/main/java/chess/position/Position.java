@@ -49,7 +49,11 @@ public class Position {
         return file.getDistance(other.file);
     }
 
-    public Collection<Position> getPath(Position to) {
+    public boolean hasLinearPath(Position to) {
+        return isVerticalWay(to) || isHorizontalWay(to) || isDiagonalWay(to);
+    }
+
+    public Collection<Position> getLinearPath(Position to) {
         if (isVerticalWay(to)) {
             return getVerticalPath(to);
         }
@@ -59,7 +63,7 @@ public class Position {
         if (isDiagonalWay(to)) {
             return getDiagonalPath(to);
         }
-        return List.of();
+        throw new IllegalArgumentException("일직선 상의 경로가 없습니다.");
     }
 
     private List<Position> getVerticalPath(Position to) {
