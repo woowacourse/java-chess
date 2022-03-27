@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import chess.dto.MoveCommandDto;
 
-public final class GameOver extends Started {
+final class GameOver extends Started {
 
-    public GameOver(ActivePieces chessmen) {
+    GameOver(ActivePieces chessmen) {
         super(chessmen);
     }
 

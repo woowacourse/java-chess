@@ -4,11 +4,11 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.MoveCommandDto;
 
-public abstract class Running extends Started {
+abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
 
-    public Running(ActivePieces chessmen) {
+    Running(ActivePieces chessmen) {
         super(chessmen);
     }
 

@@ -1,8 +1,8 @@
 package chess.domain.game;
 
-public final class BlackTurn extends Running {
+final class BlackTurn extends Running {
 
-    public BlackTurn(ActivePieces chessmen) {
+    BlackTurn(ActivePieces chessmen) {
         super(chessmen);
     }
 

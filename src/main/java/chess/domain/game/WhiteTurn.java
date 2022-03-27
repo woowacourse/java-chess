@@ -1,8 +1,8 @@
 package chess.domain.game;
 
-public final class WhiteTurn extends Running {
+final class WhiteTurn extends Running {
 
-    public WhiteTurn(ActivePieces chessmen) {
+    WhiteTurn(ActivePieces chessmen) {
         super(chessmen);
     }
 
