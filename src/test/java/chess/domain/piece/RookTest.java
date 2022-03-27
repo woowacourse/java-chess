@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.C;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,28 +17,28 @@ import chess.domain.board.Rank;
 public class RookTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"THREE:A", "THREE:H", "ONE:C", "EIGHT:C"}, delimiter = ':')
+    @CsvSource(value = {"A:THREE", "H:THREE", "C:ONE", "C:EIGHT"}, delimiter = ':')
     @DisplayName("Rook은 동일 Rank나 File에 있는 좌표로 이동할 수 있다")
-    void isMovable(Rank rank, File file) {
+    void isMovable(File file, Rank rank) {
         //given
         Rook rook = new Rook(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = rook.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ONE:A", "TWO:B", "FOUR:D"}, delimiter = ':')
+    @CsvSource(value = {"A:ONE", "B:TWO", "D:FOUR"}, delimiter = ':')
     @DisplayName("Rook은 Rank 나 File 모두 동일하지 않다면 이동이 불가하다 (false 반환)")
-    void cantMovable(Rank rank, File file) {
+    void cantMovable(File file, Rank rank) {
         //given
         Rook rook = new Rook(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = rook.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

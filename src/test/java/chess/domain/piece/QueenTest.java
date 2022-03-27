@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.C;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,29 +17,29 @@ import chess.domain.board.Rank;
 public class QueenTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"FIVE:E", "FIVE:C"}, delimiter = ':')
+    @CsvSource(value = {"E:FIVE", "C:FIVE"}, delimiter = ':')
     @DisplayName("퀸은 상하좌우, 대각선 이동만 가능하다")
-    void isMovable(Rank rank, File file) {
+    void isMovable(File file, Rank rank) {
 
         //given
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = queen.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"FIVE:D", "ONE:B"}, delimiter = ':')
+    @CsvSource(value = {"D:FIVE", "B:ONE"}, delimiter = ':')
     @DisplayName("퀸은 상하좌우, 대각선 이동이 아니면 false를 반환한다")
-    void cantMovable(Rank rank, File file) {
+    void cantMovable(File file, Rank rank) {
         //given
         Queen queen = new Queen(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = queen.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

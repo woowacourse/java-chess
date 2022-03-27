@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public Position(String rankFile) {
@@ -83,17 +83,17 @@ public class Position {
         List<Position> positions = new ArrayList<>();
 
         if (!rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(this.rank, file)));
+            fileIterator.forEachRemaining(file -> positions.add(new Position(file, this.rank)));
             return positions;
         }
 
         if (!fileIterator.hasNext()) {
-            rankIterator.forEachRemaining(rank -> positions.add(new Position(rank, this.file)));
+            rankIterator.forEachRemaining(rank -> positions.add(new Position(this.file, rank)));
             return positions;
         }
 
         while (rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(rankIterator.next(), file)));
+            fileIterator.forEachRemaining(file -> positions.add(new Position(file, rankIterator.next())));
         }
 
         return positions.stream()

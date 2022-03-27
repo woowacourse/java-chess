@@ -18,12 +18,12 @@ class BishopTest {
 
     @DisplayName("비숍은 오로지 대각선 방향으로만 이동이 가능하다")
     @ParameterizedTest
-    @CsvSource(value = {"FOUR:D", "FIVE:E", "FOUR:B", "TWO:B"}, delimiter = ':')
-    void isMovable(Rank rank, File file) {
+    @CsvSource(value = {"D:FOUR", "E:FIVE", "B:FOUR", "B:TWO"}, delimiter = ':')
+    void isMovable(File file, Rank rank) {
         //given
         Bishop bishop = new Bishop(PieceColor.WHITE);
-        Position source = new Position(THREE, C);
-        Position target = new Position(rank, file);
+        Position source = new Position(C, THREE);
+        Position target = new Position(file, rank);
 
         //when
         boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
@@ -33,13 +33,13 @@ class BishopTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"THREE:D", "FOUR:E"}, delimiter = ':')
+    @CsvSource(value = {"D:THREE", "E:FOUR"}, delimiter = ':')
     @DisplayName("비숍은 대각선이 아니면 이동이 불가능하다")
-    void cantMovable(Rank rank, File file) {
+    void cantMovable(File file, Rank rank) {
         //given
         Bishop bishop = new Bishop(PieceColor.WHITE);
-        Position source = new Position(THREE, C);
-        Position target = new Position(rank, file);
+        Position source = new Position(C, THREE);
+        Position target = new Position(file, rank);
 
         //when
         boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
@@ -47,5 +47,4 @@ class BishopTest {
         //then
         assertThat(actual).isFalse();
     }
-
 }

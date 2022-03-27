@@ -26,7 +26,7 @@ public class OutputView {
     public static void printChessGameBoard(Map<Position, Piece> piecesByPositions) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                Position searchPosition = new Position(rank, file);
+                Position searchPosition = new Position(file, rank);
                 Piece piece = piecesByPositions.get(searchPosition);
                 out.print(piece.getEmblem());
             }

@@ -51,7 +51,7 @@ public class Board {
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                result.put(new Position(rank, file), EMPTY_PIECE);
+                result.put(new Position(file, rank), EMPTY_PIECE);
             }
         }
     }
@@ -70,13 +70,13 @@ public class Board {
         ListIterator<Piece> piecesIterator = createPieceFunction.apply(color).listIterator();
 
         for (File file : File.values()) {
-            result.put(new Position(rank, file), piecesIterator.next());
+            result.put(new Position(file, rank), piecesIterator.next());
         }
     }
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(rank, file), new Pawn(color));
+            result.put(new Position(file, rank), new Pawn(color));
         }
     }
 
@@ -150,7 +150,7 @@ public class Board {
         int adjustingScore = 0;
         for (File file : File.values()) {
             long count = reverseValues().stream()
-                .map(rank -> new Position(rank, file))
+                .map(rank -> new Position(file, rank))
                 .filter(position -> values.get(position) instanceof Pawn
                     && turnDecider.isCorrectTurn(values.get(position)))
                 .count();

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.C;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +24,7 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.WHITE);
 
         //when
-        boolean actual = knight.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = knight.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -36,7 +38,7 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.WHITE);
 
         //when
-        boolean actual = knight.isMovable(new Position(Rank.THREE, File.C), new Position(rank, file), MoveType.EMPTY);
+        boolean actual = knight.isMovable(new Position(C, THREE), new Position(file, rank), MoveType.EMPTY);
 
         //then
         assertThat(actual).isFalse();
