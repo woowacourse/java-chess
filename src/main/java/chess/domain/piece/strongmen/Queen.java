@@ -23,9 +23,7 @@ public final class Queen extends Strongmen {
 
     @Override
     protected boolean canMoveTo(Position targetPosition) {
-        return position.isHorizontal(targetPosition)
-                || position.isVertical(targetPosition)
-                || position.isDiagonal(targetPosition);
+        return position.isStraightPathTo(targetPosition);
     }
 
     @Override

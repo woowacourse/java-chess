@@ -13,9 +13,9 @@ public final class Pawn extends Chessmen {
 
     private static final double DEFAULT_SCORE = 1;
 
-    private static final int MOVE_FILE_COUNT = 0;
-    private static final int FORWARD_RANK_COUNT = 1;
-    private static final int JUMP_RANK_COUNT = 2;
+    private static final int MOVE_FILE_DIFF = 0;
+    private static final int FORWARD_RANK_DIFF = 1;
+    private static final int JUMP_RANK_DIFF = 2;
 
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
@@ -45,15 +45,15 @@ public final class Pawn extends Chessmen {
 
     @Override
     protected boolean canMoveTo(Position targetPosition) {
-        if (canJump() && targetPosition == getMovablePosition(JUMP_RANK_COUNT)) {
+        if (canJump() && targetPosition == getMovablePosition(JUMP_RANK_DIFF)) {
             return true;
         }
-        Position forwardPosition = getMovablePosition(FORWARD_RANK_COUNT);
+        Position forwardPosition = getMovablePosition(FORWARD_RANK_DIFF);
         return targetPosition == forwardPosition;
     }
 
     private Position getMovablePosition(int moveRankDiff) {
-        return position.movedBy(MOVE_FILE_COUNT, moveRankDifference(moveRankDiff));
+        return position.movedBy(MOVE_FILE_DIFF, moveRankDifference(moveRankDiff));
     }
 
     private int moveRankDifference(int moveCount) {

@@ -58,7 +58,7 @@ public class Position {
         return fileDifference(toPosition) == rankDifference(toPosition);
     }
 
-    private boolean isStraightPathTo(Position targetPosition) {
+    public boolean isStraightPathTo(Position targetPosition) {
         return isHorizontal(targetPosition) || isVertical(targetPosition) || isDiagonal(targetPosition);
     }
 
