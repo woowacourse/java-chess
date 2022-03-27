@@ -1,19 +1,29 @@
 package chess.domain.board.strategy;
 
+import static chess.domain.PieceType.BISHOP;
+import static chess.domain.PieceType.KING;
+import static chess.domain.PieceType.KNIGHT;
+import static chess.domain.PieceType.QUEEN;
+import static chess.domain.PieceType.ROOK;
+import static chess.domain.board.Column.a;
+import static chess.domain.board.Column.b;
+import static chess.domain.board.Column.c;
+import static chess.domain.board.Column.d;
+import static chess.domain.board.Column.e;
+import static chess.domain.board.Column.f;
+import static chess.domain.board.Column.g;
+import static chess.domain.board.Column.h;
 import static java.util.Map.Entry;
 import static java.util.Map.entry;
 
+import chess.domain.PieceType;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.factory.PieceFactory;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +33,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
+
+    private static final List<Entry<Column, PieceType>> lineOrder =
+            List.of(entry(a, ROOK), entry(b, KNIGHT), entry(c, BISHOP),
+                    entry(d, QUEEN), entry(e, KING), entry(f, BISHOP),
+                    entry(g, KNIGHT), entry(h, ROOK));
 
     public CreateCompleteBoardStrategy() {
     }
@@ -55,18 +70,11 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     }
 
     private Map<Position, Piece> createLineOf(final Entry<Row, Color> rowAndColor) {
-        Map<Position, Piece> singleLine = new HashMap<>();
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
-        singleLine.put(new Position(row, Column.a), new Rook(color));
-        singleLine.put(new Position(row, Column.b), new Knight(color));
-        singleLine.put(new Position(row, Column.c), new Bishop(color));
-        singleLine.put(new Position(row, Column.d), new Queen(color));
-        singleLine.put(new Position(row, Column.e), new King(color));
-        singleLine.put(new Position(row, Column.f), new Bishop(color));
-        singleLine.put(new Position(row, Column.g), new Knight(color));
-        singleLine.put(new Position(row, Column.h), new Rook(color));
-        return singleLine;
+        return lineOrder.stream()
+                .collect(Collectors.toMap(entry -> new Position(row, entry.getKey()),
+                        entry -> PieceFactory.createPiece(entry.getValue(), color)));
     }
 
 }
