@@ -1,6 +1,7 @@
 package chess.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
 import chess.domain.piece.Color;
@@ -53,4 +54,11 @@ class StartedTest {
         assertThat(started.status()).isInstanceOf(Started.class);
     }
 
+    @Test
+    @DisplayName("move의 source 위치와 target 위치가 부적절한 경우 예외를 발생시킨다.")
+    void exceptionWhenIllegalPosition() {
+        String[] commands = {"move", "b3"};
+        assertThatThrownBy(() -> started.move(commands)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] source 위치와 target 위치를 입력해주세요.");
+    }
 }

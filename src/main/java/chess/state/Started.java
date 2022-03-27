@@ -10,6 +10,9 @@ import chess.view.OutputView;
 
 public class Started implements State {
 
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     private final Color turn;
     private final Board board;
 
@@ -32,8 +35,8 @@ public class Started implements State {
 
     @Override
     public State move(final String[] commands) {
-        final Position from = Position.create(commands[1]);
-        final Position to = Position.create(commands[2]);
+        final Position from = Position.create(toPosition(commands, SOURCE_INDEX));
+        final Position to = Position.create(toPosition(commands, TARGET_INDEX));
 
         final Move move = new Move(board, turn);
         move.isMovable(from, to);
@@ -42,6 +45,14 @@ public class Started implements State {
             return runCheckmate();
         }
         return runMovePiece(from, to);
+    }
+
+    private String toPosition(final String[] commands, final int index) {
+        try {
+            return commands[index];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException("[ERROR] source 위치와 target 위치를 입력해주세요.");
+        }
     }
 
     private State runCheckmate() {
