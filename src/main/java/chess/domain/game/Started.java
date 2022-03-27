@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 import chess.dto.GameResultDto;
 import java.util.List;
 
-public abstract class Started implements Game{
+public abstract class Started implements Game {
 
     protected final ActivePieces chessmen;
 
@@ -15,11 +15,11 @@ public abstract class Started implements Game{
         this.chessmen = chessmen;
     }
 
-    public List<Piece> getChessmen() {
+    public final List<Piece> getChessmen() {
         return chessmen.findAll();
     }
 
-    public GameResultDto getGameResult() {
+    public final GameResultDto getGameResult() {
         double whiteScore = chessmen.calculateScore(WHITE);
         double blackScore = chessmen.calculateScore(BLACK);
 

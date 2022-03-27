@@ -13,7 +13,7 @@ public class Running extends Started {
     }
 
     @Override
-    public Game moveChessmen(MoveCommandDto dto) {
+    public final Game moveChessmen(MoveCommandDto dto) {
         Piece sourcePiece = chessmen.findByPosition(sourcePositionOf(dto));
         Position targetPosition = targetPositionOf(dto);
 
@@ -45,7 +45,7 @@ public class Running extends Started {
     }
 
     @Override
-    public boolean isEnd() {
+    public final boolean isEnd() {
         return false;
     }
 
