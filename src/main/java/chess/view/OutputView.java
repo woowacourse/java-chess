@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -23,6 +24,14 @@ public class OutputView {
 			System.out.println();
 		}
 		System.out.println();
+	}
+
+	public void displayTurn(Color color) {
+		if (color == Color.WHITE) {
+			System.out.print("하얀색 차례 - ");
+			return;
+		}
+		System.out.print("검은색 차례 - ");
 	}
 
 	private void displayLine(Board board, int i) {

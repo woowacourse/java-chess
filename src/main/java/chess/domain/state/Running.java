@@ -25,6 +25,11 @@ public abstract class Running extends State {
 		return false;
 	}
 
+	@Override
+	public boolean isRunning() {
+		return true;
+	}
+
 	protected State checkFinished(Command command) {
 		if (command.isStart()) {
 			throw new IllegalArgumentException(CANNOT_START_AGAIN);

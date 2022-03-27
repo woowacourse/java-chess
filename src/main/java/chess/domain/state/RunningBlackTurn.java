@@ -35,4 +35,9 @@ public class RunningBlackTurn extends Running {
 		}
 		return new RunningWhiteTurn(board.getPieces());
 	}
+
+	@Override
+	public Color getColor() {
+		return Color.BLACK;
+	}
 }

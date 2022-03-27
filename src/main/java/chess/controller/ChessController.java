@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import java.util.NoSuchElementException;
 
@@ -23,6 +23,7 @@ public class ChessController {
 
 	private State processOneTurn(State state) {
 		try {
+			checkTurn(state);
 			Command command = inputView.askCommand();
 			state = state.proceed(command);
 			outputView.displayChessBoard(state.getBoard());
@@ -31,6 +32,12 @@ public class ChessController {
 			outputView.displayErrorMessage(exception);
 		}
 		return state;
+	}
+
+	private void checkTurn(State state) {
+		if (state.isRunning()) {
+			outputView.displayTurn(state.getColor());
+		}
 	}
 
 	private void checkScore(State state, Command command) {

@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
@@ -23,11 +24,15 @@ public abstract class State {
 
 	public abstract State proceed(Command command);
 
-	public Board getBoard() {
-		return board;
-	}
-
 	public abstract boolean isFinished();
 
 	public abstract ChessScore generateScore();
+
+	public abstract boolean isRunning();
+
+	public abstract Color getColor();
+
+	public Board getBoard() {
+		return board;
+	}
 }
