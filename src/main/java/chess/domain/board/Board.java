@@ -129,17 +129,24 @@ public class Board {
         double result = 0.0;
 
         for (Position column : columns) {
-            Optional<Piece> optionalPiece = findPieceBy(column);
-            if (optionalPiece.isPresent() && optionalPiece.get().isSameColor(color)) {
-                result += optionalPiece.get().getPoint();
-            }
+            result = addPoint(color, result, column);
         }
+        result = handlePawnPenalty(result, countPawn(columns, color));
+        return result;
+    }
 
-        int pawnCount = countPawn(columns, color);
+    private double addPoint(Color color, double result, Position column) {
+        Optional<Piece> optionalPiece = findPieceBy(column);
+        if (optionalPiece.isPresent() && optionalPiece.get().isSameColor(color)) {
+            result += optionalPiece.get().getPoint();
+        }
+        return result;
+    }
+
+    private double handlePawnPenalty(double result, int pawnCount) {
         if (pawnCount > 1) {
             result -= pawnCount * 0.5;
         }
-
         return result;
     }
 
