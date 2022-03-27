@@ -15,13 +15,20 @@ public class InputView {
         System.out.println("게임 종료 : end");
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
 
-        final String command = SCANNER.nextLine();
-        validateStartCommand(command);
-        return command;
+        try {
+            final String command = SCANNER.nextLine();
+            validateStartCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            OutputView.printException(e);
+            return requestStartCommand();
+        }
     }
 
     private static void validateStartCommand(final String command) {
-        if (!command.equals("start")) {
+        final boolean isStart = command.equals("start");
+
+        if (!isStart) {
             throw new IllegalArgumentException("게임 시작은 start 만 입력할 수 있습니다.");
         }
     }
@@ -38,7 +45,11 @@ public class InputView {
     }
 
     private static void validateGameCommand(final String command) {
-        if (!PATTERN.matcher(command).matches() && !command.equals("status") && !command.equals("end")) {
+        final boolean isMove = PATTERN.matcher(command).matches();
+        final boolean isStatus = command.equals("status");
+        final boolean isEnd = command.equals("end");
+
+        if (!isMove && !isStatus && !isEnd) {
             throw new IllegalArgumentException("올바르지 않은 명령어를 입력하셨습니다.");
         }
     }
