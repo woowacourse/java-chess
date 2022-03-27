@@ -9,6 +9,8 @@ public enum Command {
     MOVE("move [a-h]\\d [a-h]\\d"),
     STATUS("status");
 
+    private static final String NO_COMMEND_MESSAGE = "잘못된 커멘드 명령입니다.";
+
     private final String value;
 
     Command(String value) {
@@ -19,7 +21,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> Pattern.matches(command.value, commandText))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_COMMEND_MESSAGE));
     }
 }
 

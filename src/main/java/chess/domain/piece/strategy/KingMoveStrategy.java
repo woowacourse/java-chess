@@ -7,12 +7,14 @@ import java.util.List;
 
 public final class KingMoveStrategy extends MoveStrategy {
 
+    private static final String NO_MOVE_MESSAGE = "킹이 이동할 수 없는 위치입니다.";
+
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = Direction.royalDirection(color);
 
         if (isInvalidDistance(from, to, directions)) {
-            throw new IllegalArgumentException("킹이 이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 
         return true;

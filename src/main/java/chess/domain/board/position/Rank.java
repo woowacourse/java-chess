@@ -13,8 +13,9 @@ public enum Rank {
     SEVEN(7, "7"),
     EIGHT(8, "8");
 
-    private final int number;
+    private static final String NO_NUMBER_ERROR_MESSAGE = "잘못된 위치 값 입니다.";
 
+    private final int number;
     private final String condition;
 
     Rank(int number, String condition) {
@@ -26,14 +27,14 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
     }
 
     public static Rank conditionOf(String value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.condition.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
     }
 
     public String getCondition() {

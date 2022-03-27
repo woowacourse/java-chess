@@ -23,6 +23,8 @@ public enum Direction {
     LLT(-2, 1),
     TTL(-1, 2);
 
+    private static final String NO_DIRECTION_ERROR_MESSAGE = "해당하는 방향이 없습니다.";
+
     private final int x;
     private final int y;
 
@@ -36,7 +38,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(value -> value.isSameDirection(from, to))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 방향이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_DIRECTION_ERROR_MESSAGE));
     }
 
     public static List<Direction> royalDirection(Color color) {
@@ -66,7 +68,7 @@ public enum Direction {
                 .filter(value -> value.getX() == (-1) * x)
                 .filter(value -> value.getY() == (-1) * y)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 방향의 반대 방향이 없습니다."));
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public int getX() {

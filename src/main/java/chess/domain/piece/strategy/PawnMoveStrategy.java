@@ -8,6 +8,9 @@ import chess.domain.piece.attribute.Color;
 import java.util.List;
 
 public final class PawnMoveStrategy extends MoveStrategy {
+    private static final String NO_MOVE_MESSAGE = "폰이 이동할 수 없는 위치입니다.";
+    private static final String NO_MOVE_MESSAGE_DIAGONAL = "대각선 방향에 상대 기물이 없으면 이동할 수 없습니다.";
+    private static final String NO_MOVE_MESSAGE_TARGET = "상대방 기물을 알 수 없으면 이동할 수 없습니다.";
     private static final int INIT_MAX_DISTANCE = 2;
 
     @Override
@@ -19,7 +22,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
             validateInitDirection(color, from, to, directions);
         }
         if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeColor(color)) {
-            throw new IllegalArgumentException("대각선 방향에 상대 기물이 없으면 이동할 수 없습니다.");
+            throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
 
         return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
@@ -27,7 +30,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
-        throw new IllegalArgumentException("상대방 기물을 알 수 없으면 이동할 수 없습니다.");
+        throw new IllegalArgumentException(NO_MOVE_MESSAGE_TARGET);
     }
 
     public static List<Direction> pawnDirection(Color color) {
@@ -42,7 +45,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
         if (isInitLine(color, from) && isInitDistance(from, to, directions.get(0))) {
             return;
         }
-        throw new IllegalArgumentException("폰이 이동할 수 없는 위치입니다.");
+        throw new IllegalArgumentException(NO_MOVE_MESSAGE);
     }
 
     private boolean isInitLine(Color color, Position from) {

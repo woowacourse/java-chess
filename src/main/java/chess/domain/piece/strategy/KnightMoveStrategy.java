@@ -8,12 +8,14 @@ import java.util.List;
 
 public final class KnightMoveStrategy extends MoveStrategy {
 
+    private static final String NO_MOVE_MESSAGE = "나이트가 이동할 수 없는 위치입니다.";
+
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = knightDirection(color);
 
         if (isInvalidDistance(from, to, directions)) {
-            throw new IllegalArgumentException("나이트가 이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 
         return true;

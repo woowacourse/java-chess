@@ -7,12 +7,14 @@ import java.util.List;
 
 public final class RookMoveStrategy extends MoveStrategy {
 
+    private static final String NO_MOVE_MESSAGE = "룩이 이동할 수 없는 위치입니다.";
+
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {
         List<Direction> directions = rookDirection(color);
 
         if (isInvalidDirection(from, to, directions)) {
-            throw new IllegalArgumentException("룩이 이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 
         return true;

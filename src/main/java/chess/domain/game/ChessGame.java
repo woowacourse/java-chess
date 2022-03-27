@@ -18,6 +18,7 @@ import java.util.Map;
 
 public final class ChessGame {
 
+    private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
     private final Board board;
     private GameStatus gameStatus;
     private Color turn = Color.WHITE;
@@ -29,7 +30,7 @@ public final class ChessGame {
 
     public void play(Position from, Position to) {
         if (!isThatTurn(from)) {
-            throw new IllegalArgumentException("현재 진영에 속해있지 않는 위치입니다.");
+            throw new IllegalArgumentException(NO_TURN_MESSAGE);
         }
 
         boolean isToNotKing = isKingAlive(to);

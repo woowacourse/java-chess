@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public final class Board {
+    private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
     private final Map<Position, Piece> squares;
 
     public Board(Map<Position, Piece> squares) {
@@ -32,7 +33,7 @@ public final class Board {
         validateNotSameColor(sourcePiece, targetPiece);
 
         if (!sourcePiece.canMove(targetPiece, from, to) && targetPiece.isPiece()) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
 
         validateNotHurdle(from, to);
@@ -56,7 +57,7 @@ public final class Board {
 
         for (Position position : route) {
             if (findByPosition(position).isPiece()) {
-                throw new IllegalArgumentException("이동할 수 없다.");
+                throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
             }
         }
     }

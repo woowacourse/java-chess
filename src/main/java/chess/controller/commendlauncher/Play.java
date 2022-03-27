@@ -10,6 +10,7 @@ import chess.view.OutputView;
 import java.util.List;
 
 public final class Play extends CommendLauncher {
+    private static final String INVALID_COMMEND_MESSAGE = "end, move 만 입력할 수 있습니다.";
     ChessGame chessGame;
 
     public Play(ChessGame chessGame) {
@@ -33,7 +34,7 @@ public final class Play extends CommendLauncher {
             playOrEnd(chessGame);
             return;
         }
-        throw new IllegalArgumentException("end, move 만 입력할 수 있습니다.");
+        throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
     private void move(String input, ChessGame chessGame) {

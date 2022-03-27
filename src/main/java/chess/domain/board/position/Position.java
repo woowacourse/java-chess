@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 public final class Position {
 
+    private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
+    private static final int POSITION_BEGIN_INDEX = 5;
+    private static final String SEPARATOR = " ";
     private final File file;
     private final Rank rank;
 
@@ -18,7 +21,7 @@ public final class Position {
     public static Position from(String position) {
         String[] attribute = position.split("");
         if (attribute.length != 2) {
-            throw new IllegalArgumentException("잘못된 위치 값 입니다.");
+            throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
         File file = File.letterOf(attribute[0]);
         Rank rank = Rank.conditionOf(attribute[1]);
@@ -27,8 +30,8 @@ public final class Position {
     }
 
     public static List<Position> inputToPositions(String input) {
-        return Arrays.stream(input.substring(5)
-                        .split(" "))
+        return Arrays.stream(input.substring(POSITION_BEGIN_INDEX)
+                        .split(SEPARATOR))
                 .map(Position::from)
                 .collect(Collectors.toList());
     }

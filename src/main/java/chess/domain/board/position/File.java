@@ -14,6 +14,7 @@ public enum File {
     H("h", 8),
     ;
 
+    private static final String NO_NUMBER_ERROR_MESSAGE = "잘못된 위치 값 입니다.";
     private final String letter;
     private final int number;
 
@@ -26,7 +27,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
 
     }
 
@@ -34,7 +35,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.letter.equals(letter))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
     }
 
     public int getNumber() {

@@ -5,6 +5,7 @@ import chess.domain.game.ChessGame;
 import chess.view.OutputView;
 
 public final class End extends CommendLauncher {
+    private static final String INVALID_COMMEND_MESSAGE = "status 를 입력하세요.";
     ChessGame chessGame;
 
     public End(ChessGame chessGame) {
@@ -19,6 +20,6 @@ public final class End extends CommendLauncher {
             OutputView.printStatus(chessGame.getStatus());
             return;
         }
-        throw new IllegalArgumentException("status 를 입력하세요.");
+        throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 }
