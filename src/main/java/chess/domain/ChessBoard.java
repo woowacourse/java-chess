@@ -1,13 +1,12 @@
 package chess.domain;
 
 import chess.domain.chessPiece.*;
+import chess.domain.game.GameStatus;
+import chess.domain.game.Score;
 import chess.domain.position.Direction;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
