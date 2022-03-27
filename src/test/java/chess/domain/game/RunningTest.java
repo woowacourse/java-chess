@@ -36,12 +36,12 @@ public class RunningTest {
 
         @Test
         void 체스말_이동() {
-            game.moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, "d4"));
+            Game moveQueenGame = game.moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, "d4"));
 
             Piece whiteQueen = new Queen(WHITE);
             whiteQueen.move(Position.of("d4"), CLEAR_PATH_STRATEGY);
 
-            List<Piece> actual = game.getChessmen();
+            List<Piece> actual = moveQueenGame.getChessmen();
             List<Piece> expected = List.of(whiteQueen, new Queen(BLACK));
 
             assertThat(actual).isEqualTo(expected);
@@ -49,12 +49,12 @@ public class RunningTest {
 
         @Test
         void 체스말로_다른_체스말_공격() {
-            game.moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, BLACK_QUEEN_POSITION));
+            Game killQueenGame = game.moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, BLACK_QUEEN_POSITION));
 
             Piece aliveWhiteQueen = new Queen(WHITE);
             aliveWhiteQueen.move(Position.of(BLACK_QUEEN_POSITION), CLEAR_PATH_STRATEGY);
 
-            List<Piece> actual = game.getChessmen();
+            List<Piece> actual = killQueenGame.getChessmen();
             List<Piece> expected = List.of(aliveWhiteQueen);
 
             assertThat(actual).isEqualTo(expected);
@@ -82,19 +82,19 @@ public class RunningTest {
 
         @Test
         void 체스말_이동_후_킹이_2개면_게임진행() {
-            game.moveChessmen(new MoveCommandDto(BLACK_KING_POSITION, "d8"));
+            Game aliveKingsGame = game.moveChessmen(new MoveCommandDto(BLACK_KING_POSITION, "d8"));
 
-            boolean actual = game.isEnd();
+            boolean actual = aliveKingsGame.isEnd();
 
             assertThat(actual).isFalse();
         }
 
         @Test
         void 체스말_이동_후_킹이_2개_미만이면_게임종료() {
-            Game moveKingGame = game.moveChessmen(new MoveCommandDto(BLACK_KING_POSITION, "d8"));
-            Game killKingGame = moveKingGame.moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, "d8"));
+            Game killedKingGame = game.moveChessmen(new MoveCommandDto(BLACK_KING_POSITION, "d8"))
+                    .moveChessmen(new MoveCommandDto(WHITE_QUEEN_POSITION, "d8"));
 
-            boolean actual = killKingGame.isEnd();
+            boolean actual = killedKingGame.isEnd();
 
             assertThat(actual).isTrue();
         }
