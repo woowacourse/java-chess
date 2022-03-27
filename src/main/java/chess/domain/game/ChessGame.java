@@ -28,7 +28,7 @@ public class ChessGame {
 	public boolean isFinished() {
 		return state.isFinished();
 	}
-
+	
 	public Map<Coordinate, Piece> getValue() {
 		return state.getValue();
 	}

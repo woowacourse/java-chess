@@ -6,7 +6,8 @@ public enum Function {
 
 	START("start"),
 	END("end"),
-	MOVE("move");
+	MOVE("move"),
+	STATUS("status");
 
 	private final String value;
 

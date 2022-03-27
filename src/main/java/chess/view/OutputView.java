@@ -6,6 +6,7 @@ import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 public class OutputView {
 
@@ -26,5 +27,9 @@ public class OutputView {
 			}
 			System.out.println();
 		}
+	}
+	
+	public static void printStatus(Map<Team, Double> status) {
+		status.forEach((team, count) -> System.out.println(team + " : " + count + "점"));
 	}
 }
