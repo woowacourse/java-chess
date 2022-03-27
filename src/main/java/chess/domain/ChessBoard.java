@@ -93,7 +93,7 @@ public class ChessBoard {
     }
 
     private boolean isStraight(Position from, Position to) {
-        return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
+        return to.findDirection(from).equals(Direction.N) || to.findDirection(from).equals(Direction.S);
     }
 
     private void checkMove(Position from, Position to, ChessPiece me) {
@@ -196,6 +196,7 @@ public class ChessBoard {
 
     private double sumPawnScore(double pawnCount) {
         if (pawnCount == 1) {
+            //TODO: 상수화
             return 1;
         }
         return pawnCount * 0.5;

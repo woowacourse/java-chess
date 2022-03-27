@@ -11,10 +11,10 @@ public enum GameStatus {
     }
 
     public boolean isPlaying() {
-        return this == PLAYING;
+        return this.equals(PLAYING);
     }
 
     public boolean isEnd() {
-        return this == END;
+        return this.equals(END);
     }
 }

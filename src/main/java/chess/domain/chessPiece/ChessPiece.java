@@ -50,7 +50,7 @@ public abstract class ChessPiece {
     }
 
     public boolean isSameColor(ChessPiece chessPiece) {
-        return this.color == chessPiece.color;
+        return this.color.equals(chessPiece.color);
     }
 
     public boolean isSameColor(Color color) {
@@ -58,12 +58,11 @@ public abstract class ChessPiece {
     }
 
     public boolean isEnemyTurn(Color color) {
-        return this.color != color;
+        return !this.color.equals(color);
     }
 
     public double getValue() {
         return value;
     }
 
-    ;
 }
