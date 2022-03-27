@@ -11,11 +11,11 @@ import chess.domain.piece.state.started.StartedBishop;
 
 public class PieceTest {
     @Test
-    @DisplayName("체스말은 생성될때 색, 이름, 상태을 가진다.")
+    @DisplayName("체스말은 생성될때 색, 이름, 점수, 상태을 가진다.")
     void pieceTest() {
         assertThatCode(() -> mock(Piece.class,
             withSettings()
-                .useConstructor(Color.Black, "k", new StartedBishop())
+                .useConstructor(Color.Black, "k", 1.0, new StartedBishop())
                 .defaultAnswer(CALLS_REAL_METHODS)))
             .doesNotThrowAnyException();
     }
