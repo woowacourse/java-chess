@@ -14,15 +14,19 @@ public abstract class Piece {
     public static final int ONE_STEP = 1;
     public static final int TWO_STEP = 2;
 
-    private final String name;
     protected final Color color;
+    private final String name;
+    private final double score;
 
-    protected Piece(final Color color, final String name) {
+    protected Piece(final Color color, final String name, final double score) {
         this.color = color;
         this.name = name;
+        this.score = score;
     }
 
     public abstract void checkPieceMoveRange(final Board board, final Position from, final Position to);
+
+    public abstract boolean isPawn();
 
     public abstract boolean isKing();
 
@@ -70,6 +74,10 @@ public abstract class Piece {
             return name.toUpperCase(Locale.ROOT);
         }
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override

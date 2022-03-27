@@ -31,6 +31,11 @@ public class Output {
         }
     }
 
+    public static void printScore(final String colorName, final double score) {
+        System.out.printf("%s의 점수는 %.1f점 입니다.", colorName, score);
+        System.out.println();
+    }
+
     private static void printBoard(final Rank rank, final Map<Position, Piece> board) {
         for (final File file : File.sorted()) {
             printBoard(file, rank, board);

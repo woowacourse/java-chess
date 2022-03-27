@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.position.Position;
 
+import java.util.function.BiConsumer;
+
 public class Ready extends State {
 
     public Ready() {
@@ -30,11 +32,11 @@ public class Ready extends State {
     }
 
     @Override
-    public void status() {
+    public void status(final BiConsumer<String, Double> printScore) {
         if (board.isInitialized(new BoardInitializer())) {
             throw new IllegalStateException("게임을 시작해주세요.");
         }
-//        board.showStatus();
+        board.showStatus(printScore);
     }
 
     @Override

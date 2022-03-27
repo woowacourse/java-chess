@@ -6,9 +6,10 @@ import chess.domain.position.Position;
 public class Rook extends Piece {
 
     private static final String NAME = "r";
+    private static final double SCORE = 5;
 
     public Rook(final Color color) {
-        super(color, NAME);
+        super(color, NAME, SCORE);
     }
 
     @Override
@@ -18,6 +19,11 @@ public class Rook extends Piece {
             return;
         }
         throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
     @Override

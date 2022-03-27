@@ -1,11 +1,11 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Initializable;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public abstract class State {
 
@@ -17,7 +17,7 @@ public abstract class State {
 
     public abstract State end();
 
-    public abstract void status();
+    public abstract void status(final BiConsumer<String, Double> printScore);
 
     public abstract boolean isRunning();
 

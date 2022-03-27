@@ -6,9 +6,10 @@ import chess.domain.position.Position;
 public class King extends Piece {
 
     private static final String NAME = "k";
+    private static final double SCORE = 0;
 
     public King(final Color color) {
-        super(color, NAME);
+        super(color, NAME, SCORE);
     }
 
     @Override
@@ -17,6 +18,11 @@ public class King extends Piece {
             return;
         }
         throw new IllegalArgumentException("킹은 모든 방향으로 한 칸 이동 가능합니다.");
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
     @Override

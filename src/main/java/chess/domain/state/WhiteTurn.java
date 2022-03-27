@@ -22,9 +22,4 @@ public class WhiteTurn extends Turn {
         }
         return new BlackTurn(board);
     }
-
-    @Override
-    public void status() {
-        throw new IllegalStateException("게임이 종료된 이후 점수 조회가 가능합니다.");
-    }
 }

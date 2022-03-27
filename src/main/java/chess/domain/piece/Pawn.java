@@ -7,13 +7,14 @@ import chess.domain.position.Rank;
 public class Pawn extends Piece {
 
     private static final String NAME = "p";
+    private static final double SCORE = 1;
     private static final int WHITE_INIT_RANK = 2;
     private static final int BLACK_INIT_RANK = 7;
     private static final int DEFAULT_FORWARD = 1;
     private static final int INIT_FORWARD = 2;
 
     public Pawn(final Color color) {
-        super(color, NAME);
+        super(color, NAME, SCORE);
     }
 
     @Override
@@ -22,6 +23,11 @@ public class Pawn extends Piece {
             return;
         }
         throw new IllegalArgumentException("폰은 앞으로 한 칸만 이동할 수 있습니다.");
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

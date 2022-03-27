@@ -7,11 +7,16 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class Board {
 
     private static final int NEXT = 1;
+
     private final Map<Position, Piece> value;
 
     public Board(final Initializable initializable) {
@@ -26,6 +31,14 @@ public class Board {
         final Piece piece = getPiece(from);
         piece.checkPieceMoveRange(this, from, to);
         value.put(to, value.remove(from));
+    }
+
+    public void showStatus(final BiConsumer<String, Double> printScore) {
+        double whiteScore = calculateScore(Color.WHITE);
+        double blackScore = calculateScore(Color.BLACK);
+
+        printScore.accept("흰색", whiteScore);
+        printScore.accept("검은색", blackScore);
     }
 
     public boolean isMatchedColor(final Position target, final Color color) {
@@ -62,6 +75,41 @@ public class Board {
         if (hasPiece(to)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
+    }
+
+    private double calculateScore(final Color color) {
+        double pawnScore = calculateScorePawn(color);
+        double otherScore = calculateScoreOtherPiece(color);
+
+        return pawnScore + otherScore;
+    }
+
+    private double calculateScorePawn(final Color color) {
+        return value.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .filter(entry -> entry.getValue().isPawn())
+                .map(entry -> getPawnScore(entry.getKey(), entry.getValue(), color))
+                .reduce(0.0, Double::sum);
+    }
+
+    private double getPawnScore(final Position position, final Piece pawn, final Color color) {
+        long pawnCountInFile = value.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getKey().getFile().equals(position.getFile()))
+                .count();
+        if (pawnCountInFile > 1) {
+            return pawn.getScore() / 2;
+        }
+        return pawn.getScore();
+    }
+
+    private double calculateScoreOtherPiece(final Color color) {
+        return value.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .filter(piece -> !piece.isPawn())
+                .map(Piece::getScore)
+                .reduce(0.0, Double::sum);
     }
 
     private void checkRisingDiagonal(final Position from, final Position to) {

@@ -16,7 +16,7 @@ public class ChessController {
 
         ChessGame chessGame = new ChessGame();
 
-        while (chessGame.isRunning()) {
+        while (!chessGame.isEnded()) {
             command(chessGame);
         }
     }
@@ -31,7 +31,7 @@ public class ChessController {
     }
 
     private void printBoard(final ChessGame chessGame) {
-        if (chessGame.isRunning()) {
+        if (!chessGame.isEnded()) {
             Output.printBoard(chessGame.getBoard());
         }
     }

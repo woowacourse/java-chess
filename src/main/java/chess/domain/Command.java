@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.view.Output;
+
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
@@ -11,7 +13,7 @@ public enum Command {
         checkMoveCommandLength(input);
         chessGame.move(input);
     }),
-    STATUS("status", (input, chessGame) -> chessGame.status()),
+    STATUS("status", (input, chessGame) -> chessGame.status(Output::printScore)),
     ;
 
     private static final int COMMAND_LOCATION = 0;
