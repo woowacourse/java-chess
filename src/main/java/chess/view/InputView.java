@@ -11,12 +11,14 @@ public class InputView {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
+    private static final String STATUS = "status";
     private static final String SPLIT_REGEX = " ";
     private static final String ERROR_MESSAGE_COMMAND = "[ERROR] 그런 명령어는 없는뎅...ㅎ;;";
     private static final String ERROR_MESSAGE_LACK_INFORMATION = "[ERROR] 부족해잉~ 더줘잉~";
     private static final String ERROR_MESSAGE_POSITION_FORMAT = "[ERROR] 위치의 포맷을 지켜서 입력하세요.";
     private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??";
     private static final String ERROR_MESSAGE_TMI = "[ERROR] 투 머치 인포메이션~ㅋ";
+    private static final String MESSAGE_GAME_END = "king 잡았다!";
 
     private static final int COMMAND_INDEX = 0;
     private static final int COMMAND_MOVE_SOURCE_INDEX = 1;
@@ -29,6 +31,7 @@ public class InputView {
         try {
             String command = getCommands().get(COMMAND_INDEX);
             checkImpossibleCommand(MOVE, command);
+            checkImpossibleCommand(STATUS,command);
             return START.equals(command);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -39,12 +42,28 @@ public class InputView {
     public static List<String> requireCommand() {
         try {
             List<String> commands = getCommands();
-            checkImpossibleCommand(START, commands.get(COMMAND_INDEX));
+            String command = commands.get(COMMAND_INDEX);
+            checkImpossibleCommand(START, command);
+            checkImpossibleCommand(STATUS,command);
+
             commands.remove(COMMAND_INDEX);
             return commands;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return requireCommand();
+        }
+    }
+
+    public static boolean isGameEnd() {
+        System.out.println(MESSAGE_GAME_END);
+        try {
+            String command = getCommands().get(COMMAND_INDEX);
+            checkImpossibleCommand(START, command);
+            checkImpossibleCommand(MOVE, command);
+            return END.equals(command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return isGameEnd();
         }
     }
 
@@ -70,7 +89,8 @@ public class InputView {
     private static void validateCommands(List<String> commands) {
         String command = commands.get(COMMAND_INDEX);
 
-        if (!START.equals(command) && !END.equals(command) && !MOVE.equals(command)) {
+        if (!START.equals(command) && !END.equals(command)
+                && !MOVE.equals(command)&&!STATUS.equals(command)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_COMMAND);
         }
 
@@ -78,7 +98,8 @@ public class InputView {
     }
 
     private static void validateCommand(List<String> commands, String command) {
-        if (START.equals(command) || END.equals(command)) {
+        if (START.equals(command) || END.equals(command)
+                || STATUS.equals(command)) {
             validateInformationCount(commands, COMMAND_NOT_MOVE_FORMAT_SIZE);
         }
 

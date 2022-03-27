@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.Board;
+import chess.domain.Status;
+import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -24,6 +26,14 @@ public class ChessGame {
             movePiece(board, squares);
             squares = checkGameOver(board);
         }
+
+        if(InputView.isGameEnd()){
+            System.exit(0);
+        }
+
+        Status status = new Status(board);
+        OutputView.showScore(status,Color.WHITE);
+        OutputView.showScore(status,Color.BLACK);
     }
 
     private List<String> checkGameOver(Board board) {
