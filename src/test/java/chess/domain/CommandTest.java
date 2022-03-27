@@ -27,6 +27,12 @@ public class CommandTest {
     }
 
     @Test
+    @DisplayName("status Command가 존재하는지 확인한다.")
+    void status() {
+        assertThat(Command.of("status")).isEqualTo(Command.STATUS);
+    }
+
+    @Test
     @DisplayName("존재하지 않는 Command를 입력했을경우 예외를 발생시킨다.")
     void checkNonCommandException() {
         assertThatThrownBy(() -> Command.of("go"))
