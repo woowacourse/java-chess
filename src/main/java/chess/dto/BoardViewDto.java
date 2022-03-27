@@ -3,10 +3,10 @@ package chess.dto;
 import static chess.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 
-import chess.domain.game.ActivePieces;
+import chess.domain.piece.ActivePieces;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.piece.Position;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

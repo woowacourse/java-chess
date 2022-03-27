@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.piece.ActivePieces;
 import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
 

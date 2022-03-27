@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.strategy.OccupiedChecker;
 
 public interface Piece {

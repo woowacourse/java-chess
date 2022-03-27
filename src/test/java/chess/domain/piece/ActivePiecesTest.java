@@ -1,14 +1,11 @@
-package chess.domain.game;
+package chess.domain.piece;
 
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
-import chess.domain.position.Position;
+import chess.domain.piece.strongmen.King;
+import chess.domain.piece.strongmen.Rook;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

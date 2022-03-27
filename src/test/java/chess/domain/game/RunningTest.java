@@ -5,10 +5,11 @@ import static chess.domain.piece.Color.WHITE;
 import static chess.fixture.StrategyFixture.CLEAR_PATH_STRATEGY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.King;
+import chess.domain.piece.ActivePieces;
+import chess.domain.piece.strongmen.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.position.Position;
+import chess.domain.piece.strongmen.Queen;
+import chess.domain.piece.Position;
 import chess.dto.MoveCommandDto;
 import java.util.ArrayList;
 import java.util.List;

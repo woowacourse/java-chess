@@ -1,8 +1,10 @@
-package chess.domain.piece;
+package chess.domain.piece.strongmen;
 
 import static chess.domain.piece.Color.BLACK;
 
-import chess.domain.position.Position;
+import chess.domain.piece.Chessmen;
+import chess.domain.piece.Color;
+import chess.domain.piece.Position;
 import chess.strategy.OccupiedChecker;
 
 public abstract class Strongmen extends Chessmen {

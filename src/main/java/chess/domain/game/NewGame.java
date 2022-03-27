@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import static chess.util.PieceGeneratorUtil.initAllChessmen;
 
+import chess.domain.piece.ActivePieces;
 import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
 

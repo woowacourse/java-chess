@@ -1,6 +1,6 @@
 package chess.strategy;
 
-import chess.domain.position.Position;
+import chess.domain.piece.Position;
 
 @FunctionalInterface
 public interface OccupiedChecker {

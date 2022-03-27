@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.strongmen;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
@@ -6,7 +6,7 @@ import static chess.fixture.StrategyFixture.CLEAR_PATH_STRATEGY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-import chess.domain.position.Position;
+import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,9 @@
 package chess.domain.game;
 
+import chess.domain.piece.ActivePieces;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.piece.Position;
 import chess.dto.MoveCommandDto;
 
 abstract class Running extends Started {

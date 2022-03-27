@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import static chess.domain.piece.Color.WHITE;
 
+import chess.domain.piece.ActivePieces;
 import chess.domain.piece.Color;
 
 final class WhiteTurn extends Running {

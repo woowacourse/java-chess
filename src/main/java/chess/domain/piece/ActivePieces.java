@@ -1,10 +1,7 @@
-package chess.domain.game;
+package chess.domain.piece;
 
 import static chess.util.PositionUtil.FILES_TOTAL_SIZE;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

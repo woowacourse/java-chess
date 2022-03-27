@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import static chess.domain.piece.Color.BLACK;
 
+import chess.domain.piece.ActivePieces;
 import chess.domain.piece.Color;
 
 final class BlackTurn extends Running {
