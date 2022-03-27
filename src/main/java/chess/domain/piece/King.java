@@ -2,9 +2,10 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
-import chess.domain.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.direction.strategy.KingDirectionStrategy;
+import chess.domain.position.Position;
 
 public class King extends Piece {
 
@@ -17,8 +18,11 @@ public class King extends Piece {
 	private static final King whiteKing = new King(Color.WHITE);
 	private static final King blackKing = new King(Color.BLACK);
 
+	private final DirectionStrategy directionStrategy;
+
 	private King(Color color) {
 		super(color);
+		directionStrategy = new KingDirectionStrategy();
 	}
 
 	public static King createWhite() {
@@ -27,6 +31,19 @@ public class King extends Piece {
 
 	public static King createBlack() {
 		return blackKing;
+	}
+
+	@Override
+	public Direction matchDirection(Position from, Position to) {
+		Optional<? extends Direction> findDirection = directionStrategy.find(from, to);
+		if (findDirection.isEmpty()) {
+			throw new IllegalArgumentException(INVALID_DIRECTION_KING);
+		}
+		Direction direction = findDirection.get();
+		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
+			return direction;
+		}
+		throw new IllegalArgumentException(INVALID_DISTANCE_KING);
 	}
 
 	@Override
@@ -42,18 +59,5 @@ public class King extends Piece {
 	@Override
 	public double getScore() {
 		return KING_SCORE;
-	}
-
-	@Override
-	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> findDirection = new KingDirectionStrategy().find(from, to);
-		if (findDirection.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_DIRECTION_KING);
-		}
-		Direction direction = findDirection.get();
-		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
-			return direction;
-		}
-		throw new IllegalArgumentException(INVALID_DISTANCE_KING);
 	}
 }

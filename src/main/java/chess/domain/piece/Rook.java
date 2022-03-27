@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
+import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.RookDirectionStrategy;
@@ -14,8 +15,11 @@ public class Rook extends Piece {
 	private static final Rook whiteRook = new Rook(Color.WHITE);
 	private static final Rook blackRook = new Rook(Color.BLACK);
 
+	private final DirectionStrategy directionStrategy;
+
 	private Rook(Color color) {
 		super(color);
+		directionStrategy = new RookDirectionStrategy();
 	}
 
 	public static Rook createWhite() {
@@ -28,7 +32,7 @@ public class Rook extends Piece {
 
 	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> direction = new RookDirectionStrategy().find(from, to);
+		Optional<? extends Direction> direction = directionStrategy.find(from, to);
 		if (direction.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_DIRECTION_ROOK);
 		}

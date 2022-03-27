@@ -20,11 +20,14 @@ public class Pawn extends Piece {
 	private static final int PAWN_INITIAL_DISTANCE = 2;
 	private static final int PAWN_BASIC_DISTANCE = 1;
 
-	private static final Pawn whitePawn = new Pawn(Color.WHITE);
-	private static final Pawn blackPawn = new Pawn(Color.BLACK);
+	private static final Pawn whitePawn = new Pawn(Color.WHITE, new WhitePawnDirectionStrategy());
+	private static final Pawn blackPawn = new Pawn(Color.BLACK, new BlackPawnDirectionStrategy());
 
-	public Pawn(Color color) {
+	private final DirectionStrategy directionStrategy;
+
+	public Pawn(Color color, DirectionStrategy directionStrategy) {
 		super(color);
+		this.directionStrategy = directionStrategy;
 	}
 
 	public static Pawn createWhite() {
@@ -36,23 +39,8 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean isPawn() {
-		return true;
-	}
-
-	@Override
-	public boolean isKing() {
-		return false;
-	}
-
-	@Override
-	public double getScore() {
-		return PAWN_SCORE;
-	}
-
-	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> findDirection = findStrategy().find(from, to);
+		Optional<? extends Direction> findDirection = directionStrategy.find(from, to);
 		if (findDirection.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_DIRECTION_PAWN);
 		}
@@ -77,10 +65,18 @@ public class Pawn extends Piece {
 		return from.canReach(to, direction.getUnitPosition(), PAWN_BASIC_DISTANCE);
 	}
 
-	private DirectionStrategy findStrategy() {
-		if (this.color == Color.WHITE) {
-			return new WhitePawnDirectionStrategy();
-		}
-		return new BlackPawnDirectionStrategy();
+	@Override
+	public boolean isPawn() {
+		return true;
+	}
+
+	@Override
+	public boolean isKing() {
+		return false;
+	}
+
+	@Override
+	public double getScore() {
+		return PAWN_SCORE;
 	}
 }

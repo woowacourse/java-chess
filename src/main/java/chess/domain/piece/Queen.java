@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Optional;
 
+import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.QueenDirectionStrategy;
@@ -14,8 +15,11 @@ public class Queen extends Piece {
 	private static final Queen whiteQueen = new Queen(Color.WHITE);
 	private static final Queen blackQueen = new Queen(Color.BLACK);
 
+	private final DirectionStrategy directionStrategy;
+
 	private Queen(Color color) {
 		super(color);
+		directionStrategy = new QueenDirectionStrategy();
 	}
 
 	public static Queen createWhite() {
@@ -28,7 +32,7 @@ public class Queen extends Piece {
 
 	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> direction = new QueenDirectionStrategy().find(from, to);
+		Optional<? extends Direction> direction = directionStrategy.find(from, to);
 		if (direction.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_DIRECTION_QUEEN);
 		}
