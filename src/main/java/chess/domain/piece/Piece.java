@@ -5,6 +5,8 @@ import chess.domain.direction.Direction;
 
 public abstract class Piece {
 
+	public static final double PAWN_LOW_SCORE = 0.5;
+
 	protected final Color color;
 
 	protected Piece(Color color) {

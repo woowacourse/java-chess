@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
@@ -24,6 +25,8 @@ public class Board {
 	private static final String PAWN_ONLY_DIAGONAL_CATCH = "폰은 본인 진행 방향 대각선에 있는 적만 잡을 수 있습니다.";
 	private static final String CANNOT_MOVE_DIAGONAL_NOT_ENEMY = "폰은 적이 없으면 대각선으로 갈 수 없습니다.";
 
+	private static final int CRITERIA_COUNT_OF_PAWN_SCORE = 1;
+
 	private final Map<Position, Piece> pieces;
 
 	public Board() {
@@ -32,6 +35,10 @@ public class Board {
 
 	public Board(Map<Position, Piece> pieces) {
 		this.pieces = new HashMap<>(pieces);
+	}
+
+	public boolean isWhite(Position position) {
+		return checkFromPieceEmpty(position).isWhite();
 	}
 
 	public Optional<Piece> findPiece(Position position) {
@@ -48,10 +55,6 @@ public class Board {
 		checkTargetPosition(to, fromPiece, direction);
 
 		move(from, to, fromPiece);
-	}
-
-	public boolean isWhite(Position position) {
-		return checkFromPieceEmpty(position).isWhite();
 	}
 
 	private Piece checkFromPieceEmpty(Position from) {
@@ -99,15 +102,15 @@ public class Board {
 		}
 	}
 
-	private void validatePawnDiagonalMove(Piece fromPiece, Direction direction) {
-		if (fromPiece.isPawn() && direction.isDiagonal()) {
-			throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL_NOT_ENEMY);
-		}
-	}
-
 	private void validateDiagonalEnemy(Piece fromPiece, Piece toPiece, Direction direction) {
 		if (!direction.isDiagonal() || fromPiece.isSameColor(toPiece)) {
 			throw new IllegalArgumentException(PAWN_ONLY_DIAGONAL_CATCH);
+		}
+	}
+
+	private void validatePawnDiagonalMove(Piece fromPiece, Direction direction) {
+		if (fromPiece.isPawn() && direction.isDiagonal()) {
+			throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL_NOT_ENEMY);
 		}
 	}
 
@@ -120,24 +123,21 @@ public class Board {
 		double whiteScore = 0;
 		double blackScore = 0;
 		for (int column = Position.MIN; column <= Position.MAX; column++) {
-			whiteScore += calculateColumn(column, (Piece::isWhite));
-			blackScore += calculateColumn(column, (piece -> !piece.isWhite()));
+			whiteScore += calculateColumnScore(column, (Piece::isWhite));
+			blackScore += calculateColumnScore(column, (piece -> !piece.isWhite()));
 		}
 		return new ChessScore(whiteScore, blackScore);
 	}
 
-	private double calculateColumn(int column, Predicate<Piece> colorCondition) {
+	private double calculateColumnScore(int column, Predicate<Piece> colorCondition) {
 		Map<Boolean, List<Piece>> pawnOrNot = groupByPawn(column, colorCondition);
 
 		List<Piece> pawns = pawnOrNot.computeIfAbsent(true, key -> new ArrayList<>());
 		List<Piece> notPawn = pawnOrNot.computeIfAbsent(false, key -> new ArrayList<>());
 
-		double notPawnSum = calculateSum(notPawn);
-		double pawnSum = calculateSum(pawns);
+		double pawnSum = sumScoreOfPawn(pawns);
+		double notPawnSum = sumScores(notPawn);
 
-		if (pawnOrNot.get(true).size() > 1) {
-			return notPawnSum + (pawnSum * 0.5);
-		}
 		return notPawnSum + pawnSum;
 	}
 
@@ -146,21 +146,29 @@ public class Board {
 			.filter(entry -> entry.getKey().isSameColumn(column))
 			.map(Map.Entry::getValue)
 			.filter(colorCondition)
-			.collect(Collectors.groupingBy(Piece::isPawn));
+			.collect(groupingBy(Piece::isPawn));
 	}
 
-	private double calculateSum(List<Piece> notPawn) {
-		return notPawn.stream()
+	private double sumScoreOfPawn(List<Piece> pawns) {
+		int pawnSize = pawns.size();
+		if (pawnSize == CRITERIA_COUNT_OF_PAWN_SCORE) {
+			return sumScores(pawns);
+		}
+		return pawnSize * Piece.PAWN_LOW_SCORE;
+	}
+
+	private double sumScores(List<Piece> pieces) {
+		return pieces.stream()
 			.mapToDouble(Piece::getScore)
 			.sum();
-	}
-
-	public Map<Position, Piece> getPieces() {
-		return new HashMap<>(pieces);
 	}
 
 	public boolean isKingNotExist(Color color) {
 		return this.pieces.values().stream()
 			.noneMatch(piece -> piece.isKing() && piece.isSameColor(color));
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return new HashMap<>(pieces);
 	}
 }
