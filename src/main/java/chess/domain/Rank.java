@@ -1,6 +1,7 @@
 package chess.domain;
 
-import java.time.temporal.Temporal;
+import chess.domain.piece.*;
+
 import java.util.EnumMap;
 import java.util.Map;
 

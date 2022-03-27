@@ -1,7 +1,8 @@
 package chess;
 
-import chess.domain.Board;
-import chess.domain.Team;
+import chess.domain.state.BoardInitialize;
+import chess.domain.state.GameState;
+import chess.domain.state.WhiteTurn;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,29 +12,26 @@ public class Application {
     public static void main(String[] args) {
         OutputView.printStartMessage();
         List<String> input = InputView.requestCommand();
+        GameState gameState = new WhiteTurn(BoardInitialize.create());
         Command command = Command.of(input.get(0));
-        Team team = Team.WHITE;
         if (command.isStart()) {
-            Board board = new Board();
-            OutputView.printChessBoard(board.getBoard());
-            input = InputView.requestCommand();
-            command = Command.of(input.get(0));
-            while (!command.isEnd()) {
-                if (command == Command.STATUS) {
-                    OutputView.printStatus(board.getTeamScore(Team.WHITE), board.getTeamScore(Team.BLACK));
-                    input = InputView.requestCommand();
-                    command = Command.of(input.get(0));
-                    continue;
-                }
-                if (board.isKingDead(board.movePiece(input.get(1), input.get(2), team))) {
-                    OutputView.printFinishedGame(board.getBoard(), team);
-                    break;
-                }
-                OutputView.printChessBoard(board.getBoard());
-                input = InputView.requestCommand();
-                command = Command.of(input.get(0));
-                team = Team.switchTeam(team);
-            }
+            startGame(gameState);
         }
     }
+
+    private static void startGame(GameState gameState) {
+        OutputView.printChessBoard(gameState.getBoard());
+        while (!gameState.isFinished()) {
+            List<String> input = InputView.requestCommand();
+            Command command = Command.of(input.get(0));
+            if (command == Command.STATUS) {
+                OutputView.printStatus(gameState.getTeamScore(), gameState.getTeamScore());
+                continue;
+            }
+            gameState = gameState.move(input.get(1), input.get(2));
+            OutputView.printChessBoard(gameState.getBoard());
+        }
+        OutputView.printFinishedGame(gameState);
+    }
 }
+

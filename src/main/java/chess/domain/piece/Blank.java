@@ -1,4 +1,9 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Column;
+import chess.domain.Position;
+import chess.domain.Row;
+import chess.domain.Team;
 
 import java.util.EnumMap;
 import java.util.List;

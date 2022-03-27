@@ -1,21 +1,22 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Bishop extends Piece {
 
-    public Queen(Team team, Position position) {
-        super(team, Queen.class.getSimpleName(), position, 9);
+    public Bishop(Team team, Position position) {
+        super(team, Bishop.class.getSimpleName(), position, 3);
     }
 
     private Direction findDirection(Position destination) {
-        for (Direction direction : Direction.everyDirection()) {
-            for (int i = 1; i <= 8; i++) {
-                if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree() * i
-                        && destination.getCol().getDifference(position.getCol()) == direction.getXDegree() * i) {
-                    return direction;
-                }
+        for (Direction direction : Direction.diagonalDirection()) {
+            if (destination.getCol().getDifference(position.getCol()) * direction.getXDegree()
+                    == (destination.getRow().getDifference(position.getRow()) * direction.getYDegree())
+            && (destination.getRow().getDifference(position.getRow()) * direction.getYDegree()) > 0) {
+                return direction;
             }
         }
         throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");

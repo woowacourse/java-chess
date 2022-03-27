@@ -1,4 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.Position;
+import chess.domain.Team;
 
 import java.util.List;
 
@@ -57,5 +60,13 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return getTeam() == piece.getTeam();
     }
 }

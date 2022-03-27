@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Rank;
 import chess.domain.Row;
-import chess.domain.Team;
+import chess.domain.state.GameState;
 
 import java.util.Map;
 
@@ -28,9 +28,9 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printFinishedGame(Map<Row, Rank> board, Team team) {
-        printChessBoard(board);
-        System.out.println("이긴 팀은 "+ team.name());
+    public static void printFinishedGame(GameState gameState) {
+        printChessBoard(gameState.getBoard());
+        System.out.println("이긴 팀은 "+ gameState.getTeam());
     }
 
     public static void printStatus(double teamScore, double score) {
