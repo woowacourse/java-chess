@@ -3,13 +3,12 @@ package chess.view;
 import java.util.Scanner;
 
 public class InputView {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public void terminate() {
-        scanner.close();
+    private InputView() {
     }
 
-    public String getStartOrEndInput() {
+    public static String getStartOrEndInput() {
         try {
             String input = scanner.nextLine();
             validateStartOrEndInput(input);
@@ -19,13 +18,13 @@ public class InputView {
         }
     }
 
-    private void validateStartOrEndInput(String input) {
+    private static void validateStartOrEndInput(String input) {
         if (!input.equals("start") && !input.equals("end")) {
             throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
         }
     }
 
-    public String getCommand() {
+    public static String getCommand() {
         String input = scanner.nextLine();
 
         if (input.startsWith("move")) {
@@ -41,19 +40,19 @@ public class InputView {
         throw new IllegalArgumentException("status 혹은 move source위치 target위치 형식으로 입력해주세요.");
     }
 
-    private void validateStatusInput(String input) {
+    private static void validateStatusInput(String input) {
         if (!input.equals("status")) {
             throw new IllegalArgumentException("status 를 정확히 입력해주세요");
         }
     }
 
-    private void validateMoveCommandFormat(String[] commands) {
+    private static void validateMoveCommandFormat(String[] commands) {
         if (commands.length != 3) {
             throw new IllegalArgumentException("move source위치 target위치 형식으로 입력해주세요.");
         }
     }
 
-    private void validateMoveCommandKeyword(String[] commands) {
+    private static void validateMoveCommandKeyword(String[] commands) {
         if (!commands[0].equals("move")) {
             throw new IllegalArgumentException("move source위치 target위치 형식으로 입력해주세요.");
         }

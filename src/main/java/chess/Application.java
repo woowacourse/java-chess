@@ -1,38 +1,36 @@
 package chess;
 
+import java.util.Map;
+
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Map;
-
 public class Application {
     public static void main(String[] args) {
-        InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
         outputView.printGameStartMessage();
 
-        String startOrEndInput = inputView.getStartOrEndInput();
+        String startOrEndInput = InputView.getStartOrEndInput();
         if (startOrEndInput.equals("start")) {
-            startGame(inputView, outputView);
+            startGame(outputView);
         }
-        inputView.terminate();
     }
 
-    private static void startGame(InputView inputView, OutputView outputView) {
+    private static void startGame(OutputView outputView) {
         ChessGame game = new ChessGame();
         outputView.printBoard(game.getBoard());
         while (game.isRunning()) {
-            play(inputView, outputView, game);
+            play(outputView, game);
             outputView.printBoard(game.getBoard());
         }
     }
 
-    private static void play(InputView inputView, OutputView outputView, ChessGame game) {
+    private static void play(OutputView outputView, ChessGame game) {
         try {
-            String command = inputView.getCommand();
+            String command = InputView.getCommand();
             if (command.startsWith("move")) {
                 playTurn(command, game);
             }
@@ -41,7 +39,7 @@ public class Application {
             }
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
-            play(inputView, outputView, game);
+            play(outputView, game);
         }
     }
 
