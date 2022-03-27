@@ -19,17 +19,24 @@ import java.util.Map;
 public class ChessGame {
 
     private final Board board;
+    private GameStatus gameStatus;
     private Color turn = Color.WHITE;
 
     public ChessGame() {
         this.board = new Board(createBoard());
+        this.gameStatus = GameStatus.READY;
     }
 
     public void play(Position from, Position to) {
         if (!isThatTurn(from)) {
             throw new IllegalArgumentException("해당 진영의 차례가 아닙니다");
         }
+
+        boolean isToNotKing = isKingAlive(to);
         board.move(from, to);
+        if (!isToNotKing) {
+            gameStatus = GameStatus.END;
+        }
         turn = turn.oppositeColor();
     }
 
@@ -41,7 +48,7 @@ public class ChessGame {
         return new Status(board.getColorsTotalScore());
     }
 
-    public boolean isGameNext(Position to) {
+    public boolean isKingAlive(Position to) {
         return board.isKingAlive(to);
     }
 
@@ -80,6 +87,22 @@ public class ChessGame {
         squares.replace(new Position(File.F, rank), new Bishop(color));
         squares.replace(new Position(File.G, rank), new Knight(color));
         squares.replace(new Position(File.H, rank), new Rook(color));
+    }
+
+    public void start() {
+        gameStatus = GameStatus.PLAYING;
+    }
+
+    public boolean isReady() {
+        return gameStatus == GameStatus.READY;
+    }
+
+    public boolean isPlaying() {
+        return gameStatus == GameStatus.PLAYING;
+    }
+
+    public boolean isEnd() {
+        return gameStatus == GameStatus.END;
     }
 
     public Board getBoard() {
