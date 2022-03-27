@@ -58,4 +58,10 @@ public class OutputView {
         }
         System.out.print(name.toLowerCase());
     }
+
+    public static void printScore(final Map<Color, Double> score) {
+        for (final Color color : score.keySet()) {
+            System.out.println(color + " " + score.get(color).intValue());
+        }
+    }
 }

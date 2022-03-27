@@ -7,6 +7,7 @@ import chess.Board;
 import chess.MoveCommand;
 import chess.piece.Color;
 import chess.view.Command;
+import java.util.Map;
 
 public class Running implements State {
 
@@ -22,6 +23,7 @@ public class Running implements State {
         if (command.isStart()) {
             throw new IllegalStateException("이미 게임이 시작된 상태입니다.");
         }
+
         if (command.isEnd()) {
             return new Finished();
         }
@@ -67,5 +69,10 @@ public class Running implements State {
     public Color getColor() {
         reverseColor(color);
         return color;
+    }
+
+    @Override
+    public Map<Color, Double> getStatus() {
+        return board.getBoardScore();
     }
 }

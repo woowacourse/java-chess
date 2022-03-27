@@ -4,7 +4,9 @@ import chess.piece.Color;
 import chess.status.State;
 import chess.view.Command;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
 
@@ -19,12 +21,17 @@ public class Game {
         return state.isRunning();
     }
 
-    public void run(final String input) {
+    public Map<Color, Double> run(final String input) {
         final List<String> inputs = Arrays.asList(input.split(" "));
         final Command command = Command.of(inputs.get(0));
         validate(command, inputs);
 
         state = state.turn(command);
+
+        if (command.isStatus()) {
+            return state.getStatus();
+        }
+
         if (state.canMove()) {
             state.move(MoveCommand.of(inputs.get(1) + " " + inputs.get(2)));
         }
@@ -33,6 +40,8 @@ public class Game {
             winColor = state.getColor();
             state = state.turn(Command.END);
         }
+
+        return Collections.emptyMap();
     }
 
     private void validate(final Command command, final List<String> input) {

@@ -26,7 +26,7 @@ public class ConsoleApplication {
 
     private static void run(final Game game) {
         try {
-            game.run(InputView.input());
+            OutputView.printScore(game.run(InputView.input()));
         } catch (final IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }

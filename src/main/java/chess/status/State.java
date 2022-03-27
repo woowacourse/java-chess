@@ -4,6 +4,7 @@ import chess.Board;
 import chess.MoveCommand;
 import chess.piece.Color;
 import chess.view.Command;
+import java.util.Map;
 
 public interface State {
 
@@ -20,4 +21,6 @@ public interface State {
     boolean isGameEnd();
 
     Color getColor();
+
+    Map<Color, Double> getStatus();
 }

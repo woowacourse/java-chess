@@ -4,6 +4,7 @@ import chess.Board;
 import chess.MoveCommand;
 import chess.piece.Color;
 import chess.view.Command;
+import java.util.Map;
 
 public final class Ready implements State {
 
@@ -54,6 +55,11 @@ public final class Ready implements State {
 
     @Override
     public Color getColor() {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public Map<Color, Double> getStatus() {
         throw new IllegalStateException();
     }
 }
