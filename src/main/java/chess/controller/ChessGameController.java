@@ -51,6 +51,10 @@ public class ChessGameController {
                 }
                 chessGame.end();
                 outputView.printFinishMessage();
+                outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            }
+            if ("status".equals(command)) {
+                outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
             }
         }
     }

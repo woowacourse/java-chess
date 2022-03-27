@@ -24,6 +24,14 @@ public class ChessGame {
         this.state = this.state.end();
     }
 
+    public double statusOfBlack() {
+        return this.state.statusOfBlack();
+    }
+
+    public double statusOfWhite() {
+        return this.state.statusOfWhite();
+    }
+
     public boolean isRunning() {
         return this.state.isRunning();
     }

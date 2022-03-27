@@ -3,9 +3,9 @@ package chess.domain.piece;
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public final class Bishop extends Piece {
+    private static final int SCORE = 3;
 
     public Bishop(Camp camp) {
         super(camp);
@@ -31,6 +31,11 @@ public final class Bishop extends Piece {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
         return columnDistance == rowDistance;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
@@ -62,5 +67,4 @@ public final class Bishop extends Piece {
     public boolean isRook() {
         return false;
     }
-
 }

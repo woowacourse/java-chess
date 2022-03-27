@@ -29,6 +29,8 @@ public abstract class Piece {
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
+    public abstract double getScore();
+
     public abstract boolean isBishop();
 
     public abstract boolean isKing();

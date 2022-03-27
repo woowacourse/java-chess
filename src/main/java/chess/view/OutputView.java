@@ -74,4 +74,8 @@ public class OutputView {
     public void printFinishMessage() {
         System.out.println("해당 게임이 종료되었습니다.");
     }
+
+    public void printStatus(double statusOfWhite, double statusOfBlack) {
+        System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
+    }
 }

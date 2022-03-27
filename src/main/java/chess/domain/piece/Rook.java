@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public final class Rook extends Piece {
     private static final int NOT_MOVED_DISTANCE = 0;
+    private static final double SCORE = 5;
 
     public Rook(Camp camp) {
         super(camp);
@@ -32,6 +33,11 @@ public final class Rook extends Piece {
             return true;
         }
         return rowDistance == NOT_MOVED_DISTANCE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

@@ -8,7 +8,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,5 +39,13 @@ public class RunningTest {
         Position a3 = new Position(Column.A, Row.THREE);
 
         assertThatNoException().isThrownBy(() -> state.move(a2, a3));
+    }
+
+    @DisplayName("Running 상태에서 status 명령 호출할 수 있다.")
+    @Test
+    void running_status_no_exception() {
+        State state = new Running(new Board());
+
+        assertThatNoException().isThrownBy(state::statusOfBlack);
     }
 }

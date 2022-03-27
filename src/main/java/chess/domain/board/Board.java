@@ -11,12 +11,15 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.xml.xpath.XPathNodes;
 
 public final class Board {
@@ -79,13 +82,13 @@ public final class Board {
 
     public void move(Position beforePosition, Position afterPosition) {
         Piece piece = this.value.get(beforePosition);
-        if (piece.isBlack() == whiteTurn) {
-            throw new IllegalArgumentException("상대 진영의 차례입니다.");
-        }
+
         if (isBlank(beforePosition)) {
             throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다.");
         }
-
+        if (piece.isBlack() == whiteTurn) {
+            throw new IllegalArgumentException("상대 진영의 차례입니다.");
+        }
         if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
             throw new IllegalArgumentException("경로에 기물이 있어 움직일 수 없습니다.");
         }
@@ -128,6 +131,66 @@ public final class Board {
                 .filter(Objects::nonNull)
                 .filter(Piece::isKing)
                 .count();
+    }
+
+    public double calculateScoreOfBlack() {
+        return Arrays.stream(Column.values())
+                .map(this::collectBlackPiecesIn)
+                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
+                .sum();
+    }
+
+    private List<Piece> collectBlackPiecesIn(Column column) {
+        return Arrays.stream(Row.values())
+                .map(row -> this.value.get(new Position(column, row)))
+                .filter(Objects::nonNull)
+                .filter(Piece::isBlack)
+                .collect(Collectors.toList());
+    }
+
+    public double calculateScoreOfWhite() {
+        return Arrays.stream(Column.values())
+                .map(this::collectWhitePiecesIn)
+                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
+                .sum();
+    }
+
+    private List<Piece> collectWhitePiecesIn(Column column) {
+        return Arrays.stream(Row.values())
+                .map(row -> this.value.get(new Position(column, row)))
+                .filter(Objects::nonNull)
+                .filter(piece -> !piece.isBlack())
+                .collect(Collectors.toList());
+    }
+
+    private double calculateScoreWithoutPawnIn(List<Piece> pieces) {
+        List<Piece> piecesWithoutPawn = collectPiecesWithoutPawnIn(pieces);
+        return piecesWithoutPawn.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private List<Piece> collectPiecesWithoutPawnIn(List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> !piece.isPawn())
+                .collect(Collectors.toList());
+    }
+
+    private double calculatePawnScoreIn(List<Piece> pieces) {
+        List<Piece> pawns = collectPawnsIn(pieces);
+        if (pawns.size() == 0) {
+            return 0;
+        }
+        if (pawns.size() > 1) {
+            return 0.5 * pawns.size();
+        }
+        return pawns.get(0).getScore() * pawns.size();
+    }
+
+    private List<Piece> collectPawnsIn(List<Piece> pieces) {
+        return pieces.stream()
+                .filter(Piece::isPawn)
+                .collect(Collectors.toList());
     }
 
     public Map<Position, Piece> getValue() {

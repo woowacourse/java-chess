@@ -151,23 +151,6 @@ public class BoardTest {
         assertThatNoException().isThrownBy(() -> board.move(a2, a4));
     }
 
-    @DisplayName("이동하려는 위치에 반대 진영 기물이 있으면 잡을 수 있다.")
-    @Test
-    void attack_opposite_piece() {
-        Board board = new Board();
-
-        Position g2 = new Position(Column.G, Row.TWO);
-        Position g4 = new Position(Column.G, Row.FOUR);
-        Position g5 = new Position(Column.G, Row.FIVE);
-        Position g6 = new Position(Column.G, Row.SIX);
-        board.move(g2, g4);
-        board.move(g4, g5);
-        board.move(g5, g6);
-        Position h7 = new Position(Column.H, Row.SEVEN);
-
-        assertThatNoException().isThrownBy(() -> board.move(g6, h7));
-    }
-
     @DisplayName("빈칸의 위치를 출발지로 둘 수 없다.")
     @Test
     void move_blank_exception() {
@@ -190,7 +173,53 @@ public class BoardTest {
                 .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
     }
 
+    @DisplayName("초기 상태의 체스판에서 흑색 진영의 점수는 38점이다.")
+    @Test
+    void calculateScoreOfBlack_38() {
+        Board board = new Board();
 
+        assertThat(board.calculateScoreOfBlack()).isEqualTo(38);
+    }
+
+    @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 흑색 진영의 점수는 37점이다.")
+    @Test
+    void calculateScoreOfBlack_37() {
+        Board board = new Board();
+        Position b2 = new Position(Column.B, Row.TWO);
+        Position b4 = new Position(Column.B, Row.FOUR);
+        Position c7 = new Position(Column.C, Row.SEVEN);
+        Position c5 = new Position(Column.C, Row.FIVE);
+        Position d2 = new Position(Column.D, Row.TWO);
+        Position d4 = new Position(Column.D, Row.FOUR);
+
+        board.move(b2, b4);
+        board.move(c7, c5);
+        board.move(d2, d4);
+        board.move(c5, b4);
+        assertThat(board.calculateScoreOfBlack()).isEqualTo(37);
+    }
+
+    @DisplayName("초기 상태의 체스판에서 백색 진영의 점수는 38점이다.")
+    @Test
+    void calculateScoreOfWhite_38() {
+        Board board = new Board();
+
+        assertThat(board.calculateScoreOfWhite()).isEqualTo(38);
+    }
+
+    @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 백색 진영의 점수는 37점이다.")
+    @Test
+    void calculateScoreOfWhite_37() {
+        Board board = new Board();
+        Position b2 = new Position(Column.B, Row.TWO);
+        Position b4 = new Position(Column.B, Row.FOUR);
+        Position c7 = new Position(Column.C, Row.SEVEN);
+        Position c5 = new Position(Column.C, Row.FIVE);
+        board.move(b2, b4);
+        board.move(c7, c5);
+        board.move(b4, c5);
+        assertThat(board.calculateScoreOfWhite()).isEqualTo(37);
+    }
 
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(

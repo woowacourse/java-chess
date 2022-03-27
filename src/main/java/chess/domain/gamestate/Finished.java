@@ -27,6 +27,16 @@ public class Finished implements State {
     }
 
     @Override
+    public double statusOfBlack() {
+        return board.calculateScoreOfBlack();
+    }
+
+    @Override
+    public double statusOfWhite() {
+        return board.calculateScoreOfWhite();
+    }
+
+    @Override
     public boolean isRunning() {
         return false;
     }

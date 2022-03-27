@@ -1,6 +1,7 @@
 package chess.domain.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
@@ -30,5 +31,13 @@ public class FinishedTest {
         assertThatThrownBy(() -> state.move(a2, a3))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
+    }
+
+    @DisplayName("Finished 상태에서 status 명령 호출할 수 있다.")
+    @Test
+    void finished_status_no_exception() {
+        State state = new Finished(new Board());
+
+        assertThatNoException().isThrownBy(state::statusOfBlack);
     }
 }

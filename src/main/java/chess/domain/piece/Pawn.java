@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 public final class Pawn extends Piece {
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE = 1;
+    private static final double SCORE = 1;
 
     private boolean firstMove;
 
@@ -58,6 +59,11 @@ public final class Pawn extends Piece {
             return -movableDistance <= distance && distance < 0;
         }
         return 0 < distance && distance <= movableDistance;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

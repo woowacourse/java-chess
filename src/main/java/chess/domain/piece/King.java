@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public final class King extends Piece {
     private static final int MOVABLE_DISTANCE = 1;
+    private static final double SCORE = 0;
 
     public King(Camp camp) {
         super(camp);
@@ -32,6 +33,11 @@ public final class King extends Piece {
             return true;
         }
         return columnDistance == 1 && rowDistance == 1;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public final class Queen extends Piece{
     private static final int NOT_MOVED_DISTANCE = 0;
+    private static final double SCORE = 9;
 
     public Queen(Camp camp) {
         super(camp);
@@ -35,6 +36,11 @@ public final class Queen extends Piece{
             return true;
         }
         return columnDistance == rowDistance;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

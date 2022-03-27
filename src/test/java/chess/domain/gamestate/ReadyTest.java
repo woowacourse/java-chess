@@ -30,4 +30,14 @@ public class ReadyTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
     }
+
+    @DisplayName("Ready 상태에서 status 명령 호출 시 예외 발생")
+    @Test
+    void ready_status_exception() {
+        State state = new Ready();
+
+        assertThatThrownBy(state::statusOfBlack)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
+    }
 }

@@ -16,10 +16,19 @@ public class Ready implements State {
         throw new IllegalStateException("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
     }
 
-
     @Override
     public State end() {
         return this;
+    }
+
+    @Override
+    public double statusOfBlack() {
+        throw new IllegalStateException("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
+    }
+
+    @Override
+    public double statusOfWhite() {
+        throw new IllegalStateException("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
     }
 
     @Override

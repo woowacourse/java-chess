@@ -11,6 +11,10 @@ public interface State {
 
     State end();
 
+    double statusOfBlack();
+
+    double statusOfWhite();
+
     boolean isRunning();
 
     Board getBoard();
