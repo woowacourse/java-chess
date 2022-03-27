@@ -115,11 +115,12 @@ public class Board {
         }
     }
 
-    public double sumScore(final Color targetColor) {
-        return value.entrySet().stream()
+    public Map<Color, Double> sumScore(final Color targetColor) {
+        final double sum = value.entrySet().stream()
                 .filter(e -> e.getValue().isSameColor(targetColor))
                 .mapToDouble(this::getScore)
                 .sum();
+        return Map.of(targetColor, sum);
     }
 
     private double getScore(final Map.Entry<Position, Piece> entry) {
@@ -144,5 +145,11 @@ public class Board {
             return pawn.getScore() / 2;
         }
         return pawn.getScore();
+    }
+
+    boolean hasKing(final Color targetColor) {
+        return value.values().stream()
+                .filter(it -> it.isSameColor(targetColor))
+                .anyMatch(it -> it.getName().equalsIgnoreCase("k"));
     }
 }
