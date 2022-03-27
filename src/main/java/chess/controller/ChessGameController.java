@@ -39,49 +39,37 @@ public class ChessGameController {
     }
 
     private void progressGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
-        if (finishCurrentPlayerTurn(chessGame, whitePlayer, blackPlayer)) {
+        if (isFinishTurn(chessGame, whitePlayer, blackPlayer)) {
             return;
         }
-        if (finishCurrentPlayerTurn(chessGame, blackPlayer, whitePlayer)) {
+        showMap(chessGame.createMap());
+        if (isFinishTurn(chessGame, blackPlayer, whitePlayer)) {
             return;
         }
+        showMap(chessGame.createMap());
         progressGame(chessGame, whitePlayer, blackPlayer);
     }
 
-    private boolean finishCurrentPlayerTurn(final ChessGame chessGame,
-                                            final Player currentPlayer, final Player opponentPlayer) {
-        final boolean isEndTurn = turn(chessGame, currentPlayer, opponentPlayer);
-        if (!isRunningChessGame(isEndTurn, chessGame)) {
-            return true;
-        }
-        showMap(chessGame.createMap());
-        return false;
-    }
-
-    private boolean turn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
+    private boolean isFinishTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
         try {
             final String command = InputView.requestGameCommand();
-            return isFinishCurrentPlayerTurn(chessGame, command, currentPlayer, opponentPlayer);
+            final boolean isFinish = progressTurn(chessGame, command, currentPlayer, opponentPlayer);
+            return isFinish || !chessGame.isRunning();
         } catch (final IllegalArgumentException e) {
             OutputView.printException(e);
-            return turn(chessGame, currentPlayer, opponentPlayer);
+            return isFinishTurn(chessGame, currentPlayer, opponentPlayer);
         }
     }
 
-    private boolean isRunningChessGame(final boolean isEndTurn, final ChessGame chessGame) {
-        return !isEndTurn && chessGame.isRunning();
-    }
-
-    private boolean isFinishCurrentPlayerTurn(final ChessGame chessGame, final String command,
-                                              final Player currentPlayer, final Player opponentPlayer) {
+    private boolean progressTurn(final ChessGame chessGame, final String command,
+                                 final Player currentPlayer, final Player opponentPlayer) {
         if (command.contains("move")) {
             moveTurn(chessGame, command, currentPlayer, opponentPlayer);
             return false;
         }
         if (command.equals("status")) {
             showResult(currentPlayer, opponentPlayer);
-            turn(chessGame, currentPlayer, opponentPlayer);
-            return false;
+            return isFinishTurn(chessGame, currentPlayer, opponentPlayer);
         }
         return true;
     }
