@@ -7,6 +7,7 @@ public class InputView {
     public static final String START = "start";
     public static final String END = "end";
     public static final String MOVE = "move";
+    public static final String STATUS = "status";
     public static final String DELIMITER = " ";
     public static final String EMPTY_STRING = "";
     public static final int SOURCE_INDEX = 0;
@@ -34,6 +35,7 @@ public class InputView {
             validateInputPositions(inputs);
             input = String.join(DELIMITER, inputs);
         }
+        System.out.println("input command = " + input);
         return input;
     }
 
@@ -85,8 +87,8 @@ public class InputView {
     }
 
     private static void validateNotAllowPlayCommand(String input) {
-        if (!(input.contains(MOVE) || input.equals(END))) {
-            throw new IllegalArgumentException("[ERROR] move, end 이외의 문자는 입력할 수 없습니다.");
+        if (!(input.contains(MOVE) || input.equals(END) || input.equals(STATUS))) {
+            throw new IllegalArgumentException("[ERROR] move, status, end 이외의 문자는 입력할 수 없습니다.");
         }
     }
 }

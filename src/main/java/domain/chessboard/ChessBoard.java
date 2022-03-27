@@ -1,6 +1,7 @@
 package domain.chessboard;
 
 import domain.Player;
+import domain.Result;
 import domain.directions.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceSymbol;
@@ -185,5 +186,21 @@ public class ChessBoard {
             return count * PieceScore.DUPLICATE_PAWN;
         }
         return 0;
+    }
+
+    public Result calculateResult() {
+        double currentPlayerScore = calculateScoreByPlayer(currentPlayer);
+        double otherPlayerScore = calculateScoreByPlayer(Player.otherPlayer(currentPlayer));
+        if (currentPlayerScore > otherPlayerScore) {
+            return Result.WIN;
+        }
+        if (currentPlayerScore == otherPlayerScore) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

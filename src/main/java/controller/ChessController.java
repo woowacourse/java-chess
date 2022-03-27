@@ -1,5 +1,7 @@
 package controller;
 
+import domain.Player;
+import domain.Result;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.ChessBoardGenerator;
 import domain.position.Position;
@@ -28,13 +30,27 @@ public class ChessController {
                 OutputView.printExitMessage();
                 return;
             }
-
+            if (input.equals(InputView.STATUS)) {
+                System.out.println("this is status command");
+                status(chessBoard);
+                play(chessBoard);
+                return;
+            }
+            System.out.println("this is move command");
             move(input, chessBoard);
             play(chessBoard);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             play(chessBoard);
         }
+    }
+
+    private void status(ChessBoard chessBoard) {
+        Result result = chessBoard.calculateResult();
+        Player player = chessBoard.getCurrentPlayer();
+        double score = chessBoard.calculateScoreByPlayer(player);
+        System.out.println(player + " 현재 점수 : " + score + "(" + result + ")");
+        OutputView.printBoard(chessBoard);
     }
 
     private void move(String input, ChessBoard chessBoard) {
