@@ -25,4 +25,9 @@ public class Knight extends AbstractPiece {
 
         return direction.isEqualTo(columnDistance, rowDistance);
     }
+
+    @Override
+    public boolean isKnight() {
+        return true;
+    }
 }

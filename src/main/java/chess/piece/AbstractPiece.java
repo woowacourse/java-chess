@@ -38,4 +38,8 @@ public abstract class AbstractPiece implements Piece {
         return false;
     }
 
+    @Override
+    public boolean isKnight() {
+        return false;
+    }
 }

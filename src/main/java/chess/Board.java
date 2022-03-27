@@ -88,9 +88,15 @@ public class Board {
         validatePawnMove(moveCommand, from, to, piece);
 
         if (piece.canMove(moveCommand)) {
-            validatePieceBlock(from, to, piece);
+            validatePiece(from, to, piece);
             value.put(to, piece);
             value.remove(from);
+        }
+    }
+
+    private void validatePiece(final Position from, final Position to, final Piece piece) {
+        if (!piece.isKnight()) {
+            validatePieceBlock(from, to, piece);
         }
     }
 

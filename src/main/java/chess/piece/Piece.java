@@ -13,4 +13,6 @@ public interface Piece {
     boolean canMove(MoveCommand command);
 
     boolean isPawn();
+
+    boolean isKnight();
 }
