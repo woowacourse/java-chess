@@ -1,7 +1,7 @@
 package chess.turndecider;
 
-import chess.PieceColor;
-import chess.piece.Piece;
+import chess.domain.piece.constant.PieceColor;
+import chess.domain.piece.Piece;
 
 public class WhiteState implements State {
 

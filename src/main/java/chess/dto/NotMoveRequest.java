@@ -1,7 +1,7 @@
 package chess.dto;
 
-import chess.Command;
-import chess.Position;
+import chess.constant.Command;
+import chess.domain.board.Position;
 
 public class NotMoveRequest implements Request {
 

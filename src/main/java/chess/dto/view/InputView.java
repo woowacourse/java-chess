@@ -1,26 +1,27 @@
 package chess.dto.view;
 
-import static camp.nextstep.edu.missionutils.Console.*;
-
 import java.util.List;
 
-import chess.Command;
-import chess.Position;
+import chess.constant.Command;
+import chess.domain.board.Position;
 import chess.dto.MoveRequest;
 import chess.dto.NotMoveRequest;
 import chess.dto.Request;
+import java.util.Scanner;
 
 public class InputView {
+
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     private InputView() {
     }
 
     public static Command inputCommandInStart() {
-        return Command.startEnd(readLine());
+        return Command.startEnd(SCANNER.nextLine());
     }
 
-    public static Request inputCommandInGaming() { // RequestDto
-        String input = readLine();
+    public static Request inputCommandInGaming() {
+        String input = SCANNER.nextLine();
         Command command = Command.endMove(input);
         if (command == Command.END) {
             return new NotMoveRequest(command);

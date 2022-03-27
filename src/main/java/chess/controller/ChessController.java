@@ -1,9 +1,9 @@
 package chess.controller;
 
-import static chess.Command.*;
+import static chess.constant.Command.*;
 
-import chess.Board;
-import chess.Command;
+import chess.domain.board.Board;
+import chess.constant.Command;
 import chess.dto.Request;
 import chess.dto.view.InputView;
 import chess.dto.view.OutputView;

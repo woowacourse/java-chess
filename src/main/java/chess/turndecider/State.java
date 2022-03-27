@@ -1,6 +1,6 @@
 package chess.turndecider;
 
-import chess.piece.Piece;
+import chess.domain.piece.Piece;
 
 public interface State {
 
