@@ -1,6 +1,6 @@
-package chess;
+package chess.game;
 
-import static chess.Position.of;
+import static chess.game.Position.of;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 

@@ -1,8 +1,7 @@
-package chess;
+package chess.game;
 
 import chess.piece.Color;
 import chess.status.State;
-import chess.view.Command;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

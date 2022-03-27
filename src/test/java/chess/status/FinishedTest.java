@@ -3,8 +3,8 @@ package chess.status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.MoveCommand;
-import chess.view.Command;
+import chess.game.MoveCommand;
+import chess.game.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

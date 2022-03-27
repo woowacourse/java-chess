@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.MoveCommand;
+import chess.game.MoveCommand;
 
 public interface Piece {
 

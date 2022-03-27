@@ -3,10 +3,10 @@ package chess.status;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
-import chess.Board;
-import chess.MoveCommand;
+import chess.game.Board;
+import chess.game.MoveCommand;
 import chess.piece.Color;
-import chess.view.Command;
+import chess.game.Command;
 import java.util.Map;
 
 public class Running implements State {

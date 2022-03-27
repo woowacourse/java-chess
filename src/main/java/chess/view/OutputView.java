@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.Board;
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.game.Board;
+import chess.game.Column;
+import chess.game.Position;
+import chess.game.Row;
 import chess.piece.Color;
 import chess.piece.Name;
 import chess.piece.Piece;

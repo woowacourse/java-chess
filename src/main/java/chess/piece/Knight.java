@@ -1,8 +1,8 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.MoveCommand;
-import chess.Position;
+import chess.game.Direction;
+import chess.game.MoveCommand;
+import chess.game.Position;
 
 public class Knight extends AbstractPiece {
 

@@ -2,8 +2,8 @@ package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.Direction;
-import chess.Position;
+import chess.game.Direction;
+import chess.game.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

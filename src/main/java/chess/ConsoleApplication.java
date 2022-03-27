@@ -1,19 +1,19 @@
 package chess;
 
+import chess.game.Command;
+import chess.game.Game;
 import chess.status.Ready;
-import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ConsoleApplication {
 
     public static void main(final String[] args) {
-        final Game game = new Game(Ready.run(Command.of(InputView.inputCommand())));
+        final Game game = new Game(Ready.start(Command.of(InputView.inputCommand())));
         while (game.isRunning()) {
             OutputView.printBoard(game.getBoard());
             run(game);
         }
-
         OutputView.printGameEnd(game.getWinColor());
     }
 

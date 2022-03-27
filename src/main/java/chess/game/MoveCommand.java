@@ -1,4 +1,4 @@
-package chess;
+package chess.game;
 
 public class MoveCommand {
 

@@ -1,9 +1,9 @@
 package chess.status;
 
-import chess.Board;
-import chess.MoveCommand;
+import chess.game.Board;
+import chess.game.MoveCommand;
 import chess.piece.Color;
-import chess.view.Command;
+import chess.game.Command;
 import java.util.Map;
 
 public final class Ready implements State {
@@ -11,7 +11,7 @@ public final class Ready implements State {
     private Ready() {
     }
 
-    public static State run(final Command command) {
+    public static State start(final Command command) {
         if (command.isStart()) {
             return new Running();
         }

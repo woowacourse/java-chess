@@ -1,9 +1,8 @@
-package chess;
+package chess.game;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.status.Ready;
-import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ class GameTest {
     @Test
     @DisplayName("킹이 죽으면 게임이 종료된다.")
     void gameEnd() {
-        Game game = new Game(Ready.run(Command.START));
+        Game game = new Game(Ready.start(Command.START));
         game.run("move b1 c3");
         game.run("move h7 h6");
         game.run("move c3 d5");
