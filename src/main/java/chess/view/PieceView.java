@@ -25,6 +25,8 @@ public enum PieceView {
 	BLACK_PAWN(Pawn.createBlack(), "♙"),
 	WHITE_PAWN(Pawn.createWhite(), "♟");
 
+	private static final String NOT_HAVE_SYMBOL = "심볼이 없는 피스입니다.";
+
 	private final Piece piece;
 	private final String symbol;
 
@@ -38,6 +40,6 @@ public enum PieceView {
 			.filter(pieceView -> pieceView.piece.equals(piece))
 			.map(pieceView -> pieceView.symbol)
 			.findAny()
-			.orElseThrow(() -> new IllegalArgumentException("심볼이 없는 피스입니다."));
+			.orElseThrow(() -> new IllegalArgumentException(NOT_HAVE_SYMBOL));
 	}
 }
