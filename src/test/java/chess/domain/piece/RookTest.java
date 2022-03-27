@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Rook 테스트")
 class RookTest {
 
     @DisplayName("입력된 방향에 대해")
