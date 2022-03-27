@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WhitePawnDirections implements DirectionsGenerator {
 
-    private List<Direction> directions;
+    private final List<Direction> directions;
 
     public WhitePawnDirections() {
         this.directions = new ArrayList<>();

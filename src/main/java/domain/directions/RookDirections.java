@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RookDirections implements DirectionsGenerator {
 
-    private List<Direction> directions;
+    private final List<Direction> directions;
 
     public RookDirections() {
         this.directions = new ArrayList<>();

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class KnightDirections implements DirectionsGenerator {
 
-    private List<Direction> directions;
+    private final List<Direction> directions;
 
     public KnightDirections() {
         this.directions = new ArrayList<>();

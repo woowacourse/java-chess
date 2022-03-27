@@ -10,7 +10,7 @@ public enum PieceSymbol {
     Rook("R"),
     Pawn("P");
 
-    private String symbol;
+    private final String symbol;
 
     PieceSymbol(final String symbol) {
         this.symbol = symbol;
@@ -20,7 +20,7 @@ public enum PieceSymbol {
         return symbol;
     }
 
-    public String symbol(Player player) {
+    public String symbol(final Player player) {
         if (player == Player.BLACK) {
             return symbol;
         }

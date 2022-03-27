@@ -16,7 +16,7 @@ public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
-    private Map<Direction, List<Position>> availableMovePosition;
+    private final Map<Direction, List<Position>> availableMovePosition;
 
     public Piece(final Player player, final PieceSymbol pieceSymbol,
         DirectionsGenerator directionsGenerator) {
@@ -25,16 +25,16 @@ public abstract class Piece {
         this.availableMovePosition = initAvailablePosition(directionsGenerator.generate());
     }
 
-    abstract List<Position> calculateAvailablePosition(final Position source,
+    protected abstract List<Position> calculateAvailablePosition(final Position source,
         final Direction direction);
 
-    private Map<Direction, List<Position>> initAvailablePosition(List<Direction> directions) {
+    private Map<Direction, List<Position>> initAvailablePosition(final List<Direction> directions) {
         Map<Direction, List<Position>> availableMovePosition = new HashMap<>();
         directions.forEach(direction -> availableMovePosition.put(direction, null));
         return availableMovePosition;
     }
 
-    public boolean isAvailableMove(Position source, Position target) {
+    public boolean isAvailableMove(final Position source, final Position target) {
         generateAvailablePosition(source);
         return availableMovePosition.values().stream()
             .filter(Objects::nonNull)
@@ -43,7 +43,13 @@ public abstract class Piece {
             .orElse(null) != null;
     }
 
-    public List<Position> getAvailablePositions(Position target) {
+    private void generateAvailablePosition(Position source) {
+        for (Direction direction : availableMovePosition.keySet()) {
+            availableMovePosition.put(direction, calculateAvailablePosition(source, direction));
+        }
+    }
+
+    public List<Position> getAvailablePositions(final Position target) {
         return availableMovePosition.values().stream()
             .filter(Objects::nonNull)
             .filter(value -> value.contains(target))
@@ -59,14 +65,16 @@ public abstract class Piece {
             .orElse(null);
     }
 
-    private void generateAvailablePosition(Position source) {
-        for (Direction direction : availableMovePosition.keySet()) {
-            availableMovePosition.put(direction, calculateAvailablePosition(source, direction));
-        }
+    protected boolean checkOverRange(final Position source, final Direction direction) {
+        int rank = source.getRank() + direction.getRank();
+        int file = source.getFile() + direction.getFile();
+        return File.isFileRange(file) && Rank.isRankRange(rank);
     }
 
-    protected boolean checkOverRange(final int file, final int rank) {
-        return File.isFileRange(file) && Rank.isRankRange(rank);
+    protected Position createDirectionPosition(final Position source, final Direction direction) {
+        int rank = source.getRank() + direction.getRank();
+        int file = source.getFile() + direction.getFile();
+        return Position.of(File.of(file), Rank.of(rank));
     }
 
     public boolean isSamePlayer(Player player) {

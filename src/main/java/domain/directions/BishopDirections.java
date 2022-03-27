@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BishopDirections implements DirectionsGenerator {
 
-    private List<Direction> directions;
+    private final List<Direction> directions;
 
     public BishopDirections() {
         this.directions = new ArrayList<>();

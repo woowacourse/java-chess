@@ -3,62 +3,57 @@ package domain.piece;
 import domain.Player;
 import domain.directions.Direction;
 import domain.directions.DirectionsGenerator;
-import domain.position.File;
 import domain.position.Position;
-import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends SpecificLocationPiece {
 
-    private int startLine;
+    private final int startLine;
 
-    public Pawn(final Player player, final DirectionsGenerator directionsGenerator, int startLine) {
+    public Pawn(final Player player, final DirectionsGenerator directionsGenerator,
+        final int startLine) {
         super(player, PieceSymbol.Pawn, directionsGenerator);
         this.startLine = startLine;
     }
 
-
     @Override
-    List<Position> calculateAvailablePosition(Position source, Direction direction) {
+    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
             return null;
         }
-        List<Position> positions = new ArrayList<>();
-        if (isTwoSpaceMoveDirection(direction)) {
-            calculatePawnTwoSpaceMove(positions, source, direction);
+        List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
+        if (checkOverRange(source, direction)) {
+            positions.add(createDirectionPosition(source, direction));
         }
-        int file = source.getFile() + direction.getFile();
-        int rank = source.getRank() + direction.getRank();
-
-        if (checkOverRange(file, rank)) {
-            positions.add(Position.of(File.of(file), Rank.of(rank)));
-        }
-        System.out.println(positions);
         return positions;
     }
 
-    private boolean isFirstMove(Position source) {
+    private boolean isFirstMove(final Position source) {
         return source.getRank() == startLine;
     }
 
-    private boolean isTwoSpaceMoveDirection(Direction direction) {
+    private boolean isTwoSpaceMoveDirection(final Direction direction) {
         return direction.equals(Direction.SOUTH_SOUTH) || direction.equals(Direction.NORTH_NORTH);
     }
 
-    private void calculatePawnTwoSpaceMove(List<Position> positions, Position source,
-        Direction direction) {
-        Direction addDirection = generateAddDirection(direction);
-        if (addDirection != null) {
-            int file = source.getFile() + addDirection.getFile();
-            int rank = source.getRank() + addDirection.getRank();
-            if (checkOverRange(rank, file)) {
-                positions.add(Position.of(File.of(file), Rank.of(rank)));
-            }
+    private List<Position> generateTwoSpaceMoveRoute(final Position source, final Direction direction) {
+        List<Position> positions = new ArrayList<>();
+        if (isTwoSpaceMoveDirection(direction)) {
+            positions.add(calculatePawnWayPoint(source, direction));
         }
+        return positions;
     }
 
-    private Direction generateAddDirection(Direction direction) {
+    private Position calculatePawnWayPoint(final Position source, final Direction direction) {
+        Direction addDirection = generateAddDirection(direction);
+        if (addDirection != null && checkOverRange(source, addDirection)) {
+            return createDirectionPosition(source, addDirection);
+        }
+        return null;
+    }
+
+    private Direction generateAddDirection(final Direction direction) {
         if (direction.equals(Direction.NORTH_NORTH)) {
             return Direction.NORTH;
         }

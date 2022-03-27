@@ -35,7 +35,6 @@ public class InputView {
             validateInputPositions(inputs);
             input = String.join(DELIMITER, inputs);
         }
-        System.out.println("input command = " + input);
         return input;
     }
 

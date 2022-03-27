@@ -5,7 +5,7 @@ import java.util.List;
 
 public class QueenDirections implements DirectionsGenerator {
 
-    private List<Direction> directions;
+    private final List<Direction> directions;
 
     public QueenDirections() {
         this.directions = new ArrayList<>();

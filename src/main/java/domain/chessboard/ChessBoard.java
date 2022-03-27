@@ -8,33 +8,24 @@ import domain.piece.PieceSymbol;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import utils.PieceScore;
 
 public class ChessBoard {
 
     private static final String NULL_PIECE_SYMBOL = ".";
+    public static final int DEFAULT_KING_COUNT = 2;
+    public static final int PAWN_COUNT_SAME_FILE = 2;
 
+    private final Map<Position, Piece> board;
     private Player currentPlayer;
-    private Map<Position, Piece> board;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
         this.board = boardGenerator.generate();
         this.currentPlayer = Player.WHITE;
-    }
-
-    public String getSymbol(final Position position) {
-        Piece piece = board.get(position);
-        if (piece == null) {
-            return NULL_PIECE_SYMBOL;
-        }
-        return piece.symbolByPlayer();
-    }
-
-    public Piece getPieceOf(final Position position) {
-        return board.get(position);
     }
 
     public void move(final Position source, final Position target) {
@@ -89,9 +80,10 @@ public class ChessBoard {
     }
 
     private boolean isPawnMoveDirection(final Direction moveDirection) {
-        return moveDirection.equals(Direction.NORTH_NORTH) || moveDirection.equals(
-            Direction.SOUTH_SOUTH) || moveDirection.equals(Direction.NORTH) || moveDirection.equals(
-            Direction.SOUTH);
+        return moveDirection.equals(Direction.NORTH_NORTH)
+            || moveDirection.equals(Direction.SOUTH_SOUTH)
+            || moveDirection.equals(Direction.NORTH)
+            || moveDirection.equals(Direction.SOUTH);
     }
 
     private void validatePawnMove(final Position target, final Piece sourcePiece) {
@@ -151,43 +143,6 @@ public class ChessBoard {
         this.currentPlayer = Player.WHITE;
     }
 
-    public double calculateScoreByPlayer(Player player) {
-        double sum = 0;
-        for (File file : File.values()) {
-            List<PieceScore> pieceScores = new ArrayList<>();
-            for (Rank rank : Rank.values()) {
-                Piece piece = board.get(Position.of(file, rank));
-                if (piece != null && piece.isSamePlayer(player)) {
-                    PieceScore pieceScore = PieceScore.of(piece.symbol());
-                    pieceScores.add(pieceScore);
-                }
-
-            }
-            sum += calculateFileScore(pieceScores);
-        }
-        return sum;
-    }
-
-    private double calculateFileScore(List<PieceScore> pieceScores) {
-        double sum = 0;
-        for (PieceScore pieceScore : pieceScores) {
-            if (pieceScore != null) {
-                sum += pieceScore.score();
-            }
-        }
-        return sum - calculatePawnsInFile(pieceScores);
-    }
-
-    private double calculatePawnsInFile(List<PieceScore> pieceScores) {
-        long count = pieceScores.stream()
-            .filter(pieceScore -> pieceScore.score() == PieceScore.Pawn.score())
-            .count();
-        if (count >= 2) {
-            return count * PieceScore.DUPLICATE_PAWN;
-        }
-        return 0;
-    }
-
     public Result calculateResult() {
         double currentPlayerScore = calculateScoreByPlayer(currentPlayer);
         double otherPlayerScore = calculateScoreByPlayer(Player.otherPlayer(currentPlayer));
@@ -200,8 +155,40 @@ public class ChessBoard {
         return Result.LOSE;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public double calculateScoreByPlayer(Player player) {
+        double sum = 0;
+        for (File file : File.values()) {
+            List<PieceScore> pieceScores = generatePieceScoreList(player, file);
+            sum += calculateFileScore(pieceScores);
+        }
+        return sum;
+    }
+
+    private List<PieceScore> generatePieceScoreList(Player player, File file) {
+        return Arrays.stream(Rank.values())
+            .map(rank -> board.get(Position.of(file, rank)))
+            .filter(piece -> piece != null && piece.isSamePlayer(player))
+            .map(piece -> PieceScore.of(piece.symbol()))
+            .collect(Collectors.toList());
+    }
+
+    private double calculateFileScore(List<PieceScore> pieceScores) {
+        double sum = pieceScores.stream()
+            .filter(pieceScore -> pieceScore != null)
+            .map(PieceScore::score)
+            .mapToDouble(Double::doubleValue)
+            .sum();
+        return sum - calculatePawnsInFile(pieceScores);
+    }
+
+    private double calculatePawnsInFile(List<PieceScore> pieceScores) {
+        long count = pieceScores.stream()
+            .filter(pieceScore -> pieceScore.score() == PieceScore.Pawn.score())
+            .count();
+        if (count >= PAWN_COUNT_SAME_FILE) {
+            return count * PieceScore.DUPLICATE_PAWN;
+        }
+        return 0;
     }
 
     public boolean isKingOnlyOne() {
@@ -209,6 +196,18 @@ public class ChessBoard {
             .filter(piece -> piece != null)
             .filter(piece -> piece.symbol().equals(PieceSymbol.King.symbol()))
             .count();
-        return kingCount != 2;
+        return kingCount != DEFAULT_KING_COUNT;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public String getSymbol(final Position position) {
+        Piece piece = board.get(position);
+        if (piece == null) {
+            return NULL_PIECE_SYMBOL;
+        }
+        return piece.symbolByPlayer();
     }
 }
