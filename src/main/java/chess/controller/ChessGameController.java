@@ -14,13 +14,16 @@ import java.util.List;
 public class ChessGameController {
 
     private static final String MOVE_COMMAND_DELIMITER = " ";
+    private static final int CURRENT_POSITION_INDEX = 1;
+    private static final int DESTINATION_POSITION_INDEX = 2;
+    private static final int POSITION_FILE_INDEX = 0;
+    private static final int POSITION_RANK_INDEX = 1;
 
     public void run() {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
         showMap(chessGame.createMap());
-        // 화나.
         progressGame(chessGame, whitePlayer, blackPlayer);
         showResult(whitePlayer, blackPlayer);
     }
@@ -88,15 +91,17 @@ public class ChessGameController {
 
     private void moveTurn(ChessGame chessGame, Player currentPlayer, Player opponentPlayer, String command) {
         final String[] moveCommand = command.split(MOVE_COMMAND_DELIMITER);
-        List<Position> positions = findMoveCommandPosition(moveCommand[1], moveCommand[2]);
-        chessGame.move(currentPlayer, opponentPlayer, positions.get(0), positions.get(1));
+        List<Position> positions =
+                findMoveCommandPosition(moveCommand[CURRENT_POSITION_INDEX], moveCommand[DESTINATION_POSITION_INDEX]);
+        chessGame.move(currentPlayer, opponentPlayer,
+                positions.get(POSITION_FILE_INDEX), positions.get(POSITION_RANK_INDEX));
     }
 
     public List<Position> findMoveCommandPosition(final String currentPosition, final String destinationPosition) {
-        final char currentFile = currentPosition.charAt(0);
-        final int currentRank = currentPosition.charAt(1) - '0';
-        final char destinationFile = destinationPosition.charAt(0);
-        final int destinationRank = destinationPosition.charAt(1) - '0';
+        final char currentFile = currentPosition.charAt(POSITION_FILE_INDEX);
+        final int currentRank = currentPosition.charAt(POSITION_RANK_INDEX) - '0';
+        final char destinationFile = destinationPosition.charAt(POSITION_FILE_INDEX);
+        final int destinationRank = destinationPosition.charAt(POSITION_RANK_INDEX) - '0';
         return List.of(new Position(currentRank, currentFile), new Position(destinationRank, destinationFile));
     }
 
