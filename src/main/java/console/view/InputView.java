@@ -6,6 +6,7 @@ import static chess.position.Rank.*;
 import static chess.position.Rank.EIGHT;
 
 import chess.position.*;
+import console.command.*;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,24 +20,31 @@ public class InputView {
     );
     private static final Scanner SCANNER = new Scanner(System.in);
 
+    public static boolean inputIsStartGame() {
+        String command = SCANNER.nextLine();
+        if (command.equals("start")) {
+            return true;
+        }
+        if (command.equals("end")) {
+            return false;
+        }
+        throw new IllegalArgumentException("잘못된 명령어 입니다.");
+    }
+
     public static Command inputCommand() {
         String command = SCANNER.nextLine();
-
-        if (command.matches("^start$")) {
-            return new StartCommand();
-        }
-        if (command.matches("^end$")) {
+        if (command.equals("end")) {
             return new EndCommand();
+        }
+        if (command.equals("status")) {
+            return new StatusCommand();
         }
         if (command.matches("^move [a-h][1-8] [a-h][1-8]$")) {
             String from = command.split(" ")[1];
             String to = command.split(" ")[2];
             return new MoveCommand(createPosition(from), createPosition(to));
         }
-        if (command.matches("^status$")) {
-            return new StatusCommand();
-        }
-        throw new IllegalArgumentException("[ERROR] 잘못된 명령어를 입력하셨습니다.");
+        throw new IllegalArgumentException("잘못된 명령어 입니다.");
     }
 
     private static Position createPosition(String position) {

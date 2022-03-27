@@ -2,7 +2,6 @@ package chess.piece;
 
 import chess.position.Position;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -16,24 +15,25 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Pieces pieces) {
         if (!isForward(to)) {
             return false;
         }
-
-        if (getPosition().isVerticalWay(to) && isValidDistance(to)) {
-            return !pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
+        if (isUncapturablePosition(to)) {
+            return !pieces.hasPieceByPosition(to);
         }
-
-        if (getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == 1) {
-            return pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
+        if (isCapturablePosition(to)) {
+            return pieces.hasPieceByPosition(to);
         }
-
         return false;
     }
 
     private boolean isForward(Position to) {
         return getColor().isForward(getPosition(), to);
+    }
+
+    private boolean isUncapturablePosition(Position to) {
+        return getPosition().isVerticalWay(to) && isValidDistance(to);
     }
 
     private boolean isValidDistance(Position to) {
@@ -49,6 +49,10 @@ public class Pawn extends Piece {
 
     private boolean isStartPawnPosition() {
         return getColor().isStartPawnPosition(getPosition());
+    }
+
+    private boolean isCapturablePosition(Position to) {
+        return getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == 1;
     }
 
     @Override

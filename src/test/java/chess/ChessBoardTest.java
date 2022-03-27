@@ -23,7 +23,7 @@ class ChessBoardTest {
     void selectedNotFoundPieces() {
         ChessBoard chessBoard = new ChessBoard(List.of(), Color.WHITE);
 
-        assertThatThrownBy(() -> chessBoard.move(new Position(D, FIVE), new Position(F, SIX)))
+        assertThatThrownBy(() -> chessBoard.transfer(new Position(D, FIVE), new Position(F, SIX)))
             .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
@@ -33,7 +33,8 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(
             List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
-        assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, SEVEN)))
+        assertThatThrownBy(
+            () -> chessBoard.transfer(new Position(A, SEVEN), new Position(A, SEVEN)))
             .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
@@ -43,7 +44,8 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(
             List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
-        assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(B, SEVEN)))
+        assertThatThrownBy(
+            () -> chessBoard.transfer(new Position(A, SEVEN), new Position(B, SEVEN)))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,16 +56,11 @@ class ChessBoardTest {
             List.of(new King(Color.WHITE, new Position(E, FIVE)),
                 new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
 
-        chessBoard.move(new Position(E, FIVE), new Position(E, SIX));
+        ChessBoard newChessBoard = chessBoard.transfer(new Position(E, FIVE), new Position(E, SIX));
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> chessBoard.move(new Position(E, SIX), new Position(E, FIVE)))
-                .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                new King(Color.WHITE, new Position(E, SIX)),
-                new King(Color.BLACK, new Position(B, FIVE)));
-        });
-
+        assertThatThrownBy(
+            () -> newChessBoard.transfer(new Position(E, SIX), new Position(E, FIVE)))
+            .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
     @Test
@@ -74,10 +71,10 @@ class ChessBoardTest {
                 new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
 
         assertThatCode(() -> {
-            chessBoard.move(new Position(E, FIVE), new Position(E, SIX));
-            chessBoard.move(new Position(B, FIVE), new Position(B, SIX));
-            chessBoard.move(new Position(E, SIX), new Position(E, FIVE));
-            chessBoard.move(new Position(B, SIX), new Position(B, FIVE));
+            chessBoard.transfer(new Position(E, FIVE), new Position(E, SIX))
+                .transfer(new Position(B, FIVE), new Position(B, SIX))
+                .transfer(new Position(E, SIX), new Position(E, FIVE))
+                .transfer(new Position(B, SIX), new Position(B, FIVE));
         }).doesNotThrowAnyException();
     }
 
@@ -88,13 +85,9 @@ class ChessBoardTest {
             List.of(new King(Color.WHITE, new Position(E, FIVE)),
                 new Pawn(Color.WHITE, new Position(E, SIX))), Color.WHITE);
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> chessBoard.move(new Position(E, FIVE), new Position(E, SIX)))
-                .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                new King(Color.WHITE, new Position(E, FIVE)),
-                new Pawn(Color.WHITE, new Position(E, SIX)));
-        });
+        assertThatThrownBy(
+            () -> chessBoard.transfer(new Position(E, FIVE), new Position(E, SIX)))
+            .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -105,13 +98,8 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.WHITE, from),
             new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
-        assertAll(() -> {
-            assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(java.lang.IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                new Queen(Color.WHITE, from),
-                new Pawn(Color.BLACK, obstacle));
-        });
+        assertThatThrownBy(() -> chessBoard.transfer(from, to))
+            .isInstanceOf(java.lang.IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideHasObstacleVerticalAndHorizontalWay() {
@@ -134,12 +122,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.WHITE, from),
             new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
-        assertAll(() -> {
-            assertThatCode(() -> chessBoard.move(from, to)).doesNotThrowAnyException();
-            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                new Knight(Color.WHITE, to),
-                new Pawn(Color.BLACK, obstacle));
-        });
+        assertThatCode(() -> chessBoard.transfer(from, to)).doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> provideOverObstacle() {
@@ -158,9 +141,9 @@ class ChessBoardTest {
             List.of(new Queen(Color.WHITE, new Position(D, FOUR)),
                 new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
 
-        chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
+        ChessBoard newChessBoard = chessBoard.transfer(new Position(D, FOUR), new Position(D, FIVE));
 
-        assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+        assertThat(newChessBoard.getPieces()).containsExactlyInAnyOrder(
             new Queen(Color.WHITE, new Position(D, FIVE)));
     }
 
@@ -171,9 +154,9 @@ class ChessBoardTest {
             List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
                 new Pawn(Color.BLACK, new Position(E, FIVE))), Color.WHITE);
 
-        chessBoard.move(new Position(D, FOUR), new Position(E, FIVE));
+        ChessBoard newChessBoard = chessBoard.transfer(new Position(D, FOUR), new Position(E, FIVE));
 
-        assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+        assertThat(newChessBoard.getPieces()).containsExactlyInAnyOrder(
             new Pawn(Color.WHITE, new Position(E, FIVE))
         );
     }
@@ -196,8 +179,10 @@ class ChessBoardTest {
                 new King(Color.BLACK, new Position(E, FOUR))), Color.WHITE);
 
         assertAll(() -> {
-            assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(new BigDecimal("20.5"));
-            assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(new BigDecimal("20.5"));
+            assertThat(chessBoard.getScore(Color.WHITE).getValue())
+                .isEqualTo(new BigDecimal("20.5"));
+            assertThat(chessBoard.getScore(Color.BLACK).getValue())
+                .isEqualTo(new BigDecimal("20.5"));
         });
     }
 
@@ -213,8 +198,10 @@ class ChessBoardTest {
                 new Pawn(Color.BLACK, new Position(E, THREE))), Color.WHITE);
 
         assertAll(() -> {
-            assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(new BigDecimal("6.5"));
-            assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(new BigDecimal("2.0"));
+            assertThat(chessBoard.getScore(Color.WHITE).getValue())
+                .isEqualTo(new BigDecimal("6.5"));
+            assertThat(chessBoard.getScore(Color.BLACK).getValue())
+                .isEqualTo(new BigDecimal("2.0"));
         });
     }
 

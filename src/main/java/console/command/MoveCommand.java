@@ -1,7 +1,8 @@
-package console.view;
+package console.command;
 
 import chess.ChessBoard;
 import chess.position.Position;
+import console.view.OutputView;
 
 public class MoveCommand implements Command {
 
@@ -14,23 +15,14 @@ public class MoveCommand implements Command {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public boolean isRunning() {
+        return true;
     }
 
     @Override
     public ChessBoard execute(ChessBoard chessBoard) {
-        chessBoard.move(from, to);
-        return chessBoard;
-    }
-
-    @Override
-    public Position getFrom() {
-        return from;
-    }
-
-    @Override
-    public Position getTo() {
-        return to;
+        ChessBoard newChessBoard = chessBoard.transfer(from, to);
+        OutputView.printChessBoard(newChessBoard.getPieces());
+        return newChessBoard;
     }
 }

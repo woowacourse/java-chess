@@ -8,6 +8,8 @@ import static chess.position.Rank.TWO;
 import chess.ChessBoard;
 import chess.piece.*;
 import chess.position.Position;
+import console.command.Command;
+import console.command.EndCommand;
 import console.view.*;
 import java.util.List;
 
@@ -15,60 +17,26 @@ public class Application {
 
     public static void main(String[] args) {
         OutputView.printInitChessGameMessage();
-        Command command = inputCommand();
-        ChessBoard chessBoard = null;
+        boolean isStartGame = inputIsStartGame();
 
-        while (true) {
-            try {
-                if (command instanceof StartCommand) {
-                    if(chessBoard != null) {
-                        throw new IllegalStateException("체스 게임이 이미 진행중입니다.");
-                    }
-
-                    chessBoard = new ChessBoard(createPieces(), Color.WHITE);
-                    OutputView.printChessBoard(chessBoard.getPieces());
-                }
-
-                if (command instanceof MoveCommand) {
-                    if (chessBoard == null) {
-                        throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
-                    }
-
-                    chessBoard.move(command.getFrom(), command.getTo());
-                    OutputView.printChessBoard(chessBoard.getPieces());
-                }
-
-                if (command instanceof StatusCommand) {
-                    if (chessBoard == null) {
-                        throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
-                    }
-
-                    OutputView.printScores(chessBoard.getScore(Color.WHITE),
-                        chessBoard.getScore(Color.BLACK));
-                }
-
-                if (chessBoard != null && chessBoard.isFinished()) {
-                    OutputView.printWinner(chessBoard.getWinner());
-                    return;
-                }
-
-                if (command instanceof EndCommand) {
-                    return;
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-            command = inputCommand();
+        if (isStartGame) {
+            ChessBoard chessBoard = createChessBoard();
+            OutputView.printChessBoard(chessBoard.getPieces());
+            executeChessGame(chessBoard);
         }
     }
 
-    private static Command inputCommand() {
+    private static boolean inputIsStartGame() {
         try {
-            return InputView.inputCommand();
+            return InputView.inputIsStartGame();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return inputCommand();
+            return inputIsStartGame();
         }
+    }
+
+    private static ChessBoard createChessBoard() {
+        return new ChessBoard(createPieces(), Color.WHITE);
     }
 
     private static List<Piece> createPieces() {
@@ -105,5 +73,43 @@ public class Application {
             new Pawn(Color.WHITE, new Position(F, TWO)),
             new Pawn(Color.WHITE, new Position(G, TWO)),
             new Pawn(Color.WHITE, new Position(H, TWO)));
+    }
+
+    private static void executeChessGame(ChessBoard chessBoard) {
+        Command command = inputCommand();
+
+        while (command.isRunning()) {
+            chessBoard = executeCommand(chessBoard, command);
+            command = inputNextCommand(chessBoard, command);
+        }
+
+        if (chessBoard.isFinished()) {
+            OutputView.printWinner(chessBoard.getWinner());
+        }
+    }
+
+    private static Command inputCommand() {
+        try {
+            return InputView.inputCommand();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputCommand();
+        }
+    }
+
+    private static ChessBoard executeCommand(ChessBoard chessBoard, Command command) {
+        try {
+            return command.execute(chessBoard);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return chessBoard;
+        }
+    }
+
+    private static Command inputNextCommand(ChessBoard chessBoard, Command command) {
+        if (!chessBoard.isFinished()) {
+            return inputCommand();
+        }
+        return new EndCommand();
     }
 }

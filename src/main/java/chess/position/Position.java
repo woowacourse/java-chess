@@ -49,10 +49,6 @@ public class Position {
         return file.getDistance(other.file);
     }
 
-    public boolean hasLinearPath(Position to) {
-        return isVerticalWay(to) || isHorizontalWay(to) || isDiagonalWay(to);
-    }
-
     public Collection<Position> getLinearPath(Position to) {
         if (isVerticalWay(to)) {
             return getVerticalPath(to);

@@ -2,7 +2,6 @@ package chess.piece;
 
 import chess.position.Position;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Queen extends Piece {
 
@@ -16,9 +15,17 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Pieces pieces) {
+        return isValidWay(to) && !hasObstacle(to, pieces);
+    }
+
+    private boolean isValidWay(Position to) {
         return getPosition().isDiagonalWay(to) || getPosition().isVerticalWay(to)
             || getPosition().isHorizontalWay(to);
+    }
+
+    private boolean hasObstacle(Position to, Pieces pieces) {
+        return pieces.hasObstacleOnLinearPath(getPosition(), to);
     }
 
     @Override

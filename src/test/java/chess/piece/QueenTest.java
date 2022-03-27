@@ -21,7 +21,7 @@ class QueenTest {
     void moveInvalidMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK, from);
 
-        assertThatThrownBy(() -> queen.transfer(to, List.of(queen)))
+        assertThatThrownBy(() -> queen.transfer(to, new Pieces(List.of(queen))))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,7 +40,7 @@ class QueenTest {
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK, from);
 
-        assertThat(queen.transfer(to, List.of(queen)))
+        assertThat(queen.transfer(to, new Pieces(List.of(queen))))
             .isEqualTo(new Queen(Color.BLACK, to));
     }
 

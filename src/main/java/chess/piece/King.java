@@ -16,7 +16,7 @@ public class King extends Piece{
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+    protected boolean isPossibleMovement(Position to, Pieces pieces) {
         return getPosition().isAdjacent(to);
     }
 
