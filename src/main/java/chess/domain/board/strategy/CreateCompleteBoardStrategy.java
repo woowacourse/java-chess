@@ -58,7 +58,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
         return Arrays.stream(Column.values())
-                .map(column -> new Position(row, column))
+                .map(column -> new Position(column, row))
                 .collect(Collectors.toMap(Function.identity(), p -> new Pawn(color)));
     }
 
@@ -73,7 +73,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
         return lineOrder.stream()
-                .collect(Collectors.toMap(entry -> new Position(row, entry.getKey()),
+                .collect(Collectors.toMap(entry -> new Position(entry.getKey(), row),
                         entry -> PieceFactory.createPiece(entry.getValue(), color)));
     }
 

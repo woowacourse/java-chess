@@ -12,16 +12,16 @@ public class Position {
     private static final int COLUMN_POSITION_FROM = 0;
     private static final int COLUMN_POSITION_TO = 1;
 
-    private final Row row;
     private final Column column;
+    private final Row row;
 
-    public Position(final Row row, final Column column) {
-        this.row = row;
+    public Position(final Column column, final Row row) {
         this.column = column;
+        this.row = row;
     }
 
     public Position(String rowString, String columnString) {
-        this(Row.from(rowString), Column.valueOf(columnString));
+        this(Column.valueOf(columnString), Row.from(rowString));
     }
 
     public static Position from(String rawPosition) {
@@ -30,7 +30,7 @@ public class Position {
         }
         Row row = Row.from(rawPosition.substring(ROW_POSITION_FROM, ROW_POSITION_TO));
         Column column = Column.valueOf(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
-        return new Position(row, column);
+        return new Position(column, row);
     }
 
     public int calculateRowDifference(final Position target) {
@@ -42,7 +42,7 @@ public class Position {
     }
 
     public Position move(final Direction direction) {
-        return new Position(row.move(direction.getRow()), column.move(direction.getColumn()));
+        return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
     }
 
     public Row getRow() {

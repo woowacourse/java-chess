@@ -18,14 +18,14 @@ class PositionTest {
     @ParameterizedTest(name = "{index} {displayName} row={0} column={1}")
     @CsvSource(value = {"FIRST, a", "EIGHTH, h", "FIRST, h", "EIGHTH, a"})
     void valid_Position(final Row row, final Column column) {
-        assertThatNoException().isThrownBy(() -> new Position(row, column));
+        assertThatNoException().isThrownBy(() -> new Position(column, row));
     }
 
     @DisplayName("두 위치 간의 행 차이를 계산한다.")
     @Test
     void calculate_Row() {
-        Position current = new Position(Row.FIRST, Column.a);
-        Position target = new Position(Row.SECOND, Column.a);
+        Position current = new Position(Column.a, Row.FIRST);
+        Position target = new Position(Column.a, Row.SECOND);
         int actual = current.calculateRowDifference(target);
 
         assertThat(actual).isEqualTo(-1);
@@ -34,8 +34,8 @@ class PositionTest {
     @DisplayName("두 위치 간의 열 차이를 계산한다.")
     @Test
     void calculate_Column() {
-        Position current = new Position(Row.FIRST, Column.a);
-        Position target = new Position(Row.FIRST, Column.b);
+        Position current = new Position(Column.a, Row.FIRST);
+        Position target = new Position(Column.b, Row.FIRST);
         int actual = current.calculateColumnDifference(target);
 
         assertThat(actual).isEqualTo(-1);
@@ -47,7 +47,7 @@ class PositionTest {
         @Test
         @DisplayName("체스판의 범위를 벗어났으면 예외를 반환한다")
         void outOfBound() {
-            Position current = new Position(Row.FIRST, Column.a);
+            Position current = new Position(Column.a, Row.FIRST);
             assertThatThrownBy(
                     () -> current.move(Direction.SW)
             ).isInstanceOf(IllegalArgumentException.class)
@@ -58,8 +58,8 @@ class PositionTest {
         @Test
         @DisplayName("체스판의 범위내면 위치로 이동한다")
         void successMove() {
-            Position current = new Position(Row.FIRST, Column.a);
-            final Position expected = new Position(Row.SECOND, Column.a);
+            Position current = new Position(Column.a, Row.FIRST);
+            final Position expected = new Position(Column.a, Row.SECOND);
 
             assertThat(current.move(Direction.N)).isEqualTo(expected);
 

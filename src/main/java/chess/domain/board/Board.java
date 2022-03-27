@@ -133,7 +133,7 @@ public class Board {
 
     private boolean hasAnotherPawnInSameColumn(Map.Entry<Position, Piece> piece) {
         return Arrays.stream(Row.values())
-                .map(row -> new Position(row, piece.getKey().getColumn()))
+                .map(row -> new Position(piece.getKey().getColumn(), row))
                 .anyMatch(position -> !piece.getKey().equals(position)
                         && get(position).equals(piece.getValue()));
     }

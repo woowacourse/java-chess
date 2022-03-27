@@ -1,14 +1,14 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class KingTest {
 
@@ -19,8 +19,8 @@ class KingTest {
         @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
         void invalid_Direction() {
-            Position current = new Position(Row.FIRST, Column.a);
-            Position invalidTarget = new Position(Row.THIRD, Column.b);
+            Position current = new Position(Column.a, Row.FIRST);
+            Position invalidTarget = new Position(Column.b, Row.THIRD);
             King king = new King(Color.BLACK);
 
             assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
@@ -29,8 +29,8 @@ class KingTest {
         @DisplayName("유효하면 방향 객체를 반환한다.")
         @Test
         void valid_Direction() {
-            Position current = new Position(Row.FIRST, Column.a);
-            Position target = new Position(Row.SECOND, Column.b);
+            Position current = new Position(Column.a, Row.FIRST);
+            Position target = new Position(Column.b, Row.SECOND);
             King king = new King(Color.BLACK);
 
             Direction actual = king.findValidDirection(current, target);
@@ -46,8 +46,8 @@ class KingTest {
         @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
         void invalid_Range() {
-            Position current = new Position(Row.FIRST, Column.a);
-            Position invalidTarget = new Position(Row.EIGHTH, Column.a);
+            Position current = new Position(Column.a, Row.FIRST);
+            Position invalidTarget = new Position(Column.a, Row.EIGHTH);
             King king = new King(Color.BLACK);
 
             assertThatThrownBy(() -> king.findValidDirection(current, invalidTarget));
@@ -56,8 +56,8 @@ class KingTest {
         @DisplayName("유효하면 방향 객체를 반환한다.")
         @Test
         void valid_Direction() {
-            Position current = new Position(Row.FIRST, Column.a);
-            Position target = new Position(Row.SECOND, Column.b);
+            Position current = new Position(Column.a, Row.FIRST);
+            Position target = new Position(Column.b, Row.SECOND);
             King king = new King(Color.BLACK);
 
             Direction actual = king.findValidDirection(current, target);
