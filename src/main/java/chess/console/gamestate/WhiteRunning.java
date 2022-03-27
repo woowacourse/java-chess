@@ -1,4 +1,4 @@
-package chess.gamestate;
+package chess.console.gamestate;
 
 import static chess.domain.Color.WHITE;
 

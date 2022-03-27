@@ -1,4 +1,4 @@
-package chess.gamestate;
+package chess.console.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -1,4 +1,4 @@
-package chess.gamestate;
+package chess.console.gamestate;
 
 import chess.domain.Position;
 import java.util.Objects;

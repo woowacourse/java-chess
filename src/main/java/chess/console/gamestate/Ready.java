@@ -1,7 +1,7 @@
-package chess.gamestate;
+package chess.console.gamestate;
 
+import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
-import chess.view.OutputView;
 
 public class Ready implements GameState {
 

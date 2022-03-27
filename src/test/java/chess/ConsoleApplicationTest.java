@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest extends NsTest {
+class ConsoleApplicationTest extends NsTest {
 
     @Test
     void 게임판_생성() {
@@ -99,6 +99,6 @@ class ApplicationTest extends NsTest {
 
     @Override
     public void runMain() {
-        Application.main(new String[]{});
+        ConsoleApplication.main(new String[]{});
     }
 }

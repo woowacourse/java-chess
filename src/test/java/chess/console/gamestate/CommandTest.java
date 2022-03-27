@@ -1,7 +1,7 @@
-package chess.gamestate;
+package chess.console.gamestate;
 
-import static chess.gamestate.Command.MOVE;
-import static chess.gamestate.Command.START;
+import static chess.console.gamestate.Command.MOVE;
+import static chess.console.gamestate.Command.START;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

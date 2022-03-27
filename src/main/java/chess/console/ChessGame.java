@@ -1,9 +1,9 @@
-package chess;
+package chess.console;
 
-import chess.gamestate.GameState;
-import chess.gamestate.Ready;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.gamestate.GameState;
+import chess.console.gamestate.Ready;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 
 public class ChessGame {
 
