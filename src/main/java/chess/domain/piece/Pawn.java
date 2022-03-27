@@ -43,7 +43,7 @@ public class Pawn extends Piece {
                 .map(source::addDirection)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .anyMatch(position -> position.equals(target));
+                .anyMatch(target::equals);
     }
 
     @Override
