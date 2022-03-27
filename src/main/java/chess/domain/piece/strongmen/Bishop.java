@@ -19,12 +19,12 @@ public final class Bishop extends Strongmen {
     }
 
     public static Bishop ofLeft(Color color) {
-        Position position = Position.of(LEFT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(LEFT_INIT_FILE, initRankOf(color));
         return new Bishop(color, position);
     }
 
     public static Bishop ofRight(Color color) {
-        Position position = Position.of(RIGHT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(RIGHT_INIT_FILE, initRankOf(color));
         return new Bishop(color, position);
     }
 

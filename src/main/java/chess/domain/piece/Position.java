@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class Position {
 
+    public static final int LEFT_END_FILE_IDX = 0;
+    public static final int RIGHT_END_FILE_IDX = 7;
+
     private final int fileIdx;
     private final int rankIdx;
 
@@ -31,11 +34,7 @@ public class Position {
     }
 
     public int rankDifference(Position targetPosition) {
-        return Math.abs(rankRawDifference(targetPosition));
-    }
-
-    public int rankRawDifference(Position targetPosition) {
-        return targetPosition.rankIdx - rankIdx;
+        return Math.abs(targetPosition.rankIdx - rankIdx);
     }
 
     public Position movedBy(int fileDiff, int rankDiff) {

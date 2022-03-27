@@ -18,7 +18,7 @@ public final class Queen extends Strongmen {
     }
 
     public Queen(Color color) {
-        this(color, Position.of(INIT_FILE, firstRankOf(color)));
+        this(color, Position.of(INIT_FILE, initRankOf(color)));
     }
 
     @Override

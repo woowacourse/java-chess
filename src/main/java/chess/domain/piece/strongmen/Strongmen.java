@@ -9,18 +9,18 @@ import chess.strategy.OccupiedChecker;
 
 public abstract class Strongmen extends Chessmen {
 
-    private static final int BLACK_FIRST_RANK = 7;
-    private static final int WHITE_FIRST_RANK = 0;
+    private static final int BLACK_INIT_RANK = 7;
+    private static final int WHITE_INIT_RANK = 0;
 
     protected Strongmen(Color color, Position position) {
         super(color, position);
     }
 
-    protected static int firstRankOf(Color color) {
+    protected static int initRankOf(Color color) {
         if (color == BLACK) {
-            return BLACK_FIRST_RANK;
+            return BLACK_INIT_RANK;
         }
-        return WHITE_FIRST_RANK;
+        return WHITE_INIT_RANK;
     }
 
     @Override

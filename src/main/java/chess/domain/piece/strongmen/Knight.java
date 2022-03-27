@@ -22,12 +22,12 @@ public final class Knight extends Strongmen {
     }
 
     public static Knight ofLeft(Color color) {
-        Position position = Position.of(LEFT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(LEFT_INIT_FILE, initRankOf(color));
         return new Knight(color, position);
     }
 
     public static Knight ofRight(Color color) {
-        Position position = Position.of(RIGHT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(RIGHT_INIT_FILE, initRankOf(color));
         return new Knight(color, position);
     }
 

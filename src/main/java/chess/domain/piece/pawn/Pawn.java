@@ -1,6 +1,8 @@
 package chess.domain.piece.pawn;
 
 import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Position.LEFT_END_FILE_IDX;
+import static chess.domain.piece.Position.RIGHT_END_FILE_IDX;
 
 import chess.domain.piece.Chessmen;
 import chess.domain.piece.Color;
@@ -22,9 +24,6 @@ public abstract class Pawn extends Chessmen {
 
     private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
 
-    private static final int LEFT_END_FILE_IDX = 0;
-    private static final int RIGHT_END_FILE_IDX = 7;
-
     Pawn(Color color, Position position) {
         super(color, position);
     }
@@ -45,19 +44,19 @@ public abstract class Pawn extends Chessmen {
         return targetPosition == forwardPosition;
     }
 
-    protected Position getMovablePosition(int moveRankDiff) {
-        return this.position.movedBy(MOVE_FILE_DIFF, forwardRankDiff(moveRankDiff));
-    }
-
     private boolean canJump(Position targetPosition) {
-        if (!position.hasRankIdxOf(initRank())) {
+        if (hasMoved()) {
             return false;
         }
         Position jumpPosition = getMovablePosition(JUMP_RANK_DIFF);
         return targetPosition == jumpPosition;
     }
 
-    abstract protected int initRank();
+    abstract protected boolean hasMoved();
+
+    protected Position getMovablePosition(int moveRankDiff) {
+        return position.movedBy(MOVE_FILE_DIFF, forwardRankDiff(moveRankDiff));
+    }
 
     abstract protected int forwardRankDiff(int rankDiff);
 

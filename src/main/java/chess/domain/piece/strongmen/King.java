@@ -20,7 +20,7 @@ public final class King extends Strongmen {
     }
 
     public King(Color color) {
-        this(color, Position.of(INIT_FILE, firstRankOf(color)));
+        this(color, Position.of(INIT_FILE, initRankOf(color)));
     }
 
     @Override

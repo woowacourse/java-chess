@@ -5,7 +5,7 @@ import chess.domain.piece.Position;
 
 public final class WhitePawn extends Pawn {
 
-    private static final int INIT_RANK = 1;
+    private static final int INIT_RANK_IDX = 1;
     private static final int RANK_FORWARD_DIRECTION = 1;
 
     private static final String DISPLAY = "♗";
@@ -15,12 +15,12 @@ public final class WhitePawn extends Pawn {
     }
 
     WhitePawn(int fileIdx) {
-        this(Position.of(fileIdx, INIT_RANK));
+        this(Position.of(fileIdx, INIT_RANK_IDX));
     }
 
     @Override
-    protected int initRank() {
-        return INIT_RANK;
+    protected boolean hasMoved() {
+        return !position.hasRankIdxOf(INIT_RANK_IDX);
     }
 
     @Override

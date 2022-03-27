@@ -19,12 +19,12 @@ public final class Rook extends Strongmen {
     }
 
     public static Rook ofLeft(Color color) {
-        Position position = Position.of(LEFT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(LEFT_INIT_FILE, initRankOf(color));
         return new Rook(color, position);
     }
 
     public static Rook ofRight(Color color) {
-        Position position = Position.of(RIGHT_INIT_FILE, firstRankOf(color));
+        Position position = Position.of(RIGHT_INIT_FILE, initRankOf(color));
         return new Rook(color, position);
     }
 
