@@ -46,6 +46,11 @@ public class Knight extends Piece {
 	}
 
 	@Override
+	public boolean isKing() {
+		return false;
+	}
+
+	@Override
 	public double getScore() {
 		return KNIGHT_SCORE;
 	}

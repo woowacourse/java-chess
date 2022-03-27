@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.UnitPosition;
@@ -156,5 +157,10 @@ public class Board {
 
 	public Map<Position, Piece> getPieces() {
 		return new HashMap<>(pieces);
+	}
+
+	public boolean isKingNotExist(Color color) {
+		return this.pieces.values().stream()
+			.noneMatch(piece -> piece.isKing() && piece.isSameColor(color));
 	}
 }

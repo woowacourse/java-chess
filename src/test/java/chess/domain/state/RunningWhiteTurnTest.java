@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.piece.King;
 import chess.domain.position.Position;
 import chess.domain.command.Move;
 import chess.domain.command.Start;
@@ -47,5 +48,20 @@ public class RunningWhiteTurnTest {
 
 		assertThatThrownBy(() -> state.proceed(new Move("b7", "b6")))
 			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	@DisplayName("RunningWhiteTurn일 때 상대방의 King을 잡으면 Finished로 전환")
+	void killOpponentKing() {
+		Map<Position, Piece> board = Map.of(
+			new Position(6, 1), King.createBlack(),
+			new Position(7, 3), King.createWhite(),
+			new Position(5, 2), Pawn.createWhite()
+		);
+		State state = State.create(board);
+		state = state.proceed(new Start());
+		state = state.proceed(new Move("b5", "a6"));
+
+		assertThat(state).isInstanceOf(Finished.class);
 	}
 }

@@ -19,6 +19,10 @@ public abstract class Piece {
 		return this.color == piece.color;
 	}
 
+	public boolean isSameColor(Color color) {
+		return this.color == color;
+	}
+
 	public abstract boolean isPawn();
 
 	public boolean isWhite() {
@@ -26,4 +30,6 @@ public abstract class Piece {
 	}
 
 	public abstract double getScore();
+
+	public abstract boolean isKing();
 }
