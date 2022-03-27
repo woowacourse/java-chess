@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import chess.domain.PositionMock;
 import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,8 +25,8 @@ class PositionTest {
     @DisplayName("두 위치 간의 행 차이를 계산한다.")
     @Test
     void calculate_Row() {
-        Position current = new Position(Column.a, Row.FIRST);
-        Position target = new Position(Column.a, Row.SECOND);
+        Position current = PositionMock.a1;
+        Position target = PositionMock.a2;
         int actual = current.calculateRowDifference(target);
 
         assertThat(actual).isEqualTo(-1);
@@ -34,8 +35,8 @@ class PositionTest {
     @DisplayName("두 위치 간의 열 차이를 계산한다.")
     @Test
     void calculate_Column() {
-        Position current = new Position(Column.a, Row.FIRST);
-        Position target = new Position(Column.b, Row.FIRST);
+        Position current = PositionMock.a1;
+        Position target = PositionMock.b1;
         int actual = current.calculateColumnDifference(target);
 
         assertThat(actual).isEqualTo(-1);
@@ -47,7 +48,7 @@ class PositionTest {
         @Test
         @DisplayName("체스판의 범위를 벗어났으면 예외를 반환한다")
         void outOfBound() {
-            Position current = new Position(Column.a, Row.FIRST);
+            Position current = PositionMock.a1;
             assertThatThrownBy(
                     () -> current.move(Direction.SW)
             ).isInstanceOf(IllegalArgumentException.class)
@@ -58,8 +59,8 @@ class PositionTest {
         @Test
         @DisplayName("체스판의 범위내면 위치로 이동한다")
         void successMove() {
-            Position current = new Position(Column.a, Row.FIRST);
-            final Position expected = new Position(Column.a, Row.SECOND);
+            Position current = PositionMock.a1;
+            final Position expected = PositionMock.a2;
 
             assertThat(current.move(Direction.N)).isEqualTo(expected);
 

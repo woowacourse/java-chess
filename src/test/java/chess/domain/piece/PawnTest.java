@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.PositionMock;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -22,8 +23,8 @@ class PawnTest {
         @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
         void invalid_Direction() {
-            Position current = new Position(Column.a, Row.SECOND);
-            Position invalidTarget = new Position(Column.c, Row.THIRD);
+            Position current = PositionMock.a2;
+            Position invalidTarget = PositionMock.c3;
             Pawn pawn = new Pawn(Color.BLACK);
 
             assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));
@@ -32,8 +33,8 @@ class PawnTest {
         @DisplayName("유효하면 방향 객체를 반환한다.")
         @Test
         void valid_Direction() {
-            Position current = new Position(Column.a, Row.FIRST);
-            Position target = new Position(Column.a, Row.SECOND);
+            Position current = PositionMock.a1;
+            Position target = PositionMock.a2;
             Pawn pawn = new Pawn(Color.WHITE);
 
             Direction actual = pawn.findValidDirection(current, target);
@@ -49,8 +50,8 @@ class PawnTest {
         @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
         void invalid_Range() {
-            Position current = new Position(Column.a, Row.FIRST);
-            Position invalidTarget = new Position(Column.a, Row.THIRD);
+            Position current = PositionMock.a1;
+            Position invalidTarget = PositionMock.a3;
             Pawn pawn = new Pawn(Color.WHITE);
 
             assertThatThrownBy(() -> pawn.findValidDirection(current, invalidTarget));

@@ -3,9 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -35,8 +33,8 @@ class StatusTest {
     void check_Score_With_King() {
         Piece king = new King(Color.BLACK);
         Piece queen = new Queen(Color.BLACK);
-        Position p1 = new Position(Column.a, Row.FIRST);
-        Position p2 = new Position(Column.a, Row.THIRD);
+        Position p1 = PositionMock.a1;
+        Position p2 = PositionMock.a3;
         Map<Position, Piece> pieces = Map.of(p1, king, p2, queen);
         Board board = new Board(new CreateMockBoardStrategy(pieces));
 
@@ -49,10 +47,10 @@ class StatusTest {
     @DisplayName("폰이 같은 열에 있으면 폰 하나를 0.5점으로 계산한다")
     void pawns_Score() {
         Piece pawn = new Pawn(Color.BLACK);
-        Position p1 = new Position(Column.a, Row.FIRST);
-        Position p2 = new Position(Column.a, Row.THIRD);
+        Position p1 = PositionMock.a1;
+        Position p2 = PositionMock.a3;
         Piece king = new King(Color.BLACK);
-        Position p3 = new Position(Column.a, Row.FOURTH);
+        Position p3 = PositionMock.a2;
         Map<Position, Piece> pieces = Map.of(p1, pawn, p2, pawn, p3, king);
         Board board = new Board(new CreateMockBoardStrategy(pieces));
 
