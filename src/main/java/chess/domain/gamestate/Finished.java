@@ -37,6 +37,17 @@ public class Finished implements State {
     }
 
     @Override
+    public int hasBlackWon() {
+        if (this.board.hasBlackKingCaptured()){
+            return -1;
+        }
+        if (this.board.hasWhiteKingCaptured()) {
+            return 1;
+        }
+        return Double.compare(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+    }
+
+    @Override
     public boolean isRunning() {
         return false;
     }

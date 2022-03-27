@@ -20,7 +20,6 @@ import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.xml.xpath.XPathNodes;
 
 public final class Board {
     private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
@@ -122,15 +121,15 @@ public final class Board {
     }
 
     public boolean hasKingCaptured(){
-        return 2 != countKing();
+        return 2 != collectKing().size();
     }
 
-    private int countKing() {
-        return (int) this.value.values()
+    private List<Piece> collectKing() {
+        return this.value.values()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(Piece::isKing)
-                .count();
+                .collect(Collectors.toList());
     }
 
     public double calculateScoreOfBlack() {
@@ -195,5 +194,15 @@ public final class Board {
 
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
+    }
+
+    public boolean hasBlackKingCaptured() {
+        return collectKing().stream()
+                .noneMatch(Piece::isBlack);
+    }
+
+    public boolean hasWhiteKingCaptured() {
+        return collectKing().stream()
+                .allMatch(Piece::isBlack);
     }
 }

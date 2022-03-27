@@ -1,6 +1,5 @@
 package chess.domain.gamestate;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -29,6 +28,11 @@ public class Ready implements State {
     @Override
     public double statusOfWhite() {
         throw new IllegalStateException("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
+    }
+
+    @Override
+    public int hasBlackWon() {
+        throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
     }
 
     @Override

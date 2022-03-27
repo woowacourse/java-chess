@@ -42,7 +42,7 @@ public class ChessGameController {
                 chessGame.move(positions.get(0), positions.get(1));
                 outputView.printBoard(chessGame.getBoard().getValue());
                 if (!chessGame.isRunning()) {
-                    outputView.printFinishMessage();
+                    printResult(chessGame);
                 }
             }
             if ("end".equals(command)) {
@@ -50,12 +50,25 @@ public class ChessGameController {
                     break;
                 }
                 chessGame.end();
-                outputView.printFinishMessage();
-                outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+                printResult(chessGame);
             }
             if ("status".equals(command)) {
                 outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
             }
+        }
+    }
+
+    private void printResult(ChessGame chessGame) {
+        outputView.printFinishMessage();
+        outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+        if (chessGame.hasBlackWon() > 0) {
+            outputView.printBlackWin();
+        }
+        if (chessGame.hasBlackWon() < 0) {
+            outputView.printWhiteWin();
+        }
+        if (chessGame.hasBlackWon() == 0) {
+            outputView.printDraw();
         }
     }
 }

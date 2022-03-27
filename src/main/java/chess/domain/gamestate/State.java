@@ -18,4 +18,6 @@ public interface State {
     boolean isRunning();
 
     Board getBoard();
+
+    int hasBlackWon();
 }

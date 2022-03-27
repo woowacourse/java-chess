@@ -40,6 +40,11 @@ public class Running implements State {
     }
 
     @Override
+    public int hasBlackWon() {
+        throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
+    }
+
+    @Override
     public boolean isRunning() {
         return true;
     }

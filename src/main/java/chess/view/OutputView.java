@@ -78,4 +78,16 @@ public class OutputView {
     public void printStatus(double statusOfWhite, double statusOfBlack) {
         System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
     }
+
+    public void printBlackWin() {
+        System.out.println("흑색 진영의 승리입니다.");
+    }
+
+    public void printWhiteWin() {
+        System.out.println("백색 진영의 승리입니다.");
+    }
+
+    public void printDraw() {
+        System.out.println("무승부입니다.");
+    }
 }

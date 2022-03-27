@@ -39,4 +39,8 @@ public class ChessGame {
     public Board getBoard() {
         return this.state.getBoard();
     }
+
+    public int hasBlackWon(){
+        return this.state.hasBlackWon();
+    }
 }
