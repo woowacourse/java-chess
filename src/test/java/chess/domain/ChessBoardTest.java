@@ -107,7 +107,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
+    @DisplayName("자신의 순서가 아니면 예외를 발생시킵니다..")
     void chessBoard_turn() {
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a7"), new Position("a6")))
