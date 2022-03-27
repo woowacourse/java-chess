@@ -29,6 +29,6 @@ public final class King extends Piece {
     }
 
     private List<Direction> direction() {
-        return List.of(Direction.values());
+        return Direction.getNonKnightDirection();
     }
 }

@@ -10,7 +10,6 @@ public final class Knight extends Piece{
         super(color, square);
     }
 
-
     @Override
     public boolean movable(Piece targetPiece) {
         Direction directionTo = findDirectionTo(targetPiece);
