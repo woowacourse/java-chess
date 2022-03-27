@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Name;
@@ -12,7 +11,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Position from, Position to) {
+    public boolean canMove(Piece targetPiece, Position from, Position to) {
         return moveStrategy.isValidateCanMove(color, from, to);
     }
 }

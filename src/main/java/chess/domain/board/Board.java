@@ -30,7 +30,7 @@ public class Board {
 
         validateNotSameColor(sourcePiece, targetPiece);
 
-        if (!sourcePiece.canMove(this, from, to) && !targetPiece.isEmpty()) {
+        if (!sourcePiece.canMove(targetPiece, from, to) && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
 
@@ -78,8 +78,4 @@ public class Board {
     public boolean isKingAlive(Position to) {
         return !findByPosition(to).isKing();
     }
-
-//    private boolean isOppositeColor(Piece sourcePiece, Piece targetPiece) {
-//        return !targetPiece.isEmpty() && !sourcePiece.isSameColor(targetPiece);
-//    }
 }

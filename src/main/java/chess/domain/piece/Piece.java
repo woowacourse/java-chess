@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Name;
@@ -20,7 +19,7 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public abstract boolean canMove(Board board, Position from, Position to);
+    public abstract boolean canMove(Piece targetPiece, Position from, Position to);
 
     public Color getColor() {
         return color;
@@ -39,6 +38,11 @@ public abstract class Piece {
 
     public boolean isSameColor(Piece targetPiece) {
         return this.color == targetPiece.color;
+    }
+
+    public boolean isOppositeColor(Color color) {
+        return (color == Color.WHITE && this.color == Color.BLACK) ||
+                (color == Color.BLACK && this.color == Color.WHITE);
     }
 
     public List<Position> getRoute(Position from, Position to) {
