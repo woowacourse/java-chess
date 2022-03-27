@@ -7,4 +7,8 @@ public enum Team {
 
 	Team() {
 	}
+
+	public boolean isSame(Team team) {
+		return this == team;
+	}
 }

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 public enum Symbol {
-	DOT(".", "."),
+	EMPTY(".", "."),
 	PAWN("P", "p"),
 	ROOK("R", "r"),
 	BISHOP("B", "b"),
