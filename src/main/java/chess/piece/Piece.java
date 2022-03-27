@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public abstract class Piece {
-    private Type type;
+    private final Type type;
     protected Color color;
 
     public Piece(Type type, Color color) {
@@ -22,6 +22,10 @@ public abstract class Piece {
         return this.type == type;
     }
 
+    public boolean isColor(Color color) {
+        return this.color == color;
+    }
+
     public String getSymbolByColor() {
         return type.getSymbol(color);
     }
@@ -33,5 +37,4 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
-
 }

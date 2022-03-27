@@ -28,8 +28,9 @@ public class Play implements State {
 
     @Override
     public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        boolean isKing = chessboard.movePiece(source, target, turn);
-        if (isKing) {
+        chessboard.movePiece(source, target, turn);
+
+        if (chessboard.isKing(target)) {
             return new Finish(chessboard);
         }
         turn.nextTurn();

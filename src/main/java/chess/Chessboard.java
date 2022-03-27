@@ -9,7 +9,11 @@ import java.util.List;
 
 public class Chessboard {
 
-    private final List<List<Piece>> board;
+    private final List<Rank> board;
+
+    private Chessboard(List<Rank> board) {
+        this.board = board;
+    }
 
     public static Chessboard emptyChessboard() {
         return new Chessboard(new ArrayList<>());
@@ -19,105 +23,15 @@ public class Chessboard {
         return new Chessboard();
     }
 
-    public double computeScore(Color color) {
-        double score = 0;
-
-        for (List<Piece> list : board) {
-            score += list.stream()
-                    .filter(p -> p.getColor() == color)
-                    .mapToDouble(p -> p.getType().getScore())
-                    .sum();
-        }
-
-        for (int i = 0; i < 8; i++) {
-            int duplicatedPawn = computePawnCount(i, color);
-            if (computePawnCount(i, color) >= 2) {
-                score -= 0.5 * duplicatedPawn;
-            }
-        }
-        return score;
-    }
-
-    private int computePawnCount(int i, Color color) {
-        return (int) board.stream()
-                .map(l -> l.get(i))
-                .filter(p -> (p.getColor() == color) && p.isSameType(Type.PAWN))
-                .count();
-    }
-
-    private Chessboard(List<List<Piece>> board) {
-        this.board = board;
-    }
-
     private Chessboard() {
-        board = new ArrayList<>();
-        initializePieceWithoutPawn(Color.BLACK);
-        initializePawn(Color.BLACK);
-
-        for (int i = 0; i < 4; i++) {
-            initializeBlank();
-        }
-        initializePawn(Color.WHITE);
-        initializePieceWithoutPawn(Color.WHITE);
+        board = Ranks.create();
     }
 
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        Piece sourcePiece = board.get(source.getLeft()).get(source.getRight());
-
-        if (isTherePiece(target) && checkPawn(sourcePiece, source, target)) {
-            return true;
-        }
-        return sourcePiece.isMovable(source, target);
-    }
-
-    public boolean movePiece(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
+    public void movePiece(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
         validate(source, target, turn);
-        boolean isKing = board.get(target.getLeft()).get(target.getRight()).isSameType(Type.KING);
-        board.get(target.getLeft()).set(target.getRight(), board.get(source.getLeft()).get(source.getRight()));
-        board.get(source.getLeft()).set(source.getRight(), new Blank());
 
-        return isKing;
-    }
-
-    private void initializePieceWithoutPawn(Color color) {
-        List<Piece> line = new ArrayList<>();
-        line.add(new Rook(color));
-        line.add(new Knight(color));
-        line.add(new Bishop(color));
-        line.add(new Queen(color));
-        line.add(new King(color));
-        line.add(new Bishop(color));
-        line.add(new Knight(color));
-        line.add(new Rook(color));
-        board.add(line);
-    }
-
-    private void initializePawn(Color color) {
-        List<Piece> line = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            line.add(new Pawn(color));
-        }
-        board.add(line);
-    }
-
-    private void initializeBlank() {
-        List<Piece> line = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            line.add(new Blank());
-        }
-        board.add(line);
-    }
-
-    private boolean isTherePiece(Pair<Integer, Integer> target) {
-        return !board.get(target.getLeft()).get(target.getRight()).isSameType(Type.BLANK);
-    }
-
-    private boolean checkPawn(Piece sourcePiece, Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (!sourcePiece.isSameType(Type.PAWN)) {
-            return false;
-        }
-        Pawn pawn = (Pawn) sourcePiece;
-        return pawn.isDiagonal(source, target);
+        board.get(target.getLeft()).assignLocationPiece(source, target, board.get(source.getLeft()));
+        board.get(source.getLeft()).removeLocationPiece(source);
     }
 
     private void validate(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Turn turn) {
@@ -135,13 +49,13 @@ public class Chessboard {
     }
 
     private void validateBlank(Pair<Integer, Integer> source) {
-        if (board.get(source.getLeft()).get(source.getRight()).getType() == Type.BLANK) {
+        if (!board.get(source.getLeft()).isExistPiece(source)) {
             throw new IllegalArgumentException("이동하려는 위치에 기물이 없습니다.");
         }
     }
 
     private void validateTurn(Pair<Integer, Integer> source, Turn turn) {
-        if (!turn.isRightTurn(board.get(source.getLeft()).get(source.getRight()).getColor())) {
+        if (!board.get(source.getLeft()).isMovableColor(turn, source)) {
             throw new IllegalArgumentException("상대편의 기물은 움직일 수 없습니다.");
         }
     }
@@ -153,18 +67,45 @@ public class Chessboard {
     }
 
     private void validateMovableBetweenPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        List<Pair<Integer, Integer>> betweenPositions = board.get(source.getLeft()).get(source.getRight())
-                .computeBetweenTwoPosition(source, target);
-
+        List<Pair<Integer, Integer>> betweenPositions = board.get(source.getLeft()).findBetweenTwoPosition(source, target);
         for (Pair<Integer, Integer> position : betweenPositions) {
-            if (board.get(position.getLeft()).get(position.getRight()).getType() == Type.BLANK) {
+            if (!board.get(position.getLeft()).isExistPiece(position)) {
                 continue;
             }
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");
         }
     }
 
-    public List<List<Piece>> getBoard() {
+    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+        return board.get(source.getLeft()).isMovable(source, target);
+    }
+
+    public boolean isKing(Pair<Integer, Integer> target) {
+        return board.get(target.getLeft()).isKing(target);
+    }
+
+    public double computeScore(Color color) {
+        double score = board.stream()
+                .mapToDouble(rank -> rank.score(color))
+                .sum();
+
+        for (int column = 0; column < 8; column++) {
+            score -= 0.5 * countSameColumnPawn(column, color);
+        }
+        return score;
+    }
+
+    private long countSameColumnPawn(int column, Color color) {
+        long count = board.stream()
+                .filter(rank -> rank.isSameColor(column, color) && rank.isSameType(column, Type.PAWN))
+                .count();
+        if (count < 2) {
+            return 0;
+        }
+        return count;
+    }
+
+    public List<Rank> getBoard() {
         return Collections.unmodifiableList(board);
     }
 }
