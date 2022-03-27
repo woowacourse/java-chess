@@ -45,6 +45,16 @@ public class Score {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public List<Team> findWinTeam() {
+        if (value.get(Team.WHITE) > value.get(Team.BLACK)) {
+            return List.of(Team.WHITE);
+        }
+        if (value.get(Team.WHITE) < value.get(Team.BLACK)) {
+            return List.of(Team.BLACK);
+        }
+        return List.of(Team.values());
+    }
+
     public Map<Team, Double> getValue() {
         return value;
     }

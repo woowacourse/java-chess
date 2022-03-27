@@ -6,6 +6,7 @@ public enum Menu {
 
     START("start"),
     MOVE("move"),
+    STATUS("status"),
     END("end");
 
     private final String value;
@@ -31,5 +32,9 @@ public enum Menu {
 
     public boolean isMove() {
         return this == MOVE;
+    }
+
+    public boolean isStatus() {
+        return this == STATUS;
     }
 }
