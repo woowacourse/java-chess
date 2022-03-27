@@ -1,15 +1,15 @@
 package chess;
 
 import chess.controller.GameController;
-import chess.domain.game.ChessGame;
+import chess.domain.game.Game;
 
 public class Application {
 
     private static final GameController controller = new GameController();
 
     public static void main(String[] args) {
-        ChessGame game = controller.startGame();
-        controller.playGame(game);
+        Game game = controller.startGame();
+        game = controller.playGame(game);
         controller.endGame(game);
     }
 }

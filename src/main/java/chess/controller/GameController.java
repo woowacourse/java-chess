@@ -11,43 +11,46 @@ import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.game.ActivePieces;
-import chess.domain.game.ChessGame;
+import chess.domain.game.Game;
+import chess.domain.game.Running;
 import chess.dto.BoardViewDto;
 
 public class GameController {
 
     private static final int EXIT_STATUS_CODE = 0;
 
-    public ChessGame startGame() {
+    public Game startGame() {
         printGameInstructions();
         if (!requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new ChessGame(new ActivePieces(initAllChessmen()));
+        return new Running(new ActivePieces(initAllChessmen()));
     }
 
-    public void playGame(ChessGame game) {
+    public Game playGame(Game game) {
         printBoardDisplay(game);
         while (!game.isEnd()) {
-            moveChessmen(game);
+            game = moveChessmen(game);
         }
+        return game;
     }
 
-    private void moveChessmen(ChessGame game) {
+    private Game moveChessmen(Game game) {
         try {
-            game.moveChessmen(requestValidMoveInput());
+            game = game.moveChessmen(requestValidMoveInput());
             printBoardDisplay(game);
+            return game;
         } catch (IllegalArgumentException e) {
             print(e.getMessage());
-            moveChessmen(game);
+            return moveChessmen(game);
         }
     }
 
-    private void printBoardDisplay(ChessGame game) {
+    private void printBoardDisplay(Game game) {
         printBoard(new BoardViewDto(game));
     }
 
-    public void endGame(ChessGame game) {
+    public void endGame(Game game) {
         printGameOverInstructions();
         while (requestValidStatusOrEndInput()) {
             printStatus(game.getGameResult());

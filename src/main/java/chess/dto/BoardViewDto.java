@@ -3,7 +3,7 @@ package chess.dto;
 import static chess.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 
-import chess.domain.game.ChessGame;
+import chess.domain.game.Game;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,14 +15,14 @@ public class BoardViewDto {
 
     private final List<String> boardDisplay;
 
-    public BoardViewDto(ChessGame game) {
+    public BoardViewDto(Game game) {
         boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
                 .mapToObj(rowIdx -> currentRowChessmen(game, rowIdx))
                 .map(BoardViewDto::initRowDisplay)
                 .collect(Collectors.toList());
     }
 
-    private static List<Piece> currentRowChessmen(ChessGame game, int rowIdx) {
+    private static List<Piece> currentRowChessmen(Game game, int rowIdx) {
         return game.getChessmen()
                 .stream()
                 .filter(piece -> piece.isAtRowIdxOf(rowIdx))
