@@ -74,7 +74,7 @@ public class BoardTest {
                 Position.from("a4"), new Knight(color)
         )));
 
-        assertThat(board.sumScore(color)).isEqualTo(21.5);
+        assertThat(board.sumScore(color)).isEqualTo(Map.of(color, 21.5));
     }
 
     @DisplayName("보드판에서 합계 구하기")
@@ -90,6 +90,6 @@ public class BoardTest {
                 Position.from("a4"), new Knight(color)
         )));
 
-        assertThat(board.sumScore(color)).isEqualTo(21.5);
+        assertThat(board.sumScore(color)).isEqualTo(Map.of(color, 21.5));
     }
 }

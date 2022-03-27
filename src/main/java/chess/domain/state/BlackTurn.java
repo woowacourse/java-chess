@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -17,7 +18,7 @@ public class BlackTurn extends State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(board);
     }
 
     @Override
@@ -42,5 +43,10 @@ public class BlackTurn extends State {
         if (board.hasPiece(to) && board.isMatchingColor(to, Color.BLACK)) {
             throw new IllegalArgumentException("도착 지점에 나의 말이 존재합니다.");
         }
+    }
+
+    @Override
+    public Status status() {
+        throw new IllegalStateException("게임이 끝나지 않았습니다.");
     }
 }

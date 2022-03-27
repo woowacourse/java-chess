@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Initializable;
 import chess.domain.piece.Piece;
@@ -22,4 +23,6 @@ public abstract class State {
     public abstract boolean isRunning();
 
     public abstract State move(final Position from, final Position to);
+
+    public abstract Status status();
 }
