@@ -17,7 +17,7 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
-    static final String ERROR_NOT_EXIST_RANK = "[ERROR] 존재 하지 않는 랭크입니다.";
+    private static final String ERROR_NOT_EXIST_RANK = "[ERROR] 존재 하지 않는 랭크입니다.";
 
     private final int value;
 

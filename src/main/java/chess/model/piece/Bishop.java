@@ -27,5 +27,4 @@ public class Bishop extends Piece {
     public double getScore() {
         return SCORE;
     }
-
 }
