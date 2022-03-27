@@ -1,18 +1,15 @@
 package chess.domain.state;
 
-public class Black implements State {
-    @Override
-    public State start() {
-        throw new IllegalArgumentException("Black 상태에서는 start할 수 없습니다.");
-    }
+import chess.domain.Board;
 
-    @Override
-    public State end() {
-        return new End();
+public class Black extends Started {
+
+    public Black(final Board board) {
+        super(board);
     }
 
     @Override
     public State changeTurn() {
-        return new White();
+        return new White(board());
     }
 }

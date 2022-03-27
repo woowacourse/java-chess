@@ -1,5 +1,7 @@
 package chess.domain.state;
 
+import chess.domain.Board;
+
 public class End implements State {
     @Override
     public State start() {
@@ -14,5 +16,10 @@ public class End implements State {
     @Override
     public State changeTurn() {
         throw new IllegalArgumentException("End 상태에서는 chageTurn할 수 없습니다.");
+    }
+
+    @Override
+    public Board board() {
+        throw new IllegalArgumentException("End 상태에서는 board()를 할 수 없습니다.");
     }
 }
