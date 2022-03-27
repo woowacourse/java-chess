@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitialBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
 import chess.domain.result.StatusResult;
@@ -18,7 +19,7 @@ public class ChessController {
 	public void run() {
 		InputView.printCommandGuide();
 		processStart();
-		final Board board = new Board();
+		final Board board = new Board(InitialBoard.createBoard());
 		OutputView.printBoard(board);
 		List<String> inputCommand = InputView.requestCommand();
 
@@ -29,7 +30,7 @@ public class ChessController {
 			}
 			inputCommand = InputView.requestCommand();
 		}
-		OutputView.printWinner(board.getWinner());
+		OutputView.printWinner(board.judgeWinner());
 	}
 
 	private void processStart() {

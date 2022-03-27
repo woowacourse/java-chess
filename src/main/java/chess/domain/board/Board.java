@@ -1,13 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.state.State;
 import chess.domain.state.WhiteTurn;
@@ -28,10 +22,9 @@ public class Board {
 	private final Map<Position, Piece> board;
 	private State state;
 
-	public Board() {
-		this.board = new HashMap<>();
+	public Board(final Map<Position, Piece> board) {
+		this.board = new HashMap<>(board);
 		this.state = new WhiteTurn();
-		initialBatchPiece();
 	}
 
 	public void move(Position source, Position target) {
@@ -79,10 +72,6 @@ public class Board {
 		}
 	}
 
-	public boolean isFinished() {
-		return state.isFinished();
-	}
-
 	public double calculateScore(Team team) {
 		double score = 0;
 		for (int column = 1; column <= 8; column++) {
@@ -117,48 +106,19 @@ public class Board {
 		}
 		return pieces;
 	}
-	
-	private void initialBatchPiece() {
-		for (Position position : Position.getPositions()) {
-			board.put(position, new Blank());
-		}
 
-		List<Piece> blackSpecials = initSpecialBuilder(Team.BLACK);
-		List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
-		for (int i = 0; i < 8; i++) {
-			board.put(Position.of(8, i + 1), blackSpecials.get(i));
-			board.put(Position.of(7, i + 1), new Pawn(Team.BLACK));
-
-			board.put(Position.of(1, i + 1), whiteSpecials.get(i));
-			board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
-		}
+	public boolean isFinished() {
+		return state.isFinished();
 	}
 
-	private List<Piece> initSpecialBuilder(Team team) {
-		List<Piece> pieces = new ArrayList<>();
-		pieces.add(new Rook(team));
-		pieces.add(new Knight(team));
-		pieces.add(new Bishop(team));
-		pieces.add(new Queen(team));
-		pieces.add(new King(team));
-		pieces.add(new Bishop(team));
-		pieces.add(new Knight(team));
-		pieces.add(new Rook(team));
-		return pieces;
-	}
-
-	public boolean isBlank(Position position) {
-		return board.get(position).isBlank();
-	}
-
-	public Map<Position, Piece> getBoard() {
-		return board;
-	}
-
-	public Team getWinner() {
+	public Team judgeWinner() {
 		if (state.isFinished()) {
 			return state.getTeam();
 		}
 		throw new IllegalArgumentException(NOT_FINISHED_ERROR);
+	}
+
+	public Map<Position, Piece> getBoard() {
+		return new HashMap<>(board);
 	}
 }
