@@ -44,7 +44,7 @@ public class Black implements State {
     }
 
     private void checkTeam(Command command, ChessBoard chessBoard) {
-        Map<String, Position> positions = command.makePosition();
+        Map<String, Position> positions = command.makePositions();
 
         Position source = positions.get("source");
 

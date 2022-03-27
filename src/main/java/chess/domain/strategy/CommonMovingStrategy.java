@@ -26,19 +26,24 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
 
         Position currentPosition = source;
 
-        List<Position> paths = new ArrayList<>();
-
-        while (!currentPosition.equals(target)) {
-            currentPosition = currentPosition.toDirection(direction);
-
-            paths.add(currentPosition);
-        }
+        List<Position> paths = getPaths(target, direction, currentPosition);
 
         paths.remove(target);
 
         if (chessBoard.isContainPiece(paths)) {
             throw new IllegalStateException("경로상에 말이 존재합니다.");
         }
+    }
+
+    private List<Position> getPaths(Position target, Direction direction, Position currentPosition) {
+        List<Position> paths = new ArrayList<>();
+
+        while (!currentPosition.equals(target)) {
+            currentPosition = currentPosition.toDirection(direction);
+            paths.add(currentPosition);
+        }
+
+        return paths;
     }
 
     private void checkTargetPosition(Position source, Position target, ChessBoard chessBoard) {
@@ -55,5 +60,4 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
             throw new IllegalStateException("경로상에 말이 존재합니다.");
         }
     }
-
 }

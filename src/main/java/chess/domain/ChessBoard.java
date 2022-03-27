@@ -35,7 +35,7 @@ public class ChessBoard {
     }
 
     public void move(Command command) {
-        Map<String, Position> positions = command.makePosition();
+        Map<String, Position> positions = command.makePositions();
 
         Position source = positions.get("source");
 
