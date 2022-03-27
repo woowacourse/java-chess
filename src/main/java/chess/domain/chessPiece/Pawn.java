@@ -11,6 +11,10 @@ public class Pawn extends ChessPiece {
     private static final Double VALUE = 1.0;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
+    private static final int BLACK_MOVEALBE_DISTANCE = 1;
+    private static final int WHITE_MOVEABLE_DISTANCE = -1;
+    private static final int PAWN_MOVE_IN_INIT_FILE = 2;
+    private static final int PAWN_MOVE_RANGE = 1;
 
     public Pawn(Color color) {
         super(color, NAME, VALUE);
@@ -37,12 +41,11 @@ public class Pawn extends ChessPiece {
     @Override
     public void canMove(Position from, Position to) {
         if (from.isSameRank(to)) {
-            //Todo: 상수화
-            if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
+            if (isBlack() && checkMove(from, to, BLACK_MOVEALBE_DISTANCE, BLACK_INIT_FILE)) {
                 return;
             }
 
-            if (!isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
+            if (!isBlack() && checkMove(from, to, WHITE_MOVEABLE_DISTANCE, WHITE_INIT_FILE)) {
                 return;
             }
 
@@ -58,8 +61,7 @@ public class Pawn extends ChessPiece {
             return true;
         }
         if (from.isSameFile(initFile)) {
-            // TODO: 상수화 -> 초기에서 2칸 앞으로
-            return fileDistance == movableDistance * 2;
+            return fileDistance == movableDistance * PAWN_MOVE_IN_INIT_FILE;
         }
         return false;
     }
@@ -67,10 +69,10 @@ public class Pawn extends ChessPiece {
     public void checkCrossMove(Position from, Position to) {
         int fileDistance = from.fileDistance(to);
         if (isPawnMoveableDistanceRange(from, to)) {
-            if (isBlack() && fileDistance == 1) {
+            if (isBlack() && fileDistance == BLACK_MOVEALBE_DISTANCE) {
                 return;
             }
-            if (!isBlack() && fileDistance == -1) {
+            if (!isBlack() && fileDistance == WHITE_MOVEABLE_DISTANCE) {
                 return;
             }
         }
@@ -79,7 +81,6 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean isPawnMoveableDistanceRange(Position from, Position to) {
-        //Todo: 상수화
-        return Math.abs(from.rankDistance(to)) == 1;
+        return Math.abs(from.rankDistance(to)) == PAWN_MOVE_RANGE;
     }
 }
