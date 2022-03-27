@@ -21,4 +21,5 @@ public class CommandDto {
     public String gameState() {
         return gameState;
     }
+
 }

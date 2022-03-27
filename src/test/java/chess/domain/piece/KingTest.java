@@ -108,4 +108,5 @@ public class KingTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }

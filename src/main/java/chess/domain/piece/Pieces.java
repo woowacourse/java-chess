@@ -76,4 +76,5 @@ public class Pieces {
             .findFirst()
             .orElseThrow();
     }
+
 }

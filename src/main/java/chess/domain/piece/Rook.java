@@ -92,4 +92,5 @@ public class Rook extends Piece {
             ", position=" + position +
             '}';
     }
+
 }

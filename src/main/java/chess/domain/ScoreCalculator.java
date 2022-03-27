@@ -14,7 +14,6 @@ public class ScoreCalculator {
     private static final int SUM_BASE_INT = 0;
     private static final double SUM_BASE_DOUBLE = 0;
 
-
     public double calculate(List<Piece> sameColorPieces) {
         List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
 

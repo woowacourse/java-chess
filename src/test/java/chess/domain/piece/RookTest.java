@@ -96,4 +96,5 @@ public class RookTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }

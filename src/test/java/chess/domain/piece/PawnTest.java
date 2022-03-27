@@ -182,4 +182,5 @@ public class PawnTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }

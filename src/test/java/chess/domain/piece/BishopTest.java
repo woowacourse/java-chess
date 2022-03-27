@@ -108,4 +108,5 @@ public class BishopTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }

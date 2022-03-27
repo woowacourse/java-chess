@@ -60,4 +60,5 @@ public class BoardDto {
     public List<String> getDisplay() {
         return boardDisplay;
     }
+
 }

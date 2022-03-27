@@ -108,4 +108,5 @@ public class KnightTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }

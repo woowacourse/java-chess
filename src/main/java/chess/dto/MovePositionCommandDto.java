@@ -20,4 +20,5 @@ public class MovePositionCommandDto {
     public String target() {
         return target;
     }
+
 }

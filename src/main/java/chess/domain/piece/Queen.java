@@ -94,4 +94,5 @@ public class Queen extends Piece {
             ", position=" + position +
             '}';
     }
+
 }

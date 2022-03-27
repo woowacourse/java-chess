@@ -51,7 +51,6 @@ public enum Direction {
         return NONE;
     }
 
-
     public static Direction findDiagonalDirection(Position source, Position target) {
         if (!source.isDiagonal(target)) {
             return NONE;
@@ -94,4 +93,5 @@ public enum Direction {
 
         return new ArrayList<>(positions);
     }
+
 }

@@ -119,4 +119,5 @@ public class QueenTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
 }
