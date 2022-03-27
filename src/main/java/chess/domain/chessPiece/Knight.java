@@ -29,6 +29,7 @@ public class Knight extends ChessPiece {
         int fileDistance = Math.abs(from.fileDistance(to));
         int rankDistance = Math.abs(from.rankDistance(to));
 
+        //상수화
         if (rankDistance + fileDistance != 3) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }

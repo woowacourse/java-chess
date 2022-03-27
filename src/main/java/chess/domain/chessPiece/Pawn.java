@@ -37,6 +37,7 @@ public class Pawn extends ChessPiece {
     @Override
     public void canMove(Position from, Position to) {
         if (from.isSameRank(to)) {
+            //Todo: 상수화
             if (isBlack() && checkMove(from, to, 1, BLACK_INIT_FILE)) {
                 return;
             }
@@ -44,6 +45,7 @@ public class Pawn extends ChessPiece {
             if (!isBlack() && checkMove(from, to, -1, WHITE_INIT_FILE)) {
                 return;
             }
+
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
 
@@ -56,6 +58,7 @@ public class Pawn extends ChessPiece {
             return true;
         }
         if (from.isSameFile(initFile)) {
+            // TODO: 상수화 -> 초기에서 2칸 앞으로
             return fileDistance == movableDistance * 2;
         }
         return false;
@@ -63,7 +66,7 @@ public class Pawn extends ChessPiece {
 
     public void checkCrossMove(Position from, Position to) {
         int fileDistance = from.fileDistance(to);
-        if (Math.abs(from.rankDistance(to)) == 1) {
+        if (isPawnMoveableDistanceRange(from, to)) {
             if (isBlack() && fileDistance == 1) {
                 return;
             }
@@ -73,5 +76,10 @@ public class Pawn extends ChessPiece {
         }
 
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
+    }
+
+    private boolean isPawnMoveableDistanceRange(Position from, Position to) {
+        //Todo: 상수화
+        return Math.abs(from.rankDistance(to)) == 1;
     }
 }

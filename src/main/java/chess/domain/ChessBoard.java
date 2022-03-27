@@ -35,21 +35,32 @@ public class ChessBoard {
                     new Rook(value),
                     new Bishop(value),
                     new Knight(value));
+            addPiece(pieces);
+        }
+    }
 
-            for (ChessPiece chessPiece : pieces) {
-                initByPiece(chessPiece);
-            }
+    private void addPiece(List<ChessPiece> pieces) {
+        for (ChessPiece chessPiece : pieces) {
+            initByPiece(chessPiece);
         }
     }
 
     private void initByPiece(ChessPiece chessPiece) {
         if (chessPiece.isBlack()) {
-            for (Position position : chessPiece.getInitBlackPosition()) {
-                chessBoard.put(position, chessPiece);
-            }
+            addBlackPiece(chessPiece);
             return;
         }
+        addWhitePiece(chessPiece);
+    }
+
+    private void addWhitePiece(ChessPiece chessPiece) {
         for (Position position : chessPiece.getInitWhitePosition()) {
+            chessBoard.put(position, chessPiece);
+        }
+    }
+
+    private void addBlackPiece(ChessPiece chessPiece) {
+        for (Position position : chessPiece.getInitBlackPosition()) {
             chessBoard.put(position, chessPiece);
         }
     }
@@ -58,9 +69,7 @@ public class ChessBoard {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
-        if (me.isEnemyTurn(currentTurn)) {
-            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
-        }
+        validateTurn(me);
 
         checkMove(from, to, me);
 
@@ -73,6 +82,12 @@ public class ChessBoard {
         if (enemyExist(me, to)) {
             checkPawnCrossMove(from, to, me);
             movePiece(from, to, me);
+        }
+    }
+
+    private void validateTurn(ChessPiece me) {
+        if (me.isEnemyTurn(currentTurn)) {
+            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
     }
 
@@ -112,12 +127,16 @@ public class ChessBoard {
     }
 
     private void movePiece(Position from, Position to, ChessPiece me) {
-        if (chessBoard.get(to) instanceof King) {
-            gameStatus = GameStatus.END;
-        }
+        checkMate(to);
         chessBoard.put(to, me);
         chessBoard.remove(from);
         currentTurn = currentTurn.toOpposite();
+    }
+
+    private void checkMate(Position to) {
+        if (chessBoard.get(to) instanceof King) {
+            gameStatus = GameStatus.END;
+        }
     }
 
     public int countPiece() {
@@ -195,11 +214,14 @@ public class ChessBoard {
     }
 
     private double sumPawnScore(double pawnCount) {
-        if (pawnCount == 1) {
-            //TODO: 상수화
+        if (isOnlyPawnInFile(pawnCount)) {
             return 1;
         }
         return pawnCount * 0.5;
+    }
+
+    private boolean isOnlyPawnInFile(double pawnCount) {
+        return pawnCount == 1;
     }
 
     public boolean isReady() {
