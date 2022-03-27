@@ -1,9 +1,9 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
 import chess.domain.piece.attribute.Color;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
     private static final String ARROW = "> ";
     private static final String TEAM_STATUS = "%s 점수 : %.1f졈" + SEPARATOR;

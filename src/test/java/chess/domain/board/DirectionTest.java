@@ -2,6 +2,10 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.strategy.PawnMoveStrategy;
 import java.util.List;

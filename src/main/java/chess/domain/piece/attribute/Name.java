@@ -2,7 +2,7 @@ package chess.domain.piece.attribute;
 
 import java.util.Objects;
 
-public class Name {
+public final class Name {
     private final String value;
 
     public Name(String value) {

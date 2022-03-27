@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Name;
 import chess.domain.piece.strategy.KingMoveStrategy;
 
-public class King extends Piece {
+public final class King extends Piece {
     public King(Color color) {
         super(new Name("K"), color, new KingMoveStrategy());
     }

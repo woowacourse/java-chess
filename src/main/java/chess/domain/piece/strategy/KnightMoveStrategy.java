@@ -1,12 +1,12 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
 import chess.domain.piece.attribute.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KnightMoveStrategy extends MoveStrategy {
+public final class KnightMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {

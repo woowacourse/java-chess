@@ -3,7 +3,7 @@ package chess.domain.game;
 import chess.domain.piece.attribute.Color;
 import java.util.Map;
 
-public class Status {
+public final class Status {
 
     private final Map<Color, Double> colorsTotalScore;
     private final Color winnerColor;

@@ -3,7 +3,7 @@ package chess.controller.commendlauncher;
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
 
-public class Start extends CommendLauncher {
+public final class Start extends CommendLauncher {
 
 
     public Start() {

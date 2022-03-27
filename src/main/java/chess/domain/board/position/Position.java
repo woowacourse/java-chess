@@ -1,11 +1,11 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Position {
+public final class Position {
 
     private final File file;
     private final Rank rank;

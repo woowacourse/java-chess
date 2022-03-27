@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.attribute.Color;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

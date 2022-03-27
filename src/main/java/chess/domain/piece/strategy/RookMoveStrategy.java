@@ -1,11 +1,11 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
 import chess.domain.piece.attribute.Color;
 import java.util.List;
 
-public class RookMoveStrategy extends MoveStrategy {
+public final class RookMoveStrategy extends MoveStrategy {
 
     @Override
     public boolean isValidateCanMove(Color color, Position from, Position to) {

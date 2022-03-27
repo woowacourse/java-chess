@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Name;
 import chess.domain.piece.strategy.MoveStrategy;
@@ -49,7 +49,7 @@ public abstract class Piece {
         return moveStrategy.getRoute(from, to);
     }
 
-    public boolean isEmpty() {
-        return false;
+    public boolean isPiece() {
+        return true;
     }
 }

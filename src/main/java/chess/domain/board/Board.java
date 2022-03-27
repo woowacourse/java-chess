@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Board {
+public final class Board {
     private final Map<Position, Piece> squares;
 
     public Board(Map<Position, Piece> squares) {
@@ -30,7 +31,7 @@ public class Board {
 
         validateNotSameColor(sourcePiece, targetPiece);
 
-        if (!sourcePiece.canMove(targetPiece, from, to) && !targetPiece.isEmpty()) {
+        if (!sourcePiece.canMove(targetPiece, from, to) && targetPiece.isPiece()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
 
@@ -54,7 +55,7 @@ public class Board {
         List<Position> route = findByPosition(from).getRoute(from, to);
 
         for (Position position : route) {
-            if (!findByPosition(position).isEmpty()) {
+            if (findByPosition(position).isPiece()) {
                 throw new IllegalArgumentException("이동할 수 없다.");
             }
         }

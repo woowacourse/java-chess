@@ -1,15 +1,15 @@
 package chess.controller.commendlauncher;
 
-import static chess.domain.board.Position.inputToPositions;
+import static chess.domain.board.position.Position.inputToPositions;
 
 import chess.controller.Command;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class Play extends CommendLauncher {
+public final class Play extends CommendLauncher {
     ChessGame chessGame;
 
     public Play(ChessGame chessGame) {

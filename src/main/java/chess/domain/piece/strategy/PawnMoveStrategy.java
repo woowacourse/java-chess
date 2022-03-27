@@ -1,13 +1,13 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
 import java.util.List;
 
-public class PawnMoveStrategy extends MoveStrategy {
+public final class PawnMoveStrategy extends MoveStrategy {
     private static final int INIT_MAX_DISTANCE = 2;
 
     @Override

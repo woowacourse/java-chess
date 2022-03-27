@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import chess.domain.piece.attribute.Color;
 import java.util.Arrays;
