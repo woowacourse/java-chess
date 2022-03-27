@@ -48,11 +48,11 @@ public abstract class Piece {
             throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
         }
     }
-    
+
     @Override
     public String toString() {
         return "Piece{" +
-                "name='" + name + '\'' +
+                "name='" + team.convert(name) + '\'' +
                 ", score=" + score +
                 ", team=" + team +
                 '}';
