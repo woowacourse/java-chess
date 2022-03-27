@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.player.Team;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,6 +40,9 @@ public class Position {
     }
 
     public List<Position> findAllBetweenPosition(final Position destination) {
+        if (isMoveOfKnight(destination)) {
+            return Collections.emptyList();
+        }
         if (isMoveLinear(destination)) {
             return findBetweenLinearPosition(destination);
         }
