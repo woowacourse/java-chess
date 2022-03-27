@@ -11,12 +11,21 @@ import chess.domain.piece.state.PieceState;
 public abstract class Piece {
     private final Color color;
     private final Name name;
+    private final double score;
+
     private PieceState pieceState;
 
-    public Piece(Color color, String name, PieceState pieceState) {
+    public Piece(Color color, String name, double score, PieceState pieceState) {
         this.color = color;
         this.name = new Name(color.convertName(name));
+        this.score = score;
         this.pieceState = pieceState;
+    }
+
+    public static double computeScore(List<Piece> pieces) {
+        return pieces.stream()
+            .mapToDouble(piece -> piece.score)
+            .sum();
     }
 
     public List<Position> getMovablePaths(Position source, ChessBoard board) {
@@ -41,5 +50,22 @@ public abstract class Piece {
 
     public void killed() {
         pieceState = pieceState.killed();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Piece piece = (Piece)o;
+
+        return getName() != null ? getName().equals(piece.getName()) : piece.getName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getName() != null ? getName().hashCode() : 0;
     }
 }

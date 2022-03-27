@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import chess.domain.piece.property.Color;
 import chess.dto.ChessBoardDto;
 import chess.dto.PositionDto;
 
@@ -14,19 +15,27 @@ public class OutputView {
 
     public static void printChessBoard(ChessBoardDto chessBoardDto) {
         Map<PositionDto, String> chessBoard = chessBoardDto.getChessBoard();
-        if (!chessBoard.isEmpty()) {
-            printPieces(chessBoard);
-        }
+        printPieces(chessBoard);
     }
 
     private static void printPieces(Map<PositionDto, String> chessBoard) {
+        System.out.println("abcdefgh");
+        System.out.println();
         for (int i = 0; i < RANK_SIZE; i++) {
             final int rank = i;
             IntStream.range(0, FILE_SIZE)
                 .forEach(file -> System.out.print(chessBoard.getOrDefault(new PositionDto(rank, file), NO_PIECE)));
-            System.out.println();
+            System.out.print("   ");
+            System.out.println(RANK_SIZE - i);
         }
         System.out.println();
+        System.out.println("abcdefgh");
+    }
+
+    public static void printScore(Map<Color, Double> score) {
+        for (Color color : score.keySet()) {
+            System.out.println(color.name() + " " + score.get(color) + "점");
+        }
     }
 
     public static void printErrorMessage(String message) {

@@ -32,7 +32,7 @@ public class StartedGame implements GameState {
     }
 
     @Override
-    public GameState status() {
+    public Map<Color, Double> status() {
         throw new IllegalArgumentException("start를 해야만 status를 할 수 있습니다.");
     }
 

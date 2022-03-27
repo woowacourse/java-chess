@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.property.Color;
 
 public class EndGame implements GameState {
 
@@ -18,7 +19,7 @@ public class EndGame implements GameState {
     }
 
     @Override
-    public GameState status() {
+    public Map<Color, Double> status() {
         throw new IllegalArgumentException("이미 종료된 게임입니다.");
     }
 

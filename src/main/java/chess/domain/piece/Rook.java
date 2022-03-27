@@ -5,9 +5,10 @@ import chess.domain.piece.state.started.StartedRook;
 
 public final class Rook extends Piece {
     private static final String NAME = "r";
+    private static final double SCORE = 5;
 
     public Rook(Color color) {
-        super(color, NAME, new StartedRook());
+        super(color, NAME, SCORE, new StartedRook());
     }
 
 }

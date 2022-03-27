@@ -7,6 +7,7 @@ import chess.domain.game.state.GameState;
 import chess.domain.game.state.StartedGame;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.property.Color;
 
 public class ChessGame {
     private GameState state = new StartedGame();
@@ -28,5 +29,9 @@ public class ChessGame {
 
     public boolean isFinished() {
         return state.isFinished();
+    }
+
+    public Map<Color, Double> status() {
+        return state.status();
     }
 }

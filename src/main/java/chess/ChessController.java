@@ -1,12 +1,10 @@
 package chess;
 
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Piece;
-import chess.domain.piece.position.Position;
 import chess.dto.ChessBoardDto;
+import chess.dto.GameResult;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -27,8 +25,14 @@ public class ChessController {
     private void act(ChessGame chessGame) {
         try {
             String input = InputView.requestCommand();
-            Map<Position, Piece> chessBoard = Command.act(input, chessGame);
-            OutputView.printChessBoard(ChessBoardDto.of(chessBoard));
+            GameResult gameResult = Command.act(input, chessGame);
+
+            if (gameResult.isBoard()) {
+               OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
+            }
+            if (gameResult.isScore()) {
+                OutputView.printScore(gameResult.getScore());
+            }
         } catch (NoSuchElementException | IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }

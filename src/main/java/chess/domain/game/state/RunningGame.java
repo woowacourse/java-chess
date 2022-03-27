@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.property.Color;
 
 public class RunningGame extends StartedGame {
 
@@ -41,7 +42,7 @@ public class RunningGame extends StartedGame {
     }
 
     @Override
-    public GameState status() {
-        return null;
+    public Map<Color, Double> status() {
+        return board.computeScore();
     }
 }

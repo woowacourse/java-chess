@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.property.Color;
 
 public interface GameState {
 
@@ -11,7 +12,7 @@ public interface GameState {
 
     GameState move(Position source, Position target);
 
-    GameState status();
+    Map<Color, Double> status();
 
     GameState end();
 
