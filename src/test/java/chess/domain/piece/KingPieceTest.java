@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class KingPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, d3", "d4, d5","d4, e4","d4, c4","d4, e3","d4, e5","d4, c3","d4, c5"})
+    @CsvSource({"d4, d3", "d4, d5", "d4, e4", "d4, c4", "d4, e3", "d4, e5", "d4, c3", "d4, c5"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece king = new KingPiece(Color.BLACK);

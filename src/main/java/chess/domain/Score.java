@@ -40,26 +40,26 @@ public class Score {
 
     private Map<Piece, Double> initializeScoreRuleWithoutPawn(final Color color) {
         return Map.of(
-            new QueenPiece(color), QUEEN_SCORE,
-            new RookPiece(color), ROOK_SCORE,
-            new BishopPiece(color), BISHOP_SCORE,
-            new KnightPiece(color), KNIGHT_SCORE
+                new QueenPiece(color), QUEEN_SCORE,
+                new RookPiece(color), ROOK_SCORE,
+                new BishopPiece(color), BISHOP_SCORE,
+                new KnightPiece(color), KNIGHT_SCORE
         );
     }
 
     private double calculateScoreWithoutPawn(final Board board,
-        final Map<Piece, Double> pieceScores) {
+                                             final Map<Piece, Double> pieceScores) {
         return pieceScores.entrySet()
-            .stream()
-            .mapToDouble(entry -> board.countPiece(entry.getKey()) * entry.getValue())
-            .sum();
+                .stream()
+                .mapToDouble(entry -> board.countPiece(entry.getKey()) * entry.getValue())
+                .sum();
     }
 
     private double calculateScorePawn(final Board board, final Color color) {
         return Arrays.stream(File.values())
-            .mapToInt(file -> board.countPieceOnSameFile(new PawnPiece(color), file))
-            .mapToDouble(this::decidePawnScoreRule)
-            .sum();
+                .mapToInt(file -> board.countPieceOnSameFile(new PawnPiece(color), file))
+                .mapToDouble(this::decidePawnScoreRule)
+                .sum();
     }
 
     private double decidePawnScoreRule(final int count) {

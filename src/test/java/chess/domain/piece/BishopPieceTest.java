@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class BishopPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, e5", "d4, b6","d4, g1","e5, a1"})
+    @CsvSource({"d4, e5", "d4, b6", "d4, g1", "e5, a1"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece bishop = new BishopPiece(Color.BLACK);

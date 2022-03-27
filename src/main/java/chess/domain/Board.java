@@ -40,9 +40,9 @@ public class Board {
 
     private static void initialPositions(Map<Position, Piece> board) {
         List<Position> positions = Stream.of(Rank.values())
-            .flatMap(rank ->
-                Stream.of(File.values()).map(file -> new Position(file, rank)))
-            .collect(Collectors.toList());
+                .flatMap(rank ->
+                        Stream.of(File.values()).map(file -> new Position(file, rank)))
+                .collect(Collectors.toList());
 
         for (Position position : positions) {
             board.put(position, new EmptyPiece());
@@ -58,7 +58,7 @@ public class Board {
     }
 
     private static void initialPiecesWithoutPawn(Map<Position, Piece> board, final Rank rank,
-        final Color color) {
+                                                 final Color color) {
         board.put(new Position(File.A, rank), new RookPiece(color));
         board.put(new Position(File.B, rank), new KnightPiece(color));
         board.put(new Position(File.C, rank), new BishopPiece(color));
@@ -70,7 +70,7 @@ public class Board {
     }
 
     private static void initialPawns(Map<Position, Piece> board, final Rank rank,
-        final Color color) {
+                                     final Color color) {
         for (File file : File.values()) {
             board.put(new Position(file, rank), new PawnPiece(color));
         }
@@ -83,16 +83,16 @@ public class Board {
 
     public int countPiece(final Piece piece) {
         return (int) board.values().stream()
-            .filter(value -> value.equals(piece))
-            .count();
+                .filter(value -> value.equals(piece))
+                .count();
     }
 
     public int countPieceOnSameFile(final Piece piece, final File file) {
         return (int) board.entrySet()
-            .stream()
-            .filter(entry -> entry.getKey().isSameFile(file))
-            .filter(entry -> entry.getValue().equals(piece))
-            .count();
+                .stream()
+                .filter(entry -> entry.getKey().isSameFile(file))
+                .filter(entry -> entry.getValue().equals(piece))
+                .count();
     }
 
     public Piece findPiece(final Position position) {

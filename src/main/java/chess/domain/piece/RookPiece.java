@@ -14,7 +14,7 @@ public class RookPiece extends Piece {
     public RookPiece(final Color color) {
         super(color, NAME);
         this.movableDirections = new ArrayList<>(
-            List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH));
+                List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH));
     }
 
     @Override
@@ -26,5 +26,4 @@ public class RookPiece extends Piece {
 
         return movableDirections.contains(direction);
     }
-
 }

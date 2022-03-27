@@ -19,9 +19,9 @@ public enum Command {
 
     public static Command of(final String command) {
         return Arrays.stream(Command.values())
-            .filter(value -> value.command.equals(command))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
+                .filter(value -> value.command.equals(command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
     }
 
     public State run(final State state, final String[] commands) {

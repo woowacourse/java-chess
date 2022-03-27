@@ -11,6 +11,4 @@ public interface State {
     State status();
 
     boolean isNotEnded();
-
-
 }

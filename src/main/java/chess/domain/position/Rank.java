@@ -21,9 +21,9 @@ public enum Rank {
 
     public static Rank of(final int value) {
         return Arrays.stream(Rank.values())
-            .filter(rank -> rank.value == value)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다."));
+                .filter(rank -> rank.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다."));
     }
 
     public static Rank of(final String value) {
@@ -49,5 +49,4 @@ public enum Rank {
             return null;
         }
     }
-
 }

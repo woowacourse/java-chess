@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RookPieceTest {
 
     @ParameterizedTest
-    @CsvSource({"d4, d5", "d4, d2","d4, a4","d4, h4"})
+    @CsvSource({"d4, d5", "d4, d2", "d4, a4", "d4, h4"})
     @DisplayName("move 할 수 있는지 확인한다.")
     void canMove(String source, String target) {
         Piece rook = new RookPiece(Color.BLACK);

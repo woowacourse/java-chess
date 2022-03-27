@@ -15,9 +15,9 @@ public class KingPiece extends Piece {
     public KingPiece(final Color color) {
         super(color, NAME);
         this.movableDirections = new ArrayList<>(
-            List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH,
-                Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
-                Direction.SOUTH_WEST));
+                List.of(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH,
+                        Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
+                        Direction.SOUTH_WEST));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class KingPiece extends Piece {
         final Direction direction = Direction.of(fileDistance, rankDistance);
 
         return movableDirections.contains(direction) &&
-            Math.abs(fileDistance) < LIMIT_DISTANCE && Math.abs(rankDistance) < LIMIT_DISTANCE;
+                Math.abs(fileDistance) < LIMIT_DISTANCE && Math.abs(rankDistance) < LIMIT_DISTANCE;
     }
 
     @Override

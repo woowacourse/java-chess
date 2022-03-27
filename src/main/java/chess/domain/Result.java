@@ -21,9 +21,9 @@ public enum Result {
         final int resultValue = my.decideResultValue(opponent);
 
         return Arrays.stream(Result.values())
-            .filter(result -> result.value == resultValue)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 구할 수 없습니다."));
+                .filter(result -> result.value == resultValue)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 구할 수 없습니다."));
     }
 
     public String getName() {

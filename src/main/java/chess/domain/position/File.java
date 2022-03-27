@@ -21,9 +21,9 @@ public enum File {
 
     public static File of(final char value) {
         return Arrays.stream(File.values())
-            .filter(file -> file.value == value)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 File 값 입니다."));
+                .filter(file -> file.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 File 값 입니다."));
     }
 
     public int calculateDistance(final File file) {

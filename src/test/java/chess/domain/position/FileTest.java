@@ -12,7 +12,7 @@ public class FileTest {
     @DisplayName("File에 a~h이 포함되는지 확인한다.")
     void contain() {
         assertThat(File.values())
-            .containsOnly(File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H);
+                .containsOnly(File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H);
     }
 
     @Test
@@ -25,8 +25,8 @@ public class FileTest {
     @DisplayName("a~h 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
         assertThatThrownBy(() -> File.of('i'))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
     }
 
     @Test

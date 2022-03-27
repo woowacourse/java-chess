@@ -21,7 +21,7 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(final Position from, final Position to,
-        final boolean isEmptyTarget);
+                                      final boolean isEmptyTarget);
 
     public boolean isSameColor(final Color color) {
         return this.color.equals(color);
@@ -33,6 +33,10 @@ public abstract class Piece {
 
     public boolean isKing() {
         return false;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -51,9 +55,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(name, color);
     }
-
-    public String getName() {
-        return name;
-    }
-
 }
