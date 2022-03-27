@@ -10,6 +10,6 @@ abstract class BeforeRunning extends Started {
 
     @Override
     public State startGame() {
-        return new RunningWhite(getBoard());
+        return new RunningWhite(Board.createInitializedBoard());
     }
 }

@@ -31,6 +31,12 @@ public class Position {
         return from(xAxis, yAxis);
     }
 
+    public static List<Position> getPositionsByXAxis(XAxis xAxis) {
+        return Arrays.stream(YAxis.values())
+                .map(yAxis -> Position.from(xAxis, yAxis))
+                .collect(Collectors.toList());
+    }
+
     public boolean isSameXAxis(Position other) {
         return this.xAxis.equals(other.xAxis);
     }
@@ -45,10 +51,6 @@ public class Position {
 
     public int subtractYAxis(Position other) {
         return this.yAxis.subtract(other.yAxis);
-    }
-
-    public int subtractXAxis(Position other) {
-        return this.xAxis.subtract(other.xAxis);
     }
 
     public boolean isOnDiagonal(Position other) {

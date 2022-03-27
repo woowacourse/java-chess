@@ -155,23 +155,31 @@ public class Board {
     }
 
     private double adjustPawnScore(PieceColor pieceColor) {
-        int duplicatedPawnCount = 0;
+        int totalDuplicatedPawnCount = 0;
+
         for (XAxis xAxis : XAxis.values()) {
-            int count = 0;
-            for (YAxis yAxis : YAxis.values()) {
-                Position position = Position.from(xAxis, yAxis);
-                if (!Objects.isNull(value.get(position))) {
-                    if (value.get(position).isPieceColor(pieceColor) && value.get(position)
-                            .isPieceType(PieceScore.PAWN)) {
-                        count += 1;
-                    }
-                }
-            }
-            if (count >= 2) {
-                duplicatedPawnCount += count;
-            }
+            totalDuplicatedPawnCount += getDuplicatedPawnCountInColumn(pieceColor, xAxis);
         }
 
-        return duplicatedPawnCount * 0.5;
+        return totalDuplicatedPawnCount * 0.5;
+    }
+
+    private int getDuplicatedPawnCountInColumn(PieceColor pieceColor, XAxis xAxis) {
+        List<Position> positions = Position.getPositionsByXAxis(xAxis);
+        int count = countPawnByPositions(pieceColor, positions);
+
+        if (count >= 2) {
+            return count;
+        }
+        return 0;
+    }
+
+    private int countPawnByPositions(PieceColor pieceColor, List<Position> positions) {
+        return (int) positions.stream()
+                .map(value::get)
+                .filter(piece -> !Objects.isNull(piece))
+                .filter(piece -> piece.isPieceColor(pieceColor))
+                .filter(piece -> piece.isPieceType(PieceScore.PAWN))
+                .count();
     }
 }
