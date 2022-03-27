@@ -85,10 +85,15 @@ public class ChessGame {
     public GameResultDto calculateGameResult() {
         ScoreCalculator scoreCalculator = new ScoreCalculator();
 
+        Color winner = findWinner();
         double whiteScore = scoreCalculator.calculate(chessmen.extractPiecesOf(Color.WHITE));
         double blackScore = scoreCalculator.calculate(chessmen.extractPiecesOf(Color.BLACK));
 
-        return new GameResultDto(whiteScore, blackScore);
+        return new GameResultDto(winner, whiteScore, blackScore);
+    }
+
+    private Color findWinner() {
+        return chessmen.findKingSurvivor();
     }
 
     public Pieces getChessmen() {

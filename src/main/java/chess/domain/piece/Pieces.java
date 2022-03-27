@@ -68,4 +68,12 @@ public class Pieces {
             '}';
     }
 
+    public Color findKingSurvivor() {
+        return pieces
+            .stream()
+            .filter(Piece::isKing)
+            .map(Piece::getColor)
+            .findFirst()
+            .orElseThrow();
+    }
 }

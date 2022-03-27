@@ -6,6 +6,7 @@ import static chess.view.InputView.requestStatusOrEndInput;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printChessGameInitInstruction;
 import static chess.view.OutputView.printForceEndInstruction;
+import static chess.view.OutputView.printForceQuitStatus;
 import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
@@ -47,7 +48,7 @@ public class ChessController {
     }
 
     private ChessGame progressGameUntilEnd(ChessGame chessGame) {
-        while(!chessGame.isEnd() && !playerWantToEndStatus) {
+        while (!chessGame.isEnd() && !playerWantToEndStatus) {
             chessGame = progressByCommand(chessGame, requestStartOrMoveOrEndInput());
         }
         return chessGame;
@@ -79,10 +80,22 @@ public class ChessController {
     }
 
     private void endOrShowGameResult(ChessGame chessGame) {
+        if (playerWantToEndStatus) {
+            forceQuitGameResult(chessGame);
+            return;
+        }
         printGameOverInstructions();
         if (requestStatusOrEndInput()) {
-            printStatus(chessGame.calculateGameResult());
+            normalQuitGameResult(chessGame);
         }
+    }
+
+    private void forceQuitGameResult(ChessGame chessGame) {
+        printForceQuitStatus(chessGame.calculateGameResult());
+    }
+
+    private void normalQuitGameResult(ChessGame chessGame) {
+        printStatus(chessGame.calculateGameResult());
     }
 
 }
