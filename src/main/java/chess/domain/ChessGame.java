@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 
@@ -15,15 +16,19 @@ public class ChessGame {
         this.state = this.state.start();
     }
 
-    public Board getBoard() {
-        return this.state.getBoard();
+    public void move(Position beforePosition, Position afterPosition) {
+        this.state = this.state.move(beforePosition, afterPosition);
+    }
+
+    public void end() {
+        this.state = this.state.end();
     }
 
     public boolean isRunning() {
         return this.state.isRunning();
     }
 
-    public void end() {
-        this.state = this.state.end();
+    public Board getBoard() {
+        return this.state.getBoard();
     }
 }

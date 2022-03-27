@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import javax.xml.xpath.XPathNodes;
 
 public final class Board {
     private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
@@ -28,9 +29,11 @@ public final class Board {
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
     private final Map<Position, Piece> value;
+    private boolean whiteTurn;
 
     public Board() {
         this.value = new TreeMap<>();
+        this.whiteTurn = true;
         initializeFourPiecesOf(ROOK_INITIAL_POSITION, Rook::new);
         initializeFourPiecesOf(KNIGHT_INITIAL_POSITION, Knight::new);
         initializeFourPiecesOf(BISHOP_INITIAL_POSITION, Bishop::new);
@@ -75,7 +78,9 @@ public final class Board {
 
     public void move(Position beforePosition, Position afterPosition) {
         Piece piece = this.value.get(beforePosition);
-
+        if (piece.isBlack() == whiteTurn) {
+            throw new IllegalArgumentException("상대 진영의 차례입니다.");
+        }
         if (isBlank(beforePosition)) {
             throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다.");
         }
@@ -84,6 +89,7 @@ public final class Board {
             throw new IllegalArgumentException("경로에 기물이 있어 움직일 수 없습니다.");
         }
 
+        this.whiteTurn = !whiteTurn;
         if (isBlank(afterPosition)) {
             piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;

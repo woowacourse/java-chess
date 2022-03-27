@@ -21,7 +21,11 @@ public enum Row {
         this.value = value;
     }
 
-    private static Row of(int value) {
+    public static Row from(String rawRow) {
+        return from(Integer.parseInt(rawRow) - 1);
+    }
+
+    private static Row from(int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
@@ -53,7 +57,7 @@ public enum Row {
     private List<Row> rightPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
         for (int i = this.value + 1; i <  otherRow.value; i++) {
-            path.add(Row.of(i));
+            path.add(Row.from(i));
         }
         return path;
     }
@@ -61,7 +65,7 @@ public enum Row {
     private List<Row> leftPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
         for (int i = this.value - 1; i >  otherRow.value; i--) {
-            path.add(Row.of(i));
+            path.add(Row.from(i));
         }
         return path;
     }

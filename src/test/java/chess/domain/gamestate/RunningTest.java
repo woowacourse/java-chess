@@ -1,9 +1,14 @@
 package chess.domain.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.board.Column;
+import chess.domain.board.Position;
+import chess.domain.board.Row;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,5 +30,15 @@ public class RunningTest {
         State state = new Running(new Board());
 
         assertThat(state.end()).isInstanceOf(Finished.class);
+    }
+
+    @DisplayName("Running 상태에서 move 명령 호출할 수 있다.")
+    @Test
+    void running_move_no_exception() {
+        State state = new Running(new Board());
+        Position a2 = new Position(Column.A, Row.TWO);
+        Position a3 = new Position(Column.A, Row.THREE);
+
+        assertThatNoException().isThrownBy(() -> state.move(a2, a3));
     }
 }

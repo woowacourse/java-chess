@@ -5,23 +5,32 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0),
-    B(1),
-    C(2),
-    D(3),
-    E(4),
-    F(5),
-    G(6),
-    H(7),
+    A(0, "a"),
+    B(1, "b"),
+    C(2, "c"),
+    D(3, "d"),
+    E(4, "e"),
+    F(5, "f"),
+    G(6, "g"),
+    H(7, "h"),
     ;
 
     private final int value;
+    private final String name;
 
-    Column(final int value) {
+    Column(final int value, String name) {
         this.value = value;
+        this.name = name;
     }
 
-    private static Column of(int value) {
+    public static Column from(String rawColumn) {
+        return Arrays.stream(values())
+                .filter(column -> column.name.equals(rawColumn))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+    }
+
+    private static Column from(int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)
                 .findFirst()
@@ -49,7 +58,7 @@ public enum Column {
     private List<Column> upPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
         for (int i = this.value + 1; i <  otherColumn.value; i++) {
-            path.add(Column.of(i));
+            path.add(Column.from(i));
         }
         return path;
     }
@@ -57,7 +66,7 @@ public enum Column {
     private List<Column> downPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
         for (int i = this.value - 1; i >  otherColumn.value; i--) {
-            path.add(Column.of(i));
+            path.add(Column.from(i));
         }
         return path;
     }

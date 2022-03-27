@@ -2,6 +2,7 @@ package chess.domain.gamestate;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 
 public class Ready implements State {
 
@@ -9,6 +10,12 @@ public class Ready implements State {
     public State start() {
         return new Running(new Board());
     }
+
+    @Override
+    public State move(Position beforePosition, Position afterPosition) {
+        throw new IllegalStateException("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
+    }
+
 
     @Override
     public State end() {

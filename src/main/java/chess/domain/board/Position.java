@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +13,12 @@ public class Position implements Comparable<Position> {
     public Position(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static Position from(String rawPosition) {
+        String rawColumn = rawPosition.substring(0, 1);
+        String rawRow = rawPosition.substring(1);
+        return new Position(Column.from(rawColumn), Row.from(rawRow));
     }
 
     public int columnDistance(Position otherPosition) {

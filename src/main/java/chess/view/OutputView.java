@@ -8,12 +8,18 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
-    private static final String GAME_START_MESSAGE = "체스 게임을 시작합니다.";
-    private static final String GAME_START_COMMAND_FORMAT = "게임 시작은 %s, 종료는 %s 명령을 입력하세요.%n";
+    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
+    private static final String GAME_COMMAND_FORMAT = "> %s : %s%n";
+    private static final String GAME_START_COMMAND_NAME = "게임 시작";
+    private static final String GAME_MOVE_COMMAND_NAME = "게임 이동";
+    private static final String GAME_END_COMMAND_NAME = "게임 종료";
+    private static final String GAME_MOVE_COMMAND = "move source위치 target위치 - 예. move b2 b3";
 
     public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
-        System.out.printf(GAME_START_COMMAND_FORMAT, START_COMMAND, END_COMMAND);
+        System.out.printf(GAME_COMMAND_FORMAT, GAME_START_COMMAND_NAME, START_COMMAND);
+        System.out.printf(GAME_COMMAND_FORMAT, GAME_END_COMMAND_NAME, END_COMMAND);
+        System.out.printf(GAME_COMMAND_FORMAT, GAME_MOVE_COMMAND_NAME, GAME_MOVE_COMMAND);
     }
 
     public void printBoard(Map<Position, Piece> board) {
