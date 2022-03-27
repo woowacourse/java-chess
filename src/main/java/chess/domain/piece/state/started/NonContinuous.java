@@ -12,7 +12,7 @@ public class NonContinuous {
     public List<Position> getMovablePositions(Position source, ChessBoard board, List<Direction> directions) {
         return directions
             .stream()
-            .filter(direction -> board.canMoveOneStep(source, direction))
+            .filter(direction -> board.canMoveOrKillByOneStep(source, direction))
             .map(source::getNext)
             .collect(Collectors.toList());
     }

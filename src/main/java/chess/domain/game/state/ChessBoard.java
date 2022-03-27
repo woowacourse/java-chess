@@ -45,13 +45,22 @@ public class ChessBoard {
         return movablePaths.contains(target);
     }
 
-    public boolean canMoveOneStep(Position source, Direction direction) {
+    public boolean canMoveOrKillByOneStep(Position source, Direction direction) {
         Position target = source.getNext(direction);
         if (source.isBlocked(direction)) {
             return false;
         }
 
         return !isFilled(target) || canKill(source, target);
+    }
+
+    public boolean canOnlyMoveByOneStep(Position source, Direction direction) {
+        Position target = source.getNext(direction);
+        if (source.isBlocked(direction)) {
+            return false;
+        }
+
+        return !isFilled(target);
     }
 
     public boolean canKill(Position source, Position target) {

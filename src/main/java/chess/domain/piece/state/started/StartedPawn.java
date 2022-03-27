@@ -22,15 +22,16 @@ public class StartedPawn extends Started {
         List<Position> positions = new ArrayList<>();
         Position next = source.getNext(forward);
 
-        if (board.canMoveOneStep(source, forward)) {
+        if (board.canOnlyMoveByOneStep(source, forward)) {
             positions.add(next);
         }
 
-        if (canMoveTwoStep(source, board, forward)) {
+        if (canOnlyMoveByTwoStep(source, board, forward)) {
             positions.add(next.getNext(forward));
         }
 
-        positions.addAll(getKillablePositions(source, board));
+        List<Position> killablePositions = getKillablePositions(source, board);
+        positions.addAll(killablePositions);
         return positions;
     }
 
@@ -39,9 +40,9 @@ public class StartedPawn extends Started {
         return new MovedPawn(forward);
     }
 
-    private boolean canMoveTwoStep(Position source, ChessBoard board, Direction direction) {
+    private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {
         Position next = source.getNext(direction);
-        return board.canMoveOneStep(source, forward) && board.canMoveOneStep(next, forward);
+        return board.canOnlyMoveByOneStep(source, forward) && board.canOnlyMoveByOneStep(next, forward);
     }
 
     public List<Position> getKillablePositions(Position source, ChessBoard board) {
