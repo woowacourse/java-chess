@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.Board;
@@ -21,8 +22,15 @@ public class ChessGame {
         List<String> squares = InputView.requireCommand();
         while (squares.size() != 0) {
             movePiece(board, squares);
-            squares = InputView.requireCommand();
+            squares = checkGameOver(board);
         }
+    }
+
+    private List<String> checkGameOver(Board board) {
+        if (board.isGameOver()) {
+            return new ArrayList<>();
+        }
+        return InputView.requireCommand();
     }
 
     private void movePiece(Board board, List<String> squares) {

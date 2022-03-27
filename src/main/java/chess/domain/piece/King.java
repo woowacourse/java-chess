@@ -45,4 +45,9 @@ public final class King extends Piece {
         checkSameTeam(target);
         return direction.hasSame(MOVABLE_DIRECTIONS);
     }
+
+    @Override
+    public boolean isKing(){
+        return true;
+    }
 }

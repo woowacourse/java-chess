@@ -71,6 +71,9 @@ public class Board {
         checkCapableDirection(source, target, direction);
 
         turn = turn.switchColor();
+        if(targetPiece.isKing()){
+            turn = Color.NONE;
+        }
 
         board.put(target, sourcePiece);
         board.put(source, new None(Color.NONE));
@@ -105,9 +108,14 @@ public class Board {
         }
     }
 
+    public boolean isGameOver() {
+        return turn == Color.NONE;
+    }
+
     public List<Map.Entry<Square, Piece>> filterBy(Color color) {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toList());
     }
+
 }
