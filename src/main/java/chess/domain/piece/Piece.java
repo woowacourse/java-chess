@@ -23,24 +23,23 @@ public abstract class Piece {
 
     abstract public boolean canMove(Direction direction, Piece otherPiece);
 
-    public void checkSameTeam(Piece otherPiece) {
-        if (this.color == otherPiece.color) {
+    void checkSameTeam(Piece otherPiece) {
+        if (isSameColor(otherPiece.color)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
         }
     }
 
-    public boolean isNone() {
-        return false;
-    }
-
-    public boolean isSameColor(Color turn) {
-        return turn == this.color;
+    public boolean isSameColor(Color color) {
+        return color == this.color;
     }
 
     public double addScore(double sum) {
         return sum + score;
     }
 
+    public boolean isNone() {
+        return false;
+    }
 
     public boolean isPawn() {
         return false;
