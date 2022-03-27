@@ -15,7 +15,7 @@ public class BoardInitializerTest {
     @Test
     void init() {
         Board board = new BoardInitializer().init();
-        Map<Position, Piece> cells = board.getPieces();
+        Map<Position, Piece> cells = board.cells();
 
         assertThat(cells.size()).isEqualTo(32);
     }
