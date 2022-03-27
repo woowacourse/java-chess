@@ -93,7 +93,7 @@ public class ChessBoard {
     }
 
     private boolean isStraight(Position from, Position to) {
-        return to.findDirection(from) == Direction.N && to.findDirection(from) == Direction.S;
+        return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
     }
 
     private void checkMove(Position from, Position to, ChessPiece me) {
