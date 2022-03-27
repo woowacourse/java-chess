@@ -1,5 +1,7 @@
 package chess.game;
 
+import static chess.piece.Color.NONE;
+
 import chess.piece.Color;
 import chess.status.State;
 import java.util.Arrays;
@@ -10,7 +12,7 @@ import java.util.Map;
 public class Game {
 
     private State state;
-    private Color winColor;
+    private Color winColor = NONE;
 
     public Game(final State state) {
         this.state = state;
