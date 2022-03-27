@@ -5,6 +5,8 @@ import chess.domain.state.Direction;
 
 public class Pawn extends Piece {
     private static final double SCORE = 1;
+    public static final int FIRST_TURN_MOVABLE_DISTANCE = 2;
+    public static final int MOVABLE_DISTANCE = 1;
 
     public Pawn(Team team) {
         super(team, Name.PAWN);
@@ -24,9 +26,9 @@ public class Pawn extends Piece {
         int distance = locationDiff.computeDistance();
 
         if ((direction == Direction.D || direction == Direction.U) && isFirst()) {
-            return distance <= 2;
+            return distance <= FIRST_TURN_MOVABLE_DISTANCE;
         }
-        return distance <= 1;
+        return distance <= MOVABLE_DISTANCE;
     }
 
     @Override

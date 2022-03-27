@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final double DUPLICATE_PAWN_SCORE = 0.5;
     private final Map<Location, Piece> chessBoard;
 
     public Board() {
@@ -107,7 +108,7 @@ public class Board {
 
     private double computeDuplicatePawnScore(List<Piece> pieceList) {
         if (countPawn(pieceList) > 1) {
-            return countPawn(pieceList) * 0.5;
+            return countPawn(pieceList) * DUPLICATE_PAWN_SCORE;
         }
         return 0;
     }

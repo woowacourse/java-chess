@@ -5,6 +5,7 @@ import chess.domain.state.Direction;
 
 public class Knight extends Piece{
     private static final double SCORE = 2.5;
+    public static final int MOVABLE_DISTANCE = 1;
 
     public Knight(Team team) {
         super(team, Name.KNIGHT);
@@ -17,7 +18,7 @@ public class Knight extends Piece{
 
     @Override
     public boolean isMovableDistance(LocationDiff locationDiff) {
-        return locationDiff.computeDistance() == 1;
+        return locationDiff.computeDistance() == MOVABLE_DISTANCE;
     }
 
     @Override
