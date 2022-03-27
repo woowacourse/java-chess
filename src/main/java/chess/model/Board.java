@@ -20,7 +20,9 @@ import chess.vo.Position;
 
 public class Board {
 
-    static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
+    static final String ERROR_SOURCE_PIECE_EMPTY = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
+    static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
+    static final String ERROR_NOT_MOVABLE = "[ERROR] 이동할 수 없는 위치입니다.";
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
 
     private final Map<Position, Piece> values;
@@ -46,13 +48,13 @@ public class Board {
 
     private void turnDecide(Position source) {
         if (!turnDecider.isTurnOf(pieceAt(source))) {
-            throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
+            throw new IllegalArgumentException(ERROR_NOT_CORRECT_TURN);
         }
     }
 
     private void validateSourceNotEmpty(Position source) {
         if (isEmptyPiece(pieceAt(source))) {
-            throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
+            throw new IllegalArgumentException(ERROR_SOURCE_PIECE_EMPTY);
         }
     }
 
@@ -69,7 +71,7 @@ public class Board {
     private void validateChangeable(Position source, Position target, MoveType moveType) {
         if (!pieceAt(source).isMovable(new Path(source, target), moveType) || isBlocked(source, target)
             || isFriendly(moveType)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(ERROR_NOT_MOVABLE);
         }
     }
 

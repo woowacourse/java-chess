@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RankTest {
 
@@ -17,13 +19,14 @@ class RankTest {
         assertThat(reverseValues).isEqualTo(List.of(EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO, ONE));
     }
 
-    @Test
-    @DisplayName("두 Rank 사이에 존재하는 모든 Rank을 List로 담아 전달한다.")
-    void traceGroup() {
+    @ParameterizedTest
+    @CsvSource(value = {"ONE:false", "TWO:true", "FOUR:false", "FIVE:false"}, delimiter = ':')
+    @DisplayName("해당 Rank가 두 Rank 사이에 존재하는지 검증한다.")
+    void traceGroup(Rank rank, boolean expected) {
         //given
-        List<Rank> ranks = Rank.traceGroup(Rank.ONE, FOUR);
+        boolean actual = rank.isBetween(ONE, FOUR);
 
         //then
-        assertThat(ranks).isEqualTo(List.of(Rank.TWO, Rank.THREE));
+        assertThat(actual).isEqualTo(expected);
     }
 }

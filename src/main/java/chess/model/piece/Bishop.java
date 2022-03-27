@@ -14,13 +14,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.isDiagonal();
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return path.isDiagonal();
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override

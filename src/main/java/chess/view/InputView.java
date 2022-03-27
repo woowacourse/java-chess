@@ -22,18 +22,12 @@ public class InputView {
     public static Request inputCommandInGaming() {
         String input = readLine();
         Command command = Command.MoveStatusEnd(input);
-        if (command == Command.END) {
+        if (command == Command.END || command == Command.STATUS) {
             return new NotMoveRequest(command);
         }
 
-        if (command == Command.STATUS) {
-            return new NotMoveRequest(command);
-        }
         List<String> inputs = List.of(input.split(" "));
-
-        Position source = new Position(inputs.get(1));
-        Position target = new Position(inputs.get(2));
-        return new MoveRequest(command, source, target);
+        return new MoveRequest(command, new Position(inputs.get(1)), new Position(inputs.get(2)));
     }
 
 }

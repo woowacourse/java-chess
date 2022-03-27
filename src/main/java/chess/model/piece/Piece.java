@@ -14,6 +14,8 @@ public abstract class Piece {
         this.pieceColor = pieceColor;
     }
 
+    public abstract boolean isMovable(Path path, MoveType moveType);
+
     public String getEmblem() {
         if (pieceColor == PieceColor.WHITE) {
             return getConcreteEmblem().toLowerCase();
@@ -22,8 +24,6 @@ public abstract class Piece {
     }
 
     public abstract String getConcreteEmblem();
-
-    public abstract boolean isMovable(Path path, MoveType moveType);
 
     public boolean isSameColor(PieceColor otherPieceColor) {
         return this.pieceColor == otherPieceColor;

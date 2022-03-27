@@ -14,13 +14,13 @@ public class King extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.isAllDirectional() && path.fileDistance() <= 1 && path.rankDistance() <= 1;
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return path.isAllDirectional() && path.fileDistance() <= 1 && path.rankDistance() <= 1;
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override

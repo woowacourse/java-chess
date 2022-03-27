@@ -1,21 +1,22 @@
 package chess.vo;
 
+import static chess.vo.File.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class FileTest {
 
-    @Test
-    @DisplayName("두 File 사이에 존재하는 모든 File을 List로 담아 전달한다.")
-    void traceGroup() {
+    @ParameterizedTest
+    @CsvSource(value = {"A:false", "B:true", "D:false", "E:false"}, delimiter = ':')
+    @DisplayName("해당 File이 두 File 사이에 존재하는지 검증한다.")
+    void traceGroup(File file, boolean expected) {
         //given
-        List<File> files = File.traceGroup(File.A, File.D);
+        boolean actual = file.isBetween(A, D);
 
         //then
-        assertThat(files).isEqualTo(List.of(File.B, File.C));
+        assertThat(actual).isEqualTo(expected);
     }
 }

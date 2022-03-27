@@ -17,6 +17,8 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    static final String ERROR_NOT_EXIST_RANK = "[ERROR] 존재 하지 않는 랭크입니다.";
+
     private final int value;
 
     Rank(int value) {
@@ -27,18 +29,12 @@ public enum Rank {
         return Arrays.stream(values())
             .filter(rank -> rank.value == Integer.parseInt(input))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_RANK));
     }
 
     public static List<Rank> reverseValues() {
         return Arrays.stream(values())
             .sorted(Comparator.reverseOrder())
-            .collect(toUnmodifiableList());
-    }
-
-    public static List<Rank> traceGroup(Rank source, Rank target) {
-        return Arrays.stream(values())
-            .filter(rank -> rank.isBetween(source, target))
             .collect(toUnmodifiableList());
     }
 

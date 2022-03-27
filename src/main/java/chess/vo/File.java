@@ -1,9 +1,6 @@
 package chess.vo;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.Arrays;
-import java.util.List;
 
 public enum File {
 
@@ -16,6 +13,7 @@ public enum File {
     G("g"),
     H("h");
 
+    static final String ERROR_NOT_EXIST_FILE = "[ERROR] 존재 하지 않는 파일입니다.";
     private final String value;
 
     File(String value) {
@@ -26,13 +24,7 @@ public enum File {
         return Arrays.stream(values())
             .filter(file -> file.value.equals(input))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
-    }
-
-    public static List<File> traceGroup(File source, File target) {
-        return Arrays.stream(values())
-            .filter(file -> file.isBetween(source, target))
-            .collect(toUnmodifiableList());
+            .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_FILE));
     }
 
     public boolean isBetween(File source, File target) {

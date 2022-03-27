@@ -94,7 +94,7 @@ public class BoardTest {
     void move_exception() {
         assertThatThrownBy(() -> board.move(new Position(Rank.THREE, A), new Position(Rank.THREE, B)))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
+            .hasMessage(ERROR_SOURCE_PIECE_EMPTY);
     }
 
     @Test

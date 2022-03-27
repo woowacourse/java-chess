@@ -14,13 +14,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.isCross();
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return path.isCross();
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override

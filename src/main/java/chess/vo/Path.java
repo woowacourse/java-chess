@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 public class Path {
 
+    private static final int UNIT_DISTANCE = 1;
+
     private final Position source;
     private final Position target;
 
@@ -22,17 +24,17 @@ public class Path {
     }
 
     public boolean isUpDiagonal() {
-        return isDiagonal() && source.rankDisplacement(target) == 1
-            && source.fileDistance(target) == 1;
+        return isDiagonal() && source.rankDisplacement(target) == UNIT_DISTANCE
+            && source.fileDistance(target) == UNIT_DISTANCE;
     }
 
     public boolean isDownDiagonal() {
-        return isDiagonal() && target.rankDisplacement(source) == 1
-            && source.fileDistance(target) == 1;
+        return isDiagonal() && target.rankDisplacement(source) == UNIT_DISTANCE
+            && source.fileDistance(target) == UNIT_DISTANCE;
     }
 
     private boolean isForward(Position source, Position target, int amount) {
-        return source.rankDisplacement(target) > 0
+        return source.rankDisplacement(target) >= UNIT_DISTANCE
             && source.rankDisplacement(target) <= amount && source.isSameFile(target);
     }
 

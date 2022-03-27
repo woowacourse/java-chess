@@ -8,20 +8,22 @@ public class Knight extends Piece {
 
     private static final String EMBLEM = "N";
     private static final double SCORE = 2.5;
+    private static final int BIG_MOVE = 2;
+    private static final int SMALL_MOVE = 1;
 
     public Knight(PieceColor pieceColor) {
         super(pieceColor);
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.rankDistance() == BIG_MOVE && path.fileDistance() == SMALL_MOVE ||
+            path.rankDistance() == SMALL_MOVE && path.fileDistance() == BIG_MOVE;
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return path.rankDistance() == 2 && path.fileDistance() == 1 ||
-            path.rankDistance() == 1 && path.fileDistance() == 2;
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override

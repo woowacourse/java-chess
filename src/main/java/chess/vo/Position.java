@@ -1,5 +1,6 @@
 package chess.vo;
 
+import static java.lang.String.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
@@ -7,6 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
+
+    private static final int INDEX_FILE = 0;
+    private static final int INDEX_RANK = 1;
 
     private final Rank rank;
     private final File file;
@@ -17,31 +21,8 @@ public class Position {
     }
 
     public Position(String rankFile) {
-        this.rank = Rank.of(rankFile.substring(1, 2));
-        this.file = File.of(rankFile.substring(0, 1));
-    }
-
-    public int rankDisplacement(Position other) {
-        return rank.displacement(other.rank);
-    }
-
-    public boolean isSameFile(Position other) {
-        return this.file == other.file;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Position position = (Position)o;
-        return rank == position.rank && file == position.file;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, file);
+        this(Rank.of(valueOf(rankFile.charAt(INDEX_RANK))),
+            File.of(valueOf(rankFile.charAt(INDEX_FILE))));
     }
 
     public boolean isRankOf(Rank otherRank) {
@@ -60,6 +41,14 @@ public class Position {
         return Math.abs(file.displacement(other.file));
     }
 
+    public int rankDisplacement(Position other) {
+        return rank.displacement(other.rank);
+    }
+
+    public boolean isSameFile(Position other) {
+        return this.file == other.file;
+    }
+
     public List<Position> between(Position other) {
         return Rank.reverseValues()
             .stream()
@@ -72,6 +61,21 @@ public class Position {
             .filter(file -> rank.isBetween(this.rank, other.rank) && file.isBetween(this.file, other.file))
             .map(file -> new Position(rank, file))
             .collect(toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Position position = (Position)o;
+        return rank == position.rank && file == position.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, file);
     }
 
     @Override

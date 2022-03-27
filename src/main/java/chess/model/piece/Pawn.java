@@ -11,6 +11,8 @@ public class Pawn extends Piece {
 
     private static final String EMBLEM = "P";
     private static final double SCORE = 1;
+    private static final int FIST_MOVE_DISTANCE = 2;
+    private static final int DEFAULT_MOVE_DISTANCE = 1;
 
     public Pawn(PieceColor pieceColor) {
         super(pieceColor);
@@ -38,10 +40,10 @@ public class Pawn extends Piece {
 
     private boolean isForwardWhite(Path path) {
         if (isFirstMove(path)) {
-            return path.isUpStraight(2);
+            return path.isUpStraight(FIST_MOVE_DISTANCE);
         }
 
-        return path.isUpStraight(1);
+        return path.isUpStraight(DEFAULT_MOVE_DISTANCE);
     }
 
     private boolean isFirstMove(Path path) {
@@ -50,10 +52,10 @@ public class Pawn extends Piece {
 
     private boolean isForwardBlack(Path path) {
         if (isFirstMove(path)) {
-            return path.isDownStraight(2);
+            return path.isDownStraight(FIST_MOVE_DISTANCE);
         }
 
-        return path.isDownStraight(1);
+        return path.isDownStraight(DEFAULT_MOVE_DISTANCE);
     }
 
     @Override

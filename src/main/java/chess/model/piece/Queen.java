@@ -14,13 +14,13 @@ public class Queen extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return path.isAllDirectional();
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return path.isAllDirectional();
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override

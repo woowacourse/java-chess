@@ -14,13 +14,13 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
-        return EMBLEM;
+    public boolean isMovable(Path path, MoveType moveType) {
+        return false;
     }
 
     @Override
-    public boolean isMovable(Path path, MoveType moveType) {
-        return false;
+    public String getConcreteEmblem() {
+        return EMBLEM;
     }
 
     @Override
