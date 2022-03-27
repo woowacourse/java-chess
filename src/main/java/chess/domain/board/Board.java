@@ -7,9 +7,9 @@ import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
+import chess.game.TotalScore;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class Board {
     private static final List<Rank> INITIAL_PIECES_RANKS = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
 
     private final List<Piece> pieces;
-    private TeamColor currentTurnTeamColor;
+    private final TeamColor currentTurnTeamColor;
 
     private Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
         this.pieces = pieces;
@@ -89,41 +89,16 @@ public class Board {
         }
     }
 
-    public boolean isCheckMate() {
+    public boolean hasOneKing() {
         return pieces.stream()
                 .filter(piece -> piece.isTypeOf(King.class))
-                .count() != 2;
+                .count() == 1;
     }
 
     public double getTotalPoint(TeamColor teamColor) {
-        double totalPoint = pieces.stream()
+        final List<Piece> teamPieces = pieces.stream()
                 .filter(piece -> piece.isTeamOf(teamColor))
-                .mapToDouble(Piece::getScore)
-                .sum();
-        final List<Pawn> pawns = findPawns(teamColor);
-
-        for (File file : File.values()) {
-            totalPoint -= countSameFilePawn(pawns, file) * 0.5;
-        }
-        return totalPoint;
-    }
-
-    private int countSameFilePawn(final List<Pawn> pawns, final File file) {
-        final int sameFilePawnCount = (int) pawns.stream()
-                .map(Pawn.class::cast)
-                .filter(pawn -> pawn.isInFile(file))
-                .count();
-        if (sameFilePawnCount > 1) {
-            return sameFilePawnCount;
-        }
-        return 0;
-    }
-
-    private List<Pawn> findPawns(final TeamColor teamColor) {
-        return pieces.stream()
-                .filter(piece -> piece.isTeamOf(teamColor))
-                .filter(piece -> piece.isTypeOf(Pawn.class))
-                .map(Pawn.class::cast)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
+        return TotalScore.getTotalPoint(teamPieces);
     }
 }
