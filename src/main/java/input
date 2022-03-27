@@ -1,0 +1,11 @@
+start
+move d2 d4
+move c7 c5
+move a2 a3
+move c5 d4
+move a3 a4
+move d4 d3
+move a4 a5
+move d3 d2
+move a1 a2
+move d2 e1

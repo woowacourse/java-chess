@@ -33,6 +33,9 @@ public class InputView {
             String to = command.split(" ")[2];
             return new MoveCommand(createPosition(from), createPosition(to));
         }
+        if (command.matches("^status$")) {
+            return new StatusCommand();
+        }
         throw new IllegalArgumentException("[ERROR] 잘못된 명령어를 입력하셨습니다.");
     }
 

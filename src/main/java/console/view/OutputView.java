@@ -2,6 +2,7 @@ package console.view;
 
 import chess.piece.*;
 import chess.position.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class OutputView {
@@ -51,5 +52,14 @@ public class OutputView {
             return PIECE_SYMBOL.get(piece.getClass()).toLowerCase(Locale.ROOT);
         }
         return PIECE_SYMBOL.get(piece.getClass());
+    }
+
+    public static void printScores(BigDecimal whiteScore, BigDecimal blackScore) {
+        System.out.printf("WHITE 점수: %s %n", whiteScore.toPlainString());
+        System.out.printf("BLACK 점수: %s %n", blackScore.toPlainString());
+    }
+
+    public static void printWinner(Color winnerColor) {
+        System.out.printf("%s 승리!", winnerColor);
     }
 }

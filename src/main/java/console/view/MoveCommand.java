@@ -23,4 +23,14 @@ public class MoveCommand implements Command {
         chessBoard.move(from, to);
         return chessBoard;
     }
+
+    @Override
+    public Position getFrom() {
+        return from;
+    }
+
+    @Override
+    public Position getTo() {
+        return to;
+    }
 }
