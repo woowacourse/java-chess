@@ -14,11 +14,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 class KnightTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"4d", "3e", "4h", "3g", "6h", "7g", "6d", "7e"})
+    @ValueSource(strings = {"d4", "e3", "h4", "g3", "h6", "g7", "d6", "e7"})
     @DisplayName("이동경로에 기물이 존재하지 않으면 목표 지점에 이동한다.")
     void move(final String targetPositionValue) {
         //given
-        final Knight knight = new Knight(TeamColor.BLACK, Position.from("5f"));
+        final Knight knight = new Knight(TeamColor.BLACK, Position.from("f5"));
         final Position targetPosition = Position.from(targetPositionValue);
         final Piece moved = knight.move(new ArrayList<>(), targetPosition);
         //when
@@ -31,8 +31,8 @@ class KnightTest {
     @DisplayName("목표 지점이 갈 수 없는 곳이면 예외를 발생시킨다.")
     void moveExceptionTarget() {
         //given
-        final Knight knight = new Knight(TeamColor.BLACK, Position.from("1a"));
-        final Position targetPosition = Position.from("3c");
+        final Knight knight = new Knight(TeamColor.BLACK, Position.from("a1"));
+        final Position targetPosition = Position.from("c3");
         //when, then
         assertThatThrownBy(() -> knight.move(new ArrayList<>(), targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)

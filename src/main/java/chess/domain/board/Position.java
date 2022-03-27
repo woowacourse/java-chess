@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-    private static final int RANK_INDEX = 0;
-    private static final int FILE_INDEX = 1;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final String RANK_FILE_DELIMITER = "";
 
     private static final List<Position> allPositions;

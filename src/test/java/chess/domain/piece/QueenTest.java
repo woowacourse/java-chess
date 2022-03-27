@@ -16,11 +16,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 class QueenTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"8a", "3c"})
+    @ValueSource(strings = {"a8", "c3"})
     @DisplayName("이동경로에 기물이 존재하지 않으면 목표 지점에 이동한다.")
     void move(final String targetPositionValue) {
         //given
-        final Queen queen = new Queen(TeamColor.BLACK, Position.from("1a"));
+        final Queen queen = new Queen(TeamColor.BLACK, Position.from("a1"));
         final Position targetPosition = Position.from(targetPositionValue);
         final Piece moved = queen.move(new ArrayList<>(), targetPosition);
         //when
@@ -33,9 +33,9 @@ class QueenTest {
     @DisplayName("이동경로에 기물이 존재하면 예외를 발생시킨다.")
     void moveException() {
         //given
-        final Queen queen = new Queen(TeamColor.BLACK, Position.from("1a"));
-        final List<Piece> pieces = Collections.singletonList(new Knight(TeamColor.BLACK, Position.from("4a")));
-        final Position targetPosition = Position.from("8a");
+        final Queen queen = new Queen(TeamColor.BLACK, Position.from("a1"));
+        final List<Piece> pieces = Collections.singletonList(new Knight(TeamColor.BLACK, Position.from("a4")));
+        final Position targetPosition = Position.from("a8");
         //when, then
         assertThatThrownBy(() -> queen.move(pieces, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -46,8 +46,8 @@ class QueenTest {
     @DisplayName("목표 지점이 갈 수 없는 곳이면 예외를 발생시킨다.")
     void moveExceptionTarget() {
         //given
-        final Queen queen = new Queen(TeamColor.BLACK, Position.from("1a"));
-        final Position targetPosition = Position.from("3b");
+        final Queen queen = new Queen(TeamColor.BLACK, Position.from("a1"));
+        final Position targetPosition = Position.from("b3");
         //when, then
         assertThatThrownBy(() -> queen.move(new ArrayList<>(), targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)

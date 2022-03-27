@@ -17,9 +17,9 @@ class RookTest {
     @DisplayName("이동경로에 기물이 존재하지 않으면 목표 지점에 이동한다.")
     void move() {
         //given
-        final Rook rook = new Rook(TeamColor.BLACK, Position.from("1a"));
-        final Rook anotherRook = new Rook(TeamColor.BLACK, Position.from("1h"));
-        final Position targetPosition = Position.from("8a");
+        final Rook rook = new Rook(TeamColor.BLACK, Position.from("a1"));
+        final Rook anotherRook = new Rook(TeamColor.BLACK, Position.from("h1"));
+        final Position targetPosition = Position.from("a8");
         final Piece moved = rook.move(Collections.singletonList(anotherRook), targetPosition);
         //when
         final boolean actual = moved.hasPosition(targetPosition);
@@ -31,9 +31,9 @@ class RookTest {
     @DisplayName("이동경로에 기물이 존재하면 예외를 발생시킨다.")
     void moveException() {
         //given
-        final Rook rook = new Rook(TeamColor.BLACK, Position.from("1a"));
-        final List<Piece> pieces = Collections.singletonList(new Knight(TeamColor.BLACK, Position.from("4a")));
-        final Position targetPosition = Position.from("8a");
+        final Rook rook = new Rook(TeamColor.BLACK, Position.from("a1"));
+        final List<Piece> pieces = Collections.singletonList(new Knight(TeamColor.BLACK, Position.from("a4")));
+        final Position targetPosition = Position.from("a8");
         //when, then
         assertThatThrownBy(() -> rook.move(pieces, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -44,8 +44,8 @@ class RookTest {
     @DisplayName("목표 지점이 갈 수 없는 곳이면 예외를 발생시킨다.")
     void moveExceptionTarget() {
         //given
-        final Rook rook = new Rook(TeamColor.BLACK, Position.from("1a"));
-        final Position targetPosition = Position.from("2b");
+        final Rook rook = new Rook(TeamColor.BLACK, Position.from("a1"));
+        final Position targetPosition = Position.from("b2");
         //when, then
         assertThatThrownBy(() -> rook.move(new ArrayList<>(), targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
