@@ -38,10 +38,14 @@ public class Board {
     public void move(Position src, Position dest, Color targetColor) {
         Piece piece = findPieceBy(src)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
+        checkCurrentPieceAndTargetPieceHaveSameColor(targetColor, piece);
+        move(src, dest, piece);
+    }
+
+    private void checkCurrentPieceAndTargetPieceHaveSameColor(Color targetColor, Piece piece) {
         if (!piece.isSameColor(targetColor)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다");
         }
-        move(src, dest, piece);
     }
 
     public Result calculateCurrentResult() {
@@ -64,15 +68,34 @@ public class Board {
     }
 
     private void move(Position src, Position dest, Piece piece) {
-        if (!piece.canMove(src, dest)) {
-            throw new IllegalArgumentException("이동할 수 없습니다");
-        }
-
+        checkFollowMovementRule(src, dest, piece);
+        checkPawnMoveForwardToCatch(src, dest, piece);
+        checkPawnMoveDiagonallyWithoutCatching(src, dest, piece);
         checkSameColorInDestination(piece, dest);
         checkObstacleInPath(src, dest);
 
         value.put(dest, piece);
         value.remove(src);
+    }
+
+    private void checkFollowMovementRule(Position src, Position dest, Piece piece) {
+        if (!piece.canMove(src, dest)) {
+            throw new IllegalArgumentException("이동할 수 없습니다");
+        }
+    }
+
+    private void checkPawnMoveForwardToCatch(Position src, Position dest, Piece piece) {
+        boolean destHasPiece = findPieceBy(dest).isPresent();
+        if (piece.isSameType(Pawn.class) && destHasPiece && src.isSameFile(dest)) {
+            throw new IllegalArgumentException("이동할 수 없습니다");
+        }
+    }
+
+    private void checkPawnMoveDiagonallyWithoutCatching(Position src, Position dest, Piece piece) {
+        boolean destHasPiece = findPieceBy(dest).isPresent();
+        if (piece.isSameType(Pawn.class) && !destHasPiece && !src.isSameFile(dest)) {
+            throw new IllegalArgumentException("이동할 수 없습니다");
+        }
     }
 
     private void checkSameColorInDestination(Piece piece, Position dest) {

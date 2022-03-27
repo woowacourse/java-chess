@@ -97,4 +97,8 @@ public class Position {
                 ", " + row +
                 '}';
     }
+
+    public boolean isSameFile(Position position) {
+        return this.column.equals(position.column);
+    }
 }
