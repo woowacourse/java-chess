@@ -5,6 +5,13 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final String WRONG_POSITION = "올바르지 않은 위치 입력입니다.";
+    private static final int POSITION_ARGUMENT_LENGTH = 2;
+    private static final int ROW_POSITION_FROM = 1;
+    private static final int ROW_POSITION_TO = 2;
+    private static final int COLUMN_POSITION_FROM = 0;
+    private static final int COLUMN_POSITION_TO = 1;
+
     private final Row row;
     private final Column column;
 
@@ -18,11 +25,11 @@ public class Position {
     }
 
     public static Position from(String rawPosition) {
-        if (rawPosition.length() != 2) {
-            throw new IllegalArgumentException("올바르지 않은 위치 입력입니다.");
+        if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
+            throw new IllegalArgumentException(WRONG_POSITION);
         }
-        Row row = Row.from(rawPosition.substring(1, 2));
-        Column column = Column.valueOf(rawPosition.substring(0, 1));
+        Row row = Row.from(rawPosition.substring(ROW_POSITION_FROM, ROW_POSITION_TO));
+        Column column = Column.valueOf(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
         return new Position(row, column);
     }
 

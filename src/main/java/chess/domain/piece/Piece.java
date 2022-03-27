@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    protected static final String INVALID_DIRECTION = "진행할 수 없는 방향입니다.";
+    protected static final String INVALID_POSITION = "진행할 수 없는 위치입니다.";
+
     private final PieceType pieceType;
     private final Color color;
 
@@ -45,4 +48,5 @@ public abstract class Piece {
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
+
 }

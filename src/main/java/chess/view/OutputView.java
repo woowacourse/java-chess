@@ -1,8 +1,5 @@
 package chess.view;
 
-import java.util.Locale;
-import java.util.Map;
-
 import chess.domain.Status;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
@@ -10,8 +7,14 @@ import chess.domain.board.Row;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
+import java.util.Locale;
+import java.util.Map;
 
 public class OutputView {
+
+    private static final double KING_CAUGHT_AND_LOST = -1.0;
+    private static final int BOARD_ROW_MAX_POSITION = 8;
+    private static final int BOARD_ROW_MIN_POSITION = 1;
 
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -26,14 +29,14 @@ public class OutputView {
     }
 
     public static void printBoard(final Map<Position, Piece> pieces) {
-        for (int i = 8; i >= 1; i--) {
+        for (int i = BOARD_ROW_MAX_POSITION; i >= BOARD_ROW_MIN_POSITION; i--) {
             printRow(pieces, i);
             System.out.print(System.lineSeparator());
         }
     }
 
     private static void printRow(final Map<Position, Piece> pieces, int rawRow) {
-        for (int i = 1; i <= 8; i++) {
+        for (int i = BOARD_ROW_MIN_POSITION; i <= BOARD_ROW_MAX_POSITION; i++) {
             Position position = new Position(Row.from(rawRow), Column.from(i));
             Piece piece = pieces.getOrDefault(position, new EmptySpace());
             System.out.print(convertToSymbol(piece));
@@ -51,7 +54,7 @@ public class OutputView {
     public static void printStatus(Status status) {
         final double blackScore = status.getBlackScore();
         final double whiteScore = status.getWhiteScore();
-        if (blackScore == -1.0 || whiteScore == -1.0) {
+        if (blackScore == KING_CAUGHT_AND_LOST || whiteScore == KING_CAUGHT_AND_LOST) {
             printWinner(blackScore);
             return;
         }
@@ -66,10 +69,9 @@ public class OutputView {
     }
 
     private static void printWinner(double blackScore) {
-        if (blackScore == -1.0) {
+        if (blackScore == KING_CAUGHT_AND_LOST) {
             System.out.println("화이트의 승리입니다");
         }
         System.out.println("블랙의 승리입니다");
     }
-
 }

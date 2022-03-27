@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 
     private void validateInitialRange(int rowDifference, int columnDifference) {
         if (isValidInitialRange(rowDifference, columnDifference)) {
-            throw new IllegalArgumentException("진행할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_POSITION);
         }
     }
 
@@ -51,7 +51,7 @@ public class Pawn extends Piece {
 
     private void validateDirection(Direction direction) {
         if (isInvalidDirection(direction)) {
-            throw new IllegalArgumentException("진행할 수 없는 방향입니다.");
+            throw new IllegalArgumentException(INVALID_DIRECTION);
         }
     }
 
@@ -77,11 +77,12 @@ public class Pawn extends Piece {
 
     private void validateRange(int rowDifference, int columnDifference) {
         if (isInvalidRange(rowDifference, columnDifference)) {
-            throw new IllegalArgumentException("진행할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_POSITION);
         }
     }
 
     private boolean isInvalidRange(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) > POSSIBLE_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
     }
+
 }

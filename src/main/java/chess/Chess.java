@@ -10,6 +10,14 @@ import chess.view.OutputView;
 
 public class Chess {
 
+    private static final String COMMAND_DISTRIBUTOR = " ";
+    private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
+    private static final String INVALID_MOVING_COMMAND = "올바르지 않은 이동 명령입니다.";
+    private static final int COMMAND = 0;
+    private static final int MOVE_COMMAND_LENGTH = 3;
+    private static final int STARTING_POINT = 1;
+    private static final int DESTINATION = 2;
+
     private final Board board;
     private GameState gameState;
 
@@ -37,8 +45,8 @@ public class Chess {
 
     private void operateOnce() {
         String[] args = InputView.input()
-                .split(" ", -1);
-        Command command = Command.from(args[0]);
+                .split(COMMAND_DISTRIBUTOR, -1);
+        Command command = Command.from(args[COMMAND]);
         if (command == Command.START && gameState == GameState.READY) {
             start();
             gameState = GameState.WHITE_RUNNING;
@@ -57,7 +65,7 @@ public class Chess {
             OutputView.printStatus(new Status(board));
             return;
         }
-        throw new IllegalArgumentException("현재 실행할 수 없는 명령입니다.");
+        throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
     }
 
     private void start() {
@@ -65,11 +73,11 @@ public class Chess {
     }
 
     private void move(String[] args) {
-        if (args.length != 3) {
-            throw new IllegalArgumentException("올바르지 않은 이동 명령입니다.");
+        if (args.length != MOVE_COMMAND_LENGTH) {
+            throw new IllegalArgumentException(INVALID_MOVING_COMMAND);
         }
-        Position start = Position.from(args[1]);
-        Position target = Position.from(args[2]);
+        Position start = Position.from(args[STARTING_POINT]);
+        Position target = Position.from(args[DESTINATION]);
         Color currentColor = getCurrentColor();
         if (board.move(start, target, currentColor).isSamePiece(PieceType.KING)) {
             gameState = GameState.END;
