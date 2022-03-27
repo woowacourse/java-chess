@@ -1,8 +1,8 @@
 package chess.domain;
 
+import static chess.domain.TestBoardGenerator.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ public class StatusTest {
         board.put(new Square("c4"), WHITE_ROOK);
         board.put(new Square("c5"), WHITE_BISHOP);
         board.put(new Square("c6"), WHITE_PAWN);
-        Board chessBoard = new Board(board, Color.WHITE);
+        Board chessBoard = new Board(board);
         Status status = new Status(chessBoard);
 
         assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18);
@@ -40,7 +40,7 @@ public class StatusTest {
         Map<Square, Piece> board = createBoard();
         board.put(new Square("c5"), WHITE_PAWN);
         board.put(new Square("c6"), WHITE_PAWN);
-        Board chessBoard = new Board(board,Color.WHITE);
+        Board chessBoard = new Board(board);
         Status status = new Status(chessBoard);
 
         assertThat(status.calculateScore(Color.WHITE)).isEqualTo(1);
@@ -56,23 +56,9 @@ public class StatusTest {
         board.put(new Square("c6"), WHITE_PAWN);
         board.put(new Square("c5"), WHITE_PAWN);
         board.put(new Square("c4"), WHITE_PAWN);
-        Board chessBoard = new Board(board,Color.WHITE);
+        Board chessBoard = new Board(board);
         Status status = new Status(chessBoard);
 
         assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18.5);
-    }
-
-    private Map<Square, Piece> createBoard() {
-        Map<Square, Piece> board = new LinkedHashMap<>();
-        for (Rank rank : Rank.values()) {
-            createRow(board, rank);
-        }
-        return board;
-    }
-
-    private void createRow(Map<Square, Piece> board, Rank rank) {
-        for (File file : File.values()) {
-            board.put(new Square(file, rank), Piece.from(File.A, Rank.THREE));
-        }
     }
 }

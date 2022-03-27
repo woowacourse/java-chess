@@ -43,7 +43,6 @@ public class InputView {
             String command = commands.get(COMMAND_INDEX);
             checkImpossibleCommand(List.of(START, STATUS), command);
             commands.remove(COMMAND_INDEX);
-            System.out.println(commands.size());
             return commands;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

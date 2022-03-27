@@ -3,46 +3,47 @@ package chess;
 import java.util.List;
 
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.Status;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGame {
+public class ChessGameLauncher {
     public void run() {
         OutputView.announceStart();
-        Board board = initGame();
-        inGame(board);
-        endGame(board);
+        ChessGame game = initGame();
+        inGame(game);
+        endGame(game);
     }
 
-    private Board initGame() {
+    private ChessGame initGame() {
         if (!InputView.isStart()) {
             System.exit(0);
         }
 
-        Board board = new Board();
-        OutputView.showBoard(board.splitByRank());
-        return board;
+        ChessGame game = new ChessGame();
+        OutputView.showBoard(game.collectPieceNames());
+        return game;
     }
 
-    private void inGame(Board board) {
+    private void inGame(ChessGame game) {
         List<String> squares = inputSquaresToMove();
 
-        while (!board.isKingDie()) {
-            movePiece(board, squares);
+        while (!game.isKingDie()) {
+            movePiece(game, squares);
             squares = inputSquaresToMove();
         }
         OutputView.printKingDieMessage();
     }
 
-    private void movePiece(Board board, List<String> squares) {
+    private void movePiece(ChessGame game, List<String> squares) {
         try {
             String source = squares.get(0);
             String target = squares.get(1);
-            board = board.move(new Square(source), new Square(target));
-            OutputView.showBoard(board.splitByRank());
+            game.move(new Square(source), new Square(target));
+            OutputView.showBoard(game.collectPieceNames());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
         }
@@ -58,16 +59,16 @@ public class ChessGame {
         return squares;
     }
 
-    private void endGame(Board board) {
+    private void endGame(ChessGame game) {
         if (InputView.isGameEnd()) {
             System.exit(0);
         }
 
-        printStatus(board);
+        printStatus(game);
     }
 
-    private void printStatus(Board board) {
-        Status status = new Status(board);
+    private void printStatus(ChessGame game) {
+        Status status = game.saveStatus();
         OutputView.showScore(status, Color.WHITE);
         OutputView.showScore(status, Color.BLACK);
     }

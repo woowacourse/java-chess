@@ -19,18 +19,15 @@ import chess.domain.position.Square;
 public class Board {
     private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 이동할 수 없는 위치입니다.";
     private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 가는 길에 다른 피스가 있습니다";
-    private static final String ERROR_MESSAGE_TURN = "[ERROR] 순서 지키시지?!";
 
     private final Map<Square, Piece> board;
-    private Color turn;
 
     public Board() {
-        this(createBoard(), Color.WHITE);
+        this(createBoard());
     }
 
-    public Board(Map<Square, Piece> board, Color color) {
+    public Board(Map<Square, Piece> board) {
         this.board = new LinkedHashMap<>(board);
-        this.turn = color;
     }
 
     private static Map<Square, Piece> createBoard() {
@@ -61,29 +58,17 @@ public class Board {
         return result;
     }
 
-    public Board move(Square source, Square target) {
+    public boolean isRightTurn(Square source, Color turn) {
+        return board.get(source).isSameColor(turn);
+    }
+
+    public void checkCanMove(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         Direction direction = source.getGap(target);
 
-        checkTurn(sourcePiece);
         checkCapablePosition(direction, sourcePiece, targetPiece);
         checkCapableDirection(source, target, direction);
-
-        turn = turn.switchColor();
-        if(targetPiece.isKing()){
-            turn = Color.NONE;
-        }
-
-        board.put(target, sourcePiece);
-        board.put(source, new None(Color.NONE));
-        return new Board(board,turn);
-    }
-
-    private void checkTurn(Piece sourcePiece) {
-        if (!sourcePiece.isSameColor(turn)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_TURN);
-        }
     }
 
     private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
@@ -108,8 +93,15 @@ public class Board {
         }
     }
 
-    public boolean isKingDie() {
-        return turn == Color.NONE;
+    public boolean isTargetKing(Square target) {
+        return board.get(target).isKing();
+    }
+
+    public Board move(Square source, Square target) {
+        Piece sourcePiece = board.get(source);
+        board.put(target, sourcePiece);
+        board.put(source, new None(Color.NONE));
+        return new Board(board);
     }
 
     public List<Map.Entry<Square, Piece>> filterBy(Color color) {
@@ -117,5 +109,4 @@ public class Board {
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toList());
     }
-
 }

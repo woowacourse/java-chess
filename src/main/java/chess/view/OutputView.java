@@ -23,11 +23,9 @@ public class OutputView {
         System.out.println(MESSAGE_INPUT_STATUS);
     }
 
-    public static void showBoard(List<List<Piece>> board) {
-        for (List<Piece> pieces : board) {
-            pieces.stream()
-                    .map(Piece::getEmoji)
-                    .forEach(System.out::print);
+    public static void showBoard(List<List<String>> board) {
+        for (List<String> pieces : board) {
+            pieces.forEach(System.out::print);
             System.out.println();
         }
     }
