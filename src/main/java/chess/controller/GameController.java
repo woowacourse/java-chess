@@ -11,7 +11,7 @@ import static chess.view.OutputView.printGameOverInstructions;
 
 import chess.domain.game.ActivePieces;
 import chess.domain.game.Game;
-import chess.domain.game.Running;
+import chess.domain.game.WhiteTurn;
 import chess.dto.BoardViewDto;
 import chess.view.OutputView;
 
@@ -24,7 +24,7 @@ public class GameController {
         if (!requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
-        return new Running(new ActivePieces(initAllChessmen()));
+        return new WhiteTurn(new ActivePieces(initAllChessmen()));
     }
 
     public Game playGame(Game game) {

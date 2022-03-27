@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.MoveCommandDto;
 
-public class Running extends Started {
+public abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
 
@@ -21,7 +21,7 @@ public class Running extends Started {
             return attack(sourcePiece, chessmen.findByPosition(targetPosition));
         }
         sourcePiece.move(targetPosition, chessmen::isOccupied);
-        return new Running(chessmen);
+        return continueGame();
     }
 
     private Position sourcePositionOf(MoveCommandDto dto) {
@@ -41,16 +41,13 @@ public class Running extends Started {
         if (chessmen.countKings() < ONGOING_GAME_KING_COUNT) {
             return new GameOver(chessmen);
         }
-        return new Running(chessmen);
+        return continueGame();
     }
+
+    abstract protected Game continueGame();
 
     @Override
     public final boolean isEnd() {
         return false;
-    }
-
-    @Override
-    public String toString() {
-        return "Running{" + "chessmen=" + chessmen + '}';
     }
 }
