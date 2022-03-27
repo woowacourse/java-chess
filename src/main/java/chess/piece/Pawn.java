@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -14,31 +15,38 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to) {
-        return getPosition().isVerticalWay(to) && isForward(getPosition(), to) && isValidDistance(getPosition(), to);
+    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
+        if (!isForward(to)) {
+            return false;
+        }
+
+        if (getPosition().isVerticalWay(to) && isValidDistance(to)) {
+            return !pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
+        }
+
+        if (getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == 1) {
+            return pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
+        }
+
+        return false;
     }
 
-    @Override
-    public boolean isPawn() {
-        return true;
+    private boolean isForward(Position to) {
+        return getColor().isForward(getPosition(), to);
     }
 
-    private boolean isForward(Position from, Position to) {
-        return getColor().isForward(from, to);
+    private boolean isValidDistance(Position to) {
+        return getPosition().getVerticalDistance(to) <= movableDistance();
     }
 
-    private boolean isValidDistance(Position from, Position to) {
-        return from.getVerticalDistance(to) <= movableDistance(from);
-    }
-
-    private int movableDistance(Position from) {
-        if (isStartPawnPosition(from)) {
+    private int movableDistance() {
+        if (isStartPawnPosition()) {
             return 2;
         }
         return 1;
     }
 
-    private boolean isStartPawnPosition(Position from) {
-        return getColor().isStartPawnPosition(from);
+    private boolean isStartPawnPosition() {
+        return getColor().isStartPawnPosition(getPosition());
     }
 }

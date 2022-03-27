@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -13,13 +14,17 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public Piece transfer(Position to) {
+    public Piece transfer(Position to, List<Piece> pieces) {
         if (getPosition().equals(to)) {
             throw new IllegalArgumentException("동일한 위치로 기물을 움직일 수 없습니다.");
-
         }
 
-        if (!isPossibleMovement(to)) {
+        if (!isPossibleMovement(to, pieces)) {
+            throw new IllegalArgumentException(String.format(
+                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
+        }
+
+        if (hasObstacleBetweenPositions(to, pieces) || hasSameColorTargetPiece(to, pieces)) {
             throw new IllegalArgumentException(String.format(
                 "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
         }
@@ -27,12 +32,36 @@ public abstract class Piece {
         return createNewPiece(to);
     }
 
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    private boolean hasObstacleBetweenPositions(Position to, List<Piece> pieces) {
+        if (!getPosition().hasLinearPath(to)) {
+            return false;
+        }
+
+        return getPosition().getLinearPath(to).stream()
+            .anyMatch(position -> hasPieceByPosition(position, pieces));
     }
 
-    public boolean isPawn() {
-        return false;
+    private boolean hasSameColorTargetPiece(Position to, List<Piece> pieces) {
+        if (!hasPieceByPosition(to, pieces)) {
+            return false;
+        }
+
+        Piece targetPiece = findPieceByPosition(to, pieces);
+        return isSameColor(targetPiece.getColor());
+    }
+
+    private Piece findPieceByPosition(Position position, List<Piece> pieces) {
+        return pieces.stream().filter(piece -> piece.isSamePosition(position))
+            .findFirst().get();
+    }
+
+    private boolean hasPieceByPosition(Position position, List<Piece> pieces) {
+        return pieces.stream()
+            .anyMatch(piece -> piece.isSamePosition(position));
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     public Color getColor() {
@@ -73,5 +102,5 @@ public abstract class Piece {
 
     protected abstract Piece createNewPiece(Position to);
 
-    protected abstract boolean isPossibleMovement(Position to);
+    protected abstract boolean isPossibleMovement(Position to, List<Piece> pieces);
 }

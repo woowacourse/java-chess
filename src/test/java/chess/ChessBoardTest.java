@@ -151,22 +151,6 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("폰이 이동하는 위치에 기물이 있으면 예외 발생")
-    void throwExceptionMovePawnAlreadyExistPiecePosition() {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
-            new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
-
-        assertAll(() -> {
-            assertThatThrownBy(() -> chessBoard.move(new Position(D, FOUR), new Position(D, FIVE)))
-                .isInstanceOf(IllegalArgumentException.class);
-            assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
-                new Pawn(Color.WHITE, new Position(D, FOUR)),
-                new Pawn(Color.BLACK, new Position(D, FIVE)));
-        });
-    }
-
-
-    @Test
     @DisplayName("폰을 제외한 기물이 이동하는 위치에 기물이 있으면 해당 기물을 제거")
     void removeTargetPieceByMove() {
         ChessBoard chessBoard = new ChessBoard(
@@ -177,5 +161,19 @@ class ChessBoardTest {
 
         assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
             new Queen(Color.WHITE, new Position(D, FIVE)));
+    }
+
+    @Test
+    @DisplayName("폰은 대각선에 위치한 기물을 제거할 수 있다.")
+    void removeTargetPieceByPawn() {
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
+                new Pawn(Color.BLACK, new Position(E, FIVE))), Color.WHITE);
+
+        chessBoard.move(new Position(D, FOUR), new Position(E, FIVE));
+
+        assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+            new Pawn(Color.WHITE, new Position(E, FIVE))
+        );
     }
 }

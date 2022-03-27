@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.util.List;
 
 public class Rook extends Piece{
 
@@ -14,7 +15,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to) {
+    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
         return getPosition().isVerticalWay(to) || getPosition().isHorizontalWay(to);
     }
 }

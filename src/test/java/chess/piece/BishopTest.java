@@ -3,8 +3,10 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.position.Position;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +21,8 @@ class BishopTest {
     void throwExceptionInvalidMoveBishop(Position from, Position to) {
         Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThat(bishop.isPossibleMovement(to)).isFalse();
+        assertThatThrownBy(() -> bishop.transfer(to, List.of(bishop)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveBishop() {
@@ -37,7 +40,7 @@ class BishopTest {
     void moveCrossBishop(Position from, Position to) {
         Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThat(bishop.isPossibleMovement(to)).isTrue();
+        assertThat(bishop.transfer(to, List.of(bishop))).isEqualTo(new Bishop(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideCrossMoveBishop() {

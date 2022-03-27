@@ -3,8 +3,10 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.position.Position;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +21,8 @@ class KnightTest {
     void moveKnightToInvalidPosition() {
         Knight knight = new Knight(Color.BLACK, new Position(G, EIGHT));
 
-        assertThat(
-            knight.isPossibleMovement(new Position(F, FIVE)))
-            .isFalse();
+        assertThatThrownBy(() -> knight.transfer(new Position(F, FIVE), List.of(knight)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -30,8 +31,7 @@ class KnightTest {
     void moveKnightToValidPosition(Position from, Position to) {
         Knight knight = new Knight(Color.BLACK, from);
 
-        assertThat(knight.isPossibleMovement(to))
-            .isTrue();
+        assertThat(knight.transfer(to, List.of(knight))).isEqualTo(new Knight(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideValidMoveKnight() {

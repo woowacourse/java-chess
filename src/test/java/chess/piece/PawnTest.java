@@ -1,11 +1,15 @@
 package chess.piece;
 
-import static chess.position.File.A;
-import static chess.position.File.B;
+import static chess.position.File.*;
+import static chess.position.File.E;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.ChessBoard;
 import chess.position.Position;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +25,8 @@ class PawnTest {
     void movePawn(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThat(pawn.isPossibleMovement(to))
-            .isTrue();
+        assertThat(pawn.transfer(to, List.of(pawn)))
+            .isEqualTo(new Pawn(color, to));
     }
 
     private static Stream<Arguments> provideFirstMoveForwardPawn() {
@@ -39,8 +43,8 @@ class PawnTest {
     void throwExceptionMovePawnOverTwoSpaceWhenFirstMove() {
         Pawn pawn = new Pawn(Color.BLACK, new Position(A, SEVEN));
 
-        assertThat(pawn.isPossibleMovement(new Position(A, FOUR)))
-            .isFalse();
+        assertThatThrownBy(() -> pawn.transfer(new Position(A, FOUR), List.of(pawn)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -49,8 +53,8 @@ class PawnTest {
     void throwExceptionMovePawnOverOneSpaceAfterFirstMove(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThat(pawn.isPossibleMovement(to))
-            .isFalse();
+        assertThatThrownBy(() -> pawn.transfer(to, List.of(pawn)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveForwardPawn() {
@@ -66,8 +70,8 @@ class PawnTest {
     void throwExceptionMovePawnBackward(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThat(pawn.isPossibleMovement(to))
-            .isFalse();
+        assertThatThrownBy(() -> pawn.transfer(to, List.of(pawn)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideMoveBackwardPawn() {
@@ -83,8 +87,8 @@ class PawnTest {
     void throwExceptionPawnMoveSide(Position from, Position to) {
         Pawn pawn = new Pawn(Color.WHITE, from);
 
-        assertThat(pawn.isPossibleMovement(to))
-            .isFalse();
+        assertThatThrownBy(() -> pawn.transfer(to, List.of(pawn)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideMoveSidePawn() {
@@ -93,5 +97,34 @@ class PawnTest {
             Arguments.of(new Position(A, TWO), new Position(B, TWO)),
             Arguments.of(new Position(B, TWO), new Position(A, TWO))
         );
+    }
+
+    @Test
+    @DisplayName("폰이 이동하는 위치에 기물이 있으면 예외 발생")
+    void throwExceptionMovePawnAlreadyExistPiecePosition() {
+        Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
+        Pawn targetPawn = new Pawn(Color.BLACK, new Position(D, FIVE));
+
+        assertThatThrownBy(() -> pickedPawn.transfer(new Position(D, FIVE),
+            List.of(pickedPawn, targetPawn))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 대각선에 기물이 없으면 이동할 수 없다.")
+    void throwExceptionWhenPawnMoveToNotHasTargetPieceDiagonalPosition() {
+        Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
+
+        assertThatThrownBy(() -> pickedPawn.transfer(new Position(E, FIVE), List.of(pickedPawn)))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 대각선에 위치한 기물을 제거할 수 있다.")
+    void removeTargetPieceByPawn() {
+        Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
+        Pawn targetPawn = new Pawn(Color.BLACK, new Position(E, FIVE));
+
+        assertThat(pickedPawn.transfer(new Position(E, FIVE), List.of(pickedPawn, targetPawn)))
+            .isEqualTo(new Pawn(Color.WHITE, new Position(E, FIVE)));
     }
 }

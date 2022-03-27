@@ -3,8 +3,10 @@ package chess.piece;
 import static chess.position.File.*;
 import static chess.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.position.Position;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,8 +21,8 @@ class QueenTest {
     void moveInvalidMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK, from);
 
-        assertThat(queen.isPossibleMovement(to))
-            .isFalse();
+        assertThatThrownBy(() -> queen.transfer(to, List.of(queen)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveQueen() {
@@ -38,8 +40,8 @@ class QueenTest {
     void moveCrossOrSameRowOrColMoveQueen(Position from, Position to) {
         Queen queen = new Queen(Color.BLACK, from);
 
-        assertThat(queen.isPossibleMovement(to))
-            .isTrue();
+        assertThat(queen.transfer(to, List.of(queen)))
+            .isEqualTo(new Queen(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideValidMoveQueen() {

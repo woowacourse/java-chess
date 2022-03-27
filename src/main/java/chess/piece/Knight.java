@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.util.List;
 
 public class Knight extends Piece{
 
@@ -14,7 +15,7 @@ public class Knight extends Piece{
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to) {
+    protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
         int horizontalDistance = getPosition().getHorizontalDistance(to);
         int verticalDistance = getPosition().getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||

@@ -22,12 +22,6 @@ public class ChessBoard {
             throw new IllegalArgumentException(String.format(
                 "%s 색깔의 기물을 움직일 수 없습니다.", currentColor));
         }
-
-        if (hasObstacleBetweenPositions(from, to) || hasUncaptuarableTargetPiece(from, to)) {
-            throw new IllegalArgumentException(String.format(
-                "기물을 %s에서 %s로 이동할 수 없습니다.", from, to));
-        }
-
         movePickedPiece(from, to);
     }
 
@@ -43,31 +37,12 @@ public class ChessBoard {
         return board.get(position);
     }
 
-    private boolean hasObstacleBetweenPositions(Position from, Position to) {
-        if (from.hasLinearPath(to)) {
-            return from.getLinearPath(to).stream()
-                .anyMatch(this::hasPieceByPosition);
-        }
-        return false;
-    }
-
-    private boolean hasPieceByPosition(Position position) {
-        return board.containsKey(position);
-    }
-
-    private boolean hasUncaptuarableTargetPiece(Position from, Position to) {
-        if (hasPieceByPosition(to)) {
-            Piece pickedPiece = findPieceByPosition(from);
-            Piece targetPiece = findPieceByPosition(to);
-            return pickedPiece.isSameColor(targetPiece.getColor()) || pickedPiece.isPawn();
-        }
-        return false;
-    }
-
     private void movePickedPiece(Position from, Position to) {
         Piece pickedPiece = findPieceByPosition(from);
+        Piece transferredPiece = pickedPiece.transfer(to, getPieces());
+
         board.remove(from);
-        board.put(to, pickedPiece.transfer(to));
+        board.put(to, transferredPiece);
         currentColor = currentColor.reverse();
     }
 
