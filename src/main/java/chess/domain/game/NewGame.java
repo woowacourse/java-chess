@@ -11,6 +11,7 @@ public final class NewGame implements Game {
 
     private static final String GAME_NOT_STARTED_EXCEPTION_MESSAGE = "아직 시작되지 않은 게임입니다.";
 
+    @Override
     public Game init() {
         return new WhiteTurn(new ActivePieces(initAllChessmen()));
     }

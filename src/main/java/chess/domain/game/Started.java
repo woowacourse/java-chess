@@ -20,10 +20,12 @@ abstract class Started implements Game {
         return new NewGame().init();
     }
 
+    @Override
     public final List<Piece> getChessmen() {
         return chessmen.findAll();
     }
 
+    @Override
     public final GameResultDto getGameResult() {
         double whiteScore = chessmen.calculateScore(WHITE);
         double blackScore = chessmen.calculateScore(BLACK);

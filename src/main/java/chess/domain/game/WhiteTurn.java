@@ -22,6 +22,7 @@ final class WhiteTurn extends Running {
         }
     }
 
+    @Override
     protected Game continueGame() {
         return new BlackTurn(chessmen);
     }
