@@ -29,7 +29,7 @@ public class ChessGame {
 
     public void play(Position from, Position to) {
         if (!isThatTurn(from)) {
-            throw new IllegalArgumentException("해당 진영의 차례가 아닙니다");
+            throw new IllegalArgumentException("현재 진영에 속해있지 않는 위치입니다.");
         }
 
         boolean isToNotKing = isKingAlive(to);
