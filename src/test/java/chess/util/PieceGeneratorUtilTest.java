@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.piece.strongmen.Bishop;
 import chess.domain.piece.strongmen.King;
 import chess.domain.piece.strongmen.Knight;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.strongmen.Queen;
 import chess.domain.piece.strongmen.Rook;

@@ -6,20 +6,20 @@ import chess.domain.piece.Position;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
-public class Pawn2Test {
+public class PawnTest {
 
     @Test
     void 위치만_같으면_동일한_인스턴스() {
-        Pawn2 actual = new WhitePawn(Position.of("a2"));
-        Pawn2 expected = new WhitePawn(Position.of("a2"));
+        Pawn actual = new WhitePawn(Position.of("a2"));
+        Pawn expected = new WhitePawn(Position.of("a2"));
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     void 색이_동일해도_위치가_다르면_별개의_인스턴스() {
-        Pawn2 pawn1 = new WhitePawn(Position.of("a2"));
-        Pawn2 pawn2 = new WhitePawn(Position.of("b2"));
+        Pawn pawn1 = new WhitePawn(Position.of("a2"));
+        Pawn pawn2 = new WhitePawn(Position.of("b2"));
 
         assertThat(pawn1).isNotEqualTo(pawn2);
     }

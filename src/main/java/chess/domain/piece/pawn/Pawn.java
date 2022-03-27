@@ -8,7 +8,7 @@ import chess.domain.piece.Position;
 import chess.strategy.OccupiedChecker;
 import java.util.Objects;
 
-public abstract class Pawn2 extends Chessmen {
+public abstract class Pawn extends Chessmen {
 
     private static final double DEFAULT_SCORE = 1;
 
@@ -25,11 +25,11 @@ public abstract class Pawn2 extends Chessmen {
     private static final int LEFT_END_FILE_IDX = 0;
     private static final int RIGHT_END_FILE_IDX = 7;
 
-    Pawn2(Color color, Position position) {
+    Pawn(Color color, Position position) {
         super(color, position);
     }
 
-    public static Pawn2 of(Color color, int fileIdx) {
+    public static Pawn of(Color color, int fileIdx) {
         if (color == BLACK) {
             return new BlackPawn(fileIdx);
         }
@@ -112,7 +112,7 @@ public abstract class Pawn2 extends Chessmen {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Pawn2 pawn = (Pawn2) o;
+        Pawn pawn = (Pawn) o;
         return color == pawn.color
                 && position == pawn.position;
     }

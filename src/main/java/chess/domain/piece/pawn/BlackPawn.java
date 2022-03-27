@@ -3,7 +3,7 @@ package chess.domain.piece.pawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
-public final class BlackPawn extends Pawn2 {
+public final class BlackPawn extends Pawn {
 
     private static final int INIT_RANK = 6;
     private static final int RANK_FORWARD_DIRECTION = -1;

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("NonAsciiCharacters")
 public class WhitePawnTest {
 
-    private Pawn2 pawn;
+    private Pawn pawn;
 
     @BeforeEach
     void setUp() {
@@ -21,8 +21,8 @@ public class WhitePawnTest {
 
     @Test
     void 백색_폰은_두번째_rank에_생성() {
-        Pawn2 actual = new WhitePawn(0);
-        Pawn2 expected = new WhitePawn(Position.of("a2"));
+        Pawn actual = new WhitePawn(0);
+        Pawn expected = new WhitePawn(Position.of("a2"));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -34,14 +34,14 @@ public class WhitePawnTest {
         void 백색_폰은_한칸_위로_전진_가능() {
             pawn.move(Position.of("b3"), CLEAR_PATH_STRATEGY);
 
-            Pawn2 expected = new WhitePawn(Position.of("b3"));
+            Pawn expected = new WhitePawn(Position.of("b3"));
 
             assertThat(pawn).isEqualTo(expected);
         }
 
         @Test
         void 백색_폰이_아래로_후진시_예외발생() {
-            Pawn2 pawn = new WhitePawn(Position.of("a4"));
+            Pawn pawn = new WhitePawn(Position.of("a4"));
 
             assertThatCode(() -> pawn.move(Position.of("a3"), CLEAR_PATH_STRATEGY))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -52,14 +52,14 @@ public class WhitePawnTest {
         void 백색_폰은_초기화된_위치에서는_두칸_위로_전진_가능() {
             pawn.move(Position.of("b4"), CLEAR_PATH_STRATEGY);
 
-            Pawn2 expected = new WhitePawn(Position.of("b4"));
+            Pawn expected = new WhitePawn(Position.of("b4"));
 
             assertThat(pawn).isEqualTo(expected);
         }
 
         @Test
         void 백색_폰은_초기화된_위치가_아니면_두칸_위로_전진_시도시_예외발생() {
-            Pawn2 pawn = new WhitePawn(Position.of("a3"));
+            Pawn pawn = new WhitePawn(Position.of("a3"));
 
             assertThatCode(() -> pawn.move(Position.of("a5"), CLEAR_PATH_STRATEGY))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -74,7 +74,7 @@ public class WhitePawnTest {
         void 백색_폰은_한칸_위쪽_왼쪽_대각선으로_공격_가능() {
             pawn.attack(Position.of("a3"), CLEAR_PATH_STRATEGY);
 
-            Pawn2 expected = new WhitePawn(Position.of("a3"));
+            Pawn expected = new WhitePawn(Position.of("a3"));
 
             assertThat(pawn).isEqualTo(expected);
         }
@@ -83,7 +83,7 @@ public class WhitePawnTest {
         void 백색_폰은_한칸_위쪽_오른쪽_대각선으로_공격_가능() {
             pawn.attack(Position.of("c3"), CLEAR_PATH_STRATEGY);
 
-            Pawn2 expected = new WhitePawn(Position.of("c3"));
+            Pawn expected = new WhitePawn(Position.of("c3"));
 
             assertThat(pawn).isEqualTo(expected);
         }

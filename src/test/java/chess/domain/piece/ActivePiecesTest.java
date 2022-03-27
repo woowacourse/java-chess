@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.strongmen.King;
 import chess.domain.piece.strongmen.Rook;
 import java.util.ArrayList;
