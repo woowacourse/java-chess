@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 
@@ -22,7 +23,7 @@ public final class End extends Command {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
+    public Board getBoard() {
         throw new UnsupportedOperationException();
     }
 

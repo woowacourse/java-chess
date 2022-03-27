@@ -1,11 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
-
-import java.util.Map;
 
 public abstract class Command {
 
@@ -14,7 +10,7 @@ public abstract class Command {
 
     public static Command of(String input) {
         if (input.equals(START)) {
-            return new Start(Ready.start(Board.getInstance()));
+            return new Start(Ready.start(Board.getBasicInstance()));
         }
         if (input.equals(END)) {
             return new End();
@@ -28,7 +24,7 @@ public abstract class Command {
 
     public abstract Command execute(String command);
 
-    public abstract Map<Position, Piece> getBoard();
+    public abstract Board getBoard();
 
     public abstract StatusResult getStatus();
 }

@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
@@ -15,7 +16,7 @@ public class ConsoleController {
         Command command = inputCommand();
 
         while (command.isStart()) {
-            Map<Position, Piece> board = command.getBoard();
+            Board board = command.getBoard();
             OutputView.printBoard(board);
             command = inputCommandAndExecute(command);
             if (command.isStatus()) {

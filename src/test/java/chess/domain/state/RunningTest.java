@@ -10,14 +10,14 @@ public class RunningTest {
     @DisplayName("BlackTurn은 끝나지 않은 상태이다")
     @Test
     void testBlackTurnIsFinished() {
-        State blackTurn = new BlackTurn(Board.getInstance());
+        State blackTurn = new BlackTurn(Board.getBasicInstance());
         Assertions.assertThat(blackTurn.isFinished()).isFalse();
     }
 
     @DisplayName("WhiteTurn은 끝나지 않은 상태이다")
     @Test
     void testWhiteTurnIsFinished() {
-        State whiteTurn = new WhiteTurn(Board.getInstance());
+        State whiteTurn = new WhiteTurn(Board.getBasicInstance());
         Assertions.assertThat(whiteTurn.isFinished()).isFalse();
     }
 }

@@ -1,21 +1,17 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.Result;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-
-import java.util.Map;
+import chess.domain.board.MatchResult;
+import chess.domain.board.ScoreResult;
 
 public interface State {
 
     State movePiece(Position src, Position dest);
 
-    Map<Position, Piece> getBoard();
+    Board getBoard();
 
-    Map<Color, Double> getScore();
-
-    Result getResult();
+    ScoreResult getScore();
 
     boolean isFinished();
 }

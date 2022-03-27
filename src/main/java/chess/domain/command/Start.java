@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.state.State;
@@ -54,7 +55,7 @@ public class Start extends Command {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
+    public Board getBoard() {
         return state.getBoard();
     }
 

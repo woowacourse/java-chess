@@ -1,10 +1,6 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
-
-import java.util.Map;
 
 public abstract class Ready implements State {
 
@@ -19,7 +15,7 @@ public abstract class Ready implements State {
     }
 
     @Override
-    public final Map<Position, Piece> getBoard() {
-        return board.getValue();
+    public final Board getBoard() {
+        return new Board(board.getValue());
     }
 }

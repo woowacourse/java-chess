@@ -1,8 +1,15 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-
-import java.util.*;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -13,46 +20,8 @@ public class Board {
         this.value = value;
     }
 
-    public static Board getInstance() {
-        Map<Position, Piece> board = new HashMap<>();
-
-        board.put(Position.of("a8"), new Rook(Color.BLACK));
-        board.put(Position.of("b8"), new Knight(Color.BLACK));
-        board.put(Position.of("c8"), new Bishop(Color.BLACK));
-        board.put(Position.of("d8"), new Queen(Color.BLACK));
-        board.put(Position.of("e8"), new King(Color.BLACK));
-        board.put(Position.of("f8"), new Bishop(Color.BLACK));
-        board.put(Position.of("g8"), new Knight(Color.BLACK));
-        board.put(Position.of("h8"), new Rook(Color.BLACK));
-
-        board.put(Position.of("a7"), new Pawn(Color.BLACK));
-        board.put(Position.of("b7"), new Pawn(Color.BLACK));
-        board.put(Position.of("c7"), new Pawn(Color.BLACK));
-        board.put(Position.of("d7"), new Pawn(Color.BLACK));
-        board.put(Position.of("e7"), new Pawn(Color.BLACK));
-        board.put(Position.of("f7"), new Pawn(Color.BLACK));
-        board.put(Position.of("g7"), new Pawn(Color.BLACK));
-        board.put(Position.of("h7"), new Pawn(Color.BLACK));
-
-        board.put(Position.of("a1"), new Rook(Color.WHITE));
-        board.put(Position.of("b1"), new Knight(Color.WHITE));
-        board.put(Position.of("c1"), new Bishop(Color.WHITE));
-        board.put(Position.of("d1"), new Queen(Color.WHITE));
-        board.put(Position.of("e1"), new King(Color.WHITE));
-        board.put(Position.of("f1"), new Bishop(Color.WHITE));
-        board.put(Position.of("g1"), new Knight(Color.WHITE));
-        board.put(Position.of("h1"), new Rook(Color.WHITE));
-
-        board.put(Position.of("a2"), new Pawn(Color.WHITE));
-        board.put(Position.of("b2"), new Pawn(Color.WHITE));
-        board.put(Position.of("c2"), new Pawn(Color.WHITE));
-        board.put(Position.of("d2"), new Pawn(Color.WHITE));
-        board.put(Position.of("e2"), new Pawn(Color.WHITE));
-        board.put(Position.of("f2"), new Pawn(Color.WHITE));
-        board.put(Position.of("g2"), new Pawn(Color.WHITE));
-        board.put(Position.of("h2"), new Pawn(Color.WHITE));
-
-        return new Board(board);
+    public static Board getBasicInstance() {
+        return new Board(new BasicChessBoardGenerator().generator());
     }
 
     public boolean exist(Position position, Class<? extends Piece> type, Color color) {
@@ -130,7 +99,7 @@ public class Board {
 
     public double calculateScore(Color color) {
         return Arrays.stream(Column.values())
-                .map(this::getColumns)
+                .map(this::getPositionsByColumn)
                 .mapToDouble(positions -> calculateScoreByColumn(positions, color))
                 .sum();
     }
@@ -162,23 +131,10 @@ public class Board {
                 .count();
     }
 
-    private List<Position> getColumns(Column column) {
+    private List<Position> getPositionsByColumn(Column column) {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(column, row))
                 .collect(Collectors.toList());
-    }
-
-    public Result calculateCurrentWinner() {
-        double whiteScore = calculateScore(Color.WHITE);
-        double blackScore = calculateScore(Color.BLACK);
-
-        if (whiteScore > blackScore) {
-            return Result.WHITE_WIN;
-        }
-        if (whiteScore < blackScore) {
-            return Result.BLACK_WIN;
-        }
-        return Result.DRAW;
     }
 
     public Map<Position, Piece> getValue() {

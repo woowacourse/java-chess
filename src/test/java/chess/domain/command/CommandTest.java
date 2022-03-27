@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -60,7 +61,7 @@ class CommandTest {
         String moveInput = "move a2 a3";
         start = start.execute(moveInput);
 
-        Map<Position, Piece> board = start.getBoard();
+        Board board = start.getBoard();
 
         assertThat(board.get(Position.of("a2"))).isNull();
         assertThat(board.get(Position.of("a3"))).isInstanceOf(Pawn.class);
