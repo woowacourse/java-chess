@@ -9,19 +9,15 @@ public class InputView {
     private InputView() {
     }
 
-    public static String getStartOrEndInput() {
-        try {
-            String input = scanner.nextLine();
-            validateStartOrEndInput(input);
-            return input;
-        } catch (IllegalArgumentException e) {
-            return getStartOrEndInput();
-        }
+    public static String getFirstCommand() {
+        String commandInput = scanner.nextLine();
+        validateFirstCommandInput(commandInput);
+        return commandInput;
     }
 
-    private static void validateStartOrEndInput(String input) {
+    private static void validateFirstCommandInput(String input) {
         if (!input.equals("start") && !input.equals("end")) {
-            throw new IllegalArgumentException("start 또는 end를 입력해주세요.");
+            throw new IllegalArgumentException("start 혹은 end 를 입력해주세요.");
         }
     }
 
@@ -34,28 +30,21 @@ public class InputView {
             validateMoveCommandKeyword(commands);
             return input;
         }
-        if (input.startsWith("status")) {
-            validateStatusInput(input);
+        if (input.equals("status") || input.equals("end")) {
             return input;
         }
-        throw new IllegalArgumentException("status 혹은 move source위치 target위치 형식으로 입력해주세요.");
-    }
-
-    private static void validateStatusInput(String input) {
-        if (!input.equals("status")) {
-            throw new IllegalArgumentException("status 를 정확히 입력해주세요");
-        }
+        throw new IllegalArgumentException("정확한 명령을 입력해주세요.");
     }
 
     private static void validateMoveCommandFormat(String[] commands) {
         if (commands.length != 3) {
-            throw new IllegalArgumentException("move source위치 target위치 형식으로 입력해주세요.");
+            throw new IllegalArgumentException("move source 위치 target 위치 형식으로 입력해주세요.");
         }
     }
 
     private static void validateMoveCommandKeyword(String[] commands) {
         if (!commands[0].equals("move")) {
-            throw new IllegalArgumentException("move source위치 target위치 형식으로 입력해주세요.");
+            throw new IllegalArgumentException("move source 위치 target 위치 형식으로 입력해주세요.");
         }
     }
 }

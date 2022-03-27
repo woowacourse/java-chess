@@ -10,15 +10,19 @@ import chess.domain.position.PositionY;
 
 public class OutputView {
 
-    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.\n" +
-            "> 게임 시작 : start\n" +
-            "> 게임 종료 : end\n" +
-            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-
     private OutputView() {
     }
+
     public static void printGameStartMessage() {
-        System.out.println(GAME_START_MESSAGE);
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+    }
+
+    public static void printPlayingCommandMessage() {
+        System.out.println("> 게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+        System.out.println("> 게임 현황 : status");
+        System.out.println("> 게임 종료 : end");
     }
 
     public static void printBoard(Map<Position, Piece> board) {
@@ -45,11 +49,11 @@ public class OutputView {
             System.out.println(color.name() + ": " + scores.get(color) + "점");
         }
 
-        if(winningColor == Color.NONE){
+        if (winningColor == Color.NONE) {
             System.out.println("동점입니다.");
             return;
         }
-        System.out.println(winningColor.name()+"진영이 이기고 있습니다.");
+        System.out.println(winningColor.name() + "진영이 이기고 있습니다.");
         System.out.println();
     }
 }

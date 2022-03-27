@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.ChessGame;
 import chess.domain.Color;
+import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -11,9 +12,18 @@ public class Application {
 
     public static void main(String[] args) {
         OutputView.printGameStartMessage();
-        String startOrEndInput = InputView.getStartOrEndInput();
-        if (startOrEndInput.equals("start")) {
+        Command command = getFirstCommand();
+        if (command == Command.START) {
             startGame();
+        }
+    }
+
+    private static Command getFirstCommand() {
+        try {
+            return Command.of(InputView.getFirstCommand());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return getFirstCommand();
         }
     }
 
@@ -21,29 +31,26 @@ public class Application {
         ChessGame game = new ChessGame();
         OutputView.printBoard(game.getBoard());
         while (game.isRunning()) {
-            play(game);
-            OutputView.printBoard(game.getBoard());
-        }
-    }
-
-    private static void play(ChessGame game) {
-        try {
-            String command = InputView.getCommand();
-            if (command.startsWith("move")) {
-                playTurn(command, game);
+            OutputView.printPlayingCommandMessage();
+            String commandValue = InputView.getCommand();
+            Command command = Command.of(commandValue);
+            if (command == Command.MOVE) {
+                playTurn(commandValue, game);
             }
-            if (command.startsWith("status")) {
+            if (command == Command.STATUS) {
                 showStatus(game);
             }
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            play(game);
         }
     }
 
     private static void playTurn(String moveCommand, ChessGame game) {
-        String[] commands = moveCommand.split(" ");
-        game.movePiece(commands[1], commands[2]);
+        try {
+            String[] commands = moveCommand.split(" ");
+            game.movePiece(commands[1], commands[2]);
+            OutputView.printBoard(game.getBoard());
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private static void showStatus(ChessGame game) {
