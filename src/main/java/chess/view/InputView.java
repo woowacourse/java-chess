@@ -14,9 +14,6 @@ public class InputView {
     }
 
     private static void validateCommend(String commend) {
-        if (!commend.equals("start") && !commend.equals("end") && !commend.contains("move")) {
-            throw new IllegalArgumentException("잘못된 명령어입니다.");
-        }
         if (commend.contains("move") && !MOVE_PATTERN.matcher(commend).matches()) {
             throw new IllegalArgumentException("move 포맷에 맞게 작성해주세요.");
         }
