@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -18,5 +19,10 @@ public class Queen extends Piece {
     protected boolean isPossibleMovement(Position to, List<Piece> pieces) {
         return getPosition().isDiagonalWay(to) || getPosition().isVerticalWay(to)
             || getPosition().isHorizontalWay(to);
+    }
+
+    @Override
+    public BigDecimal getPoint() {
+        return new BigDecimal("9");
     }
 }

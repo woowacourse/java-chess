@@ -14,22 +14,21 @@ public class InputView {
     private static final Map<String, Rank> RANKS = Map.of(
         "1", ONE, "2", TWO, "3", THREE, "4", FOUR, "5", FIVE, "6", SIX, "7", SEVEN, "8", EIGHT
     );
-
     private static final Map<String, File> FILES = Map.of(
         "a", A, "b", B, "c", C, "d", D, "e", E, "f", F, "g", G, "h", H
     );
-
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static Command inputCommand() {
         String command = SCANNER.nextLine();
-        if (command.equals("start")) {
+
+        if (command.matches("^start$")) {
             return new StartCommand();
         }
-        if (command.equals("end")) {
+        if (command.matches("^end$")) {
             return new EndCommand();
         }
-        if (command.startsWith("move")) {
+        if (command.matches("^move [a-h][1-8] [a-h][1-8]$")) {
             String from = command.split(" ")[1];
             String to = command.split(" ")[2];
             return new MoveCommand(createPosition(from), createPosition(to));
@@ -40,15 +39,6 @@ public class InputView {
     private static Position createPosition(String position) {
         String file = position.substring(0, 1);
         String rank = position.substring(1, 2);
-
-        if (!file.matches("[a-h]")) {
-            throw new IllegalArgumentException("파일의 범위가 잘못되었습니다.");
-        }
-
-        if (!rank.matches("[1-8]")) {
-            throw new IllegalArgumentException("랭크의 범위가 잘못되었습니다.");
-        }
-
         return new Position(FILES.get(file), RANKS.get(rank));
     }
 }

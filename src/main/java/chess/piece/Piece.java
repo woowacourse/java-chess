@@ -1,6 +1,8 @@
 package chess.piece;
 
+import chess.position.File;
 import chess.position.Position;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,6 +78,14 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
+    public boolean isSameFile(File file) {
+        return position.isSameFile(file);
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -103,4 +113,6 @@ public abstract class Piece {
     protected abstract Piece createNewPiece(Position to);
 
     protected abstract boolean isPossibleMovement(Position to, List<Piece> pieces);
+
+    public abstract BigDecimal getPoint();
 }

@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Knight extends Piece{
@@ -20,5 +21,10 @@ public class Knight extends Piece{
         int verticalDistance = getPosition().getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||
             (horizontalDistance == 2 && verticalDistance == 1);
+    }
+
+    @Override
+    public BigDecimal getPoint() {
+        return new BigDecimal("2.5");
     }
 }

@@ -113,4 +113,8 @@ public class Position {
             ", col=" + rank +
             '}';
     }
+
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
 }

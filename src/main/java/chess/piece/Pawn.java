@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.Position;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -48,5 +49,15 @@ public class Pawn extends Piece {
 
     private boolean isStartPawnPosition() {
         return getColor().isStartPawnPosition(getPosition());
+    }
+
+    @Override
+    public BigDecimal getPoint() {
+        return BigDecimal.ONE;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }
