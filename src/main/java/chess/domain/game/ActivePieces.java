@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class ActivePieces {
@@ -73,5 +74,22 @@ public class ActivePieces {
                 .filter(piece -> piece.hasColorOf(color))
                 .filter(piece -> piece.isAtFileOrColumnIdxOf(fileIdx))
                 .count();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ActivePieces that = (ActivePieces) o;
+        return Objects.equals(pieces, that.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

@@ -73,12 +73,6 @@ public abstract class Chessmen implements Piece {
     }
 
     @Override
-    public final boolean isAtRowIdxOf(int rowIdx) {
-        int displayRowIdx = position.toDisplayRowIndex();
-        return displayRowIdx == rowIdx;
-    }
-
-    @Override
     public final Position position() {
         return position;
     }

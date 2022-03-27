@@ -41,8 +41,8 @@ public class RunningTest {
             Piece whiteQueen = new Queen(WHITE);
             whiteQueen.move(Position.of("d4"), CLEAR_PATH_STRATEGY);
 
-            List<Piece> actual = moveQueenGame.getChessmen();
-            List<Piece> expected = List.of(whiteQueen, new Queen(BLACK));
+            ActivePieces actual = moveQueenGame.getChessmen();
+            ActivePieces expected = new ActivePieces(List.of(whiteQueen, new Queen(BLACK)));
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -54,8 +54,8 @@ public class RunningTest {
             Piece aliveWhiteQueen = new Queen(WHITE);
             aliveWhiteQueen.move(Position.of(BLACK_QUEEN_POSITION), CLEAR_PATH_STRATEGY);
 
-            List<Piece> actual = killQueenGame.getChessmen();
-            List<Piece> expected = List.of(aliveWhiteQueen);
+            ActivePieces actual = killQueenGame.getChessmen();
+            ActivePieces expected = new ActivePieces(List.of(aliveWhiteQueen));
 
             assertThat(actual).isEqualTo(expected);
         }

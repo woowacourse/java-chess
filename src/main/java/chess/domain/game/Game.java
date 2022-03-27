@@ -1,9 +1,7 @@
 package chess.domain.game;
 
-import chess.domain.piece.Piece;
 import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
-import java.util.List;
 
 public interface Game {
 
@@ -15,5 +13,5 @@ public interface Game {
 
     GameResultDto getGameResult();
 
-    List<Piece> getChessmen();
+    ActivePieces getChessmen();
 }

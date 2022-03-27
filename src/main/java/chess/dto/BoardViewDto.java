@@ -3,8 +3,11 @@ package chess.dto;
 import static chess.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 
+import chess.domain.game.ActivePieces;
 import chess.domain.game.Game;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -16,28 +19,28 @@ public class BoardViewDto {
     private final List<String> boardDisplay;
 
     public BoardViewDto(Game game) {
-        boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
-                .mapToObj(rowIdx -> currentRowChessmen(game, rowIdx))
-                .map(BoardViewDto::initRowDisplay)
-                .collect(Collectors.toList());
+        boardDisplay = toBoard(game);
     }
 
-    private static List<Piece> currentRowChessmen(Game game, int rowIdx) {
-        return game.getChessmen()
-                .stream()
-                .filter(piece -> piece.isAtRowIdxOf(rowIdx))
+    private static List<String> toBoard(Game game) {
+        ActivePieces chessmen = game.getChessmen();
+        return IntStream.range(0, RANKS_TOTAL_SIZE)
+                .mapToObj(rankIdx -> toRow(chessmen, rankIdx))
+                .sorted(Collections.reverseOrder())
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static String initRowDisplay(List<Piece> chessmen) {
+    private static String toRow(ActivePieces chessmen, int rankIdx) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
-                .mapToObj(colIdx -> squareDisplay(chessmen, colIdx))
+                .mapToObj(fileIdx -> Position.of(fileIdx, rankIdx))
+                .map(position -> toSquare(chessmen, position))
                 .collect(Collectors.joining());
     }
 
-    private static String squareDisplay(List<Piece> chessmen, int colIdx) {
-        return chessmen.stream()
-                .filter(piece -> piece.isAtFileOrColumnIdxOf(colIdx))
+    private static String toSquare(ActivePieces chessmen, Position position) {
+        return chessmen.findAll()
+                .stream()
+                .filter(piece -> piece.isAt(position))
                 .map(Piece::display)
                 .findFirst()
                 .orElse(EMPTY_SQUARE_DISPLAY);

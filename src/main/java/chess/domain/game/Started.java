@@ -3,9 +3,7 @@ package chess.domain.game;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
-import chess.domain.piece.Piece;
 import chess.dto.GameResultDto;
-import java.util.List;
 
 abstract class Started implements Game {
 
@@ -21,8 +19,8 @@ abstract class Started implements Game {
     }
 
     @Override
-    public final List<Piece> getChessmen() {
-        return chessmen.findAll();
+    public final ActivePieces getChessmen() {
+        return chessmen;
     }
 
     @Override

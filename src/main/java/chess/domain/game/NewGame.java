@@ -2,10 +2,8 @@ package chess.domain.game;
 
 import static chess.util.PieceGeneratorUtil.initAllChessmen;
 
-import chess.domain.piece.Piece;
 import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
-import java.util.List;
 
 public final class NewGame implements Game {
 
@@ -32,7 +30,7 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public List<Piece> getChessmen() {
+    public ActivePieces getChessmen() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 }

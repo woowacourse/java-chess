@@ -21,8 +21,6 @@ public interface Piece {
 
     boolean isAtFileOrColumnIdxOf(int idx);
 
-    boolean isAtRowIdxOf(int rowIdx);
-
     Position position();
 
     String display();
