@@ -39,8 +39,8 @@ public class Board {
     private void isMovablePath(Direction direction, Position source, Position target) {
         Position currentPosition = source;
         while(!currentPosition.equals(target)) {
-            currentPosition = currentPosition.from(direction);
             hasPieceInPath(currentPosition);
+            currentPosition = currentPosition.from(direction);
         }
     }
 
