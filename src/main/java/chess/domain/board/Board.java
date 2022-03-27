@@ -76,6 +76,14 @@ public final class Board {
     public void move(Position beforePosition, Position afterPosition) {
         Piece piece = this.value.get(beforePosition);
 
+        if (isBlank(beforePosition)) {
+            throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다.");
+        }
+
+        if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
+            throw new IllegalArgumentException("경로에 기물이 있어 움직일 수 없습니다.");
+        }
+
         if (isBlank(afterPosition)) {
             piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
@@ -84,6 +92,7 @@ public final class Board {
             piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
         }
+
         throw new IllegalArgumentException("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
     }
 

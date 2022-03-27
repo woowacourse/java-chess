@@ -156,12 +156,41 @@ public class BoardTest {
     void attack_opposite_piece() {
         Board board = new Board();
 
-        Position h1 = new Position(Column.H, Row.ONE);
+        Position g2 = new Position(Column.G, Row.TWO);
+        Position g4 = new Position(Column.G, Row.FOUR);
+        Position g5 = new Position(Column.G, Row.FIVE);
+        Position g6 = new Position(Column.G, Row.SIX);
+        board.move(g2, g4);
+        board.move(g4, g5);
+        board.move(g5, g6);
         Position h7 = new Position(Column.H, Row.SEVEN);
 
-        assertThatNoException().isThrownBy(() -> board.move(h1, h7));
-
+        assertThatNoException().isThrownBy(() -> board.move(g6, h7));
     }
+
+    @DisplayName("빈칸의 위치를 출발지로 둘 수 없다.")
+    @Test
+    void move_blank_exception() {
+        Board board = new Board();
+        Position a3 = new Position(Column.A, Row.THREE);
+        Position a4 = new Position(Column.A, Row.FOUR);
+        assertThatThrownBy(() -> board.move(a3, a4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 있는 기물이 없습니다.");
+    }
+
+    @DisplayName("경로에 기물이 있을 경우 움직일 수 없다.")
+    @Test
+    void move_obstacle_exception() {
+        Board board = new Board();
+        Position a1 = new Position(Column.A, Row.ONE);
+        Position a4 = new Position(Column.A, Row.FOUR);
+        assertThatThrownBy(() -> board.move(a1, a4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
+    }
+
+
 
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(

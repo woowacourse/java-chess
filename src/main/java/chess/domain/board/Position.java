@@ -1,7 +1,11 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
     private final Column column;
@@ -24,6 +28,26 @@ public class Position implements Comparable<Position> {
         return this.row.directedDistance(otherPosition.row);
     }
 
+    public Position flipHorizontally() {
+        return new Position(this.column.flip(), this.row);
+    }
+
+    public Position flipVertically() {
+        return new Position(this.column, this.row.flip());
+    }
+
+    public Position flipDiagonally() {
+        return new Position(this.column.flip(), this.row.flip());
+    }
+
+    public boolean isSameRowWith(Position otherPosition) {
+        return this.row == otherPosition.row;
+    }
+
+    public boolean isSameColumnWith(Position otherPosition) {
+        return this.column == otherPosition.column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -39,18 +63,6 @@ public class Position implements Comparable<Position> {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
-    }
-
-    public Position flipHorizontally() {
-        return new Position(this.column.flip(), this.row);
-    }
-
-    public Position flipVertically() {
-        return new Position(this.column, this.row.flip());
-    }
-
-    public Position flipDiagonally() {
-        return new Position(this.column.flip(), this.row.flip());
     }
 
     public Column getColumn() {
@@ -72,4 +84,26 @@ public class Position implements Comparable<Position> {
                 .thenComparing(Position::getColumn)
                 .compare(this, o);
     }
+
+    public List<Position> pathTo(Position otherPosition) {
+        List<Row> rowPath = this.row.pathTo(otherPosition.row);
+        List<Column> columnPath = this.column.pathTo(otherPosition.column);
+
+        if (rowPath.size() == 0) {
+            return columnPath.stream()
+                    .map(column -> new Position(column, this.row))
+                    .collect(Collectors.toList());
+        }
+
+        if (columnPath.size() == 0) {
+            return rowPath.stream()
+                    .map(row -> new Position(this.column, row))
+                    .collect(Collectors.toList());
+        }
+
+        return IntStream.range(0, rowPath.size())
+                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+                .collect(Collectors.toList());
+    }
 }
+
