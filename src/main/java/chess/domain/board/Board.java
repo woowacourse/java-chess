@@ -114,4 +114,35 @@ public class Board {
             throw new IllegalArgumentException("도착 지점에 기물이 존재합니다.");
         }
     }
+
+    public double sumScore(final Color targetColor) {
+        return value.entrySet().stream()
+                .filter(e -> e.getValue().isSameColor(targetColor))
+                .mapToDouble(this::getScore)
+                .sum();
+    }
+
+    private double getScore(final Map.Entry<Position, Piece> entry) {
+        final Piece piece = entry.getValue();
+
+        if (piece.getName().equalsIgnoreCase("p")) {
+            return calculatePawnScore(entry);
+        }
+        return piece.getScore();
+    }
+
+    private double calculatePawnScore(final Map.Entry<Position, Piece> entry) {
+        final Position position = entry.getKey();
+        final Piece pawn = entry.getValue();
+
+        long pawnCountInSameFile = value.entrySet().stream()
+                .filter(e -> e.getValue().equals(pawn))
+                .filter(e -> e.getKey().getFile() == position.getFile())
+                .count();
+
+        if (pawnCountInSameFile > 1) {
+            return pawn.getScore() / 2;
+        }
+        return pawn.getScore();
+    }
 }

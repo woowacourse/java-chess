@@ -12,7 +12,7 @@ public class Knight extends Piece {
     private static final int SECOND_STEP = 1;
 
     public Knight(final Color color) {
-        super(color, NAME);
+        super(color, NAME, 2.5);
     }
 
     @Override

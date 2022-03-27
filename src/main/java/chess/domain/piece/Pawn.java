@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     private static final int INIT_FORWARD = 2;
 
     public Pawn(final Color color) {
-        super(color, NAME);
+        super(color, NAME, 1);
     }
 
     @Override

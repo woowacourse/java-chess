@@ -10,7 +10,7 @@ public class Bishop extends Piece {
     private static final String NAME = "b";
 
     public Bishop(final Color color) {
-        super(color, NAME);
+        super(color, NAME, 3);
     }
 
     @Override

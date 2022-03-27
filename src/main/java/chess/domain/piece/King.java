@@ -10,7 +10,7 @@ public class King extends Piece {
     private static final String NAME = "k";
 
     public King(final Color color) {
-        super(color, NAME);
+        super(color, NAME, 1);
     }
 
     @Override

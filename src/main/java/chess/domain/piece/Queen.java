@@ -10,7 +10,7 @@ public class Queen extends Piece {
     private static final String NAME = "q";
 
     public Queen(final Color color) {
-        super(color, NAME);
+        super(color, NAME, 9);
     }
 
     @Override
