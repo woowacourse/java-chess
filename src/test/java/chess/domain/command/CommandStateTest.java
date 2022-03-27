@@ -60,8 +60,8 @@ class CommandStateTest {
 
         Board board = start.getBoard();
 
-        assertThat(board.get(Position.of("a2"))).isNull();
-        assertThat(board.get(Position.of("a3"))).isInstanceOf(Pawn.class);
+        assertThat(board.findPieceBy(Position.of("a2"))).isEmpty();
+        assertThat(board.findPieceBy(Position.of("a3")).get()).isInstanceOf(Pawn.class);
     }
 
     @Test

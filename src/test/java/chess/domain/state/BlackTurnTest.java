@@ -24,7 +24,8 @@ class BlackTurnTest {
 
         blackTurn.movePiece(src, dest);
 
-        assertThat(board.exist(dest, Pawn.class, Color.BLACK)).isTrue();
+        assertThat(board.findPieceBy(dest).get().isSameColor(Color.BLACK)).isTrue();
+        assertThat(board.findPieceBy(dest).get().isSameType(Pawn.class)).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")

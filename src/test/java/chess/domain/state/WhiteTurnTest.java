@@ -25,7 +25,8 @@ class WhiteTurnTest {
 
         whiteTurn.movePiece(src, dest);
 
-        assertThat(board.exist(dest, Pawn.class, Color.WHITE)).isTrue();
+        assertThat(board.findPieceBy(dest).get().isSameColor(Color.WHITE)).isTrue();
+        assertThat(board.findPieceBy(dest).get().isSameType(Pawn.class)).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")

@@ -20,7 +20,7 @@ public class OutputView {
     public static void printBoard(Board board) {
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
-                Piece piece = board.get(new Position(column, row));
+                Piece piece = board.findPieceBy(new Position(column, row)).orElse(null);
                 System.out.print(PieceOutputText.of(piece));
             }
             System.out.println();

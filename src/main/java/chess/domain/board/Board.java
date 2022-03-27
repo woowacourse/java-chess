@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final double PAWN_HALF_POINT = 0.5;
+    private static final int PAWN_PENALTY_COUNT_IN_SAME_FILE = 2;
+
     private final Map<Position, Piece> value;
 
     public Board(Map<Position, Piece> value) {
@@ -24,36 +27,12 @@ public class Board {
         return new Board(new BasicChessBoardGenerator().generator());
     }
 
-    public boolean exist(Position position, Class<? extends Piece> type, Color color) {
-        Piece piece = value.get(position);
-        return piece.isSameType(type) && piece.isSameColor(color);
-    }
-
-    public Piece get(Position position) {
-        return value.get(position);
-    }
-
     public Optional<Piece> findPieceBy(Position position) {
         Piece piece = value.get(position);
         if (piece == null) {
             return Optional.empty();
         }
         return Optional.of(piece);
-    }
-
-    public void move(Position src, Position dest) {
-        Piece piece = findPieceBy(src)
-                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
-
-        if (!piece.canMove(src, dest)) {
-            throw new IllegalArgumentException("이동할 수 없습니다");
-        }
-
-        checkSameColorInDestination(piece, dest);
-        checkObstacleInPath(src, dest);
-
-        value.put(dest, piece);
-        value.remove(src);
     }
 
     public void move(Position src, Position dest, Color color) {
@@ -65,6 +44,24 @@ public class Board {
         }
 
         move(src, dest);
+    }
+
+    private void move(Position src, Position dest) {
+        Piece piece = findPieceBy(src)
+                .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
+
+        checkCanMove(piece, src, dest);
+        checkSameColorInDestination(piece, dest);
+        checkObstacleInPath(src, dest);
+
+        value.put(dest, piece);
+        value.remove(src);
+    }
+
+    private void checkCanMove(Piece piece, Position src, Position dest) {
+        if (!piece.canMove(src, dest)) {
+            throw new IllegalArgumentException("이동할 수 없습니다");
+        }
     }
 
     private void checkSameColorInDestination(Piece piece, Position dest) {
@@ -104,27 +101,27 @@ public class Board {
                 .sum();
     }
 
-    private double calculateScoreByColumn(List<Position> columns, Color color) {
-        double result = 0.0;
+    private double calculateScoreByColumn(List<Position> positions, Color color) {
+        double result = positions.stream()
+                .map(value::get)
+                .filter(Objects::nonNull)
+                .mapToDouble(Piece::getPoint)
+                .sum();
 
-        for (Position column : columns) {
-            Optional<Piece> optionalPiece = findPieceBy(column);
-            if (optionalPiece.isPresent() && optionalPiece.get().isSameColor(color)) {
-                result += optionalPiece.get().getPoint();
-            }
+        result = subtractPawnPenalty(result, countPawn(positions, color));
+        return result;
+    }
+
+    private double subtractPawnPenalty(double result, int pawnCount) {
+        if (pawnCount >= PAWN_PENALTY_COUNT_IN_SAME_FILE) {
+            result -= pawnCount * PAWN_HALF_POINT;
         }
-
-        int pawnCount = countPawn(columns, color);
-        if (pawnCount > 1) {
-            result -= pawnCount * 0.5;
-        }
-
         return result;
     }
 
     private int countPawn(List<Position> columns, Color color) {
         return (int) columns.stream()
-                .map(this::get)
+                .map(value::get)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.isSameColor(color))
                 .filter(piece -> piece.isSameType(Pawn.class))
