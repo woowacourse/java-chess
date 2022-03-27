@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class KingTest {
+class KingTest {
 
     @Test
     @DisplayName("킹을 만든다.")

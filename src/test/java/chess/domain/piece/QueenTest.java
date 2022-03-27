@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class QueenTest {
+class QueenTest {
 
     @Test
     @DisplayName("퀸을 만든다.")
@@ -23,8 +23,8 @@ public class QueenTest {
     @Test
     @DisplayName("상하좌우의 직선으로 이동할 수 있다.")
     void moveWithCross() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(1, 7);
+        Point from = Point.of("a1");
+        Point to = Point.of("a7");
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
@@ -47,8 +47,8 @@ public class QueenTest {
     @Test
     @DisplayName("퀸은 직선으로만 이동할 수 있다.")
     void notMovableWithoutStraight() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(2, 7);
+        Point from = Point.of("a1");
+        Point to = Point.of("b7");
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
@@ -59,11 +59,11 @@ public class QueenTest {
     @Test
     @DisplayName("장애물이 있을 경우 상하좌우로 이동할 수 없다.")
     void notMovableWithCrossObstacle() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(1, 7);
+        Point from = Point.of("a1");
+        Point to = Point.of("a7");
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.create(Map.of(
-                Point.of(1, 5), new Pawn(Color.WHITE)
+                Point.of("a5"), new Pawn(Color.WHITE)
         ));
 
         assertThatExceptionOfType(IllegalArgumentException.class)

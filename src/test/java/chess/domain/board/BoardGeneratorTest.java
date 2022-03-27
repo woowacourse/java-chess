@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardGeneratorTest {
+class BoardGeneratorTest {
 
     @Test
     @DisplayName("초기 체스판을 만든다.")

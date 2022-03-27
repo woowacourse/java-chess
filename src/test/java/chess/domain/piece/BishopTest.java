@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class BishopTest {
+class BishopTest {
 
     @Test
     @DisplayName("비숍을 만든다.")
