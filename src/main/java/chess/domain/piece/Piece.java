@@ -14,7 +14,7 @@ public abstract class Piece {
         this.color = color;
         this.name = name;
     }
-
+    //추후에 수정하기 view 를 위한 로직
     public final String getName() {
         if (color.equals(Color.BLACK)) {
             return name.toUpperCase(Locale.ROOT);

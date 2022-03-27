@@ -12,6 +12,8 @@ import java.util.Map;
 public class Board {
 
     private static final int NEXT = 1;
+    private static final int INIT_KING_COUNT = 2;
+
     private final Map<Position, Piece> value;
 
     public Board(final Initializable initializable) {
@@ -26,6 +28,16 @@ public class Board {
         final Piece piece = getPiece(from);
         piece.checkPieceMoveRange(this, from, to);
         value.put(to, value.remove(from));
+        checkHasKing();
+    }
+
+    private void checkHasKing() {
+        long kingCount = value.values().stream()
+                .filter(piece -> "k".equalsIgnoreCase(piece.getName()))
+                .count();
+        if (kingCount != INIT_KING_COUNT) {
+            throw new IllegalStateException("해당 보드판에 king 이 존재하지 않습니다.");
+        }
     }
 
     public boolean isMatchingColor(final Position target, final Color color) {
