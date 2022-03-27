@@ -75,8 +75,9 @@ class ActivePiecesTest {
     @Test
     void 점수_계산() {
         double actual = activePieces.calculateScore(WHITE);
+        double expected = 5 + 1;
 
-        assertThat(actual).isEqualTo(6.0);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

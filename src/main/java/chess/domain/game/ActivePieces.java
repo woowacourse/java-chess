@@ -7,13 +7,12 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ActivePieces {
 
-    private static final int SAME_FILE_PAWN_DISADVANTAGE = 2;
     private static final String NOT_FOUND_EXCEPTION_MESSAGE = "해당 위치에 체스 말이 존재하지 않습니다.";
+    private static final double SAME_FILE_PAWN_DISADVANTAGE = 0.5;
 
     private final List<Piece> pieces;
 
@@ -48,40 +47,30 @@ public class ActivePieces {
     }
 
     public double calculateScore(Color color) {
-        double defaultScore = calculateDefaultScore(findByColor(color));
-        double sameFilePawnCount = calculateSameFilePiecesSum(findPawnPositionsByColor(color));
+        double defaultScore = defaultScore(color);
+        int sameFilePawnCount = sameFilePawnCount(color);
 
-        return defaultScore - (sameFilePawnCount / SAME_FILE_PAWN_DISADVANTAGE);
+        return defaultScore - (sameFilePawnCount * SAME_FILE_PAWN_DISADVANTAGE);
     }
 
-    private Double calculateDefaultScore(List<Piece> sameColorPieces) {
-        return sameColorPieces.stream()
-                .map(Piece::score)
-                .reduce(0.0, Double::sum);
-    }
-
-    private List<Piece> findByColor(Color color) {
+    private double defaultScore(Color color) {
         return pieces.stream()
                 .filter(piece -> piece.hasColorOf(color))
-                .collect(Collectors.toUnmodifiableList());
+                .mapToDouble(Piece::score)
+                .sum();
     }
 
-    private List<Piece> findPawnPositionsByColor(Color color) {
-        return pieces.stream()
+    private int sameFilePawnCount(Color color) {
+        return IntStream.range(0, FILES_TOTAL_SIZE)
+                .map(fileIdx -> countPawnsOfSameFile(color, fileIdx))
+                .filter(sameFilePawnCount -> sameFilePawnCount > 1)
+                .sum();
+    }
+
+    private int countPawnsOfSameFile(Color color, int fileIdx) {
+        return (int) pieces.stream()
                 .filter(Piece::isPawn)
                 .filter(piece -> piece.hasColorOf(color))
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private double calculateSameFilePiecesSum(List<Piece> pieces) {
-        return IntStream.range(0, FILES_TOTAL_SIZE)
-                .map(fileIdx -> countPiecesOfSameFile(pieces, fileIdx))
-                .filter(count -> count > 1)
-                .reduce(0, Integer::sum);
-    }
-
-    private int countPiecesOfSameFile(List<Piece> pieces, int fileIdx) {
-        return (int) pieces.stream()
                 .filter(piece -> piece.isAtFileOrColumnIdxOf(fileIdx))
                 .count();
     }
