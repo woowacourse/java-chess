@@ -1,15 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.postion.Position;
+import chess.domain.piece.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece{
 
     public Pawn(final Team team) {
-        super(team);
-    }
-
-    @Override
-    public void canMove(final Position Source, final Position target) {
-
+        super(team, new PawnMoveStrategy());
     }
 }

@@ -15,6 +15,9 @@ public class Board {
 
     public Board movePiece(Position source, Position target) {
         Piece piece = cells.get(source);
+
+        piece.canMove(source, target);
+
         cells.remove(source);
         cells.put(target, piece);
 
