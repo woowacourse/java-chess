@@ -68,11 +68,11 @@ public class Position {
 		return Math.abs(this.row - position.row) != Math.abs(this.column - position.column);
 	}
 
-	public int subtractRow(Position position) {
+	public int calculateRowDirection(Position position) {
 		return Integer.compare(this.row, position.row);
 	}
 
-	public int subtractColumn(Position position) {
+	public int calculateColumnDirection(Position position) {
 		return Integer.compare(this.column, position.column);
 	}
 

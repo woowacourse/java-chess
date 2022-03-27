@@ -19,8 +19,8 @@ public abstract class Piece {
 	}
 
 	public Direction getDirection(final Position source, final Position target) {
-		int differenceRow = target.subtractRow(source);
-		int differenceColumn = target.subtractColumn(source);
+		int differenceRow = target.calculateRowDirection(source);
+		int differenceColumn = target.calculateColumnDirection(source);
 		return Direction.find(differenceRow, differenceColumn);
 	}
 
