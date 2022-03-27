@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.ChessBoard;
+import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.position.Rank;

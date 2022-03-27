@@ -2,22 +2,22 @@ package chess.domain.piece.state;
 
 import java.util.List;
 
-import chess.domain.ChessBoard;
+import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Position;
 
-public class Dead implements State {
+public class Dead implements PieceState {
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
         throw new IllegalArgumentException("죽은 체스말 입니다.");
     }
 
     @Override
-    public State killed() {
+    public PieceState killed() {
         throw new IllegalArgumentException("죽은 체스말 입니다.");
     }
 
     @Override
-    public State updateState() {
+    public PieceState updateState() {
         throw new IllegalArgumentException("죽은 체스말 입니다.");
     }
 }

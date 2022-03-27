@@ -14,7 +14,9 @@ public class OutputView {
 
     public static void printChessBoard(ChessBoardDto chessBoardDto) {
         Map<PositionDto, String> chessBoard = chessBoardDto.getChessBoard();
-        printPieces(chessBoard);
+        if (!chessBoard.isEmpty()) {
+            printPieces(chessBoard);
+        }
     }
 
     private static void printPieces(Map<PositionDto, String> chessBoard) {

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.domain.ChessBoard;
+import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.State;
+import chess.domain.piece.state.PieceState;
 
 public class StartedPawn extends Started {
 
@@ -35,7 +35,7 @@ public class StartedPawn extends Started {
     }
 
     @Override
-    public State updateState() {
+    public PieceState updateState() {
         return new MovedPawn(forward);
     }
 

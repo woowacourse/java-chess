@@ -1,11 +1,11 @@
 package chess.domain.piece.state.started;
 
 import chess.domain.piece.state.Dead;
-import chess.domain.piece.state.State;
+import chess.domain.piece.state.PieceState;
 
-public abstract class Started implements State {
+public abstract class Started implements PieceState {
     @Override
-    public State killed() {
+    public PieceState killed() {
         return new Dead();
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game.state;
 
 import java.util.Map;
 
@@ -14,16 +14,41 @@ import chess.domain.piece.position.Position;
 import chess.domain.piece.position.Rank;
 import chess.domain.piece.property.Color;
 
-public class ChessGame {
-    private ChessBoard board;
-    private Player player = Player.White;
+public class StartedGame implements GameState {
 
-    public Map<Position, Piece> start() {
-        board = new ChessBoard();
+    private final ChessBoard board = new ChessBoard();
+
+    @Override
+    public GameState start() {
         initBlack();
         initWhite();
 
+        return new RunningGame(board, Player.White);
+    }
+
+    @Override
+    public GameState move(Position source, Position target) {
+        throw new IllegalArgumentException("start를 해야만 move를 할 수 있습니다.");
+    }
+
+    @Override
+    public GameState status() {
+        throw new IllegalArgumentException("start를 해야만 status를 할 수 있습니다.");
+    }
+
+    @Override
+    public GameState end() {
+        return new EndGame();
+    }
+
+    @Override
+    public Map<Position, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     private void initBlack() {
@@ -78,22 +103,5 @@ public class ChessGame {
         board.putPiece(Position.of(File.f, Rank.One), new Bishop(Color.White));
         board.putPiece(Position.of(File.g, Rank.One), new Knight(Color.White));
         board.putPiece(Position.of(File.h, Rank.One), new Rook(Color.White));
-    }
-
-    public void move(Position source, Position target) {
-        validatePosition(source);
-        board.move(source, target);
-        player = player.change();
-    }
-
-    private void validatePosition(Position source) {
-        board.validateExist(source);
-        checkMyPiece(board.getPiece(source));
-    }
-
-    private void checkMyPiece(Piece sourcePiece) {
-        if (!player.isMyPiece(sourcePiece)) {
-            throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
-        }
     }
 }

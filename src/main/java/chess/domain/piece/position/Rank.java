@@ -1,6 +1,7 @@
 package chess.domain.piece.position;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum Rank {
     One(1),
@@ -20,11 +21,11 @@ public enum Rank {
         this.value = value;
     }
 
-    private static Rank valueOf(int value) {
+    public static Rank of(int value) {
         return Arrays.stream(Rank.values())
             .filter(rank -> rank.value == value)
             .findFirst()
-            .get();
+            .orElseThrow(NoSuchElementException::new);
     }
 
     public int getValue() {
@@ -36,6 +37,6 @@ public enum Rank {
             return Out;
         }
 
-        return Rank.valueOf(value + next);
+        return Rank.of(value + next);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import chess.domain.ChessBoard;
+import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 
