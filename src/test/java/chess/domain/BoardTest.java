@@ -55,6 +55,41 @@ class BoardTest {
 	}
 
 	@ParameterizedTest
+	@CsvSource(value = {"3:1", "3:3"}, delimiter = ':')
+	@DisplayName("화이트폰은 적이 없는한 대각선으로 갈 수 없다.")
+	void notMoveWhitePawnDiagonal(int row, int column) {
+		Map<Position, Piece> pieces = Map.of(new Position(2, 2), Pawn.createWhite());
+		Board board = new Board(pieces);
+
+		assertThatThrownBy(() -> board.movePiece(new Position(2, 2), new Position(row, column)))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"3:2", "4:2"}, delimiter = ':')
+	@DisplayName("화이트폰은 적이 정면에 있는 경우 적을 잡을 수 없다.")
+	void notMoveWhiteNorth(int row, int column) {
+		Map<Position, Piece> pieces = Map.of(
+			new Position(row, column), Pawn.createBlack(),
+			new Position(2, 2), Pawn.createWhite());
+		Board board = new Board(pieces);
+
+		assertThatThrownBy(() -> board.movePiece(new Position(2, 2), new Position(row, column)))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"6:1", "6:3"}, delimiter = ':')
+	@DisplayName("블랙폰은 적이 없는한 대각선으로 갈 수 없다.")
+	void notMoveBlackPawnDiagonal(int row, int column) {
+		Map<Position, Piece> pieces = Map.of(new Position(7, 2), Pawn.createBlack());
+		Board board = new Board(pieces);
+
+		assertThatThrownBy(() -> board.movePiece(new Position(7, 2), new Position(row, column)))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@ParameterizedTest
 	@CsvSource(value = {"6:2", "5:2"}, delimiter = ':')
 	@DisplayName("블랙폰은 기물이 없는 위치로 이동할 수 있다.")
 	void moveBlackPawnNotCatch(int row, int column) {

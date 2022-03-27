@@ -16,6 +16,7 @@ public class Board {
 	private static final String PIECE_BLOCK = "가려는 위치 중간에 말이 존재합니다.";
 	private static final String CANNOT_MOVE_SAME_COLOR = "아군이 있는 위치에 갈 수 없습니다.";
 	private static final String PAWN_ONLY_DIAGONAL_CATCH = "폰은 본인 진행 방향 대각선에 있는 적만 잡을 수 있습니다.";
+	private static final String CANNOT_MOVE_DIAGONAL_NOT_ENEMY = "폰은 적이 없으면 대각선으로 갈 수 없습니다.";
 
 	private final Map<Position, Piece> pieces;
 
@@ -70,13 +71,14 @@ public class Board {
 	}
 
 	private void checkTargetPosition(Position to, Piece fromPiece, Direction direction) {
-		Optional<Piece> piece;
-		piece = findPiece(to);
+		Optional<Piece> piece = findPiece(to);
 		if (piece.isPresent()) {
 			Piece toPiece = piece.get();
 			validateSameColor(fromPiece, toPiece);
 			checkPieceIsPawn(fromPiece, direction, toPiece);
+			return;
 		}
+		validatePawnDiagonalMove(fromPiece, direction);
 	}
 
 	private void validateSameColor(Piece fromPiece, Piece toPiece) {
@@ -88,6 +90,12 @@ public class Board {
 	private void checkPieceIsPawn(Piece fromPiece, Direction direction, Piece toPiece) {
 		if (fromPiece.isPawn()) {
 			validateDiagonalEnemy(fromPiece, toPiece, direction);
+		}
+	}
+
+	private void validatePawnDiagonalMove(Piece fromPiece, Direction direction) {
+		if (fromPiece.isPawn() && direction.isDiagonal()) {
+			throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL_NOT_ENEMY);
 		}
 	}
 
