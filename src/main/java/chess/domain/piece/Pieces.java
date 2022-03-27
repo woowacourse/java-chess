@@ -42,11 +42,13 @@ public class Pieces {
     }
 
     public boolean isAnyPieceExistInPositions(List<Position> positions) {
+        long count = 0;
         for (Position position : positions) {
-            return pieces.stream()
-                .anyMatch(piece -> piece.isAt(position));
+            count += pieces.stream()
+                .filter(piece -> piece.isAt(position))
+                .count();
         }
-        return false;
+        return count != 0;
     }
 
     public List<Piece> extractPiecesOf(Color color) {
