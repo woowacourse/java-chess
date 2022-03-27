@@ -70,4 +70,8 @@ public class OutputView {
         }
         throw new IllegalArgumentException("존재하지 않는 기물입니다.");
     }
+
+    public void printFinishMessage() {
+        System.out.println("해당 게임이 종료되었습니다.");
+    }
 }

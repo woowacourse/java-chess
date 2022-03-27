@@ -13,6 +13,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -115,6 +116,18 @@ public final class Board {
 
     private boolean isCapturing(Piece piece, Position afterPosition) {
         return !piece.isSameCampWith(value.get(afterPosition));
+    }
+
+    public boolean hasKingCaptured(){
+        return 2 != countKing();
+    }
+
+    private int countKing() {
+        return (int) this.value.values()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(Piece::isKing)
+                .count();
     }
 
     public Map<Position, Piece> getValue() {

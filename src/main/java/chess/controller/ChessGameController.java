@@ -41,12 +41,16 @@ public class ChessGameController {
                         .collect(Collectors.toList());
                 chessGame.move(positions.get(0), positions.get(1));
                 outputView.printBoard(chessGame.getBoard().getValue());
+                if (!chessGame.isRunning()) {
+                    outputView.printFinishMessage();
+                }
             }
             if ("end".equals(command)) {
                 if (!chessGame.isRunning()) {
                     break;
                 }
                 chessGame.end();
+                outputView.printFinishMessage();
             }
         }
     }
