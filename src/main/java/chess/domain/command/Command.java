@@ -1,30 +1,30 @@
 package chess.domain.command;
 
-import chess.domain.board.Board;
-import chess.domain.state.Ready;
+import java.util.Arrays;
 
-public abstract class Command {
+public enum Command {
+    START("start"),
+    END("end"),
+    MOVE("move"),
+    STATUE("status"),
+    ;
 
-    protected static final String START = "start";
-    protected static final String END = "end";
+    private static final String NO_SUCH_INPUT_ERROR_MESSAGE = "없는 명령어를 입력했습니다";
+    
+    private final String command;
 
-    public static Command of(String input) {
-        if (input.equals(START)) {
-            return new Start(Ready.start(Board.getBasicInstance()));
-        }
-        if (input.equals(END)) {
-            return new End();
-        }
-        throw new IllegalArgumentException(START + " 혹은 " + END + "를 입력해주세요");
+    Command(String command) {
+        this.command = command;
     }
 
-    public abstract boolean isStart();
+    public static Command find(String input) {
+        return Arrays.stream(Command.values())
+                .filter(value -> value.command.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_INPUT_ERROR_MESSAGE));
+    }
 
-    public abstract boolean isStatus();
-
-    public abstract Command execute(String command);
-
-    public abstract Board getBoard();
-
-    public abstract StatusResult getStatus();
+    public String get() {
+        return command;
+    }
 }

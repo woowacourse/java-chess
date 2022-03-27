@@ -1,6 +1,5 @@
 package chess.domain.command;
 
-import chess.domain.board.ScoreResult;
 import chess.domain.state.State;
 
 public class Status extends Start {
@@ -16,9 +15,6 @@ public class Status extends Start {
 
     @Override
     public StatusResult getStatus() {
-
-        ScoreResult score = state.getScore();
-
-        return new StatusResult(score);
+        return new StatusResult(state.getScore());
     }
 }

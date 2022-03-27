@@ -1,12 +1,8 @@
 package chess.domain.command;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 
-import java.util.Map;
-
-public final class End extends Command {
+public final class End extends CommandState {
     @Override
     public boolean isStart() {
         return false;
@@ -18,7 +14,7 @@ public final class End extends Command {
     }
 
     @Override
-    public Command execute(String command) {
+    public CommandState execute(String command) {
         throw new UnsupportedOperationException();
     }
 

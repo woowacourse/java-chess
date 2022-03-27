@@ -3,21 +3,18 @@ package chess.domain.command;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class CommandTest {
+class CommandStateTest {
 
     @Test
     void test() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         assertThat(start).isInstanceOf(Start.class);
     }
@@ -25,7 +22,7 @@ class CommandTest {
     @Test
     void testIsStart() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         assertThat(start.isStart()).isTrue();
     }
@@ -33,7 +30,7 @@ class CommandTest {
     @Test
     void testEnd() {
         String input = "end";
-        Command end = Command.of(input);
+        CommandState end = CommandState.of(input);
 
         assertThat(end).isInstanceOf(End.class);
     }
@@ -41,7 +38,7 @@ class CommandTest {
     @Test
     void testEndIsStart() {
         String input = "end";
-        Command end = Command.of(input);
+        CommandState end = CommandState.of(input);
 
         assertThat(end.isStart()).isFalse();
     }
@@ -49,14 +46,14 @@ class CommandTest {
     @Test
     void testInvalidInput() {
         String input = "unknown";
-        Assertions.assertThatThrownBy(() -> Command.of(input))
+        Assertions.assertThatThrownBy(() -> CommandState.of(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void moveOnlyStartFromStart() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         String moveInput = "move a2 a3";
         start = start.execute(moveInput);
@@ -70,7 +67,7 @@ class CommandTest {
     @Test
     void moveOnlyStartFromStartFail() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         String moveInput = "move a7 a6";
 
@@ -81,7 +78,7 @@ class CommandTest {
     @Test
     void startToEnd() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         String endInput = "end";
         start = start.execute(endInput);
@@ -92,7 +89,7 @@ class CommandTest {
     @Test
     void startToInvalidInput() {
         String input = "start";
-        Command start = Command.of(input);
+        CommandState start = CommandState.of(input);
 
         String unknown = "unknown";
         assertThatThrownBy(() -> start.execute(unknown))
@@ -102,7 +99,7 @@ class CommandTest {
     @Test
     void endToCommand() {
         String input = "end";
-        Command end = Command.of(input);
+        CommandState end = CommandState.of(input);
 
         String start = "start";
         assertThatThrownBy(() -> end.execute(start))
