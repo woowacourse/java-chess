@@ -10,14 +10,11 @@ public enum Command {
     END("end"),
     STATUS("status");
 
-    private static final String regexStartEnd = "(start)|(end)";
-    private static final String regexEndMove = "(end)|(status)|(move [a-h][1-8] [a-h][1-8])";
-
-    public static final Pattern PATTERN_START_END = Pattern.compile(regexStartEnd);
-    public static final Pattern PATTERN_END_MOVE = Pattern.compile(regexEndMove);
-
     static final String NOT_FOUND_COMMAND_EXCEPTION = "[ERROR] 이 명령문은 존재하지 않습니다.";
-
+    private static final String REGEX_START_END = "(start)|(end)";
+    private static final String REGEX_MOVE_STATUS_END = "(end)|(status)|(move [a-h][1-8] [a-h][1-8])";
+    private static final Pattern PATTERN_START_END = Pattern.compile(REGEX_START_END);
+    private static final Pattern PATTERN_END_MOVE = Pattern.compile(REGEX_MOVE_STATUS_END);
     private final String name;
 
     Command(String name) {
