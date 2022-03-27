@@ -3,7 +3,7 @@ package chess.view.dto;
 import chess.domain.board.Board;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceScore;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -29,7 +29,7 @@ enum PieceName {
         this.whiteName = whiteName;
     }
 
-    public static PieceName find(PieceType pieceType) {
+    public static PieceName find(PieceScore pieceType) {
         return Stream.of(PieceName.values())
                 .filter(pieceName -> pieceName.name().equals(pieceType.name()))
                 .findFirst()
@@ -80,7 +80,7 @@ public class BoardDto {
     }
 
     private String generateExistingPieceName(AbstractPiece piece) {
-        PieceType pieceType = piece.getPieceType();
+        PieceScore pieceType = piece.getPieceType();
         PieceColor pieceColor = piece.getPieceColor();
 
         return PieceName.find(pieceType).getName(pieceColor);

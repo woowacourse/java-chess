@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceScore;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -135,7 +135,7 @@ public class Board {
         value.put(to, piece);
         value.remove(from);
 
-        if (otherPiece.isPieceType(PieceType.KING)) {
+        if (otherPiece.isPieceType(PieceScore.KING)) {
             return MoveResult.KILL_KING;
         }
 
@@ -162,7 +162,7 @@ public class Board {
                 Position position = Position.from(xAxis, yAxis);
                 if (!Objects.isNull(value.get(position))) {
                     if (value.get(position).isPieceColor(pieceColor) && value.get(position)
-                            .isPieceType(PieceType.PAWN)) {
+                            .isPieceType(PieceScore.PAWN)) {
                         count += 1;
                     }
                 }

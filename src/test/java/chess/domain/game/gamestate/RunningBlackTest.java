@@ -36,7 +36,7 @@ class RunningBlackTest {
                 .hasMessage("이미 게임 중 입니다.");
     }
 
-    @DisplayName("showStatus를 호출하면 Finished가 반환된다.")
+    @DisplayName("showStatus를 호출하면 FinishedStatus가 반환된다.")
     @Test
     void showStatus_returnsFinished() {
         // given
@@ -46,6 +46,6 @@ class RunningBlackTest {
         State actual = state.showStatus();
 
         // then
-        assertThat(actual).isInstanceOf(FinishedKing.class);
+        assertThat(actual).isInstanceOf(FinishedStatus.class);
     }
 }

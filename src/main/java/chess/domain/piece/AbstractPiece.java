@@ -5,9 +5,9 @@ import chess.domain.position.Position;
 public abstract class AbstractPiece {
 
     private final PieceColor pieceColor;
-    private final PieceType pieceType;
+    private final PieceScore pieceType;
 
-    public AbstractPiece(PieceColor pieceColor, PieceType pieceType) {
+    public AbstractPiece(PieceColor pieceColor, PieceScore pieceType) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
     }
@@ -16,17 +16,11 @@ public abstract class AbstractPiece {
         return pieceColor;
     }
 
-    public PieceType getPieceType() {
+    public PieceScore getPieceType() {
         return pieceType;
     }
 
-    public boolean isMovable(Position from, Position to) {
-        if (from == to) {
-            return false;
-        }
-
-        return pieceType.isMovable(from, to);
-    }
+    public abstract boolean isMovable(Position from, Position to);
 
     public boolean isAbleToAttack(Position from, Position to) {
         return isMovable(from, to);
@@ -44,7 +38,7 @@ public abstract class AbstractPiece {
         return this.pieceColor == pieceColor;
     }
 
-    public boolean isPieceType(PieceType pieceType) {
+    public boolean isPieceType(PieceScore pieceType) {
         return this.pieceType == pieceType;
     }
 

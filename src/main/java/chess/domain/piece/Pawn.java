@@ -9,7 +9,7 @@ public class Pawn extends AbstractPiece {
     private static final int INITIAL_MOVE_RANGE = 2;
 
     Pawn(PieceColor pieceColor) {
-        super(pieceColor, PieceType.PAWN);
+        super(pieceColor, PieceScore.PAWN);
     }
 
     @Override
