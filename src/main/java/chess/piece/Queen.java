@@ -29,4 +29,9 @@ public class Queen extends AbstractPiece {
 
         return Math.abs(columnDistance) == Math.abs(rowDistance);
     }
+
+    @Override
+    public double getScore() {
+        return 9;
+    }
 }

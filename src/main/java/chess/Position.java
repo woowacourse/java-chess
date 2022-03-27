@@ -193,4 +193,8 @@ public class Position {
         final Row row = Row.of(this.row.getValue() + direction.getRow());
         return Position.of(column, row);
     }
+
+    public boolean equalsColumn(final int column) {
+        return this.column.getValue() == column;
+    }
 }

@@ -23,6 +23,11 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public double getScore() {
+        return 0;
+    }
+
+    @Override
     public final boolean isSameTeam(final Piece other) {
         return this.color.hasSameColor(other.getColor());
     }

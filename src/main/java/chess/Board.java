@@ -5,6 +5,7 @@ import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
 import chess.piece.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +94,37 @@ public class Board {
             value.put(to, piece);
             value.remove(from);
         }
+    }
+
+    public Map<Color, Double> getBoardScore() {
+        final Map<Color, Double> score = new HashMap<>();
+        score.put(BLACK, calculateScore(BLACK));
+        score.put(WHITE, calculateScore(WHITE));
+        return score;
+    }
+
+    public double calculateScore(final Color color) {
+        final double sum = value.values().stream()
+                .filter(piece -> piece.getColor() == color)
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_PAWN_SCORE;
+    }
+
+    private double pawnCountOnSameColumn(final Color color) {
+        return Arrays.stream(Column.values())
+                .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
+                .filter(count -> count > 1)
+                .sum();
+    }
+
+    private int countPawnsByColumn(final int column, Color color) {
+        return (int) value.keySet().stream()
+                .filter(position -> position.equalsColumn(column))
+                .map(value::get)
+                .filter(piece -> piece.isPawn() && piece.getColor().hasSameColor(color))
+                .count();
     }
 
     public boolean isKingDead() {

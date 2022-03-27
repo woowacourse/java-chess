@@ -25,4 +25,9 @@ public class Rook extends AbstractPiece {
 
         return columnDistance == 0 || rowDistance == 0;
     }
+
+    @Override
+    public double getScore() {
+        return 5;
+    }
 }

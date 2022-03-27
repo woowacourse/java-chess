@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import java.util.Map;
 
 class BoardTest {
 
@@ -57,5 +58,120 @@ class BoardTest {
         board.move(MoveCommand.of("d3 d7"), Color.WHITE);
 
         assertThat(board.getValue().get(Position.of("d7"))).isInstanceOf(Rook.class);
+    }
+
+    @Test
+    @DisplayName("남아있는 말에 따라 점수를 계산한다.")
+    void score() {
+        final Board board = Board.create();
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("폰을 잃은 팀의 점수를 계산한다.")
+    void scorePawnLoss() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("a2 a4"), Color.WHITE);
+        board.move(MoveCommand.of("a4 a5"), Color.WHITE);
+        board.move(MoveCommand.of("a5 a6"), Color.WHITE);
+        board.move(MoveCommand.of("a6 b7"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(37);
+    }
+
+    @Test
+    @DisplayName("룩을 잃은 팀의 점수를 계산한다.")
+    void scoreRookLoss() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("b1 a3"), Color.WHITE);
+        board.move(MoveCommand.of("a3 c4"), Color.WHITE);
+        board.move(MoveCommand.of("c4 b6"), Color.WHITE);
+        board.move(MoveCommand.of("b6 a8"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(33);
+    }
+    
+    @Test
+    @DisplayName("나이트를 잃은 팀의 점수를 계산한다.")
+    void scoreKnightLoss() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("b1 c3"), Color.WHITE);
+        board.move(MoveCommand.of("c3 a4"), Color.WHITE);
+        board.move(MoveCommand.of("a4 c5"), Color.WHITE);
+        board.move(MoveCommand.of("c5 a6"), Color.WHITE);
+        board.move(MoveCommand.of("a6 b8"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(35.5);
+    }
+
+    @Test
+    @DisplayName("비숍를 잃은 팀의 점수를 계산한다.")
+    void scoreBishopLoss() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("b1 c3"), Color.WHITE);
+        board.move(MoveCommand.of("c3 b5"), Color.WHITE);
+        board.move(MoveCommand.of("b5 d6"), Color.WHITE);
+        board.move(MoveCommand.of("d6 c8"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(35);
+    }
+
+    @Test
+    @DisplayName("퀸을 잃은 팀의 점수를 계산한다.")
+    void scoreQueenLoss() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("b1 a3"), Color.WHITE);
+        board.move(MoveCommand.of("a3 c4"), Color.WHITE);
+        board.move(MoveCommand.of("c4 a5"), Color.WHITE);
+        board.move(MoveCommand.of("a5 c6"), Color.WHITE);
+        board.move(MoveCommand.of("c6 d8"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.BLACK)).isEqualTo(29);
+    }
+
+    @Test
+    @DisplayName("같은 열에 폰이 2개 있을 경우 점수를 계산한다.")
+    void scoreTwoPawnsOnSameColumn() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("a2 a4"), Color.WHITE);
+        board.move(MoveCommand.of("a4 a5"), Color.WHITE);
+        board.move(MoveCommand.of("a5 a6"), Color.WHITE);
+        board.move(MoveCommand.of("a6 b7"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.WHITE)).isEqualTo(37);
+    }
+
+    @Test
+    @DisplayName("같은 열에 폰이 3개 있을 경우 점수를 계산한다.")
+    void scoreThreePawnsOnSameColumn() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("b2 b4"), Color.WHITE);
+        board.move(MoveCommand.of("b4 b5"), Color.WHITE);
+        board.move(MoveCommand.of("b5 b6"), Color.WHITE);
+        board.move(MoveCommand.of("b6 a7"), Color.WHITE);
+
+        board.move(MoveCommand.of("c2 c4"), Color.WHITE);
+        board.move(MoveCommand.of("c4 c5"), Color.WHITE);
+        board.move(MoveCommand.of("c5 c6"), Color.WHITE);
+        board.move(MoveCommand.of("c6 b7"), Color.WHITE);
+        board.move(MoveCommand.of("b7 a8"), Color.WHITE);
+
+        final Map<Color, Double> boardScore = board.getBoardScore();
+
+        assertThat(boardScore.get(Color.WHITE)).isEqualTo(36.5);
     }
 }

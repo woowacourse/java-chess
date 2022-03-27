@@ -8,6 +8,8 @@ public interface Piece {
 
     Color getColor();
 
+    double getScore();
+
     boolean isSameTeam(Piece piece);
 
     boolean canMove(MoveCommand command);
