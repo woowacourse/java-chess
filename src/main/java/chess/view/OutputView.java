@@ -4,7 +4,6 @@ import java.util.List;
 
 import chess.domain.Status;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String MESSAGE_START = "> 체스 게임을 시작합니다.";

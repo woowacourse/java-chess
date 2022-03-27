@@ -8,7 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Square;
 
-public class Status {
+public final class Status {
     private final Board board;
 
     public Status(Board board) {

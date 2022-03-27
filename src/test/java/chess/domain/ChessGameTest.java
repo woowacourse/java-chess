@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.TestBoardGenerator.*;
+import static chess.domain.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
@@ -10,13 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class ChessGameTest {
-    private static final Piece WHITE_QUEEN = Piece.from(File.D, Rank.ONE);
-    private static final Piece BLACK_QUEEN = Piece.from(File.D, Rank.EIGHT);
 
     @Test
     @DisplayName("흰 말로 시작하지 않으면 에러를 반환한다")

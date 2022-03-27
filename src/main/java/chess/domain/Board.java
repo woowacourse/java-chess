@@ -16,17 +16,17 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
-public class Board {
-    private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 이동할 수 없는 위치입니다.";
-    private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 가는 길에 다른 피스가 있습니다";
+public final class Board {
+    private static final String ERROR_MESSAGE_POSITION_INCAPABLE = "[ERROR] 허걱... 거긴 못가... 미안..";
+    private static final String ERROR_MESSAGE_DIRECTION_INCAPABLE = "[ERROR] 길이 막혔다...!";
 
     private final Map<Square, Piece> board;
 
-    public Board() {
+    Board() {
         this(createBoard());
     }
 
-    public Board(Map<Square, Piece> board) {
+    Board(Map<Square, Piece> board) {
         this.board = new LinkedHashMap<>(board);
     }
 
@@ -44,7 +44,7 @@ public class Board {
         }
     }
 
-    public List<List<Piece>> splitByRank() {
+    List<List<Piece>> splitByRank() {
         List<Piece> pieces = new ArrayList<>(board.values());
         List<List<Piece>> splitPieces = Lists.partition(pieces, Rank.values().length);
         return reverse(splitPieces);
@@ -58,7 +58,7 @@ public class Board {
         return result;
     }
 
-    public boolean isRightTurn(Square source, Color turn) {
+    boolean isRightTurn(Square source, Color turn) {
         return board.get(source).isSameColor(turn);
     }
 
@@ -93,18 +93,18 @@ public class Board {
         }
     }
 
-    public boolean isTargetKing(Square target) {
+    boolean isTargetKing(Square target) {
         return board.get(target).isKing();
     }
 
-    public Board move(Square source, Square target) {
+    Board move(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.put(source, new None(Color.NONE));
         return new Board(board);
     }
 
-    public List<Map.Entry<Square, Piece>> filterBy(Color color) {
+    List<Map.Entry<Square, Piece>> filterBy(Color color) {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toList());

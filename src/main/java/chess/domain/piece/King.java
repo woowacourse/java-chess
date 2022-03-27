@@ -47,7 +47,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isKing(){
+    public boolean isKing() {
         return true;
     }
 }

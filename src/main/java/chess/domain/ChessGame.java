@@ -8,7 +8,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Square;
 
-public class ChessGame {
+public final class ChessGame {
     private static final String ERROR_MESSAGE_TURN = "[ERROR] 순서 지키시지?!";
 
     private Board board;
@@ -38,17 +38,23 @@ public class ChessGame {
     }
 
     public void move(Square source, Square target) {
+        checkTurn(source);
+        board.checkCanMove(source, target);
+        turn = turn.switchColor();
+        checkKingDie(target);
+        board = board.move(source, target);
+    }
+
+    private void checkTurn(Square source) {
         if (!board.isRightTurn(source, turn)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_TURN);
         }
-        board.checkCanMove(source, target);
-        turn = turn.switchColor();
+    }
 
+    private void checkKingDie(Square target) {
         if (board.isTargetKing(target)) {
             turn = Color.NONE;
         }
-
-        board = board.move(source, target);
     }
 
     public boolean isKingDie() {

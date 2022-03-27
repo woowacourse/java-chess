@@ -3,7 +3,7 @@ package chess.domain.position;
 import java.util.List;
 import java.util.Objects;
 
-public class Direction {
+public final class Direction {
     private final int dFile;
     private final int dRank;
 
@@ -12,7 +12,7 @@ public class Direction {
         this.dRank = dRank;
     }
 
-    public Square add(File file, Rank rank) {
+    Square add(File file, Rank rank) {
         return new Square(file.add(dFile), rank.add(dRank));
     }
 

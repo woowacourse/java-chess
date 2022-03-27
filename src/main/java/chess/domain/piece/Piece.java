@@ -5,10 +5,10 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 
 public abstract class Piece {
-    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 아군의 말이 있는 곳으로는 이동할 수 없습니다.";
+    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
 
-    protected final Color color;
-    protected double score;
+    final Color color;
+    double score;
 
     Piece(Color color) {
         this.color = color;

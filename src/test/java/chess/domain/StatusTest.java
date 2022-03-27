@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.TestBoardGenerator.*;
+import static chess.domain.TestUtils.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
@@ -10,15 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public class StatusTest {
-    private static final Piece WHITE_QUEEN = Piece.from(File.D, Rank.ONE);
-    private static final Piece WHITE_BISHOP = Piece.from(File.C, Rank.ONE);
-    private static final Piece WHITE_PAWN = Piece.from(File.A, Rank.TWO);
-    private static final Piece WHITE_ROOK = Piece.from(File.A, Rank.ONE);
 
     @Test
     @DisplayName("룩1, 비숍1, 퀸1, 폰1 가 있으면 18점을 반환한다")

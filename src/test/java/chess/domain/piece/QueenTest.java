@@ -59,6 +59,6 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         assertThatThrownBy(() -> queen.canMove(new Direction(2, 2), new Rook(Color.BLACK)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 아군의 말이 있는 곳으로는 이동할 수 없습니다.");
+                .hasMessage("[ERROR] 사격 중지!! 아군이다!! ><");
     }
 }

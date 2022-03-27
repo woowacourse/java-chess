@@ -12,7 +12,7 @@ public enum Rank {
     SEVEN("7", 7),
     EIGHT("8", 8);
 
-    private static final String ERROR_MESSAGE_BOUND = "[ERROR] 체스판 범위를 벗어났습니다.";
+    private static final String BUG_MESSAGE_BOUND = "[BUG] 체스판 범위를 벗어났습니다.";
     private final String value;
     private final int index;
 
@@ -21,21 +21,21 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank find(String value) {
+    static Rank find(String value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
+                .orElseThrow(() -> new IllegalArgumentException(BUG_MESSAGE_BOUND));
     }
 
-    public int getGap(Rank target) {
+    int getGap(Rank target) {
         return target.index - this.index;
     }
 
-    public Rank add(int dRank) {
+    Rank add(int dRank) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == this.index + dRank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_BOUND));
+                .orElseThrow(() -> new IllegalArgumentException(BUG_MESSAGE_BOUND));
     }
 }

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 
-public class PieceCondition {
+public final class PieceCondition {
 
     private final File file;
     private final Rank rank;

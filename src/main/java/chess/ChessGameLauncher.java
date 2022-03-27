@@ -2,7 +2,6 @@ package chess;
 
 import java.util.List;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Status;
 import chess.domain.piece.Color;
@@ -10,8 +9,8 @@ import chess.domain.position.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGameLauncher {
-    public void run() {
+public final class ChessGameLauncher {
+    void run() {
         OutputView.announceStart();
         ChessGame game = initGame();
         inGame(game);
@@ -52,7 +51,7 @@ public class ChessGameLauncher {
     private List<String> inputSquaresToMove() {
         List<String> squares = InputView.requireCommand();
 
-        if(squares.isEmpty()){
+        if (squares.isEmpty()) {
             System.exit(0);
         }
 

@@ -83,6 +83,56 @@
   - knight = 2.5점
   - pawn = 기본 1점 / 같은 세로줄에 같은 색의 폰이 있는 경우 0.5점
 
+### 각 도메인의 역할
+
+#### File & Rank
+
+- 입력받은 문자열에 해당하는 값 반환
+- 체스판 내의 칸(square)에 대한 연산 지원
+
+#### Square
+
+- 필드 : file, rank
+- 체스판 내의 칸에 대한 연산
+
+#### Direction
+
+- 수학에서 사용되는 벡터 연산
+  - 체스판 내의 칸끼리의 거리와 방향을 가짐
+  - 단위 벡터를 구하고 활용하는 기능을 가짐
+
+#### PieceCondition
+
+- file과 rank를 받아서 해당 위치가 시작 위치인 Piece를 판단
+
+#### PieceGenerator
+
+- PieceCondition 으로 판단한 피스에 색을 결정하여 반환
+
+#### Piece
+
+- 필드 : Color, Score
+- 목표 위치에 갈 수 있는지 판단 (position)
+  - 각 피스마다 갈 수 있는 단위 벡터들을 상수로 가짐
+- 팀의 점수를 매길떄 자신의 점수를 더해줌
+
+#### Board
+
+- Square와 Piece를 짝으로 가지고 있는 일급 컬렉션
+- 각 Square에 있는 Piece의 이동 관리
+  - 목표 위치에 갈 수 있는지 판단 (direction)
+
+#### ChessGame
+
+- 필드 : Board, 턴을 결정하는 Color
+- 사용자 순서 관리
+- King이 잡혔는지 확인
+
+#### Status
+
+- 순간의 체스판을 저장
+- 저장된 체스판을 가지고 요구받은 팀에 대한 score 계산
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
