@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,10 +16,11 @@ public class ChessGameController {
 
     public void run() {
         outputView.printStartMessage();
+        ChessGame chessGame = new ChessGame();
         while (inputView.inputStartCommand()) {
-            Board board = new Board();
+            chessGame.start();
 
-            outputView.printBoard(board.getValue());
+            outputView.printBoard(chessGame.getBoard().getValue());
         }
 
     }
