@@ -27,17 +27,17 @@ public final class Knight extends SingleMovePiece {
     }
 
     @Override
-    public final double score() {
+    public double score() {
         return KNIGHT_SCORE;
     }
 
     @Override
-    public final boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 
     @Override
-    public final boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 }
