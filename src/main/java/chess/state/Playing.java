@@ -1,6 +1,6 @@
 package chess.state;
 
-import chess.domain.MoveResult;
+import chess.domain.board.MoveResult;
 import chess.domain.board.Board;
 import chess.dto.BoardDto;
 import chess.dto.ScoreDto;

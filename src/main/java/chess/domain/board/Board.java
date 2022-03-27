@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingDouble;
 
 import chess.domain.Color;
-import chess.domain.MoveResult;
 import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
 import chess.domain.piece.King;

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.MoveResult;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
