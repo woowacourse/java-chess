@@ -25,14 +25,14 @@ class DirectionTest {
         int vertical = 4;
         Point from = Point.of(horizontal, vertical);
         return Stream.of(
-                Arguments.of(from, Point.of(horizontal + 1, vertical + 0), EAST),
+                Arguments.of(from, Point.of(horizontal + 1, vertical), EAST),
                 Arguments.of(from, Point.of(horizontal + 1, vertical + 1), NORTHEAST),
                 Arguments.of(from, Point.of(horizontal + 1, vertical + -1), SOUTHEAST),
-                Arguments.of(from, Point.of(horizontal + -1, vertical + 0), WEST),
+                Arguments.of(from, Point.of(horizontal + -1, vertical), WEST),
                 Arguments.of(from, Point.of(horizontal + -1, vertical + 1), NORTHWEST),
                 Arguments.of(from, Point.of(horizontal + -1, vertical + -1), SOUTHWEST),
-                Arguments.of(from, Point.of(horizontal + 0, vertical + 1), NORTH),
-                Arguments.of(from, Point.of(horizontal + 0, vertical + -1), SOUTH)
+                Arguments.of(from, Point.of(horizontal, vertical + 1), NORTH),
+                Arguments.of(from, Point.of(horizontal, vertical + -1), SOUTH)
         );
     }
 

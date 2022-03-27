@@ -8,7 +8,7 @@ public enum Command {
 
     START("start", (GameState state, List<String> ignored) -> state.start()),
     FINISH("end", (GameState state, List<String> ignored) -> state.finish()),
-    MOVE("move", (GameState state, List<String> arguments) -> state.move(arguments)),
+    MOVE("move", GameState::move),
     STATUS("status", (GameState state, List<String> arguments) -> state.status());
 
     private final String input;
