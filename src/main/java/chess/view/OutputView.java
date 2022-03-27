@@ -13,8 +13,10 @@ public class OutputView {
 
     private static final String NEXT_LINE = System.lineSeparator();
 
-    public static void printInitMessage() {
+    private OutputView() {
+    }
 
+    public static void printInitMessage() {
         out.println(
             "> 체스 게임을 시작합니다." + NEXT_LINE +
                 "> 게임 시작 : start" + NEXT_LINE +
@@ -27,6 +29,11 @@ public class OutputView {
         for (Rank rank : Rank.reverseValues()) {
             printPiecesInOneRank(piecesByPositions, rank);
         }
+        printEmptyLine();
+    }
+
+    private static void printEmptyLine() {
+        out.println();
     }
 
     private static void printPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
