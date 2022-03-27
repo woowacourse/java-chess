@@ -5,7 +5,7 @@ import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public abstract class CommendLauncher {
+public abstract class ChessController {
 
     protected void go(ChessGame chessGame) {
         try {
@@ -15,6 +15,8 @@ public abstract class CommendLauncher {
             go(chessGame);
         }
     }
+
+    public abstract void start();
 
     protected Command getCommand() {
         String input = InputView.inputCommend();

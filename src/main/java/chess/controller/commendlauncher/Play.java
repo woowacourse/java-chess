@@ -9,12 +9,10 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public final class Play extends CommendLauncher {
+public final class Play extends ChessController {
     private static final String INVALID_COMMEND_MESSAGE = "end, move 만 입력할 수 있습니다.";
-    ChessGame chessGame;
 
     public Play(ChessGame chessGame) {
-        this.chessGame = chessGame;
         go(chessGame);
     }
 
@@ -49,4 +47,7 @@ public final class Play extends CommendLauncher {
         }
         new End(chessGame);
     }
+
+    @Override
+    public void start() {}
 }

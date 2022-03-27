@@ -2,13 +2,18 @@ package chess.controller.commendlauncher;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
+import chess.view.OutputView;
 
-public final class Start extends CommendLauncher {
+public final class Init extends ChessController {
 
 
     private static final String INVALID_COMMEND_MESSAGE = "end 혹은 start 만 입력할 수 있습니다.";
 
-    public Start() {
+    public Init() {
+        OutputView.printInitMessage();
+    }
+
+    public void start() {
         go(new ChessGame());
     }
 
