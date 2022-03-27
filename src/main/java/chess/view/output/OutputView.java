@@ -25,7 +25,6 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
     }
 
-
     public static void printCurrentBoard(final Board board) {
         final List<Rank> reverseOrderRanks = getReverseOrderRanks();
         for (Rank rank : reverseOrderRanks) {
@@ -52,5 +51,9 @@ public class OutputView {
             return PieceSymbol.findSymbol(piece);
         }
         return EMPTY_SYMBOL;
+    }
+
+    public static void printScore(double whiteTeamScore, double blackTeamScore) {
+        System.out.printf("whiteScore : %f | blackScore : %f%n", whiteTeamScore, blackTeamScore);
     }
 }
