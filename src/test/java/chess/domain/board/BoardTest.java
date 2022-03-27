@@ -27,4 +27,12 @@ public class BoardTest {
 
 		assertThat(newBoard.findByCoordinate(Coordinate.of("c3"))).isInstanceOf(Knight.class);
 	}
+
+	@Test
+	@DisplayName("왕이 둘다 살아있으면 true를 반환")
+	void is_both_king_lived() {
+		Board board = Board.create();
+
+		assertThat(board.isBothKingAlive()).isTrue();
+	}
 }

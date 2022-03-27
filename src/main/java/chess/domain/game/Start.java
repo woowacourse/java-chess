@@ -15,7 +15,7 @@ public class Start implements State {
 
 	@Override
 	public State end() {
-		return new End();
+		throw new IllegalStateException("");
 	}
 
 	@Override

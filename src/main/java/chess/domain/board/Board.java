@@ -9,6 +9,8 @@ import chess.domain.piece.Symbol;
 import chess.domain.piece.Team;
 
 public class Board {
+	public static final int BOTH_KING_ALIVE = 2;
+	
 	private final Map<Coordinate, Piece> value;
 
 	private Board(Map<Coordinate, Piece> value) {
@@ -50,6 +52,13 @@ public class Board {
 
 	public Piece findByCoordinate(Coordinate coordinate) {
 		return value.get(coordinate);
+	}
+
+	public boolean isBothKingAlive() {
+		return value.values()
+			.stream()
+			.filter(Piece::isKing)
+			.count() == BOTH_KING_ALIVE;
 	}
 
 	public Map<Coordinate, Piece> getValue() {

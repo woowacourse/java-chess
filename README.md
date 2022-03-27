@@ -23,6 +23,12 @@
 - [x] 체스 말을 도착 좌표로 옮김
 - [x] 게임 진행 상태 구현
 
+# Step3
+
+- [x] 왕이 잡혔을 때 게임을 종료시키는 기능 구현
+- [] 현재 남아 있는 말에 대한 점수를 구현
+- [] status 명령을 추가
+
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)

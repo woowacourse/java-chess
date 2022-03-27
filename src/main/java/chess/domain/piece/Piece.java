@@ -44,6 +44,10 @@ public abstract class Piece {
 		return team;
 	}
 
+	public boolean isKing() {
+		return symbol == Symbol.KING;
+	}
+
 	public boolean isEmpty() {
 		return false;
 	}

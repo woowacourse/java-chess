@@ -21,7 +21,7 @@ public class BlackTurn implements State {
 
 	@Override
 	public State end() {
-		return new End();
+		return new End(board);
 	}
 
 	@Override
@@ -34,6 +34,9 @@ public class BlackTurn implements State {
 
 		Board newBoard = board.move(from, to);
 
+		if (!newBoard.isBothKingAlive()) {
+			return new End(board);
+		}
 		return new WhiteTurn(newBoard);
 	}
 
