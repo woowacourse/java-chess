@@ -60,6 +60,7 @@ public class Board {
 
     private void checkCanMove(Piece piece, Position src, Position dest) {
         validatePawnCatchFront(piece, src, dest);
+        validatePawnCannotCatchDiagonal(piece, src, dest);
         if (!piece.canMove(src, dest)) {
             throw new IllegalArgumentException("이동할 수 없습니다");
         }
@@ -69,6 +70,13 @@ public class Board {
         boolean destHasPiece = findPieceBy(dest).isPresent();
         if (piece.isSameType(Pawn.class) && destHasPiece && src.isSameFile(dest)) {
             throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
+        }
+    }
+
+    private void validatePawnCannotCatchDiagonal(Piece piece, Position src, Position dest) {
+        boolean destHasPiece = findPieceBy(dest).isPresent();
+        if (piece.isSameType(Pawn.class) && !destHasPiece && !src.isSameFile(dest)) {
+            throw new IllegalArgumentException("폰은 기물을 잡을 수 있을때만 대각선으로 이동할 수 있습니다");
         }
     }
 
