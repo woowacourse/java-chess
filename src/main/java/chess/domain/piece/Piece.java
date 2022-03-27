@@ -19,7 +19,7 @@ public abstract class Piece {
 
 	public boolean isMovable(Map<Coordinate, Piece> value, Coordinate from, Coordinate to) {
 		Piece toPiece = value.get(to);
-		if (isSameTeam(toPiece) || !hasDirection(Direction.of(from, to))) {
+		if (isSameTeam(toPiece.team) || !hasDirection(Direction.of(from, to))) {
 			return false;
 		}
 		return moveStrategy().isMovable(value, from, to);
@@ -29,8 +29,8 @@ public abstract class Piece {
 
 	public abstract MoveStrategy moveStrategy();
 
-	public boolean isSameTeam(Piece piece) {
-		return team.isSame(piece.team);
+	public boolean isSameTeam(Team team) {
+		return this.team.isSame(team);
 	}
 
 	public String getSymbol() {
@@ -46,6 +46,10 @@ public abstract class Piece {
 
 	public boolean isKing() {
 		return symbol == Symbol.KING;
+	}
+
+	public boolean isPawn() {
+		return symbol == Symbol.PAWN;
 	}
 
 	public boolean isEmpty() {
@@ -73,5 +77,9 @@ public abstract class Piece {
 
 	public boolean isWhite() {
 		return team.isSame(Team.WHITE);
+	}
+
+	public double getScore() {
+		return symbol.getScore();
 	}
 }
