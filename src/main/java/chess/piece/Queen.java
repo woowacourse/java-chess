@@ -15,11 +15,11 @@ public class Queen extends AbstractPiece {
         final Position from = command.getFrom();
         final Position to = command.getTo();
 
-        return Direction.getRookDirections().stream()
-                .anyMatch(direction -> canRookMove(from, to));
+        return Direction.getEveryDirections().stream()
+                .anyMatch(direction -> canQueenMove(from, to));
     }
 
-    private boolean canRookMove(final Position from, final Position to) {
+    private boolean canQueenMove(final Position from, final Position to) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
 

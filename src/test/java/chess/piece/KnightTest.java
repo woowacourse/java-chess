@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class KnightTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"d4 e6","d4 f5", "d4 f3", "d4 e2", "d4 c2", "d4 b3", "d4 b5", "d4 c6"})
+    @ValueSource(strings = {"d4 e6", "d4 f5", "d4 f3", "d4 e2", "d4 c2", "d4 b3", "d4 b5", "d4 c6"})
     @DisplayName("나이트가 8방향으로 여러 칸 움직일 수 있는지 확인한다.")
     void canKnightMove(final String command) {
         final Piece piece = new Knight(WHITE);
@@ -20,7 +20,7 @@ class KnightTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"d4 d8","d4 h8", "d4 h4", "d4 g1", "d4 d1", "d4 a1", "d4 a4", "d4 a7"})
+    @ValueSource(strings = {"d4 d8", "d4 h8", "d4 h4", "d4 g1", "d4 d1", "d4 a1", "d4 a4", "d4 a7"})
     @DisplayName("나이트의 이동경로가 아닌지 확인한다.")
     void invalidKnightMove(final String command) {
         final Piece piece = new Knight(WHITE);

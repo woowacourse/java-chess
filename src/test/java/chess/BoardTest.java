@@ -1,7 +1,9 @@
 package chess;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,6 +44,18 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(MoveCommand.of("a6 a7")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 상대말이 있을 때 직진할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("룩이 전진해서 상대 말을 잡는다.")
+    void rookAttackForward() {
+        final Board board = Board.create();
+        board.move(MoveCommand.of("a2 a4"));
+        board.move(MoveCommand.of("a1 a3"));
+        board.move(MoveCommand.of("a3 d3"));
+        board.move(MoveCommand.of("d3 d7"));
+
+        assertThat(board.getValue().get(Position.of("d7"))).isInstanceOf(Rook.class);
     }
 
 }

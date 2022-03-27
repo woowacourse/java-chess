@@ -38,12 +38,16 @@ public enum Direction {
         return List.of(S, SW, SE);
     }
 
-    public static List<Direction> getKingDirections() {
+    public static List<Direction> getEveryDirections() {
         return List.of(N, NE, E, SE, S, SW, W, NW);
     }
 
-    public static List<Direction> getRookDirections() {
+    public static List<Direction> getVerticalAndHorizontalDirections() {
         return List.of(N, E, S, W);
+    }
+
+    public static List<Direction> getDiagonalDirections() {
+        return List.of(NW, NE, SE, SW);
     }
 
     public static List<Direction> getKnightDirections() {
@@ -66,6 +70,14 @@ public enum Direction {
 
     public boolean isEqualTo(final int columnDistance, final int rowDistance) {
         return column == columnDistance && row == rowDistance;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
     }
 }
 

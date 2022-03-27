@@ -32,8 +32,8 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
-    public Row increment(final int row) {
-        return Row.of(value + row);
+    public int getValue() {
+        return value;
     }
 
     public int getDistance(final Row other) {

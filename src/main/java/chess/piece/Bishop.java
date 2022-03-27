@@ -15,11 +15,11 @@ public class Bishop extends AbstractPiece {
         final Position from = command.getFrom();
         final Position to = command.getTo();
 
-        return Direction.getRookDirections().stream()
-                .anyMatch(direction -> canRookMove(from, to));
+        return Direction.getDiagonalDirections().stream()
+                .anyMatch(direction -> canBishopMove(from, to));
     }
 
-    private boolean canRookMove(final Position from, final Position to) {
+    private boolean canBishopMove(final Position from, final Position to) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
 

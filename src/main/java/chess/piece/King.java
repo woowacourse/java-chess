@@ -15,7 +15,7 @@ public class King extends AbstractPiece {
         final Position from = command.getFrom();
         final Position to = command.getTo();
 
-        return Direction.getKingDirections().stream()
+        return Direction.getEveryDirections().stream()
                 .anyMatch(direction -> canKingMove(from, to, direction));
     }
 

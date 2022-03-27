@@ -15,7 +15,7 @@ public class Rook extends AbstractPiece {
         final Position from = command.getFrom();
         final Position to = command.getTo();
 
-        return Direction.getRookDirections().stream()
+        return Direction.getVerticalAndHorizontalDirections().stream()
                 .anyMatch(direction -> canRookMove(from, to));
     }
 

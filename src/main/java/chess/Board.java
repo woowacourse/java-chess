@@ -88,8 +88,20 @@ public class Board {
         validatePawnMove(moveCommand, from, to, piece);
 
         if (piece.canMove(moveCommand)) {
+            validatePieceBlock(from, to, piece);
             value.put(to, piece);
             value.remove(from);
+        }
+    }
+
+    private void validatePieceBlock(final Position from, final Position to, Piece piece) {
+        final Direction direction = from.getDir(to);
+
+        Position movedPosition = from;
+        movedPosition = movedPosition.shift(direction);
+        while (!movedPosition.equals(to)) {
+            validateBlock(movedPosition);
+            movedPosition = movedPosition.shift(direction);
         }
     }
 
@@ -108,6 +120,12 @@ public class Board {
     private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
+        }
+    }
+
+    private void validateBlock(final Position position) {
+        if (value.containsKey(position)) {
+            throw new IllegalArgumentException("말의 이동 위치가 가로막혀 있습니다.");
         }
     }
 

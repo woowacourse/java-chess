@@ -36,4 +36,8 @@ public enum Column {
     public int getDistance(final Column other) {
         return this.value - other.value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
