@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-
 import java.util.Objects;
 
 public abstract class Piece {

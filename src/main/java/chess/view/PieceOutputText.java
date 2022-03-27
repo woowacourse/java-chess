@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-
 import java.util.Arrays;
 import java.util.function.Predicate;
 

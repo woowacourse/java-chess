@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ScoreResult {

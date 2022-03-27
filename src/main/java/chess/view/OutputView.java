@@ -2,11 +2,10 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.board.Column;
-import chess.domain.board.Position;
 import chess.domain.board.MatchResult;
+import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.command.StatusResult;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 public class OutputView {
