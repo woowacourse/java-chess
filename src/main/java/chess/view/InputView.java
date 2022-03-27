@@ -11,6 +11,7 @@ public class InputView {
 	private static final String START = "start";
 	private static final String END = "end";
 	private static final String MOVE = "move";
+	private static final String STATUS = "status";
 
 	private static final Scanner scanner = new Scanner(System.in);
 
@@ -26,14 +27,16 @@ public class InputView {
 			throw new IllegalArgumentException();
 		}
 
-		if (!isStartOrEnd(command) && !isMove(command)) {
+		if (!isNotMove(command) && !isMove(command)) {
 			throw new IllegalArgumentException(INVALID_INPUT);
 		}
 	}
 
-	private boolean isStartOrEnd(List<String> command) {
+	private boolean isNotMove(List<String> command) {
 		String headCommand = command.get(0);
-		return (headCommand.equals(START) || headCommand.equals(END)) && command.size() == 1;
+		return (headCommand.equals(START)
+			|| headCommand.equals(END)
+			|| headCommand.equals(STATUS)) && command.size() == 1;
 	}
 
 	private boolean isMove(List<String> command) {

@@ -2,9 +2,10 @@ package chess.view;
 
 import java.util.Optional;
 
+import chess.domain.ChessScore;
 import chess.domain.board.Board;
-import chess.domain.position.Position;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public class OutputView {
 
@@ -36,5 +37,14 @@ public class OutputView {
 			return;
 		}
 		System.out.print("ꕤ");
+	}
+
+	public void displayErrorMessage(RuntimeException exception) {
+		System.out.println(exception.getMessage());
+	}
+
+	public void displayScore(ChessScore chessScore) {
+		System.out.println("흰색 팀 점수 : " + chessScore.getWhiteScore());
+		System.out.println("검은색 팀 점수 : " + chessScore.getBlackScore());
 	}
 }

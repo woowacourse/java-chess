@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.command.Status;
 import chess.domain.piece.King;
 import chess.domain.position.Position;
 import chess.domain.command.Move;
@@ -72,5 +73,16 @@ public class RunningBlackTurnTest {
 		state = state.proceed(new Move("b7", "c6"));
 
 		assertThat(state).isInstanceOf(Finished.class);
+	}
+
+	@Test
+	@DisplayName("RunningBlackTurn일 때 Staus 커맨드이면 자기 자신을 유지해야 한다")
+	void statusCommand() {
+		State state = State.create();
+		state = state.proceed(new Start());
+		state = state.proceed(new Move("b2", "b3"));
+		state = state.proceed(new Status());
+
+		assertThat(state).isInstanceOf(RunningBlackTurn.class);
 	}
 }

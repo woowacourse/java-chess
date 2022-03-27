@@ -52,6 +52,11 @@ public class Move implements Command {
 	}
 
 	@Override
+	public boolean isStatus() {
+		return false;
+	}
+
+	@Override
 	public Position getFromPosition() {
 		return from;
 	}

@@ -6,6 +6,7 @@ public interface Command {
 
 	boolean isStart();
 	boolean isMove();
+	boolean isStatus();
 	Position getFromPosition();
 	Position getToPosition();
 }

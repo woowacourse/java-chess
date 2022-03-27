@@ -20,6 +20,14 @@ public class ChessScore {
 		}
 	}
 
+	public double getWhiteScore() {
+		return whiteScore;
+	}
+
+	public double getBlackScore() {
+		return blackScore;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

@@ -2,13 +2,13 @@ package chess.domain.command;
 
 import chess.domain.position.Position;
 
-public class Start implements Command {
+public class Status implements Command{
 
-	private static final String CANNOT_HAVE_POSITION = "END 커맨드에선 위치 정보를 불러올 수 없습니다.";
+	public static final String CANNOT_HAVE_POSITION = "Status 커맨드에선 위치 정보를 불러올 수 없습니다.";
 
 	@Override
 	public boolean isStart() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class Start implements Command {
 
 	@Override
 	public boolean isStatus() {
-		return false;
+		return true;
 	}
 
 	@Override

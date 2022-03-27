@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
+import chess.domain.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.position.Position;
@@ -27,4 +28,6 @@ public abstract class State {
 	}
 
 	public abstract boolean isFinished();
+
+	public abstract ChessScore generateScore();
 }

@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
+import chess.domain.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.command.Command;
@@ -28,6 +29,14 @@ public abstract class Running extends State {
 		if (command.isStart()) {
 			throw new IllegalArgumentException(CANNOT_START_AGAIN);
 		}
+		if (command.isStatus()) {
+			return this;
+		}
 		return new Finished(board.getPieces());
+	}
+
+	@Override
+	public ChessScore generateScore() {
+		return this.board.calculateScore();
 	}
 }

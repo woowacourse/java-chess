@@ -17,6 +17,11 @@ public class End implements Command {
 	}
 
 	@Override
+	public boolean isStatus() {
+		return false;
+	}
+
+	@Override
 	public Position getFromPosition() {
 		throw new IllegalStateException(CANNOT_HAVE_POSITION);
 	}
