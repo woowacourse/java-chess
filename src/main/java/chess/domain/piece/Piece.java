@@ -36,12 +36,12 @@ public abstract class Piece {
         return color.isSameColor(other);
     }
 
-    public String getName() {
-        return name.getName();
+    public boolean isSameColor(Piece piece) {
+        return color.isSameColor(piece.color);
     }
 
-    public Color getColor() {
-        return color;
+    public String getName() {
+        return name.getName();
     }
 
     public void updateState() {

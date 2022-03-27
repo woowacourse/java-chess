@@ -93,7 +93,7 @@ public class ChessBoard {
         Piece sourcePiece = getPiece(source);
         Piece targetPiece = getPiece(target);
 
-        return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
+        return isFilled(target) && !sourcePiece.isSameColor(targetPiece);
     }
 
     public void putPiece(Position position, Piece piece) {
