@@ -1,4 +1,4 @@
-package chess.domain.status;
+package chess.domain.state;
 
 public class Ready implements State {
 

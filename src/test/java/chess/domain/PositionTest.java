@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.postion.File;
+import chess.domain.postion.Position;
+import chess.domain.postion.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.status.End;
-import chess.domain.status.Ready;
-import chess.domain.status.White;
+import chess.domain.state.End;
+import chess.domain.state.Ready;
+import chess.domain.state.White;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

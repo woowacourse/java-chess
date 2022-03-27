@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
+
+import chess.domain.postion.Position;
 
 public class Rook extends Piece {
 

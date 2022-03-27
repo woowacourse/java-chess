@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.postion;
 
 public class Position {
     private File file;

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.postion;
 
 public enum Rank {
     ONE(1),
