@@ -9,6 +9,7 @@ import chess.domain.player.Player;
 import chess.domain.player.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 
 public class ChessGameController {
@@ -47,7 +48,8 @@ public class ChessGameController {
         progressGame(chessGame, whitePlayer, blackPlayer);
     }
 
-    private boolean runCurrentPlayerTurn(ChessGame chessGame, Player currentPlayer, Player opponentPlayer) {
+    private boolean runCurrentPlayerTurn(final ChessGame chessGame,
+                                         final Player currentPlayer, final Player opponentPlayer) {
         final boolean isEndTurn = turn(chessGame, currentPlayer, opponentPlayer);
         if (!isRunningChessGame(isEndTurn, chessGame)) {
             return false;
@@ -71,9 +73,9 @@ public class ChessGameController {
     }
 
     private boolean isFinishCurrentPlayerTurn(final ChessGame chessGame, final String command,
-            final Player currentPlayer, final Player opponentPlayer) {
+                                              final Player currentPlayer, final Player opponentPlayer) {
         if (command.contains("move")) {
-            moveTurn(chessGame, currentPlayer, opponentPlayer, command);
+            moveTurn(chessGame, command, currentPlayer, opponentPlayer);
             return false;
         }
         if (command.equals("status")) {
@@ -84,7 +86,8 @@ public class ChessGameController {
         return true;
     }
 
-    private void moveTurn(ChessGame chessGame, Player currentPlayer, Player opponentPlayer, String command) {
+    private void moveTurn(final ChessGame chessGame, final String command,
+                          final Player currentPlayer, final Player opponentPlayer) {
         final String[] moveCommand = command.split(MOVE_COMMAND_DELIMITER);
         List<Position> positions =
                 findMoveCommandPosition(moveCommand[CURRENT_POSITION_INDEX], moveCommand[DESTINATION_POSITION_INDEX]);
