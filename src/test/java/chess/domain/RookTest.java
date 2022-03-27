@@ -24,19 +24,19 @@ public class RookTest {
 
     @DisplayName("source와 target이 같은 file이 아닐 경우 에러 테스트")
     @Test
-    void sameFile() {
+    void notSameFile() {
         Rook rook = whiteRook;
 
-        assertThatThrownBy(() -> rook.canMove(WHITE_SOURCE, new Position(File.A, Rank.EIGHT)))
+        assertThatThrownBy(() -> rook.canMove(WHITE_SOURCE, new Position(File.B, Rank.TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("source와 target이 같은 rank가 아닐 경우 에러 테스트")
     @Test
-    void sameRank() {
+    void notSameRank() {
         Rook rook = whiteRook;
 
-        assertThatThrownBy(() -> rook.canMove(WHITE_SOURCE, new Position(File.E, Rank.TWO)))
+        assertThatThrownBy(() -> rook.canMove(WHITE_SOURCE, new Position(File.A, Rank.EIGHT)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -11,6 +11,7 @@ public abstract class Piece {
     private final MoveStrategy moveStrategy;
 
     public abstract String symbol();
+    public abstract List<Direction> possibleDirections();
 
     public Piece(final Team team, final MoveStrategy moveStrategy) {
         this.team = team;
@@ -21,5 +22,7 @@ public abstract class Piece {
        moveStrategy.isMovable(source, target);
     }
 
-    public abstract List<Direction> possibleDirections();
+    public Team team() {
+        return team;
+    }
 }

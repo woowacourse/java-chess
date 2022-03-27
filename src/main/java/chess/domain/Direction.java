@@ -52,8 +52,12 @@ public enum Direction {
         return null;
     }
 
-    public static List<Direction> getPawnDirection() {
-        return null;
+    public static List<Direction> getWhitePawnDirection() {
+        return List.of(TOP);
+    }
+
+    public static List<Direction> getBlackPawnDirection() {
+        return List.of(BOTTOM);
     }
 
     public static Direction beMoveDirection(List<Direction> directions, Position source, Position target) {

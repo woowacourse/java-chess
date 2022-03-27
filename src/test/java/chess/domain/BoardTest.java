@@ -39,9 +39,8 @@ public class BoardTest {
     @Test
     void invalidPath1() {
         Board board = BoardFixture.setup();
-        board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX));
-       assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX)))
-               .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("source 위치에 기물이 존재하지 않는 경우 에러 테스트")
