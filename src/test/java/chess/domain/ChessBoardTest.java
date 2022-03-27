@@ -115,6 +115,22 @@ class ChessBoardTest {
                 .hasMessage("WHITE의 차례입니다.");
     }
 
+    @Test
+    @DisplayName("폰의 직선방향에 적 기물이 있을때 예외를 발생시킨다.")
+    void checkCrossMove() {
+        // given
+        Map<Position, ChessPiece> pieceByPosition = new HashMap<>();
+        pieceByPosition.put(new Position("a5"), new Pawn(Color.BLACK));
+        pieceByPosition.put(new Position("a4"), new Pawn(Color.WHITE));
+
+        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+
+        assertThatThrownBy(() -> chessBoard.move(new Position("a4"),new Position("a5")))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
+
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"BLACK:1.5", "WHITE:1"}, delimiter = ':')
     @DisplayName("폰이 같은 세로줄에 있는 경우의 점수를 구한다.")
