@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.postion.Position;
 
 public class White extends Started {
 
@@ -9,7 +10,9 @@ public class White extends Started {
     }
 
     @Override
-    public State changeTurn() {
-        return new Black(board());
+    public State changeTurn(final Position source, final Position target) {
+        final Board board = board().movePiece(source, target);
+
+        return new Black(board);
     }
 }

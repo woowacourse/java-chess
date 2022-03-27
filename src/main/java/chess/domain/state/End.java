@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.postion.Position;
 
 public class End implements State {
     @Override
@@ -14,7 +15,7 @@ public class End implements State {
     }
 
     @Override
-    public State changeTurn() {
+    public State changeTurn(Position source, Position target) {
         throw new IllegalArgumentException("End 상태에서는 chageTurn할 수 없습니다.");
     }
 

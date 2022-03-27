@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.postion.Position;
 
 public interface State {
 
@@ -8,7 +9,7 @@ public interface State {
 
     State end();
 
-    State changeTurn();
+    State changeTurn(Position source, Position target);
 
     Board board();
 }

@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.postion.Position;
 
 public class Ready implements State {
     private final Board board;
@@ -20,7 +21,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State changeTurn() {
+    public State changeTurn(Position source, Position target) {
         throw new IllegalArgumentException("Ready 상태에서는 chageTurn할 수 없습니다.");
     }
 
