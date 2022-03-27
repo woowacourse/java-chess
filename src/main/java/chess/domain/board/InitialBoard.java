@@ -9,7 +9,7 @@ import chess.domain.board.coordinate.Column;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.board.coordinate.Row;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Dot;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -25,15 +25,15 @@ public enum InitialBoard {
 	BLACK_KING(Arrays.asList(Column.E), Arrays.asList(Row.EIGHT), new King(Symbol.KING, Team.BLACK)),
 	WHITE_KING(Arrays.asList(Column.E), Arrays.asList(Row.ONE), new King(Symbol.KING, Team.WHITE)),
 	BLACK_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.EIGHT), new Knight(Symbol.KNIGHT, Team.BLACK)),
-	WHITE_KNIGHT(Arrays.asList(Column.B,Column.G), Arrays.asList(Row.ONE), new Bishop(Symbol.KNIGHT, Team.WHITE)),
+	WHITE_KNIGHT(Arrays.asList(Column.B, Column.G), Arrays.asList(Row.ONE), new Knight(Symbol.KNIGHT, Team.WHITE)),
 	BLACK_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.SEVEN), new Pawn(Symbol.PAWN, Team.BLACK)),
 	WHITE_PAWN(Arrays.asList(Column.values()), Arrays.asList(Row.TWO), new Pawn(Symbol.PAWN, Team.WHITE)),
 	BLACK_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.EIGHT), new Queen(Symbol.QUEEN, Team.BLACK)),
 	WHITE_QUEEN(Arrays.asList(Column.D), Arrays.asList(Row.ONE), new Queen(Symbol.QUEEN, Team.WHITE)),
 	BLACK_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.EIGHT), new Rook(Symbol.ROOK, Team.BLACK)),
 	WHITE_ROOK(Arrays.asList(Column.A, Column.H), Arrays.asList(Row.ONE), new Rook(Symbol.ROOK, Team.WHITE)),
-	DOT(Arrays.asList(Column.values()),
-		Arrays.asList(Row.THREE, Row.FOUR, Row.FIVE, Row.SIX), new Dot(Symbol.DOT, Team.NONE));
+	EMPTY(Arrays.asList(Column.values()),
+		Arrays.asList(Row.THREE, Row.FOUR, Row.FIVE, Row.SIX), new Empty(Symbol.EMPTY, Team.NONE));
 
 	private final List<Column> columns;
 	private final List<Row> rows;

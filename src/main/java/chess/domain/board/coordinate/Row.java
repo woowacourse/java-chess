@@ -1,5 +1,7 @@
 package chess.domain.board.coordinate;
 
+import java.util.Arrays;
+
 public enum Row {
 	EIGHT(8),
 	SEVEN(7),
@@ -14,6 +16,13 @@ public enum Row {
 
 	Row(final int value) {
 		this.value = value;
+	}
+
+	public Row move(int distance) {
+		return Arrays.stream(values())
+			.filter(row -> row.value == this.value + distance)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(""));
 	}
 
 	public int getValue() {
