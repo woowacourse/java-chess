@@ -77,8 +77,12 @@ public abstract class Piece {
         return comparePiece.isSamePlayer(player);
     }
 
-    public String symbol() {
+    public String symbolByPlayer() {
         return pieceSymbol.symbol(player);
+    }
+
+    public String symbol() {
+        return pieceSymbol.symbol();
     }
 
     public Player getPlayer() {

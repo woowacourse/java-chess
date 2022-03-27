@@ -16,6 +16,10 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
+    public String symbol() {
+        return symbol;
+    }
+
     public String symbol(Player player) {
         if (player == Player.BLACK) {
             return symbol;

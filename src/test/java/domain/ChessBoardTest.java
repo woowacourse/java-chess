@@ -204,4 +204,27 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("플레이어 별 점수 계산이 가능하며 초기 점수는 38점이다.")
+    void calculateScoreByPlayer() {
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+
+        assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("Pawn이 같은 File에 2개 이상이 있을 경우 개당 0.5점의 점수를 적용한다.")
+    void calculateScorePawnsInFile() {
+        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
+            @Override
+            public Map<Position, Piece> generate() {
+                Map<Position, Piece> board = new HashMap<>();
+                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
+                return board;
+            }
+        });
+        assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(1);
+    }
 }
