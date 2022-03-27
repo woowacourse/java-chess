@@ -35,15 +35,6 @@ public class Board {
         }
     }
 
-    private void validCheck(Position from, Position to, Piece fromPiece) {
-        try {
-            fromPiece.movable(from, to);
-            validPath(from, to, fromPiece.findDirection(from, to));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("현재 Check 상황입니다.");
-        }
-    }
-
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
         return board.entrySet()
                 .stream()
@@ -60,9 +51,19 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
     }
 
+    private void validCheck(Position from, Position to, Piece fromPiece) {
+        try {
+            fromPiece.movable(from, to);
+            validPath(from, to, fromPiece.findDirection(from, to));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("현재 Check 상황입니다.");
+        }
+    }
+
     public void move(Position from, Position to) {
         Piece piece = board.get(from);
         Direction direction = piece.findDirection(from, to);
+
         validNowTurn(piece);
         piece.movable(from, to);
         piece.validArrive(board.get(to), direction);

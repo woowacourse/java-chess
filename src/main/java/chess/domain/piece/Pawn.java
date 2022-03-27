@@ -30,12 +30,9 @@ public class Pawn extends Piece {
         return Direction.pullBlackPawnDirections();
     }
 
-    private boolean isWhiteStart(Position position) {
-        return super.isSameTeam(WHITE) && position.isSameRow(Row.TWO);
-    }
-
-    private boolean isBlackStart(Position position) {
-        return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override
@@ -55,9 +52,12 @@ public class Pawn extends Piece {
         }
     }
 
-    @Override
-    public boolean isPawn() {
-        return true;
+    private boolean isWhiteStart(Position position) {
+        return super.isSameTeam(WHITE) && position.isSameRow(Row.TWO);
+    }
+
+    private boolean isBlackStart(Position position) {
+        return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
     }
 
     @Override

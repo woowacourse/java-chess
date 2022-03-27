@@ -25,10 +25,10 @@ public enum Menu {
         return this == END;
     }
 
-
     public boolean isStart() {
         return this == START;
     }
+
     public boolean isMove() {
         return this == MOVE;
     }

@@ -15,6 +15,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public void movable(Position from, Position to) {
         Direction direction = from.findDirection(to, true);
         if (!directions.contains(direction)) {
@@ -25,10 +30,5 @@ public class King extends Piece {
     @Override
     public Direction findDirection(Position from, Position to) {
         return from.findDirection(to, true);
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
     }
 }
