@@ -18,15 +18,11 @@ public class BoardTest {
     @BeforeEach
     void init() {
         board = new Board();
-        board.initBoard();
     }
-
 
     @DisplayName("체스판이 비어있는지 확인한다.")
     @Test
     void empty_board() {
-        // given
-        board = new Board();
         // then
         assertThat(board.isEmpty()).isTrue();
     }
@@ -35,8 +31,7 @@ public class BoardTest {
     @Test
     void empty_board_false() {
         // given
-        board = new Board();
-        board.initBoard();
+        board.initBoard(new BasicBoardGenerator());
 
         // then
         assertThat(board.isEmpty()).isFalse();
@@ -46,6 +41,8 @@ public class BoardTest {
     @Test
     void move() {
         // given
+        board.initBoard(new BasicBoardGenerator());
+
         Position from = new Position(Column.E, Row.TWO);
         Position to = new Position(Column.E, Row.THREE);
 
@@ -58,6 +55,8 @@ public class BoardTest {
     @Test
     void valid_path() {
         // given
+        board.initBoard(new BasicBoardGenerator());
+
         Position from = new Position(Column.D, Row.ONE);
         Position to = new Position(Column.F, Row.THREE);
 
@@ -70,6 +69,8 @@ public class BoardTest {
     @Test
     void valid_arrive() {
         // given
+        board.initBoard(new BasicBoardGenerator());
+
         Position from = new Position(Column.D, Row.ONE);
         Position to = new Position(Column.E, Row.TWO);
 
@@ -82,11 +83,23 @@ public class BoardTest {
     @Test
     void valid_turn() {
         // given
+        board.initBoard(new BasicBoardGenerator());
+
         Position from = new Position(Column.A, Row.SEVEN);
         Position to = new Position(Column.A, Row.SIX);
 
         // then
         assertThatThrownBy(() -> board.move(from, to))
                 .hasMessage("현재 차례는 WHITE입니다.");
+    }
+
+    @DisplayName("블랙이 체크인 상황")
+    @Test
+    void valid_black_check() {
+        // given
+        board.initBoard(new WhiteCheckBoardGenerator());
+
+        // then
+        assertThat(board.check()).isTrue();
     }
 }

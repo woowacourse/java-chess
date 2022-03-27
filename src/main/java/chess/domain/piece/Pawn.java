@@ -85,4 +85,10 @@ public class Pawn extends Piece {
             throw new IllegalArgumentException("Pawn 의 대각선 이동은 상대편의 말을 잡을 때만 가능합니다.");
         }
     }
+
+    @Override
+    public boolean isMovablePath(Position from, Position to) {
+        Direction direction = from.findDirection(to, true);
+        return Direction.pullDiagonalDirections().contains(direction);
+    }
 }

@@ -5,7 +5,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -18,6 +21,35 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+
+    public boolean check() {
+        List<Entry<Position, Piece>> entries = findSameTeamPieces(turn.change());
+        Position kingPosition = findKingPosition(turn);
+
+        for (Entry<Position, Piece> entry : entries) {
+            if (entry.getValue().isMovablePath(entry.getKey(), kingPosition)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private Position findKingPosition(Team team) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameTeam(team) && entry.getValue().isKing())
+                .map(Entry::getKey)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
     }
 
     public void move(Position from, Position to) {

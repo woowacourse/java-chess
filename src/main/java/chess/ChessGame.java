@@ -1,6 +1,8 @@
 package chess;
 
+import chess.domain.board.BasicBoardGenerator;
 import chess.domain.board.Board;
+import chess.domain.board.BoardGenerator;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.Menu;
@@ -9,6 +11,7 @@ import chess.view.OutputView;
 public class ChessGame {
 
     private final Board board = new Board();
+    private final BoardGenerator boardGenerator = new BasicBoardGenerator();
 
     public void init() {
         OutputView.printGuideMessage();
@@ -36,7 +39,7 @@ public class ChessGame {
     }
 
     private void start() {
-        board.initBoard();
+        board.initBoard(boardGenerator);
         OutputView.printBoard(board.getBoard());
     }
 

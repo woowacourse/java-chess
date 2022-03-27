@@ -16,8 +16,7 @@ public class King extends Piece {
 
     @Override
     public void movable(Position from, Position to) {
-        Direction direction = from.findDirection(to, true);
-        if (!directions.contains(direction)) {
+        if (!isMovablePath(from, to)) {
             throw new IllegalArgumentException("King 이 움직일 수 있는 방향이 아닙니다.");
         }
     }
@@ -25,5 +24,16 @@ public class King extends Piece {
     @Override
     public Direction findDirection(Position from, Position to) {
         return from.findDirection(to, true);
+    }
+
+    @Override
+    public boolean isMovablePath(Position from, Position to) {
+        Direction direction = from.findDirection(to, true);
+        return directions.contains(direction);
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

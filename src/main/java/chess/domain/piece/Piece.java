@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -19,6 +20,8 @@ public abstract class Piece {
 
     public abstract Direction findDirection(Position from, Position to);
 
+    public abstract boolean isMovablePath(Position from, Position to);
+
     public final String getName() {
         return team.convert(name);
     }
@@ -32,6 +35,10 @@ public abstract class Piece {
     }
 
     public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isKing() {
         return false;
     }
 
