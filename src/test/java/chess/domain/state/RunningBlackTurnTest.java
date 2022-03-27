@@ -24,8 +24,10 @@ public class RunningBlackTurnTest {
 	void blackTurn_to_whiteTurn() {
 		State state = State.create();
 		state = state.proceed(new Start());
-		state = state.proceed(new Move("b2", "b3"));
-		state = state.proceed(new Move("b7", "b6"));
+		state = state.proceed(
+			new Move(new Position(2, 2), new Position(3, 2)));
+		state = state.proceed(
+			new Move(new Position(7, 2), new Position(6, 2)));
 
 		assertThat(state).isInstanceOf(RunningWhiteTurn.class);
 	}
@@ -38,8 +40,10 @@ public class RunningBlackTurnTest {
 			new Position(2, 2), King.createWhite());
 		State state = State.create(board)
 			.proceed(new Start())
-			.proceed(new Move("b2", "b3"))
-			.proceed(new Move("b7", "b6"));
+			.proceed(
+				new Move(new Position(2, 2), new Position(3, 2)))
+			.proceed(
+				new Move(new Position(7, 2), new Position(6, 2)));
 
 		assertThat(state.getBoard().findPiece(new Position(6, 2)).get())
 			.isInstanceOf(King.class);
@@ -53,9 +57,10 @@ public class RunningBlackTurnTest {
 			new Position(8, 2), King.createBlack());
 		State state = State.create(board)
 			.proceed(new Start())
-			.proceed(new Move("b2", "b3"));
+			.proceed(new Move(new Position(2, 2), new Position(3, 2)));
 
-		assertThatThrownBy(() -> state.proceed(new Move("b3", "b4")))
+		assertThatThrownBy(() -> state.proceed(
+			new Move(new Position(3, 2), new Position(4, 2))))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -69,8 +74,10 @@ public class RunningBlackTurnTest {
 		);
 		State state = State.create(board);
 		state = state.proceed(new Start());
-		state = state.proceed(new Move("b6", "c6"));
-		state = state.proceed(new Move("b7", "c6"));
+		state = state.proceed(
+			new Move(new Position(6, 2), new Position(6, 3)));
+		state = state.proceed(
+			new Move(new Position(7, 2), new Position(6, 3)));
 
 		assertThat(state).isInstanceOf(Finished.class);
 	}
@@ -80,7 +87,8 @@ public class RunningBlackTurnTest {
 	void statusCommand() {
 		State state = State.create();
 		state = state.proceed(new Start());
-		state = state.proceed(new Move("b2", "b3"));
+		state = state.proceed(
+			new Move(new Position(2, 2), new Position(3, 2)));
 		state = state.proceed(new Status());
 
 		assertThat(state).isInstanceOf(RunningBlackTurn.class);

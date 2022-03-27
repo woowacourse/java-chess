@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import chess.domain.ChessScore;
 import chess.domain.command.Command;
 import chess.domain.state.State;
-import chess.view.CommandConverter;
 import chess.view.InputView;
 import chess.view.OutputView;
 

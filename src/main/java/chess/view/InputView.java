@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Scanner;
 
 import chess.domain.command.Command;
+import chess.view.converter.CommandConverter;
 
 public class InputView {
 

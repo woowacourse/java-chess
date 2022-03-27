@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.command.End;
 import chess.domain.command.Move;
 import chess.domain.command.Start;
+import chess.domain.position.Position;
 
 public class ReadyTest {
 
@@ -15,8 +16,9 @@ public class ReadyTest {
 	@DisplayName("Ready는 Move 커맨드를 받을 수 없다.")
 	void ready_cannot_proceed_move() {
 		State state = State.create();
-		assertThatThrownBy(() -> state.proceed(new Move("a1", "b2")))
-			.isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> state.proceed(
+			new Move(new Position(1, 1), new Position(2, 2)))
+		).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test

@@ -23,7 +23,8 @@ public class RunningWhiteTurnTest {
 	void blackTurn() {
 		State state = State.create();
 		state = state.proceed(new Start());
-		state = state.proceed(new Move("b2", "b3"));
+		state = state.proceed(
+			new Move(new Position(2, 2), new Position(3, 2)));
 
 		assertThat(state).isInstanceOf(RunningBlackTurn.class);
 	}
@@ -34,7 +35,8 @@ public class RunningWhiteTurnTest {
 		Map<Position, Piece> board = Map.of(new Position(2, 2), Pawn.createWhite());
 		State state = State.create(board)
 			.proceed(new Start())
-			.proceed(new Move("b2", "b3"));
+			.proceed(
+				new Move(new Position(2, 2), new Position(3, 2)));
 
 		assertThat(state.getBoard().findPiece(new Position(3, 2)).get())
 			.isInstanceOf(Pawn.class);
@@ -47,7 +49,8 @@ public class RunningWhiteTurnTest {
 		State state = State.create(board)
 			.proceed(new Start());
 
-		assertThatThrownBy(() -> state.proceed(new Move("b7", "b6")))
+		assertThatThrownBy(() -> state.proceed(
+			new Move(new Position(7, 2), new Position(6, 2))))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -61,7 +64,8 @@ public class RunningWhiteTurnTest {
 		);
 		State state = State.create(board);
 		state = state.proceed(new Start());
-		state = state.proceed(new Move("b5", "a6"));
+		state = state.proceed(
+			new Move(new Position(5, 2), new Position(6, 1)));
 
 		assertThat(state).isInstanceOf(Finished.class);
 	}
