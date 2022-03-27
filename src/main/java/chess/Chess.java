@@ -50,12 +50,10 @@ public class Chess {
         Command command = Command.from(args[COMMAND]);
         if (command == Command.START && gameState == GameState.READY) {
             start();
-            gameState = GameState.WHITE_RUNNING;
             return;
         }
         if (command == Command.MOVE && gameState.isRunning()) {
             move(args);
-            gameState = gameState.getOpposite();
             return;
         }
         if (command == Command.END) {
@@ -70,6 +68,7 @@ public class Chess {
     }
 
     private void start() {
+        gameState = GameState.WHITE_RUNNING;
         OutputView.printBoard(board.getPieces());
     }
 
@@ -83,6 +82,7 @@ public class Chess {
         if (board.move(start, target, currentColor).isSamePiece(PieceType.KING)) {
             gameState = GameState.END;
         }
+        gameState = gameState.getOpposite();
         OutputView.printBoard(board.getPieces());
     }
 
