@@ -15,4 +15,6 @@ public abstract class Piece {
     public void canMove(final Position source, final Position target){
        moveStrategy.isMovable(source, target);
     }
+
+    abstract String symbol();
 }

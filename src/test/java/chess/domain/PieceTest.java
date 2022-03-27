@@ -12,6 +12,6 @@ class PieceTest {
     @DisplayName("기물 생성 테스트")
     @Test
     void construct() {
-        assertDoesNotThrow(() -> new Pawn(Team.BLACK));
+        assertDoesNotThrow(() -> new Pawn(Team.BLACK, "p"));
     }
 }
