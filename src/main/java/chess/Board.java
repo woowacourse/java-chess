@@ -161,6 +161,7 @@ public class Board {
     private void validatePawnMove(final MoveCommand moveCommand, final Position from, final Position to, final Piece piece) {
         if (piece.isPawn() && piece.canMove(moveCommand)) {
             validatePawnForwardMove(from, to);
+            validatePawnDiagonalMove(to);
         }
     }
 
@@ -185,6 +186,12 @@ public class Board {
     private void validatePawnForwardMove(final Position from, final Position to) {
         if (from.isSameColumn(to) && value.containsKey(to)) {
             throw new IllegalArgumentException("폰은 상대말이 있을 때 직진할 수 없습니다.");
+        }
+    }
+
+    private void validatePawnDiagonalMove(final Position to) {
+        if (!value.containsKey(to)) {
+            throw new IllegalArgumentException("폰은 상대말이 존재하지 않을 때 대각선으로 이동할 수 없습니다.");
         }
     }
 }

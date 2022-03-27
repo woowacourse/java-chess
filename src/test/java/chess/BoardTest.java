@@ -49,6 +49,16 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("폰이 공격하는 경우가 아닐 때 대각선 이동시 예외를 발생한다.")
+    void pawnCannotMoveDiagonalIfEmpty() {
+        final Board board = Board.create();
+
+        assertThatThrownBy(() -> board.move(MoveCommand.of("a2 b3"), Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 상대말이 존재하지 않을 때 대각선으로 이동할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("룩이 전진해서 상대 말을 잡는다.")
     void rookAttackForward() {
         final Board board = Board.create();
