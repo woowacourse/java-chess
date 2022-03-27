@@ -30,4 +30,10 @@ class KingPieceTest {
 
         assertFalse(king.isMovable(from, to, false));
     }
+
+    @Test
+    void isKing() {
+        Piece king = new KingPiece(Color.BLACK);
+        assertTrue(king.isKing());
+    }
 }
