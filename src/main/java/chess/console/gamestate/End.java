@@ -1,6 +1,6 @@
 package chess.console.gamestate;
 
-public class End implements GameState {
+public final class End implements GameState {
 
     @Override
     public GameState run(String requestCommand) {

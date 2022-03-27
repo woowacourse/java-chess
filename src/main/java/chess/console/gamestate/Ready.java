@@ -3,7 +3,7 @@ package chess.console.gamestate;
 import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
 
-public class Ready implements GameState {
+public final class Ready implements GameState {
 
     @Override
     public GameState run(String requestCommand) {

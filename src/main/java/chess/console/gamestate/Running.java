@@ -57,9 +57,9 @@ public abstract class Running implements GameState {
     }
 
     @Override
-    public boolean isEnd() {
+    public final boolean isEnd() {
         return false;
     }
 
-    abstract protected Running otherState(ChessBoard chessBoard);
+    abstract public Running otherState(ChessBoard chessBoard);
 }

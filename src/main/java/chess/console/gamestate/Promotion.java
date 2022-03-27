@@ -3,7 +3,7 @@ package chess.console.gamestate;
 import chess.domain.ChessBoard;
 import chess.domain.PromotionPiece;
 
-public class Promotion extends Running {
+public final class Promotion extends Running {
 
     private final Running beforeRunning;
 
@@ -19,12 +19,7 @@ public class Promotion extends Running {
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    protected Running otherState(ChessBoard chessBoard) {
+    public Running otherState(ChessBoard chessBoard) {
         throw new IllegalStateException("Promotion은 상대 턴을 확인할 수 없습니다.");
     }
 }
