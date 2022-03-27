@@ -24,7 +24,7 @@ public class Pawn extends Piece {
             return isCaptureMoving(path);
         }
 
-        if (pieceColor == WHITE) {
+        if (isSameColor(WHITE)) {
             return isForwardWhite(path);
         }
 
@@ -32,7 +32,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isCaptureMoving(Path path) {
-        if (pieceColor == WHITE) {
+        if (isSameColor(WHITE)) {
             return path.isUpDiagonal();
         }
         return path.isDownDiagonal();

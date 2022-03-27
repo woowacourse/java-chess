@@ -8,7 +8,7 @@ import chess.vo.PieceColor;
 
 public abstract class Piece {
 
-    final PieceColor pieceColor;
+    private final PieceColor pieceColor;
 
     public Piece(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
@@ -25,8 +25,8 @@ public abstract class Piece {
 
     public abstract String getConcreteEmblem();
 
-    public boolean isSameColor(PieceColor otherPieceColor) {
-        return this.pieceColor == otherPieceColor;
+    public boolean isSameColor(PieceColor PieceColor) {
+        return this.pieceColor == PieceColor;
     }
 
     public abstract double getScore();
