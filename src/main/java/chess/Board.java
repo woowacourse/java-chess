@@ -87,7 +87,7 @@ public class Board {
 
         final Piece piece = value.get(from);
         validateColor(piece, color);
-        validatePawnMove(moveCommand, from, to, piece);
+        validatePawnMove(from, to, piece);
 
         if (piece.canMove(moveCommand)) {
             validatePiece(from, to, piece);
@@ -158,8 +158,8 @@ public class Board {
         }
     }
 
-    private void validatePawnMove(final MoveCommand moveCommand, final Position from, final Position to, final Piece piece) {
-        if (piece.isPawn() && piece.canMove(moveCommand)) {
+    private void validatePawnMove(final Position from, final Position to, final Piece piece) {
+        if (piece.isPawn()) {
             validatePawnForwardMove(from, to);
         }
     }
@@ -185,6 +185,9 @@ public class Board {
     private void validatePawnForwardMove(final Position from, final Position to) {
         if (from.isSameColumn(to) && value.containsKey(to)) {
             throw new IllegalArgumentException("폰은 상대말이 있을 때 직진할 수 없습니다.");
+        }
+        if (!from.isSameColumn(to) && !value.containsKey(to)) {
+            throw new IllegalArgumentException("폰은 상대말이 존재하지 않을 때 대각선으로 이동할 수 없습니다.");
         }
     }
 }

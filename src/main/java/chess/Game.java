@@ -57,4 +57,8 @@ public class Game {
     public Color getWinColor() {
         return winColor;
     }
+
+    public Board getBoard() {
+        return state.getBoard();
+    }
 }
