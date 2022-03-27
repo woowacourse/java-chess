@@ -33,8 +33,8 @@ class StatusTest {
     void check_Score_With_King() {
         Piece king = new King(Color.BLACK);
         Piece queen = new Queen(Color.BLACK);
-        Position p1 = PositionMock.a1;
-        Position p2 = PositionMock.a3;
+        Position p1 = CachedPosition.a1;
+        Position p2 = CachedPosition.a3;
         Map<Position, Piece> pieces = Map.of(p1, king, p2, queen);
         Board board = new Board(new CreateMockBoardStrategy(pieces));
 
@@ -47,10 +47,10 @@ class StatusTest {
     @DisplayName("폰이 같은 열에 있으면 폰 하나를 0.5점으로 계산한다")
     void pawns_Score() {
         Piece pawn = new Pawn(Color.BLACK);
-        Position p1 = PositionMock.a1;
-        Position p2 = PositionMock.a3;
+        Position p1 = CachedPosition.a1;
+        Position p2 = CachedPosition.a3;
         Piece king = new King(Color.BLACK);
-        Position p3 = PositionMock.a2;
+        Position p3 = CachedPosition.a2;
         Map<Position, Piece> pieces = Map.of(p1, pawn, p2, pawn, p3, king);
         Board board = new Board(new CreateMockBoardStrategy(pieces));
 

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.PositionMock;
+import chess.domain.CachedPosition;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,8 +19,8 @@ class QueenTest {
         @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
         void invalid_Direction() {
-            Position current = PositionMock.a1;
-            Position invalidTarget = PositionMock.b3;
+            Position current = CachedPosition.a1;
+            Position invalidTarget = CachedPosition.b3;
             Queen queen = new Queen(Color.BLACK);
 
             assertThatThrownBy(() -> queen.findValidDirection(current, invalidTarget));
@@ -29,8 +29,8 @@ class QueenTest {
         @DisplayName("유효하면 방향 객체를 반환한다.")
         @Test
         void valid_Direction() {
-            Position current = PositionMock.a1;
-            Position target = PositionMock.c3;
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.c3;
             Queen queen = new Queen(Color.BLACK);
 
             Direction actual = queen.findValidDirection(current, target);

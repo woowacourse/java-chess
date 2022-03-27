@@ -9,7 +9,7 @@ import static chess.domain.board.Row.THIRD;
 
 import chess.domain.board.Position;
 
-public class PositionMock {
+public class CachedPosition {
 
     public static final Position a1 = new Position(a, FIRST);
     public static final Position a2 = new Position(a, SECOND);

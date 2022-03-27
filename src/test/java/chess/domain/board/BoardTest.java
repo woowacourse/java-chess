@@ -3,7 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.PositionMock;
+import chess.domain.CachedPosition;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Bishop;
@@ -197,9 +197,9 @@ class BoardTest {
         void other_Piece_In_Path() {
             Piece startPiece = new Rook(Color.BLACK);
             Piece existPiece = new Rook(Color.BLACK);
-            Position start = PositionMock.a1;
-            Position midpoint = PositionMock.a2;
-            Position target = PositionMock.a3;
+            Position start = CachedPosition.a1;
+            Position midpoint = CachedPosition.a2;
+            Position target = CachedPosition.a3;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midpoint, existPiece)));
 
@@ -213,8 +213,8 @@ class BoardTest {
         void same_Color_Piece_In_Target_Point() {
             Piece startPiece = new Rook(Color.BLACK);
             Piece existPiece = new Rook(Color.BLACK);
-            Position start = PositionMock.a1;
-            Position target = PositionMock.a3;
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.a3;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
@@ -227,8 +227,8 @@ class BoardTest {
         @Test
         void success_Move() {
             Piece startPiece = new King(Color.BLACK);
-            Position start = PositionMock.a1;
-            Position target = PositionMock.a2;
+            Position start = CachedPosition.a1;
+            Position target = CachedPosition.a2;
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
 
@@ -246,8 +246,8 @@ class BoardTest {
     void same_Color_Piece_In_Target_Point() {
         Piece startPiece = new Rook(Color.BLACK);
         Piece existPiece = new Rook(Color.BLACK);
-        Position start = PositionMock.a1;
-        Position target = PositionMock.a3;
+        Position start = CachedPosition.a1;
+        Position target = CachedPosition.a3;
 
         Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
