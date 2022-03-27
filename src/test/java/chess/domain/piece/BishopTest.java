@@ -1,19 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import chess.domain.Color;
+import chess.domain.position.Position;
+import chess.domain.position.PositionX;
+import chess.domain.position.PositionY;
 
 public class BishopTest {
+
     @ParameterizedTest
     @CsvSource(value = {"BLACK:B", "WHITE:b"}, delimiter = ':')
     @DisplayName("Bishop 의 색깔에 맞는 이름을 반환하는지")

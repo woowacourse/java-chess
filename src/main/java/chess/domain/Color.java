@@ -3,7 +3,10 @@ package chess.domain;
 import java.util.Locale;
 
 public enum Color {
-    BLACK, WHITE, NONE;
+
+    BLACK,
+    WHITE,
+    NONE;
 
     public String correctSignature(String signature) {
         if (this == BLACK) {

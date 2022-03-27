@@ -1,14 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import chess.domain.position.Position;
+import chess.domain.position.PositionX;
+import chess.domain.position.PositionY;
 
 public class BlankTest {
+
     @Test
     @DisplayName("Blank 가 움직일 수 있는지 체크하는 경우 예외를 발생시키는지")
     void isNotMovable() {

@@ -1,16 +1,19 @@
 package chess.domain;
 
-import chess.domain.piece.*;
-import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import chess.domain.piece.Blank;
+import chess.domain.piece.InitialPiece;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.PositionX;
+import chess.domain.position.PositionY;
+
 public final class ChessGame {
+
     private final Board board;
     private Color currentTurnColor = Color.WHITE;
 

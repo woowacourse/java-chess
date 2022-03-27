@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.position.Position;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.Color;
+import chess.domain.position.Position;
+
 public abstract class Piece {
+
     protected final Color color;
     protected boolean isDisplaced;
 

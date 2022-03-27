@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum PositionX {
+
     A("a", 0),
     B("b", 1),
     C("c", 2),

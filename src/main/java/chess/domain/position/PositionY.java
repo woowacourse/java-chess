@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum PositionY {
+
     RANK_1("1", 7),
     RANK_2("2", 6),
     RANK_3("3", 5),

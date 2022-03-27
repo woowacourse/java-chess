@@ -9,6 +9,7 @@ import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
 public class OutputView {
+
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.\n" +
             "> 게임 시작 : start\n" +
             "> 게임 종료 : end\n" +

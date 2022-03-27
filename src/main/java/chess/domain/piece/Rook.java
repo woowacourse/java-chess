@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
+import java.util.List;
+
 import chess.domain.Color;
 import chess.domain.position.Position;
 
-import java.util.List;
-
 public class Rook extends Piece {
+
     public Rook(Color color) {
         super(color);
     }

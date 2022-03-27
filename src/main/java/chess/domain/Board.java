@@ -1,15 +1,16 @@
 package chess.domain;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.PositionY;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class Board {
+
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {

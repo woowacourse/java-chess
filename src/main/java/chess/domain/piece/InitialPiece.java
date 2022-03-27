@@ -6,6 +6,7 @@ import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
 public enum InitialPiece {
+
     WHITE_ROOK1(new Rook(Color.WHITE), new Position(PositionX.A, PositionY.RANK_1)),
     WHITE_KNIGHT1(new Knight(Color.WHITE), new Position(PositionX.B, PositionY.RANK_1)),
     WHITE_BISHOP1(new Bishop(Color.WHITE), new Position(PositionX.C, PositionY.RANK_1)),
