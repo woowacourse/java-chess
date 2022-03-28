@@ -16,6 +16,10 @@ public class Position {
         return new Position(rank, file);
     }
 
+    public static Position from(String position) {
+        return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
+    }
+
     public boolean isInBoardAfterMoved(Direction direction) {
         return direction.isMovablePosition(rank, file);
     }
