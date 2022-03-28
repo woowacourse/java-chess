@@ -4,8 +4,8 @@ import static chess2.domain2.board2.piece2.Color.BLACK;
 import static chess2.domain2.board2.piece2.Color.WHITE;
 import static chess2.domain2.board2.piece2.PieceType.KING;
 import static chess2.domain2.board2.piece2.PieceType.PAWN;
-import static chess2.util2.PositionUtil.FILES_TOTAL_SIZE;
-import static chess2.util2.PositionUtil.RANKS_TOTAL_SIZE;
+import static chess2.util2.PositionConverterUtil.FILES_TOTAL_SIZE;
+import static chess2.util2.PositionConverterUtil.RANKS_TOTAL_SIZE;
 
 import chess2.domain2.board2.Position;
 import chess2.domain2.board2.piece2.Color;

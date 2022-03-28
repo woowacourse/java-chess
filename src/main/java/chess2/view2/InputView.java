@@ -1,6 +1,6 @@
 package chess2.view2;
 
-import static chess2.util2.PositionUtil.validatePositionFormat;
+import static chess2.util2.PositionConverterUtil.validatePositionFormat;
 import static chess2.view2.OutputView.print;
 
 import chess2.dto2.MoveCommandDto;

@@ -1,6 +1,6 @@
 package chess2.domain2.board2;
 
-import chess2.util2.PositionUtil;
+import chess2.util2.PositionConverterUtil;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +19,8 @@ public class Position {
     }
 
     public static Position of(String positionKey) {
-        int fileIdx = PositionUtil.toFileIdx(positionKey);
-        int rankIdx = PositionUtil.toRankIdx(positionKey);
+        int fileIdx = PositionConverterUtil.toFileIdx(positionKey);
+        int rankIdx = PositionConverterUtil.toRankIdx(positionKey);
         return Position.of(fileIdx, rankIdx);
     }
 
