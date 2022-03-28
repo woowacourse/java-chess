@@ -8,6 +8,7 @@ import java.util.List;
 public class ChessMap {
 
     private static final char BLANK = '.';
+    private static final int CHESS_MAP_RANK_SIZE = 8;
 
     private final char[][] chessMap;
 
@@ -40,7 +41,7 @@ public class ChessMap {
     private static void showWhitePieces(final char[][] chessMap, final List<Piece> whitePieces) {
         for (Piece piece : whitePieces) {
             final Position position = piece.getPosition();
-            final int rank = 8 - position.getRank();
+            final int rank = CHESS_MAP_RANK_SIZE - position.getRank();
             final int file = position.getFile();
             chessMap[rank][file] = Character.toLowerCase(piece.getName());
         }
@@ -49,7 +50,7 @@ public class ChessMap {
     private static void showBlackPieces(final char[][] chessMap, final List<Piece> blackPieces) {
         for (Piece piece : blackPieces) {
             final Position position = piece.getPosition();
-            final int rank = 8 - position.getRank();
+            final int rank = CHESS_MAP_RANK_SIZE - position.getRank();
             final int file = position.getFile();
             chessMap[rank][file] = piece.getName();
         }
