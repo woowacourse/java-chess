@@ -1,5 +1,6 @@
 package chess2.domain2.board2.piece2;
 
+import chess2.domain2.board2.Position;
 import java.util.Objects;
 
 public class Piece {
@@ -10,6 +11,17 @@ public class Piece {
     public Piece(Color color, PieceType type) {
         this.color = color;
         this.type = type;
+    }
+
+    public boolean canMove(Position from, Position to) {
+        return type.isMovable(from, to);
+    }
+
+    public boolean canAttack(Position from, Position to, Piece targetPiece) {
+        if(targetPiece.hasColorOf(color)) {
+            throw new IllegalArgumentException("아군은 공격할 수 없습니다.");
+        }
+        return type.isMovable(from, to); // TODO: divide move and attack case
     }
 
     public boolean hasColorOf(Color color) {

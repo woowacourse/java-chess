@@ -16,11 +16,15 @@ abstract class Running extends Started {
     }
 
     @Override
-    public final Game moveChessmen(MoveCommandDto dto) {
-        Position from = fromPosition(dto);
-        Position to = toPosition(dto);
+    public final Game moveChessmen(MoveCommandDto moveCommand) {
+        Position from = fromPosition(moveCommand);
+        Position to = toPosition(moveCommand);
 
         board.movePiece(from, to, currentTurnColor());
+        return moveResult();
+    }
+
+    private Game moveResult() {
         if (board.countByType(KING) < ONGOING_GAME_KING_COUNT) {
             return new GameOver(board);
         }

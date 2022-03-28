@@ -14,17 +14,47 @@ public class Board {
     }
 
     public void movePiece(Position from, Position to, Color color) {
-        validatePieceAndColor(from, color);
-        board.put(to, board.remove(from));
+        validatePieceAndCurrentTurn(from, color);
+        Piece fromPiece = board.get(from);
+        if (isOccupied(to)) {
+            confirmAttack(from, to, fromPiece);
+            return;
+        }
+        validateMovable(fromPiece.canMove(from, to));
+        confirmMove(from, to);
     }
 
-    private void validatePieceAndColor(Position from, Color currentColor) {
-        if (!board.containsKey(from)) {
+    private void validatePieceAndCurrentTurn(Position from, Color currentTurnColor) {
+        if (!isOccupied(from)) {
             throw new IllegalArgumentException("해당 위치에 체스 말은 존재하지 않습니다.");
         }
-        if (!board.get(from).hasColorOf(currentColor)) {
-            throw new IllegalArgumentException(currentColor + " 진영이 움직일 차례입니다!");
+        Piece fromPiece = board.get(from);
+        if (!fromPiece.hasColorOf(currentTurnColor)) {
+            throw new IllegalArgumentException(currentTurnColor + " 진영이 움직일 차례입니다!");
         }
+    }
+
+    private boolean isOccupied(Position to) {
+        return board.containsKey(to);
+    }
+
+    private void confirmAttack(Position from, Position to, Piece fromPiece) {
+        Piece targetPiece = board.get(to);
+        if (!fromPiece.canAttack(from, to, targetPiece)) {
+            throw new IllegalArgumentException("공격할 수 없는 위치입니다.");
+        }
+        confirmMove(from, to);
+    }
+
+    private void validateMovable(boolean movable) {
+        if (!movable) {
+            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+        }
+    }
+
+    private void confirmMove(Position from, Position to) {
+        Piece fromPiece = board.remove(from);
+        board.put(to, fromPiece);
     }
 
     public int countByType(PieceType pieceType) {
