@@ -1,43 +1,58 @@
 package chess.domain.board;
 
-import static chess.domain.board.Board.*;
-import static chess.domain.board.File.*;
-import static chess.domain.board.Rank.*;
+import static chess.domain.board.Board.SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
+import static chess.domain.board.File.G;
+import static chess.domain.board.File.H;
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.SIX;
+import static chess.domain.board.Rank.THREE;
+import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.constant.PieceColor.WHITE;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.utils.BoardFactory;
+import chess.domain.board.utils.ProductionBoardFactory;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.turndecider.AlternatingTurnDecider;
 import chess.turndecider.FixedTurnDecider;
-import chess.domain.piece.constant.PieceColor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.turndecider.AlternatingTurnDecider;
-
 public class BoardTest {
 
-    private static Board board;
+    private Board board;
+    private final BoardFactory boardFactory = ProductionBoardFactory.getInstance();
 
     @BeforeEach
     void setUp() {
-        board = new Board(new FixedTurnDecider());
+        board = new Board(boardFactory.create(), new FixedTurnDecider());
     }
 
     @Test
     @DisplayName("체스 보드 생성 테스트 : 개수")
     void init_count() {
         //given
-        Map<Position, Piece> piecesByPositions = board.getValues();
+        Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //when
         int actual = piecesByPositions.keySet().size();
@@ -50,7 +65,7 @@ public class BoardTest {
     @DisplayName("체스 보드 생성 테스트 : 폰이 있는 행")
     void init_pawns_only() {
         //given
-        Map<Position, Piece> piecesByPositions = board.getValues();
+        Map<Position, Piece> piecesByPositions = board.getBoard();
 
         // when & then
         List<Piece> expected = Arrays.stream(File.values())
@@ -68,7 +83,7 @@ public class BoardTest {
     @DisplayName("체스 보드 생성 테스트 : 폰이 있는 행")
     void init_Except_Pawn() {
         //given
-        Map<Position, Piece> piecesByPositions = board.getValues();
+        Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //when
         List<Piece> expected = Arrays.stream(File.values())
@@ -96,7 +111,7 @@ public class BoardTest {
     void move_test() {
         //when
         board.move(new Position(A, TWO), new Position(A, THREE));
-        Map<Position, Piece> piecesByPositions = board.getValues();
+        Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //then
         assertThat(piecesByPositions.get(new Position(A, THREE))).isEqualTo(new Pawn(WHITE));
@@ -141,7 +156,7 @@ public class BoardTest {
     @Test
     void move_pawn_and_now_pawn_is_at_target_pos() {
         board.move(new Position(A, TWO), new Position(A, FOUR));
-        Piece findPiece = board.getValues().get(new Position(A, FOUR));
+        Piece findPiece = board.getBoard().get(new Position(A, FOUR));
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
@@ -165,7 +180,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {
-        Board board = new Board(new AlternatingTurnDecider());
+        Board board = new Board(boardFactory.create(), new AlternatingTurnDecider());
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }
@@ -173,7 +188,7 @@ public class BoardTest {
     @Test
     @DisplayName("폰이 같은 File에 두 개 이상 있을 경우 각 0.5점으로 계산한다.")
     void when_pawns_in_same_file() {
-        Board board = new Board(new AlternatingTurnDecider());
+        Board board = new Board(boardFactory.create(), new AlternatingTurnDecider());
 
         board.move(new Position(A, TWO), new Position(A, FOUR));
         board.move(new Position(B, SEVEN), new Position(B, FIVE));
