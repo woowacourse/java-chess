@@ -25,4 +25,12 @@ public class Rank {
     public List<Piece> getPieces() {
         return pieces;
     }
+
+    public Piece getPiece(int index) {
+        return pieces.get(index);
+    }
+
+    public void updatePiece(int index, Piece piece) {
+        pieces.set(index, piece);
+    }
 }

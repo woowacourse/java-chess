@@ -21,102 +21,11 @@ public class Board {
         this.ranks = ranks;
     }
 
-    public Rank getRank(int rankLine) {
-        return ranks.get(rankLine);
-    }
-
-    public double calculateBlackScore() {
-        double totalScore = 0;
-
-        for (int i = 0; i < 8; i++) {
-            List<Piece> file = makeBlackFile(i);
-            List<Piece> pawns = getPawns(file);
-            List<Piece> noPawns = getNoPawns(file);
-            totalScore += calculateFileScore(pawns, noPawns);
-        }
-
-        return totalScore;
-    }
-
-    private List<Piece> makeBlackFile(int index) {
-        List<Piece> file = new ArrayList<>();
-
-        for (Rank rank : ranks.values()) {
-            file.add(rank.getPieces().get(index));
-        }
-
-        return file.stream()
-                .filter(Piece::isBlack)
-                .collect(Collectors.toList());
-    }
-
-    public double calculateWhiteScore() {
-        double totalScore = 0;
-
-        for (int i = 0; i < 8; i++) {
-            List<Piece> file = makeWhiteFile(i);
-            List<Piece> pawns = getPawns(file);
-            List<Piece> noPawns = getNoPawns(file);
-            totalScore += calculateFileScore(pawns, noPawns);
-        }
-
-        return totalScore;
-    }
-
-    private List<Piece> makeWhiteFile(int index) {
-        List<Piece> file = new ArrayList<>();
-
-        for (Rank rank : ranks.values()) {
-            file.add(rank.getPieces().get(index));
-        }
-
-        return file.stream()
-                .filter(piece -> !piece.isBlack() && !piece.isBlank())
-                .collect(Collectors.toList());
-    }
-
-    private List<Piece> getPawns(List<Piece> file) {
-        return file.stream()
-                .filter(Piece::isPawn)
-                .collect(Collectors.toList());
-    }
-
-    private List<Piece> getNoPawns(List<Piece> file) {
-        return file.stream()
-                .filter(piece -> !piece.isPawn())
-                .collect(Collectors.toList());
-    }
-
-    private double calculateFileScore(List<Piece> pawns, List<Piece> noPawns) {
-        double pawnsScore = calculatePiecesScore(pawns);
-        double noPawnsScore = calculatePiecesScore(noPawns);
-
-        if (pawns.size() >= 2) {
-            pawnsScore *= 0.5;
-        }
-
-        return pawnsScore + noPawnsScore;
-    }
-
-    private double calculatePiecesScore(List<Piece> pieces) {
-        return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private Piece getPiece(Position position) {
-        return ranks.get(position.getY())
-                .getPieces()
-                .get(position.getX());
-    }
-
     public Piece move(Position start, Position target, boolean isBlackTurn) {
         Piece selected = getPiece(start);
-
         if (selected.isBlack() != isBlackTurn) {
             throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
         }
-
         if (selected.isKnight()) {
             return jump(start, target);
         }
@@ -126,7 +35,6 @@ public class Board {
     private Piece jump(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
-
         if (selected.isMovable(targetPiece)) {
             updateBoard(target, selected, start, targetPiece);
             return targetPiece;
@@ -139,7 +47,6 @@ public class Board {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
         Direction direction = Direction.findDirection(start, target);
-
         checkPath(start, target, direction);
 
         if (selected.isMovable(targetPiece)) {
@@ -147,18 +54,6 @@ public class Board {
             return targetPiece;
         }
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
-    }
-
-    private void updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
-        updatePiece(target, selected);
-        updatePiece(start, new Blank(start));
-        selected.updatePosition(targetPiece.getPosition());
-    }
-
-    private void updatePiece(Position position, Piece piece) {
-        ranks.get(position.getY())
-                .getPieces()
-                .set(position.getX(), piece);
     }
 
     private void checkPath(Position start, Position target, Direction direction) {
@@ -178,5 +73,84 @@ public class Board {
         if (!getPiece(position).isBlank()) {
             throw new IllegalArgumentException(OBSTACLE_EXCEPTION_MESSAGE);
         }
+    }
+
+    private void updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
+        updatePiece(target, selected);
+        updatePiece(start, new Blank(start));
+        selected.updatePosition(targetPiece.getPosition());
+    }
+
+    private void updatePiece(Position position, Piece piece) {
+        Rank rank = ranks.get(position.getY());
+        rank.updatePiece(position.getX(), piece);
+    }
+
+    public double calculateBlackScore() {
+        return calculateScore(new BlackChoicePieceCondition());
+    }
+
+    public double calculateWhiteScore() {
+        return calculateScore(new WhiteChoicePieceCondition());
+    }
+
+    private double calculateScore(ChoicePieceCondition choicePieceCondition) {
+        double totalScore = 0;
+
+        for (int i = 0; i < 8; i++) {
+            List<Piece> file = makeFile(i, choicePieceCondition);
+            totalScore += calculateFileScore(getPawns(file), getNoPawns(file));
+        }
+
+        return totalScore;
+    }
+
+    private List<Piece> makeFile(int index, ChoicePieceCondition choicePieceCondition) {
+        List<Piece> file = new ArrayList<>();
+
+        for (Rank rank : ranks.values()) {
+            file.add(rank.getPieces().get(index));
+        }
+
+        return file.stream()
+                .filter(choicePieceCondition::test)
+                .collect(Collectors.toList());
+    }
+
+    private List<Piece> getPawns(List<Piece> file) {
+        return file.stream()
+                .filter(Piece::isPawn)
+                .collect(Collectors.toList());
+    }
+
+    private List<Piece> getNoPawns(List<Piece> file) {
+        return file.stream()
+                .filter(piece -> !piece.isPawn())
+                .collect(Collectors.toList());
+    }
+
+    private double calculateFileScore(List<Piece> pawns, List<Piece> noPawns) {
+        double pawnsScore = calculatePiecesScore(pawns);
+        double noPawnsScore = calculatePiecesScore(noPawns);
+        if (pawns.size() >= 2) {
+            pawnsScore *= 0.5;
+        }
+
+        return pawnsScore + noPawnsScore;
+    }
+
+    private double calculatePiecesScore(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private Piece getPiece(Position position) {
+        Rank rank = ranks.get(position.getY());
+        return rank.getPiece(position.getX());
+    }
+
+    public Rank getRank(int rankLine) {
+        return ranks.get(rankLine);
     }
 }
