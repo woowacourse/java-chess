@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public abstract class SlidingPiece extends Piece {
 
-    public SlidingPiece(Position position, String signature) {
+    protected SlidingPiece(Position position, String signature) {
         super(position, signature);
     }
 

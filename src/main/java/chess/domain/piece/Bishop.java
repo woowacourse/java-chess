@@ -29,6 +29,4 @@ public class Bishop extends SlidingPiece {
     public double getScore() {
         return SCORE;
     }
-
-
 }

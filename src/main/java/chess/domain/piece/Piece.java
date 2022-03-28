@@ -27,6 +27,14 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     public boolean isBlack() {
         return Character.isUpperCase(signature.charAt(0));
     }
@@ -41,13 +49,5 @@ public abstract class Piece {
 
     public void updatePosition(Position position) {
         this.position = position;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
     }
 }

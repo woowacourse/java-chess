@@ -7,7 +7,7 @@ public abstract class GameStarted implements GameState {
 
     protected final Board board;
 
-    public GameStarted(Board board) {
+    protected GameStarted(Board board) {
         this.board = board;
     }
 

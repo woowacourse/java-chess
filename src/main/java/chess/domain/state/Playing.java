@@ -8,7 +8,7 @@ public abstract class Playing extends GameStarted {
 
     private static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
 
-    public Playing(Board board) {
+    protected Playing(Board board) {
         super(board);
     }
 
