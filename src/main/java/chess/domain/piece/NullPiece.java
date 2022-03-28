@@ -31,8 +31,8 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    public boolean isNull() {
-        return true;
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    public double getScore() {
-        return SCORE;
+    public boolean isNull() {
+        return true;
     }
 }
