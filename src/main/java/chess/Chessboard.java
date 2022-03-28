@@ -103,7 +103,7 @@ public class Chessboard {
 
     public List<Position> findBetweenTwoPosition(Position source, Position target) {
         return board.get(source)
-                .computeBetweenTwoPosition(source, target);
+                .computeBetweenTwoPositionByLine(source, target);
     }
 
     public boolean isMovable(Position source, Position target) {
@@ -123,7 +123,7 @@ public class Chessboard {
             return false;
         }
         Pawn pawn = (Pawn) sourcePiece;
-        return pawn.isDiagonal(source, target);
+        return pawn.isMovableDiagonal(source, target);
     }
 
     public boolean isKing(Position target) {

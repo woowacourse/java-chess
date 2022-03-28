@@ -5,7 +5,7 @@ import chess.position.Position;
 
 import java.util.List;
 
-import static chess.utils.PossiblePositionChecker.isMovableCoordinates;
+import static chess.utils.PossiblePositionChecker.isMovablePositions;
 
 public class Pawn extends Piece {
 
@@ -26,27 +26,27 @@ public class Pawn extends Piece {
 
     private boolean isMovableWhenWhite(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovableCoordinates(Direction.pawnWhiteFirstTurn(), source, target);
+            return isMovablePositions(Direction.pawnWhiteFirstTurn(), source, target);
         }
-        return isMovableCoordinates(Direction.pawnWhiteTurn(), source, target);
+        return isMovablePositions(Direction.pawnWhiteTurn(), source, target);
     }
 
     private boolean isMovableWhenBlack(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovableCoordinates(Direction.pawnBlackFirstTurn(), source, target);
+            return isMovablePositions(Direction.pawnBlackFirstTurn(), source, target);
         }
-        return isMovableCoordinates(Direction.pawnBlackTurn(), source, target);
+        return isMovablePositions(Direction.pawnBlackTurn(), source, target);
     }
 
-    public boolean isDiagonal(Position source, Position target) {
+    public boolean isMovableDiagonal(Position source, Position target) {
         if (color == Color.WHITE) {
-            return isMovableCoordinates(Direction.pawnWhiteDiagonal(), source, target);
+            return isMovablePositions(Direction.pawnWhiteDiagonal(), source, target);
         }
-        return isMovableCoordinates(Direction.pawnBlackDiagonal(), source, target);
+        return isMovablePositions(Direction.pawnBlackDiagonal(), source, target);
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
         return List.of();
     }
 }

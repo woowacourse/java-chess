@@ -14,11 +14,11 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return PossiblePositionChecker.isMovableCoordinates(Direction.king(), source, target);
+        return PossiblePositionChecker.isMovablePositions(Direction.king(), source, target);
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
         return List.of();
     }
 }

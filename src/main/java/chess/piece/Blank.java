@@ -16,7 +16,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
         return List.of();
     }
 }

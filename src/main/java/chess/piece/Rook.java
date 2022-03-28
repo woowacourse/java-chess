@@ -19,7 +19,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
         if (source.isSameRow(target)) {
             return computeBetweenPositionBySameRow(source, target);
         }

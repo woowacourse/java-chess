@@ -32,7 +32,7 @@ class RookTest {
     @DisplayName("source와 target 사이에 룩이 이동가능한 위치 리스트 반환")
     void checkAllPositionOfPossible() {
         Rook rook = new Rook(Color.WHITE);
-        assertThat(rook.computeBetweenTwoPosition(new Position(0, 0), new Position(0, 3)))
+        assertThat(rook.computeBetweenTwoPositionByLine(new Position(0, 0), new Position(0, 3)))
                 .isEqualTo(List.of(new Position(0, 1), new Position(0, 2)));
     }
 }

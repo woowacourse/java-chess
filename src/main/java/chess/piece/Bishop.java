@@ -18,7 +18,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
         if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
             return computeBetweenPositionDiagonal(source, target);
         }

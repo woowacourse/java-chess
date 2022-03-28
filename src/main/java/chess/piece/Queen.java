@@ -19,18 +19,18 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        List<Position> result = new ArrayList<>();
+    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
+        List<Position> positions = new ArrayList<>();
         if (source.isSameRow(target)) {
-            result.addAll(computeBetweenPositionBySameRow(source, target));
+            positions.addAll(computeBetweenPositionBySameRow(source, target));
         }
         if (source.isSameColumn(target)) {
-            result.addAll(computeBetweenPositionBySameColumn(source, target));
+            positions.addAll(computeBetweenPositionBySameColumn(source, target));
         }
         if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
-            result.addAll(computeBetweenPositionDiagonal(source, target));
+            positions.addAll(computeBetweenPositionDiagonal(source, target));
         }
-        return result;
+        return positions;
     }
 
     private boolean isSameLine(Position source, Position target) {

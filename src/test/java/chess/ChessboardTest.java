@@ -35,7 +35,8 @@ public class ChessboardTest {
     void checkSamePosition() {
         Chessboard chessboard = Chessboard.initializedChessboard();
 
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(0, 0), new Position(0, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(0, 0),
+                new Position(0, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("현재 위치와 같은 위치로 이동할 수 없습니다.");
     }
@@ -45,7 +46,8 @@ public class ChessboardTest {
     void checkBlankTarget() {
         Chessboard chessboard = Chessboard.initializedChessboard();
 
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(2, 0), new Position(3, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(2, 0),
+                new Position(3, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동하려는 위치에 기물이 없습니다.");
     }
@@ -55,7 +57,8 @@ public class ChessboardTest {
     void checkWrongTurn() {
         Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0), new Position(1, 1), turn))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0),
+                new Position(1, 1), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물은 움직일 수 없습니다.");
     }
@@ -65,7 +68,8 @@ public class ChessboardTest {
     void checkCandidatesOfPossibleCoordinates() {
         Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(7, 0), new Position(5, 0), turn))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(7, 0),
+                new Position(5, 0), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("가로막는 기물이 있습니다.");
     }

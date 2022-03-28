@@ -14,7 +14,8 @@ public class PawnTest {
     @DisplayName("white pawn 대각선 위치 검증 - true")
     void checkDiagonalWhenWhiteTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
+                new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -22,7 +23,8 @@ public class PawnTest {
     @DisplayName("white pawn 대각선 위치 검증 - false")
     void checkDiagonalWhenWhiteFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
+                new Position(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -30,7 +32,8 @@ public class PawnTest {
     @DisplayName("black pawn 대각선 위치 검증 - true")
     void checkDiagonalWhenBlackTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
+                new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -38,7 +41,8 @@ public class PawnTest {
     @DisplayName("black pawn 대각선 위치 검증 - false")
     void checkDiagonalWhenBlackFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isMovableDiagonal(new Position(4, 4),
+                new Position(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest

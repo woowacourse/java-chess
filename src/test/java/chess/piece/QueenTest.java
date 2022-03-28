@@ -43,14 +43,16 @@ public class QueenTest {
     @DisplayName("source와 target 사이에 퀸이 이동가능한 위치 리스트 반환")
     void checkAllPositionOfPossible(Position source, Position target, Position coordinate) {
         Queen queen = new Queen(Color.WHITE);
-        assertThat(queen.computeBetweenTwoPosition(source, target))
+        assertThat(queen.computeBetweenTwoPositionByLine(source, target))
                 .isEqualTo(List.of(coordinate));
     }
 
     static Stream<Arguments> possiblePositionOfQueen() {
         return Stream.of(
-                Arguments.of(new Position(7, 2), new Position(5, 4), new Position(6, 3)),
-                Arguments.of(new Position(0, 0), new Position(0, 2), new Position(0, 1))
+                Arguments.of(new Position(7, 2), new Position(5, 4),
+                        new Position(6, 3)),
+                Arguments.of(new Position(0, 0), new Position(0, 2),
+                        new Position(0, 1))
         );
     }
 }

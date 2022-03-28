@@ -43,14 +43,6 @@ public class Position {
         return this.column == position.column;
     }
 
-    public Position findPossiblePosition(int moveRow, int moveColumn) {
-        return new Position(row + moveRow, column + moveColumn);
-    }
-
-    public Position findPossiblePosition(Direction direction) {
-        return new Position(direction.moveRow(row), direction.moveColumn(column));
-    }
-
     public int gapTwoPositionRow(Position position) {
         return Math.abs(this.row - position.row);
     }
@@ -59,6 +51,13 @@ public class Position {
         return Math.abs(this.column - position.column);
     }
 
+    public Position findPossiblePosition(int moveRow, int moveColumn) {
+        return new Position(row + moveRow, column + moveColumn);
+    }
+
+    public Position findPossiblePosition(Direction direction) {
+        return new Position(direction.moveRow(row), direction.moveColumn(column));
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -16,7 +16,7 @@ public class OutputView {
     private static final String BLACK = "블랙";
     private static final String WHITE = "화이트";
     private static final String DELIMITER = " : ";
-    public static final String WINNER = "우승";
+    private static final String WINNER = "우승";
 
     public static void printStartMessage() {
         System.out.println(START_MESSAGE);

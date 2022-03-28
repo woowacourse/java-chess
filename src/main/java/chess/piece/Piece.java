@@ -16,7 +16,7 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Position source, Position target);
 
-    public abstract List<Position> computeBetweenTwoPosition(Position source, Position target);
+    public abstract List<Position> computeBetweenTwoPositionByLine(Position source, Position target);
 
     public boolean isSameType(Type type) {
         return this.type == type;

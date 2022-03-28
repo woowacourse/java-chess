@@ -32,7 +32,7 @@ public class BishopTest {
     @DisplayName("source와 target 사이에 비숍이 이동가능한 위치 리스트 반환")
     void checkAllPositionOfPossible() {
         Bishop bishop = new Bishop(Color.WHITE);
-        assertThat(bishop.computeBetweenTwoPosition(new Position(7, 2), new Position(5, 4)))
-                .isEqualTo(List.of(new Position(6, 3)));
+        assertThat(bishop.computeBetweenTwoPositionByLine(new Position(7, 2),
+                new Position(5, 4))).isEqualTo(List.of(new Position(6, 3)));
     }
 }
