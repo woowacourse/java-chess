@@ -12,8 +12,8 @@ public class StartedQueen extends Started{
     private final Continuous continuous = new Continuous();
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return continuous.getMovablePositions(Direction.all(), source, board);
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
+        return continuous.findMovablePositions(Direction.all(), source, board);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class ChessBoard {
 
     private boolean canMove(Position source, Position target) {
         Piece piece = getPiece(source);
-        List<Position> movablePaths = piece.getMovablePaths(source, this);
+        List<Position> movablePaths = piece.findMovablePaths(source, this);
 
         return movablePaths.contains(target);
     }
@@ -68,7 +68,7 @@ public class ChessBoard {
     }
 
     public boolean canMoveOrKillByOneStep(Position source, Direction direction) {
-        Position target = source.getNext(direction);
+        Position target = source.findNext(direction);
         if (source.isBlocked(direction)) {
             return false;
         }
@@ -77,7 +77,7 @@ public class ChessBoard {
     }
 
     public boolean canOnlyMoveByOneStep(Position source, Direction direction) {
-        Position target = source.getNext(direction);
+        Position target = source.findNext(direction);
         if (source.isBlocked(direction)) {
             return false;
         }

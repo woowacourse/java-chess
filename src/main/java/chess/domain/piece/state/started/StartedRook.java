@@ -12,8 +12,8 @@ public class StartedRook extends Started{
     private final Continuous continuous = new Continuous();
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return continuous.getMovablePositions(Direction.upDownLeftRight(), source, board);
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
+        return continuous.findMovablePositions(Direction.upDownLeftRight(), source, board);
     }
 
     @Override

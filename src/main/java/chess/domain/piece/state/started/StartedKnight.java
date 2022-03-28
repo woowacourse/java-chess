@@ -12,8 +12,8 @@ public class StartedKnight extends Started{
     private final NonContinuous nonContinuous = new NonContinuous();
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return nonContinuous.getMovablePositions(source, board, Direction.knight());
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
+        return nonContinuous.findMovablePositions(source, board, Direction.knight());
     }
 
     @Override

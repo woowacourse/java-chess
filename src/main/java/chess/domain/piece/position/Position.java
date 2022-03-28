@@ -19,7 +19,7 @@ public class Position {
     }
 
     public boolean isBlocked(Direction direction) {
-        Position next = getNext(direction);
+        Position next = findNext(direction);
         return next.getFile() == File.Out || next.getRank() == Rank.Out;
     }
 
@@ -31,7 +31,7 @@ public class Position {
         return rank;
     }
 
-    public Position getNext(Direction direction) {
-        return Position.of(file.getNext(direction.file()), rank.getNext(direction.rank()));
+    public Position findNext(Direction direction) {
+        return Position.of(file.findNext(direction.file()), rank.findNext(direction.rank()));
     }
 }

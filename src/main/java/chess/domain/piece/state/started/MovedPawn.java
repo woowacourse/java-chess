@@ -17,9 +17,9 @@ public class MovedPawn extends StartedPawn {
     }
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
         List<Position> positions = new ArrayList<>();
-        Position next = source.getNext(forward);
+        Position next = source.findNext(forward);
 
         if (board.canMoveOrKillByOneStep(source, forward)) {
             positions.add(next);

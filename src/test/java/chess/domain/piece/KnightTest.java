@@ -32,7 +32,7 @@ public class KnightTest {
         board.putPiece(Position.of(File.b, Rank.Three), new Knight(Color.White));
 
         for (Direction direction : Direction.all()) {
-            board.putPiece(source.getNext(direction), new Knight(Color.Black));
+            board.putPiece(source.findNext(direction), new Knight(Color.Black));
         }
     }
 

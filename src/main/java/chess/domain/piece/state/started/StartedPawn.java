@@ -18,16 +18,16 @@ public class StartedPawn extends Started {
     }
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
         List<Position> positions = new ArrayList<>();
-        Position next = source.getNext(forward);
+        Position next = source.findNext(forward);
 
         if (board.canOnlyMoveByOneStep(source, forward)) {
             positions.add(next);
         }
 
         if (canOnlyMoveByTwoStep(source, board, forward)) {
-            positions.add(next.getNext(forward));
+            positions.add(next.findNext(forward));
         }
 
         List<Position> killablePositions = getKillablePositions(source, board);
@@ -38,8 +38,8 @@ public class StartedPawn extends Started {
     public List<Position> getKillablePositions(Position source, ChessBoard board) {
         return Direction.leftRight()
             .stream()
-            .map(source::getNext)
-            .map(position -> position.getNext(forward))
+            .map(source::findNext)
+            .map(position -> position.findNext(forward))
             .filter(direction -> board.canKill(source, direction))
             .collect(Collectors.toList());
     }
@@ -50,7 +50,7 @@ public class StartedPawn extends Started {
     }
 
     private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {
-        Position next = source.getNext(direction);
+        Position next = source.findNext(direction);
         return board.canOnlyMoveByOneStep(source, forward) && board.canOnlyMoveByOneStep(next, forward);
     }
 }

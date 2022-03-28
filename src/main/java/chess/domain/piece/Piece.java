@@ -28,8 +28,8 @@ public abstract class Piece {
             .sum();
     }
 
-    public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        return pieceState.getMovablePositions(source, board);
+    public List<Position> findMovablePaths(Position source, ChessBoard board) {
+        return pieceState.findMovablePositions(source, board);
     }
 
     public boolean isSameColor(Color other) {

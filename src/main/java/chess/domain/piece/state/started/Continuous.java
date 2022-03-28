@@ -11,7 +11,7 @@ import chess.domain.piece.position.Position;
 
 public class Continuous {
 
-    public List<Position> getMovablePositions(List<Direction> directions, Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(List<Direction> directions, Position source, ChessBoard board) {
         return directions.stream()
             .map(direction -> getPositions(source, board, direction))
             .flatMap(Collection::stream)
@@ -22,12 +22,12 @@ public class Continuous {
         List<Position> list = new ArrayList<>();
 
         Position current = source;
-        Position next = current.getNext(direction);
+        Position next = current.findNext(direction);
 
         while (!current.isBlocked(direction) && !board.isFilled(next)) {
             list.add(next);
             current = next;
-            next = current.getNext(direction);
+            next = current.findNext(direction);
         }
 
         if (board.canKill(source, next)) {

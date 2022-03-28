@@ -35,7 +35,7 @@ public enum File {
             .get();
     }
 
-    public File getNext(int next) {
+    public File findNext(int next) {
         if (value + next < 1 || value + next > 8) {
             return Out;
         }

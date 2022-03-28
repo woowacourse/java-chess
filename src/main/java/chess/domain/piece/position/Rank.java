@@ -32,7 +32,7 @@ public enum Rank {
         return value;
     }
 
-    public Rank getNext(int next) {
+    public Rank findNext(int next) {
         if (value + next < One.value || value + next > Eight.value) {
             return Out;
         }

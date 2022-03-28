@@ -9,11 +9,11 @@ import chess.domain.piece.position.Position;
 
 public class NonContinuous {
 
-    public List<Position> getMovablePositions(Position source, ChessBoard board, List<Direction> directions) {
+    public List<Position> findMovablePositions(Position source, ChessBoard board, List<Direction> directions) {
         return directions
             .stream()
             .filter(direction -> board.canMoveOrKillByOneStep(source, direction))
-            .map(source::getNext)
+            .map(source::findNext)
             .collect(Collectors.toList());
     }
 }
