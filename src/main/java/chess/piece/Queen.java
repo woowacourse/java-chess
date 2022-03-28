@@ -13,6 +13,8 @@ import static chess.Direction.NORTH;
 
 public class Queen extends Piece {
 
+    private static final double SCORE = 9;
+
     public Queen(Player player, String symbol) {
         super(player, symbol);
     }
@@ -45,5 +47,10 @@ public class Queen extends Piece {
     @Override
     protected List<Direction> getDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST);
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
     }
 }

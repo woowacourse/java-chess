@@ -41,4 +41,10 @@ public abstract class Piece {
     public boolean isKing() {
         return false;
     }
+
+    public abstract double addTo(double score);
+
+    public boolean isPawn() {
+        return false;
+    }
 }

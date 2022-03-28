@@ -2,9 +2,7 @@ package chess;
 
 import chess.piece.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static chess.File.*;
 import static chess.Player.*;
@@ -85,5 +83,24 @@ public class Board {
 
     public boolean checkRightTurn(Player player, Position source) {
         return board.get(source).isSame(player);
+    }
+
+    public double calculateScore(Player player) {
+        double score = 0;
+        for (Rank rank : Rank.values()) {
+            int PawnCountInFile = 0;
+            for (File file : File.values()) {
+                if (board.get(Position.of(rank, file)).isSame(player)) {
+                    score = board.get(Position.of(rank, file)).addTo(score);
+                    if (board.get(Position.of(rank, file)).isPawn()) {
+                        PawnCountInFile += 1;
+                    }
+                }
+            }
+            if (PawnCountInFile >= 2) {
+                score -= 0.5 * PawnCountInFile;
+            }
+        }
+        return score;
     }
 }

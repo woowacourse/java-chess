@@ -12,6 +12,7 @@ import static chess.Direction.*;
 
 public class Bishop extends Piece {
 
+    private static final double SCORE = 3;
     public Bishop(Player player, String symbol) {
         super(player, symbol);
     }
@@ -44,5 +45,10 @@ public class Bishop extends Piece {
     @Override
     protected List<Direction> getDirection() {
         return List.of(SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST);
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
     }
 }

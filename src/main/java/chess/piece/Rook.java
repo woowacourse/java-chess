@@ -12,6 +12,8 @@ import static chess.Direction.*;
 
 public class Rook extends Piece {
 
+    private static final double SCORE = 5;
+
     public Rook(Player player, String symbol) {
         super(player, symbol);
     }
@@ -44,5 +46,10 @@ public class Rook extends Piece {
     @Override
     protected List<Direction> getDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH);
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
     }
 }

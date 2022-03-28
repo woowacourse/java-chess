@@ -15,6 +15,8 @@ import static chess.Player.NONE;
 
 public class Pawn extends Piece {
 
+    private static final double SCORE = 1;
+
     public Pawn(Player player, String symbol) {
         super(player, symbol);
     }
@@ -63,5 +65,15 @@ public class Pawn extends Piece {
             return List.of(SOUTHEAST, SOUTHWEST, SOUTH, SS);
         }
         return List.of(NORTHEAST, NORTHWEST, NORTH, NN);
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }
