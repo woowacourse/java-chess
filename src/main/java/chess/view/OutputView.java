@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
-import chess.domain.Rank;
+import chess.domain.location.Rank;
 import chess.domain.TeamScore;
 import chess.domain.piece.Piece;
 import java.util.List;

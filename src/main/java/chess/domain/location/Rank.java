@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.location;
 
 import java.util.Arrays;
 import java.util.Comparator;

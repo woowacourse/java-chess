@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
-import chess.domain.File;
-import chess.domain.Location;
-import chess.domain.Rank;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Team;
-import java.util.Map;
+import chess.domain.location.File;
+import chess.domain.location.Location;
+import chess.domain.location.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

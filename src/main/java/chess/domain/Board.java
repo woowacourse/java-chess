@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.location.File;
+import chess.domain.location.Location;
+import chess.domain.location.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;

@@ -1,8 +1,8 @@
 package chess.domain.state;
 
 import chess.domain.Board;
-import chess.domain.Location;
-import chess.domain.LocationDiff;
+import chess.domain.location.Location;
+import chess.domain.location.LocationDiff;
 import chess.domain.TeamScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;

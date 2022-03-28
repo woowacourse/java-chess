@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.ChessGame;
+import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -17,7 +18,8 @@ public class Application {
     private static void playEachTurn(ChessGame chessGame) {
         try {
             String inputValue = InputView.askCommand();
-            chessGame.execute(List.of(inputValue.split(" ")));
+            Command command = new Command(List.of(inputValue.split(" ")));
+            chessGame.execute(command);
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
             playEachTurn(chessGame);

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.LocationDiff;
+import chess.domain.location.LocationDiff;
 import chess.domain.state.Direction;
 
 public class Pawn extends Piece {

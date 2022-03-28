@@ -3,6 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.location.LocationDiff;
 import chess.domain.state.Direction;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
