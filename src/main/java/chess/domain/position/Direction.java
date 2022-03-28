@@ -49,11 +49,7 @@ public enum Direction {
     public boolean isKnightDirection() {
         List<Direction> knightDirection = List.of(TTR, TTL, BBR, BBL, RRT, RRB, LLT, LLB);
 
-        if (knightDirection.contains(this)) {
-            return true;
-        }
-
-        return false;
+        return knightDirection.contains(this);
     }
 
     private static Direction getDirection(Direction[] values, int file, int rank) {
@@ -74,30 +70,16 @@ public enum Direction {
         Rank sourceRank = source.getRank();
         Rank targetRank = target.getRank();
 
-        if (targetRank.calculateRank(sourceRank) > 0) {
-            return 1;
-        }
+        return Integer.compare(targetRank.calculateRank(sourceRank), 0);
 
-        if (targetRank.calculateRank(sourceRank) == 0) {
-            return 0;
-        }
-
-        return -1;
     }
 
     private static int calculateFileDirection(Position source, Position target) {
         File sourceFile = source.getFile();
         File targetFile = target.getFile();
 
-        if (targetFile.calculateFile(sourceFile) > 0) {
-            return 1;
-        }
+        return Integer.compare(targetFile.calculateFile(sourceFile), 0);
 
-        if (targetFile.calculateFile(sourceFile) == 0) {
-            return 0;
-        }
-
-        return -1;
     }
 
     public int getRank() {

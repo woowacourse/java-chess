@@ -39,37 +39,21 @@ public class Position implements Comparable<Position> {
     public boolean isSameRank(Position position) {
         Rank rank = position.getRank();
 
-        if (this.rank == rank) {
-            return true;
-        }
-
-        return false;
+        return this.rank == rank;
     }
 
     public boolean isSameFile(Position position) {
         File file = position.getFile();
 
-        if (this.file == file) {
-            return true;
-        }
-
-        return false;
+        return this.file == file;
     }
 
     public boolean isReductionRank(Position position) {
-        if (rank.calculateRank(position.getRank()) > 0) {
-            return true;
-        }
-
-        return false;
+        return rank.calculateRank(position.getRank()) > 0;
     }
 
     public boolean isIncreaseRank(Position position) {
-        if (rank.calculateRank(position.getRank()) < 0) {
-            return true;
-        }
-
-        return false;
+        return rank.calculateRank(position.getRank()) < 0;
     }
 
     public boolean isDiagonal(Position position) {
@@ -79,11 +63,7 @@ public class Position implements Comparable<Position> {
         int rankDifference = this.rank.calculateAbsoluteValue(rank);
         int fileDifference = this.file.calculateAbsoluteValue(file);
 
-        if (rankDifference == fileDifference) {
-            return true;
-        }
-
-        return false;
+        return rankDifference == fileDifference;
     }
 
     public Rank getRank() {

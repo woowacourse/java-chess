@@ -48,42 +48,23 @@ public class Command {
         char first = token.charAt(0);
         char second = token.charAt(1);
 
-        if (File.isFile(first) && Rank.isRank(Character.getNumericValue(second))) {
-            return true;
-        }
-        return false;
+        return File.isFile(first) && Rank.isRank(Character.getNumericValue(second));
     }
 
     public boolean isEnd() {
-        if (command.equals("end")) {
-            return true;
-        }
-
-        return false;
+        return command.equals("end");
     }
 
     public boolean isMoveCommand() {
-        if (command.startsWith("move")) {
-            return true;
-        }
-
-        return false;
+        return command.startsWith("move");
     }
 
     public boolean isStart() {
-        if (command.equals("start")) {
-            return true;
-        }
-
-        return false;
+        return command.equals("start");
     }
 
     public boolean isStatus() {
-        if (command.equals("status")) {
-            return true;
-        }
-
-        return false;
+        return command.equals("status");
     }
 
     public Map<String, Position> makePositions() {

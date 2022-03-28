@@ -62,11 +62,7 @@ public class ChessBoard {
                 .filter(cellsKeySet::contains)
                 .count();
 
-        if (count > 0) {
-            return true;
-        }
-
-        return false;
+        return count > 0;
     }
 
     public double calculateByTeam(Team team) {
@@ -114,10 +110,6 @@ public class ChessBoard {
     }
 
     public boolean isExist(Position target) {
-        if (cells.containsKey(target)) {
-            return true;
-        }
-
-        return false;
+        return cells.containsKey(target);
     }
 }

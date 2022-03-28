@@ -24,9 +24,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
     private void checkPath(Position source, Position target, ChessBoard chessBoard) {
         Direction direction = Direction.of(source, target);
 
-        Position currentPosition = source;
-
-        List<Position> paths = getPaths(target, direction, currentPosition);
+        List<Position> paths = getPaths(target, direction, source);
 
         paths.remove(target);
 
