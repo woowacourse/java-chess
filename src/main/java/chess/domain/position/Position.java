@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
 import java.util.Objects;
 
 public class Position {
@@ -9,6 +10,7 @@ public class Position {
     private static final int FIRST_END = 1;
     private static final int SECOND_BEGIN = 1;
     private static final int SECOND_END = 2;
+
     private final Column column;
     private final Row row;
 
@@ -22,11 +24,11 @@ public class Position {
                 Row.of(value.substring(SECOND_BEGIN, SECOND_END)));
     }
 
-    public Direction findDirection(Position position, boolean isOne) {
+    public Direction findDirection(Position position, Piece piece) {
         int x = column.calculateIndex(position.column);
         int y = row.calculateIndex(position.row);
 
-        if (isOne) {
+        if (piece.isStep()) {
             return Direction.of(x, y);
         }
 

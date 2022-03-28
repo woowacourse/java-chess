@@ -44,6 +44,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isStep() {
+        return true;
+    }
+
     public float getScore() {
         return score.getValue();
     }

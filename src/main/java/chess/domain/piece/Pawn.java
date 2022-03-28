@@ -39,7 +39,7 @@ public class Pawn extends Piece {
 
     @Override
     public void movable(Position from, Position to) {
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to, this);
 
         validFirstMove(from, direction);
 
@@ -72,7 +72,7 @@ public class Pawn extends Piece {
 
     @Override
     public Direction findDirection(Position from, Position to) {
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to, this);
 
         if (direction == NORTH_NORTH) {
             return NORTH;

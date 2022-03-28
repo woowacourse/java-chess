@@ -3,6 +3,8 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +24,7 @@ public class PositionTest {
         Position to = new Position(Column.A, Row.TWO);
 
         // when
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to, new Rook(Team.WHITE));
 
         // then
         assertThat(direction).isEqualTo(Direction.NORTH);

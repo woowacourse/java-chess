@@ -17,7 +17,7 @@ public class Bishop extends Piece {
 
     @Override
     public void movable(Position from, Position to) {
-        Direction direction = from.findDirection(to, false);
+        Direction direction = from.findDirection(to, this);
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("Bishop이 움직일 수 있는 방향이 아닙니다.");
         }
@@ -25,7 +25,12 @@ public class Bishop extends Piece {
 
     @Override
     public Direction findDirection(Position from, Position to) {
-        return from.findDirection(to, false);
+        return from.findDirection(to, this);
+    }
+
+    @Override
+    public boolean isStep() {
+        return false;
     }
 
     @Override
