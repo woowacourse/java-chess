@@ -3,6 +3,7 @@ package chess.model;
 import java.util.Arrays;
 
 public enum File {
+
     A(1),
     B(2),
     C(3),

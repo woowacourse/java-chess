@@ -3,6 +3,7 @@ package chess.model;
 import java.util.Objects;
 
 public final class Square {
+
     private final File file;
     private final Rank rank;
 
@@ -34,26 +35,15 @@ public final class Square {
         return this;
     }
 
-    private Square move(Direction direction) {
-        //TODO: GETTER를 안쓸 순 없나?
-        return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
-    }
-
-    private boolean canMove(Direction direction) {
-        //TODO: 갈 수 있는지를 움직여봐야 아는건가?
-        try {
-            move(direction);
-            return true;
-        } catch (IllegalArgumentException exception) {
-            return false;
-        }
-    }
-
     public Direction findDirection(Square source) {
         int fileDistance = file.calculateGap(source.file);
         int rankDistance = rank.calculateGap(source.rank);
         int gcd = GCD(fileDistance, rankDistance);
         return Direction.of(fileDistance / gcd, rankDistance / gcd);
+    }
+
+    public boolean isSameFile(Square other) {
+        return this.file.equals(other.file);
     }
 
     private static int GCD(int fileDistance, int rankDistance) {
@@ -67,6 +57,19 @@ public final class Square {
             smaller = tmp % smaller;
         }
         return bigger;
+    }
+
+    private Square move(Direction direction) {
+        return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
+    }
+
+    private boolean canMove(Direction direction) {
+        try {
+            move(direction);
+            return true;
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
     }
 
     @Override
@@ -84,9 +87,5 @@ public final class Square {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public boolean isSameFile(Square other) {
-        return this.file.equals(other.file);
     }
 }

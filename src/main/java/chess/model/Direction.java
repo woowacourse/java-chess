@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
+
     NORTH(0, 1),
     EAST(1, 0),
     SOUTH(0, -1),
@@ -21,15 +22,17 @@ public enum Direction {
     WWN(-2, 1),
     WWS(-2, -1);
 
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
+
     Direction(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
     public static Direction of(int row, int col) {
-        return Arrays.stream(values()).filter(direction -> direction.col == col && direction.row == row)
+        return Arrays.stream(values())
+                .filter(direction -> direction.col == col && direction.row == row)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
@@ -45,6 +48,7 @@ public enum Direction {
     public static List<Direction> getNonKnightDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, NORTHEAST, SOUTHWEST, NORTHWEST);
     }
+
     public static List<Direction> getKnightDirection() {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
