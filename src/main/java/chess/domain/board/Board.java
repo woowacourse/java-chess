@@ -31,6 +31,10 @@ public class Board {
         board.put(source, new Blank());
     }
 
+    public void endGame() {
+        state = state.finish();
+    }
+
     private void validateMove(final Position source, final Position target) {
         Piece piece = board.get(source);
         checkBlank(piece);

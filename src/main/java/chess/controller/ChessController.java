@@ -9,31 +9,32 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PositionConvertor;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
     private static final String GAME_START_ERROR = "게임 시작을 먼저 해야 합니다.";
     private static final String ALREADY_GAME_START_ERROR = "게임이 이미 시작되었습니다.";
+    private final Board board;
+
+    public ChessController() {
+        this.board = new Board();
+    }
 
     public void run() {
         InputView.printCommandGuide();
         processStart();
-        final Board board = new Board();
         OutputView.printBoard(board);
-        processCommand(board);
+        processCommand();
         OutputView.printWinner(board.getWinner());
     }
 
-    private void processCommand(Board board) {
-        List<String> inputCommand = InputView.requestCommand();
-
-        while (!Command.isEnd(inputCommand.get(0))) {
-            processEachCommand(board, inputCommand);
-            if (board.isFinished()) {
-                break;
-            }
-            inputCommand = InputView.requestCommand();
+    private void processCommand() {
+        while (!board.isFinished()) {
+            List<String> inputCommand = InputView.requestCommand();
+            processEachCommand(inputCommand);
         }
     }
 
@@ -44,26 +45,35 @@ public class ChessController {
         }
     }
 
-    private void processEachCommand(final Board board, final List<String> inputCommand) {
-        if (Command.isStart(inputCommand.get(0))) {
-            throw new IllegalArgumentException(ALREADY_GAME_START_ERROR);
-        }
+    private void processEachCommand(List<String> inputCommand) {
         if (Command.isMove(inputCommand.get(0))) {
-            processMove(inputCommand, board);
+            processMove(inputCommand);
+            return;
         }
-        if (Command.isStatus(inputCommand.get(0))) {
-            processStatus(board);
-        }
+
+        Map<Command, Runnable> functionByCommand = makeFunctionByCommand();
+        Command command = Command.find(inputCommand.get(0));
+        functionByCommand.get(command).run();
     }
 
-    private void processMove(final List<String> inputCommand, final Board board) {
+    private Map<Command, Runnable> makeFunctionByCommand() {
+        Map<Command, Runnable> functionByCommand = new EnumMap<>(Command.class);
+        functionByCommand.put(Command.END, board::endGame);
+        functionByCommand.put(Command.START, () -> {
+            throw new IllegalArgumentException();
+        });
+        functionByCommand.put(Command.STATUS, this::processStatus);
+        return functionByCommand;
+    }
+
+    private void processMove(final List<String> inputCommand) {
         Position source = PositionConvertor.to(inputCommand.get(1));
         Position target = PositionConvertor.to(inputCommand.get(2));
         board.move(source, target);
         OutputView.printBoard(board);
     }
 
-    private void processStatus(final Board board) {
+    private void processStatus() {
         double blackScore = board.calculateScore(Team.BLACK);
         double whiteScore = board.calculateScore(Team.WHITE);
         StatusResult result = new StatusResult(blackScore, whiteScore);

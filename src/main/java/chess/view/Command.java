@@ -1,5 +1,8 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum Command {
 
     START("start"),
@@ -27,5 +30,12 @@ public enum Command {
 
     public static boolean isStatus(final String request) {
         return request.equalsIgnoreCase(STATUS.command);
+    }
+
+    public static Command find(String input) {
+        return Arrays.stream(values())
+                .filter(value -> value.command.equals(input))
+                .findAny()
+                .get();
     }
 }
