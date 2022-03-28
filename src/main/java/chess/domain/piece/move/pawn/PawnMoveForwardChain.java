@@ -16,9 +16,13 @@ public class PawnMoveForwardChain extends PawnMoveChain {
     public boolean move(Board board, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
-        if (vertical == 1 && horizontal == 0 && board.isEmpty(to)) {
+        if (isToPoint(horizontal, vertical) && board.isEmpty(to)) {
             return true;
         }
         return next.move(board, from, to);
+    }
+
+    private boolean isToPoint(int horizontal, int vertical) {
+        return vertical == 1 && horizontal == 0;
     }
 }
