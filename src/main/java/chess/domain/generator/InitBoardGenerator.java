@@ -11,9 +11,12 @@ import java.util.stream.IntStream;
 
 public class InitBoardGenerator implements BoardGenerator {
 
+    private static final int START_INCLUSIVE = 0;
+    private static final int END_INCLUSIVE = 7;
+
     @Override
     public List<List<Piece>> generate() {
-        List<List<Piece>> board = IntStream.rangeClosed(0, 7)
+        List<List<Piece>> board = IntStream.rangeClosed(START_INCLUSIVE, END_INCLUSIVE)
                 .mapToObj(ignored -> generatePieces())
                 .collect(toList());
 
@@ -25,7 +28,7 @@ public class InitBoardGenerator implements BoardGenerator {
     }
 
     private List<Piece> generatePieces() {
-        return IntStream.rangeClosed(0, 7)
+        return IntStream.rangeClosed(START_INCLUSIVE, END_INCLUSIVE)
                 .mapToObj(ignored -> new EmptyPiece())
                 .collect(toList());
     }
