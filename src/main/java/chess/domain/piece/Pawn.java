@@ -2,20 +2,20 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.move.pawn.PawnMoveChain;
-import chess.domain.piece.move.pawn.PawnMoveForwardChain;
-import chess.domain.piece.move.pawn.PawnSupport;
+import chess.domain.piece.move.MovingStrategy;
+import chess.domain.piece.move.pawn.PawnMovingStrategy;
 
 public class Pawn extends Piece {
 
+    private final MovingStrategy strategy;
+
     public Pawn(Color color) {
         super(color, PieceType.PAWN);
+        this.strategy = new PawnMovingStrategy(color);
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
-        PawnSupport support = new PawnSupport(color);
-        PawnMoveChain chain = new PawnMoveForwardChain(support);
-        chain.move(board, from, to);
+    public boolean move(Board board, Point from, Point to) {
+        return strategy.move(board, from, to);
     }
 }

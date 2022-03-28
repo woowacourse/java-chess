@@ -1,13 +1,21 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import static java.util.stream.Collectors.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toMap;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 
 public class InitialBoardGenerator implements BoardGenerator {
 
@@ -40,13 +48,13 @@ public class InitialBoardGenerator implements BoardGenerator {
 
     private Map<Point, Piece> generatePawnLine(int lineNumber, Color color) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-                .mapToObj(i -> Point.of(i, lineNumber))
-                .collect(toMap(Function.identity(), it -> new Pawn(color)));
+            .mapToObj(i -> Point.of(i, lineNumber))
+            .collect(toMap(Function.identity(), it -> new Pawn(color)));
     }
 
     private Map<Point, Piece> generateEmptyLine(int lineNumber) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-                .mapToObj(i -> Point.of(i, lineNumber))
-                .collect(toMap(Function.identity(), it -> new Empty()));
+            .mapToObj(i -> Point.of(i, lineNumber))
+            .collect(toMap(Function.identity(), it -> new Empty()));
     }
 }

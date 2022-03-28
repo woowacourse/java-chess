@@ -1,10 +1,10 @@
 package chess.dto;
 
-import chess.domain.piece.Color;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import chess.domain.piece.Color;
 
 public class ScoreResponse implements Response {
 
@@ -42,9 +42,9 @@ public class ScoreResponse implements Response {
     @Override
     public String getInformation() {
         return information.entrySet()
-                .stream()
-                .map(entry -> entry.getKey() + ": " + entry.getValue())
-                .collect(Collectors.joining(System.lineSeparator()));
+            .stream()
+            .map(entry -> entry.getKey() + ": " + entry.getValue())
+            .collect(Collectors.joining(System.lineSeparator()));
     }
 
     @Override

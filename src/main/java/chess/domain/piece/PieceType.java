@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import java.util.Map;
+
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
-
-import java.util.Map;
 
 public enum PieceType {
 

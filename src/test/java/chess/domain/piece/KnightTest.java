@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
-import chess.domain.board.Point;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.board.Board;
+import chess.domain.board.BoardFixtures;
+import chess.domain.board.Point;
 
 public class KnightTest {
 
@@ -29,7 +30,7 @@ public class KnightTest {
         Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -40,8 +41,9 @@ public class KnightTest {
         Point to = Point.of("c4");
         Board board = BoardFixtures.empty();
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 
     @Test
@@ -54,7 +56,7 @@ public class KnightTest {
         Board board = BoardFixtures.create(Map.of(Point.of("c3"), new Pawn(Color.BLACK)));
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -67,7 +69,7 @@ public class KnightTest {
         Board board = BoardFixtures.create(Map.of(Point.of("b2"), new Pawn(Color.WHITE)));
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
 }

@@ -1,10 +1,10 @@
 package chess.domain.board;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
 
 public class TestBoardGenerator implements BoardGenerator {
 

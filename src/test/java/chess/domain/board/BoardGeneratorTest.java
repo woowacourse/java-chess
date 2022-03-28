@@ -1,12 +1,13 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.Piece;
 
 public class BoardGeneratorTest {
 

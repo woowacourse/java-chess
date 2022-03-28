@@ -2,41 +2,23 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.piece.move.MovingStrategy;
 import chess.domain.piece.move.StraightDirection;
+import chess.domain.piece.move.straight.InfiniteStepDistance;
+import chess.domain.piece.move.straight.StraightMovingStrategy;
 
 public class Rook extends Piece {
 
+    private final MovingStrategy strategy;
+
     public Rook(Color color) {
         super(color, PieceType.ROOK);
+        this.strategy = new StraightMovingStrategy(StraightDirection.getCross(), InfiniteStepDistance.getInstance());
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
-        StraightDirection direction = findDirection(from, to);
-
-        Point next = from.next(direction);
-        while (!next.equals(to)) {
-            validateEmpty(board, next);
-            next = next.next(direction);
-        }
-    }
-
-    private StraightDirection findDirection(Point from, Point to) {
-        StraightDirection direction = StraightDirection.find(from, to);
-        validateDirection(direction);
-        return direction;
-    }
-
-    private void validateDirection(StraightDirection direction) {
-        if (!direction.isCross()) {
-            throw new IllegalArgumentException("[ERROR] 룩은 상하좌우로만 이동할 수 있습니다.");
-        }
-    }
-
-    private void validateEmpty(Board board, Point point) {
-        if (!board.isEmpty(point)) {
-            throw new IllegalArgumentException("[ERROR] 이동 과정 중에 장애물이 있습니다.");
-        }
+    public boolean move(Board board, Point from, Point to) {
+        return strategy.move(board, from, to);
     }
 }
 

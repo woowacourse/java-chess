@@ -1,8 +1,8 @@
 package chess.domain.game;
 
-import chess.dto.Response;
-
 import java.util.List;
+
+import chess.dto.Response;
 
 public interface GameState {
 

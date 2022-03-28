@@ -13,12 +13,12 @@ public class PawnMoveForwardChain extends PawnMoveChain {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public boolean move(Board board, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
         if (vertical == 1 && horizontal == 0 && board.isEmpty(to)) {
-            return;
+            return true;
         }
-        next.move(board, from, to);
+        return next.move(board, from, to);
     }
 }

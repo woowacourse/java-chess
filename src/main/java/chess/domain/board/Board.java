@@ -1,14 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class Board {
 
@@ -32,11 +32,16 @@ public class Board {
         validateAllyMove(turnColor, fromPiece);
         validateNotAllyAttack(turnColor, toPiece);
 
-        fromPiece.move(this, from, to);
+        if (!fromPiece.move(this, from, to)) {
+            throw new IllegalArgumentException("움직일 수 없습니다.");
+        }
+        movePiece(from, to, fromPiece);
+        return toPiece.isSameType(PieceType.KING);
+    }
+
+    private void movePiece(Point from, Point to, Piece fromPiece) {
         pointPieces.put(to, fromPiece);
         pointPieces.put(from, new Empty());
-
-        return toPiece.isSameType(PieceType.KING);
     }
 
     private void validateArgumentSize(List<String> arguments) {

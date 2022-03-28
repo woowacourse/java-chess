@@ -1,10 +1,10 @@
 package chess.view;
 
+import java.util.Arrays;
+
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-
-import java.util.Arrays;
 
 public enum PieceRepresentation {
 
@@ -36,8 +36,8 @@ public enum PieceRepresentation {
 
     private static PieceRepresentation findMatchingType(Piece piece) {
         return Arrays.stream(values())
-                .filter(value -> piece.isSameType(value.pieceType))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 타입이 없습니다."));
+            .filter(value -> piece.isSameType(value.pieceType))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 타입이 없습니다."));
     }
 }

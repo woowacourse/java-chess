@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
-import chess.domain.board.Point;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFixtures;
+import chess.domain.board.Point;
 
 public class KingTest {
 
@@ -28,7 +29,7 @@ public class KingTest {
         Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -41,7 +42,7 @@ public class KingTest {
         Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -54,7 +55,7 @@ public class KingTest {
         Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -66,7 +67,8 @@ public class KingTest {
         Point to = Point.of("d4");
         Board board = BoardFixtures.empty();
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 }

@@ -2,21 +2,20 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.move.knight.KnightDirection;
-
-import java.util.List;
+import chess.domain.piece.move.MovingStrategy;
+import chess.domain.piece.move.knight.KnightMovingStrategy;
 
 public class Knight extends Piece {
 
+    private final MovingStrategy strategy;
+
     public Knight(Color color) {
         super(color, PieceType.KNIGHT);
+        this.strategy = new KnightMovingStrategy();
     }
 
     @Override
-    public void move(Board ignored, Point from, Point to) {
-        List<Point> candidates = KnightDirection.createNextPointCandidates(from);
-        if (!candidates.contains(to)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 경로입니다.");
-        }
+    public boolean move(Board ignored, Point from, Point to) {
+        return strategy.move(ignored, from, to);
     }
 }

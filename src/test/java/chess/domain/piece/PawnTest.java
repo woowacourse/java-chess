@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
-import chess.domain.board.Point;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.board.Board;
+import chess.domain.board.BoardFixtures;
+import chess.domain.board.Point;
 
 public class PawnTest {
 
@@ -30,7 +31,7 @@ public class PawnTest {
         Board board = BoardFixtures.empty();
 
         assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -42,8 +43,9 @@ public class PawnTest {
         Point to = Point.of("b6");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -55,8 +57,9 @@ public class PawnTest {
         Point to = Point.of("a4");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -68,8 +71,9 @@ public class PawnTest {
         Point to = Point.of("b5");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -80,24 +84,26 @@ public class PawnTest {
         Point from = Point.of("b7");
         Point to = Point.of("b5");
         Board board = BoardFixtures.create(
-                Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
+            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 
     @Test
-    @DisplayName("폰이 초기 위치에서 두 칸을 움직일 떄, 중간 위치에 말이 있으면 예외가 발생한다.")
+    @DisplayName("폰이 초기 위치에서 두 칸을 움직일 떄, 중간 위치에 말이 있으면 이동할 수 없다.")
     void moveForwardTwoStepExceptionTest2() {
         Piece piece = new Pawn(Color.BLACK);
 
         Point from = Point.of("b7");
         Point to = Point.of("b5");
         Board board = BoardFixtures.create(
-                Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
+            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 
     @Test
@@ -108,10 +114,11 @@ public class PawnTest {
         Point from = Point.of("a4");
         Point to = Point.of("b5");
         Board board = BoardFixtures.create(
-                Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
+            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -122,10 +129,11 @@ public class PawnTest {
         Point from = Point.of("a5");
         Point to = Point.of("b4");
         Board board = BoardFixtures.create(
-                Map.of(Point.of(2, 4), new Rook(Color.WHITE)));
+            Map.of(Point.of(2, 4), new Rook(Color.WHITE)));
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -136,10 +144,11 @@ public class PawnTest {
         Point from = Point.of("a2");
         Point to = Point.of("b3");
         Board board = BoardFixtures.create(
-                Map.of(to, new Rook(Color.BLACK)));
+            Map.of(to, new Rook(Color.BLACK)));
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -150,9 +159,10 @@ public class PawnTest {
         Point from = Point.of("a7");
         Point to = Point.of("b6");
         Board board = BoardFixtures.create(
-                Map.of(to, new Rook(Color.WHITE)));
+            Map.of(to, new Rook(Color.WHITE)));
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 }

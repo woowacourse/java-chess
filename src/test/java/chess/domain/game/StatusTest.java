@@ -1,5 +1,13 @@
 package chess.domain.game;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
@@ -7,13 +15,6 @@ import chess.domain.piece.King;
 import chess.domain.piece.Queen;
 import chess.dto.Response;
 import chess.dto.ScoreResponse;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.*;
 
 class StatusTest {
 
@@ -23,8 +24,8 @@ class StatusTest {
         GameState gameState = new Status(BoardFixtures.initial(), Color.WHITE);
 
         assertThatThrownBy(gameState::start)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessageContaining("[ERROR]");
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessageContaining("[ERROR]");
     }
 
     @Test
@@ -51,8 +52,8 @@ class StatusTest {
     void moveToFinishTest() {
         List<String> arguments = List.of("e1", "e8");
         GameState gameState = new Status(BoardFixtures.create(Map.of(
-                Point.of("e8"), new King(Color.BLACK),
-                Point.of("e1"), new Queen(Color.WHITE)
+            Point.of("e8"), new King(Color.BLACK),
+            Point.of("e1"), new Queen(Color.WHITE)
         )), Color.WHITE);
 
         GameState movedState = gameState.move(arguments);

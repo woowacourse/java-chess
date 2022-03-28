@@ -1,11 +1,11 @@
 package chess.domain.piece.move.knight;
 
-import chess.domain.board.Point;
-import chess.domain.piece.move.Direction;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import chess.domain.board.Point;
+import chess.domain.piece.move.Direction;
 
 public enum KnightDirection implements Direction {
 
@@ -28,9 +28,9 @@ public enum KnightDirection implements Direction {
 
     public static List<Point> createNextPointCandidates(Point from) {
         return Arrays.stream(values())
-                .filter(value -> from.isInRangeNext(value.dx, value.dy))
-                .map(from::next)
-                .collect(Collectors.toList());
+            .filter(value -> from.isInRangeNext(value.dx, value.dy))
+            .map(from::next)
+            .collect(Collectors.toList());
     }
 
     @Override

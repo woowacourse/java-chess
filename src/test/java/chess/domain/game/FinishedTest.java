@@ -1,16 +1,16 @@
 package chess.domain.game;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import chess.domain.board.BoardFixtures;
 import chess.domain.piece.Color;
 import chess.dto.EmptyResponse;
 import chess.dto.Response;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 class FinishedTest {
 
@@ -20,8 +20,8 @@ class FinishedTest {
         GameState gameState = new Finished(BoardFixtures.initial(), Color.WHITE);
 
         assertThatThrownBy(gameState::start)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessageContaining("[ERROR]");
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessageContaining("[ERROR]");
     }
 
     @Test
@@ -30,8 +30,8 @@ class FinishedTest {
         GameState gameState = new Finished(BoardFixtures.initial(), Color.WHITE);
 
         assertThatThrownBy(gameState::finish)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessageContaining("[ERROR]");
+            .isInstanceOf(UnsupportedOperationException.class)
+            .hasMessageContaining("[ERROR]");
     }
 
     @Test
@@ -41,7 +41,7 @@ class FinishedTest {
         GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> state.move(ignored));
+            .isThrownBy(() -> state.move(ignored));
     }
 
     @Test
@@ -50,7 +50,7 @@ class FinishedTest {
         GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(state::status);
+            .isThrownBy(state::status);
     }
 
     @Test
@@ -62,7 +62,6 @@ class FinishedTest {
 
         assertThat(isRunnable).isFalse();
     }
-
 
     @Test
     @DisplayName("종료 상태에서 비어있는 응답을 반환한다.")

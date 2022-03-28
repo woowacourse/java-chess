@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.InitialBoardGenerator;
-import chess.domain.board.Point;
-import chess.domain.board.TestBoardGenerator;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.board.InitialBoardGenerator;
+import chess.domain.board.Point;
+import chess.domain.board.TestBoardGenerator;
 
 class PieceTypeTest {
 
@@ -21,7 +22,7 @@ class PieceTypeTest {
         Map<Point, Piece> pointPieces = generator.generate();
 
         assertThat(PieceType.calculateScore(pointPieces, Color.WHITE))
-                .isEqualTo(initialTotalScore);
+            .isEqualTo(initialTotalScore);
     }
 
     @Test
@@ -29,13 +30,13 @@ class PieceTypeTest {
     void calculateScoreWithVerticalPawn() {
         double blackScore = 6;
         TestBoardGenerator generator = new TestBoardGenerator(Map.of(
-                Point.of("a7"), new Pawn(Color.BLACK),
-                Point.of("a6"), new Pawn(Color.BLACK),
-                Point.of("a8"), new Rook(Color.BLACK)
+            Point.of("a7"), new Pawn(Color.BLACK),
+            Point.of("a6"), new Pawn(Color.BLACK),
+            Point.of("a8"), new Rook(Color.BLACK)
         ));
         Map<Point, Piece> pointPieces = generator.generate();
 
         assertThat(PieceType.calculateScore(pointPieces, Color.BLACK))
-                .isEqualTo(blackScore);
+            .isEqualTo(blackScore);
     }
 }

@@ -11,5 +11,5 @@ public abstract class PawnMoveChain {
         this.support = support;
     }
 
-    public abstract void move(Board board, Point from, Point to);
+    public abstract boolean move(Board board, Point from, Point to);
 }

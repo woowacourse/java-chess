@@ -1,14 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
-import chess.domain.board.Point;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.board.Board;
+import chess.domain.board.BoardFixtures;
+import chess.domain.board.Point;
 
 public class QueenTest {
 
@@ -28,8 +29,9 @@ public class QueenTest {
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -40,8 +42,9 @@ public class QueenTest {
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-                .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -52,8 +55,9 @@ public class QueenTest {
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 
     @Test
@@ -63,11 +67,12 @@ public class QueenTest {
         Point to = Point.of(1, 7);
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.create(Map.of(
-                Point.of(1, 5), new Pawn(Color.WHITE)
+            Point.of(1, 5), new Pawn(Color.WHITE)
         ));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 
     @Test
@@ -77,10 +82,11 @@ public class QueenTest {
         Point to = Point.of("g5");
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.create(Map.of(
-                Point.of("d2"), new Pawn(Color.WHITE)
+            Point.of("d2"), new Pawn(Color.WHITE)
         ));
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isFalse();
     }
 }

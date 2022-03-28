@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import chess.domain.piece.Piece;
 
 public class BoardFixtures {
 

@@ -10,14 +10,10 @@ public class PawnMoveDiagonalChain extends PawnMoveChain {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
-        int horizontal = to.subtractHorizontal(from);
+    public boolean move(Board board, Point from, Point to) {
+        int horizontal = Math.abs(to.subtractHorizontal(from));
         int vertical = support.forwarding(to.subtractVertical(from));
-        if (isToPoint(horizontal, vertical) &&
-                isEnemyExist(board, to)) {
-            return;
-        }
-        throw new IllegalArgumentException("[ERROR] 폰이 이동할 수 없는 위치입니다.");
+        return isToPoint(horizontal, vertical) && isEnemyExist(board, to);
     }
 
     private boolean isEnemyExist(Board board, Point to) {

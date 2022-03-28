@@ -49,9 +49,11 @@ public class LineNumber {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LineNumber that = (LineNumber) o;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        LineNumber that = (LineNumber)o;
         return number == that.number;
     }
 
@@ -63,7 +65,7 @@ public class LineNumber {
     @Override
     public String toString() {
         return "LineNumber{" +
-                "number=" + number +
-                '}';
+            "number=" + number +
+            '}';
     }
 }

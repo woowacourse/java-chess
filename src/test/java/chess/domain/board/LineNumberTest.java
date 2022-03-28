@@ -1,12 +1,11 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.*;
-
 
 class LineNumberTest {
 
@@ -15,15 +14,15 @@ class LineNumberTest {
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
     void createLineNumberByString(final int number) {
         assertThatCode(() -> LineNumber.of(number))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @ParameterizedTest(name = "{index} {displayName} input = {0}")
     @DisplayName("문자열로 위치를 생성할 수 있다.")
-    @ValueSource(strings = {"1", "2", "3", "4", "5", "6","7", "8"})
+    @ValueSource(strings = {"1", "2", "3", "4", "5", "6", "7", "8"})
     void createLineNumberByString(final String input) {
         assertThatCode(() -> LineNumber.of(input))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @ParameterizedTest(name = "{index} {displayName} input = {0}")
@@ -31,7 +30,7 @@ class LineNumberTest {
     @ValueSource(ints = {0, 9, 10})
     void throwsExceptionWithNumberOutOfRange(final int number) {
         assertThatThrownBy(() -> LineNumber.of(number))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -1,15 +1,16 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Queen;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Queen;
 
 class BoardTest {
 
@@ -28,7 +29,7 @@ class BoardTest {
         Board board = BoardFixtures.initial();
 
         assertThatCode(() -> board.move(arguments, turnColor))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Test
@@ -39,7 +40,7 @@ class BoardTest {
         Board board = BoardFixtures.initial();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> board.move(arguments, turnColor));
+            .isThrownBy(() -> board.move(arguments, turnColor));
     }
 
     @Test
@@ -50,7 +51,7 @@ class BoardTest {
         Board board = BoardFixtures.initial();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> board.move(arguments, turnColor));
+            .isThrownBy(() -> board.move(arguments, turnColor));
     }
 
     @Test
@@ -61,7 +62,7 @@ class BoardTest {
         Board board = BoardFixtures.initial();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> board.move(arguments, turnColor));
+            .isThrownBy(() -> board.move(arguments, turnColor));
     }
 
     @Test
@@ -69,8 +70,8 @@ class BoardTest {
     void returnTrueWithKingDead() {
         List<String> arguments = List.of("e1", "e8");
         Board board = BoardFixtures.create(Map.of(
-                Point.of("e8"), new King(Color.BLACK),
-                Point.of("e1"), new Queen(Color.WHITE)
+            Point.of("e8"), new King(Color.BLACK),
+            Point.of("e1"), new Queen(Color.WHITE)
         ));
 
         boolean isKingDead = board.move(arguments, Color.WHITE);
@@ -95,6 +96,6 @@ class BoardTest {
         Board board = Board.of(new InitialBoardGenerator());
 
         assertThat(board.calculateScore().values())
-                .containsExactly(initialTotalScore, initialTotalScore);
+            .containsExactly(initialTotalScore, initialTotalScore);
     }
 }

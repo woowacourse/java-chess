@@ -14,16 +14,16 @@ public class PawnMoveDoubleForwardChain extends PawnMoveChain {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public boolean move(Board board, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
         Point middle = from.next(StraightDirection.find(from, to));
         if (isStartLine(from) &&
-                isToPoint(horizontal, vertical) &&
-                isNoObstacle(board, to, middle)) {
-            return;
+            isToPoint(horizontal, vertical) &&
+            isNoObstacle(board, to, middle)) {
+            return true;
         }
-        next.move(board, from, to);
+        return next.move(board, from, to);
     }
 
     private boolean isStartLine(Point from) {

@@ -22,8 +22,8 @@ public class Request {
 
     private static List<String> toArguments(String[] split) {
         return Arrays.stream(split)
-                .skip(1)
-                .collect(Collectors.toList());
+            .skip(1)
+            .collect(Collectors.toList());
     }
 
     public String getCommand() {

@@ -1,13 +1,11 @@
 package chess.domain.game;
 
-import chess.dto.Response;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ReadyTest {
 
@@ -42,7 +40,7 @@ class ReadyTest {
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> state.move(ignored));
+            .isThrownBy(() -> state.move(ignored));
     }
 
     @Test
@@ -51,7 +49,7 @@ class ReadyTest {
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(state::status);
+            .isThrownBy(state::status);
     }
 
     @Test
@@ -70,6 +68,6 @@ class ReadyTest {
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(state::getResponse);
+            .isThrownBy(state::getResponse);
     }
 }

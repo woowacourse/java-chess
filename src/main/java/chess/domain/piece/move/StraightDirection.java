@@ -1,11 +1,14 @@
 package chess.domain.piece.move;
 
-import chess.domain.board.Point;
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import chess.domain.board.Point;
 
 public enum StraightDirection implements Direction {
+
     NORTH(0, 1),
     SOUTH(0, -1),
     WEST(-1, 0),
@@ -29,7 +32,7 @@ public enum StraightDirection implements Direction {
         int v = to.subtractVertical(from);
         int dx = toDegree(h);
         int dy = toDegree(v);
-        return of(dx,dy);
+        return of(dx, dy);
     }
 
     private static int toDegree(int number) {
@@ -44,10 +47,10 @@ public enum StraightDirection implements Direction {
 
     private static StraightDirection of(int dx, int dy) {
         return Arrays.stream(values())
-                .filter(value -> value.dx == dx)
-                .filter(value -> value.dy == dy)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 방향이 없습니다."));
+            .filter(value -> value.dx == dx)
+            .filter(value -> value.dy == dy)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 방향이 없습니다."));
     }
 
     @Override
@@ -61,6 +64,19 @@ public enum StraightDirection implements Direction {
     }
 
     public boolean isCross() {
-        return List.of(NORTH, SOUTH, EAST, WEST).contains(this);
+        return getCross().contains(this);
+    }
+
+    public static List<StraightDirection> getCross() {
+        return List.of(NORTH, SOUTH, EAST, WEST);
+    }
+
+    public static List<StraightDirection> getDiagonal() {
+        return List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHEAST);
+    }
+
+    public static List<StraightDirection> getAll() {
+        return Stream.concat(getCross().stream(), getDiagonal().stream())
+            .collect(Collectors.toList());
     }
 }

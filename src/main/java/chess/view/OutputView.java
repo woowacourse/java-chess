@@ -6,7 +6,7 @@ public class OutputView {
 
     public void printIntroduction() {
         System.out.println("체스 게임을 시작합니다.\n" +
-                "게임 시작은 start, 종료는 end 명령을 입력하세요.");
+            "게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
     public void printException(RuntimeException e) {

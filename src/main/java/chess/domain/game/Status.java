@@ -1,11 +1,11 @@
 package chess.domain.game;
 
+import java.util.List;
+
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.dto.Response;
 import chess.dto.ScoreResponse;
-
-import java.util.List;
 
 public class Status extends Started {
 

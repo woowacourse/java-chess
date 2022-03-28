@@ -2,20 +2,22 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.piece.move.MovingStrategy;
 import chess.domain.piece.move.StraightDirection;
+import chess.domain.piece.move.straight.OneStepDistance;
+import chess.domain.piece.move.straight.StraightMovingStrategy;
 
 public class King extends Piece {
 
+    private final MovingStrategy strategy;
+
     public King(Color color) {
         super(color, PieceType.KING);
+        this.strategy = new StraightMovingStrategy(StraightDirection.getAll(), OneStepDistance.getInstance());
     }
 
     @Override
-    public void move(Board ignored, Point from, Point to) {
-        StraightDirection direction = StraightDirection.find(from, to);
-        Point next = from.next(direction);
-        if (!next.equals(to)) {
-            throw new IllegalArgumentException("[ERROR] 킹은 한 칸만 이동할 수 있습니다.");
-        }
+    public boolean move(Board board, Point from, Point to) {
+        return strategy.move(board, from, to);
     }
 }

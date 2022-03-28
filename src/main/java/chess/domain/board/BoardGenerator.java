@@ -1,10 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
-
 import java.util.Map;
 
-public interface BoardGenerator {
+import chess.domain.piece.Piece;
 
+public interface BoardGenerator {
     Map<Point, Piece> generate();
 }

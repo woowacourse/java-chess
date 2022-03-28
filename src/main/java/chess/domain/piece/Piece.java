@@ -5,7 +5,7 @@ import chess.domain.board.Point;
 
 public abstract class Piece {
 
-    protected final Color color;
+    private final Color color;
     private final PieceType type;
 
     public Piece(Color color, PieceType type) {
@@ -25,5 +25,5 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
-    public abstract void move(Board board, Point from, Point to);
+    public abstract boolean move(Board board, Point from, Point to);
 }

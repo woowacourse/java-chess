@@ -21,9 +21,9 @@ public enum Command {
 
     public static Command find(String input) {
         return Arrays.stream(values())
-                .filter(value -> value.input.equals(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다."));
+            .filter(value -> value.input.equals(input))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다."));
     }
 
     public GameState execute(GameState state, List<String> arguments) {

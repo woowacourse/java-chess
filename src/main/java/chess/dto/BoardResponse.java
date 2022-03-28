@@ -1,14 +1,14 @@
 package chess.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.view.PieceRepresentation;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class BoardResponse implements Response {
 
