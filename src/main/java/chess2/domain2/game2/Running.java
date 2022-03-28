@@ -42,6 +42,11 @@ abstract class Running extends Started {
     }
 
     @Override
+    public final GameResult result() {
+        throw new UnsupportedOperationException("아직 종료되지 않은 게임입니다.");
+    }
+
+    @Override
     public final boolean isEnd() {
         return false;
     }

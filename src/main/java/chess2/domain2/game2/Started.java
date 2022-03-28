@@ -17,11 +17,6 @@ abstract class Started implements Game {
     }
 
     @Override
-    public final GameResult result() {
-        return new GameResult(board.getBoard());
-    }
-
-    @Override
     public final BoardViewDto boardView() {
         return new BoardViewDto(board);
     }
