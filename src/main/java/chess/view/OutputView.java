@@ -1,12 +1,14 @@
 package chess.view;
 
-import static chess.view.InputView.COMMAND_END;
-import static chess.view.InputView.COMMAND_START;
+import static chess.view.Expressions.COMMAND_END;
+import static chess.view.Expressions.COMMAND_START;
+import static chess.view.Expressions.PIECE_EXPRESSONS;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
@@ -16,10 +18,17 @@ public class OutputView {
     private static final String GAME_END_COMMAND_NAME = "게임 종료";
     private static final String GAME_MOVE_COMMAND = "move source위치 target위치 - 예. move b2 b3";
 
+    private static final int COUNT_PIECES_IN_A_ROW = 8;
+
     private static final String CAMP_BLACK = "흑색 진영";
     private static final String CAMP_WHITE = "백색 진영";
     private static final String FORMAT_WINNER = "%s의 승리입니다.%n";
     private static final String MESSAGE_DRAW = "무승부입니다.";
+
+    private static final String MESSAGE_GAME_END = "해당 게임이 종료되었습니다.";
+    private static final String FORMAT_SCORE = "%s 점수 : %.1f%n";
+
+    private static final String ERROR_NO_SUCH_PIECE = "존재하지 않는 기물입니다.";
 
     public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -29,26 +38,26 @@ public class OutputView {
     }
 
     public void printBoard(Map<Position, Piece> board) {
-        int count = 0;
-        for (Position position : board.keySet()) {
-            String content = makeBoardContentString(board.get(position));
-            System.out.print(content);
-            count++;
-            if (count % 8 == 0) {
-                System.out.println();
-            }
+        String pieces = piecesToString(board);
+        for (int i = 0; i < COUNT_PIECES_IN_A_ROW; i++) {
+            int startIndex = i * COUNT_PIECES_IN_A_ROW;
+            int endIndex = startIndex + COUNT_PIECES_IN_A_ROW;
+            System.out.println(pieces.substring(startIndex, endIndex));
         }
     }
 
-    private String makeBoardContentString(Piece piece) {
-        if (piece == null) {
-            return ".";
-        }
-        return decideCaseByCamp(piece);
+    private String piecesToString(Map<Position, Piece> board) {
+        return board.values().stream()
+                .map(this::pieceToString)
+                .collect(Collectors.joining());
     }
 
-    private String decideCaseByCamp(Piece piece) {
+    private String pieceToString(Piece piece) {
         String convertedString = convertPieceToString(piece);
+        return decideCaseByCamp(piece, convertedString);
+    }
+
+    private String decideCaseByCamp(Piece piece, String convertedString) {
         if (piece.isCamp(Camp.BLACK)) {
             return convertedString.toUpperCase();
         }
@@ -56,33 +65,20 @@ public class OutputView {
     }
 
     private String convertPieceToString(Piece piece) {
-        if (piece.isBishop()) {
-            return "b";
-        }
-        if (piece.isKing()) {
-            return "k";
-        }
-        if (piece.isKnight()) {
-            return "n";
-        }
-        if (piece.isPawn()) {
-            return "p";
-        }
-        if (piece.isQueen()) {
-            return "q";
-        }
-        if (piece.isRook()) {
-            return "r";
-        }
-        throw new IllegalArgumentException("존재하지 않는 기물입니다.");
+        return PIECE_EXPRESSONS.keySet().stream()
+                .filter(piecePredicate -> piecePredicate.test(piece))
+                .findFirst()
+                .map(PIECE_EXPRESSONS::get)
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_PIECE));
     }
 
     public void printFinishMessage() {
-        System.out.println("해당 게임이 종료되었습니다.");
+        System.out.println(MESSAGE_GAME_END);
     }
 
     public void printStatus(double statusOfWhite, double statusOfBlack) {
-        System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
+        System.out.printf(FORMAT_SCORE, CAMP_WHITE, statusOfWhite);
+        System.out.printf(FORMAT_SCORE, CAMP_BLACK, statusOfBlack);
     }
 
     public void printWinner(Camp winner) {

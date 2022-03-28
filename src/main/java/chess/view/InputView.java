@@ -1,15 +1,17 @@
 package chess.view;
 
-import chess.domain.board.Position;
+import static chess.view.Expressions.EXPRESSIONS_COLUMN;
+import static chess.view.Expressions.EXPRESSIONS_COMMAND;
+import static chess.view.Expressions.EXPRESSIONS_ROW;
+
 import chess.command.Command;
+import chess.domain.board.Position;
 import java.util.Scanner;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputView {
-    static final String COMMAND_START = "start";
-    static final String COMMAND_END = "end";
-    private static final String COMMAND_STATUS = "status";
     private static final String COMMAND_MOVE = "move";
 
     private static final String ERROR_BLANK = "명령어를 입력하세요.";
@@ -39,14 +41,9 @@ public class InputView {
     }
 
     private Command parseCommand(String rawCommand) {
-        if (COMMAND_START.equals(rawCommand)) {
-            return Command.createStart();
-        }
-        if (COMMAND_END.equals(rawCommand)) {
-            return Command.createEnd();
-        }
-        if (COMMAND_STATUS.equals(rawCommand)) {
-            return Command.createStatus();
+        Supplier<Command> commandSupplier = EXPRESSIONS_COMMAND.get(rawCommand);
+        if (commandSupplier != null) {
+            return commandSupplier.get();
         }
         if (rawCommand.startsWith(COMMAND_MOVE)) {
             return parseMoveCommand(rawCommand);
@@ -60,14 +57,19 @@ public class InputView {
             throw new IllegalArgumentException(ERROR_MOVE_COMMAND_FORMAT);
         }
         Matcher positionMatcher = PATTERN_POSITION.matcher(rawCommand);
-        String rawSourcePosition = findPosition(positionMatcher);
-        String rawTargetPosition = findPosition(positionMatcher);
+        Position sourcePosition = findPosition(positionMatcher);
+        Position targetPosition = findPosition(positionMatcher);
 
-        return Command.createMove(Position.from(rawSourcePosition), Position.from(rawTargetPosition));
+        return Command.createMove(sourcePosition, targetPosition);
     }
 
-    private String findPosition(Matcher positionMatcher) {
+    private Position findPosition(Matcher positionMatcher) {
         positionMatcher.find();
-        return positionMatcher.group();
+        return parsePosition(positionMatcher.group());
+    }
+
+    private Position parsePosition(String rawPosition) {
+        return new Position(EXPRESSIONS_COLUMN.get(rawPosition.charAt(0)),
+                EXPRESSIONS_ROW.get(rawPosition.charAt(1)));
     }
 }

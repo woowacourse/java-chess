@@ -24,10 +24,6 @@ public enum Row {
         this.value = value;
     }
 
-    public static Row from(String rawRow) {
-        return from(Integer.parseInt(rawRow) - 1);
-    }
-
     public Row flip() {
         return from(MAX_VALUE - this.value);
     }

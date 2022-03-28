@@ -17,12 +17,6 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position from(String rawPosition) {
-        String rawColumn = rawPosition.substring(0, 1);
-        String rawRow = rawPosition.substring(1);
-        return new Position(Column.from(rawColumn), Row.from(rawRow));
-    }
-
     public int columnDistance(Position otherPosition) {
         return this.column.distance(otherPosition.column);
     }

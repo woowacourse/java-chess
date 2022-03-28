@@ -4,21 +4,16 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class Queen extends Piece{
-    private static final String ERROR_CANT_MOVE = "퀸이 이동할 수 없는 위치입니다.";
-    private static final int NOT_MOVED_DISTANCE = 0;
-    private static final double SCORE = 9;
+public class None extends Piece {
+    private static final String ERROR_CANT_MOVE = "말이 없어 이동할 수 없습니다.";
 
-    public Queen(Camp camp) {
-        super(camp);
+    public None() {
+        super(Camp.NONE);
     }
 
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException(ERROR_CANT_MOVE);
-        }
-        moveFunction.accept(this);
+        throw new IllegalArgumentException(ERROR_CANT_MOVE);
     }
 
     @Override
@@ -28,20 +23,12 @@ public final class Queen extends Piece{
 
     @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int columnDistance = beforePosition.columnDistance(afterPosition);
-        int rowDistance = beforePosition.rowDistance(afterPosition);
-        if (columnDistance == NOT_MOVED_DISTANCE) {
-            return true;
-        }
-        if (rowDistance == NOT_MOVED_DISTANCE) {
-            return true;
-        }
-        return columnDistance == rowDistance;
+        return false;
     }
 
     @Override
     public double getScore() {
-        return SCORE;
+        return 0;
     }
 
     @Override
@@ -66,7 +53,7 @@ public final class Queen extends Piece{
 
     @Override
     public boolean isQueen() {
-        return true;
+        return false;
     }
 
     @Override
@@ -76,7 +63,6 @@ public final class Queen extends Piece{
 
     @Override
     public boolean isNone() {
-        return false;
+        return true;
     }
-
 }

@@ -7,6 +7,7 @@ import chess.domain.Camp;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.None;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -86,7 +87,7 @@ public final class Board {
 
     private void initializeBlankColumn(Column column) {
         for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
-            value.put(new Position(column, Row.values()[i]), null);
+            value.put(new Position(column, Row.values()[i]), new None());
         }
     }
 
@@ -141,12 +142,12 @@ public final class Board {
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
             this.value.put(afterPosition, piece);
-            this.value.put(beforePosition, null);
+            this.value.put(beforePosition, new None());
         };
     }
 
     private boolean isBlank(Position afterPosition) {
-        return value.get(afterPosition) == null;
+        return value.get(afterPosition).isNone();
     }
 
     public boolean hasKingCaptured(){
@@ -156,7 +157,6 @@ public final class Board {
     private List<Piece> collectKing() {
         return this.value.values()
                 .stream()
-                .filter(Objects::nonNull)
                 .filter(Piece::isKing)
                 .collect(Collectors.toList());
     }
@@ -171,7 +171,6 @@ public final class Board {
     private List<Piece> collectPiecesOfCampIn(Column column, Camp camp) {
         return Arrays.stream(Row.values())
                 .map(row -> this.value.get(new Position(column, row)))
-                .filter(Objects::nonNull)
                 .filter(piece -> piece.isCamp(camp))
                 .collect(Collectors.toList());
     }

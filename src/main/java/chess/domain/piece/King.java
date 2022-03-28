@@ -70,4 +70,9 @@ public final class King extends Piece {
     public boolean isRook() {
         return false;
     }
+
+    @Override
+    public boolean isNone() {
+        return false;
+    }
 }

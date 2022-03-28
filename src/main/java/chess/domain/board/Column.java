@@ -5,31 +5,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0, "a"),
-    B(1, "b"),
-    C(2, "c"),
-    D(3, "d"),
-    E(4, "e"),
-    F(5, "f"),
-    G(6, "g"),
-    H(7, "h"),
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7),
     ;
 
     private static final String ERROR_NO_SUCH_COLUMN = "존재하지 않는 열입니다.";
 
     private final int value;
-    private final String name;
 
-    Column(final int value, String name) {
+    Column(final int value) {
         this.value = value;
-        this.name = name;
-    }
-
-    public static Column from(String rawColumn) {
-        return Arrays.stream(values())
-                .filter(column -> column.name.equals(rawColumn))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_COLUMN));
     }
 
     private static Column from(int value) {
