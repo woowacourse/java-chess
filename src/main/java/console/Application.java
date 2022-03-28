@@ -6,6 +6,11 @@ import static chess.position.Rank.*;
 import static chess.position.Rank.TWO;
 
 import chess.ChessBoard;
+import chess.command.Command;
+import chess.command.EndCommand;
+import chess.command.MoveCommand;
+import chess.command.StartCommand;
+import chess.command.StatusCommand;
 import chess.piece.*;
 import chess.position.Position;
 import console.view.*;
@@ -34,7 +39,7 @@ public class Application {
                         throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
                     }
 
-                    chessBoard.move(command.getFrom(), command.getTo());
+                    chessBoard.move(command.from(), command.to());
                     OutputView.printChessBoard(chessBoard.getPieces());
                 }
 
@@ -64,7 +69,7 @@ public class Application {
 
     private static Command inputCommand() {
         try {
-            return InputView.inputCommand();
+            return Command.from(InputView.inputCommand());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return inputCommand();
