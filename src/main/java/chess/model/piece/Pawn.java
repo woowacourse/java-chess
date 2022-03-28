@@ -12,20 +12,6 @@ public final class Pawn extends Piece {
         super(color, square, new PawnMovableStrategy(nonAttackDirection(color), attackDirection(color)));
     }
 
-    @Override
-    public Point getPoint() {
-        return Point.PAWN;
-    }
-
-    public boolean isFirstLocation() {
-        return square().isPawnFirstSquare(color());
-    }
-
-    @Override
-    public String getLetter() {
-        return "p";
-    }
-
     private static List<Direction> nonAttackDirection(Color color) {
         if (color.isBlack()) {
             return List.of(Direction.SOUTH);
@@ -41,12 +27,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public Point getPoint() {
+        return Point.PAWN;
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean isFirstLocation() {
+        return square().isPawnFirstSquare(color());
     }
 }

@@ -11,11 +11,6 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public String getLetter() {
-        return "q";
-    }
-
-    @Override
     public Point getPoint() {
         return Point.QUEEN;
     }

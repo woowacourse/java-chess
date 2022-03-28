@@ -11,6 +11,7 @@ import chess.model.board.Board;
 import chess.model.board.ChessInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +40,8 @@ public class BoardTest {
         Piece h8Piece = board.findPieceBySquare(new Square(File.H, Rank.EIGHT));
 
         assertAll(
-                () -> assertThat(a1Piece.getLetter()).isEqualTo("r"),
-                () -> assertThat(h8Piece.getLetter()).isEqualTo("r")
+                () -> assertThat(a1Piece.getClass()).isEqualTo(Rook.class),
+                () -> assertThat(h8Piece.getClass()).isEqualTo(Rook.class)
         );
     }
 

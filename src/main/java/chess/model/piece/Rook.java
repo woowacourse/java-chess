@@ -16,9 +16,4 @@ public final class Rook extends Piece {
     public Point getPoint() {
         return Point.ROOK;
     }
-
-    @Override
-    public String getLetter() {
-        return "r";
-    }
 }

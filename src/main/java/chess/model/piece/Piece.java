@@ -24,8 +24,6 @@ public abstract class Piece {
         this(color, new Square(file, rank), strategy);
     }
 
-    public abstract String getLetter();
-
     public abstract Point getPoint();
 
     public boolean movable(final Piece targetPiece) {

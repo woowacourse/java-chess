@@ -15,9 +15,4 @@ public final class Bishop extends Piece {
     public Point getPoint() {
         return Point.BISHOP;
     }
-
-    @Override
-    public String getLetter() {
-        return "b";
-    }
 }

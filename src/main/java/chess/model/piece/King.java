@@ -14,9 +14,4 @@ public final class King extends Piece {
     public Point getPoint() {
         return Point.KING;
     }
-
-    @Override
-    public String getLetter() {
-        return "k";
-    }
 }

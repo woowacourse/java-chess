@@ -5,6 +5,7 @@ import chess.model.GameStartCommand;
 import chess.model.piece.Piece;
 import chess.state.GameState;
 import chess.state.Ready;
+import chess.util.PieceToLetterConvertor;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -44,16 +45,8 @@ public final class ChessController {
 
     private List<String> toDto(final Board board) {
         return board.getBoard().stream()
-                .map(this::convertToLetter)
+                .map(PieceToLetterConvertor::convertToLetter)
                 .collect(Collectors.toList());
-    }
-
-    private String convertToLetter(final Piece piece) {
-        String pieceDto = piece.getLetter();
-        if (piece.isBlack()) {
-            return pieceDto.toUpperCase();
-        }
-        return pieceDto;
     }
 
     private ScoresDto toDto(final Map<String, Double> scores) {

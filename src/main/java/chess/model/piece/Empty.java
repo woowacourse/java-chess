@@ -11,11 +11,6 @@ public class Empty extends Piece {
     }
 
     @Override
-    public String getLetter() {
-        return ".";
-    }
-
-    @Override
     public Point getPoint() {
         return Point.EMPTY;
     }
