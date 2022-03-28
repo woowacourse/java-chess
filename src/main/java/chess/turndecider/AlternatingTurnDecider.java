@@ -1,10 +1,12 @@
 package chess.turndecider;
 
 import chess.domain.piece.Piece;
+import chess.turndecider.state.State;
+import chess.turndecider.state.WhiteTeam;
 
 public class AlternatingTurnDecider implements TurnDecider {
 
-    private State currentState = new WhiteState();
+    private State currentState = new WhiteTeam();
 
     @Override
     public boolean isCorrectTurn(Piece sourcePiece) {
@@ -12,11 +14,16 @@ public class AlternatingTurnDecider implements TurnDecider {
     }
 
     @Override
-    public void nextState() {
-        currentState = currentState.nextState();
+    public void nextState(boolean isGameFinished) {
+        currentState = currentState.nextState(isGameFinished);
     }
 
     private boolean isSameColor(Piece sourcePiece) {
         return currentState.isSameColor(sourcePiece);
+    }
+
+    @Override
+    public boolean isRunning() {
+        return currentState.isRunning();
     }
 }

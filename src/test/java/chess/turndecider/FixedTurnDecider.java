@@ -1,20 +1,24 @@
 package chess.turndecider;
 
 import chess.domain.piece.Piece;
-import chess.turndecider.State;
-import chess.turndecider.TurnDecider;
-import chess.turndecider.WhiteState;
+import chess.turndecider.state.State;
+import chess.turndecider.state.WhiteTeam;
 
 public class FixedTurnDecider implements TurnDecider {
 
-    private final State currentState = new WhiteState();
+    private final State currentState = new WhiteTeam();
 
     public boolean isCorrectTurn(Piece sourcePiece) {
         return true;
     }
 
     @Override
-    public void nextState() {
+    public void nextState(boolean isFinished) {
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 }
 

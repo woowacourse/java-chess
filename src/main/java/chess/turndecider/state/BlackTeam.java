@@ -1,9 +1,9 @@
-package chess.turndecider;
+package chess.turndecider.state;
 
 import chess.domain.piece.constant.PieceColor;
 import chess.domain.piece.Piece;
 
-public class BlackState implements State {
+public class BlackTeam extends Running {
 
     private final PieceColor pieceColor = PieceColor.BLACK;
 
@@ -13,7 +13,10 @@ public class BlackState implements State {
     }
 
     @Override
-    public State nextState() {
-        return new WhiteState();
+    public State nextState(boolean isGameFinished) {
+        if (isGameFinished) {
+            return new Finish();
+        }
+        return new WhiteTeam();
     }
 }

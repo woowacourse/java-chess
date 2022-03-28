@@ -29,10 +29,10 @@ public class Board {
     public boolean move(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
-        boolean isFinished = board.get(target) instanceof King;
+        boolean isGameFinished = board.get(target) instanceof King;
         changePieces(source, target);
-        turnDecider.nextState();
-        return isFinished;
+        turnDecider.nextState(isGameFinished);
+        return isGameFinished;
     }
 
     private void turnDecide(Position source) {

@@ -34,10 +34,10 @@ class AlternatingTurnDeciderTest {
     void when_first_turn_white_is_ok_then_next_turn_black_is_black() {
         assertThat(turnDecider.isCorrectTurn(new Pawn(WHITE))).isTrue();
 
-        turnDecider.nextState();
+        turnDecider.nextState(false);
         assertThat(turnDecider.isCorrectTurn(new Pawn(BLACK))).isTrue();
 
-        turnDecider.nextState();
+        turnDecider.nextState(false);
         assertThat(turnDecider.isCorrectTurn(new Pawn(WHITE))).isTrue();
     }
 }

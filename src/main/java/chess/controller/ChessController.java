@@ -1,12 +1,14 @@
 package chess.controller;
 
 import static chess.constant.Command.END;
+import static chess.constant.Command.STATUS;
 
 import chess.constant.Command;
 import chess.domain.board.Board;
 import chess.domain.board.utils.BoardFactory;
 import chess.domain.board.utils.ProductionBoardFactory;
 import chess.dto.Request;
+import chess.turndecider.TurnDecider;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.turndecider.AlternatingTurnDecider;
@@ -18,7 +20,8 @@ public class ChessController {
 
         BoardFactory boardFactory = ProductionBoardFactory.getInstance();
 
-        Board board = new Board(boardFactory.create(), new AlternatingTurnDecider());
+        TurnDecider turnDecider = new AlternatingTurnDecider();
+        Board board = new Board(boardFactory.create(), turnDecider);
         Command beginCommand = InputView.inputStartCommand();
 
         if (beginCommand == END) {
@@ -26,13 +29,13 @@ public class ChessController {
         }
 
         OutputView.printChessGameBoard(board.getBoard());
-        while (true) {
+        while (turnDecider.isRunning()) {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand() == END) {
                 break;
             }
 
-            if (request.getCommand() == Command.STATUS) {
+            if (request.getCommand() == STATUS) {
                 OutputView.printCurrentTeamGameScore(board.calculateScore());
                 continue;
             }
