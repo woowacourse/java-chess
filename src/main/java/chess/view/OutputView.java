@@ -1,7 +1,7 @@
 package chess.view;
 
-import static chess.view.InputView.END_COMMAND;
-import static chess.view.InputView.START_COMMAND;
+import static chess.view.InputView.COMMAND_END;
+import static chess.view.InputView.COMMAND_START;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -17,8 +17,8 @@ public class OutputView {
 
     public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
-        System.out.printf(GAME_COMMAND_FORMAT, GAME_START_COMMAND_NAME, START_COMMAND);
-        System.out.printf(GAME_COMMAND_FORMAT, GAME_END_COMMAND_NAME, END_COMMAND);
+        System.out.printf(GAME_COMMAND_FORMAT, GAME_START_COMMAND_NAME, COMMAND_START);
+        System.out.printf(GAME_COMMAND_FORMAT, GAME_END_COMMAND_NAME, COMMAND_END);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_MOVE_COMMAND_NAME, GAME_MOVE_COMMAND);
     }
 

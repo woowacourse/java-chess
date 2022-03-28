@@ -1,17 +1,12 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Position;
+import chess.command.Command;
+import chess.command.Move;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class ChessGameController {
-    private static final Pattern POSITION_PATTERN = Pattern.compile("[a-h][1-8]");
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -23,44 +18,52 @@ public class ChessGameController {
     public void run() {
         outputView.printStartMessage();
         ChessGame chessGame = new ChessGame();
+        Command command;
+        do {
+            command = inputView.readCommand();
+            executeCommand(chessGame, command);
+        } while (!command.isEnd() && !chessGame.isFinished());
+    }
 
-        while (true) {
-            String command = inputView.inputCommand();
-            if ("start".equals(command)) {
-                chessGame.start();
-                outputView.printBoard(chessGame.getBoard().getValue());
-            }
-            if (command.startsWith("move")) {
-                List<String> commands = Arrays.asList(command.split(" "));
-                if (commands.size() != 3) {
-                    throw new IllegalArgumentException("이동 명령을 형식에 맞게 입력하세요.");
-                }
-                List<Position> positions = commands.stream()
-                        .filter(splitedCommand -> POSITION_PATTERN.matcher(splitedCommand).matches())
-                        .map(Position::from)
-                        .collect(Collectors.toList());
-                chessGame.move(positions.get(0), positions.get(1));
-                outputView.printBoard(chessGame.getBoard().getValue());
-                if (!chessGame.isRunning()) {
-                    printResult(chessGame);
-                }
-            }
-            if ("end".equals(command)) {
-                if (!chessGame.isRunning()) {
-                    break;
-                }
-                chessGame.end();
-                printResult(chessGame);
-            }
-            if ("status".equals(command)) {
-                outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-            }
+    private void executeCommand(ChessGame chessGame, Command command) {
+        if (command.isStart()) {
+            start(chessGame);
+        }
+        if (command.isMove()) {
+            move(chessGame, (Move) command);
+        }
+        if (command.isEnd()) {
+            end(chessGame);
+        }
+        if (command.isStatus()) {
+            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+        }
+    }
+
+    private void start(ChessGame chessGame) {
+        chessGame.start();
+        outputView.printBoard(chessGame.getBoard().getValue());
+    }
+
+    private void move(ChessGame chessGame, Move move) {
+        chessGame.move(move.getSourcePosition(), move.getTargetPosition());
+        outputView.printBoard(chessGame.getBoard().getValue());
+        if (chessGame.isFinished()) {
+            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            printResult(chessGame);
+        }
+    }
+
+    private void end(ChessGame chessGame) {
+        outputView.printFinishMessage();
+        chessGame.end();
+        if (chessGame.isFinished()) {
+            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            printResult(chessGame);
         }
     }
 
     private void printResult(ChessGame chessGame) {
-        outputView.printFinishMessage();
-        outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
         if (chessGame.hasBlackWon() > 0) {
             outputView.printBlackWin();
         }

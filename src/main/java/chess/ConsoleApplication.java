@@ -6,7 +6,6 @@ import chess.view.OutputView;
 
 public class ConsoleApplication {
     public static void main(String[] args) {
-
         ChessGameController chessGameController = new ChessGameController(new InputView(), new OutputView());
         chessGameController.run();
     }

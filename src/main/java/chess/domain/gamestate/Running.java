@@ -45,8 +45,8 @@ public class Running implements State {
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
