@@ -12,7 +12,6 @@ public class TeamScore {
         this.score = score;
     }
 
-
     public String getTeam() {
         return team.getTeamName();
     }

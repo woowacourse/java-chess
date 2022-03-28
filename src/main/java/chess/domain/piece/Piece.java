@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.LocationDiff;
-import chess.domain.state.Direction;
+import chess.domain.Direction;
 
 public abstract class Piece {
     private final Team team;

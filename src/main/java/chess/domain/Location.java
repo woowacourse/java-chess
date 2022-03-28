@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.state.Direction;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

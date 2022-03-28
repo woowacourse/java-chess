@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     public static void printChessBoard(Board board) {
-        for (Rank rank : Rank.values()) {
+        for (Rank rank : Rank.reverseValues()) {
             List<Piece> rankPieces = board.getPiecesByRank(rank);
             printEachRank(rankPieces);
         }

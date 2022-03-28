@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Direction;
 import chess.domain.Location;
 import chess.domain.LocationDiff;
 import chess.domain.TeamScore;

@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.state.Direction;
-
 public class LocationDiff {
 
     private final int diffFile;

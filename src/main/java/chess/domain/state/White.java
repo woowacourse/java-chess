@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Direction;
 import chess.domain.Location;
 import chess.domain.LocationDiff;
 import chess.domain.TeamScore;
@@ -26,7 +27,7 @@ public class White extends Running {
         checkRoute(source, locationDiff);
         checkTarget(targetPiece);
 
-        if (sourcePiece.isPawn()){
+        if (sourcePiece.isPawn()) {
             if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
                 throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
             }

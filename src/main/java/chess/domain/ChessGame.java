@@ -1,10 +1,8 @@
 package chess.domain;
 
-import chess.GameCommand;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessGame {
     private State state;
@@ -17,28 +15,26 @@ public class ChessGame {
         return state.isRunning();
     }
 
-    public void execute(List<String> commandList) {
-        if (GameCommand.isStart(commandList.get(0))) {
+    public void execute(Command command) {
+        if (command.isStart()) {
             start();
         }
 
-        if (GameCommand.isEnd(commandList.get(0))) {
+        if (command.isEnd()) {
             end();
         }
 
-        if (GameCommand.isMove(commandList.get(0))) {
-            move(commandList.get(1), commandList.get(2));
+        if (command.isMove()) {
+            move(command.getSource(), command.getTarget());
         }
 
-        if (GameCommand.isStatus(commandList.get(0))) {
+        if (command.isStatus()) {
             status();
         }
     }
 
-    private void move(String source, String target) {
-        Location sourceLocation = Location.of(source);
-        Location targetLocation = Location.of(target);
-        this.state = state.move(sourceLocation, targetLocation);
+    private void move(Location source, Location target) {
+        this.state = state.move(source, target);
         OutputView.printChessBoard(state.getBoard());
     }
 
