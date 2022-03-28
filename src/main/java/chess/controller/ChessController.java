@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.GameStartCommand;
 import chess.model.piece.Piece;
 import chess.state.GameState;

@@ -1,10 +1,9 @@
 package chess.controller;
 
-import chess.model.Board;
+import chess.model.board.Board;
+import chess.model.board.ChessInitializer;
 import chess.model.Color;
 import chess.model.Square;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,7 @@ public class ChessService {
     private Board board;
 
     public Board initBoard() {
-        board = new Board();
+        board = new Board(new ChessInitializer());
         return board;
     }
 

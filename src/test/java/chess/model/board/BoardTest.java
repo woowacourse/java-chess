@@ -1,30 +1,40 @@
-package chess.model;
+package chess.model.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.model.Color;
+import chess.model.File;
+import chess.model.Rank;
+import chess.model.Square;
+import chess.model.board.Board;
+import chess.model.board.ChessInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = new Board(new ChessInitializer());
+    }
 
     @Test
     void createTest() {
-        Board board = new Board();
         assertThat(board).isInstanceOf(Board.class);
     }
 
     @Test
     void findPiece() {
-        Board board = new Board();
         Piece a2 = board.findPieceBySquare(new Square(File.A, Rank.TWO));
         assertThat(a2).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.TWO)));
     }
 
     @Test
     void getTest() {
-        Board board = new Board();
         Piece a1Piece = board.findPieceBySquare(new Square(File.A, Rank.ONE));
         Piece h8Piece = board.findPieceBySquare(new Square(File.H, Rank.EIGHT));
 
@@ -36,7 +46,6 @@ public class BoardTest {
 
     @Test
     void move() {
-        Board board = new Board();
         board.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
         Piece a3Piece = board.findPieceBySquare(new Square(File.A, Rank.THREE));
         board.move(Square.of("e2"), Square.of("e3"));
@@ -47,14 +56,12 @@ public class BoardTest {
 
     @Test
     void point() {
-        Board board = new Board();
         double score = board.calculatePoint(Color.WHITE);
         assertThat(score).isEqualTo(38);
     }
 
     @Test
     void pointWithPawn() {
-        Board board = new Board();
         board.move(Square.of("b8"), Square.of("c6"));
         board.move(Square.of("c6"), Square.of("b4"));
         board.move(Square.of("b4"), Square.of("d3"));
