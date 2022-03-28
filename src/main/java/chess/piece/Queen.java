@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.piece.position.Position;
 import chess.Team;
+import chess.piece.position.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,20 +36,19 @@ public final class Queen extends Piece implements RookMovable, BishopMovable {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Position> positions = new ArrayList<>();
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list);
         if (position.isHorizontal(targetPiece.position)) {
-            return getHorizontalPositions(positions, list);
+            return getHorizontalPositions(list);
         }
         if (position.isVertical(targetPiece.position)) {
-            return getVerticalPositions(positions, list);
+            return getVerticalPositions(list);
         }
         if (position.isPositiveDiagonal(targetPiece.position)) {
-            return getPositiveDiagonal(positions, list);
+            return getPositiveDiagonal(list);
         }
         if (position.isNegativeDiagonal(targetPiece.position)) {
-            return getNegativeDiagonal(positions, list);
+            return getNegativeDiagonal(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
     }

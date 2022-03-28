@@ -1,8 +1,8 @@
 package chess.piece;
 
-import chess.piece.position.Position;
 import chess.Team;
 import chess.Turn;
+import chess.piece.position.Position;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,7 +64,7 @@ public abstract class Piece implements Comparable<Piece> {
         return this.position.getUpVerticalPosition(distance);
     }
 
-    public boolean isKill(Piece piece){
+    public boolean isKill(Piece piece) {
         return false;
     }
 

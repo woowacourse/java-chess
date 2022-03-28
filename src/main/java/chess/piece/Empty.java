@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.piece.position.Position;
 import chess.Team;
+import chess.piece.position.Position;
 
 import java.util.List;
 

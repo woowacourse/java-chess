@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.piece.position.Position;
 import chess.Team;
+import chess.piece.position.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,15 +40,14 @@ public final class Bishop extends Piece implements BishopMovable {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Position> positions = new ArrayList<>();
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list); // rank 큰게 먼저
         // rank 같다면, file이 작은게 먼저
         if (position.isPositiveDiagonal(targetPiece.position)) {
-            return getPositiveDiagonal(positions, list);
+            return getPositiveDiagonal(list);
         }
         if (position.isNegativeDiagonal(targetPiece.position)) {
-            return getNegativeDiagonal(positions, list);
+            return getNegativeDiagonal(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
     }

@@ -1,8 +1,8 @@
 package chess.piece;
 
+import chess.Team;
 import chess.piece.position.File;
 import chess.piece.position.Position;
-import chess.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public final class Pieces {
         return new Pieces(pieces);
     }
 
-    public static Pieces create() {
+    public static Pieces createInit() {
         char[] files = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         List<Piece> pieces = new ArrayList<>();
         pieces.addAll(makePieces('8', Team.BLACK));

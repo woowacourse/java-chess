@@ -50,7 +50,7 @@ class KnightTest {
     @DisplayName("나이트가 target위치로 진행할때 방해물이 있으면 넘어서 진행한다.")
     void moveKnightTest2() {
 
-        Board board = Board.create(Pieces.create());
+        Board board = Board.create(Pieces.createInit());
         List<String> command = List.of("g1", "h3");
 
         assertDoesNotThrow(

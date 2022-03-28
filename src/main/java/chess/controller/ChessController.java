@@ -15,7 +15,7 @@ public class ChessController {
         String input = InputView.inputCommand();
         Command command = new Init(input);
         command = command.turnState(input);
-        Board board = Board.create(Pieces.create());
+        Board board = Board.create(Pieces.createInit());
         command = playGame(command, board);
         OutputView.printFinishMessage();
         finishGame(command, board);

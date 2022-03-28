@@ -3,26 +3,26 @@ package chess.piece;
 import chess.piece.position.Position;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public interface RookMovable {
 
-    default List<Position> getHorizontalPositions(List<Position> positions, List<Piece> list) {
+    default List<Position> getHorizontalPositions(List<Piece> list) {
         Piece left = list.get(0);
         Piece right = list.get(1);
         int distance = right.getHorizontalDistance(left);
-        for (int i = 1; i < distance; i++) {
-            positions.add(left.getRightHorizontalPosition(i));
-        }
-        return positions;
+        return IntStream.range(1, distance)
+                .mapToObj(left::getRightHorizontalPosition)
+                .collect(Collectors.toList());
     }
 
-    default List<Position> getVerticalPositions(List<Position> positions, List<Piece> list) {
+    default List<Position> getVerticalPositions(List<Piece> list) {
         Piece up = list.get(0);
         Piece down = list.get(1);
         int distance = up.getVerticalDistance(down);
-        for (int i = 1; i < distance; i++) {
-            positions.add(down.getUpVerticalPosition(i));
-        }
-        return positions;
+        return IntStream.range(1, distance)
+                .mapToObj(down::getUpVerticalPosition)
+                .collect(Collectors.toList());
     }
 }

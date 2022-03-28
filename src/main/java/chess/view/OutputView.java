@@ -8,7 +8,8 @@ import java.util.Collections;
 
 public final class OutputView {
 
-    private OutputView(){}
+    private OutputView() {
+    }
 
     public static void startGame() {
         System.out.println("> 체스 게임을 시작합니다.\n" +

@@ -1,8 +1,8 @@
 package chess.piece;
 
+import chess.Team;
 import chess.piece.position.Position;
 import chess.piece.position.Rank;
-import chess.Team;
 
 import java.util.List;
 
