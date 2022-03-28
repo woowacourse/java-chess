@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Board;
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ class KingTest {
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -62,7 +63,7 @@ class KingTest {
         List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -77,15 +78,15 @@ class KingTest {
         List<String> command = List.of("a8", "a7");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("킹은 source와 target사이에 말들이 없다.")
-    void getIntervalPositionTest(){
-        Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
-        Piece king = new King(Position.of('e','8'),Team.BLACK);
+    void getIntervalPositionTest() {
+        Piece rook = new Rook(Position.of('h', '8'), Team.BLACK);
+        Piece king = new King(Position.of('e', '8'), Team.BLACK);
         List<Position> intervalPosition = king.getIntervalPosition(rook);
 
         assertThat(intervalPosition.isEmpty()).isTrue();

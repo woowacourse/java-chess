@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Board;
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +70,7 @@ class PawnTest {
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -84,7 +85,7 @@ class PawnTest {
         List<String> command = List.of("a2", "a3");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         );
     }
 
@@ -99,7 +100,7 @@ class PawnTest {
         List<String> command = List.of("a8", "a7");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -126,7 +127,7 @@ class PawnTest {
         List<String> command = List.of("a6", "a4");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -142,7 +143,7 @@ class PawnTest {
         List<String> command = List.of("a6", "a7");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -158,7 +159,7 @@ class PawnTest {
         List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -174,7 +175,7 @@ class PawnTest {
         List<String> command = List.of("a2", "b3");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         );
     }
 
@@ -190,7 +191,7 @@ class PawnTest {
         List<String> command = List.of("a8", "b7");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -206,7 +207,7 @@ class PawnTest {
         List<String> command = List.of("b7", "a8");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Board;
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +39,7 @@ class QueenTest {
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -54,7 +55,7 @@ class QueenTest {
         List<String> command = List.of("a8", "c6");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -70,7 +71,7 @@ class QueenTest {
         List<String> command = List.of("c6", "e8");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 

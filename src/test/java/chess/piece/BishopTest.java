@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Board;
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,14 +27,14 @@ class BishopTest {
     @DisplayName("비숍의 target위치에 아군 말이 없으면 움직임에 성공한다")
     void moveKingTest() {
         List<Piece> pieces = List.of(
-                new King(Position.of('a', '8'), Team.BLACK),
-                new Pawn(Position.of('a', '7'), Team.WHITE)
+                new Bishop(Position.of('a', '8'), Team.BLACK),
+                new Pawn(Position.of('b', '7'), Team.WHITE)
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "a7");
+        List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -49,7 +50,7 @@ class BishopTest {
         List<String> command = List.of("a8", "c6");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
@@ -65,7 +66,7 @@ class BishopTest {
         List<String> command = List.of("c6", "e8");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 

@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Board;
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ class KnightTest {
 
     @Test
     @DisplayName("나이트의 target위치에 아군 말이 없으면 움직임에 성공한다")
-    void moveKingTest() {
+    void moveKnightTest() {
         List<Piece> pieces = List.of(
                 new Knight(Position.of('a', '8'), Team.BLACK),
                 new Pawn(Position.of('b', '6'), Team.WHITE)
@@ -41,25 +42,25 @@ class KnightTest {
         List<String> command = List.of("a8", "b6");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.BLACK))
         );
     }
 
     @Test
     @DisplayName("나이트가 target위치로 진행할때 방해물이 있으면 넘어서 진행한다.")
-    void moveKingTest2() {
+    void moveKnightTest2() {
 
         Board board = Board.create(Pieces.create());
         List<String> command = List.of("g1", "h3");
 
         assertDoesNotThrow(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         );
     }
 
     @Test
     @DisplayName("나이트의 target위치에 아군 말이 있으면 예외처리")
-    void moveFailureKingTest() {
+    void moveFailureKnightTest() {
         List<Piece> pieces = List.of(
                 new Knight(Position.of('a', '8'), Team.WHITE),
                 new Pawn(Position.of('c', '7'), Team.WHITE)
@@ -68,7 +69,7 @@ class KnightTest {
         List<String> command = List.of("a8", "c7");
 
         assertThatThrownBy(
-                () -> board.move(command)
+                () -> board.move(command, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

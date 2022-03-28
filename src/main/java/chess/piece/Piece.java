@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Position;
 import chess.Team;
+import chess.Turn;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,8 +41,12 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
-    public int getDistance(Piece other) {
+    public int getHorizontalDistance(Piece other) {
         return this.position.getFile().absMinus(other.position.getFile());
+    }
+
+    public int getVerticalDistance(Piece other) {
+        return this.position.getRank().absMinus(other.position.getRank());
     }
 
     public Position getPositiveDiagonalPosition(int distance) {
@@ -60,6 +65,9 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return this.position.getUpVerticalPosition(distance);
     }
 
+    public boolean isCurrentTurn(Turn turn){
+        return turn.isCurrentTeam(team);
+    }
     public abstract double getScore();
 
     public abstract List<Position> getIntervalPosition(Piece targetPiece);

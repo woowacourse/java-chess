@@ -22,11 +22,14 @@ public class Board {
         return pieces;
     }
 
-    public void move(List<String> commandPosition) {
+    public void move(List<String> commandPosition, Turn thisTurn) {
         Position sourcePosition = getSource(commandPosition);
         Position targetPosition = getTarget(commandPosition);
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
+        if (!sourcePiece.isCurrentTurn(thisTurn)) {
+            throw new IllegalArgumentException("움직일 수 없습니다");
+        }
         Piece targetPiece = pieces.findByPosition(targetPosition);
         if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) || sourcePiece.isKill(targetPiece)) {
             sourcePiece.moveTo(targetPiece);

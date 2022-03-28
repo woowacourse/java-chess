@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.Board;
+import chess.Team;
+import chess.Turn;
 import chess.command.Command;
 import chess.command.Init;
 import chess.piece.Pieces;
@@ -15,10 +17,12 @@ public class ChessController {
         Command command = new Init(input);
         Pieces pieces = Pieces.create();
         Board board = Board.create(pieces);
+        Turn turn = Turn.init();
         command = command.turnState(input);
         while (!command.isEnd() || board.isDeadKing()){
             if(command.isMove()){
-                board.move(command.getCommandPosition());
+                board.move(command.getCommandPosition(), turn);
+                turn = turn.change();
             }
             OutputView.printBoard(board.getPieces());
             command = command.turnState(InputView.inputCommand());
