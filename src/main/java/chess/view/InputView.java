@@ -8,6 +8,7 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String MOVE_COMMAND_REGEX = "^move [a-z][0-9] [a-z][0-9]$";
     private static final Pattern PATTERN = Pattern.compile(MOVE_COMMAND_REGEX);
+    private static final String COMMAND_DELIMITER = " ";
 
     public static String requestStartCommand() {
         System.out.println("체스 게임을 시작합니다.");
@@ -33,11 +34,11 @@ public class InputView {
         }
     }
 
-    public static String requestGameCommand() {
+    public static String[] requestGameCommand() {
         try {
             final String command = SCANNER.nextLine();
             validateGameCommand(command);
-            return command;
+            return command.split(COMMAND_DELIMITER);
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
             return requestGameCommand();
