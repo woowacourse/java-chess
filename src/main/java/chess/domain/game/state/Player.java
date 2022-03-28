@@ -16,7 +16,7 @@ public enum Player {
         this.color = color;
     }
 
-    public boolean isMyPiece(Piece piece) {
+    public boolean hasPiece(Piece piece) {
         return piece.isSameColor(this.color);
     }
 

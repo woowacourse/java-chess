@@ -35,13 +35,13 @@ public class RunningGame extends StartedGame {
         return new RunningGame(board, player);
     }
 
-    private void validatePosition(Position source) {
-        board.validateExist(source);
-        checkMyPiece(board.getPiece(source));
+    private void validatePosition(Position position) {
+        board.validateExist(position);
+        checkMyPiece(board.getPiece(position));
     }
 
-    private void checkMyPiece(Piece sourcePiece) {
-        if (!player.isMyPiece(sourcePiece)) {
+    private void checkMyPiece(Piece piece) {
+        if (!player.hasPiece(piece)) {
             throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
         }
     }
