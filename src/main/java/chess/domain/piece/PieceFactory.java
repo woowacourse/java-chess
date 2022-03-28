@@ -37,7 +37,7 @@ public class PieceFactory {
     private static Map<Position, Piece> whitePieces() {
         Map<Position, Piece> pieces = Arrays.stream(File.values())
                 .collect(toMap(
-                         file -> Position.of(file, TWO), file -> new Pawn(WHITE, "p")
+                        file -> Position.of(file, TWO), file -> new Pawn(WHITE, "p")
                 ));
 
         pieces.put(Position.of(A, ONE), new Rook(WHITE, "r"));
@@ -65,7 +65,7 @@ public class PieceFactory {
         pieces.put(Position.of(E, EIGHT), new King(BLACK, "K"));
         pieces.put(Position.of(F, EIGHT), new Bishop(BLACK, "B"));
         pieces.put(Position.of(G, EIGHT), new Knight(BLACK, "N"));
-        pieces.put(Position.of(H,  EIGHT), new Rook(BLACK, "R"));
+        pieces.put(Position.of(H, EIGHT), new Rook(BLACK, "R"));
 
         return pieces;
     }

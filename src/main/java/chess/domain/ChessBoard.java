@@ -51,7 +51,7 @@ public class ChessBoard {
 
         cells.remove(source);
 
-        cells.put(target,piece);
+        cells.put(target, piece);
     }
 
 

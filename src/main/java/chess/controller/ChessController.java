@@ -55,7 +55,7 @@ public class ChessController {
             checkFinalCommand(command);
 
             processStatus(chessGame, command);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
             showStatus(chessGame);
@@ -82,7 +82,7 @@ public class ChessController {
             chessGame.progress(command);
 
             return chessGame.isEnd();
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
             return checkEnd(chessGame);
@@ -92,7 +92,7 @@ public class ChessController {
     private void progress(ChessGame chessGame) {
         try {
             playChessGame(chessGame);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
             progress(chessGame);

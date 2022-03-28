@@ -39,7 +39,7 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        if((!isPosition(token[1])) || (!isPosition(token[2]))) {
+        if ((!isPosition(token[1])) || (!isPosition(token[2]))) {
             throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
         }
     }
