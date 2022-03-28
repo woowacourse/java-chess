@@ -2,6 +2,8 @@ package chess.domain.state;
 
 import chess.domain.ChessBoard;
 import chess.domain.Command;
+import chess.domain.piece.Team;
+import java.util.Map;
 
 public final class Ready implements State {
     @Override
@@ -15,18 +17,13 @@ public final class Ready implements State {
     }
 
     @Override
+    public Map<Team, Double> status(ChessBoard chessBoard) {
+        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
+    }
+
+    @Override
     public State changeTurn(Command command, ChessBoard chessBoard) {
         return new Ready();
-    }
-
-    @Override
-    public double calculateBlackScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
-    }
-
-    @Override
-    public double calculateWhiteScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
     }
 
     @Override

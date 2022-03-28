@@ -43,9 +43,37 @@ public class ChessController {
 
         progress(chessGame);
 
-        Map<Team, Double> teamScores = chessGame.calculateResult();
+        showStatus(chessGame);
+    }
 
-        outputView.printResult(teamScores);
+    private void showStatus(ChessGame chessGame) {
+        try {
+            outputView.printEnd();
+
+            Command command = Command.from(inputView.inputCommand());
+
+            checkFinalCommand(command);
+
+            processStatus(chessGame, command);
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            showStatus(chessGame);
+        }
+    }
+
+    private void checkFinalCommand(Command command) {
+        if (!command.isEnd() && !command.isStatus()) {
+            throw new IllegalArgumentException("end 혹은 status를 입력해주세요.");
+        }
+    }
+
+    private void processStatus(ChessGame chessGame, Command command) {
+        if (command.isStatus()) {
+            Map<Team, Double> teamScores = chessGame.calculateResult();
+
+            outputView.printResult(teamScores);
+        }
     }
 
     private boolean checkEnd(ChessGame chessGame) {

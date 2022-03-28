@@ -55,7 +55,7 @@ public class Command {
     }
 
     public boolean isEnd() {
-        if (command.equals("end") || command.equals("status")) {
+        if (command.equals("end")) {
             return true;
         }
 
@@ -72,6 +72,14 @@ public class Command {
 
     public boolean isStart() {
         if (command.equals("start")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isStatus() {
+        if (command.equals("status")) {
             return true;
         }
 
@@ -100,7 +108,7 @@ public class Command {
 
     private void checkMoveCommand() {
         if (!isMoveCommand()) {
-            throw new IllegalArgumentException("move 커맨드가 아닙니다.");
+            throw new IllegalArgumentException("커맨드가 잘못되었습니다. move 커맨드가 와야 합니다.");
         }
     }
 }

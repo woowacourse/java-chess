@@ -21,6 +21,11 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public void printEnd() {
+        System.out.println("> 게임을 종료합니다.");
+        System.out.println("> 승패와 점수를 보려면 status 를 입력해주세요.");
+    }
+
     public void printChessBoard(List<String> symbols) {
         int count = 0;
 
