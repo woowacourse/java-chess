@@ -21,14 +21,20 @@ public class OutputView {
         int count = 0;
 
         for (String symbol : symbols) {
-            if (count % SIZE == 0) {
-                printNextLine();
-            }
-            System.out.print(symbol);
-            count ++;
+            count = getCount(count, symbol);
         }
         printNextLine();
         printNextLine();
+    }
+
+    private int getCount(int count, String symbol) {
+        if (count % SIZE == 0) {
+            printNextLine();
+        }
+
+        System.out.print(symbol);
+
+        return ++count;
     }
 
     private void printNextLine() {
