@@ -32,7 +32,7 @@ public class Piece {
         return this.type == type;
     }
 
-    PieceType type() {
+    public PieceType type() {
         return type;
     }
 
