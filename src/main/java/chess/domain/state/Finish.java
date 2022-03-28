@@ -3,11 +3,17 @@ package chess.domain.state;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public final class Ready extends State {
+public final class Finish extends State {
 
-    private static final String ERROR_MESSAGE = "게임을 시작해 주세요.";
+    private final Color winnerColor;
+
+    public Finish(final Board board, final Color color) {
+        this.board = board;
+        this.winnerColor = color;
+    }
 
     @Override
     public State start() {
@@ -20,12 +26,12 @@ public final class Ready extends State {
     }
 
     @Override
-    public State move(final Position from, final Position to) {
-        throw new IllegalStateException(ERROR_MESSAGE);
+    public State move(Position from, Position to) {
+        throw new IllegalStateException("이번 게임은 끝났습니다.");
     }
 
     @Override
     public Status status() {
-        throw new IllegalStateException(ERROR_MESSAGE);
+        return new Status(winnerColor, board);
     }
 }

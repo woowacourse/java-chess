@@ -1,13 +1,11 @@
 package chess.domain.state;
 
 import chess.domain.Status;
-import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-public class End extends State {
+public final class Exit extends State {
 
-    public End(final Board board) {
-        this.board = board;
+    public Exit() {
     }
 
     @Override
@@ -15,14 +13,10 @@ public class End extends State {
         throw new IllegalStateException("게임이 종료됐습니다.");
     }
 
-    @Override
-    public State end() {
-        throw new IllegalStateException("게임이 이미 종료됐습니다.");
-    }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public boolean isExit() {
+        return true;
     }
 
     @Override
@@ -32,6 +26,6 @@ public class End extends State {
 
     @Override
     public Status status() {
-        return new Status(board);
+        throw new IllegalStateException("게임이 종료됐습니다.");
     }
 }
