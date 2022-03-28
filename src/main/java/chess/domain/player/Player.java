@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class Player {
 
+    private static final double DUPLICATE_PAWN_SCORE = 0.5;
     private static final int DEFAULT_PLURAL_COUNT = 2;
 
     private final List<Piece> pieces;
@@ -65,8 +66,6 @@ public class Player {
     }
 
     private double calculateDuplicatePawnScore() {
-        final double DUPLICATE_PAWN_SCORE = 0.5;
-
         int pawnCountByFile = 0;
         for (char file = 'a'; file <= 'h'; file++) {
             pawnCountByFile += countPluralPawnByFile(file);
