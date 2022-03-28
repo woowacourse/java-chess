@@ -13,17 +13,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class KnightTest {
 
-    final Position initialPosition = Position.from("d5");
-
     @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     @ValueSource(strings = {"c6", "d6", "e6", "e5", "e4", "d4", "c4", "c5", "d8", "a5"})
     void canMove_cantGo(final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final ChessPiece knight = Knight.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> knight.checkMovablePosition(initialPosition, Position.from(target)))
+        assertThatThrownBy(() -> knight.checkMovablePosition(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -33,10 +33,12 @@ class KnightTest {
     @ValueSource(strings = {"c7", "c3", "b6", "b4", "f4", "f6", "e7", "e3"})
     void canMove_canGo(final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final ChessPiece knight = Knight.from(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> knight.checkMovablePosition(initialPosition, Position.from(target)))
+        Assertions.assertThatCode(() -> knight.checkMovablePosition(from, to))
                 .doesNotThrowAnyException();
 
     }
@@ -45,10 +47,12 @@ class KnightTest {
     @DisplayName("목적지까지 경로를 구한다.")
     void findRoute() {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from("b6");
         final ChessPiece knight = Knight.from(Color.BLACK);
 
         // when
-        final Stack<Position> actual = knight.findRoute(initialPosition, Position.from("b6"));
+        final Stack<Position> actual = knight.findRoute(from, to);
 
         // then
         assertThat(actual).isEmpty();

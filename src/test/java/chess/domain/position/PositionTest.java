@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PositionTest {
 
-    final Position position = Position.from("a1");
-
     @ParameterizedTest
     @DisplayName("유효하지 않은 값으로 포지션을 찾으면 예외를 던진다.")
     @ValueSource(strings = {"i1", "a9", "i9", "a", "1", "."})
@@ -27,6 +25,7 @@ class PositionTest {
     @CsvSource(value = {"b1:true", "a2:false"}, delimiter = ':')
     void isSameFile(final String target, final boolean expected) {
         //given
+        final Position position = Position.from("a1");
         final Position targetPosition = Position.from(target);
 
         // when
@@ -40,6 +39,9 @@ class PositionTest {
     @DisplayName("위치의 이름을 비교한다.")
     @CsvSource(value = {"1:true", "2:false"}, delimiter = ':')
     void testIsSameFile(final String target, final boolean expected) {
+        // given
+        final Position position = Position.from("a1");
+
         // when
         final boolean actual = position.isSameFile(target);
 
@@ -52,6 +54,7 @@ class PositionTest {
     @CsvSource(value = {"a2:true", "b1:false"}, delimiter = ':')
     void isSameRank(final String target, final boolean expected) {
         //given
+        final Position position = Position.from("a1");
         final Position targetPosition = Position.from(target);
 
         // when

@@ -11,17 +11,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
 
-    final Position initialPosition = Position.from("d5");
-
     @ParameterizedTest
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     @ValueSource(strings = {"c4", "d4", "e4"})
     void canMove(final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final ChessPiece pawn = Pawn.from(Color.BLACK);
 
         // then
-        assertThatCode(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
+        assertThatCode(() -> pawn.checkMovablePosition(from, to))
                 .doesNotThrowAnyException();
 
     }
@@ -31,10 +31,12 @@ class PawnTest {
     @CsvSource(value = {"BLACK:d6", "BLACK:d3", "BLACK:c3", "WHITE:d4", "WHITE:d7", "WHITE:c7"}, delimiter = ':')
     void canMove_exception(final Color color, final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -69,10 +71,12 @@ class PawnTest {
     @CsvSource(value = {"BLACK:e4", "BLACK:c4", "WHITE:c6", "WHITE:e6"}, delimiter = ':')
     void checkCrossMove(final Color color, final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatCode(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
+        assertThatCode(() -> pawn.checkMovablePosition(from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -81,10 +85,12 @@ class PawnTest {
     @CsvSource(value = {"BLACK:f4", "BLACK:b4", "WHITE:b6", "WHITE:f6"}, delimiter = ':')
     void checkCrossMove_exception(final Color color, final String target) {
         // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from(target);
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkMovablePosition(initialPosition, Position.from(target)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
