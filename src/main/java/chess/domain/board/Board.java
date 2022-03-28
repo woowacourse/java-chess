@@ -120,59 +120,59 @@ public final class Board {
         return !piece.isSameCampWith(value.get(afterPosition));
     }
 
-    public boolean hasKingCaptured(){
+    public boolean hasKingCaptured() {
         return 2 != collectKing().size();
     }
 
     private List<Piece> collectKing() {
         return this.value.values()
-                .stream()
-                .filter(Objects::nonNull)
-                .filter(Piece::isKing)
-                .collect(Collectors.toList());
+            .stream()
+            .filter(Objects::nonNull)
+            .filter(Piece::isKing)
+            .collect(Collectors.toList());
     }
 
     public double calculateScoreOfBlack() {
         return Arrays.stream(Column.values())
-                .map(this::collectBlackPiecesIn)
-                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
-                .sum();
+            .map(this::collectBlackPiecesIn)
+            .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
+            .sum();
     }
 
     private List<Piece> collectBlackPiecesIn(Column column) {
         return Arrays.stream(Row.values())
-                .map(row -> this.value.get(new Position(column, row)))
-                .filter(Objects::nonNull)
-                .filter(Piece::isBlack)
-                .collect(Collectors.toList());
+            .map(row -> this.value.get(new Position(column, row)))
+            .filter(Objects::nonNull)
+            .filter(Piece::isBlack)
+            .collect(Collectors.toList());
     }
 
     public double calculateScoreOfWhite() {
         return Arrays.stream(Column.values())
-                .map(this::collectWhitePiecesIn)
-                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
-                .sum();
+            .map(this::collectWhitePiecesIn)
+            .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
+            .sum();
     }
 
     private List<Piece> collectWhitePiecesIn(Column column) {
         return Arrays.stream(Row.values())
-                .map(row -> this.value.get(new Position(column, row)))
-                .filter(Objects::nonNull)
-                .filter(piece -> !piece.isBlack())
-                .collect(Collectors.toList());
+            .map(row -> this.value.get(new Position(column, row)))
+            .filter(Objects::nonNull)
+            .filter(piece -> !piece.isBlack())
+            .collect(Collectors.toList());
     }
 
     private double calculateScoreWithoutPawnIn(List<Piece> pieces) {
         List<Piece> piecesWithoutPawn = collectPiecesWithoutPawnIn(pieces);
         return piecesWithoutPawn.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
+            .mapToDouble(Piece::getScore)
+            .sum();
     }
 
     private List<Piece> collectPiecesWithoutPawnIn(List<Piece> pieces) {
         return pieces.stream()
-                .filter(piece -> !piece.isPawn())
-                .collect(Collectors.toList());
+            .filter(piece -> !piece.isPawn())
+            .collect(Collectors.toList());
     }
 
     private double calculatePawnScoreIn(List<Piece> pieces) {
@@ -188,8 +188,8 @@ public final class Board {
 
     private List<Piece> collectPawnsIn(List<Piece> pieces) {
         return pieces.stream()
-                .filter(Piece::isPawn)
-                .collect(Collectors.toList());
+            .filter(Piece::isPawn)
+            .collect(Collectors.toList());
     }
 
     public Map<Position, Piece> getValue() {
@@ -198,11 +198,11 @@ public final class Board {
 
     public boolean hasBlackKingCaptured() {
         return collectKing().stream()
-                .noneMatch(Piece::isBlack);
+            .noneMatch(Piece::isBlack);
     }
 
     public boolean hasWhiteKingCaptured() {
         return collectKing().stream()
-                .allMatch(Piece::isBlack);
+            .allMatch(Piece::isBlack);
     }
 }

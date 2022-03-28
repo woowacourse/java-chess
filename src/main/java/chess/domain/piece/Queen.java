@@ -4,7 +4,8 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class Queen extends Piece{
+public final class Queen extends Piece {
+    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int NOT_MOVED_DISTANCE = 0;
     private static final double SCORE = 9;
 
@@ -15,7 +16,7 @@ public final class Queen extends Piece{
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
     }

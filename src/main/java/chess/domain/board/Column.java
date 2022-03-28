@@ -25,23 +25,23 @@ public enum Column {
 
     public static Column from(String rawColumn) {
         return Arrays.stream(values())
-                .filter(column -> column.name.equals(rawColumn))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .filter(column -> column.name.equals(rawColumn))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
     private static Column from(int value) {
         return Arrays.stream(values())
-                .filter(column -> column.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .filter(column -> column.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
     public Column flip() {
         return Arrays.stream(Column.values())
-                .filter( it -> it.value == (7 - this.value))
-                .findFirst()
-                .orElseThrow();
+            .filter(it -> it.value == (7 - this.value))
+            .findFirst()
+            .orElseThrow();
     }
 
     public int distance(Column otherColumn) {
@@ -49,7 +49,7 @@ public enum Column {
     }
 
     public List<Column> pathTo(Column otherColumn) {
-        if (this.value < otherColumn.value){
+        if (this.value < otherColumn.value) {
             return this.upPathTo(otherColumn);
         }
         return this.downPathTo(otherColumn);
@@ -57,7 +57,7 @@ public enum Column {
 
     private List<Column> upPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value + 1; i <  otherColumn.value; i++) {
+        for (int i = this.value + 1; i < otherColumn.value; i++) {
             path.add(Column.from(i));
         }
         return path;
@@ -65,7 +65,7 @@ public enum Column {
 
     private List<Column> downPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value - 1; i >  otherColumn.value; i--) {
+        for (int i = this.value - 1; i > otherColumn.value; i--) {
             path.add(Column.from(i));
         }
         return path;

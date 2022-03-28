@@ -40,7 +40,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(Rook.class);
+            .isInstanceOf(Rook.class);
     }
 
     @MethodSource("provideBishopPosition")
@@ -52,7 +52,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(Bishop.class);
+            .isInstanceOf(Bishop.class);
     }
 
     @MethodSource("provideKnightPosition")
@@ -64,7 +64,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(Knight.class);
+            .isInstanceOf(Knight.class);
     }
 
     @MethodSource("provideQueenPosition")
@@ -76,7 +76,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(Queen.class);
+            .isInstanceOf(Queen.class);
     }
 
     @MethodSource("provideKingPosition")
@@ -88,7 +88,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(King.class);
+            .isInstanceOf(King.class);
     }
 
     @MethodSource("providePawnPosition")
@@ -100,7 +100,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         //then
         assertThat(boardValue.get(expectedPosition))
-                .isInstanceOf(Pawn.class);
+            .isInstanceOf(Pawn.class);
     }
 
     @MethodSource("provideWhiteRow")
@@ -136,8 +136,8 @@ public class BoardTest {
         Position h2 = new Position(Column.H, Row.TWO);
 
         assertThatThrownBy(() -> board.move(h1, h2))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
     }
 
     @DisplayName("이동하려는 위치가 빈 칸이면 이동할 수 있다.")
@@ -158,8 +158,8 @@ public class BoardTest {
         Position a3 = new Position(Column.A, Row.THREE);
         Position a4 = new Position(Column.A, Row.FOUR);
         assertThatThrownBy(() -> board.move(a3, a4))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 있는 기물이 없습니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 있는 기물이 없습니다.");
     }
 
     @DisplayName("경로에 기물이 있을 경우 움직일 수 없다.")
@@ -169,8 +169,8 @@ public class BoardTest {
         Position a1 = new Position(Column.A, Row.ONE);
         Position a4 = new Position(Column.A, Row.FOUR);
         assertThatThrownBy(() -> board.move(a1, a4))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
     }
 
     @DisplayName("초기 상태의 체스판에서 흑색 진영의 점수는 38점이다.")
@@ -223,77 +223,77 @@ public class BoardTest {
 
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.A, Row.ONE)),
-                Arguments.of(new Position(Column.H, Row.ONE)),
-                Arguments.of(new Position(Column.A, Row.EIGHT)),
-                Arguments.of(new Position(Column.H, Row.EIGHT))
+            Arguments.of(new Position(Column.A, Row.ONE)),
+            Arguments.of(new Position(Column.H, Row.ONE)),
+            Arguments.of(new Position(Column.A, Row.EIGHT)),
+            Arguments.of(new Position(Column.H, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideBishopPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.C, Row.ONE)),
-                Arguments.of(new Position(Column.F, Row.ONE)),
-                Arguments.of(new Position(Column.C, Row.EIGHT)),
-                Arguments.of(new Position(Column.F, Row.EIGHT))
+            Arguments.of(new Position(Column.C, Row.ONE)),
+            Arguments.of(new Position(Column.F, Row.ONE)),
+            Arguments.of(new Position(Column.C, Row.EIGHT)),
+            Arguments.of(new Position(Column.F, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideKnightPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.B, Row.ONE)),
-                Arguments.of(new Position(Column.G, Row.ONE)),
-                Arguments.of(new Position(Column.B, Row.EIGHT)),
-                Arguments.of(new Position(Column.G, Row.EIGHT))
+            Arguments.of(new Position(Column.B, Row.ONE)),
+            Arguments.of(new Position(Column.G, Row.ONE)),
+            Arguments.of(new Position(Column.B, Row.EIGHT)),
+            Arguments.of(new Position(Column.G, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideQueenPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.D, Row.ONE)),
-                Arguments.of(new Position(Column.D, Row.EIGHT))
+            Arguments.of(new Position(Column.D, Row.ONE)),
+            Arguments.of(new Position(Column.D, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideKingPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.E, Row.ONE)),
-                Arguments.of(new Position(Column.E, Row.EIGHT))
+            Arguments.of(new Position(Column.E, Row.ONE)),
+            Arguments.of(new Position(Column.E, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> providePawnPosition() {
         return Stream.of(
-                Arguments.of(new Position(Column.A, Row.TWO)),
-                Arguments.of(new Position(Column.B, Row.TWO)),
-                Arguments.of(new Position(Column.C, Row.TWO)),
-                Arguments.of(new Position(Column.D, Row.TWO)),
-                Arguments.of(new Position(Column.E, Row.TWO)),
-                Arguments.of(new Position(Column.F, Row.TWO)),
-                Arguments.of(new Position(Column.G, Row.TWO)),
-                Arguments.of(new Position(Column.H, Row.TWO)),
-                Arguments.of(new Position(Column.A, Row.SEVEN)),
-                Arguments.of(new Position(Column.B, Row.SEVEN)),
-                Arguments.of(new Position(Column.C, Row.SEVEN)),
-                Arguments.of(new Position(Column.D, Row.SEVEN)),
-                Arguments.of(new Position(Column.E, Row.SEVEN)),
-                Arguments.of(new Position(Column.F, Row.SEVEN)),
-                Arguments.of(new Position(Column.G, Row.SEVEN)),
-                Arguments.of(new Position(Column.H, Row.SEVEN))
+            Arguments.of(new Position(Column.A, Row.TWO)),
+            Arguments.of(new Position(Column.B, Row.TWO)),
+            Arguments.of(new Position(Column.C, Row.TWO)),
+            Arguments.of(new Position(Column.D, Row.TWO)),
+            Arguments.of(new Position(Column.E, Row.TWO)),
+            Arguments.of(new Position(Column.F, Row.TWO)),
+            Arguments.of(new Position(Column.G, Row.TWO)),
+            Arguments.of(new Position(Column.H, Row.TWO)),
+            Arguments.of(new Position(Column.A, Row.SEVEN)),
+            Arguments.of(new Position(Column.B, Row.SEVEN)),
+            Arguments.of(new Position(Column.C, Row.SEVEN)),
+            Arguments.of(new Position(Column.D, Row.SEVEN)),
+            Arguments.of(new Position(Column.E, Row.SEVEN)),
+            Arguments.of(new Position(Column.F, Row.SEVEN)),
+            Arguments.of(new Position(Column.G, Row.SEVEN)),
+            Arguments.of(new Position(Column.H, Row.SEVEN))
         );
     }
 
     private static Stream<Arguments> provideWhiteRow() {
         return Stream.of(
-                Arguments.of(Row.ONE),
-                Arguments.of(Row.TWO)
+            Arguments.of(Row.ONE),
+            Arguments.of(Row.TWO)
         );
     }
 
     private static Stream<Arguments> provideBlackRow() {
         return Stream.of(
-                Arguments.of(Row.SEVEN),
-                Arguments.of(Row.EIGHT)
+            Arguments.of(Row.SEVEN),
+            Arguments.of(Row.EIGHT)
         );
     }
 }

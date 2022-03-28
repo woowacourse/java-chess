@@ -11,8 +11,8 @@ public class PathCheckTest {
     @Test
     void path_a1_a3() {
         assertThat(PathCheck.check(new Position(Column.A, Row.ONE),
-                new Position(Column.A, Row.THREE),
-                (position) -> Objects.equals(position, new Position(Column.A, Row.TWO)))).isTrue();
+            new Position(Column.A, Row.THREE),
+            (position) -> Objects.equals(position, new Position(Column.A, Row.TWO)))).isTrue();
 
     }
 
@@ -20,8 +20,8 @@ public class PathCheckTest {
     @Test
     void path_a1_c1() {
         assertThat(PathCheck.check(new Position(Column.A, Row.ONE),
-                new Position(Column.C, Row.ONE),
-                (position) -> Objects.equals(position, new Position(Column.B, Row.ONE)))).isTrue();
+            new Position(Column.C, Row.ONE),
+            (position) -> Objects.equals(position, new Position(Column.B, Row.ONE)))).isTrue();
 
     }
 
@@ -29,7 +29,7 @@ public class PathCheckTest {
     @Test
     void path_e1_c3() {
         assertThat(PathCheck.check(new Position(Column.E, Row.ONE),
-                new Position(Column.C, Row.THREE),
-                (position) -> Objects.equals(position, new Position(Column.D, Row.TWO)))).isTrue();
+            new Position(Column.C, Row.THREE),
+            (position) -> Objects.equals(position, new Position(Column.D, Row.TWO)))).isTrue();
     }
 }

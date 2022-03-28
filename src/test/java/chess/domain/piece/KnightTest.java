@@ -56,6 +56,7 @@ public class KnightTest {
 
         assertThat(knight.canMove(c4, d2)).isTrue();
     }
+
     @DisplayName("나이트는 왼쪽으로 2칸 위로 1칸 움직일 수 있다.")
     @Test
     void move_c4_a5() {

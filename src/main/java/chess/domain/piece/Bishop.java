@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public final class Bishop extends Piece {
     private static final int SCORE = 3;
+    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
 
     public Bishop(Camp camp) {
         super(camp);
@@ -16,7 +17,7 @@ public final class Bishop extends Piece {
                      Position afterPosition,
                      Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
     }

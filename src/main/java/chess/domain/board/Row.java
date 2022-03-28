@@ -27,16 +27,16 @@ public enum Row {
 
     private static Row from(int value) {
         return Arrays.stream(values())
-                .filter(row -> row.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .filter(row -> row.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
     public Row flip() {
         return Arrays.stream(Row.values())
-                .filter(it -> it.value == (7 - this.value))
-                .findFirst()
-                .orElseThrow();
+            .filter(it -> it.value == (7 - this.value))
+            .findFirst()
+            .orElseThrow();
     }
 
     public int directedDistance(Row otherRow) {
@@ -48,7 +48,7 @@ public enum Row {
     }
 
     public List<Row> pathTo(Row otherRow) {
-        if (this.value < otherRow.value){
+        if (this.value < otherRow.value) {
             return this.rightPathTo(otherRow);
         }
         return this.leftPathTo(otherRow);
@@ -56,7 +56,7 @@ public enum Row {
 
     private List<Row> rightPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value + 1; i <  otherRow.value; i++) {
+        for (int i = this.value + 1; i < otherRow.value; i++) {
             path.add(Row.from(i));
         }
         return path;
@@ -64,7 +64,7 @@ public enum Row {
 
     private List<Row> leftPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value - 1; i >  otherRow.value; i--) {
+        for (int i = this.value - 1; i > otherRow.value; i--) {
             path.add(Row.from(i));
         }
         return path;

@@ -6,6 +6,7 @@ import chess.domain.board.Position;
 
 public class Running implements State {
     private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
+    private static final String CANT_GET_RESULT_WHEN_NOW = "아직 승패를 판정할 수 없습니다.";
     private final Board board;
 
     public Running(Board board) {
@@ -43,7 +44,7 @@ public class Running implements State {
 
     @Override
     public Result getResult() {
-        throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
+        throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
     }
 
     @Override

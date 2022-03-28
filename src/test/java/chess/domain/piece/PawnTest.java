@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Camp;
-import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -133,7 +132,7 @@ class PawnTest {
 
         assertThatThrownBy(() -> pawn.capture(f6, f7, (piece -> {
         })))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 }

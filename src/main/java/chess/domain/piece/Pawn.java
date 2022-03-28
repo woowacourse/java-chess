@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class Pawn extends Piece {
+    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 1;
@@ -19,7 +20,7 @@ public final class Pawn extends Piece {
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
         this.firstMove = false;

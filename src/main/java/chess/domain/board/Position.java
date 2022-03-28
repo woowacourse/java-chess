@@ -45,12 +45,40 @@ public class Position implements Comparable<Position> {
         return new Position(this.column.flip(), this.row.flip());
     }
 
-    public boolean isSameRowWith(Position otherPosition) {
-        return this.row == otherPosition.row;
+    public List<Position> pathTo(Position otherPosition) {
+        List<Row> rowPath = this.row.pathTo(otherPosition.row);
+        List<Column> columnPath = this.column.pathTo(otherPosition.column);
+
+        if (rowPath.size() == 0) {
+            return columnPath.stream()
+                .map(column -> new Position(column, this.row))
+                .collect(Collectors.toList());
+        }
+
+        if (columnPath.size() == 0) {
+            return rowPath.stream()
+                .map(row -> new Position(this.column, row))
+                .collect(Collectors.toList());
+        }
+
+        return IntStream.range(0, rowPath.size())
+            .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+            .collect(Collectors.toList());
     }
 
-    public boolean isSameColumnWith(Position otherPosition) {
-        return this.column == otherPosition.column;
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
+            .thenComparing(Position::getColumn)
+            .compare(this, o);
     }
 
     @Override
@@ -70,45 +98,9 @@ public class Position implements Comparable<Position> {
         return Objects.hash(column, row);
     }
 
-    public Column getColumn() {
-        return column;
-    }
-
-    public Row getRow() {
-        return row;
-    }
-
     @Override
     public String toString() {
         return "" + column + row;
-    }
-
-    @Override
-    public int compareTo(Position o) {
-        return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
-                .thenComparing(Position::getColumn)
-                .compare(this, o);
-    }
-
-    public List<Position> pathTo(Position otherPosition) {
-        List<Row> rowPath = this.row.pathTo(otherPosition.row);
-        List<Column> columnPath = this.column.pathTo(otherPosition.column);
-
-        if (rowPath.size() == 0) {
-            return columnPath.stream()
-                    .map(column -> new Position(column, this.row))
-                    .collect(Collectors.toList());
-        }
-
-        if (columnPath.size() == 0) {
-            return rowPath.stream()
-                    .map(row -> new Position(this.column, row))
-                    .collect(Collectors.toList());
-        }
-
-        return IntStream.range(0, rowPath.size())
-                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
-                .collect(Collectors.toList());
     }
 }
 
