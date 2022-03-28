@@ -35,14 +35,11 @@ public final class Direction {
     }
 
     public Direction getUnitDirection() {
-        int x = this.dFile;
-        int y = this.dRank;
-
-        if (x == 0 || y == 0) {
-            return getUnitDirectionWithZero(x, y);
+        if (dFile == 0 || dRank == 0) {
+            return getUnitDirectionWithZero(dFile, dRank);
         }
 
-        return getUnitDirectionWithOutZero(x, y);
+        return getUnitDirectionWithOutZero(dFile, dRank);
     }
 
     private Direction getUnitDirectionWithZero(int x, int y) {
