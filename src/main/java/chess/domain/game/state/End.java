@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 
 public class End implements GameState{
 
@@ -29,6 +30,11 @@ public class End implements GameState{
 
     @Override
     public Board getBoard() {
+        throw new IllegalStateException(ALREADY_END_GAME);
+    }
+
+    @Override
+    public double calculateScore(Color color) {
         throw new IllegalStateException(ALREADY_END_GAME);
     }
 }

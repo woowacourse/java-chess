@@ -7,6 +7,7 @@ import chess.domain.Ordinate;
 import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Ready;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,4 +53,13 @@ public class EndTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 종료되어 지원하지 않는 기능입니다");
     }
+
+    @Test
+    @DisplayName("게임이 종료되고 보드 상황을 확인하려고 하면 예외가 발생한다")
+    void calculateScoreException() {
+        assertThatThrownBy(() -> state.calculateScore(Color.WHITE))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 게임이 종료되어 지원하지 않는 기능입니다");
+    }
+
 }
