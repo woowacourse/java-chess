@@ -1,5 +1,6 @@
 package chess.dto;
 
+import chess.domain.ChessBoardPosition;
 import chess.domain.piece.ChessPiece;
 
 public class ChessPieceDto {
@@ -14,8 +15,9 @@ public class ChessPieceDto {
     }
 
     public static ChessPieceDto of(ChessPiece chessPiece) {
-        return new ChessPieceDto(
-                chessPiece.getName(), chessPiece.getPosition().getColumn(), chessPiece.getPosition().getRow());
+        String name = chessPiece.getName();
+        ChessBoardPosition position = chessPiece.getPosition();
+        return new ChessPieceDto(name, position.getColumn(), position.getRow());
     }
 
     public String getName() {
