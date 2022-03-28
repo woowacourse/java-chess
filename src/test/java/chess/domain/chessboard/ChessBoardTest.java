@@ -1,7 +1,6 @@
 package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.chesspiece.Bishop;
@@ -13,7 +12,6 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -100,153 +98,6 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
-    }
-
-    @Test
-    @DisplayName("흰색 폰을 직진으로 이동 시킨다.")
-    void move_white_pawn_straight() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-
-        // then
-        assertThatCode(() -> chessBoard.move(Position.from("a2"), Position.from("a3")))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("검은색 폰을 직진으로 이동 시킨다.")
-    void move_black_pawn_straight() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-        chessBoard.move(Position.from("a2"), Position.from("a3"));
-
-        // then
-        assertThatCode(() -> chessBoard.move(Position.from("a7"), Position.from("a6")))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("폰으로 대각선에 있는 다른 색의 기물을 잡는다.")
-    void move_pawn_cross() {
-        // given
-        final Position from = Position.from("a3");
-        final Position to = Position.from("b4");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .add(to, Pawn.from(Color.BLACK))
-                .toChessBoard();
-
-        // then
-        assertThatCode(() -> chessBoard.move(from, to))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("폰의 목적지에 같은색 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Straight1() {
-        // given
-        final Position from = Position.from("c2");
-        final Position to = Position.from("c3");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .add(to, Knight.from(Color.WHITE))
-                .toChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은색 기물입니다.");
-    }
-
-    @Test
-    @DisplayName("폰의 이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Straight2() {
-        // given
-        final Position from = Position.from("c2");
-        final Position to = Position.from("c4");
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .add(Position.from("c3"), Knight.from(Color.WHITE))
-                .toChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
-    }
-
-    @Test
-    @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Straight3() {
-        // given
-        final Position from = Position.from("d5");
-        final Position to = Position.from("d6");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .add(to, Pawn.from(Color.BLACK))
-                .toChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("폰의 목적지에 다른색의 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Straight4() {
-        // given
-        final Position from = Position.from("a5");
-        final Position to = Position.from("a4");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.BLACK))
-                .add(Position.from("a3"), Pawn.from(Color.WHITE))
-                .toChessBoard();
-        chessBoard.move(Position.from("a3"), to);
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
-    }
-
-    @Test
-    @DisplayName("폰의 대각선 방향에 같은색 기물이 있으면 예외를 발생시킵니다.")
-    void move_Pawn_Cross1() {
-        // given
-        final Position from = Position.from("d5");
-        final Position to = Position.from("c6");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .add(to, Pawn.from(Color.WHITE))
-                .toChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은색 기물입니다.");
-    }
-
-    @Test
-    @DisplayName("폰의 대각선 방향에 기물이 없으면 예외를 발생시킵니다.")
-    void move_Pawn_Cross2() {
-        // given
-        final Position from = Position.from("d5");
-        final Position to = Position.from("c6");
-
-        final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Pawn.from(Color.WHITE))
-                .toChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
     }
 
     @Test

@@ -5,7 +5,6 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
-import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -43,7 +42,6 @@ public class ChessBoard {
         checkCurrentTurn(movablePiece);
         movablePiece.checkMovablePosition(from, to, findPiece(to));
         checkHurdle(from, to, movablePiece);
-        checkTargetPosition(from, to, movablePiece);
     }
 
     private void checkCurrentTurn(final ChessPiece movablePiece) {
@@ -59,45 +57,6 @@ public class ChessBoard {
 
         if (hurdleExist) {
             throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
-        }
-    }
-
-    private void checkTargetPosition(final Position from, final Position to, final ChessPiece movablePiece) {
-        final Optional<ChessPiece> possibleTargetPiece = findPiece(to);
-        if (possibleTargetPiece.isEmpty()) {
-            checkPawnStraightMove(from, to, movablePiece);
-            return;
-        }
-
-        checkEnemy(movablePiece, possibleTargetPiece.get());
-        checkPawnCrossMove(from, to, movablePiece);
-    }
-
-    private void checkPawnStraightMove(final Position from, final Position to, final ChessPiece chessPiece) {
-        if (!(chessPiece instanceof Pawn)) {
-            return;
-        }
-
-        final Direction direction = to.findDirection(from);
-        if (!direction.equals(Direction.N) && !direction.equals(Direction.S)) {
-            throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
-        }
-    }
-
-    private void checkEnemy(final ChessPiece movablePiece, final ChessPiece targetPiece) {
-        if (targetPiece.isSameColor(movablePiece)) {
-            throw new IllegalArgumentException("같은색 기물입니다.");
-        }
-    }
-
-    private void checkPawnCrossMove(final Position from, final Position to, final ChessPiece chessPiece) {
-        if (!(chessPiece instanceof Pawn)) {
-            return;
-        }
-
-        final Direction direction = to.findDirection(from);
-        if (direction.equals(Direction.N) || direction.equals(Direction.S)) {
-            throw new IllegalArgumentException("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
         }
     }
 
