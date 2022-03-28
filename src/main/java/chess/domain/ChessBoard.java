@@ -31,6 +31,10 @@ public class ChessBoard {
     public Team findTeam(Position position) {
         Piece piece = cells.get(position);
 
+        if (piece == null) {
+            throw new IllegalStateException("해당 위치에 말이 없습니다.");
+        }
+
         return piece.getTeam();
     }
 
