@@ -13,12 +13,12 @@ public class Continuous {
 
     public List<Position> findMovablePositions(List<Direction> directions, Position source, ChessBoard board) {
         return directions.stream()
-            .map(direction -> getPositions(source, board, direction))
+            .map(direction -> findContinuousPositions(direction, source, board))
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
     }
 
-    private List<Position> getPositions(Position source, ChessBoard board, Direction direction) {
+    private List<Position> findContinuousPositions(Direction direction, Position source, ChessBoard board) {
         List<Position> list = new ArrayList<>();
 
         Position current = source;
