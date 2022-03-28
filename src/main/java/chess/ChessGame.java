@@ -22,7 +22,7 @@ public class ChessGame {
 
         while (play) {
             if (board.check()) {
-                OutputView.printMessage("현재 check 상황입니다.");
+                OutputView.printCheck();
             }
             Command command = InputView.inputCommand();
             play = convert(command);
@@ -54,7 +54,7 @@ public class ChessGame {
 
     private void move(Command command) {
         if (board.isEmpty()) {
-            OutputView.printMessage("체스 게임을 시작해야 합니다.");
+            OutputView.printStartWarning();
             return;
         }
         try {

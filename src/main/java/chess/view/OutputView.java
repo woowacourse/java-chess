@@ -59,7 +59,11 @@ public class OutputView {
         System.out.printf("승리 팀은 %s 입니다.", result.get(0));
     }
 
-    public static void printMessage(String string) {
-        System.out.println(string);
+    public static void printCheck() {
+        System.out.println("현재 check 상황입니다.");
+    }
+
+    public static void printStartWarning() {
+        System.out.println("체스 게임을 시작해야 합니다.");
     }
 }
