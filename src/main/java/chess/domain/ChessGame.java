@@ -21,6 +21,8 @@ public class ChessGame {
     private static final char QUEEN_COLUMN = 'd';
     private static final char KING_COLUMN = 'e';
     private static final int PAIR_COLUMN_SUM = 'a' + 'h';
+    private static final String NOT_MOVABLE_PATH_EXCEPTION = "[ERROR] 체스피스가 이동할 수 없는 위치입니다.";
+    private static final String MY_TEAM_EXISTS_IN_TARGET_POSITION_EXCEPTION = "[ERROR] 도착 위치에 우리 팀 체스피스가 있어 이동할 수 없습니다.";
 
     private final ChessMen blackChessMen;
     private final ChessMen whiteChessMen;
@@ -90,11 +92,11 @@ public class ChessGame {
         ChessPiece chessPiece = getChessPiece(sourcePosition);
 
         if (!chessPiece.isMovable(targetPosition, whiteChessMen, blackChessMen)) {
-            throw new IllegalArgumentException("[ERROR] 경로에 다른 체스가 있어 이동할 수 없습니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_PATH_EXCEPTION);
         }
 
         if (chessPiece.myTeamExistsInTargetPosition(targetPosition, getMyTeam())) {
-            throw new IllegalArgumentException("[ERROR] 도착 위치에 우리 팀 체스피스가 있어 이동할 수 없습니다.");
+            throw new IllegalArgumentException(MY_TEAM_EXISTS_IN_TARGET_POSITION_EXCEPTION);
         }
 
         ChessMen enemy = getEnemy();

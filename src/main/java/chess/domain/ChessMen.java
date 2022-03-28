@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ChessMen implements Iterable<ChessPiece> {
+    private static final int NUMBER_OF_FULL_POINT_PAWNS = 1;
+    private static final double SCORE_OF_SAME_ROW_PAWN = 0.5;
     private static final String NO_CHESS_PIECE_EXCEPTION = "[ERROR] 움직이려는 위치에 체스피스가 없습니다.";
+
     private final List<ChessPiece> chessPieces;
 
     public ChessMen(List<ChessPiece> chessPieces) {
@@ -42,7 +45,7 @@ public class ChessMen implements Iterable<ChessPiece> {
         double sum = chessPieces.stream()
                 .mapToDouble(ChessPiece::getScore)
                 .sum();
-        return sum - countSameRowPawn() * 0.5;
+        return sum - countSameRowPawn() * SCORE_OF_SAME_ROW_PAWN;
     }
 
     private int countSameRowPawn() {
@@ -52,7 +55,7 @@ public class ChessMen implements Iterable<ChessPiece> {
                 .map(it -> Collections.frequency(pawnColumns, (char)it.intValue()))
                 .collect(Collectors.toList())
                 .stream()
-                .filter(it -> it > 1)
+                .filter(it -> it > NUMBER_OF_FULL_POINT_PAWNS)
                 .mapToInt(Integer::intValue)
                 .sum();
     }
