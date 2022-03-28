@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.command.InputCommand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -11,11 +12,11 @@ public class InputView {
     private static final String COMMAND_DELIMITER = " ";
     private static final List<String> COMMANDS = List.of("move", "start", "end", "status");
 
-    public static List<String> inputCommand() {
+    public static InputCommand inputCommand() {
         List<String> commands = Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));
         validateCommand(commands.get(0));
 
-        return commands;
+        return InputCommand.valueOf(commands.get(0));
     }
 
     private static void validateCommand(String command) {

@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.command.InputCommand;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -14,28 +15,27 @@ public class ChessController {
         OutputView.printCommandGuide();
 
         while (true) {
-            List<String> commands = InputView.inputCommand();
-            String command = commands.get(0);
+            InputCommand commands = InputView.inputCommand();
 
-            if (command.equals("start")) {
+            if (commands == InputCommand.START) {
                 chessGame.startGame();
                 OutputView.printBoard(chessGame.getBoard());
             }
 
-            if (command.equals("move")) {
-                Position fromPosition = Position.from(commands.get(1));
-                Position toPosition = Position.from(commands.get(2));
+            if (commands == InputCommand.MOVE) {
+                Position fromPosition = Position.from(commands.getFirstPosition());
+                Position toPosition = Position.from(commands.getSecondPosition());
 
                 chessGame.movePiece(fromPosition, toPosition);
                 OutputView.printBoard(chessGame.getBoard());
             }
 
-            if (command.equals("status")) {
+            if (commands == InputCommand.STATUS) {
                 chessGame.showStatus();
                 OutputView.printScore(chessGame.getBoard());
             }
 
-            if (command.equals("end")) {
+            if (commands == InputCommand.END) {
                 chessGame.endGame();
             }
         }

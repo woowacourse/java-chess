@@ -58,7 +58,6 @@ public class Board {
         return Optional.ofNullable(value.get(position));
     }
 
-    // TODO: 실패 원인을 클라이언트가 알 수 있게 개선
     public MoveResult executeCommand(Position from, Position to, PieceColor pieceColor) {
         AbstractPiece piece = value.get(from);
 
