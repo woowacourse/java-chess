@@ -21,10 +21,9 @@ public final class KnightMoveStrategy extends FirstRowMoveStrategy {
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-
         if (!MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
-        return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+        return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
     }
 }

@@ -11,5 +11,5 @@ public abstract class MoveStrategy {
 
     public abstract boolean isMovable(final Board board, final Position source, final Position target);
 
-    protected abstract boolean isTargetPositionMovable(final Piece targetPiece, final Color color);
+    protected abstract boolean isMovableToTarget(final Piece targetPiece, final Color color);
 }

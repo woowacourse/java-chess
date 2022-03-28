@@ -44,7 +44,6 @@ public class Score {
         for (final Entry<Position, Piece> boardEntry : board.entrySet()) {
             putPawnCount(color, pawnCount, boardEntry);
         }
-
         return pawnCount.values().stream()
                 .mapToDouble(this::adjustPawnPoint)
                 .sum();

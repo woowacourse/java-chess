@@ -40,7 +40,7 @@ public class ChessGame {
 
     private void validateMove(final Position source, final Position target, final MoveStrategy moveStrategy) {
         if (!moveStrategy.isMovable(board, source, target)) {
-            throw new IllegalStateException("[ERROR] 이동할 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 기물을 이동할 수 없습니다.");
         }
     }
 

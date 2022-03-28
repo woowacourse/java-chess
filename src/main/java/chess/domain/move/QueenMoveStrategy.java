@@ -8,11 +8,9 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
-
         if (!isQueenMovePattern(distance)) {
             return false;
         }
-
         final Position smallerPosition = source.compareSmaller(target);
         if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
             return false;
@@ -26,14 +24,13 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
         if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
             return false;
         }
-
-        return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+        return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
     }
 
     private boolean isQueenMovePattern(final Distance distance) {
-        return distance.isHorizontalMovement()
-                || distance.isVerticalMovement()
-                || distance.isPositiveDiagonal()
-                || distance.isNegativeDiagonal();
+        return distance.isHorizontalMovement() ||
+                distance.isVerticalMovement() ||
+                distance.isPositiveDiagonal() ||
+                distance.isNegativeDiagonal();
     }
 }

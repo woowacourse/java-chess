@@ -30,15 +30,17 @@ public final class PawnMoveStrategy extends MoveStrategy {
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
-
         if (color == Color.BLACK) {
             return isBlackMovePattern(movePattern, board, source, targetPiece, color);
         }
         return isWhiteMovePattern(movePattern, board, source, targetPiece, color);
     }
 
-    private boolean isBlackMovePattern(final MovePattern movePattern, final Board board, final Position source,
-                                       final Piece targetPiece, final Color color) {
+    private boolean isBlackMovePattern(final MovePattern movePattern,
+                                       final Board board,
+                                       final Position source,
+                                       final Piece targetPiece,
+                                       final Color color) {
         if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
@@ -49,13 +51,16 @@ public final class PawnMoveStrategy extends MoveStrategy {
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.SOUTHEAST || movePattern == MovePattern.SOUTHWEST) {
-            return isTargetPositionMovable(targetPiece, color);
+            return isMovableToTarget(targetPiece, color);
         }
         return false;
     }
 
-    private boolean isWhiteMovePattern(final MovePattern movePattern, final Board board, final Position source,
-                                       final Piece targetPiece, final Color color) {
+    private boolean isWhiteMovePattern(final MovePattern movePattern,
+                                       final Board board,
+                                       final Position source,
+                                       final Piece targetPiece,
+                                       final Color color) {
         if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
@@ -66,7 +71,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.NORTHEAST || movePattern == MovePattern.NORTHWEST) {
-            return isTargetPositionMovable(targetPiece, color);
+            return isMovableToTarget(targetPiece, color);
         }
         return false;
     }
@@ -86,7 +91,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    protected boolean isTargetPositionMovable(final Piece targetPiece, final Color color) {
+    protected boolean isMovableToTarget(final Piece targetPiece, final Color color) {
         return !targetPiece.isBlank() && targetPiece.getColor() == color.oppositeColor();
     }
 }

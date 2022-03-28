@@ -13,6 +13,14 @@ public abstract class Piece {
         this.point = point;
     }
 
+    public abstract boolean isBlank();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract MoveStrategy getMoveStrategy();
+
     public final Color getColor() {
         return color;
     }
@@ -20,14 +28,6 @@ public abstract class Piece {
     public double getPoint() {
         return point;
     }
-
-    public abstract boolean isBlank();
-
-    public abstract MoveStrategy getMoveStrategy();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isPawn();
 
     @Override
     public boolean equals(Object o) {

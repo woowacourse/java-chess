@@ -10,11 +10,9 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
-
         if (!isRookMovePattern(distance)) {
             return false;
         }
-
         final Position smallerPosition = source.compareSmaller(target);
         if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
             return false;
@@ -23,7 +21,7 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
             return false;
         }
 
-        return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+        return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
     }
 
     private boolean isRookMovePattern(final Distance distance) {
@@ -31,13 +29,15 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
     }
 
     @Override
-    protected boolean isPieceExistWhenPositiveDiagonal(final Board board, final Position smallerPosition,
+    protected boolean isPieceExistWhenPositiveDiagonal(final Board board,
+                                                       final Position smallerPosition,
                                                        final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected boolean isPieceExistWhenNegativeDiagonal(final Board board, final Position smallerPosition,
+    protected boolean isPieceExistWhenNegativeDiagonal(final Board board,
+                                                       final Position smallerPosition,
                                                        final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }

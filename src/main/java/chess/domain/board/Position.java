@@ -27,7 +27,6 @@ public class Position implements Comparable<Position> {
 
     private static List<Position> createAll() {
         List<Position> positions = new ArrayList<>();
-
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
                 positions.add(new Position(column, row));
