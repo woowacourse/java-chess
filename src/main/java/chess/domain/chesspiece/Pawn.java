@@ -12,6 +12,7 @@ import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,8 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to) {
+    public void checkMovablePosition(final Position from, final Position to,
+                                     final Optional<ChessPiece> possiblePiece) {
         if (isMovablePosition(from, to)) {
             return;
         }

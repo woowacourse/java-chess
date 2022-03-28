@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -21,7 +22,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(Color.BLACK);
 
         // then
-        assertThatCode(() -> pawn.checkMovablePosition(from, to))
+        assertThatCode(() -> pawn.checkMovablePosition(from, to, Optional.empty()))
                 .doesNotThrowAnyException();
 
     }
@@ -36,7 +37,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to, Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -49,7 +50,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatCode(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to)))
+        assertThatCode(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to), Optional.empty()))
                 .doesNotThrowAnyException();
     }
 
@@ -61,7 +62,7 @@ class PawnTest {
         final ChessPiece pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to)))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(Position.from(from), Position.from(to), Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -76,7 +77,7 @@ class PawnTest {
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatCode(() -> pawn.checkMovablePosition(from, to))
+        assertThatCode(() -> pawn.checkMovablePosition(from, to, Optional.empty()))
                 .doesNotThrowAnyException();
     }
 
@@ -90,7 +91,7 @@ class PawnTest {
         final Pawn pawn = Pawn.from(color);
 
         // then
-        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to))
+        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to, Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }

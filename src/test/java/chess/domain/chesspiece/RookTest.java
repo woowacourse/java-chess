@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class RookTest {
         final ChessPiece rook = Rook.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> rook.checkMovablePosition(from, to))
+        assertThatThrownBy(() -> rook.checkMovablePosition(from, to, Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -35,7 +36,7 @@ class RookTest {
         final ChessPiece rook = Rook.from(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> rook.checkMovablePosition(from, to))
+        Assertions.assertThatCode(() -> rook.checkMovablePosition(from, to, Optional.empty()))
                 .doesNotThrowAnyException();
     }
 

@@ -40,6 +40,8 @@ public final class Queen extends ChessPiece {
         if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
+
+        checkTargetPosition(possiblePiece);
     }
 
     @Override

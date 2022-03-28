@@ -41,7 +41,7 @@ public class ChessBoard {
 
     private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
         checkCurrentTurn(movablePiece);
-        movablePiece.checkMovablePosition(from, to);
+        movablePiece.checkMovablePosition(from, to, findPiece(to));
         checkHurdle(from, to, movablePiece);
         checkTargetPosition(from, to, movablePiece);
     }

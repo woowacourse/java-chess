@@ -38,11 +38,7 @@ public final class Bishop extends ChessPiece {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
 
-        possiblePiece.ifPresent(piece -> {
-            if (piece.isSameColor(color)) {
-                throw new IllegalArgumentException("같은색 기물입니다.");
-            }
-        });
+        checkTargetPosition(possiblePiece);
     }
 
     @Override

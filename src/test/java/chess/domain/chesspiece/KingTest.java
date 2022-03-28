@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
+import java.util.Optional;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class KingTest {
-
 
     @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
@@ -24,7 +24,7 @@ class KingTest {
         final ChessPiece king = King.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> king.checkMovablePosition(from, to))
+        assertThatThrownBy(() -> king.checkMovablePosition(from, to, Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -39,7 +39,7 @@ class KingTest {
         final ChessPiece king = King.from(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> king.checkMovablePosition(from, to))
+        Assertions.assertThatCode(() -> king.checkMovablePosition(from, to, Optional.empty()))
                 .doesNotThrowAnyException();
 
     }

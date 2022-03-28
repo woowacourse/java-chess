@@ -3,6 +3,7 @@ package chess.domain.chesspiece;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,13 +30,16 @@ public final class King extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to) {
+    public void checkMovablePosition(final Position from, final Position to,
+                                     final Optional<ChessPiece> possiblePiece) {
         final int fileDistance = Math.abs(from.fileDistance(to));
         final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (Math.abs(fileDistance) > MOVING_DISTANCE || Math.abs(rankDistance) > MOVING_DISTANCE) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
+
+        checkTargetPosition(possiblePiece);
     }
 
     @Override
