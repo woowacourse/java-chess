@@ -5,7 +5,6 @@ import chess.domain.piece.strategy.KingMoveStrategy;
 
 public class King extends Piece {
 
-    private static final int SCOPE_DIFFERENCE = 1;
     private static final double KING_SCORE = 0;
 
     public King(Color color) {
