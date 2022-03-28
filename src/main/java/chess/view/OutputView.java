@@ -21,9 +21,10 @@ public class OutputView {
     private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
     private static final String GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
-    private static final String TEAM_SCORE_DELIMITER = ": ";
+    private static final String GAME_STATUS_COMMAND_MESSAGE = "> 게임 각 진영의 점수 확인 : status";
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
+    private static final String TEAM_SCORE_DELIMITER = ": ";
+    private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
 
     static {
         chessPieceNameToCharacter.put("PAWN", 'p');
@@ -34,6 +35,9 @@ public class OutputView {
         chessPieceNameToCharacter.put("QUEEN", 'q');
     }
 
+    private OutputView() {
+    }
+
     public static void printChessGameStart() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(CHESS_GAME_START_MESSAGE)
@@ -42,7 +46,9 @@ public class OutputView {
                 .append(System.lineSeparator())
                 .append(GAME_END_COMMAND_MESSAGE)
                 .append(System.lineSeparator())
-                .append(GAME_MOVE_COMMAND_MESSAGE);
+                .append(GAME_MOVE_COMMAND_MESSAGE)
+                .append(System.lineSeparator())
+                .append(GAME_STATUS_COMMAND_MESSAGE);
         System.out.println(stringBuilder);
     }
 
@@ -61,7 +67,7 @@ public class OutputView {
     private static List<List<Character>> initializeChessBoard() {
         List<List<Character>> chessBoard = new ArrayList<>();
         for (int i = 0; i < CHESSBOARD_SIZE; i++) {
-            List<Character> emptyRow = new ArrayList<>(Collections.nCopies(8, EMPTY_CHESS_BLOCK));
+            List<Character> emptyRow = new ArrayList<>(Collections.nCopies(CHESSBOARD_SIZE, EMPTY_CHESS_BLOCK));
             chessBoard.add(emptyRow);
         }
         return chessBoard;
@@ -73,6 +79,10 @@ public class OutputView {
             char chessPieceAbbreviation = chessTypeToUpperCase(chessPieceNameToCharacter.get(name));
             chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
         }
+    }
+
+    private static Character chessTypeToUpperCase(Character type) {
+        return Character.toUpperCase(type);
     }
 
     private static void setWhiteChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
@@ -89,10 +99,6 @@ public class OutputView {
 
     private static int getColumnIndex(ChessPieceDto chessPieceDto) {
         return chessPieceDto.getColumn() - ADJUST_COLUMN_INDEX;
-    }
-
-    private static Character chessTypeToUpperCase(Character type) {
-        return Character.toUpperCase(type);
     }
 
     public static void printStatus(ChessStatusDto chessStatusDto) {
