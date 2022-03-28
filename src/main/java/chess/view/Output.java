@@ -52,10 +52,10 @@ public class Output {
 
     private static void printPieceName(final Piece piece) {
         if (piece.isSameColor(Color.WHITE)) {
-            System.out.println(piece.getNotation().getValue());
+            System.out.print(piece.getNotation().getValue());
             return;
         }
-        System.out.println(piece.getNotation().getValue().toUpperCase(Locale.ROOT));
+        System.out.print(piece.getNotation().getValue().toUpperCase(Locale.ROOT));
     }
 
     public static void printStatus(final Status status) {
