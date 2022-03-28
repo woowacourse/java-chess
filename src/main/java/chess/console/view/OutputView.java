@@ -7,6 +7,12 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final char MIN_COLUMN = 'a';
+    private static final char MAX_COLUMN = 'h';
+    private static final char MIN_ROW = '1';
+    private static final char MAX_ROW = '8';
+    private static final String EMPTY_POSITION_OF_BOARD = ".";
+
     private OutputView() {
         throw new AssertionError();
     }
@@ -17,12 +23,16 @@ public class OutputView {
     }
 
     public static void printChessBoard(Map<Position, Piece> pieces) {
-        for (char i = '8'; i >= '1'; i--) {
-            for (char j = 'a'; j <= 'h'; j++) {
-                Position position = Position.of(j, i);
-                System.out.print(piecePrintName(pieces, position));
-            }
+        for (char row = MAX_ROW; row >= MIN_ROW; row--) {
+            printChessBoardColumnsByRow(pieces, row);
             System.out.println();
+        }
+    }
+
+    private static void printChessBoardColumnsByRow(Map<Position, Piece> pieces, char row) {
+        for (char column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
+            Position position = Position.of(column, row);
+            System.out.print(piecePrintName(pieces, position));
         }
     }
 
@@ -31,7 +41,7 @@ public class OutputView {
             Piece piece = pieces.get(position);
             return piece.convertedName();
         }
-        return ".";
+        return EMPTY_POSITION_OF_BOARD;
     }
 
     public static void printChessBoardStatus(Map<Color, Double> chessBoardStatus) {
