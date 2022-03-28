@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +26,7 @@ public class Pawn extends Piece {
 
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        Map<Direction, List<Position>> movable = new HashMap<>();
+        Map<Direction, List<Position>> movable = new EnumMap<>(Direction.class);
         if (color == Color.BLACK) {
             movable.put(BLACK_DIRECTION, new ArrayList<>());
             putFirstMovablePositionByDirection(movable, position, BLACK_DIRECTION);
