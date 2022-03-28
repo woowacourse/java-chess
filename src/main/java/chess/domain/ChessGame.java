@@ -58,4 +58,23 @@ public class ChessGame {
 
         return hasPieceOfBlackPlayer || hasPieceOfWhitePlayer;
     }
+
+    public boolean isWin(final Player currentPlayer, final Player opponentPlayer) {
+        if (hasNoKing(currentPlayer)) {
+            return false;
+        }
+        return hasNoKing(opponentPlayer) || isHigherScore(currentPlayer, opponentPlayer);
+    }
+
+    public boolean hasNoKing(final Player currentPlayer) {
+        return !currentPlayer.hasKing();
+    }
+
+    public boolean isHigherScore(final Player currentPlayer, final Player opponentPlayer) {
+        return getPlayerScore(currentPlayer) > getPlayerScore(opponentPlayer);
+    }
+
+    public double getPlayerScore(final Player currentPlayer) {
+        return currentPlayer.calculateScore();
+    }
 }
