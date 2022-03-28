@@ -6,9 +6,8 @@ import static java.util.stream.Collectors.summingDouble;
 import chess.domain.Color;
 import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceClassChecker;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class Board {
 
     private boolean isInValidMove(Position from, Position to, Piece pieceAtFrom, Piece pieceAtTo) {
         return isInvalidFrom(pieceAtFrom) || isNotMovable(from, to, pieceAtFrom, pieceAtTo)
-            || canNotGoOnTheWay(from, to, pieceAtFrom);
+                || canNotGoOnTheWay(from, to, pieceAtFrom);
     }
 
     private boolean isInvalidFrom(Piece pieceAtFrom) {
@@ -63,7 +62,7 @@ public class Board {
         List<Position> positionsOnTheWay = fromPosition.getPositionBetween(toPosition);
 
         return positionsOnTheWay.stream()
-            .anyMatch(board::containsKey);
+                .anyMatch(board::containsKey);
     }
 
     private void movePiece(Position from, Position to, Piece pieceAtFrom) {
@@ -72,7 +71,7 @@ public class Board {
     }
 
     private MoveResult getMoveResult(Piece pieceAtTo) {
-        if (pieceAtTo instanceof King) {
+        if (PieceClassChecker.from(pieceAtTo) == PieceClassChecker.KING) {
             return MoveResult.ENDED;
         }
         return MoveResult.SUCCESS;
@@ -90,19 +89,19 @@ public class Board {
 
     private List<Position> getPawnPositionsByColor(Predicate<Piece> condition) {
         return board.entrySet()
-            .stream()
-            .filter(entry -> entry.getValue() instanceof Pawn)
-            .filter(entry -> condition.test(entry.getValue()))
-            .map(Entry::getKey)
-            .collect(Collectors.toList());
+                .stream()
+                .filter(entry -> PieceClassChecker.from(entry.getValue()) == PieceClassChecker.PAWN)
+                .filter(entry -> condition.test(entry.getValue()))
+                .map(Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     private double calculatePawnScore(List<Position> pawnPositions) {
         double pawnScore = pawnPositions.size();
         for (File file : File.values()) {
             long count = pawnPositions.stream()
-                .filter(position -> position.isSameFile(file))
-                .count();
+                    .filter(position -> position.isSameFile(file))
+                    .count();
 
             pawnScore = subtractPawnScore(pawnScore, count);
         }
@@ -119,19 +118,17 @@ public class Board {
     private Map<Color, Double> calculateChessScore(double whitePawnScore, double blackPawnScore) {
         Map<Color, Double> chessScore = getChessScoreWithoutPawn();
 
-        chessScore.put(Color.WHITE,
-            chessScore.getOrDefault(Color.WHITE, DEFAULT_SCORE) + whitePawnScore);
-        chessScore.put(Color.BLACK,
-            chessScore.getOrDefault(Color.BLACK, DEFAULT_SCORE) + blackPawnScore);
+        chessScore.put(Color.WHITE, chessScore.getOrDefault(Color.WHITE, DEFAULT_SCORE) + whitePawnScore);
+        chessScore.put(Color.BLACK, chessScore.getOrDefault(Color.BLACK, DEFAULT_SCORE) + blackPawnScore);
 
         return chessScore;
     }
 
     private Map<Color, Double> getChessScoreWithoutPawn() {
         return board.values()
-            .stream()
-            .filter(piece -> !(piece instanceof Pawn))
-            .collect(groupingBy(Color::from, summingDouble(Score::from)));
+                .stream()
+                .filter(piece -> PieceClassChecker.from(piece) != PieceClassChecker.PAWN)
+                .collect(groupingBy(Color::from, summingDouble(Score::from)));
     }
 
     public Map<Position, Piece> getBoard() {

@@ -1,16 +1,17 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceClassChecker;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum Score {
-    KING((piece) -> piece.getClass().getSimpleName().equals("King"), 0),
-    QUEEN((piece) -> piece.getClass().getSimpleName().equals("Queen"), 9),
-    BISHOP((piece) -> piece.getClass().getSimpleName().equals("Bishop"), 3),
-    KNIGHT((piece -> piece.getClass().getSimpleName().equals("Knight")), 2.5),
-    ROOK((piece) -> piece.getClass().getSimpleName().equals("Rook"), 5),
-    PAWN((piece) -> piece.getClass().getSimpleName().equals("Pawn"), 1),
+    KING((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.KING, 0),
+    QUEEN((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.QUEEN , 9),
+    BISHOP((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.BISHOP , 3),
+    KNIGHT((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.KNIGHT , 2.5),
+    ROOK((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.ROOK ,5),
+    PAWN((piece) -> PieceClassChecker.from(piece) == PieceClassChecker.PAWN ,1),
     ;
 
     private final Predicate<Piece> piecePredicate;
