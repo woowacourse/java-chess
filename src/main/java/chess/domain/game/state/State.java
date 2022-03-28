@@ -4,9 +4,7 @@ import chess.domain.game.ChessGame;
 import chess.view.OutputView;
 
 public abstract class State {
-
     protected final ChessGame chessGame;
-    protected boolean run = true;
 
     public State(ChessGame chessGame) {
         this.chessGame = chessGame;
@@ -24,14 +22,14 @@ public abstract class State {
     protected abstract State execute(String input);
 
     public boolean isRun() {
-        return run;
+        return true;
     }
 
     public boolean isPlay() {
         return false;
     }
 
-    public boolean isStatus() {
+    public boolean isStatusEnd() {
         return false;
     }
 }

@@ -8,7 +8,7 @@ public final class StatusEnd extends End {
     }
 
     @Override
-    public boolean isStatus() {
+    public boolean isStatusEnd() {
         return true;
     }
 }

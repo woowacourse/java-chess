@@ -15,7 +15,6 @@ public final class Play extends State {
     @Override
     protected State execute(String input) {
         Command command = Command.from(input);
-
         if (command == Command.END) {
             return new ExitEnd(chessGame);
         }

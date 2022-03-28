@@ -18,11 +18,9 @@ public final class KnightMoveStrategy extends MoveStrategy {
     @Override
     public boolean isValidateCanMove(Team team, Position from, Position to) {
         List<Direction> directions = knightDirection(team);
-
         if (isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
-
         return true;
     }
 

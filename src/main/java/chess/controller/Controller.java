@@ -19,7 +19,7 @@ public class Controller {
             printChessBoardIfPlay(state, chessGame);
             state = state.go(InputView.inputCommend());
         }
-        if (state.isStatus()) {
+        if (state.isStatusEnd()) {
             OutputView.printStatus(chessGame.getStatus());
         }
     }

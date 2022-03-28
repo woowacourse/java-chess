@@ -8,7 +8,6 @@ public enum Command {
     END("end"),
     MOVE("move [a-h]\\d [a-h]\\d"),
     STATUS("status");
-
     private static final String NO_COMMEND_MESSAGE = "잘못된 커멘드 명령입니다.";
 
     private final String value;

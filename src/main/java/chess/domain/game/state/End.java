@@ -7,11 +7,14 @@ public abstract class End extends State {
 
     public End(ChessGame chessGame) {
         super(chessGame);
-        this.run = false;
     }
 
     @Override
     protected State execute(String input) {
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
+    }
+
+    public boolean isRun() {
+        return false;
     }
 }

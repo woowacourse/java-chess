@@ -11,6 +11,7 @@ public final class Position {
     private static final int POSITION_BEGIN_INDEX = 5;
     private static final String SEPARATOR = " ";
     private static final int ATTRIBUTE_SIZE = 2;
+
     private final File file;
     private final Rank rank;
 

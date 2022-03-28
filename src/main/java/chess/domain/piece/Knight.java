@@ -10,7 +10,6 @@ public final class Knight extends Piece {
         super(new Name("N"), team, new KnightMoveStrategy());
     }
 
-
     @Override
     public boolean canMove(Piece targetPiece, Position from, Position to) {
         return moveStrategy.isValidateCanMove(team, from, to);
