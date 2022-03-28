@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.List;
 
 import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class Rook extends Piece {
 	private static final String BUG_MESSAGE_COLOR = "[BUG] 룩은 색상을 가져야합니다.";
@@ -13,6 +14,13 @@ public final class Rook extends Piece {
 		new Direction(0, 1),
 		new Direction(-1, 0),
 		new Direction(0, -1)
+	);
+
+	private static final List<UnitDirection> MOVABLE_UNIT_DIRECTIONS = List.of(
+		UnitDirection.NORTH,
+		UnitDirection.WEST,
+		UnitDirection.EAST,
+		UnitDirection.SOUTH
 	);
 
 	Rook(Color color) {
@@ -31,10 +39,10 @@ public final class Rook extends Piece {
 
 		return WHITE_ROOK;
 	}
-
+	
 	@Override
 	public boolean canMove(Direction direction, Piece target) {
 		checkSameTeam(target);
-		return direction.hasMultiple(MOVABLE_DIRECTIONS);
+		return direction.hasMultiple(MOVABLE_UNIT_DIRECTIONS);
 	}
 }

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.List;
 
 import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class King extends Piece {
 	private final static String BUG_MESSAGE_COLOR = "[BUG] 킹은 색상을 가져야합니다.";
@@ -17,6 +18,17 @@ public final class King extends Piece {
 		new Direction(-1, 0),
 		new Direction(-1, -1),
 		new Direction(-1, 1)
+	);
+
+	private static final List<UnitDirection> MOVABLE_UNIT_DIRECTIONS = List.of(
+		UnitDirection.NORTH,
+		UnitDirection.SOUTH,
+		UnitDirection.EAST,
+		UnitDirection.WEST,
+		UnitDirection.NORTH_EAST,
+		UnitDirection.NORTH_WEST,
+		UnitDirection.SOUTH_EAST,
+		UnitDirection.SOUTH_WEST
 	);
 
 	King(Color color) {
@@ -39,7 +51,7 @@ public final class King extends Piece {
 	@Override
 	public boolean canMove(Direction direction, Piece target) {
 		checkSameTeam(target);
-		return direction.hasSame(MOVABLE_DIRECTIONS);
+		return direction.hasSame(MOVABLE_UNIT_DIRECTIONS);
 	}
 
 	@Override

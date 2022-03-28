@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.List;
 
 import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class Knight extends Piece {
 	private final static String BUG_MESSAGE_COLOR = "[BUG] 나이트는 색상을 가져야합니다.";
@@ -17,6 +18,17 @@ public final class Knight extends Piece {
 		new Direction(2, -1),
 		new Direction(-2, -1),
 		new Direction(-2, 1)
+	);
+
+	private static final List<UnitDirection> MOVABLE_UNIT_DIRECTIONS = List.of(
+		UnitDirection.NNE,
+		UnitDirection.NNW,
+		UnitDirection.SSE,
+		UnitDirection.SSW,
+		UnitDirection.EEN,
+		UnitDirection.EES,
+		UnitDirection.WWN,
+		UnitDirection.WWS
 	);
 
 	Knight(Color color) {
@@ -39,6 +51,6 @@ public final class Knight extends Piece {
 	@Override
 	public boolean canMove(Direction direction, Piece target) {
 		checkSameTeam(target);
-		return direction.hasSame(MOVABLE_DIRECTIONS);
+		return direction.hasSame(MOVABLE_UNIT_DIRECTIONS);
 	}
 }

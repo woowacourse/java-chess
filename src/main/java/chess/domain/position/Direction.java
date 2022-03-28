@@ -20,13 +20,15 @@ public final class Direction {
 		return new Direction(dFile, -1 * dRank);
 	}
 
-	public boolean hasSame(List<Direction> directions) {
+	public boolean hasSame(List<UnitDirection> directions) {
 		return directions.stream()
+			.map(UnitDirection::getUnitDirection)
 			.anyMatch(this::equals);
 	}
 
-	public boolean hasMultiple(List<Direction> directions) {
+	public boolean hasMultiple(List<UnitDirection> directions) {
 		return directions.stream()
+			.map(UnitDirection::getUnitDirection)
 			.anyMatch(direction -> this.getUnitDirection().equals(direction));
 	}
 
