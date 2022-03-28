@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Direction;
 import chess.MoveCommand;
 import chess.Position;
+import java.util.List;
 
 public class Bishop extends AbstractPiece {
 
@@ -17,6 +18,16 @@ public class Bishop extends AbstractPiece {
 
         return Direction.getDiagonalDirections().stream()
                 .anyMatch(direction -> canBishopMove(from, to));
+    }
+
+    @Override
+    public Direction getDirection(final Position from, final Position to) {
+        List<Direction> dirs = Direction.getDiagonalDirections();
+
+        return dirs.stream()
+                .filter(direction -> from.canMoveToCurrentDirection(direction, to))
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean canBishopMove(final Position from, final Position to) {

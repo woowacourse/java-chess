@@ -1,5 +1,7 @@
 package chess.piece;
 
+import static chess.Direction.*;
+import static chess.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Direction;
@@ -23,20 +25,20 @@ public class PositionTest {
     @ParameterizedTest
     @MethodSource("provideForPositionAndDirection")
     @DisplayName("출발지와 도착지의 방향을 구한다.")
-    void getDirection(final Position from, final Position to, final Direction direction) {
-        assertThat(from.getDir(to)).isEqualTo(direction);
+    void getDirectionFromTo(final Position from, final Position to, final Direction direction, final Piece piece) {
+        assertThat(piece.getDirection(from, to)).isEqualTo(direction);
     }
 
     static Stream<Arguments> provideForPositionAndDirection() {
         return Stream.of(
-                Arguments.of("d4", "d6", Direction.N),
-                Arguments.of("d4", "f6", Direction.NE),
-                Arguments.of("d4", "f4", Direction.E),
-                Arguments.of("d4", "f2", Direction.SE),
-                Arguments.of("d4", "d2", Direction.S),
-                Arguments.of("d4", "b2", Direction.SW),
-                Arguments.of("d4", "a4", Direction.W),
-                Arguments.of("d4", "b6", Direction.NW)
+                Arguments.of("d4", "d6", N, new Queen(WHITE)),
+                Arguments.of("d4", "f6", NE, new Queen(WHITE)),
+                Arguments.of("d4", "f4", E, new Queen(WHITE)),
+                Arguments.of("d4", "f2", SE, new Queen(WHITE)),
+                Arguments.of("d4", "d2", S, new Queen(WHITE)),
+                Arguments.of("d4", "b2", SW, new Queen(WHITE)),
+                Arguments.of("d4", "a4", W, new Queen(WHITE)),
+                Arguments.of("d4", "b6", NW, new Queen(WHITE))
         );
     }
 

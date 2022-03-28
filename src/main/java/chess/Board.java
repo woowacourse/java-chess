@@ -136,13 +136,13 @@ public class Board {
     }
 
     private void validatePiece(final Position from, final Position to, final Piece piece) {
-        if (!piece.isKnight()) {
+        if (!piece.isKnight() && !piece.isPawn()) {
             validatePieceBlock(from, to, piece);
         }
     }
 
-    private void validatePieceBlock(final Position from, final Position to, Piece piece) {
-        final Direction direction = from.getDir(to);
+    private void validatePieceBlock(final Position from, final Position to, final Piece piece) {
+        final Direction direction = piece.getDirection(from, to);
 
         Position movedPosition = from;
         movedPosition = movedPosition.shift(direction);

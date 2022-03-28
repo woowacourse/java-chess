@@ -88,104 +88,32 @@ public class Position {
         return column == other.column;
     }
 
-    public Direction getDir(final Position other) {
-        final List<Position> northPositions = getNorthPositions();
-        if (northPositions.contains(other)) {
-            return Direction.N;
-        }
-        final List<Position> southPositions = getSouthPositions();
-        if (southPositions.contains(other)) {
-            return Direction.S;
-        }
-        final List<Position> eastPositions = getEastPositions();
-        if (eastPositions.contains(other)) {
-            return Direction.E;
-        }
-        final List<Position> westPositions = getWestPositions();
-        if (westPositions.contains(other)) {
-            return Direction.W;
-        }
-        final List<Position> northEastPositions = getNorthEastPositions();
-        if (northEastPositions.contains(other)) {
-            return Direction.NE;
-        }
-        final List<Position> southEastPositions = getSouthEastPositions();
-        if (southEastPositions.contains(other)) {
-            return Direction.SE;
-        }
-        final List<Position> northWestPositions = getNorthWestPositions();
-        if (northWestPositions.contains(other)) {
-            return Direction.NW;
-        }
-        final List<Position> southWestPositions = getSouthWestPositions();
-        if (southWestPositions.contains(other)) {
-            return Direction.SW;
-        }
-        return null;
+    public boolean canMoveToCurrentDirection(Direction direction, Position to) {
+        return isValidPosition(this, to, direction);
     }
 
-    private List<Position> getNorthPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = row.getValue(); i <= 8; i++) {
-            positions.add(Position.of(column, Row.of(i)));
+    private boolean isValidPosition(Position from, Position to, Direction direction) {
+        final int columnVal = from.column.getValue() + direction.getColumn();
+        final int rowVal = from.row.getValue() + direction.getRow();
+        if (!from.canShift(columnVal, rowVal)) {
+            return false;
         }
-        return positions;
+        Position nextPosition = otherShift(from, direction);
+        if (nextPosition.equals(to)) {
+            return true;
+        }
+        return isValidPosition(nextPosition, to, direction);
     }
 
-    private List<Position> getSouthPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = row.getValue(); i >= 1; i--) {
-            positions.add(Position.of(column, Row.of(i)));
-        }
-        return positions;
+    private Position otherShift(final Position position, final Direction direction) {
+        final Column column = Column.of(position.column.getValue() + direction.getColumn());
+        final Row row = Row.of(position.row.getValue() + direction.getRow());
+        return Position.of(column, row);
+
     }
 
-    private List<Position> getEastPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(); i <= 8; i++) {
-            positions.add(Position.of(Column.of(i), row));
-        }
-        return positions;
-    }
-
-    private List<Position> getWestPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(); i >= 1; i--) {
-            positions.add(Position.of(Column.of(i), row));
-        }
-        return positions;
-    }
-
-    private List<Position> getNorthEastPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(), j = row.getValue(); i <= 8 && j <= 8; i++, j++) {
-            positions.add(Position.of(Column.of(i), Row.of(j)));
-        }
-        return positions;
-    }
-
-    private List<Position> getNorthWestPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(), j = row.getValue(); i >= 1 && j <= 8; i--, j++) {
-            positions.add(Position.of(Column.of(i), Row.of(j)));
-        }
-        return positions;
-    }
-
-    private List<Position> getSouthEastPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(), j = row.getValue(); i <= 8 && j >= 1; i++, j--) {
-            positions.add(Position.of(Column.of(i), Row.of(j)));
-        }
-        return positions;
-    }
-
-    private List<Position> getSouthWestPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = column.getValue(), j = row.getValue(); i >= 1 && j >= 1; i--, j--) {
-            positions.add(Position.of(Column.of(i), Row.of(j)));
-        }
-        return positions;
+    private boolean canShift(final int column, final int row) {
+        return column >= 1 && row >= 1 && column <= 8 && row <= 8;
     }
 
     public Position shift(final Direction direction) {

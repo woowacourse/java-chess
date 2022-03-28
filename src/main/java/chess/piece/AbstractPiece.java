@@ -1,6 +1,9 @@
 package chess.piece;
 
+import chess.Direction;
 import chess.MoveCommand;
+import chess.Position;
+import java.util.List;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -34,8 +37,12 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean canMove(MoveCommand command) {
-        // todo: abstract로 수정할 것
         return true;
+    }
+
+    @Override
+    public Direction getDirection(final Position from, final Position to) {
+        return Direction.NONE;
     }
 
     @Override

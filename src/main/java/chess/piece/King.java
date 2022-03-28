@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Direction;
 import chess.MoveCommand;
 import chess.Position;
+import java.util.List;
 
 public class King extends AbstractPiece {
 
@@ -17,6 +18,16 @@ public class King extends AbstractPiece {
 
         return Direction.getEveryDirections().stream()
                 .anyMatch(direction -> canKingMove(from, to, direction));
+    }
+
+    @Override
+    public Direction getDirection(final Position from, final Position to) {
+        List<Direction> dirs = Direction.getEveryDirections();
+
+        return dirs.stream()
+                .filter(direction -> from.canMoveToCurrentDirection(direction, to))
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean canKingMove(final Position from, final Position to, final Direction direction) {

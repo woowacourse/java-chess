@@ -6,6 +6,7 @@ import static chess.piece.Color.WHITE;
 import chess.Direction;
 import chess.MoveCommand;
 import chess.Position;
+import java.util.List;
 
 public class Pawn extends AbstractPiece {
 

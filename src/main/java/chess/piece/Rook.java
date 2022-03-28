@@ -3,6 +3,7 @@ package chess.piece;
 import chess.Direction;
 import chess.MoveCommand;
 import chess.Position;
+import java.util.List;
 
 public class Rook extends AbstractPiece {
 
@@ -17,6 +18,16 @@ public class Rook extends AbstractPiece {
 
         return Direction.getVerticalAndHorizontalDirections().stream()
                 .anyMatch(direction -> canRookMove(from, to));
+    }
+
+    @Override
+    public Direction getDirection(final Position from, final Position to) {
+        List<Direction> dirs = Direction.getVerticalAndHorizontalDirections();
+
+        return dirs.stream()
+                .filter(direction -> from.canMoveToCurrentDirection(direction, to))
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean canRookMove(final Position from, final Position to) {
