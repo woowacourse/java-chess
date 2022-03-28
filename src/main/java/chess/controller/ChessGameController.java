@@ -86,7 +86,7 @@ public class ChessGameController {
                 positions.get(POSITION_FILE_INDEX), positions.get(POSITION_RANK_INDEX));
     }
 
-    public List<Position> findMoveCommandPosition(final String currentPosition, final String destinationPosition) {
+    private List<Position> findMoveCommandPosition(final String currentPosition, final String destinationPosition) {
         final char currentFile = currentPosition.charAt(POSITION_FILE_INDEX);
         final int currentRank = currentPosition.charAt(POSITION_RANK_INDEX) - '0';
         final char destinationFile = destinationPosition.charAt(POSITION_FILE_INDEX);
