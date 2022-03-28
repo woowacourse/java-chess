@@ -13,6 +13,10 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public static void printError(String message) {
+        System.out.println(message);
+    }
+
     public static void printBoard(Board board) {
         System.out.println();
         System.out.printf("   [ %s팀의 차례입니다 ]%n", findTurn(board));
