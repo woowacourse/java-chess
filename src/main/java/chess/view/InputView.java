@@ -7,6 +7,6 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static String inputOption() {
-        return InputOption.from(SCANNER.nextLine());
+        return SCANNER.nextLine();
     }
 }

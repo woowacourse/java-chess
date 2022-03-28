@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import chess.domain.Board;
 import chess.domain.Position;
 
-public class End implements GameState{
+public class End implements GameState {
 
     @Override
     public GameState movePiece(Board board, Position fromPosition, Position toPosition) {
@@ -13,5 +13,10 @@ public class End implements GameState{
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public boolean isWaiting() {
+        return false;
     }
 }

@@ -1,20 +1,26 @@
 package chess.domain.game;
 
+import java.util.Arrays;
+import java.util.List;
+
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Running;
+import chess.domain.game.state.Waiting;
 import chess.domain.piece.Color;
-import java.util.Arrays;
-import java.util.List;
 
 public class ChessGame {
 
     private GameState state;
-    private final Board board;
+    private Board board;
 
     public ChessGame() {
+        state = new Waiting();
+    }
+
+    public void start() {
         state = new Running();
         board = new Board(BoardFactory.getInitialPieces());
     }
@@ -25,8 +31,8 @@ public class ChessGame {
             Position.valueOf(information.get(2)));
     }
 
-    public boolean isFinish() {
-        return state.isFinish();
+    public boolean isWaiting() {
+        return state.isWaiting();
     }
 
     public double calculateScore(Color color) {
