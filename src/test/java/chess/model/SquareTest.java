@@ -54,4 +54,11 @@ public class SquareTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유효하지 않은 방향입니다.");
     }
+
+    @Test
+    void tryToMove() {
+        Square a1 = Square.of("a1");
+        int distanceToA2 = a1.getDistance(Square.of("a2"));
+        assertThat(distanceToA2).isEqualTo(1);
+    }
 }

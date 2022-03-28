@@ -21,10 +21,6 @@ public enum GameStartCommand {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", commandLine)));
     }
 
-    public boolean isNotEnd() {
-        return isStart() || isMove();
-    }
-
     public boolean isStart() {
         return this.equals(START);
     }

@@ -5,25 +5,32 @@ import chess.model.Direction;
 import chess.model.File;
 import chess.model.Rank;
 import chess.model.Square;
+import chess.model.piece.strategy.MovableStrategy;
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
     private Square square;
+    private MovableStrategy strategy;
 
-    public Piece(final Color color, final Square square) {
+    public Piece(final Color color, final Square square, final MovableStrategy strategy) {
         this.color = color;
         this.square = square;
+        this.strategy = strategy;
     }
 
-    public Piece(final Color color, final File file, final Rank rank) {
-        this(color, new Square(file, rank));
+    public Piece(final Color color, final File file, final Rank rank, final MovableStrategy strategy) {
+        this(color, new Square(file, rank), strategy);
     }
-
-    public abstract boolean movable(final Piece targetPiece);
 
     public abstract String getLetter();
+
+    public abstract Point getPoint();
+
+    public boolean movable(final Piece targetPiece) {
+        return this.strategy.movable(this, targetPiece);
+    }
 
     public boolean isBlack() {
         return color.isBlack();
@@ -31,18 +38,6 @@ public abstract class Piece {
 
     public boolean isAt(Square square) {
         return this.square.equals(square);
-    }
-
-    protected Color color() {
-        return this.color;
-    }
-
-    protected Square square() {
-        return this.square;
-    }
-
-    protected boolean isEnemy(Piece targetPiece) {
-        return color.isEnemy(targetPiece.color);
     }
 
     public boolean isAlly(Piece targetPiece) {
@@ -55,25 +50,6 @@ public abstract class Piece {
 
     public Direction findDirectionTo(Piece target) {
         return this.square.findDirection(target.square);
-    }
-
-    public abstract Point getPoint();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return color == piece.color && Objects.equals(square, piece.square);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, square);
     }
 
     public void changeLocation(Square targetSquare) {
@@ -92,7 +68,40 @@ public abstract class Piece {
         return this.getPoint().equals(Point.KING);
     }
 
+    public boolean isEnemy(Piece targetPiece) {
+        return color.isEnemy(targetPiece.color);
+    }
+
     public boolean isSameFile(Piece other) {
         return this.square.isSameFile(other.square);
+    }
+
+    public int getDistance(Piece target) {
+        return this.square.getDistance(target.square);
+    }
+
+    protected Color color() {
+        return this.color;
+    }
+
+    protected Square square() {
+        return this.square;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return color == piece.color && Objects.equals(square, piece.square);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, square);
     }
 }

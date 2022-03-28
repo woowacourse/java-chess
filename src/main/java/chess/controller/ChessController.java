@@ -7,9 +7,9 @@ import chess.state.GameState;
 import chess.state.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class ChessController {
 
@@ -43,14 +43,12 @@ public final class ChessController {
     }
 
     private List<String> toDto(final Board board) {
-        List<String> boardDto = new ArrayList<>();
-        for (Piece piece : board.getBoard()) {
-            boardDto.add(toDto(piece));
-        }
-        return boardDto;
+        return board.getBoard().stream()
+                .map(this::convertToLetter)
+                .collect(Collectors.toList());
     }
 
-    private String toDto(final Piece piece) {
+    private String convertToLetter(final Piece piece) {
         String pieceDto = piece.getLetter();
         if (piece.isBlack()) {
             return pieceDto.toUpperCase();
@@ -59,7 +57,6 @@ public final class ChessController {
     }
 
     private ScoresDto toDto(final Map<String, Double> scores) {
-        // 메소드로 따로 빼도 될거같아요
         String winner = findWinnerName(scores);
         return new ScoresDto(winner, scores);
     }

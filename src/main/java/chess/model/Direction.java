@@ -21,15 +21,17 @@ public enum Direction {
     WWN(-2, 1),
     WWS(-2, -1);
 
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
+
     Direction(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
     public static Direction of(int row, int col) {
-        return Arrays.stream(values()).filter(direction -> direction.col == col && direction.row == row)
+        return Arrays.stream(values())
+                .filter(direction -> direction.col == col && direction.row == row)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
@@ -42,9 +44,18 @@ public enum Direction {
         return col;
     }
 
-    public static List<Direction> getNonKnightDirection() {
+    public static List<Direction> getRoyalDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, NORTHEAST, SOUTHWEST, NORTHWEST);
     }
+
+    public static List<Direction> getBishopDirection() {
+        return List.of(Direction.SOUTHEAST, Direction.NORTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
+    }
+
+    public static List<Direction> getRookDirection() {
+        return List.of(Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
+    }
+
     public static List<Direction> getKnightDirection() {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }

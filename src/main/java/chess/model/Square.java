@@ -27,36 +27,29 @@ public final class Square {
         return rank.equals(Rank.TWO);
     }
 
-    public Square tryToMove(Direction direction) {
-        if (canMove(direction)) {
-            return move(direction);
+    public int getDistance(Square target) {
+        Direction direction = this.findDirection(target);
+        Square tempSquare = this;
+        int movedCount = 0;
+        while (!tempSquare.equals(target)) {
+            tempSquare = tempSquare.move(direction);
+            movedCount ++;
         }
-        return this;
+        return movedCount;
     }
 
-    private Square move(Direction direction) {
-        //TODO: GETTER를 안쓸 순 없나?
+    public Square move(Direction direction) {
         return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
-    }
-
-    private boolean canMove(Direction direction) {
-        //TODO: 갈 수 있는지를 움직여봐야 아는건가?
-        try {
-            move(direction);
-            return true;
-        } catch (IllegalArgumentException exception) {
-            return false;
-        }
     }
 
     public Direction findDirection(Square source) {
         int fileDistance = file.calculateGap(source.file);
         int rankDistance = rank.calculateGap(source.rank);
-        int gcd = GCD(fileDistance, rankDistance);
+        int gcd = gcd(fileDistance, rankDistance);
         return Direction.of(fileDistance / gcd, rankDistance / gcd);
     }
 
-    private static int GCD(int fileDistance, int rankDistance) {
+    private static int gcd(int fileDistance, int rankDistance) {
         fileDistance = Math.abs(fileDistance);
         rankDistance = Math.abs(rankDistance);
         int bigger = Math.max(fileDistance, rankDistance);
@@ -67,6 +60,10 @@ public final class Square {
             smaller = tmp % smaller;
         }
         return bigger;
+    }
+
+    public boolean isSameFile(Square other) {
+        return this.file.equals(other.file);
     }
 
     @Override
@@ -84,9 +81,5 @@ public final class Square {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public boolean isSameFile(Square other) {
-        return this.file.equals(other.file);
     }
 }

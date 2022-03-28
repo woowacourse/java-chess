@@ -11,17 +11,14 @@ public enum Color {
     }
 
     public boolean isEnemy(Color other) {
-        if (this.equals(NOTHING) || other.equals(NOTHING)) {
-            return false;
-        }
-        if (this.equals(other)) {
+        if (this.equals(NOTHING) || other.equals(NOTHING) || this.equals(other)) {
             return false;
         }
         return true;
     }
 
     public boolean isAlly(Color other) {
-        return this.equals(other);
+        return !this.isEmpty() && this.equals(other);
     }
 
     public boolean isEmpty() {

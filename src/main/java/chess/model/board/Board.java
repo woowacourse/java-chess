@@ -37,17 +37,14 @@ public final class Board {
             throw new IllegalArgumentException("해당 칸으로 이동할 수 없습니다.");
         }
         Direction direction = sourceSquare.findDirection(targetSquare);
-        checkSquare(sourceSquare, targetSquare, direction);
+        checkRoute(sourceSquare, targetSquare, direction);
         updateBoard(sourceSquare, targetSquare, sourcePiece, targetPiece);
     }
 
-    //TODO : 방향은 쉽게 구할 수 있으니까, 해당 방향으로 몇번 가야하는지를 알면 더 쉽게 만들 수 있을 듯
-    //TODO : 방향을 갈 수 있는지 + 해당 기물이 해당 방향으로 그 칸만큼 갈 수 있는지 -> 이걸 Piece에서 해결하면 좋을듯
-    //TODO : Piece를 거리 무제한(퀸,룩,비숍) vs 거리 제한(폰, 킹, 나이트) 로 나누면 어떨까?
-    private void checkSquare(Square sourceSquare, Square targetSquare, Direction direction) {
+    private void checkRoute(Square sourceSquare, Square targetSquare, Direction direction) {
         Square tempSquare = sourceSquare;
         while (!tempSquare.equals(targetSquare)) {
-            tempSquare = tempSquare.tryToMove(direction);
+            tempSquare = tempSquare.move(direction);
             checkHasPieceInSquare(targetSquare, tempSquare);
         }
     }

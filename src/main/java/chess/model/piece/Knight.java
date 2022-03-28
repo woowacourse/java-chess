@@ -3,19 +3,11 @@ package chess.model.piece;
 import chess.model.Color;
 import chess.model.Direction;
 import chess.model.Square;
-import java.util.List;
+import chess.model.piece.strategy.LimitedMovableStrategy;
 
 public final class Knight extends Piece{
     public Knight(Color color, Square square) {
-        super(color, square);
-    }
-
-    @Override
-    public boolean movable(Piece targetPiece) {
-        Direction directionTo = findDirectionTo(targetPiece);
-        return direction().contains(directionTo) &&
-                targetPiece.isAt(square().tryToMove(directionTo)) &&
-                !targetPiece.isAlly(this);
+        super(color, square, new LimitedMovableStrategy(Direction.getKnightDirection(), 1));
     }
 
     @Override
@@ -26,9 +18,5 @@ public final class Knight extends Piece{
     @Override
     public Point getPoint() {
         return Point.KNIGHT;
-    }
-
-    private List<Direction> direction() {
-        return Direction.getKnightDirection();
     }
 }
