@@ -1,54 +1,43 @@
 package chess.domain.piece;
 
-import chess.domain.Ordinate;
+import chess.domain.Direction;
 import chess.domain.Position;
+import chess.domain.piece.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
 
-    private static final int ABSCISSA_DIFFERENCE = 1;
     private static final double PAWN_SCORE = 1;
 
     public Pawn(Color color) {
-        super(color, PAWN_SCORE);
-    }
-
-    public boolean isInitialPosition(Position fromPosition) {
-        return fromPosition.isSameOrdinate(Ordinate.TWO)
-            || fromPosition.isSameOrdinate(Ordinate.SEVEN);
+        super(new PawnMoveStrategy(), color, PAWN_SCORE);
     }
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        int difference = ABSCISSA_DIFFERENCE;
         if (color == Color.WHITE) {
-            difference = -ABSCISSA_DIFFERENCE;
+            return moveStrategy.isMovable(fromPosition, toPosition)
+                && Direction.judge(fromPosition, toPosition) == Direction.UP;
         }
-        if (isInitialPosition(fromPosition)) {
-            return canMovePosition(fromPosition, toPosition, difference)
-                || canMovePosition(fromPosition, toPosition, difference * 2);
-        }
-        return canMovePosition(fromPosition, toPosition, difference);
-    }
-
-    private boolean canMovePosition(Position fromPosition, Position toPosition, int difference) {
-        return fromPosition.isSameAbscissa(toPosition)
-            && fromPosition.getOrdinateDifference(toPosition) == difference;
+        return moveStrategy.isMovable(fromPosition, toPosition)
+            && Direction.judge(fromPosition, toPosition) == Direction.DOWN;
     }
 
     @Override
     public boolean isCatchable(Position fromPosition, Position toPosition) {
         if (color == Color.WHITE) {
-            return isOneDifferenceDiagonal(fromPosition, toPosition)
-                && toPosition.getOrdinateDifference(fromPosition) > 0;
+            return moveStrategy.isCatchable(fromPosition, toPosition)
+                && isWhiteCatchableDirection(Direction.judge(fromPosition, toPosition));
         }
-        return isOneDifferenceDiagonal(fromPosition, toPosition)
-            && toPosition.getOrdinateDifference(fromPosition) < 0;
+        return moveStrategy.isCatchable(fromPosition, toPosition)
+            && isBlackCatchableDirection(Direction.judge(fromPosition, toPosition));
     }
 
-    private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getOrdinateDifference(toPosition);
-        int width = fromPosition.getAbscissaDifference(toPosition);
-        return Math.pow(height,2) + Math.pow(width,2) == 2;
+    private boolean isWhiteCatchableDirection(Direction direction) {
+        return direction == Direction.LEFTUP || direction == Direction.RIGHTUP;
+    }
+
+    private boolean isBlackCatchableDirection(Direction direction) {
+        return direction == Direction.LEFTDOWN || direction == Direction.RIGHTDOWN;
     }
 
     @Override
