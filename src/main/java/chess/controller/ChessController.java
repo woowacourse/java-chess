@@ -7,6 +7,11 @@ import chess.view.OutputView;
 
 public class ChessController {
 
+    private static final String COMMAND_SPLIT = " ";
+    private static final int POSITION_FROM_INDEX = 0;
+    private static final int POSITION_TO_INDEX = 1;
+    private static final int COMMAND_LENGTH = 5;
+
     public void run() {
         OutputView.printInitMessage();
         final ChessGame chessGame = new ChessGame();
@@ -69,10 +74,10 @@ public class ChessController {
     private void runCommand(ChessGame chessGame, String inputCommand) {
         try {
             validateGamePlaying(chessGame);
-            String[] position = inputCommand.substring(5).split(" ");
+            String[] position = inputCommand.substring(COMMAND_LENGTH).split(COMMAND_SPLIT);
             chessGame.play(
-                    Position.from(position[0]),
-                    Position.from(position[1]));
+                    Position.from(position[POSITION_FROM_INDEX]),
+                    Position.from(position[POSITION_TO_INDEX]));
             OutputView.printChessBoard(chessGame.getBoard());
             play(chessGame);
         } catch (IllegalArgumentException e) {

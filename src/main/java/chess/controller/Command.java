@@ -9,6 +9,8 @@ public enum Command {
     STATUS("status")
     ;
 
+    private static final int COMMAND_INDEX = 0;
+
     private final String value;
 
     Command(String value) {
@@ -18,7 +20,7 @@ public enum Command {
     public static Command from(String commandText) {
         final String[] splitCommand = commandText.split(" ");
         return Arrays.stream(values())
-                .filter(command -> command.value.equals(splitCommand[0]))
+                .filter(command -> command.value.equals(splitCommand[COMMAND_INDEX]))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 명령입니다."));
     }
