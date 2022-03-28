@@ -11,7 +11,7 @@ import java.util.List;
 public class Bishop extends Piece {
 
     public Bishop(Team team, Position position) {
-        super(team, Bishop.class.getSimpleName(), position, 3);
+        super(team, position, 3);
     }
 
     private Direction findDirection(Position destination) {

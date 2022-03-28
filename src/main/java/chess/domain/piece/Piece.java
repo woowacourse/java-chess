@@ -6,20 +6,26 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private Team team;
-    private final String name;
+    private final Team team;
     protected Position position;
-    private double score;
+    private final double score;
 
-    public Piece(Team team, String name, Position position, double score) {
+    public Piece(Team team, Position position, double score) {
         this.team = team;
-        this.name = name;
         this.position = position;
         this.score = score;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
     public String getName() {
-        return name;
+        return this.getClass().getSimpleName();
     }
 
     public boolean isBlackTeam() {
@@ -36,28 +42,11 @@ public abstract class Piece {
         return false;
     }
 
-    public void move(Position destination) {
-        position = destination;
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "team=" + team +
-                ", name='" + name + '\'' +
-                ", position=" + position +
-                '}';
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
     public boolean isKing() {
         return false;
+    }
+
+    public void move(Position destination) {
+        position = destination;
     }
 }

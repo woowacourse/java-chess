@@ -12,7 +12,7 @@ import java.util.List;
 public class Pawn extends Piece {
 
     public Pawn(Team team, Position position) {
-        super(team, Pawn.class.getSimpleName(), position, 1);
+        super(team, position, 1);
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {
