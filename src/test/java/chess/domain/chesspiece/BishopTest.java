@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,18 +15,33 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BishopTest {
 
-    @Test
+    @ParameterizedTest
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
-    void canMove_cantGo() {
+    @ValueSource(strings = {"d6", "d4", "c5", "e5"})
+    void canMove_cantGo(String target) {
         // given
         final Position from = Position.from("d5");
-        final Position to = Position.from("d6");
+        final Position to = Position.from(target);
         final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to))
+        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, Optional.empty()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
+    }
+
+    @Test
+    @DisplayName("이동 할 수 있는 위치에 같은 색 기물이 존재하면 예외를 던진다.")
+    void canMove_cantGo() {
+        // given
+        final Position from = Position.from("d5");
+        final Position to = Position.from("b7");
+        final ChessPiece bishop = Bishop.from(Color.BLACK);
+
+        // then
+        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, Optional.of(Bishop.from(Color.BLACK))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("같은색 기물입니다.");
     }
 
     @ParameterizedTest
@@ -38,7 +54,7 @@ class BishopTest {
         final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
-        assertThatCode(() -> bishop.checkMovablePosition(from, to))
+        assertThatCode(() -> bishop.checkMovablePosition(from, to, Optional.empty()))
                 .doesNotThrowAnyException();
 
     }

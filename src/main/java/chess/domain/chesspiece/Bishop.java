@@ -3,6 +3,7 @@ package chess.domain.chesspiece;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,20 @@ public final class Bishop extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to) {
+    public void checkMovablePosition(final Position from, final Position to,
+                                     final Optional<ChessPiece> possiblePiece) {
         final int rankDistance = Math.abs(from.rankDistance(to));
         final int fileDistance = Math.abs(from.fileDistance(to));
 
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
+
+        possiblePiece.ifPresent(piece -> {
+            if (piece.isSameColor(color)) {
+                throw new IllegalArgumentException("같은색 기물입니다.");
+            }
+        });
     }
 
     @Override
