@@ -1,9 +1,6 @@
 package chess.domain;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ChessBoardPosition {
     private static final char MINIMUM_COLUMN = 'a';
@@ -59,6 +56,10 @@ public class ChessBoardPosition {
         }
     }
 
+    public ChessBoardPosition move(int columnChange, int rowChange) {
+        return new ChessBoardPosition((char)(this.column + columnChange), this.row + rowChange);
+    }
+
     public boolean isSameRow(int row) {
         return this.row == row;
     }
@@ -69,34 +70,6 @@ public class ChessBoardPosition {
 
     public int getRow() {
         return row;
-    }
-
-    public boolean isDifferentColumn(ChessBoardPosition targetPosition) {
-        return column != targetPosition.column;
-    }
-
-    public List<Integer> ascendingRowRange(ChessBoardPosition other) {
-        if (row > other.row) {
-            return range(other.row, row);
-        }
-        return range(row, other.row);
-    }
-
-    public List<Integer> ascendingColumnRange(ChessBoardPosition other) {
-        if (column > other.column) {
-            return range(other.column, column);
-        }
-        return range(column, other.column);
-    }
-
-    private List<Integer> range(int start, int end) {
-        return IntStream.rangeClosed(start, end)
-                .boxed()
-                .collect(Collectors.toList());
-    }
-
-    public ChessBoardPosition move(int columnChange, int rowChange) {
-        return new ChessBoardPosition((char)(this.column + columnChange), this.row + rowChange);
     }
 
     @Override
