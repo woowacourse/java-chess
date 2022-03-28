@@ -39,25 +39,25 @@ public class ChessGameController {
     }
 
     private void progressGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
-        if (isFinishTurn(chessGame, whitePlayer, blackPlayer)) {
+        if (isTurnFinished(chessGame, whitePlayer, blackPlayer)) {
             return;
         }
         showMap(chessGame.createMap());
-        if (isFinishTurn(chessGame, blackPlayer, whitePlayer)) {
+        if (isTurnFinished(chessGame, blackPlayer, whitePlayer)) {
             return;
         }
         showMap(chessGame.createMap());
         progressGame(chessGame, whitePlayer, blackPlayer);
     }
 
-    private boolean isFinishTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
+    private boolean isTurnFinished(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
         try {
             final String command = InputView.requestGameCommand();
-            final boolean isFinish = progressTurn(chessGame, command, currentPlayer, opponentPlayer);
-            return isFinish || !chessGame.isRunning();
+            final boolean isFinished = progressTurn(chessGame, command, currentPlayer, opponentPlayer);
+            return isFinished || !chessGame.isRunning();
         } catch (final IllegalArgumentException e) {
             OutputView.printException(e);
-            return isFinishTurn(chessGame, currentPlayer, opponentPlayer);
+            return isTurnFinished(chessGame, currentPlayer, opponentPlayer);
         }
     }
 
@@ -69,7 +69,7 @@ public class ChessGameController {
         }
         if (command.equals("status")) {
             showResult(currentPlayer, opponentPlayer);
-            return isFinishTurn(chessGame, currentPlayer, opponentPlayer);
+            return isTurnFinished(chessGame, currentPlayer, opponentPlayer);
         }
         return true;
     }
