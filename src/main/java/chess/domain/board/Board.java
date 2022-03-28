@@ -1,17 +1,15 @@
 package chess.domain.board;
 
-import static chess.domain.piece.constant.PieceColor.*;
-import static chess.domain.board.Rank.*;
+import static chess.domain.board.Rank.reverseValues;
+import static chess.domain.piece.constant.PieceColor.EMPTY;
 
 import chess.constant.MoveType;
-import java.util.Map;
-
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
+import java.util.Map;
 
 public class Board {
 
@@ -29,9 +27,13 @@ public class Board {
     public void move(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
-        boolean isGameFinished = board.get(target) instanceof King;
+        boolean isGameFinished = isTargetKing(target);
         changePieces(source, target);
         gameFlow.nextState(isGameFinished);
+    }
+
+    private boolean isTargetKing(Position target) {
+        return board.get(target).isKing();
     }
 
     private void turnDecide(Position source) {

@@ -35,6 +35,10 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
