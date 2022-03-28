@@ -1,6 +1,7 @@
 package chess.domain;
 
-import chess.domain.board.Board;
+import chess.domain.board.state.BoardInitializer;
+import chess.domain.board.state.BoardState;
 import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -20,10 +21,10 @@ public class ChessGame {
             return;
         }
 
-        Board board = new Board();
-        playRound(board);
+        BoardState boardState = BoardInitializer.initBoard();
+        playRound(boardState);
 
-        OutputView.printResult(board);
+        OutputView.printResult(boardState);
     }
 
     private Command requestFirstCommand() {
@@ -35,33 +36,34 @@ public class ChessGame {
         }
     }
 
-    private void playRound(Board board) {
-        while (!board.isEnd()) {
-            OutputView.printBoard(board);
-            executeTurn(board);
+    private void playRound(BoardState boardState) {
+        while (!boardState.isEnd()) {
+            OutputView.printBoard(boardState);
+            executeTurn(boardState);
         }
     }
 
-    private void executeTurn(Board board) {
+    private void executeTurn(BoardState boardState) {
         try {
-            executeCommand(board);
+            executeCommand(boardState);
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
-            OutputView.printBoard(board);
-            executeTurn(board);
+            OutputView.printBoard(boardState);
+            executeTurn(boardState);
         }
     }
 
-    private void executeCommand(Board board) {
+    private void executeCommand(BoardState boardState) {
         List<String> input = List.of(InputView.requestCommand().split(DELIMITER));
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.END) {
-            board.terminate();
+            boardState.terminate();
             return;
         }
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.MOVE) {
-            board.move(new Position(input.get(START_POSITION_INDEX)), new Position(input.get(TARGET_POSITION_INDEX)));
+            boardState.move(new Position(input.get(START_POSITION_INDEX)),
+                    new Position(input.get(TARGET_POSITION_INDEX)));
         }
     }
 }
