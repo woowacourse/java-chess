@@ -10,23 +10,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Board {
-    private final Map<Position, Piece> squares;
+    private final Map<Position, Piece> pieces;
 
     public Board(Map<Position, Piece> squares) {
-        this.squares = squares;
+        this.pieces = squares;
     }
 
     private static double scoreOfPiece(Entry<Position, Piece> positionPiece) {
         return Score.valueOf(positionPiece.getValue()).getValue();
     }
 
-    public Piece findByPosition(Position position) {
-        return squares.get(position);
-    }
-
     public void move(Position from, Position to) {
-        Piece sourcePiece = squares.get(from);
-        Piece targetPiece = squares.get(to);
+        Piece sourcePiece = pieces.get(from);
+        Piece targetPiece = pieces.get(to);
 
         validateNotSameColor(sourcePiece, targetPiece);
 
@@ -36,8 +32,8 @@ public class Board {
 
         validateNotHurdle(from, to);
 
-        squares.replace(to, sourcePiece);
-        squares.replace(from, new EmptyPiece());
+        pieces.replace(to, sourcePiece);
+        pieces.replace(from, new EmptyPiece());
     }
 
     public boolean isSameColor(Position position, Color color) {
@@ -60,6 +56,10 @@ public class Board {
         }
     }
 
+    public Piece findByPosition(Position position) {
+        return pieces.get(position);
+    }
+
     public Map<Color, Double> getColorsTotalScore() {
         Map<Color, Double> totalScore = new EnumMap<>(Color.class);
         totalScore.put(Color.WHITE, getTotalScore(Color.WHITE));
@@ -69,7 +69,7 @@ public class Board {
     }
 
     private double getTotalScore(Color color) {
-        return squares.entrySet().stream()
+        return pieces.entrySet().stream()
                 .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
