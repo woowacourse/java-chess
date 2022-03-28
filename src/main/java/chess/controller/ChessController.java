@@ -22,10 +22,6 @@ public final class ChessController {
         this.service = service;
     }
 
-    public void run() {
-        runUntilValid(this::playGame);
-    }
-
     private static void runUntilValid(Runnable runner) {
         boolean runSuccess;
         do {
@@ -41,6 +37,10 @@ public final class ChessController {
             OutputView.printException(e);
             return false;
         }
+    }
+
+    public void run() {
+        runUntilValid(this::playGame);
     }
 
     private void playGame() {

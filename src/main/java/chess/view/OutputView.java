@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.controller.BoardDto;
 import chess.controller.ScoresDto;
 import java.util.List;
 
