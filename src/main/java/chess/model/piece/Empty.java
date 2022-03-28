@@ -5,6 +5,8 @@ import chess.model.Square;
 
 public class Empty extends Piece {
 
+    private static final String EMPTY_EXPRESSION = ".";
+
     public Empty(Square square) {
         super(Color.NOTHING, square);
     }
@@ -16,7 +18,7 @@ public class Empty extends Piece {
 
     @Override
     public String getLetter() {
-        return ".";
+        return EMPTY_EXPRESSION;
     }
 
     @Override

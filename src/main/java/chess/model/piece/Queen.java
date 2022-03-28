@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Queen extends LineMovablePiece {
 
+    private static final String QUEEN_NAME = "q";
+
     public Queen(Color color, Square square) {
         super(color, square);
     }
@@ -18,7 +20,7 @@ public final class Queen extends LineMovablePiece {
 
     @Override
     public String getLetter() {
-        return "q";
+        return QUEEN_NAME;
     }
 
     @Override

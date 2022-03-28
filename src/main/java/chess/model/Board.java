@@ -14,6 +14,12 @@ import java.util.List;
 
 public final class Board {
 
+    private static final String CANNOT_FIND_LOCATION_ERROR_MESSAGE = "해당 위치의 값을 찾을 수 없습니다.";
+    private static final String CANNOT_MOVE_LOCATION_ERROR_MESSAGE = "해당 칸으로 이동할 수 없습니다.";
+    private static final String PIECE_EXIST_ON_ROUTE_ERROR_MESSAGE = "경로 중 기물이 존재하여 이동할 수 없습니다.";
+    private static final int KING_ALIVE_COUNT = 2;
+    private static final int SEVERAL_PAWN_ON_FILE_DIVIDE_POINT = 2;
+
     private final List<Piece> board;
 
     public Board() {
@@ -79,23 +85,20 @@ public final class Board {
         return board.stream()
                 .filter(piece -> piece.isAt(square))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치의 값을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(CANNOT_FIND_LOCATION_ERROR_MESSAGE));
     }
 
     public void move(Square sourceSquare, Square targetSquare) {
         Piece sourcePiece = findPieceBySquare(sourceSquare);
         Piece targetPiece = findPieceBySquare(targetSquare);
         if (!sourcePiece.movable(targetPiece)) {
-            throw new IllegalArgumentException("해당 칸으로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_LOCATION_ERROR_MESSAGE);
         }
         Direction direction = sourceSquare.findDirection(targetSquare);
         checkSquare(sourceSquare, targetSquare, direction);
         updateBoard(sourceSquare, targetSquare, sourcePiece, targetPiece);
     }
 
-    //TODO : 방향은 쉽게 구할 수 있으니까, 해당 방향으로 몇번 가야하는지를 알면 더 쉽게 만들 수 있을 듯
-    //TODO : 방향을 갈 수 있는지 + 해당 기물이 해당 방향으로 그 칸만큼 갈 수 있는지 -> 이걸 Piece에서 해결하면 좋을듯
-    //TODO : Piece를 거리 무제한(퀸,룩,비숍) vs 거리 제한(폰, 킹, 나이트) 로 나누면 어떨까?
     private void checkSquare(Square sourceSquare, Square targetSquare, Direction direction) {
         Square tempSquare = sourceSquare;
         while (!tempSquare.equals(targetSquare)) {
@@ -106,7 +109,7 @@ public final class Board {
 
     private void checkHasPieceInSquare(Square targetSquare, Square tempSquare) {
         if (!findPieceBySquare(tempSquare).isEmpty() && !tempSquare.equals(targetSquare)) {
-            throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
+            throw new IllegalArgumentException(PIECE_EXIST_ON_ROUTE_ERROR_MESSAGE);
         }
     }
 
@@ -119,7 +122,7 @@ public final class Board {
     public boolean aliveTwoKings() {
         return board.stream()
                 .filter(Piece::isKing)
-                .count() == 2;
+                .count() == KING_ALIVE_COUNT;
     }
 
     public double calculatePoint(Color color) {
@@ -131,7 +134,7 @@ public final class Board {
 
     private double calculateEachPoint(Piece piece) {
         if (piece.isPawn() && isPawnInSameFile(piece)) {
-            return piece.getPoint().getValue() / 2;
+            return piece.getPoint().getValue() / SEVERAL_PAWN_ON_FILE_DIVIDE_POINT;
         }
         return piece.getPoint().getValue();
     }

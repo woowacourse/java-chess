@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
+    private static final String PAWN_NAME = "p";
+
     public Pawn(Color color, Square square) {
         super(color, square);
     }
@@ -48,7 +50,7 @@ public final class Pawn extends Piece {
 
     @Override
     public String getLetter() {
-        return "p";
+        return PAWN_NAME;
     }
 
     public Direction direction() {

@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public final class Square {
 
+    private static final String INVALID_LOCATION_ERROR_MESSAGE = "잘못된 위치를 입력하였습니다.";
+
     private final File file;
     private final Rank rank;
 
@@ -14,7 +16,7 @@ public final class Square {
 
     public static Square of(String squareName) {
         if (squareName.length() != 2) {
-            throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
+            throw new IllegalArgumentException(INVALID_LOCATION_ERROR_MESSAGE);
         }
         File file = File.valueOf(String.valueOf(Character.toUpperCase(squareName.charAt(0))));
         Rank rank = Rank.of(Character.getNumericValue(squareName.charAt(1)));

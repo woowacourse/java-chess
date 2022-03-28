@@ -15,6 +15,8 @@ public enum Rank {
     EIGHT(8)
     ;
 
+    private static final String INVALID_RANK_LOCATION_FORMAT = "잘못된 위치입니다. %d";
+
     private final int col;
 
     Rank(int col) {
@@ -25,7 +27,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.col == col)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다"));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(INVALID_RANK_LOCATION_FORMAT, col)));
     }
 
     public Rank add(int col) {

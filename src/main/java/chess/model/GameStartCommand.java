@@ -9,6 +9,8 @@ public enum GameStartCommand {
     MOVE("move"),
     STATUS("status");
 
+    private static final String INVALID_COMMAND_ERROR_MESSAGE = "잘못된 게임 시작 커맨드입니다. %s";
+
     private final String commandLine;
 
     GameStartCommand(final String commandLine) {
@@ -19,7 +21,7 @@ public enum GameStartCommand {
         return Arrays.stream(values())
                 .filter(gameStartCommand -> gameStartCommand.commandLine.equals(commandLine))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", commandLine)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(INVALID_COMMAND_ERROR_MESSAGE, commandLine)));
     }
 
     public boolean isStart() {

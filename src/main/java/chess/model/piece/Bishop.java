@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Bishop extends LineMovablePiece {
 
+    private static final String BISHOP_NAME = "b";
+
     public Bishop(Color color, Square square) {
         super(color, square);
     }
@@ -18,7 +20,7 @@ public final class Bishop extends LineMovablePiece {
 
     @Override
     public String getLetter() {
-        return "b";
+        return BISHOP_NAME;
     }
 
     @Override

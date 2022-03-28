@@ -22,6 +22,8 @@ public enum Direction {
     WWN(-2, 1),
     WWS(-2, -1);
 
+    private static final String INVALID_DIRECTION_ERROR_MESSAGE = "유효하지 않은 방향입니다.";
+
     private final int row;
     private final int col;
 
@@ -34,7 +36,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.col == col && direction.row == row)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_DIRECTION_ERROR_MESSAGE));
     }
 
     public int getRow() {

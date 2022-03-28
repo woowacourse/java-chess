@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Knight extends PointMovablePiece {
 
+    private static final String KNIGHT_NAME = "n";
+
     public Knight(Color color, Square square) {
         super(color, square);
     }
@@ -18,7 +20,7 @@ public final class Knight extends PointMovablePiece {
 
     @Override
     public String getLetter() {
-        return "n";
+        return KNIGHT_NAME;
     }
 
     @Override

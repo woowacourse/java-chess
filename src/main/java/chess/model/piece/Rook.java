@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class Rook extends LineMovablePiece {
 
+    private static final String ROOK_NAME = "r";
+
     public Rook(Color color, Square square) {
         super(color, square);
     }
@@ -18,7 +20,7 @@ public final class Rook extends LineMovablePiece {
 
     @Override
     public String getLetter() {
-        return "r";
+        return ROOK_NAME;
     }
 
     @Override
