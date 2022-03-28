@@ -34,11 +34,8 @@ public class Board {
     }
 
     public void showStatus(final BiConsumer<String, Double> printScore) {
-        double whiteScore = calculateScore(Color.WHITE);
-        double blackScore = calculateScore(Color.BLACK);
-
-        printScore.accept("흰색", whiteScore);
-        printScore.accept("검은색", blackScore);
+        showColorStatus(printScore, Color.WHITE);
+        showColorStatus(printScore, Color.BLACK);
     }
 
     public boolean isMatchedColor(final Position target, final Color color) {
@@ -75,6 +72,10 @@ public class Board {
         if (hasPiece(to)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
+    }
+
+    private void showColorStatus(final BiConsumer<String, Double> printScore, final Color color) {
+        printScore.accept(color.getName(), calculateScore(color));
     }
 
     private double calculateScore(final Color color) {
