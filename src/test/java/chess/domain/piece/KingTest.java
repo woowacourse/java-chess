@@ -28,8 +28,9 @@ public class KingTest {
         Point to = Point.of("e2");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-            .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -41,8 +42,9 @@ public class KingTest {
         Point to = Point.of("d2");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-            .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
@@ -54,8 +56,9 @@ public class KingTest {
         Point to = Point.of("d1");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-            .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test

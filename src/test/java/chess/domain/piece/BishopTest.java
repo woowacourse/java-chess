@@ -29,8 +29,9 @@ public class BishopTest {
         Piece piece = new Bishop(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-            .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test

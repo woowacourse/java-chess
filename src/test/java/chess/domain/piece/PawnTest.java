@@ -30,8 +30,9 @@ public class PawnTest {
         Point to = Point.of("a3");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
-            .doesNotThrowAnyException();
+        boolean isMovable = piece.move(board, from, to);
+
+        assertThat(isMovable).isTrue();
     }
 
     @Test
