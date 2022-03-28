@@ -6,7 +6,7 @@ public class Blank extends Piece {
 
     private static final String SYMBOL = ".";
     private static final String CAN_NOT_MOVE_ERROR = "빈 곳은 이동이 불가능 합니다.";
-    public static final int NO_SCORE = 0;
+    private static final int NO_SCORE = 0;
 
     public Blank() {
         super(Team.NEUTRALITY);
