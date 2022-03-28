@@ -15,6 +15,7 @@ public enum Row {
     EIGHT(7),
     ;
 
+    private static final int MAX_VALUE = 7;
     private static final String ERROR_NO_SUCH_ROW = "존재하지 않는 열입니다.";
 
     private final int value;
@@ -27,18 +28,15 @@ public enum Row {
         return from(Integer.parseInt(rawRow) - 1);
     }
 
+    public Row flip() {
+        return from(MAX_VALUE - this.value);
+    }
+
     private static Row from(int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
-    }
-
-    public Row flip() {
-        return Arrays.stream(Row.values())
-                .filter(it -> it.value == (7 - this.value))
-                .findFirst()
-                .orElseThrow();
     }
 
     public int directedDistance(Row otherRow) {

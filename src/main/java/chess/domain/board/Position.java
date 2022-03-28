@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
+    private static final int DISTANCE_NOT_MOVED = 0;
+
     private final Column column;
     private final Row row;
 
@@ -86,18 +88,28 @@ public class Position implements Comparable<Position> {
         List<Row> rowPath = this.row.pathTo(otherPosition.row);
         List<Column> columnPath = this.column.pathTo(otherPosition.column);
 
-        if (rowPath.size() == 0) {
-            return columnPath.stream()
-                    .map(column -> new Position(column, this.row))
-                    .collect(Collectors.toList());
+        if (rowPath.size() == DISTANCE_NOT_MOVED) {
+            return this.positionsInColumn(columnPath);
         }
-
-        if (columnPath.size() == 0) {
-            return rowPath.stream()
-                    .map(row -> new Position(this.column, row))
-                    .collect(Collectors.toList());
+        if (columnPath.size() == DISTANCE_NOT_MOVED) {
+            return positionsInRow(rowPath);
         }
+        return positionsInDiagonal(rowPath, columnPath);
+    }
 
+    private List<Position> positionsInColumn(List<Column> columnPath) {
+        return columnPath.stream()
+                .map(column -> new Position(column, this.row))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> positionsInRow(List<Row> rowPath) {
+        return rowPath.stream()
+                .map(row -> new Position(this.column, row))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> positionsInDiagonal(List<Row> rowPath, List<Column> columnPath) {
         return IntStream.range(0, rowPath.size())
                 .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
                 .collect(Collectors.toList());

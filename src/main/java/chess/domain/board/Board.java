@@ -42,15 +42,16 @@ public final class Board {
     public Board() {
         this.value = new TreeMap<>();
         this.whiteTurn = true;
+        initializeFourPieces();
+        initializeTwoPieces();
+        initializePawn();
+        initializeBlanks();
+    }
+
+    private void initializeFourPieces() {
         initializeFourPiecesOf(ROOK_INITIAL_POSITION, Rook::new);
         initializeFourPiecesOf(KNIGHT_INITIAL_POSITION, Knight::new);
         initializeFourPiecesOf(BISHOP_INITIAL_POSITION, Bishop::new);
-
-        initializeTwoPiecesOf(QUEEN_INITIAL_POSITION, Queen::new);
-        initializeTwoPiecesOf(KING_INITIAL_POSITION, King::new);
-
-        initializePawn();
-        initializeBlanks();
     }
 
     private void initializeFourPiecesOf(Position pieceInitialPosition,
@@ -59,6 +60,11 @@ public final class Board {
         value.put(pieceInitialPosition.flipHorizontally(), pieceConstructor.apply(WHITE));
         value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
         value.put(pieceInitialPosition.flipDiagonally(), pieceConstructor.apply(BLACK));
+    }
+
+    private void initializeTwoPieces() {
+        initializeTwoPiecesOf(QUEEN_INITIAL_POSITION, Queen::new);
+        initializeTwoPiecesOf(KING_INITIAL_POSITION, King::new);
     }
 
     private void initializeTwoPiecesOf(Position pieceInitialPosition, Function<Camp, Piece> pieceConstructor) {
@@ -84,29 +90,48 @@ public final class Board {
         }
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        Piece piece = this.value.get(beforePosition);
+    public void move(Position sourcePosition, Position targetPosition) {
+        Piece source = this.value.get(sourcePosition);
 
-        if (isBlank(beforePosition)) {
-            throw new IllegalArgumentException(ERROR_NO_SOURCE);
-        }
-        if (piece.isBlack() == whiteTurn) {
-            throw new IllegalArgumentException(ERROR_NOT_YOUR_TURN);
-        }
-        if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
-            throw new IllegalArgumentException(ERROR_NOT_BLANK_PATH);
-        }
+        checkSource(sourcePosition, source);
+        checkPath(sourcePosition, targetPosition, source);
 
         this.whiteTurn = !whiteTurn;
-        if (isBlank(afterPosition)) {
-            piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
-            return;
-        }
-        if (isCapturing(piece, afterPosition)) {
-            piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
-            return;
-        }
+        move(sourcePosition, targetPosition, source);
+    }
 
+    private void checkSource(Position sourcePosition, Piece source) {
+        checkBlank(sourcePosition);
+        checkTurn(source);
+    }
+
+    private void checkBlank(Position sourcePosition) {
+        if (isBlank(sourcePosition)) {
+            throw new IllegalArgumentException(ERROR_NO_SOURCE);
+        }
+    }
+
+    private void checkTurn(Piece source) {
+        if (source.isBlack() == whiteTurn) {
+            throw new IllegalArgumentException(ERROR_NOT_YOUR_TURN);
+        }
+    }
+
+    private void checkPath(Position sourcePosition, Position targetPosition, Piece source) {
+        if (!source.isKnight() && !PathCheck.check(sourcePosition, targetPosition, this::isBlank)) {
+            throw new IllegalArgumentException(ERROR_NOT_BLANK_PATH);
+        }
+    }
+
+    private void move(Position sourcePosition, Position targetPosition, Piece source) {
+        if (isBlank(targetPosition)) {
+            source.move(sourcePosition, targetPosition, moveFunction(sourcePosition, targetPosition));
+            return;
+        }
+        if (isCapturing(source, targetPosition)) {
+            source.capture(sourcePosition, targetPosition, moveFunction(sourcePosition, targetPosition));
+            return;
+        }
         throw new IllegalArgumentException(ERROR_SAME_CAMP_TARGET);
     }
 
