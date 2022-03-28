@@ -33,24 +33,18 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position start, Position target) {
-        for (Direction direction : getEightStraightDirections()) {
-            Optional<Position> optionalPosition = findPositionInDirection(start, target, direction);
-
-            if (optionalPosition.isEmpty()) {
-                continue;
-            }
-
-            return direction;
-        }
-        throw new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다.");
+        List<Direction> directions = getEightStraightDirections();
+        return directions.stream()
+                .filter(direction -> hasPositionInDirection(start, target, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다."));
     }
 
-    private static Optional<Position> findPositionInDirection(Position start, Position target, Direction direction) {
+    private static boolean hasPositionInDirection(Position start, Position target, Direction direction) {
         return IntStream.rangeClosed(1, Position.calculateStraightDistance(start, target))
                 .mapToObj(number -> new Position(start.getX() + direction.getXDegree() * number,
                         start.getY() + direction.getYDegree() * number))
-                .filter(position -> position.equals(target))
-                .findAny();
+                .anyMatch(position -> position.equals(target));
     }
 
     public static List<Direction> getKnightDirections() {
