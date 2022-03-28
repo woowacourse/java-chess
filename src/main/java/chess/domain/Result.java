@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain;
 
 import chess.domain.piece.Color;
 
@@ -7,8 +7,8 @@ public enum Result {
     WHITE_WIN,
     ;
 
-    public static Result from(final Board board) {
-        if (board.hasKing(Color.BLACK)) {
+    public static Result from(final Color color) {
+        if (color == Color.BLACK) {
             return BLACK_WIN;
         }
         return WHITE_WIN;
