@@ -127,7 +127,7 @@ public class ChessGame {
         return blackChessMen.getChessPieceAt(sourcePosition);
     }
 
-    public boolean isGameEnd() {
+    public boolean end() {
         return blackChessMen.isKingDead() || whiteChessMen.isKingDead();
     }
 

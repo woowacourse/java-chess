@@ -24,6 +24,7 @@ public class OutputView {
     private static final String GAME_STATUS_COMMAND_MESSAGE = "> 게임 각 진영의 점수 확인 : status";
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
     private static final String TEAM_SCORE_DELIMITER = ": ";
+    private static final String IN_GAME_COMMAND_EXCEPTION = "[ERROR] move, status 중 하나를 입력해주세요.";
     private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
 
     static {
@@ -106,5 +107,13 @@ public class OutputView {
             System.out.println(entry.getKey() + TEAM_SCORE_DELIMITER + entry.getValue());
         }
         System.out.printf(WINNER_FORMAT, chessStatusDto.getWinner());
+    }
+
+    public static void printInGameCommandExceptionMessage() {
+        System.out.println(IN_GAME_COMMAND_EXCEPTION);
+    }
+
+    public static void printExceptionMessage(String exceptionMessage) {
+        System.out.println(exceptionMessage);
     }
 }

@@ -12,6 +12,7 @@ public class ChessBoardPosition {
     private static final int MAXIMUM_ROW = 8;
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
+    private static final String INVALID_POSITION = "[ERROR] 체스판 위치 입력 형식에 맞지 않습니다.";
     private static final String POSITION_OUT_OF_RANGE = "[ERROR] 체스판 범위를 벗어나는 위치가 입력되었습니다.";
 
     private final char column;
@@ -34,7 +35,11 @@ public class ChessBoardPosition {
     }
 
     private static int extractRow(String positionInput) {
-        return Character.getNumericValue(positionInput.charAt(ROW_INDEX));
+        try {
+            return Character.getNumericValue(positionInput.charAt(ROW_INDEX));
+        } catch (Exception e) {
+            throw new IllegalArgumentException(INVALID_POSITION);
+        }
     }
 
     private void validateRange(char column, int row) {
