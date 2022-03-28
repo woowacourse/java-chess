@@ -2,16 +2,16 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.CoordinateY;
 
 public class Pawn extends Piece {
 
     private static final String NAME = "p";
     private static final double SCORE = 1;
-    private static final int WHITE_INIT_RANK = 2;
-    private static final int BLACK_INIT_RANK = 7;
+    private static final int INITIAL_WHITE_COORDINATE_Y = 2;
+    private static final int INITIAL_BLACK_COORDINATE_Y = 7;
     private static final int DEFAULT_FORWARD = 1;
-    private static final int INIT_FORWARD = 2;
+    private static final int INITIAL_FORWARD = 2;
 
     public Pawn(final Color color) {
         super(color, NAME, SCORE);
@@ -41,10 +41,10 @@ public class Pawn extends Piece {
 
     private boolean isValidDirection(final Position from, final Position to) {
         if (color == Color.WHITE) {
-            return from.getRank() < to.getRank();
+            return from.getCoordinateY() < to.getCoordinateY();
         }
         if (color == Color.BLACK) {
-            return from.getRank() > to.getRank();
+            return from.getCoordinateY() > to.getCoordinateY();
         }
         throw new IllegalStateException("잘못된 색상 정보 입니다.");
     }
@@ -62,25 +62,25 @@ public class Pawn extends Piece {
             return false;
         }
 
-        int initRank = getInitRank();
-        int start = from.getRank();
-        int rankDistance = Rank.difference(from.getRank(), to.getRank());
+        int initialCoordinateY = getInitialCoordinateY();
+        int start = from.getCoordinateY();
+        int yDistance = CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY());
 
-        return isInitForward(start, initRank, rankDistance) || isDefaultForward(start, initRank, rankDistance);
+        return isInitForward(start, initialCoordinateY, yDistance) || isDefaultForward(start, initialCoordinateY, yDistance);
     }
 
-    private int getInitRank() {
+    private int getInitialCoordinateY() {
         if (color == Color.WHITE) {
-            return WHITE_INIT_RANK;
+            return INITIAL_WHITE_COORDINATE_Y;
         }
-        return BLACK_INIT_RANK;
+        return INITIAL_BLACK_COORDINATE_Y;
     }
 
-    private boolean isInitForward(final int start, final int initRank, final int distance) {
-        return start == initRank && (distance == DEFAULT_FORWARD || distance == INIT_FORWARD);
+    private boolean isInitForward(final int start, final int initialCoordinateY, final int distance) {
+        return start == initialCoordinateY && (distance == DEFAULT_FORWARD || distance == INITIAL_FORWARD);
     }
 
-    private boolean isDefaultForward(final int start, final int initRank, final int distance) {
-        return start != initRank && distance == DEFAULT_FORWARD;
+    private boolean isDefaultForward(final int start, final int initialCoordinateY, final int distance) {
+        return start != initialCoordinateY && distance == DEFAULT_FORWARD;
     }
 }

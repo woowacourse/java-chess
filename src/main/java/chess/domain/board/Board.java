@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.CoordinateY;
 
 import java.util.Collections;
 import java.util.Map;
@@ -41,21 +41,21 @@ public class Board {
     }
 
     public boolean hasPieceInXAxis(final Position from, final Position to) {
-        int minRank = Math.min(from.getRank(), to.getRank());
-        int maxRank = Math.max(from.getRank(), to.getRank());
+        int minY = Math.min(from.getCoordinateY(), to.getCoordinateY());
+        int maxY = Math.max(from.getCoordinateY(), to.getCoordinateY());
 
         return value.keySet().stream()
                 .filter(position -> position.getCoordinateX().equals(from.getCoordinateX()))
-                .filter(position -> position.getRank() > minRank)
-                .anyMatch(position -> position.getRank() < maxRank);
+                .filter(position -> position.getCoordinateY() > minY)
+                .anyMatch(position -> position.getCoordinateY() < maxY);
     }
 
-    public boolean hasPieceInRank(final Position from, final Position to) {
+    public boolean hasPieceInYAxis(final Position from, final Position to) {
         int minX = CoordinateX.min(from.getCoordinateX(), to.getCoordinateX());
         int maxX = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX());
 
         return value.keySet().stream()
-                .filter(position -> position.getRank() == from.getRank())
+                .filter(position -> position.getCoordinateY() == from.getCoordinateY())
                 .filter(position -> position.getCoordinateXOrder() > minX)
                 .anyMatch(position -> position.getCoordinateXOrder() < maxX);
     }
@@ -113,21 +113,21 @@ public class Board {
     private void checkRisingDiagonal(final Position from, final Position to) {
         int minX = CoordinateX.min(from.getCoordinateX(), to.getCoordinateX());
         int maxX = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX());
-        int minRank = Math.min(from.getRank(), to.getRank());
+        int minY = Math.min(from.getCoordinateY(), to.getCoordinateY());
 
-        int rank = minRank + NEXT;
-        for (int x = minX + NEXT; x < maxX; x++, rank++) {
-            checkHasPiece(Position.of(CoordinateX.from(x), Rank.from(rank)));
+        int y = minY + NEXT;
+        for (int x = minX + NEXT; x < maxX; x++, y++) {
+            checkHasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)));
         }
     }
 
     private void checkDescendingDiagonal(final Position from, final Position to) {
-        int nextRank = Math.min(from.getRank(), to.getRank()) + NEXT;
-        int maxRank = Math.max(from.getRank(), to.getRank());
+        int nextY = Math.min(from.getCoordinateY(), to.getCoordinateY()) + NEXT;
+        int maxY = Math.max(from.getCoordinateY(), to.getCoordinateY());
         int x = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX()) - NEXT;
 
-        for (int rank = nextRank; rank < maxRank; rank++, x--) {
-            checkHasPiece(Position.of(CoordinateX.from(x), Rank.from(rank)));
+        for (int y = nextY; y < maxY; y++, x--) {
+            checkHasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)));
         }
     }
 

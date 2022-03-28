@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.CoordinateY;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -31,7 +31,7 @@ public abstract class Piece {
     public abstract boolean isKing();
 
     public void checkAnyPiece(final Board board, final Position from, final Position to) {
-        if (board.hasPieceInXAxis(from, to) || board.hasPieceInRank(from, to)) {
+        if (board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
     }
@@ -41,28 +41,28 @@ public abstract class Piece {
     }
 
     public boolean isHorizontal(final Position from, final Position to) {
-        return Rank.difference(from.getRank(), to.getRank()) == ZERO_STEP;
+        return CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == ZERO_STEP;
     }
 
     public boolean isDiagonal(final Position from, final Position to) {
-        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == Rank.difference(from.getRank(), to.getRank());
+        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY());
     }
 
     public boolean isBothSidesOneStep(final Position from, final Position to) {
-        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ZERO_STEP && Rank.difference(from.getRank(), to.getRank()) == ONE_STEP;
+        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ZERO_STEP && CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == ONE_STEP;
     }
 
     public boolean isUpAndDownOneStep(final Position from, final Position to) {
-        return Rank.difference(from.getRank(), to.getRank()) == ZERO_STEP && CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP;
+        return CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == ZERO_STEP && CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP;
     }
 
     public boolean isDiagonalOneStep(final Position from, final Position to) {
-        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP && Rank.difference(from.getRank(), to.getRank()) == ONE_STEP;
+        return CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP && CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == ONE_STEP;
     }
 
     public boolean isKnightMoving(final Position from, final Position to) {
-        return Rank.difference(from.getRank(), to.getRank()) == ONE_STEP && CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == TWO_STEP ||
-                CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP && Rank.difference(from.getRank(), to.getRank()) == TWO_STEP;
+        return CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == ONE_STEP && CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == TWO_STEP ||
+                CoordinateX.difference(from.getCoordinateX(), to.getCoordinateX()) == ONE_STEP && CoordinateY.difference(from.getCoordinateY(), to.getCoordinateY()) == TWO_STEP;
     }
 
     public boolean isSameColor(final Color other) {

@@ -16,8 +16,8 @@ public class PositionTest {
     }
 
     @Test
-    @DisplayName("체스판의 rank 범위를 넘어서는 위치를 입력할 경우 예외 발생")
-    void boardRankRangeOverException() {
+    @DisplayName("체스판의 y 범위를 넘어서는 위치를 입력할 경우 예외 발생")
+    void boardCoordinateYRangeOverException() {
         assertThatThrownBy(() -> Position.from("a9"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("체스판 범위를 벗어납니다.");

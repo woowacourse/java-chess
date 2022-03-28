@@ -3,7 +3,7 @@ package chess.view;
 import chess.domain.piece.Piece;
 import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.CoordinateY;
 
 import java.util.Map;
 
@@ -26,8 +26,8 @@ public class Output {
     }
 
     public static void printBoard(final Map<Position, Piece> board) {
-        for (final Rank rank : Rank.reversed()) {
-            printBoard(rank, board);
+        for (final CoordinateY coordinateY : CoordinateY.reversed()) {
+            printBoard(coordinateY, board);
         }
     }
 
@@ -36,15 +36,15 @@ public class Output {
         System.out.println();
     }
 
-    private static void printBoard(final Rank rank, final Map<Position, Piece> board) {
+    private static void printBoard(final CoordinateY coordinateY, final Map<Position, Piece> board) {
         for (final CoordinateX coordinateX : CoordinateX.sorted()) {
-            printBoard(coordinateX, rank, board);
+            printBoard(coordinateX, coordinateY, board);
         }
         System.out.println();
     }
 
-    private static void printBoard(final CoordinateX coordinateX, final Rank rank, final Map<Position, Piece> board) {
-        final Piece target = board.get(Position.of(coordinateX, rank));
+    private static void printBoard(final CoordinateX coordinateX, final CoordinateY coordinateY, final Map<Position, Piece> board) {
+        final Piece target = board.get(Position.of(coordinateX, coordinateY));
         if (target != null) {
             System.out.print(target.getName());
             return;

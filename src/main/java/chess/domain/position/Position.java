@@ -7,20 +7,20 @@ import java.util.Objects;
 public class Position {
 
     private static final int COORDINATE_X_INDEX = 0;
-    private static final int RANK_INDEX = 1;
+    private static final int COORDINATE_Y_INDEX = 1;
 
     private final CoordinateX coordinateX;
-    private final Rank rank;
+    private final CoordinateY coordinateY;
 
     private static final List<Position> TOTAL = new ArrayList<>();
 
-    private Position(final CoordinateX coordinateX, final Rank rank) {
+    private Position(final CoordinateX coordinateX, final CoordinateY coordinateY) {
         this.coordinateX = coordinateX;
-        this.rank = rank;
+        this.coordinateY = coordinateY;
     }
 
-    public static Position of(final CoordinateX coordinateX, final Rank rank) {
-        Position newPosition = new Position(coordinateX, rank);
+    public static Position of(final CoordinateX coordinateX, final CoordinateY coordinateY) {
+        Position newPosition = new Position(coordinateX, coordinateY);
         return TOTAL.stream()
                 .filter(position -> position.equals(newPosition))
                 .findFirst()
@@ -28,10 +28,10 @@ public class Position {
     }
 
     public static Position from(final String position) {
-        CoordinateX coordinateX = CoordinateX.from(position.substring(COORDINATE_X_INDEX, RANK_INDEX));
-        Rank rank = Rank.from(Integer.parseInt(position.substring(RANK_INDEX)));
+        CoordinateX coordinateX = CoordinateX.from(position.substring(COORDINATE_X_INDEX, COORDINATE_Y_INDEX));
+        CoordinateY coordinateY = CoordinateY.from(Integer.parseInt(position.substring(COORDINATE_Y_INDEX)));
 
-        return Position.of(coordinateX, rank);
+        return Position.of(coordinateX, coordinateY);
     }
 
     public CoordinateX getCoordinateX() {
@@ -42,8 +42,8 @@ public class Position {
         return coordinateX.getOrder();
     }
 
-    public int getRank() {
-        return rank.getRank();
+    public int getCoordinateY() {
+        return coordinateY.getOrder();
     }
 
     @Override
@@ -53,11 +53,11 @@ public class Position {
 
         Position position = (Position) other;
 
-        return coordinateX == position.coordinateX && rank == position.rank;
+        return coordinateX == position.coordinateX && coordinateY == position.coordinateY;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinateX, rank);
+        return Objects.hash(coordinateX, coordinateY);
     }
 }

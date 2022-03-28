@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Rank {
+public enum CoordinateY {
 
     ONE(1),
     TWO(2),
@@ -18,22 +18,22 @@ public enum Rank {
     EIGHT(8),
     ;
 
-    private final int rank;
+    private final int order;
 
-    Rank(final int rank) {
-        this.rank = rank;
+    CoordinateY(final int order) {
+        this.order = order;
     }
 
-    public static Rank from(final int other) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.rank == other)
+    public static CoordinateY from(final int other) {
+        return Arrays.stream(CoordinateY.values())
+                .filter(coordinateY -> coordinateY.order == other)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
 
-    public static List<Rank> reversed() {
+    public static List<CoordinateY> reversed() {
         return Arrays.stream(values())
-                .sorted(Comparator.comparing(Rank::getRank).reversed())
+                .sorted(Comparator.comparing(CoordinateY::getOrder).reversed())
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -41,7 +41,7 @@ public enum Rank {
         return Math.abs(from - to);
     }
 
-    public int getRank() {
-        return rank;
+    public int getOrder() {
+        return order;
     }
 }
