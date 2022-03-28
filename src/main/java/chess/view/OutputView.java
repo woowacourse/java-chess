@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.File;
+import chess.Player;
 import chess.Position;
 import chess.Rank;
 import chess.piece.Piece;
@@ -24,5 +25,25 @@ public class OutputView {
             }
             System.out.println();
         }
+    }
+
+    public void printScores(Map<Player, Double> calculateScore) {
+        for (Player player : calculateScore.keySet()) {
+            if (player == Player.BLACK) {
+                System.out.printf("검은색: %f", calculateScore.get(player));
+            }
+            if (player == Player.WHITE) {
+                System.out.printf("흰색: %f", calculateScore.get(player));
+            }
+        }
+        printWinner(calculateScore);
+    }
+
+    private void printWinner(Map<Player, Double> calculateScore) {
+        if (calculateScore.get(Player.BLACK) > calculateScore.get(Player.WHITE)) {
+            System.out.println("블랙 승");
+            return;
+        }
+        System.out.println("흰색 승");
     }
 }

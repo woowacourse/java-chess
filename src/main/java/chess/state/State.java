@@ -1,5 +1,6 @@
 package chess.state;
 
+import chess.Player;
 import chess.Position;
 import chess.piece.Piece;
 
@@ -11,4 +12,8 @@ public interface State {
     State proceed(String command);
 
     Map<Position, Piece> getBoard();
+
+    Map<Player, Double> calculateScore();
+
+    boolean isStatus();
 }

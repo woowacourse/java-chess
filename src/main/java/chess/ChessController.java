@@ -2,6 +2,7 @@ package chess;
 
 import chess.state.Start;
 import chess.state.State;
+import chess.state.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -22,6 +23,9 @@ public class ChessController {
         while (state.isRunning()) {
             outputView.printBoard(state.getBoard());
             state = proceed(state);
+        }
+        if (state.isStatus()) {
+            outputView.printScores(state.calculateScore());
         }
     }
 

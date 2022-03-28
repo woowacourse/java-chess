@@ -12,6 +12,8 @@ import static chess.Direction.*;
 
 public class Knight extends Piece {
 
+    private static final double SCORE = 2.5;
+
     public Knight(Player player, String symbol) {
         super(player, symbol);
     }
@@ -30,5 +32,10 @@ public class Knight extends Piece {
     @Override
     protected List<Direction> getDirection() {
         return List.of(EEN, EES, WWN, WWS, SSE, SSW, NNE, NNW);
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
     }
 }

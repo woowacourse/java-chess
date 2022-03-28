@@ -12,6 +12,8 @@ import static chess.Direction.*;
 
 public class King extends Piece {
 
+    private static final double SCORE = 0;
+
     public King(Player player, String symbol) {
         super(player, symbol);
     }
@@ -35,5 +37,10 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double addTo(double score) {
+        return score + SCORE;
     }
 }
