@@ -46,7 +46,7 @@ public class DirectionTest {
         Position to = Position.valueOf(File.c, Rank.THREE);
         Direction direction = Direction.judge(from, to);
 
-        Position stepPosition = Direction.step(from, direction);
+        Position stepPosition = Direction.getNextPosition(from, direction);
 
         assertThat(stepPosition).isEqualTo(Position.valueOf(File.b, Rank.TWO));
     }
@@ -58,7 +58,7 @@ public class DirectionTest {
         Position to = Position.valueOf(File.a, Rank.THREE);
         Direction direction = Direction.judge(from, to);
 
-        Position stepPosition = Direction.step(from, direction);
+        Position stepPosition = Direction.getNextPosition(from, direction);
 
         assertThat(stepPosition).isEqualTo(Position.valueOf(File.a, Rank.TWO));
     }

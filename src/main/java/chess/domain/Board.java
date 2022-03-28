@@ -53,7 +53,7 @@ public class Board {
         Position initialPosition = fromPosition;
         Direction direction = Direction.judge(fromPosition, toPosition);
         while (initialPosition != toPosition) {
-            initialPosition = Direction.step(initialPosition, direction);
+            initialPosition = Direction.getNextPosition(initialPosition, direction);
             validateRoute(initialPosition, toPosition);
         }
     }
