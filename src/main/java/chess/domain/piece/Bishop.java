@@ -1,23 +1,22 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
-    private static final String NAME = "b";
+    private static final int BISHOP_SCORE = 3;
 
     public Bishop(final Color color) {
-        super(color, NAME, 3);
+        super(color, PieceNotation.BISHOP, BISHOP_SCORE);
     }
 
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (File.difference(from.getFile(), to.getFile()) != Rank.difference(from.getRankNumber(), to.getRankNumber())) {
-            throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
+    public void checkMoveRange(final Board board, final Position from, final Position to) {
+        if (isDiagonalMove(from, to)) {
+            board.checkHasPieceInDiagonal(from, to);
+            return;
         }
-        board.checkPieceInDiagonal(from, to);
+        throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
     }
 }

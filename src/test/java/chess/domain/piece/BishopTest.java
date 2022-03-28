@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.Initializable;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +37,7 @@ public class BishopTest {
     void diagonal(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatCode(() -> bishop.checkPieceMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
+        assertThatCode(() -> bishop.checkMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -48,7 +47,7 @@ public class BishopTest {
     void notDiagonal(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatThrownBy(() -> bishop.checkPieceMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
+        assertThatThrownBy(() -> bishop.checkMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("비숍은 대각선 방향만 이동할 수 있습니다.");
     }
@@ -59,7 +58,7 @@ public class BishopTest {
     void invalid(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatThrownBy(() -> bishop.checkPieceMoveRange(board, Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> bishop.checkMoveRange(board, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 기물이 존재합니다.");
     }

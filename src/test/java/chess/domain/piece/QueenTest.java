@@ -23,7 +23,7 @@ public class QueenTest {
     void move(String to) {
         Piece queen = new Queen(Color.WHITE);
 
-        assertThatCode(() -> queen.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
+        assertThatCode(() -> queen.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -32,7 +32,7 @@ public class QueenTest {
     void invalidMove() {
         Piece queen = new Queen(Color.WHITE);
 
-        assertThatThrownBy(() -> queen.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("f7")))
+        assertThatThrownBy(() -> queen.checkMoveRange(emptyBoard, Position.from("e5"), Position.from("f7")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
     }
@@ -54,7 +54,7 @@ public class QueenTest {
         final Board mockBoard = new Board(() -> pieceExistBoard);
 
         Piece queen = new Queen(Color.WHITE);
-        assertThatThrownBy(() -> queen.checkPieceMoveRange(mockBoard, Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> queen.checkMoveRange(mockBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 기물이 존재합니다.");
     }

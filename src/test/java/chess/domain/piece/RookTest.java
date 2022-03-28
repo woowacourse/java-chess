@@ -22,7 +22,7 @@ public class RookTest {
     void forward(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -32,7 +32,7 @@ public class RookTest {
     void back(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -42,7 +42,7 @@ public class RookTest {
     void right(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkMoveRange(emptyBoard, Position.from("a3"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -52,7 +52,7 @@ public class RookTest {
     void left(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatCode(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
+        assertThatCode(() -> rook.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(toPosition)))
                 .doesNotThrowAnyException();
     }
 
@@ -62,7 +62,7 @@ public class RookTest {
     void diagonal(String toPosition) {
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatThrownBy(() -> rook.checkPieceMoveRange(emptyBoard, Position.from("d4"), Position.from(toPosition)))
+        assertThatThrownBy(() -> rook.checkMoveRange(emptyBoard, Position.from("d4"), Position.from(toPosition)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("룩은 대각선으로 이동할 수 없습니다.");
     }
@@ -75,8 +75,8 @@ public class RookTest {
 
         Piece rook = new Rook(Color.WHITE);
 
-        assertThatThrownBy(() -> rook.checkPieceMoveRange(mockBoard, Position.from("a1"), Position.from("a3")))
+        assertThatThrownBy(() -> rook.checkMoveRange(mockBoard, Position.from("a1"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("룩의 이동 경로에 기물이 존재합니다.");
+                .hasMessageContaining("이동 경로에 기물이 존재합니다.");
     }
 }

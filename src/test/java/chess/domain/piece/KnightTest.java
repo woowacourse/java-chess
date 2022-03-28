@@ -21,7 +21,7 @@ class KnightTest {
     void move(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatCode(() -> knight.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
+        assertThatCode(() -> knight.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +31,7 @@ class KnightTest {
     void invalidMove(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatThrownBy(() -> knight.checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> knight.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
     }

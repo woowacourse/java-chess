@@ -3,26 +3,20 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
-    private static final String NAME = "r";
+    private static final int ROOK_SCORE = 5;
 
     public Rook(final Color color) {
-        super(color, NAME, 5);
+        super(color, PieceNotation.ROOK, ROOK_SCORE);
     }
 
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (from.getFile().equals(to.getFile()) || from.getRankNumber() == to.getRankNumber()) {
-            checkAnyPiece(board, from, to);
+    public void checkMoveRange(final Board board, final Position from, final Position to) {
+        if (isLinerMove(from, to)) {
+            board.checkHasPieceInLiner(from, to);
             return;
         }
         throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
-    }
-
-    private void checkAnyPiece(final Board board, final Position from, final Position to) {
-        if (board.hasPieceInFile(from, to) || board.hasPieceInRank(from, to)) {
-            throw new IllegalArgumentException("룩의 이동 경로에 기물이 존재합니다.");
-        }
     }
 }
