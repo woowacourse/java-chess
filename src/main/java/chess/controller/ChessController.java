@@ -37,7 +37,7 @@ public class ChessController {
 
         outputView.printAnnounce();
 
-        if (!checkStart(chessGame)) {
+        if (checkEnd(chessGame)) {
             return;
         }
 
@@ -48,10 +48,12 @@ public class ChessController {
         outputView.printResult(teamScores);
     }
 
-    private boolean checkStart(ChessGame chessGame) {
+    private boolean checkEnd(ChessGame chessGame) {
         Command command = Command.from(inputView.inputCommand());
 
-        return command.isStart();
+        chessGame.progress(command);
+
+        return chessGame.isEnd();
     }
 
     private void play(ChessGame chessGame) {

@@ -85,20 +85,15 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        putPosition(positions, "source", token);
-        putPosition(positions, "target", token);
+        positions.put("source", makePosition(token, SOURCE_INDEX));
+        positions.put("target", makePosition(token, TARGET_INDEX));
 
         return positions;
     }
 
-    private void putPosition(Map<String, Position> positions, String key, String[] token) {
-        Position sourcePosition = makePosition(token);
-        positions.put(key, sourcePosition);
-    }
-
-    private Position makePosition(String[] token) {
-        File file = File.toFile(token[SOURCE_INDEX].charAt(0));
-        Rank rank = Rank.toRank(token[TARGET_INDEX].charAt(1));
+    private Position makePosition(String[] token, int index) {
+        File file = File.toFile(token[index].charAt(0));
+        Rank rank = Rank.toRank(token[index].charAt(1));
 
         return Position.of(file, rank);
     }
