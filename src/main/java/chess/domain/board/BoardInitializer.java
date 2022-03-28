@@ -12,7 +12,7 @@ public final class BoardInitializer implements Initializable {
 
     @Override
     public Map<Position, Piece> init() {
-        Map<Position, Piece> initialBoard = new HashMap<>();
+        final Map<Position, Piece> initialBoard = new HashMap<>();
 
         initPawn(initialBoard);
         initOtherPiece(initialBoard, Rank.EIGHT, Color.BLACK);
