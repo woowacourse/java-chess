@@ -17,8 +17,7 @@ public class ChessGameController {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
-        showChessMap(chessGame.createMap());
-        playGame(chessGame, whitePlayer, blackPlayer);
+        playGame(chessGame);
         showPlayerResult(whitePlayer, blackPlayer);
     }
 
@@ -27,70 +26,43 @@ public class ChessGameController {
         return new ChessGame(whitePlayer, blackPlayer);
     }
 
+    private void playGame(final ChessGame chessGame) {
+        showChessMap(chessGame.createMap());
+
+        Command command;
+        do {
+            final String[] inputCommand = InputView.requestGameCommand();
+            command = Command.from(inputCommand[0]);
+            turnEachPlayer(command, inputCommand, chessGame);
+            chessGame.changeTurn();
+        } while (!command.isEnd() && chessGame.isRunning());
+    }
+
+    private void turnEachPlayer(Command command, String[] inputCommand, ChessGame chessGame) {
+        if (command.isStatus()) {
+            showPlayerResult(chessGame.getCurrentPlayer(), chessGame.getOpponentPlayer());
+        }
+        if (command.isMove()) {
+            move(chessGame, inputCommand);
+            showChessMap(chessGame.createMap());
+        }
+    }
+
     private void showChessMap(final ChessMap chessMap) {
         OutputView.printChessMap(chessMap.getChessMap());
     }
 
-    private void playGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
-        if (!runCurrentPlayerTurn(chessGame, whitePlayer, blackPlayer)) {
-            return;
-        }
-        if (!runCurrentPlayerTurn(chessGame, blackPlayer, whitePlayer)) {
-            return;
-        }
-        playGame(chessGame, whitePlayer, blackPlayer);
-    }
+    private void move(final ChessGame chessGame, String[] positionInput) {
+        final List<Position> positions = findMoveCommandPosition(positionInput[1], positionInput[2]);
+        final Position currentPosition = positions.get(0);
+        final Position destinationPosition = positions.get(1);
 
-    private boolean runCurrentPlayerTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
-        final boolean isEndTurn = turn(chessGame, currentPlayer, opponentPlayer);
-        if (!isRunningChessGame(isEndTurn, chessGame)) {
-            return false;
-        }
-        showChessMap(chessGame.createMap());
-        return true;
-    }
-
-    private boolean turn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
-        try {
-            final String[] command = InputView.requestGameCommand();
-            return isFinishCurrentPlayerTurn(chessGame, command, currentPlayer, opponentPlayer);
-        } catch (final IllegalArgumentException e) {
-            OutputView.printException(e);
-            return turn(chessGame, currentPlayer, opponentPlayer);
-        }
-    }
-
-    private boolean isRunningChessGame(final boolean isEndTurn, final ChessGame chessGame) {
-        return !isEndTurn && chessGame.isRunning();
-    }
-
-    private boolean isFinishCurrentPlayerTurn(final ChessGame chessGame, final String[] commandInput,
-            final Player currentPlayer, final Player opponentPlayer) {
-        final String command = commandInput[0];
-        if (command.contains("move")) {
-            moveTurn(chessGame, currentPlayer, opponentPlayer, commandInput);
-            return false;
-        }
-        if (command.equals("status")) {
-            showPlayerResult(currentPlayer, opponentPlayer);
-            turn(chessGame, currentPlayer, opponentPlayer);
-            return false;
-        }
-        return true;
-    }
-
-    private void moveTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer, final String[] command) {
-        final List<Position> positions = findMoveCommandPosition(command[1], command[2]);
-        chessGame.move(currentPlayer, opponentPlayer, positions.get(0), positions.get(1));
+        chessGame.move(chessGame.getCurrentPlayer(), chessGame.getOpponentPlayer(),
+                currentPosition, destinationPosition);
     }
 
     public List<Position> findMoveCommandPosition(final String currentPosition, final String destinationPosition) {
-        final char currentFile = currentPosition.charAt(0);
-        final int currentRank = currentPosition.charAt(1) - '0';
-        final char destinationFile = destinationPosition.charAt(0);
-        final int destinationRank = destinationPosition.charAt(1) - '0';
-
-        return List.of(new Position(currentRank, currentFile), new Position(destinationRank, destinationFile));
+        return List.of(new Position(currentPosition), new Position(destinationPosition));
     }
 
     private void showPlayerResult(final Player currentPlayer, final Player opponentPlayer) {

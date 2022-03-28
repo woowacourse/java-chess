@@ -10,7 +10,7 @@ public class InputView {
     private static final Pattern PATTERN = Pattern.compile(MOVE_COMMAND_REGEX);
     private static final String COMMAND_DELIMITER = " ";
 
-    public static String requestStartCommand() {
+    public static void requestStartCommand() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작 : start");
         System.out.println("게임 종료 : end");
@@ -19,10 +19,9 @@ public class InputView {
         try {
             final String command = SCANNER.nextLine();
             validateStartCommand(command);
-            return command;
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return requestStartCommand();
+            requestStartCommand();
         }
     }
 
