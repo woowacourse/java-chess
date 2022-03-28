@@ -1,6 +1,9 @@
 package chess.domain.game.state;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -20,8 +23,9 @@ public class StartedGame implements GameState {
 
     @Override
     public GameState start() {
-        initBlack();
-        initWhite();
+        initializePieces(Rank.Eight, Color.Black);
+        initializePieces(Rank.One, Color.White);
+        initializePawn();
 
         return new RunningGame(board, Player.White);
     }
@@ -51,57 +55,30 @@ public class StartedGame implements GameState {
         return false;
     }
 
-    private void initBlack() {
-        initBlackRankEight();
-        initBlackRankSeven();
+    private void initializePieces(Rank rank, Color color) {
+        board.putPiece(Position.of(File.a, rank), new Rook(color));
+        board.putPiece(Position.of(File.b, rank), new Knight(color));
+        board.putPiece(Position.of(File.c, rank), new Bishop(color));
+        board.putPiece(Position.of(File.d, rank), new Queen(color));
+        board.putPiece(Position.of(File.e, rank), new King(color));
+        board.putPiece(Position.of(File.f, rank), new Bishop(color));
+        board.putPiece(Position.of(File.g, rank), new Knight(color));
+        board.putPiece(Position.of(File.h, rank), new Rook(color));
     }
 
-    private void initBlackRankEight() {
-        board.putPiece(Position.of(File.a, Rank.Eight), new Rook(Color.Black));
-        board.putPiece(Position.of(File.b, Rank.Eight), new Knight(Color.Black));
-        board.putPiece(Position.of(File.c, Rank.Eight), new Bishop(Color.Black));
-        board.putPiece(Position.of(File.d, Rank.Eight), new Queen(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Eight), new King(Color.Black));
-        board.putPiece(Position.of(File.f, Rank.Eight), new Bishop(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Eight), new Knight(Color.Black));
-        board.putPiece(Position.of(File.h, Rank.Eight), new Rook(Color.Black));
+    private void initializePawn() {
+        putPawn(Rank.Seven, Color.Black);
+        putPawn(Rank.Two, Color.White);
     }
 
-    private void initBlackRankSeven() {
-        board.putPiece(Position.of(File.a, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.b, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.c, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.d, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.f, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.h, Rank.Seven), new Pawn(Color.Black));
-    }
+    private void putPawn(Rank rank, Color color) {
+        List<Position> positions = Arrays.stream(File.values())
+            .filter(file -> file != File.Out)
+            .map(file -> Position.of(file, rank))
+            .collect(Collectors.toList());
 
-    private void initWhite() {
-        initWhiteRankOne();
-        initWhiteRankTwo();
-    }
-
-    private void initWhiteRankTwo() {
-        board.putPiece(Position.of(File.a, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.b, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.c, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.d, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.e, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.f, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.g, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.h, Rank.Two), new Pawn(Color.White));
-    }
-
-    private void initWhiteRankOne() {
-        board.putPiece(Position.of(File.a, Rank.One), new Rook(Color.White));
-        board.putPiece(Position.of(File.b, Rank.One), new Knight(Color.White));
-        board.putPiece(Position.of(File.c, Rank.One), new Bishop(Color.White));
-        board.putPiece(Position.of(File.d, Rank.One), new Queen(Color.White));
-        board.putPiece(Position.of(File.e, Rank.One), new King(Color.White));
-        board.putPiece(Position.of(File.f, Rank.One), new Bishop(Color.White));
-        board.putPiece(Position.of(File.g, Rank.One), new Knight(Color.White));
-        board.putPiece(Position.of(File.h, Rank.One), new Rook(Color.White));
+        for (Position position : positions) {
+            board.putPiece(position, new Pawn(color));
+        }
     }
 }
