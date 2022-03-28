@@ -1,6 +1,6 @@
 package chess.command;
 
-public class Init extends Command {
+public final class Init extends Command {
 
     public Init(String input) {
         super(input);

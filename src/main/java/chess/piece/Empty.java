@@ -1,11 +1,11 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 
 import java.util.List;
 
-public class Empty extends Piece {
+public final class Empty extends Piece {
 
     private static final String NAME = ".";
     private static final double SCORE = 0D;
@@ -31,7 +31,7 @@ public class Empty extends Piece {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        return null;
+        throw new IllegalArgumentException("사이의 값을 셀수 없습니다.");
     }
 
     @Override

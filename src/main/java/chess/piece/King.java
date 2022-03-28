@@ -1,12 +1,12 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 
 import java.util.Collections;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
     private static final String BLACK_NAME = "K";
     private static final String WHITE_NAME = "k";
     private static final double SCORE = 0D;

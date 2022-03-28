@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 
 import java.util.List;
 

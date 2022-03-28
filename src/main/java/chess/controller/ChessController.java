@@ -14,19 +14,32 @@ public class ChessController {
 
         String input = InputView.inputCommand();
         Command command = new Init(input);
-        Pieces pieces = Pieces.create();
-        Board board = Board.create(pieces);
-        Turn turn = Turn.init();
         command = command.turnState(input);
+        Board board = Board.create(Pieces.create());
+        command = playGame(command, board);
+        OutputView.printFinishMessage();
+        finishGame(command, board);
+    }
+
+    private Command playGame(Command command, Board board) {
+        Turn turn = Turn.init();
         while (!command.isEnd() || board.isDeadKing()) {
-            if (command.isMove()) {
-                board.move(command.getCommandPosition(), turn);
-                turn = turn.change();
-            }
+            turn = nextTurn(command, board, turn);
             OutputView.printBoard(board.getPieces());
             command = command.turnState(InputView.inputCommand());
         }
-        OutputView.printFinishMessage();
+        return command;
+    }
+
+    private Turn nextTurn(Command command, Board board, Turn turn) {
+        if (command.isMove()) {
+            board.move(command.getCommandPosition(), turn);
+            turn = turn.change();
+        }
+        return turn;
+    }
+
+    private void finishGame(Command command, Board board) {
         command = command.turnFinalState(InputView.inputCommand());
         if (command.isStatus()) {
             OutputView.printFinalResult(board.getWinTeam(), board.getWhiteTeamScore(), board.getBlackTeamScore());

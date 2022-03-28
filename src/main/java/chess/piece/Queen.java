@@ -1,13 +1,13 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Queen extends Piece implements RookMovable, BishopMovable {
+public final class Queen extends Piece implements RookMovable, BishopMovable {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;

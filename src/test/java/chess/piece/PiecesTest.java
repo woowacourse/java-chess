@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

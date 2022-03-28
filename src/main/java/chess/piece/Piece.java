@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 import chess.Turn;
 
@@ -28,9 +28,8 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return this.position.equals(position);
     }
 
-
-    public void moveTo(Piece targetPiece) {
-        position = targetPiece.position;
+    public void moveTo(Position targetPosition) {
+        position = targetPosition;
     }
 
     public boolean isSameTeam(Piece targetPiece) {

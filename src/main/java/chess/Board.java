@@ -3,10 +3,11 @@ package chess;
 import chess.piece.Empty;
 import chess.piece.Piece;
 import chess.piece.Pieces;
+import chess.piece.position.Position;
 
 import java.util.List;
 
-public class Board {
+public final class Board {
 
     private final Pieces pieces;
 
@@ -27,17 +28,29 @@ public class Board {
         Position targetPosition = getTarget(commandPosition);
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
-        if (!sourcePiece.isCurrentTurn(thisTurn)) {
-            throw new IllegalArgumentException("움직일 수 없습니다");
-        }
         Piece targetPiece = pieces.findByPosition(targetPosition);
-        if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) || sourcePiece.isKill(targetPiece)) {
-            sourcePiece.moveTo(targetPiece);
-            pieces.remove(targetPiece);
-            pieces.add(new Empty(sourcePosition));
+        validateTurn(thisTurn, sourcePiece);
+        if (canMove(targetPosition, sourcePiece, targetPiece)) {
+            move(sourcePosition, targetPosition, sourcePiece, targetPiece);
             return;
         }
         throw new IllegalArgumentException("움직일수 없습니다.");
+    }
+
+    private void validateTurn(Turn thisTurn, Piece sourcePiece) {
+        if (!sourcePiece.isCurrentTurn(thisTurn)) {
+            throw new IllegalArgumentException("[ERROR] 현재 차례가 아닙니다.");
+        }
+    }
+
+    private boolean canMove(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) || sourcePiece.isKill(targetPiece);
+    }
+
+    private void move(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        sourcePiece.moveTo(targetPosition);
+        pieces.remove(targetPiece);
+        pieces.add(new Empty(sourcePosition));
     }
 
     private boolean hasBlock(Piece sourcePiece, Piece targetPiece) {

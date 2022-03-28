@@ -1,13 +1,13 @@
 package chess.piece;
 
-import chess.Position;
+import chess.piece.position.Position;
 import chess.Team;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop extends Piece implements BishopMovable {
+public final class Bishop extends Piece implements BishopMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;

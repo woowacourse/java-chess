@@ -1,8 +1,8 @@
-package chess;
+package chess.piece.position;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
     private static final int ASCII_TO_INT = 96;
     private final Rank rank;
     private final File file;

@@ -1,6 +1,6 @@
 package chess.command;
 
-public class Status extends Command {
+public final class Status extends Command {
 
     public Status(String input) {
         super(input);

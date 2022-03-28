@@ -6,7 +6,9 @@ import chess.piece.Pieces;
 
 import java.util.Collections;
 
-public class OutputView {
+public final class OutputView {
+
+    private OutputView(){}
 
     public static void startGame() {
         System.out.println("> 체스 게임을 시작합니다.\n" +

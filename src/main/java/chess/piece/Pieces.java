@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.File;
-import chess.Position;
+import chess.piece.position.File;
+import chess.piece.position.Position;
 import chess.Team;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 
-public class Pieces {
+public final class Pieces {
     private final List<Piece> pieces;
 
     private Pieces(List<Piece> pieces) {

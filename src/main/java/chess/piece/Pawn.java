@@ -1,12 +1,12 @@
 package chess.piece;
 
-import chess.Position;
-import chess.Rank;
+import chess.piece.position.Position;
+import chess.piece.position.Rank;
 import chess.Team;
 
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     private static final int ONE_STEP = 1;
     private static final int INIT_DISTANCE = 2;
     private static final String BLACK_NAME = "P";

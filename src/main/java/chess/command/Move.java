@@ -3,7 +3,7 @@ package chess.command;
 import java.util.Arrays;
 import java.util.List;
 
-public class Move extends Command {
+public final class Move extends Command {
 
     private static final String EMPTY_DELIMITER = " ";
 
