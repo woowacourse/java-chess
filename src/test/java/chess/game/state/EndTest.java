@@ -49,14 +49,6 @@ public class EndTest {
 
     @Test
     @DisplayName("게임이 종료되고 보드 상황을 확인하려고 하면 예외가 발생한다")
-    void getBoardException() {
-        assertThatThrownBy(() -> state.getBoard())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임이 종료되어 지원하지 않는 기능입니다");
-    }
-
-    @Test
-    @DisplayName("게임이 종료되고 보드 상황을 확인하려고 하면 예외가 발생한다")
     void calculateScoreException() {
         assertThatThrownBy(() -> state.calculateScore(Color.WHITE))
             .isInstanceOf(IllegalStateException.class)
