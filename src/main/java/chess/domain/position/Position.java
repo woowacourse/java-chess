@@ -25,8 +25,8 @@ public class Position {
     }
 
     public static Position from(final String position) {
-        File file = File.from(position.substring(0, 1));
-        Rank rank = Rank.from(Integer.parseInt(position.substring(1)));
+        final File file = File.from(position.substring(0, 1));
+        final Rank rank = Rank.from(Integer.parseInt(position.substring(1)));
 
         return Position.of(file, rank);
     }
@@ -54,7 +54,6 @@ public class Position {
     public File getFile() {
         return file;
     }
-
 
     public int getFileOrder() {
         return file.getOrder();
