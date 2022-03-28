@@ -1,11 +1,13 @@
-package chess;
+package chess.domain.board;
 
-import chess.piece.*;
-import chess.position.PieceCache;
-import chess.position.Position;
-import chess.position.PositionCache;
+import chess.domain.Turn;
+import chess.domain.piece.*;
+import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

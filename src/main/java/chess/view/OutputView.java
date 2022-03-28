@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.Chessboard;
-import chess.piece.Piece;
-import chess.position.Position;
-import chess.position.PositionCache;
+import chess.domain.board.Chessboard;
+import chess.domain.board.PositionCache;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.Map;
 

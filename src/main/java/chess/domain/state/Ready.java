@@ -1,20 +1,23 @@
-package chess.state;
+package chess.domain.state;
 
-import chess.Chessboard;
-import chess.piece.Color;
-import chess.position.Position;
+import chess.domain.Turn;
+import chess.domain.board.Chessboard;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
-public class Finish implements State {
+public class Ready implements State {
 
     private final Chessboard chessboard;
+    private final Turn turn;
 
-    public Finish(Chessboard chessboard) {
-        this.chessboard = chessboard;
+    public Ready() {
+        chessboard = Chessboard.emptyChessboard();
+        turn = new Turn();
     }
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        return new Play(turn);
     }
 
     @Override
@@ -24,17 +27,17 @@ public class Finish implements State {
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException();
+        return new Finish(chessboard);
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
     public double computeScore(Color color) {
-        return chessboard.computeScore(color);
+        throw new UnsupportedOperationException();
     }
 
     @Override

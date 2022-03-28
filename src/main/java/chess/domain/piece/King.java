@@ -1,20 +1,20 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.position.Direction;
-import chess.position.Position;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import chess.utils.PossiblePositionChecker;
 
 import java.util.List;
 
-public class Knight extends Piece {
+public class King extends Piece {
 
-    public Knight(Color color) {
-        super(Type.KNIGHT, color);
+    public King(Color color) {
+        super(Type.KING, color);
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return PossiblePositionChecker.isMovablePositions(Direction.knight(), source, target);
+        return PossiblePositionChecker.isMovablePositions(Direction.king(), source, target);
     }
 
     @Override

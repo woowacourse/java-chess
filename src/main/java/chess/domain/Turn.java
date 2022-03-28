@@ -1,6 +1,6 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Color;
+import chess.domain.piece.Color;
 
 public class Turn {
     Color color;

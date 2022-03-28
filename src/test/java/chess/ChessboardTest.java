@@ -1,9 +1,11 @@
 package chess;
 
-import chess.piece.Color;
-import chess.piece.Piece;
-import chess.piece.Type;
-import chess.position.Position;
+import chess.domain.Turn;
+import chess.domain.board.Chessboard;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessboardTest {
 
-    Map<Position, Piece> board;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {

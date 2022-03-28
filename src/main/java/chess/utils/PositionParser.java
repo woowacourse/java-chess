@@ -1,7 +1,7 @@
 package chess.utils;
 
-import chess.position.Position;
-import chess.position.PositionCache;
+import chess.domain.board.PositionCache;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,9 +1,9 @@
-package chess.state;
+package chess.domain.state;
 
-import chess.Chessboard;
-import chess.Turn;
-import chess.piece.Color;
-import chess.position.Position;
+import chess.domain.Turn;
+import chess.domain.board.Chessboard;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public class Play implements State {
 

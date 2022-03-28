@@ -1,6 +1,6 @@
-package chess.position;
+package chess.domain.board;
 
-import chess.Chessboard;
+import chess.domain.position.Position;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

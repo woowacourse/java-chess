@@ -1,6 +1,6 @@
 package chess.util;
 
-import chess.position.Position;
+import chess.domain.position.Position;
 import chess.utils.PositionParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

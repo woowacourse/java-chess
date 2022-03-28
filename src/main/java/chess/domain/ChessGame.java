@@ -1,9 +1,10 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Color;
-import chess.position.Position;
-import chess.state.Ready;
-import chess.state.State;
+import chess.domain.board.Chessboard;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.utils.PositionParser;
 
 import java.util.List;

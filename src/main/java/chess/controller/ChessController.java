@@ -1,6 +1,7 @@
-package chess;
+package chess.controller;
 
-import chess.piece.Color;
+import chess.domain.ChessGame;
+import chess.domain.piece.Color;
 import chess.view.OutputView;
 
 import static chess.Command.*;

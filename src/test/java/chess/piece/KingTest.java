@@ -1,6 +1,8 @@
 package chess.piece;
 
-import chess.position.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
