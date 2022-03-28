@@ -28,6 +28,10 @@ public class Game {
 
         state = state.turn(command);
 
+        return gameProgress(inputs, command);
+    }
+
+    private Map<Color, Double> gameProgress(final List<String> inputs, final Command command) {
         if (command.isStatus()) {
             return state.getStatus();
         }
@@ -56,5 +60,9 @@ public class Game {
 
     public Color getWinColor() {
         return winColor;
+    }
+
+    public Board getBoard() {
+        return state.getBoard();
     }
 }

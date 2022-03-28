@@ -11,7 +11,7 @@ public final class Ready implements State {
     private Ready() {
     }
 
-    public static State run(final Command command) {
+    public static State start(final Command command) {
         if (command.isStart()) {
             return new Running();
         }

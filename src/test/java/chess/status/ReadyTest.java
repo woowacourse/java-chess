@@ -12,7 +12,7 @@ class ReadyTest {
     @Test
     @DisplayName("준비 상태에서 말을 움직일 수 없다.")
     void readyCannotMove() {
-        assertThatThrownBy(() -> Ready.run(Command.MOVE))
+        assertThatThrownBy(() -> Ready.start(Command.MOVE))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -20,13 +20,13 @@ class ReadyTest {
     @Test
     @DisplayName("준비 상태에서 게임을 시작하면 Start 상태가 된다.")
     void startFromReady() {
-        assertThat(Ready.run(Command.START)).isInstanceOf(Running.class);
+        assertThat(Ready.start(Command.START)).isInstanceOf(Running.class);
     }
 
     @Test
     @DisplayName("준비 상태에서 게임을 끝내면 Finished 상태가 된다.")
     void finishFromReady() {
-        assertThat(Ready.run(Command.END)).isInstanceOf(Finished.class);
+        assertThat(Ready.start(Command.END)).isInstanceOf(Finished.class);
     }
 
 }
