@@ -5,47 +5,47 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 
 public abstract class Piece {
-    private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
+	private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
 
-    final Color color;
-    double score;
+	final Color color;
+	double score;
 
-    Piece(Color color) {
-        this.color = color;
-        this.score = 0;
-    }
+	Piece(Color color, double score) {
+		this.color = color;
+		this.score = score;
+	}
 
-    public static Piece from(File file, Rank rank) {
-        return PieceGenerator.generatePiece(file, rank);
-    }
+	public static Piece from(File file, Rank rank) {
+		return PieceGenerator.generatePiece(file, rank);
+	}
 
-    abstract public String getEmoji();
+	abstract public String getEmoji();
 
-    abstract public boolean canMove(Direction direction, Piece otherPiece);
+	abstract public boolean canMove(Direction direction, Piece otherPiece);
 
-    void checkSameTeam(Piece otherPiece) {
-        if (isSameColor(otherPiece.color)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
-        }
-    }
+	void checkSameTeam(Piece otherPiece) {
+		if (isSameColor(otherPiece.color)) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
+		}
+	}
 
-    public boolean isSameColor(Color color) {
-        return color == this.color;
-    }
+	public boolean isSameColor(Color color) {
+		return color == this.color;
+	}
 
-    public double addScore(double sum) {
-        return sum + score;
-    }
+	public double addScore(double sum) {
+		return sum + score;
+	}
 
-    public boolean isNone() {
-        return false;
-    }
+	public boolean isNone() {
+		return false;
+	}
 
-    public boolean isPawn() {
-        return false;
-    }
+	public boolean isPawn() {
+		return false;
+	}
 
-    public boolean isKing() {
-        return false;
-    }
+	public boolean isKing() {
+		return false;
+	}
 }
