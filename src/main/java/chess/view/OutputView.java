@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.controller.BoardDto;
 import chess.controller.ScoresDto;
+import java.util.List;
 
 public final class OutputView {
 
@@ -11,13 +12,14 @@ public final class OutputView {
     private static final String NAME_SCORE_DELIMITER = " : ";
     private static final String GAME_RESULT = "승부 결과 : %s\n";
     private static final String ERROR = "[ERROR]]";
+    private static final String END_MESSAGE = "게임을 종료합니다. 안녕히 가십시오.";
 
     public static void startGame() {
         System.out.println(START_MESSAGE);
     }
 
-    public static void startGameBoard(final BoardDto boardDto) {
-        String joinedPieces = String.join(PIECE_DELIMITER, boardDto.getPieces());
+    public static void printBoard(final List<String> boardDto) {
+        String joinedPieces = String.join(PIECE_DELIMITER, boardDto);
         for (int i = PIECE_COUNT_PER_RANK; i <= joinedPieces.length(); i += PIECE_COUNT_PER_RANK) {
             System.out.println(joinedPieces.substring(i - PIECE_COUNT_PER_RANK, i));
         }
@@ -31,7 +33,11 @@ public final class OutputView {
         System.out.printf(GAME_RESULT, dto.getWinner());
     }
 
-    public static void printException(IllegalArgumentException exception) {
+    public static void printException(RuntimeException exception) {
         System.out.println(ERROR + exception.getMessage());
+    }
+
+    public static void printEndMessage() {
+        System.out.println(END_MESSAGE);
     }
 }

@@ -1,22 +1,29 @@
 package chess.controller;
 
-import chess.model.GameStartCommand;
-import chess.model.board.Board;
-import chess.state.GameState;
-import chess.state.Ready;
-import chess.util.PieceToLetterConvertor;
+import chess.controller.state.GameState;
+import chess.controller.state.Ready;
+import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.function.Consumer;
 
 public final class ChessController {
 
+    private static final int FROM_INDEX = 0;
+    private static final int TO_INDEX = 1;
     private final ChessService service;
+    private final Map<GameCommand, Consumer<GameCommandRequest>> requestMapper
+            = Map.of(GameCommand.START, this::start, GameCommand.MOVE, this::move,
+            GameCommand.END, this::end, GameCommand.STATUS, this::status);
 
     public ChessController(ChessService service) {
         this.service = service;
+    }
+
+    public void run() {
+        runUntilValid(this::playGame);
     }
 
     private static void runUntilValid(Runnable runner) {
@@ -30,48 +37,35 @@ public final class ChessController {
         try {
             runner.run();
             return true;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printException(e);
             return false;
         }
     }
 
-    public void run() {
-        runUntilValid(this::playGame);
-    }
-
     private void playGame() {
-        OutputView.startGame();
         GameState gameState = new Ready();
-        while (!gameState.isEnd()) {
-            List<String> request = InputView.inputStartOrEndGame();
-            GameStartCommand command = GameStartCommand.findCommand(request.get(0));
-            gameState = gameState.changeStatus(command);
-            request.remove(0);
-            gameState = gameState.execute(service, request);
-            outputBy(gameState);
+        while (!gameState.isEnd(service)) {
+            GameCommandRequest request = GameCommandRequest.of(InputView.inputStartOrEndGame());
+            gameState = gameState.execute(request.getGameCommand());
+            requestMapper.get(request.getGameCommand()).accept(request);
         }
     }
 
-    private void outputBy(GameState gameState) {
-        if (gameState.isEnd()) {
-            return;
-        }
-        if (gameState.isStatus()) {
-            OutputView.printStatus(toDto(service.getScores()));
-        }
-        OutputView.startGameBoard(new BoardDto(toDto(service.getBoard())));
+    private void start(GameCommandRequest request) {
+        OutputView.startGame();
+        OutputView.printBoard(service.initBoard());
     }
 
-    private List<String> toDto(final Board board) {
-        return board.getBoard().stream()
-                .map(PieceToLetterConvertor::convertToLetter)
-                .collect(Collectors.toList());
+    private void move(GameCommandRequest request) {
+        List<String> body = request.getBody();
+        OutputView.printBoard(service.move(body.get(FROM_INDEX), body.get(TO_INDEX)));
     }
 
-    private ScoresDto toDto(final Map<String, Double> scores) {
-        String winner = findWinnerName(scores);
-        return new ScoresDto(winner, scores);
+    private void status(GameCommandRequest request) {
+        Map<String, Double> scores = service.getScores();
+        OutputView.printStatus(new ScoresDto(findWinnerName(scores), scores));
+        this.end(request);
     }
 
     private String findWinnerName(Map<String, Double> scores) {
@@ -82,5 +76,9 @@ public final class ChessController {
             return "BLACK 승";
         }
         return "WHITE 승";
+    }
+
+    private void end(GameCommandRequest request) {
+        OutputView.printEndMessage();
     }
 }

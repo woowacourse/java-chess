@@ -1,31 +1,35 @@
-package chess.controller;
+package chess.service;
 
 import chess.model.Color;
 import chess.model.Square;
 import chess.model.board.Board;
 import chess.model.board.ChessInitializer;
+import chess.util.PieceToLetterConvertor;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
     private Board board;
 
-    public Board initBoard() {
+    public List<String> initBoard() {
         board = new Board(new ChessInitializer());
-        return board;
+        return toDto(board);
     }
 
-    public Board move(String from, String to) {
+    private List<String> toDto(final Board board) {
+        return board.getBoard().stream()
+                .map(PieceToLetterConvertor::convertToLetter)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> move(String from, String to) {
         board.move(Square.of(from), Square.of(to));
-        return board;
+        return toDto(board);
     }
 
     public boolean checkKingsAlive() {
         return board.aliveTwoKings();
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public Map<String, Double> getScores() {
