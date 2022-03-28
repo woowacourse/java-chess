@@ -9,8 +9,8 @@ public class Knight extends Piece {
 
     private static final double SCORE = 2.5;
     private static final BiPredicate<Integer, Integer> movingCondition =
-            (rankDifference, fileDifference) ->
-                    (fileDifference == 2 && rankDifference == 1) || (fileDifference == 1 && rankDifference == 2);
+            (rankMove, fileMove) ->
+                    (fileMove == 2 && rankMove == 1) || (fileMove == 1 && rankMove == 2);
 
     public Knight(final TeamColor teamColor, final Position position) {
         super(teamColor, position);

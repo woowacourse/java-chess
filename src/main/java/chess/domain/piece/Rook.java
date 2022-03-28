@@ -9,7 +9,7 @@ public class Rook extends Piece {
 
     private static final double SCORE = 5;
     static final BiPredicate<Integer, Integer> movingCondition =
-            (rankDifference, fileDifference) -> fileDifference == 0 || rankDifference == 0;
+            (rankMove, fileMove) -> fileMove == 0 || rankMove == 0;
 
     public Rook(final TeamColor teamColor, final Position position) {
         super(teamColor, position);

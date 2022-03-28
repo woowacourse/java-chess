@@ -9,7 +9,7 @@ public class Bishop extends Piece {
 
     private static final double SCORE = 3;
     static final BiPredicate<Integer, Integer> movingCondition =
-            (rankDifference, fileDifference) -> rankDifference == fileDifference;
+            (rankMove, fileMove) -> rankMove == fileMove;
 
     public Bishop(final TeamColor teamColor, final Position position) {
         super(teamColor, position);

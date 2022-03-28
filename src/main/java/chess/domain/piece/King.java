@@ -9,7 +9,7 @@ public class King extends Piece {
 
     private static final double SCORE = 0;
     private static final BiPredicate<Integer, Integer> movingCondition =
-            (rankDifference, fileDifference) -> rankDifference <= 1 && fileDifference <= 1;
+            (rankMove, fileMove) -> rankMove <= 1 && fileMove <= 1;
 
     public King(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
