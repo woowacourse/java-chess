@@ -47,6 +47,7 @@ public class Chessboard {
     private void validate(Position source, Position target, Turn turn) {
         validateSamePosition(source, target);
         validateBlank(source);
+        validateSameTeam(source, target);
         validateTurn(source, turn);
         validateMovable(source, target);
         validateMovableBetweenPosition(source, target);
@@ -61,6 +62,12 @@ public class Chessboard {
     private void validateBlank(Position source) {
         if (board.get(source).isSameType(Type.BLANK)) {
             throw new IllegalArgumentException("이동하려는 위치에 기물이 없습니다.");
+        }
+    }
+
+    private void validateSameTeam(Position source, Position target) {
+        if (board.get(source).isColor(board.get(target))) {
+            throw new IllegalArgumentException("같은편의 기물을 공격할 수 없습니다.");
         }
     }
 
@@ -82,7 +89,7 @@ public class Chessboard {
             if (!isExistPiece(position)) {
                 continue;
             }
-            throw new IllegalArgumentException("가로막는 기물이 있습니다.");
+            throw new IllegalArgumentException("이동 중간에 가로막는 기물이 있습니다.");
         }
     }
 

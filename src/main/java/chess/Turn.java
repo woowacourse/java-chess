@@ -22,8 +22,4 @@ public class Turn {
             color = Color.BLACK;
         }
     }
-
-    public Color getColor() {
-        return color;
-    }
 }

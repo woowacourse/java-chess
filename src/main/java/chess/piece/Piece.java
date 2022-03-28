@@ -26,6 +26,10 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public boolean isColor(Piece piece) {
+        return this.color == piece.color;
+    }
+
     public String getSymbolByColor() {
         return type.getSymbol(color);
     }
