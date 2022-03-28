@@ -32,11 +32,7 @@ public abstract class Piece {
 	public boolean isSameColor(Color color) {
 		return color == this.color;
 	}
-
-	public double addScore(double sum) {
-		return sum + score;
-	}
-
+	
 	public boolean isNone() {
 		return false;
 	}
@@ -47,5 +43,9 @@ public abstract class Piece {
 
 	public boolean isKing() {
 		return false;
+	}
+
+	public double getScore() {
+		return score;
 	}
 }

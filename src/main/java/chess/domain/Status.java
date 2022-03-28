@@ -9,45 +9,54 @@ import chess.domain.position.File;
 import chess.domain.position.Square;
 
 public final class Status {
-    private final Board board;
+	public static final double PAWN_PENALTY_SCORE = 0.5;
+	private final Board board;
 
-    public Status(Board board) {
-        this.board = board;
-    }
+	public Status(Board board) {
+		this.board = board;
+	}
 
-    public double calculateScore(Color color) {
-        List<Map.Entry<Square, Piece>> survives = board.filterBy(color);
-        return adjustmentSum(getSum(survives), survives);
-    }
+	public double calculateScore(Color color) {
+		List<Map.Entry<Square, Piece>> survives = board.filterBy(color);
+		return getSum(survives);
+	}
 
-    private double getSum(List<Map.Entry<Square, Piece>> survives) {
-        double sum = 0;
-        for (Map.Entry<Square, Piece> survive : survives) {
-            Piece piece = survive.getValue();
-            sum = piece.addScore(sum);
-        }
-        return sum;
-    }
+	private double getSum(List<Map.Entry<Square, Piece>> survives) {
+		double sum = survives.stream()
+			.map(entry -> entry.getValue())
+			.mapToDouble(Piece::getScore)
+			.sum();
+		return adjustmentSum(sum, survives);
+	}
 
-    private double adjustmentSum(double sum, List<Map.Entry<Square, Piece>> survives) {
-        for (File file : File.values()) {
-            int count = countPawnInSameFile(survives, file);
-            sum = subtractPawnInSameFile(sum, count);
-        }
-        return sum;
-    }
+	private double adjustmentSum(double sum, List<Map.Entry<Square, Piece>> survives) {
+		for (File file : File.values()) {
+			int count = countPawnInSameFile(survives, file);
+			sum -= subtractPawnInSameFile(count);
+		}
+		return sum;
+	}
 
-    private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
-        return (int)survives.stream()
-                .filter(entry -> entry.getValue().isPawn())
-                .filter(entry -> entry.getKey().checkFile(file))
-                .count();
-    }
+	private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
+		return (int)survives.stream()
+			.filter(entry -> checkPawnInFile(entry, file))
+			.count();
+	}
 
-    private double subtractPawnInSameFile(double sum, int count) {
-        if (count > 1) {
-            sum -= 0.5 * count;
-        }
-        return sum;
-    }
+	private boolean checkPawnInFile(Map.Entry<Square, Piece> entry, File file) {
+		Square square = entry.getKey();
+		Piece piece = entry.getValue();
+
+		if (square.checkFile(file) && piece.isPawn()) {
+			return true;
+		}
+		return false;
+	}
+
+	private double subtractPawnInSameFile(int count) {
+		if (count > 1) {
+			return PAWN_PENALTY_SCORE * count;
+		}
+		return 0;
+	}
 }
