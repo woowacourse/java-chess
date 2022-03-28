@@ -1,8 +1,8 @@
 package chess.console.game.playstate;
 
-public interface Command {
+public interface PlayState {
 
-    Command run(String command);
+    PlayState run(String command);
 
     boolean isEnd();
 }

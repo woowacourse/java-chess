@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class RunningTest {
 
-    private Command running;
+    private PlayState running;
 
     @BeforeEach
     void setUp() {
@@ -45,17 +45,17 @@ class RunningTest {
     @Test
     @DisplayName("end커맨드 입력 시 End 상태로 변경")
     void runToEnd() {
-        Command command = running.run("end");
-        assertThat(command).isInstanceOf(End.class);
+        PlayState playState = running.run("end");
+        assertThat(playState).isInstanceOf(End.class);
     }
 
     @Test
     @DisplayName("move커맨드 진행 후 promotion이 가능하면 promotion상태로 변경")
     void moveToPromotion() {
-        Command command = new Running(new ChessBoard(Map.of(
+        PlayState playState = new Running(new ChessBoard(Map.of(
                 Position.of('a', '7'), new WhitePawn(),
                 Position.of('a', '1'), new King(WHITE),
                 Position.of('a', '2'), new King(BLACK))), WHITE);
-        assertThat(command.run("move a7 a8")).isInstanceOf(PromotionStatus.class);
+        assertThat(playState.run("move a7 a8")).isInstanceOf(Promotion.class);
     }
 }

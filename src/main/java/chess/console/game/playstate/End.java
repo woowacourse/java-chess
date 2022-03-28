@@ -1,9 +1,9 @@
 package chess.console.game.playstate;
 
-public class End implements Command {
+public class End implements PlayState {
 
     @Override
-    public Command run(String command) {
+    public PlayState run(String command) {
         throw new UnsupportedOperationException("게임이 종료된 상태에서는 게임을 실행할 수 없습니다.");
     }
 

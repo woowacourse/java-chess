@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Running implements Command {
+public class Running implements PlayState {
 
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("move [a-h][1-8] [a-h][1-8]");
+    private static final String COMMAND_DELIMITER = " ";
     private static final int START_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
@@ -28,7 +29,7 @@ public class Running implements Command {
     }
 
     @Override
-    public Command run(String command) {
+    public PlayState run(String command) {
         if (command.equals("end")) {
             return new End();
         }
@@ -45,10 +46,10 @@ public class Running implements Command {
         throw new IllegalArgumentException("게임 진행상태에서 불가능한 명령어입니다.");
     }
 
-    private Command moveNextCommand() {
+    private PlayState moveNextCommand() {
         if (chessBoard.isPromotionStatus(color)) {
             OutputView.printPromotionGuide();
-            return new PromotionStatus(chessBoard, color);
+            return new Promotion(chessBoard, color);
         }
         if (chessBoard.isFinished()) {
             return new End();
@@ -57,7 +58,7 @@ public class Running implements Command {
     }
 
     private void movePieceByCommand(final String command) {
-        List<String> values = Arrays.asList(command.split(" "));
+        List<String> values = Arrays.asList(command.split(COMMAND_DELIMITER));
         Position source = position(values.get(START_POSITION_INDEX));
         Position target = position(values.get(TARGET_POSITION_INDEX));
         chessBoard.movePiece(source, target, color);
