@@ -43,7 +43,7 @@ public class Board {
 
     private void validateNotSameColor(Piece sourcePiece, Piece targetPiece) {
         if (sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("다른 진영의 기물을 움직일 수 없습니다.");
         }
     }
 
