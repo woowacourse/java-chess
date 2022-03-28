@@ -5,7 +5,13 @@ import chess.domain.Position;
 
 public interface GameState {
 
-    GameState movePiece(Board board, Position fromPosition, Position toPosition);
+    GameState initBoard();
+
+    GameState movePiece(Position fromPosition, Position toPosition);
+
+    GameState end();
 
     boolean isFinish();
+
+    Board getBoard();
 }
