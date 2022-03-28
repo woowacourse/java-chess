@@ -13,15 +13,19 @@ public class MoveCommand implements Command {
     private final Position to;
 
     public MoveCommand(String command) {
-        this(test(command));
+        this(splitCommand(command));
     }
 
-    private static String[] test(String command) {
+    private static String[] splitCommand(String command) {
         String[] commands = command.split(DELIMITER);
+        validateCommandLength(commands);
+        return commands;
+    }
+
+    private static void validateCommandLength(String[] commands) {
         if (commands.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException("[ERROR] move명령어가 잘못되었습니다.");
         }
-        return commands;
     }
 
     public MoveCommand(String... position) {
@@ -50,7 +54,7 @@ public class MoveCommand implements Command {
 
     @Override
     public boolean isMove() {
-        return false;
+        return true;
     }
 
     @Override
