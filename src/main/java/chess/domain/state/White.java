@@ -16,33 +16,42 @@ public class White extends Running {
 
     @Override
     public State move(Location source, Location target) {
+        checkMovable(source, target);
+
         Piece sourcePiece = getBoard().getPiece(source);
         Piece targetPiece = getBoard().getPiece(target);
-
-        checkSourceColor(sourcePiece);
         LocationDiff locationDiff = source.computeDiff(target);
 
+        if (sourcePiece.isPawn()) {
+            checkPawnMovable(targetPiece, locationDiff);
+        }
+
+        getBoard().move(source, target);
+        if (targetPiece.isKing()) {
+            return end();
+        }
+        return new Black(getBoard());
+    }
+
+    private void checkMovable(Location source, Location target) {
+        Piece sourcePiece = getBoard().getPiece(source);
+        Piece targetPiece = getBoard().getPiece(target);
+        LocationDiff locationDiff = source.computeDiff(target);
+
+        checkSourceColor(sourcePiece);
         checkDirection(sourcePiece, locationDiff.computeDirection());
         checkDistance(sourcePiece, locationDiff);
         checkRoute(source, locationDiff);
         checkTarget(targetPiece);
+    }
 
-        if (sourcePiece.isPawn()) {
-            if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
-                throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
-            }
-            if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
-                throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
-            }
+    private void checkPawnMovable(Piece targetPiece, LocationDiff locationDiff) {
+        if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
         }
-
-        getBoard().move(source, target);
-
-        if (targetPiece.isKing()) {
-            System.out.println("화이트가 이김");
-            return end();
+        if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
         }
-        return new Black(getBoard());
     }
 
     @Override
