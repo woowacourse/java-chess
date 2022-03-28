@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 
 public class OutputView {
     private static final int ADJUST_ROW_INDEX = 1;
-    private static final int CHESSBOARD_SIZE = 8;
+    private static final int LAST_CHESSBOARD_INDEX = 7;
     private static final char EMPTY_CHESS_BLOCK = '.';
     private static final char ADJUST_COLUMN_INDEX = 'a';
     private static final String EMPTY_STRING = "";
@@ -26,6 +26,7 @@ public class OutputView {
     private static final String TEAM_SCORE_DELIMITER = ": ";
     private static final String IN_GAME_COMMAND_EXCEPTION = "[ERROR] move, status 중 하나를 입력해주세요.";
     private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
+    private static final int CHESSBOARD_SIZE = 8;
 
     static {
         chessPieceNameToCharacter.put("PAWN", 'p');
@@ -58,7 +59,7 @@ public class OutputView {
         setBlackChessMenOnBoard(chessBoard, blackChessMenDto);
         setWhiteChessMenOnBoard(chessBoard, whiteChessMenDto);
 
-        for (int i = 0; i < CHESSBOARD_SIZE; i++) {
+        for (int i = LAST_CHESSBOARD_INDEX; i >= 0 ; i--) {
             List<Character> chessBoardRow = chessBoard.get(i);
             String visualizedRow = Joiner.on(EMPTY_STRING).join(chessBoardRow);
             System.out.println(visualizedRow);

@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
-    private static final int BLACK_PAWN_ROW = 2;
-    private static final int BLACK_PIECE_ROW = 1;
-    private static final int WHITE_PAWN_ROW = 7;
-    private static final int WHITE_PIECE_ROW = 8;
+    private static final int WHITE_PIECE_ROW = 1;
+    private static final int WHITE_PAWN_ROW = 2;
+    private static final int BLACK_PIECE_ROW = 8;
+    private static final int BLACK_PAWN_ROW = 7;
+    private static final char COLUMN_FIRST_INDEX = 'a';
+    private static final char COLUMN_LAST_INDEX = 'h';
     private static final char ROOK_COLUMN = 'a';
     private static final char KNIGHT_COLUMN = 'b';
     private static final char BISHOP_COLUMN = 'c';
@@ -51,7 +53,7 @@ public class ChessGame {
     }
 
     private static void addPawns(List<ChessPiece> chessPieces, Team team, int row) {
-        for (char column = 'a'; column < 'i'; column++) {
+        for (char column = COLUMN_FIRST_INDEX; column <= COLUMN_LAST_INDEX; column++) {
             chessPieces.add(new Pawn(team, new ChessBoardPosition(column, row)));
         }
     }
