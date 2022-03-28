@@ -36,7 +36,7 @@ public class Ready implements State {
     }
 
     @Override
-    public boolean isRunning() {
+    public boolean isFinished() {
         return false;
     }
 

@@ -15,7 +15,6 @@ public class Finished implements State {
         return new Running(new Board());
     }
 
-
     @Override
     public State move(Position beforePosition, Position afterPosition) {
         throw new IllegalStateException("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
@@ -38,7 +37,7 @@ public class Finished implements State {
 
     @Override
     public int hasBlackWon() {
-        if (this.board.hasBlackKingCaptured()){
+        if (this.board.hasBlackKingCaptured()) {
             return -1;
         }
         if (this.board.hasWhiteKingCaptured()) {
@@ -48,8 +47,8 @@ public class Finished implements State {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public boolean isFinished() {
+        return true;
     }
 
     @Override

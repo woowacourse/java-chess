@@ -23,24 +23,32 @@ public class ChessGameController {
             final String rawInputCommand = inputView.inputCommand();
 
             final ChessGameCommand command = ChessGameCommand.from(rawInputCommand);
-            //ready상태일때만
+
+            //ready +  + fininshed 상태일때만 호출 가능 -> 개별구현
             if (command == ChessGameCommand.START) {
-                chessGame.start();
-                outputView.printBoard(chessGame.getBoard().getValue());
+                chessGame.start(); // Ready -> new Board -> Running
+                outputView.printBoard(chessGame.board().getValue());
             }
-            //running상태일대만
+
+            //-> 이미 Running상태------------------------
+
+            //  + Running +    상태일대만 move  ->
             if (command == ChessGameCommand.MOVE) {
                 final Positions movePositions = Positions.from(rawInputCommand);
                 // TODO: getter대신 메세지보내서 처리하기
                 chessGame.move(movePositions.get(0), movePositions.get(1));
-                outputView.printBoard(chessGame.getBoard().getValue());
-                if (!chessGame.isRunning()) {
+                outputView.printBoard(chessGame.board().getValue());
+
+                // move결과 -> 결과를 뿌려주긴하는데,
+                //     if king 잡 -> new Finished()  -> 최종결과 print
+                //     king 안잡 -> 그대로 this( Running())
+                if (chessGame.isFinished()) {
                     printResult(chessGame);
                 }
             }
             //ready + running 상태일때만    finished(x)
             if (command == ChessGameCommand.END) {
-                if (!chessGame.isRunning()) {
+                if (chessGame.isFinished()) {
                     break;
                 }
                 chessGame.end();

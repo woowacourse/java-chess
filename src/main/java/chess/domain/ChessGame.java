@@ -32,11 +32,11 @@ public class ChessGame {
         return this.state.statusOfWhite();
     }
 
-    public boolean isRunning() {
-        return this.state.isRunning();
+    public boolean isFinished() {
+        return this.state.isFinished();
     }
 
-    public Board getBoard() {
+    public Board board() {
         return this.state.getBoard();
     }
 

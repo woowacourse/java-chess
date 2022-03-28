@@ -15,7 +15,7 @@ public interface State {
 
     double statusOfWhite();
 
-    boolean isRunning();
+    boolean isFinished();
 
     Board getBoard();
 

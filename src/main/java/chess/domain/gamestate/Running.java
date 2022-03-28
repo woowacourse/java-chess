@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 public class Running implements State {
+    private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
     private final Board board;
 
     public Running(Board board) {
@@ -12,7 +13,7 @@ public class Running implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException("진행 중일 때는 시작할 수 없습니다.");
+        throw new IllegalStateException(DONT_START_WHEN_RUNNING);
     }
 
     @Override
@@ -45,8 +46,8 @@ public class Running implements State {
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
