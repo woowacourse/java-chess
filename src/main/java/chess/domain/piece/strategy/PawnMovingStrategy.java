@@ -8,47 +8,58 @@ import java.util.List;
 public abstract class PawnMovingStrategy implements MovingStrategy {
 
     private final int rankIndexStartingPoint;
-    private final List<Direction> movableDirection;
+    private final List<Direction> directions;
 
-    protected PawnMovingStrategy(int rankIndexStartingPoint, List<Direction> movableDirection) {
+    protected PawnMovingStrategy(int rankIndexStartingPoint, List<Direction> directions) {
         this.rankIndexStartingPoint = rankIndexStartingPoint;
-        this.movableDirection = movableDirection;
+        this.directions = directions;
     }
 
     @Override
     public final void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        int rankLength = Math.abs(sourcePosition.getRankIndex() - targetPosition.getRankIndex());
-        int fileLength = Math.abs(sourcePosition.getFileIndex() - targetPosition.getFileIndex());
-        Direction direction = Direction.of(sourcePosition, targetPosition);
+        MovingInfo movingInfo = new MovingInfo(sourcePosition, targetPosition);
 
-        validateDirectionAndLength(sourcePosition, rankLength, fileLength, direction);
-        if (isMovableLengthAtMove(sourcePosition, rankLength, fileLength)) {
-            validateMoveTop(sourcePosition, rankLength, findPiece(board, sourcePosition.add(direction)));
-            validateExistPiece(findPiece(board, targetPosition));
+        validateDirection(movingInfo);
+        if (canMovingForward(board, sourcePosition, targetPosition, movingInfo)) {
+            return;
         }
-        if (isMovableLengthAtCapture(rankLength, fileLength)) {
-            validateCapture(findPiece(board, targetPosition));
+        if (canCapture(board, targetPosition, movingInfo)) {
+            return;
         }
+        throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
     }
 
-    private void validateDirectionAndLength(Position sourcePosition, int rankLength, int fileLength,
-                                            Direction direction) {
-        if (!(movableDirection.contains(direction) && (isMovableLengthAtMove(sourcePosition, rankLength, fileLength)
-                || isMovableLengthAtCapture(rankLength, fileLength)))) {
+    private void validateDirection(MovingInfo movingInfo) {
+        if (!movingInfo.isContainedDirection(directions)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
         }
     }
 
-    private boolean isMovableLengthAtMove(Position sourcePosition, int rankLength, int fileLength) {
-        return fileLength == 0 && (rankLength == 1 || (isStartingPoint(sourcePosition) && rankLength == 2));
+    private boolean canMovingForward(List<List<Piece>> board, Position sourcePosition, Position targetPosition,
+                                     MovingInfo movingInfo) {
+        if (isMovableLengthAtMove(sourcePosition, movingInfo)) {
+            Piece pieceInPath = findPiece(board, sourcePosition.add(movingInfo.getDirection()));
+            Piece targetPiece = findPiece(board, targetPosition);
+
+            validateMoveTop(sourcePosition, movingInfo, pieceInPath);
+            validateExistPiece(targetPiece);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isMovableLengthAtMove(Position sourcePosition, MovingInfo movingInfo) {
+        return movingInfo.isSameFileLength(0)
+                && (movingInfo.isSameRankLength(1)
+                || (isStartingPoint(sourcePosition) && movingInfo.isSameRankLength(2)));
     }
 
     private boolean isStartingPoint(Position sourcePosition) {
         return sourcePosition.getRankIndex() == rankIndexStartingPoint;
     }
 
-    private void validateMoveTop(Position source, int rankLength, Piece piece) {
-        if (rankLength == 2 && isStartingPoint(source)) {
+    private void validateMoveTop(Position source, MovingInfo movingInfo, Piece piece) {
+        if (movingInfo.isSameRankLength(2) && isStartingPoint(source)) {
             validateExistPiece(piece);
         }
     }
@@ -59,13 +70,19 @@ public abstract class PawnMovingStrategy implements MovingStrategy {
         }
     }
 
-    private boolean isMovableLengthAtCapture(int rankLength, int fileLength) {
-        return fileLength == 1 && rankLength == 1;
+    private boolean canCapture(List<List<Piece>> board, Position targetPosition, MovingInfo movingInfo) {
+        if (isMovableLengthAtCapture(movingInfo)) {
+            Piece targetPiece = findPiece(board, targetPosition);
+
+            validateEmptyPiece(targetPiece);
+            validateSameColor(targetPiece);
+            return true;
+        }
+        return false;
     }
 
-    private void validateCapture(Piece targetPiece) {
-        validateEmptyPiece(targetPiece);
-        validateSameColor(targetPiece);
+    private boolean isMovableLengthAtCapture(MovingInfo movingInfo) {
+        return movingInfo.isSameRankLength(1) && movingInfo.isSameFileLength(1);
     }
 
     private void validateEmptyPiece(Piece piece) {
