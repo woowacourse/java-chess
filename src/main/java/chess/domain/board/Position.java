@@ -43,11 +43,9 @@ public class Position {
         if (fileBetween.isEmpty()) {
             return getVerticalPositions(rankBetween);
         }
-
         if (rankBetween.isEmpty()) {
             return getHorizontalPositions(fileBetween);
         }
-
         return getDiagonalPositions(fileBetween, rankBetween);
     }
 
