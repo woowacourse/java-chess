@@ -1,4 +1,4 @@
-package chess.domain.state;
+package chess.domain.board;
 
 import chess.domain.board.Board;
 import chess.domain.board.Rank;
