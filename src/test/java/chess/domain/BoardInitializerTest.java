@@ -27,18 +27,10 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> rookPositions() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("h1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("a8"), BLACK
-                ),
-                Arguments.of(
-                        Position.of("h8"), BLACK
-                )
+                Arguments.of(Position.of("a1"), WHITE),
+                Arguments.of(Position.of("h1"), WHITE),
+                Arguments.of(Position.of("a8"), BLACK),
+                Arguments.of(Position.of("h8"), BLACK)
         );
     }
 
@@ -52,18 +44,10 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> knightPositions() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("b1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("g1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("b8"), BLACK
-                ),
-                Arguments.of(
-                        Position.of("g8"), BLACK
-                )
+                Arguments.of(Position.of("b1"), WHITE),
+                Arguments.of(Position.of("g1"), WHITE),
+                Arguments.of(Position.of("b8"), BLACK),
+                Arguments.of(Position.of("g8"), BLACK)
         );
     }
 
@@ -77,18 +61,10 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> bishopPositions() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("c1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("f1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("c8"), BLACK
-                ),
-                Arguments.of(
-                        Position.of("f8"), BLACK
-                )
+                Arguments.of(Position.of("c1"), WHITE),
+                Arguments.of(Position.of("f1"), WHITE),
+                Arguments.of(Position.of("c8"), BLACK),
+                Arguments.of(Position.of("f8"), BLACK)
         );
     }
 
@@ -102,12 +78,8 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> queenPositions() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("d1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("d8"), BLACK
-                )
+                Arguments.of(Position.of("d1"), WHITE),
+                Arguments.of(Position.of("d8"), BLACK)
         );
     }
 
@@ -121,12 +93,8 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> kingPositions() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("e1"), WHITE
-                ),
-                Arguments.of(
-                        Position.of("e8"), BLACK
-                )
+                Arguments.of(Position.of("e1"), WHITE),
+                Arguments.of(Position.of("e8"), BLACK)
         );
     }
 

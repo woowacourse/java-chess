@@ -66,15 +66,9 @@ class PieceTest {
 
     private static Stream<Arguments> blackPawnMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a3"), Position.of("a2"), true
-                ),
-                Arguments.of(
-                        Position.of("a2"), Position.of("a3"), false
-                ),
-                Arguments.of(
-                        Position.of("a3"), Position.of("a1"), false
-                )
+                Arguments.of(Position.of("a3"), Position.of("a2"), true),
+                Arguments.of(Position.of("a2"), Position.of("a3"), false),
+                Arguments.of(Position.of("a3"), Position.of("a1"), false)
         );
     }
 
@@ -88,15 +82,9 @@ class PieceTest {
 
     private static Stream<Arguments> whitePawnMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a2"), Position.of("a3"), true
-                ),
-                Arguments.of(
-                        Position.of("a3"), Position.of("a2"), false
-                ),
-                Arguments.of(
-                        Position.of("a4"), Position.of("a2"), false
-                )
+                Arguments.of(Position.of("a2"), Position.of("a3"), true),
+                Arguments.of(Position.of("a3"), Position.of("a2"), false),
+                Arguments.of(Position.of("a4"), Position.of("a2"), false)
         );
     }
 
@@ -110,18 +98,10 @@ class PieceTest {
 
     private static Stream<Arguments> pawnFirstMovement() {
         return Stream.of(
-                Arguments.of(
-                        WHITE, Position.of("a2"), Position.of("a4"), true
-                ),
-                Arguments.of(
-                        WHITE, Position.of("a7"), Position.of("a5"), false
-                ),
-                Arguments.of(
-                        BLACK, Position.of("a7"), Position.of("a5"), true
-                ),
-                Arguments.of(
-                        BLACK, Position.of("a2"), Position.of("a4"), false
-                )
+                Arguments.of(WHITE, Position.of("a2"), Position.of("a4"), true),
+                Arguments.of(WHITE, Position.of("a7"), Position.of("a5"), false),
+                Arguments.of(BLACK, Position.of("a7"), Position.of("a5"), true),
+                Arguments.of(BLACK, Position.of("a2"), Position.of("a4"), false)
         );
     }
 
@@ -135,18 +115,10 @@ class PieceTest {
 
     private static Stream<Arguments> blackPawnDiagonalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("c3"), Position.of("d2"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("d4"), false
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b2"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b4"), false
-                )
+                Arguments.of(Position.of("c3"), Position.of("d2"), true),
+                Arguments.of(Position.of("c3"), Position.of("d4"), false),
+                Arguments.of(Position.of("c3"), Position.of("b2"), true),
+                Arguments.of(Position.of("c3"), Position.of("b4"), false)
         );
     }
 
@@ -160,18 +132,10 @@ class PieceTest {
 
     private static Stream<Arguments> whitePawnDiagonalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("c3"), Position.of("d4"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("d2"), false
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b4"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b2"), false
-                )
+                Arguments.of(Position.of("c3"), Position.of("d4"), true),
+                Arguments.of(Position.of("c3"), Position.of("d2"), false),
+                Arguments.of(Position.of("c3"), Position.of("b4"), true),
+                Arguments.of(Position.of("c3"), Position.of("b2"), false)
         );
     }
 }

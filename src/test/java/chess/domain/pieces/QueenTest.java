@@ -24,12 +24,8 @@ class QueenTest {
 
     private static Stream<Arguments> queenVerticalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a8"), true
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("a7"), true
-                )
+                Arguments.of(Position.of("a1"), Position.of("a8"), true),
+                Arguments.of(Position.of("a8"), Position.of("a7"), true)
         );
     }
 
@@ -43,12 +39,8 @@ class QueenTest {
 
     private static Stream<Arguments> queenHorizontalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a7"), Position.of("c7"), true
-                ),
-                Arguments.of(
-                        Position.of("d8"), Position.of("b8"), true
-                )
+                Arguments.of(Position.of("a7"), Position.of("c7"), true),
+                Arguments.of(Position.of("d8"), Position.of("b8"), true)
         );
     }
 
@@ -62,18 +54,10 @@ class QueenTest {
 
     private static Stream<Arguments> queenDiagonalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("d4"), true
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("f8"), false
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("b5"), true
-                ),
-                Arguments.of(
-                        Position.of("d6"), Position.of("a8"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("d4"), true),
+                Arguments.of(Position.of("c6"), Position.of("f8"), false),
+                Arguments.of(Position.of("c6"), Position.of("b5"), true),
+                Arguments.of(Position.of("d6"), Position.of("a8"), false)
         );
     }
 }

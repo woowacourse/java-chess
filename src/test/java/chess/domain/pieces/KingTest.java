@@ -22,18 +22,10 @@ class KingTest {
 
     private static Stream<Arguments> kingMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a2"), true
-                ),
-                Arguments.of(
-                        Position.of("a1"), Position.of("a3"), false
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("b5"), true
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("a4"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("a2"), true),
+                Arguments.of(Position.of("a1"), Position.of("a3"), false),
+                Arguments.of(Position.of("c6"), Position.of("b5"), true),
+                Arguments.of(Position.of("c6"), Position.of("a4"), false)
         );
     }
 }

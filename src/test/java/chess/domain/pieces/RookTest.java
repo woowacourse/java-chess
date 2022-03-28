@@ -22,18 +22,10 @@ class RookTest {
 
     private static Stream<Arguments> rookVerticalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a8"), true
-                ),
-                Arguments.of(
-                        Position.of("a1"), Position.of("b2"), false
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("a7"), true
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("b7"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("a8"), true),
+                Arguments.of(Position.of("a1"), Position.of("b2"), false),
+                Arguments.of(Position.of("a8"), Position.of("a7"), true),
+                Arguments.of(Position.of("a8"), Position.of("b7"), false)
         );
     }
 
@@ -47,18 +39,10 @@ class RookTest {
 
     private static Stream<Arguments> rookHorizontalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a7"), Position.of("c7"), true
-                ),
-                Arguments.of(
-                        Position.of("c1"), Position.of("d7"), false
-                ),
-                Arguments.of(
-                        Position.of("d8"), Position.of("b8"), true
-                ),
-                Arguments.of(
-                        Position.of("d7"), Position.of("c6"), false
-                )
+                Arguments.of(Position.of("a7"), Position.of("c7"), true),
+                Arguments.of(Position.of("c1"), Position.of("d7"), false),
+                Arguments.of(Position.of("d8"), Position.of("b8"), true),
+                Arguments.of(Position.of("d7"), Position.of("c6"), false)
         );
     }
 }

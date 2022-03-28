@@ -23,15 +23,9 @@ class PawnTest {
 
     private static Stream<Arguments> pawnMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a2"), true
-                ),
-                Arguments.of(
-                        Position.of("a1"), Position.of("b1"), false
-                ),
-                Arguments.of(
-                        Position.of("e5"), Position.of("e4"), true
-                )
+                Arguments.of(Position.of("a1"), Position.of("a2"), true),
+                Arguments.of(Position.of("a1"), Position.of("b1"), false),
+                Arguments.of(Position.of("e5"), Position.of("e4"), true)
         );
     }
 
@@ -52,18 +46,10 @@ class PawnTest {
 
     private static Stream<Arguments> pawnDiagonalMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("b2"), true
-                ),
-                Arguments.of(
-                        Position.of("a1"), Position.of("c3"), false
-                ),
-                Arguments.of(
-                        Position.of("e5"), Position.of("d4"), true
-                ),
-                Arguments.of(
-                        Position.of("e5"), Position.of("c3"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("b2"), true),
+                Arguments.of(Position.of("a1"), Position.of("c3"), false),
+                Arguments.of(Position.of("e5"), Position.of("d4"), true),
+                Arguments.of(Position.of("e5"), Position.of("c3"), false)
         );
     }
 }
