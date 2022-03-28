@@ -105,7 +105,7 @@ public class Board {
         List<Piece> file = new ArrayList<>();
 
         for (Rank rank : ranks.values()) {
-            file.add(rank.getPieces().get(index));
+            file.add(rank.getPiece(index));
         }
 
         return file.stream()
