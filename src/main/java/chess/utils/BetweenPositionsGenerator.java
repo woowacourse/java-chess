@@ -24,20 +24,19 @@ public class BetweenPositionsGenerator {
         return generatePositionBySameColumn(target, source);
     }
 
-    public static List<Position> computeBetweenPositionDiagonal(Position source, Position target) {
+    public static List<Position> computeBetweenPositionNegativeDiagonal(Position source, Position target) {
         if (source.isSmallRow(target)) {
-            return generateDiagonalPositions(source, target);
+            return generateNegativeDiagonalPositions(source, target);
         }
-        return generateDiagonalPositions(target, source);
+        return generateNegativeDiagonalPositions(target, source);
     }
 
-    private static List<Position> generateDiagonalPositions(Position source, Position target) {
-        List<Position> positions = new ArrayList<>();
-        int gap = source.gapTwoPositionRow(target);
-        for (int index = 1; index < gap; index++) {
-            positions.add(source.findPossiblePosition(index, -index));
+
+    public static List<Position> computeBetweenPositionPositiveDiagonal(Position source, Position target) {
+        if (source.isSmallRow(target)) {
+            return generatePositiveDiagonalPositions(source, target);
         }
-        return positions;
+        return generatePositiveDiagonalPositions(target, source);
     }
 
     private static List<Position> generatePositionBySameRow(Position source, Position target) {
@@ -54,6 +53,25 @@ public class BetweenPositionsGenerator {
         int gap = source.gapTwoPositionRow(target);
         for (int index = 1; index < gap; index++) {
             positions.add(source.findPossiblePosition(index, 0));
+        }
+        return positions;
+    }
+
+    private static List<Position> generatePositiveDiagonalPositions(Position source, Position target) {
+        List<Position> positions = new ArrayList<>();
+        int gap = source.gapTwoPositionRow(target);
+        for (int index = 1; index < gap; index++) {
+            positions.add(source.findPossiblePosition(index, index));
+        }
+        return positions;
+    }
+
+
+    private static List<Position> generateNegativeDiagonalPositions(Position source, Position target) {
+        List<Position> positions = new ArrayList<>();
+        int gap = source.gapTwoPositionRow(target);
+        for (int index = 1; index < gap; index++) {
+            positions.add(source.findPossiblePosition(index, -index));
         }
         return positions;
     }

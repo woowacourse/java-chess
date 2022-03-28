@@ -28,9 +28,18 @@ public class Queen extends Piece {
             positions.addAll(computeBetweenPositionBySameColumn(source, target));
         }
         if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
-            positions.addAll(computeBetweenPositionDiagonal(source, target));
+            computeDiagonalPosition(source, target, positions);
         }
         return positions;
+    }
+
+    private void computeDiagonalPosition(Position source, Position target, List<Position> positions) {
+        if (source.isSmallColumn(target)) {
+            positions.addAll(computeBetweenPositionNegativeDiagonal(source, target));
+        }
+        if (target.isSmallColumn(source)) {
+            positions.addAll(computeBetweenPositionPositiveDiagonal(source, target));
+        }
     }
 
     private boolean isSameLine(Position source, Position target) {
