@@ -1,6 +1,6 @@
 package chess.domain.piece.move;
 
-import static chess.domain.piece.move.StraightDirection.*;
+import static chess.domain.piece.move.straight.StraightDirection.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Point;
+import chess.domain.piece.move.straight.StraightDirection;
 
 class DirectionTest {
 

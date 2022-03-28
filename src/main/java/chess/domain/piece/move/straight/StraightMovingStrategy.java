@@ -5,7 +5,6 @@ import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.MovingStrategy;
-import chess.domain.piece.move.StraightDirection;
 
 public class StraightMovingStrategy implements MovingStrategy {
 

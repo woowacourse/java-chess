@@ -1,4 +1,4 @@
-package chess.domain.piece.move;
+package chess.domain.piece.move.straight;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import chess.domain.board.Point;
+import chess.domain.piece.move.Direction;
 
 public enum StraightDirection implements Direction {
 

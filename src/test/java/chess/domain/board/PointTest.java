@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.piece.move.StraightDirection;
+import chess.domain.piece.move.straight.StraightDirection;
 
 class PointTest {
 

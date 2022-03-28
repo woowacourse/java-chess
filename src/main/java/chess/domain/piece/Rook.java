@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.MovingStrategy;
-import chess.domain.piece.move.StraightDirection;
+import chess.domain.piece.move.straight.StraightDirection;
 import chess.domain.piece.move.straight.InfiniteStepDistance;
 import chess.domain.piece.move.straight.StraightMovingStrategy;
 

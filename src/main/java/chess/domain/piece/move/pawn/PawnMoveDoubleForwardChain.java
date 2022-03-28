@@ -2,7 +2,7 @@ package chess.domain.piece.move.pawn;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.move.StraightDirection;
+import chess.domain.piece.move.straight.StraightDirection;
 
 public class PawnMoveDoubleForwardChain extends PawnMoveChain {
 
