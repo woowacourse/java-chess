@@ -36,7 +36,7 @@ public class Pawn extends Piece {
 
     @Override
     public void movable(Position from, Position to) {
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to);
 
         if (direction == NORTH_NORTH && !isWhiteStart(from)) {
             throw new IllegalArgumentException("위로 두칸은 white Pawn 이 첫수일 경우만 가능합니다.");
@@ -61,7 +61,7 @@ public class Pawn extends Piece {
 
     @Override
     public Direction findDirection(Position from, Position to) {
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to);
 
         if (direction == NORTH_NORTH) {
             return NORTH;

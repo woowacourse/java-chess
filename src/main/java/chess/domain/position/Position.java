@@ -17,13 +17,16 @@ public class Position {
         this(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
     }
 
-    public Direction findDirection(Position position, boolean isOne) {
+    public Direction findDirection(Position position) {
         int x = column.calculateIndex(position.column);
         int y = row.calculateIndex(position.row);
 
-        if (isOne) {
             return Direction.of(x, y);
-        }
+    }
+
+    public Direction findDirectionByCompactValue(Position position) {
+        int x = column.calculateIndex(position.column);
+        int y = row.calculateIndex(position.row);
 
         int nx = convertCompactValue(x, y);
         int ny = convertCompactValue(y, x);

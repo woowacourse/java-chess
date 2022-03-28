@@ -22,7 +22,7 @@ public class PositionTest {
         Position to = new Position(Column.A, Row.TWO);
 
         // when
-        Direction direction = from.findDirection(to, true);
+        Direction direction = from.findDirection(to);
 
         // then
         assertThat(direction).isEqualTo(Direction.NORTH);
