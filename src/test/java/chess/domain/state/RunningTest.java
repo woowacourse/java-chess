@@ -3,14 +3,14 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.BoardFixtures;
 import chess.domain.ChessBoard;
-import chess.domain.generator.EmptyBoardGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RunningTest {
 
-    private static final ChessBoard chessBoard = new ChessBoard(new EmptyBoardGenerator());
+    private static final ChessBoard chessBoard = BoardFixtures.generateEmptyChessBoard();
 
     @DisplayName("Running에서 start를 실행하면 예외가 발생한다.")
     @Test
