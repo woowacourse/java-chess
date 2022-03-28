@@ -28,7 +28,7 @@ public class ReadyTest {
 
         assertThatThrownBy(() -> state.move(a2, a3))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
+                .hasMessage("게임이 시작되지 않아 기물을 이동할 수 없습니다.");
     }
 
     @DisplayName("Ready 상태에서 status 명령 호출 시 예외 발생")
@@ -38,6 +38,6 @@ public class ReadyTest {
 
         assertThatThrownBy(state::statusOfBlack)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
+                .hasMessage("게임이 시작되지 않아 상태를 확인할 수 없습니다.");
     }
 }

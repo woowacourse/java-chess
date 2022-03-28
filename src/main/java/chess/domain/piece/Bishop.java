@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class Bishop extends Piece {
+    private static final String ERROR_CANT_MOVE = "비숍이 이동할 수 없는 위치입니다.";
     private static final int SCORE = 3;
 
     public Bishop(Camp camp) {
@@ -16,7 +17,7 @@ public final class Bishop extends Piece {
                      Position afterPosition,
                      Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
         moveFunction.accept(this);
     }

@@ -20,7 +20,7 @@ public class RunningTest {
 
         assertThatThrownBy(state::start)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("진행 중일 때는 시작할 수 없습니다.");
+                .hasMessage("이미 시작되었습니다.");
     }
 
     @DisplayName("Running 상태에서 end 호출시 Finished 상태가 된다.")

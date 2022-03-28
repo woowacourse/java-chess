@@ -5,6 +5,9 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 public class Running implements State {
+    private static final String ERROR_ALREADY_STARTED = "이미 시작되었습니다.";
+    private static final String ERROR_NO_WINNER = "게임 진행 중에는 승패를 판정할 수 없습니다.";
+
     private final Board board;
 
     public Running(Board board) {
@@ -13,7 +16,7 @@ public class Running implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException("진행 중일 때는 시작할 수 없습니다.");
+        throw new IllegalStateException(ERROR_ALREADY_STARTED);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Running implements State {
 
     @Override
     public Camp getWinner() {
-        throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
+        throw new IllegalStateException(ERROR_NO_WINNER);
     }
 
     @Override

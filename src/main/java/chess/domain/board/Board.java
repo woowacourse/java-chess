@@ -31,6 +31,11 @@ public final class Board {
     private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
+    private static final String ERROR_NO_SOURCE = "이동할 수 있는 기물이 없습니다.";
+    private static final String ERROR_NOT_YOUR_TURN = "상대 진영의 차례입니다.";
+    private static final String ERROR_NOT_BLANK_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
+    private static final String ERROR_SAME_CAMP_TARGET = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
+
     private final Map<Position, Piece> value;
     private boolean whiteTurn;
 
@@ -83,13 +88,13 @@ public final class Board {
         Piece piece = this.value.get(beforePosition);
 
         if (isBlank(beforePosition)) {
-            throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다.");
+            throw new IllegalArgumentException(ERROR_NO_SOURCE);
         }
         if (piece.isBlack() == whiteTurn) {
-            throw new IllegalArgumentException("상대 진영의 차례입니다.");
+            throw new IllegalArgumentException(ERROR_NOT_YOUR_TURN);
         }
         if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
-            throw new IllegalArgumentException("경로에 기물이 있어 움직일 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_NOT_BLANK_PATH);
         }
 
         this.whiteTurn = !whiteTurn;
@@ -102,7 +107,7 @@ public final class Board {
             return;
         }
 
-        throw new IllegalArgumentException("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
+        throw new IllegalArgumentException(ERROR_SAME_CAMP_TARGET);
     }
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {

@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class King extends Piece {
+    private static final String ERROR_CANT_MOVE = "킹이 이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 0;
 
@@ -15,7 +16,7 @@ public final class King extends Piece {
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
         moveFunction.accept(this);
     }

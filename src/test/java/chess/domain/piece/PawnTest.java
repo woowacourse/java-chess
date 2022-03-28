@@ -134,6 +134,6 @@ class PawnTest {
         assertThatThrownBy(() -> pawn.capture(f6, f7, (piece -> {
         })))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+                .hasMessage("폰이 잡을 수 없는 위치입니다.");
     }
 }

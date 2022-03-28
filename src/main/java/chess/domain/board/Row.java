@@ -15,6 +15,8 @@ public enum Row {
     EIGHT(7),
     ;
 
+    private static final String ERROR_NO_SUCH_ROW = "존재하지 않는 열입니다.";
+
     private final int value;
 
     Row(int value) {
@@ -29,7 +31,7 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
     }
 
     public Row flip() {

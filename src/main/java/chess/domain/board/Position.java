@@ -45,14 +45,6 @@ public class Position implements Comparable<Position> {
         return new Position(this.column.flip(), this.row.flip());
     }
 
-    public boolean isSameRowWith(Position otherPosition) {
-        return this.row == otherPosition.row;
-    }
-
-    public boolean isSameColumnWith(Position otherPosition) {
-        return this.column == otherPosition.column;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

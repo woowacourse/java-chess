@@ -5,6 +5,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 public class Finished implements State {
+    private static final String ERROR_CANT_MOVE = "게임이 종료되어 기물을 이동할 수 없습니다.";
+
     private final Board board;
 
     public Finished(Board board) {
@@ -18,7 +20,7 @@ public class Finished implements State {
 
     @Override
     public State move(Position beforePosition, Position afterPosition) {
-        throw new IllegalStateException("게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.");
+        throw new IllegalStateException(ERROR_CANT_MOVE);
     }
 
     @Override
