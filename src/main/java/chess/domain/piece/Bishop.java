@@ -13,9 +13,13 @@ public class Bishop extends Piece {
         super(color, NAME, SCORE);
     }
 
+    public static boolean isBishopMoving(final Position from, final Position to) {
+        return Direction.isDiagonal(from, to);
+    }
+
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
-        if (!Direction.isBishopMoving(from, to)) {
+        if (!isBishopMoving(from, to)) {
             throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
         }
         if (board.hasPieceInDiagonal(from, to)) {

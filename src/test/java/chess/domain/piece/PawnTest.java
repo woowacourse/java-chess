@@ -44,29 +44,29 @@ public class PawnTest {
                 .doesNotThrowAnyException();
     }
 
-//    @Test
-//    @DisplayName("흰색 폰이 앞으로 한 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
-//    void forwardWhiteOneStep() {
-//        Pawn pawn = new Pawn(Color.WHITE);
-//
-//        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a3"), new Pawn(Color.BLACK))));
-//
-//        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a3")))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("이동 경로에 기물이 존재합니다.");
-//    }
+    @Test
+    @DisplayName("흰색 폰이 앞으로 한 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
+    void forwardWhiteOneStep() {
+        Pawn pawn = new Pawn(Color.WHITE);
 
-//    @Test
-//    @DisplayName("흰색 폰이 앞으로 두 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
-//    void forwardWhiteTwoStep() {
-//        Pawn pawn = new Pawn(Color.WHITE);
-//
-//        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a4"), new Pawn(Color.BLACK))));
-//
-//        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a4")))
-//                .isInstanceOf(IllegalArgumentException.class)
-//                .hasMessage("이동 경로에 기물이 존재합니다.");
-//    }
+        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a3"), new Pawn(Color.BLACK))));
+
+        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a3")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 앞으로 두 칸 이동시 도착지점에 검정 폰이 있는 경우 예외 발생")
+    void forwardWhiteTwoStep() {
+        Pawn pawn = new Pawn(Color.WHITE);
+
+        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a4"), new Pawn(Color.BLACK))));
+
+        assertThatThrownBy(() -> pawn.checkMovingRange(mockBoard, Position.from("a2"), Position.from("a4")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 앞으로 한 칸만 이동할 수 있습니다.");
+    }
 
     @Test
     @DisplayName("흰색 폰 뒤로 이동 시 예외 발생")

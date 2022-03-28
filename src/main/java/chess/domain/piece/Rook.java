@@ -13,13 +13,17 @@ public class Rook extends Piece {
         super(color, NAME, SCORE);
     }
 
+    public static boolean isRookMoving(final Position from, final Position to) {
+        return Direction.isVertical(from, to) || Direction.isHorizontal(from, to);
+    }
+
     private boolean hasAnyPiece(final Board board, final Position from, final Position to) {
         return board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to);
     }
 
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
-        if (!Direction.isRookMoving(from, to)) {
+        if (!isRookMoving(from, to)) {
             throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
         }
         if (hasAnyPiece(board, from, to)) {

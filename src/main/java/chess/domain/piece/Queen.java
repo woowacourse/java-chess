@@ -13,13 +13,17 @@ public class Queen extends Piece {
         super(color, NAME, SCORE);
     }
 
+    public static boolean isQueenMoving(final Position from, final Position to) {
+        return Direction.isVertical(from, to) || Direction.isHorizontal(from, to) || Direction.isDiagonal(from, to);
+    }
+
     private boolean hasAnyPiece(final Board board, final Position from, final Position to) {
         return board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to) || board.hasPieceInDiagonal(from, to);
     }
 
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
-        if (!Direction.isQueenMoving(from, to)) {
+        if (!isQueenMoving(from, to)) {
             throw new IllegalArgumentException("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
         }
         if (hasAnyPiece(board, from, to)) {
