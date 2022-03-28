@@ -11,25 +11,27 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private Map<Position, Piece> board;
-    private Color currentColor;
 
-    public ChessBoard(List<Piece> pieces, Color currentColor) {
+    public ChessBoard(List<Piece> pieces) {
         this.board = pieces.stream()
             .collect(Collectors.toMap(Piece::getPosition, piece -> piece));
-        this.currentColor = currentColor;
     }
 
-    public void move(Position from, Position to) {
-        if (!isCurrentColorPiece(from)) {
+    public static ChessBoard createChessBoard() {
+        return new ChessBoard(BoardInitializer.init());
+    }
+
+    public void move(Position from, Position to, Color color) {
+        if (!isCurrentColorPiece(from, color)) {
             throw new IllegalArgumentException(String.format(
-                "%s 색깔의 기물을 움직일 수 있습니다.", currentColor));
+                "%s 색깔의 기물을 움직일 수 있습니다.", color));
         }
         movePickedPiece(from, to);
     }
 
-    private boolean isCurrentColorPiece(Position position) {
+    private boolean isCurrentColorPiece(Position position, Color color) {
         Piece piece = findPieceByPosition(position);
-        return piece.isSameColor(currentColor);
+        return piece.isSameColor(color);
     }
 
     private Piece findPieceByPosition(Position position) {
@@ -45,10 +47,9 @@ public class ChessBoard {
 
         board.remove(from);
         board.put(to, transferredPiece);
-        currentColor = currentColor.reverse();
     }
 
-    public boolean isFinished() {
+    public boolean isGameEnd() {
         return !hasKingByColor(Color.WHITE) || !hasKingByColor(Color.BLACK);
     }
 
@@ -93,7 +94,7 @@ public class ChessBoard {
     }
 
     public Color getWinner() {
-        if (!isFinished()) {
+        if (!isGameEnd()) {
             throw new IllegalStateException("체스 게임이 종료되지 않았습니다.");
         }
         if (hasKingByColor(Color.WHITE)) {
