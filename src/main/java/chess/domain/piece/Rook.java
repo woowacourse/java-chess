@@ -13,7 +13,7 @@ public class Rook extends Piece {
 
     public Rook(Color color) {
         super(color, PieceType.ROOK);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getCross(), InfiniteStepDistance.getInstance());
+        this.strategy = new StraightMovingStrategy(StraightDirection.getCross(), InfiniteStepDistance.init());
     }
 
     @Override

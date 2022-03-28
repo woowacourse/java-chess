@@ -13,7 +13,7 @@ public class Bishop extends Piece {
 
     public Bishop(Color color) {
         super(color, PieceType.BISHOP);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getDiagonal(), InfiniteStepDistance.getInstance());
+        this.strategy = new StraightMovingStrategy(StraightDirection.getDiagonal(), InfiniteStepDistance.init());
     }
 
     @Override

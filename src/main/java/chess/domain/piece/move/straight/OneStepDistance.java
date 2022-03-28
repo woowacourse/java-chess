@@ -2,16 +2,24 @@ package chess.domain.piece.move.straight;
 
 public class OneStepDistance implements Distance {
 
-    private static class OneStepDistanceHelper {
-        private static final OneStepDistance INSTANCE = new OneStepDistance();
+    private static final Distance INIT = new OneStepDistance(1);
+    private final int amount;
+
+    private OneStepDistance(int amount) {
+        this.amount = amount;
     }
 
-    public static Distance getInstance() {
-        return OneStepDistanceHelper.INSTANCE;
+    public static Distance init() {
+        return INIT;
     }
 
     @Override
-    public int getDistance() {
-        return 1;
+    public Distance decrease() {
+        return new OneStepDistance(this.amount - 1);
+    }
+
+    @Override
+    public boolean isLeft() {
+        return this.amount > 0;
     }
 }

@@ -13,7 +13,7 @@ public class Queen extends Piece {
 
     public Queen(Color color) {
         super(color, PieceType.QUEEN);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getAll(), InfiniteStepDistance.getInstance());
+        this.strategy = new StraightMovingStrategy(StraightDirection.getAll(), InfiniteStepDistance.init());
     }
 
     @Override

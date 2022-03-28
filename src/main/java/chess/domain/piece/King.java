@@ -13,7 +13,7 @@ public class King extends Piece {
 
     public King(Color color) {
         super(color, PieceType.KING);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getAll(), OneStepDistance.getInstance());
+        this.strategy = new StraightMovingStrategy(StraightDirection.getAll(), OneStepDistance.init());
     }
 
     @Override
