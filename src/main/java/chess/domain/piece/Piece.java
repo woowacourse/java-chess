@@ -1,85 +1,86 @@
 package chess.domain.piece;
 
-import java.util.Map;
-import java.util.Objects;
-
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.direction.Direction;
 import chess.domain.piece.movestrategy.MoveStrategy;
+import java.util.Map;
+import java.util.Objects;
 
 public abstract class Piece {
 
-	protected final Symbol symbol;
-	protected final Team team;
+    protected final Symbol symbol;
+    protected final Team team;
 
-	protected Piece(final Symbol symbol, final Team team) {
-		this.symbol = symbol;
-		this.team = team;
-	}
+    protected Piece(final Symbol symbol, final Team team) {
+        this.symbol = symbol;
+        this.team = team;
+    }
 
-	public boolean isMovable(Map<Coordinate, Piece> value, Coordinate from, Coordinate to) {
-		Piece toPiece = value.get(to);
-		if (isSameTeam(toPiece.team) || !hasDirection(Direction.of(from, to))) {
-			return false;
-		}
-		return moveStrategy().isMovable(value, from, to);
-	}
+    public boolean isMovable(Map<Coordinate, Piece> value, Coordinate from, Coordinate to) {
+        Piece toPiece = value.get(to);
+        if (isSameTeam(toPiece.team) || !hasDirection(Direction.of(from, to))) {
+            return false;
+        }
+        return moveStrategy().isMovable(value, from, to);
+    }
 
-	public abstract boolean hasDirection(Direction direction);
+    public abstract boolean hasDirection(Direction direction);
 
-	public abstract MoveStrategy moveStrategy();
+    public abstract MoveStrategy moveStrategy();
 
-	public boolean isSameTeam(Team team) {
-		return this.team.isSame(team);
-	}
+    public boolean isSameTeam(Team team) {
+        return this.team.isSame(team);
+    }
 
-	public String getSymbol() {
-		if (team.equals(Team.BLACK)) {
-			return symbol.getBlack();
-		}
-		return symbol.getWhite();
-	}
+    public boolean isKing() {
+        return symbol == Symbol.KING;
+    }
 
-	public Team getTeam() {
-		return team;
-	}
+    public boolean isPawn() {
+        return symbol == Symbol.PAWN;
+    }
 
-	public boolean isKing() {
-		return symbol == Symbol.KING;
-	}
+    public boolean isEmpty() {
+        return false;
+    }
 
-	public boolean isPawn() {
-		return symbol == Symbol.PAWN;
-	}
+    public boolean isBlack() {
+        return team.isBlack();
+    }
 
-	public boolean isEmpty() {
-		return false;
-	}
+    public boolean isWhite() {
+        return team.isWhite();
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Piece piece = (Piece)o;
-		return symbol == piece.symbol && team == piece.team;
-	}
+    public String getSymbol() {
+        if (team.isBlack()) {
+            return symbol.getBlack();
+        }
+        return symbol.getWhite();
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(symbol, team);
-	}
+    public Team getTeam() {
+        return team;
+    }
 
-	public boolean isBlack() {
-		return team.isSame(Team.BLACK);
-	}
+    public double getScore() {
+        return symbol.getScore();
+    }
 
-	public boolean isWhite() {
-		return team.isSame(Team.WHITE);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return symbol == piece.symbol && team == piece.team;
+    }
 
-	public double getScore() {
-		return symbol.getScore();
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbol, team);
+    }
 }

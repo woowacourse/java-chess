@@ -1,56 +1,62 @@
 package chess.domain.board.coordinate;
 
+import chess.domain.direction.Direction;
 import java.util.HashMap;
 import java.util.Map;
-
-import chess.domain.direction.Direction;
-import chess.domain.piece.Team;
+import java.util.Objects;
 
 public class Coordinate {
 
-	private static final Map<String, Coordinate> CACHE = new HashMap<>();
+    private static final Map<String, Coordinate> CACHE = new HashMap<>();
+    private static final int BLACK_PAWN_START_ROW = 7;
+    private static final int WHITE_PAWN_START_ROW = 2;
 
-	static {
-		for (Column column : Column.values()) {
-			for (Row row : Row.values()) {
-				CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
-			}
-		}
-	}
+    static {
+        for (Column column : Column.values()) {
+            for (Row row : Row.values()) {
+                CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
+            }
+        }
+    }
 
-	private final Column column;
-	private final Row row;
+    private final Column column;
+    private final Row row;
 
-	private Coordinate(Column column, Row row) {
-		this.column = column;
-		this.row = row;
-	}
+    private Coordinate(Column column, Row row) {
+        this.column = column;
+        this.row = row;
+    }
 
-	public static Coordinate of(String value) {
-		return CACHE.get(value);
-	}
+    public static Coordinate of(String value) {
+        Coordinate coordinate = CACHE.get(value);
+        if (Objects.isNull(coordinate)) {
+            throw new IllegalArgumentException("잘못된 좌표가 존재합니다. (a1 ~ h8) 사이의 값만 입력해주세요.");
+        }
+        return coordinate;
+    }
 
-	public static Coordinate of(Column column, Row row) {
-		String key = column.getName() + row.getValue();
-		return of(key);
-	}
+    public static Coordinate of(Column column, Row row) {
+        String key = column.getName() + row.getValue();
+        return of(key);
+    }
 
-	public Coordinate next(Direction direction) {
-		return of(column.move(direction.getColumnVector()), row.move(direction.getRowVector()));
-	}
+    public Coordinate next(Direction direction) {
+        return of(column.move(direction.getColumnVector()), row.move(direction.getRowVector()));
+    }
 
-	public boolean isPawnStartRow(Team team) {
-		if (team.isSame(Team.BLACK)) {
-			return row.getValue() == 7;
-		}
-		return row.getValue() == 2;
-	}
+    public boolean isPawnStartRow() {
+        return row.getValue() == BLACK_PAWN_START_ROW || row.getValue() == WHITE_PAWN_START_ROW;
+    }
 
-	public Column getColumn() {
-		return column;
-	}
+    public int columnGap(Coordinate to) {
+        return column.gap(to.column);
+    }
 
-	public Row getRow() {
-		return row;
-	}
+    public int rowGap(Coordinate to) {
+        return row.gap(to.row);
+    }
+
+    public Column getColumn() {
+        return column;
+    }
 }

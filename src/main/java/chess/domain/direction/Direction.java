@@ -6,7 +6,6 @@ import java.util.List;
 import chess.domain.board.coordinate.Coordinate;
 
 public enum Direction {
-	//위, 아래, 왼, 오른, 왼위, 왼아래, 오위, 오아래, 위위오른, 위위왼, 아래아래왼, 아래아래오른, 왼왼위, 왼왼아래, 오오위, 오오아래
 	UP(0, 1),
 	DOWN(0, -1),
 	LEFT(-1, 0),
@@ -65,8 +64,8 @@ public enum Direction {
 	}
 
 	public static Direction of(Coordinate from, Coordinate to) {
-		int columnGap = to.getColumn().getValue() - from.getColumn().getValue();
-		int rowGap = to.getRow().getValue() - from.getRow().getValue();
+		int columnGap = from.columnGap(to);
+		int rowGap = from.rowGap(to);
 
 		return Arrays.stream(values())
 			.filter(direction -> direction.columnVector == calculateVector(columnGap, rowGap))
