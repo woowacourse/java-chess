@@ -27,12 +27,6 @@ public class OutputView {
         return OUTPUT_VIEW;
     }
 
-    private static Function<Rank, Stream<? extends Position>> getPositionStream() {
-        return rank ->
-                Arrays.stream(File.values())
-                        .map(file -> Position.of(rank, file));
-    }
-
     public void initialPrint() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -58,6 +52,12 @@ public class OutputView {
         }
 
         System.out.println(stringBuilder);
+    }
+
+    private static Function<Rank, Stream<? extends Position>> getPositionStream() {
+        return rank ->
+                Arrays.stream(File.values())
+                        .map(file -> Position.of(rank, file));
     }
 
     public void printScore(ScoreDto scoreDto) {
