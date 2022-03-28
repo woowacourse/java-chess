@@ -5,7 +5,6 @@ import chess.domain.piece.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -48,15 +47,15 @@ public class OutputView {
         return EMPTY_PIECE;
     }
 
-    public static void printStatus(Map<Team, Double> status, List<Team> result) {
+    public static void printStatus(Map<Team, Double> status, Team result) {
         for (Entry<Team, Double> value : status.entrySet()) {
             System.out.printf("%s는 %f점 입니다.%n", value.getKey(), value.getValue());
         }
-        if (result.size() == 2) {
+        if (result == null) {
             System.out.println("무승부 입니다.");
             return;
         }
-        System.out.printf("승리 팀은 %s 입니다.", result.get(0));
+        System.out.printf("승리 팀은 %s 입니다.", result);
     }
 
     public static void printCheck() {

@@ -49,14 +49,14 @@ public class Board {
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
         return board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeam(team))
+                .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private Position findKingPosition(Team team) {
         return board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeam(team) && entry.getValue().isKing())
+                .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team) && entry.getValue().isKing())
                 .map(Entry::getKey)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
@@ -75,24 +75,29 @@ public class Board {
     public void move(Position from, Position to) {
         Piece piece = board.get(from);
         Piece toPiece = board.get(to);
-        Direction direction = piece.findDirection(from, to);
 
-        validNowTurn(piece);
-        piece.movable(from, to);
-        piece.validArrive(board.get(to), direction);
-        validPath(from, to, direction);
+        validBeforeMove(piece, from, to);
 
         board.put(to, piece);
         board.remove(from);
-        validCheckAfterMove(from, to, piece, toPiece);
-        turn = turn.findOpposite();
+
+        validAfterMove(from, to, piece, toPiece);
     }
 
-    private void validCheckAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
-        if (check()) {
-            board.put(to, toPiece);
-            board.put(from, piece);
-            throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
+    private void validBeforeMove(Piece fromPiece, Position from, Position to) {
+        validPiece(fromPiece);
+
+        Direction direction = fromPiece.findDirection(from, to);
+
+        validNowTurn(fromPiece);
+        fromPiece.movable(from, to);
+        fromPiece.validArrive(board.get(to), direction);
+        validPath(from, to, direction);
+    }
+
+    private void validPiece(Piece piece) {
+        if (piece == null) {
+            throw new IllegalArgumentException("piece 가 존재하지 않습니다.");
         }
     }
 
@@ -111,6 +116,15 @@ public class Board {
             }
             current = current.move(direction);
         }
+    }
+
+    private void validAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
+        if (check()) {
+            board.put(to, toPiece);
+            board.put(from, piece);
+            throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
+        }
+        turn = turn.findOpposite();
     }
 
     public boolean isEmpty() {

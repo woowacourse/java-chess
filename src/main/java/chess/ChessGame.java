@@ -4,12 +4,10 @@ import chess.domain.board.BasicBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.Score;
-import chess.domain.piece.Team;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.Menu;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessGame {
 
@@ -21,7 +19,7 @@ public class ChessGame {
         boolean play = true;
 
         while (play) {
-            if (board.check()) {
+            if (check()) {
                 OutputView.printCheck();
             }
             Command command = InputView.inputCommand();
@@ -29,10 +27,18 @@ public class ChessGame {
         }
     }
 
+    private boolean check() {
+        try {
+            return !board.isEmpty() && board.check();
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     private boolean convert(Command command) {
         Menu menu = command.getMenu();
 
-        if (menu.isEnd() || board.checkmate()) {
+        if (menu.isEnd()) {
             return false;
         }
         if (menu.isStart()) {
@@ -67,7 +73,6 @@ public class ChessGame {
 
     private void status() {
         Score score = board.createResult();
-        List<Team> gameResult = score.findWinTeam();
-        OutputView.printStatus(score.getValue(), gameResult);
+        OutputView.printStatus(score.getValue(), score.findWinTeam());
     }
 }

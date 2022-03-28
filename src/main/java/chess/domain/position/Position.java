@@ -18,7 +18,16 @@ public class Position {
     }
 
     public Position(String value) {
-        this(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
+        validInput(value);
+        this.column = Column.of(value.substring(0, 1));
+        this.row = Row.of(value.substring(1, 2));
+    }
+
+    private void validInput(String value) {
+        if (value.length() != 2) {
+            throw new IllegalArgumentException("올바른 값으로 Position 을 생성해주세요.");
+
+        }
     }
 
     public Direction findDirection(Position position) {
