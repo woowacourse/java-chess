@@ -19,21 +19,25 @@ public class ChessGame {
     }
 
     public void end() {
-        state = state.end();
+        state = state.exit();
     }
 
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
     }
 
-    public boolean isRunning() {
-        return state.isRunning();
-    }
-
     public void move(final String[] positions) {
-        Position from = Position.from(positions[FROM]);
-        Position to = Position.from(positions[TO]);
+        final Position from = Position.from(positions[FROM]);
+        final Position to = Position.from(positions[TO]);
 
         state = state.move(from, to);
+    }
+
+    public Status status() {
+        return state.status();
+    }
+
+    public boolean isExit() {
+        return state.isExit();
     }
 }
