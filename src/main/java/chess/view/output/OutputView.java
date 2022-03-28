@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String EMPTY_SYMBOL = ".";
-    private static final String SCORE_MESSAGE_FORMAT = "whiteScore : %f | blackScore : %f%n";
+    private static final String SCORE_MESSAGE_FORMAT = "whiteScore : %.1f | blackScore : %.1f%n";
 
     private OutputView() {
         throw new AssertionError();
