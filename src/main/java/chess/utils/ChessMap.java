@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.utils;
 
+import chess.domain.Position;
 import chess.domain.piece.Piece;
+
 import java.util.List;
 
 public class ChessMap {
