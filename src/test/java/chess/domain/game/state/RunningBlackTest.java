@@ -1,9 +1,12 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.beforerunning.FinishedStatus;
+import chess.domain.game.state.running.RunningBlack;
+import chess.domain.game.state.running.RunningWhite;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;

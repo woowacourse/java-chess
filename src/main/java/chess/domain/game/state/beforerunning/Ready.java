@@ -1,6 +1,7 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state.beforerunning;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
 public class Ready extends BeforeRunning {

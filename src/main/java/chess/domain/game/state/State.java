@@ -1,4 +1,4 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;

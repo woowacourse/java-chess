@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Rook extends AbstractPiece {
+
     Rook(PieceColor pieceColor) {
         super(pieceColor, PieceScore.ROOK);
     }

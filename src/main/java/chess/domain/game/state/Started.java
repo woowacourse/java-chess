@@ -1,12 +1,12 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state;
 
 import chess.domain.board.Board;
 
-abstract class Started implements State {
+public abstract class Started implements State {
 
     private final Board board;
 
-    Started(Board board) {
+    protected Started(Board board) {
         this.board = board;
     }
 

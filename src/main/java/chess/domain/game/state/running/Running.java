@@ -1,8 +1,11 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state.running;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.beforerunning.FinishedStatus;
+import chess.domain.game.state.Started;
+import chess.domain.game.state.State;
 
-abstract class Running extends Started {
+public abstract class Running extends Started {
 
     public Running(Board board) {
         super(board);

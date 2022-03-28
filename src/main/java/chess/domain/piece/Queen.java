@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Queen extends AbstractPiece {
+
     Queen(PieceColor pieceColor) {
         super(pieceColor, PieceScore.QUEEN);
     }

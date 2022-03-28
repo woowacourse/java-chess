@@ -1,8 +1,8 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.game.gamestate.Ready;
-import chess.domain.game.gamestate.State;
+import chess.domain.game.state.beforerunning.Ready;
+import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
 public class ChessGame {

@@ -1,17 +1,18 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state.beforerunning;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
-public class FinishedEnd extends BeforeRunning {
+public class FinishedStatus extends BeforeRunning {
 
-    public FinishedEnd(Board board) {
+    public FinishedStatus(Board board) {
         super(board);
     }
 
     @Override
     public State endGame() {
-        return this;
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override
@@ -21,6 +22,7 @@ public class FinishedEnd extends BeforeRunning {
 
     @Override
     public State showStatus() {
-        throw new IllegalStateException("게임이 끝나서 상태를 볼 수 없습니다.");
+        // TODO: 점수를 출력하는 로직
+        return new Ready();
     }
 }

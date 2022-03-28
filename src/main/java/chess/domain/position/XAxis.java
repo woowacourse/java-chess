@@ -37,10 +37,6 @@ public enum XAxis {
                 .collect(Collectors.toList());
     }
 
-    int subtract(XAxis other) {
-        return this.value - other.value;
-    }
-
     public int getValue() {
         return value;
     }

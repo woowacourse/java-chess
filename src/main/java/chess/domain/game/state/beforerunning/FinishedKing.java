@@ -1,9 +1,10 @@
-package chess.domain.game.gamestate;
+package chess.domain.game.state.beforerunning;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
-class FinishedKing extends BeforeRunning {
+public class FinishedKing extends BeforeRunning {
 
     public FinishedKing(Board board) {
         super(board);
