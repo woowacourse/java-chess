@@ -54,7 +54,7 @@ public abstract class Piece {
     }
 
     public Direction findDirectionTo(Piece target) {
-        return this.square.findDirection(target.square);
+        return square.findDirection(target.square);
     }
 
     public abstract Point getPoint();

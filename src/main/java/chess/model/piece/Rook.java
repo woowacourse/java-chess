@@ -5,18 +5,10 @@ import chess.model.Direction;
 import chess.model.Square;
 import java.util.List;
 
-public final class Rook extends Piece {
+public final class Rook extends LineMovablePiece {
 
     public Rook(Color color, Square square) {
         super(color, square);
-    }
-
-    @Override
-    public boolean movable(Piece targetPiece) {
-        if (!targetPiece.isAlly(this) && canMoveTo(targetPiece)) {
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -24,20 +16,13 @@ public final class Rook extends Piece {
         return Point.ROOK;
     }
 
-    private boolean canMoveTo(Piece target) {
-        try {
-            return direction().contains(this.findDirectionTo(target));
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
     @Override
     public String getLetter() {
         return "r";
     }
 
-    private List<Direction> direction() {
+    @Override
+    protected List<Direction> direction() {
         return List.of(Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
     }
 }

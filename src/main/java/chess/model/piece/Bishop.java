@@ -5,17 +5,10 @@ import chess.model.Direction;
 import chess.model.Square;
 import java.util.List;
 
-public final class Bishop extends Piece {
+public final class Bishop extends LineMovablePiece {
+
     public Bishop(Color color, Square square) {
         super(color, square);
-    }
-
-    @Override
-    public boolean movable(Piece targetPiece) {
-        if (!targetPiece.isAlly(this) && canMoveTo(targetPiece)) {
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -23,21 +16,13 @@ public final class Bishop extends Piece {
         return Point.BISHOP;
     }
 
-    private boolean canMoveTo(Piece target) {
-        try {
-            return direction().contains(this.findDirectionTo(target));
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
     @Override
     public String getLetter() {
         return "b";
     }
 
-    //TODO: 이 부분은 EMPTY를 제외한 모든 Piece가 가짐.
-    private List<Direction> direction() {
+    @Override
+    protected List<Direction> direction() {
         return List.of(Direction.SOUTHEAST, Direction.NORTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
     }
 }
