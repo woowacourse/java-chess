@@ -5,18 +5,15 @@ import chess.model.Direction;
 import chess.model.Square;
 import java.util.List;
 
-public final class Knight extends Piece{
+public final class Knight extends PointMovablePiece {
+
     public Knight(Color color, Square square) {
         super(color, square);
     }
 
-
     @Override
-    public boolean movable(Piece targetPiece) {
-        Direction directionTo = findDirectionTo(targetPiece);
-        return direction().contains(directionTo) &&
-                targetPiece.isAt(square().tryToMove(directionTo)) &&
-                !targetPiece.isAlly(this);
+    public Point getPoint() {
+        return Point.KNIGHT;
     }
 
     @Override
@@ -25,11 +22,7 @@ public final class Knight extends Piece{
     }
 
     @Override
-    public Point getPoint() {
-        return Point.KNIGHT;
-    }
-
-    private List<Direction> direction() {
+    protected List<Direction> direction() {
         return Direction.getKnightDirection();
     }
 }
