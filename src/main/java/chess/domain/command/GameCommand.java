@@ -25,10 +25,6 @@ public enum GameCommand {
         return GameCommand.of(command) == GameCommand.START;
     }
 
-    public static boolean isEnd(String command) {
-        return GameCommand.of(command) == GameCommand.END;
-    }
-
     public static boolean isMove(String command) {
         return GameCommand.of(command) == GameCommand.MOVE;
     }

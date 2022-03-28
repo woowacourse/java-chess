@@ -1,9 +1,13 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.ChessGame;
+import chess.domain.command.Command;
 import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,5 +54,40 @@ class PawnTest {
                 Arguments.arguments(0, 3, false),
                 Arguments.arguments(2, 2, false)
         );
+    }
+
+    @Test
+    @DisplayName("White 폰앞에 기물이 있을 경우 전진 못함")
+    void whitePawnCantMovableForward() {
+        ChessGame chessGame = new ChessGame();
+
+        chessGame.execute(new Command(List.of("start")));
+        chessGame.execute(new Command(List.of("move", "a2", "a4")));
+        chessGame.execute(new Command(List.of("move", "a7", "a5")));
+        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a4", "a5"))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("White 폰 대각선 앞에 기물이 없을 경우 전진 못함")
+    void whitePawnCantMovableForwardWhenEmptyPiece() {
+        ChessGame chessGame = new ChessGame();
+
+        chessGame.execute(new Command(List.of("start")));
+        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a2", "b3"))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("White 폰 대각선 앞에 기물이 있을 경우 전진 못함")
+    void whitePawnMovableForwardWhenEmptyPiece() {
+        ChessGame chessGame = new ChessGame();
+
+        chessGame.execute(new Command(List.of("start")));
+        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a2", "b3"))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
     }
 }
