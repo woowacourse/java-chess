@@ -47,6 +47,7 @@ public class OutputView {
         for (Entry<Color, Double> entry : colorsTotalScore.entrySet()) {
             System.out.printf(TEAM_STATUS, entry.getKey().name(), entry.getValue());
         }
+        System.out.println();
     }
 
     public static void printGameResult(Color winnerColor) {
