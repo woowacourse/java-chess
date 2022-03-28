@@ -7,8 +7,8 @@ import chess.domain.board.Board;
 import chess.domain.board.utils.BoardFactory;
 import chess.domain.board.utils.ProductionBoardFactory;
 import chess.dto.Request;
-import chess.dto.view.InputView;
-import chess.dto.view.OutputView;
+import chess.view.InputView;
+import chess.view.OutputView;
 import chess.turndecider.AlternatingTurnDecider;
 
 public class ChessController {

@@ -1,4 +1,4 @@
-package chess.dto.view;
+package chess.view;
 
 import static java.lang.System.*;
 

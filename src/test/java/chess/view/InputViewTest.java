@@ -1,6 +1,6 @@
-package chess.dto.view;
+package chess.view;
 
-import static chess.dto.view.InputView.NOT_SUPPORT_OPERATION_MESSAGE;
+import static chess.view.InputView.NOT_SUPPORT_OPERATION_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
