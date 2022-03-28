@@ -14,7 +14,7 @@ public class BoardTest {
     void diagonalStraightMove_Obstacle_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("c1"), new Position("a3")))
+        assertThatThrownBy(() -> board.playTurn(new Position("c1"), new Position("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -24,7 +24,7 @@ public class BoardTest {
     void diagonalStraightMove_ObstacleAlly_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("c1"), new Position("b2")))
+        assertThatThrownBy(() -> board.playTurn(new Position("c1"), new Position("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
@@ -34,7 +34,7 @@ public class BoardTest {
     void verticalStraightMove_Obstacle_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("a3")))
+        assertThatThrownBy(() -> board.playTurn(new Position("a1"), new Position("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -44,7 +44,7 @@ public class BoardTest {
     void verticalStraightMove_ObstacleAlly_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("a2")))
+        assertThatThrownBy(() -> board.playTurn(new Position("a1"), new Position("a2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
@@ -54,7 +54,7 @@ public class BoardTest {
     void horizontalStraightMove_Obstacle_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("c1")))
+        assertThatThrownBy(() -> board.playTurn(new Position("a1"), new Position("c1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재합니다.");
     }
@@ -64,7 +64,7 @@ public class BoardTest {
     void horizontalStraightMove_ObstacleAlly_Fails() {
         Board board = new Board(BoardInitializer.initBoard());
 
-        assertThatThrownBy(() -> board.move(new Position("a1"), new Position("b1")))
+        assertThatThrownBy(() -> board.playTurn(new Position("a1"), new Position("b1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }

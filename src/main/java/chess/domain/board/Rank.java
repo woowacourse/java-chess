@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Rank {
@@ -23,7 +24,7 @@ public class Rank {
     }
 
     public List<Piece> getPieces() {
-        return pieces;
+        return Collections.unmodifiableList(pieces);
     }
 
     public Piece getPiece(int index) {

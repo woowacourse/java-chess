@@ -27,7 +27,7 @@ public abstract class Playing extends GameStarted {
         if (!isCorrectTurn(start)) {
             throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
         }
-        Piece targetPiece = board.move(start, target);
+        Piece targetPiece = board.playTurn(start, target);
         return judgeStatus(targetPiece);
     }
 

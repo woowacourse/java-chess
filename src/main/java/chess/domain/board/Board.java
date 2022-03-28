@@ -20,33 +20,28 @@ public class Board {
         this.ranks = ranks;
     }
 
-    public Piece move(Position start, Position target) {
-        Piece selected = getPiece(start);
-        if (selected.isKnight()) {
-            return jump(start, target);
+    public Piece playTurn(Position start, Position target) {
+        Piece selectedPiece = getPiece(start);
+        Piece targetPiece = getPiece(target);
+        if (selectedPiece.isKnight()) {
+            return jump(selectedPiece, targetPiece);
         }
-        return moveStraight(start, target);
+        return moveStraight(selectedPiece, targetPiece);
     }
 
-    private Piece jump(Position start, Position target) {
-        Piece selected = getPiece(start);
-        Piece targetPiece = getPiece(target);
-        if (selected.isMovable(targetPiece)) {
-            updateBoard(target, selected, start, targetPiece);
-            return targetPiece;
-        }
-
-        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
+    private Piece jump(Piece selectedPiece, Piece targetPiece) {
+        return move(selectedPiece, targetPiece);
     }
 
-    private Piece moveStraight(Position start, Position target) {
-        Piece selected = getPiece(start);
-        Piece targetPiece = getPiece(target);
-        Direction direction = Direction.findDirection(start, target);
-        checkPath(start, target, direction);
+    private Piece moveStraight(Piece selectedPiece, Piece targetPiece) {
+        Direction direction = Direction.findDirection(selectedPiece.getPosition(), targetPiece.getPosition());
+        checkPath(selectedPiece.getPosition(), targetPiece.getPosition(), direction);
+        return move(selectedPiece, targetPiece);
+    }
 
+    private Piece move(Piece selected, Piece targetPiece) {
         if (selected.isMovable(targetPiece)) {
-            updateBoard(target, selected, start, targetPiece);
+            updateBoard(selected, targetPiece);
             return targetPiece;
         }
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
@@ -71,10 +66,10 @@ public class Board {
         }
     }
 
-    private void updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
-        updatePiece(target, selected);
-        updatePiece(start, new Blank(start));
-        selected.updatePosition(targetPiece.getPosition());
+    private void updateBoard(Piece selectedPiece, Piece targetPiece) {
+        updatePiece(targetPiece.getPosition(), selectedPiece);
+        updatePiece(selectedPiece.getPosition(), new Blank(targetPiece.getPosition()));
+        selectedPiece.updatePosition(targetPiece.getPosition());
     }
 
     private void updatePiece(Position position, Piece piece) {
