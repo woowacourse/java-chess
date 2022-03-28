@@ -16,7 +16,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(Position beforePosition, Position afterPosition) {
+    public State move(Position sourcePosition, Position targetPosition) {
         throw new IllegalStateException(ERROR_CANT_MOVE);
     }
 

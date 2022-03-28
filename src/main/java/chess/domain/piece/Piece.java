@@ -19,15 +19,11 @@ public abstract class Piece {
         return this.isCamp(piece.camp);
     }
 
-    public abstract void move(Position beforePosition,
-                              Position afterPosition,
-                              Consumer<Piece> moveFunction);
+    public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
-    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
+    protected abstract boolean canMove(Position sourcePosition, Position targetPosition);
 
-    public abstract void capture(Position beforePosition,
-                                 Position afterPosition,
-                                 Consumer<Piece> moveFunction);
+    public abstract void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
     public abstract boolean isBishop();
 

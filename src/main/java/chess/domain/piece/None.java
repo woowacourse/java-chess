@@ -12,18 +12,18 @@ public class None extends Piece {
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+    public void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         throw new IllegalArgumentException(ERROR_CANT_MOVE);
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
+    protected boolean canMove(Position sourcePosition, Position targetPosition) {
         return false;
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
+    public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
+        this.move(sourcePosition, targetPosition, moveApplier);
     }
 
     @Override

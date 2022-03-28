@@ -145,15 +145,15 @@ public final class Board {
         }
     }
 
-    private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
+    private Consumer<Piece> moveFunction(Position sourcePosition, Position targetPosition) {
         return (piece) -> {
-            this.value.put(afterPosition, piece);
-            this.value.put(beforePosition, new None());
+            this.value.put(targetPosition, piece);
+            this.value.put(sourcePosition, new None());
         };
     }
 
-    private boolean isBlank(Position afterPosition) {
-        return value.get(afterPosition).isNone();
+    private boolean isBlank(Position position) {
+        return value.get(position).isNone();
     }
 
     public boolean hasKingCaptured(){

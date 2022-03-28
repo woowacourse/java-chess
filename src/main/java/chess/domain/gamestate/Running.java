@@ -20,8 +20,8 @@ public class Running implements State {
     }
 
     @Override
-    public State move(Position beforePosition, Position afterPosition) {
-        this.board.move(beforePosition, afterPosition);
+    public State move(Position sourcePosition, Position targetPosition) {
+        this.board.move(sourcePosition, targetPosition);
         if (this.board.hasKingCaptured()) {
             return new Finished(this.board);
         }

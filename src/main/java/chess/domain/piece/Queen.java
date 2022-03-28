@@ -14,17 +14,17 @@ public final class Queen extends Piece{
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canMove(beforePosition, afterPosition)) {
+    public void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
+        if (!canMove(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
-        moveFunction.accept(this);
+        moveApplier.accept(this);
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int columnDistance = beforePosition.columnDistance(afterPosition);
-        int rowDistance = beforePosition.rowDistance(afterPosition);
+    protected boolean canMove(Position sourcePosition, Position targetPosition) {
+        int columnDistance = sourcePosition.columnDistance(targetPosition);
+        int rowDistance = sourcePosition.rowDistance(targetPosition);
         if (columnDistance == NOT_MOVED_DISTANCE) {
             return true;
         }
@@ -35,8 +35,8 @@ public final class Queen extends Piece{
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
+    public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
+        this.move(sourcePosition, targetPosition, moveApplier);
     }
 
     @Override

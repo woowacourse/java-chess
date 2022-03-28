@@ -8,7 +8,7 @@ public interface State {
 
     State start();
 
-    State move(Position beforePosition, Position afterPosition);
+    State move(Position sourcePosition, Position targetPosition);
 
     State end();
 

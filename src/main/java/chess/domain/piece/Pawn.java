@@ -20,27 +20,27 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canMove(beforePosition, afterPosition)) {
+    public void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
+        if (!canMove(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
-        moveFunction.accept(this);
+        moveApplier.accept(this);
         this.firstMove = false;
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canCapture(beforePosition, afterPosition)) {
+    public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
+        if (!canCapture(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_CAPTURE);
         }
-        moveFunction.accept(this);
+        moveApplier.accept(this);
         this.firstMove = false;
     }
 
     @Override
-    protected boolean canMove(Position beforePosition, Position afterPosition) {
-        int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
-        int columnDistance = afterPosition.columnDistance(beforePosition);
+    protected boolean canMove(Position sourcePosition, Position targetPosition) {
+        int rowDirectedDistance = targetPosition.rowDirectedDistance(sourcePosition);
+        int columnDistance = targetPosition.columnDistance(sourcePosition);
         if (columnDistance != DISTANCE_NOT_MOVED) {
             return false;
         }
@@ -51,17 +51,15 @@ public final class Pawn extends Piece {
 
     }
 
-    private boolean canCapture(Position beforePosition, Position afterPosition) {
-        int columnDistance = afterPosition.columnDistance(beforePosition);
-        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-        return columnDistance == DISTANCE_MOVABLE &&
-                checkMovableLimitByCamp(rowDistance, DISTANCE_MOVABLE);
+    private boolean canCapture(Position sourcePosition, Position targetPosition) {
+        int columnDistance = targetPosition.columnDistance(sourcePosition);
+        int rowDistance = targetPosition.rowDirectedDistance(sourcePosition);
+        return columnDistance == DISTANCE_MOVABLE && checkMovableLimitByCamp(rowDistance, DISTANCE_MOVABLE);
     }
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
         if (this.isCamp(Camp.BLACK)) {
-            return Camp.BLACK.giveVerticalDirectionTo(movableDistance) <= distance &&
-                    distance < DISTANCE_NOT_MOVED;
+            return Camp.BLACK.giveVerticalDirectionTo(movableDistance) <= distance && distance < DISTANCE_NOT_MOVED;
         }
         return DISTANCE_NOT_MOVED < distance && distance <= movableDistance;
     }

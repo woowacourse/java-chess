@@ -16,8 +16,8 @@ public class ChessGame {
         this.state = this.state.start();
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        this.state = this.state.move(beforePosition, afterPosition);
+    public void move(Position sourcePosition, Position targetPosition) {
+        this.state = this.state.move(sourcePosition, targetPosition);
     }
 
     public void end() {
