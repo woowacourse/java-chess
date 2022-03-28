@@ -6,13 +6,11 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    private final String name;
-    private final float score;
+    private final PieceInfo info;
     protected final Team team;
 
-    public Piece(String name, float score, Team team) {
-        this.name = name;
-        this.score = score;
+    public Piece(PieceInfo info, Team team) {
+        this.info = info;
         this.team = team;
     }
 
@@ -23,7 +21,7 @@ public abstract class Piece {
     public abstract List<Position> findMovablePosition(Position now);
 
     public final String getName() {
-        return team.convert(name);
+        return team.convert(info.getName());
     }
 
     public final boolean isSameTeam(Piece piece) {
@@ -43,7 +41,7 @@ public abstract class Piece {
     }
 
     public float getScore() {
-        return score;
+        return info.getScore();
     }
 
     public void validArrive(Piece to, Direction direction) {
@@ -55,8 +53,7 @@ public abstract class Piece {
     @Override
     public String toString() {
         return "Piece{" +
-                "name='" + team.convert(name) + '\'' +
-                ", score=" + score +
+                "info=" + info +
                 ", team=" + team +
                 '}';
     }

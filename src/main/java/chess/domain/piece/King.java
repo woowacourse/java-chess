@@ -6,13 +6,10 @@ import java.util.stream.Collectors;
 
 public class King extends Piece {
 
-    private static final String name = "K";
-    private static final float score = 0.0f;
-
     private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public King(Team team) {
-        super(name, score, team);
+        super(PieceInfo.KING, team);
     }
 
     @Override

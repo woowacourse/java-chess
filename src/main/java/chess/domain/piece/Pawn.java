@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
-    private static final String name = "P";
-    private static final float score = 1.0f;
     private final List<Direction> directions;
 
     public Pawn(Team team) {
-        super(name, score, team);
+        super(PieceInfo.PAWN, team);
         directions = selectDirections(team);
     }
 

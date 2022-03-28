@@ -6,12 +6,10 @@ import java.util.stream.Collectors;
 
 public class Knight extends Piece {
 
-    private static final String name = "N";
-    private static final float score = 2.5f;
     private static final List<Direction> directions = Direction.pullKnightDirections();
 
     public Knight(Team team) {
-        super(name, score, team);
+        super(PieceInfo.KNIGHT, team);
     }
 
     @Override

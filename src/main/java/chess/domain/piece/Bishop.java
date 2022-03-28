@@ -6,12 +6,10 @@ import java.util.stream.Collectors;
 
 public class Bishop extends Piece {
 
-    private static final String name = "B";
-    private static final float score = 3.0f;
     private static final List<Direction> directions = Direction.pullDiagonalDirections();
 
     public Bishop(Team team) {
-        super(name, score, team);
+        super(PieceInfo.BISHOP, team);
     }
 
     @Override
