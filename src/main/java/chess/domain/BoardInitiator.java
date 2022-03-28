@@ -4,6 +4,7 @@ import chess.domain.pieces.*;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
+import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,34 +27,34 @@ public final class BoardInitiator implements Initiator {
     }
 
     private void initRooks(Map<Position, Piece> pieces) {
-        for (String column : List.of("a", "h")) {
+        for (Column column : List.of(Column.A, Column.H)) {
             initWhitePiece(pieces, column, new Rook());
             initBlackPiece(pieces, column, new Rook());
         }
     }
 
     private void initKnights(Map<Position, Piece> pieces) {
-        for (String column : List.of("b", "g")) {
+        for (Column column : List.of(Column.B, Column.G)) {
             initWhitePiece(pieces, column, new Knight());
             initBlackPiece(pieces, column, new Knight());
         }
     }
 
     private void initBishops(Map<Position, Piece> pieces) {
-        for (String column : List.of("c", "f")) {
+        for (Column column : List.of(Column.C, Column.F)) {
             initWhitePiece(pieces, column, new Bishop());
             initBlackPiece(pieces, column, new Bishop());
         }
     }
 
     private void initQueens(Map<Position, Piece> pieces) {
-        initWhitePiece(pieces, "d", new Queen());
-        initBlackPiece(pieces, "d", new Queen());
+        initWhitePiece(pieces, Column.D, new Queen());
+        initBlackPiece(pieces, Column.D, new Queen());
     }
 
     private void initKings(Map<Position, Piece> pieces) {
-        initWhitePiece(pieces, "e", new King());
-        initBlackPiece(pieces, "e", new King());
+        initWhitePiece(pieces, Column.E, new King());
+        initBlackPiece(pieces, Column.E, new King());
     }
 
     private void initPawns(Map<Position, Piece> pieces) {
@@ -63,21 +64,21 @@ public final class BoardInitiator implements Initiator {
 
     private void initBlackPawns(Map<Position, Piece> pieces) {
         for (Column column : Column.values()) {
-            pieces.put(Position.of(column.name() + "7"), new Piece(Color.BLACK, new Pawn()));
+            pieces.put(Position.valueOf(column, Row.SEVEN), new Piece(Color.BLACK, new Pawn()));
         }
     }
 
     private void initWhitePawns(Map<Position, Piece> pieces) {
         for (Column column : Column.values()) {
-            pieces.put(Position.of(column.name() + "2"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.valueOf(column, Row.TWO), new Piece(Color.WHITE, new Pawn()));
         }
     }
 
-    private void initWhitePiece(Map<Position, Piece> pieces, String column, Type type) {
-        pieces.put(Position.of(column + "1"), new Piece(Color.WHITE, type));
+    private void initWhitePiece(Map<Position, Piece> pieces, Column column, Type type) {
+        pieces.put(Position.valueOf(column, Row.ONE), new Piece(Color.WHITE, type));
     }
 
-    private void initBlackPiece(Map<Position, Piece> pieces, String column, Type type) {
-        pieces.put(Position.of(column + "8"), new Piece(Color.BLACK, type));
+    private void initBlackPiece(Map<Position, Piece> pieces, Column column, Type type) {
+        pieces.put(Position.valueOf(column, Row.EIGHT), new Piece(Color.BLACK, type));
     }
 }
