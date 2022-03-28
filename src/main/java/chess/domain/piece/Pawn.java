@@ -10,8 +10,11 @@ public class Pawn extends Piece {
     private static final int FIRST_MOVE_DISTANCE = 2;
     private static final double SCORE = 1.0;
 
+    private boolean isFirstTurn;
+
     private Pawn(Position position, String signature) {
         super(position, signature);
+        this.isFirstTurn = true;
     }
 
     public static Pawn createWhite(Position position) {
@@ -74,5 +77,11 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public void updatePosition(Position position) {
+        super.updatePosition(position);
+        this.isFirstTurn = false;
     }
 }

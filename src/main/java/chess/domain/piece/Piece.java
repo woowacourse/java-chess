@@ -3,12 +3,10 @@ package chess.domain.piece;
 public abstract class Piece {
 
     protected Position position;
-    protected boolean isFirstTurn;
     private final String signature;
 
     protected Piece(Position position, String signature) {
         this.position = position;
-        this.isFirstTurn = true;
         this.signature = signature;
     }
 
@@ -43,7 +41,6 @@ public abstract class Piece {
 
     public void updatePosition(Position position) {
         this.position = position;
-        this.isFirstTurn = false;
     }
 
     public boolean isKing() {
