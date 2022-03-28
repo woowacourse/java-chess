@@ -5,10 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Position;
-import chess.domain.state.BlackTurn;
-import chess.domain.state.BoardInitializer;
-import chess.domain.state.GameState;
-import chess.domain.state.WhiteTurn;
+import chess.domain.board.BoardInitializer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

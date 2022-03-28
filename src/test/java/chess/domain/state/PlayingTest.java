@@ -1,10 +1,9 @@
 package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.board.Board;
-import org.assertj.core.api.Assertions;
+import chess.domain.board.BoardInitializer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

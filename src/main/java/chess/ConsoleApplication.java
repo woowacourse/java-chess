@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
-import chess.domain.state.BoardInitializer;
+import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
 
 public class ConsoleApplication {
