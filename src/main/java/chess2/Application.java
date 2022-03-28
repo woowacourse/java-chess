@@ -1,17 +1,15 @@
 package chess2;
 
-import chess2.domain2.board2.Board;
-import chess2.dto2.BoardViewDto;
-import chess2.util2.PieceGeneratorUtil;
-import chess2.view2.OutputView;
+import chess2.controller.GameController;
+import chess2.domain2.game2.Game;
 
 public class Application {
 
-    private static final OutputView outputView = new OutputView();
+    private static final GameController controller = new GameController();
 
     public static void main(String[] args) {
-        outputView.printGameInstructions();
-        Board board = new Board(PieceGeneratorUtil.initFullChessBoard());
-        outputView.printBoard(new BoardViewDto(board));
+        Game game = controller.startGame();
+        game = controller.playGame(game);
+        controller.printGameOver(game);
     }
 }

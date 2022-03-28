@@ -28,7 +28,7 @@ public class GameResult {
         this.scoreResult = new GameScoreDto(calculateScore(board, WHITE), calculateScore(board, BLACK));
     }
 
-    public Color chooseWinner(Map<Position, Piece> board) {
+    private Color chooseWinner(Map<Position, Piece> board) {
         Piece king = getOnlyKingLeft(board);
         if (king.hasColorOf(WHITE)) {
             return WHITE;
