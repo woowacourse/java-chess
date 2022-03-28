@@ -6,6 +6,8 @@ import chess.domain.generator.InitBoardGenerator;
 
 public class Ready extends Started {
 
+    public static final String ERROR_MESSAGE_GAME_NOT_START = "게임이 시작되지 않았습니다.";
+
     public Ready() {
         super(new ChessBoard(new InitBoardGenerator()));
     }
@@ -17,12 +19,12 @@ public class Ready extends Started {
 
     @Override
     public State end() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(ERROR_MESSAGE_GAME_NOT_START);
     }
 
     @Override
     public State move(String source, String target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(ERROR_MESSAGE_GAME_NOT_START);
     }
 
     @Override
@@ -32,6 +34,6 @@ public class Ready extends Started {
 
     @Override
     public Result winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(ERROR_MESSAGE_GAME_NOT_START);
     }
 }
