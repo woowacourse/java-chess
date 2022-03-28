@@ -1,8 +1,8 @@
 package chess.dto;
 
-import chess.domain.piece.position.File;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Rank;
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
 
 public class PositionDto {
     private static final int MAX_RANK = 8;

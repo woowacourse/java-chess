@@ -8,6 +8,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.game.state.position.Direction;
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
+
 class PositionTest {
 
     @ParameterizedTest(name = "{index}: {1}")

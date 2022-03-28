@@ -9,9 +9,9 @@ import java.util.function.BiFunction;
 import java.util.regex.Pattern;
 
 import chess.domain.game.ChessGame;
-import chess.domain.piece.position.File;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Rank;
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
 import chess.dto.GameResult;
 
 public class Command {

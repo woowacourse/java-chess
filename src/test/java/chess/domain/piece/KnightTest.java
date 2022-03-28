@@ -11,10 +11,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.game.state.ChessBoard;
-import chess.domain.piece.position.Direction;
-import chess.domain.piece.position.File;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.position.Rank;
+import chess.domain.game.state.position.Direction;
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
 import chess.domain.piece.property.Color;
 
 public class KnightTest {

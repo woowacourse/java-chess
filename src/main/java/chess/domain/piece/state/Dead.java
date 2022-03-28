@@ -3,7 +3,7 @@ package chess.domain.piece.state;
 import java.util.List;
 
 import chess.domain.game.state.ChessBoard;
-import chess.domain.piece.position.Position;
+import chess.domain.game.state.position.Position;
 
 public class Dead implements PieceState {
     @Override

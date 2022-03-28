@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import chess.domain.game.state.ChessBoard;
-import chess.domain.piece.position.Direction;
-import chess.domain.piece.position.Position;
+import chess.domain.game.state.position.Direction;
+import chess.domain.game.state.position.Position;
 import chess.domain.piece.state.PieceState;
 
 public class StartedPawn extends Started {

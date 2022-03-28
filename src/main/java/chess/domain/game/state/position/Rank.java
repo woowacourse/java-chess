@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.game.state.position;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;

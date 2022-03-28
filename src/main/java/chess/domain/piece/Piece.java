@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import chess.domain.game.state.ChessBoard;
-import chess.domain.piece.position.Position;
+import chess.domain.game.state.position.Position;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.PieceProperty;
 import chess.domain.piece.state.PieceState;

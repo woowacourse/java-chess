@@ -1,6 +1,6 @@
 package chess.domain.piece.property;
 
-import chess.domain.piece.position.Direction;
+import chess.domain.game.state.position.Direction;
 
 public enum Color {
     Black (Direction.Down),
