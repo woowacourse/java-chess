@@ -15,7 +15,7 @@ public class InfiniteStepDistance implements Distance {
     }
 
     @Override
-    public Distance decrease() {
+    public Distance decreaseOne() {
         return new InfiniteStepDistance(this.amount - 1);
     }
 

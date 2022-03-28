@@ -14,7 +14,7 @@ public class OneStepDistance implements Distance {
     }
 
     @Override
-    public Distance decrease() {
+    public Distance decreaseOne() {
         return new OneStepDistance(this.amount - 1);
     }
 

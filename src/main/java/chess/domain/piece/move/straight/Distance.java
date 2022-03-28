@@ -1,7 +1,7 @@
 package chess.domain.piece.move.straight;
 
 public interface Distance {
-    Distance decrease();
+    Distance decreaseOne();
 
     boolean isLeft();
 }

@@ -27,7 +27,7 @@ public class StraightMovingStrategy implements MovingStrategy {
         Point next;
         do {
             next = from.next(direction);
-            distance.decrease();
+            distance.decreaseOne();
             from = next;
         } while (distance.isLeft() && isMovable(to, next) && board.isEmpty(next));
         return !isMovable(to, next);
