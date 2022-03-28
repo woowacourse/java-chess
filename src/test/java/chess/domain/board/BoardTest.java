@@ -8,6 +8,7 @@ import chess.domain.board.boardGenerator.CheckmateBoardGenerator;
 import chess.domain.board.boardGenerator.NotCheckmateBoardGenerator;
 import chess.domain.board.boardGenerator.TestBoardGenerator;
 import chess.domain.board.boardGenerator.WhiteCheckBoardGenerator;
+import chess.domain.board.generator.BasicBoardGenerator;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;

@@ -4,9 +4,9 @@ import static chess.view.InputView.FROM_POSITION_INDEX;
 import static chess.view.InputView.MENU_INDEX;
 import static chess.view.InputView.TO_POSITION_INDEX;
 
-import chess.domain.board.BasicBoardGenerator;
+import chess.domain.board.generator.BasicBoardGenerator;
 import chess.domain.board.Board;
-import chess.domain.board.BoardGenerator;
+import chess.domain.board.generator.BoardGenerator;
 import chess.domain.board.Score;
 import chess.domain.position.Position;
 import chess.view.InputView;

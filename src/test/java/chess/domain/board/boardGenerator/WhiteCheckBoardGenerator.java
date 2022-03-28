@@ -1,6 +1,6 @@
 package chess.domain.board.boardGenerator;
 
-import chess.domain.board.BoardGenerator;
+import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;

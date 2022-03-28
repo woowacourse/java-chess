@@ -1,6 +1,6 @@
 package chess.domain.board.boardGenerator;
 
-import chess.domain.board.BoardGenerator;
+import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
