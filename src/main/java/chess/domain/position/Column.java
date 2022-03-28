@@ -13,6 +13,8 @@ public enum Column {
     G("g", 7),
     H("h", 8);
 
+    private static final String ERROR_INCORRECT_COLUMN = "올바르지 않은 컬럼입니다.";
+
     private final String value;
     private final int index;
 
@@ -25,14 +27,14 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_COLUMN));
     }
 
     public static Column of(final int value) {
         return Arrays.stream(values())
                 .filter(it -> it.index == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_COLUMN));
     }
 
     public int calculateIndex(Column column) {

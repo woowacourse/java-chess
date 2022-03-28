@@ -98,7 +98,7 @@ public class Board {
 
     private void validNowTurn(Piece piece) {
         if (!piece.isSameTeam(turn)) {
-            throw new IllegalArgumentException("현재 차례는 " + turn + "입니다.");
+            throw new IllegalArgumentException(String.format("현재 차례는 %s 입니다.", turn));
         }
     }
 

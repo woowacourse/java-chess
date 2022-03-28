@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.board.Score;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Column;
@@ -12,6 +11,8 @@ import java.util.Map.Entry;
 
 public class OutputView {
 
+    private static final String EMPTY_PIECE = ".";
+
     private OutputView() {
     }
 
@@ -21,41 +22,41 @@ public class OutputView {
     }
 
     public static void printErrorMessage(String message) {
-        System.out.printf("[ERROR] %s %n", message);
+        System.out.printf("[ERROR] %s%n", message);
     }
 
     public static void printBoard(Map<Position, Piece> board) {
         for (Row row : Row.reverseRows()) {
             printColumnWithRow(board, row);
-            System.out.println();
         }
     }
 
     private static void printColumnWithRow(Map<Position, Piece> board, Row row) {
+        StringBuilder stringBuilder = new StringBuilder();
+
         for (Column column : Column.values()) {
-            Position position = new Position(column, row);
-            Piece piece = board.get(position);
-            printStringOrDefault(piece);
+            Piece piece = board.get(new Position(column, row));
+            stringBuilder.append(drawPrintString(piece));
         }
+        System.out.println(stringBuilder);
     }
 
-    private static void printStringOrDefault(Piece piece) {
+    private static String drawPrintString(Piece piece) {
         if (piece != null) {
-            System.out.print(piece.getName());
-            return;
+            return piece.getName();
         }
-        System.out.print(".");
+        return EMPTY_PIECE;
     }
 
     public static void printStatus(Map<Team, Double> status, List<Team> result) {
         for (Entry<Team, Double> value : status.entrySet()) {
-            System.out.printf(value.getKey() + " : " + value.getValue() + "점%n");
+            System.out.printf("%s는 %f점 입니다.%n", value.getKey(), value.getValue());
         }
         if (result.size() == 2) {
-            System.out.println("무승부 입니다!");
+            System.out.println("무승부 입니다.");
             return;
         }
-        System.out.println("승리 팀은 : " + result.get(0) + " 입니다.");
+        System.out.printf("승리 팀은 %s 입니다.", result.get(0));
     }
 
     public static void printMessage(String string) {

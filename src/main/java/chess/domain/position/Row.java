@@ -15,6 +15,8 @@ public enum Row {
     SEVEN("7", 7),
     EIGHT("8", 8);
 
+    private static final String ERROR_INCORRECT_ROW = "올바르지 않은 로우입니다.";
+
     private final String value;
     private final int index;
 
@@ -27,14 +29,14 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_ROW));
     }
 
     public static Row of(final int value) {
         return Arrays.stream(values())
                 .filter(it -> it.index == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 로우입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_ROW));
     }
 
     public static List<Row> reverseRows() {
