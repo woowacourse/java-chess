@@ -32,7 +32,7 @@ public class ChessGameController {
         Command command;
         do {
             final String[] inputCommand = InputView.requestGameCommand();
-            command = Command.from(inputCommand[0]);
+            command = Command.from(inputCommand);
             turnEachPlayer(command, inputCommand, chessGame);
             chessGame.changeTurn();
         } while (!command.isEnd() && chessGame.isRunning());
