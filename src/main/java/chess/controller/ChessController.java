@@ -33,6 +33,7 @@ public class ChessController {
         while (!chessGame.end()) {
             executeCommand(chessGame);
         }
+        printStatus(ChessStatusDto.of(chessGame));
     }
 
     private void executeCommand(ChessGame chessGame) {
