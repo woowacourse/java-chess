@@ -1,6 +1,7 @@
 package console.view;
 
-import chess.Score;
+import chess.ChessBoard;
+import chess.game.Score;
 import chess.piece.*;
 import chess.position.*;
 import java.math.BigDecimal;
@@ -15,12 +16,19 @@ public class OutputView {
             Pawn.class, "P",
             Knight.class, "N");
 
+    private OutputView() {
+    }
+
     public static void printInitChessGameMessage() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printChessBoard(List<Piece> pieces) {
+    public static void printChessBoard(ChessBoard chessBoard) {
+        printChessBoard(chessBoard.getPieces());
+    }
+
+    private static void printChessBoard(List<Piece> pieces) {
         for (Rank rank : Rank.orderedValues()) {
             printEachColumn(pieces, rank);
         }
@@ -64,5 +72,9 @@ public class OutputView {
 
     public static void printWinner(Color winnerColor) {
         System.out.printf("%s 승리!", winnerColor);
+    }
+
+    public static void printError(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }

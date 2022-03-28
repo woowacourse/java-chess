@@ -1,5 +1,6 @@
-package chess;
+package chess.game;
 
+import chess.ChessBoard;
 import chess.piece.Color;
 import java.math.BigDecimal;
 

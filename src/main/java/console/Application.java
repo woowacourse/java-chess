@@ -1,11 +1,9 @@
 package console;
 
-import chess.BoardInitializer;
 import chess.ChessBoard;
-import chess.Score;
+import chess.game.ChessGame;
 import chess.command.Command;
-import chess.command.StartCommand;
-import chess.piece.Color;
+import chess.state.Ready;
 import console.view.InputView;
 import console.view.OutputView;
 
@@ -14,48 +12,40 @@ public class Application {
     public static void main(String[] args) {
         OutputView.printInitChessGameMessage();
         Command command = inputCommand();
-        ChessBoard chessBoard = null;
+        ChessGame chessGame = new ChessGame(new Ready(ChessBoard.createChessBoard()));
 
-        while (true) {
-            try {
-                if (command instanceof StartCommand) {
-                    if(chessBoard != null) {
-                        throw new IllegalStateException("체스 게임이 이미 진행중입니다.");
-                    }
+        if (command.isStart()) {
+            chessGame.start();
+            printChessBoard(chessGame);
+            playChessGame(chessGame);
+        }
+    }
 
-                    chessBoard = new ChessBoard(BoardInitializer.init(), Color.WHITE);
-                    OutputView.printChessBoard(chessBoard.getPieces());
-                }
+    private static void playChessGame(ChessGame chessGame) {
+        while (!chessGame.isFinished()) {
+            tryOneTurn(chessGame);
+            printChessBoard(chessGame);
+        }
+    }
 
-                if (command.isMove()) {
-                    if (chessBoard == null) {
-                        throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
-                    }
-
-                    chessBoard.move(command.from(), command.to());
-                    OutputView.printChessBoard(chessBoard.getPieces());
-                }
-
-                if (command.isStatus()) {
-                    if (chessBoard == null) {
-                        throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
-                    }
-
-                    OutputView.printScores(Score.from(chessBoard));
-                }
-
-                if (chessBoard != null && chessBoard.isFinished()) {
-                    OutputView.printWinner(chessBoard.getWinner());
-                    return;
-                }
-
-                if (command.isEnd()) {
-                    return;
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+    private static void tryOneTurn(ChessGame chessGame) {
+        try {
+            Command command = inputCommand();
+            chessGame.execute(command);
+            if (command.isStatus()) {
+                OutputView.printScores(chessGame.score());
             }
-            command = inputCommand();
+        } catch (RuntimeException e) {
+            OutputView.printError(e.getMessage());
+            tryOneTurn(chessGame);
+        }
+    }
+
+    private static void printChessBoard(ChessGame chessGame) {
+        OutputView.printChessBoard(chessGame.chessBoard());
+
+        if (chessGame.isGameEnd()) {
+            OutputView.printWinner(chessGame.winner());
         }
     }
 
@@ -63,7 +53,7 @@ public class Application {
         try {
             return Command.from(InputView.inputCommand());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printError(e.getMessage());
             return inputCommand();
         }
     }
