@@ -36,7 +36,7 @@ public final class King extends ChessPiece {
         final int rankDistance = Math.abs(from.rankDistance(to));
 
         if (Math.abs(fileDistance) > MOVING_DISTANCE || Math.abs(rankDistance) > MOVING_DISTANCE) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
 
         checkTargetPosition(possiblePiece);

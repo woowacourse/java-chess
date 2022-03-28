@@ -35,7 +35,7 @@ public final class Bishop extends ChessPiece {
         final int fileDistance = Math.abs(from.fileDistance(to));
 
         if (fileDistance != rankDistance) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
 
         checkTargetPosition(possiblePiece);

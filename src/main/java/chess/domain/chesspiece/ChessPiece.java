@@ -7,7 +7,8 @@ import java.util.Stack;
 
 public abstract class ChessPiece {
 
-    protected static final String CHECK_POSITION_ERROR_MESSAGE = "해당 기물이 갈 수 없는 위치입니다.";
+    protected static final String INVALID_TARGET_POSITION = "해당 기물이 갈 수 없는 위치입니다.";
+    protected static final String TARGET_SAME_COLOR_MESSAGE = "같은색 기물입니다.";
 
     protected final Color color;
     private final String name;
@@ -27,7 +28,7 @@ public abstract class ChessPiece {
 
         final ChessPiece targetPiece = possiblePiece.get();
         if (targetPiece.isSameColor(color)) {
-            throw new IllegalArgumentException("같은색 기물입니다.");
+            throw new IllegalArgumentException(TARGET_SAME_COLOR_MESSAGE);
         }
     }
 

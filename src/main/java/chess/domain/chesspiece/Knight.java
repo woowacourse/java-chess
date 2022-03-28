@@ -36,7 +36,7 @@ public final class Knight extends ChessPiece {
         checkMovableDistance(from, to);
 
         if (from.isSameFile(to) || from.isSameRank(to)) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
 
         checkTargetPosition(possiblePiece);
@@ -50,7 +50,7 @@ public final class Knight extends ChessPiece {
         if (movableDistance) {
             return;
         }
-        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+        throw new IllegalArgumentException(INVALID_TARGET_POSITION);
     }
 
     @Override

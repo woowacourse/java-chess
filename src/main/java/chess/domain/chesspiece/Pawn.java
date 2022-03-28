@@ -5,13 +5,14 @@ import static chess.domain.position.Direction.NW;
 import static chess.domain.position.Direction.SE;
 import static chess.domain.position.Direction.SW;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Pawn extends ChessPiece {
 
@@ -26,6 +27,8 @@ public final class Pawn extends ChessPiece {
     private static final int WHITE_MOVABLE_MAX_DISTANCE = -2;
     private static final int WHITE_MOVABLE_DEFAULT_DISTANCE = -1;
     private static final int DEFAULT_PAWN_COUNT = 1;
+    private static final String CROSS_MOVE_TO_EMPTY = "폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.";
+    private static final String STRAIGHT_MOVE_TO_ENEMY = "폰은 대각선 이동으로만 적을 잡을 수 있습니다.";
 
     static {
         cache = Arrays.stream(Color.values())
@@ -52,61 +55,88 @@ public final class Pawn extends ChessPiece {
     @Override
     public void checkMovablePosition(final Position from, final Position to,
                                      final Optional<ChessPiece> possiblePiece) {
-        if (from.isSameRank(to) && isStraight(from, to)) {
-            if (possiblePiece.isPresent()) {
-                final ChessPiece targetPiece = possiblePiece.get();
-                if (targetPiece.isSameColor(color)) {
-                    throw new IllegalArgumentException("같은색 기물입니다.");
-                }
-                throw new IllegalArgumentException("폰은 대각선 이동으로만 적을 잡을 수 있습니다.");
-            }
+        if (from.isSameRank(to)) {
+            validateStraightMove(from, to, possiblePiece);
             return;
         }
-
         if (isCross(from, to)) {
-            if (possiblePiece.isEmpty()) {
-                throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선으로 이동할 수 있습니다.");
-            }
-            final ChessPiece targetPiece = possiblePiece.get();
-            if (targetPiece.isSameColor(color)) {
-                throw new IllegalArgumentException("같은색 기물입니다.");
-            }
+            validateCrossMove(possiblePiece);
+            return;
+        }
+        throw new IllegalArgumentException(INVALID_TARGET_POSITION);
+    }
+
+    private void validateStraightMove(final Position from, final Position to,
+                                      final Optional<ChessPiece> possiblePiece) {
+        if (!isMovableDistance(from, to)) {
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
+        }
+        if (possiblePiece.isEmpty()) {
             return;
         }
 
-        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+        checkTargetIsSameColor(possiblePiece.get());
+        throw new IllegalArgumentException(STRAIGHT_MOVE_TO_ENEMY);
+    }
+
+    private boolean isMovableDistance(final Position from, final Position to) {
+        final int distance = from.fileDistance(to);
+        if (isDefaultDistance(distance)) {
+            return true;
+        }
+        if (isInitFilePosition(from)) {
+            return isMaxDistance(distance);
+        }
+        return false;
+    }
+
+    private boolean isDefaultDistance(final int distance) {
+        if (color.isBlack()) {
+            return distance == BLACK_MOVABLE_DEFAULT_DISTANCE;
+        }
+        return distance == WHITE_MOVABLE_DEFAULT_DISTANCE;
+    }
+
+    private boolean isInitFilePosition(final Position from) {
+        if (color.isBlack()) {
+            return from.isSameFile(BLACK_INIT_FILE);
+        }
+        return from.isSameFile(WHITE_INIT_FILE);
+    }
+
+    private boolean isMaxDistance(final int distance) {
+        if (color.isBlack()) {
+            return distance == BLACK_MOVABLE_MAX_DISTANCE;
+        }
+        return distance == WHITE_MOVABLE_MAX_DISTANCE;
     }
 
     private boolean isCross(final Position from, final Position to) {
-        if (color.isBlack()) {
-            return Stream.of(SE, SW)
-                    .map(from::toNextPosition)
-                    .anyMatch(position -> position.equals(to));
-        }
-
-        return Stream.of(NE, NW)
+        return findCrossDirection()
+                .stream()
                 .map(from::toNextPosition)
                 .anyMatch(position -> position.equals(to));
     }
 
-    private boolean isStraight(final Position from, final Position to) {
-        final int distance = from.fileDistance(to);
+    private List<Direction> findCrossDirection() {
         if (color.isBlack()) {
-            if (distance == BLACK_MOVABLE_DEFAULT_DISTANCE) {
-                return true;
-            }
-            if (from.isSameFile(BLACK_INIT_FILE)) {
-                return distance == BLACK_MOVABLE_MAX_DISTANCE;
-            }
-            return false;
+            return List.of(SE, SW);
         }
-        if (distance == WHITE_MOVABLE_DEFAULT_DISTANCE) {
-            return true;
+        return List.of(NE, NW);
+    }
+
+    private void validateCrossMove(final Optional<ChessPiece> possiblePiece) {
+        if (possiblePiece.isEmpty()) {
+            throw new IllegalArgumentException(CROSS_MOVE_TO_EMPTY);
         }
-        if (from.isSameFile(WHITE_INIT_FILE)) {
-            return distance == WHITE_MOVABLE_MAX_DISTANCE;
+
+        checkTargetIsSameColor(possiblePiece.get());
+    }
+
+    private void checkTargetIsSameColor(final ChessPiece targetPiece) {
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException(TARGET_SAME_COLOR_MESSAGE);
         }
-        return false;
     }
 
     @Override

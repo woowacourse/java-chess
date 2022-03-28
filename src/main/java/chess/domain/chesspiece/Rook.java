@@ -35,7 +35,7 @@ public final class Rook extends ChessPiece {
         final boolean sameRank = from.isSameRank(to);
 
         if (!sameFile && !sameRank) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
 
         checkTargetPosition(possiblePiece);
