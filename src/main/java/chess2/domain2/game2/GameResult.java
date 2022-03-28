@@ -1,5 +1,8 @@
 package chess2.domain2.game2;
 
+import static chess2.domain2.board2.piece2.Color.BLACK;
+import static chess2.domain2.board2.piece2.Color.WHITE;
+import static chess2.domain2.board2.piece2.PieceType.KING;
 import static chess2.domain2.board2.piece2.PieceType.PAWN;
 import static chess2.util2.PositionUtil.FILES_TOTAL_SIZE;
 import static chess2.util2.PositionUtil.RANKS_TOTAL_SIZE;
@@ -20,22 +23,25 @@ public class GameResult {
     private final Color winnerColor;
     private final GameScoreDto scoreResult;
 
-    public GameResult(Map<Position, Piece> board, Color winnerColor) {
-        this.winnerColor = winnerColor;
-        this.scoreResult = new GameScoreDto(
-                calculateScore(board, Color.WHITE), calculateScore(board, Color.BLACK));
+    public GameResult(Map<Position, Piece> board) {
+        this.winnerColor = chooseWinner(board);
+        this.scoreResult = new GameScoreDto(calculateScore(board, WHITE), calculateScore(board, BLACK));
     }
 
-    public Color winnerColor() {
-        return winnerColor;
+    public Color chooseWinner(Map<Position, Piece> board) {
+        Piece king = getOnlyKingLeft(board);
+        if (king.hasColorOf(WHITE)) {
+            return WHITE;
+        }
+        return BLACK;
     }
 
-    public double whiteScore() {
-        return scoreResult.whiteScore();
-    }
-
-    public double blackScore() {
-        return scoreResult.blackScore();
+    private Piece getOnlyKingLeft(Map<Position, Piece> board) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.hasTypeOf(KING))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("킹이 하나도 없는 게임은 존재할 수 없습니다."));
     }
 
     public double calculateScore(Map<Position, Piece> board, Color color) {
@@ -68,5 +74,17 @@ public class GameResult {
                 .filter(piece -> piece.hasColorOf(color))
                 .filter(piece -> piece.hasTypeOf(PAWN))
                 .count();
+    }
+
+    public Color winnerColor() {
+        return winnerColor;
+    }
+
+    public double whiteScore() {
+        return scoreResult.whiteScore();
+    }
+
+    public double blackScore() {
+        return scoreResult.blackScore();
     }
 }
