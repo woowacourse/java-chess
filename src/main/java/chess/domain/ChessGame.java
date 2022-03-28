@@ -6,7 +6,7 @@ import chess.domain.location.Location;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
-import java.util.regex.Pattern;
+import java.util.function.Consumer;
 
 public class ChessGame {
     private State state;
@@ -19,27 +19,25 @@ public class ChessGame {
         return state.isRunning();
     }
 
-    public void execute(Command command) {
+    public Consumer<Board> execute(Command command) {
         if (GameCommand.isStart(command.getGameCommand())) {
             start();
+            return OutputView::printChessBoard;
         }
-
-        if (GameCommand.isEnd(command.getGameCommand())) {
-            end();
-        }
-
         if (GameCommand.isMove(command.getGameCommand())) {
             move(command.getSourceLocation(), command.getTargetLocation());
+            return OutputView::printChessBoard;
         }
-
-        if (GameCommand.isStatus(command.getGameCommand())){
+        if (GameCommand.isStatus(command.getGameCommand())) {
             status();
+            return board -> OutputView.printScore(state.getScore());
         }
+        end();
+        return board -> System.out.println();
     }
 
     private void move(Location source, Location target) {
         this.state = state.move(source, target);
-        OutputView.printChessBoard(state.getBoard());
     }
 
     private void start() {
@@ -47,8 +45,6 @@ public class ChessGame {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 실행 중 입니다.");
         }
         this.state = state.start();
-        Board board = state.getBoard();
-        OutputView.printChessBoard(board);
     }
 
     private void end() {
@@ -62,9 +58,9 @@ public class ChessGame {
         if (!isRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
-
-        OutputView.printScore(state.getScore());
-
     }
 
+    public Board getBoard() {
+        return state.getBoard();
+    }
 }
