@@ -5,6 +5,10 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int FIRST_BEGIN = 0;
+    private static final int FIRST_END = 1;
+    private static final int SECOND_BEGIN = 1;
+    private static final int SECOND_END = 2;
     private final Column column;
     private final Row row;
 
@@ -14,7 +18,8 @@ public class Position {
     }
 
     public Position(String value) {
-        this(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
+        this(Column.of(value.substring(FIRST_BEGIN, FIRST_END)),
+                Row.of(value.substring(SECOND_BEGIN, SECOND_END)));
     }
 
     public Direction findDirection(Position position, boolean isOne) {

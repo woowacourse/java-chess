@@ -40,16 +40,18 @@ public class Pawn extends Piece {
     public void movable(Position from, Position to) {
         Direction direction = from.findDirection(to, true);
 
+        validFirstMove(from, direction);
+
+        validMove(direction);
+    }
+
+    private void validFirstMove(Position from, Direction direction) {
         if (direction == NORTH_NORTH && !isWhiteStart(from)) {
             throw new IllegalArgumentException("위로 두칸은 white Pawn 이 첫수일 경우만 가능합니다.");
         }
 
         if (direction == SOUTH_SOUTH && !isBlackStart(from)) {
             throw new IllegalArgumentException("아래로 두칸은 black Pawn 이 첫수일 경우만 가능합니다.");
-        }
-
-        if (!directions.contains(direction)) {
-            throw new IllegalArgumentException("Pawn 이 움직일 수 있는 방향이 아닙니다.");
         }
     }
 
@@ -59,6 +61,12 @@ public class Pawn extends Piece {
 
     private boolean isBlackStart(Position position) {
         return super.isSameTeam(BLACK) && position.isSameRow(Row.SEVEN);
+    }
+
+    private void validMove(Direction direction) {
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException("Pawn 이 움직일 수 있는 방향이 아닙니다.");
+        }
     }
 
     @Override

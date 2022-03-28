@@ -29,7 +29,7 @@ public class ChessGame {
         }
     }
 
-    private boolean convert(Command command) {
+    private boolean convert(Command command) { // 이게 캡슐화 위반이다..
         Menu menu = command.getMenu();
 
         if (menu.isEnd() || board.checkmate()) {

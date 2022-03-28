@@ -3,16 +3,23 @@ package chess.view;
 import chess.domain.position.Position;
 
 public class Command {
-    Menu menu;
-    Position beforePosition;
-    Position afterPosition;
+
+    private static final String EMPTY_REGEX = " ";
+    private static final int BEFORE_POSITION = 1;
+    private static final int AFTER_POSITION = 2;
+    private static final int MENU_INDEX = 0;
+
+    private final Menu menu;
+    private Position beforePosition;
+    private Position afterPosition;
 
     public Command(String value) {
-        String[] stringArray = value.split(" ");
-        menu = Menu.of(stringArray[0]);
+        String[] stringArray = value.split(EMPTY_REGEX);
+        menu = Menu.of(stringArray[MENU_INDEX]);
+
         if (menu.isMove()) {
-            beforePosition = new Position(stringArray[1]);
-            afterPosition = new Position(stringArray[2]);
+            beforePosition = new Position(stringArray[BEFORE_POSITION]);
+            afterPosition = new Position(stringArray[AFTER_POSITION]);
         }
     }
 

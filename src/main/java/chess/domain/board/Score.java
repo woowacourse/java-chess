@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class Score {
 
+    private static final double CONVERT_PAWN_SCORE = 0.5;
+    private static final int DUPLICATION_REMOVE_VALUE = 2;
+
     private final Map<Team, Double> value = new HashMap<>();
 
     public Score(Map<Position, Piece> board) {
@@ -33,9 +36,9 @@ public class Score {
                 .flatMap(pawn -> pawns
                         .stream()
                         .filter(target -> (!target.equals(pawn)) && target.isSameColumn(pawn)))
-                .count() / 2;
+                .count() / DUPLICATION_REMOVE_VALUE;
 
-        return count * -0.5;
+        return count * -CONVERT_PAWN_SCORE;
     }
 
     private List<Position> findPawnPositions(Map<Position, Piece> board, Team team) {
