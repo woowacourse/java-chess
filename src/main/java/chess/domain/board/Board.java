@@ -33,12 +33,8 @@ public class Board {
         Position kingPosition = findKingPosition(turn);
         List<Position> kingPaths = board.get(kingPosition).findMovablePosition(kingPosition);
 
-        for (Position to : kingPaths) {
-            if (!checkAnyMatch(to)) {
-                return false;
-            }
-        }
-        return true;
+        return kingPaths.stream()
+                .allMatch(this::checkAnyMatch);
     }
 
     private boolean checkAnyMatch(Position to) {
@@ -57,7 +53,8 @@ public class Board {
     private Position findKingPosition(Team team) {
         return board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team) && entry.getValue().isKing())
+                .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team) && entry.getValue()
+                        .isKing())
                 .map(Entry::getKey)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
@@ -112,10 +109,14 @@ public class Board {
         Position current = from.move(direction);
 
         while (!current.equals(to)) {
-            if (board.get(current) != null) {
-                throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
-            }
+            haveOtherPiece(board.get(current));
             current = current.move(direction);
+        }
+    }
+
+    private void haveOtherPiece(Piece piece) {
+        if (piece != null) {
+            throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
         }
     }
 

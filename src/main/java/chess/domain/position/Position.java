@@ -41,7 +41,6 @@ public class Position {
     private static void validInput(String value) {
         if (value.length() != 2) {
             throw new IllegalArgumentException("올바른 값으로 Position 을 생성해주세요.");
-
         }
     }
 
