@@ -3,7 +3,7 @@ package chess.state;
 import chess.controller.ChessService;
 import java.util.List;
 
-public class Start extends Running {
+public final class Start extends Running {
 
     @Override
     public boolean isEnd() {

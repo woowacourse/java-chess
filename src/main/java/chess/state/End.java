@@ -4,7 +4,7 @@ import chess.controller.ChessService;
 import chess.model.GameStartCommand;
 import java.util.List;
 
-public class End implements GameState {
+public final class End implements GameState {
 
     @Override
     public GameState changeStatus(GameStartCommand command) {

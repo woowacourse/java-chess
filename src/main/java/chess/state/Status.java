@@ -4,7 +4,7 @@ import chess.controller.ChessService;
 import chess.model.GameStartCommand;
 import java.util.List;
 
-public class Status extends Running {
+public final class Status extends Running {
 
     @Override
     public boolean isEnd() {

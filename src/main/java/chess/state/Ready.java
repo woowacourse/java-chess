@@ -5,7 +5,7 @@ import chess.model.GameStartCommand;
 import java.util.List;
 
 
-public class Ready implements GameState {
+public final class Ready implements GameState {
 
     @Override
     public GameState changeStatus(GameStartCommand command) {
@@ -14,6 +14,9 @@ public class Ready implements GameState {
         }
         if (command.isMove()) {
             return new Move();
+        }
+        if (command.isStatus()) {
+            return new Status();
         }
         return new End();
     }
