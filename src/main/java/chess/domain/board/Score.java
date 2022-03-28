@@ -49,13 +49,7 @@ public class Score {
     }
 
     public List<Team> findWinTeam() {
-        if (value.get(Team.WHITE) > value.get(Team.BLACK)) {
-            return List.of(Team.WHITE);
-        }
-        if (value.get(Team.WHITE) < value.get(Team.BLACK)) {
-            return List.of(Team.BLACK);
-        }
-        return List.of(Team.values());
+        return Team.findWinner(value.get(Team.WHITE), value.get(Team.BLACK));
     }
 
     public Map<Team, Double> getValue() {

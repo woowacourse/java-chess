@@ -73,25 +73,30 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        Piece piece = board.get(from);
-        Piece toPiece = board.get(to);
-        Direction direction = piece.findDirection(from, to);
-
-        validNowTurn(piece);
-        piece.movable(from, to);
-        piece.validArrive(board.get(to), direction);
-        validPath(from, to, direction);
-
-        board.put(to, piece);
-        board.remove(from);
-        validCheckAfterMove(from, to, piece, toPiece);
+        validCanMove(from, to);
+        validCheckAfterMove(from, to);
         turn = turn.change();
     }
 
-    private void validCheckAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
+    private void validCanMove(Position from, Position to) {
+        Piece fromPiece = board.get(from);
+        Piece toPiece = board.get(to);
+        Direction direction = fromPiece.findDirection(from, to);
+
+        validNowTurn(fromPiece);
+        fromPiece.movable(from, to);
+        fromPiece.validArrive(toPiece, direction);
+        validPath(from, to, direction);
+    }
+
+    private void validCheckAfterMove(Position from, Position to) {
+        Piece fromPiece = board.get(from);
+        Piece toPiece = board.get(to);
+        board.put(to, fromPiece);
+        board.remove(from);
         if (check()) {
             board.put(to, toPiece);
-            board.put(from, piece);
+            board.put(from, fromPiece);
             throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
         }
     }
