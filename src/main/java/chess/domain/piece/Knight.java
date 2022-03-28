@@ -20,15 +20,6 @@ public class Knight extends ChessPiece {
         return Math.abs(highColumn - lowColumn);
     }
 
-    public boolean isSamePosition(ChessBoardPosition nextPosition) {
-        return position.equals(nextPosition);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        position = targetPosition;
-    }
-
     @Override
     public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());

@@ -14,15 +14,6 @@ public class Bishop extends ChessPiece {
         super(NAME, SCORE, team, position);
     }
 
-    public boolean isSamePosition(ChessBoardPosition nextPosition) {
-        return position.equals(nextPosition);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        position = targetPosition;
-    }
-
     @Override
     public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         return isReachable(targetPosition) && isUnobstructed(targetPosition, whiteChessMen, blackChessMen);

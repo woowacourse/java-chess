@@ -10,8 +10,8 @@ public class Pawn extends ChessPiece {
     private static final int OPTIONAL_DISTANCE = 1;
     private static final int WHITE_INITIAL_ROW_POSITION = 7;
     private static final int BLACK_INITIAL_ROW_POSITION = 2;
+    private static final double SCORE = 1.0;
     private static final String NAME = "PAWN";
-    private static final double SCORE = 1;
 
     public Pawn(Team team, ChessBoardPosition position) {
         super(NAME, SCORE, team, position);
@@ -29,17 +29,8 @@ public class Pawn extends ChessPiece {
         return highRow - lowRow;
     }
 
-    public boolean isSamePosition(ChessBoardPosition anotherPosition) {
-        return position.equals(anotherPosition);
-    }
-
     private int calculateColumnDistance(char highColumn, char lowColumn) {
         return Math.abs(highColumn - lowColumn);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        position = targetPosition;
     }
 
     @Override

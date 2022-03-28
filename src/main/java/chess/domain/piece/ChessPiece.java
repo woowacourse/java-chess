@@ -20,14 +20,8 @@ public abstract class ChessPiece {
 
     public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen);
 
-    public abstract void move(ChessBoardPosition targetPosition);
-
-    public String getName() {
-        return name;
-    }
-
-    public ChessBoardPosition getPosition() {
-        return position;
+    public void move(ChessBoardPosition targetPosition) {
+        this.position = targetPosition;
     }
 
     public boolean isSamePosition(ChessBoardPosition other) {
@@ -40,6 +34,18 @@ public abstract class ChessPiece {
 
     public boolean enemyExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen enemyChessMen) {
         return enemyChessMen.existChessPieceAt(targetPosition);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ChessBoardPosition getPosition() {
+        return position;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override
@@ -58,9 +64,5 @@ public abstract class ChessPiece {
     @Override
     public int hashCode() {
         return Objects.hash(name, team, position);
-    }
-
-    public double getScore() {
-        return score;
     }
 }

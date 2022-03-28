@@ -38,20 +38,6 @@ public class Queen extends ChessPiece {
         return rowDistance != columnDistance;
     }
 
-    public boolean isSamePosition(ChessBoardPosition nextPosition) {
-        return position.equals(nextPosition);
-    }
-
-    @Override
-    public void move(ChessBoardPosition targetPosition) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
-        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
-        if (isNotEightCardinalMovement(rowDistance, columnDistance)) {
-            throw new IllegalArgumentException(UNEXPECTED_MOVEMENT_EXCEPTION);
-        }
-        position = targetPosition;
-    }
-
     @Override
     public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
         return isReachable(targetPosition) && isUnobstructed(targetPosition, whiteChessMen, blackChessMen);
