@@ -24,15 +24,12 @@ public class Pawn extends Piece {
         if (!isForward(to)) {
             return false;
         }
-
         if (getPosition().isVerticalWay(to) && isValidDistance(to)) {
             return pieces.stream().noneMatch(piece -> piece.isSamePosition(to));
         }
-
         if (getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == ONE_SQUARE) {
             return pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
         }
-
         return false;
     }
 
