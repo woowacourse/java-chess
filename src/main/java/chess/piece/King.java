@@ -6,7 +6,7 @@ import java.util.List;
 
 public class King extends Piece{
 
-    private King(Color color, Position position) {
+    public King(Color color, Position position) {
         super(color, position);
     }
 
