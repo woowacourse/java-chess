@@ -21,17 +21,17 @@ public final class Rook extends MultipleMovablePiece {
     }
 
     @Override
-    public final double score() {
+    public double score() {
         return ROOK_SCORE;
     }
 
     @Override
-    public final boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 
     @Override
-    public final boolean isKing() {
+    public boolean isKing() {
         return false;
     }
 }
