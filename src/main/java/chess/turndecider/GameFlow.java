@@ -2,7 +2,7 @@ package chess.turndecider;
 
 import chess.domain.piece.Piece;
 
-public interface TurnDecider {
+public interface GameFlow {
 
     boolean isCorrectTurn(Piece sourcePiece);
 

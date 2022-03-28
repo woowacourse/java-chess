@@ -26,8 +26,8 @@ import chess.domain.board.utils.BoardFactory;
 import chess.domain.board.utils.ProductionBoardFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.turndecider.AlternatingTurnDecider;
-import chess.turndecider.FixedTurnDecider;
+import chess.turndecider.AlternatingGameFlow;
+import chess.turndecider.FixedGameFlow;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(boardFactory.create(), new FixedTurnDecider());
+        board = new Board(boardFactory.create(), new FixedGameFlow());
     }
 
     @Test
@@ -180,7 +180,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {
-        Board board = new Board(boardFactory.create(), new AlternatingTurnDecider());
+        Board board = new Board(boardFactory.create(), new AlternatingGameFlow());
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }
@@ -188,7 +188,7 @@ public class BoardTest {
     @Test
     @DisplayName("폰이 같은 File에 두 개 이상 있을 경우 각 0.5점으로 계산한다.")
     void when_pawns_in_same_file() {
-        Board board = new Board(boardFactory.create(), new AlternatingTurnDecider());
+        Board board = new Board(boardFactory.create(), new AlternatingGameFlow());
 
         board.move(new Position(A, TWO), new Position(A, FOUR));
         board.move(new Position(B, SEVEN), new Position(B, FIVE));

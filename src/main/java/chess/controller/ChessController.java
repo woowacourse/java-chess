@@ -8,10 +8,10 @@ import chess.domain.board.Board;
 import chess.domain.board.utils.BoardFactory;
 import chess.domain.board.utils.ProductionBoardFactory;
 import chess.dto.Request;
-import chess.turndecider.TurnDecider;
+import chess.turndecider.GameFlow;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.turndecider.AlternatingTurnDecider;
+import chess.turndecider.AlternatingGameFlow;
 
 public class ChessController {
 
@@ -20,8 +20,8 @@ public class ChessController {
 
         BoardFactory boardFactory = ProductionBoardFactory.getInstance();
 
-        TurnDecider turnDecider = new AlternatingTurnDecider();
-        Board board = new Board(boardFactory.create(), turnDecider);
+        GameFlow gameFlow = new AlternatingGameFlow();
+        Board board = new Board(boardFactory.create(), gameFlow);
         Command beginCommand = InputView.inputStartCommand();
 
         if (beginCommand == END) {
@@ -29,7 +29,7 @@ public class ChessController {
         }
 
         OutputView.printChessGameBoard(board.getBoard());
-        while (turnDecider.isRunning()) {
+        while (gameFlow.isRunning()) {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand() == END) {
                 break;

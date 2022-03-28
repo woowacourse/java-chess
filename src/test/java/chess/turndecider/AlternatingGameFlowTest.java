@@ -12,13 +12,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import chess.domain.piece.constant.PieceColor;
 import chess.domain.piece.Pawn;
 
-class AlternatingTurnDeciderTest {
+class AlternatingGameFlowTest {
 
-    private AlternatingTurnDecider turnDecider;
+    private AlternatingGameFlow turnDecider;
 
     @BeforeEach
     void setUp() {
-        turnDecider = new AlternatingTurnDecider();
+        turnDecider = new AlternatingGameFlow();
     }
 
     @DisplayName("처음 턴은 백이므로 해당 턴에는 흑은 선택될 수 없다")

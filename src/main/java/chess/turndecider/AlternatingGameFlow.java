@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.turndecider.state.State;
 import chess.turndecider.state.WhiteTeam;
 
-public class AlternatingTurnDecider implements TurnDecider {
+public class AlternatingGameFlow implements GameFlow {
 
     private State currentState = new WhiteTeam();
 

@@ -11,7 +11,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.turndecider.TurnDecider;
+import chess.turndecider.GameFlow;
 
 public class Board {
 
@@ -19,11 +19,11 @@ public class Board {
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
 
     private final Map<Position, Piece> board;
-    private final TurnDecider turnDecider;
+    private final GameFlow gameFlow;
 
-    public Board(Map<Position, Piece> board, TurnDecider turnDecider) {
+    public Board(Map<Position, Piece> board, GameFlow gameFlow) {
         this.board = board;
-        this.turnDecider = turnDecider;
+        this.gameFlow = gameFlow;
     }
 
     public boolean move(Position source, Position target) {
@@ -31,12 +31,12 @@ public class Board {
         validateSourceNotEmpty(source);
         boolean isGameFinished = board.get(target) instanceof King;
         changePieces(source, target);
-        turnDecider.nextState(isGameFinished);
+        gameFlow.nextState(isGameFinished);
         return isGameFinished;
     }
 
     private void turnDecide(Position source) {
-        if (!turnDecider.isCorrectTurn(board.get(source))) {
+        if (!gameFlow.isCorrectTurn(board.get(source))) {
             throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
         }
     }
@@ -59,7 +59,7 @@ public class Board {
         if (targetPiece.equals(EMPTY_PIECE)) {
             return MoveType.EMPTY;
         }
-        if (turnDecider.isCorrectTurn(targetPiece)) {
+        if (gameFlow.isCorrectTurn(targetPiece)) {
             return MoveType.FRIENDLY;
         }
         return MoveType.ENEMY;
@@ -87,7 +87,7 @@ public class Board {
     public double calculateScore() {
         return board.values()
             .stream()
-            .filter(turnDecider::isCorrectTurn)
+            .filter(gameFlow::isCorrectTurn)
             .mapToDouble(Piece::getScore)
             .sum() - adjustPawnScore();
     }
@@ -98,7 +98,7 @@ public class Board {
             long count = reverseValues().stream()
                 .map(rank -> new Position(file, rank))
                 .filter(position -> board.get(position) instanceof Pawn
-                    && turnDecider.isCorrectTurn(board.get(position)))
+                    && gameFlow.isCorrectTurn(board.get(position)))
                 .count();
 
             if (count > 1) {
