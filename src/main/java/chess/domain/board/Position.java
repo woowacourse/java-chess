@@ -7,108 +7,110 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    private final Column column;
-    private final Row row;
+	private final Column column;
+	private final Row row;
 
-    public Position(Column column, Row row) {
-        this.column = column;
-        this.row = row;
-    }
+	public Position(Column column, Row row) {
+		this.column = column;
+		this.row = row;
+	}
 
-    public static Position from(String rawPosition) {
-        String rawColumn = rawPosition.substring(0, 1);
-        String rawRow = rawPosition.substring(1);
-        return new Position(Column.from(rawColumn), Row.from(rawRow));
-    }
+	public static Position from(String rawPosition) {
+		String rawColumn = rawPosition.substring(0, 1);
+		String rawRow = rawPosition.substring(1);
+		return new Position(Column.from(rawColumn), Row.from(rawRow));
+	}
 
-    public int columnDistance(Position otherPosition) {
-        return this.column.distance(otherPosition.column);
-    }
+	public int columnDistance(Position otherPosition) {
+		return this.column.distance(otherPosition.column);
+	}
 
-    public int rowDistance(Position otherPosition) {
-        return this.row.distance(otherPosition.row);
-    }
+	public int rowDistance(Position otherPosition) {
+		return this.row.distance(otherPosition.row);
+	}
 
-    public int rowDirectedDistance(Position otherPosition) {
-        return this.row.directedDistance(otherPosition.row);
-    }
+	public int rowDirectedDistance(Position otherPosition) {
+		return this.row.directedDistance(otherPosition.row);
+	}
 
-    public Position flipHorizontally() {
-        return new Position(this.column.flip(), this.row);
-    }
+	public Position flipHorizontally() {
+		return new Position(this.column.flip(), this.row);
+	}
 
-    public Position flipVertically() {
-        return new Position(this.column, this.row.flip());
-    }
+	public Position flipVertically() {
+		return new Position(this.column, this.row.flip());
+	}
 
-    public Position flipDiagonally() {
-        return new Position(this.column.flip(), this.row.flip());
-    }
+	public Position flipDiagonally() {
+		return new Position(this.column.flip(), this.row.flip());
+	}
 
-    public boolean isSameRowWith(Position otherPosition) {
-        return this.row == otherPosition.row;
-    }
+	public List<Position> pathTo(Position otherPosition) {
+		List<Row> rowPath = this.row.pathTo(otherPosition.row);
+		List<Column> columnPath = this.column.pathTo(otherPosition.column);
 
-    public boolean isSameColumnWith(Position otherPosition) {
-        return this.column == otherPosition.column;
-    }
+		if (rowPath.size() == 0) {
+			return findHorizontalPath(columnPath);
+		}
+		if (columnPath.size() == 0) {
+			return findVerticalPath(rowPath);
+		}
+		return findDiagonalPath(rowPath, columnPath);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Position that = (Position) o;
-        return column == that.column && row == that.row;
-    }
+	private List<Position> findHorizontalPath(List<Column> columnPath) {
+		return columnPath.stream()
+			.map(column -> new Position(column, this.row))
+			.collect(Collectors.toList());
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(column, row);
-    }
+	private List<Position> findVerticalPath(List<Row> rowPath) {
+		return rowPath.stream()
+			.map(row -> new Position(this.column, row))
+			.collect(Collectors.toList());
+	}
 
-    public Column getColumn() {
-        return column;
-    }
+	private List<Position> findDiagonalPath(List<Row> rowPath, List<Column> columnPath) {
+		return IntStream.range(0, rowPath.size())
+			.mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+			.collect(Collectors.toList());
+	}
 
-    public Row getRow() {
-        return row;
-    }
+	public Column getColumn() {
+		return column;
+	}
 
-    @Override
-    public String toString() {
-        return "" + column + row;
-    }
+	public Row getRow() {
+		return row;
+	}
 
-    @Override
-    public int compareTo(Position o) {
-        return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
-                .thenComparing(Position::getColumn)
-                .compare(this, o);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Position that = (Position)o;
+		return column == that.column && row == that.row;
+	}
 
-    public List<Position> pathTo(Position otherPosition) {
-        List<Row> rowPath = this.row.pathTo(otherPosition.row);
-        List<Column> columnPath = this.column.pathTo(otherPosition.column);
+	@Override
+	public int hashCode() {
+		return Objects.hash(column, row);
+	}
 
-        if (rowPath.size() == 0) {
-            return columnPath.stream()
-                    .map(column -> new Position(column, this.row))
-                    .collect(Collectors.toList());
-        }
+	@Override
+	public String toString() {
+		return "" + column + row;
+	}
 
-        if (columnPath.size() == 0) {
-            return rowPath.stream()
-                    .map(row -> new Position(this.column, row))
-                    .collect(Collectors.toList());
-        }
-
-        return IntStream.range(0, rowPath.size())
-                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
-                .collect(Collectors.toList());
-    }
+	@Override
+	public int compareTo(Position o) {
+		return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
+			.thenComparing(Position::getColumn)
+			.compare(this, o);
+	}
 }
 
