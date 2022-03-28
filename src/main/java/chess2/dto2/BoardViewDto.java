@@ -7,7 +7,6 @@ import chess2.domain2.board2.Board;
 import chess2.domain2.board2.Position;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.domain2.board2.piece2.PieceDisplayUtil;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +22,10 @@ public class BoardViewDto {
     }
 
     private static List<String> toBoardDisplay(Map<Position, Piece> board) {
-        List<String> boardDisplay = new ArrayList<>();
+        List<String> boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
+                .mapToObj(rankIdx -> toRowDisplay(board, rankIdx))
+                .collect(Collectors.toList());
 
-        for (int rankIdx = 0; rankIdx < RANKS_TOTAL_SIZE; rankIdx++) {
-            boardDisplay.add(toRowDisplay(board, rankIdx));
-        }
         Collections.reverse(boardDisplay);
         return boardDisplay;
     }
