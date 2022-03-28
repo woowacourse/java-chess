@@ -33,14 +33,14 @@ public class Pawn extends Piece {
         return getPath(destination, direction, position.getCol(), position.getRow());
     }
 
-    private Direction findDirection(List<Direction> directions, Position destination) {
-        for (Direction direction : directions) {
-            if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
-                    && destination.getCol().getDifference(position.getCol()) == direction.getXDegree()) {
-                return direction;
-            }
+    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
+        List<Position> positions = new ArrayList<>();
+        while (!(col == destination.getCol() && row == destination.getRow())) {
+            col = col.plusColumn(direction.getXDegree());
+            row = row.plusRow(direction.getYDegree());
+            positions.add(new Position(col, row));
         }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        return positions;
     }
 
     private boolean isFirstTurn() {
@@ -50,14 +50,18 @@ public class Pawn extends Piece {
         return isBlackTeam() && position.getRow() == Row.SEVEN;
     }
 
-    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
-        List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
-            col = col.plusColumn(direction.getXDegree());
-            row = row.plusRow(direction.getYDegree());
-            positions.add(new Position(col, row));
-        }
-        return positions;
+    private Direction findDirection(List<Direction> directions, Position destination) {
+        int colDiff = destination.getCol().getDifference(position.getCol());
+        int rowDiff = destination.getRow().getDifference(position.getRow());
+
+        return directions.stream()
+                .filter(direction -> isMatch(colDiff, rowDiff, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
+    }
+
+    private boolean isMatch(int colDiff, int rowDiff, Direction direction) {
+        return rowDiff == direction.getYDegree() && colDiff == direction.getXDegree();
     }
 
     @Override

@@ -35,6 +35,6 @@ public class OutputView {
 
     public static void printStatus(double teamScore, double score) {
         System.out.printf("WHITE 팀 점수는%.1f\n" +
-                "BLACK 팀 점수는%.1f\n", teamScore, score);
+                "BLACK 팀 점수는%.1f\n", teamScore, score + "\n");
     }
 }

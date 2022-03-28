@@ -12,13 +12,17 @@ public class Knight extends Piece {
     }
 
     public void validateIsPossible(Position destination) {
-        for (Direction direction : Direction.knightDirection()) {
-            if (position.getRow().getDifference(destination.getRow()) == direction.getYDegree()
-            && position.getCol().getDifference(destination.getCol()) == direction.getXDegree()) {
-                return;
-            }
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        int colDiff = destination.getCol().getDifference(position.getCol());
+        int rowDiff = destination.getRow().getDifference(position.getRow());
+
+        Direction.knightDirection().stream()
+                .filter(direction -> isMatch(colDiff, rowDiff, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
+    }
+
+    private boolean isMatch(int colDiff, int rowDiff, Direction direction) {
+        return rowDiff == direction.getYDegree() && colDiff == direction.getXDegree();
     }
 
     @Override

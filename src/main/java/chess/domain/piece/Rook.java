@@ -16,6 +16,7 @@ public class Rook extends JumpPiece {
     protected Direction findDirection(Position destination) {
         int colDiff = destination.getCol().getDifference(position.getCol());
         int rowDiff = destination.getRow().getDifference(position.getRow());
+
         if (colDiff == 0) {
             return findDirectionWithRowDiff(rowDiff);
         }

@@ -12,14 +12,13 @@ public class Bishop extends JumpPiece {
 
     @Override
     protected Direction findDirection(Position destination) {
-        for (Direction direction : Direction.diagonalDirection()) {
-            if (destination.getCol().getDifference(position.getCol()) * direction.getXDegree()
-                    == (destination.getRow().getDifference(position.getRow()) * direction.getYDegree())
-                    && (destination.getRow().getDifference(position.getRow()) * direction.getYDegree()) > 0) {
-                return direction;
-            }
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        int colDiff = destination.getCol().getDifference(position.getCol());
+        int rowDiff = destination.getRow().getDifference(position.getRow());
+
+        return Direction.diagonalDirection().stream()
+                .filter(direction -> isMatch(colDiff, rowDiff, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
     }
 
     private boolean isMatch(int colDiff, int rowDiff, Direction direction) {

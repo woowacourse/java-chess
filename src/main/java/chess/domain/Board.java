@@ -116,7 +116,7 @@ public class Board {
         double totalScore = 0;
         Map<Column, Integer> pawnNeighbors = new EnumMap<>(Column.class);
         for (Row row : board.keySet()) {
-            totalScore += board.get(row).calculateTeamTotalScore(team);
+            totalScore += board.get(row).calculateRankTotalScore(team);
             findNeighborPawns(team, row, pawnNeighbors);
         }
         return reCalculateWithPawnNeighbors(totalScore, pawnNeighbors);

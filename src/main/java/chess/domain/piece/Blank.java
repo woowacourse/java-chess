@@ -14,11 +14,11 @@ public class Blank extends Piece {
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {
-        EnumMap<Column, Piece> pawns = new EnumMap<>(Column.class);
+        EnumMap<Column, Piece> blanks = new EnumMap<>(Column.class);
         for (Column column : Column.values()) {
-            pawns.put(column, new Blank(team, new Position(column, Row.find(row))));
+            blanks.put(column, new Blank(team, new Position(column, Row.find(row))));
         }
-        return pawns;
+        return blanks;
     }
 
     @Override

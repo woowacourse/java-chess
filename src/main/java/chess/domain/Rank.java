@@ -51,7 +51,7 @@ public class Rank {
         pieces.put(column, piece);
     }
 
-    public double calculateTeamTotalScore(Team team) {
+    public double calculateRankTotalScore(Team team) {
         double totalScore = 0;
         for (Column column : pieces.keySet()) {
             totalScore = plusSameTeamPieceScore(team, totalScore, column);
