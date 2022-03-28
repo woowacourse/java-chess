@@ -5,10 +5,11 @@ import chess.domain.board.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
 	private static final String BLACK_SYMBOL = "P";
 	private static final String WHITE_SYMBOL = "p";
+	private static final int PAWN_SCORE = 1;
 
 	public Pawn(final Team team) {
 		super(team);
@@ -53,6 +54,6 @@ public class Pawn extends Piece {
 
 	@Override
 	public double getScore() {
-		return 1;
+		return PAWN_SCORE;
 	}
 }

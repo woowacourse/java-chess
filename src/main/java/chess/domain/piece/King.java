@@ -4,10 +4,11 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
 
 	private static final String BLACK_SYMBOL = "K";
 	private static final String WHITE_SYMBOL = "k";
+	private static final int KING_SCORE = 0;
 
 	public King(final Team team) {
 		super(team);
@@ -47,6 +48,6 @@ public class King extends Piece {
 
 	@Override
 	public double getScore() {
-		return 0;
+		return KING_SCORE;
 	}
 }

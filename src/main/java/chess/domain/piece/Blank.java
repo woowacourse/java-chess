@@ -2,10 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-public class Blank extends Piece {
+public final class Blank extends Piece {
 
 	private static final String SYMBOL = ".";
-	private static final String CAN_NOT_MOVE_ERROR = "빈 곳은 이동이 불가능 합니다.";
+	private static final String CAN_NOT_MOVE_ERROR = "해당 클래스는 이동이 불가능 합니다.";
+	private static final int BLANK_SCORE = 0;
 
 	public Blank() {
 		super(Team.NEUTRALITY);
@@ -38,6 +39,6 @@ public class Blank extends Piece {
 
 	@Override
 	public double getScore() {
-		return 0;
+		return BLANK_SCORE;
 	}
 }

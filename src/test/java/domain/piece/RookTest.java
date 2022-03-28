@@ -10,6 +10,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class RookTest {
 
@@ -25,11 +27,12 @@ public class RookTest {
 		assertThat(rook.getSymbol()).isEqualTo("r");
 	}
 
-	@Test
-	void validateMovement() {
-		Position source = Position.of(1, 1);
+	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@CsvSource(value = {"8, 4", "4, 5", "3, 4", "4, 3"})
+	void validateMovement(int targetRow, int targetCol) {
+		Position source = Position.of(4, 4);
 		Piece sourceRook = new Rook(Team.BLACK);
-		Position target = Position.of(1, 7);
+		Position target = Position.of(targetRow, targetCol);
 		Piece targetRook = new Rook(Team.WHITE);
 
 		assertDoesNotThrow(() -> sourceRook.validateMovement(source, target, targetRook));
@@ -45,5 +48,17 @@ public class RookTest {
 		assertThatThrownBy(() -> rook.validateMovement(source, target, blank))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
+	}
+
+	@Test
+	void validateCatchAllyException() {
+		Position source = Position.of(4, 4);
+		Piece sourceRook = new Rook(Team.BLACK);
+		Position target = Position.of(5, 4);
+		Piece targetRook = new Rook(Team.BLACK);
+
+		assertThatThrownBy(() -> sourceRook.validateMovement(source, target, targetRook))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
 	}
 }

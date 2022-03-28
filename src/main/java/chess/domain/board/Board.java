@@ -89,7 +89,7 @@ public class Board {
 		List<Piece> pieces = new ArrayList<>();
 		for (int row = 1; row <= 8; row++) {
 			Position position = Position.of(row, column);
-			if (board.get(position).isSameTeam(team)) {
+			if (board.get(position).isAlly(team)) {
 				pieces.add(board.get(position));
 			}
 		}

@@ -30,13 +30,13 @@ public abstract class Running implements State {
 	}
 
 	private void validateSourcePiece(final Piece piece) {
-		if (!piece.isSameTeam(team)) {
+		if (!piece.isAlly(team)) {
 			throw new IllegalArgumentException(WRONG_SOURCE_ERROR);
 		}
 	}
 
 	private void validateTargetPiece(final Piece piece) {
-		if (piece.isSameTeam(team)) {
+		if (piece.isAlly(team)) {
 			throw new IllegalArgumentException(WRONG_TARGET_ERROR);
 		}
 	}

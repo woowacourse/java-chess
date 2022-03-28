@@ -2,10 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
 	private static final String BLACK_SYMBOL = "Q";
 	private static final String WHITE_SYMBOL = "q";
+	private static final int QUEEN_SCORE = 9;
 
 	public Queen(final Team team) {
 		super(team);
@@ -43,6 +44,6 @@ public class Queen extends Piece {
 
 	@Override
 	public double getScore() {
-		return 9;
+		return QUEEN_SCORE;
 	}
 }

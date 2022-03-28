@@ -8,14 +8,29 @@ public abstract class Piece {
 
 	protected static final String MOVEMENT_ERROR = "해당 기물은 그곳으로 이동할 수 없습니다.";
 
-	private static final String CAN_NOT_CATCH_Ally_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
+	private static final String CAN_NOT_CATCH_AllY_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
 
 	private final String symbol;
 	protected final Team team;
 
-	public Piece(final Team team) {
+	protected Piece(final Team team) {
 		this.symbol = createSymbol(team);
 		this.team = team;
+	}
+
+	public final void validateMovement(final Position source, final Position target, final Piece targetPiece) {
+		validateDirection(source, target, targetPiece);
+		validateCatchAlly(targetPiece);
+	}
+
+	private void validateCatchAlly(final Piece targetPiece) {
+		if (isAlly(targetPiece.team)) {
+			throw new IllegalArgumentException(CAN_NOT_CATCH_AllY_ERROR);
+		}
+	}
+
+	public final boolean isAlly(final Team team) {
+		return this.team == team;
 	}
 
 	public Direction getDirection(final Position source, final Position target) {
@@ -24,23 +39,8 @@ public abstract class Piece {
 		return Direction.find(differenceRow, differenceColumn);
 	}
 
-	public String getSymbol() {
+	public final String getSymbol() {
 		return symbol;
-	}
-
-	public final void validateMovement(final Position source, final Position target, final Piece targetPiece) {
-		validateCatchAlly(targetPiece);
-		validateDirection(source, target, targetPiece);
-	}
-
-	private void validateCatchAlly(final Piece targetPiece) {
-		if (this.team == targetPiece.team) {
-			throw new IllegalArgumentException(CAN_NOT_CATCH_Ally_ERROR);
-		}
-	}
-
-	public boolean isSameTeam(final Team team) {
-		return this.team == team;
 	}
 
 	protected abstract String createSymbol(final Team team);

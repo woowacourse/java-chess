@@ -27,10 +27,10 @@ public class QueenTest {
 		assertThat(queen.getSymbol()).isEqualTo("q");
 	}
 
-	@ParameterizedTest
-	@CsvSource(value = {"4, 4, 8, 8", "4, 4, 3, 5", "4, 4, 3, 3", "4, 4, 5, 3"})
-	void validateMovement(int sourceRow, int sourceCol, int targetRow, int targetCol) {
-		Position source = Position.of(sourceRow, sourceCol);
+	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@CsvSource(value = {"8, 8", "3, 5", "3, 3", "5, 3", "8, 4", "3, 4", "4, 5", "4, 3"})
+	void validateMovement(int targetRow, int targetCol) {
+		Position source = Position.of(4, 4);
 		Piece sourceQueen = new Queen(Team.BLACK);
 		Position target = Position.of(targetRow, targetCol);
 		Piece targetQueen = new Queen(Team.WHITE);
@@ -48,5 +48,17 @@ public class QueenTest {
 		assertThatThrownBy(() -> queen.validateMovement(source, target, blank))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
+	}
+
+	@Test
+	void validateCatchAllyException() {
+		Position source = Position.of(4, 4);
+		Piece sourceQueen = new Queen(Team.BLACK);
+		Position target = Position.of(5, 4);
+		Piece targetQueen = new Queen(Team.BLACK);
+
+		assertThatThrownBy(() -> sourceQueen.validateMovement(source, target, targetQueen))
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
 	}
 }
