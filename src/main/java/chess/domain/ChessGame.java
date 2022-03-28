@@ -27,6 +27,14 @@ public class ChessGame {
         state = state.stop();
     }
 
+    public boolean isExistKing() {
+        return chessBoard.isExistKing();
+    }
+
+    public Team getWinTeam() {
+        return chessBoard.findWinTeam();
+    }
+
     public void progress(Command command) {
         if (command.isStart()) {
             start();

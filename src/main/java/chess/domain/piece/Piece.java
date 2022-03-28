@@ -26,4 +26,6 @@ public abstract class Piece {
     public abstract double getScore();
 
     public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 }

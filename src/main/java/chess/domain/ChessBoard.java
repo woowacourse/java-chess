@@ -112,4 +112,23 @@ public class ChessBoard {
     public boolean isExist(Position target) {
         return cells.containsKey(target);
     }
+
+    public boolean isExistKing() {
+        long kingCount = cells.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return kingCount == 2;
+    }
+
+    public Team findWinTeam() {
+        Piece winKing = cells.values()
+                .stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+
+        return winKing.getTeam();
+    }
 }

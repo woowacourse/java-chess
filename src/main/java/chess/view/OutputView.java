@@ -21,8 +21,8 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printEnd() {
-        System.out.println("> 게임을 종료합니다.");
+    public void printEndWithoutWinTeam() {
+        printEndMessage();
         System.out.println("> 승패와 점수를 보려면 status 를 입력해주세요.");
     }
 
@@ -68,5 +68,13 @@ public class OutputView {
 
         System.out.println("흰팀 점수: " + whiteScore);
         System.out.println("검은팀 점수: " + blackScore);
+    }
+
+    public void printWinTeam(String winTeamName) {
+        System.out.println("승리: " + winTeamName);
+    }
+
+    public void printEndMessage() {
+        System.out.println("> 게임을 종료합니다.");
     }
 }

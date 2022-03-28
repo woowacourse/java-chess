@@ -43,12 +43,25 @@ public class ChessController {
 
         progress(chessGame);
 
+        if (!chessGame.isExistKing()) {
+            showWinTeam(chessGame);
+            return;
+        }
+
         showStatus(chessGame);
+    }
+
+    private void showWinTeam(ChessGame chessGame) {
+        outputView.printEndMessage();
+
+        Team winTeam = chessGame.getWinTeam();
+
+        outputView.printWinTeam(winTeam.toString());
     }
 
     private void showStatus(ChessGame chessGame) {
         try {
-            outputView.printEnd();
+            outputView.printEndWithoutWinTeam();
 
             Command command = Command.from(inputView.inputCommand());
 
@@ -100,7 +113,7 @@ public class ChessController {
     }
 
     private void playChessGame(ChessGame chessGame) {
-        while (!chessGame.isEnd()) {
+        while (!chessGame.isEnd() && chessGame.isExistKing()) {
             printChessBoard(chessGame);
 
             Command command = Command.from(inputView.inputCommand());
