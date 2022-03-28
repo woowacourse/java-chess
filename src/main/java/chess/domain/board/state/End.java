@@ -1,17 +1,14 @@
 package chess.domain.board.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public abstract class End extends GameStarted {
 
-    public End(Map<Integer, Rank> ranks) {
-        super(ranks);
+    protected End(Board board) {
+        super(board);
     }
 
     @Override
@@ -25,12 +22,22 @@ public abstract class End extends GameStarted {
     }
 
     @Override
-    public BoardState move(Position start, Position target) {
+    public GameState move(Position start, Position target) {
         throw new IllegalStateException("게임이 끝나서 말을 움직일 수 없습니다.");
     }
 
     @Override
-    public BoardState terminate() {
+    public GameState terminate() {
         throw new IllegalStateException("이미 게임이 종료되었습니다.");
+    }
+
+    @Override
+    public double calculateBlackScore() {
+        return board.calculateBlackScore();
+    }
+
+    @Override
+    public double calculateWhiteScore() {
+        return board.calculateWhiteScore();
     }
 }

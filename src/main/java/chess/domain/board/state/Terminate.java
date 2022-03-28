@@ -1,12 +1,13 @@
 package chess.domain.board.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import java.util.Map;
 
 public final class Terminate extends End {
 
-    public Terminate(Map<Integer, Rank> ranks) {
-        super(ranks);
+    public Terminate(Board board) {
+        super(board);
     }
 
     @Override

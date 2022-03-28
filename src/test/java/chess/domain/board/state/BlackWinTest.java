@@ -2,6 +2,7 @@ package chess.domain.board.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.piece.Position;
 import java.util.HashMap;
@@ -14,8 +15,7 @@ class BlackWinTest {
     @DisplayName("흑팀의 승리인지 확인한다.")
     @Test
     void isBlackWin() {
-        Map<Integer, Rank> ranks = new HashMap<>();
-        BlackWin blackWin = new BlackWin(ranks);
+        BlackWin blackWin = new BlackWin(new Board(BoardInitializer.initBoard()));
 
         assertThat(blackWin.findWinner()).isEqualTo(Winner.BLACK);
     }
@@ -23,7 +23,7 @@ class BlackWinTest {
     @DisplayName("흑팀이 백팀의 킹을 잡을 경우 흑팀이 승리한다.")
     @Test
     void blackWin() {
-        BoardState state = BoardInitializer.initBoard();
+        GameState state = new WhiteTurn(new Board(BoardInitializer.initBoard()));
         state = state.move(new Position("d2"), new Position("d4"));
         state = state.move(new Position("c7"), new Position("c5"));
         state = state.move(new Position("e2"), new Position("e4"));

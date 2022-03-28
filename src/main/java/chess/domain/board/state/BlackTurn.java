@@ -1,12 +1,13 @@
 package chess.domain.board.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import java.util.Map;
 
 public final class BlackTurn extends Playing {
 
-    public BlackTurn(Map<Integer, Rank> ranks) {
-        super(ranks);
+    public BlackTurn(Board board) {
+        super(board);
     }
 
     @Override

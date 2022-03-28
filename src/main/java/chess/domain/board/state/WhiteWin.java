@@ -1,12 +1,13 @@
 package chess.domain.board.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import java.util.Map;
 
 public final class WhiteWin extends End {
 
-    public WhiteWin(Map<Integer, Rank> ranks) {
-        super(ranks);
+    public WhiteWin(Board board) {
+        super(board);
     }
 
     @Override

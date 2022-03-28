@@ -14,7 +14,7 @@ class BoardInitializerTest {
     @DisplayName("체스판 초기화 시 모든 기물이 제자리에 생성되었는지 확인")
     @Test
     void initializeBoard() {
-        Board board = new Board();
+        Board board = new Board(BoardInitializer.initBoard());
 
         List<List<String>> signatures = List.of(
                 List.of("R", "N", "B", "Q", "K", "B", "N", "R"),
@@ -33,13 +33,5 @@ class BoardInitializerTest {
                     .collect(Collectors.toList())
             ).isEqualTo(signatures.get(i));
         }
-    }
-
-    @DisplayName("체스 게임은 백팀 차례로 시작한다.")
-    @Test
-    void isWhiteTurnAfterInitialize() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
-
-        assertThat(whiteTurn).isInstanceOf(WhiteTurn.class);
     }
 }

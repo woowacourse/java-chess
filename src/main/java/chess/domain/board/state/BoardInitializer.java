@@ -1,5 +1,6 @@
 package chess.domain.board.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -15,14 +16,14 @@ import java.util.Map;
 
 public class BoardInitializer {
 
-    public static BoardState initBoard() {
+    public static Map<Integer, Rank> initBoard() {
         Map<Integer, Rank> ranks = new HashMap<>();
         initRank1(ranks);
         initRank2(ranks);
         initRank3To6(ranks);
         initRank7(ranks);
         initRank8(ranks);
-        return new WhiteTurn(ranks);
+        return ranks;
     }
 
     private static void initRank1(Map<Integer, Rank> ranks) {
@@ -91,5 +92,4 @@ public class BoardInitializer {
                 Rook.createBlack(new Position("h8"))
         )));
     }
-
 }
