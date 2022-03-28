@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 public class ActivePieces {
 
     private static final String NOT_FOUND_EXCEPTION_MESSAGE = "해당 위치에 체스 말이 존재하지 않습니다.";
+    private static final int SAME_FILE_PAWN_MIN_COUNT = 2;
     private static final double SAME_FILE_PAWN_DISADVANTAGE = 0.5;
 
     private final List<Piece> pieces;
@@ -61,7 +62,7 @@ public class ActivePieces {
     private int countAllSameFilePawns(Color color) {
         return IntStream.range(0, FILES_TOTAL_SIZE)
                 .map(fileIdx -> countPawnsOfSameFile(color, fileIdx))
-                .filter(sameFilePawnCount -> sameFilePawnCount > 1)
+                .filter(sameFilePawnCount -> sameFilePawnCount >= SAME_FILE_PAWN_MIN_COUNT)
                 .sum();
     }
 

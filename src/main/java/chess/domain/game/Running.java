@@ -16,8 +16,8 @@ abstract class Running extends Started {
 
     @Override
     public final Game moveChessmen(MoveCommandDto dto) {
-        Piece sourcePiece = chessmen.findByPosition(sourcePositionOf(dto));
-        Position targetPosition = targetPositionOf(dto);
+        Piece sourcePiece = chessmen.findByPosition(fromPosition(dto));
+        Position targetPosition = toPosition(dto);
         validateTurn(sourcePiece);
 
         if (chessmen.isOccupied(targetPosition)) {
@@ -48,13 +48,13 @@ abstract class Running extends Started {
 
     abstract protected Game continueGame();
 
-    private Position sourcePositionOf(MoveCommandDto dto) {
-        String source = dto.source();
+    private Position fromPosition(MoveCommandDto moveCommand) {
+        String source = moveCommand.source();
         return Position.of(source);
     }
 
-    private Position targetPositionOf(MoveCommandDto dto) {
-        String target = dto.target();
+    private Position toPosition(MoveCommandDto moveCommand) {
+        String target = moveCommand.target();
         return Position.of(target);
     }
 
