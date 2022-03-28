@@ -1,9 +1,9 @@
-package chess.command;
+package chess.console.command;
 
+import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;

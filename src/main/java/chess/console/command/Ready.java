@@ -1,7 +1,7 @@
-package chess.command;
+package chess.console.command;
 
+import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
-import chess.view.OutputView;
 import java.util.Objects;
 
 public class Ready implements Command {

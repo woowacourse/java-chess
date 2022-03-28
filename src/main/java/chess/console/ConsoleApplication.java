@@ -1,6 +1,6 @@
-package chess;
+package chess.console;
 
-public class Application {
+public class ConsoleApplication {
 
     public static void main(String[] args) {
         ChessGame chessGame = new ChessGame();

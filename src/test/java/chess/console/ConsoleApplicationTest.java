@@ -1,16 +1,17 @@
-package chess;
+package chess.console;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ApplicationTest extends NsTest {
+class ConsoleApplicationTest extends NsTest {
 
     @Test
-    void 게임_진행() {
+    @DisplayName("게임 진행")
+    void run() {
         assertSimpleTest(() -> {
             run("start\n"
                     + "move d2 d4\n"
@@ -46,6 +47,6 @@ class ApplicationTest extends NsTest {
 
     @Override
     public void runMain() {
-        Application.main(new String[]{});
+        ConsoleApplication.main(new String[]{});
     }
 }

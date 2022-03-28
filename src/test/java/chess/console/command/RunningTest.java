@@ -1,4 +1,4 @@
-package chess.command;
+package chess.console.command;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;

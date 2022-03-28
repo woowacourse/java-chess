@@ -1,4 +1,4 @@
-package chess.command;
+package chess.console.command;
 
 public class End implements Command {
 

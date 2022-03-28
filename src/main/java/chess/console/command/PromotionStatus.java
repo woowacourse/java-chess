@@ -1,10 +1,10 @@
-package chess.command;
+package chess.console.command;
 
+import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Promotion;
 import chess.domain.piece.Piece;
-import chess.view.OutputView;
 
 public class PromotionStatus implements Command {
 
