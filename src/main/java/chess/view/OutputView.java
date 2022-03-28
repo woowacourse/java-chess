@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OutputView {
-
-    private static final OutputView OUTPUT_VIEW = new OutputView();
     private static final int ONE_LINE_AMOUNT = 8;
     private static final int LINE_SEPARATE_CRITERIA = 7;
+    private static final String END_MESSAGE_FOR_KING_CAPTURE = "KING이 잡혀 게임이 끝났습니다.";
+    private static final OutputView OUTPUT_VIEW = new OutputView();
 
     private OutputView() {
     }
@@ -36,22 +36,24 @@ public class OutputView {
 
     public void printBoard(BoardDto boardDto) {
         Map<Position, Piece> board = boardDto.getBoard();
-
-        List<Position> collect = Arrays.stream(Rank.values())
+        List<Position> positions = Arrays.stream(Rank.values())
                 .flatMap(getPositionStream())
                 .collect(Collectors.toList());
 
+        System.out.println(getPrintResult(board, positions));
+    }
+
+    private StringBuilder getPrintResult(Map<Position, Piece> board, List<Position> positions) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < collect.size(); i++) {
-            Piece piece = board.get(collect.get(i));
+        for (int i = 0; i < positions.size(); i++) {
+            Piece piece = board.get(positions.get(i));
             stringBuilder.append(PieceMapper.getByPiece(piece));
 
             if (i % ONE_LINE_AMOUNT == LINE_SEPARATE_CRITERIA) {
                 stringBuilder.append(System.lineSeparator());
             }
         }
-
-        System.out.println(stringBuilder);
+        return stringBuilder;
     }
 
     private static Function<Rank, Stream<? extends Position>> getPositionStream() {
@@ -69,7 +71,7 @@ public class OutputView {
     }
 
     public void printGameEnded(ScoreDto scoreDto) {
-        System.out.println("KING이 잡혀 게임이 끝났습니다.");
+        System.out.println(END_MESSAGE_FOR_KING_CAPTURE);
         printScore(scoreDto);
     }
 }

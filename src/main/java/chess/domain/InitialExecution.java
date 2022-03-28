@@ -1,11 +1,10 @@
 package chess.domain;
 
-import chess.controller.ChessController;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum InitialExecution {
-    START("start", () -> new ChessController().start()),
+    START("start", () -> new ChessGame().start()),
     END("end", () -> System.out.println("프로그램을 종료합니다.")),
     MOVE("move", () -> System.out.println("start 또는 end만 입력 가능합니다")),
     ;
