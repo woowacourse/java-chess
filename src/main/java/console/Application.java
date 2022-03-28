@@ -9,7 +9,7 @@ import chess.ChessBoard;
 import chess.piece.*;
 import chess.position.Position;
 import console.command.Command;
-import console.command.EndCommand;
+import console.command.CommandType;
 import console.view.*;
 import java.util.List;
 
@@ -17,21 +17,21 @@ public class Application {
 
     public static void main(String[] args) {
         OutputView.printInitChessGameMessage();
-        boolean isStartGame = inputIsStartGame();
+        Command command = inputStartAndEndCommand();
 
-        if (isStartGame) {
+        if (command.isTypeOf(CommandType.START)) {
             ChessBoard chessBoard = createChessBoard();
             OutputView.printChessBoard(chessBoard.getPieces());
             executeChessGame(chessBoard);
         }
     }
 
-    private static boolean inputIsStartGame() {
+    private static Command inputStartAndEndCommand() {
         try {
-            return InputView.inputIsStartGame();
+            return InputView.inputStartOrEndCommand();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return inputIsStartGame();
+            return inputStartAndEndCommand();
         }
     }
 
@@ -78,9 +78,9 @@ public class Application {
     private static void executeChessGame(ChessBoard chessBoard) {
         Command command = inputCommand();
 
-        while (command.isRunning()) {
-            chessBoard = executeCommand(chessBoard, command);
-            command = inputNextCommand(chessBoard, command);
+        while (!command.isTypeOf(CommandType.END)) {
+            executeCommand(chessBoard, command);
+            command = inputNextCommand(chessBoard);
         }
 
         if (chessBoard.isFinished()) {
@@ -97,19 +97,34 @@ public class Application {
         }
     }
 
-    private static ChessBoard executeCommand(ChessBoard chessBoard, Command command) {
-        try {
-            return command.execute(chessBoard);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return chessBoard;
+    private static void executeCommand(ChessBoard chessBoard, Command command) {
+        if (command.isTypeOf(CommandType.MOVE)) {
+            movePiece(chessBoard, command);
+        }
+        if (command.isTypeOf(CommandType.STATUS)) {
+            printScores(chessBoard);
         }
     }
 
-    private static Command inputNextCommand(ChessBoard chessBoard, Command command) {
+    private static void movePiece(ChessBoard chessBoard, Command command) {
+        try {
+            chessBoard.move(command.getFrom(), command.getTo());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            OutputView.printChessBoard(chessBoard.getPieces());
+        }
+    }
+
+    private static void printScores(ChessBoard chessBoard) {
+        OutputView.printScores(chessBoard.getScore(Color.WHITE).getValue(),
+            chessBoard.getScore(Color.BLACK).getValue());
+    }
+
+    private static Command inputNextCommand(ChessBoard chessBoard) {
         if (!chessBoard.isFinished()) {
             return inputCommand();
         }
-        return new EndCommand();
+        return new Command(CommandType.END);
     }
 }

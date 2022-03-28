@@ -20,7 +20,7 @@ public class Pawn extends Piece {
             return false;
         }
         if (isUncapturablePosition(to)) {
-            return !pieces.hasPieceByPosition(to);
+            return !pieces.hasPieceByPosition(to) && !pieces.hasObstacleOnLinearPath(getPosition(), to);
         }
         if (isCapturablePosition(to)) {
             return pieces.hasPieceByPosition(to);

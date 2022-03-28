@@ -20,13 +20,13 @@ public class InputView {
     );
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static boolean inputIsStartGame() {
+    public static Command inputStartOrEndCommand() {
         String command = SCANNER.nextLine();
         if (command.equals("start")) {
-            return true;
+            return new Command(CommandType.START);
         }
         if (command.equals("end")) {
-            return false;
+            return new Command(CommandType.END);
         }
         throw new IllegalArgumentException("잘못된 명령어 입니다.");
     }
@@ -34,15 +34,15 @@ public class InputView {
     public static Command inputCommand() {
         String command = SCANNER.nextLine();
         if (command.equals("end")) {
-            return new EndCommand();
+            return new Command(CommandType.END);
         }
         if (command.equals("status")) {
-            return new StatusCommand();
+            return new Command(CommandType.STATUS);
         }
         if (command.matches("^move [a-h][1-8] [a-h][1-8]$")) {
             String from = command.split(" ")[1];
             String to = command.split(" ")[2];
-            return new MoveCommand(createPosition(from), createPosition(to));
+            return new Command(CommandType.MOVE, createPosition(from), createPosition(to));
         }
         throw new IllegalArgumentException("잘못된 명령어 입니다.");
     }

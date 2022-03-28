@@ -1,6 +1,5 @@
 package chess;
 
-import chess.piece.Color;
 import chess.piece.Piece;
 import chess.position.File;
 import java.math.BigDecimal;
