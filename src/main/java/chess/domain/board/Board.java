@@ -6,7 +6,6 @@ import static chess.domain.piece.constant.PieceColor.EMPTY;
 import chess.constant.MoveType;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
 import java.util.Map;
@@ -98,7 +97,7 @@ public class Board {
         for (File file : File.values()) {
             long count = reverseValues().stream()
                 .map(rank -> new Position(file, rank))
-                .filter(position -> board.get(position) instanceof Pawn
+                .filter(position -> board.get(position).isPawn()
                     && gameFlow.isCorrectTurn(board.get(position)))
                 .count();
 

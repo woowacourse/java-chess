@@ -39,6 +39,10 @@ public abstract class Piece {
         return this instanceof King;
     }
 
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
