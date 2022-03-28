@@ -14,4 +14,11 @@ public enum Team {
     public String getName() {
         return name;
     }
+
+    public Team next() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

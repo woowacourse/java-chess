@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.player.Team;
 import java.util.List;
 
 public class ChessGame {
@@ -9,9 +10,12 @@ public class ChessGame {
     private final Player whitePlayer;
     private final Player blackPlayer;
 
+    private Team turn;
+
     public ChessGame(Player whitePlayer, Player blackPlayer) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
+        this.turn = Team.WHITE;
     }
 
     public ChessMap createMap() {
@@ -58,5 +62,23 @@ public class ChessGame {
                 .anyMatch(whitePlayer::hasPiece);
 
         return hasPieceOfBlackPlayer || hasPieceOfWhitePlayer;
+    }
+
+    public void changeTurn() {
+        turn = turn.next();
+    }
+
+    public Player getCurrentPlayer() {
+        if (turn == Team.WHITE) {
+            return whitePlayer;
+        }
+        return blackPlayer;
+    }
+
+    public Player getOpponentPlayer() {
+        if (turn == Team.WHITE) {
+            return blackPlayer;
+        }
+        return whitePlayer;
     }
 }
