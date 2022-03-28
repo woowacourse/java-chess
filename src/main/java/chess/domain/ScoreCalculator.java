@@ -7,6 +7,7 @@ import java.util.List;
 public class ScoreCalculator {
 
     private static final ScoreCalculator scoreCalculator = new ScoreCalculator();
+    private static final int SINGLE_PAWN_COUNT = 1;
 
     private ScoreCalculator() {
     }
@@ -29,7 +30,7 @@ public class ScoreCalculator {
                 .mapToDouble(Piece::getPoint)
                 .sum();
 
-        if (pawnCount == 1) {
+        if (pawnCount == SINGLE_PAWN_COUNT) {
             return sum;
         }
         return sum - (pawnCount / 2.0);

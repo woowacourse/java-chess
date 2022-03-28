@@ -20,6 +20,7 @@ public class ChessBoard {
 
     private static final int SECOND_MOVE_INDEX = 1;
     private static final int SECOND_MOVE_SIZE = 2;
+    private static final int RUNNING_KING_COUNT = 2;
 
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn = new ArrayList<>();
@@ -105,7 +106,7 @@ public class ChessBoard {
     }
 
     private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
-        if (positions.size() != 0) {
+        if (!positions.isEmpty()) {
             int cutIndex = getCutIndex(piece, positions);
             result.addAll(positions.subList(0, cutIndex));
         }
@@ -173,7 +174,6 @@ public class ChessBoard {
         for (Column column : Column.values()) {
             result.add(getPiecesOnColumn(column, color));
         }
-
         return result;
     }
 
@@ -181,7 +181,7 @@ public class ChessBoard {
         long kingCount = pieces.values().stream()
                 .filter(p -> p.isSamePieceName(PieceName.KING))
                 .count();
-        return kingCount != 2;
+        return kingCount != RUNNING_KING_COUNT;
     }
 
     public Color getColor(Position position) {

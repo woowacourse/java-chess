@@ -7,10 +7,13 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int POSITION_STRING_SIZE = 2;
+
+    private static final int CACHE_SIZE = 64;
+    private static final Map<String, Position> CACHE = new HashMap<>(CACHE_SIZE);
+
     private final Column column;
     private final Row row;
-
-    private static final Map<String, Position> CACHE = new HashMap<>(64);
 
     private Position(Column column, Row row) {
         this.column = column;
@@ -37,7 +40,7 @@ public class Position {
     }
 
     private static void validateLength(String value) {
-        if (value.length() != 2) {
+        if (value.length() != POSITION_STRING_SIZE) {
             throw new IllegalArgumentException("포지션은 두 글자입니다.");
         }
     }

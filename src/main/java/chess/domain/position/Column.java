@@ -13,6 +13,9 @@ public enum Column {
     G(7),
     H(8);
 
+    private static final int MAX_COLUMN = 8;
+    private static final int MIN_COLUMN = 1;
+
     private final int value;
 
     Column(int value) {
@@ -36,7 +39,7 @@ public enum Column {
 
     public Column move(int value) {
         int indexAfterMove = this.value + value;
-        if (indexAfterMove > 8 || indexAfterMove < 1) {
+        if (indexAfterMove > MAX_COLUMN || indexAfterMove < MIN_COLUMN) {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }
         return of(indexAfterMove);

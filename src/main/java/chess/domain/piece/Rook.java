@@ -14,6 +14,7 @@ public class Rook extends StraightMovablePiece {
 
     private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+    private static final int ROOK_POINT = 5;
 
     public Rook(Color color) {
         super(color, PieceName.ROOK);
@@ -26,6 +27,6 @@ public class Rook extends StraightMovablePiece {
 
     @Override
     public double getPoint() {
-        return 5;
+        return ROOK_POINT;
     }
 }

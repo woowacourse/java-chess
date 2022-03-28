@@ -16,6 +16,9 @@ public enum Row {
     SEVEN(7),
     EIGHT(8);
 
+    private static final int MAX_ROW = 8;
+    private static final int MIN_ROW = 1;
+
     private final int value;
 
     Row(int value) {
@@ -39,7 +42,7 @@ public enum Row {
 
     public Row move(int value) {
         int indexAfterMove = this.value + value;
-        if (indexAfterMove > 8 || indexAfterMove < 1) {
+        if (indexAfterMove > MAX_ROW || indexAfterMove < MIN_ROW) {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }
         return of(indexAfterMove);

@@ -15,6 +15,7 @@ public class Knight extends FixedMovablePiece {
     private static final List<Direction> DIRECTIONS = List.of(
             Direction.SSE, Direction.SSW, Direction.NNE, Direction.NNW,
             Direction.EES, Direction.EEN, Direction.WWS, Direction.WWN);
+    private static final double KNIGHT_POINT = 2.5;
 
     public Knight(Color color) {
         super(color, PieceName.KNIGHT);
@@ -27,6 +28,6 @@ public class Knight extends FixedMovablePiece {
 
     @Override
     public double getPoint() {
-        return 2.5;
+        return KNIGHT_POINT;
     }
 }

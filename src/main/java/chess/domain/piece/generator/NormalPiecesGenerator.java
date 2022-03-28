@@ -14,28 +14,30 @@ import java.util.Map;
 
 public class NormalPiecesGenerator implements PiecesGenerator {
 
-    public static final  Map<Position, Piece> pieces = new HashMap<>(32);
+    private static final int PIECES_NUM = 32;
+
+    private static final Map<Position, Piece> pieces = new HashMap<>(PIECES_NUM);
 
     static {
-        createKing(pieces);
-        createQueen(pieces);
-        createRook(pieces);
-        createBishop(pieces);
-        createKnight(pieces);
-        createPawn(pieces);
+        createKing();
+        createQueen();
+        createRook();
+        createBishop();
+        createKnight();
+        createPawn();
     }
 
-    private static void createKing(Map<Position, Piece> pieces) {
+    private static void createKing() {
         pieces.put(King.BLACK_INIT_LOCATION, new King(Color.BLACK));
         pieces.put(King.WHITE_INIT_LOCATION, new King(Color.WHITE));
     }
 
-    private static void createQueen(Map<Position, Piece> pieces) {
+    private static void createQueen() {
         pieces.put(Queen.BLACK_INIT_LOCATION, new Queen(Color.BLACK));
         pieces.put(Queen.WHITE_INIT_LOCATION, new Queen(Color.WHITE));
     }
 
-    private static void createRook(Map<Position, Piece> pieces) {
+    private static void createRook() {
         for (Position position : Rook.BLACK_INIT_LOCATIONS) {
             pieces.put(position, new Rook(Color.BLACK));
         }
@@ -45,7 +47,7 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         }
     }
 
-    private static void createBishop(Map<Position, Piece> pieces) {
+    private static void createBishop() {
         for (Position position : Bishop.BLACK_INIT_LOCATIONS) {
             pieces.put(position, new Bishop(Color.BLACK));
         }
@@ -55,7 +57,7 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         }
     }
 
-    private static void createKnight(Map<Position, Piece> pieces) {
+    private static void createKnight() {
         for (Position position : Knight.BLACK_INIT_LOCATIONS) {
             pieces.put(position, new Knight(Color.BLACK));
         }
@@ -65,7 +67,7 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         }
     }
 
-    private static void createPawn(Map<Position, Piece> pieces) {
+    private static void createPawn() {
         for (Position position : Pawn.BLACK_INIT_LOCATIONS) {
             pieces.put(position, new Pawn(Color.BLACK));
         }

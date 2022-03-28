@@ -14,6 +14,7 @@ public class Bishop extends StraightMovablePiece {
 
     private static final List<Direction> DIRECTIONS = List.of(
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+    private static final int BISHOP_POINT = 3;
 
     public Bishop(Color color) {
         super(color, PieceName.BISHOP);
@@ -26,6 +27,6 @@ public class Bishop extends StraightMovablePiece {
 
     @Override
     public double getPoint() {
-        return 3;
+        return BISHOP_POINT;
     }
 }

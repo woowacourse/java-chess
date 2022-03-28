@@ -18,6 +18,7 @@ public class Pawn extends Piece {
 
     private static final Direction BLACK_DIRECTION = Direction.SOUTH;
     private static final Direction WHITE_DIRECTION = Direction.NORTH;
+    private static final int PAWN_POINT = 1;
 
     public Pawn(Color color) {
         super(color, PieceName.PAWN);
@@ -54,6 +55,6 @@ public class Pawn extends Piece {
 
     @Override
     public double getPoint() {
-        return 1;
+        return PAWN_POINT;
     }
 }

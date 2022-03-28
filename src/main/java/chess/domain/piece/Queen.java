@@ -13,6 +13,7 @@ public class Queen extends StraightMovablePiece {
     private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+    private static final int QUEEN_POINT = 9;
 
     public Queen(Color color) {
         super(color, PieceName.QUEEN);
@@ -25,6 +26,6 @@ public class Queen extends StraightMovablePiece {
 
     @Override
     public double getPoint() {
-        return 9;
+        return QUEEN_POINT;
     }
 }

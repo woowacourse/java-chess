@@ -13,6 +13,7 @@ public class King extends FixedMovablePiece {
     private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
+    private static final int KING_POINT = 0;
 
     public King(Color color) {
         super(color, PieceName.KING);
@@ -25,6 +26,6 @@ public class King extends FixedMovablePiece {
 
     @Override
     public double getPoint() {
-        return 0;
+        return KING_POINT;
     }
 }
