@@ -57,7 +57,7 @@ public class OutputView {
             System.out.println("승리: 검은팀");
         }
 
-        if (blackScore == whiteScore) {
+        if (blackScore.equals(whiteScore)) {
             System.out.println("무승부");
         }
 
