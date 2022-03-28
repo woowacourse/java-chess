@@ -14,6 +14,7 @@ public class OutputView {
     private static final String GAME_MOVE_COMMAND_NAME = "게임 이동";
     private static final String GAME_END_COMMAND_NAME = "게임 종료";
     private static final String GAME_MOVE_COMMAND = "move source위치 target위치 - 예. move b2 b3";
+    private static final String RESULT_MESSAGE_SUFFIX = "입니다.";
 
     public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -89,5 +90,9 @@ public class OutputView {
 
     public void printDraw() {
         System.out.println("무승부입니다.");
+    }
+
+    public void printResultMessage(final String resultMessage) {
+        System.out.println(resultMessage + RESULT_MESSAGE_SUFFIX);
     }
 }

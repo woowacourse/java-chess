@@ -17,17 +17,8 @@ public class End implements Command {
             return;
         }
         chessGame.end();
-
         outputView.printFinishMessage();
         outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-        if (chessGame.hasBlackWon() > 0) {
-            outputView.printBlackWin();
-        }
-        if (chessGame.hasBlackWon() < 0) {
-            outputView.printWhiteWin();
-        }
-        if (chessGame.hasBlackWon() == 0) {
-            outputView.printDraw();
-        }
+        outputView.printResultMessage(chessGame.getResultMessage());
     }
 }

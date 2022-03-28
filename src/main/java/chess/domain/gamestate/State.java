@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Result;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -17,7 +18,7 @@ public interface State {
 
     Board getBoard();
 
-    int hasBlackWon();
+    Result getResult();
 
     boolean isRunning();
 }

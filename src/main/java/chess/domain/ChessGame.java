@@ -41,8 +41,8 @@ public class ChessGame {
         return this.state.getBoard();
     }
 
-    public int hasBlackWon() {
-        return this.state.hasBlackWon();
+    public String getResultMessage() {
+        return Result.from(this.state.getResult()).getMessage();
     }
 
     public boolean isEnd() {

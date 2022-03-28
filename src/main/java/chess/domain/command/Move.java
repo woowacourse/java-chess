@@ -17,19 +17,9 @@ public class Move implements Command {
         chessGame.move(movePositions.get(0), movePositions.get(1));
         outputView.printBoard(chessGame.board().getValue());
         if (chessGame.isNotRunning()) {
-
             outputView.printFinishMessage();
             outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-            if (chessGame.hasBlackWon() > 0) {
-                outputView.printBlackWin();
-            }
-            if (chessGame.hasBlackWon() < 0) {
-                outputView.printWhiteWin();
-            }
-            if (chessGame.hasBlackWon() == 0) {
-                outputView.printDraw();
-            }
-
+            outputView.printResultMessage(chessGame.getResultMessage());
         }
     }
 }

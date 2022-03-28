@@ -1,9 +1,11 @@
 package chess.domain.gamestate;
 
+import chess.domain.Result;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 public class Finished implements State {
+    private static final int RESULT_CRITERIA = 0;
     private final Board board;
 
     public Finished(Board board) {
@@ -36,14 +38,26 @@ public class Finished implements State {
     }
 
     @Override
-    public int hasBlackWon() {
+    public Result getResult() {
         if (this.board.hasBlackKingCaptured()) {
-            return -1;
+            return Result.BLACK_LOSE;
         }
         if (this.board.hasWhiteKingCaptured()) {
-            return 1;
+            return Result.BLACK_WIN;
         }
-        return Double.compare(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+        return getResultWhenNoKingCaputerd();
+    }
+
+    private Result getResultWhenNoKingCaputerd() {
+        final int resultNumber = Double.compare(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+        if (resultNumber > RESULT_CRITERIA) {
+            return Result.BLACK_WIN;
+        }
+        if (resultNumber < RESULT_CRITERIA) {
+            return Result.BLACK_LOSE;
+        }
+        return Result.DRAW;
+
     }
 
     @Override
