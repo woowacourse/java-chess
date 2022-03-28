@@ -5,13 +5,30 @@ import chess.domain.Position;
 
 public class End implements GameState{
 
+    private static final String ALREADY_END_GAME = "[ERROR] 게임이 종료되어 지원하지 않는 기능입니다";
+
     @Override
-    public GameState movePiece(Board board, Position fromPosition, Position toPosition) {
-        return null;
+    public GameState initBoard() {
+        throw new IllegalStateException(ALREADY_END_GAME);
+    }
+
+    @Override
+    public GameState movePiece(Position fromPosition, Position toPosition) {
+        throw new IllegalStateException(ALREADY_END_GAME);
+    }
+
+    @Override
+    public GameState end() {
+        throw new IllegalStateException(ALREADY_END_GAME);
     }
 
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalStateException(ALREADY_END_GAME);
     }
 }
