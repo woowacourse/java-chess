@@ -1,41 +1,16 @@
 package chess.piece;
 
+import chess.position.Direction;
 import chess.position.Position;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static chess.utils.CheckerOfAllPossiblePosition.isMovableCoordinates;
+import static chess.utils.PossiblePositionChecker.isMovableCoordinates;
 
 public class Pawn extends Piece {
 
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_WHITE_DIAGONAL_MOVABLE = List.of(
-            Pair.of(-1, -1),
-            Pair.of(-1, 1));
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_BLACK_DIAGONAL_MOVABLE = List.of(
-            Pair.of(1, -1),
-            Pair.of(1, 1));
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE = List.of(
-            Pair.of(-1, 0),
-            Pair.of(-2, 0));
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE = List.of(
-            Pair.of(1, 0),
-            Pair.of(2, 0));
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_WHITE_TURN_MOVABLE = List.of(
-            Pair.of(-1, 0));
-    private static final List<Pair<Integer, Integer>> COORDINATES_OF_BLACK_TURN_MOVABLE = List.of(
-            Pair.of(1, 0));
-
     public Pawn(Color color) {
         super(Type.PAWN, color);
-    }
-
-    public boolean isDiagonal(Position source, Position target) {
-        if (color == Color.WHITE) {
-            return isMovableCoordinates(COORDINATES_OF_WHITE_DIAGONAL_MOVABLE, source, target);
-        }
-        return isMovableCoordinates(COORDINATES_OF_BLACK_DIAGONAL_MOVABLE, source, target);
     }
 
     @Override
@@ -48,7 +23,7 @@ public class Pawn extends Piece {
                 return List.of(source.findPossiblePosition(1, 0));
             }
         }
-        return new ArrayList<>();
+        return List.of();
     }
 
     @Override
@@ -62,17 +37,24 @@ public class Pawn extends Piece {
         return false;
     }
 
+    public boolean isDiagonal(Position source, Position target) {
+        if (color == Color.WHITE) {
+            return isMovableCoordinates(Direction.pawnWhiteDiagonal(), source, target);
+        }
+        return isMovableCoordinates(Direction.pawnBlackDiagonal(), source, target);
+    }
+
     private boolean isMovableWhenWhite(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovableCoordinates(COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE, source, target);
+            return isMovableCoordinates(Direction.pawnWhiteFirstTurn(), source, target);
         }
-        return isMovableCoordinates(COORDINATES_OF_WHITE_TURN_MOVABLE, source, target);
+        return isMovableCoordinates(Direction.pawnWhiteTurn(), source, target);
     }
 
     private boolean isMovableWhenBlack(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovableCoordinates(COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE, source, target);
+            return isMovableCoordinates(Direction.pawnBlackFirstTurn(), source, target);
         }
-        return isMovableCoordinates(COORDINATES_OF_BLACK_TURN_MOVABLE, source, target);
+        return isMovableCoordinates(Direction.pawnBlackTurn(), source, target);
     }
 }

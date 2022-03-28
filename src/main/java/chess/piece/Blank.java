@@ -2,7 +2,6 @@ package chess.piece;
 
 import chess.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Blank extends Piece {
@@ -13,7 +12,7 @@ public class Blank extends Piece {
 
     @Override
     public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        return new ArrayList<>();
+        return List.of();
     }
 
     @Override

@@ -31,11 +31,13 @@ public class PositionParser {
         FILES.put("1", 7);
     }
 
+    private PositionParser() {
+    }
+
     public static Position parse(String x, String y) {
         if (!RANKS.containsKey(x) || !FILES.containsKey(y)) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
-
         return PositionCache.of(FILES.get(y), RANKS.get(x));
     }
 }

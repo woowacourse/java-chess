@@ -2,11 +2,9 @@ package chess.piece;
 
 import chess.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static chess.utils.MovingBetweenPositions.computeLeftDownRightUp;
-import static chess.utils.MovingBetweenPositions.computeLeftUpRightDown;
+import static chess.utils.BetweenPositionsGenerator.computeBetweenPositionDiagonal;
 
 public class Bishop extends Piece {
 
@@ -16,14 +14,10 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        if (source.gapTwoPositionRow(target) == (-1) * source.gapTwoPositionColumn(target)) {
-            return computeLeftDownRightUp(source, target);
-
-        }
         if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
-            return computeLeftUpRightDown(source, target);
+            return computeBetweenPositionDiagonal(source, target);
         }
-        return new ArrayList<>();
+        return List.of();
     }
 
     @Override

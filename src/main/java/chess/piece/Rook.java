@@ -2,11 +2,10 @@ package chess.piece;
 
 import chess.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static chess.utils.MovingBetweenPositions.computeBetweenPositionsOfColumn;
-import static chess.utils.MovingBetweenPositions.computeBetweenPositionsOfRow;
+import static chess.utils.BetweenPositionsGenerator.computeBetweenPositionBySameColumn;
+import static chess.utils.BetweenPositionsGenerator.computeBetweenPositionBySameRow;
 
 public class Rook extends Piece {
 
@@ -17,12 +16,12 @@ public class Rook extends Piece {
     @Override
     public List<Position> computeBetweenTwoPosition(Position source, Position target) {
         if (source.isSameRow(target)) {
-            return computeBetweenPositionsOfRow(source, target);
+            return computeBetweenPositionBySameRow(source, target);
         }
         if (source.isSameColumn(target)) {
-            return computeBetweenPositionsOfColumn(source, target);
+            return computeBetweenPositionBySameColumn(source, target);
         }
-        return new ArrayList<>();
+        return List.of();
     }
 
     @Override

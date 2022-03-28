@@ -44,6 +44,10 @@ public class Position {
         return new Position(row + moveRow, column + moveColumn);
     }
 
+    public Position findPossiblePosition(Direction direction) {
+        return new Position(direction.moveRow(row), direction.moveColumn(column));
+    }
+
     public int gapTwoPositionRow(Position position) {
         return Math.abs(this.row - position.row);
     }
