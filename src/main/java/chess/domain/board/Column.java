@@ -15,6 +15,8 @@ public enum Column {
     H(7, "h"),
     ;
 
+    private static final String INVALID_COLUMN_EXCEPTION = "존재하지 않는 열입니다.";
+
     private final int value;
     private final String name;
 
@@ -27,14 +29,14 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(column -> column.name.equals(rawColumn))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_EXCEPTION));
     }
 
     private static Column from(int value) {
         return Arrays.stream(values())
                 .filter(column -> column.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_EXCEPTION));
     }
 
     public Column flip() {

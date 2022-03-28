@@ -1,16 +1,7 @@
 package chess.domain.board;
 
-import static chess.domain.Camp.BLACK;
-import static chess.domain.Camp.WHITE;
+import static chess.domain.Camp.*;
 
-import chess.domain.Camp;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +12,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import chess.domain.Camp;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+
 public final class Board {
     private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
     private static final Position KNIGHT_INITIAL_POSITION = new Position(Column.B, Row.ONE);
@@ -30,6 +30,12 @@ public final class Board {
     private static final Row PAWN_INITIAL_ROW = Row.TWO;
     private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
+    private static final String SAME_CAMP_MOVE_EXCEPTION = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
+    private static final String EMPTY_SPACE_EXCEPTION = "이동할 수 있는 기물이 없습니다.";
+    private static final String INVALID_TURN_EXCEPTION = "상대 진영의 차례입니다.";
+    private static final String INVALID_MOVING_PATH_EXCEPTION = "경로에 기물이 있어 움직일 수 없습니다.";
+    private static final double HALF_PAWN_SCORE = 0.5;
+    private static final int ALL_THE_NUMBER_OF_KING = 2;
 
     private final Map<Position, Piece> value;
     private boolean whiteTurn;
@@ -80,19 +86,10 @@ public final class Board {
     }
 
     public void move(Position beforePosition, Position afterPosition) {
-        Piece piece = this.value.get(beforePosition);
-
-        if (isBlank(beforePosition)) {
-            throw new IllegalArgumentException("이동할 수 있는 기물이 없습니다.");
-        }
-        if (piece.isBlack() == whiteTurn) {
-            throw new IllegalArgumentException("상대 진영의 차례입니다.");
-        }
-        if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
-            throw new IllegalArgumentException("경로에 기물이 있어 움직일 수 없습니다.");
-        }
-
-        this.whiteTurn = !whiteTurn;
+        final Piece piece = this.value.get(beforePosition);
+        validateMovable(beforePosition, afterPosition, piece);
+        
+        flipTurnToOpponent();
         if (isBlank(afterPosition)) {
             piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
@@ -101,8 +98,23 @@ public final class Board {
             piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
         }
+        throw new IllegalArgumentException(SAME_CAMP_MOVE_EXCEPTION);
+    }
 
-        throw new IllegalArgumentException("같은 팀 기물이 있는 위치로는 이동할 수 없습니다.");
+    private void flipTurnToOpponent() {
+        this.whiteTurn = !whiteTurn;
+    }
+
+    private void validateMovable(Position beforePosition, Position afterPosition, Piece piece) {
+        if (isBlank(beforePosition)) {
+            throw new IllegalArgumentException(EMPTY_SPACE_EXCEPTION);
+        }
+        if (piece.isBlack() == whiteTurn) {
+            throw new IllegalArgumentException(INVALID_TURN_EXCEPTION);
+        }
+        if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
+            throw new IllegalArgumentException(INVALID_MOVING_PATH_EXCEPTION);
+        }
     }
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
@@ -121,7 +133,7 @@ public final class Board {
     }
 
     public boolean hasKingCaptured(){
-        return 2 != collectKing().size();
+        return ALL_THE_NUMBER_OF_KING != collectKing().size();
     }
 
     private List<Piece> collectKing() {
@@ -181,7 +193,7 @@ public final class Board {
             return 0;
         }
         if (pawns.size() > 1) {
-            return 0.5 * pawns.size();
+            return HALF_PAWN_SCORE * pawns.size();
         }
         return pawns.get(0).getScore() * pawns.size();
     }
