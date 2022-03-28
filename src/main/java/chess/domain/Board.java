@@ -1,34 +1,43 @@
 package chess.domain;
 
-import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 import java.util.*;
 
 public final class Board {
 
     private static final double PAWN_PENALTY_SCORE = 0.5;
+    public static final String ERROR_PIECE_NOT_EXIST = "해당 위치에 말이 존재하지 않습니다.";
+    public static final String ERROR_CANNOT_CATCH_SAME_COLOR = "목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.";
+    public static final String ERROR_CANNOT_GO_THROUGH = "이동경로에 다른 기물이 있으면 움직일 수 없습니다.";
+    public static final String ERROR_PAWN_GO_DIAGONAL_WHEN_CATCH_OTHER = "폰은 상대 기물을 잡을 때만 대각선으로 이동 가능합니다.";
+    public static final String ERROR_PAWN_CANNOT_GO_THROUGH_OTHER = "폰은 직진할 때 상대 기물을 지나치거나 집을 수 없습니다.";
+    public static final String ERROR_SOURCE_AND_TARGET_SAME = "출발지와 목적지가 동일합니다.";
 
-    private final Map<Position, Piece> pieces;
+    private final Pieces pieces;
     private Color turn = Color.WHITE;
 
     public Board(final Initiator initiator) {
-        pieces = initiator.initiate();
+        pieces = new Pieces(initiator);
     }
 
     public Optional<Piece> piece(final Position position) {
-        if (pieces.containsKey(position)) {
-            return Optional.of(pieces.get(position));
+        return pieces.findPiece(position);
+    }
+
+    private Piece findPiece(Position source) {
+        Optional<Piece> piece = piece(source);
+        if (piece.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
         }
-        return Optional.empty();
+        return piece.get();
     }
 
     public void move(String source, String target) {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
-        validateNotEquals(sourcePosition, targetPosition);
+        validatePositionsNotEquals(sourcePosition, targetPosition);
 
         Piece piece = findPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
@@ -36,65 +45,57 @@ public final class Board {
         checkMovableAndMovePiece(sourcePosition, targetPosition, piece);
     }
 
-    private Piece findPiece(Position sourcePosition) {
-        Optional<Piece> wrappedPiece = piece(sourcePosition);
-        if (wrappedPiece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
-        }
-        return wrappedPiece.get();
-    }
 
-    private void validateTargetNotSameColor(Position targetPosition, Piece piece) {
-        if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
-            throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+    private void validateTargetNotSameColor(Position target, Piece piece) {
+        if (pieces.pieceExist(target) && piece.isSameColor(findPiece(target))) {
+            throw new IllegalArgumentException(ERROR_CANNOT_CATCH_SAME_COLOR);
         }
     }
 
-    private void checkMovableAndMovePiece(Position sourcePosition, Position targetPosition, Piece piece) {
+    private void checkMovableAndMovePiece(Position source, Position target, Piece piece) {
         validateCorrectTurn(piece);
-        if (piece.isMovable(sourcePosition, targetPosition)) {
-            checkPawnMovement(sourcePosition, targetPosition, piece);
-            validatePathEmpty(sourcePosition, targetPosition);
-            movePiece(sourcePosition, targetPosition, piece);
+        if (piece.isMovable(source, target)) {
+            checkPawnMovement(source, target, piece);
+            validatePathEmpty(source, target);
+            movePiece(source, target);
         }
     }
 
     private void validateCorrectTurn(Piece piece) {
         if (!piece.isSameColor(turn)) {
-            throw new IllegalArgumentException("[ERROR] 지금은 " + turn.value() + "의 턴입니다.");
+            throw new IllegalArgumentException("지금은 " + turn.value() + "의 턴입니다.");
         }
     }
 
-    private void checkPawnMovement(Position sourcePosition, Position targetPosition, Piece piece) {
-        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.DIAGONAL) {
-            checkPawnTargetExist(targetPosition);
+    private void checkPawnMovement(Position source, Position target, Piece piece) {
+        if (piece.isPawn() && Direction.calculate(source, target) == Direction.DIAGONAL) {
+            checkPawnTargetExist(target);
         }
-        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.VERTICAL) {
-            checkPawnTargetNotExist(targetPosition);
-        }
-    }
-
-    private void checkPawnTargetExist(Position targetPosition) {
-        if (!pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
+        if (piece.isPawn() && Direction.calculate(source, target) == Direction.VERTICAL) {
+            checkPawnTargetNotExist(target);
         }
     }
 
-    private void checkPawnTargetNotExist(Position targetPosition) {
-        if (pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
+    private void checkPawnTargetExist(Position target) {
+        if (!pieces.pieceExist(target)) {
+            throw new IllegalArgumentException(ERROR_PAWN_GO_DIAGONAL_WHEN_CATCH_OTHER);
         }
     }
 
-    private void movePiece(Position sourcePosition, Position targetPosition, Piece piece) {
-        pieces.remove(sourcePosition);
-        pieces.put(targetPosition, piece);
+    private void checkPawnTargetNotExist(Position target) {
+        if (pieces.pieceExist(target)) {
+            throw new IllegalArgumentException(ERROR_PAWN_CANNOT_GO_THROUGH_OTHER);
+        }
+    }
+
+    private void movePiece(Position source, Position target) {
+        pieces.move(source, target);
         turn = Color.opposite(turn);
     }
 
-    private void validateNotEquals(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
+    private void validatePositionsNotEquals(Position source, Position target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException(ERROR_SOURCE_AND_TARGET_SAME);
         }
     }
 
@@ -103,8 +104,7 @@ public final class Board {
         if (direction.isIgnore()) {
             return;
         }
-        List<Position> positions = source.calculatePath(target, direction);
-        validatePiecesNotExistOnPath(positions);
+        validatePiecesNotExistOnPath(source.calculatePath(target, direction));
     }
 
     private void validatePiecesNotExistOnPath(List<Position> positions) {
@@ -114,42 +114,20 @@ public final class Board {
     }
 
     private void validatePieceNotExist(Position position) {
-        if (pieces.containsKey(position)) {
-            throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+        if (pieces.pieceExist(position)) {
+            throw new IllegalArgumentException(ERROR_CANNOT_GO_THROUGH);
         }
     }
 
     public boolean isEnd() {
-        return pieces.values()
-                .stream()
-                .filter(Piece::isKing)
-                .count() != 2;
+        return pieces.kingCaught();
     }
 
     public double calculateScore(Color color) {
-        double score = pieces.values()
-                .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::score)
-                .sum();
-        return score - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
+        return pieces.calculateBasicScore(color) - pieces.countPenaltyPawns(color) * PAWN_PENALTY_SCORE;
     }
 
-    private int countPawnsOnSameColumns(Color color) {
-        return Arrays.stream(Column.values())
-                .mapToInt(column -> countPawnsOnSameColumn(column, color))
-                .filter(count -> count > 1)
-                .sum();
-    }
-
-    private int countPawnsOnSameColumn(Column column, Color color) {
-        return (int) Arrays.stream(Row.values())
-                .map(row -> piece(Position.valueOf(column, row)))
-                .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))
-                .count();
-    }
-
-    public Map<Result, Color> whoIsWin() {
+    public Map<Result, Color> gameResult() {
         Map<Result, Color> gameResult = new HashMap<>();
         if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
             gameResult.put(Result.WIN, Color.WHITE);

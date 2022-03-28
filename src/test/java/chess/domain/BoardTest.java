@@ -27,7 +27,7 @@ class BoardTest {
         Board board = new Board(new BoardInitiator());
         assertThatThrownBy(() -> board.move("a3", "a4"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 말이 존재하지 않습니다.");
+                .hasMessage("해당 위치에 말이 존재하지 않습니다.");
     }
 
     @Test
@@ -36,82 +36,7 @@ class BoardTest {
         Board board = new Board(new BoardInitiator());
         assertThatThrownBy(() -> board.move("a3", "a3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("룩을 목적지로 옮길 수 있다")
-    void moveRook_sourceAndTargetGiven() {
-        Piece piece = new Piece(Color.WHITE, new Rook());
-        Board board = new Board(() -> {
-            Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("a1"), piece);
-            return pieces;
-        });
-
-        board.move("a1", "a8");
-
-        assertThat(board.piece(Position.of("a8")).get()).isEqualTo(piece);
-    }
-
-    @Test
-    @DisplayName("비숍을 목적지로 옮길 수 있다")
-    void moveBishop_sourceAndTargetGiven() {
-        Piece piece = new Piece(Color.WHITE, new Bishop());
-        Board board = new Board(() -> {
-            Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("a1"), piece);
-            return pieces;
-        });
-
-        board.move("a1", "e5");
-
-        assertThat(board.piece(Position.of("e5")).get()).isEqualTo(piece);
-    }
-
-    @Test
-    @DisplayName("퀸을 목적지로 옮길 수 있다")
-    void moveQueen_sourceAndTargetGiven() {
-        Piece piece = new Piece(Color.WHITE, new Queen());
-        Board board = new Board(() -> {
-            Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("f5"), piece);
-            return pieces;
-        });
-
-        board.move("f5", "e4");
-
-        assertThat(board.piece(Position.of("e4")).get()).isEqualTo(piece);
-    }
-
-    @Test
-    @DisplayName("나이트를 목적지로 옮길 수 있다")
-    void moveKnight_sourceAndTargetGiven() {
-        Piece piece = new Piece(Color.WHITE, new Knight());
-        Board board = new Board(() -> {
-            Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("f5"), piece);
-            return pieces;
-        });
-
-        board.move("f5", "d4");
-
-        assertThat(board.piece(Position.of("d4")).get()).isEqualTo(piece);
-    }
-
-    @Test
-    @DisplayName("킹을 목적지로 옮길 수 있다")
-    void moveKing_sourceAndTargetGiven() {
-        Piece piece = new Piece(Color.WHITE, new King());
-        Board board = new Board(() -> {
-            Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("f5"), piece);
-            return pieces;
-        });
-
-        board.move("f5", "g4");
-
-        assertThat(board.piece(Position.of("g4")).get()).isEqualTo(piece);
+                .hasMessage("출발지와 목적지가 동일합니다.");
     }
 
     @Test
@@ -126,7 +51,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("a2", "b3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
+                .hasMessage("폰은 상대 기물을 잡을 때만 대각선으로 이동 가능합니다.");
     }
 
     @Test
@@ -157,7 +82,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("a2", "a4"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
+                .hasMessage("폰은 직진할 때 상대 기물을 지나치거나 집을 수 없습니다.");
     }
 
     @Test
@@ -173,7 +98,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("a2", "a4"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -188,7 +113,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("b8", "b3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+                .hasMessage("목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -204,7 +129,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("b8", "b3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -220,7 +145,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("b8", "e5"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -253,7 +178,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("b3", "b8"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -269,7 +194,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("b3", "f3"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -285,7 +210,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move("g7", "b2"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -358,6 +283,6 @@ class BoardTest {
         board.move("a5", "a6");
         assertThatThrownBy(() -> board.move("a4", "a5"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 지금은 검은말의 턴입니다.");
+                .hasMessage("지금은 검은말의 턴입니다.");
     }
 }
