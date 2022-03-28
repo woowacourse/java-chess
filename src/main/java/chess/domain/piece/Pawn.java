@@ -58,15 +58,23 @@ public class Pawn extends Piece {
     }
 
     private boolean isWrongMovementDirection(final Piece targetPiece, final Direction direction) {
-        return targetPiece.isBlank() && (direction == Direction.NE || direction == Direction.SE
+        return targetPiece.isBlank() && isDiagonalDirection(direction);
+    }
+
+    private boolean isDiagonalDirection(Direction direction) {
+        return direction == Direction.NE || direction == Direction.SE
                 || direction == Direction.SW
-                || direction == Direction.NW);
+                || direction == Direction.NW;
     }
 
     private boolean isWrongCatchDirection(final Piece targetPiece, final Direction direction) {
-        return !targetPiece.isBlank() && (direction == Direction.N || direction == Direction.NN
+        return !targetPiece.isBlank() && isStraightDirection(direction);
+    }
+
+    private boolean isStraightDirection(Direction direction) {
+        return direction == Direction.N || direction == Direction.NN
                 || direction == Direction.S
-                || direction == Direction.SS);
+                || direction == Direction.SS;
     }
 
     @Override

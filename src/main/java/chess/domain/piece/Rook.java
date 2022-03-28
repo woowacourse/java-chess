@@ -6,6 +6,7 @@ public class Rook extends Piece {
 
     private static final String BLACK_SYMBOL = "R";
     private static final String WHITE_SYMBOL = "r";
+    public static final int ROOK_SCORE = 5;
 
     public Rook(final Team team) {
         super(team);
@@ -43,6 +44,6 @@ public class Rook extends Piece {
 
     @Override
     public double getScore() {
-        return 5;
+        return ROOK_SCORE;
     }
 }

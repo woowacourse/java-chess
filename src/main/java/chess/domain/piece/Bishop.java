@@ -6,6 +6,7 @@ public class Bishop extends Piece {
 
     private static final String BLACK_SYMBOL = "B";
     private static final String WHITE_SYMBOL = "b";
+    public static final int BISHOP_SCORE = 3;
 
     public Bishop(final Team team) {
         super(team);
@@ -43,6 +44,6 @@ public class Bishop extends Piece {
 
     @Override
     public double getScore() {
-        return 3;
+        return BISHOP_SCORE;
     }
 }

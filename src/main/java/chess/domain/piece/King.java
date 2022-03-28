@@ -10,6 +10,7 @@ public class King extends Piece {
 
     private static final String BLACK_SYMBOL = "K";
     private static final String WHITE_SYMBOL = "k";
+    public static final int KING_SCORE = 0;
 
     public King(final Team team) {
         super(team);
@@ -56,6 +57,6 @@ public class King extends Piece {
 
     @Override
     public double getScore() {
-        return 0;
+        return KING_SCORE;
     }
 }

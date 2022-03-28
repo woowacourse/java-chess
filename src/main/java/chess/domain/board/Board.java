@@ -34,8 +34,18 @@ public class Board {
     private void validateMove(final Position source, final Position target) {
         Piece piece = board.get(source);
         validateBlank(piece);
-        piece.validateMovement(source, target);
+        validateMovement(piece, source, target);
         validateBlocking(source, target);
+    }
+
+    private void validateBlank(final Piece piece) {
+        if (piece.isBlank()) {
+            throw new IllegalArgumentException(BLANK_ERROR);
+        }
+    }
+
+    private void validateMovement(Piece piece, Position source, Position target) {
+        piece.validateMovement(source, target);
     }
 
     private void validateBlocking(final Position source, final Position target) {
@@ -62,12 +72,6 @@ public class Board {
             throw new IllegalArgumentException(BOARD_RANGE_ERROR);
         }
         return position.get();
-    }
-
-    private void validateBlank(final Piece piece) {
-        if (piece.isBlank()) {
-            throw new IllegalArgumentException(BLANK_ERROR);
-        }
     }
 
     public boolean isFinished() {

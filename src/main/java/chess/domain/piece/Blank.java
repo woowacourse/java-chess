@@ -6,6 +6,7 @@ public class Blank extends Piece {
 
     private static final String SYMBOL = ".";
     private static final String CAN_NOT_MOVE_ERROR = "빈 곳은 이동이 불가능 합니다.";
+    public static final int NO_SCORE = 0;
 
     public Blank() {
         super(Team.NEUTRALITY);
@@ -38,6 +39,6 @@ public class Blank extends Piece {
 
     @Override
     public double getScore() {
-        return 0;
+        return NO_SCORE;
     }
 }
