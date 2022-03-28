@@ -10,8 +10,7 @@ public enum File {
     E(5),
     F(6),
     G(7),
-    H(8)
-    ;
+    H(8);
 
     private final int row;
 

@@ -36,14 +36,6 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
     public static List<Direction> getRoyalDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, NORTHEAST, SOUTHWEST, NORTHWEST);
     }
@@ -58,5 +50,13 @@ public enum Direction {
 
     public static List<Direction> getKnightDirection() {
         return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 }

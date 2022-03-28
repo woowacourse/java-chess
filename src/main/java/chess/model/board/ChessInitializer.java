@@ -13,7 +13,6 @@ import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ChessInitializer implements BoardInitializer {

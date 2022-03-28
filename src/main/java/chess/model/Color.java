@@ -6,6 +6,10 @@ public enum Color {
 
     WHITE, BLACK, NOTHING;
 
+    public static List<Color> getPlayerColors() {
+        return List.of(WHITE, BLACK);
+    }
+
     public boolean isBlack() {
         return this.equals(BLACK);
     }
@@ -23,9 +27,5 @@ public enum Color {
 
     public boolean isEmpty() {
         return this.equals(Color.NOTHING);
-    }
-
-    public static List<Color> getPlayerColors() {
-        return List.of(WHITE, BLACK);
     }
 }

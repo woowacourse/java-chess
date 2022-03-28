@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Color;
 import chess.model.Square;
-import chess.model.board.BoardInitializer;
-import chess.model.board.ChessInitializer;
 import chess.model.piece.Bishop;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
@@ -36,6 +34,6 @@ public class ChessInitializerTest {
                 new Bishop(Color.WHITE, Square.of("c1")), new Queen(Color.WHITE, Square.of("d1")),
                 new King(Color.WHITE, Square.of("e1")), new Bishop(Color.WHITE, Square.of("f1")),
                 new Knight(Color.WHITE, Square.of("g1")), new Rook(Color.WHITE, Square.of("h1"))
-                );
+        );
     }
 }

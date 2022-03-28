@@ -20,6 +20,19 @@ public final class Square {
         return new Square(file, rank);
     }
 
+    private static int gcd(int fileDistance, int rankDistance) {
+        fileDistance = Math.abs(fileDistance);
+        rankDistance = Math.abs(rankDistance);
+        int bigger = Math.max(fileDistance, rankDistance);
+        int smaller = Math.min(fileDistance, rankDistance);
+        while (smaller > 0) {
+            int tmp = bigger;
+            bigger = smaller;
+            smaller = tmp % smaller;
+        }
+        return bigger;
+    }
+
     public boolean isPawnFirstSquare(Color color) {
         if (color.isBlack()) {
             return rank.equals(Rank.SEVEN);
@@ -33,7 +46,7 @@ public final class Square {
         int movedCount = 0;
         while (!tempSquare.equals(target)) {
             tempSquare = tempSquare.move(direction);
-            movedCount ++;
+            movedCount++;
         }
         return movedCount;
     }
@@ -47,19 +60,6 @@ public final class Square {
         int rankDistance = rank.calculateGap(source.rank);
         int gcd = gcd(fileDistance, rankDistance);
         return Direction.of(fileDistance / gcd, rankDistance / gcd);
-    }
-
-    private static int gcd(int fileDistance, int rankDistance) {
-        fileDistance = Math.abs(fileDistance);
-        rankDistance = Math.abs(rankDistance);
-        int bigger = Math.max(fileDistance, rankDistance);
-        int smaller = Math.min(fileDistance, rankDistance);
-        while (smaller > 0) {
-            int tmp = bigger;
-            bigger = smaller;
-            smaller = tmp % smaller;
-        }
-        return bigger;
     }
 
     public boolean isSameFile(Square other) {

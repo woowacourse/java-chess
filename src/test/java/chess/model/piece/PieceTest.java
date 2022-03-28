@@ -7,9 +7,6 @@ import chess.model.Color;
 import chess.model.File;
 import chess.model.Rank;
 import chess.model.Square;
-import chess.model.piece.Empty;
-import chess.model.piece.Piece;
-import chess.model.piece.Rook;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {

@@ -11,8 +11,7 @@ public enum Rank {
     FIVE(5),
     SIX(6),
     SEVEN(7),
-    EIGHT(8)
-    ;
+    EIGHT(8);
 
     private final int col;
 
@@ -27,15 +26,15 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치입니다"));
     }
 
+    public static List<Rank> emptyBaseLine() {
+        return List.of(SIX, FIVE, FOUR, THREE);
+    }
+
     public Rank add(int col) {
         return Rank.of(this.col + col);
     }
 
     public int calculateGap(Rank target) {
         return target.col - this.col;
-    }
-
-    public static List<Rank> emptyBaseLine() {
-        return List.of(SIX, FIVE, FOUR, THREE);
     }
 }

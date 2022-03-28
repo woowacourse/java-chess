@@ -7,8 +7,6 @@ import chess.model.Color;
 import chess.model.File;
 import chess.model.Rank;
 import chess.model.Square;
-import chess.model.board.Board;
-import chess.model.board.ChessInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Rook;

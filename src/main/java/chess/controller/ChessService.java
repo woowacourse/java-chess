@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.model.board.Board;
-import chess.model.board.ChessInitializer;
 import chess.model.Color;
 import chess.model.Square;
+import chess.model.board.Board;
+import chess.model.board.ChessInitializer;
 import java.util.Map;
 import java.util.stream.Collectors;
 

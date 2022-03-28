@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.controller.BoardDto;
 import chess.controller.ScoresDto;
-import java.util.Map;
 
 public final class OutputView {
 
@@ -33,6 +32,6 @@ public final class OutputView {
     }
 
     public static void printException(IllegalArgumentException exception) {
-        System.out.println(ERROR +exception.getMessage());
+        System.out.println(ERROR + exception.getMessage());
     }
 }
