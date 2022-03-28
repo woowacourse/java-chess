@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-	private static final int MIN_POSITION = 1;
-	private static final int MAX_POSITION = 8;
+	public static final int MIN_POSITION = 1;
+	public static final int MAX_POSITION = 8;
+	
 	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
 
 	private final int row;

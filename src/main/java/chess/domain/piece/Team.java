@@ -8,4 +8,8 @@ public enum Team {
 	public boolean isBlack() {
 		return this == Team.BLACK;
 	}
+
+	public boolean isWhite() {
+		return this == Team.WHITE;
+	}
 }

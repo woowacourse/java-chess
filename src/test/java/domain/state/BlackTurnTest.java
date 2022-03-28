@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
+import chess.domain.state.EndGame;
 import chess.domain.state.KingDeath;
 import chess.domain.state.State;
 import chess.domain.state.WhiteTurn;
@@ -55,5 +56,13 @@ class BlackTurnTest {
 		assertThatThrownBy(() -> blackTurn.play(new Pawn(Team.BLACK), new Pawn(Team.BLACK)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("같은 팀의 기물로 이동할 수 없습니다.");
+	}
+
+	@Test
+	void finish() {
+		State state = new WhiteTurn();
+		State blackTurn = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+
+		assertThat(blackTurn.finish()).isInstanceOf(EndGame.class);
 	}
 }

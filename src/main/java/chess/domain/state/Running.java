@@ -42,6 +42,11 @@ public abstract class Running implements State {
 	}
 
 	@Override
+	public final State finish() {
+		return new EndGame(Team.NEUTRALITY);
+	}
+
+	@Override
 	public final Team getTeam() {
 		return team;
 	}

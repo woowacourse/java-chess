@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import static chess.domain.board.Position.MAX_POSITION;
+import static chess.domain.board.Position.MIN_POSITION;
+
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -16,6 +19,8 @@ public class Board {
 	private static final String BLOCK_ERROR = "해당 위치로 기물을 옮길 수 없습니다.";
 	private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
 	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
+	private static final int SAME_COLUMN_PAWN_COUNT = 2;
+	private static final double DUPLICATION_PAWN_SCORE = 0.5;
 
 	private final Map<Position, Piece> board;
 	private State state;
@@ -63,7 +68,7 @@ public class Board {
 
 	public double calculateScore(Team team) {
 		double score = 0;
-		for (int column = 1; column <= 8; column++) {
+		for (int column = MIN_POSITION; column <= MAX_POSITION; column++) {
 			List<Piece> columnPieces = findColumnPieces(team, column);
 			score += calculateColumnScore(columnPieces);
 		}
@@ -71,29 +76,31 @@ public class Board {
 	}
 
 	private double calculateColumnScore(final List<Piece> columnPieces) {
-		double sum = 0;
 		long pawnCount = columnPieces.stream()
 				.filter(Piece::isPawn)
 				.count();
-		for (Piece piece : columnPieces) {
-			sum += piece.getScore();
+		double sum = columnPieces.stream()
+				.mapToDouble(Piece::getScore)
+				.sum();
+		if (pawnCount >= SAME_COLUMN_PAWN_COUNT) {
+			sum -= DUPLICATION_PAWN_SCORE * pawnCount;
 		}
-		if (pawnCount >= 2) {
-			sum -= 0.5 * pawnCount;
-		}
-
 		return sum;
 	}
 
 	private List<Piece> findColumnPieces(Team team, final int column) {
 		List<Piece> pieces = new ArrayList<>();
-		for (int row = 1; row <= 8; row++) {
+		for (int row = MIN_POSITION; row <= MAX_POSITION; row++) {
 			Position position = Position.of(row, column);
 			if (board.get(position).isAlly(team)) {
 				pieces.add(board.get(position));
 			}
 		}
 		return pieces;
+	}
+
+	public void endGame() {
+		state = state.finish();
 	}
 
 	public boolean isFinished() {
