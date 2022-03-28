@@ -6,6 +6,7 @@ import chess.domain.location.Location;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
+import java.util.regex.Pattern;
 
 public class ChessGame {
     private State state;

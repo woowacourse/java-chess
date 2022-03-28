@@ -34,22 +34,12 @@ public abstract class Running implements State {
 
     @Override
     public State move(Location source, Location target) {
-        Piece sourcePiece = getBoard().getPiece(source);
-        Piece targetPiece = getBoard().getPiece(target);
-
-        checkSourceColor(sourcePiece);
+        Piece sourcePiece = board.getPiece(source);
+        Piece targetPiece = board.getPiece(target);
         LocationDiff locationDiff = source.computeDiff(target);
-
-        checkDirection(sourcePiece, locationDiff.computeDirection());
-        checkDistance(sourcePiece, locationDiff);
+        checkMovable(sourcePiece, targetPiece, locationDiff);
         checkRoute(source, locationDiff);
-        checkTarget(targetPiece);
-
-        if (sourcePiece.isPawn()){
-            checkPawnTargetLocation(targetPiece, locationDiff);
-        }
-
-        getBoard().move(source, target);
+        board.move(source, target);
 
         if (targetPiece.isKing()) {
             return end();
@@ -57,18 +47,15 @@ public abstract class Running implements State {
         return getOpposingTeam();
     }
 
-    private void checkPawnTargetLocation(Piece targetPiece, LocationDiff locationDiff) {
-        if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
-        }
-        if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
-        }
+    private void checkMovable(Piece sourcePiece, Piece targetPiece, LocationDiff locationDiff) {
+        checkSourceColor(sourcePiece);
+        checkDirection(sourcePiece, locationDiff.computeDirection());
+        checkDistance(sourcePiece, locationDiff);
+        checkTarget(targetPiece);
+        checkPawn(sourcePiece, targetPiece, locationDiff);
     }
 
-    abstract Running getOpposingTeam();
     abstract void checkSourceColor(Piece piece);
-    abstract void checkTarget(Piece piece);
 
     private void checkDirection(Piece piece, Direction direction) {
         if (!piece.isMovableDirection(direction)) {
@@ -81,6 +68,22 @@ public abstract class Running implements State {
             throw new IllegalArgumentException("[ERROR] 해당 위치까지 이동할 수 없습니다.");
         }
     }
+    abstract void checkTarget(Piece piece);
+
+    private void checkPawn(Piece sourcePiece, Piece targetPiece, LocationDiff locationDiff) {
+        if (sourcePiece.isPawn()){
+            checkPawnTargetLocation(targetPiece, locationDiff);
+        }
+    }
+
+    private void checkPawnTargetLocation(Piece targetPiece, LocationDiff locationDiff) {
+        if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
+        }
+        if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
+        }
+    }
 
     private void checkRoute(Location source, LocationDiff locationDiff) {
         Location routeLocation = source.copyOf();
@@ -91,4 +94,6 @@ public abstract class Running implements State {
             }
         }
     }
+
+    abstract Running getOpposingTeam();
 }
