@@ -19,8 +19,21 @@ public class OutputView {
         }
     }
 
+    public static void printWinner(final String whitePlayerName, final String blackPlayerName,
+                                   final boolean isWhitePlayerWin, final boolean isBlackPlayerWin) {
+        if (!isWhitePlayerWin && !isBlackPlayerWin) {
+            System.out.println("무승부");
+        }
+        if (isWhitePlayerWin) {
+            System.out.println(whitePlayerName.concat(" 승리!"));
+        }
+        if (isBlackPlayerWin) {
+            System.out.println(blackPlayerName.concat(" 승리!"));
+        }
+    }
+
     public static void printResult(final String currentPlayerName, final double currentPlayerScore,
-            final String opponentPlayerName, final double opponentPlayerScore) {
+                                   final String opponentPlayerName, final double opponentPlayerScore) {
         System.out.print(currentPlayerName.concat(": "));
         System.out.println(currentPlayerScore);
 

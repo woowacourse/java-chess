@@ -26,7 +26,10 @@ public class ChessGameController {
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
         showMap(chessGame.createMap());
         progressGame(chessGame, whitePlayer, blackPlayer);
-        showResult(whitePlayer, blackPlayer);
+        showWinner(chessGame, whitePlayer, blackPlayer);
+        if (!isFinishedByCaptureKing(chessGame, whitePlayer, blackPlayer)) {
+            showScore(chessGame, whitePlayer, blackPlayer);
+        }
     }
 
     private ChessGame initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
@@ -68,7 +71,7 @@ public class ChessGameController {
             return false;
         }
         if (command.equals("status")) {
-            showResult(currentPlayer, opponentPlayer);
+            showScore(chessGame, currentPlayer, opponentPlayer);
             return isTurnFinished(chessGame, currentPlayer, opponentPlayer);
         }
         return true;
@@ -91,12 +94,31 @@ public class ChessGameController {
         return List.of(new Position(currentRank, currentFile), new Position(destinationRank, destinationFile));
     }
 
-    private void showResult(final Player currentPlayer, final Player opponentPlayer) {
+    private void showWinner(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
+        final String currentPlayerName = whitePlayer.getTeamName();
+        final String opponentPlayerName = blackPlayer.getTeamName();
+
+        final boolean isWhiteWin = chessGame.isWin(whitePlayer, blackPlayer);
+        final boolean isBlackWin = chessGame.isWin(blackPlayer, whitePlayer);
+        OutputView.printWinner(currentPlayerName, opponentPlayerName, isWhiteWin, isBlackWin);
+    }
+
+    private void showScore(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
         final String currentPlayerName = currentPlayer.getTeamName();
         final String opponentPlayerName = opponentPlayer.getTeamName();
 
-        final double currentPlayerScore = currentPlayer.calculateScore();
-        final double opponentPlayerScore = opponentPlayer.calculateScore();
+        if (isFinishedByCaptureKing(chessGame, currentPlayer, opponentPlayer)) {
+            return;
+        }
+        final double currentPlayerScore = chessGame.getPlayerScore(currentPlayer);
+        final double opponentPlayerScore = chessGame.getPlayerScore(opponentPlayer);
         OutputView.printResult(currentPlayerName, currentPlayerScore, opponentPlayerName, opponentPlayerScore);
+    }
+
+    private boolean isFinishedByCaptureKing(final ChessGame chessGame,
+                                            final Player currentPlayer, final Player opponentPlayer) {
+        final boolean isOpponentPlayerWin = chessGame.hasNoKing(currentPlayer);
+        final boolean isCurrentPlayerWin = chessGame.hasNoKing(opponentPlayer);
+        return isCurrentPlayerWin || isOpponentPlayerWin;
     }
 }
