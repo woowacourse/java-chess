@@ -24,7 +24,7 @@ public class PositionTest {
     @MethodSource("provideForPositionAndDirection")
     @DisplayName("출발지와 도착지의 방향을 구한다.")
     void getDirection(final Position from, final Position to, final Direction direction) {
-        assertThat(from.getDir(to)).isEqualTo(direction);
+        assertThat(from.findDirection(to)).isEqualTo(direction);
     }
 
     static Stream<Arguments> provideForPositionAndDirection() {

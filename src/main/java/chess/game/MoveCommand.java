@@ -15,17 +15,17 @@ public class MoveCommand {
         return new MoveCommand(Position.of(from), Position.of(to));
     }
 
-    private void validateFromEqualsTo(final Position from, final Position to) {
-        if (from.equals(to)) {
-            throw new IllegalArgumentException("현재 위치와 이동할 위치가 같을 수 없습니다.");
-        }
-    }
-
     public Position getFrom() {
         return from;
     }
 
     public Position getTo() {
         return to;
+    }
+
+    private void validateFromEqualsTo(final Position from, final Position to) {
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("현재 위치와 이동할 위치가 같을 수 없습니다.");
+        }
     }
 }

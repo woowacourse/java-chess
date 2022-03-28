@@ -26,23 +26,37 @@ public class Game {
         final List<String> inputs = Arrays.asList(input.split(" "));
         final Command command = Command.of(inputs.get(0));
         validate(command, inputs);
-
         state = state.turn(command);
-
         if (command.isStatus()) {
             return state.score();
         }
+        isMoveStatus(inputs);
+        isEndStatus();
+        return Collections.emptyMap();
+    }
 
+    private void isMoveStatus(final List<String> inputs) {
         if (state.canMove()) {
             state.move(MoveCommand.of(inputs.get(1), inputs.get(2)));
         }
+    }
 
+    public Board getBoard() {
+        return state.getBoard();
+    }
+
+    private Color reversColor(final Color color) {
+        if (color == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
+
+    private void isEndStatus() {
         if (state.isGameEnd()) {
             winColor = reversColor(state.getColor());
             state = state.turn(Command.END);
         }
-
-        return Collections.emptyMap();
     }
 
     private void validate(final Command command, final List<String> input) {
@@ -57,16 +71,5 @@ public class Game {
 
     public Color getWinColor() {
         return winColor;
-    }
-
-    public Board getBoard() {
-        return state.getBoard();
-    }
-
-    private Color reversColor(final Color color) {
-        if (color == BLACK) {
-            return WHITE;
-        }
-        return BLACK;
     }
 }

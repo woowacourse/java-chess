@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int DEAD_KING_COUNT = 1;
+    private static final int PAWN_MINIMUM_REDUCE_ROW_COUNT = 1;
+
     private final Map<Position, Piece> value;
 
     private Board(final Map<Position, Piece> value) {
@@ -25,7 +28,6 @@ public class Board {
         createKnight(board);
         createRook(board);
         createPawn(board);
-
         return new Board(board);
     }
 
@@ -67,39 +69,14 @@ public class Board {
         }
     }
 
-    public Map<Position, Piece> getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return "Board{" +
-                "value=" + value +
-                '}';
-    }
-
-    public void move(final MoveCommand moveCommand, Color color) {
+    public void move(final MoveCommand moveCommand, final Color color) {
         final Position from = moveCommand.getFrom();
         final Position to = moveCommand.getTo();
-
-        validatePieceExist(from);
-        validateSameTeam(from, to);
-
         final Piece piece = value.get(from);
-        validateColor(piece, color);
-        validatePawnMove(from, to, piece);
 
-        move(from, to, piece);
-    }
+        validateMove(color, from, to, piece);
 
-    private void move(final Position from, final Position to, final Piece piece) {
-        if (piece.canMove(from, to)) {
-            validatePiece(from, to, piece);
-            value.put(to, piece);
-            value.remove(from);
-            return;
-        }
-        throw new IllegalArgumentException("이동이 불가능 합니다.");
+        movePiece(from, to, piece);
     }
 
     public Map<Color, Double> getBoardScore() {
@@ -110,22 +87,37 @@ public class Board {
     }
 
     public double calculateScore(final Color color) {
-        final double sum = value.values().stream()
+        return sumScore(color) - pawnCountOnSameColumn(color) * Pawn.REDUCED_SCORE;
+    }
+
+    public boolean isKingDead() {
+        return countKingPiece() == DEAD_KING_COUNT;
+    }
+
+    private void movePiece(final Position from, final Position to, final Piece piece) {
+        if (piece.canMove(from, to)) {
+            value.put(to, piece);
+            value.remove(from);
+            return;
+        }
+        throw new IllegalArgumentException("이동이 불가능 합니다.");
+    }
+
+    private double sumScore(final Color color) {
+        return value.values().stream()
                 .filter(piece -> piece.getColor() == color)
                 .mapToDouble(Piece::getScore)
                 .sum();
-
-        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_SCORE;
     }
 
     private double pawnCountOnSameColumn(final Color color) {
         return Arrays.stream(Column.values())
                 .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
-                .filter(count -> count > 1)
+                .filter(count -> count > PAWN_MINIMUM_REDUCE_ROW_COUNT)
                 .sum();
     }
 
-    private int countPawnsByColumn(final int column, Color color) {
+    private int countPawnsByColumn(final int column, final Color color) {
         return (int) value.keySet().stream()
                 .filter(position -> position.equalsColumn(column))
                 .map(value::get)
@@ -133,41 +125,18 @@ public class Board {
                 .count();
     }
 
-    public boolean isKingDead() {
-        int kingCount = (int) value.values().stream()
+    private int countKingPiece() {
+        return (int) value.values().stream()
                 .filter(Piece::isKing)
                 .count();
-
-        return kingCount == 1;
     }
 
-    private void validatePiece(final Position from, final Position to, final Piece piece) {
-        if (!piece.isKnight()) {
-            validatePieceBlock(from, to, piece);
-        }
-    }
-
-    private void validatePieceBlock(final Position from, final Position to, Piece piece) {
-        final Direction direction = from.getDir(to);
-
-        Position movedPosition = from;
-        movedPosition = movedPosition.shift(direction);
-        while (!movedPosition.equals(to)) {
-            validateBlock(movedPosition);
-            movedPosition = movedPosition.shift(direction);
-        }
-    }
-
-    private void validateColor(final Piece piece, Color color) {
-        if (piece.getColor() != color) {
-            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
-        }
-    }
-
-    private void validatePawnMove(final Position from, final Position to, final Piece piece) {
-        if (piece.isPawn()) {
-            validatePawnForwardMove(from, to);
-        }
+    private void validateMove(final Color color, final Position from, final Position to, final Piece piece) {
+        validatePieceExist(from);
+        validateSameTeam(from, to);
+        validatePiece(from, to, piece);
+        validateColor(piece, color);
+        validatePawnMove(from, to, piece);
     }
 
     private void validatePieceExist(final Position position) {
@@ -179,6 +148,33 @@ public class Board {
     private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
+        }
+    }
+
+    private void validatePiece(final Position from, final Position to, final Piece piece) {
+        if (!piece.isKnight()) {
+            validatePieceBlock(from, to);
+        }
+    }
+
+    private void validatePieceBlock(final Position from, final Position to) {
+        final Direction direction = from.findDirection(to);
+        Position movedPosition = from.shift(direction);
+        while (!movedPosition.equals(to)) {
+            validateBlock(movedPosition);
+            movedPosition = movedPosition.shift(direction);
+        }
+    }
+
+    private void validateColor(final Piece piece, final Color color) {
+        if (piece.getColor() != color) {
+            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
+        }
+    }
+
+    private void validatePawnMove(final Position from, final Position to, final Piece piece) {
+        if (piece.isPawn()) {
+            validatePawnForwardMove(from, to);
         }
     }
 
@@ -195,5 +191,16 @@ public class Board {
         if (!from.isSameColumn(to) && !value.containsKey(to)) {
             throw new IllegalArgumentException("폰은 상대말이 존재하지 않을 때 대각선으로 이동할 수 없습니다.");
         }
+    }
+
+    public Map<Position, Piece> getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "value=" + value +
+                '}';
     }
 }
