@@ -1,16 +1,45 @@
 package chess.position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
 
+    public static final int ONE_SQUARE = 1;
+    private static final Map<String, Position> CACHE = new HashMap<>();
+
     private final File file;
     private final Rank rank;
+
+    static {
+        for (File file : File.orderedValues()) {
+            cacheByFile(file);
+        }
+    }
+
+    private static void cacheByFile(File file) {
+        for (Rank rank : Rank.values()) {
+            CACHE.put(file.name().toLowerCase(Locale.ROOT) + rank.getValue(),
+                new Position(file, rank));
+        }
+    }
 
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position from(String key) {
+        if (!CACHE.containsKey(key)) {
+            throw new IllegalArgumentException("[ERROR] 체스 보드 position의 범위를 넘어갑니다.");
+        }
+        return CACHE.get(key);
     }
 
     public boolean isVerticalWay(Position other) {
@@ -26,7 +55,7 @@ public class Position {
     }
 
     public boolean isAdjacent(Position other) {
-        return (getVerticalDistance(other) | getHorizontalDistance(other)) == 1;
+        return (getVerticalDistance(other) | getHorizontalDistance(other)) == ONE_SQUARE;
     }
 
     public boolean isUpward(Position other) {
@@ -63,7 +92,7 @@ public class Position {
         if (isDiagonalWay(to)) {
             return getDiagonalPath(to);
         }
-        throw new IllegalArgumentException("일직선 상의 경로가 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 일직선 상의 경로가 없습니다.");
     }
 
     private List<Position> getVerticalPath(Position to) {
