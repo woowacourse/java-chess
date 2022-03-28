@@ -146,4 +146,8 @@ public class ChessBoard {
 
         return 0;
     }
+
+    public boolean isKing(Position position) {
+        return isFilled(position) && board.get(position).isKing();
+    }
 }

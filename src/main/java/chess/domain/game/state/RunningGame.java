@@ -25,7 +25,7 @@ public class RunningGame extends StartedGame {
     public GameState move(Position source, Position target) {
         validatePosition(source);
 
-        if (isKingKilled(target)) {
+        if (board.isKing(target)) {
             return new EndGame();
         }
 
@@ -33,10 +33,6 @@ public class RunningGame extends StartedGame {
         player = player.change();
 
         return new RunningGame(board, player);
-    }
-
-    private boolean isKingKilled(Position target) {
-        return board.isFilled(target) && board.getPiece(target).isKing();
     }
 
     private void validatePosition(Position source) {
