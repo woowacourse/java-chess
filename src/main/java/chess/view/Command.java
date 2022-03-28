@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 
-public enum Menu {
+public enum Command {
 
     START("start"),
     MOVE("move"),
@@ -11,12 +11,12 @@ public enum Menu {
 
     private final String value;
 
-    Menu(String value) {
+    Command(String value) {
         this.value = value;
     }
 
-    public static Menu of(String value) {
-        return Arrays.stream(Menu.values())
+    public static Command of(String value) {
+        return Arrays.stream(Command.values())
                 .filter(it -> it.value.equalsIgnoreCase(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어 입니다."));

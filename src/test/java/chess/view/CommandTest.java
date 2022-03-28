@@ -7,12 +7,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 
-class MenuTest {
+class CommandTest {
 
     @DisplayName("생성 확인")
     @ParameterizedTest
     @CsvSource(value = {"start:START", "Start:START", "START:START", "move:MOVE", "end:END"}, delimiter = ':')
-    void create(String input, Menu expect) {
-        assertThat(Menu.of(input)).isEqualTo(expect);
+    void create(String input, Command expect) {
+        assertThat(Command.of(input)).isEqualTo(expect);
     }
 }

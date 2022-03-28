@@ -4,13 +4,13 @@ import static chess.view.InputView.FROM_POSITION_INDEX;
 import static chess.view.InputView.MENU_INDEX;
 import static chess.view.InputView.TO_POSITION_INDEX;
 
-import chess.domain.board.generator.BasicBoardGenerator;
 import chess.domain.board.Board;
-import chess.domain.board.generator.BoardGenerator;
 import chess.domain.board.Score;
+import chess.domain.board.generator.BasicBoardGenerator;
+import chess.domain.board.generator.BoardGenerator;
 import chess.domain.position.Position;
+import chess.view.Command;
 import chess.view.InputView;
-import chess.view.Menu;
 import chess.view.OutputView;
 
 public class ChessGame {
@@ -26,8 +26,8 @@ public class ChessGame {
             if (check()) {
                 OutputView.printCheck();
             }
-            String[] command = InputView.inputCommand();
-            play = convert(command);
+            String[] inputs = InputView.inputCommand();
+            play = convert(inputs);
         }
     }
 
@@ -39,19 +39,19 @@ public class ChessGame {
         }
     }
 
-    private boolean convert(String[] command) {
-        Menu menu = Menu.of(command[MENU_INDEX]);
+    private boolean convert(String[] inputs) {
+        Command command = Command.of(inputs[MENU_INDEX]);
 
-        if (menu.isEnd()) {
+        if (command.isEnd()) {
             return false;
         }
-        if (menu.isStart()) {
+        if (command.isStart()) {
             start();
         }
-        if (menu.isMove()) {
-            move(command);
+        if (command.isMove()) {
+            move(inputs);
         }
-        if (menu.isStatus()) {
+        if (command.isStatus()) {
             status();
         }
         return true;
