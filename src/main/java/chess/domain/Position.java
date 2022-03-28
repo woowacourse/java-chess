@@ -26,6 +26,10 @@ public class Position {
         this.file = lowerCaseFile;
     }
 
+    public Position(String position) {
+        this(Character.getNumericValue(position.charAt(1)), position.charAt(0));
+    }
+
     private void validatePositionRange(final int rank, final char file) {
         if (rank < MIN_RANK_RANGE || rank > MAX_RANK_RANGE) {
             throw new IllegalArgumentException("잘못된 범위입니다.");
