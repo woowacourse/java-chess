@@ -19,6 +19,9 @@ public enum Direction {
     SSW(-2, -1),
     NNE(2, 1),
     NNW(2, -1),
+
+    SS(-2, 0),
+    NN(2, 0),
     ;
 
     private final int row;

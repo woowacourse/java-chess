@@ -17,7 +17,7 @@ class RookTest {
     void canMove_false(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece rook = new Rook(Player.BLACK, "R");
-        Boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isFalse();
     }
@@ -28,7 +28,7 @@ class RookTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece rook = new Rook(Player.BLACK, "R");
-        Boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = rook.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

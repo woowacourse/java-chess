@@ -18,7 +18,7 @@ class QueenTest {
     void canMove_false(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece queen = new Queen(Player.BLACK, "B");
-        Boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isFalse();
     }
@@ -29,7 +29,7 @@ class QueenTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece queen = new Queen(Player.BLACK, "R");
-        Boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

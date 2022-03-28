@@ -17,7 +17,7 @@ class KnightTest {
     void canMove_false() {
         Map<Position, Piece> board = new Board().getBoard();
         Piece knight = board.get(Position.of(Rank.EIGHT, File.B));
-        Boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(Rank.SIX, File.B), board);
+        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(Rank.SIX, File.B), board);
 
         assertThat(actual).isFalse();
     }
@@ -28,7 +28,7 @@ class KnightTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece knight = board.get(Position.of(Rank.EIGHT, File.B));
-        Boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(rank, file), board);
+        boolean actual = knight.canMove(Position.of(Rank.EIGHT, File.B), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

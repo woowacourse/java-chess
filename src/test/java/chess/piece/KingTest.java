@@ -19,7 +19,7 @@ public class KingTest {
     void canMove_false() {
         Map<Position, Piece> board = new Board().getBoard();
         Piece king = board.get(Position.of(Rank.EIGHT, File.E));
-        Boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), board);
+        boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), board);
 
         assertThat(actual).isFalse();
     }
@@ -30,7 +30,7 @@ public class KingTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece king = new King(Player.BLACK, "K");
-        Boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), board);
+        boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

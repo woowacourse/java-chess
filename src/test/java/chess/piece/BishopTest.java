@@ -18,7 +18,7 @@ class BishopTest {
     void canMove_false(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece bishop = new Bishop(Player.BLACK, "B");
-        Boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isFalse();
     }
@@ -29,7 +29,7 @@ class BishopTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece bishop = new Bishop(Player.BLACK, "B");
-        Boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+        boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }

@@ -36,4 +36,8 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    public boolean isStart() {
+        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    }
 }
