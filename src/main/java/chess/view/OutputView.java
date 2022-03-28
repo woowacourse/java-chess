@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
 import chess.domain.Rank;
 import chess.domain.Row;
 import chess.domain.Team;
-
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
@@ -31,7 +30,7 @@ public class OutputView {
 
     public static void printFinishedGame(Map<Row, Rank> board, Team team) {
         printChessBoard(board);
-        System.out.println("이긴 팀은 "+ team.name());
+        System.out.println("이긴 팀은 " + team.name());
     }
 
     public static void printStatus(double whiteTeamScore, double blackTeamScore) {

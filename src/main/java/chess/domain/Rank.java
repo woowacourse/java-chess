@@ -18,10 +18,6 @@ public class Rank {
         this.pieces = pieces;
     }
 
-    public Map<Column, Piece> getPieces() {
-        return pieces;
-    }
-
     public static Rank createBlank(int row) {
         return new Rank(Blank.from(row, Team.NONE));
     }
@@ -41,6 +37,10 @@ public class Rank {
         pieces.put(Column.G, new Knight(team, new Position(Column.G, Row.find(row))));
         pieces.put(Column.H, new Rook(team, new Position(Column.H, Row.find(row))));
         return new Rank(pieces);
+    }
+
+    public Map<Column, Piece> getPieces() {
+        return pieces;
     }
 
     public Piece getPiece(Column column) {

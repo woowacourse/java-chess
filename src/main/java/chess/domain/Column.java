@@ -30,6 +30,6 @@ public enum Column {
     }
 
     public Column plusColumn(int number) {
-        return find((char)(value + number));
+        return find((char) (value + number));
     }
 }

@@ -11,7 +11,7 @@ public class Position {
         this.row = row;
     }
 
-    public static Position from(String position) throws RuntimeException{
+    public static Position from(String position) throws RuntimeException {
         validateLength(position);
         Column col = Column.find(position.charAt(0));
         Row row = Row.find(Character.getNumericValue(position.charAt(1)));
@@ -34,8 +34,12 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return col == position.col && row == position.row;
     }

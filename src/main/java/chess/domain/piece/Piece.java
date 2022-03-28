@@ -7,8 +7,8 @@ import java.util.List;
 public abstract class Piece {
 
     private final Team team;
-    protected Position position;
     private final double score;
+    protected Position position;
 
     public Piece(Team team, Position position, double score) {
         this.team = team;

@@ -25,7 +25,7 @@ public abstract class JumpPiece extends Piece {
 
     private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
-        while(!(col == destination.getCol() && row == destination.getRow())) {
+        while (!(col == destination.getCol() && row == destination.getRow())) {
             positions.add(new Position(col, row));
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());

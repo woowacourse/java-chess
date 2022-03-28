@@ -1,7 +1,5 @@
 package chess.view;
 
-import chess.Command;
-
 import java.util.List;
 import java.util.Scanner;
 

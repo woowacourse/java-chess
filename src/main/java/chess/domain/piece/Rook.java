@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.Direction.*;
+import static chess.domain.Direction.EAST;
+import static chess.domain.Direction.NORTH;
+import static chess.domain.Direction.SOUTH;
+import static chess.domain.Direction.WEST;
 
 import chess.domain.Direction;
 import chess.domain.Position;

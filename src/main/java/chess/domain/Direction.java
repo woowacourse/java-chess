@@ -32,14 +32,6 @@ public enum Direction {
         this.yDegree = yDegree;
     }
 
-    public int getXDegree() {
-        return xDegree;
-    }
-
-    public int getYDegree() {
-        return yDegree;
-    }
-
     public static List<Direction> diagonalDirection() {
         return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
@@ -64,5 +56,13 @@ public enum Direction {
             return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_TWO_STEP);
         }
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public int getYDegree() {
+        return yDegree;
     }
 }
