@@ -3,6 +3,7 @@ package chess.domain.move;
 import java.util.Arrays;
 
 public enum MovePattern {
+
     NORTH(0, 1),
     SOUTH(0, -1),
     WEST(-1, 0),

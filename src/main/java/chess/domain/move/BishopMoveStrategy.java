@@ -28,12 +28,16 @@ public class BishopMoveStrategy extends LinearMoveStrategy {
     }
 
     @Override
-    protected boolean isPieceExistWhenHorizon(final Board board, final Position smallerPosition, final Distance distance) {
+    protected boolean isPieceExistWhenHorizon(final Board board,
+                                              final Position smallerPosition,
+                                              final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected boolean isPieceExistWhenVertical(final Board board, final Position smallerPosition, final Distance distance) {
+    protected boolean isPieceExistWhenVertical(final Board board,
+                                               final Position smallerPosition,
+                                               final Distance distance) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

@@ -24,7 +24,6 @@ public class Board {
 
     public static Board create() {
         Map<Position, Piece> emptyBoard = initEmptyBoard();
-
         initFirstLine(Color.BLACK, Row.EIGHT, emptyBoard);
         initPawn(Color.BLACK, Row.SEVEN, emptyBoard);
         initFirstLine(Color.WHITE, Row.ONE, emptyBoard);
@@ -36,8 +35,7 @@ public class Board {
         Map<Position, Piece> emptyBoard = new TreeMap<>();
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
-                emptyBoard.put(Position.valueOf(column.getName() + row.getValue()),
-                        new Blank());
+                emptyBoard.put(Position.valueOf(column.getName() + row.getValue()), new Blank());
             }
         }
         return emptyBoard;

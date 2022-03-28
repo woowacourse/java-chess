@@ -17,10 +17,10 @@ public class OutputView {
     }
 
     public static void printBoard(final Map<Position, Piece> board) {
-        System.out.println(loadBoard(board));
+        System.out.println(loadBoardView(board));
     }
 
-    private static String loadBoard(final Map<Position, Piece> board) {
+    private static String loadBoardView(final Map<Position, Piece> board) {
         StringBuilder stringBuilder = new StringBuilder();
         Set<Position> keys = board.keySet();
         int unit = 1;
