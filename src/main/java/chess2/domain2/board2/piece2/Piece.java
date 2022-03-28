@@ -18,7 +18,7 @@ public class Piece {
     }
 
     public boolean canAttack(Position from, Position to, Piece targetPiece) {
-        if(targetPiece.hasColorOf(color)) {
+        if (targetPiece.hasColorOf(color)) {
             throw new IllegalArgumentException("아군은 공격할 수 없습니다.");
         }
         return type.isMovable(from, to); // TODO: divide move and attack case

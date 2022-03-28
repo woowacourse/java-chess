@@ -34,10 +34,6 @@ public class Board {
         }
     }
 
-    private boolean isOccupied(Position to) {
-        return board.containsKey(to);
-    }
-
     private void confirmAttack(Position from, Position to, Piece fromPiece) {
         Piece targetPiece = board.get(to);
         if (!fromPiece.canAttack(from, to, targetPiece)) {
@@ -53,8 +49,23 @@ public class Board {
     }
 
     private void confirmMove(Position from, Position to) {
+        validateClearPath(from, to);
         Piece fromPiece = board.remove(from);
         board.put(to, fromPiece);
+    }
+
+    private void validateClearPath(Position from, Position to) {
+        boolean isClear = PositionUtil.positionsStraightBetween(from, to)
+                .stream()
+                .noneMatch(this::isOccupied);
+
+        if (!isClear) {
+            throw new IllegalArgumentException("다른 말이 가로막고 있습니다.");
+        }
+    }
+
+    private boolean isOccupied(Position position) {
+        return board.containsKey(position);
     }
 
     public int countByType(PieceType pieceType) {

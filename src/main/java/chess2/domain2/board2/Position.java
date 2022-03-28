@@ -50,6 +50,17 @@ public class Position {
         return isHorizontal(toPosition) || isVertical(toPosition) || isDiagonal(toPosition);
     }
 
+    public Position oneStepToward(Position targetPosition) {
+        int nextFileIdx = incrementToward(fileIdx, targetPosition.fileIdx);
+        int nextRankIdx = incrementToward(rankIdx, targetPosition.rankIdx);
+
+        return PositionCache.getCache(nextFileIdx, nextRankIdx);
+    }
+
+    private int incrementToward(int from, int to) {
+        return from + Integer.compare(to, from);
+    }
+
     @Override
     public String toString() {
         return "Position{fileIdx=" + fileIdx + ", rankIdx=" + rankIdx + '}';
