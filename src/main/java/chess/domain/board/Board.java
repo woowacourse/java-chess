@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import static chess.domain.board.Rank.reverseValues;
 import static chess.domain.piece.constant.PieceColor.EMPTY;
 
 import chess.constant.MoveType;
@@ -47,7 +46,7 @@ public class Board {
 
         MoveType moveType = decideMoveType(targetPiece);
         if (!sourcePiece.isMovable(source, target, moveType) || isBlocked(source, target) || targetPiece.isMyTeam(
-            sourcePiece)) {
+                sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
@@ -86,23 +85,26 @@ public class Board {
 
     public double calculateScore() {
         return board.values()
-            .stream()
-            .filter(gameFlow::isCorrectTurn)
-            .mapToDouble(Piece::getScore)
-            .sum() - adjustPawnScore();
+                .stream()
+                .filter(gameFlow::isCorrectTurn)
+                .mapToDouble(Piece::getScore)
+                .sum() - adjustPawnScore();
     }
 
     public double adjustPawnScore() {
         int adjustingScore = 0;
         for (File file : File.values()) {
-            long count = reverseValues().stream()
-                .map(rank -> new Position(file, rank))
-                .filter(position -> board.get(position).isPawn()
-                    && gameFlow.isCorrectTurn(board.get(position)))
-                .count();
+            long rankDuplicatedPiecesCount = Rank.reverseValues()
+                    .stream()
+                    .map(rank -> new Position(file, rank))
+                    .filter(position -> {
+                                Piece piece = board.get(position);
+                                return piece.isPawn() && gameFlow.isCorrectTurn(piece);
+                            }
+                    ).count();
 
-            if (count > 1) {
-                adjustingScore += count * 0.5;
+            if (rankDuplicatedPiecesCount> 1) {
+                adjustingScore += rankDuplicatedPiecesCount * 0.5;
             }
         }
         return adjustingScore;
