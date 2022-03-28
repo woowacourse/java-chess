@@ -1,14 +1,11 @@
 package chess.controller;
 
-import java.util.List;
-import java.util.Map;
-
 public class ScoresDto {
 
-    private String winner;
-    private Map<String, Double> scores;
+    private final String winner;
+    private final ScoreResult scores;
 
-    public ScoresDto(String winner, Map<String, Double> scores) {
+    public ScoresDto(String winner, ScoreResult scores) {
         this.winner = winner;
         this.scores = scores;
     }
@@ -17,7 +14,7 @@ public class ScoresDto {
         return winner;
     }
 
-    public Map<String, Double> getScores() {
+    public ScoreResult getScores() {
         return scores;
     }
 }

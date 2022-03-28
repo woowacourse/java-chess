@@ -4,7 +4,7 @@ import java.util.List;
 
 public enum Color {
 
-    WHITE, BLACK, NOTHING;
+    BLACK, WHITE, NOTHING;
 
     public boolean isBlack() {
         return this.equals(BLACK);
@@ -14,10 +14,7 @@ public enum Color {
         if (this.equals(NOTHING) || other.equals(NOTHING)) {
             return false;
         }
-        if (this.equals(other)) {
-            return false;
-        }
-        return true;
+        return !this.equals(other);
     }
 
     public boolean isAlly(Color other) {
@@ -29,6 +26,6 @@ public enum Color {
     }
 
     public static List<Color> getPlayerColors() {
-        return List.of(WHITE, BLACK);
+        return List.of(BLACK, WHITE);
     }
 }

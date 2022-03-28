@@ -3,20 +3,15 @@ package chess.controller;
 import chess.model.Board;
 import chess.model.Color;
 import chess.model.Square;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-public class ChessService {
+public final class ChessService {
     private Board board;
 
-    public Board initBoard() {
+    public void initBoard() {
         board = new Board();
-        return board;
     }
 
-    public Board move(String from, String to) {
+    public Board move(final String from, final String to) {
         board.move(Square.of(from), Square.of(to));
         return board;
     }
@@ -29,8 +24,12 @@ public class ChessService {
         return board;
     }
 
-    public Map<String, Double> getScores() {
-        return Color.getPlayerColors().stream()
-                .collect(Collectors.toMap(Color::name, color -> board.calculatePoint(color)));
+    public ScoreResult getScores() {
+        final ScoreResult scoreResult = new ScoreResult();
+        for (Color color : Color.getPlayerColors()) {
+            scoreResult.addResult(color, board.calculatePoint(color));
+        }
+        return scoreResult;
     }
 }
+

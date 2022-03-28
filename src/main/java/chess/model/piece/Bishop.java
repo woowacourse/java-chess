@@ -5,12 +5,11 @@ import chess.model.Direction;
 import chess.model.Square;
 import java.util.List;
 
-public final class Bishop extends Piece{
+public final class Bishop extends Piece {
     public Bishop(Color color, Square square) {
         super(color, square);
     }
 
-    //TODO: 이 부분 퀸, 룩, 비숍이 중복임.
     @Override
     public boolean movable(Piece targetPiece) {
         if (!targetPiece.isAlly(this) && canMoveTo(targetPiece)) {

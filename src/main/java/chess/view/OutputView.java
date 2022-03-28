@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.controller.BoardDto;
 import chess.controller.ScoresDto;
-import java.util.Map;
+import chess.model.Color;
 
 public final class OutputView {
 
@@ -18,9 +18,8 @@ public final class OutputView {
     }
 
     public static void printStatus(ScoresDto dto) {
-        // 그거를 컨트롤러에서 toStatusDto 로 만들어서 어때여??
-        for (String name : dto.getScores().keySet()) {
-            System.out.println(name + " : " + dto.getScores().get(name));
+        for (Color color : dto.getScores().keySet()) {
+            System.out.println(color.name() + " : " + dto.getScores().get(color));
         }
         System.out.println();
         System.out.printf("승부 결과 : %s\n", dto.getWinner());
