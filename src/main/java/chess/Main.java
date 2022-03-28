@@ -7,6 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         ChessController chessController = new ChessController(new ChessService());
-        chessController.playGame();
+        chessController.run();
     }
 }

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.model.board.Board;
 import chess.model.GameStartCommand;
-import chess.model.piece.Piece;
 import chess.state.GameState;
 import chess.state.Ready;
 import chess.util.PieceToLetterConvertor;
@@ -20,7 +19,28 @@ public final class ChessController {
         this.service = service;
     }
 
-    public void playGame() {
+    public void run() {
+        runUntilValid(this::playGame);
+    }
+
+    private static void runUntilValid(Runnable runner) {
+        boolean runSuccess;
+        do {
+            runSuccess = tryRun(runner);
+        } while (!runSuccess);
+    }
+
+    private static boolean tryRun(Runnable runner) {
+        try {
+            runner.run();
+            return true;
+        } catch (IllegalArgumentException e) {
+            OutputView.printException(e);
+            return false;
+        }
+    }
+
+    private void playGame() {
         OutputView.startGame();
         GameState gameState = new Ready();
         while (!gameState.isEnd()) {
