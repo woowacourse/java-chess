@@ -1,4 +1,4 @@
-package chess.domain;
+package chess;
 
 public enum GameState {
 
@@ -16,5 +16,9 @@ public enum GameState {
             return WHITE_RUNNING;
         }
         return this;
+    }
+
+    public boolean isFinished() {
+        return this == END;
     }
 }
