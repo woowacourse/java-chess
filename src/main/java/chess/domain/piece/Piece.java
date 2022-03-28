@@ -6,21 +6,20 @@ import chess.domain.Team;
 import java.util.List;
 
 public abstract class Piece {
-
     private Team team;
-    private final String name;
+    private final String symbol;
     protected Position position;
     private double score;
 
-    public Piece(Team team, String name, Position position, double score) {
+    public Piece(Team team, String symbol, Position position, double score) {
         this.team = team;
-        this.name = name;
+        this.symbol = team.getSymbol(symbol);
         this.position = position;
         this.score = score;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 
     public boolean isBlackTeam() {
@@ -49,7 +48,7 @@ public abstract class Piece {
     public String toString() {
         return "Piece{" +
                 "team=" + team +
-                ", name='" + name + '\'' +
+                ", name='" + symbol + '\'' +
                 ", position=" + position +
                 '}';
     }

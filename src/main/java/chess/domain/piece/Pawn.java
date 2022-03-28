@@ -9,7 +9,7 @@ import java.util.List;
 public class Pawn extends Piece {
 
     public Pawn(Team team, Position position) {
-        super(team, Pawn.class.getSimpleName(), position, 1);
+        super(team, "P", position, 1);
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {
@@ -48,13 +48,15 @@ public class Pawn extends Piece {
     }
 
     private Direction findDirection(List<Direction> directions, Position destination) {
-        for (Direction direction : directions) {
-            if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
-                    && destination.getCol().getDifference(position.getCol()) == direction.getXDegree()) {
-                return direction;
-            }
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        return directions.stream()
+                .filter(direction -> isCorrectDirection(destination, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
+    }
+
+    private boolean isCorrectDirection(Position destination, Direction direction) {
+        return (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
+                && destination.getCol().getDifference(position.getCol()) == direction.getXDegree());
     }
 
     @Override

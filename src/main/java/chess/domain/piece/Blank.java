@@ -11,7 +11,7 @@ import java.util.List;
 public class Blank extends Piece {
 
     public Blank(Team team, Position position) {
-        super(team, Blank.class.getSimpleName(), position, 0);
+        super(team, ".", position, 0);
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {

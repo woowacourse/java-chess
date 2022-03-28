@@ -8,18 +8,20 @@ import java.util.List;
 public class Bishop extends Piece {
 
     public Bishop(Team team, Position position) {
-        super(team, Bishop.class.getSimpleName(), position, 3);
+        super(team, "B", position, 3);
     }
 
     private Direction findDirection(Position destination) {
-        for (Direction direction : Direction.diagonalDirection()) {
-            if (destination.getCol().getDifference(position.getCol()) * direction.getXDegree()
-                    == (destination.getRow().getDifference(position.getRow()) * direction.getYDegree())
-            && (destination.getRow().getDifference(position.getRow()) * direction.getYDegree()) > 0) {
-                return direction;
-            }
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        return Direction.diagonalDirection().stream()
+                .filter(direction -> isCorrectDirection(destination, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
+    }
+
+    private boolean isCorrectDirection(Position destination, Direction direction) {
+        return (destination.getCol().getDifference(position.getCol()) * direction.getXDegree()
+                == (destination.getRow().getDifference(position.getRow()) * direction.getYDegree())
+                && (destination.getRow().getDifference(position.getRow()) * direction.getYDegree()) > 0);
     }
 
     @Override

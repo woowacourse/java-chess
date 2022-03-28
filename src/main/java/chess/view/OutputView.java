@@ -16,7 +16,7 @@ public class OutputView {
 
     private static void printRank(Rank rank) {
         for (Piece piece : rank.getPieces().values()) {
-            System.out.print(PieceSymbolMapper.getSymbol(piece));
+            System.out.print(piece.getSymbol());
         }
         System.out.println();
     }

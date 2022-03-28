@@ -8,7 +8,7 @@ import java.util.List;
 public class Queen extends Piece {
 
     public Queen(Team team, Position position) {
-        super(team, Queen.class.getSimpleName(), position, 9);
+        super(team, "Q", position, 9);
     }
 
     private Direction findDirection(Position destination) {

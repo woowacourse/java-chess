@@ -1,17 +1,16 @@
 package chess.domain;
 
+import java.util.Locale;
+
 public enum Team {
     BLACK,
     WHITE,
     NONE;
 
-    public static Team switchTeam(Team team) {
-        if (team == BLACK) {
-            return WHITE;
+    public String getSymbol(String symbol) {
+        if (this == BLACK) {
+            return symbol.toUpperCase(Locale.ROOT);
         }
-        if (team == WHITE) {
-            return BLACK;
-        }
-        return NONE;
+        return symbol.toLowerCase(Locale.ROOT);
     }
 }

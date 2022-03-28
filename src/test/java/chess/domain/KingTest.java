@@ -15,7 +15,7 @@ class KingTest {
         Position position = Position.from("c4");
         Knight knight = new Knight(Team.BLACK, position);
         Assertions.assertThatThrownBy(() -> {
-                    knight.validateIsPossible(Position.from(input));
+                    knight.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치로 말이 움직일 수 없습니다.");
     }
@@ -26,6 +26,6 @@ class KingTest {
     void isPossible(String input) {
         Position position = Position.from("e4");
         Knight knight = new Knight(Team.BLACK, position);
-        knight.validateIsPossible(Position.from(input));
+        knight.findPath(Position.from(input));
     }
 }
