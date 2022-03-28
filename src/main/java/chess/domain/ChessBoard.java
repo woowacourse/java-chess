@@ -89,7 +89,7 @@ public class ChessBoard {
     private void movePiece(Position from, Position to, Piece piece) {
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
-        if (piece.isSamePieceName(PieceName.PAWN) && firstPositionsOfPawn.contains(from)) {
+        if (piece.isSamePieceName(PieceName.PAWN)) {
             firstPositionsOfPawn.remove(from);
         }
     }
