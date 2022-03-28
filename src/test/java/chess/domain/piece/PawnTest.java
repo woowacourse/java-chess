@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Color;
+import chess.domain.MoveResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
@@ -22,10 +23,10 @@ class PawnTest {
         Board board = BoardFactory.newInstance();
 
         // when
-        boolean move = board.move(from, to);
+        MoveResult move = board.move(from, to);
 
         // then
-        assertThat(move).isTrue();
+        assertThat(move).isEqualTo(MoveResult.SUCCESS);
     }
 
     @Test
@@ -38,9 +39,9 @@ class PawnTest {
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
-        boolean move = board.move("F5", "F6");
+        MoveResult move = board.move("F5", "F6");
 
         // then
-        assertThat(move).isFalse();
+        assertThat(move).isEqualTo(MoveResult.FAIL);
     }
 }

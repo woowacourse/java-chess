@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Color;
+import chess.domain.MoveResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
@@ -24,10 +25,10 @@ class BishopTest {
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
-        boolean move = board.move("E4", to);
+        MoveResult move = board.move("E4", to);
 
         // then
-        assertThat(move).isTrue();
+        assertThat(move).isEqualTo(MoveResult.SUCCESS);
     }
 
     @ParameterizedTest(name = "출발지 : E4, 도착지 : {0}")
@@ -43,10 +44,10 @@ class BishopTest {
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
-        boolean move = board.move("E4", to);
+        MoveResult move = board.move("E4", to);
 
         // then
-        assertThat(move).isFalse();
+        assertThat(move).isEqualTo(MoveResult.FAIL);
     }
 
     @ParameterizedTest(name = "출발지 : E4, 도착지 : {0}")
@@ -62,9 +63,9 @@ class BishopTest {
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
-        boolean move = board.move("E4", to);
+        MoveResult move = board.move("E4", to);
 
         // then
-        assertThat(move).isFalse();
+        assertThat(move).isEqualTo(MoveResult.FAIL);
     }
 }

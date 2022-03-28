@@ -25,10 +25,10 @@ class BoardTest {
         Board board = BoardFactory.newInstance();
 
         // when
-        boolean result = board.move(from, to);
+        MoveResult result = board.move(from, to);
 
         // then
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(MoveResult.SUCCESS);
     }
 
     @Test
