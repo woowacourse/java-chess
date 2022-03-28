@@ -1,6 +1,8 @@
 package chess.command;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Position;
+import chess.view.OutputView;
 
 public interface Command {
 
@@ -19,6 +21,8 @@ public interface Command {
     static Command createStatus() {
         return new Status();
     }
+
+    void execute(ChessGame chessGame, OutputView outputView);
 
     boolean isStart();
 

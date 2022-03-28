@@ -88,9 +88,11 @@ public class OutputView {
     public void printWinner(Camp winner) {
         if (winner == Camp.BLACK) {
             printWinner(CAMP_BLACK);
+            return;
         }
         if (winner == Camp.WHITE) {
             printWinner(CAMP_WHITE);
+            return;
         }
         printDraw();
     }
