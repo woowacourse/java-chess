@@ -13,54 +13,46 @@ import java.util.List;
 
 public class ChessGameController {
 
-    private static final String MOVE_COMMAND_DELIMITER = " ";
-
     public void run() {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
-        showMap(chessGame.createMap());
-        // 화나.
-        progressGame(chessGame, whitePlayer, blackPlayer);
-        showResult(whitePlayer, blackPlayer);
+        showChessMap(chessGame.createMap());
+        playGame(chessGame, whitePlayer, blackPlayer);
+        showPlayerResult(whitePlayer, blackPlayer);
     }
 
     private ChessGame initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
-        try {
-            InputView.requestStartCommand();
-            return new ChessGame(whitePlayer, blackPlayer);
-        } catch (final IllegalArgumentException e) {
-            OutputView.printException(e);
-            return initializeChessGame(whitePlayer, blackPlayer);
-        }
+        InputView.requestStartCommand();
+        return new ChessGame(whitePlayer, blackPlayer);
     }
 
-    private void showMap(final ChessMap chessMap) {
+    private void showChessMap(final ChessMap chessMap) {
         OutputView.printChessMap(chessMap.getChessMap());
     }
 
-    private void progressGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
+    private void playGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
         if (!runCurrentPlayerTurn(chessGame, whitePlayer, blackPlayer)) {
             return;
         }
         if (!runCurrentPlayerTurn(chessGame, blackPlayer, whitePlayer)) {
             return;
         }
-        progressGame(chessGame, whitePlayer, blackPlayer);
+        playGame(chessGame, whitePlayer, blackPlayer);
     }
 
-    private boolean runCurrentPlayerTurn(ChessGame chessGame, Player currentPlayer, Player opponentPlayer) {
+    private boolean runCurrentPlayerTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
         final boolean isEndTurn = turn(chessGame, currentPlayer, opponentPlayer);
         if (!isRunningChessGame(isEndTurn, chessGame)) {
             return false;
         }
-        showMap(chessGame.createMap());
+        showChessMap(chessGame.createMap());
         return true;
     }
 
     private boolean turn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
         try {
-            final String command = InputView.requestGameCommand();
+            final String[] command = InputView.requestGameCommand();
             return isFinishCurrentPlayerTurn(chessGame, command, currentPlayer, opponentPlayer);
         } catch (final IllegalArgumentException e) {
             OutputView.printException(e);
@@ -72,23 +64,23 @@ public class ChessGameController {
         return !isEndTurn && chessGame.isRunning();
     }
 
-    private boolean isFinishCurrentPlayerTurn(final ChessGame chessGame, final String command,
+    private boolean isFinishCurrentPlayerTurn(final ChessGame chessGame, final String[] commandInput,
             final Player currentPlayer, final Player opponentPlayer) {
+        final String command = commandInput[0];
         if (command.contains("move")) {
-            moveTurn(chessGame, currentPlayer, opponentPlayer, command);
+            moveTurn(chessGame, currentPlayer, opponentPlayer, commandInput);
             return false;
         }
         if (command.equals("status")) {
-            showResult(currentPlayer, opponentPlayer);
+            showPlayerResult(currentPlayer, opponentPlayer);
             turn(chessGame, currentPlayer, opponentPlayer);
             return false;
         }
         return true;
     }
 
-    private void moveTurn(ChessGame chessGame, Player currentPlayer, Player opponentPlayer, String command) {
-        final String[] moveCommand = command.split(MOVE_COMMAND_DELIMITER);
-        List<Position> positions = findMoveCommandPosition(moveCommand[1], moveCommand[2]);
+    private void moveTurn(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer, final String[] command) {
+        final List<Position> positions = findMoveCommandPosition(command[1], command[2]);
         chessGame.move(currentPlayer, opponentPlayer, positions.get(0), positions.get(1));
     }
 
@@ -97,10 +89,11 @@ public class ChessGameController {
         final int currentRank = currentPosition.charAt(1) - '0';
         final char destinationFile = destinationPosition.charAt(0);
         final int destinationRank = destinationPosition.charAt(1) - '0';
+
         return List.of(new Position(currentRank, currentFile), new Position(destinationRank, destinationFile));
     }
 
-    private void showResult(final Player currentPlayer, final Player opponentPlayer) {
+    private void showPlayerResult(final Player currentPlayer, final Player opponentPlayer) {
         final String currentPlayerName = currentPlayer.getTeamName();
         final String opponentPlayerName = opponentPlayer.getTeamName();
 
