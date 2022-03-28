@@ -26,6 +26,9 @@ public class InputView {
     private static final Pattern PATTERN_POSITION = Pattern.compile(REGEX_POSITION);
     private static final Pattern PATTERN_COMMAND_MOVE = Pattern.compile(REGEX_COMMAND_MOVE);
 
+    private static final int INDEX_COLUMN = 0;
+    private static final int INDEX_ROW = 1;
+
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public Command readCommand() {
@@ -69,7 +72,7 @@ public class InputView {
     }
 
     private Position parsePosition(String rawPosition) {
-        return new Position(EXPRESSIONS_COLUMN.get(rawPosition.charAt(0)),
-                EXPRESSIONS_ROW.get(rawPosition.charAt(1)));
+        return new Position(EXPRESSIONS_COLUMN.get(rawPosition.charAt(INDEX_COLUMN)),
+                EXPRESSIONS_ROW.get(rawPosition.charAt(INDEX_ROW)));
     }
 }
