@@ -15,6 +15,7 @@ public enum Column {
     H(7),
     ;
 
+    private static final int MAX_VALUE = 7;
     private static final String ERROR_NO_SUCH_COLUMN = "존재하지 않는 열입니다.";
 
     private final int value;
@@ -32,7 +33,7 @@ public enum Column {
 
     Column flip() {
         return Arrays.stream(Column.values())
-                .filter( it -> it.value == (7 - this.value))
+                .filter( it -> it.value == (MAX_VALUE - this.value))
                 .findFirst()
                 .orElseThrow();
     }
