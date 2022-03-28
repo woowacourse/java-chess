@@ -8,42 +8,38 @@ import chess.view.OutputView;
 public class ChessController {
 
     public void run() {
-        ChessGame chessGame;
+        ChessGame chessGame = new ChessGame();
         OutputView.printGameInitMessage();
-        String option = InputView.inputOption();
-        if (option.equals("start")) {
-            chessGame = new ChessGame();
-            OutputView.printInitialChessBoard(chessGame.getBoard());
-            turn(chessGame);
+        while (!chessGame.isFinish()) {
+            selectMenu(chessGame);
         }
     }
 
-    private void turn(ChessGame chessGame) {
-        while (!chessGame.isFinish()) {
-            String inputOption = InputView.inputOption();
-            boolean isMoveOption = inputOption.contains("move");
-            boolean isEndOption = inputOption.equals("end");
-            boolean isStatusOption = inputOption.equals("status");
+    public void selectMenu(ChessGame chessGame) {
+        String option = InputView.inputOption();
+        Command.playCommand(chessGame, option);
+    }
 
-            if(isEndOption) {
-                double whiteScore = chessGame.calculateScore(Color.WHITE);
-                double blackScore = chessGame.calculateScore(Color.BLACK);
-                OutputView.printScore(whiteScore, blackScore);
-                OutputView.printWinner(chessGame.judgeWinner());
-            }
+    public static void initBoard(ChessGame chessGame, String input) {
+        chessGame.initBoard();
+        OutputView.printInitialChessBoard(chessGame.getBoard());
+    }
 
-            if (isMoveOption) {
-                chessGame.movePiece(inputOption);
-                OutputView.printInitialChessBoard(chessGame.getBoard());
-            }
-
-            if (isStatusOption) {
-                double whiteScore = chessGame.calculateScore(Color.WHITE);
-                double blackScore = chessGame.calculateScore(Color.BLACK);
-                OutputView.printScore(whiteScore, blackScore);
-            }
+    public static void move(ChessGame chessGame, String input) {
+        chessGame.movePiece(input);
+        OutputView.printInitialChessBoard(chessGame.getBoard());
+        if (!chessGame.isAllKingExist()) {
+            OutputView.printWinner(chessGame.judgeWinner());
         }
-        OutputView.printWinner(chessGame.judgeWinner());
+    }
+
+    public static void showStatus(ChessGame chessGame, String input) {
+        OutputView.printScore(chessGame.calculateScore(Color.WHITE),
+            chessGame.calculateScore(Color.BLACK));
+    }
+
+    public static void end(ChessGame chessGame, String input) {
+        chessGame.endGame();
     }
 }
 

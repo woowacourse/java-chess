@@ -1,0 +1,33 @@
+package chess.controller;
+
+import chess.domain.game.ChessGame;
+import java.util.Arrays;
+import java.util.function.BiConsumer;
+
+public enum Command {
+    START("start", ChessController::initBoard),
+    MOVE("move", ChessController::move),
+    STATUS("status", ChessController::showStatus),
+    END("end", ChessController::end);
+
+    private final String command;
+    BiConsumer<ChessGame, String> function;
+
+    Command(String command, BiConsumer<ChessGame, String> function) {
+        this.command = command;
+        this.function = function;
+    }
+
+    private void play(ChessGame game, String command) {
+        function.accept(game, command);
+    }
+
+    public static void playCommand(ChessGame game, String input) {
+        Command command = Arrays.stream(Command.values())
+            .filter(option -> input.contains(option.command))
+            .findAny()
+            .orElseThrow();
+        command.play(game, input);
+    }
+
+}
