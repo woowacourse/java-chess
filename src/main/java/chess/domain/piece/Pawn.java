@@ -33,14 +33,14 @@ public class Pawn extends Piece {
         return getPath(destination, direction, position.getCol(), position.getRow());
     }
 
-    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
-        List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
-            col = col.plusColumn(direction.getXDegree());
-            row = row.plusRow(direction.getYDegree());
-            positions.add(new Position(col, row));
+    private Direction findDirection(List<Direction> directions, Position destination) {
+        for (Direction direction : directions) {
+            if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
+                    && destination.getCol().getDifference(position.getCol()) == direction.getXDegree()) {
+                return direction;
+            }
         }
-        return positions;
+        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
     }
 
     private boolean isFirstTurn() {
@@ -50,14 +50,14 @@ public class Pawn extends Piece {
         return isBlackTeam() && position.getRow() == Row.SEVEN;
     }
 
-    private Direction findDirection(List<Direction> directions, Position destination) {
-        for (Direction direction : directions) {
-            if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
-                    && destination.getCol().getDifference(position.getCol()) == direction.getXDegree()) {
-                return direction;
-            }
+    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
+        List<Position> positions = new ArrayList<>();
+        while (!(col == destination.getCol() && row == destination.getRow())) {
+            col = col.plusColumn(direction.getXDegree());
+            row = row.plusRow(direction.getYDegree());
+            positions.add(new Position(col, row));
         }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        return positions;
     }
 
     @Override

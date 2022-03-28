@@ -18,7 +18,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(i -> i.value.equals(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("start,end,move,status만 입력할 수 있습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move, status만 입력할 수 있습니다."));
     }
 
     public boolean isStart() {

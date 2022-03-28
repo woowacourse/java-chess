@@ -16,8 +16,12 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public Team getTeam() {
-        return team;
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
+
+    public boolean isSameTeam(Piece piece) {
+        return piece.isSameTeam(team);
     }
 
     public double getScore() {
@@ -36,7 +40,7 @@ public abstract class Piece {
 
     public boolean isBlank() {
         return false;
-    };
+    }
 
     public boolean isPawn() {
         return false;

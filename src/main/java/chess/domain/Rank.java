@@ -51,20 +51,22 @@ public class Rank {
         pieces.put(column, piece);
     }
 
-    public double calculateWhiteTotalScore(Team team) {
+    public double calculateTeamTotalScore(Team team) {
         double totalScore = 0;
         for (Column column : pieces.keySet()) {
-            if (pieces.get(column).getTeam() == team) {
-                totalScore += pieces.get(column).getScore();
-            }
+            totalScore = plusSameTeamPieceScore(team, totalScore, column);
         }
         return totalScore;
     }
 
-    public boolean isPawn(Team team, Column column) {
-        if (pieces.get(column).getTeam() == team) {
-            return pieces.get(column).isPawn();
+    private double plusSameTeamPieceScore(Team team, double totalScore, Column column) {
+        if (pieces.get(column).isSameTeam(team)) {
+            totalScore += pieces.get(column).getScore();
         }
-        return false;
+        return totalScore;
+    }
+
+    public boolean isSameTeamPawn(Team team, Column column) {
+        return pieces.get(column).isSameTeam(team) && pieces.get(column).isPawn();
     }
 }
