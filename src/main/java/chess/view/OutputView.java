@@ -1,11 +1,9 @@
 package chess.view;
 
-import static chess.view.InputView.END_COMMAND;
-import static chess.view.InputView.START_COMMAND;
+import java.util.Map;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import java.util.Map;
 
 public class OutputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
@@ -13,6 +11,8 @@ public class OutputView {
     private static final String GAME_START_COMMAND_NAME = "게임 시작";
     private static final String GAME_MOVE_COMMAND_NAME = "게임 이동";
     private static final String GAME_END_COMMAND_NAME = "게임 종료";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
     private static final String GAME_MOVE_COMMAND = "move source위치 target위치 - 예. move b2 b3";
 
     public void printStartMessage() {
@@ -28,9 +28,13 @@ public class OutputView {
             String content = makeBoardContentString(board.get(position));
             System.out.print(content);
             count++;
-            if (count % 8 == 0) {
-                System.out.println();
-            }
+            printNewLineEachRow(count);
+        }
+    }
+
+    private void printNewLineEachRow(int count) {
+        if (count % 8 == 0) {
+            System.out.println();
         }
     }
 
@@ -42,7 +46,7 @@ public class OutputView {
     }
 
     private String decideCaseByCamp(Piece piece) {
-        String convertedString = convertPieceToString(piece);
+        final String convertedString = convertPieceToString(piece);
         if (piece.isBlack()) {
             return convertedString.toUpperCase();
         }

@@ -73,5 +73,4 @@ public final class Queen extends Piece{
     public boolean isRook() {
         return false;
     }
-
 }
