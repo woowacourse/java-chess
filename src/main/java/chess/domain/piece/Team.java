@@ -12,7 +12,7 @@ public enum Team {
         return value.toLowerCase();
     }
 
-    public Team change() {
+    public Team findOpposite() {
         if (this == BLACK) {
             return WHITE;
         }

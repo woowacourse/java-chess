@@ -41,7 +41,7 @@ public class Board {
     }
 
     private boolean checkAnyMatch(Position to) {
-        return findSameTeamPieces(turn.change())
+        return findSameTeamPieces(turn.findOpposite())
                 .stream()
                 .anyMatch(entry -> validCheck(entry.getKey(), to, entry.getValue()));
     }
@@ -85,7 +85,7 @@ public class Board {
         board.put(to, piece);
         board.remove(from);
         validCheckAfterMove(from, to, piece, toPiece);
-        turn = turn.change();
+        turn = turn.findOpposite();
     }
 
     private void validCheckAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
