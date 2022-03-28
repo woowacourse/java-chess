@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -9,27 +8,23 @@ public abstract class Piece {
 
     private final PieceType pieceType;
     private final Color color;
-    private final MovingStrategy movingStrategy;
 
-    protected Piece(PieceType pieceType, Color color, MovingStrategy movingStrategy) {
+    protected Piece(PieceType pieceType, Color color) {
         this.pieceType = pieceType;
         this.color = color;
-        this.movingStrategy = movingStrategy;
     }
 
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        movingStrategy.validateMove(board, sourcePosition, targetPosition);
-    }
+    abstract public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition);
 
     public boolean isBlack() {
         return color.isBlack();
     }
 
-    public boolean isSameColor(Color color) {
+    public final boolean isSameColor(Color color) {
         return this.color == color;
     }
 
-    public boolean isSameColor(Piece piece) {
+    public final boolean isSameColor(Piece piece) {
         return this.color == piece.color;
     }
 
@@ -37,15 +32,15 @@ public abstract class Piece {
         return false;
     }
 
-    public String getNotation() {
+    public final String getNotation() {
         return pieceType.getNotation(color);
     }
 
-    public double getScore() {
+    public final double getScore() {
         return pieceType.getScore();
     }
 
-    public boolean isSamePieceType(PieceType pieceType) {
+    public final boolean isSamePieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 }

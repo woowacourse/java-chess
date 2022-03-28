@@ -7,7 +7,7 @@ import java.util.List;
 public class EmptyPiece extends Piece {
 
     public EmptyPiece() {
-        super(PieceType.EMPTY, Color.NONE, null);
+        super(PieceType.EMPTY, Color.NONE);
     }
 
     @Override
