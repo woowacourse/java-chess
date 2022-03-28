@@ -31,4 +31,9 @@ public class King extends Piece {
     protected List<Direction> getDirection() {
         return List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHWEST, SOUTHEAST);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

@@ -76,6 +76,13 @@ public class Board {
         board.put(source, new Blank(NONE, "."));
     }
 
+    public boolean isKilledKing() {
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() < 2;
+    }
+
     public boolean checkRightTurn(Player player, Position source) {
         return board.get(source).isSame(player);
     }

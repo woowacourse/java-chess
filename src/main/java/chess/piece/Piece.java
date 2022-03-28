@@ -37,4 +37,8 @@ public abstract class Piece {
     protected boolean isOpponent(Player player) {
         return !player.equals(this.player) && !this.player.equals(Player.NONE);
     }
+
+    public boolean isKing() {
+        return false;
+    }
 }

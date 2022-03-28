@@ -1,8 +1,17 @@
 package chess;
 
+import chess.piece.Piece;
+import chess.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
+
+import static chess.File.A;
+import static chess.File.D;
+import static chess.Player.WHITE;
+import static chess.Rank.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

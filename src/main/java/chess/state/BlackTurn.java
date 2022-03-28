@@ -30,7 +30,7 @@ public class BlackTurn extends Running {
 
     @Override
     public State proceed(String command) {
-        if (command.startsWith("end")) {
+        if (command.startsWith("end") || board.isKilledKing()) {
             return new End(board);
         }
         if (command.startsWith("move")) {
