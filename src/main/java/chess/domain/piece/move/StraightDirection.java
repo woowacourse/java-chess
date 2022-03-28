@@ -36,13 +36,7 @@ public enum StraightDirection implements Direction {
     }
 
     private static int toDegree(int number) {
-        if (number == 0) {
-            return 0;
-        }
-        if (number > 0) {
-            return 1;
-        }
-        return -1;
+        return Integer.compare(number, 0);
     }
 
     private static StraightDirection of(int dx, int dy) {
