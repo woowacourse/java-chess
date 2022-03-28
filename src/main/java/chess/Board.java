@@ -44,7 +44,8 @@ public final class Board {
     }
 
     private boolean canMove(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) || sourcePiece.isKill(targetPiece);
+        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) ||
+                sourcePiece.isKill(targetPiece);
     }
 
     private void move(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {

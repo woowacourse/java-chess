@@ -38,8 +38,4 @@ public final class Knight extends Piece {
         return Collections.emptyList();
     }
 
-    @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
 }

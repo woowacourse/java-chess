@@ -7,7 +7,7 @@ import chess.Turn;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Comparable<Piece>, KillStrategy {
+public abstract class Piece implements Comparable<Piece> {
     protected Position position;
     protected final Team team;
 
@@ -62,6 +62,10 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
 
     public Position getUpVerticalPosition(int distance) {
         return this.position.getUpVerticalPosition(distance);
+    }
+
+    public boolean isKill(Piece piece){
+        return false;
     }
 
     public boolean isCurrentTurn(Turn turn) {

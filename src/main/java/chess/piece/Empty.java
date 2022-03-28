@@ -34,8 +34,4 @@ public final class Empty extends Piece {
         throw new IllegalArgumentException("사이의 값을 셀수 없습니다.");
     }
 
-    @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
 }

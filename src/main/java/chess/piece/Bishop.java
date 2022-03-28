@@ -52,9 +52,4 @@ public final class Bishop extends Piece implements BishopMovable {
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
     }
-
-    @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
 }
