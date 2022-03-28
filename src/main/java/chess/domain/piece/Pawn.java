@@ -1,16 +1,13 @@
 package chess.domain.piece;
 
-import java.util.Optional;
-
-import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.BlackPawnDirectionStrategy;
 import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.direction.strategy.WhitePawnDirectionStrategy;
+import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 
-	private static final String INVALID_DIRECTION_PAWN = "Pawn이 갈 수 없는 방향입니다.";
 	private static final String INVALID_DISTANCE_PAWN = "Pawn이 갈 수 없는 거리입니다.";
 	private static final double PAWN_SCORE = 1.0;
 
@@ -40,12 +37,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> findDirection = directionStrategy.find(from, to);
-		if (findDirection.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_DIRECTION_PAWN);
-		}
-
-		Direction direction = findDirection.get();
+		Direction direction = directionStrategy.find(from, to);
 		if (checkFirstMove(from, to, direction) || checkMove(from, to, direction)) {
 			return direction;
 		}

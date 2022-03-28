@@ -1,15 +1,12 @@
 package chess.domain.piece;
 
-import java.util.Optional;
-
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.DirectionStrategy;
-import chess.domain.direction.strategy.KingDirectionStrategy;
+import chess.domain.direction.strategy.RoyalDirectionStrategy;
 import chess.domain.position.Position;
 
 public class King extends Piece {
 
-	private static final String INVALID_DIRECTION_KING = "King이 갈 수 없는 방향입니다.";
 	private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
 
 	private static final double KING_SCORE = 0;
@@ -22,7 +19,7 @@ public class King extends Piece {
 
 	private King(Color color) {
 		super(color);
-		directionStrategy = new KingDirectionStrategy();
+		directionStrategy = new RoyalDirectionStrategy();
 	}
 
 	public static King createWhite() {
@@ -35,11 +32,7 @@ public class King extends Piece {
 
 	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> findDirection = directionStrategy.find(from, to);
-		if (findDirection.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_DIRECTION_KING);
-		}
-		Direction direction = findDirection.get();
+		Direction direction = directionStrategy.find(from, to);
 		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
 			return direction;
 		}

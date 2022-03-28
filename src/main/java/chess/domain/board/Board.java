@@ -58,11 +58,8 @@ public class Board {
 	}
 
 	private Piece checkFromPieceEmpty(Position from) {
-		Optional<Piece> piece = findPiece(from);
-		if (piece.isEmpty()) {
-			throw new NoSuchElementException(NO_PIECE);
-		}
-		return piece.get();
+		return findPiece(from)
+			.orElseThrow(() -> new NoSuchElementException(NO_PIECE));
 	}
 
 	private void searchPiece(Position from, Position to, Direction direction) {
@@ -80,14 +77,13 @@ public class Board {
 	}
 
 	private void checkTargetPosition(Position to, Piece fromPiece, Direction direction) {
-		Optional<Piece> piece = findPiece(to);
-		if (piece.isPresent()) {
-			Piece toPiece = piece.get();
-			validateSameColor(fromPiece, toPiece);
-			checkPieceIsPawn(fromPiece, direction, toPiece);
-			return;
-		}
-		validatePawnDiagonalMove(fromPiece, direction);
+		findPiece(to).ifPresentOrElse(
+			toPiece -> {
+				validateSameColor(fromPiece, toPiece);
+				checkPieceIsPawn(fromPiece, direction, toPiece);
+			},
+			() -> validatePawnDiagonalMove(fromPiece, direction)
+		);
 	}
 
 	private void validateSameColor(Piece fromPiece, Piece toPiece) {

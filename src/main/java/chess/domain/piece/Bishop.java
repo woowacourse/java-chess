@@ -1,15 +1,12 @@
 package chess.domain.piece;
 
-import java.util.Optional;
-
-import chess.domain.direction.strategy.DirectionStrategy;
-import chess.domain.position.Position;
 import chess.domain.direction.Direction;
 import chess.domain.direction.strategy.BishopDirectionStrategy;
+import chess.domain.direction.strategy.DirectionStrategy;
+import chess.domain.position.Position;
 
 public class Bishop extends Piece {
 
-	private static final String INVALID_DIRECTION_BISHOP = "비숍이 갈 수 없는 방향입니다.";
 	private static final double BISHOP_SCORE = 3.0;
 
 	private static final Bishop whiteBishop = new Bishop(Color.WHITE);
@@ -32,11 +29,7 @@ public class Bishop extends Piece {
 
 	@Override
 	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> direction = directionStrategy.find(from, to);
-		if (direction.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_DIRECTION_BISHOP);
-		}
-		return direction.get();
+		return directionStrategy.find(from, to);
 	}
 
 	@Override

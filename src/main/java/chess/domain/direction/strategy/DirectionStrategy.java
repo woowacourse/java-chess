@@ -1,11 +1,9 @@
 package chess.domain.direction.strategy;
 
-import java.util.Optional;
-
-import chess.domain.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.position.Position;
 
 public interface DirectionStrategy {
 
-	Optional<? extends Direction> find(Position from, Position to);
+	Direction find(Position from, Position to);
 }
