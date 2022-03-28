@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ChessMenDto implements Iterable<ChessPieceDto> {
-    public List<ChessPieceDto> chessPieces;
+    private final List<ChessPieceDto> chessPieces;
 
     public ChessMenDto(List<ChessPieceDto> chessPieces) {
         this.chessPieces = chessPieces;
