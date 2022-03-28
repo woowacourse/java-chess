@@ -8,6 +8,9 @@ import java.util.Set;
 public final class ScoreResult {
 
     private static final String CANNOT_FOUND_WINNER_ERROR_MESSAGE = "우승자를 찾을 수 없습니다.";
+    private static final String DRAW_MESSAGE = "무승부";
+    private static final String WHITE_WIN = "WHITE 승";
+    private static final String BLACK_WIN = "BLACK 승";
 
     private final Map<Color, Double> scoreResult = new LinkedHashMap<>();
 
@@ -33,11 +36,11 @@ public final class ScoreResult {
 
     private String findWinner(final Double subtractedScore) {
         if (subtractedScore.equals(0.0)) {
-            return "무승부";
+            return DRAW_MESSAGE;
         }
         if (subtractedScore < 0) {
-            return "WHITE 승";
+            return WHITE_WIN;
         }
-        return "BLACK 승";
+        return BLACK_WIN;
     }
 }
