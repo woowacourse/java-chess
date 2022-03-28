@@ -49,8 +49,8 @@ public class Pawn extends Piece {
             isFirstMove = false;
             return;
         }
-        final BiPredicate<Integer, Integer> moveCondition = (fileMove, RankMove) ->
-                fileMove == 0 && RankMove == 1 * directionValue;
+        final BiPredicate<Integer, Integer> moveCondition = (fileMove, rankMove) ->
+                fileMove == 0 && rankMove == 1 * directionValue;
         position.validateTargetPosition(targetPosition, moveCondition, false);
     }
 
