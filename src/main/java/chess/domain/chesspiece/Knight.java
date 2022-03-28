@@ -31,16 +31,22 @@ public final class Knight extends ChessPiece {
 
     @Override
     public void checkMovablePosition(final Position from, final Position to) {
-        final int fileDistance = Math.abs(from.fileDistance(to));
-        final int rankDistance = Math.abs(from.rankDistance(to));
-
-        if (rankDistance + fileDistance != MOVING_DISTANCE) {
-            throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
-        }
+        checkMovableDistance(from, to);
 
         if (from.isSameFile(to) || from.isSameRank(to)) {
             throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
         }
+    }
+
+    private void checkMovableDistance(final Position from, final Position to) {
+        final int fileDistance = Math.abs(from.fileDistance(to));
+        final int rankDistance = Math.abs(from.rankDistance(to));
+
+        final boolean movableDistance = rankDistance + fileDistance == MOVING_DISTANCE;
+        if (movableDistance) {
+            return;
+        }
+        throw new IllegalArgumentException(CHECK_POSITION_ERROR_MESSAGE);
     }
 
     @Override
