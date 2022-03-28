@@ -25,14 +25,14 @@ class BoardTest {
         Board board = new ChessGame().getBoard();
 
         assertAll(
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.ONE))).isInstanceOf(Rook.class),
-                () -> assertThat(board.findByPosition(new Position(File.B, Rank.ONE))).isInstanceOf(Knight.class),
-                () -> assertThat(board.findByPosition(new Position(File.C, Rank.ONE))).isInstanceOf(Bishop.class),
-                () -> assertThat(board.findByPosition(new Position(File.D, Rank.ONE))).isInstanceOf(Queen.class),
-                () -> assertThat(board.findByPosition(new Position(File.E, Rank.ONE))).isInstanceOf(King.class),
-                () -> assertThat(board.findByPosition(new Position(File.F, Rank.ONE))).isInstanceOf(Bishop.class),
-                () -> assertThat(board.findByPosition(new Position(File.G, Rank.ONE))).isInstanceOf(Knight.class),
-                () -> assertThat(board.findByPosition(new Position(File.H, Rank.ONE))).isInstanceOf(Rook.class)
+                () -> assertThat(board.findByPiece(new Position(File.A, Rank.ONE))).isInstanceOf(Rook.class),
+                () -> assertThat(board.findByPiece(new Position(File.B, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(board.findByPiece(new Position(File.C, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(board.findByPiece(new Position(File.D, Rank.ONE))).isInstanceOf(Queen.class),
+                () -> assertThat(board.findByPiece(new Position(File.E, Rank.ONE))).isInstanceOf(King.class),
+                () -> assertThat(board.findByPiece(new Position(File.F, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(board.findByPiece(new Position(File.G, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(board.findByPiece(new Position(File.H, Rank.ONE))).isInstanceOf(Rook.class)
         );
     }
 
@@ -41,7 +41,7 @@ class BoardTest {
     void createBoardOfPawn() {
         Board board = new ChessGame().getBoard();
 
-        assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
+        assertThat(board.findByPiece(new Position(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -52,9 +52,9 @@ class BoardTest {
         board.move(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
 
         assertAll(
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.TWO)))
+                () -> assertThat(board.findByPiece(new Position(File.A, Rank.TWO)))
                         .isInstanceOf(EmptyPiece.class),
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE)))
+                () -> assertThat(board.findByPiece(new Position(File.A, Rank.THREE)))
                         .isInstanceOf(Pawn.class)
         );
     }

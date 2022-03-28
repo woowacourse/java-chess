@@ -37,7 +37,7 @@ public class Board {
     }
 
     public boolean isSameColor(Position position, Color color) {
-        return findByPosition(position).getColor() == color;
+        return findByPiece(position).getColor() == color;
     }
 
     private void validateNotSameColor(Piece sourcePiece, Piece targetPiece) {
@@ -47,16 +47,19 @@ public class Board {
     }
 
     private void validateNotHurdle(Position from, Position to) {
-        List<Position> route = findByPosition(from).getRoute(from, to);
+        List<Position> route = findByPiece(from).getRoute(from, to);
 
         for (Position position : route) {
-            if (!findByPosition(position).isEmpty()) {
+            if (!findByPiece(position).isEmpty()) {
                 throw new IllegalArgumentException("이동할 수 없다.");
             }
         }
     }
 
-    public Piece findByPosition(Position position) {
+    public Piece findByPiece(Position position) {
+        if (!pieces.containsKey(position)) {
+            throw new IllegalArgumentException("해당 위치에 존재하는 기물이 없습니다.");
+        }
         return pieces.get(position);
     }
 
@@ -76,6 +79,6 @@ public class Board {
     }
 
     public boolean isKingAlive(Position to) {
-        return !findByPosition(to).isKing();
+        return !findByPiece(to).isKing();
     }
 }

@@ -36,7 +36,7 @@ public class OutputView {
 
         for (Rank rank : ranks) {
             for (File file : File.values()) {
-                System.out.print(board.findByPosition(new Position(file, rank)).getName());
+                System.out.print(board.findByPiece(new Position(file, rank)).getName());
             }
             System.out.println();
         }
