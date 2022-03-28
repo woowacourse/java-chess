@@ -103,13 +103,25 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("폰을 직진으로 이동 시킨다.")
+    @DisplayName("흰색 폰을 직진으로 이동 시킨다.")
     void move_white_pawn_straight() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
 
         // then
         assertThatCode(() -> chessBoard.move(Position.from("a2"), Position.from("a3")))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("검은색 폰을 직진으로 이동 시킨다.")
+    void move_black_pawn_straight() {
+        // given
+        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
+        chessBoard.move(Position.from("a2"), Position.from("a3"));
+
+        // then
+        assertThatCode(() -> chessBoard.move(Position.from("a7"), Position.from("a6")))
                 .doesNotThrowAnyException();
     }
 
