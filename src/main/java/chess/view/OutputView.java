@@ -71,6 +71,7 @@ public class OutputView {
     private static void printWinner(final double blackScore) {
         if (blackScore == KING_CAUGHT_AND_LOST) {
             System.out.println("화이트의 승리입니다");
+            return;
         }
         System.out.println("블랙의 승리입니다");
     }
