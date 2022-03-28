@@ -89,7 +89,7 @@ public class ChessBoard {
     private void movePiece(Position from, Position to, Piece piece) {
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
-        if (piece.isSamePieceName(PieceName.PAWN) && firstPositionsOfPawn.contains(from)) {
+        if (piece.isSamePieceName(PieceName.PAWN)) {
             firstPositionsOfPawn.remove(from);
         }
     }
@@ -97,8 +97,8 @@ public class ChessBoard {
     public List<Position> generateMovablePositionsWithBlock(Position nowPosition, Piece piece,
                                                             Map<Direction, List<Position>> movablePositions) {
         List<Position> result = new ArrayList<>();
-        for (Direction direction : movablePositions.keySet()) {
-            List<Position> positions = movablePositions.get(direction);
+        for (Map.Entry<Direction, List<Position>> entry : movablePositions.entrySet()) {
+            List<Position> positions = entry.getValue();
             addMovablePositionsWithBlock(piece, result, positions);
         }
         addDiagonalMoveForPawn(nowPosition, piece, result);
