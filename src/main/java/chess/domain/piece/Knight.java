@@ -71,4 +71,9 @@ public final class Knight extends Piece {
     public boolean isRook() {
         return false;
     }
+
+    @Override
+    public boolean isNull() {
+        return false;
+    }
 }

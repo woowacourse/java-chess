@@ -42,4 +42,6 @@ public abstract class Piece {
     public abstract boolean isQueen();
 
     public abstract boolean isRook();
+
+    public abstract boolean isNull();
 }

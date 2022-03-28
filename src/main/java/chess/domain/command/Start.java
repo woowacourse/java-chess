@@ -13,6 +13,7 @@ public class Start implements Command {
     @Override
     public void execute(String rawInputCommand, final OutputView outputView) {
         chessGame.start();
+        
         outputView.printBoard(chessGame.board().getValue());
     }
 }

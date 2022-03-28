@@ -17,6 +17,7 @@ public class End implements Command {
             return;
         }
         chessGame.end();
+        
         outputView.printFinishMessage();
         outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
         outputView.printResultMessage(chessGame.getResultMessage());

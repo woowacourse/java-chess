@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private String makeBoardContentString(Piece piece) {
-        if (piece == null) {
+        if (piece.isNull()) {
             return EMPTY_PIECE_CHARACTER;
         }
         return decideCaseByCamp(piece);

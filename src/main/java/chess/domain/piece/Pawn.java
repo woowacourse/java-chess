@@ -29,7 +29,7 @@ public final class Pawn extends Piece {
     @Override
     public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canCapture(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
         this.firstMove = false;
@@ -94,6 +94,11 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isRook() {
+        return false;
+    }
+
+    @Override
+    public boolean isNull() {
         return false;
     }
 }

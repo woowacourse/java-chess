@@ -71,4 +71,9 @@ public final class Rook extends Piece {
         return true;
     }
 
+    @Override
+    public boolean isNull() {
+        return false;
+    }
+
 }

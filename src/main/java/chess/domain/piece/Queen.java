@@ -74,4 +74,9 @@ public final class Queen extends Piece {
         return false;
     }
 
+    @Override
+    public boolean isNull() {
+        return false;
+    }
+
 }

@@ -7,6 +7,7 @@ import chess.domain.Camp;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.NullPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -75,7 +76,7 @@ public final class Board {
 
     private void initializeBlankColumn(Column column) {
         for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
-            value.put(new Position(column, Row.values()[i]), null);
+            value.put(new Position(column, Row.values()[i]), new NullPiece(null));
         }
     }
 
@@ -108,12 +109,12 @@ public final class Board {
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
             this.value.put(afterPosition, piece);
-            this.value.put(beforePosition, null);
+            this.value.put(beforePosition, new NullPiece(null));
         };
     }
 
     private boolean isBlank(Position afterPosition) {
-        return value.get(afterPosition) == null;
+        return value.get(afterPosition).isNull();
     }
 
     private boolean isCapturing(Piece piece, Position afterPosition) {
