@@ -1,12 +1,8 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import java.util.Map;
 
 public abstract class Playing extends GameStarted {
 

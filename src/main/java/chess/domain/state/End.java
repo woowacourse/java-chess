@@ -1,9 +1,7 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.piece.Position;
-import java.util.Map;
 
 public abstract class End extends GameStarted {
 

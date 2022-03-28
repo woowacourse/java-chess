@@ -1,12 +1,7 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Rank;
-import chess.domain.piece.Piece;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public abstract class GameStarted implements GameState {
 

@@ -1,15 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.state.BlackTurn;
-import chess.domain.board.state.BlackWin;
-import chess.domain.board.state.BoardInitializer;
-import chess.domain.board.state.End;
-import chess.domain.board.state.GameStarted;
-import chess.domain.board.state.GameState;
-import chess.domain.board.state.Playing;
-import chess.domain.board.state.WhiteTurn;
-import chess.domain.board.state.WhiteWin;
-import chess.domain.board.state.Winner;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;

@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.state.BoardInitializer;
+import chess.domain.state.BoardInitializer;
 import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

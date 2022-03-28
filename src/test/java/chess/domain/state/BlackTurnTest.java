@@ -1,13 +1,14 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.Rank;
 import chess.domain.piece.Position;
-import java.util.HashMap;
-import java.util.Map;
+import chess.domain.state.BlackTurn;
+import chess.domain.state.BoardInitializer;
+import chess.domain.state.GameState;
+import chess.domain.state.WhiteTurn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
