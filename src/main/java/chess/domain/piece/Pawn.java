@@ -18,7 +18,6 @@ public class Pawn extends Piece {
 
     @Override
     public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        System.out.println(this.isBlack());
         if (this.isBlack()) {
             BLACK_MOVING_STRATEGY.validateMove(board, sourcePosition, targetPosition);
             return;
