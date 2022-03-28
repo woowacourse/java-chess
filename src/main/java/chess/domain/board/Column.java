@@ -26,6 +26,14 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
+    public static Column from(final String name) {
+        try {
+            return Column.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("올바르지 않은 위치입니다.");
+        }
+    }
+
     public int calculateDifference(final Column target) {
         return this.value - target.value;
     }
