@@ -25,12 +25,12 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("이미 게임이 종료되었습니다.");
     }
 
     @Override
     public State stop() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("이미 게임이 종료되었습니다.");
     }
 
     @Override

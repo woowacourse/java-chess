@@ -17,7 +17,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
 
     private void checkStay(Position source, Position target) {
         if (source.isSameFile(target) && source.isSameRank(target)) {
-            throw new IllegalStateException("제자리에 머무를 수 없습니다.");
+            throw new IllegalArgumentException("제자리에 머무를 수 없습니다.");
         }
     }
 
@@ -31,7 +31,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
         paths.remove(target);
 
         if (chessBoard.isContainPiece(paths)) {
-            throw new IllegalStateException("경로상에 말이 존재합니다.");
+            throw new IllegalArgumentException("경로상에 말이 존재합니다.");
         }
     }
 
@@ -57,7 +57,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
         Team targetTeam = chessBoard.findTeam(target);
 
         if (sourceTeam == targetTeam) {
-            throw new IllegalStateException("경로상에 말이 존재합니다.");
+            throw new IllegalArgumentException("경로상에 말이 존재합니다.");
         }
     }
 }

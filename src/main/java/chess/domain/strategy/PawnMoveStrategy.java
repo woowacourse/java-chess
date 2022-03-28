@@ -13,7 +13,7 @@ public final class PawnMoveStrategy implements MoveStrategy {
     @Override
     public void isMovable(Position source, Position target, ChessBoard chessBoard) {
         if (source.isSameRank(target)) {
-            throw new IllegalStateException("제자리에 머무를 수 없습니다.");
+            throw new IllegalArgumentException("제자리에 머무를 수 없습니다.");
         }
 
         if (!checkPawnMoveDistance(source, target, chessBoard)) {
@@ -37,11 +37,11 @@ public final class PawnMoveStrategy implements MoveStrategy {
 
     private void checkPawnDirection(Position source, Position target, ChessBoard chessBoard) {
         if (chessBoard.findTeam(source) == WHITE && source.isReductionRank(target)) {
-            throw new IllegalStateException("잘못된 이동입니다.");
+            throw new IllegalArgumentException("잘못된 이동입니다.");
         }
 
         if (chessBoard.findTeam(source) == BLACK && source.isIncreaseRank(target)) {
-            throw new IllegalStateException("잘못된 이동입니다.");
+            throw new IllegalArgumentException("잘못된 이동입니다.");
         }
     }
 }

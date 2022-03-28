@@ -32,7 +32,7 @@ public class ChessBoard {
         Piece piece = cells.get(position);
 
         if (piece == null) {
-            throw new IllegalStateException("해당 위치에 말이 없습니다.");
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
 
         return piece.getTeam();

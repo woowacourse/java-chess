@@ -10,7 +10,7 @@ public final class BishopMoveStrategy extends CommonMovingStrategy {
         checkCommonCondition(source, target, chessBoard);
 
         if (!source.isDiagonal(target)) {
-            throw new IllegalStateException("대각선이 아닙니다.");
+            throw new IllegalArgumentException("대각선이 아닙니다.");
         }
     }
 }

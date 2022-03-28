@@ -10,6 +10,10 @@ import java.util.Map;
 public class OutputView {
     private static final int SIZE = 8;
 
+    public void printErrorMessage(String errorMessage) {
+        System.out.println("[ERROR] " + errorMessage);
+    }
+
     public void printAnnounce() {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");

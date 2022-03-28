@@ -100,7 +100,7 @@ public class Command {
 
     private void checkMoveCommand() {
         if (!isMoveCommand()) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException("move 커맨드가 아닙니다.");
         }
     }
 }

@@ -21,12 +21,12 @@ public final class Ready implements State {
 
     @Override
     public double calculateBlackScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
     }
 
     @Override
     public double calculateWhiteScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ChessController {
             return;
         }
 
-        play(chessGame);
+        progress(chessGame);
 
         Map<Team, Double> teamScores = chessGame.calculateResult();
 
@@ -49,14 +49,29 @@ public class ChessController {
     }
 
     private boolean checkEnd(ChessGame chessGame) {
-        Command command = Command.from(inputView.inputCommand());
+        try {
+            Command command = Command.from(inputView.inputCommand());
+            chessGame.progress(command);
 
-        chessGame.progress(command);
+            return chessGame.isEnd();
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
 
-        return chessGame.isEnd();
+            return checkEnd(chessGame);
+        }
     }
 
-    private void play(ChessGame chessGame) {
+    private void progress(ChessGame chessGame) {
+        try {
+            playChessGame(chessGame);
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            progress(chessGame);
+        }
+    }
+
+    private void playChessGame(ChessGame chessGame) {
         while (!chessGame.isEnd()) {
             printChessBoard(chessGame);
 

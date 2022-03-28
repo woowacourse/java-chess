@@ -11,7 +11,7 @@ import java.util.Map;
 public class Black implements State {
     @Override
     public State start() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("이미 게임을 시작하였습니다.");
     }
 
     @Override
@@ -30,12 +30,12 @@ public class Black implements State {
 
     @Override
     public double calculateBlackScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
     }
 
     @Override
     public double calculateWhiteScore(ChessBoard chessBoard) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
     }
 
     @Override
