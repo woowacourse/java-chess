@@ -11,7 +11,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,11 +28,7 @@ public class ChessBoard {
 
     public Optional<ChessPiece> findPiece(final Position position) {
         final ChessPiece piece = chessBoard.get(position);
-        if (Objects.isNull(piece)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(piece);
+        return Optional.ofNullable(piece);
     }
 
     public void move(final Position from, final Position to) {
