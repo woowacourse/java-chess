@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class OutputView {
     public static void printChessBoard(Map<Row, Rank> board) {
+        System.out.println();
         for (Rank rank : board.values()) {
             printRank(rank);
         }
@@ -33,8 +34,8 @@ public class OutputView {
         System.out.println("이긴 팀은 "+ team.name());
     }
 
-    public static void printStatus(double teamScore, double score) {
+    public static void printStatus(double whiteTeamScore, double blackTeamScore) {
         System.out.printf("WHITE 팀 점수는%.1f\n" +
-                "BLACK 팀 점수는%.1f\n", teamScore, score + "\n");
+                "BLACK 팀 점수는%.1f\n", whiteTeamScore, blackTeamScore);
     }
 }

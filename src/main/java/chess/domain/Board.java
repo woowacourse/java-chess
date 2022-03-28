@@ -58,7 +58,6 @@ public class Board {
     public void validateMovingPiece(Position source, Position destination, Piece piece, Team team) {
         validateTeam(team, piece);
         validateMovingPath(source, destination, piece);
-        validateExistOtherPiece(piece.findPath(destination));
     }
 
     private void validateTeam(Team team, Piece piece) {
@@ -73,7 +72,9 @@ public class Board {
         }
         if (piece.isPawn() && isDiagonal(source, destination)) {
             validatePawnAttemptKill(destination);
+            return;
         }
+        validateExistOtherPiece(piece.findPath(destination));
     }
 
     private boolean isDiagonal(Position source, Position destination) {
@@ -110,41 +111,5 @@ public class Board {
 
     public Map<Row, Rank> getBoard() {
         return new EnumMap<>(board);
-    }
-
-    public double getTeamScore(Team team) {
-        double totalScore = 0;
-        Map<Column, Integer> pawnNeighbors = new EnumMap<>(Column.class);
-        for (Row row : board.keySet()) {
-            totalScore += board.get(row).calculateRankTotalScore(team);
-            findNeighborPawns(team, row, pawnNeighbors);
-        }
-        return reCalculateWithPawnNeighbors(totalScore, pawnNeighbors);
-    }
-
-    private double reCalculateWithPawnNeighbors(double totalScore, Map<Column, Integer> pawnNeighbors) {
-        for (Column col : pawnNeighbors.keySet()) {
-            totalScore = calculateScoreWithPawnCount(totalScore, pawnNeighbors.get(col));
-        }
-        return totalScore;
-    }
-
-    private double calculateScoreWithPawnCount(double totalScore, int pawnCount) {
-        if (pawnCount > 1) {
-            totalScore -= pawnCount * 0.5;
-        }
-        return totalScore;
-    }
-
-    private void findNeighborPawns(Team team, Row row, Map<Column, Integer> pawnNeighbors) {
-        for (Column column : Column.values()) {
-            findNeighborsInColumn(team, row, pawnNeighbors, column);
-        }
-    }
-
-    private void findNeighborsInColumn(Team team, Row row, Map<Column, Integer> pawnNeighbors, Column column) {
-        if (board.get(row).isSameTeamPawn(team, column)) {
-            pawnNeighbors.put(column, pawnNeighbors.getOrDefault(column, 0) + 1);
-        }
     }
 }

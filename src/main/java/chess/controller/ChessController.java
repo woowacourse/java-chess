@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.Command;
 import chess.domain.Board;
+import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
@@ -53,7 +54,8 @@ public class ChessController {
     }
 
     private void displayTeamStatus(Board board) {
-        OutputView.printStatus(board.getTeamScore(Team.WHITE), board.getTeamScore(Team.BLACK));
+        OutputView.printStatus(new Score(board.getBoard(), Team.WHITE).getTotalScore(),
+                new Score(board.getBoard(), Team.BLACK).getTotalScore());
     }
 
     private Piece movePiece(List<String> input, Board board, Team team) {
