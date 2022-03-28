@@ -196,9 +196,9 @@ class BoardTest {
     void rookCannotMove_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Rook()));
-            pieces.put(Position.of("b5"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("b3"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b8"), new Piece(Color.WHITE, new Rook()));
+            pieces.put(Position.of("b5"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 
@@ -212,9 +212,9 @@ class BoardTest {
     void bishopCannotMove_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Bishop()));
-            pieces.put(Position.of("d6"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("e5"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b8"), new Piece(Color.WHITE, new Bishop()));
+            pieces.put(Position.of("d6"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("e5"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 
@@ -226,13 +226,13 @@ class BoardTest {
     @Test
     @DisplayName("나이트는 이동경로에 다른 기물이 있어도 이동할 수 있다")
     void knightCanMove_anotherPiecesExistOnPath() {
-        Piece piece = new Piece(Color.BLACK, new Knight());
+        Piece piece = new Piece(Color.WHITE, new Knight());
 
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
             pieces.put(Position.of("b8"), piece);
-            pieces.put(Position.of("c8"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("d7"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("c8"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("d7"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 
@@ -245,9 +245,9 @@ class BoardTest {
     void queenCanNotMoveVertically_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Queen()));
-            pieces.put(Position.of("b5"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("b8"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b3"), new Piece(Color.WHITE, new Queen()));
+            pieces.put(Position.of("b5"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b8"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 
@@ -261,9 +261,9 @@ class BoardTest {
     void queenCanNotMoveHorizontally_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("b3"), new Piece(Color.BLACK, new Queen()));
-            pieces.put(Position.of("e3"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("f3"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b3"), new Piece(Color.WHITE, new Queen()));
+            pieces.put(Position.of("e3"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("f3"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 
@@ -277,9 +277,9 @@ class BoardTest {
     void queenCannotMoveDiagonally_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(Position.of("g7"), new Piece(Color.BLACK, new Queen()));
-            pieces.put(Position.of("d4"), new Piece(Color.BLACK, new Pawn()));
-            pieces.put(Position.of("b2"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("g7"), new Piece(Color.WHITE, new Queen()));
+            pieces.put(Position.of("d4"), new Piece(Color.WHITE, new Pawn()));
+            pieces.put(Position.of("b2"), new Piece(Color.BLACK, new Pawn()));
             return pieces;
         });
 

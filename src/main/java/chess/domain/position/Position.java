@@ -1,82 +1,86 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public final class Position {
 
     private static final int AROUND_DISTANCE = 1;
+    private static final int POSITION_SIZE = 2;
+    private static final String ERROR_POSITION_VALUE_FORMAT = "[ERROR] 위치는 열과 행, 두 문자의 조합으로 쓰세요.";
 
     private final Column column;
     private final Row row;
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
-    private Position(Column column, Row row) {
+    static {
+        generateAllPositions();
+    }
+
+    private Position(final Column column, final Row row) {
         this.column = column;
         this.row = row;
     }
 
     public static Position of(final String value) {
-        if (value.length() != 2) {
-            throw new IllegalArgumentException("[ERROR] 위치는 열과 행으로 이루어져야 합니다.");
-        }
-        final var column = Column.of(value.substring(0, 1));
-        final var row = Row.of(value.substring(1));
-
-        return new Position(column, row);
+        validateValue(value);
+        return CACHE.get(value.toUpperCase());
     }
 
     public static Position valueOf(final Column column, final Row row) {
-        return new Position(column, row);
+        return CACHE.get(column.name() + row.getValue());
     }
 
-    public boolean isStraight(Position target) {
+    private static void validateValue(final String value) {
+        if (value.length() != POSITION_SIZE) {
+            throw new IllegalArgumentException(ERROR_POSITION_VALUE_FORMAT);
+        }
+    }
+
+    public boolean isStraight(final Position target) {
         return isVertical(target) || isHorizontal(target);
     }
 
-    public boolean isVertical(Position target) {
+    public boolean isVertical(final Position target) {
         return column.isSame(target.column);
     }
 
-    public boolean isHorizontal(Position target) {
+    public boolean isHorizontal(final Position target) {
         return row.isSame(target.row);
     }
 
-    public boolean isDiagonal(Position target) {
-        int columnGap = column.gap(target.column);
-        int rowGap = row.gap(target.row);
-        return columnGap == rowGap;
+    public boolean isDiagonal(final Position target) {
+        return columnGap(target) == rowGap(target);
     }
 
-    public int columnGap(Position target) {
+    public int columnGap(final Position target) {
         return column.gap(target.column);
     }
 
-    public int rowGap(Position target) {
+    public int rowGap(final Position target) {
         return row.gap(target.row);
     }
 
-    public boolean isAbove(Position target) {
+    public boolean isAbove(final Position target) {
         return row.isGreaterThan(target.row);
     }
 
-    public boolean isBelow(Position target) {
+    public boolean isBelow(final Position target) {
         return row.isSmallerThan(target.row);
     }
 
-    public boolean isSameRow(Row row) {
+    public boolean isSameRow(final Row row) {
         return this.row.isSame(row);
     }
 
-    public List<Position> calculatePath(Position target, Direction direction) {
+    public List<Position> calculatePath(final Position target, final Direction direction) {
         if (rowGap(target) <= AROUND_DISTANCE && columnGap(target) <= AROUND_DISTANCE) {
             return Collections.emptyList();
         }
         return calculateByDirection(target, direction);
     }
 
-    private List<Position> calculateByDirection(Position target, Direction direction) {
+    private List<Position> calculateByDirection(final Position target, final Direction direction) {
         if (direction.isVertical()) {
             return verticalPaths(target);
         }
@@ -89,30 +93,36 @@ public final class Position {
         return Collections.emptyList();
     }
 
-    private List<Position> verticalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
-        for (Row row : row.rowPaths(target.row)) {
-            positions.add(Position.valueOf(this.column, row));
-        }
-        return positions;
+    private List<Position> verticalPaths(final Position target) {
+        return row.rowPaths(target.row).stream()
+                .map(row -> Position.valueOf(this.column, row))
+                .collect(Collectors.toList());
     }
 
-    private List<Position> horizontalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
-        for (Column column : column.columnPaths(target.column)) {
-            positions.add(Position.valueOf(column, this.row));
-        }
-        return positions;
+    private List<Position> horizontalPaths(final Position target) {
+        return column.columnPaths(target.column).stream()
+                .map(column -> Position.valueOf(column, this.row))
+                .collect(Collectors.toList());
     }
 
-    private List<Position> diagonalPaths(Position target) {
-        List<Position> positions = new ArrayList<>();
-        List<Column> columns = column.columnPaths(target.column);
-        List<Row> rows = row.rowPaths(target.row);
+    private List<Position> diagonalPaths(final Position target) {
+        final List<Position> positions = new ArrayList<>();
+        final List<Column> columns = column.columnPaths(target.column);
+        final List<Row> rows = row.rowPaths(target.row);
         for (int i = 0; i < columns.size(); i++) {
             positions.add(Position.valueOf(columns.get(i), rows.get(i)));
         }
         return positions;
+    }
+
+    private static void generateAllPositions() {
+        Arrays.stream(Column.values())
+                .forEach(column -> generateOneColumn(column));
+    }
+
+    private static void generateOneColumn(Column column) {
+        Arrays.stream(Row.values())
+                .forEach(row -> CACHE.put(column.name() + row.getValue(), new Position(column, row)));
     }
 
     @Override
