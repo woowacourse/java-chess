@@ -9,6 +9,7 @@ import chess.domain.position.File;
 import chess.domain.position.Square;
 
 public final class Status {
+    private static final double PAWN_PENALTY_SCORE = 0.5;
     private final Board board;
 
     public Status(Board board) {
@@ -38,7 +39,7 @@ public final class Status {
     }
 
     private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
-        return (int)survives.stream()
+        return (int) survives.stream()
                 .filter(entry -> entry.getValue().isPawn())
                 .filter(entry -> entry.getKey().checkFile(file))
                 .count();
@@ -46,7 +47,7 @@ public final class Status {
 
     private double subtractPawnInSameFile(double sum, int count) {
         if (count > 1) {
-            sum -= 0.5 * count;
+            sum -= PAWN_PENALTY_SCORE * count;
         }
         return sum;
     }
