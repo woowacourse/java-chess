@@ -15,6 +15,9 @@ public class ChessController {
     }
 
     public void play(ChessGame chessGame) {
+        if (chessGame.isEnd()) {
+            executeEnd(chessGame);
+        }
         try {
             final String inputCommand = InputView.inputCommend();
             final Command command = Command.from(inputCommand);
@@ -38,7 +41,7 @@ public class ChessController {
             runCommand(chessGame, inputCommand);
         }
         if (command == Command.STATUS) {
-            runStatusCommand(chessGame);
+            statusCommand(chessGame);
         }
     }
 
@@ -87,9 +90,9 @@ public class ChessController {
         }
     }
 
-    private void runStatusCommand(ChessGame chessGame) {
+    private void statusCommand(ChessGame chessGame) {
         try {
-            validateGameEnd(chessGame);
+            validateGameStatus(chessGame);
             OutputView.printStatus(chessGame.getStatus());
             play(chessGame);
         } catch (IllegalArgumentException e) {
@@ -98,9 +101,13 @@ public class ChessController {
         }
     }
 
-    private void validateGameEnd(ChessGame chessGame) {
-        if (chessGame.isPlaying() || chessGame.isReady()) {
+    private void validateGameStatus(ChessGame chessGame) {
+        if (chessGame.isEnd() || chessGame.isReady()) {
             throw new IllegalArgumentException("게임이 아직 종료되지 않았습니다.");
         }
+    }
+
+    private void executeEnd(ChessGame chessGame) {
+        OutputView.printGameResult(chessGame.getWinner());
     }
 }

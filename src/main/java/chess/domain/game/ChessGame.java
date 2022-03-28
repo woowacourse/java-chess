@@ -44,12 +44,16 @@ public class ChessGame {
         return board.isSameColor(position, turn);
     }
 
-    public Status getStatus() {
-        return new Status(board.getColorsTotalScore());
-    }
-
     public boolean isKingAlive(Position to) {
         return board.isKingAlive(to);
+    }
+
+    public Map<Color, Double> getStatus() {
+        return board.getColorsTotalScore();
+    }
+
+    public Color getWinner() {
+        return board.getWinner();
     }
 
     private Map<Position, Piece> createBoard() {

@@ -43,22 +43,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printStatus(Status status) {
-        printColorsTotalScore(status.getColorsTotalScore());
-        printGameResult(status.getWinnerColor());
-    }
-
-    private static void printColorsTotalScore(Map<Color, Double> colorsTotalScore) {
+    public static void printStatus(Map<Color, Double> colorsTotalScore) {
         for (Entry<Color, Double> entry : colorsTotalScore.entrySet()) {
             System.out.printf(TEAM_STATUS, entry.getKey().name(), entry.getValue());
         }
     }
 
-    private static void printGameResult(Color winnerColor) {
-        if (winnerColor.equals(Color.NONE)) {
-            System.out.println(DRAW);
-            return;
-        }
+    public static void printGameResult(Color winnerColor) {
         System.out.printf(WINNER_TEAM, winnerColor.name());
     }
 }

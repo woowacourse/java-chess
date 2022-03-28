@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Board {
+
     private final Map<Position, Piece> pieces;
 
     public Board(Map<Position, Piece> squares) {
@@ -80,5 +81,18 @@ public class Board {
 
     public boolean isKingAlive(Position to) {
         return !findByPiece(to).isKing();
+    }
+
+    public Color getWinner() {
+        return pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .map(Piece::getColor)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("보드 판에 왕이 존재하지 않습니다."));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(pieces);
     }
 }
