@@ -3,8 +3,7 @@ package chess.state;
 import chess.Chessboard;
 import chess.Turn;
 import chess.piece.Color;
-
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 public class Play implements State {
 
@@ -27,9 +26,8 @@ public class Play implements State {
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public State move(Position source, Position target) {
         chessboard.movePiece(source, target, turn);
-
         if (chessboard.isKing(target)) {
             return new Finish(chessboard);
         }

@@ -2,13 +2,13 @@ package chess.state;
 
 import chess.Chessboard;
 import chess.piece.Color;
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 public interface State {
 
     State start();
 
-    State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target);
+    State move(Position source, Position target);
 
     State end();
 

@@ -1,76 +1,77 @@
 package chess.utils;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovingBetweenPositions {
 
-    public static List<Pair<Integer, Integer>> computeBetweenPositionsOfRow(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (source.getRight() < target.getRight()) {
-            return generateRowPositions(source.getLeft(), source.getRight(), target.getRight());
+    public static List<Position> computeBetweenPositionsOfRow(Position source, Position target) {
+        if (source.isSmallColumn(target)) {
+            return generateRowPositions(source, target);
         }
-        return generateRowPositions(source.getLeft(), target.getRight(), source.getRight());
+        return generateRowPositions(target, source);
     }
 
-    public static List<Pair<Integer, Integer>> computeBetweenPositionsOfColumn(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (source.getLeft() < target.getLeft()) {
-            return generateColumnPositions(source.getRight(), source.getLeft(), target.getLeft());
+    public static List<Position> computeBetweenPositionsOfColumn(Position source, Position target) {
+        if (source.isSmallRow(target)) {
+            return generateColumnPositions(source, target);
         }
-        return generateColumnPositions(source.getRight(), target.getLeft(), source.getLeft());
+        return generateColumnPositions(target, source);
     }
 
-    public static List<Pair<Integer, Integer>> computeLeftDownRightUp(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (source.getLeft() < target.getLeft()) {
+    public static List<Position> computeLeftDownRightUp(Position source, Position target) {
+        if (source.isSmallRow(target)) {
             return generateLeftDownRightUpPositions(source, target);
         }
         return generateLeftDownRightUpPositions(target, source);
     }
 
-    public static List<Pair<Integer, Integer>> computeLeftUpRightDown(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (source.getLeft() < target.getLeft()) {
+    public static List<Position> computeLeftUpRightDown(Position source, Position target) {
+        if (source.isSmallRow(target)) {
             return generateLeftUpRightDownPositions(source, target);
         }
         return generateLeftUpRightDownPositions(target, source);
     }
 
 
-    private static List<Pair<Integer, Integer>> generateLeftDownRightUpPositions(Pair<Integer, Integer> min, Pair<Integer, Integer> max) {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        int count = max.getLeft() - min.getLeft();
+    private static List<Position> generateLeftDownRightUpPositions(Position source, Position target) {
+        List<Position> list = new ArrayList<>();
+        int count = source.gapTwoPositionRow(target);
 
-        for (int i = 1; i < count; i++) {
-            list.add(Pair.of(min.getLeft() + i, min.getRight() - i));
-        }
-
-        return list;
-    }
-
-    private static List<Pair<Integer, Integer>> generateLeftUpRightDownPositions(Pair<Integer, Integer> min, Pair<Integer, Integer> max) {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
-        int count = max.getLeft() - min.getLeft();
-
-        for (int i = 1; i < count; i++) {
-            list.add(Pair.of(min.getLeft() + i, min.getRight() + i));
+        for (int index = 1; index < count; index++) {
+            list.add(source.findPossiblePosition(index, -index));
         }
         return list;
     }
 
-    private static List<Pair<Integer, Integer>> generateRowPositions(int row, int min, int max) {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
+    private static List<Position> generateLeftUpRightDownPositions(Position min, Position max) {
+        List<Position> list = new ArrayList<>();
+        int count = max.gapTwoPositionRow(min);
 
-        for (int i = min + 1; i < max; i++) {
-            list.add(Pair.of(row, i));
+        for (int index = 1; index < count; index++) {
+            list.add(min.findPossiblePosition(index, -index));
         }
         return list;
     }
 
-    private static List<Pair<Integer, Integer>> generateColumnPositions(int col, int min, int max) {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
+    private static List<Position> generateRowPositions(Position source, Position target) {
+        List<Position> list = new ArrayList<>();
+        int count = source.gapTwoPositionColumn(target);
 
-        for (int i = min + 1; i < max; i++) {
-            list.add(Pair.of(i, col));
+        for (int index = 1; index < count; index++) {
+            list.add(source.findPossiblePosition(0, index));
+        }
+        return list;
+    }
+
+    private static List<Position> generateColumnPositions(Position source, Position target) {
+        List<Position> list = new ArrayList<>();
+        int count = source.gapTwoPositionRow(target);
+
+        for (int index = 1; index < count; index++) {
+            list.add(source.findPossiblePosition(index, 0));
         }
         return list;
     }

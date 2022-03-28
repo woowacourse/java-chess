@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.position.Position;
 import chess.utils.CheckerOfAllPossiblePosition;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -24,12 +25,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public boolean isMovable(Position source, Position target) {
         return CheckerOfAllPossiblePosition.isMovableCoordinates(COORDINATES_OF_MOVABLE, source, target);
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
         return new ArrayList<>();
     }
 }

@@ -1,7 +1,7 @@
 package chess.util;
 
+import chess.position.Position;
 import chess.utils.PositionParser;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,17 +27,16 @@ public class PositionParserTest {
     @ParameterizedTest
     @MethodSource("positionInput")
     @DisplayName("유효한 위치 입력시 입력을 올바른 인덱스 값으로 매핑하여 pair로 반환")
-    void rightPositionInput(String x, String y, Pair<Integer, Integer> expected) {
-        Pair<Integer, Integer> position = PositionParser.parse(x, y);
-        assertThat(position.getRight()).isEqualTo(expected.getRight());
-        assertThat(position.getLeft()).isEqualTo(expected.getLeft());
+    void rightPositionInput(String x, String y, Position expected) {
+        Position position = PositionParser.parse(x, y);
+        assertThat(position).isEqualTo(expected);
     }
 
     private static Stream<Arguments> positionInput() {
         return Stream.of(
-                Arguments.of("a", "8", Pair.of(0, 0)),
-                Arguments.of("d", "5", Pair.of(3, 3)),
-                Arguments.of("h", "1", Pair.of(7, 7))
+                Arguments.of("a", "8", new Position(0, 0)),
+                Arguments.of("d", "5", new Position(3, 3)),
+                Arguments.of("h", "1", new Position(7, 7))
         );
     }
 }

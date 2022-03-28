@@ -1,6 +1,6 @@
 package chess.piece;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +17,7 @@ public class PawnTest {
     @DisplayName("white pawn 대각선 위치 검증 - true")
     void checkDiagonalWhenWhiteTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -25,7 +25,7 @@ public class PawnTest {
     @DisplayName("white pawn 대각선 위치 검증 - false")
     void checkDiagonalWhenWhiteFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -33,7 +33,7 @@ public class PawnTest {
     @DisplayName("black pawn 대각선 위치 검증 - true")
     void checkDiagonalWhenBlackTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -41,7 +41,7 @@ public class PawnTest {
     @DisplayName("black pawn 대각선 위치 검증 - false")
     void checkDiagonalWhenBlackFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isDiagonal(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(pawn.isDiagonal(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -49,7 +49,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> true")
     void checkPositionWhenWhiteFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(6, 6), Pair.of(6 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position(6, 6), new Position(6 + a, 6 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -57,7 +57,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> false")
     void checkPositionWhenWhiteFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(6, 6), Pair.of(6 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovable(new Position(6, 6), new Position(6 + a, 6 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -65,7 +65,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> true")
     void checkPositionWhenBlackFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(1, 1), Pair.of(1 + a, 1 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position(1, 1), new Position(1 + a, 1 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -73,7 +73,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> false")
     void checkPositionWhenBlackFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(1, 1), Pair.of(1 + a, 1 + b))).isFalse();
+        assertThat(pawn.isMovable(new Position(1, 1), new Position(1 + a, 1 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -81,7 +81,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> true")
     void checkPositionWhenWhiteTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(7, 6), Pair.of(7 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position(7, 6), new Position(7 + a, 6 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -89,7 +89,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> false")
     void checkPositionWhenWhiteTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovable(Pair.of(7, 6), Pair.of(7 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovable(new Position(7, 6), new Position(7 + a, 6 + b))).isFalse();
     }
 
     @ParameterizedTest
@@ -97,7 +97,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> true")
     void checkPositionWhenBlackTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(2, 6), Pair.of(2 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovable(new Position(2, 6), new Position(2 + a, 6 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -105,22 +105,22 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> false")
     void checkPositionWhenBlackTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovable(Pair.of(2, 6), Pair.of(2 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovable(new Position(2, 6), new Position(2 + a, 6 + b))).isFalse();
     }
 
     @Test
     @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환- white ")
     void checkAllPositionOfPossibleWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.computeBetweenTwoPosition(Pair.of(6, 0), Pair.of(4, 0)))
-                .isEqualTo(List.of(Pair.of(5, 0)));
+        assertThat(pawn.computeBetweenTwoPosition(new Position(6, 0), new Position(4, 0)))
+                .isEqualTo(List.of(new Position(5, 0)));
     }
 
     @Test
     @DisplayName("source와 target 사이에 폰이 이동가능한 위치 리스트 반환 - black")
     void checkAllPositionOfPossibleBlack() {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.computeBetweenTwoPosition(Pair.of(1, 0), Pair.of(3, 0)))
-                .isEqualTo(List.of(Pair.of(2, 0)));
+        assertThat(pawn.computeBetweenTwoPosition(new Position(1, 0), new Position(3, 0)))
+                .isEqualTo(List.of(new Position(2, 0)));
     }
 }

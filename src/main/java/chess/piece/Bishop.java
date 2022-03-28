@@ -1,6 +1,6 @@
 package chess.piece;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +15,19 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if ((source.getLeft() - target.getLeft()) == (-1) * (source.getRight() - target.getRight())) {
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        if (source.gapTwoPositionRow(target) == (-1) * source.gapTwoPositionColumn(target)) {
             return computeLeftDownRightUp(source, target);
+
         }
-        if ((source.getLeft() - target.getLeft()) == (source.getRight() - target.getRight())) {
+        if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
             return computeLeftUpRightDown(source, target);
         }
         return new ArrayList<>();
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return Math.abs(source.getRight() - target.getRight()) == Math.abs(source.getLeft() - target.getLeft());
+    public boolean isMovable(Position source, Position target) {
+        return source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target);
     }
 }

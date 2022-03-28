@@ -1,6 +1,6 @@
 package chess.piece;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +15,19 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        if (source.getLeft() == target.getLeft()) {
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        if (source.isSameRow(target)) {
             return computeBetweenPositionsOfRow(source, target);
         }
-        if (source.getRight() == target.getRight()) {
+        if (source.isSameColumn(target)) {
             return computeBetweenPositionsOfColumn(source, target);
         }
-
         return new ArrayList<>();
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return source.getRight() == target.getRight() || source.getLeft() == target.getLeft();
+    public boolean isMovable(Position source, Position target) {
+        return source.isSameRow(target) || source.isSameColumn(target);
     }
 }
 

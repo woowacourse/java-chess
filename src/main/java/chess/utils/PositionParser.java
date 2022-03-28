@@ -1,40 +1,41 @@
 package chess.utils;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
+import chess.position.PositionCache;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PositionParser {
+    private static final Map<String, Integer> RANKS = new HashMap<>();
+    private static final Map<String, Integer> FILES = new HashMap<>();
     private static final String WRONG_POSITION = "올바르지 않은 위치 정보입니다.";
-    static Map<String, Integer> ranks = new HashMap<>();
-    static Map<String, Integer> files = new HashMap<>();
 
     static {
-        ranks.put("a", 0);
-        ranks.put("b", 1);
-        ranks.put("c", 2);
-        ranks.put("d", 3);
-        ranks.put("e", 4);
-        ranks.put("f", 5);
-        ranks.put("g", 6);
-        ranks.put("h", 7);
+        RANKS.put("a", 0);
+        RANKS.put("b", 1);
+        RANKS.put("c", 2);
+        RANKS.put("d", 3);
+        RANKS.put("e", 4);
+        RANKS.put("f", 5);
+        RANKS.put("g", 6);
+        RANKS.put("h", 7);
 
-        files.put("8", 0);
-        files.put("7", 1);
-        files.put("6", 2);
-        files.put("5", 3);
-        files.put("4", 4);
-        files.put("3", 5);
-        files.put("2", 6);
-        files.put("1", 7);
+        FILES.put("8", 0);
+        FILES.put("7", 1);
+        FILES.put("6", 2);
+        FILES.put("5", 3);
+        FILES.put("4", 4);
+        FILES.put("3", 5);
+        FILES.put("2", 6);
+        FILES.put("1", 7);
     }
 
-    public static Pair<Integer, Integer> parse(String x, String y) {
-        if (!ranks.containsKey(x) || !files.containsKey(y)) {
+    public static Position parse(String x, String y) {
+        if (!RANKS.containsKey(x) || !FILES.containsKey(y)) {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
 
-        return Pair.of(files.get(y), ranks.get(x));
+        return PositionCache.of(FILES.get(y), RANKS.get(x));
     }
 }

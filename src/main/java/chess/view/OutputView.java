@@ -1,9 +1,11 @@
 package chess.view;
 
 import chess.Chessboard;
-import chess.piece.Rank;
+import chess.piece.Piece;
+import chess.position.Position;
+import chess.position.PositionCache;
 
-import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -21,14 +23,18 @@ public class OutputView {
     }
 
     public static void printBoard(Chessboard chessboard) {
-        List<Rank> board = chessboard.getBoard();
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
-                System.out.print(board.get(i).getRank(j).getSymbolByColor());
-            }
+        Map<Position, Piece> board = chessboard.getBoard();
+        for (int row = 0; row < 8; row++) {
+            printPiece(board, row);
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printPiece(Map<Position, Piece> board, int row) {
+        for (int column = 0; column < 8; column++) {
+            System.out.print(board.get(PositionCache.of(row, column)).getSymbolByColor());
+        }
     }
 
     public static void printScore(double scoreOfBlack, double scoreOfWhite) {

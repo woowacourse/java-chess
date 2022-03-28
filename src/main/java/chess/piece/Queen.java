@@ -1,12 +1,11 @@
 package chess.piece;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static chess.utils.MovingBetweenPositions.*;
-import static chess.utils.MovingBetweenPositions.computeLeftUpRightDown;
 
 public class Queen extends Piece {
 
@@ -15,32 +14,30 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return Math.abs(source.getRight() - target.getRight()) == Math.abs(source.getLeft() - target.getLeft())
-                || isSameLine(source, target);
+    public boolean isMovable(Position source, Position target) {
+        return (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) || isSameLine(source, target);
     }
 
     @Override
-    public List<Pair<Integer, Integer>> computeBetweenTwoPosition(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        List<Pair<Integer, Integer>> result = new ArrayList<>();
-        if (source.getLeft() == target.getLeft()) {
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        List<Position> result = new ArrayList<>();
+        if (source.isSameRow(target)) {
             result.addAll(computeBetweenPositionsOfRow(source, target));
         }
-        if (source.getRight() == target.getRight()) {
+        if (source.isSameColumn(target)) {
             result.addAll(computeBetweenPositionsOfColumn(source, target));
         }
-
-        if ((source.getLeft() - target.getLeft()) == (-1) * (source.getRight() - target.getRight())) {
+        if ((source.gapTwoPositionRow(target) == (-1) * source.gapTwoPositionColumn(target))) {
             result.addAll(computeLeftDownRightUp(source, target));
         }
-        if ((source.getLeft() - target.getLeft()) == (source.getRight() - target.getRight())) {
+        if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
             result.addAll(computeLeftUpRightDown(source, target));
         }
-
         return result;
     }
 
-    private boolean isSameLine(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
-        return (source.getRight() == target.getRight() || source.getLeft() == target.getLeft());
+    private boolean isSameLine(Position source, Position target) {
+        return source.isSameRow(target) || source.isSameColumn(target);
+        //return (toInt(source.charAt(1)) == toInt(target.charAt(1)) || toInt(source.charAt(0)) == toInt(target.charAt(0)));
     }
 }

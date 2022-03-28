@@ -2,7 +2,7 @@ package chess.state;
 
 import chess.Chessboard;
 import chess.piece.Color;
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 
 public class Finish implements State {
 
@@ -18,7 +18,7 @@ public class Finish implements State {
     }
 
     @Override
-    public State move(Pair<Integer, Integer> source, Pair<Integer, Integer> target) {
+    public State move(Position source, Position target) {
         throw new UnsupportedOperationException();
     }
 

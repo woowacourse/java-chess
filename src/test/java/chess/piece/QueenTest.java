@@ -1,6 +1,6 @@
 package chess.piece;
 
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,7 +19,7 @@ public class QueenTest {
     @DisplayName("queen 기물 대각선 이동 위치 검증 - true")
     void checkQueenPositionDiagonal(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -27,7 +27,7 @@ public class QueenTest {
     @DisplayName("queen 기물 상하좌우 이동 위치 검증 - true")
     void checkQueenPositionUpDownLeftRight(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -35,13 +35,13 @@ public class QueenTest {
     @DisplayName("queen 기물 이동 위치 검증 - false")
     void checkBishopPositionWhenFalse(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovable(Pair.of(4, 4), Pair.of(4 + a, 4 + b))).isFalse();
+        assertThat(queen.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 
     @ParameterizedTest
     @MethodSource("possiblePositionOfQueen")
     @DisplayName("source와 target 사이에 퀸이 이동가능한 위치 리스트 반환")
-    void checkAllPositionOfPossible(Pair<Integer, Integer> source, Pair<Integer, Integer> target, Pair<Integer, Integer> coordinate) {
+    void checkAllPositionOfPossible(Position source, Position target, Position coordinate) {
         Queen queen = new Queen(Color.WHITE);
         assertThat(queen.computeBetweenTwoPosition(source, target))
                 .isEqualTo(List.of(coordinate));
@@ -49,8 +49,8 @@ public class QueenTest {
 
     static Stream<Arguments> possiblePositionOfQueen() {
         return Stream.of(
-                Arguments.of(Pair.of(7, 2), Pair.of(5, 4), Pair.of(6, 3)),
-                Arguments.of(Pair.of(0, 0), Pair.of(0, 2), Pair.of(0, 1))
+                Arguments.of(new Position(7, 2), new Position(5, 4), new Position(6, 3)),
+                Arguments.of(new Position(0, 0), new Position(0, 2), new Position(0, 1))
         );
     }
 }

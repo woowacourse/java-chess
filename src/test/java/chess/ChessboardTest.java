@@ -1,15 +1,15 @@
 package chess;
 
 import chess.piece.Color;
-import chess.piece.Rank;
+import chess.piece.Piece;
 import chess.piece.Type;
-import org.apache.commons.lang3.tuple.Pair;
+import chess.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessboardTest {
 
-    List<Rank> board;
+    Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
@@ -25,9 +25,9 @@ public class ChessboardTest {
     }
 
     @Test
-    @DisplayName("체스판 row 사이즈 확인")
+    @DisplayName("체스판 map 사이즈 확인")
     void checkSizeOfChessboard() {
-        assertThat(board.size()).isEqualTo(8);
+        assertThat(board.keySet().size()).isEqualTo(64);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ChessboardTest {
     void checkSamePosition() {
         Chessboard chessboard = Chessboard.initializedChessboard();
 
-        assertThatThrownBy(() -> chessboard.movePiece(Pair.of(0, 0), Pair.of(0, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(0, 0), new Position(0, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("현재 위치와 같은 위치로 이동할 수 없습니다.");
     }
@@ -45,7 +45,7 @@ public class ChessboardTest {
     void checkBlankTarget() {
         Chessboard chessboard = Chessboard.initializedChessboard();
 
-        assertThatThrownBy(() -> chessboard.movePiece(Pair.of(2, 0), Pair.of(3, 0), new Turn()))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(2, 0), new Position(3, 0), new Turn()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동하려는 위치에 기물이 없습니다.");
     }
@@ -55,7 +55,7 @@ public class ChessboardTest {
     void checkWrongTurn() {
         Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.movePiece(Pair.of(1, 0), Pair.of(1, 1), turn))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0), new Position(1, 1), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물은 움직일 수 없습니다.");
     }
@@ -65,7 +65,7 @@ public class ChessboardTest {
     void checkCandidatesOfPossibleCoordinates() {
         Chessboard chessboard = Chessboard.initializedChessboard();
         Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.movePiece(Pair.of(7, 0), Pair.of(5, 0), turn))
+        assertThatThrownBy(() -> chessboard.movePiece(new Position(7, 0), new Position(5, 0), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("가로막는 기물이 있습니다.");
     }
