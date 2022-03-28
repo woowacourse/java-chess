@@ -15,6 +15,7 @@ public class OutputView {
     private static final String EXAMPLE_START_MESSAGE = "> 게임 시작 : start";
     private static final String EXAMPLE_END_MESSAGE = "> 게임 종료 : end";
     private static final String EXAMPLE_MOVE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String EXAMPLE_STATUS_MESSAGE = "> 게임 점수 : status";
     private static final String NONE_PIECE = ".";
     private static final String SCORE_FORMAT = "%s팀 점수 : %.1f";
     private static final String WINNER_FORMAT = "%s팀이 승리했습니다!";
@@ -26,6 +27,7 @@ public class OutputView {
         System.out.println(EXAMPLE_START_MESSAGE);
         System.out.println(EXAMPLE_END_MESSAGE);
         System.out.println(EXAMPLE_MOVE_MESSAGE);
+        System.out.println(EXAMPLE_STATUS_MESSAGE);
     }
 
     public static void printInitialChessBoard(Board board) {
@@ -50,6 +52,7 @@ public class OutputView {
         System.out.printf(SCORE_FORMAT, BLACK_TEAM_NAME, blackScore);
         System.out.print(System.lineSeparator());
         System.out.printf(SCORE_FORMAT, WHITE_TEAM_NAME, whiteScore);
+        System.out.print(System.lineSeparator());
         System.out.print(System.lineSeparator());
     }
 
