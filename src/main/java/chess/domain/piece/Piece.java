@@ -1,55 +1,52 @@
 package chess.domain.piece;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.Color;
-import chess.domain.piece.property.Name;
+import chess.domain.piece.property.PieceProperty;
 import chess.domain.piece.state.PieceState;
 
 public abstract class Piece {
-    private final Color color;
-    private final Name name;
-    private final double score;
+    private final PieceProperty property;
+    private PieceState state;
 
-    private PieceState pieceState;
-
-    public Piece(Color color, String name, double score, PieceState pieceState) {
-        this.color = color;
-        this.name = new Name(color.convertName(name));
-        this.score = score;
-        this.pieceState = pieceState;
+    public Piece(Color color, String name, double score, PieceState state) {
+        this.property = PieceProperty.of(color, name, score);
+        this.state = state;
     }
 
     public static double computeScore(List<Piece> pieces) {
-        return pieces.stream()
-            .mapToDouble(piece -> piece.score)
-            .sum();
+        return PieceProperty.computeScore(
+            pieces.stream()
+                .map(piece -> piece.property)
+                .collect(Collectors.toList()));
     }
 
     public List<Position> findMovablePaths(Position source, ChessBoard board) {
-        return pieceState.findMovablePositions(source, board);
+        return state.findMovablePositions(source, board);
     }
 
-    public boolean isSameColor(Color other) {
-        return color.isSameColor(other);
+    public boolean isSameColor(Color color) {
+        return property.isSameColor(color);
     }
 
     public boolean isSameColor(Piece piece) {
-        return color.isSameColor(piece.color);
+        return property.isSameColor(piece.property);
     }
 
     public String getName() {
-        return name.getName();
+        return property.getName();
     }
 
     public void updateState() {
-        pieceState = pieceState.updateState();
+        state = state.updateState();
     }
 
     public void killed() {
-        pieceState = pieceState.killed();
+        state = state.killed();
     }
 
     public boolean isKing() {
