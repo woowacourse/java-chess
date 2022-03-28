@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+
 import java.util.List;
 
 public class ChessGame {
@@ -23,22 +24,19 @@ public class ChessGame {
     }
 
     public List<Piece> move(final Player currentPlayer, final Player opponentPlayer,
-            final Position currentPosition, final Position destinationPosition) {
+                            final Position currentPosition, final Position destinationPosition) {
         validateMovable(currentPlayer, currentPosition, destinationPosition);
-        final boolean hasPieceOfCurrentPlayer = currentPlayer.hasPiece(destinationPosition);
-        final boolean hasPieceOfOpponentPlayer = opponentPlayer.hasPiece(destinationPosition);
-        if (!hasPieceOfCurrentPlayer && !hasPieceOfOpponentPlayer) {
-            currentPlayer.move(currentPosition, destinationPosition);
-        }
-        if (hasPieceOfOpponentPlayer) {
+        if (opponentPlayer.hasPiece(destinationPosition)) {
             currentPlayer.capture(currentPosition, destinationPosition);
             opponentPlayer.remove(destinationPosition);
+            return currentPlayer.findAll();
         }
+        currentPlayer.move(currentPosition, destinationPosition);
         return currentPlayer.findAll();
     }
 
     private void validateMovable(final Player currentPlayer, final Position currentPosition,
-            final Position destinationPosition) {
+                                 final Position destinationPosition) {
         if (!currentPlayer.hasPiece(currentPosition)) {
             throw new IllegalArgumentException("선택한 출발 위치에 체스말이 존재하지 않습니다.");
         }
