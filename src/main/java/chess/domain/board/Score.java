@@ -1,58 +1,21 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
-import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+public enum Score {
 
-public class Score {
+    King(0.0f),
+    Pawn(1.0f),
+    Knight(2.5f),
+    Bishop(3.0f),
+    Rook(5.0f),
+    Queen(9.0f);
 
-    private static final double CONVERT_PAWN_SCORE = 0.5;
-    private static final int DUPLICATION_REMOVE_VALUE = 2;
+    private final float value;
 
-    private final Map<Team, Double> value = new HashMap<>();
-
-    public Score(Map<Position, Piece> board) {
-        for (Team team : Team.values()) {
-            value.put(team, calculateScore(board, team) + calculatePawnScore(board, team));
-        }
+    Score(float value) {
+        this.value = value;
     }
 
-    private double calculateScore(Map<Position, Piece> board, Team team) {
-        return board.values()
-                .stream()
-                .filter(piece -> piece.isSameTeam(team))
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private double calculatePawnScore(Map<Position, Piece> board, Team team) {
-        List<Position> pawns = findPawnPositions(board, team);
-
-        long count = pawns.stream()
-                .flatMap(pawn -> pawns
-                        .stream()
-                        .filter(target -> (!target.equals(pawn)) && target.isSameColumn(pawn)))
-                .count() / DUPLICATION_REMOVE_VALUE;
-
-        return count * -CONVERT_PAWN_SCORE;
-    }
-
-    private List<Position> findPawnPositions(Map<Position, Piece> board, Team team) {
-        return board.keySet()
-                .stream()
-                .filter(key -> board.get(key).isPawn() && board.get(key).isSameTeam(team))
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public List<Team> findWinTeam() {
-        return Team.findWinner(value.get(Team.WHITE), value.get(Team.BLACK));
-    }
-
-    public Map<Team, Double> getValue() {
+    public float getValue() {
         return value;
     }
 }

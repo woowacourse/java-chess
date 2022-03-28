@@ -16,7 +16,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ScoreTest {
+class ResultTest {
     @DisplayName("생성 후 값 확인")
     @Test
     void test() {
@@ -25,8 +25,8 @@ class ScoreTest {
         board.put(new Position(Column.B, Row.EIGHT), new Knight(Team.BLACK)); // 2.5
         board.put(new Position(Column.C, Row.EIGHT), new Bishop(Team.BLACK)); // 3.0
 
-        Score score = new Score(board);
-        Map<Team, Double> value = score.getValue();
+        Result result = new Result(board);
+        Map<Team, Double> value = result.getValue();
 
         assertThat(value.get(Team.BLACK)).isEqualTo(10.5f);
     }
@@ -41,8 +41,8 @@ class ScoreTest {
         board.put(new Position(Column.B, Row.THREE), new Pawn(Team.BLACK)); // 1.0
         board.put(new Position(Column.A, Row.FOUR), new Pawn(Team.WHITE)); // 1.0
 
-        Score score = new Score(board);
-        Map<Team, Double> value = score.getValue();
+        Result result = new Result(board);
+        Map<Team, Double> value = result.getValue();
 
         assertThat(value.get(Team.BLACK)).isEqualTo(2.5f);
     }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.board.Result;
+import chess.domain.board.Score;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Objects;
@@ -7,10 +9,10 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final String name;
-    private final float score;
+    private final Score score;
     protected final Team team;
 
-    public Piece(String name, float score, Team team) {
+    public Piece(String name, Score score, Team team) {
         this.name = name;
         this.score = score;
         this.team = team;
@@ -43,7 +45,7 @@ public abstract class Piece {
     }
 
     public float getScore() {
-        return score;
+        return score.getValue();
     }
 
     public void validArrive(Piece to, Direction direction) {

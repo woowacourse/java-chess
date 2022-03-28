@@ -3,7 +3,7 @@ package chess;
 import chess.domain.board.BasicBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
-import chess.domain.board.Score;
+import chess.domain.board.Result;
 import chess.domain.piece.Team;
 import chess.view.Command;
 import chess.view.InputView;
@@ -66,7 +66,7 @@ public class ChessGame {
     }
 
     private void status() {
-        Score score = board.createResult();
+        Result score = board.createResult();
         List<Team> gameResult = score.findWinTeam();
         OutputView.printStatus(score.getValue(), gameResult);
     }

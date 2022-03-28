@@ -122,7 +122,7 @@ public class Board {
         return board.isEmpty();
     }
 
-    public Score createResult() {
-        return new Score(board);
+    public Result createResult() {
+        return new Result(board);
     }
 }

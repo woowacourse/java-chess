@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Score;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,11 +8,11 @@ import java.util.stream.Collectors;
 public class Rook extends Piece {
 
     private static final String name = "R";
-    private static final float score = 5.0f;
+
     private static final List<Direction> directions = Direction.pullStraightDirections();
 
     public Rook(Team team) {
-        super(name, score, team);
+        super(name, Score.Rook, team);
     }
 
     @Override

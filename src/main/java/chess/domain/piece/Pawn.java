@@ -7,6 +7,7 @@ import static chess.domain.piece.Direction.SOUTH_SOUTH;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
+import chess.domain.board.Score;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.stream.Collectors;
 public class Pawn extends Piece {
 
     private static final String name = "P";
-    private static final float score = 1.0f;
+
     private final List<Direction> directions;
 
     public Pawn(Team team) {
-        super(name, score, team);
+        super(name, Score.Pawn, team);
         directions = selectDirections(team);
     }
 
