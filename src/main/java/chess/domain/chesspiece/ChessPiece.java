@@ -2,6 +2,7 @@ package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import java.util.Optional;
 import java.util.Stack;
 
 public abstract class ChessPiece {
@@ -16,7 +17,19 @@ public abstract class ChessPiece {
         this.name = color.convertByColor(name);
     }
 
-    public abstract void checkMovablePosition(final Position from, final Position to);
+    public abstract void checkMovablePosition(final Position from, final Position to,
+                                              final Optional<ChessPiece> possiblePiece);
+
+    protected void checkTargetPosition(final Optional<ChessPiece> possiblePiece) {
+        if (possiblePiece.isEmpty()) {
+            return;
+        }
+
+        final ChessPiece targetPiece = possiblePiece.get();
+        if (targetPiece.isSameColor(color)) {
+            throw new IllegalArgumentException("같은색 기물입니다.");
+        }
+    }
 
     public Stack<Position> findRoute(final Position from, final Position to) {
         final Stack<Position> routes = new Stack<>();
