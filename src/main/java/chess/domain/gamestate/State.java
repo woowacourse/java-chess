@@ -15,9 +15,9 @@ public interface State {
 
     double statusOfWhite();
 
-    boolean isFinished();
-
     Board getBoard();
 
     int hasBlackWon();
+
+    boolean isRunning();
 }

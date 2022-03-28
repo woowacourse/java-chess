@@ -7,6 +7,7 @@ import chess.domain.gamestate.State;
 
 public class ChessGame {
     private State state;
+    public boolean isEnd = false;
 
     public ChessGame() {
         this.state = new Ready();
@@ -32,8 +33,8 @@ public class ChessGame {
         return this.state.statusOfWhite();
     }
 
-    public boolean isFinished() {
-        return this.state.isFinished();
+    public boolean isNotRunning() {
+        return !this.state.isRunning();
     }
 
     public Board board() {
@@ -42,5 +43,9 @@ public class ChessGame {
 
     public int hasBlackWon() {
         return this.state.hasBlackWon();
+    }
+
+    public boolean isEnd() {
+        return this.isEnd;
     }
 }
