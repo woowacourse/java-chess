@@ -45,5 +45,10 @@ public class Ready implements GameState{
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 
+    @Override
+    public Color judgeWinner() {
+        throw new IllegalStateException(NOT_STARTED_GAME);
+    }
+
 
 }

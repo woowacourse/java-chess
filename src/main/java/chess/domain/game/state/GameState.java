@@ -17,4 +17,6 @@ public interface GameState {
     Board getBoard();
 
     double calculateScore(Color color);
+
+    Color judgeWinner();
 }

@@ -61,4 +61,12 @@ public class ReadyTest {
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
+
+    @Test
+    @DisplayName("보드가 초기화되지 않은 상태에서 승자를 결정하려고 하면 에외가 발생한다")
+    void judgeWinnerWhenReadyState() {
+        assertThatThrownBy(() -> state.judgeWinner())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+    }
 }
