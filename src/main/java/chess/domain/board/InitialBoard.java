@@ -18,6 +18,8 @@ public class InitialBoard {
 
 	public static final int INITIAL_BLACK_PAWN_ROW = 7;
 	public static final int INITIAL_WHITE_PAWN_ROW = 2;
+	private static final int INITIAL_BLACK_ROW = 8;
+	private static final int INITIAL_WHITE_ROW = 1;
 
 	private InitialBoard() {
 		throw new AssertionError();
@@ -25,25 +27,25 @@ public class InitialBoard {
 
 	public static Map<Position, Piece> createBoard() {
 		final Map<Position, Piece> board = new HashMap<>();
-
 		for (Position position : Position.getPositions()) {
 			board.put(position, new Blank());
 		}
 
 		List<Piece> blackSpecials = initSpecialBuilder(Team.BLACK);
 		List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
-		for (int i = 0; i < 8; i++) {
-			board.put(Position.of(8, i + 1), blackSpecials.get(i));
-			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i + 1), new Pawn(Team.BLACK));
+		for (int i = Position.MIN_POSITION; i <= Position.MAX_POSITION; i++) {
+			board.put(Position.of(INITIAL_BLACK_ROW, i), blackSpecials.get(i));
+			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i), new Pawn(Team.BLACK));
 
-			board.put(Position.of(1, i + 1), whiteSpecials.get(i));
-			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i + 1), new Pawn(Team.WHITE));
+			board.put(Position.of(INITIAL_WHITE_ROW, i), whiteSpecials.get(i));
+			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i), new Pawn(Team.WHITE));
 		}
 		return board;
 	}
 
 	private static List<Piece> initSpecialBuilder(Team team) {
 		List<Piece> pieces = new ArrayList<>();
+		pieces.add(new Blank());
 		pieces.add(new Rook(team));
 		pieces.add(new Knight(team));
 		pieces.add(new Bishop(team));

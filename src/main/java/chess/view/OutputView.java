@@ -54,9 +54,11 @@ public class OutputView {
 	public static void printWinner(final Team winner) {
 		if (winner.isBlack()) {
 			System.out.println(CATCH_KING + BLACK_TEAM + WIN_MESSAGE);
+			return;
 		}
 		if (winner.isWhite()) {
 			System.out.println(CATCH_KING + WHITE_TEAM + WIN_MESSAGE);
+			return;
 		}
 		System.out.println(END_GAME_WITH_DRAW);
 	}
