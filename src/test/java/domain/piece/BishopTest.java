@@ -29,13 +29,13 @@ class BishopTest {
 	@CsvSource(value = {"4, 4, 8, 8", "4, 4, 3, 5", "4, 4, 3, 3", "4, 4, 5, 3"})
 	void validateMovement(int startRow, int startCol, int endRow, int endCol) {
 		Bishop bishop = new Bishop(Team.BLACK);
-		assertDoesNotThrow(() -> bishop.validateMovement(Position.of(startRow, startCol), Position.of(endRow, endCol)));
+		assertDoesNotThrow(() -> bishop.checkReachable(Position.of(startRow, startCol), Position.of(endRow, endCol)));
 	}
 
 	@Test
 	void validateMovementException() {
 		Bishop bishop = new Bishop(Team.BLACK);
-		assertThatThrownBy(() -> bishop.validateMovement(Position.of(1, 1), Position.of(1, 2)))
+		assertThatThrownBy(() -> bishop.checkReachable(Position.of(1, 1), Position.of(1, 2)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

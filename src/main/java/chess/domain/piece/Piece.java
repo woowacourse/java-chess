@@ -41,7 +41,7 @@ public abstract class Piece {
 
     protected abstract String createSymbol(final Team team);
 
-    public abstract void validateMovement(Position source, Position target);
+    public abstract void checkReachable(Position source, Position target);
 
     public abstract boolean isBlank();
 

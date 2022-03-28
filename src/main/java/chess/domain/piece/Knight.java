@@ -25,7 +25,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void validateMovement(final Position source, final Position target) {
+	public void checkReachable(final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
 		if (!canMove(source, target, directions)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);

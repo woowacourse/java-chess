@@ -27,7 +27,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void validateMovement(final Position source, final Position target) {
+    public void checkReachable(final Position source, final Position target) {
         List<Direction> directions = new ArrayList<>(Direction.getPawnByTeam(team));
         if (source.isDefaultRow(team)) {
             directions.add(Direction.getDefaultPawnByTeam(team));

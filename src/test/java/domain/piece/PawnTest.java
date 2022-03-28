@@ -29,14 +29,14 @@ public class PawnTest {
 	@CsvSource(value = {"3, 3, BLACK", "3, 4, BLACK", "3, 5, BLACK", "5, 3, WHITE", "5, 4, WHITE", "5, 5, WHITE"})
 	void validateMovement(int targetRow, int targetColumn, Team team) {
 		Pawn pawn = new Pawn(team);
-		assertDoesNotThrow(() -> pawn.validateMovement(Position.of(4, 4), Position.of(targetRow, targetColumn)));
+		assertDoesNotThrow(() -> pawn.checkReachable(Position.of(4, 4), Position.of(targetRow, targetColumn)));
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {"3, 3, WHITE", "3, 4, WHITE", "3, 5, WHITE", "5, 3, BLACK", "5, 4, BLACK", "5, 5, BLACK"})
 	void validateMovementException(int targetRow, int targetColumn, Team team) {
 		Pawn pawn = new Pawn(team);
-		assertThatThrownBy(() -> pawn.validateMovement(Position.of(4, 4), Position.of(targetRow, targetColumn)))
+		assertThatThrownBy(() -> pawn.checkReachable(Position.of(4, 4), Position.of(targetRow, targetColumn)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

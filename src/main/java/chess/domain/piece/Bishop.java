@@ -21,7 +21,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void validateMovement(final Position source, final Position target) {
+    public void checkReachable(final Position source, final Position target) {
         if (target.isDifferentDiagonal(source)) {
             throw new IllegalArgumentException(MOVEMENT_ERROR);
         }

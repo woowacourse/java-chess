@@ -26,13 +26,13 @@ public class KnightTest {
 	@Test
 	void validateMovement() {
 		Knight knight = new Knight(Team.BLACK);
-		assertDoesNotThrow(() -> knight.validateMovement(Position.of(1, 1), Position.of(3, 2)));
+		assertDoesNotThrow(() -> knight.checkReachable(Position.of(1, 1), Position.of(3, 2)));
 	}
 
 	@Test
 	void validateMovementException() {
 		Knight knight = new Knight(Team.BLACK);
-		assertThatThrownBy(() -> knight.validateMovement(Position.of(1, 1), Position.of(2, 2)))
+		assertThatThrownBy(() -> knight.checkReachable(Position.of(1, 1), Position.of(2, 2)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

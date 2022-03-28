@@ -26,13 +26,13 @@ public class KingTest {
 	@Test
 	void validateMovement() {
 		King king = new King(Team.BLACK);
-		assertDoesNotThrow(() -> king.validateMovement(Position.of(1, 1), Position.of(2, 2)));
+		assertDoesNotThrow(() -> king.checkReachable(Position.of(1, 1), Position.of(2, 2)));
 	}
 
 	@Test
 	void validateMovementException() {
 		King king = new King(Team.BLACK);
-		assertThatThrownBy(() -> king.validateMovement(Position.of(1, 1), Position.of(7, 5)))
+		assertThatThrownBy(() -> king.checkReachable(Position.of(1, 1), Position.of(7, 5)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

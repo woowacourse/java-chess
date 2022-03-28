@@ -33,34 +33,34 @@ public class Board {
 
     private void validateMove(final Position source, final Position target) {
         Piece piece = board.get(source);
-        validateBlank(piece);
-        validateMovement(piece, source, target);
-        validateBlocking(source, target);
+        checkBlank(piece);
+        checkReachable(piece, source, target);
+        checkBlocking(source, target);
     }
 
-    private void validateBlank(final Piece piece) {
+    private void checkBlank(final Piece piece) {
         if (piece.isBlank()) {
             throw new IllegalArgumentException(BLANK_ERROR);
         }
     }
 
-    private void validateMovement(Piece piece, Position source, Position target) {
-        piece.validateMovement(source, target);
+    private void checkReachable(Piece piece, Position source, Position target) {
+        piece.checkReachable(source, target);
     }
 
-    private void validateBlocking(final Position source, final Position target) {
+    private void checkBlocking(final Position source, final Position target) {
         Piece piece = board.get(source);
         Direction direction = piece.getDirection(source, target);
         Position checkPosition = source;
         while (checkPosition != target) {
             checkPosition = moveNextPosition(direction, checkPosition);
             Piece currentPiece = board.get(checkPosition);
-            checkBlocking(target, checkPosition, currentPiece);
+            checkCatchable(target, checkPosition, currentPiece);
             piece.validateCatch(currentPiece, direction);
         }
     }
 
-    private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
+    private void checkCatchable(final Position target, final Position checkPosition, final Piece currentPiece) {
         if (checkPosition != target && !currentPiece.isBlank()) {
             throw new IllegalArgumentException(BLOCK_ERROR);
         }

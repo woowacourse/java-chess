@@ -26,13 +26,13 @@ public class RookTest {
 	@Test
 	void validateMovement() {
 		Rook rook = new Rook(Team.BLACK);
-		assertDoesNotThrow(() -> rook.validateMovement(Position.of(1, 1), Position.of(1, 7)));
+		assertDoesNotThrow(() -> rook.checkReachable(Position.of(1, 1), Position.of(1, 7)));
 	}
 
 	@Test
 	void validateMovementException() {
 		Rook rook = new Rook(Team.BLACK);
-		assertThatThrownBy(() -> rook.validateMovement(Position.of(1, 1), Position.of(2, 2)))
+		assertThatThrownBy(() -> rook.checkReachable(Position.of(1, 1), Position.of(2, 2)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

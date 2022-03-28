@@ -29,13 +29,13 @@ public class QueenTest {
 	@CsvSource(value = {"4, 4, 8, 8", "4, 4, 3, 5", "4, 4, 3, 3", "4, 4, 5, 3"})
 	void validateMovement(int startRow, int startCol, int endRow, int endCol) {
 		Queen queen = new Queen(Team.BLACK);
-		assertDoesNotThrow(() -> queen.validateMovement(Position.of(startRow, startCol), Position.of(endRow, endCol)));
+		assertDoesNotThrow(() -> queen.checkReachable(Position.of(startRow, startCol), Position.of(endRow, endCol)));
 	}
 
 	@Test
 	void validateMovementException() {
 		Queen queen = new Queen(Team.BLACK);
-		assertThatThrownBy(() -> queen.validateMovement(Position.of(1, 1), Position.of(3, 2)))
+		assertThatThrownBy(() -> queen.checkReachable(Position.of(1, 1), Position.of(3, 2)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

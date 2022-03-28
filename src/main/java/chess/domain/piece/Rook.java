@@ -21,7 +21,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void validateMovement(final Position source, final Position target) {
+    public void checkReachable(final Position source, final Position target) {
         if (target.isDifferentRow(source) && target.isDifferentColumn(source)) {
             throw new IllegalArgumentException(MOVEMENT_ERROR);
         }
