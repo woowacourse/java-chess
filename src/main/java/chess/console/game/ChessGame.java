@@ -1,7 +1,7 @@
-package chess.console;
+package chess.console.game;
 
-import chess.console.command.Command;
-import chess.console.command.Ready;
+import chess.console.game.playstate.Command;
+import chess.console.game.playstate.Ready;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 

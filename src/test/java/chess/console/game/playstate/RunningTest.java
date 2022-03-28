@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.console.game.playstate;
 
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;

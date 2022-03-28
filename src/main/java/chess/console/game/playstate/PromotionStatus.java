@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.console.game.playstate;
 
 import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
@@ -11,8 +11,8 @@ public class PromotionStatus implements Command {
     private final ChessBoard chessBoard;
     private final Color color;
 
-    public PromotionStatus(ChessBoard chessbBoard, Color color) {
-        this.chessBoard = chessbBoard;
+    public PromotionStatus(ChessBoard chessBoard, Color color) {
+        this.chessBoard = chessBoard;
         this.color = color;
     }
 

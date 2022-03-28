@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.console.game.playstate;
 
 public interface Command {
 

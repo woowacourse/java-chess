@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.console.game.playstate;
 
 import chess.console.view.OutputView;
 import chess.domain.ChessBoard;

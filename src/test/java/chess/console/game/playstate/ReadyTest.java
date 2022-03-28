@@ -1,4 +1,4 @@
-package chess.console.command;
+package chess.console.game.playstate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
