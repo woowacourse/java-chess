@@ -1,10 +1,14 @@
 package chess;
 
+import static chess.view.InputView.FROM_POSITION_INDEX;
+import static chess.view.InputView.MENU_INDEX;
+import static chess.view.InputView.TO_POSITION_INDEX;
+
 import chess.domain.board.BasicBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerator;
 import chess.domain.board.Score;
-import chess.view.Command;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.Menu;
 import chess.view.OutputView;
@@ -22,7 +26,7 @@ public class ChessGame {
             if (check()) {
                 OutputView.printCheck();
             }
-            Command command = InputView.inputCommand();
+            String[] command = InputView.inputCommand();
             play = convert(command);
         }
     }
@@ -35,8 +39,8 @@ public class ChessGame {
         }
     }
 
-    private boolean convert(Command command) {
-        Menu menu = command.getMenu();
+    private boolean convert(String[] command) {
+        Menu menu = Menu.of(command[MENU_INDEX]);
 
         if (menu.isEnd()) {
             return false;
@@ -58,13 +62,13 @@ public class ChessGame {
         OutputView.printBoard(board.getBoard());
     }
 
-    private void move(Command command) {
+    private void move(String[] command) {
         if (board.isEmpty()) {
             OutputView.printStartWarning();
             return;
         }
         try {
-            board.move(command.getBeforePosition(), command.getAfterPosition());
+            board.move(Position.of(command[FROM_POSITION_INDEX]), Position.of(command[TO_POSITION_INDEX]));
             OutputView.printBoard(board.getBoard());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
