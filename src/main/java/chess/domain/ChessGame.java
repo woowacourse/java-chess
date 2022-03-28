@@ -136,7 +136,9 @@ public class ChessGame {
     }
 
     public Team judgeWinner() {
-        if (blackChessMen.calculateScore() > whiteChessMen.calculateScore()) {
+        if (blackChessMen.calculateScore() == whiteChessMen.calculateScore()) {
+            return Team.NONE;
+        }if (blackChessMen.calculateScore() > whiteChessMen.calculateScore()) {
             return Team.BLACK;
         }
         return Team.WHITE;
