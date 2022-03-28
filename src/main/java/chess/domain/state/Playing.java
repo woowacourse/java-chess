@@ -6,6 +6,8 @@ import chess.domain.piece.Position;
 
 public abstract class Playing extends GameStarted {
 
+    private static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
+
     public Playing(Board board) {
         super(board);
     }
@@ -22,8 +24,15 @@ public abstract class Playing extends GameStarted {
 
     @Override
     public GameState move(Position start, Position target) {
-        Piece targetPiece = board.move(start, target, isBlackTurn());
+        if (!isCorrectTurn(start)) {
+            throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
+        }
+        Piece targetPiece = board.move(start, target);
         return judgeStatus(targetPiece);
+    }
+
+    private boolean isCorrectTurn(Position start) {
+        return board.isBlack(start) == isBlackTurn();
     }
 
     private GameStarted judgeStatus(Piece piece) {

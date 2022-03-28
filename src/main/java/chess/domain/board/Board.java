@@ -13,7 +13,6 @@ public class Board {
 
     private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
     private static final String OBSTACLE_EXCEPTION_MESSAGE = "경로에 기물이 존재합니다.";
-    private static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
 
     private final Map<Integer, Rank> ranks;
 
@@ -21,11 +20,8 @@ public class Board {
         this.ranks = ranks;
     }
 
-    public Piece move(Position start, Position target, boolean isBlackTurn) {
+    public Piece move(Position start, Position target) {
         Piece selected = getPiece(start);
-        if (selected.isBlack() != isBlackTurn) {
-            throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
-        }
         if (selected.isKnight()) {
             return jump(start, target);
         }
@@ -145,7 +141,11 @@ public class Board {
                 .sum();
     }
 
-    private Piece getPiece(Position position) {
+    public boolean isBlack(Position position) {
+        return getPiece(position).isBlack();
+    }
+
+    public Piece getPiece(Position position) {
         Rank rank = ranks.get(position.getY());
         return rank.getPiece(position.getX());
     }
