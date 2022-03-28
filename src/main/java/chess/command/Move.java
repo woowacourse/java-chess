@@ -12,7 +12,7 @@ public class Move extends Command {
     }
 
     @Override
-    public List<String> getCommandPosition(){
+    public List<String> getCommandPosition() {
         String[] split = input.split(EMPTY_DELIMITER);
         return Arrays.asList(split[1], split[2]);
     }

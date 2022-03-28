@@ -37,7 +37,7 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return team.equals(targetPiece.team);
     }
 
-    public boolean isOtherTeam(Piece targetPiece){
+    public boolean isOtherTeam(Piece targetPiece) {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
@@ -65,9 +65,10 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
         return this.position.getUpVerticalPosition(distance);
     }
 
-    public boolean isCurrentTurn(Turn turn){
+    public boolean isCurrentTurn(Turn turn) {
         return turn.isCurrentTeam(team);
     }
+
     public abstract double getScore();
 
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
@@ -76,13 +77,14 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
 
     public abstract String getName();
 
-    public boolean isKing(){
+    public boolean isKing() {
         return false;
     }
 
-    public boolean isPawn(){
+    public boolean isPawn() {
         return false;
     }
+
     @Override
     public int compareTo(Piece piece) {
         if (this.position.isLessRankThan(piece.position)) {

@@ -5,7 +5,7 @@ import chess.Team;
 
 import java.util.List;
 
-public class Empty extends Piece{
+public class Empty extends Piece {
 
     private static final String NAME = ".";
     private static final double SCORE = 0D;

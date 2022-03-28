@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.Board;
-import chess.Team;
 import chess.Turn;
 import chess.command.Command;
 import chess.command.Init;
@@ -19,8 +18,8 @@ public class ChessController {
         Board board = Board.create(pieces);
         Turn turn = Turn.init();
         command = command.turnState(input);
-        while (!command.isEnd() || board.isDeadKing()){
-            if(command.isMove()){
+        while (!command.isEnd() || board.isDeadKing()) {
+            if (command.isMove()) {
                 board.move(command.getCommandPosition(), turn);
                 turn = turn.change();
             }
@@ -29,7 +28,7 @@ public class ChessController {
         }
         OutputView.printFinishMessage();
         command = command.turnFinalState(InputView.inputCommand());
-        if(command.isStatus()) {
+        if (command.isStatus()) {
             OutputView.printFinalResult(board.getWinTeam(), board.getWhiteTeamScore(), board.getBlackTeamScore());
         }
     }

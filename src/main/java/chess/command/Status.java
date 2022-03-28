@@ -1,6 +1,6 @@
 package chess.command;
 
-public class Status extends Command{
+public class Status extends Command {
 
     public Status(String input) {
         super(input);
@@ -12,7 +12,7 @@ public class Status extends Command{
     }
 
     @Override
-    public boolean isStatus(){
+    public boolean isStatus() {
         return true;
     }
 }

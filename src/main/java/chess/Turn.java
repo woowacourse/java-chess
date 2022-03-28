@@ -7,7 +7,7 @@ public class Turn {
         this.team = team;
     }
 
-    public static Turn init(){
+    public static Turn init() {
         return new Turn(Team.WHITE);
     }
 
@@ -16,7 +16,7 @@ public class Turn {
     }
 
     public Turn change() {
-        if(team.equals(Team.BLACK)){
+        if (team.equals(Team.BLACK)) {
             return new Turn(Team.WHITE);
         }
         return new Turn(Team.BLACK);

@@ -78,7 +78,7 @@ public class Board {
         if (getWhiteTeamScore() > getBlackTeamScore()) {
             return Team.WHITE;
         }
-        if(getBlackTeamScore() > getWhiteTeamScore()){
+        if (getBlackTeamScore() > getWhiteTeamScore()) {
             return Team.BLACK;
         }
         return Team.NONE;
