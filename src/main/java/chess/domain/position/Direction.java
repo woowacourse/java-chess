@@ -27,11 +27,7 @@ public final class Direction {
 
 	public boolean hasMultiple(List<Direction> directions) {
 		return directions.stream()
-			.anyMatch(this::canReach);
-	}
-
-	private boolean canReach(Direction direction) {
-		return direction.equals(getUnitDirection());
+			.anyMatch(direction -> this.getUnitDirection().equals(direction));
 	}
 
 	public Direction getUnitDirection() {
