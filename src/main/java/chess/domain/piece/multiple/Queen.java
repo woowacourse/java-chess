@@ -14,7 +14,7 @@ import chess.domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Queen extends MultiplePiece {
+public final class Queen extends MultipleMovablePiece {
 
     private static final String QUEEN_NAME = "Q";
     private static final double QUEEN_SCORE = 9;

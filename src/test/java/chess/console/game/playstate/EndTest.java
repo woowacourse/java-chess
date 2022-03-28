@@ -14,7 +14,7 @@ class EndTest {
     void runException(String inputLine) {
         PlayState playState = new End();
         assertThatThrownBy(() -> playState.run(inputLine))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 종료된 상태에서는 게임을 실행할 수 없습니다.");
     }
 }

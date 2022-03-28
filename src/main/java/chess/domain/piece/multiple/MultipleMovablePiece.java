@@ -9,11 +9,11 @@ import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class MultiplePiece extends AbstractPiece {
+public abstract class MultipleMovablePiece extends AbstractPiece {
 
     private final List<Direction> moveDirections;
 
-    protected MultiplePiece(Color color, String name, List<Direction> moveDirections) {
+    protected MultipleMovablePiece(Color color, String name, List<Direction> moveDirections) {
         super(color, name);
         this.moveDirections = moveDirections;
     }

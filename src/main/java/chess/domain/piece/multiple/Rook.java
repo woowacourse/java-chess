@@ -10,7 +10,7 @@ import chess.domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Rook extends MultiplePiece {
+public final class Rook extends MultipleMovablePiece {
 
     private static final String ROOK_NAME = "R";
     private static final double ROOK_SCORE = 5;

@@ -10,7 +10,7 @@ import chess.domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Bishop extends MultiplePiece {
+public final class Bishop extends MultipleMovablePiece {
 
     private static final String BISHOP_NAME = "B";
     private static final double BISHOP_SCORE = 3;
