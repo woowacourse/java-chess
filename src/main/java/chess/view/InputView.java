@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.model.GameStartCommand;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +20,13 @@ public final class InputView {
     }
 
     private static void checkCommandValue(final String inputCommand) {
-        if (!inputCommand.equals("start") && !inputCommand.equals("end") && !inputCommand.contains("move") && !inputCommand.contains("status")) {
+        if (inputWrongCommand(inputCommand)) {
             throw new IllegalArgumentException(String.format("잘못된 게임 시작 커맨드입니다. %s", inputCommand));
         }
+    }
+
+    private static boolean inputWrongCommand(String inputCommand) {
+        return Arrays.stream(GameStartCommand.values())
+                .noneMatch(command -> command.name().toLowerCase().equals(inputCommand));
     }
 }
