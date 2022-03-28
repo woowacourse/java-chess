@@ -41,11 +41,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class BoardTest {
 
     private Board board;
+    FixedGameFlow gameFlow;
     private final BoardFactory boardFactory = ProductionBoardFactory.getInstance();
 
     @BeforeEach
     void setUp() {
-        board = new Board(boardFactory.create(), new FixedGameFlow());
+        gameFlow = new FixedGameFlow();
+        board = new Board(boardFactory.create(), gameFlow);
     }
 
     @Test
@@ -160,21 +162,27 @@ public class BoardTest {
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
-    @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
+    @DisplayName("킹이 잡힐 경우 게임은 종료된다")
     @Test
-    void move_return_true_when_king_captured() {
-        board.move(new Position(B, ONE), new Position(C, THREE));
-        board.move(new Position(F, TWO), new Position(F, THREE));
+    void when_king_captured_then_game_end() {
+        AlternatingGameFlow gameFlow = new AlternatingGameFlow();
+        board = new Board(boardFactory.create(), gameFlow);
 
-        board.move(new Position(C, THREE), new Position(E, FOUR));
-        board.move(new Position(G, TWO), new Position(G, THREE));
+        board.move(new Position(H, TWO), new Position(H, FOUR)); // 흰 폰
+        board.move(new Position(E, SEVEN), new Position(E, FIVE)); // 검은 폰
 
-        board.move(new Position(E, FOUR), new Position(D, SIX));
-        board.move(new Position(H, TWO), new Position(H, THREE));
+        board.move(new Position(H, ONE), new Position(H, THREE)); // 흰 룩
+        board.move(new Position(E, FIVE), new Position(E, FOUR)); // 검은 폰
 
-        boolean isFinished = board.move(new Position(D, SIX), new Position(E, EIGHT));
+        board.move(new Position(H, THREE), new Position(E, THREE)); // 흰 룩
+        board.move(new Position(E, EIGHT), new Position(E, SEVEN)); // 검은 킹
 
-        assertThat(isFinished).isTrue();
+        board.move(new Position(E, THREE), new Position(E, FOUR)); // 흰 룩 : 게임 룰 상 이때 체크메이트 !
+        board.move(new Position(E, SEVEN), new Position(E, SIX)); // 검은 킹
+
+        board.move(new Position(E, FOUR), new Position(E, SIX)); // 흰 룩
+
+        assertThat(gameFlow.isRunning()).isFalse();
     }
 
     @Test
