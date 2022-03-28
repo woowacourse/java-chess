@@ -8,22 +8,22 @@ import java.util.Map;
 public class Location {
     private static final Map<String, Location> CACHE = new HashMap<>();
 
+    private final File file;
+    private final Rank rank;
+
     static {
         Arrays.stream(File.values())
                 .forEach(file -> Arrays.stream(Rank.values())
                         .forEach(rank -> CACHE.put(toKey(file, rank), new Location(file, rank))));
     }
 
-    private static String toKey(File file, Rank rank) {
-        return file.name() + rank.name();
-    }
-
-    private final File file;
-    private final Rank rank;
-
     private Location(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 
     public static Location of(File file, Rank rank) {

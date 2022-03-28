@@ -42,11 +42,6 @@ public enum Rank {
         }
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(rank);
-    }
-
     public int computeDiff(Rank target) {
         return target.rank - rank;
     }

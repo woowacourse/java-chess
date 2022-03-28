@@ -1,10 +1,10 @@
 package chess.view;
 
 import chess.domain.Board;
-import chess.domain.Location;
+import chess.domain.Rank;
 import chess.domain.TeamScore;
 import chess.domain.piece.Piece;
-import java.util.Map;
+import java.util.List;
 
 public class OutputView {
 
@@ -20,19 +20,17 @@ public class OutputView {
     }
 
     public static void printChessBoard(Board board) {
-        int count = 0;
-        Map<Location, Piece> boardMap = board.getBoard();
-        for(Location location : boardMap.keySet()) {
-            if (count < 8) {
-                System.out.print(boardMap.get(location));
-                count++;
-                continue;
-            }
-            count %= 8;
-            count++;
-            System.out.println();
-            System.out.print(boardMap.get(location));
+        for (Rank rank : Rank.values()) {
+            List<Piece> rankPieces = board.getPiecesByRank(rank);
+            printEachRank(rankPieces);
         }
+    }
+
+    private static void printEachRank(List<Piece> rankPieces) {
+        for (Piece rankPiece : rankPieces) {
+            System.out.print(rankPiece.getName());
+        }
+        System.out.println();
     }
 
     public static void printScore(TeamScore score) {

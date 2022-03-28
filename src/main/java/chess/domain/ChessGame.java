@@ -30,7 +30,7 @@ public class ChessGame {
             move(commandList.get(1), commandList.get(2));
         }
 
-        if (GameCommand.isStatus(commandList.get(0))){
+        if (GameCommand.isStatus(commandList.get(0))) {
             status();
         }
     }
@@ -62,9 +62,6 @@ public class ChessGame {
         if (!isRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
-
         OutputView.printScore(state.getScore());
-
     }
-
 }

@@ -18,11 +18,6 @@ public abstract class Piece {
         return name.getName(team);
     }
 
-    @Override
-    public String toString() {
-        return getName();
-    }
-
     public boolean isBlack() {
         return team.isBlack();
     }
