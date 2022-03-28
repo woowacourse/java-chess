@@ -2,6 +2,7 @@ package console;
 
 import chess.BoardInitializer;
 import chess.ChessBoard;
+import chess.Score;
 import chess.command.Command;
 import chess.command.StartCommand;
 import chess.piece.Color;
@@ -40,8 +41,7 @@ public class Application {
                         throw new IllegalStateException("체스 게임이 시작되지 않았습니다.");
                     }
 
-                    OutputView.printScores(chessBoard.getScore(Color.WHITE),
-                        chessBoard.getScore(Color.BLACK));
+                    OutputView.printScores(Score.from(chessBoard));
                 }
 
                 if (chessBoard != null && chessBoard.isFinished()) {
