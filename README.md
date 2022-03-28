@@ -1,6 +1,56 @@
 # java-chess
 
 체스 미션 저장소
+- 체스 게임을 구현한 저장소입니다.
+
+## 애플리케이션 설명
+체스 게임을 java로 구현한 애플리케이션입니다.\
+애플리케이션을 실행하면 터미널에서 체스 게임을 실행할 수 있으며 콘솔UI에 체스의 이동 및 현재 상황을 명령할 수 있습니다.
+
+### 환경
+- java 11
+- junit 5
+
+### 기능 요구 사항
+- 애플리케이션을 실행하면 아래처럼 
+```text
+> 체스 게임을 시작합니다.
+> 게임 시작 : start
+> 게임 종료 : end
+> 게임 이동 : move source위치 target위치 - 예. move b2 b3
+> 점수 출력 : status
+start
+RNBQKBNR
+PPPPPPPP
+........
+........
+........
+........
+pppppppp
+rnbqkbnr
+move b2 b3
+RNBQKBNR
+PPPPPPPP
+........
+........
+........
+.p......
+p.pppppp
+rnbqkbnr
+status
+whiteScore : 38.000000 | blackScore : 38.000000
+RNBQKBNR
+PPPPPPPP
+........
+........
+........
+.p......
+p.pppppp
+rnbqkbnr
+end
+whiteScore : 38.000000 | blackScore : 38.000000
+
+```
 
 ## 기능 목록
 
