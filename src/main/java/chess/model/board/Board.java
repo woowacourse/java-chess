@@ -9,6 +9,8 @@ import java.util.List;
 
 public final class Board {
 
+    private static final int VALID_KING_COUNT = 2;
+    private static final int PAWN_POINT_DIVIDE_VALUE = 2;
     private final List<Piece> board;
 
     private Board(List<Piece> board) {
@@ -64,7 +66,7 @@ public final class Board {
     public boolean aliveTwoKings() {
         return board.stream()
                 .filter(Piece::isKing)
-                .count() == 2;
+                .count() == VALID_KING_COUNT;
     }
 
     public double calculatePoint(Color color) {
@@ -76,7 +78,7 @@ public final class Board {
 
     private double calculateEachPoint(Piece piece) {
         if (piece.isPawn() && isPawnInSameFile(piece)) {
-            return piece.getPoint().getValue() / 2;
+            return piece.getPoint().getValue() / PAWN_POINT_DIVIDE_VALUE;
         }
         return piece.getPoint().getValue();
     }

@@ -2,8 +2,6 @@ package chess.model.piece;
 
 import chess.model.Color;
 import chess.model.Direction;
-import chess.model.File;
-import chess.model.Rank;
 import chess.model.Square;
 import chess.model.piece.strategy.MovableStrategy;
 import java.util.Objects;
@@ -18,10 +16,6 @@ public abstract class Piece {
         this.color = color;
         this.square = square;
         this.strategy = strategy;
-    }
-
-    public Piece(final Color color, final File file, final Rank rank, final MovableStrategy strategy) {
-        this(color, new Square(file, rank), strategy);
     }
 
     public abstract Point getPoint();
