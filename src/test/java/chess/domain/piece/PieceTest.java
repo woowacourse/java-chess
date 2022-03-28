@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.LocationDiff;
-import chess.domain.Direction;
+import chess.domain.board.LocationDiff;
+import chess.domain.board.Direction;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

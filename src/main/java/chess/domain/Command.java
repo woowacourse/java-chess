@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Location;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

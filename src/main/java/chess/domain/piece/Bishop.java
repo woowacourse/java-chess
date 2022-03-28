@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.LocationDiff;
-import chess.domain.Direction;
+import chess.domain.board.LocationDiff;
+import chess.domain.board.Direction;
 
 public class Bishop extends Piece {
     private static final double SCORE = 3;

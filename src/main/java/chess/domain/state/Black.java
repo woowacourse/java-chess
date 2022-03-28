@@ -1,10 +1,10 @@
 package chess.domain.state;
 
-import chess.domain.Board;
-import chess.domain.Direction;
-import chess.domain.Location;
-import chess.domain.LocationDiff;
-import chess.domain.TeamScore;
+import chess.domain.board.Board;
+import chess.domain.board.Direction;
+import chess.domain.board.Location;
+import chess.domain.board.LocationDiff;
+import chess.domain.board.TeamScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 

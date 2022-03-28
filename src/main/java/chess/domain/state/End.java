@@ -1,8 +1,8 @@
 package chess.domain.state;
 
-import chess.domain.Board;
-import chess.domain.Location;
-import chess.domain.TeamScore;
+import chess.domain.board.Board;
+import chess.domain.board.Location;
+import chess.domain.board.TeamScore;
 
 public class End implements State {
 

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.board.Board;
+import chess.domain.board.Location;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;

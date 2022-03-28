@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.Board;
-import chess.domain.Rank;
-import chess.domain.TeamScore;
+import chess.domain.board.Board;
+import chess.domain.board.Rank;
+import chess.domain.board.TeamScore;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -34,6 +34,6 @@ public class OutputView {
     }
 
     public static void printScore(TeamScore score) {
-        System.out.printf("%s팀 점수: %2f", score.getTeam(), score.getScore());
+        System.out.printf("%s팀 점수: %.2f\n", score.getTeam(), score.getScore());
     }
 }

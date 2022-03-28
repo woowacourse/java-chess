@@ -1,10 +1,13 @@
 package chess.domain;
 
-import static chess.domain.File.*;
-import static chess.domain.Rank.*;
+import static chess.domain.board.File.*;
+import static chess.domain.board.Rank.*;
 import static chess.domain.piece.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

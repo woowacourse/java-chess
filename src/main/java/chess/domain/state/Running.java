@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 
 public abstract class Running implements State {
     private final Board board;
