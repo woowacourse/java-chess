@@ -2,11 +2,11 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.straightmovablepiece.Bishop;
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
-import chess.domain.piece.fixedmovablepiece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ public class ScoreCalculatorTest {
     @DisplayName("폰이 두 개 이상 포함된 한 컬럼의 점수를 계산한다.")
     void calculateOneColumnWithPawns() {
         List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                new Pawn(Color.BLACK), new Pawn(Color.BLACK), new Pawn(Color.BLACK));
+                new BlackPawn(), new BlackPawn(), new BlackPawn());
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
         assertThat(score).isEqualTo(7);
@@ -38,8 +38,8 @@ public class ScoreCalculatorTest {
     void calculateColumns() {
         List<List<Piece>> pieces = List.of(
                 List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                        new Pawn(Color.BLACK), new Pawn(Color.BLACK), new Pawn(Color.BLACK)),
-                List.of(new Pawn(Color.BLACK), new Pawn(Color.BLACK), new Queen(Color.BLACK))
+                        new BlackPawn(), new BlackPawn(), new BlackPawn()),
+                List.of(new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK))
         );
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateColumns(pieces);

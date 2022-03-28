@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import chess.domain.piece.straightmovablepiece.Rook;
@@ -21,9 +22,9 @@ public class PieceTest {
     class Constructor {
 
         @Test
-        @DisplayName("폰을 생성한다.")
+        @DisplayName("흑색 폰을 생성한다.")
         void constructPawn() {
-            assertThatCode(() -> new Pawn(Color.BLACK))
+            assertThatCode(BlackPawn::new)
                     .doesNotThrowAnyException();
         }
 

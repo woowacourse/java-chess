@@ -28,7 +28,7 @@ public abstract class FixedMovablePiece extends Piece {
         return movable;
     }
 
-    private final void putMovablePositionsByDirection(Map<Direction, List<Position>> movable, Position position,
+    private void putMovablePositionsByDirection(Map<Direction, List<Position>> movable, Position position,
                                                 Direction direction) {
         Position nextPosition = position.toDirection(direction);
         if (nextPosition == position) {

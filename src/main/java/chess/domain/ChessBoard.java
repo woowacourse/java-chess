@@ -1,10 +1,11 @@
 package chess.domain;
 
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
@@ -28,8 +29,8 @@ public class ChessBoard {
     }
 
     private void initFirstPositionsOfPawn() {
-        firstPositionsOfPawn.addAll(Pawn.BLACK_INIT_LOCATIONS);
-        firstPositionsOfPawn.addAll(Pawn.WHITE_INIT_LOCATIONS);
+        firstPositionsOfPawn.addAll(BlackPawn.BLACK_INIT_LOCATIONS);
+        firstPositionsOfPawn.addAll(WhitePawn.WHITE_INIT_LOCATIONS);
     }
 
     private void fillEmptyPieceIfAbsent() {

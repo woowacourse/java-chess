@@ -7,14 +7,16 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class King extends FixedMovablePiece {
+public final class King extends FixedMovablePiece {
 
-    private final static List<Direction> DIRECTIONS = List.of(
+    private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static Position BLACK_INIT_LOCATION = Position.of("e8");
-    public static Position WHITE_INIT_LOCATION = Position.of("e1");
+    public static final Position BLACK_INIT_LOCATION = Position.of("e8");
+    public static final Position WHITE_INIT_LOCATION = Position.of("e1");
+
+    private static final int KING_POINT = 0;
 
     public King(Color color) {
         super(color, PieceName.KING);
@@ -27,6 +29,6 @@ public class King extends FixedMovablePiece {
 
     @Override
     public double getPoint() {
-        return 0;
+        return KING_POINT;
     }
 }

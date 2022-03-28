@@ -15,7 +15,8 @@ public enum CommandType {
     }
 
     public static CommandType of(String commandName) {
-        return Arrays.stream(values()).filter(commandType -> commandName.equalsIgnoreCase(commandType.name()))
+        return Arrays.stream(values())
+                .filter(commandType -> commandName.equalsIgnoreCase(commandType.name()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효한 커맨드가 아닙니다."));
     }

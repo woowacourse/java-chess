@@ -4,16 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.straightmovablepiece.Bishop;
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceName;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.fixedmovablepiece.Knight;
 import chess.domain.piece.generator.NormalPiecesGenerator;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
 import chess.domain.piece.generator.PiecesGenerator;
+import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import chess.domain.piece.straightmovablepiece.Rook;
 import chess.domain.position.Column;
@@ -33,8 +34,8 @@ public class ChessBoardTest {
     @DisplayName("체스판을 생성한다.")
     void construct() {
         Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a2"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), new WhitePawn()),
+                Map.entry(Position.of("a2"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> pieces);
         assertThat(chessBoard.getPieces()).containsAllEntriesOf(pieces);
@@ -44,8 +45,8 @@ public class ChessBoardTest {
     @DisplayName("체스판을 생성할 때 빈 칸은 EmptyPiece를 삽입한다.")
     void constructEmptyPieces() {
         Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
-                Map.entry(Position.of("a1"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a2"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a1"), new WhitePawn()),
+                Map.entry(Position.of("a2"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> pieces);
         assertThat(chessBoard.getPieces()).contains(Map.entry(Position.of("a3"), EmptyPiece.getInstance()));
@@ -78,8 +79,8 @@ public class ChessBoardTest {
         void king() {
             Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new King(Color.WHITE));
-            testBoard.put(Position.of("d5"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("e3"), new Pawn(Color.BLACK));
+            testBoard.put(Position.of("d5"), new WhitePawn());
+            testBoard.put(Position.of("e3"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -96,8 +97,8 @@ public class ChessBoardTest {
         void queen() {
             Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Queen(Color.WHITE));
-            testBoard.put(Position.of("g4"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("d2"), new Pawn(Color.BLACK));
+            testBoard.put(Position.of("g4"), new WhitePawn());
+            testBoard.put(Position.of("d2"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -119,8 +120,8 @@ public class ChessBoardTest {
         void rook() {
             Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Rook(Color.WHITE));
-            testBoard.put(Position.of("g4"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("d2"), new Pawn(Color.BLACK));
+            testBoard.put(Position.of("g4"), new WhitePawn());
+            testBoard.put(Position.of("d2"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -138,8 +139,8 @@ public class ChessBoardTest {
         void bishop() {
             Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Bishop(Color.WHITE));
-            testBoard.put(Position.of("g7"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("f2"), new Pawn(Color.BLACK));
+            testBoard.put(Position.of("g7"), new WhitePawn());
+            testBoard.put(Position.of("f2"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -157,8 +158,8 @@ public class ChessBoardTest {
         void knight() {
             Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Knight(Color.WHITE));
-            testBoard.put(Position.of("f3"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("c2"), new Pawn(Color.BLACK));
+            testBoard.put(Position.of("f3"), new WhitePawn());
+            testBoard.put(Position.of("c2"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -174,8 +175,8 @@ public class ChessBoardTest {
         @DisplayName("폰일때")
         void pawn() {
             Map<Position, Piece> testBoard = new HashMap<>();
-            testBoard.put(Position.of("d4"), new Pawn(Color.WHITE));
-            testBoard.put(Position.of("e5"), new Pawn(Color.BLACK)); // 갈 수 있음
+            testBoard.put(Position.of("d4"), new WhitePawn());
+            testBoard.put(Position.of("e5"), new BlackPawn()); // 갈 수 있음
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
@@ -191,8 +192,8 @@ public class ChessBoardTest {
             Map<Position, Piece> testBoard = new HashMap<>();
             Position pawnPosition = Position.of("d2");
 
-            testBoard.put(pawnPosition, new Pawn(Color.WHITE));
-            testBoard.put(Position.of("e3"), new Pawn(Color.BLACK));
+            testBoard.put(pawnPosition, new WhitePawn());
+            testBoard.put(Position.of("e3"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(pawnPosition);
@@ -208,9 +209,9 @@ public class ChessBoardTest {
             Map<Position, Piece> testBoard = new HashMap<>();
             Position pawnPosition = Position.of("d2");
 
-            testBoard.put(pawnPosition, new Pawn(Color.WHITE));
-            testBoard.put(Position.of("d3"), new Pawn(Color.BLACK));
-            testBoard.put(Position.of("e3"), new Pawn(Color.BLACK));
+            testBoard.put(pawnPosition, new WhitePawn());
+            testBoard.put(Position.of("d3"), new BlackPawn());
+            testBoard.put(Position.of("e3"), new BlackPawn());
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(pawnPosition);
@@ -228,8 +229,8 @@ public class ChessBoardTest {
         void king() {
             Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new King(Color.WHITE)),
-                    Map.entry(Position.of("d3"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d5"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("d3"), new WhitePawn()),
+                    Map.entry(Position.of("d5"), new BlackPawn())
             ));
             ChessBoard chessBoard = new ChessBoard(() -> pieces);
             GameCommand gameCommand = new GameCommand("move", "d4", "d5");
@@ -247,8 +248,8 @@ public class ChessBoardTest {
         void queen() {
             Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new Queen(Color.WHITE)),
-                    Map.entry(Position.of("g4"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("g4"), new WhitePawn()),
+                    Map.entry(Position.of("d2"), new BlackPawn())
             ));
             ChessBoard chessBoard = new ChessBoard(() -> pieces);
             GameCommand gameCommand = new GameCommand("move", "d4", "d2");
@@ -266,8 +267,8 @@ public class ChessBoardTest {
         void rook() {
             Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new Rook(Color.WHITE)),
-                    Map.entry(Position.of("g4"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("d2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("g4"), new WhitePawn()),
+                    Map.entry(Position.of("d2"), new BlackPawn())
             ));
             ChessBoard chessBoard = new ChessBoard(() -> pieces);
             GameCommand gameCommand = new GameCommand("move", "d4", "d2");
@@ -285,8 +286,8 @@ public class ChessBoardTest {
         void bishop() {
             Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new Bishop(Color.WHITE)),
-                    Map.entry(Position.of("g7"), new Pawn(Color.WHITE)),
-                    Map.entry(Position.of("f2"), new Pawn(Color.BLACK))
+                    Map.entry(Position.of("g7"), new WhitePawn()),
+                    Map.entry(Position.of("f2"), new BlackPawn())
             ));
             ChessBoard chessBoard = new ChessBoard(() -> pieces);
             GameCommand gameCommand = new GameCommand("move", "d4", "f2");
@@ -361,12 +362,12 @@ public class ChessBoardTest {
 
         Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new Queen(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("c4"), new WhitePawn()),
+                Map.entry(Position.of("a4"), new BlackPawn()),
+                Map.entry(Position.of("a7"), new BlackPawn()),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
 
         ));
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
@@ -389,12 +390,12 @@ public class ChessBoardTest {
     void isEndTrue() {
         Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("a4"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("c4"), new WhitePawn()),
+                Map.entry(Position.of("a4"), new BlackPawn()),
+                Map.entry(Position.of("a7"), new BlackPawn()),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
@@ -406,12 +407,12 @@ public class ChessBoardTest {
     void isEndFalse() {
         Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new King(Color.WHITE)),
-                Map.entry(Position.of("b3"), new Pawn(Color.WHITE)),
-                Map.entry(Position.of("c4"), new Pawn(Color.WHITE)),
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("c4"), new WhitePawn()),
                 Map.entry(Position.of("a4"), new King(Color.BLACK)),
-                Map.entry(Position.of("a7"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("c5"), new Pawn(Color.BLACK)),
-                Map.entry(Position.of("b8"), new Pawn(Color.BLACK))
+                Map.entry(Position.of("a7"), new BlackPawn()),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 

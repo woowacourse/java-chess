@@ -7,26 +7,28 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Queen extends StraightMovablePiece {
+public final class Queen extends StraightMovablePiece {
 
-    private final static List<Direction> DIRECTIONS = List.of(
+    private static final List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
-    public static Position BLACK_INIT_LOCATION = Position.of("d8");
-    public static Position WHITE_INIT_LOCATION = Position.of("d1");
+    public static final Position BLACK_INIT_LOCATION = Position.of("d8");
+    public static final Position WHITE_INIT_LOCATION = Position.of("d1");
+
+    private static final int QUEEN_POINT = 9;
 
     public Queen(Color color) {
         super(color, PieceName.QUEEN);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public final Map<Direction, List<Position>> getMovablePositions(Position position) {
         return super.getMovablePositionsByDirections(position, DIRECTIONS);
     }
 
     @Override
-    public double getPoint() {
-        return 9;
+    public final double getPoint() {
+        return QUEEN_POINT;
     }
 }
