@@ -20,7 +20,7 @@ public class Board {
     public Board() {
         this.board = new HashMap<>();
         this.state = new WhiteTurn();
-        initialBatchPiece();
+        initialPlacePiece();
     }
 
     public void move(Position source, Position target) {
@@ -121,7 +121,7 @@ public class Board {
         return pieces;
     }
 
-    private void initialBatchPiece() {
+    private void initialPlacePiece() {
         for (Position position : Position.getPositions()) {
             board.put(position, new Blank());
         }
