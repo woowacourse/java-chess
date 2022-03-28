@@ -1,7 +1,6 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.GameStartCommand;
 import java.util.List;
 
 public final class Status extends Running {

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.model.GameStartCommand;
+import chess.model.GameCommand;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +33,7 @@ public final class InputView {
     }
 
     private static boolean inputWrongCommand(String inputCommand) {
-        return Arrays.stream(GameStartCommand.values())
+        return Arrays.stream(GameCommand.values())
                 .noneMatch(command -> command.name().toLowerCase().equals(inputCommand));
     }
 }

@@ -1,14 +1,14 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.GameStartCommand;
+import chess.model.GameCommand;
 import java.util.List;
 
 
 public final class Ready implements GameState {
 
     @Override
-    public GameState changeStatus(GameStartCommand command) {
+    public GameState changeStatus(GameCommand command) {
         if (command.isStart()) {
             return new Start();
         }

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.model.Board;
-import chess.model.GameStartCommand;
+import chess.model.GameCommand;
 import chess.model.piece.Piece;
 import chess.state.GameState;
 import chess.state.Ready;
@@ -27,7 +27,7 @@ public final class ChessController {
     private void playChess(GameState gameState) {
         while (!gameState.isEnd()) {
             List<String> request = InputView.inputStartOrEndGame();
-            GameStartCommand command = GameStartCommand.findCommand(request.get(0));
+            GameCommand command = GameCommand.findCommand(request.get(0));
             gameState = gameState.changeStatus(command);
             request.remove(0);
             gameState = gameState.execute(service, request);

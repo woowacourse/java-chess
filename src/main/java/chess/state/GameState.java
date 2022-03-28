@@ -1,12 +1,12 @@
 package chess.state;
 
 import chess.controller.ChessService;
-import chess.model.GameStartCommand;
+import chess.model.GameCommand;
 import java.util.List;
 
 public interface GameState {
 
-    GameState changeStatus(GameStartCommand command);
+    GameState changeStatus(GameCommand command);
 
     boolean isEnd();
 

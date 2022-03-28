@@ -2,7 +2,7 @@ package chess.model;
 
 import java.util.Arrays;
 
-public enum GameStartCommand {
+public enum GameCommand {
 
     START("start"),
     END("end"),
@@ -13,11 +13,11 @@ public enum GameStartCommand {
 
     private final String commandLine;
 
-    GameStartCommand(final String commandLine) {
+    GameCommand(final String commandLine) {
         this.commandLine = commandLine;
     }
 
-    public static GameStartCommand findCommand(final String commandLine) {
+    public static GameCommand findCommand(final String commandLine) {
         return Arrays.stream(values())
                 .filter(gameStartCommand -> gameStartCommand.commandLine.equals(commandLine))
                 .findFirst()
