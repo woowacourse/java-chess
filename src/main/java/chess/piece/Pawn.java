@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final int ONE_SQUARE = 1;
+    private static final int DOUBLE_STEP = 2;
+    private static final int SINGLE_STEP = 1;
+
     public Pawn(Color color, Position position) {
         super(color, position);
     }
@@ -22,10 +26,10 @@ public class Pawn extends Piece {
         }
 
         if (getPosition().isVerticalWay(to) && isValidDistance(to)) {
-            return !pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
+            return pieces.stream().noneMatch(piece -> piece.isSamePosition(to));
         }
 
-        if (getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == 1) {
+        if (getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == ONE_SQUARE) {
             return pieces.stream().anyMatch(piece -> piece.isSamePosition(to));
         }
 
@@ -42,9 +46,9 @@ public class Pawn extends Piece {
 
     private int movableDistance() {
         if (isStartPawnPosition()) {
-            return 2;
+            return DOUBLE_STEP;
         }
-        return 1;
+        return SINGLE_STEP;
     }
 
     private boolean isStartPawnPosition() {

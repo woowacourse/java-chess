@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Rook extends Piece{
 
+    private static final String ROOK_SCORE = "5";
+
     public Rook(Color color, Position position) {
         super(color, position);
     }
@@ -22,6 +24,6 @@ public class Rook extends Piece{
 
     @Override
     public BigDecimal getPoint() {
-        return new BigDecimal("5");
+        return new BigDecimal(ROOK_SCORE);
     }
 }

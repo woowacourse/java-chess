@@ -18,17 +18,17 @@ public abstract class Piece {
 
     public Piece transfer(Position to, List<Piece> pieces) {
         if (getPosition().equals(to)) {
-            throw new IllegalArgumentException("동일한 위치로 기물을 움직일 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 동일한 위치로 기물을 움직일 수 없습니다.");
         }
 
         if (!isPossibleMovement(to, pieces)) {
             throw new IllegalArgumentException(String.format(
-                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
+                "[ERROR] %s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
         }
 
         if (hasObstacleBetweenPositions(to, pieces) || hasSameColorTargetPiece(to, pieces)) {
             throw new IllegalArgumentException(String.format(
-                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
+                "[ERROR] %s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
         }
 
         return createNewPiece(to);

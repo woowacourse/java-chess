@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Queen extends Piece {
 
+    private static final String QUEEN_SCORE = "9";
+
     public Queen(Color color, Position position) {
         super(color, position);
     }
@@ -23,6 +25,6 @@ public class Queen extends Piece {
 
     @Override
     public BigDecimal getPoint() {
-        return new BigDecimal("9");
+        return new BigDecimal(QUEEN_SCORE);
     }
 }

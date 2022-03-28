@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
+    private static final String BISHOP_SCORE = "3";
+
     public Bishop(Color color, Position position) {
         super(color, position);
     }
@@ -22,6 +24,6 @@ public class Bishop extends Piece {
 
     @Override
     public BigDecimal getPoint() {
-        return new BigDecimal("3");
+        return new BigDecimal(BISHOP_SCORE);
     }
 }
