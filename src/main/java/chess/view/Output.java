@@ -1,10 +1,13 @@
 package chess.view;
 
+import chess.domain.Status;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class Output {
@@ -41,9 +44,23 @@ public class Output {
     private static void printBoard(final File file, final Rank rank, final Map<Position, Piece> board) {
         final Piece target = board.get(Position.of(file, rank));
         if (target != null) {
-            System.out.print(target.getName());
+            printPieceName(target);
             return;
         }
         System.out.print(".");
+    }
+
+    private static void printPieceName(final Piece piece) {
+        if (piece.isSameColor(Color.WHITE)) {
+            System.out.println(piece.getNotation().getValue());
+            return;
+        }
+        System.out.println(piece.getNotation().getValue().toUpperCase(Locale.ROOT));
+    }
+
+    public static void printStatus(final Status status) {
+        System.out.println(status.getResult());
+        System.out.println(status.getBlackScore());
+        System.out.println(status.getWhiteScore());
     }
 }
