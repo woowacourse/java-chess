@@ -55,8 +55,7 @@ public class Board {
     public Board movePiece(final Position sourcePosition, final Position targetPosition) {
         final Piece sourcePiece = findPieceInPosition(sourcePosition);
         validateTurn(sourcePiece);
-        final List<Piece> otherPieces = getOtherPieces(sourcePiece);
-        final Piece movedPiece = sourcePiece.move(otherPieces, targetPosition);
+        final Piece movedPiece = sourcePiece.move(getOtherPieces(sourcePiece), targetPosition);
 
         if (hasPieceInPosition(targetPosition)) {
             removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
