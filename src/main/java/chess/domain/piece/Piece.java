@@ -23,13 +23,11 @@ public abstract class Piece {
                               Position afterPosition,
                               Consumer<Piece> moveFunction);
 
+    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
+
     public abstract void capture(Position beforePosition,
                                  Position afterPosition,
                                  Consumer<Piece> moveFunction);
-
-    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
-
-    public abstract double getScore();
 
     public abstract boolean isBishop();
 
@@ -44,4 +42,6 @@ public abstract class Piece {
     public abstract boolean isRook();
 
     public abstract boolean isNone();
+
+    public abstract double getScore();
 }

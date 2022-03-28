@@ -23,31 +23,8 @@ public class Move implements Command {
         }
     }
 
-    public Position getSourcePosition() {
-        return sourcePosition;
-    }
-
-    public Position getTargetPosition() {
-        return targetPosition;
-    }
-
-    @Override
-    public boolean isStart() {
-        return false;
-    }
-
-    @Override
-    public boolean isMove() {
-        return true;
-    }
-
     @Override
     public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public boolean isStatus() {
         return false;
     }
 }

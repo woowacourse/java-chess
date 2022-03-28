@@ -22,11 +22,6 @@ public final class Queen extends Piece{
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         int columnDistance = beforePosition.columnDistance(afterPosition);
         int rowDistance = beforePosition.rowDistance(afterPosition);
@@ -40,8 +35,8 @@ public final class Queen extends Piece{
     }
 
     @Override
-    public double getScore() {
-        return SCORE;
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        this.move(beforePosition, afterPosition, moveFunction);
     }
 
     @Override
@@ -79,4 +74,8 @@ public final class Queen extends Piece{
         return false;
     }
 
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
 }

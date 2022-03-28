@@ -29,16 +29,55 @@ public class Position implements Comparable<Position> {
         return this.row.directedDistance(otherPosition.row);
     }
 
-    public Position flipHorizontally() {
+    Position flipHorizontally() {
         return new Position(this.column.flip(), this.row);
     }
 
-    public Position flipVertically() {
+    Position flipVertically() {
         return new Position(this.column, this.row.flip());
     }
 
-    public Position flipDiagonally() {
+    Position flipDiagonally() {
         return new Position(this.column.flip(), this.row.flip());
+    }
+
+    List<Position> pathTo(Position otherPosition) {
+        List<Row> rowPath = this.row.pathTo(otherPosition.row);
+        List<Column> columnPath = this.column.pathTo(otherPosition.column);
+
+        if (rowPath.size() == DISTANCE_NOT_MOVED) {
+            return this.pathInColumn(columnPath);
+        }
+        if (columnPath.size() == DISTANCE_NOT_MOVED) {
+            return pathInRow(rowPath);
+        }
+        return pathInDiagonal(rowPath, columnPath);
+    }
+
+    private List<Position> pathInColumn(List<Column> columnPath) {
+        return columnPath.stream()
+                .map(column -> new Position(column, this.row))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> pathInRow(List<Row> rowPath) {
+        return rowPath.stream()
+                .map(row -> new Position(this.column, row))
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> pathInDiagonal(List<Row> rowPath, List<Column> columnPath) {
+        return IntStream.range(0, rowPath.size())
+                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+                .collect(Collectors.toList());
+    }
+
+    Column getColumn() {
+        return column;
+    }
+
+    Row getRow() {
+        return row;
     }
 
     @Override
@@ -58,14 +97,6 @@ public class Position implements Comparable<Position> {
         return Objects.hash(column, row);
     }
 
-    public Column getColumn() {
-        return column;
-    }
-
-    public Row getRow() {
-        return row;
-    }
-
     @Override
     public String toString() {
         return "" + column + row;
@@ -76,37 +107,6 @@ public class Position implements Comparable<Position> {
         return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
                 .thenComparing(Position::getColumn)
                 .compare(this, o);
-    }
-
-    public List<Position> pathTo(Position otherPosition) {
-        List<Row> rowPath = this.row.pathTo(otherPosition.row);
-        List<Column> columnPath = this.column.pathTo(otherPosition.column);
-
-        if (rowPath.size() == DISTANCE_NOT_MOVED) {
-            return this.positionsInColumn(columnPath);
-        }
-        if (columnPath.size() == DISTANCE_NOT_MOVED) {
-            return positionsInRow(rowPath);
-        }
-        return positionsInDiagonal(rowPath, columnPath);
-    }
-
-    private List<Position> positionsInColumn(List<Column> columnPath) {
-        return columnPath.stream()
-                .map(column -> new Position(column, this.row))
-                .collect(Collectors.toList());
-    }
-
-    private List<Position> positionsInRow(List<Row> rowPath) {
-        return rowPath.stream()
-                .map(row -> new Position(this.column, row))
-                .collect(Collectors.toList());
-    }
-
-    private List<Position> positionsInDiagonal(List<Row> rowPath, List<Column> columnPath) {
-        return IntStream.range(0, rowPath.size())
-                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
-                .collect(Collectors.toList());
     }
 }
 

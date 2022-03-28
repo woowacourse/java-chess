@@ -16,26 +16,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class Board {
-    private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
-    private static final Position KNIGHT_INITIAL_POSITION = new Position(Column.B, Row.ONE);
-    private static final Position BISHOP_INITIAL_POSITION = new Position(Column.C, Row.ONE);
-    private static final Position QUEEN_INITIAL_POSITION = new Position(Column.D, Row.ONE);
-    private static final Position KING_INITIAL_POSITION = new Position(Column.E, Row.ONE);
-    private static final Row PAWN_INITIAL_ROW = Row.TWO;
-    private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
-    private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
+    private static final Position INITIAL_POSITION_ROOK = new Position(Column.A, Row.ONE);
+    private static final Position INITIAL_POSITION_KNIGHT = new Position(Column.B, Row.ONE);
+    private static final Position INITIAL_POSITION_BISHOP = new Position(Column.C, Row.ONE);
+    private static final Position INITIAL_POSITION_QUEEN = new Position(Column.D, Row.ONE);
+    private static final Position INITIAL_POSITION_KING = new Position(Column.E, Row.ONE);
+    private static final Row INITIAL_ROW_PAWN = Row.TWO;
+    private static final int INITIAL_START_ROW_INDEX_BLANK = 2;
+    private static final int INITIAL_END_ROW_INDEX_BLANK = 5;
 
     private static final String ERROR_NO_SOURCE = "이동할 수 있는 기물이 없습니다.";
     private static final String ERROR_NOT_YOUR_TURN = "상대 진영의 차례입니다.";
     private static final String ERROR_NOT_BLANK_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
     private static final String ERROR_SAME_CAMP_TARGET = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
+
+    private static final int COUNT_INITIAL_KING = 2;
 
     private final Map<Position, Piece> value;
     private boolean whiteTurn;
@@ -50,9 +51,9 @@ public final class Board {
     }
 
     private void initializeFourPieces() {
-        initializeFourPiecesOf(ROOK_INITIAL_POSITION, Rook::new);
-        initializeFourPiecesOf(KNIGHT_INITIAL_POSITION, Knight::new);
-        initializeFourPiecesOf(BISHOP_INITIAL_POSITION, Bishop::new);
+        initializeFourPiecesOf(INITIAL_POSITION_ROOK, Rook::new);
+        initializeFourPiecesOf(INITIAL_POSITION_KNIGHT, Knight::new);
+        initializeFourPiecesOf(INITIAL_POSITION_BISHOP, Bishop::new);
     }
 
     private void initializeFourPiecesOf(Position pieceInitialPosition,
@@ -64,8 +65,8 @@ public final class Board {
     }
 
     private void initializeTwoPieces() {
-        initializeTwoPiecesOf(QUEEN_INITIAL_POSITION, Queen::new);
-        initializeTwoPiecesOf(KING_INITIAL_POSITION, King::new);
+        initializeTwoPiecesOf(INITIAL_POSITION_QUEEN, Queen::new);
+        initializeTwoPiecesOf(INITIAL_POSITION_KING, King::new);
     }
 
     private void initializeTwoPiecesOf(Position pieceInitialPosition, Function<Camp, Piece> pieceConstructor) {
@@ -75,7 +76,7 @@ public final class Board {
 
     private void initializePawn() {
         for (Column column : Column.values()) {
-            initializeTwoPiecesOf(new Position(column, PAWN_INITIAL_ROW), Pawn::new);
+            initializeTwoPiecesOf(new Position(column, INITIAL_ROW_PAWN), Pawn::new);
         }
     }
 
@@ -86,7 +87,7 @@ public final class Board {
     }
 
     private void initializeBlankColumn(Column column) {
-        for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
+        for (int i = INITIAL_START_ROW_INDEX_BLANK; i <= INITIAL_END_ROW_INDEX_BLANK; i++) {
             value.put(new Position(column, Row.values()[i]), new None());
         }
     }
@@ -119,7 +120,12 @@ public final class Board {
     }
 
     private void checkPath(Position sourcePosition, Position targetPosition, Piece source) {
-        if (!source.isKnight() && !PathCheck.check(sourcePosition, targetPosition, this::isBlank)) {
+        if (source.isKnight()) {
+            return;
+        }
+        boolean blankPath = sourcePosition.pathTo(targetPosition).stream()
+                .allMatch(this::isBlank);
+        if (!blankPath) {
             throw new IllegalArgumentException(ERROR_NOT_BLANK_PATH);
         }
     }
@@ -151,7 +157,22 @@ public final class Board {
     }
 
     public boolean hasKingCaptured(){
-        return 2 != collectKing().size();
+        return COUNT_INITIAL_KING != collectKing().size();
+    }
+
+    public Camp winnerByKing() {
+        if (this.hasKingOfCampCaptured(BLACK)){
+            return WHITE;
+        }
+        if (this.hasKingOfCampCaptured(WHITE)) {
+            return BLACK;
+        }
+        return Camp.NONE;
+    }
+
+    private boolean hasKingOfCampCaptured(Camp camp) {
+        return collectKing().stream()
+                .noneMatch(piece -> piece.isCamp(camp));
     }
 
     private List<Piece> collectKing() {
@@ -159,6 +180,18 @@ public final class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .collect(Collectors.toList());
+    }
+
+    public Camp winnerByScore() {
+        double blackScore = calculateScoreOf(BLACK);
+        double whiteScore = calculateScoreOf(WHITE);
+        if (blackScore > whiteScore) {
+            return BLACK;
+        }
+        if (whiteScore > blackScore) {
+            return WHITE;
+        }
+        return Camp.NONE;
     }
 
     public double calculateScoreOf(Camp camp) {
@@ -208,32 +241,5 @@ public final class Board {
 
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
-    }
-
-    public Camp winnerByKing() {
-        if (this.hasKingOfCampCaptured(BLACK)){
-            return WHITE;
-        }
-        if (this.hasKingOfCampCaptured(WHITE)) {
-            return BLACK;
-        }
-        return Camp.NONE;
-    }
-
-    private boolean hasKingOfCampCaptured(Camp camp) {
-        return collectKing().stream()
-                .noneMatch(piece -> piece.isCamp(camp));
-    }
-
-    public Camp winnerByScore() {
-        double blackScore = calculateScoreOf(BLACK);
-        double whiteScore = calculateScoreOf(WHITE);
-        if (blackScore > whiteScore) {
-            return BLACK;
-        }
-        if (whiteScore > blackScore) {
-            return WHITE;
-        }
-        return Camp.NONE;
     }
 }

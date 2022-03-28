@@ -17,18 +17,13 @@ public class None extends Piece {
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
-    }
-
-    @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         return false;
     }
 
     @Override
-    public double getScore() {
-        return 0;
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        this.move(beforePosition, afterPosition, moveFunction);
     }
 
     @Override
@@ -64,5 +59,10 @@ public class None extends Piece {
     @Override
     public boolean isNone() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return 0;
     }
 }

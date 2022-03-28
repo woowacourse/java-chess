@@ -24,11 +24,5 @@ public interface Command {
 
     void execute(ChessGame chessGame, OutputView outputView);
 
-    boolean isStart();
-
-    boolean isMove();
-
     boolean isEnd();
-
-    boolean isStatus();
 }

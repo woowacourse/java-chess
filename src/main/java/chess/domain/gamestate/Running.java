@@ -44,11 +44,6 @@ public class Running implements State {
     }
 
     @Override
-    public Camp getWinner() {
-        throw new IllegalStateException(ERROR_NO_WINNER);
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }
@@ -56,5 +51,10 @@ public class Running implements State {
     @Override
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public Camp getWinner() {
+        throw new IllegalStateException(ERROR_NO_WINNER);
     }
 }

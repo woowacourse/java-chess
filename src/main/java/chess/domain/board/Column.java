@@ -30,18 +30,18 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_COLUMN));
     }
 
-    public Column flip() {
+    Column flip() {
         return Arrays.stream(Column.values())
                 .filter( it -> it.value == (7 - this.value))
                 .findFirst()
                 .orElseThrow();
     }
 
-    public int distance(Column otherColumn) {
+    int distance(Column otherColumn) {
         return Math.abs(this.value - otherColumn.value);
     }
 
-    public List<Column> pathTo(Column otherColumn) {
+    List<Column> pathTo(Column otherColumn) {
         if (this.value < otherColumn.value){
             return this.upPathTo(otherColumn);
         }

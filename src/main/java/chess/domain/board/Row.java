@@ -24,7 +24,7 @@ public enum Row {
         this.value = value;
     }
 
-    public Row flip() {
+    Row flip() {
         return from(MAX_VALUE - this.value);
     }
 
@@ -35,15 +35,15 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
     }
 
-    public int directedDistance(Row otherRow) {
+    int directedDistance(Row otherRow) {
         return this.value - otherRow.value;
     }
 
-    public int distance(Row otherRow) {
+    int distance(Row otherRow) {
         return Math.abs(directedDistance(otherRow));
     }
 
-    public List<Row> pathTo(Row otherRow) {
+    List<Row> pathTo(Row otherRow) {
         if (this.value < otherRow.value){
             return this.rightPathTo(otherRow);
         }

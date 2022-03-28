@@ -37,13 +37,6 @@ public final class Pawn extends Piece {
         this.firstMove = false;
     }
 
-    private boolean canCapture(Position beforePosition, Position afterPosition) {
-        int columnDistance = afterPosition.columnDistance(beforePosition);
-        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-        return columnDistance == DISTANCE_MOVABLE &&
-                checkMovableLimitByCamp(rowDistance, DISTANCE_MOVABLE);
-    }
-
     @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
@@ -58,17 +51,19 @@ public final class Pawn extends Piece {
 
     }
 
+    private boolean canCapture(Position beforePosition, Position afterPosition) {
+        int columnDistance = afterPosition.columnDistance(beforePosition);
+        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
+        return columnDistance == DISTANCE_MOVABLE &&
+                checkMovableLimitByCamp(rowDistance, DISTANCE_MOVABLE);
+    }
+
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
         if (this.isCamp(Camp.BLACK)) {
             return Camp.BLACK.giveVerticalDirectionTo(movableDistance) <= distance &&
                     distance < DISTANCE_NOT_MOVED;
         }
         return DISTANCE_NOT_MOVED < distance && distance <= movableDistance;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override
@@ -104,5 +99,10 @@ public final class Pawn extends Piece {
     @Override
     public boolean isNone() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

@@ -39,15 +39,6 @@ public class Finished implements State {
     }
 
     @Override
-    public Camp getWinner() {
-        Camp winnerByKing = this.board.winnerByKing();
-        if (winnerByKing != Camp.NONE) {
-            return winnerByKing;
-        }
-        return this.board.winnerByScore();
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
@@ -55,5 +46,14 @@ public class Finished implements State {
     @Override
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public Camp getWinner() {
+        Camp winnerByKing = this.board.winnerByKing();
+        if (winnerByKing != Camp.NONE) {
+            return winnerByKing;
+        }
+        return this.board.winnerByScore();
     }
 }
