@@ -28,17 +28,36 @@ public final class Board {
     }
 
     public void move(Position from, Position to) {
-        Piece sourcePiece = squares.get(from);
-        Piece targetPiece = squares.get(to);
+        validateMove(from, to);
+        replace(from, to, squares.get(from));
+    }
 
-        validateNotSameTeam(sourcePiece, targetPiece);
+    private void validateMove(Position from, Position to) {
+        validateNotSameTeam(from, to);
+        validateCanMove(from, to);
+        validateNotHurdle(from, to);
+    }
 
-        if (!sourcePiece.canMove(targetPiece, from, to) && targetPiece.isPiece()) {
+    private void validateNotSameTeam(Position from, Position to) {
+        if (squares.get(from).isSameTeam(squares.get(to))) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateCanMove(Position from, Position to) {
+        if (!squares.get(from).canMove(squares.get(to), from, to) && squares.get(to).isPiece()) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
+    }
 
-        validateNotHurdle(from, to);
+    private void validateNotHurdle(Position from, Position to) {
+        List<Position> route = findByPosition(from).getRoute(from, to);
+        for (Position position : route) {
+            validateIsPiece(position);
+        }
+    }
 
+    private void replace(Position from, Position to, Piece sourcePiece) {
         squares.replace(to, sourcePiece);
         squares.replace(from, new EmptyPiece());
     }
@@ -47,19 +66,9 @@ public final class Board {
         return findByPosition(position).getColor() == team;
     }
 
-    private void validateNotSameTeam(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void validateNotHurdle(Position from, Position to) {
-        List<Position> route = findByPosition(from).getRoute(from, to);
-
-        for (Position position : route) {
-            if (findByPosition(position).isPiece()) {
-                throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-            }
+    private void validateIsPiece(Position position) {
+        if (findByPosition(position).isPiece()) {
+            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
     }
 
@@ -67,7 +76,6 @@ public final class Board {
         Map<Team, Double> totalScore = new EnumMap<>(Team.class);
         totalScore.put(Team.WHITE, getScore(Team.WHITE));
         totalScore.put(Team.BLACK, getScore(Team.BLACK));
-
         return totalScore;
     }
 
