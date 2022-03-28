@@ -10,6 +10,7 @@ import chess.domain.game.state.End;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,5 +73,12 @@ public class RunningTest {
     @DisplayName("Running 상태에서 isFinish()는 False를 반환한다")
     void isFinish() {
         assertThat(state.isFinish()).isFalse();
+    }
+
+    @Test
+    @DisplayName("보드가 초기화되었을 때, Black과 white 두팀은 38점이다")
+    void calculateScore() {
+        assertThat(state.calculateScore(Color.WHITE)).isEqualTo(38.0);
+        assertThat(state.calculateScore(Color.BLACK)).isEqualTo(38.0);
     }
 }

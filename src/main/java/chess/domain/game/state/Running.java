@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 
 public class Running implements GameState{
 
@@ -40,5 +41,10 @@ public class Running implements GameState{
     @Override
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public double calculateScore(Color color) {
+        return board.calculateScore(color);
     }
 }
