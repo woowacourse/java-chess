@@ -1,9 +1,14 @@
 package chess.domain.board;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
@@ -27,27 +32,26 @@ public class Board {
         Point from = Point.of(arguments.get(0));
         Point to = Point.of(arguments.get(1));
 
-        Piece fromPiece = pointPieces.get(from);
-        Piece toPiece = pointPieces.get(to);
-        validateAllyMove(turnColor, fromPiece);
-        validateNotAllyAttack(turnColor, toPiece);
-
-        if (!fromPiece.move(this, from, to)) {
-            throw new IllegalArgumentException("움직일 수 없습니다.");
-        }
-        movePiece(from, to, fromPiece);
-        return toPiece.isSameType(PieceType.KING);
+        validate(turnColor, from, to);
+        boolean isKingDead = isKingDead(to);
+        movePiece(from, to);
+        return isKingDead;
     }
 
-    private void movePiece(Point from, Point to, Piece fromPiece) {
-        pointPieces.put(to, fromPiece);
-        pointPieces.put(from, new Empty());
+    private boolean isKingDead(Point to) {
+        return pointPieces.get(to)
+            .isSameType(PieceType.KING);
     }
 
     private void validateArgumentSize(List<String> arguments) {
         if (arguments.size() != 2) {
             throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
         }
+    }
+
+    private void validate(Color turnColor, Point from, Point to) {
+        validateAllyMove(turnColor, pointPieces.get(from));
+        validateNotAllyAttack(turnColor, pointPieces.get(to));
     }
 
     private void validateAllyMove(Color turnColor, Piece fromPiece) {
@@ -62,16 +66,34 @@ public class Board {
         }
     }
 
+    private void movePiece(Point from, Point to) {
+        Piece fromPiece = pointPieces.get(from);
+        tryMove(from, to, fromPiece);
+        replacePiecePoint(from, to, fromPiece);
+    }
+
+    private void tryMove(Point from, Point to, Piece fromPiece) {
+        if (!fromPiece.move(this, from, to)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치로 움직일 수 없습니다.");
+        }
+    }
+
+    private void replacePiecePoint(Point from, Point to, Piece fromPiece) {
+        pointPieces.put(to, fromPiece);
+        pointPieces.put(from, new Empty());
+    }
+
     public boolean isEmpty(Point point) {
         Piece piece = pointPieces.get(point);
         return piece.isSameType(PieceType.EMPTY);
     }
 
     public Map<Color, Double> calculateScore() {
-        Map<Color, Double> map = new LinkedHashMap<>();
-        map.put(Color.WHITE, PieceType.calculateScore(pointPieces, Color.WHITE));
-        map.put(Color.BLACK, PieceType.calculateScore(pointPieces, Color.BLACK));
-        return map;
+        return Stream.of(Color.WHITE, Color.BLACK)
+            .collect(toMap(
+                Function.identity(),
+                color -> PieceType.calculateScore(pointPieces, color)
+            ));
     }
 
     public Map<Point, Piece> getPointPieces() {
