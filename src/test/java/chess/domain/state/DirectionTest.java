@@ -1,7 +1,6 @@
 package chess.domain.state;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import chess.domain.location.Direction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

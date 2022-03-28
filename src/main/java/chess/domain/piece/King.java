@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.location.LocationDiff;
-import chess.domain.state.Direction;
+import chess.domain.location.Direction;
 
 public class King extends Piece{
     public static final int MOVABLE_DISTANCE = 1;

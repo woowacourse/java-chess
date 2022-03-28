@@ -1,4 +1,4 @@
-package chess.domain.state;
+package chess.domain.location;
 
 import java.util.Arrays;
 import java.util.List;
