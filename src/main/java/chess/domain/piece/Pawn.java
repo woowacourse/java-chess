@@ -8,8 +8,8 @@ public class Pawn extends ChessPiece {
 
     private static final int DEFAULT_DISTANCE = 1;
     private static final int OPTIONAL_DISTANCE = 1;
-    private static final int WHITE_INITIAL_ROW_POSITION = 7;
-    private static final int BLACK_INITIAL_ROW_POSITION = 2;
+    private static final int WHITE_INITIAL_ROW_POSITION = 2;
+    private static final int BLACK_INITIAL_ROW_POSITION = 7;
     private static final String NAME = "PAWN";
     private static final double SCORE = 1;
 
@@ -63,14 +63,14 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean isDiagonalMoveBlack(ChessBoardPosition targetPosition) {
-        int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
-        int columnDistance = calculateColumnDistance(targetPosition.getColumn(), position.getColumn());
+        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
+        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
         return rowDistance == DEFAULT_DISTANCE && columnDistance == DEFAULT_DISTANCE;
     }
 
     private boolean isDiagonalMoveWhite(ChessBoardPosition targetPosition) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
-        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
+        int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
+        int columnDistance = calculateColumnDistance(targetPosition.getColumn(), position.getColumn());
         return rowDistance == DEFAULT_DISTANCE && columnDistance == DEFAULT_DISTANCE;
     }
 
@@ -85,14 +85,14 @@ public class Pawn extends ChessPiece {
         if (isBlackInitialPosition()) {
             return isMovableBlackInitialPosition(targetPosition, whiteChessMen, blackChessMen);
         }
-        return calculateRowDistance(targetPosition.getRow(), position.getRow()) == DEFAULT_DISTANCE;
+        return calculateRowDistance(position.getRow(), targetPosition.getRow()) == DEFAULT_DISTANCE;
     }
 
     private boolean isMovableBlackInitialPosition(ChessBoardPosition targetPosition, ChessMen whiteChessMen,
                                                   ChessMen blackChessMen) {
-        int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
+        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
         if (rowDistance == DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
-            return isUnobstructed(whiteChessMen, blackChessMen, DEFAULT_DISTANCE);
+            return isUnobstructed(whiteChessMen, blackChessMen, -DEFAULT_DISTANCE);
         }
         return rowDistance == DEFAULT_DISTANCE;
     }
@@ -101,14 +101,14 @@ public class Pawn extends ChessPiece {
         if (isWhiteInitialPosition()) {
             return isMovableWhiteInitialPosition(targetPosition, whiteChessMen, blackChessMen);
         }
-        return calculateRowDistance(position.getRow(), targetPosition.getRow()) == DEFAULT_DISTANCE;
+        return calculateRowDistance(targetPosition.getRow(), position.getRow()) == DEFAULT_DISTANCE;
     }
 
     private boolean isMovableWhiteInitialPosition(ChessBoardPosition targetPosition, ChessMen whiteChessMen,
                                                   ChessMen blackChessMen) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
+        int rowDistance = calculateRowDistance(targetPosition.getRow(), position.getRow());
         if (rowDistance == DEFAULT_DISTANCE + OPTIONAL_DISTANCE) {
-            return isUnobstructed(whiteChessMen, blackChessMen, -DEFAULT_DISTANCE);
+            return isUnobstructed(whiteChessMen, blackChessMen, DEFAULT_DISTANCE);
         }
         return rowDistance == DEFAULT_DISTANCE;
     }

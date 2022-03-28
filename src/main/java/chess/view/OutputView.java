@@ -51,7 +51,7 @@ public class OutputView {
         setBlackChessMenOnBoard(chessBoard, blackChessMenDto);
         setWhiteChessMenOnBoard(chessBoard, whiteChessMenDto);
 
-        for (int i = 0; i < CHESSBOARD_SIZE; i++) {
+        for (int i = CHESSBOARD_SIZE - 1; i >= 0; i--) {
             List<Character> chessBoardRow = chessBoard.get(i);
             String visualizedRow = Joiner.on(EMPTY_STRING).join(chessBoardRow);
             System.out.println(visualizedRow);
