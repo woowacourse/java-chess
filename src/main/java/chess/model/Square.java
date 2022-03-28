@@ -90,4 +90,17 @@ public final class Square {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public Square tryToMoveTwice(Direction direction) {
+        Square moved = move(direction);
+        return moveTwice(direction, moved);
+    }
+
+    private Square moveTwice(Direction direction, Square moved) {
+        if (canMove(direction)) {
+            moved = moved.move(direction);
+            return moved;
+    }
+        return this;
+    }
 }

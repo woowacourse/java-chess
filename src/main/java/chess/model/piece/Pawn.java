@@ -13,30 +13,38 @@ public final class Pawn extends Piece {
         super(color, square);
     }
 
+
     @Override
     public boolean movable(Piece targetPiece) {
-        Square tempSquare = square();
-        for (Direction diagonalDirection : diagonalDirection()) {
-            Square newSquare = tempSquare.tryToMove(diagonalDirection);
-            if (targetPiece.isAt(newSquare) && isEnemy(targetPiece)) {
-                return true;
-            }
+        if (targetPiece.isEnemy(this)) {
+            return canMoveToEnemy(targetPiece);
         }
+        return movableToLinear(targetPiece);
+    }
 
+    private boolean movableToLinear(Piece targetPiece) {
+        Direction directionTo = findDirectionTo(targetPiece);
         if (firstLocation()) {
-            for (int i = 0; i < 2; i++) {
-                tempSquare = tempSquare.tryToMove(direction());
-                if (tempSquare.equals(targetPiece.square())) {
-                    return true;
-                }
-            }
+            return direction().contains(directionTo) &&
+                    moveOnceOrTwice(targetPiece, directionTo) &&
+                    !isAlly(targetPiece);
+        }
+        return direction().contains(directionTo) &&
+                targetPiece.isAt(square().tryToMove(directionTo)) &&
+                !isAlly(targetPiece);
+    }
+
+    private boolean moveOnceOrTwice(Piece targetPiece, Direction directionTo) {
+        return targetPiece.isAt(square().tryToMoveTwice(directionTo)) || targetPiece.isAt(
+                square().tryToMove(directionTo));
+    }
+
+    private boolean canMoveToEnemy(Piece target) {
+        try {
+            return diagonalDirection().contains(findDirectionTo(target));
+        } catch (IllegalArgumentException e) {
             return false;
         }
-        tempSquare = square().tryToMove(direction());
-        if (tempSquare.equals(targetPiece.square())) {
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -53,11 +61,11 @@ public final class Pawn extends Piece {
         return PAWN_NAME;
     }
 
-    public Direction direction() {
+    public List<Direction> direction() {
         if (this.isBlack()) {
-            return Direction.SOUTH;
+            return List.of(Direction.SOUTH);
         }
-        return Direction.NORTH;
+        return List.of(Direction.NORTH);
     }
 
     private List<Direction> diagonalDirection() {
