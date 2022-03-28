@@ -81,4 +81,12 @@ public class RunningTest {
         assertThat(state.calculateScore(Color.WHITE)).isEqualTo(38.0);
         assertThat(state.calculateScore(Color.BLACK)).isEqualTo(38.0);
     }
+
+    @Test
+    @DisplayName("King이 잡히지 않은 상황에서, 승자를 판정하려고 하면 예외가 발생한다")
+    void judgeWinner() {
+        assertThatThrownBy(() -> state.judgeWinner())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 킹이 잡혀야 게임의 승패가 결정됩니다.");
+    }
 }
