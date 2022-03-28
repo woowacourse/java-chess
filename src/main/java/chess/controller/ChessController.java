@@ -12,7 +12,7 @@ public class ChessController {
         OutputView.printGameInitMessage();
         String input = InputView.inputOption();
 
-        while (true) {
+        while (!input.equals("end")) {
             OptionController.run(chessGame, input);
             input = InputView.inputOption();
         }
@@ -35,7 +35,6 @@ public class ChessController {
             OutputView.printScore(whiteScore, blackScore);
             OutputView.printWinner(chessGame.judgeWinner());
         }
-        System.exit(0);
     }
 
     static void status(ChessGame chessGame, String optionInput) {
