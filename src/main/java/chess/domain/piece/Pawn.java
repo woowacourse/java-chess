@@ -42,11 +42,11 @@ public class Pawn extends Piece {
 
     private boolean isInStraightRange(Position targetPosition, Direction direction) {
         if (isFirstTurn) {
-            return List.of(Position.createNextPosition(position, direction),
-                            Position.createNextPosition(position, direction, FIRST_MOVE_DISTANCE))
+            return List.of(position.createNextPosition(direction),
+                            position.createNextPosition(direction, FIRST_MOVE_DISTANCE))
                     .contains(targetPosition);
         }
-        return Position.createNextPosition(position, direction).equals(targetPosition);
+        return position.createNextPosition(direction).equals(targetPosition);
     }
 
     private boolean isEnemyTarget(Piece piece) {
@@ -59,8 +59,8 @@ public class Pawn extends Piece {
     private boolean isInRange(Position targetPosition, List<Direction> directions) {
         List<Position> inRangePosition = directions
                 .stream()
-                .filter(direction -> Position.isValidPosition(Position.createNextPosition(position, direction)))
-                .map(direction -> Position.createNextPosition(position, direction))
+                .filter(direction -> Position.isValidPosition(position.createNextPosition(direction)))
+                .map(direction -> position.createNextPosition(direction))
                 .collect(Collectors.toList());
 
         return inRangePosition.contains(targetPosition);

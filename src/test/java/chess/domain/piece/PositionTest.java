@@ -49,7 +49,7 @@ public class PositionTest {
     void createNextPosition() {
         Position position = new Position("a1");
 
-        assertThat(Position.createNextPosition(position, Direction.NORTH))
+        assertThat(position.createNextPosition(Direction.NORTH))
                 .isEqualTo(new Position("a2"));
     }
 
@@ -58,7 +58,7 @@ public class PositionTest {
     void createNextPositionExistProduct() {
         Position position = new Position("a1");
 
-        assertThat(Position.createNextPosition(position, Direction.NORTH, 3))
+        assertThat(position.createNextPosition(Direction.NORTH, 3))
                 .isEqualTo(new Position("a4"));
     }
 

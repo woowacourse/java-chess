@@ -29,24 +29,12 @@ public class Position {
         this.y = y;
     }
 
-    public static Position createNextPosition(Position position, Direction direction) {
-        return new Position(
-                position.getX() + direction.getXDegree(),
-                position.getY() + direction.getYDegree());
-    }
-
-    public static Position createNextPosition(Position position, Direction direction, int product) {
-        return new Position(
-                position.getX() + direction.getXDegree() * product,
-                position.getY() + direction.getYDegree() * product);
-    }
-
     public static boolean isValidPosition(Position position) {
-        return position.getX() >= MIN && position.getX() < MAX && position.getY() >= MIN && position.getY() < MAX;
+        return position.x >= MIN && position.x < MAX && position.y >= MIN && position.y < MAX;
     }
 
     public static int calculateStraightDistance(Position position1, Position position2) {
-        return Math.max(Math.abs(position1.getX() - position2.getX()), Math.abs(position1.getY() - position2.getY()));
+        return Math.max(Math.abs(position1.x - position2.x), Math.abs(position1.y - position2.y));
     }
 
     private void validate(String charPosition) {
@@ -73,6 +61,18 @@ public class Position {
                 || charPosition.charAt(SECOND_INDEX) >= ASCII_NUMBER + MAX) {
             throw new IllegalArgumentException(CHAR_POSITION_NUMBER_EXCEPTION_MESSAGE);
         }
+    }
+
+    public Position createNextPosition(Direction direction) {
+        return new Position(
+                this.x + direction.getXDegree(),
+                this.y + direction.getYDegree());
+    }
+
+    public Position createNextPosition(Direction direction, int product) {
+        return new Position(
+                this.x + direction.getXDegree() * product,
+                this.y + direction.getYDegree() * product);
     }
 
     public int getX() {
