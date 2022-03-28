@@ -16,8 +16,8 @@ class KingTest {
     @Test
     void move() {
         // given
-        Position to = new Position("a1");
-        Position from = new Position("a2");
+        Position to = Position.of("a1");
+        Position from = Position.of("a2");
 
         King king = new King(Team.BLACK);
 
@@ -29,8 +29,8 @@ class KingTest {
     @Test
     void move_x() {
         // given
-        Position to = new Position("a1");
-        Position from = new Position("a5");
+        Position to = Position.of("a1");
+        Position from = Position.of("a5");
 
         King king = new King(Team.BLACK);
 

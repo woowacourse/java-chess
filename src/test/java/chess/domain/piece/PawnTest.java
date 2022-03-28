@@ -17,8 +17,8 @@ public class PawnTest {
     @CsvSource(value = {"e2,d3", "e2,e3", "e2,f3", "a2,a4"})
     void movable_while(String toValue, String fromValue) {
         // given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Pawn pawn = new Pawn(Team.WHITE);
 
@@ -31,8 +31,8 @@ public class PawnTest {
     @CsvSource(value = {"a2,a1", "a7,a5", "a3,a5"})
     void movable_while_x(String toValue, String fromValue) {
         // given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Pawn pawn = new Pawn(Team.WHITE);
 
@@ -45,8 +45,8 @@ public class PawnTest {
     @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6", "a7,a5"})
     void movable_black(String toValue, String fromValue) {
         // given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Pawn pawn = new Pawn(Team.BLACK);
 
@@ -58,8 +58,8 @@ public class PawnTest {
     @Test
     void movable_black_x() {
         // given
-        Position to = new Position("a1");
-        Position from = new Position("a2");
+        Position to = Position.of("a1");
+        Position from = Position.of("a2");
 
         Pawn pawn = new Pawn(Team.BLACK);
 

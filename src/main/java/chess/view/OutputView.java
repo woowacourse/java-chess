@@ -34,7 +34,7 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Column column : Column.values()) {
-            Piece piece = board.get(new Position(column, row));
+            Piece piece = board.get(Position.of(column, row));
             stringBuilder.append(drawPrintString(piece));
         }
         System.out.println(stringBuilder);

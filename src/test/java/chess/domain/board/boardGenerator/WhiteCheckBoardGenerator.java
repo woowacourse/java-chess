@@ -18,9 +18,9 @@ public class WhiteCheckBoardGenerator implements BoardGenerator {
 
     @Override
     public Map<Position, Piece> create() {
-        board.put(new Position(Column.A, Row.EIGHT), new Rook(Team.WHITE));
-        board.put(new Position(Column.D, Row.EIGHT), new King(Team.WHITE));
-        board.put(new Position(Column.B, Row.SIX), new Bishop(Team.BLACK));
+        board.put(Position.of(Column.A, Row.EIGHT), new Rook(Team.WHITE));
+        board.put(Position.of(Column.D, Row.EIGHT), new King(Team.WHITE));
+        board.put(Position.of(Column.B, Row.SIX), new Bishop(Team.BLACK));
         return Map.copyOf(board);
     }
 }

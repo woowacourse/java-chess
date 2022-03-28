@@ -17,8 +17,8 @@ class QueenTest {
     @CsvSource(value = {"a1,a5", "a5,a1", "d1,d5", "d5,d1", "a1,c3", "c3,a1", "a3,c1", "c1,a3"})
     void movable(String toValue, String fromValue) {
         // given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Queen queen = new Queen(Team.BLACK);
 
@@ -30,8 +30,8 @@ class QueenTest {
     @Test
     void notMovable() {
         // given
-        Position to = new Position("a1");
-        Position from = new Position("b3");
+        Position to = Position.of("a1");
+        Position from = Position.of("b3");
 
         Queen queen = new Queen(Team.BLACK);
 

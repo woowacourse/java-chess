@@ -11,15 +11,15 @@ public class PositionTest {
     @Test
     void create() {
         // then
-        assertThat(new Position(Column.A, Row.ONE)).isNotNull();
+        assertThat(Position.of(Column.A, Row.ONE)).isNotNull();
     }
 
     @DisplayName("좌표 이동")
     @Test
     void move() {
         // given
-        Position from = new Position(Column.A, Row.ONE);
-        Position to = new Position(Column.A, Row.TWO);
+        Position from = Position.of(Column.A, Row.ONE);
+        Position to = Position.of(Column.A, Row.TWO);
 
         // when
         Direction direction = from.findDirection(to);

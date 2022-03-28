@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -8,22 +10,35 @@ public class Position {
     private static final int COMPACT_VALUE_ONE = 1;
     private static final int COMPACT_VALUE_ZERO = 0;
     private static final int COMPACT_VALUE_MINUS_ONE = -1;
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
     private final Column column;
     private final Row row;
 
-    public Position(Column column, Row row) {
+    private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
 
-    public Position(String value) {
-        validInput(value);
-        this.column = Column.of(value.substring(0, 1));
-        this.row = Row.of(value.substring(1, 2));
+    public static Position of(Column column, Row row) {
+        String key = madeKey(column, row);
+
+        if (CACHE.get(key) == null) {
+            CACHE.put(key, new Position(column, row));
+        }
+        return CACHE.get(key);
     }
 
-    private void validInput(String value) {
+    private static String madeKey(Column column, Row row) {
+        return column.getValue() + row.getValue();
+    }
+
+    public static Position of(String value) {
+        validInput(value);
+        return of(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
+    }
+
+    private static void validInput(String value) {
         if (value.length() != 2) {
             throw new IllegalArgumentException("올바른 값으로 Position 을 생성해주세요.");
 

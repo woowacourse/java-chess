@@ -11,8 +11,8 @@ public class Command {
         String[] stringArray = value.split(" ");
         menu = Menu.of(stringArray[0]);
         if (menu.isMove()) {
-            beforePosition = new Position(stringArray[1]);
-            afterPosition = new Position(stringArray[2]);
+            beforePosition = Position.of(stringArray[1]);
+            afterPosition = Position.of(stringArray[2]);
         }
     }
 

@@ -18,10 +18,10 @@ public class CheckmateBoardGenerator implements BoardGenerator {
 
     @Override
     public Map<Position, Piece> create() {
-        board.put(new Position(Column.D, Row.EIGHT), new King(Team.WHITE));
-        board.put(new Position(Column.D, Row.SIX), new Rook(Team.BLACK));
-        board.put(new Position(Column.C, Row.SIX), new Rook(Team.BLACK));
-        board.put(new Position(Column.E, Row.SIX), new Queen(Team.BLACK));
+        board.put(Position.of(Column.D, Row.EIGHT), new King(Team.WHITE));
+        board.put(Position.of(Column.D, Row.SIX), new Rook(Team.BLACK));
+        board.put(Position.of(Column.C, Row.SIX), new Rook(Team.BLACK));
+        board.put(Position.of(Column.E, Row.SIX), new Queen(Team.BLACK));
         return Map.copyOf(board);
     }
 }

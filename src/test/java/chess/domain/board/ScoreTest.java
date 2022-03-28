@@ -21,9 +21,9 @@ class ScoreTest {
     @Test
     void test() {
         Map<Position, Piece> board = new HashMap<>();
-        board.put(new Position(Column.A, Row.EIGHT), new Rook(Team.BLACK)); // 5.0
-        board.put(new Position(Column.B, Row.EIGHT), new Knight(Team.BLACK)); // 2.5
-        board.put(new Position(Column.C, Row.EIGHT), new Bishop(Team.BLACK)); // 3.0
+        board.put(Position.of(Column.A, Row.EIGHT), new Rook(Team.BLACK)); // 5.0
+        board.put(Position.of(Column.B, Row.EIGHT), new Knight(Team.BLACK)); // 2.5
+        board.put(Position.of(Column.C, Row.EIGHT), new Bishop(Team.BLACK)); // 3.0
 
         Score score = new Score(board);
         Map<Team, Double> value = score.getValue();
@@ -35,11 +35,11 @@ class ScoreTest {
     @Test
     void test2() {
         Map<Position, Piece> board = new HashMap<>();
-        board.put(new Position(Column.A, Row.ONE), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.A, Row.TWO), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.A, Row.THREE), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.B, Row.THREE), new Pawn(Team.BLACK)); // 1.0
-        board.put(new Position(Column.A, Row.FOUR), new Pawn(Team.WHITE)); // 1.0
+        board.put(Position.of(Column.A, Row.ONE), new Pawn(Team.BLACK)); // 0.5
+        board.put(Position.of(Column.A, Row.TWO), new Pawn(Team.BLACK)); // 0.5
+        board.put(Position.of(Column.A, Row.THREE), new Pawn(Team.BLACK)); // 0.5
+        board.put(Position.of(Column.B, Row.THREE), new Pawn(Team.BLACK)); // 1.0
+        board.put(Position.of(Column.A, Row.FOUR), new Pawn(Team.WHITE)); // 1.0
 
         Score score = new Score(board);
         Map<Team, Double> value = score.getValue();

@@ -17,8 +17,8 @@ public class KnightTest {
     @CsvSource(value = {"c3,a2", "c3,a4", "c3,b1", "c3,b5", "c3,d1", "c3,d5", "c3,e2", "c3,e4"})
     void movable(String toValue, String fromValue) {
         //given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Knight knight = new Knight(Team.BLACK);
 
@@ -31,8 +31,8 @@ public class KnightTest {
     @CsvSource(value = {"c3,a3", "c3,a5", "c3,b2", "c3,b6", "c3,d2", "c3,d6", "c3,e3", "c3,e5"})
     void movable_false(String toValue, String fromValue) {
         //given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Knight knight = new Knight(Team.BLACK);
 

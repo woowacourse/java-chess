@@ -17,8 +17,8 @@ class RookTest {
     @CsvSource(value = {"a1,a5", "a5,a1", "d1,d5", "d5,d1"})
     void movable(String toValue, String fromValue) {
         // given
-        Position to = new Position(toValue);
-        Position from = new Position(fromValue);
+        Position to = Position.of(toValue);
+        Position from = Position.of(fromValue);
 
         Rook rook = new Rook(Team.BLACK);
 
@@ -30,8 +30,8 @@ class RookTest {
     @Test
     void notMovable() {
         // given
-        Position to = new Position("a1");
-        Position from = new Position("b3");
+        Position to = Position.of("a1");
+        Position from = Position.of("b3");
 
         Rook rook = new Rook(Team.BLACK);
 

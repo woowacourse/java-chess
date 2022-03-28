@@ -50,8 +50,8 @@ public class BoardTest {
         // given
         board.initBoard(new BasicBoardGenerator());
 
-        Position from = new Position(Column.E, Row.TWO);
-        Position to = new Position(Column.E, Row.THREE);
+        Position from = Position.of(Column.E, Row.TWO);
+        Position to = Position.of(Column.E, Row.THREE);
 
         // then
         assertThatNoException()
@@ -64,8 +64,8 @@ public class BoardTest {
         // given
         board.initBoard(new BasicBoardGenerator());
 
-        Position from = new Position(Column.D, Row.ONE);
-        Position to = new Position(Column.F, Row.THREE);
+        Position from = Position.of(Column.D, Row.ONE);
+        Position to = Position.of(Column.F, Row.THREE);
 
         // then
         assertThatThrownBy(() -> board.move(from, to))
@@ -78,8 +78,8 @@ public class BoardTest {
         // given
         board.initBoard(new BasicBoardGenerator());
 
-        Position from = new Position(Column.D, Row.ONE);
-        Position to = new Position(Column.E, Row.TWO);
+        Position from = Position.of(Column.D, Row.ONE);
+        Position to = Position.of(Column.E, Row.TWO);
 
         // then
         assertThatThrownBy(() -> board.move(from, to))
@@ -92,8 +92,8 @@ public class BoardTest {
         // given
         board.initBoard(new BasicBoardGenerator());
 
-        Position from = new Position(Column.A, Row.SEVEN);
-        Position to = new Position(Column.A, Row.SIX);
+        Position from = Position.of(Column.A, Row.SEVEN);
+        Position to = Position.of(Column.A, Row.SIX);
 
         // then
         assertThatThrownBy(() -> board.move(from, to))
@@ -114,8 +114,8 @@ public class BoardTest {
     @Test
     void valid_pawn_move_fail() {
         // given
-        Position blackPawnPosition = new Position("a1");
-        Position whiteKingPosition = new Position("b2");
+        Position blackPawnPosition = Position.of("a1");
+        Position whiteKingPosition = Position.of("b2");
 
         TestBoardGenerator boardGenerator = new TestBoardGenerator();
         boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
@@ -131,8 +131,8 @@ public class BoardTest {
     @Test
     void valid_pawn_move_ok() {
         // given
-        Position blackPawnPosition = new Position("a3");
-        Position whiteKingPosition = new Position("b2");
+        Position blackPawnPosition = Position.of("a3");
+        Position whiteKingPosition = Position.of("b2");
 
         TestBoardGenerator boardGenerator = new TestBoardGenerator();
         boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
@@ -171,7 +171,7 @@ public class BoardTest {
         board.initBoard(new WhiteCheckBoardGenerator());
 
         // then
-        assertThatThrownBy(() -> board.move(new Position("a8"), new Position("a7")))
+        assertThatThrownBy(() -> board.move(Position.of("a8"), Position.of("a7")))
                 .hasMessage("체크 상황을 벗어나야 합니다.");
     }
 
@@ -183,6 +183,6 @@ public class BoardTest {
 
         // then
         assertThatNoException()
-                .isThrownBy(() -> board.move(new Position("d8"), new Position("d7")));
+                .isThrownBy(() -> board.move(Position.of("d8"), Position.of("d7")));
     }
 }

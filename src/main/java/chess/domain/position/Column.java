@@ -49,4 +49,8 @@ public enum Column {
     public Column move(int distance) {
         return of(index + distance);
     }
+
+    public String getValue() {
+        return value;
+    }
 }
