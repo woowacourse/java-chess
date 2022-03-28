@@ -1,5 +1,6 @@
 package chess.game;
 
+import static chess.view.input.InputView.inputPromotionType;
 import static chess.view.output.OutputView.printScore;
 
 import chess.domain.board.Board;
@@ -28,7 +29,11 @@ public enum CommandType {
         public Board play(Board board, List<String> command) {
             final Position sourcePosition = Position.from(command.get(SOURCE_POSITION_INDEX));
             final Position targetPosition = Position.from(command.get(TARGET_POSITION_INDEX));
-            return board.movePiece(sourcePosition, targetPosition);
+            board = board.movePiece(sourcePosition, targetPosition);
+            if (board.hasPromotionPawn(targetPosition)) {
+                return board.promotePawn(targetPosition, inputPromotionType());
+            }
+            return board;
         }
     },
     STATUS("status") {
@@ -41,7 +46,7 @@ public enum CommandType {
     ;
 
     private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
+    public static final int TARGET_POSITION_INDEX = 2;
 
     private final String value;
 

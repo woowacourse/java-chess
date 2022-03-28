@@ -92,4 +92,8 @@ public class Position {
     public boolean isInFile(final File file) {
         return this.file == file;
     }
+
+    public boolean isInRank(final Rank rank) {
+        return this.rank == rank;
+    }
 }

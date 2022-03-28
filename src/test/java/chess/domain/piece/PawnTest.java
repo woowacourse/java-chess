@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.vo.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -7,9 +8,12 @@ import chess.domain.board.Position;
 import chess.domain.piece.vo.TeamColor;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
@@ -80,5 +84,38 @@ class PawnTest {
         assertThatThrownBy(() -> pawn.move(new ArrayList<>(), Position.from(targetPosition)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
+    }
+
+    @ParameterizedTest
+    @DisplayName("프로모션 할 수 있는지 반환한다.")
+    @CsvSource({"WHITE, a8, true", "WHITE, a7, false", "BLACK, a1, true", "BLACK, a2, false"})
+    void canPromote(final TeamColor teamColor, final String position, final boolean expected) {
+        //given
+        final Pawn pawn = new Pawn(teamColor, Position.from(position));
+        //when
+        boolean actual = pawn.canPromote();
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("프로모션할 수 있다.")
+    @MethodSource("providePromotionTypeAndExpected")
+    void promote(final String promotionType, final Class<? extends Piece> expected) {
+        //given
+        final Pawn pawn = new Pawn(WHITE, Position.from("a8"));
+        //actual
+        final Piece promotedPiece = pawn.promote(promotionType);
+        //then
+        assertThat(promotedPiece).isInstanceOf(expected);
+    }
+
+    private static Stream<Arguments> providePromotionTypeAndExpected() {
+        return Stream.of(
+                Arguments.of("q", Queen.class),
+                Arguments.of("b", Bishop.class),
+                Arguments.of("n", Knight.class),
+                Arguments.of("r", Rook.class)
+        );
     }
 }

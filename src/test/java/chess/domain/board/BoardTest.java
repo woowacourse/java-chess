@@ -8,6 +8,8 @@ import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 import chess.domain.piece.vo.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,5 +70,48 @@ class BoardTest {
         double actual = board.getTotalPoint(teamColor);
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("위치 값을 받아, 해당 위치에 프로모션 가능한 폰이 있는지 반환한다.")
+    void hasPromotionPawn() {
+        //given
+        Board board = new Board();
+        board = board.movePiece(Position.from("f2"), Position.from("f4"));
+        board = board.movePiece(Position.from("b7"), Position.from("b5"));
+        board = board.movePiece(Position.from("f4"), Position.from("f5"));
+        board = board.movePiece(Position.from("b5"), Position.from("b4"));
+        board = board.movePiece(Position.from("f5"), Position.from("f6"));
+        board = board.movePiece(Position.from("b4"), Position.from("b3"));
+        board = board.movePiece(Position.from("f6"), Position.from("g7"));
+        board = board.movePiece(Position.from("b3"), Position.from("c2"));
+        board = board.movePiece(Position.from("g7"), Position.from("h8"));
+        //when
+        boolean whiteTeamPawnPromotion = board.hasPromotionPawn(Position.from("h8"));
+        boolean blackTeamPawnPromotion = board.hasPromotionPawn(Position.from("c2"));
+        //then
+        assertThat(whiteTeamPawnPromotion).isTrue();
+        assertThat(blackTeamPawnPromotion).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰을 프로모션 할 수 있다.")
+    void promotePawn() {
+        //given
+        Board board = new Board();
+        board = board.movePiece(Position.from("f2"), Position.from("f4"));
+        board = board.movePiece(Position.from("b7"), Position.from("b5"));
+        board = board.movePiece(Position.from("f4"), Position.from("f5"));
+        board = board.movePiece(Position.from("b5"), Position.from("b4"));
+        board = board.movePiece(Position.from("f5"), Position.from("f6"));
+        board = board.movePiece(Position.from("b4"), Position.from("b3"));
+        board = board.movePiece(Position.from("f6"), Position.from("g7"));
+        board = board.movePiece(Position.from("b3"), Position.from("c2"));
+        board = board.movePiece(Position.from("g7"), Position.from("h8"));
+        board = board.promotePawn(Position.from("h8"), "r");
+        //when
+        final Piece piece = board.findPieceInPosition(Position.from("h8"));
+        //then
+        assertThat(piece).isInstanceOf(Rook.class);
     }
 }

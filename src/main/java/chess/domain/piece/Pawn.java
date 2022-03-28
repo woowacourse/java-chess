@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.ONE;
 import static chess.domain.piece.vo.TeamColor.BLACK;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
@@ -8,6 +10,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -15,6 +18,9 @@ public class Pawn extends Piece {
 
     private static final double SCORE = 1;
     private static final Map<TeamColor, Integer> DIRECTION_VALUE_BY_TEAM = Map.of(BLACK, 1, WHITE, -1);
+    private static final Map<String, BiFunction<TeamColor, Position, Piece>> promotionStrategy =
+            Map.of("q", Queen::new, "n", Knight::new,
+                    "r", Rook::new, "b", Bishop::new);
 
     private boolean isFirstMove = true;
 
@@ -85,5 +91,14 @@ public class Pawn extends Piece {
 
     public boolean isInFile(final File file) {
         return position.isInFile(file);
+    }
+
+    public boolean canPromote() {
+        return teamColor == WHITE && position.isInRank(EIGHT) ||
+                teamColor == BLACK && position.isInRank(ONE);
+    }
+
+    public Piece promote(final String promotionType) {
+        return promotionStrategy.get(promotionType).apply(teamColor, position);
     }
 }

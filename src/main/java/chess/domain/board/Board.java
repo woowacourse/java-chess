@@ -7,6 +7,7 @@ import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.vo.TeamColor.WHITE;
 
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
 import chess.game.TotalScore;
@@ -99,5 +100,19 @@ public class Board {
                 .filter(piece -> piece.isTeamOf(teamColor))
                 .collect(Collectors.toUnmodifiableList());
         return TotalScore.getTotalPoint(teamPieces);
+    }
+
+    public boolean hasPromotionPawn(final Position position) {
+        final Piece piece = findPieceInPosition(position);
+        if (!piece.isTypeOf(Pawn.class)) {
+            return false;
+        }
+        return ((Pawn) piece).canPromote();
+    }
+
+    public Board promotePawn(final Position position, final String promotionType) {
+        final Pawn pawn = (Pawn) findPieceInPosition(position);
+        pieces.set(pieces.indexOf(pawn), pawn.promote(promotionType));
+        return new Board(pieces, currentTurnTeamColor);
     }
 }
