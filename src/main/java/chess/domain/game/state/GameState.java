@@ -19,4 +19,6 @@ public interface GameState {
     double calculateScore(Color color);
 
     Color judgeWinner();
+
+    boolean isAllKingExist();
 }

@@ -50,5 +50,10 @@ public class Ready implements GameState{
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 
+    @Override
+    public boolean isAllKingExist() {
+        throw new IllegalStateException(NOT_STARTED_GAME);
+    }
+
 
 }

@@ -36,7 +36,7 @@ public class End implements GameState{
 
     @Override
     public Board getBoard() {
-        throw new IllegalStateException(ALREADY_END_GAME);
+        return board;
     }
 
     @Override
@@ -47,5 +47,10 @@ public class End implements GameState{
     @Override
     public Color judgeWinner() {
         return board.getWinnerTeamColor();
+    }
+
+    @Override
+    public boolean isAllKingExist() {
+        return board.isAllKingExist();
     }
 }

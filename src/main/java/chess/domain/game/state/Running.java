@@ -53,4 +53,9 @@ public class Running implements GameState{
     public Color judgeWinner() {
         throw new IllegalStateException(NOT_ENDED_GAME);
     }
+
+    @Override
+    public boolean isAllKingExist() {
+        return board.isAllKingExist();
+    }
 }
