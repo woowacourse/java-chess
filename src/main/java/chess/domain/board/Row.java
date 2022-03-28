@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public enum Row {
     ONE(0),
@@ -15,6 +16,8 @@ public enum Row {
     EIGHT(7),
     ;
 
+    private static final Pattern ROW_PATTERN = Pattern.compile("[1-8]");
+
     private final int value;
 
     Row(int value) {
@@ -22,6 +25,9 @@ public enum Row {
     }
 
     public static Row from(String rawRow) {
+        if (!ROW_PATTERN.matcher(rawRow).matches()) {
+            throw new IllegalArgumentException("존재하지 않는 행입니다.");
+        }
         return from(Integer.parseInt(rawRow) - 1);
     }
 
@@ -29,7 +35,7 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
     public Row flip() {
