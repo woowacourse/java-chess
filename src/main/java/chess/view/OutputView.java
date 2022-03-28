@@ -3,6 +3,7 @@ package chess.view;
 import static chess.view.InputView.COMMAND_END;
 import static chess.view.InputView.COMMAND_START;
 
+import chess.domain.Camp;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -14,6 +15,11 @@ public class OutputView {
     private static final String GAME_MOVE_COMMAND_NAME = "게임 이동";
     private static final String GAME_END_COMMAND_NAME = "게임 종료";
     private static final String GAME_MOVE_COMMAND = "move source위치 target위치 - 예. move b2 b3";
+
+    private static final String CAMP_BLACK = "흑색 진영";
+    private static final String CAMP_WHITE = "백색 진영";
+    private static final String FORMAT_WINNER = "%s의 승리입니다.%n";
+    private static final String MESSAGE_DRAW = "무승부입니다.";
 
     public void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -79,15 +85,21 @@ public class OutputView {
         System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
     }
 
-    public void printBlackWin() {
-        System.out.println("흑색 진영의 승리입니다.");
+    public void printWinner(Camp winner) {
+        if (winner == Camp.BLACK) {
+            printWinner(CAMP_BLACK);
+        }
+        if (winner == Camp.WHITE) {
+            printWinner(CAMP_WHITE);
+        }
+        printDraw();
     }
 
-    public void printWhiteWin() {
-        System.out.println("백색 진영의 승리입니다.");
+    private void printWinner(String camp) {
+        System.out.printf(FORMAT_WINNER, camp);
     }
 
-    public void printDraw() {
-        System.out.println("무승부입니다.");
+    private void printDraw() {
+        System.out.println(MESSAGE_DRAW);
     }
 }

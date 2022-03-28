@@ -40,7 +40,7 @@ public class ChessGame {
         return this.state.getBoard();
     }
 
-    public int hasBlackWon() {
-        return this.state.hasBlackWon();
+    public Camp getWinner() {
+        return this.state.getWinner();
     }
 }

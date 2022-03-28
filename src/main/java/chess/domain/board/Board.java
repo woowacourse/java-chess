@@ -196,13 +196,35 @@ public final class Board {
         return Collections.unmodifiableMap(value);
     }
 
-    public boolean hasBlackKingCaptured() {
+    public Camp winnerByKing() {
+        if (this.hasBlackKingCaptured()){
+            return Camp.WHITE;
+        }
+        if (this.hasWhiteKingCaptured()) {
+            return Camp.BLACK;
+        }
+        return Camp.NONE;
+    }
+
+    private boolean hasBlackKingCaptured() {
         return collectKing().stream()
                 .noneMatch(Piece::isBlack);
     }
 
-    public boolean hasWhiteKingCaptured() {
+    private boolean hasWhiteKingCaptured() {
         return collectKing().stream()
                 .allMatch(Piece::isBlack);
+    }
+
+    public Camp winnerByScore() {
+        double blackScore = calculateScoreOfBlack();
+        double whiteScore = calculateScoreOfWhite();
+        if (blackScore > whiteScore) {
+            return Camp.BLACK;
+        }
+        if (whiteScore > blackScore) {
+            return Camp.WHITE;
+        }
+        return Camp.NONE;
     }
 }

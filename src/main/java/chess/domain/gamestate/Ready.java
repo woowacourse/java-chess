@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -31,7 +32,7 @@ public class Ready implements State {
     }
 
     @Override
-    public int hasBlackWon() {
+    public Camp getWinner() {
         throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
     }
 

@@ -50,7 +50,7 @@ public class ChessGameController {
         outputView.printBoard(chessGame.getBoard().getValue());
         if (chessGame.isFinished()) {
             outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-            printResult(chessGame);
+            outputView.printWinner(chessGame.getWinner());
         }
     }
 
@@ -59,19 +59,7 @@ public class ChessGameController {
         chessGame.end();
         if (chessGame.isFinished()) {
             outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-            printResult(chessGame);
-        }
-    }
-
-    private void printResult(ChessGame chessGame) {
-        if (chessGame.hasBlackWon() > 0) {
-            outputView.printBlackWin();
-        }
-        if (chessGame.hasBlackWon() < 0) {
-            outputView.printWhiteWin();
-        }
-        if (chessGame.hasBlackWon() == 0) {
-            outputView.printDraw();
+            outputView.printWinner(chessGame.getWinner());
         }
     }
 }
