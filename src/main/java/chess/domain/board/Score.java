@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class Score {
 
-    private static final double PAWN_SECOND_SCORE = 0.5;
+    private static final double PAWN_SECOND_SCORE = -0.5;
     private static final int HALF = 2;
 
     private final Map<Team, Double> value = new HashMap<>();
@@ -48,14 +48,14 @@ public class Score {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Team> findWinTeam() {
+    public Team findWinTeam() {
         if (value.get(Team.WHITE) > value.get(Team.BLACK)) {
-            return List.of(Team.WHITE);
+            return Team.WHITE;
         }
         if (value.get(Team.WHITE) < value.get(Team.BLACK)) {
-            return List.of(Team.BLACK);
+            return Team.BLACK;
         }
-        return List.of(Team.values());
+        return null;
     }
 
     public Map<Team, Double> getValue() {

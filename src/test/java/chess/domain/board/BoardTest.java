@@ -97,7 +97,7 @@ public class BoardTest {
 
         // then
         assertThatThrownBy(() -> board.move(from, to))
-                .hasMessage("현재 차례는 WHITE입니다.");
+                .hasMessage("현재 차례는 WHITE 입니다.");
     }
 
     @DisplayName("체크인 상황")
