@@ -7,8 +7,9 @@ import java.util.function.Consumer;
 public final class Pawn extends Piece {
     private static final String ERROR_CANT_MOVE = "폰이 이동할 수 없는 위치입니다.";
     private static final String ERROR_CANT_CAPTURE = "폰이 잡을 수 없는 위치입니다.";
-    private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
-    private static final int MOVABLE_DISTANCE = 1;
+    private static final int DISTANCE_NOT_MOVED = 0;
+    private static final int DISTANCE_MOVABLE_AT_FIRST_TURN = 2;
+    private static final int DISTANCE_MOVABLE = 1;
     private static final double SCORE = 1;
 
     private boolean firstMove;
@@ -39,28 +40,30 @@ public final class Pawn extends Piece {
     private boolean canCapture(Position beforePosition, Position afterPosition) {
         int columnDistance = afterPosition.columnDistance(beforePosition);
         int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
+        return columnDistance == DISTANCE_MOVABLE &&
+                checkMovableLimitByCamp(rowDistance, DISTANCE_MOVABLE);
     }
 
     @Override
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
         int columnDistance = afterPosition.columnDistance(beforePosition);
-        if (columnDistance != 0) {
+        if (columnDistance != DISTANCE_NOT_MOVED) {
             return false;
         }
         if (firstMove) {
-            return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
+            return checkMovableLimitByCamp(rowDirectedDistance, DISTANCE_MOVABLE_AT_FIRST_TURN);
         }
-        return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+        return checkMovableLimitByCamp(rowDirectedDistance, DISTANCE_MOVABLE);
 
     }
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
-        if (this.isBlack()) {
-            return -movableDistance <= distance && distance < 0;
+        if (this.isCamp(Camp.BLACK)) {
+            return Camp.BLACK.giveVerticalDirectionTo(movableDistance) <= distance &&
+                    distance < DISTANCE_NOT_MOVED;
         }
-        return 0 < distance && distance <= movableDistance;
+        return DISTANCE_NOT_MOVED < distance && distance <= movableDistance;
     }
 
     @Override

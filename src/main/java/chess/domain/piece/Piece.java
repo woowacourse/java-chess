@@ -11,8 +11,12 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-    public final boolean isBlack() {
-        return this.camp == Camp.BLACK;
+    public final boolean isCamp(Camp camp) {
+        return this.camp == camp;
+    }
+
+    public final boolean isSameCampWith(Piece piece) {
+        return this.isCamp(piece.camp);
     }
 
     public abstract void move(Position beforePosition,
@@ -22,10 +26,6 @@ public abstract class Piece {
     public abstract void capture(Position beforePosition,
                                  Position afterPosition,
                                  Consumer<Piece> moveFunction);
-
-    public boolean isSameCampWith(Piece targetPiece) {
-        return this.camp == targetPiece.camp;
-    }
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 

@@ -49,7 +49,7 @@ public class OutputView {
 
     private String decideCaseByCamp(Piece piece) {
         String convertedString = convertPieceToString(piece);
-        if (piece.isBlack()) {
+        if (piece.isCamp(Camp.BLACK)) {
             return convertedString.toUpperCase();
         }
         return convertedString;

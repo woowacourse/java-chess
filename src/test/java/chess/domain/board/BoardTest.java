@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Camp;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -111,7 +112,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         for (Column column : Column.values()) {
             Piece piece = boardValue.get(new Position(column, row));
-            assertThat(piece.isBlack()).isFalse();
+            assertThat(piece.isCamp(Camp.WHITE)).isTrue();
         }
     }
 
@@ -123,7 +124,7 @@ public class BoardTest {
         Map<Position, Piece> boardValue = board.getValue();
         for (Column column : Column.values()) {
             Piece piece = boardValue.get(new Position(column, row));
-            assertThat(piece.isBlack()).isTrue();
+            assertThat(piece.isCamp(Camp.BLACK)).isTrue();
         }
     }
 
@@ -178,7 +179,7 @@ public class BoardTest {
     void calculateScoreOfBlack_38() {
         Board board = new Board();
 
-        assertThat(board.calculateScoreOfBlack()).isEqualTo(38);
+        assertThat(board.calculateScoreOf(Camp.BLACK)).isEqualTo(38);
     }
 
     @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 흑색 진영의 점수는 37점이다.")
@@ -196,7 +197,7 @@ public class BoardTest {
         board.move(c7, c5);
         board.move(d2, d4);
         board.move(c5, b4);
-        assertThat(board.calculateScoreOfBlack()).isEqualTo(37);
+        assertThat(board.calculateScoreOf(Camp.BLACK)).isEqualTo(37);
     }
 
     @DisplayName("초기 상태의 체스판에서 백색 진영의 점수는 38점이다.")
@@ -204,7 +205,7 @@ public class BoardTest {
     void calculateScoreOfWhite_38() {
         Board board = new Board();
 
-        assertThat(board.calculateScoreOfWhite()).isEqualTo(38);
+        assertThat(board.calculateScoreOf(Camp.WHITE)).isEqualTo(38);
     }
 
     @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 백색 진영의 점수는 37점이다.")
@@ -218,7 +219,7 @@ public class BoardTest {
         board.move(b2, b4);
         board.move(c7, c5);
         board.move(b4, c5);
-        assertThat(board.calculateScoreOfWhite()).isEqualTo(37);
+        assertThat(board.calculateScoreOf(Camp.WHITE)).isEqualTo(37);
     }
 
     private static Stream<Arguments> provideRookPosition() {

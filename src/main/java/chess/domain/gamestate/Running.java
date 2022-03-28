@@ -35,12 +35,12 @@ public class Running implements State {
 
     @Override
     public double statusOfBlack() {
-        return board.calculateScoreOfBlack();
+        return board.calculateScoreOf(Camp.BLACK);
     }
 
     @Override
     public double statusOfWhite() {
-        return board.calculateScoreOfWhite();
+        return board.calculateScoreOf(Camp.WHITE);
     }
 
     @Override

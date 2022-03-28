@@ -112,7 +112,7 @@ public final class Board {
     }
 
     private void checkTurn(Piece source) {
-        if (source.isBlack() == whiteTurn) {
+        if (source.isCamp(WHITE) != whiteTurn) {
             throw new IllegalArgumentException(ERROR_NOT_YOUR_TURN);
         }
     }
@@ -128,11 +128,14 @@ public final class Board {
             source.move(sourcePosition, targetPosition, moveFunction(sourcePosition, targetPosition));
             return;
         }
-        if (isCapturing(source, targetPosition)) {
-            source.capture(sourcePosition, targetPosition, moveFunction(sourcePosition, targetPosition));
-            return;
+        checkTargetCamp(targetPosition, source);
+        source.capture(sourcePosition, targetPosition, moveFunction(sourcePosition, targetPosition));
+    }
+
+    private void checkTargetCamp(Position targetPosition, Piece source) {
+        if (source.isSameCampWith(this.value.get(targetPosition))) {
+            throw new IllegalArgumentException(ERROR_SAME_CAMP_TARGET);
         }
-        throw new IllegalArgumentException(ERROR_SAME_CAMP_TARGET);
     }
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
@@ -144,10 +147,6 @@ public final class Board {
 
     private boolean isBlank(Position afterPosition) {
         return value.get(afterPosition) == null;
-    }
-
-    private boolean isCapturing(Piece piece, Position afterPosition) {
-        return !piece.isSameCampWith(value.get(afterPosition));
     }
 
     public boolean hasKingCaptured(){
@@ -162,33 +161,18 @@ public final class Board {
                 .collect(Collectors.toList());
     }
 
-    public double calculateScoreOfBlack() {
+    public double calculateScoreOf(Camp camp) {
         return Arrays.stream(Column.values())
-                .map(this::collectBlackPiecesIn)
+                .map(column -> collectPiecesOfCampIn(column, camp))
                 .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
                 .sum();
     }
 
-    private List<Piece> collectBlackPiecesIn(Column column) {
+    private List<Piece> collectPiecesOfCampIn(Column column, Camp camp) {
         return Arrays.stream(Row.values())
                 .map(row -> this.value.get(new Position(column, row)))
                 .filter(Objects::nonNull)
-                .filter(Piece::isBlack)
-                .collect(Collectors.toList());
-    }
-
-    public double calculateScoreOfWhite() {
-        return Arrays.stream(Column.values())
-                .map(this::collectWhitePiecesIn)
-                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
-                .sum();
-    }
-
-    private List<Piece> collectWhitePiecesIn(Column column) {
-        return Arrays.stream(Row.values())
-                .map(row -> this.value.get(new Position(column, row)))
-                .filter(Objects::nonNull)
-                .filter(piece -> !piece.isBlack())
+                .filter(piece -> piece.isCamp(camp))
                 .collect(Collectors.toList());
     }
 
@@ -210,10 +194,11 @@ public final class Board {
         if (pawns.size() == 0) {
             return 0;
         }
+        double pawnScore = pawns.get(0).getScore();
         if (pawns.size() > 1) {
-            return 0.5 * pawns.size();
+            return pawnScore / 2.0 * pawns.size();
         }
-        return pawns.get(0).getScore() * pawns.size();
+        return pawnScore * pawns.size();
     }
 
     private List<Piece> collectPawnsIn(List<Piece> pieces) {
@@ -227,33 +212,28 @@ public final class Board {
     }
 
     public Camp winnerByKing() {
-        if (this.hasBlackKingCaptured()){
-            return Camp.WHITE;
+        if (this.hasKingOfCampCaptured(BLACK)){
+            return WHITE;
         }
-        if (this.hasWhiteKingCaptured()) {
-            return Camp.BLACK;
+        if (this.hasKingOfCampCaptured(WHITE)) {
+            return BLACK;
         }
         return Camp.NONE;
     }
 
-    private boolean hasBlackKingCaptured() {
+    private boolean hasKingOfCampCaptured(Camp camp) {
         return collectKing().stream()
-                .noneMatch(Piece::isBlack);
-    }
-
-    private boolean hasWhiteKingCaptured() {
-        return collectKing().stream()
-                .allMatch(Piece::isBlack);
+                .noneMatch(piece -> piece.isCamp(camp));
     }
 
     public Camp winnerByScore() {
-        double blackScore = calculateScoreOfBlack();
-        double whiteScore = calculateScoreOfWhite();
+        double blackScore = calculateScoreOf(BLACK);
+        double whiteScore = calculateScoreOf(WHITE);
         if (blackScore > whiteScore) {
-            return Camp.BLACK;
+            return BLACK;
         }
         if (whiteScore > blackScore) {
-            return Camp.WHITE;
+            return WHITE;
         }
         return Camp.NONE;
     }
