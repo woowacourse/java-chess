@@ -20,7 +20,7 @@ public abstract class Piece {
 
     public abstract double getPoint();
 
-    public String getName() {
+    public final String getName() {
         String symbol = name.getSymbol();
         if (color == Color.WHITE) {
             return symbol.toLowerCase(Locale.ROOT);
@@ -28,31 +28,31 @@ public abstract class Piece {
         return symbol;
     }
 
-    public boolean isBlack() {
+    public final boolean isBlack() {
         return color == Color.BLACK;
     }
 
-    public boolean isWhite() {
+    public final boolean isWhite() {
         return color == Color.WHITE;
     }
 
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return color == Color.EMPTY;
     }
 
-    public boolean isSameColor(Piece otherPiece) {
+    public final boolean isSameColor(Piece otherPiece) {
         return color == otherPiece.color;
     }
 
-    public boolean isSamePieceName(PieceName pieceName) {
+    public final boolean isSamePieceName(PieceName pieceName) {
         return this.name == pieceName;
     }
 
-    public Color getColor() {
+    public final Color getColor() {
         return color;
     }
 
-    public boolean isSameColor(Color color) {
+    public final boolean isSameColor(Color color) {
         return this.color == color;
     }
 }

@@ -3,6 +3,11 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import chess.domain.piece.fixedmovablepiece.King;
+import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.straightmovablepiece.Bishop;
+import chess.domain.piece.straightmovablepiece.Queen;
+import chess.domain.piece.straightmovablepiece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

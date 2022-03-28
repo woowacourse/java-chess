@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    public static Direction BLACK_DIRECTION = Direction.SOUTH;
-    public static Direction WHITE_DIRECTION = Direction.NORTH;
+    private static Direction BLACK_DIRECTION = Direction.SOUTH;
+    private static Direction WHITE_DIRECTION = Direction.NORTH;
 
     public static List<Position> BLACK_INIT_LOCATIONS = List.of(
             Position.of("a7"), Position.of("b7"), Position.of("c7"), Position.of("d7"),

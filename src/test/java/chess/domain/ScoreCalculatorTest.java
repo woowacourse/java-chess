@@ -2,12 +2,12 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.Bishop;
+import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.Knight;
+import chess.domain.piece.fixedmovablepiece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
+import chess.domain.piece.straightmovablepiece.Queen;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

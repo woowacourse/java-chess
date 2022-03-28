@@ -1,5 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.fixedmovablepiece;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.PieceName;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 public class King extends FixedMovablePiece {
 
-    public final static List<Direction> DIRECTIONS = List.of(
+    private final static List<Direction> DIRECTIONS = List.of(
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
             Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST);
 
