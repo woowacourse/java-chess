@@ -1,10 +1,6 @@
-package chess;
+package chess.domain.state;
 
 import chess.domain.Turn;
-import chess.domain.state.Finish;
-import chess.domain.state.Play;
-import chess.domain.state.Ready;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

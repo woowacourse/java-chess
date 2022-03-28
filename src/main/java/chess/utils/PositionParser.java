@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PositionParser {
+
     private static final Map<String, Integer> RANKS = new HashMap<>();
     private static final Map<String, Integer> FILES = new HashMap<>();
     private static final String WRONG_POSITION = "올바르지 않은 위치 정보입니다.";
