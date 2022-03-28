@@ -12,7 +12,7 @@ public class Point {
     private static final int DECIMAL = 10;
     private static final int VERTICAL_POSITION_START = 1;
     private static final int VERTICAL_POSITION_END = 2;
-    public static final int HORIZONTAL_POSITION = 0;
+    private static final int HORIZONTAL_POSITION = 0;
 
     private final LineNumber horizontal;
     private final LineNumber vertical;
