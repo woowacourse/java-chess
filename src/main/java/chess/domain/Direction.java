@@ -40,6 +40,6 @@ public enum Direction {
     }
 
     public static Position getNextPosition(Position from, Direction direction) {
-        return from.getIncreasedOneStepPosition(direction.fileIncrement, direction.rankIncrement);
+        return from.getNextPosition(direction.fileIncrement, direction.rankIncrement);
     }
 }

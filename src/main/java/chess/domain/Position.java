@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Position {
 
@@ -33,11 +34,8 @@ public class Position {
     }
 
     public static Position valueOf(final String key) {
-        Position position = CACHE.get(key);
-        if (position == null) {
-            throw new IllegalArgumentException(NOT_EXIST_POSITION);
-        }
-        return position;
+        return Optional.ofNullable(CACHE.get(key))
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_POSITION));
     }
 
     public static Position valueOf(final File file, final Rank rank) {
@@ -64,11 +62,11 @@ public class Position {
         return file.getCoordinate() - position.file.getCoordinate();
     }
 
-    public Position getIncreasedOneStepPosition(int xDifference, int yDifference) {
-        int newX = file.getCoordinate() + xDifference;
-        int newY = rank.getCoordinate() + yDifference;
+    public Position getNextPosition(int fileDifference, int rankDifference) {
+        int newFile = file.getCoordinate() + fileDifference;
+        int newRank = rank.getCoordinate() + rankDifference;
 
-        return Position.valueOf(File.findFile(newX), Rank.findRank(newY));
+        return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
     }
 
     public File getFile() {
