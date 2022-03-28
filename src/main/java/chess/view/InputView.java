@@ -26,7 +26,7 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static boolean requestValidStartOrEndInput() {
+    public boolean requestValidStartOrEndInput() {
         try {
             return requestStartOrEndInput();
         } catch (IllegalArgumentException e) {
@@ -35,19 +35,19 @@ public class InputView {
         return requestValidStartOrEndInput();
     }
 
-    private static boolean requestStartOrEndInput() {
+    private boolean requestStartOrEndInput() {
         String input = readConsoleInput();
         validateStartOrEnd(input);
         return input.equals(START);
     }
 
-    private static void validateStartOrEnd(String input) {
+    private void validateStartOrEnd(String input) {
         if (!input.equals(START) && !input.equals(END)) {
             throw new IllegalArgumentException(INVALID_START_OR_END_INPUT_EXCEPTION_MESSAGE);
         }
     }
 
-    public static MoveCommandDto requestValidMoveInput() {
+    public MoveCommandDto requestValidMoveInput() {
         try {
             return requestMoveInput();
         } catch (IllegalArgumentException e) {
@@ -56,14 +56,14 @@ public class InputView {
         return requestValidMoveInput();
     }
 
-    private static MoveCommandDto requestMoveInput() {
+    private MoveCommandDto requestMoveInput() {
         String[] input = readConsoleInput().split(COMMAND_INPUT_DELIMITER);
         validateMoveInput(input);
 
         return new MoveCommandDto(input[MOVE_SOURCE_IDX], input[MOVE_TARGET_IDX]);
     }
 
-    private static void validateMoveInput(String[] input) {
+    private void validateMoveInput(String[] input) {
         boolean isValidMoveCommand = input[MOVE_COMMAND_IDX].equals(MOVE);
         boolean isValidCommandLength = input.length == MOVE_COMMAND_LENGTH;
 
@@ -74,7 +74,7 @@ public class InputView {
         validatePositionFormat(input[MOVE_TARGET_IDX]);
     }
 
-    public static boolean requestValidStatusOrEndInput() {
+    public boolean requestValidStatusOrEndInput() {
         try {
             return requestStatusOrEndInput();
         } catch (IllegalArgumentException e) {
@@ -83,13 +83,13 @@ public class InputView {
         return requestValidStatusOrEndInput();
     }
 
-    private static boolean requestStatusOrEndInput() {
+    private boolean requestStatusOrEndInput() {
         String input = readConsoleInput();
         validateStatusOrEnd(input);
         return input.equals(STATUS);
     }
 
-    private static void validateStatusOrEnd(String input) {
+    private void validateStatusOrEnd(String input) {
         if (!input.equals(STATUS) && !input.equals(END)) {
             throw new IllegalArgumentException(INVALID_STATUS_OR_END_INPUT_EXCEPTION_MESSAGE);
         }

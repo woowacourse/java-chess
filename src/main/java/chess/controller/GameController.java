@@ -1,25 +1,25 @@
 package chess.controller;
 
-import static chess.view.InputView.requestValidMoveInput;
-import static chess.view.InputView.requestValidStartOrEndInput;
-import static chess.view.InputView.requestValidStatusOrEndInput;
 import static chess.view.OutputView.print;
-import static chess.view.OutputView.printBoard;
-import static chess.view.OutputView.printGameInstructions;
-import static chess.view.OutputView.printGameOverInstructions;
 
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
 import chess.dto.BoardViewDto;
+import chess.dto.GameResultDto;
+import chess.dto.MoveCommandDto;
+import chess.view.InputView;
 import chess.view.OutputView;
 
 public class GameController {
 
     private static final int EXIT_STATUS_CODE = 0;
 
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
+
     public Game startGame() {
-        printGameInstructions();
-        if (!requestValidStartOrEndInput()) {
+        outputView.printGameInstructions();
+        if (!inputView.requestValidStartOrEndInput()) {
             System.exit(EXIT_STATUS_CODE);
         }
         return new NewGame().init();
@@ -35,7 +35,8 @@ public class GameController {
 
     private Game moveChessmen(Game game) {
         try {
-            game = game.moveChessmen(requestValidMoveInput());
+            MoveCommandDto validMoveInput = inputView.requestValidMoveInput();
+            game = game.moveChessmen(validMoveInput);
             printBoardDisplay(game);
             return game;
         } catch (IllegalArgumentException e) {
@@ -45,13 +46,14 @@ public class GameController {
     }
 
     private void printBoardDisplay(Game game) {
-        printBoard(new BoardViewDto(game));
+        outputView.printBoard(new BoardViewDto(game));
     }
 
     public void printGameOver(Game game) {
-        printGameOverInstructions();
-        while (requestValidStatusOrEndInput()) {
-            OutputView.printStatus(game.getGameResult());
+        outputView.printGameOverInstructions();
+        while (inputView.requestValidStatusOrEndInput()) {
+            GameResultDto gameResult = game.getGameResult();
+            outputView.printStatus(gameResult);
         }
     }
 }

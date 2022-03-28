@@ -21,7 +21,7 @@ public class OutputView {
     private static final String WINNER_ANNOUNCEMENT_FORMAT = "%s 플레이어가 승리하였습니다!" + BLANK_LINE;
     private static final String SCORE_DISPLAY_FORMAT = "%s 플레이어 점수 : %2.1f점" + BLANK_LINE;
 
-    public static void printGameInstructions() {
+    public void printGameInstructions() {
         String instructionMessage = GAME_START_MESSAGE + BLANK_LINE
                 + START_COMMAND_MESSAGE + BLANK_LINE
                 + END_COMMAND_MESSAGE + BLANK_LINE
@@ -30,7 +30,7 @@ public class OutputView {
         print(instructionMessage);
     }
 
-    public static void printBoard(BoardViewDto dto) {
+    public void printBoard(BoardViewDto dto) {
         StringBuilder builder = new StringBuilder();
         for (String rowDisplay : dto.boardDisplay()) {
             builder.append(rowDisplay)
@@ -39,7 +39,7 @@ public class OutputView {
         print(builder.toString());
     }
 
-    public static void printGameOverInstructions() {
+    public void printGameOverInstructions() {
         String instructionMessage = GAME_OVER_MESSAGE + BLANK_LINE
                 + STATUS_COMMAND_MESSAGE + BLANK_LINE
                 + END_COMMAND_MESSAGE + BLANK_LINE;
@@ -47,7 +47,7 @@ public class OutputView {
         print(instructionMessage);
     }
 
-    public static void printStatus(GameResultDto dto) {
+    public void printStatus(GameResultDto dto) {
         Color winnerColor = dto.winnerColor();
         double whiteScore = dto.whiteScore();
         double blackScore = dto.blackScore();
