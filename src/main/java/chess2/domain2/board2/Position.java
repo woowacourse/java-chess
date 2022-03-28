@@ -24,6 +24,32 @@ public class Position {
         return Position.of(fileIdx, rankIdx);
     }
 
+    public int fileDifference(Position targetPosition) {
+        return Math.abs(fileIdx - targetPosition.fileIdx);
+    }
+
+    public int rankDifference(Position targetPosition) {
+        return Math.abs(targetPosition.rankIdx - rankIdx);
+    }
+
+    public boolean isHorizontal(Position toPosition) {
+        return fileDifference(toPosition) == 0
+                && rankDifference(toPosition) > 0;
+    }
+
+    public boolean isVertical(Position toPosition) {
+        return fileDifference(toPosition) > 0
+                && rankDifference(toPosition) == 0;
+    }
+
+    public boolean isDiagonal(Position toPosition) {
+        return fileDifference(toPosition) == rankDifference(toPosition);
+    }
+
+    public boolean isStraightPath(Position toPosition) {
+        return isHorizontal(toPosition) || isVertical(toPosition) || isDiagonal(toPosition);
+    }
+
     @Override
     public String toString() {
         return "Position{fileIdx=" + fileIdx + ", rankIdx=" + rankIdx + '}';
