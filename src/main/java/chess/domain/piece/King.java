@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class King extends Piece {
@@ -13,8 +14,8 @@ public class King extends Piece {
     }
 
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (isBothSidesOneStep(from, to) || isUpAndDownOneStep(from, to) || isDiagonalOneStep(from, to)) {
+    public void checkMovingRange(final Board board, final Position from, final Position to) {
+        if (Direction.isKingMoving(from, to)) {
             return;
         }
         throw new IllegalArgumentException("킹은 모든 방향으로 한 칸 이동 가능합니다.");

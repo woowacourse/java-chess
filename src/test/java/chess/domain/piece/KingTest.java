@@ -17,7 +17,7 @@ public class KingTest {
     @Test
     @DisplayName("오른쪽으로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToRight() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("h5")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("h5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
@@ -25,7 +25,7 @@ public class KingTest {
     @Test
     @DisplayName("왼쪽으로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToLeft() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("a5")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("a5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
@@ -33,7 +33,7 @@ public class KingTest {
     @Test
     @DisplayName("위로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToTop() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("e8")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("e8")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
@@ -41,7 +41,7 @@ public class KingTest {
     @Test
     @DisplayName("아래쪽으로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToBottom() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("e3")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("e3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
@@ -49,7 +49,7 @@ public class KingTest {
     @Test
     @DisplayName("올라가는 대각선 방향으로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToRisingDiagonal() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("h8")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("h8")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }
@@ -57,7 +57,7 @@ public class KingTest {
     @Test
     @DisplayName("내려가는 대각선 방향으로 한 칸을 초과해서 이동하는 경우 예외 발생")
     void invalidMoveToDescendingDiagonal() {
-        assertThatThrownBy(() -> new King(Color.WHITE).checkPieceMoveRange(emptyBoard, Position.from("e5"), Position.from("a1")))
+        assertThatThrownBy(() -> new King(Color.WHITE).checkMovingRange(emptyBoard, Position.from("e5"), Position.from("a1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
     }

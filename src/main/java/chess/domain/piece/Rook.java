@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Rook extends Piece {
@@ -12,13 +13,18 @@ public class Rook extends Piece {
         super(color, NAME, SCORE);
     }
 
+    private boolean hasAnyPiece(final Board board, final Position from, final Position to) {
+        return board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to);
+    }
+
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (isVertical(from, to) || isHorizontal(from, to)) {
-            checkAnyPiece(board, from, to);
-            return;
+    public void checkMovingRange(final Board board, final Position from, final Position to) {
+        if (!Direction.isRookMoving(from, to)) {
+            throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
         }
-        throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
+        if (hasAnyPiece(board, from, to)) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+        }
     }
 
     @Override

@@ -26,7 +26,7 @@ public class Board {
 
     public void move(final Position from, final Position to) {
         final Piece piece = getPiece(from);
-        piece.checkPieceMoveRange(this, from, to);
+        piece.checkMovingRange(this, from, to);
         value.put(to, value.remove(from));
     }
 
@@ -60,15 +60,8 @@ public class Board {
                 .anyMatch(position -> position.getCoordinateXOrder() < maxX);
     }
 
-    public void checkPieceInDiagonal(final Position from, final Position to) {
-        checkRisingDiagonal(from, to);
-        checkDescendingDiagonal(from, to);
-    }
-
-    public void checkHasPiece(final Position to) {
-        if (hasPiece(to)) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
+    public boolean hasPieceInDiagonal(final Position from, final Position to) {
+        return hasRisingDiagonal(from, to) || hasDescendingDiagonal(from, to);
     }
 
     private void showColorStatus(final BiConsumer<String, Double> printScore, final Color color) {
@@ -110,25 +103,31 @@ public class Board {
                 .reduce(0.0, Double::sum);
     }
 
-    private void checkRisingDiagonal(final Position from, final Position to) {
+    private boolean hasRisingDiagonal(final Position from, final Position to) {
         int minX = CoordinateX.min(from.getCoordinateX(), to.getCoordinateX());
         int maxX = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX());
         int minY = Math.min(from.getCoordinateY(), to.getCoordinateY());
 
         int y = minY + NEXT;
         for (int x = minX + NEXT; x < maxX; x++, y++) {
-            checkHasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)));
+            if (hasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)))) {
+                return true;
+            }
         }
+        return false;
     }
 
-    private void checkDescendingDiagonal(final Position from, final Position to) {
+    private boolean hasDescendingDiagonal(final Position from, final Position to) {
         int nextY = Math.min(from.getCoordinateY(), to.getCoordinateY()) + NEXT;
         int maxY = Math.max(from.getCoordinateY(), to.getCoordinateY());
         int x = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX()) - NEXT;
 
         for (int y = nextY; y < maxY; y++, x--) {
-            checkHasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)));
+            if (hasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)))) {
+                return true;
+            }
         }
+        return false;
     }
 
     public boolean hasKing(final Color color) {

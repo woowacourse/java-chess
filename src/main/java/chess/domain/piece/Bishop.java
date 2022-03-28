@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
@@ -13,11 +14,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
-        if (!isDiagonal(from, to)) {
+    public void checkMovingRange(final Board board, final Position from, final Position to) {
+        if (!Direction.isBishopMoving(from, to)) {
             throw new IllegalArgumentException("비숍은 대각선 방향만 이동할 수 있습니다.");
         }
-        board.checkPieceInDiagonal(from, to);
+        if (board.hasPieceInDiagonal(from, to)) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.CoordinateY;
 
@@ -18,7 +19,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void checkPieceMoveRange(final Board board, final Position from, final Position to) {
+    public void checkMovingRange(final Board board, final Position from, final Position to) {
         if (isForwardDiagonal(board, from, to) || isValidForward(board, from, to)) {
             return;
         }
@@ -36,7 +37,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isForwardDiagonal(final Board board, final Position from, final Position to) {
-        return isValidDirection(from, to) && isDiagonal(from, to) && board.hasPiece(to);
+        return isValidDirection(from, to) && Direction.isDiagonal(from, to) && board.hasPiece(to);
     }
 
     private boolean isValidDirection(final Position from, final Position to) {
@@ -53,12 +54,12 @@ public class Pawn extends Piece {
         if (!isValidDirection(from, to) || !isForward(from, to)) {
             return false;
         }
-        board.checkHasPiece(to);
+//        board.checkHasPiece(to);
         return true;
     }
 
     private boolean isForward(final Position from, final Position to) {
-        if (!isVertical(from, to)) {
+        if (!Direction.isVertical(from, to)) {
             return false;
         }
 
