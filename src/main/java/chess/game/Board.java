@@ -89,11 +89,17 @@ public class Board {
         validateColor(piece, color);
         validatePawnMove(from, to, piece);
 
-        if (piece.canMove(moveCommand)) {
+        move(from, to, piece);
+    }
+
+    private void move(final Position from, final Position to, final Piece piece) {
+        if (piece.canMove(from, to)) {
             validatePiece(from, to, piece);
             value.put(to, piece);
             value.remove(from);
+            return;
         }
+        throw new IllegalArgumentException("이동이 불가능 합니다.");
     }
 
     public Map<Color, Double> getBoardScore() {
@@ -109,7 +115,7 @@ public class Board {
                 .mapToDouble(Piece::getScore)
                 .sum();
 
-        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_PAWN_SCORE;
+        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_SCORE;
     }
 
     private double pawnCountOnSameColumn(final Color color) {

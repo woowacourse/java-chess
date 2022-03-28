@@ -1,33 +1,25 @@
 package chess.piece;
 
 import chess.game.Direction;
-import chess.game.MoveCommand;
 import chess.game.Position;
+import java.util.Arrays;
 
 public class Rook extends AbstractPiece {
+
+    private static final double SCORE = 5;
 
     public Rook(final Color color) {
         super(Name.ROOK, color);
     }
 
     @Override
-    public boolean canMove(final MoveCommand command) {
-        final Position from = command.getFrom();
-        final Position to = command.getTo();
-
-        return Direction.getVerticalAndHorizontalDirections().stream()
-                .anyMatch(direction -> canRookMove(from, to));
-    }
-
-    private boolean canRookMove(final Position from, final Position to) {
-        final int columnDistance = to.getColumnDistance(from);
-        final int rowDistance = to.getRowDistance(from);
-
-        return columnDistance == 0 || rowDistance == 0;
+    public boolean canMove(final Position from, final Position to) {
+        return Arrays.stream(Direction.values())
+                .anyMatch(direction -> direction.canHorizontalAndVerticalMove(from, to));
     }
 
     @Override
     public double getScore() {
-        return 5;
+        return SCORE;
     }
 }

@@ -1,22 +1,22 @@
 package chess.piece;
 
-import chess.game.MoveCommand;
+import chess.game.Position;
 
 public interface Piece {
 
-    Name getName();
-
-    Color getColor();
-
-    double getScore();
-
     boolean isSameTeam(Piece piece);
 
-    boolean canMove(MoveCommand command);
+    boolean canMove(Position from, Position to);
 
     boolean isPawn();
 
     boolean isKnight();
 
     boolean isKing();
+
+    Name getName();
+
+    Color getColor();
+
+    double getScore();
 }

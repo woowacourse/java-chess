@@ -3,9 +3,6 @@ package chess.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.game.Board;
-import chess.game.MoveCommand;
-import chess.game.Position;
 import chess.piece.Color;
 import chess.piece.Rook;
 import org.junit.jupiter.api.DisplayName;

@@ -1,20 +1,18 @@
 package chess.piece;
 
 import chess.game.Direction;
-import chess.game.MoveCommand;
 import chess.game.Position;
 
 public class Knight extends AbstractPiece {
+
+    private static final double SCORE = 2.5;
 
     public Knight(final Color color) {
         super(Name.KNIGHT, color);
     }
 
     @Override
-    public boolean canMove(final MoveCommand command) {
-        final Position from = command.getFrom();
-        final Position to = command.getTo();
-
+    public boolean canMove(final Position from, final Position to) {
         return Direction.getKnightDirections().stream()
                 .anyMatch(direction -> canKnightMove(from, to, direction));
     }
@@ -33,6 +31,6 @@ public class Knight extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 2.5;
+        return SCORE;
     }
 }

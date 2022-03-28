@@ -4,46 +4,46 @@ import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.game.MoveCommand;
+import chess.game.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class PawnTest {
 
-    @ParameterizedTest
-    @ValueSource(strings = {"a2 a3", "a2 a4", "h2 h3", "h2 h4", "a7 a8", "h7 h8"})
+    @ParameterizedTest(name = "from : {0}, to : {1}")
+    @CsvSource(value = {"a2,a3", "a2,a4", "h2,h3", "h2,h4", "a7,a8", "h7,h8"})
     @DisplayName("화이트 폰이 전진할 수 있는지 확인한다.")
-    void canMoveForwardWhite(final String command) {
+    void canMoveForwardWhite(final String from, final String to) {
         final Piece piece = new Pawn(WHITE);
 
-        assertThat(piece.canMove(MoveCommand.of(command))).isTrue();
+        assertThat(piece.canMove(Position.of(from), Position.of(to))).isTrue();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"a2 b4", "h2 h5", "a3 a2", "a2 b2", "h8 h7", "a3, a5"})
+    @ParameterizedTest(name = "from : {0}, to : {1}")
+    @CsvSource(value = {"a2,b4", "h2,h5", "a3,a2", "a2,b2", "h8,h7", "a3,a5"})
     @DisplayName("화이트 폰의 이동경로가 아닌지 확인한다.")
-    void invalidMoveWhite(final String command) {
+    void invalidMoveWhite(final String from, final String to) {
         final Piece piece = new Pawn(WHITE);
 
-        assertThat(piece.canMove(MoveCommand.of(command))).isFalse();
+        assertThat(piece.canMove(Position.of(from), Position.of(to))).isFalse();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"a7 a5", "a7 a6", "h7 h5", "h7 h6", "a2 a1", "h2 h1"})
+    @ParameterizedTest(name = "from : {0}, to : {1}")
+    @CsvSource(value = {"a7,a5", "a7,a6", "h7,h5", "h7,h6", "a2,a1", "h2,h1"})
     @DisplayName("블랙 폰이 전진할 수 있는지 확인한다.")
-    void canMoveForwardBlack(final String command) {
+    void canMoveForwardBlack(final String from, final String to) {
         final Piece piece = new Pawn(BLACK);
 
-        assertThat(piece.canMove(MoveCommand.of(command))).isTrue();
+        assertThat(piece.canMove(Position.of(from), Position.of(to))).isTrue();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"a7 b5", "h7 h3", "a2 a3", "a2 b2", "h7 h8", "a5, a3"})
+    @ParameterizedTest(name = "from : {0}, to : {1}")
+    @CsvSource(value = {"a7,b5", "h7,h3", "a2,a3", "a2,b2", "h7,h8", "a5,a3"})
     @DisplayName("블랙 폰의 이동경로가 아닌지 확인한다.")
-    void invalidMoveBlack(final String command) {
+    void invalidMoveBlack(final String from, final String to) {
         final Piece piece = new Pawn(BLACK);
 
-        assertThat(piece.canMove(MoveCommand.of(command))).isFalse();
+        assertThat(piece.canMove(Position.of(from), Position.of(to))).isFalse();
     }
 }

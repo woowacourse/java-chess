@@ -24,4 +24,17 @@ class GameTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }
+
+    @Test
+    @DisplayName("룩이 대각선으로 이동할 경우 예외를 발생한다.")
+    void game() {
+        Game game = new Game(Ready.start(Command.START));
+        game.run("move b2 b4");
+        game.run("move a7 a6");
+
+
+        assertThatThrownBy(() -> game.run("move a1 b2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능 합니다.");
+    }
 }

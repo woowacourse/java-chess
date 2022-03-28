@@ -4,22 +4,19 @@ import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
 import chess.game.Direction;
-import chess.game.MoveCommand;
 import chess.game.Position;
 
 public class Pawn extends AbstractPiece {
 
-    public static double REDUCED_PAWN_SCORE = 0.5;
+    public static double SCORE = 1;
+    public static double REDUCED_SCORE = 0.5;
 
     public Pawn(final Color color) {
         super(Name.PAWN, color);
     }
 
     @Override
-    public boolean canMove(final MoveCommand command) {
-        final Position from = command.getFrom();
-        final Position to = command.getTo();
-
+    public boolean canMove(final Position from, final Position to) {
         if (getColor() == WHITE) {
             return Direction.getWhitePawnDirections().stream()
                     .anyMatch(direction -> canWhiteMove(from, to, direction));
@@ -53,6 +50,6 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 1;
+        return SCORE;
     }
 }

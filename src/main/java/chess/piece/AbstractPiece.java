@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.game.MoveCommand;
+import chess.game.Position;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -13,29 +13,14 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public Name getName() {
-        return name;
-    }
+    public abstract boolean canMove(final Position from, final Position to);
 
     @Override
-    public Color getColor() {
-        return color;
-    }
-
-    @Override
-    public double getScore() {
-        return 0;
-    }
+    public abstract double getScore();
 
     @Override
     public final boolean isSameTeam(final Piece other) {
-        return this.color.hasSameColor(other.getColor());
-    }
-
-    @Override
-    public boolean canMove(MoveCommand command) {
-        // todo: abstract로 수정할 것
-        return true;
+        return color.hasSameColor(other.getColor());
     }
 
     @Override
@@ -51,5 +36,15 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public final Name getName() {
+        return name;
+    }
+
+    @Override
+    public final Color getColor() {
+        return color;
     }
 }

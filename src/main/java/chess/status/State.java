@@ -1,9 +1,9 @@
 package chess.status;
 
 import chess.game.Board;
+import chess.game.Command;
 import chess.game.MoveCommand;
 import chess.piece.Color;
-import chess.game.Command;
 import java.util.Map;
 
 public interface State {
