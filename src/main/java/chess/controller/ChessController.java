@@ -17,7 +17,12 @@ public class ChessController {
 
     public void selectMenu(ChessGame chessGame) {
         String option = InputView.inputOption();
-        Command.playCommand(chessGame, option);
+        try {
+            Command.playCommand(chessGame, option);
+        } catch (IllegalStateException exception) {
+            OutputView.printError(exception.getMessage());
+            selectMenu(chessGame);
+        }
     }
 
     public static void initBoard(ChessGame chessGame, String input) {
@@ -26,7 +31,13 @@ public class ChessController {
     }
 
     public static void move(ChessGame chessGame, String input) {
-        chessGame.movePiece(input);
+        try {
+            chessGame.movePiece(input);
+        } catch (IllegalStateException | IllegalArgumentException exception) {
+            OutputView.printError(exception.getMessage());
+            move(chessGame, InputView.inputOption());
+            return;
+        }
         OutputView.printInitialChessBoard(chessGame.getBoard());
         if (!chessGame.isAllKingExist()) {
             OutputView.printWinner(chessGame.judgeWinner());

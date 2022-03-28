@@ -63,4 +63,9 @@ public class OutputView {
         }
         System.out.printf(WINNER_FORMAT, BLACK_TEAM_NAME);
     }
+
+    public static void printError(String errorMessage) {
+        System.out.println(errorMessage);
+        System.out.print(System.lineSeparator());
+    }
 }
