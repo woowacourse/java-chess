@@ -100,7 +100,7 @@ public class Position {
     }
 
     public Position move(Direction direction) {
-        return new Position(column.move(direction.getColumn()), row.move(direction.getRow()));
+        return of(column.move(direction.getColumn()), row.move(direction.getRow()));
     }
 
     @Override

@@ -6,69 +6,42 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class PawnTest {
 
-    @DisplayName("흰색 팀일 때 이동 가능 확인")
-    @ParameterizedTest
-    @CsvSource(value = {"e2,d3", "e2,e3", "e2,f3", "a2,a4"})
-    void movable_while(String toValue, String fromValue) {
+    @DisplayName("폰 이동 가능 확인")
+    @ParameterizedTest(name = "{2}팀 {0} -> {1} 이동")
+    @CsvSource(value = {"e2,d3,WHITE", "e2,e3,WHITE", "e2,f3,WHITE", "a2,a4,WHITE", "e7,e6,BLACK", "e7,d6,BLACK",
+            "e7,f6,BLACK", "a7,a5,BLACK"})
+    void movable_while(String toValue, String fromValue, Team team) {
         // given
         Position to = Position.of(toValue);
         Position from = Position.of(fromValue);
 
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new Pawn(team);
 
         // then
         assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
     }
 
-    @DisplayName("흰색 팀일 때 이동 불가 확인")
-    @ParameterizedTest
-    @CsvSource(value = {"a2,a1", "a7,a5", "a3,a5"})
-    void movable_while_x(String toValue, String fromValue) {
+    @DisplayName("폰 이동 불가 확인")
+    @ParameterizedTest(name = "{2}팀 {0} -> {1} 이동")
+    @CsvSource(value = {"a2,a1,WHITE", "a7,a5,WHITE", "a3,a5,WHITE", "a1,a2,BLACK"})
+    void movable_while_x(String toValue, String fromValue, Team team) {
         // given
         Position to = Position.of(toValue);
         Position from = Position.of(fromValue);
 
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new Pawn(team);
 
         // then
         assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
     }
 
-    @DisplayName("검은 팀일 때 이동 가능 확인")
-    @ParameterizedTest
-    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6", "a7,a5"})
-    void movable_black(String toValue, String fromValue) {
-        // given
-        Position to = Position.of(toValue);
-        Position from = Position.of(fromValue);
-
-        Pawn pawn = new Pawn(Team.BLACK);
-
-        // then
-        assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
-    }
-
-    @DisplayName("검은 팀일 때 이동 불가 확인")
-    @Test
-    void movable_black_x() {
-        // given
-        Position to = Position.of("a1");
-        Position from = Position.of("a2");
-
-        Pawn pawn = new Pawn(Team.BLACK);
-
-        // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
-    }
-
-    @DisplayName("이름")
-    @ParameterizedTest
+    @DisplayName("이름 확인")
+    @ParameterizedTest(name = "{0}팀은 {1} 반환")
     @CsvSource(value = {"BLACK,P", "WHITE,p"})
     void name(Team team, String expect) {
         // given
@@ -78,31 +51,17 @@ public class PawnTest {
         assertThat(pawn.getName()).isEqualTo(expect);
     }
 
-    @DisplayName("화이트 폰의 방향을 체크한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"a2,a3", "a2,a4"})
-    void findDirection_white(Position from, Position to) {
+    @DisplayName("폰의 방향을 체크")
+    @ParameterizedTest(name = "{2}팀은 {3} 쪽으로 이동 가능")
+    @CsvSource(value = {"a2,a3,WHITE,NORTH", "a2,a4,WHITE,NORTH", "a2,a1,BLACK,SOUTH", "a7,a5,BLACK,SOUTH"})
+    void findDirection_white(Position from, Position to, Team team, Direction direction) {
         // given
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new Pawn(team);
 
         // when
         Direction find = pawn.findDirection(from, to);
 
         // then
-        assertThat(find).isEqualTo(Direction.NORTH);
-    }
-
-    @DisplayName("블랙 폰의 방향을 체크한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"a2,a1", "a7,a5"})
-    void findDirection_black_while_direction(Position from, Position to) {
-        // given
-        Pawn pawn = new Pawn(Team.BLACK);
-
-        // when
-        Direction find = pawn.findDirection(from, to);
-
-        // then
-        assertThat(find).isEqualTo(Direction.SOUTH);
+        assertThat(find).isEqualTo(direction);
     }
 }
