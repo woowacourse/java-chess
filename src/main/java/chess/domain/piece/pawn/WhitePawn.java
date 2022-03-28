@@ -8,7 +8,7 @@ public final class WhitePawn extends Pawn {
     private static final int INIT_RANK_IDX = 1;
     private static final int RANK_FORWARD_DIRECTION = 1;
 
-    private static final String DISPLAY = "♗";
+    private static final String DISPLAY = "♝";
 
     WhitePawn(Position position) {
         super(Color.WHITE, position);
