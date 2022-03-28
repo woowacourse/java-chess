@@ -6,7 +6,7 @@ import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 import chess2.domain2.board2.Board;
 import chess2.domain2.board2.Position;
 import chess2.domain2.board2.piece2.Piece;
-import chess2.domain2.board2.piece2.PieceDisplayUtil;
+import chess2.util2.PieceDisplayUtil;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

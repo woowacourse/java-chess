@@ -1,5 +1,6 @@
-package chess2.domain2.board2;
+package chess2.util2;
 
+import chess2.domain2.board2.Position;
 import java.util.ArrayList;
 import java.util.List;
 

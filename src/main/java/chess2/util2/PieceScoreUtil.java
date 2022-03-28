@@ -1,4 +1,4 @@
-package chess2.domain2.board2.piece2;
+package chess2.util2;
 
 import static chess2.domain2.board2.piece2.PieceType.BISHOP;
 import static chess2.domain2.board2.piece2.PieceType.KING;
@@ -7,6 +7,8 @@ import static chess2.domain2.board2.piece2.PieceType.PAWN;
 import static chess2.domain2.board2.piece2.PieceType.QUEEN;
 import static chess2.domain2.board2.piece2.PieceType.ROOK;
 
+import chess2.domain2.board2.piece2.Piece;
+import chess2.domain2.board2.piece2.PieceType;
 import java.util.HashMap;
 import java.util.Map;
 

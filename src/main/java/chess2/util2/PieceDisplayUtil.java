@@ -1,5 +1,8 @@
-package chess2.domain2.board2.piece2;
+package chess2.util2;
 
+import chess2.domain2.board2.piece2.Color;
+import chess2.domain2.board2.piece2.Piece;
+import chess2.domain2.board2.piece2.PieceType;
 import java.util.HashMap;
 import java.util.Map;
 

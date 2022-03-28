@@ -10,7 +10,7 @@ import static chess2.util2.PositionConverterUtil.RANKS_TOTAL_SIZE;
 import chess2.domain2.board2.Position;
 import chess2.domain2.board2.piece2.Color;
 import chess2.domain2.board2.piece2.Piece;
-import chess2.domain2.board2.piece2.PieceScoreUtil;
+import chess2.util2.PieceScoreUtil;
 import chess2.dto2.GameScoreDto;
 import java.util.Map;
 import java.util.stream.IntStream;

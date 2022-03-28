@@ -3,6 +3,7 @@ package chess2.domain2.board2;
 import chess2.domain2.board2.piece2.Color;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.domain2.board2.piece2.PieceType;
+import chess2.util2.PositionUtil;
 import java.util.Map;
 
 public class Board {
