@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 
 public interface GameState {
     GameState movePiece(Board board, Position fromPosition, Position toPosition);
@@ -9,4 +10,8 @@ public interface GameState {
     boolean isFinish();
 
     boolean isWaiting();
+
+    double calculateScore(Board board, Color color);
+
+    Color getWinTeamColor(Board board);
 }

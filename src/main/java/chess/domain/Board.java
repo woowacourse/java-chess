@@ -1,11 +1,12 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 public class Board {
 
@@ -13,9 +14,20 @@ public class Board {
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
-    private static final String ALL_KING_EXIST = "[ERROR] 킹이 모두 살아 있어, 승자를 구할 수 없습니다.";
+    public static final String NOT_EMPTY_CHESS_BOARD = "[ERROR] 체스보드가 비어있지 않습니다.";
 
     private final Map<Position, Piece> board;
+
+    public Board() {
+        this.board = new HashMap<>();
+    }
+
+    public void placePieces(final Map<Position, Piece> board) {
+        if (!board.isEmpty()) {
+            throw new IllegalArgumentException(NOT_EMPTY_CHESS_BOARD);
+        }
+        this.board.putAll(new HashMap<>(board));
+    }
 
     public Board(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
@@ -115,8 +127,8 @@ public class Board {
     }
 
     public Color getWinnerTeamColor() {
-        if(isAllKingExist()) {
-            throw new IllegalArgumentException(ALL_KING_EXIST);
+        if (isAllKingExist()) {
+            return Color.NONE;
         }
         return board.values().stream()
             .filter(Piece::isKing)

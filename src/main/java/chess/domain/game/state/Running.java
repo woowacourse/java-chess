@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.Board;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 
 public class Running implements GameState {
 
@@ -22,5 +23,15 @@ public class Running implements GameState {
     @Override
     public boolean isWaiting() {
         return false;
+    }
+
+    @Override
+    public double calculateScore(Board board, Color color) {
+        return board.calculateScore(color);
+    }
+
+    @Override
+    public Color getWinTeamColor(Board board) {
+        throw new IllegalArgumentException();
     }
 }
