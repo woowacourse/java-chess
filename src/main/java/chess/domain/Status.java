@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.Result;
 import chess.domain.piece.Color;
 
 import java.util.Map;
@@ -12,10 +11,10 @@ public final class Status {
     private final Map<Color, Double> blackScore;
     private final Result result;
 
-    public Status(final Board board) {
+    public Status(final Color winnerColor, final Board board) {
+        this.result = Result.from(winnerColor);
         this.whiteScore = board.sumScore(Color.WHITE);
         this.blackScore = board.sumScore(Color.BLACK);
-        this.result = Result.from(board);
     }
 
     @Override
@@ -29,5 +28,17 @@ public final class Status {
     @Override
     public int hashCode() {
         return Objects.hash(whiteScore, blackScore, result);
+    }
+
+    public Map<Color, Double> getWhiteScore() {
+        return whiteScore;
+    }
+
+    public Map<Color, Double> getBlackScore() {
+        return blackScore;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }
