@@ -1,20 +1,20 @@
-package chess.domain.game.stateLauncher;
+package chess.domain.game.state;
 
 import chess.controller.Command;
 import chess.domain.game.ChessGame;
 
-public final class KingGo extends StateLauncher {
+public final class Result extends State {
     private static final String INVALID_COMMEND_MESSAGE = "status 를 입력하세요.";
 
-    public KingGo(ChessGame chessGame) {
+    public Result(ChessGame chessGame) {
         super(chessGame);
     }
 
     @Override
-    protected StateLauncher execute(String input) {
+    protected State execute(String input) {
         Command command = Command.from(input);
         if (command == Command.STATUS) {
-            return new Status(chessGame);
+            return new StatusEnd(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }

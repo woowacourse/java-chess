@@ -6,17 +6,17 @@ import chess.domain.Fixtures;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
-import chess.domain.game.stateLauncher.KingGo;
-import chess.domain.game.stateLauncher.Play;
-import chess.domain.game.stateLauncher.StateLauncher;
-import chess.domain.game.stateLauncher.Status;
+import chess.domain.game.state.Result;
+import chess.domain.game.state.Play;
+import chess.domain.game.state.State;
+import chess.domain.game.state.StatusEnd;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import chess.view.OutputView;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class StateLauncherTest {
+class StateTest {
     private final ChessGame chessGame = new ChessGame();
 
     @Test
@@ -33,14 +33,14 @@ class StateLauncherTest {
 
         Map<Position, Piece> stringPieceMap = Fixtures.stringToBoard(boardString);
         OutputView.printChessBoard(new Board(stringPieceMap));
-        StateLauncher stateLauncher = new Play(new ChessGame(new Board(stringPieceMap)));
-        stateLauncher = stateLauncher.go("move h1 h4");
+        State state = new Play(new ChessGame(new Board(stringPieceMap)));
+        state = state.go("move h1 h4");
 
-        assertThat(stateLauncher)
-                .isInstanceOf(KingGo.class);
-        stateLauncher = stateLauncher.go("status");
-        assertThat(stateLauncher)
-                .isInstanceOf(Status.class);
+        assertThat(state)
+                .isInstanceOf(Result.class);
+        state = state.go("status");
+        assertThat(state)
+                .isInstanceOf(StatusEnd.class);
 
         assertThat(chessGame.getStatus().getWinner())
                 .isEqualTo(Team.WHITE);

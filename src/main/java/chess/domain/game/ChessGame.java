@@ -37,7 +37,6 @@ public final class ChessGame {
         if (!isTurn(from)) {
             throw new IllegalArgumentException(NO_TURN_MESSAGE);
         }
-
         boolean isKing = isKing(to);
         board.move(from, to);
         if (isKing) {
@@ -61,13 +60,11 @@ public final class ChessGame {
 
     private Map<Position, Piece> createBoard() {
         Map<Position, Piece> squares = new HashMap<>();
-
         initEmptyPieces(squares);
         initNotPawnSquares(squares, Rank.ONE, Team.WHITE);
         initPawnPieces(squares, Rank.TWO, Team.WHITE);
         initPawnPieces(squares, Rank.SEVEN, Team.BLACK);
         initNotPawnSquares(squares, Rank.EIGHT, Team.BLACK);
-
         return squares;
     }
 

@@ -1,32 +1,31 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
-import chess.domain.game.stateLauncher.Init;
-import chess.domain.game.stateLauncher.StateLauncher;
+import chess.domain.game.state.Init;
+import chess.domain.game.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Controller {
-
     public void run() {
         OutputView.printInitMessage();
         ChessGame chessGame = new ChessGame();
-        StateLauncher stateLauncher = new Init(chessGame);
-        play(stateLauncher, chessGame);
+        State state = new Init(chessGame);
+        play(state, chessGame);
     }
 
-    private void play(StateLauncher stateLauncher, ChessGame chessGame) {
-        while (stateLauncher.isRun()) {
-            printChessBoardIfPlay(stateLauncher, chessGame);
-            stateLauncher = stateLauncher.go(InputView.inputCommend());
+    private void play(State state, ChessGame chessGame) {
+        while (state.isRun()) {
+            printChessBoardIfPlay(state, chessGame);
+            state = state.go(InputView.inputCommend());
         }
-        if (stateLauncher.isStatus()) {
+        if (state.isStatus()) {
             OutputView.printStatus(chessGame.getStatus());
         }
     }
 
-    private void printChessBoardIfPlay(StateLauncher stateLauncher, ChessGame chessGame) {
-        if (stateLauncher.isPlay()) {
+    private void printChessBoardIfPlay(State state, ChessGame chessGame) {
+        if (state.isPlay()) {
             OutputView.printChessBoard(chessGame.getBoard());
         }
     }

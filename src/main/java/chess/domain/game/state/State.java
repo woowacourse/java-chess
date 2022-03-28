@@ -1,18 +1,18 @@
-package chess.domain.game.stateLauncher;
+package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
 import chess.view.OutputView;
 
-public abstract class StateLauncher {
+public abstract class State {
 
     protected final ChessGame chessGame;
     protected boolean run = true;
 
-    public StateLauncher(ChessGame chessGame) {
+    public State(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 
-    public StateLauncher go(String input) {
+    public State go(String input) {
         try {
             return execute(input);
         } catch (IllegalArgumentException e) {
@@ -21,7 +21,7 @@ public abstract class StateLauncher {
         }
     }
 
-    protected abstract StateLauncher execute(String input);
+    protected abstract State execute(String input);
 
     public boolean isRun() {
         return run;
