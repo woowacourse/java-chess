@@ -3,8 +3,8 @@ package chess.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Abscissa;
-import chess.domain.Ordinate;
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Ready;
@@ -33,8 +33,8 @@ public class EndTest {
     @Test
     @DisplayName("게임이 종료되고 말을 움직이려고 하면 예외가 발생한다")
     void movePieceException() {
-        assertThatThrownBy(() -> state.movePiece(Position.valueOf(Abscissa.a, Ordinate.ONE),
-            Position.valueOf(Abscissa.a, Ordinate.TWO)))
+        assertThatThrownBy(() -> state.movePiece(Position.valueOf(File.a, Rank.ONE),
+            Position.valueOf(File.a, Rank.TWO)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 종료되어 지원하지 않는 기능입니다");
     }
@@ -67,22 +67,22 @@ public class EndTest {
     @DisplayName("게임이 King이 잡혀 종료되었을 때, 승패 판정을 한다. White가 이긴 경우")
     void judgeWinnerWhite() {
         GameState state = new Ready().initBoard()
-            .movePiece(Position.valueOf(Abscissa.e, Ordinate.SEVEN),
-                Position.valueOf(Abscissa.e, Ordinate.FIVE))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.TWO),
-                Position.valueOf(Abscissa.d, Ordinate.FOUR))
-            .movePiece(Position.valueOf(Abscissa.e, Ordinate.FIVE),
-                Position.valueOf(Abscissa.d, Ordinate.FOUR))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.ONE),
-                Position.valueOf(Abscissa.d, Ordinate.THREE))
-            .movePiece(Position.valueOf(Abscissa.a, Ordinate.SEVEN),
-                Position.valueOf(Abscissa.a, Ordinate.SIX))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.THREE),
-                Position.valueOf(Abscissa.e, Ordinate.THREE))
-            .movePiece(Position.valueOf(Abscissa.a, Ordinate.SIX),
-                Position.valueOf(Abscissa.a, Ordinate.FIVE))
-            .movePiece(Position.valueOf(Abscissa.e, Ordinate.THREE),
-                Position.valueOf(Abscissa.e, Ordinate.EIGHT));
+            .movePiece(Position.valueOf(File.e, Rank.SEVEN),
+                Position.valueOf(File.e, Rank.FIVE))
+            .movePiece(Position.valueOf(File.d, Rank.TWO),
+                Position.valueOf(File.d, Rank.FOUR))
+            .movePiece(Position.valueOf(File.e, Rank.FIVE),
+                Position.valueOf(File.d, Rank.FOUR))
+            .movePiece(Position.valueOf(File.d, Rank.ONE),
+                Position.valueOf(File.d, Rank.THREE))
+            .movePiece(Position.valueOf(File.a, Rank.SEVEN),
+                Position.valueOf(File.a, Rank.SIX))
+            .movePiece(Position.valueOf(File.d, Rank.THREE),
+                Position.valueOf(File.e, Rank.THREE))
+            .movePiece(Position.valueOf(File.a, Rank.SIX),
+                Position.valueOf(File.a, Rank.FIVE))
+            .movePiece(Position.valueOf(File.e, Rank.THREE),
+                Position.valueOf(File.e, Rank.EIGHT));
 
         assertThat(state.judgeWinner()).isEqualTo(Color.WHITE);
     }

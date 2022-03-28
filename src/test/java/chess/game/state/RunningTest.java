@@ -3,8 +3,8 @@ package chess.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Abscissa;
-import chess.domain.Ordinate;
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.domain.Position;
 import chess.domain.game.state.End;
 import chess.domain.game.state.GameState;
@@ -35,30 +35,30 @@ public class RunningTest {
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히지 않았다면 Running 상태에 머무른다")
     void movePiece() {
-        state.movePiece(Position.valueOf(Abscissa.a, Ordinate.TWO),
-            Position.valueOf(Abscissa.a, Ordinate.THREE));
+        state.movePiece(Position.valueOf(File.a, Rank.TWO),
+            Position.valueOf(File.a, Rank.THREE));
         assertThat(state).isInstanceOf(Running.class);
     }
 
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히면 End 상태로 변환된다")
     void movePieceAndKingKill() {
-        GameState newState = state.movePiece(Position.valueOf(Abscissa.e, Ordinate.SEVEN),
-                Position.valueOf(Abscissa.e, Ordinate.FIVE))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.TWO),
-                Position.valueOf(Abscissa.d, Ordinate.FOUR))
-            .movePiece(Position.valueOf(Abscissa.e, Ordinate.FIVE),
-                Position.valueOf(Abscissa.d, Ordinate.FOUR))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.ONE),
-                Position.valueOf(Abscissa.d, Ordinate.THREE))
-            .movePiece(Position.valueOf(Abscissa.a, Ordinate.SEVEN),
-                Position.valueOf(Abscissa.a, Ordinate.SIX))
-            .movePiece(Position.valueOf(Abscissa.d, Ordinate.THREE),
-                Position.valueOf(Abscissa.e, Ordinate.THREE))
-            .movePiece(Position.valueOf(Abscissa.a, Ordinate.SIX),
-                Position.valueOf(Abscissa.a, Ordinate.FIVE))
-            .movePiece(Position.valueOf(Abscissa.e, Ordinate.THREE),
-                Position.valueOf(Abscissa.e, Ordinate.EIGHT));
+        GameState newState = state.movePiece(Position.valueOf(File.e, Rank.SEVEN),
+                Position.valueOf(File.e, Rank.FIVE))
+            .movePiece(Position.valueOf(File.d, Rank.TWO),
+                Position.valueOf(File.d, Rank.FOUR))
+            .movePiece(Position.valueOf(File.e, Rank.FIVE),
+                Position.valueOf(File.d, Rank.FOUR))
+            .movePiece(Position.valueOf(File.d, Rank.ONE),
+                Position.valueOf(File.d, Rank.THREE))
+            .movePiece(Position.valueOf(File.a, Rank.SEVEN),
+                Position.valueOf(File.a, Rank.SIX))
+            .movePiece(Position.valueOf(File.d, Rank.THREE),
+                Position.valueOf(File.e, Rank.THREE))
+            .movePiece(Position.valueOf(File.a, Rank.SIX),
+                Position.valueOf(File.a, Rank.FIVE))
+            .movePiece(Position.valueOf(File.e, Rank.THREE),
+                Position.valueOf(File.e, Rank.EIGHT));
         assertThat(newState).isInstanceOf(End.class);
     }
 

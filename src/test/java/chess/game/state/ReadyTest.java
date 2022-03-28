@@ -3,8 +3,8 @@ package chess.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Abscissa;
-import chess.domain.Ordinate;
+import chess.domain.File;
+import chess.domain.Rank;
 import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Ready;
@@ -32,8 +32,8 @@ public class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 말을 움직이려고 하면 예외가 발생한다")
     void movePieceWhenReadyState() {
-        assertThatThrownBy(() -> state.movePiece(Position.valueOf(Abscissa.a, Ordinate.ONE),
-            Position.valueOf(Abscissa.b, Ordinate.ONE)))
+        assertThatThrownBy(() -> state.movePiece(Position.valueOf(File.a, Rank.ONE),
+            Position.valueOf(File.b, Rank.ONE)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }

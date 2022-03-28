@@ -23,18 +23,18 @@ public class King extends Piece {
     }
 
     private boolean isSameColAndOneDifference(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameAbscissa(toPosition)
-            && Math.abs(fromPosition.getOrdinateDifference(toPosition)) == SCOPE_DIFFERENCE;
+        return fromPosition.isSameFile(toPosition)
+            && Math.abs(fromPosition.getRankDifference(toPosition)) == SCOPE_DIFFERENCE;
     }
 
     private boolean isSameRowAndOneDifference(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameOrdinate(toPosition)
-            && Math.abs(fromPosition.getAbscissaDifference(toPosition)) == SCOPE_DIFFERENCE;
+        return fromPosition.isSameRank(toPosition)
+            && Math.abs(fromPosition.getFileDifference(toPosition)) == SCOPE_DIFFERENCE;
     }
 
     private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getOrdinateDifference(toPosition);
-        int width = fromPosition.getAbscissaDifference(toPosition);
+        int height = fromPosition.getRankDifference(toPosition);
+        int width = fromPosition.getFileDifference(toPosition);
         return Math.pow(height, 2) + Math.pow(width, 2) == 2;
     }
 

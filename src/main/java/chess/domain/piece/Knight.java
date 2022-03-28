@@ -16,8 +16,8 @@ public class Knight extends Piece {
     }
 
     private boolean isDiagonalLengthFive(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getOrdinateDifference(toPosition);
-        int width = fromPosition.getAbscissaDifference(toPosition);
+        int height = fromPosition.getRankDifference(toPosition);
+        int width = fromPosition.getFileDifference(toPosition);
         return Math.pow(height, 2) + Math.pow(width, 2) == 5;
     }
 

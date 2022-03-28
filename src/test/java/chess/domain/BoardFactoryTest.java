@@ -23,9 +23,9 @@ public class BoardFactoryTest {
     @DisplayName("폰들을 생성해서 매핑해준다.")
     void initPawnPosition() {
         List<Position> expected = new ArrayList<>();
-        for (Abscissa value : Abscissa.values()) {
-            expected.add(Position.valueOf(value + Ordinate.TWO.getValue()));
-            expected.add(Position.valueOf(value + Ordinate.SEVEN.getValue()));
+        for (File value : File.values()) {
+            expected.add(Position.valueOf(value + Rank.TWO.getValue()));
+            expected.add(Position.valueOf(value + Rank.SEVEN.getValue()));
         }
 
         assertThat(board.keySet()).containsAll(expected);
