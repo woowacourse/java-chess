@@ -1,9 +1,13 @@
 package chess.piece;
 
 import chess.position.Position;
+import chess.position.Rank;
 import java.math.BigDecimal;
 
 public class Pawn extends Piece {
+
+    private static final Rank BLACK_START_RANK = Rank.SEVEN;
+    private static final Rank WHITE_START_RANK = Rank.TWO;
 
     public Pawn(Color color, Position position) {
         super(color, position);
@@ -16,28 +20,36 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isPossibleMovement(Position to, Pieces pieces) {
-        if (!isForward(to)) {
-            return false;
-        }
         if (isUncapturablePosition(to)) {
-            return !pieces.hasPieceByPosition(to) && !pieces.hasObstacleOnLinearPath(getPosition(), to);
+            return !hasTargetPiece(to, pieces) && !hasObstacle(to, pieces);
         }
         if (isCapturablePosition(to)) {
-            return pieces.hasPieceByPosition(to);
+            return hasTargetPiece(to, pieces);
         }
         return false;
+    }
+
+    private boolean isUncapturablePosition(Position to) {
+        return isForward(to) && isVerticalWay(to) && isValidDistance(to);
     }
 
     private boolean isForward(Position to) {
         return getColor().isForward(getPosition(), to);
     }
 
-    private boolean isUncapturablePosition(Position to) {
-        return getPosition().isVerticalWay(to) && isValidDistance(to);
+    private boolean isVerticalWay(Position to) {
+        return getPosition().isVerticalWay(to);
     }
 
     private boolean isValidDistance(Position to) {
-        return getPosition().getVerticalDistance(to) <= movableDistance();
+        if (isVerticalWay(to)) {
+            return getVerticalDistance(to) <= movableDistance();
+        }
+        return getVerticalDistance(to) == 1 && getHorizontalDistance(to) == 1;
+    }
+
+    private int getVerticalDistance(Position to) {
+        return getPosition().getVerticalDistance(to);
     }
 
     private int movableDistance() {
@@ -48,11 +60,30 @@ public class Pawn extends Piece {
     }
 
     private boolean isStartPawnPosition() {
-        return getColor().isStartPawnPosition(getPosition());
+        if (getColor() == Color.BLACK) {
+            return getPosition().isSameRank(BLACK_START_RANK);
+        }
+        return getPosition().isSameRank(WHITE_START_RANK);
+    }
+
+    private int getHorizontalDistance(Position to) {
+        return getPosition().getHorizontalDistance(to);
+    }
+
+    private boolean hasTargetPiece(Position to, Pieces pieces) {
+        return pieces.hasPieceByPosition(to);
+    }
+
+    private boolean hasObstacle(Position to, Pieces pieces) {
+        return pieces.hasObstacleOnLinearPath(getPosition(), to);
     }
 
     private boolean isCapturablePosition(Position to) {
-        return getPosition().isDiagonalWay(to) && getPosition().getVerticalDistance(to) == 1;
+        return isForward(to) && isDiagonalWay(to) && isValidDistance(to);
+    }
+
+    private boolean isDiagonalWay(Position to) {
+        return getPosition().isDiagonalWay(to);
     }
 
     @Override
