@@ -1,9 +1,21 @@
 package console.view;
 
-import chess.piece.*;
-import chess.position.*;
+import chess.piece.Bishop;
+import chess.piece.Color;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 public class OutputView {
 

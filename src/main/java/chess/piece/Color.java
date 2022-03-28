@@ -1,7 +1,6 @@
 package chess.piece;
 
 import chess.position.Position;
-import chess.position.Rank;
 
 public enum Color {
 

@@ -2,9 +2,13 @@ package chess;
 
 import static java.util.stream.Collectors.toMap;
 
-import chess.piece.*;
+import chess.piece.Color;
+import chess.piece.Piece;
+import chess.piece.Pieces;
 import chess.position.Position;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoard {

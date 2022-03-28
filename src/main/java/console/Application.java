@@ -1,16 +1,22 @@
 package console;
 
 import static chess.position.File.*;
-import static chess.position.File.H;
 import static chess.position.Rank.*;
-import static chess.position.Rank.TWO;
 
 import chess.ChessBoard;
-import chess.piece.*;
+import chess.piece.Bishop;
+import chess.piece.Color;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.Queen;
+import chess.piece.Rook;
 import chess.position.Position;
 import console.command.Command;
 import console.command.CommandType;
-import console.view.*;
+import console.view.InputView;
+import console.view.OutputView;
 import java.util.List;
 
 public class Application {

@@ -1,9 +1,7 @@
 package console.view;
 
 import static chess.position.File.*;
-import static chess.position.File.H;
 import static chess.position.Rank.*;
-import static chess.position.Rank.EIGHT;
 
 import chess.position.*;
 import console.command.*;

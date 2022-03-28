@@ -3,7 +3,8 @@ package chess;
 import chess.piece.Piece;
 import chess.position.File;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Score {
 
