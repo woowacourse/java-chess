@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.vo.TeamColor.BLACK;
-import static chess.domain.piece.vo.TeamColor.WHITE;
+import static chess.domain.piece.vo.TeamColor.*;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
+
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.piece.vo.TeamColor;
 
 public class Pawn extends Piece {
 
@@ -30,23 +30,17 @@ public class Pawn extends Piece {
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         try {
-            validateMove(targetPosition, otherPieces);
-        } catch (IllegalArgumentException exception) {
             validateCatch(targetPosition, otherPieces);
+        } catch (IllegalArgumentException exception) {
+            validateMove(targetPosition, otherPieces);
+            validateTargetPositionExistPiece(otherPieces, targetPosition);
         }
         return new Pawn(teamColor, targetPosition, isFirstMove);
     }
 
-    @Override
-    public double getScore() {
-        return SCORE;
-    }
-
     private void validateMove(final Position targetPosition, final List<Piece> otherPieces) {
         final int directionValue = DIRECTION_VALUE_BY_TEAM.get(teamColor);
-        if (isFirstMove) {
-            validateFirstMove(targetPosition, otherPieces, directionValue);
-            isFirstMove = false;
+        if (validateFirstMove(targetPosition, otherPieces, directionValue)) {
             return;
         }
         final BiPredicate<Integer, Integer> moveCondition = (fileMove, RankMove) ->
@@ -54,12 +48,22 @@ public class Pawn extends Piece {
         position.validateTargetPosition(targetPosition, moveCondition, false);
     }
 
-    private void validateFirstMove(final Position targetPosition, final List<Piece> otherPieces,
-                                   final int directionValue) {
-        final BiPredicate<Integer, Integer> firstMoveCondition = (fileMove, rankMove) ->
+    private boolean validateFirstMove(Position targetPosition, List<Piece> otherPieces, int directionValue) {
+        if (isFirstMove) {
+            final BiPredicate<Integer, Integer> firstMoveCondition = (fileMove, rankMove) ->
                 fileMove == 0 && (rankMove == 1 * directionValue || rankMove == 2 * directionValue);
-        position.validateTargetPosition(targetPosition, firstMoveCondition, false);
-        position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
+            position.validateTargetPosition(targetPosition, firstMoveCondition, false);
+            position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
+            isFirstMove = false;
+            return true;
+        }
+        return false;
+    }
+
+    private void validateTargetPositionExistPiece(List<Piece> otherPieces, Position targetPosition) {
+        if (convertToPositions(otherPieces).contains(targetPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
     }
 
     private void validateCatch(final Position targetPosition, final List<Piece> otherPieces) {
@@ -85,5 +89,10 @@ public class Pawn extends Piece {
 
     public boolean isInFile(final File file) {
         return position.isInFile(file);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

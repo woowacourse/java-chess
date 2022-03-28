@@ -1,15 +1,18 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.Position;
 import chess.domain.piece.vo.TeamColor;
-import java.util.ArrayList;
-import java.util.Collections;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
 
@@ -53,6 +56,18 @@ class PawnTest {
         assertThatThrownBy(() -> firstMoved.move(new ArrayList<>(), Position.from(secondTargetPosition)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다.");
+    }
+
+    @Test
+    @DisplayName("대각선이 아닌 곳으로 움직일 때 해당 위치에 적 기물이 있으면 예외를 발생시킨다.")
+    void moveForwardExceptionExistEnemyPiece() {
+        //given
+        final Piece pawn = new Pawn(TeamColor.WHITE, Position.from("b4"));
+        final Piece enemyPawn = new Pawn(TeamColor.BLACK, Position.from("b5"));
+        //when, then
+        assertThatThrownBy(() -> pawn.move(List.of(enemyPawn), Position.from("b5")))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @ParameterizedTest
