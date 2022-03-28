@@ -13,15 +13,15 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target);
+    }
+
+    @Override
     public List<Position> computeBetweenTwoPosition(Position source, Position target) {
         if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
             return computeBetweenPositionDiagonal(source, target);
         }
         return List.of();
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target);
     }
 }

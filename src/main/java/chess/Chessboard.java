@@ -14,6 +14,14 @@ public class Chessboard {
     public static final List<Integer> SIZE = IntStream.range(0, 8)
             .boxed()
             .collect(Collectors.toList());
+    private static final double EXIST_PAWN_SAME_COLUMN = 0.5;
+    private static final int DUPLICATE = 2;
+    private static final String ERROR_SOURCE_TARGET_SAME_POSITION = "현재 위치와 같은 위치로 이동할 수 없습니다.";
+    private static final String ERROR_EMPTY_SOURCE_PIECE = "이동하려는 위치에 기물이 없습니다.";
+    private static final String ERROR_CATCH_PIECE_SAME_TEAM = "같은편의 기물을 공격할 수 없습니다.";
+    private static final String ERROR_MOVE_OPPOSITE_TEAM_PIECE = "상대편의 기물은 움직일 수 없습니다.";
+    private static final String ERROR_IMPOSSIBLE_MOVE_PIECE = "움직일 수 없는 기물입니다.";
+    private static final String ERROR_OBSTACLE_EXIST_PIECE = "이동 중간에 가로막는 기물이 있습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -47,39 +55,39 @@ public class Chessboard {
     private void validate(Position source, Position target, Turn turn) {
         validateSamePosition(source, target);
         validateBlank(source);
-        validateSameTeam(source, target);
         validateTurn(source, turn);
+        validateSameTeam(source, target);
         validateMovable(source, target);
         validateMovableBetweenPosition(source, target);
     }
 
     private void validateSamePosition(Position source, Position target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException("현재 위치와 같은 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_SOURCE_TARGET_SAME_POSITION);
         }
     }
 
     private void validateBlank(Position source) {
         if (board.get(source).isSameType(Type.BLANK)) {
-            throw new IllegalArgumentException("이동하려는 위치에 기물이 없습니다.");
-        }
-    }
-
-    private void validateSameTeam(Position source, Position target) {
-        if (board.get(source).isColor(board.get(target))) {
-            throw new IllegalArgumentException("같은편의 기물을 공격할 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_EMPTY_SOURCE_PIECE);
         }
     }
 
     private void validateTurn(Position source, Turn turn) {
         if (!turn.isRightTurn(board.get(source).getColor())) {
-            throw new IllegalArgumentException("상대편의 기물은 움직일 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_MOVE_OPPOSITE_TEAM_PIECE);
+        }
+    }
+
+    private void validateSameTeam(Position source, Position target) {
+        if (board.get(source).isColor(board.get(target))) {
+            throw new IllegalArgumentException(ERROR_CATCH_PIECE_SAME_TEAM);
         }
     }
 
     private void validateMovable(Position source, Position target) {
         if (!isMovable(source, target)) {
-            throw new IllegalArgumentException("움직일 수 없는 기물입니다.");
+            throw new IllegalArgumentException(ERROR_IMPOSSIBLE_MOVE_PIECE);
         }
     }
 
@@ -89,7 +97,7 @@ public class Chessboard {
             if (!isExistPiece(position)) {
                 continue;
             }
-            throw new IllegalArgumentException("이동 중간에 가로막는 기물이 있습니다.");
+            throw new IllegalArgumentException(ERROR_OBSTACLE_EXIST_PIECE);
         }
     }
 
@@ -130,7 +138,7 @@ public class Chessboard {
                 .sum();
 
         for (int column = 0; column < SIZE.size(); column++) {
-            score -= 0.5 * countSameColumnPawn(column, color);
+            score -= EXIST_PAWN_SAME_COLUMN * countSameColumnPawn(column, color);
         }
         return score;
     }
@@ -139,7 +147,7 @@ public class Chessboard {
         long count = SIZE.stream()
                 .filter(num -> board.get(new Position(num, column)).isColor(color)
                         && board.get(new Position(num, column)).isSameType(Type.PAWN)).count();
-        if (count < 2) {
+        if (count < DUPLICATE) {
             return 0;
         }
         return count;

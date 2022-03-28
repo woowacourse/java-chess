@@ -14,6 +14,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return source.isSameRow(target) || source.isSameColumn(target);
+    }
+
+    @Override
     public List<Position> computeBetweenTwoPosition(Position source, Position target) {
         if (source.isSameRow(target)) {
             return computeBetweenPositionBySameRow(source, target);
@@ -22,11 +27,6 @@ public class Rook extends Piece {
             return computeBetweenPositionBySameColumn(source, target);
         }
         return List.of();
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return source.isSameRow(target) || source.isSameColumn(target);
     }
 }
 

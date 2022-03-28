@@ -13,12 +13,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        return List.of();
+    public boolean isMovable(Position source, Position target) {
+        return PossiblePositionChecker.isMovableCoordinates(Direction.knight(), source, target);
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return PossiblePositionChecker.isMovableCoordinates(Direction.knight(), source, target);
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        return List.of();
     }
 }

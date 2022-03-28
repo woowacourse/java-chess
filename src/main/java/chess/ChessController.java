@@ -15,7 +15,7 @@ public class ChessController {
         while (!chessGame.isFinished()) {
             playTurn(chessGame);
         }
-        OutputView.printScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
+        OutputView.printFinalScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
     }
 
     private void playTurn(ChessGame chessGame) {
@@ -29,7 +29,7 @@ public class ChessController {
             OutputView.printBoard(chessGame.getChessBoard());
         }
         if (STATUS.isValue(command)) {
-            OutputView.printScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
         }
         if (END.isValue(command)) {
             chessGame.end();

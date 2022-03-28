@@ -14,19 +14,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        if (source.isFirstPosition(color)) {
-            if (color == Color.WHITE) {
-                return List.of(source.findPossiblePosition(-1, 0));
-            }
-            if (color == Color.BLACK) {
-                return List.of(source.findPossiblePosition(1, 0));
-            }
-        }
-        return List.of();
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         if (color == Color.WHITE) {
             return isMovableWhenWhite(source, target);
@@ -35,13 +22,6 @@ public class Pawn extends Piece {
             return isMovableWhenBlack(source, target);
         }
         return false;
-    }
-
-    public boolean isDiagonal(Position source, Position target) {
-        if (color == Color.WHITE) {
-            return isMovableCoordinates(Direction.pawnWhiteDiagonal(), source, target);
-        }
-        return isMovableCoordinates(Direction.pawnBlackDiagonal(), source, target);
     }
 
     private boolean isMovableWhenWhite(Position source, Position target) {
@@ -56,5 +36,17 @@ public class Pawn extends Piece {
             return isMovableCoordinates(Direction.pawnBlackFirstTurn(), source, target);
         }
         return isMovableCoordinates(Direction.pawnBlackTurn(), source, target);
+    }
+
+    public boolean isDiagonal(Position source, Position target) {
+        if (color == Color.WHITE) {
+            return isMovableCoordinates(Direction.pawnWhiteDiagonal(), source, target);
+        }
+        return isMovableCoordinates(Direction.pawnBlackDiagonal(), source, target);
+    }
+
+    @Override
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        return List.of();
     }
 }

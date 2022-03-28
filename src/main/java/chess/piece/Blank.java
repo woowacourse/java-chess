@@ -11,12 +11,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
-        return List.of();
+    public boolean isMovable(Position source, Position target) {
+        return false;
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return false;
+    public List<Position> computeBetweenTwoPosition(Position source, Position target) {
+        return List.of();
     }
 }

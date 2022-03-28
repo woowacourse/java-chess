@@ -1,6 +1,7 @@
 package chess.position;
 
 
+import chess.Chessboard;
 import chess.piece.*;
 
 import java.util.LinkedHashMap;
@@ -40,13 +41,13 @@ public class PieceCache {
     }
 
     private static void initializePiecePawn(int row, Color color) {
-        for (int index = 0; index < 8; index++) {
+        for (int index = 0; index < Chessboard.SIZE.size(); index++) {
             CACHE.put(row + Integer.toString(index), new Pawn(color));
         }
     }
 
     private static void initializeBlank(int row) {
-        for (int index = 0; index < 8; index++) {
+        for (int index = 0; index < Chessboard.SIZE.size(); index++) {
             CACHE.put(row + Integer.toString(index), new Blank());
         }
     }

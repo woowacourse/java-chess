@@ -10,6 +10,13 @@ import java.util.List;
 
 public class ChessGame {
 
+    private static final String COMMAND_DELIMITER = " ";
+    private static final String LOCATION_DELIMITER = "";
+    private static final int ROW = 0;
+    private static final int COLUMN = 1;
+    private static final int SOURCE = 1;
+    private static final int TARGET = 2;
+
     private State state;
 
     public ChessGame() {
@@ -21,12 +28,12 @@ public class ChessGame {
     }
 
     public void move(String command) {
-        List<String> moveInfo = List.of(command.split(" "));
-        String[] source = moveInfo.get(1).split("");
-        String[] target = moveInfo.get(2).split("");
+        List<String> moveInfo = List.of(command.split(COMMAND_DELIMITER));
+        String[] source = moveInfo.get(SOURCE).split(LOCATION_DELIMITER);
+        String[] target = moveInfo.get(TARGET).split(LOCATION_DELIMITER);
 
-        Position parsedSource = PositionParser.parse(source[0], source[1]);
-        Position parsedTarget = PositionParser.parse(target[0], target[1]);
+        Position parsedSource = PositionParser.parse(source[ROW], source[COLUMN]);
+        Position parsedTarget = PositionParser.parse(target[ROW], target[COLUMN]);
         state = state.move(parsedSource, parsedTarget);
     }
 

@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int WHITE_FIRST_POSITION = 6;
+    private static final int BLACK_FIRST_POSITION = 1;
+
     private final int row;
     private final int column;
 
@@ -16,10 +19,10 @@ public class Position {
 
     public boolean isFirstPosition(Color color) {
         if (color == Color.WHITE) {
-            return row == 6;
+            return row == WHITE_FIRST_POSITION;
         }
         if (color == Color.BLACK) {
-            return row == 1;
+            return row == BLACK_FIRST_POSITION;
         }
         return false;
     }
