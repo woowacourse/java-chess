@@ -1,16 +1,11 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class ChessGameController {
-    private static final Pattern POSITION_PATTERN = Pattern.compile("[a-h][1-8]");
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -25,34 +20,34 @@ public class ChessGameController {
         ChessGame chessGame = new ChessGame();
 
         while (true) {
-            String command = inputView.inputCommand();
-            if ("start".equals(command)) {
+            final String rawInputCommand = inputView.inputCommand();
+
+            final ChessGameCommand command = ChessGameCommand.from(rawInputCommand);
+            //ready상태일때만
+            if (command == ChessGameCommand.START) {
                 chessGame.start();
                 outputView.printBoard(chessGame.getBoard().getValue());
             }
-            if (command.startsWith("move")) {
-                List<String> commands = Arrays.asList(command.split(" "));
-                if (commands.size() != 3) {
-                    throw new IllegalArgumentException("이동 명령을 형식에 맞게 입력하세요.");
-                }
-                List<Position> positions = commands.stream()
-                        .filter(splitedCommand -> POSITION_PATTERN.matcher(splitedCommand).matches())
-                        .map(Position::from)
-                        .collect(Collectors.toList());
-                chessGame.move(positions.get(0), positions.get(1));
+            //running상태일대만
+            if (command == ChessGameCommand.MOVE) {
+                final Positions movePositions = Positions.from(rawInputCommand);
+                // TODO: getter대신 메세지보내서 처리하기
+                chessGame.move(movePositions.get(0), movePositions.get(1));
                 outputView.printBoard(chessGame.getBoard().getValue());
                 if (!chessGame.isRunning()) {
                     printResult(chessGame);
                 }
             }
-            if ("end".equals(command)) {
+            //ready + running 상태일때만    finished(x)
+            if (command == ChessGameCommand.END) {
                 if (!chessGame.isRunning()) {
                     break;
                 }
                 chessGame.end();
                 printResult(chessGame);
             }
-            if ("status".equals(command)) {
+            //ready(X) running + finished 둘다 가능
+            if (command == ChessGameCommand.STATUS) {
                 outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
             }
         }
