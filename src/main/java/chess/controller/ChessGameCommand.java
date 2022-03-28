@@ -8,6 +8,7 @@ import chess.domain.command.Start;
 import chess.domain.command.Status;
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public enum ChessGameCommand {
 
@@ -32,7 +33,7 @@ public enum ChessGameCommand {
             return new Move(chessGame);
         }
         return Arrays.stream(ChessGameCommand.values())
-            .filter(it -> it.value.equalsIgnoreCase(inputCommand))
+            .filter(it -> Pattern.matches(it.value, inputCommand))
             .map(command -> command.function.apply(chessGame))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_MESSAGE));
