@@ -111,7 +111,7 @@ public class Board {
     private boolean isSameLine(List<Position> pawnPositions, Position position) {
         return pawnPositions.stream()
             .filter(p -> p != position)
-            .anyMatch(p -> p.isSameAbscissa(position));
+            .anyMatch(p -> p.isSameFile(position));
     }
 
     private double calculateSameLinePawnScore(Color color) {

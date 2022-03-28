@@ -1,13 +1,14 @@
 package chess.view;
 
-import chess.domain.Abscissa;
-import chess.domain.Board;
-import chess.domain.Ordinate;
-import chess.domain.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.Optional;
+
+import chess.domain.Board;
+import chess.domain.File;
+import chess.domain.Position;
+import chess.domain.Rank;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 public class OutputView {
 
@@ -29,17 +30,17 @@ public class OutputView {
     }
 
     public static void printInitialChessBoard(Board board) {
-        for (Ordinate ordinate : Ordinate.values()) {
-            printBoardRowLine(ordinate, board);
+        for (Rank rank : Rank.values()) {
+            printBoardRowLine(rank, board);
         }
         System.out.print(System.lineSeparator());
     }
 
-    public static void printBoardRowLine(Ordinate ordinate, Board board) {
+    public static void printBoardRowLine(Rank rank, Board board) {
         Map<Position, Piece> chessBoard = board.getBoard();
-        for (Abscissa value : Abscissa.values()) {
+        for (File value : File.values()) {
             Optional<Piece> pieceOptional = Optional.ofNullable(
-                chessBoard.get(Position.valueOf(value, ordinate)));
+                chessBoard.get(Position.valueOf(value, rank)));
             String printFormat = pieceOptional.map(PieceMapper::from).orElse(NONE_PIECE);
             System.out.print(printFormat);
         }

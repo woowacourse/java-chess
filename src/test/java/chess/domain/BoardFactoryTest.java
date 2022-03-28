@@ -1,14 +1,16 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import chess.domain.piece.Piece;
 
 public class BoardFactoryTest {
 
@@ -23,9 +25,9 @@ public class BoardFactoryTest {
     @DisplayName("폰들을 생성해서 매핑해준다.")
     void initPawnPosition() {
         List<Position> expected = new ArrayList<>();
-        for (Abscissa value : Abscissa.values()) {
-            expected.add(Position.valueOf(value + Ordinate.TWO.getValue()));
-            expected.add(Position.valueOf(value + Ordinate.SEVEN.getValue()));
+        for (File value : File.values()) {
+            expected.add(Position.valueOf(value + Rank.TWO.getValue()));
+            expected.add(Position.valueOf(value + Rank.SEVEN.getValue()));
         }
 
         assertThat(board.keySet()).containsAll(expected);

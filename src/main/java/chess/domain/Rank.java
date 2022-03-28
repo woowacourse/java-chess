@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 
-public enum Ordinate {
+public enum Rank {
 
     EIGHT("8"),
     SEVEN("7"),
@@ -15,7 +15,7 @@ public enum Ordinate {
 
     private final String value;
 
-    Ordinate(final String value) {
+    Rank(final String value) {
         this.value = value;
     }
 
@@ -27,9 +27,9 @@ public enum Ordinate {
         return Integer.parseInt(value);
     }
 
-    public static Ordinate findOrdinate(int value) {
-        return Arrays.stream(Ordinate.values())
-            .filter(ordinate -> Integer.parseInt(ordinate.value) == value)
+    public static Rank findRank(int value) {
+        return Arrays.stream(Rank.values())
+            .filter(rank -> Integer.parseInt(rank.value) == value)
             .findAny()
             .orElseThrow();
     }

@@ -27,43 +27,43 @@ public class BoardFactory {
     }
 
     private static void placePawns(Map<Position, Piece> pieces) {
-        for (Abscissa value : Abscissa.values()) {
-            pieces.put(Position.valueOf(value, Ordinate.TWO), new Pawn(Color.WHITE));
-            pieces.put(Position.valueOf(value, Ordinate.SEVEN), new Pawn(Color.BLACK));
+        for (File value : File.values()) {
+            pieces.put(Position.valueOf(value, Rank.TWO), new Pawn(Color.WHITE));
+            pieces.put(Position.valueOf(value, Rank.SEVEN), new Pawn(Color.BLACK));
         }
     }
 
     private static void placeRooks(Map<Position, Piece> pieces) {
-        List<Abscissa> rookAbscissa = List.of(Abscissa.a, Abscissa.h);
-        for (Abscissa abscissa : rookAbscissa) {
-            pieces.put(Position.valueOf(abscissa, Ordinate.ONE), new Rook(Color.WHITE));
-            pieces.put(Position.valueOf(abscissa, Ordinate.EIGHT), new Rook(Color.BLACK));
+        List<File> rookFiles = List.of(File.a, File.h);
+        for (File file : rookFiles) {
+            pieces.put(Position.valueOf(file, Rank.ONE), new Rook(Color.WHITE));
+            pieces.put(Position.valueOf(file, Rank.EIGHT), new Rook(Color.BLACK));
         }
     }
 
     private static void placeKnights(Map<Position, Piece> pieces) {
-        List<Abscissa> knightAbscissa = List.of(Abscissa.b, Abscissa.g);
-        for (Abscissa abscissa : knightAbscissa) {
-            pieces.put(Position.valueOf(abscissa, Ordinate.ONE), new Knight(Color.WHITE));
-            pieces.put(Position.valueOf(abscissa, Ordinate.EIGHT), new Knight(Color.BLACK));
+        List<File> knightFiles = List.of(File.b, File.g);
+        for (File file : knightFiles) {
+            pieces.put(Position.valueOf(file, Rank.ONE), new Knight(Color.WHITE));
+            pieces.put(Position.valueOf(file, Rank.EIGHT), new Knight(Color.BLACK));
         }
     }
 
     private static void placeBishops(Map<Position, Piece> pieces) {
-        List<Abscissa> bishopAbscissa = List.of(Abscissa.c, Abscissa.f);
-        for (Abscissa abscissa : bishopAbscissa) {
-            pieces.put(Position.valueOf(abscissa, Ordinate.ONE), new Bishop(Color.WHITE));
-            pieces.put(Position.valueOf(abscissa, Ordinate.EIGHT), new Bishop(Color.BLACK));
+        List<File> bishopFiles = List.of(File.c, File.f);
+        for (File file : bishopFiles) {
+            pieces.put(Position.valueOf(file, Rank.ONE), new Bishop(Color.WHITE));
+            pieces.put(Position.valueOf(file, Rank.EIGHT), new Bishop(Color.BLACK));
         }
     }
 
     private static void placeQueens(Map<Position, Piece> pieces) {
-        pieces.put(Position.valueOf(Abscissa.d, Ordinate.ONE), new Queen(Color.WHITE));
-        pieces.put(Position.valueOf(Abscissa.d, Ordinate.EIGHT), new Queen(Color.BLACK));
+        pieces.put(Position.valueOf(File.d, Rank.ONE), new Queen(Color.WHITE));
+        pieces.put(Position.valueOf(File.d, Rank.EIGHT), new Queen(Color.BLACK));
     }
 
     private static void placeKings(Map<Position, Piece> pieces) {
-        pieces.put(Position.valueOf(Abscissa.e, Ordinate.ONE), new King(Color.WHITE));
-        pieces.put(Position.valueOf(Abscissa.e, Ordinate.EIGHT), new King(Color.BLACK));
+        pieces.put(Position.valueOf(File.e, Rank.ONE), new King(Color.WHITE));
+        pieces.put(Position.valueOf(File.e, Rank.EIGHT), new King(Color.BLACK));
     }
 }

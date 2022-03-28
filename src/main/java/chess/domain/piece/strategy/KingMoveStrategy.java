@@ -17,8 +17,8 @@ public class KingMoveStrategy implements MoveStrategy {
     }
 
     private boolean isMovableRange(Position fromPosition, Position toPosition) {
-        return Math.abs(fromPosition.getAbscissaDifference(toPosition)) == RANGE
-            || Math.abs(fromPosition.getOrdinateDifference(toPosition)) == RANGE;
+        return Math.abs(fromPosition.getFileDifference(toPosition)) == RANGE
+            || Math.abs(fromPosition.getRankDifference(toPosition)) == RANGE;
     }
 
     @Override

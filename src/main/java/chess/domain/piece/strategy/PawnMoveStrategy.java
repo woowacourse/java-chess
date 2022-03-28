@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Ordinate;
 import chess.domain.Position;
+import chess.domain.Rank;
 
 public class PawnMoveStrategy implements MoveStrategy {
 
@@ -18,19 +18,19 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     public boolean isInitialPosition(Position fromPosition) {
-        return fromPosition.isSameOrdinate(Ordinate.TWO)
-            || fromPosition.isSameOrdinate(Ordinate.SEVEN);
+        return fromPosition.isSameRank(Rank.TWO)
+            || fromPosition.isSameRank(Rank.SEVEN);
     }
 
     private boolean isMovableRange(Position fromPosition, Position toPosition, int range) {
-        return fromPosition.isSameAbscissa(toPosition)
-            && Math.abs(fromPosition.getOrdinateDifference(toPosition)) == range;
+        return fromPosition.isSameFile(toPosition)
+            && Math.abs(fromPosition.getRankDifference(toPosition)) == range;
     }
 
     @Override
     public boolean isCatchable(Position fromPosition, Position toPosition) {
         return new DiagonalMoveStrategy().isMovable(fromPosition, toPosition)
-            && Math.abs(fromPosition.getAbscissaDifference(toPosition)) == RANGE
-            && Math.abs(fromPosition.getOrdinateDifference(toPosition)) == RANGE;
+            && Math.abs(fromPosition.getFileDifference(toPosition)) == RANGE
+            && Math.abs(fromPosition.getRankDifference(toPosition)) == RANGE;
     }
 }

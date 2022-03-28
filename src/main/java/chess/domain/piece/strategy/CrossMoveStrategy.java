@@ -6,7 +6,7 @@ public class CrossMoveStrategy implements MoveStrategy {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameAbscissa(toPosition) || fromPosition.isSameOrdinate(toPosition);
+        return fromPosition.isSameFile(toPosition) || fromPosition.isSameRank(toPosition);
     }
 
     @Override

@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.Arrays;
 
-public enum Abscissa {
+public enum File {
     a(1),
     b(2),
     c(3),
@@ -14,7 +14,7 @@ public enum Abscissa {
 
     private final int coordinate;
 
-    Abscissa(int coordinate) {
+    File(int coordinate) {
         this.coordinate = coordinate;
     }
 
@@ -22,9 +22,9 @@ public enum Abscissa {
         return coordinate;
     }
 
-    public static Abscissa findAbscissa(int value) {
-        return Arrays.stream(Abscissa.values())
-            .filter(abscissa -> abscissa.coordinate == value)
+    public static File findFile(int value) {
+        return Arrays.stream(File.values())
+            .filter(file -> file.coordinate == value)
             .findAny()
             .orElseThrow();
     }

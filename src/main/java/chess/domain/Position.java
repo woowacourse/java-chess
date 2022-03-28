@@ -9,27 +9,27 @@ public class Position {
     private static final String NOT_EXIST_POSITION = "[ERROR] 해당 포지션은 체스 보드에 존재하지 않습니다.";
     private static final Map<String, Position> CACHE = new HashMap<>();
 
-    private final Abscissa abscissa;
-    private final Ordinate ordinate;
+    private final File file;
+    private final Rank rank;
 
     static {
-        Arrays.stream(Abscissa.values())
+        Arrays.stream(File.values())
             .forEach(Position::savePosition);
     }
 
-    private Position(final Abscissa abscissa, final Ordinate ordinate) {
-        this.abscissa = abscissa;
-        this.ordinate = ordinate;
+    private Position(final File file, final Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    private static void savePosition(final Abscissa abscissa) {
-        Arrays.stream(Ordinate.values())
-            .forEach(ordinate -> CACHE.put(makeKey(abscissa, ordinate),
-                new Position(abscissa, ordinate)));
+    private static void savePosition(final File file) {
+        Arrays.stream(Rank.values())
+            .forEach(rank -> CACHE.put(makeKey(file, rank),
+                new Position(file, rank)));
     }
 
-    private static String makeKey(final Abscissa abscissaValue, final Ordinate ordinateValue) {
-        return abscissaValue.toString() + ordinateValue.getValue();
+    private static String makeKey(final File file, final Rank rank) {
+        return file.toString() + rank.getValue();
     }
 
     public static Position valueOf(final String key) {
@@ -40,38 +40,38 @@ public class Position {
         return position;
     }
 
-    public static Position valueOf(final Abscissa abscissa, final Ordinate ordinate) {
-        return valueOf(makeKey(abscissa, ordinate));
+    public static Position valueOf(final File file, final Rank rank) {
+        return valueOf(makeKey(file, rank));
     }
 
-    public boolean isSameAbscissa(Position position) {
-        return abscissa == position.abscissa;
+    public boolean isSameFile(Position position) {
+        return file == position.file;
     }
 
-    public boolean isSameOrdinate(Position position) {
-        return ordinate == position.ordinate;
+    public boolean isSameRank(Position position) {
+        return rank == position.rank;
     }
 
-    public boolean isSameOrdinate(final Ordinate ordinate) {
-        return this.ordinate == ordinate;
+    public boolean isSameRank(final Rank rank) {
+        return this.rank == rank;
     }
 
-    public int getOrdinateDifference(Position position) {
-        return ordinate.getCoordinate() - position.ordinate.getCoordinate();
+    public int getRankDifference(Position position) {
+        return rank.getCoordinate() - position.rank.getCoordinate();
     }
 
-    public int getAbscissaDifference(Position position) {
-        return abscissa.getCoordinate() - position.abscissa.getCoordinate();
+    public int getFileDifference(Position position) {
+        return file.getCoordinate() - position.file.getCoordinate();
     }
 
     public Position getIncreasedOneStepPosition(int xDifference, int yDifference) {
-        int newX = abscissa.getCoordinate() + xDifference;
-        int newY = ordinate.getCoordinate() + yDifference;
+        int newX = file.getCoordinate() + xDifference;
+        int newY = rank.getCoordinate() + yDifference;
 
-        return Position.valueOf(Abscissa.findAbscissa(newX), Ordinate.findOrdinate(newY));
+        return Position.valueOf(File.findFile(newX), Rank.findRank(newY));
     }
 
-    public Abscissa getAbscissa() {
-        return abscissa;
+    public File getFile() {
+        return file;
     }
 }
