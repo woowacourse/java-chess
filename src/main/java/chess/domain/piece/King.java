@@ -23,8 +23,7 @@ public final class King extends Piece {
     }
 
     King(Color color) {
-        super(color);
-        this.score = 0;
+        super(color, 0);
     }
 
     @Override

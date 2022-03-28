@@ -19,8 +19,7 @@ public final class Rook extends Piece {
     }
 
     Rook(Color color) {
-        super(color);
-        this.score = 5;
+        super(color, 5);
     }
 
     @Override

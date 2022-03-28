@@ -8,11 +8,11 @@ public abstract class Piece {
     private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
 
     final Color color;
-    double score;
+    final double score;
 
-    Piece(Color color) {
+    Piece(Color color, double score) {
         this.color = color;
-        this.score = 0;
+        this.score = score;
     }
 
     public static Piece from(File file, Rank rank) {

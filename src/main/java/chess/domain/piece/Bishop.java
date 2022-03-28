@@ -19,8 +19,7 @@ public final class Bishop extends Piece {
     }
 
     Bishop(Color color) {
-        super(color);
-        this.score = 3;
+        super(color, 3);
     }
 
     @Override

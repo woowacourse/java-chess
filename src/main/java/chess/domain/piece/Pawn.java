@@ -21,9 +21,8 @@ public final class Pawn extends Piece {
     private boolean start;
 
     Pawn(Color color) {
-        super(color);
+        super(color, 1);
         this.start = true;
-        this.score = 1;
     }
 
     @Override
