@@ -1,21 +1,36 @@
 package chess.domain;
 
+import static chess.domain.Rank.*;
+import static chess.domain.Row.*;
+
+import chess.domain.piece.Blank;
+import chess.domain.piece.Piece;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
 
-    private final Map<Row, Rank> board = new EnumMap<>(Row.class);
+    private final Map<Row, Rank> board;
 
-    public Board() {
-        board.put(Row.EIGHT, Rank.createPiecesExceptPawn(Team.BLACK, 8));
-        board.put(Row.SEVEN, Rank.createPawn(Team.BLACK, 7));
+    private Board(Map<Row, Rank> board) {
+        this.board = board;
+    }
+
+    public static Board initBoard() {
+        Map<Row, Rank> board = new EnumMap<>(Row.class);
+        initPieces(board);
+        return new Board(board);
+    }
+
+    private static void initPieces(Map<Row, Rank> board) {
+        board.put(EIGHT, createPiecesExceptPawn(Team.BLACK, 8));
+        board.put(SEVEN, createPawn(Team.BLACK, 7));
         for (int i = 3; i <= 6; i++) {
-            board.put(Row.find(i), Rank.createBlank(i));
+            board.put(find(i), createBlank(i));
         }
-        board.put(Row.TWO, Rank.createPawn(Team.WHITE, 2));
-        board.put(Row.ONE, Rank.createPiecesExceptPawn(Team.WHITE, 1));
+        board.put(TWO, createPawn(Team.WHITE, 2));
+        board.put(ONE, createPiecesExceptPawn(Team.WHITE, 1));
     }
 
     public Piece getPiece(Position position) {

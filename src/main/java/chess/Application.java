@@ -14,7 +14,7 @@ public class Application {
         Command command = Command.of(input.get(0));
         Team team = Team.WHITE;
         if (command.isStart()) {
-            Board board = new Board();
+            Board board = Board.initBoard();
             OutputView.printChessBoard(board.getBoard());
             input = InputView.requestCommand();
             command = Command.of(input.get(0));

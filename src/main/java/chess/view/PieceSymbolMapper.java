@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 
 public enum PieceSymbolMapper {
     PAWN("P", "p"),

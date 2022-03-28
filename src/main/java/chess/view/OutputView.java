@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Rank;
 import chess.domain.Row;
 import chess.domain.Team;
