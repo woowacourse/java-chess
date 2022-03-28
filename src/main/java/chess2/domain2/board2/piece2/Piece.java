@@ -12,6 +12,18 @@ public class Piece {
         this.type = type;
     }
 
+    public boolean hasColorOf(Color color) {
+        return this.color == color;
+    }
+
+    public boolean hasTypeOf(PieceType type) {
+        return this.type == type;
+    }
+
+    PieceType type() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
