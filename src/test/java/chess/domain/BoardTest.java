@@ -79,7 +79,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("폰이 같은 file 에 존재할 경우의 게임 점수 계산")
+    @DisplayName("폰이 같은 x 에 존재할 경우의 게임 점수 계산")
     void showStatusPawnScore0_5() {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.from("a1"), new Pawn(Color.WHITE));

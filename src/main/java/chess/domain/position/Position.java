@@ -6,21 +6,21 @@ import java.util.Objects;
 
 public class Position {
 
-    private static final int FILE_INDEX = 0;
+    private static final int COORDINATE_X_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
-    private final File file;
+    private final CoordinateX coordinateX;
     private final Rank rank;
 
     private static final List<Position> TOTAL = new ArrayList<>();
 
-    private Position(final File file, final Rank rank) {
-        this.file = file;
+    private Position(final CoordinateX coordinateX, final Rank rank) {
+        this.coordinateX = coordinateX;
         this.rank = rank;
     }
 
-    public static Position of(final File file, final Rank rank) {
-        Position newPosition = new Position(file, rank);
+    public static Position of(final CoordinateX coordinateX, final Rank rank) {
+        Position newPosition = new Position(coordinateX, rank);
         return TOTAL.stream()
                 .filter(position -> position.equals(newPosition))
                 .findFirst()
@@ -28,18 +28,18 @@ public class Position {
     }
 
     public static Position from(final String position) {
-        File file = File.from(position.substring(FILE_INDEX, RANK_INDEX));
+        CoordinateX coordinateX = CoordinateX.from(position.substring(COORDINATE_X_INDEX, RANK_INDEX));
         Rank rank = Rank.from(Integer.parseInt(position.substring(RANK_INDEX)));
 
-        return Position.of(file, rank);
+        return Position.of(coordinateX, rank);
     }
 
-    public File getFile() {
-        return file;
+    public CoordinateX getCoordinateX() {
+        return coordinateX;
     }
 
-    public int getFileOrder() {
-        return file.getOrder();
+    public int getCoordinateXOrder() {
+        return coordinateX.getOrder();
     }
 
     public int getRank() {
@@ -53,11 +53,11 @@ public class Position {
 
         Position position = (Position) other;
 
-        return file == position.file && rank == position.rank;
+        return coordinateX == position.coordinateX && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(coordinateX, rank);
     }
 }

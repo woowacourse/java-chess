@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
+import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -37,14 +37,14 @@ public class Output {
     }
 
     private static void printBoard(final Rank rank, final Map<Position, Piece> board) {
-        for (final File file : File.sorted()) {
-            printBoard(file, rank, board);
+        for (final CoordinateX coordinateX : CoordinateX.sorted()) {
+            printBoard(coordinateX, rank, board);
         }
         System.out.println();
     }
 
-    private static void printBoard(final File file, final Rank rank, final Map<Position, Piece> board) {
-        final Piece target = board.get(Position.of(file, rank));
+    private static void printBoard(final CoordinateX coordinateX, final Rank rank, final Map<Position, Piece> board) {
+        final Piece target = board.get(Position.of(coordinateX, rank));
         if (target != null) {
             System.out.print(target.getName());
             return;

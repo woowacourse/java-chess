@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
 
 public class Queen extends Piece {
 
