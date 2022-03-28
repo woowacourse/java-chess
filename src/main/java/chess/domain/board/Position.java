@@ -69,6 +69,13 @@ public class Position {
         }
     }
 
+    public void checkOtherPiecesInTarget(final Position targetPosition, final List<Position> otherPositions) {
+        if (otherPositions.stream()
+                .anyMatch(other -> other == targetPosition)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
     public void checkOtherPiecesInPathToTarget(final Position targetPosition, final List<Position> positions) {
         if (this == targetPosition) {
             return;

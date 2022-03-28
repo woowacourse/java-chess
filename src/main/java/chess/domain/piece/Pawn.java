@@ -58,6 +58,7 @@ public class Pawn extends Piece {
         final BiPredicate<Integer, Integer> moveCondition = (fileMove, rankMove) ->
                 fileMove == 0 && rankMove == 1 * directionValue;
         position.validateTargetPosition(targetPosition, moveCondition, false);
+        position.checkOtherPiecesInTarget(targetPosition, convertToPositions(otherPieces));
     }
 
     private void validateFirstMove(final Position targetPosition, final List<Piece> otherPieces,
@@ -66,6 +67,7 @@ public class Pawn extends Piece {
                 fileMove == 0 && (rankMove == 1 * directionValue || rankMove == 2 * directionValue);
         position.validateTargetPosition(targetPosition, firstMoveCondition, false);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
+        position.checkOtherPiecesInTarget(targetPosition, convertToPositions(otherPieces));
     }
 
     private void validateCatch(final Position targetPosition, final List<Piece> otherPieces) {
