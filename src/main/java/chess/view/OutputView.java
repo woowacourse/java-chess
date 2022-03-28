@@ -1,8 +1,5 @@
 package chess.view;
 
-import static chess.view.InputView.END_COMMAND;
-import static chess.view.InputView.START_COMMAND;
-
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -10,6 +7,8 @@ import java.util.Map;
 public class OutputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String GAME_COMMAND_FORMAT = "> %s : %s%n";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
     private static final String GAME_START_COMMAND_NAME = "게임 시작";
     private static final String GAME_MOVE_COMMAND_NAME = "게임 이동";
     private static final String GAME_END_COMMAND_NAME = "게임 종료";
@@ -78,18 +77,6 @@ public class OutputView {
 
     public void printStatus(double statusOfWhite, double statusOfBlack) {
         System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
-    }
-
-    public void printBlackWin() {
-        System.out.println("흑색 진영의 승리입니다.");
-    }
-
-    public void printWhiteWin() {
-        System.out.println("백색 진영의 승리입니다.");
-    }
-
-    public void printDraw() {
-        System.out.println("무승부입니다.");
     }
 
     public void printResultMessage(final String resultMessage) {

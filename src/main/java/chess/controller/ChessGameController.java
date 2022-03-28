@@ -20,7 +20,7 @@ public class ChessGameController {
 
         while (!chessGame.isEnd()) {
             final String rawInputCommand = inputView.inputCommand();
-            final Command command = ChessGameCommands.of(rawInputCommand, chessGame);
+            final Command command = ChessGameCommand.of(rawInputCommand, chessGame);
             command.execute(rawInputCommand, outputView);
         }
     }

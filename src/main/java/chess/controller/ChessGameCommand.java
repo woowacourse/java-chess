@@ -8,11 +8,12 @@ import chess.domain.command.Start;
 import chess.domain.command.Status;
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
-public enum ChessGameCommands {
+public enum ChessGameCommand {
 
     START("start", Start::new),
-    MOVE("move", Move::new),
+    MOVE("move [a-h][1-9] [a-h][1-9]", Move::new),
     END("end", End::new),
     STATUS("status", Status::new),
     ;
@@ -22,17 +23,17 @@ public enum ChessGameCommands {
     private final String value;
     private final Function<ChessGame, Command> function;
 
-    ChessGameCommands(String value, Function<ChessGame, Command> function) {
+    ChessGameCommand(String value, Function<ChessGame, Command> function) {
         this.value = value;
         this.function = function;
     }
 
-    public static ChessGameCommands from(final String inputCommand) {
+    public static ChessGameCommand from(final String inputCommand) {
         if (inputCommand.startsWith(MOVE.value)) {
             return MOVE;
         }
-        return Arrays.stream(ChessGameCommands.values())
-            .filter(it -> it.value.equalsIgnoreCase(inputCommand))
+        return Arrays.stream(ChessGameCommand.values())
+            .filter(it -> Pattern.matches(it.value, inputCommand))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_MESSAGE));
     }
@@ -41,7 +42,7 @@ public enum ChessGameCommands {
         if (inputCommand.startsWith(MOVE.value)) {
             return new Move(chessGame);
         }
-        return Arrays.stream(ChessGameCommands.values())
+        return Arrays.stream(ChessGameCommand.values())
             .filter(it -> it.value.equalsIgnoreCase(inputCommand))
             .map(command -> command.function.apply(chessGame))
             .findFirst()

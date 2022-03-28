@@ -1,36 +1,33 @@
 package chess.view;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
-
-    static final String START_COMMAND = "start";
-    static final String END_COMMAND = "end";
-    private static final String START_COMMAND_EXCEPTION_MESSAGE =
-            "명령어는 " + START_COMMAND + "와 " + END_COMMAND + "만 입력하실 수 있습니다.";
+    private static final String ERROR_PREFIX = "[ERROR] : ";
+    private static final String NOT_ALLOW_EMPTY = "빈값을 입력할 수 없습니다.";
 
     public String inputCommand() {
-        return SCANNER.nextLine();
-    }
-
-    public boolean inputStartCommand() {
-        String rawStartCommand = SCANNER.nextLine();
+        final String rawInput;
         try {
-            return isStarting(rawStartCommand);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return inputStartCommand();
+            rawInput = SCANNER.nextLine();
+            validateInput(rawInput);
+            return rawInput;
+        } catch (Exception e) {
+            System.out.println(ERROR_PREFIX + e.getMessage());
+            return inputCommand();
         }
     }
 
-    private boolean isStarting(String rawStartCommand) {
-        if (START_COMMAND.equalsIgnoreCase(rawStartCommand)) {
-            return true;
+    private void validateInput(final String rawInput) {
+        checkNullOrEmpty(rawInput);
+    }
+
+    private void checkNullOrEmpty(final String rawInput) {
+        Objects.requireNonNull(rawInput, NOT_ALLOW_EMPTY);
+        if (rawInput.trim().isEmpty()) {
+            throw new IllegalArgumentException(NOT_ALLOW_EMPTY);
         }
-        if (END_COMMAND.equalsIgnoreCase(rawStartCommand)) {
-            return false;
-        }
-        throw new IllegalArgumentException(START_COMMAND_EXCEPTION_MESSAGE);
     }
 }
