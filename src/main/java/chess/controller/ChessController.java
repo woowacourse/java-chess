@@ -40,12 +40,8 @@ public class ChessController {
                 continue;
             }
 
-            boolean isFinished = board.move(request.getSource(), request.getTarget());
+            board.move(request.getSource(), request.getTarget());
             OutputView.printChessGameBoard(board.getBoard());
-
-            if (isFinished) {
-                break;
-            }
         }
     }
 }

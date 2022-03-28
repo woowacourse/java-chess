@@ -26,13 +26,12 @@ public class Board {
         this.gameFlow = gameFlow;
     }
 
-    public boolean move(Position source, Position target) {
+    public void move(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
         boolean isGameFinished = board.get(target) instanceof King;
         changePieces(source, target);
         gameFlow.nextState(isGameFinished);
-        return isGameFinished;
     }
 
     private void turnDecide(Position source) {

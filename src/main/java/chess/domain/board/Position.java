@@ -29,21 +29,6 @@ public class Position {
         return this.file == other.file;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Position position = (Position)o;
-        return rank == position.rank && file == position.file;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, file);
-    }
-
     public boolean isRankOf(Rank otherRank) {
         return rank == otherRank;
     }
@@ -99,5 +84,28 @@ public class Position {
         return positions.stream()
             .filter(this::isAllDirectional)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Position position = (Position)o;
+        return rank == position.rank && file == position.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, file);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
