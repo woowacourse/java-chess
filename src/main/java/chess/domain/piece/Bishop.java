@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
+import java.util.function.Consumer;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
-import java.util.function.Consumer;
 
 public final class Bishop extends Piece {
     private static final int SCORE = 3;
@@ -16,7 +17,7 @@ public final class Bishop extends Piece {
                      Position afterPosition,
                      Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION_EXCEPTION);
         }
         moveFunction.accept(this);
     }

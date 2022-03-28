@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
+import java.util.function.Consumer;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
-import java.util.function.Consumer;
 
 public final class Rook extends Piece {
     private static final int NOT_MOVED_DISTANCE = 0;
@@ -15,7 +16,7 @@ public final class Rook extends Piece {
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION_EXCEPTION);
         }
         moveFunction.accept(this);
     }

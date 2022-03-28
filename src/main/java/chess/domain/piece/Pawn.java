@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
+import java.util.function.Consumer;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
-import java.util.function.Consumer;
 
 public final class Pawn extends Piece {
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
@@ -19,7 +20,7 @@ public final class Pawn extends Piece {
     @Override
     public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canMove(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION_EXCEPTION);
         }
         moveFunction.accept(this);
         this.firstMove = false;
@@ -28,7 +29,7 @@ public final class Pawn extends Piece {
     @Override
     public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
         if (!canCapture(beforePosition, afterPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_TARGET_POSITION_EXCEPTION);
         }
         moveFunction.accept(this);
         this.firstMove = false;

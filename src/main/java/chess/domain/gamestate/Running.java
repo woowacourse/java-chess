@@ -4,6 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 public class Running implements State {
+    private static final String INVALID_STATE_RUNNING_START_EXCEPTION = "진행 중일 때는 시작할 수 없습니다.";
+    private static final String INVALID_STATE_RESULT_EXCEPTION = "아직 승패를 판정할 수 없습니다.";
+
     private final Board board;
 
     public Running(Board board) {
@@ -12,7 +15,7 @@ public class Running implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException("진행 중일 때는 시작할 수 없습니다.");
+        throw new IllegalStateException(INVALID_STATE_RUNNING_START_EXCEPTION);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class Running implements State {
 
     @Override
     public int hasBlackWon() {
-        throw new IllegalStateException("아직 승패를 판정할 수 없습니다.");
+        throw new IllegalStateException(INVALID_STATE_RESULT_EXCEPTION);
     }
 
     @Override

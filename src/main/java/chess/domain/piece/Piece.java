@@ -1,10 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.Camp;
-import chess.domain.board.Position;
 import java.util.function.Consumer;
 
+import chess.domain.Camp;
+import chess.domain.board.Position;
+
 public abstract class Piece {
+    protected static final String INVALID_TARGET_POSITION_EXCEPTION = "이동할 수 없는 위치입니다.";
+
     private final Camp camp;
 
     protected Piece(Camp camp) {
