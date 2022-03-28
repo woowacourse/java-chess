@@ -46,4 +46,9 @@ public enum Rank {
             .filter(rank -> start < rank.value && rank.value < end)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

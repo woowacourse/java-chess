@@ -104,10 +104,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-            "row=" + file +
-            ", col=" + rank +
-            '}';
+        return file.toString() + rank.toString();
     }
 
     public boolean isSameFile(File file) {

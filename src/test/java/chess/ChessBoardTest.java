@@ -21,7 +21,9 @@ class ChessBoardTest {
     @Test
     @DisplayName("움직이려는 위치에 기물이 존재하지 않으면 예외 발생")
     void selectedNotFoundPieces() {
-        ChessBoard chessBoard = new ChessBoard(List.of(), Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(List.of(
+            new King(Color.WHITE, new Position(E, FIVE)),
+            new King(Color.BLACK, new Position(E, SEVEN))), Color.WHITE);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(D, FIVE), new Position(F, SIX)))
             .isInstanceOf(java.lang.IllegalArgumentException.class);
@@ -31,7 +33,10 @@ class ChessBoardTest {
     @DisplayName("from과 to 위치가 동일한 경우 예외발생")
     void selectSameFromAndToPosition() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
+            List.of(
+                new King(Color.BLACK, new Position(A, SIX)),
+                new King(Color.WHITE, new Position(B, SIX)),
+                new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(A, SEVEN)))
             .isInstanceOf(java.lang.IllegalArgumentException.class);
@@ -41,7 +46,10 @@ class ChessBoardTest {
     @DisplayName("움직일 수 없는 위치로 기물을 이동시킬 경우 예외 발생")
     void movePieceToUnmovablePosition() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
+            List.of(
+                new King(Color.WHITE, new Position(H, FIVE)),
+                new King(Color.BLACK, new Position(H, SEVEN)),
+                new Pawn(Color.BLACK, new Position(A, SEVEN))), Color.BLACK);
 
         assertThatThrownBy(() -> chessBoard.move(new Position(A, SEVEN), new Position(B, SEVEN)))
             .isInstanceOf(IllegalArgumentException.class);
@@ -51,7 +59,8 @@ class ChessBoardTest {
     @DisplayName("같은 플레이어가 연속해서 기물을 움직일 경우 예외 발생")
     void throwExceptionWhenMoveSameColorPieceSubsequently() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new King(Color.WHITE, new Position(E, FIVE)),
+            List.of(
+                new King(Color.WHITE, new Position(E, FIVE)),
                 new King(Color.BLACK, new Position(B, FIVE))), Color.WHITE);
 
         chessBoard.move(new Position(E, FIVE), new Position(E, SIX));
@@ -86,6 +95,7 @@ class ChessBoardTest {
     void throwExceptionWhenMovePieceToSameColorPiecePosition() {
         ChessBoard chessBoard = new ChessBoard(
             List.of(new King(Color.WHITE, new Position(E, FIVE)),
+                new King(Color.BLACK, new Position(E, SEVEN)),
                 new Pawn(Color.WHITE, new Position(E, SIX))), Color.WHITE);
 
         assertAll(() -> {
@@ -93,6 +103,7 @@ class ChessBoardTest {
                 .isInstanceOf(java.lang.IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
                 new King(Color.WHITE, new Position(E, FIVE)),
+                new King(Color.BLACK, new Position(E, SEVEN)),
                 new Pawn(Color.WHITE, new Position(E, SIX)));
         });
     }
@@ -102,13 +113,19 @@ class ChessBoardTest {
     @DisplayName("움직일 때 장애물이 있을 경우 예외 발생")
     void throwExceptionWhenHasObstacleMoveToDestination(Position from, Position to,
         Position obstacle) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Queen(Color.WHITE, from),
-            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(
+                new King(Color.WHITE, new Position(H, FIVE)),
+                new King(Color.BLACK, new Position(H, SEVEN)),
+                new Queen(Color.WHITE, from),
+                new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
         assertAll(() -> {
             assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(java.lang.IllegalArgumentException.class);
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(H, FIVE)),
+                new King(Color.BLACK, new Position(H, SEVEN)),
                 new Queen(Color.WHITE, from),
                 new Pawn(Color.BLACK, obstacle));
         });
@@ -131,12 +148,18 @@ class ChessBoardTest {
     @MethodSource("provideOverObstacle")
     @DisplayName("나이트는 기물을 넘어서 이동 할 수 있다.")
     void moveKnightOverObstacle(Position from, Position to, Position obstacle) {
-        ChessBoard chessBoard = new ChessBoard(List.of(new Knight(Color.WHITE, from),
-            new Pawn(Color.BLACK, obstacle)), Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(
+                new King(Color.WHITE, new Position(A, FIVE)),
+                new King(Color.BLACK, new Position(A, SEVEN)),
+                new Knight(Color.WHITE, from),
+                new Pawn(Color.BLACK, obstacle)), Color.WHITE);
 
         assertAll(() -> {
             assertThatCode(() -> chessBoard.move(from, to)).doesNotThrowAnyException();
             assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+                new King(Color.WHITE, new Position(E, FIVE)),
+                new King(Color.BLACK, new Position(E, SEVEN)),
                 new Knight(Color.WHITE, to),
                 new Pawn(Color.BLACK, obstacle));
         });
@@ -155,12 +178,17 @@ class ChessBoardTest {
     @DisplayName("폰을 제외한 기물이 이동하는 위치에 기물이 있으면 해당 기물을 제거")
     void removeTargetPieceByMove() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Queen(Color.WHITE, new Position(D, FOUR)),
+            List.of(
+                new King(Color.WHITE, new Position(H, FIVE)),
+                new King(Color.BLACK, new Position(H, SEVEN)),
+                new Queen(Color.WHITE, new Position(D, FOUR)),
                 new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
 
         chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
 
         assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+            new King(Color.WHITE, new Position(H, FIVE)),
+            new King(Color.BLACK, new Position(H, SEVEN)),
             new Queen(Color.WHITE, new Position(D, FIVE)));
     }
 
@@ -168,12 +196,17 @@ class ChessBoardTest {
     @DisplayName("폰은 대각선에 위치한 기물을 제거할 수 있다.")
     void removeTargetPieceByPawn() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
+            List.of(
+                new King(Color.WHITE, new Position(H, FIVE)),
+                new King(Color.BLACK, new Position(H, SEVEN)),
+                new Pawn(Color.WHITE, new Position(D, FOUR)),
                 new Pawn(Color.BLACK, new Position(E, FIVE))), Color.WHITE);
 
         chessBoard.move(new Position(D, FOUR), new Position(E, FIVE));
 
         assertThat(chessBoard.getPieces()).containsExactlyInAnyOrder(
+            new King(Color.WHITE, new Position(H, FIVE)),
+            new King(Color.BLACK, new Position(H, SEVEN)),
             new Pawn(Color.WHITE, new Position(E, FIVE))
         );
     }
@@ -207,10 +240,13 @@ class ChessBoardTest {
     @DisplayName("동일한 기물들 기본 점수 계산")
     void calculateSameFilePawnScore() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new Pawn(Color.WHITE, new Position(D, FOUR)),
+            List.of(
+                new King(Color.WHITE, new Position(A, ONE)),
+                new Pawn(Color.WHITE, new Position(D, FOUR)),
                 new Pawn(Color.WHITE, new Position(D, FIVE)),
                 new Pawn(Color.WHITE, new Position(D, SIX)),
                 new Rook(Color.WHITE, new Position(D, SEVEN)),
+                new King(Color.BLACK, new Position(A, TWO)),
                 new Pawn(Color.BLACK, new Position(D, THREE)),
                 new Pawn(Color.BLACK, new Position(E, THREE))), Color.WHITE);
 
@@ -226,11 +262,61 @@ class ChessBoardTest {
     @DisplayName("상대방 킹이 없다면 게임 종료")
     void gameEndWhenKingCaptured() {
         ChessBoard chessBoard = new ChessBoard(
-            List.of(new King(Color.WHITE, new Position(D, FOUR))), Color.WHITE);
+            List.of(new King(Color.WHITE, new Position(D, FOUR)),
+                new King(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
+
+        chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
 
         assertAll(() -> {
             assertThat(chessBoard.isFinished()).isTrue();
             assertThat(chessBoard.getWinner()).isEqualTo(Color.WHITE);
         });
+    }
+
+    @Test
+    @DisplayName("게임이 종료된 후 체스 이동 불가")
+    void throwExceptionWhenMovePieceAfterEndGame() {
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new King(Color.WHITE, new Position(D, FOUR)),
+                new King(Color.BLACK, new Position(D, FIVE))),
+            Color.WHITE
+        );
+
+        chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
+
+        assertThatThrownBy(() -> chessBoard.move(new Position(D, FIVE), new Position(D, SIX)))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("동일한 위치의 기물이 있는 경우 예외 발생")
+    void throwExceptionWhenHasSamePositionPieces() {
+        assertThatThrownBy(() ->
+            new ChessBoard(List.of(
+                new King(Color.WHITE, new Position(D, FOUR)),
+                new King(Color.BLACK, new Position(D, FOUR))), Color.WHITE))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("각 색깔 별로 킹이 없는 경우 예외 발생")
+    void throwExceptionWhenNotHasEachColorKing() {
+        assertThatThrownBy(() ->
+            new ChessBoard(List.of(
+                new King(Color.WHITE, new Position(D, FOUR))), Color.WHITE))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("체스 게임 종료 전에 승자 확인 시 예외 발생")
+    void throwExceptionWhenGetWinnerBeforeFinishGame() {
+        ChessBoard chessBoard = new ChessBoard(
+            List.of(new King(Color.WHITE, new Position(D, FOUR)),
+                new King(Color.BLACK, new Position(D, FIVE))),
+            Color.WHITE
+        );
+
+        assertThatThrownBy(() -> chessBoard.getWinner())
+            .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -55,8 +55,8 @@ public class OutputView {
     }
 
     public static void printScores(BigDecimal whiteScore, BigDecimal blackScore) {
-        System.out.printf("WHITE 점수: %s %n", whiteScore.toPlainString());
-        System.out.printf("BLACK 점수: %s %n", blackScore.toPlainString());
+        System.out.printf("WHITE 점수: %s%n", whiteScore.toPlainString());
+        System.out.printf("BLACK 점수: %s%n", blackScore.toPlainString());
     }
 
     public static void printWinner(Color winnerColor) {

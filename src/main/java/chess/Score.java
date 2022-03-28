@@ -7,10 +7,12 @@ import java.util.*;
 
 public class Score {
 
+    public static final BigDecimal PAWN_DEDUCT_POINT = new BigDecimal("0.5");
+
     private final BigDecimal value;
 
     public Score(List<Piece> pieces) {
-        this.value = getDefaultScore(pieces).subtract(getDeductionOfPawn(pieces));
+        this.value = getDefaultScore(pieces).subtract(getDeductPointOfPawn(pieces));
     }
 
     public BigDecimal getValue() {
@@ -23,8 +25,8 @@ public class Score {
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private BigDecimal getDeductionOfPawn(List<Piece> pieces) {
-        return new BigDecimal("0.5").multiply(new BigDecimal(numberOfPawn(pieces)));
+    private BigDecimal getDeductPointOfPawn(List<Piece> pieces) {
+        return PAWN_DEDUCT_POINT.multiply(new BigDecimal(numberOfPawn(pieces)));
     }
 
     private long numberOfPawn(List<Piece> pieces) {
