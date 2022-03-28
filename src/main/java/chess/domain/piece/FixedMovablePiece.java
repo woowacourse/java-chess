@@ -13,10 +13,8 @@ public abstract class FixedMovablePiece extends Piece {
         super(color, name);
     }
 
-    @Override
-    public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
-
-    protected Map<Direction, List<Position>> getMovablePositionsByDirections(Position position, List<Direction> directions) {
+    protected Map<Direction, List<Position>> getMovablePositionsByDirections(Position position,
+                                                                             List<Direction> directions) {
         Map<Direction, List<Position>> movable = new HashMap<>();
         for (Direction direction : directions) {
             movable.put(direction, new ArrayList<>());
@@ -32,10 +30,5 @@ public abstract class FixedMovablePiece extends Piece {
             return;
         }
         movable.get(direction).add(nextPosition);
-    }
-
-    @Override
-    public double getPoint() {
-        return 0;
     }
 }
