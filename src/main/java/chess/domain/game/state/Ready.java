@@ -3,6 +3,7 @@ package chess.domain.game.state;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
+import chess.domain.piece.Color;
 
 public class Ready implements GameState{
 
@@ -36,6 +37,11 @@ public class Ready implements GameState{
 
     @Override
     public Board getBoard() {
+        throw new IllegalStateException(NOT_STARTED_GAME);
+    }
+
+    @Override
+    public double calculateScore(Color color) {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 

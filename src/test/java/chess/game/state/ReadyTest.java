@@ -9,6 +9,7 @@ import chess.domain.Position;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,14 @@ public class ReadyTest {
     @DisplayName("Ready 보드의 상태를 꺼내려고 하면 예외가 발생한다")
     void getBoardWhenReadyState() {
         assertThatThrownBy(() -> state.getBoard())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("보드가 초기화되지 않은 상태에서 점수 계산을 하려고 하면 에외가 발생한다")
+    void calculateScoreWhenReadyState() {
+        assertThatThrownBy(() -> state.calculateScore(Color.BLACK))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 시작되지 않았습니다.");
     }
