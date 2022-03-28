@@ -20,7 +20,6 @@ public class Knight extends AbstractPiece {
     private boolean canKnightMove(final Position from, final Position to, final Direction direction) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
-
         return direction.isEqualTo(columnDistance, rowDistance);
     }
 

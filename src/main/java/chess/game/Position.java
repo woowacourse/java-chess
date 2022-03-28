@@ -80,8 +80,8 @@ public class Position {
         return this.row.getDistance(to.row);
     }
 
-    public boolean isPawnInitial() {
-        return row.isPawnRow();
+    public boolean isPawnBeginningRow() {
+        return row.isTwo() || row.isSeven();
     }
 
     public boolean isSameColumn(final Position other) {

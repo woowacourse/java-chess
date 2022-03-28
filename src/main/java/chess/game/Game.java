@@ -34,7 +34,7 @@ public class Game {
         }
 
         if (state.canMove()) {
-            state.move(MoveCommand.of(inputs.get(1) + " " + inputs.get(2)));
+            state.move(MoveCommand.of(inputs.get(1), inputs.get(2)));
         }
 
         if (state.isGameEnd()) {

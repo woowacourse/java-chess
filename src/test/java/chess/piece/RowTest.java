@@ -1,10 +1,12 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.game.Row;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -25,5 +27,11 @@ public class RowTest {
     void findColumn(final int value) {
         assertThatCode(() -> Row.of(value))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("두 열의 거리를 계산한다.")
+    void distance() {
+        assertThat(Row.TWO.getDistance(Row.SEVEN)).isEqualTo(-5);
     }
 }

@@ -32,7 +32,6 @@ class GameTest {
         game.run("move b2 b4");
         game.run("move a7 a6");
 
-
         assertThatThrownBy(() -> game.run("move a1 b2"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능 합니다.");

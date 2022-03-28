@@ -32,15 +32,19 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public int getDistance(final Row other) {
         return this.value - other.value;
     }
 
-    public boolean isPawnRow() {
-        return this == TWO || this == SEVEN;
+    public boolean isSeven() {
+        return this == SEVEN;
+    }
+
+    public boolean isTwo() {
+        return this == TWO;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

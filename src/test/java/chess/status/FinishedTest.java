@@ -33,7 +33,7 @@ class FinishedTest {
     void continueRunning() {
         final State state = new Finished();
 
-        assertThatThrownBy(() -> state.move(MoveCommand.of("a1 a2")))
+        assertThatThrownBy(() -> state.move(MoveCommand.of("a1", "a2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }

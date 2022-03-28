@@ -11,12 +11,8 @@ public class MoveCommand {
         this.to = to;
     }
 
-    public static MoveCommand of(final String value) {
-        final String[] splitValue = value.split(" ");
-        final Position from = Position.of(splitValue[0]);
-        final Position to = Position.of(splitValue[1]);
-
-        return new MoveCommand(from, to);
+    public static MoveCommand of(final String from, final String to) {
+        return new MoveCommand(Position.of(from), Position.of(to));
     }
 
     private void validateFromEqualsTo(final Position from, final Position to) {

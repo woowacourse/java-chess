@@ -21,7 +21,6 @@ public class Pawn extends AbstractPiece {
             return Direction.getWhitePawnDirections().stream()
                     .anyMatch(direction -> canWhiteMove(from, to, direction));
         }
-
         if (getColor() == BLACK) {
             return Direction.getBlackPawnDirections().stream()
                     .anyMatch(direction -> canBlackMove(from, to, direction));
@@ -32,15 +31,13 @@ public class Pawn extends AbstractPiece {
     private boolean canWhiteMove(final Position from, final Position to, final Direction direction) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
-
-        return direction.canWhitePawnMove(columnDistance, rowDistance, from.isPawnInitial());
+        return direction.canWhitePawnMove(columnDistance, rowDistance, from.isPawnBeginningRow());
     }
 
     private boolean canBlackMove(final Position from, final Position to, final Direction direction) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
-
-        return direction.canBlackPawnMove(columnDistance, rowDistance, from.isPawnInitial());
+        return direction.canBlackPawnMove(columnDistance, rowDistance, from.isPawnBeginningRow());
     }
 
     @Override

@@ -58,7 +58,7 @@ class RunningTest {
     @DisplayName("한 번 움직이고 나면 화이트 턴에서 블랙 턴으로 변경된다.")
     void blackColor() {
         final State running = new Running();
-        running.move(MoveCommand.of("b1 a3"));
+        running.move(MoveCommand.of("b1", "a3"));
 
         assertThat(running.getColor()).isEqualTo(Color.BLACK);
     }
@@ -67,9 +67,9 @@ class RunningTest {
     @DisplayName("Black 차례에 White가 움직일 경우 예외를 발생한다.")
     void blackTurn() {
         final State running = new Running();
-        running.move(MoveCommand.of("a2 a4"));
+        running.move(MoveCommand.of("a2", "a4"));
 
-        assertThatThrownBy(() -> running.move(MoveCommand.of("a4 a6")))
+        assertThatThrownBy(() -> running.move(MoveCommand.of("a4", "a6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("BLACK가 둘 차례입니다.");
     }
@@ -79,7 +79,7 @@ class RunningTest {
     void whiteTurn() {
         final State running = new Running();
 
-        assertThatThrownBy(() -> running.move(MoveCommand.of("a7 a5")))
+        assertThatThrownBy(() -> running.move(MoveCommand.of("a7", "a5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("WHITE가 둘 차례입니다.");
     }
