@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +34,6 @@ public enum Rank {
         return Arrays.stream(values())
                 .sorted(Comparator.comparing(Rank::getRank).reversed())
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public static int difference(int from, int to) {
-        return Math.abs(from - to);
     }
 
     public int getRank() {

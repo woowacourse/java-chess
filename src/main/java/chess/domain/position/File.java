@@ -45,18 +45,6 @@ public enum File {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int difference(final File from, final File to) {
-        return Math.abs(from.order - to.order);
-    }
-
-    public static int min(final File from, final File to) {
-        return Math.min(from.order, to.order);
-    }
-
-    public static int max(final File from, final File to) {
-        return Math.max(from.order, to.order);
-    }
-
     String getFile() {
         return file;
     }
