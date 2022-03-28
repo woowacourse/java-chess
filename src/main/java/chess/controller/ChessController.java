@@ -31,7 +31,7 @@ public class ChessController {
             }
             executeCommand(chessGame, inputCommand);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             play(chessGame);
         }
     }
@@ -57,7 +57,7 @@ public class ChessController {
             OutputView.printChessBoard(chessGame.getBoard());
             play(chessGame);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             play(chessGame);
         }
     }
@@ -81,7 +81,7 @@ public class ChessController {
             OutputView.printChessBoard(chessGame.getBoard());
             play(chessGame);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             play(chessGame);
         }
     }
@@ -101,7 +101,7 @@ public class ChessController {
             OutputView.printStatus(chessGame.getStatus());
             play(chessGame);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             play(chessGame);
         }
     }

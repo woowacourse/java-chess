@@ -52,4 +52,8 @@ public class OutputView {
     public static void printGameResult(Color winnerColor) {
         System.out.printf(WINNER_TEAM, winnerColor.name());
     }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println("[ERROR] " + errorMessage + SEPARATOR);
+    }
 }
