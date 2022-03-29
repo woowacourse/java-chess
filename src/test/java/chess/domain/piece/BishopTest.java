@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.Color;
 import chess.domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

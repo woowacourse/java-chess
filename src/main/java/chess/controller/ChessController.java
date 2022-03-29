@@ -1,12 +1,12 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
+import chess.domain.game.board.ChessBoard;
 import chess.domain.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import static chess.domain.ChessBoardFactory.initBoard;
+import static chess.domain.game.board.ChessBoardFactory.initBoard;
 
 public class ChessController {
 

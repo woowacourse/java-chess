@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.game.Color;
+import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static chess.domain.ChessBoardFactory.initBoard;
+import static chess.domain.game.board.ChessBoardFactory.initBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
