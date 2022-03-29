@@ -1,7 +1,9 @@
 package chess;
 
 import chess.domain.board.Board;
+import chess.domain.board.Column;
 import chess.domain.board.Position;
+import chess.domain.board.Row;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,6 +17,9 @@ public class Chess {
     private static final int MOVE_COMMAND_LENGTH = 3;
     private static final int STARTING_POINT = 1;
     private static final int DESTINATION = 2;
+    private static final int POSITION_ARGUMENT_LENGTH = 2;
+    private static final int COLUMN_ARGUMENT_INDEX = 0;
+    private static final int ROW_ARGUMENT_INDEX = 1;
 
     public Chess() {
 
@@ -74,9 +79,19 @@ public class Chess {
     }
 
     private void move(ChessGame chessGame, String startValue, String targetValue) {
-        final Position start = Position.from(startValue);
-        final Position target = Position.from(targetValue);
+        final Position start = parseStringToPosition(startValue);
+        final Position target = parseStringToPosition(targetValue);
         chessGame.move(start, target);
         OutputView.printBoard(chessGame.getBoard().getPieces()); // TODO: 객체 지향 생활 체조 원칙 지키기
+    }
+
+    private Position parseStringToPosition(final String rawPosition) {
+        if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
+            throw new IllegalArgumentException(INVALID_MOVING_COMMAND);
+        }
+        final String[] separatedPosition = rawPosition.split("");
+        final Column column = Column.from(separatedPosition[COLUMN_ARGUMENT_INDEX]);
+        final Row row = Row.from(separatedPosition[ROW_ARGUMENT_INDEX]);
+        return new Position(column, row);
     }
 }
