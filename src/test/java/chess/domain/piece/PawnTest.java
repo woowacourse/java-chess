@@ -27,7 +27,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("첫번째 턴에서 1칸 또는 2칸 이동이 아닌 경우 예외를 발생시킨다.")
+    @DisplayName("처음 위치에서 1칸 또는 2칸 이동이 아닌 경우 예외를 발생시킨다.")
     void moveFirstTurnException() {
         final int currentRank = 2;
         final Position nextPosition = new Position(currentRank + 3, 'g');
@@ -37,12 +37,13 @@ class PawnTest {
                 .hasMessage("폰은 첫번째 턴에는 1칸 또는 2칸만 이동할 수 있습니다.");
     }
 
-    @Test
-    @DisplayName("첫번째 턴에선 1칸 또는 2칸 이동 가능하다.")
-    void moveFirstTurn() {
-        final Position expected = new Position(3, 'g');
+    @ParameterizedTest
+    @DisplayName("처음 위치에서 1칸 또는 2칸 이동 가능하다.")
+    @CsvSource({"3, 'g'", "4, 'g'"})
+    void moveFirstTurn(final int rank, final char file) {
+        final Position expected = new Position(rank, file);
 
-        final Position actual = pawn.move(currentPosition, new Position(3, 'g'), Team.WHITE);
+        final Position actual = pawn.move(currentPosition, new Position(rank, file), Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
     }
