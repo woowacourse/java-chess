@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.domain.GameResult;
+import java.util.List;
+
 public class OutputView {
 
     public static void printException(Exception e) {
@@ -19,12 +22,11 @@ public class OutputView {
         }
     }
 
-    public static void printResult(final String currentPlayerName, final double currentPlayerScore,
-            final String opponentPlayerName, final double opponentPlayerScore) {
-        System.out.print(currentPlayerName.concat(": "));
-        System.out.println(currentPlayerScore);
-
-        System.out.print(opponentPlayerName.concat(": "));
-        System.out.println(opponentPlayerScore);
+    public static void printResult(final List<GameResult> gameResultByPlayer) {
+        for (GameResult result : gameResultByPlayer) {
+            System.out.print(result.getTeamName() + ": ");
+            System.out.print(result.getPlayerScore() + ", ");
+            System.out.println(result.getPlayerResult());
+        }
     }
 }

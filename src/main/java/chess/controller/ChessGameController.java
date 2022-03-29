@@ -18,7 +18,7 @@ public class ChessGameController {
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
         playGame(chessGame);
-        showPlayerResult(whitePlayer, blackPlayer);
+        showGameResult(chessGame);
     }
 
     private ChessGame initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
@@ -34,13 +34,13 @@ public class ChessGameController {
             final String[] inputCommand = InputView.requestGameCommand();
             command = Command.from(inputCommand);
             turnEachPlayer(command, inputCommand, chessGame);
-            chessGame.changeTurn();
+            chessGame.changeTurn(command);
         } while (!command.isEnd() && chessGame.isRunning());
     }
 
-    private void turnEachPlayer(Command command, String[] inputCommand, ChessGame chessGame) {
+    private void turnEachPlayer(final Command command, final String[] inputCommand, final ChessGame chessGame) {
         if (command.isStatus()) {
-            showPlayerResult(chessGame.getCurrentPlayer(), chessGame.getOpponentPlayer());
+            showGameResult(chessGame);
         }
         if (command.isMove()) {
             move(chessGame, inputCommand);
@@ -65,12 +65,7 @@ public class ChessGameController {
         return List.of(new Position(currentPosition), new Position(destinationPosition));
     }
 
-    private void showPlayerResult(final Player currentPlayer, final Player opponentPlayer) {
-        final String currentPlayerName = currentPlayer.getTeamName();
-        final String opponentPlayerName = opponentPlayer.getTeamName();
-
-        final double currentPlayerScore = currentPlayer.calculateScore();
-        final double opponentPlayerScore = opponentPlayer.calculateScore();
-        OutputView.printResult(currentPlayerName, currentPlayerScore, opponentPlayerName, opponentPlayerScore);
+    private void showGameResult(final ChessGame chessGame) {
+        OutputView.printResult(chessGame.findGameResult());
     }
 }

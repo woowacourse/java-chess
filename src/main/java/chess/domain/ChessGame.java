@@ -1,8 +1,12 @@
 package chess.domain;
 
+import chess.controller.Command;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.player.Result;
+import chess.domain.player.Score;
 import chess.domain.player.Team;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
@@ -37,7 +41,7 @@ public class ChessGame {
         return currentPlayer.findAll();
     }
 
-    private List<Piece> capture(Player currentPlayer, Player opponentPlayer, Position currentPosition,
+    private List<Piece> capture(final Player currentPlayer, final Player opponentPlayer, final Position currentPosition,
             Position destinationPosition) {
         currentPlayer.capture(currentPosition, destinationPosition);
         opponentPlayer.remove(destinationPosition);
@@ -67,8 +71,30 @@ public class ChessGame {
         return hasPieceOfBlackPlayer || hasPieceOfWhitePlayer;
     }
 
-    public void changeTurn() {
-        turn = turn.next();
+    public void changeTurn(final Command command) {
+        if (command.isMove()) {
+            turn = turn.next();
+        }
+    }
+
+    public List<GameResult> findGameResult() {
+        final Score whitePlayerScore = whitePlayer.calculateScore();
+        final Score blackPlayerScore = blackPlayer.calculateScore();
+
+        final Result whitePlayerResult = Result.from(whitePlayerScore.getScore(), blackPlayerScore.getScore(),
+                whitePlayer.hasKing(), blackPlayer.hasKing());
+        final Result blackPlayerResult = Result.from(blackPlayerScore.getScore(), whitePlayerScore.getScore(),
+                blackPlayer.hasKing(), whitePlayer.hasKing());
+
+        return createGameResult(whitePlayerScore, blackPlayerScore, whitePlayerResult, blackPlayerResult);
+    }
+
+    private List<GameResult> createGameResult(final Score whitePlayerScore, final Score blackPlayerScore,
+            final Result whitePlayerResult, final Result blackPlayerResult) {
+        final List<GameResult> results = new ArrayList<>();
+        results.add(new GameResult(whitePlayer.getTeamName(), whitePlayerScore, whitePlayerResult));
+        results.add(new GameResult(blackPlayer.getTeamName(), blackPlayerScore, blackPlayerResult));
+        return results;
     }
 
     public Player getCurrentPlayer() {
