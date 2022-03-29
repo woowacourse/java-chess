@@ -13,11 +13,16 @@ public class BlackRunning extends Running {
     }
 
     @Override
-    protected ChessState move(Position start, Position target) {
+    public ChessState move(Position start, Position target) {
         Piece caughtPiece = board.move(start, target, color);
         if (caughtPiece.isSamePiece(PieceType.KING)) {
-            return new End(board);
+            return new Finished(board);
         }
+        return new WhiteRunning(board);
+    }
+
+    @Override
+    ChessState changeTurn() {
         return new WhiteRunning(board);
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.Command;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -13,17 +12,29 @@ public class Ready implements ChessState {
     private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
 
     @Override
-    public ChessState execute(final Command command, String... commandArgs) {
-        if (!(command == Command.START)) {
-            throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
-        }
+    public boolean isRunning() {
+        return false;
+    }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public ChessState start() {
         return new WhiteRunning(new Board(new CreateCompleteBoardStrategy()));
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public ChessState move(Position start, Position target) {
+        throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
     }
+
+    @Override
+    public ChessState end() {
+        throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
+    }
+
 
     @Override
     public Map<Position, Piece> getPieces() {

@@ -1,10 +1,5 @@
 package chess;
 
-import chess.domain.state.ChessState;
-import chess.domain.state.Ready;
-import chess.view.InputView;
-import chess.view.OutputView;
-
 public class Chess {
 
     private static final String COMMAND_DISTRIBUTOR = " ";
@@ -16,6 +11,7 @@ public class Chess {
 
     }
 
+    /*
     public void run() {
         OutputView.printStartMessage();
         ChessState chessState = new Ready();
@@ -54,4 +50,5 @@ public class Chess {
         }
         return state;
     }
+    */
 }

@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.Command;
+import chess.domain.CachedPosition;
 import chess.domain.board.Board;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ class WhiteRunningTest {
         Board board = new Board(new CreateCompleteBoardStrategy());
         ChessState running = new WhiteRunning(board);
 
-        ChessState actual = running.execute(Command.MOVE, "", "a2", "a3");
+        ChessState actual = running.move(CachedPosition.a2, CachedPosition.a3);
 
         assertThat(actual).isInstanceOf(BlackRunning.class);
     }
