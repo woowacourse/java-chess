@@ -112,7 +112,8 @@ public class Board {
     }
 
     private Piece get(final Position position) {
-        return pieces.getOrDefault(position, new EmptySpace());
+//        return pieces.getOrDefault(position, new EmptySpace());
+        return pieces.getOrDefault(position, EmptySpace.getInstance());
     }
 
     public int countPiece(final PieceType pieceType, final Color color) {

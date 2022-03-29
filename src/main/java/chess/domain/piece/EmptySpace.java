@@ -2,14 +2,32 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 
-public class EmptySpace extends Piece {
+public class EmptySpace {
 
-    public EmptySpace() {
-        super(PieceType.NONE, Color.NONE);
+    private static EmptyPiece emptyPiece;
+
+    private EmptySpace() {
     }
 
-    @Override
-    public Direction findValidDirection(Position current, Position target) {
-        throw new UnsupportedOperationException();
+    public static EmptyPiece getInstance() {
+        if (emptyPiece == null) {
+            synchronized (EmptySpace.class) {
+                emptyPiece = new EmptyPiece();
+            }
+        }
+        return emptyPiece;
     }
+
+    private static class EmptyPiece extends Piece {
+
+        public EmptyPiece() {
+            super(PieceType.NONE, Color.NONE);
+        }
+
+        @Override
+        public Direction findValidDirection(Position current, Position target) {
+            throw new UnsupportedOperationException();
+        }
+    }
+
 }
