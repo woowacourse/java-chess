@@ -14,7 +14,7 @@ public class BoardStatusCalculator {
     private static final int SCORE_WHEN_NO_PAWN_IN_COLUMN = 0;
     private static final double SCORE_WHEN_PAWN_MORE_THAN_TWO_IN_COLUMN = 0.5;
     private static final int CHANGE_PAWN_SCORE_CRITERIA = 2;
-    
+
     private final Map<Position, Piece> value;
 
     public BoardStatusCalculator(Board board) {

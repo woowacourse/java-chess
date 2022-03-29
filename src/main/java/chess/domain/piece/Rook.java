@@ -6,7 +6,7 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class Rook extends Piece {
+public final class Rook extends NotNullPiece {
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int NOT_MOVED_DISTANCE = 0;
     private static final double SCORE = 5;
@@ -42,10 +42,4 @@ public final class Rook extends Piece {
     public double getScore() {
         return SCORE;
     }
-
-    @Override
-    public boolean isNullPiece() {
-        return false;
-    }
-
 }

@@ -25,7 +25,6 @@ public final class Board {
     }
 
     public void move(Position beforePosition, Position afterPosition) {
-
         checkValidPiece(beforePosition);
         checkValidTurn(beforePosition);
         checkObstacles(beforePosition, afterPosition);
@@ -68,18 +67,15 @@ public final class Board {
     }
 
     private void movePiece(final Position beforePosition, final Position afterPosition) {
+        Piece beforePiece = getPieceFrom(beforePosition);
         if (isMoveToBlank(afterPosition)) {
-            Piece beforePiece = getPieceFrom(beforePosition);
             beforePiece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
         }
-
         if (isMoveToOtherCampPiece(beforePosition, afterPosition)) {
-            Piece beforePiece = getPieceFrom(beforePosition);
             beforePiece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
         }
-
         throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
     }
 

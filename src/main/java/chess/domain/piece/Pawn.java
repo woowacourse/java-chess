@@ -6,7 +6,7 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class Pawn extends Piece {
+public final class Pawn extends NotNullPiece {
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE = 1;
@@ -69,10 +69,5 @@ public final class Pawn extends Piece {
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public boolean isNullPiece() {
-        return false;
     }
 }
