@@ -1,6 +1,7 @@
 package chess.domain.move;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -57,5 +58,25 @@ public class RookMoveStrategyTest {
         Position target = Position.valueOf("h8");
 
         assertThat(rookMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("양의 대각선 기물 확인은 지원하지 않는다.")
+    void isPieceExistWhenPositiveDiagonal() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("a6");
+
+        assertThatThrownBy(() -> rookMoveStrategy.isPieceExistWhenPositiveDiagonal(board, source, Distance.of(source, target)))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("음의 대각선 기물 확인은 지원하지 않는다.")
+    void isPieceExistWhenNegativeDiagonal() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("e6");
+
+        assertThatThrownBy(() -> rookMoveStrategy.isPieceExistWhenNegativeDiagonal(board, source, Distance.of(source, target)))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }
