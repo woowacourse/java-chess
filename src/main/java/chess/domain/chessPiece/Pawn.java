@@ -11,8 +11,8 @@ public class Pawn extends ChessPiece {
     private static final Double VALUE = 1.0;
     private static final String WHITE_INIT_FILE = "2";
     private static final String BLACK_INIT_FILE = "7";
-    private static final int BLACK_MOVEALBE_DISTANCE = 1;
-    private static final int WHITE_MOVEABLE_DISTANCE = -1;
+    private static final int BLACK_MOVABLE_DISTANCE = 1;
+    private static final int WHITE_MOVABLE_DISTANCE = -1;
     private static final int PAWN_MOVE_IN_INIT_FILE = 2;
     private static final int PAWN_MOVE_RANGE = 1;
 
@@ -41,11 +41,11 @@ public class Pawn extends ChessPiece {
     @Override
     public void canMove(Position from, Position to) {
         if (from.isSameRank(to)) {
-            if (isBlack() && checkMove(from, to, BLACK_MOVEALBE_DISTANCE, BLACK_INIT_FILE)) {
+            if (isBlack() && checkMove(from, to, BLACK_MOVABLE_DISTANCE, BLACK_INIT_FILE)) {
                 return;
             }
 
-            if (!isBlack() && checkMove(from, to, WHITE_MOVEABLE_DISTANCE, WHITE_INIT_FILE)) {
+            if (!isBlack() && checkMove(from, to, WHITE_MOVABLE_DISTANCE, WHITE_INIT_FILE)) {
                 return;
             }
 
@@ -69,10 +69,10 @@ public class Pawn extends ChessPiece {
     public void checkCrossMove(Position from, Position to) {
         int fileDistance = from.fileDistance(to);
         if (isPawnMoveableDistanceRange(from, to)) {
-            if (isBlack() && fileDistance == BLACK_MOVEALBE_DISTANCE) {
+            if (isBlack() && fileDistance == BLACK_MOVABLE_DISTANCE) {
                 return;
             }
-            if (!isBlack() && fileDistance == WHITE_MOVEABLE_DISTANCE) {
+            if (!isBlack() && fileDistance == WHITE_MOVABLE_DISTANCE) {
                 return;
             }
         }
