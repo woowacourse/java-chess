@@ -41,16 +41,12 @@ public class ChessGameController {
         OutputView.printChessMap(chessMap.getChessMap());
     }
 
-    private void progressGame(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {
-        if (isTurnFinished(chessGame, whitePlayer, blackPlayer)) {
+    private void progressGame(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
+        showMap(chessGame.createMap());
+        if (isTurnFinished(chessGame, currentPlayer, opponentPlayer)) {
             return;
         }
-        showMap(chessGame.createMap());
-        if (isTurnFinished(chessGame, blackPlayer, whitePlayer)) {
-            return;
-        }
-        showMap(chessGame.createMap());
-        progressGame(chessGame, whitePlayer, blackPlayer);
+        progressGame(chessGame, opponentPlayer, currentPlayer);
     }
 
     private boolean isTurnFinished(final ChessGame chessGame, final Player currentPlayer, final Player opponentPlayer) {
