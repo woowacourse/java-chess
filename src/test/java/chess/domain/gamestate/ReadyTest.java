@@ -6,23 +6,27 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ReadyTest {
+    private State state;
+
+    @BeforeEach
+    void initializeStateAsReady() {
+        this.state = new Ready();
+    }
 
     @DisplayName("Ready 상태에서 start 호출시 Running 상태가 된다.")
     @Test
     void ready_start_running() {
-        State state = new Ready();
-
         assertThat(state.start()).isInstanceOf(Running.class);
     }
 
     @DisplayName("Ready 상태에서 move 명령 호출시 예외 발생")
     @Test
     void ready_move_exception() {
-        State state = new Ready();
         Position a2 = new Position(Column.A, Row.TWO);
         Position a3 = new Position(Column.A, Row.THREE);
 
@@ -34,8 +38,6 @@ public class ReadyTest {
     @DisplayName("Ready 상태에서 status 명령 호출 시 예외 발생")
     @Test
     void ready_status_exception() {
-        State state = new Ready();
-
         assertThatThrownBy(state::statusOfBlack)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 시작되지 않아 상태를 확인할 수 없습니다.");

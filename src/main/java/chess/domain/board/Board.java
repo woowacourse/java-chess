@@ -4,14 +4,8 @@ import static chess.domain.Camp.BLACK;
 import static chess.domain.Camp.WHITE;
 
 import chess.domain.Camp;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.None;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Type;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,19 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class Board {
-    private static final Position INITIAL_POSITION_ROOK = new Position(Column.A, Row.ONE);
-    private static final Position INITIAL_POSITION_KNIGHT = new Position(Column.B, Row.ONE);
-    private static final Position INITIAL_POSITION_BISHOP = new Position(Column.C, Row.ONE);
-    private static final Position INITIAL_POSITION_QUEEN = new Position(Column.D, Row.ONE);
-    private static final Position INITIAL_POSITION_KING = new Position(Column.E, Row.ONE);
-    private static final Row INITIAL_ROW_PAWN = Row.TWO;
-    private static final int INITIAL_START_ROW_INDEX_BLANK = 2;
-    private static final int INITIAL_END_ROW_INDEX_BLANK = 5;
-
     private static final String ERROR_NO_SOURCE = "이동할 수 있는 기물이 없습니다.";
     private static final String ERROR_NOT_YOUR_TURN = "상대 진영의 차례입니다.";
     private static final String ERROR_NOT_BLANK_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
@@ -42,55 +26,9 @@ public final class Board {
     private final Map<Position, Piece> value;
     private boolean whiteTurn;
 
-    public Board() {
-        this.value = new TreeMap<>();
+    Board(Map<Position, Piece> value) {
+        this.value = new TreeMap<>(value);
         this.whiteTurn = true;
-        initializeFourPieces();
-        initializeTwoPieces();
-        initializePawn();
-        initializeBlanks();
-    }
-
-    private void initializeFourPieces() {
-        initializeFourPiecesOf(INITIAL_POSITION_ROOK, Rook::new);
-        initializeFourPiecesOf(INITIAL_POSITION_KNIGHT, Knight::new);
-        initializeFourPiecesOf(INITIAL_POSITION_BISHOP, Bishop::new);
-    }
-
-    private void initializeFourPiecesOf(Position pieceInitialPosition,
-                                        Function<Camp, Piece> pieceConstructor) {
-        value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
-        value.put(pieceInitialPosition.flipHorizontally(), pieceConstructor.apply(WHITE));
-        value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
-        value.put(pieceInitialPosition.flipDiagonally(), pieceConstructor.apply(BLACK));
-    }
-
-    private void initializeTwoPieces() {
-        initializeTwoPiecesOf(INITIAL_POSITION_QUEEN, Queen::new);
-        initializeTwoPiecesOf(INITIAL_POSITION_KING, King::new);
-    }
-
-    private void initializeTwoPiecesOf(Position pieceInitialPosition, Function<Camp, Piece> pieceConstructor) {
-        value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
-        value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
-    }
-
-    private void initializePawn() {
-        for (Column column : Column.values()) {
-            initializeTwoPiecesOf(new Position(column, INITIAL_ROW_PAWN), Pawn::new);
-        }
-    }
-
-    private void initializeBlanks() {
-        for (Column column : Column.values()) {
-            initializeBlankColumn(column);
-        }
-    }
-
-    private void initializeBlankColumn(Column column) {
-        for (int i = INITIAL_START_ROW_INDEX_BLANK; i <= INITIAL_END_ROW_INDEX_BLANK; i++) {
-            value.put(new Position(column, Row.values()[i]), new None());
-        }
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -157,12 +95,12 @@ public final class Board {
         return value.get(position).isType(Type.NONE);
     }
 
-    public boolean hasKingCaptured(){
+    public boolean hasKingCaptured() {
         return COUNT_INITIAL_KING != collectKing().size();
     }
 
     public Camp winnerByKing() {
-        if (this.hasKingOfCampCaptured(BLACK)){
+        if (this.hasKingOfCampCaptured(BLACK)) {
             return WHITE;
         }
         if (this.hasKingOfCampCaptured(WHITE)) {

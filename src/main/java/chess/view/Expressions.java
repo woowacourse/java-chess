@@ -3,7 +3,6 @@ package chess.view;
 import chess.command.Command;
 import chess.domain.board.Column;
 import chess.domain.board.Row;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Type;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

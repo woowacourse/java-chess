@@ -4,20 +4,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RunningTest {
+    private State state;
+
+    @BeforeEach
+    void initializeStateAsRunning() {
+        this.state = new Running(BoardInitializer.get());
+    }
 
     @DisplayName("Running 상태에서 start 호출시 예외가 발생한다.")
     @Test
     void running_start_exception() {
-        State state = new Running(new Board());
-
         assertThatThrownBy(state::start)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 시작되었습니다.");
@@ -26,15 +31,12 @@ public class RunningTest {
     @DisplayName("Running 상태에서 end 호출시 Finished 상태가 된다.")
     @Test
     void running_end_finished() {
-        State state = new Running(new Board());
-
         assertThat(state.end()).isInstanceOf(Finished.class);
     }
 
     @DisplayName("Running 상태에서 move 명령 호출할 수 있다.")
     @Test
     void running_move_no_exception() {
-        State state = new Running(new Board());
         Position a2 = new Position(Column.A, Row.TWO);
         Position a3 = new Position(Column.A, Row.THREE);
 
@@ -44,8 +46,6 @@ public class RunningTest {
     @DisplayName("Running 상태에서 status 명령 호출할 수 있다.")
     @Test
     void running_status_no_exception() {
-        State state = new Running(new Board());
-
         assertThatNoException().isThrownBy(state::statusOfBlack);
     }
 }

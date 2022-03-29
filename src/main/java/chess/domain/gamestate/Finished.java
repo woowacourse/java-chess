@@ -2,6 +2,7 @@ package chess.domain.gamestate;
 
 import chess.domain.Camp;
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
 
 public class Finished implements State {
@@ -15,7 +16,7 @@ public class Finished implements State {
 
     @Override
     public State start() {
-        return new Running(new Board());
+        return new Running(BoardInitializer.get());
     }
 
     @Override
