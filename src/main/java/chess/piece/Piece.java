@@ -80,6 +80,10 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract String getName();
 
+    public Position getPosition() {
+        return position;
+    }
+
     public boolean isKing() {
         return false;
     }

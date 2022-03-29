@@ -4,9 +4,14 @@ import chess.Board;
 import chess.Turn;
 import chess.command.Command;
 import chess.command.Init;
+import chess.controller.dto.PieceDto;
 import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessController {
     public void run() {
@@ -25,10 +30,18 @@ public class ChessController {
         Turn turn = Turn.init();
         while (!command.isEnd() || board.isDeadKing()) {
             turn = nextTurn(command, board, turn);
-            OutputView.printBoard(board.getPieces());
+            OutputView.printBoard(convertToPieceDtos(board.getPieces()));
             command = command.turnState(InputView.inputCommand());
         }
         return command;
+    }
+
+    public List<PieceDto> convertToPieceDtos(Pieces pieces) {
+        return pieces.getPieces().stream()
+                .sorted(Comparator.comparing(piece -> piece))
+                .map(piece -> new PieceDto(piece.getName(), piece.isLastFile()))
+                .collect(Collectors.toList());
+
     }
 
     private Turn nextTurn(Command command, Board board, Turn turn) {

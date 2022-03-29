@@ -1,10 +1,9 @@
 package chess.view;
 
 import chess.Team;
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.controller.dto.PieceDto;
 
-import java.util.Collections;
+import java.util.List;
 
 public final class OutputView {
 
@@ -18,19 +17,20 @@ public final class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(Pieces board) {
-        Collections.sort(board.getPieces());
-        for (Piece piece : board.getPieces()) {
-            System.out.print(piece.getName());
-            makeNewLine(piece);
+    public static void printBoard(List<PieceDto> pieceDtos) {
+
+        for (PieceDto pieceDto : pieceDtos) {
+            System.out.print(pieceDto.getName());
+            printNewLine(pieceDto);
         }
     }
 
-    private static void makeNewLine(Piece piece) {
-        if (piece.isLastFile()) {
+    private static void printNewLine(PieceDto pieceDto) {
+        if(pieceDto.isLastFile()){
             System.out.println();
         }
     }
+
 
     public static void printFinalResult(Team team, double whiteScore, double blackScore) {
         System.out.println("우승팀은 " + team.name() + "입니다.");
