@@ -1,64 +1,87 @@
 package chess.domain.state;
 
+import static chess.domain.board.BoardFactory.createCatchKingBoard;
+import static chess.domain.board.PositionFixtures.initialBlackKing;
+import static chess.domain.board.PositionFixtures.initialBlackPawn;
+import static chess.domain.board.PositionFixtures.initialBlackQueen;
+import static chess.domain.board.PositionFixtures.initialWhitePawn;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Team;
+import chess.domain.board.Board;
+import chess.domain.board.InitialBoard;
+import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
 class BlackTurnTest {
 
 	@Test
 	void isFinished() {
-		State state = new WhiteTurn();
-		state = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
 
 		assertThat(state.isFinished()).isFalse();
 	}
 
 	@Test
 	void playBlackToWhite() {
-		State state = new WhiteTurn();
-		state = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+		Position blackPawn = initialBlackPawn;
+		Position target = Position.of(6, 1);
 
-		assertThat(state.play(new Pawn(Team.BLACK), new Pawn(Team.WHITE))).isInstanceOf(WhiteTurn.class);
+		assertThat(state.play(blackPawn, target)).isInstanceOf(WhiteTurn.class);
 	}
 
 	@Test
 	void playBlackCatchKing() {
-		State state = new WhiteTurn();
-		state = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(createCatchKingBoard());
+		State state = new BlackTurn(board);
+		Position blackKing = Position.of(5, 5);
+		Position whiteKing = Position.of(4, 4);
 
-		assertThat(state.play(new Pawn(Team.BLACK), new King(Team.WHITE))).isInstanceOf(KingDeath.class);
+		assertThat(state.play(blackKing, whiteKing)).isInstanceOf(KingDeath.class);
 	}
 
 	@Test
 	void playWithEnemyPiece() {
-		State state = new WhiteTurn();
-		State blackTurn = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+		Position whitePawn = initialWhitePawn;
+		Position target = Position.of(3, 1);
 
-		assertThatThrownBy(() -> blackTurn.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK)))
+		assertThatThrownBy(() -> state.play(whitePawn, target))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("상대 팀의 기물을 옮길 수 없습니다.");
 	}
 
 	@Test
 	void playCatchSameTeamPiece() {
-		State state = new WhiteTurn();
-		State blackTurn = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+		Position blackKing = initialBlackKing;
+		Position blackQueen = initialBlackQueen;
 
-		assertThatThrownBy(() -> blackTurn.play(new Pawn(Team.BLACK), new Pawn(Team.BLACK)))
+		assertThatThrownBy(() -> state.play(blackKing, blackQueen))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("같은 팀의 기물로 이동할 수 없습니다.");
+				.hasMessageContaining("같은 팀의 기물을 잡을 수 없습니다.");
 	}
 
 	@Test
 	void finish() {
-		State state = new WhiteTurn();
-		State blackTurn = state.play(new Pawn(Team.WHITE), new Pawn(Team.BLACK));
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
 
-		assertThat(blackTurn.finish()).isInstanceOf(EndGame.class);
+		assertThat(state.finish()).isInstanceOf(EndGame.class);
+	}
+
+	@Test
+	void judgeWinnerWithRunning() {
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+
+		assertThatThrownBy(state::judgeWinner)
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("아직 종료되지 않은 게임입니다.");
 	}
 }

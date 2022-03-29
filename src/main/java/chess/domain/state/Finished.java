@@ -1,17 +1,40 @@
 package chess.domain.state;
 
-import chess.domain.piece.Piece;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Team;
+import chess.domain.result.StatusResult;
 
 public abstract class Finished implements State {
 
-	private static final String GAME_PLAY_ERROR = "현재는 게임을 진행할 수 없습니다.";
 	private static final String FINISH_GAME_ERROR = "게임이 이미 종료되었습니다.";
 
+	private final Board board;
 	private final Team winner;
 
-	public Finished(final Team winner) {
+	public Finished(final Board board, final Team winner) {
+		this.board = board;
 		this.winner = winner;
+	}
+
+	@Override
+	public final State start(final Board board) {
+		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+	}
+
+	@Override
+	public final State play(final Position source, final Position target) {
+		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+	}
+
+	@Override
+	public final StatusResult createStatus() {
+		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+	}
+
+	@Override
+	public final State finish() {
+		throw new IllegalArgumentException(FINISH_GAME_ERROR);
 	}
 
 	@Override
@@ -20,17 +43,12 @@ public abstract class Finished implements State {
 	}
 
 	@Override
-	public final State play(Piece source, Piece target) {
-		throw new IllegalArgumentException(GAME_PLAY_ERROR);
-	}
-
-	@Override
-	public State finish() {
-		throw new IllegalArgumentException(FINISH_GAME_ERROR);
-	}
-
-	@Override
-	public final Team getTeam() {
+	public final Team judgeWinner() {
 		return winner;
+	}
+
+	@Override
+	public final Board getBoard() {
+		return board;
 	}
 }

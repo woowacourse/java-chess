@@ -6,8 +6,6 @@ import static chess.domain.board.Position.MIN_POSITION;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.domain.state.State;
-import chess.domain.state.WhiteTurn;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,22 +16,18 @@ public class Board {
 
 	private static final String BLOCK_ERROR = "해당 위치로 기물을 옮길 수 없습니다.";
 	private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
-	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
 	private static final int SAME_COLUMN_PAWN_COUNT = 2;
 	private static final double DUPLICATION_PAWN_SCORE = 0.5;
 
 	private final Map<Position, Piece> board;
-	private State state;
 
 	public Board(final Map<Position, Piece> board) {
 		this.board = new HashMap<>(board);
-		this.state = new WhiteTurn();
 	}
 
 	public void move(Position source, Position target) {
 		Piece piece = board.get(source);
 		validateMove(source, target, piece);
-		state = state.play(piece, board.get(target));
 		board.put(target, piece);
 		board.put(source, new Blank());
 	}
@@ -97,21 +91,6 @@ public class Board {
 			}
 		}
 		return pieces;
-	}
-
-	public void endGame() {
-		state = state.finish();
-	}
-
-	public boolean isFinished() {
-		return state.isFinished();
-	}
-
-	public Team judgeWinner() {
-		if (state.isFinished()) {
-			return state.getTeam();
-		}
-		throw new IllegalArgumentException(NOT_FINISHED_ERROR);
 	}
 
 	public Map<Position, Piece> getBoard() {

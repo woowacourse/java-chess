@@ -1,15 +1,23 @@
 package chess.domain.state;
 
-import chess.domain.piece.Piece;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Team;
+import chess.domain.result.StatusResult;
 
 public interface State {
 
-	boolean isFinished();
+	State start(Board board);
 
-	State play(Piece source, Piece target);
+	State play(Position source, Position target);
+
+	StatusResult createStatus();
 
 	State finish();
-	
-	Team getTeam();
+
+	boolean isFinished();
+
+	Team judgeWinner();
+
+	Board getBoard();
 }

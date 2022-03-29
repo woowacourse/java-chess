@@ -3,8 +3,9 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoard;
 import chess.domain.board.Position;
-import chess.domain.piece.Team;
 import chess.domain.result.StatusResult;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -19,61 +20,24 @@ public class ChessController {
 	private static final int SOURCE_INDEX = 1;
 	private static final int TARGET_INDEX = 2;
 
-	private Board board;
-
 	public void run() {
+		State state = new Ready();
 		InputView.printCommandGuide();
-		processStart(requestCommand());
-		while (!board.isFinished()) {
-			playCommand(requestCommand());
+		state = processStart(state, requestCommand());
+		while (!state.isFinished()) {
+			state = playCommand(state, requestCommand());
 		}
-		OutputView.printWinner(board.judgeWinner());
+		OutputView.printWinner(state.judgeWinner());
 	}
 
-	private void processStart(final List<String> inputCommand) {
-		if (!Command.isStart(inputCommand.get(COMMAND_INDEX))) {
+	private State processStart(final State state, final List<String> inputCommand) {
+		Command command = parseCommand(inputCommand);
+		if (!command.isStart()) {
 			throw new IllegalArgumentException(GAME_START_ERROR);
 		}
-		board = new Board(InitialBoard.createBoard());
+		Board board = new Board(InitialBoard.createBoard());
 		OutputView.printBoard(board);
-	}
-
-	private void processCommand(final List<String> inputCommand) {
-		if (Command.isStart(inputCommand.get(COMMAND_INDEX))) {
-			throw new IllegalArgumentException(ALREADY_GAME_START_ERROR);
-		}
-		if (Command.isMove(inputCommand.get(COMMAND_INDEX))) {
-			processMove(inputCommand);
-		}
-		if (Command.isStatus(inputCommand.get(COMMAND_INDEX))) {
-			processStatus(board);
-		}
-		if (Command.isEnd(inputCommand.get(COMMAND_INDEX))) {
-			board.endGame();
-		}
-	}
-
-	private void processMove(final List<String> inputCommand) {
-		Position source = PositionConvertor.to(inputCommand.get(SOURCE_INDEX));
-		Position target = PositionConvertor.to(inputCommand.get(TARGET_INDEX));
-		board.move(source, target);
-		OutputView.printBoard(board);
-	}
-
-	private void processStatus(final Board board) {
-		double blackScore = board.calculateScore(Team.BLACK);
-		double whiteScore = board.calculateScore(Team.WHITE);
-		StatusResult result = new StatusResult(blackScore, whiteScore);
-		OutputView.printScore(result);
-	}
-
-	private void playCommand(final List<String> inputCommand) {
-		try {
-			processCommand(inputCommand);
-		} catch (RuntimeException runtimeException) {
-			OutputView.printError(runtimeException.getMessage());
-			playCommand(requestCommand());
-		}
+		return state.start(board);
 	}
 
 	private List<String> requestCommand() {
@@ -83,5 +47,42 @@ public class ChessController {
 			OutputView.printError(runtimeException.getMessage());
 			return requestCommand();
 		}
+	}
+
+	private Command parseCommand(final List<String> inputCommand) {
+		return Command.of(inputCommand.get(COMMAND_INDEX));
+	}
+
+	private State playCommand(final State state, final List<String> inputCommand) {
+		try {
+			return processCommand(state, inputCommand);
+		} catch (RuntimeException runtimeException) {
+			OutputView.printError(runtimeException.getMessage());
+			return playCommand(state, requestCommand());
+		}
+	}
+
+	private State processCommand(final State state, final List<String> inputCommand) {
+		Command command = parseCommand(inputCommand);
+		if (command.isStart()) {
+			throw new IllegalArgumentException(ALREADY_GAME_START_ERROR);
+		}
+		if (command.isMove()) {
+			return processMove(state, inputCommand);
+		}
+		if (command.isStatus()) {
+			StatusResult result = state.createStatus();
+			OutputView.printScore(result);
+			return state;
+		}
+		return state.finish();
+	}
+
+	private State processMove(final State state, final List<String> inputCommand) {
+		Position source = PositionConvertor.to(inputCommand.get(SOURCE_INDEX));
+		Position target = PositionConvertor.to(inputCommand.get(TARGET_INDEX));
+		State movedState = state.play(source, target);
+		OutputView.printBoard(movedState.getBoard());
+		return movedState;
 	}
 }

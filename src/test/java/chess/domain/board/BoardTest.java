@@ -2,10 +2,8 @@ package chess.domain.board;
 
 import static chess.domain.board.BoardFactory.createBlankBoard;
 import static chess.domain.board.BoardFactory.createBoardWithBlackBlocking;
-import static chess.domain.board.BoardFactory.createCatchKingBoard;
 import static chess.domain.board.BoardFactory.createSameColumnPawnBoard;
 import static chess.domain.board.PositionFixtures.initialBlackKing;
-import static chess.domain.board.PositionFixtures.initialBlackKnight;
 import static chess.domain.board.PositionFixtures.initialBlackQueen;
 import static chess.domain.board.PositionFixtures.initialWhiteBishop;
 import static chess.domain.board.PositionFixtures.initialWhiteKing;
@@ -132,48 +130,5 @@ class BoardTest {
 		Board board = new Board(InitialBoard.createBoard());
 
 		assertDoesNotThrow(() -> board.move(initialWhiteKnight, Position.of(3, 3)));
-	}
-
-	@Test
-	void moveAndChangeTeam() {
-		Board board = new Board(InitialBoard.createBoard());
-		Position nextWhiteKnight = Position.of(3, 3);
-		board.move(initialWhiteKnight, nextWhiteKnight);
-
-		assertAll(
-				() -> assertThatThrownBy(() -> board.move(nextWhiteKnight, Position.of(5, 4)))
-						.isInstanceOf(IllegalArgumentException.class)
-						.hasMessageContaining("상대 팀의 기물을 옮길 수 없습니다."),
-				() -> assertDoesNotThrow(() -> board.move(initialBlackKnight, Position.of(6, 3)))
-		);
-	}
-
-	@Test
-	void finishGameWithCatchingKing() {
-		Board board = new Board(createCatchKingBoard());
-		Position whiteKing = Position.of(4, 4);
-		Position blackKing = Position.of(5, 5);
-		board.move(whiteKing, blackKing);
-
-		assertThat(board.isFinished()).isTrue();
-	}
-
-	@Test
-	void judgeWinnerWithFinished() {
-		Board board = new Board(createCatchKingBoard());
-		Position whiteKing = Position.of(4, 4);
-		Position blackKing = Position.of(5, 5);
-		board.move(whiteKing, blackKing);
-
-		assertThat(board.judgeWinner()).isEqualTo(Team.WHITE);
-	}
-
-	@Test
-	void judgeWinnerWithRunning() {
-		Board board = new Board(InitialBoard.createBoard());
-
-		assertThatThrownBy(board::judgeWinner)
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("아직 종료되지 않은 게임입니다.");
 	}
 }

@@ -1,17 +1,45 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.domain.result.StatusResult;
 
 public abstract class Running implements State {
 
-	private static final String WRONG_SOURCE_ERROR = "상대 팀의 기물을 옮길 수 없습니다.";
-	private static final String WRONG_TARGET_ERROR = "같은 팀의 기물로 이동할 수 없습니다.";
+	protected static final String WRONG_SOURCE_ERROR = "상대 팀의 기물을 옮길 수 없습니다.";
 
-	private final Team team;
+	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
 
-	protected Running(Team team) {
-		this.team = team;
+	protected final Board board;
+
+	public Running(final Board board) {
+		this.board = board;
+	}
+
+	@Override
+	public final State start(final Board board) {
+		throw new IllegalArgumentException();
+	}
+
+	@Override
+	public final State play(final Position source, final Position target) {
+		validateTurn(board.getBoard().get(source));
+		board.move(source, target);
+		return getNextTurn(board.getBoard().get(target).isKing());
+	}
+
+	@Override
+	public final StatusResult createStatus() {
+		double blackScore = board.calculateScore(Team.BLACK);
+		double whiteScore = board.calculateScore(Team.WHITE);
+		return new StatusResult(blackScore, whiteScore);
+	}
+
+	@Override
+	public final State finish() {
+		return new EndGame(board, Team.NEUTRALITY);
 	}
 
 	@Override
@@ -20,36 +48,16 @@ public abstract class Running implements State {
 	}
 
 	@Override
-	public final State play(final Piece source, final Piece target) {
-		validateSourcePiece(source);
-		validateTargetPiece(target);
-		if (target.isKing()) {
-			return new KingDeath(team);
-		}
-		return getNextTurn();
-	}
-
-	private void validateSourcePiece(final Piece piece) {
-		if (!piece.isAlly(team)) {
-			throw new IllegalArgumentException(WRONG_SOURCE_ERROR);
-		}
-	}
-
-	private void validateTargetPiece(final Piece piece) {
-		if (piece.isAlly(team)) {
-			throw new IllegalArgumentException(WRONG_TARGET_ERROR);
-		}
+	public final Team judgeWinner() {
+		throw new IllegalArgumentException(NOT_FINISHED_ERROR);
 	}
 
 	@Override
-	public final State finish() {
-		return new EndGame(Team.NEUTRALITY);
+	public final Board getBoard() {
+		return board;
 	}
 
-	@Override
-	public final Team getTeam() {
-		return team;
-	}
+	protected abstract void validateTurn(final Piece piece);
 
-	protected abstract State getNextTurn();
+	protected abstract State getNextTurn(boolean kingDeath);
 }
