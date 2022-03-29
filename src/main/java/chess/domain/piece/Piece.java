@@ -33,7 +33,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isMyTeam(Piece piece) {
+    public boolean isSameTeam(Piece piece) {
         return color == piece.color;
     }
 
