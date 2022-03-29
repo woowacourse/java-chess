@@ -3,36 +3,40 @@ package chess2.domain2.board2.piece2;
 import chess2.domain2.board2.Position;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
 
-    private final Color color;
-    private final PieceType type;
+    protected final Color color;
+    protected final PieceType type;
 
     public Piece(Color color, PieceType type) {
         this.color = color;
         this.type = type;
     }
 
-    public boolean canMove(Position from, Position to) {
-        return type.isMovable(from, to);
+    public final boolean canMove(Position from, Position to) {
+        return isMovableRoute(from, to);
     }
 
-    public boolean canAttack(Position from, Position to, Piece targetPiece) {
+    public final boolean canAttack(Position from, Position to, Piece targetPiece) {
         if (targetPiece.hasColorOf(color)) {
             throw new IllegalArgumentException("아군은 공격할 수 없습니다.");
         }
-        return type.isMovable(from, to); // TODO: divide move and attack case
+        return isAttackableRoute(from, to);
     }
 
-    public boolean hasColorOf(Color color) {
+    abstract protected boolean isMovableRoute(Position from, Position to);
+
+    abstract protected boolean isAttackableRoute(Position from, Position to);
+
+    public final boolean hasColorOf(Color color) {
         return this.color == color;
     }
 
-    public boolean hasTypeOf(PieceType type) {
+    public final boolean hasTypeOf(PieceType type) {
         return this.type == type;
     }
 
-    public PieceType type() {
+    public final PieceType type() {
         return type;
     }
 

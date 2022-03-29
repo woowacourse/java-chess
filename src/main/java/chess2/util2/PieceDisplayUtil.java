@@ -1,6 +1,8 @@
 package chess2.util2;
 
 import chess2.domain2.board2.piece2.Color;
+import chess2.domain2.board2.piece2.NonPawn;
+import chess2.domain2.board2.piece2.Pawn;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.domain2.board2.piece2.PieceType;
 import java.util.HashMap;
@@ -39,12 +41,12 @@ public class PieceDisplayUtil {
         }
 
         static void initDisplayMap(String[] displayFormats, Color color) {
-            displayMap.put(new Piece(color, PieceType.PAWN), displayFormats[PAWN_IDX]);
-            displayMap.put(new Piece(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
-            displayMap.put(new Piece(color, PieceType.BISHOP), displayFormats[BISHOP_IDX]);
-            displayMap.put(new Piece(color, PieceType.ROOK), displayFormats[ROOK_IDX]);
-            displayMap.put(new Piece(color, PieceType.QUEEN), displayFormats[QUEEN_IDX]);
-            displayMap.put(new Piece(color, PieceType.KING), displayFormats[KING_IDX]);
+            displayMap.put(new Pawn(color), displayFormats[PAWN_IDX]);
+            displayMap.put(new NonPawn(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
+            displayMap.put(new NonPawn(color, PieceType.BISHOP), displayFormats[BISHOP_IDX]);
+            displayMap.put(new NonPawn(color, PieceType.ROOK), displayFormats[ROOK_IDX]);
+            displayMap.put(new NonPawn(color, PieceType.QUEEN), displayFormats[QUEEN_IDX]);
+            displayMap.put(new NonPawn(color, PieceType.KING), displayFormats[KING_IDX]);
         }
 
         static String displayOf(Piece piece) {

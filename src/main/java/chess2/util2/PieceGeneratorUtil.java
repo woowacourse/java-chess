@@ -9,6 +9,8 @@ import static chess2.util2.PositionConverterUtil.FILES_TOTAL_SIZE;
 
 import chess2.domain2.board2.Position;
 import chess2.domain2.board2.piece2.Color;
+import chess2.domain2.board2.piece2.NonPawn;
+import chess2.domain2.board2.piece2.Pawn;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.domain2.board2.piece2.PieceType;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class PieceGeneratorUtil {
         Map<Position, Piece> pawnBoard = new HashMap<>();
         for (int fileIdx = 0; fileIdx < FILES_TOTAL_SIZE; fileIdx++) {
             Position position = Position.of(fileIdx, initRank);
-            pawnBoard.put(position, new Piece(color, PieceType.PAWN));
+            pawnBoard.put(position, new Pawn(color));
         }
         return pawnBoard;
     }
@@ -57,7 +59,7 @@ public class PieceGeneratorUtil {
         Map<Position, Piece> nonPawnBoard = new HashMap<>();
         for (int fileIdx = 0; fileIdx < FILES_TOTAL_SIZE; fileIdx++) {
             Position position = Position.of(fileIdx, initRank);
-            Piece nonPawn = new Piece(color, nonPawnOrder.get(fileIdx));
+            Piece nonPawn = new NonPawn(color, nonPawnOrder.get(fileIdx));
             nonPawnBoard.put(position, nonPawn);
         }
         return nonPawnBoard;
