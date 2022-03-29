@@ -9,7 +9,7 @@ public final class Bishop extends Piece {
     private static final int SCORE = 3;
 
     public Bishop(Camp camp) {
-        super(camp);
+        super(camp, Type.BISHOP);
     }
 
     @Override
@@ -30,41 +30,6 @@ public final class Bishop extends Piece {
     @Override
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         this.move(sourcePosition, targetPosition, moveApplier);
-    }
-
-    @Override
-    public boolean isBishop() {
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isNone() {
-        return false;
     }
 
     @Override

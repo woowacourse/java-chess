@@ -6,9 +6,11 @@ import java.util.function.Consumer;
 
 public abstract class Piece {
     private final Camp camp;
+    private final Type type;
 
-    protected Piece(Camp camp) {
+    protected Piece(Camp camp, Type type) {
         this.camp = camp;
+        this.type = type;
     }
 
     public final boolean isCamp(Camp camp) {
@@ -19,25 +21,15 @@ public abstract class Piece {
         return this.isCamp(piece.camp);
     }
 
+    public final boolean isType(Type type) {
+        return this.type == type;
+    }
+
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
     protected abstract boolean canMove(Position sourcePosition, Position targetPosition);
 
     public abstract void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
-
-    public abstract boolean isBishop();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isKnight();
-
-    public abstract boolean isPawn();
-
-    public abstract boolean isQueen();
-
-    public abstract boolean isRook();
-
-    public abstract boolean isNone();
 
     public abstract double getScore();
 }

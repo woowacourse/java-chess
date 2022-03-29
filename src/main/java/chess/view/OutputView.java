@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.Expressions.COMMAND_END;
 import static chess.view.Expressions.COMMAND_START;
-import static chess.view.Expressions.PIECE_EXPRESSONS;
+import static chess.view.Expressions.PIECE_EXPRESSIONS;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
@@ -65,10 +65,10 @@ public class OutputView {
     }
 
     private String convertPieceToString(Piece piece) {
-        return PIECE_EXPRESSONS.keySet().stream()
-                .filter(piecePredicate -> piecePredicate.test(piece))
+        return PIECE_EXPRESSIONS.keySet().stream()
+                .filter(piece::isType)
                 .findFirst()
-                .map(PIECE_EXPRESSONS::get)
+                .map(PIECE_EXPRESSIONS::get)
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_PIECE));
     }
 

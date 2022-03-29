@@ -12,6 +12,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Type;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -120,7 +121,7 @@ public final class Board {
     }
 
     private void checkPath(Position sourcePosition, Position targetPosition, Piece source) {
-        if (source.isKnight()) {
+        if (source.isType(Type.KNIGHT)) {
             return;
         }
         boolean blankPath = sourcePosition.pathTo(targetPosition).stream()
@@ -153,7 +154,7 @@ public final class Board {
     }
 
     private boolean isBlank(Position position) {
-        return value.get(position).isNone();
+        return value.get(position).isType(Type.NONE);
     }
 
     public boolean hasKingCaptured(){
@@ -178,7 +179,7 @@ public final class Board {
     private List<Piece> collectKing() {
         return this.value.values()
                 .stream()
-                .filter(Piece::isKing)
+                .filter(piece -> piece.isType(Type.KING))
                 .collect(Collectors.toList());
     }
 
@@ -217,7 +218,7 @@ public final class Board {
 
     private List<Piece> collectPiecesWithoutPawnIn(List<Piece> pieces) {
         return pieces.stream()
-                .filter(piece -> !piece.isPawn())
+                .filter(piece -> !piece.isType(Type.PAWN))
                 .collect(Collectors.toList());
     }
 
@@ -235,7 +236,7 @@ public final class Board {
 
     private List<Piece> collectPawnsIn(List<Piece> pieces) {
         return pieces.stream()
-                .filter(Piece::isPawn)
+                .filter(piece -> piece.isType(Type.PAWN))
                 .collect(Collectors.toList());
     }
 

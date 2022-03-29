@@ -10,7 +10,7 @@ public final class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(Camp camp) {
-        super(camp);
+        super(camp, Type.ROOK);
     }
 
     @Override
@@ -34,41 +34,6 @@ public final class Rook extends Piece {
     @Override
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         this.move(sourcePosition, targetPosition, moveApplier);
-    }
-
-    @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return true;
-    }
-
-    @Override
-    public boolean isNone() {
-        return false;
     }
 
     @Override

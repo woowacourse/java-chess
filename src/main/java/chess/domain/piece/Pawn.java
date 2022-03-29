@@ -15,7 +15,7 @@ public final class Pawn extends Piece {
     private boolean firstMove;
 
     public Pawn(Camp camp) {
-        super(camp);
+        super(camp, Type.PAWN);
         this.firstMove = true;
     }
 
@@ -62,41 +62,6 @@ public final class Pawn extends Piece {
             return Camp.BLACK.giveVerticalDirectionTo(movableDistance) <= distance && distance < DISTANCE_NOT_MOVED;
         }
         return DISTANCE_NOT_MOVED < distance && distance <= movableDistance;
-    }
-
-    @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isNone() {
-        return false;
     }
 
     @Override

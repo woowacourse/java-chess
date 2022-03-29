@@ -8,7 +8,7 @@ public class None extends Piece {
     private static final String ERROR_CANT_MOVE = "말이 없어 이동할 수 없습니다.";
 
     public None() {
-        super(Camp.NONE);
+        super(Camp.NONE, Type.NONE);
     }
 
     @Override
@@ -24,41 +24,6 @@ public class None extends Piece {
     @Override
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         this.move(sourcePosition, targetPosition, moveApplier);
-    }
-
-    @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isNone() {
-        return true;
     }
 
     @Override

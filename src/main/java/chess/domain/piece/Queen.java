@@ -10,7 +10,7 @@ public final class Queen extends Piece{
     private static final double SCORE = 9;
 
     public Queen(Camp camp) {
-        super(camp);
+        super(camp, Type.QUEEN);
     }
 
     @Override
@@ -37,41 +37,6 @@ public final class Queen extends Piece{
     @Override
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         this.move(sourcePosition, targetPosition, moveApplier);
-    }
-
-    @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return true;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isNone() {
-        return false;
     }
 
     @Override

@@ -4,11 +4,10 @@ import chess.command.Command;
 import chess.domain.board.Column;
 import chess.domain.board.Row;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Expressions {
@@ -19,7 +18,7 @@ public class Expressions {
     static final Map<Character, Column> EXPRESSIONS_COLUMN;
     static final Map<Character, Row> EXPRESSIONS_ROW;
     static final Map<String, Supplier<Command>> EXPRESSIONS_COMMAND;
-    static final Map<Predicate<Piece>, String> PIECE_EXPRESSONS;
+    static final Map<Type, String> PIECE_EXPRESSIONS;
 
     static {
         EXPRESSIONS_COLUMN = new HashMap<>();
@@ -47,13 +46,13 @@ public class Expressions {
         EXPRESSIONS_COMMAND.put(COMMAND_END, Command::createEnd);
         EXPRESSIONS_COMMAND.put(COMMAND_STATUS, Command::createStatus);
 
-        PIECE_EXPRESSONS = new LinkedHashMap<>();
-        PIECE_EXPRESSONS.put(Piece::isNone, ".");
-        PIECE_EXPRESSONS.put((Piece::isBishop), "b");
-        PIECE_EXPRESSONS.put((Piece::isKing), "k");
-        PIECE_EXPRESSONS.put((Piece::isKnight), "n");
-        PIECE_EXPRESSONS.put((Piece::isPawn), "p");
-        PIECE_EXPRESSONS.put((Piece::isQueen), "q");
-        PIECE_EXPRESSONS.put((Piece::isRook), "r");
+        PIECE_EXPRESSIONS = new LinkedHashMap<>();
+        PIECE_EXPRESSIONS.put(Type.NONE, ".");
+        PIECE_EXPRESSIONS.put(Type.BISHOP, "b");
+        PIECE_EXPRESSIONS.put(Type.KING, "k");
+        PIECE_EXPRESSIONS.put(Type.KNIGHT, "n");
+        PIECE_EXPRESSIONS.put(Type.PAWN, "p");
+        PIECE_EXPRESSIONS.put(Type.QUEEN, "q");
+        PIECE_EXPRESSIONS.put(Type.ROOK, "r");
     }
 }
