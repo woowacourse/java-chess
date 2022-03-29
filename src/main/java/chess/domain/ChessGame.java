@@ -20,6 +20,9 @@ public class ChessGame {
     }
 
     public void move(final Position from, final Position to) {
+        if (!gameStatus.isPlaying()) {
+            throw new IllegalArgumentException("게임이 이미 종료되었습니다.");
+        }
         checkCurrentTurn(from);
         chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
