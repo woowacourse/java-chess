@@ -37,8 +37,8 @@ public class RunningTest {
     @DisplayName("Running 상태에서 move 명령 호출할 수 있다.")
     @Test
     void running_move_no_exception() {
-        Position a2 = new Position(Column.A, Row.TWO);
-        Position a3 = new Position(Column.A, Row.THREE);
+        Position a2 = Position.of(Column.A, Row.TWO);
+        Position a3 = Position.of(Column.A, Row.THREE);
 
         assertThatNoException().isThrownBy(() -> state.move(a2, a3));
     }

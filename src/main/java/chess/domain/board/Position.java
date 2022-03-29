@@ -1,20 +1,32 @@
 package chess.domain.board;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
     private static final int DISTANCE_NOT_MOVED = 0;
+    private static final Map<String, Position> cash = new HashMap<>();
 
     private final Column column;
     private final Row row;
 
-    public Position(Column column, Row row) {
+    private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
+        cash.put(this.toString(), this);
+    }
+
+    public static Position of(Column column, Row row) {
+        String key = "" + column + row;
+        if (cash.containsKey(key)) {
+            return cash.get(key);
+        }
+        return new Position(column, row);
     }
 
     public int columnDistance(Position otherPosition) {
@@ -30,15 +42,15 @@ public class Position implements Comparable<Position> {
     }
 
     Position flipHorizontally() {
-        return new Position(this.column.flip(), this.row);
+        return Position.of(this.column.flip(), this.row);
     }
 
     Position flipVertically() {
-        return new Position(this.column, this.row.flip());
+        return Position.of(this.column, this.row.flip());
     }
 
     Position flipDiagonally() {
-        return new Position(this.column.flip(), this.row.flip());
+        return Position.of(this.column.flip(), this.row.flip());
     }
 
     List<Position> pathTo(Position otherPosition) {
@@ -56,19 +68,19 @@ public class Position implements Comparable<Position> {
 
     private List<Position> pathInColumn(List<Column> columnPath) {
         return columnPath.stream()
-                .map(column -> new Position(column, this.row))
+                .map(column -> Position.of(column, this.row))
                 .collect(Collectors.toList());
     }
 
     private List<Position> pathInRow(List<Row> rowPath) {
         return rowPath.stream()
-                .map(row -> new Position(this.column, row))
+                .map(row -> Position.of(this.column, row))
                 .collect(Collectors.toList());
     }
 
     private List<Position> pathInDiagonal(List<Row> rowPath, List<Column> columnPath) {
         return IntStream.range(0, rowPath.size())
-                .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+                .mapToObj(index -> Position.of(columnPath.get(index), rowPath.get(index)))
                 .collect(Collectors.toList());
     }
 

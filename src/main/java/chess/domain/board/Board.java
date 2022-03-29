@@ -142,7 +142,7 @@ public final class Board {
 
     private List<Piece> collectPiecesOfCampIn(Column column, Camp camp) {
         return Arrays.stream(Row.values())
-                .map(row -> this.value.get(new Position(column, row)))
+                .map(row -> this.value.get(Position.of(column, row)))
                 .filter(piece -> piece.isCamp(camp))
                 .collect(Collectors.toList());
     }

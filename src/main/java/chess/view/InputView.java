@@ -75,7 +75,7 @@ public class InputView {
     }
 
     private Position parsePosition(String rawPosition) {
-        return new Position(EXPRESSIONS_COLUMN.get(rawPosition.charAt(INDEX_COLUMN)),
+        return Position.of(EXPRESSIONS_COLUMN.get(rawPosition.charAt(INDEX_COLUMN)),
                 EXPRESSIONS_ROW.get(rawPosition.charAt(INDEX_ROW)));
     }
 }

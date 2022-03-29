@@ -18,11 +18,11 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class BoardInitializer {
-    private static final Position INITIAL_POSITION_ROOK = new Position(Column.A, Row.ONE);
-    private static final Position INITIAL_POSITION_KNIGHT = new Position(Column.B, Row.ONE);
-    private static final Position INITIAL_POSITION_BISHOP = new Position(Column.C, Row.ONE);
-    private static final Position INITIAL_POSITION_QUEEN = new Position(Column.D, Row.ONE);
-    private static final Position INITIAL_POSITION_KING = new Position(Column.E, Row.ONE);
+    private static final Position INITIAL_POSITION_ROOK = Position.of(Column.A, Row.ONE);
+    private static final Position INITIAL_POSITION_KNIGHT = Position.of(Column.B, Row.ONE);
+    private static final Position INITIAL_POSITION_BISHOP = Position.of(Column.C, Row.ONE);
+    private static final Position INITIAL_POSITION_QUEEN = Position.of(Column.D, Row.ONE);
+    private static final Position INITIAL_POSITION_KING = Position.of(Column.E, Row.ONE);
     private static final Row INITIAL_ROW_PAWN = Row.TWO;
     private static final int INITIAL_START_ROW_INDEX_BLANK = 2;
     private static final int INITIAL_END_ROW_INDEX_BLANK = 5;
@@ -61,7 +61,7 @@ public class BoardInitializer {
 
     private static void putPawnsOn(Map<Position, Piece> boardValue) {
         for (Column column : Column.values()) {
-            putTwoPiecesOn(new Position(column, INITIAL_ROW_PAWN), putPieceOn(boardValue, Pawn::new));
+            putTwoPiecesOn(Position.of(column, INITIAL_ROW_PAWN), putPieceOn(boardValue, Pawn::new));
         }
     }
 
@@ -78,7 +78,7 @@ public class BoardInitializer {
 
     private static void putBlanksOn(Column column, Map<Position, Piece> boardValue) {
         for (int i = INITIAL_START_ROW_INDEX_BLANK; i <= INITIAL_END_ROW_INDEX_BLANK; i++) {
-            boardValue.put(new Position(column, Row.values()[i]), new None());
+            boardValue.put(Position.of(column, Row.values()[i]), new None());
         }
     }
 }
