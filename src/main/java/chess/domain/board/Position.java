@@ -20,10 +20,6 @@ public class Position {
         this.row = row;
     }
 
-    public Position(final String rowString, final String columnString) {
-        this(Column.valueOf(columnString), Row.from(rowString));
-    }
-
     public static Position from(final String rawPosition) {
         if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
             throw new IllegalArgumentException(WRONG_POSITION);
