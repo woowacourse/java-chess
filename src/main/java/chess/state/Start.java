@@ -1,6 +1,6 @@
 package chess.state;
 
-import chess.Board;
+import chess.board.Board;
 
 public class Start extends Running {
 

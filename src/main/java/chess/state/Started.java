@@ -1,6 +1,6 @@
 package chess.state;
 
-import chess.Board;
+import chess.board.Board;
 import chess.Position;
 import chess.piece.Piece;
 
@@ -10,7 +10,7 @@ public abstract class Started implements State {
 
     protected final Board board;
 
-    protected Started(Board board) {
+    protected Started(final Board board) {
         this.board = board;
     }
 
