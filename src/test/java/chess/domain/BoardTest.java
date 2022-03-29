@@ -30,7 +30,7 @@ class BoardTest {
         Board board = new Board(new BoardInitializer());
         assertThatThrownBy(() -> board.move(Position.of("a3"), Position.of("a4")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 말이 존재하지 않습니다.");
+                .hasMessage("말이 존재하지 않습니다.");
     }
 
     @Test
@@ -120,7 +120,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
+                .hasMessage("폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있습니다.");
     }
 
     @Test
@@ -151,7 +151,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a4")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 목적지에 다른 기물이 존재하면 움직일 수 없다.");
+                .hasMessage("목적지에 다른 기물이 존재하면 움직일 수 없습니다.");
     }
 
     @Test
@@ -167,7 +167,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a4")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -182,7 +182,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("b8"), Position.of("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+                .hasMessage("목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -198,7 +198,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("b8"), Position.of("b3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -214,7 +214,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("b8"), Position.of("e5")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -247,7 +247,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("b3"), Position.of("b8")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -263,7 +263,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("b3"), Position.of("f3")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -279,7 +279,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("g7"), Position.of("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+                .hasMessage("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
     }
 
     @Test
