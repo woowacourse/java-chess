@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommandTest {
 
-    @Test
     @ParameterizedTest
     @CsvSource(value = {"start", "end", "status", "move"})
     void find(String command) {

@@ -27,10 +27,22 @@ public class PawnTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"3, 3, BLACK", "3, 4, BLACK", "3, 5, BLACK", "5, 3, WHITE", "5, 4, WHITE", "5, 5, WHITE"})
+	@CsvSource(value = {"3, 4, BLACK", "5, 4, WHITE"})
 	void validateMovement(int targetRow, int targetColumn, Team team) {
 		Pawn pawn = new Pawn(team);
 		assertDoesNotThrow(() -> pawn.checkReachable(new Blank(), Position.of(4, 4), Position.of(targetRow, targetColumn)));
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"3, 3, BLACK", "3, 5, BLACK", "5, 3, WHITE", "5, 5, WHITE"})
+	void validateDiagonalMovement(int targetRow, int targetColumn, Team team) {
+		Pawn pawn = new Pawn(team);
+		Team opponent = team;
+		if (team.isBlack()) {
+			opponent = Team.WHITE;
+		}
+		Team opponentTeam = opponent;
+		assertDoesNotThrow(() -> pawn.checkReachable(new Pawn(opponentTeam), Position.of(4, 4), Position.of(targetRow, targetColumn)));
 	}
 
 	@ParameterizedTest
