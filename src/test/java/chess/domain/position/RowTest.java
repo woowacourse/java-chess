@@ -16,7 +16,7 @@ class RowTest {
     @DisplayName("행은 1~8의 범위를 가짐")
     void row_mustInOneToEight() {
         List<Integer> values = Stream.of(values())
-                .map(Row::getValue)
+                .map(Row::value)
                 .collect(Collectors.toList());
 
         assertThat(values).doesNotContain(9);

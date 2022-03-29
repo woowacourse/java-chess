@@ -151,7 +151,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a4")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
+                .hasMessage("[ERROR] 목적지에 다른 기물이 존재하면 움직일 수 없다.");
     }
 
     @Test

@@ -81,10 +81,10 @@ public final class Board {
     }
 
     private void checkPawnMovement(final Position sourcePosition, final Position targetPosition, final Piece piece) {
-        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.DIAGONAL) {
+        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition).isDiagonal()) {
             checkPawnTargetExist(targetPosition);
         }
-        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition) == Direction.VERTICAL) {
+        if (piece.isPawn() && Direction.calculate(sourcePosition, targetPosition).isVertical()) {
             checkPawnTargetNotExist(targetPosition);
         }
     }
@@ -97,7 +97,7 @@ public final class Board {
 
     private void checkPawnTargetNotExist(final Position targetPosition) {
         if (pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 직진할 때 다른 기물이 존재하는 목적지에 이동할 수 없다.");
+            throw new IllegalArgumentException("[ERROR] 목적지에 다른 기물이 존재하면 움직일 수 없다.");
         }
     }
 

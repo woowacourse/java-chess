@@ -26,7 +26,7 @@ public enum Row {
     public static List<Integer> valuesByDescending() {
         return Arrays.stream(values())
                 .sorted((o1, o2) -> o2.value - o1.value)
-                .map(Row::getValue)
+                .map(Row::value)
                 .collect(Collectors.toList());
     }
 
@@ -44,10 +44,6 @@ public enum Row {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 헹은 숫자로 입력되어야 합니다.");
         }
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public boolean isSame(final Row row) {
@@ -91,4 +87,7 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("'" + value + "'는 올바르지 않은 로우입니다."));
     }
 
+    public int value() {
+        return value;
+    }
 }
