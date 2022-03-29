@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.unit.Bishop;
+import domain.piece.unit.King;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
 import domain.piece.unit.Rook;
@@ -53,8 +54,8 @@ class ChessBoardTest {
     @DisplayName("move 이후에 Turn 이 변경된다.")
     void changeTurnAfterMove() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
-
         chessBoard.move(B2, B3);
+
         assertThat(chessBoard.getCurrentTurn()).isEqualTo(BLACK);
     }
 
@@ -277,8 +278,10 @@ class ChessBoardTest {
     void checkCurrentTeamScore() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
-        assertThat(chessBoard.calculateTeamScore(WHITE)).isEqualTo(38);
-        assertThat(chessBoard.calculateTeamScore(BLACK)).isEqualTo(38);
+        assertAll(
+                () -> assertEquals(chessBoard.calculateTeamScore(WHITE), 38),
+                () -> assertEquals(chessBoard.calculateTeamScore(BLACK), 38)
+        );
     }
 
     @Test

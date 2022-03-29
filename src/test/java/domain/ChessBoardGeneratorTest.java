@@ -3,6 +3,7 @@ package domain;
 import static domain.PositionFixtures.*;
 import static domain.piece.property.Team.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.unit.Piece;
 import domain.piece.unit.Bishop;
@@ -13,6 +14,7 @@ import domain.piece.unit.Queen;
 import domain.piece.unit.Rook;
 import domain.position.Position;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,8 +36,10 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(position);
 
-        assertThat(piece.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(Pawn.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(WHITE), true),
+                () -> assertThat(piece).isInstanceOf(Pawn.class)
+        );
     }
 
     private static Stream<Position> whitePawns() {
@@ -49,8 +53,10 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(position);
 
-        assertThat(piece.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(Pawn.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(BLACK), true),
+                () -> assertThat(piece).isInstanceOf(Pawn.class)
+        );
     }
 
     private static Stream<Position> columns() {
@@ -64,10 +70,12 @@ class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(A1);
         Piece rightRook = chessBoardGenerator.generate().get(H1);
 
-        assertThat(leftRook.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(rightRook.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(leftRook).isInstanceOf(Rook.class);
-        assertThat(rightRook).isInstanceOf(Rook.class);
+        assertAll(
+                () -> assertEquals(leftRook.checkSameTeam(WHITE), true),
+                () -> assertEquals(rightRook.checkSameTeam(WHITE), true),
+                () -> assertThat(leftRook).isInstanceOf(Rook.class),
+                () -> assertThat(rightRook).isInstanceOf(Rook.class)
+        );
     }
 
     @Test
@@ -77,10 +85,12 @@ class ChessBoardGeneratorTest {
         Piece leftRook = chessBoardGenerator.generate().get(A8);
         Piece rightRook = chessBoardGenerator.generate().get(H8);
 
-        assertThat(leftRook.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(rightRook.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(leftRook).isInstanceOf(Rook.class);
-        assertThat(rightRook).isInstanceOf(Rook.class);
+        assertAll(
+                () -> assertEquals(leftRook.checkSameTeam(BLACK), true),
+                () -> assertEquals(rightRook.checkSameTeam(BLACK), true),
+                () -> assertThat(leftRook).isInstanceOf(Rook.class),
+                () -> assertThat(rightRook).isInstanceOf(Rook.class)
+        );
     }
 
     @Test
@@ -90,10 +100,12 @@ class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(B1);
         Piece rightKnight = chessBoardGenerator.generate().get(G1);
 
-        assertThat(leftKnight.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(rightKnight.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(leftKnight).isInstanceOf(Knight.class);
-        assertThat(rightKnight).isInstanceOf(Knight.class);
+        assertAll(
+                () -> assertEquals(leftKnight.checkSameTeam(WHITE), true),
+                () -> assertEquals(rightKnight.checkSameTeam(WHITE), true),
+                () -> assertThat(leftKnight).isInstanceOf(Knight.class),
+                () -> assertThat(rightKnight).isInstanceOf(Knight.class)
+        );
     }
 
     @Test
@@ -103,10 +115,12 @@ class ChessBoardGeneratorTest {
         Piece leftKnight = chessBoardGenerator.generate().get(B8);
         Piece rightKnight = chessBoardGenerator.generate().get(G8);
 
-        assertThat(leftKnight.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(rightKnight.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(leftKnight).isInstanceOf(Knight.class);
-        assertThat(rightKnight).isInstanceOf(Knight.class);
+        assertAll(
+                () -> assertEquals(leftKnight.checkSameTeam(BLACK), true),
+                () -> assertEquals(rightKnight.checkSameTeam(BLACK), true),
+                () -> assertThat(leftKnight).isInstanceOf(Knight.class),
+                () -> assertThat(rightKnight).isInstanceOf(Knight.class)
+        );
     }
 
     @Test
@@ -116,10 +130,12 @@ class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(C1);
         Piece rightBishop = chessBoardGenerator.generate().get(F1);
 
-        assertThat(leftBishop.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(rightBishop.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(leftBishop).isInstanceOf(Bishop.class);
-        assertThat(rightBishop).isInstanceOf(Bishop.class);
+        assertAll(
+                () -> assertEquals(leftBishop.checkSameTeam(WHITE), true),
+                () -> assertEquals(rightBishop.checkSameTeam(WHITE), true),
+                () -> assertThat(leftBishop).isInstanceOf(Bishop.class),
+                () -> assertThat(rightBishop).isInstanceOf(Bishop.class)
+        );
     }
 
     @Test
@@ -129,10 +145,12 @@ class ChessBoardGeneratorTest {
         Piece leftBishop = chessBoardGenerator.generate().get(C8);
         Piece rightBishop = chessBoardGenerator.generate().get(F8);
 
-        assertThat(leftBishop.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(rightBishop.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(leftBishop).isInstanceOf(Bishop.class);
-        assertThat(rightBishop).isInstanceOf(Bishop.class);
+        assertAll(
+                () -> assertEquals(leftBishop.checkSameTeam(BLACK), true),
+                () -> assertEquals(rightBishop.checkSameTeam(BLACK), true),
+                () -> assertThat(leftBishop).isInstanceOf(Bishop.class),
+                () -> assertThat(rightBishop).isInstanceOf(Bishop.class)
+        );
     }
 
     @Test
@@ -141,8 +159,10 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(D1);
 
-        assertThat(piece.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(Queen.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(WHITE), true),
+                () -> assertThat(piece).isInstanceOf(Queen.class)
+        );
     }
 
     @Test
@@ -151,8 +171,10 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(D8);
 
-        assertThat(piece.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(Queen.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(BLACK), true),
+                () -> assertThat(piece).isInstanceOf(Queen.class)
+        );
     }
 
     @Test
@@ -161,8 +183,10 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(E1);
 
-        assertThat(piece.checkSameTeam(WHITE)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(King.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(WHITE), true),
+                () -> assertThat(piece).isInstanceOf(King.class)
+        );
     }
 
     @Test
@@ -171,7 +195,9 @@ class ChessBoardGeneratorTest {
         ChessBoardGenerator chessBoardGenerator = new ChessBoardGenerator();
         Piece piece = chessBoardGenerator.generate().get(E8);
 
-        assertThat(piece.checkSameTeam(BLACK)).isEqualTo(true);
-        assertThat(piece).isInstanceOf(King.class);
+        assertAll(
+                () -> assertEquals(piece.checkSameTeam(BLACK), true),
+                () -> assertThat(piece).isInstanceOf(King.class)
+        );
     }
 }
