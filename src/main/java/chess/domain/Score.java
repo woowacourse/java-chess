@@ -23,16 +23,14 @@ public class Score {
         this.blackScore = scoreByColor.getOrDefault(Color.BLACK, 0.0);
     }
 
-    private Map<Color, Double> calculateScore(
-            final Map<Position, ChessPiece> pieceByPosition) {
+    private Map<Color, Double> calculateScore(final Map<Position, ChessPiece> pieceByPosition) {
         return Arrays.stream(Color.values())
                 .collect(Collectors.toMap(
                         Function.identity(),
                         color -> sumScoreExceptPawn(color, pieceByPosition) + sumPawnScore(color, pieceByPosition)));
     }
 
-    private double sumScoreExceptPawn(final Color color,
-                                      final Map<Position, ChessPiece> pieceByPosition) {
+    private double sumScoreExceptPawn(final Color color, final Map<Position, ChessPiece> pieceByPosition) {
         return pieceByPosition.values().stream()
                 .filter(chessPiece -> chessPiece.isSameColor(color))
                 .filter(chessPiece -> !chessPiece.isPawn())
@@ -40,16 +38,14 @@ public class Score {
                 .sum();
     }
 
-    private double sumPawnScore(final Color color,
-                                final Map<Position, ChessPiece> pieceByPosition) {
+    private double sumPawnScore(final Color color, final Map<Position, ChessPiece> pieceByPosition) {
         return Arrays.stream(Rank.values())
                 .mapToInt(rank -> countSameRankPawn(color, rank, pieceByPosition))
                 .mapToDouble(Pawn::calculateScore)
                 .sum();
     }
 
-    private int countSameRankPawn(final Color color, final Rank rank,
-                                  final Map<Position, ChessPiece> pieceByPosition) {
+    private int countSameRankPawn(final Color color, final Rank rank, final Map<Position, ChessPiece> pieceByPosition) {
         return (int) Arrays.stream(File.values())
                 .map(file -> pieceByPosition.get(Position.of(rank, file)))
                 .filter(Objects::nonNull)
