@@ -10,23 +10,26 @@ public class Controller {
     public void run() {
         OutputView.printInitMessage();
         ChessGame chessGame = new ChessGame();
-        State state = new Init(chessGame);
-        play(state, chessGame);
+        play(new Init(chessGame), chessGame);
     }
 
     private void play(State state, ChessGame chessGame) {
         while (state.isRun()) {
-            printChessBoardIfPlay(state, chessGame);
+            printPlayingChessBoard(state, chessGame);
             state = state.go(InputView.inputCommend());
         }
-        if (state.isStatusEnd()) {
-            OutputView.printStatus(chessGame.getStatus());
+        printStatusEnd(state, chessGame);
+    }
+
+    private void printPlayingChessBoard(State state, ChessGame chessGame) {
+        if (state.isPlay()) {
+            OutputView.printChessBoard(chessGame.getBoard().getSquares());
         }
     }
 
-    private void printChessBoardIfPlay(State state, ChessGame chessGame) {
-        if (state.isPlay()) {
-            OutputView.printChessBoard(chessGame.getBoard());
+    private void printStatusEnd(State state, ChessGame chessGame) {
+        if (state.isStatusEnd()) {
+            OutputView.printStatus(chessGame.getStatus());
         }
     }
 }
