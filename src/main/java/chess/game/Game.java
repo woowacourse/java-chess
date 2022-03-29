@@ -2,11 +2,10 @@ package chess.game;
 
 import static chess.piece.Color.*;
 
+import chess.dto.CommandRequest;
 import chess.piece.Color;
 import chess.status.State;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class Game {
@@ -18,26 +17,28 @@ public class Game {
         this.state = state;
     }
 
+    public Map<Color, Double> run(final CommandRequest commandRequest) {
+        final Command command = commandRequest.getCommandType();
+        state = state.turn(command);
+        isMoveStatus(commandRequest.getFrom(), commandRequest.getTo());
+        isEndStatus();
+        return score(command);
+    }
+
     public boolean isRunning() {
         return state.isRunning();
     }
 
-    public Map<Color, Double> run(final String input) {
-        final List<String> inputs = Arrays.asList(input.split(" "));
-        final Command command = Command.of(inputs.get(0));
-        validate(command, inputs);
-        state = state.turn(command);
+    private Map<Color, Double> score(final Command command) {
         if (command.isStatus()) {
             return state.score().getScore();
         }
-        isMoveStatus(inputs);
-        isEndStatus();
         return Collections.emptyMap();
     }
 
-    private void isMoveStatus(final List<String> inputs) {
+    private void isMoveStatus(final Position from, final Position to) {
         if (state.canMove()) {
-            state.move(MoveCommand.of(inputs.get(1), inputs.get(2)));
+            state.move(new MoveCommand(from, to));
         }
     }
 
@@ -53,16 +54,6 @@ public class Game {
         if (state.isGameEnd()) {
             winColor = reversColor(state.getColor());
             state = state.turn(Command.END);
-        }
-    }
-
-    private void validate(final Command command, final List<String> input) {
-        if (command.isMove() && input.size() != 3) {
-            throw new IllegalArgumentException();
-        }
-
-        if (!command.isMove() && input.size() != 1) {
-            throw new IllegalArgumentException();
         }
     }
 

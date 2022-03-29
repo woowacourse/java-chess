@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
-class CommandTest {
+class CommandRequestTypeTest {
 
     @ParameterizedTest(name = "input : {0}, command : {1}")
     @MethodSource("provideForCommand")

@@ -5,7 +5,7 @@ public class MoveCommand {
     private final Position from;
     private final Position to;
 
-    private MoveCommand(final Position from, final Position to) {
+    public MoveCommand(final Position from, final Position to) {
         validateFromEqualsTo(from, to);
         this.from = from;
         this.to = to;

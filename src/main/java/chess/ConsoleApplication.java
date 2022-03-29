@@ -1,5 +1,6 @@
 package chess;
 
+import chess.dto.CommandRequest;
 import chess.game.Command;
 import chess.game.Game;
 import chess.status.Ready;
@@ -20,7 +21,7 @@ public class ConsoleApplication {
 
     private static State ready() {
         try {
-            return Ready.start(Command.of(InputView.inputCommand()));
+            return Ready.start(Command.of(InputView.inputStartCommand()));
         } catch (final IllegalArgumentException e) {
             System.err.println(e.getMessage());
             return ready();
@@ -29,7 +30,8 @@ public class ConsoleApplication {
 
     private static void run(final Game game) {
         try {
-            OutputView.printScore(game.run(InputView.input()));
+            final CommandRequest commandRequest = InputView.inputPlayCommand();
+            OutputView.printScore(game.run(commandRequest));
         } catch (final IllegalArgumentException | IllegalStateException e) {
             System.err.println(e.getMessage());
         }
