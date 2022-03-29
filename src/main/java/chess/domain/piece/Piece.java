@@ -1,54 +1,23 @@
 package chess.domain.piece;
 
 import chess.domain.board.position.Position;
-import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
-import chess.domain.piece.strategy.MoveStrategy;
 import java.util.List;
-import java.util.Locale;
 
-public abstract class Piece {
-    protected final Name name;
-    protected final Team team;
-    protected final MoveStrategy moveStrategy;
+public interface Piece {
+    boolean canMove(Piece targetPiece, Position from, Position to);
 
-    public Piece(Name name, Team team, MoveStrategy moveStrategy) {
-        this.name = name;
-        this.team = team;
-        this.moveStrategy = moveStrategy;
-    }
+    boolean isSameTeam(Piece targetPiece);
 
-    public abstract boolean canMove(Piece targetPiece, Position from, Position to);
+    boolean isOppositeTeam(Team team);
 
-    public boolean isSameTeam(Piece targetPiece) {
-        return this.team == targetPiece.team;
-    }
+    boolean isKing();
 
-    public boolean isOppositeTeam(Team team) {
-        return (team == Team.WHITE && this.team == Team.BLACK) ||
-                (team == Team.BLACK && this.team == Team.WHITE);
-    }
+    boolean isPiece();
 
-    public boolean isKing() {
-        return false;
-    }
+    String getName();
 
-    public boolean isPiece() {
-        return true;
-    }
+    Team getTeam();
 
-    public String getName() {
-        if (team.equals(Team.WHITE)) {
-            return name.getValue().toLowerCase(Locale.ROOT);
-        }
-        return name.getValue();
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public List<Position> getRoute(Position from, Position to) {
-        return moveStrategy.getRoute(from, to);
-    }
+    List<Position> getRoute(Position from, Position to);
 }

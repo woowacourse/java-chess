@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Score;
 import chess.domain.piece.attribute.Team;
@@ -64,8 +65,8 @@ public final class Board {
         }
     }
 
-    private void replace(Position from, Position to, Piece sourcePiece) {
-        squares.replace(to, sourcePiece);
+    private void replace(Position from, Position to, Piece sourceAbstractPiece) {
+        squares.replace(to, sourceAbstractPiece);
         squares.replace(from, new EmptyPiece());
     }
 

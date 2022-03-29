@@ -54,8 +54,7 @@ public class InjectBoardStrategy implements BoardStrategy {
         int fileX = 1;
         for (String pieceString : rank.split("")) {
             board.put(new Position(Column.numberOf(fileX), Rank.numberOf(rankY)),
-                    stringPieceMap.get(pieceString)
-            );
+                    stringPieceMap.get(pieceString));
             fileX++;
         }
     }

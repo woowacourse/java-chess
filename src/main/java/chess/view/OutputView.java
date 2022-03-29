@@ -4,6 +4,7 @@ import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import java.util.List;

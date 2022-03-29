@@ -5,7 +5,7 @@ import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
 import chess.domain.piece.strategy.QueenMoveStrategy;
 
-public final class Queen extends Piece {
+public final class Queen extends AbstractPiece {
 
     public Queen(Team team) {
         super(new Name("Q"), team, new QueenMoveStrategy());
