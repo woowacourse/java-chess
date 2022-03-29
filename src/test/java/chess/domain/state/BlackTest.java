@@ -4,12 +4,15 @@ import chess.domain.Board;
 
 
 import chess.domain.BoardFixture;
+import chess.domain.Score;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static chess.domain.PositionFixture.BLACK_SOURCE;
 import static chess.domain.PositionFixture.BLACK_TARGET;
@@ -39,5 +42,13 @@ public class BlackTest {
         Black black = new Black(board);
 
         assertThatThrownBy( () -> black.changeTurn(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE)));
+    }
+
+    @DisplayName("status시 Board로 부터 Map으로된 점수를 받아오는지 테스트")
+    @Test
+    void status() {
+        Black black = new Black(board);
+
+        assertThat(black.status()).isInstanceOf(Score.class);
     }
 }

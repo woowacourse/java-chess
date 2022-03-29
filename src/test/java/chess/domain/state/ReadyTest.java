@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ReadyTest {
     private Board board;
@@ -33,6 +34,13 @@ public class ReadyTest {
         Ready ready = new Ready(board);
 
         assertThat(ready.end()).isInstanceOf(End.class);
+    }
+
+    @DisplayName("레디 상태에서 status 실행시 에러 테스트")
+    @Test
+    void status() {
+        Ready ready = new Ready(board);
+        assertThatThrownBy(ready::status).isInstanceOf(IllegalArgumentException.class);
     }
 }
 

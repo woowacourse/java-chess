@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.BoardFixture;
+import chess.domain.Score;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
@@ -45,5 +46,13 @@ public class WhiteTest {
         White white = new White(board);
 
         assertThatThrownBy( () -> white.changeTurn(new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.SIX)));
+    }
+
+    @DisplayName("status시 Board로 부터 Map으로된 점수를 받아오는지 테스트")
+    @Test
+    void status() {
+        White white = new White(board);
+
+        assertThat(white.status()).isInstanceOf(Score.class);
     }
 }

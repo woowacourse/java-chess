@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Score;
 
 public abstract class Started implements State {
 
@@ -17,7 +18,12 @@ public abstract class Started implements State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(board);
+    }
+
+    @Override
+    public Score status() {
+        return Score.from(board());
     }
 
     @Override

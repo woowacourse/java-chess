@@ -1,9 +1,14 @@
 package chess.domain.state;
 
 import chess.domain.Board;
+import chess.domain.Score;
+import chess.domain.piece.Team;
 import chess.domain.postion.Position;
 
+import java.util.Map;
+
 public class Ready implements State {
+
     private final Board board;
 
     public Ready(final Board board) {
@@ -17,12 +22,17 @@ public class Ready implements State {
 
     @Override
     public State end() {
-        return new End();
+        return new End(board);
     }
 
     @Override
     public State changeTurn(Position source, Position target) {
         throw new IllegalArgumentException("Ready 상태에서는 chageTurn할 수 없습니다.");
+    }
+
+    @Override
+    public Score status() {
+        throw new IllegalArgumentException("Ready 상태에서는 점수를 볼 수 없습니다.");
     }
 
     @Override
