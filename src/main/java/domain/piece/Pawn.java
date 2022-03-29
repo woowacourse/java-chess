@@ -13,7 +13,7 @@ public class Pawn extends SpecificLocationPiece {
 
     public Pawn(final Player player, final DirectionsGenerator directionsGenerator,
         final int startLine) {
-        super(player, PieceSymbol.Pawn, directionsGenerator);
+        super(player, PieceSymbol.PAWN, directionsGenerator);
         this.startLine = startLine;
     }
 

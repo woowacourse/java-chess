@@ -11,7 +11,7 @@
 - [ ] 말의 이동 방향 생성기(DirectionsGenerator)를 인터페이스로 구현하여 주입하는 이유
     - 클래스 파일이 많아지고 불필요한 의존성도 생기는 것 같음.
     - 각각의 Piece 클래스들이 이동 방향을 가지고 있어도 되지 않을까?
-- [ ] Enum 상수 대문자 수정
+- [x] Enum 상수 대문자 수정
     - 관례적으로 Enum 상수는 대문자로 작성
 - [ ] `Pawn`
     - [ ] `calculateAvailablePosition()` null 대신 빈 컬렉션을 반환하는 것은 어떤지.

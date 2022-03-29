@@ -6,6 +6,6 @@ import domain.directions.BishopDirections;
 public class Bishop extends MovableRangePiece {
 
     public Bishop(final Player player) {
-        super(player, PieceSymbol.Bishop, new BishopDirections());
+        super(player, PieceSymbol.BISHOP, new BishopDirections());
     }
 }

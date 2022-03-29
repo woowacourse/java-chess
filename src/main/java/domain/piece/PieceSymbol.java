@@ -3,12 +3,12 @@ package domain.piece;
 import domain.Player;
 
 public enum PieceSymbol {
-    King("K"),
-    Queen("Q"),
-    Bishop("B"),
-    Knight("N"),
-    Rook("R"),
-    Pawn("P");
+    KING("K"),
+    QUEEN("Q"),
+    BISHOP("B"),
+    KNIGHT("N"),
+    ROOK("R"),
+    PAWN("P");
 
     private final String symbol;
 

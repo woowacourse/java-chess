@@ -3,12 +3,12 @@ package utils;
 import java.util.Arrays;
 
 public enum PieceScore {
-    Queen(9, "Q"),
-    Bishop(3, "B"),
-    Knight(2.5, "N"),
-    Rook(5, "R"),
-    Pawn(1, "P"),
-    King(0, "K");
+    QUEEN(9, "Q"),
+    BISHOP(3, "B"),
+    KNIGHT(2.5, "N"),
+    ROOK(5, "R"),
+    PAWN(1, "P"),
+    KING(0, "K");
 
     public static final double DUPLICATE_PAWN = 0.5;
 

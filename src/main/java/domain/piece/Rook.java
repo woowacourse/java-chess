@@ -6,6 +6,6 @@ import domain.directions.RookDirections;
 public class Rook extends MovableRangePiece {
 
     public Rook(final Player player) {
-        super(player, PieceSymbol.Rook, new RookDirections());
+        super(player, PieceSymbol.ROOK, new RookDirections());
     }
 }

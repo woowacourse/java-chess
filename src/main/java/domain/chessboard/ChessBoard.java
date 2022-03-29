@@ -64,7 +64,7 @@ public class ChessBoard {
     }
 
     private boolean isPawn(final Position source) {
-        return board.get(source).symbolByPlayer().equals(PieceSymbol.Pawn.symbol(currentPlayer));
+        return board.get(source).symbolByPlayer().equals(PieceSymbol.PAWN.symbol(currentPlayer));
     }
 
     private void validateTargetRouteForPawn(final Position source, final Position target) {
@@ -183,7 +183,7 @@ public class ChessBoard {
 
     private double calculatePawnsInFile(List<PieceScore> pieceScores) {
         long count = pieceScores.stream()
-            .filter(pieceScore -> pieceScore.score() == PieceScore.Pawn.score())
+            .filter(pieceScore -> pieceScore.score() == PieceScore.PAWN.score())
             .count();
         if (count >= PAWN_COUNT_SAME_FILE) {
             return count * PieceScore.DUPLICATE_PAWN;
@@ -194,7 +194,7 @@ public class ChessBoard {
     public boolean isKingOnlyOne() {
         long kingCount = board.values().stream()
             .filter(piece -> piece != null)
-            .filter(piece -> piece.symbol().equals(PieceSymbol.King.symbol()))
+            .filter(piece -> piece.symbol().equals(PieceSymbol.KING.symbol()))
             .count();
         return kingCount != DEFAULT_KING_COUNT;
     }
