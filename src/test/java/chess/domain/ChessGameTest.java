@@ -131,7 +131,7 @@ public class ChessGameTest {
     void isEnd_false() {
         boolean actual = chessGame.isEnd();
 
-        assertThat(actual).isTrue();
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("King이 한 개라도 죽으면 게임은 끝난다.")
