@@ -15,9 +15,9 @@ public enum Column {
 
     public static Column from(final int value) {
         return Arrays.stream(values())
-                .filter(column -> column.ordinal() == value)
+                .filter(column -> column.position() == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다.column"));
     }
 
     public static Column from(final String position) {
@@ -32,6 +32,10 @@ public enum Column {
     }
 
     public Column move(final int columnDifference) {
-        return from(ordinal() + columnDifference);
+        return from(position() + columnDifference);
+    }
+
+    public int position() {
+        return ordinal() + 1;
     }
 }
