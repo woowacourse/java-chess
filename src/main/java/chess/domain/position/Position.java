@@ -30,21 +30,24 @@ public class Position {
 		return this.row - position.row;
 	}
 
+	public int subtractColumn(Position position) {
+		return this.column - position.column;
+	}
+
 	public boolean canReach(Position to, UnitPosition unit, int threshold) {
 		List<Position> positions = new ArrayList<>();
 		for (int i = 1; i <= threshold; i++) {
 			positions.add(this.convert(unit.multiply(i)));
 		}
 		return positions.stream()
-			.anyMatch(each -> each.equals(to));
+			.anyMatch(position -> position.equals(to));
 	}
 
 	public Position convert(UnitPosition unitPosition) {
-		return new Position(this.row + unitPosition.getUnitRow(), this.column + unitPosition.getUnitColumn());
-	}
-
-	public int subtractColumn(Position position) {
-		return this.column - position.column;
+		return new Position(
+			this.row + unitPosition.getUnitRow(),
+			this.column + unitPosition.getUnitColumn()
+		);
 	}
 
 	public boolean isSameRow(int row) {
