@@ -5,7 +5,7 @@ import chess2.strategy.RouteChecker;
 
 public enum PieceType {
 
-    PAWN((pos1, pos2) -> true), // TODO: should be fixed
+    PAWN(PieceType::isPawnMovable),
     KNIGHT(PieceType::isKnightMovable),
     BISHOP(Position::isDiagonal),
     ROOK(PieceType::isRookMovable),
@@ -26,6 +26,10 @@ public enum PieceType {
         return routeChecker.checkMovable(from, to);
     }
 
+    private static boolean isPawnMovable(Position fromPosition, Position toPosition) {
+        throw new UnsupportedOperationException("폰의 이동 로직은 별도로 구현해야 합니다.");
+    }
+
     private static boolean isKnightMovable(Position fromPosition, Position toPosition) {
         int fileDiff = fromPosition.fileDifference(toPosition);
         int rankDiff = toPosition.rankDifference(toPosition);
@@ -34,7 +38,7 @@ public enum PieceType {
                 || (fileDiff == KNIGHT_MAIN_MOVE_DIFF && rankDiff == KNIGHT_SUB_MOVE_DIFF);
     }
 
-    private static boolean isRookMovable(Position fromPosition, Position toPosition)  {
+    private static boolean isRookMovable(Position fromPosition, Position toPosition) {
         return fromPosition.isHorizontal(toPosition)
                 || fromPosition.isVertical(toPosition);
     }

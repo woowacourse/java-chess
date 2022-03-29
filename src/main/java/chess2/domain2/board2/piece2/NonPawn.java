@@ -9,7 +9,7 @@ public final class NonPawn extends Piece {
     }
 
     @Override
-    protected boolean isMovableRoute(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         return type.isMovable(from, to);
     }
 

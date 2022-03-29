@@ -13,9 +13,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public final boolean canMove(Position from, Position to) {
-        return isMovableRoute(from, to);
-    }
+    abstract public boolean canMove(Position from, Position to);
 
     public final boolean canAttack(Position from, Position to, Piece targetPiece) {
         if (targetPiece.hasColorOf(color)) {
@@ -23,8 +21,6 @@ public abstract class Piece {
         }
         return isAttackableRoute(from, to);
     }
-
-    abstract protected boolean isMovableRoute(Position from, Position to);
 
     abstract protected boolean isAttackableRoute(Position from, Position to);
 

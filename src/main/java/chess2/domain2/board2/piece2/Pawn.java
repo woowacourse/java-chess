@@ -1,22 +1,83 @@
 package chess2.domain2.board2.piece2;
 
+import static chess2.domain2.board2.Direction.DOWN;
+import static chess2.domain2.board2.Direction.DOWN_LEFT;
+import static chess2.domain2.board2.Direction.DOWN_RIGHT;
+import static chess2.domain2.board2.Direction.UP;
+import static chess2.domain2.board2.Direction.UP_LEFT;
+import static chess2.domain2.board2.Direction.UP_RIGHT;
+import static chess2.domain2.board2.piece2.Color.WHITE;
+
+import chess2.domain2.board2.Direction;
 import chess2.domain2.board2.Position;
+import java.util.List;
 
 public final class Pawn extends Piece {
+
+    private static final int WHITE_INIT_RANK_IDX = 1;
+    private static final int BLACK_INIT_RANK_IDX = 6;
+
+    private static final Direction WHITE_MOVE_DIRECTION = UP;
+    private static final Direction BLACK_MOVE_DIRECTION = DOWN;
+
+    private static final List<Direction> WHITE_ATTACK_DIRECTION = List.of(UP_LEFT, UP_RIGHT);
+    private static final List<Direction> BLACK_ATTACK_DIRECTION = List.of(DOWN_LEFT, DOWN_RIGHT);
 
     public Pawn(Color color) {
         super(color, PieceType.PAWN);
     }
 
     @Override
-    protected boolean isMovableRoute(Position from, Position to) {
-        // TODO: replace with pawn move logic
-        return type.isMovable(from, to);
+    public boolean canMove(Position from, Position to) {
+        if (!isMovableDirection(from, to)) {
+            return false;
+        }
+        return isOneOrTwoStepsAway(from, to);
+    }
+
+    private boolean isMovableDirection(Position from, Position to) {
+        if (hasColorOf(WHITE)) {
+            return from.checkDirection(to, WHITE_MOVE_DIRECTION);
+        }
+        return from.checkDirection(to, BLACK_MOVE_DIRECTION);
+    }
+
+    private boolean isOneOrTwoStepsAway(Position from, Position to) {
+        int rankDiff = from.rankDifference(to);
+        if (rankDiff == 2) {
+            return atInitialPosition(from);
+        }
+        return rankDiff == 1;
+    }
+
+    private boolean atInitialPosition(Position currentPosition) {
+        if (hasColorOf(Color.BLACK)) {
+            return currentPosition.hasRankIdxOf(BLACK_INIT_RANK_IDX);
+        }
+        return currentPosition.hasRankIdxOf(WHITE_INIT_RANK_IDX);
     }
 
     @Override
     protected boolean isAttackableRoute(Position from, Position to) {
-        // TODO: replace with pawn attack logic
-        return type.isMovable(from, to);
+        if (!isAttackDirection(from, to)) {
+            return false;
+        }
+        return isDiagonallyAdjacentRoute(from, to);
+    }
+
+    private boolean isDiagonallyAdjacentRoute(Position from, Position to) {
+        int fileDiff = from.fileDifference(to);
+        int rankDiff = from.rankDifference(to);
+
+        return fileDiff == 1 && rankDiff == 1;
+    }
+
+    private boolean isAttackDirection(Position from, Position to) {
+        if (hasColorOf(WHITE)) {
+            return WHITE_ATTACK_DIRECTION.stream()
+                    .anyMatch(direction -> from.checkDirection(to, direction));
+        }
+        return BLACK_ATTACK_DIRECTION.stream()
+                        .anyMatch(direction -> from.checkDirection(to, direction));
     }
 }
