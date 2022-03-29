@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 public class PositionConverterUtil {
 
@@ -66,8 +65,9 @@ public class PositionConverterUtil {
             final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
             final char[] fileKeys = VALID_FILES.toCharArray();
 
-            IntStream.range(0, FILES_TOTAL_SIZE)
-                    .forEach(idx -> fileMap.put(fileKeys[idx], idx));
+            for (int fileIdx = 0; fileIdx < FILES_TOTAL_SIZE; fileIdx++) {
+                fileMap.put(fileKeys[fileIdx], fileIdx);
+            }
             return fileMap;
         }
 
@@ -75,8 +75,9 @@ public class PositionConverterUtil {
             final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
             final char[] rankKeys = VALID_RANKS.toCharArray();
 
-            IntStream.range(0, RANKS_TOTAL_SIZE)
-                    .forEach(idx -> rankMap.put(rankKeys[idx], idx));
+            for (int rankIdx = 0; rankIdx < RANKS_TOTAL_SIZE; rankIdx++) {
+                rankMap.put(rankKeys[rankIdx], rankIdx);
+            }
             return rankMap;
         }
     }
