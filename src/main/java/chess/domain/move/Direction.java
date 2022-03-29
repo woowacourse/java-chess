@@ -6,14 +6,14 @@ import java.util.Arrays;
 
 public enum Direction {
 
-    EAST(1, 0), // 차이를 나타내는 객체, 읽기 좋은 코드를 작성하자
+    EAST(1, 0),
     WEST(-1, 0),
     NORTH(0, 1),
     SOUTH(0, -1),
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
-    SOUTH_WEST(-1, -1), // 일반 방향이랑 특수 방향을 나눠보자
+    SOUTH_WEST(-1, -1),
     KNIGHT_EAST_LEFT(2, 1),
     KNIGHT_EAST_RIGHT(2, -1),
     KNIGHT_WEST_LEFT(-2, 1),

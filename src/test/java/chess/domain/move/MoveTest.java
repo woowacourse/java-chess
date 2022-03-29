@@ -3,6 +3,7 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
+import chess.domain.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +12,13 @@ import org.junit.jupiter.api.Test;
 class MoveTest {
 
     Move setUpBlack() {
-        return new Move(Board.create(), Color.BLACK);
+        Board board = new Board(BoardInitializer.create());
+        return new Move(board, Color.BLACK);
     }
 
     Move setUpWhite() {
-        return new Move(Board.create(), Color.WHITE);
+        Board board = new Board(BoardInitializer.create());
+        return new Move(board, Color.WHITE);
     }
 
     @Test

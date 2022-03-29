@@ -13,7 +13,7 @@ class ResultTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = new Board(BoardInitializer.create());
     }
 
     @Test

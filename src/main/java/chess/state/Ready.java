@@ -1,6 +1,7 @@
 package chess.state;
 
 import chess.domain.Board;
+import chess.domain.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
 
@@ -8,7 +9,7 @@ public class Ready implements State {
 
     @Override
     public State start() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.create());
         OutputView.printBoard(board.getBoard());
         return new Started(Color.WHITE, board);
     }
