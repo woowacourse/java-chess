@@ -17,6 +17,8 @@ public enum CoordinateX {
     H("h", 8),
     ;
 
+    private static final int ONE_STEP = 1;
+
     private final String name;
     private final int order;
 
@@ -48,6 +50,24 @@ public enum CoordinateX {
 
     public static int max(final CoordinateX from, final CoordinateX to) {
         return Math.max(from.order, to.order);
+    }
+
+    public CoordinateX next(final CoordinateX to) {
+        if (this == to) {
+            return to;
+        }
+        int nextStep = getNextStep(this, to);
+        return Arrays.stream(CoordinateX.values())
+                .filter(coordinateX -> this.order + nextStep == coordinateX.order)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
+    }
+
+    private int getNextStep(final CoordinateX from, final CoordinateX to) {
+        if (to.order > from.order) {
+            return ONE_STEP;
+        }
+        return -ONE_STEP;
     }
 
     public int getOrder() {

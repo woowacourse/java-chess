@@ -69,19 +69,6 @@ public class RookTest {
                 .hasMessageContaining("룩은 대각선으로 이동할 수 없습니다.");
     }
 
-    @DisplayName("룩 이동거리 사이에 기물이 있는 경우 예외")
-    @ParameterizedTest
-    @ValueSource(strings = {"e5", "c5", "c3", "e3"})
-    void invalid() {
-        final Board mockBoard = new Board(() -> new HashMap<>(Map.of(Position.from("a2"), new Rook(Color.WHITE))));
-
-        Piece rook = new Rook(Color.WHITE);
-
-        assertThatThrownBy(() -> rook.checkMovingRange(mockBoard, Position.from("a1"), Position.from("a3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동 경로에 기물이 존재합니다.");
-    }
-
     @Test
     @DisplayName("킹인지 확인")
     void isKing() {

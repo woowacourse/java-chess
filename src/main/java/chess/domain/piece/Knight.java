@@ -32,6 +32,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean isKnight() {
+        return true;
+    }
+
+    @Override
     public boolean isKing() {
         return false;
     }

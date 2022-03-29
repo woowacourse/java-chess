@@ -18,6 +18,8 @@ public enum CoordinateY {
     EIGHT(8),
     ;
 
+    private static final int ONE_STEP = 1;
+
     private final int order;
 
     CoordinateY(final int order) {
@@ -35,6 +37,24 @@ public enum CoordinateY {
         return Arrays.stream(values())
                 .sorted(Comparator.comparing(CoordinateY::getOrder).reversed())
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public CoordinateY next(final CoordinateY to) {
+        if (this == to) {
+            return to;
+        }
+        int nextStep = getNextStep(this, to);
+        return Arrays.stream(CoordinateY.values())
+                .filter(coordinateY -> this.order + nextStep == coordinateY.order)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
+    }
+
+    private int getNextStep(final CoordinateY from, final CoordinateY to) {
+        if (to.order > from.order) {
+            return ONE_STEP;
+        }
+        return -ONE_STEP;
     }
 
     public int getOrder() {

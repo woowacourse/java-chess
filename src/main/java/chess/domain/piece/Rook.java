@@ -16,22 +16,20 @@ public class Rook extends Piece {
         return Direction.isVertical(from, to) || Direction.isHorizontal(from, to);
     }
 
-    private boolean hasAnyPiece(final Board board, final Position from, final Position to) {
-        return board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to);
-    }
-
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
         if (!isRookMoving(from, to)) {
             throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
         }
-        if (hasAnyPiece(board, from, to)) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
     }
 
     @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKnight() {
         return false;
     }
 

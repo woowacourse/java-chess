@@ -13,9 +13,12 @@ public abstract class Piece {
         this.color = color;
     }
 
+    // TODO: pawn 방식 수정 후 board 삭제
     public abstract void checkMovingRange(final Board board, final Position from, final Position to);
 
     public abstract boolean isPawn();
+
+    public abstract boolean isKnight();
 
     public abstract boolean isKing();
 

@@ -38,28 +38,6 @@ public class QueenTest {
                 .hasMessage("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
     }
 
-    @DisplayName("퀸의 이동 경로에 다른 기물이 있을 경우 예외 발생")
-    @ParameterizedTest
-    @ValueSource(strings = {"e8", "e1", "a5", "h5", "b8", "h8", "a1", "h2"})
-    void invalid(String to) {
-        Map<Position, Piece> pieceExistBoard = new HashMap<>();
-        final Piece other = new Queen(Color.WHITE);
-        pieceExistBoard.put(Position.from("e6"), other);
-        pieceExistBoard.put(Position.from("e4"), other);
-        pieceExistBoard.put(Position.from("d5"), other);
-        pieceExistBoard.put(Position.from("f5"), other);
-        pieceExistBoard.put(Position.from("d6"), other);
-        pieceExistBoard.put(Position.from("f6"), other);
-        pieceExistBoard.put(Position.from("b2"), other);
-        pieceExistBoard.put(Position.from("f4"), other);
-        final Board mockBoard = new Board(() -> pieceExistBoard);
-
-        Piece queen = new Queen(Color.WHITE);
-        assertThatThrownBy(() -> queen.checkMovingRange(mockBoard, Position.from("e5"), Position.from(to)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 기물이 존재합니다.");
-    }
-
     @Test
     @DisplayName("킹인지 확인")
     void isKing() {

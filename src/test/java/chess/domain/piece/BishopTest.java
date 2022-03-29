@@ -18,20 +18,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class BishopTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
-    private static Board board;
-
-    @BeforeEach
-    void beforeEach() {
-        Map<Position, Piece> pieceExistBoard = new HashMap<>();
-
-        final Bishop bishop = new Bishop(Color.BLACK);
-
-        pieceExistBoard.put(Position.from("d6"), bishop);
-        pieceExistBoard.put(Position.from("f6"), bishop);
-        pieceExistBoard.put(Position.from("d4"), bishop);
-        pieceExistBoard.put(Position.from("f4"), bishop);
-        board = new Board(() -> pieceExistBoard);
-    }
 
     @DisplayName("비숍 대각선 한 칸 이동")
     @ParameterizedTest
@@ -52,17 +38,6 @@ public class BishopTest {
         assertThatThrownBy(() -> bishop.checkMovingRange(emptyBoard, Position.from("b3"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("비숍은 대각선 방향만 이동할 수 있습니다.");
-    }
-
-    @DisplayName("비숍 이동 경로에 기물이 있을 경우 예외발생")
-    @ParameterizedTest
-    @ValueSource(strings = {"b8", "h8", "a1", "h2"})
-    void invalid(String to) {
-        Piece bishop = new Bishop(Color.WHITE);
-
-        assertThatThrownBy(() -> bishop.checkMovingRange(board, Position.from("e5"), Position.from(to)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동 경로에 기물이 존재합니다.");
     }
 
     @Test

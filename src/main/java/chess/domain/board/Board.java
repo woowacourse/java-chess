@@ -12,8 +12,6 @@ import java.util.function.BiConsumer;
 
 public class Board {
 
-    private static final int NEXT = 1;
-
     private final Map<Position, Piece> value;
 
     public Board(final Initializable initializable) {
@@ -27,6 +25,10 @@ public class Board {
     public void move(final Position from, final Position to) {
         final Piece piece = getPiece(from);
         piece.checkMovingRange(this, from, to);
+
+        if (!piece.isKnight() && hasPieceInPath(from, to)) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+        }
         value.put(to, value.remove(from));
     }
 
@@ -40,28 +42,19 @@ public class Board {
         return piece.isSameColor(color);
     }
 
-    public boolean hasPieceInXAxis(final Position from, final Position to) {
-        int minY = Math.min(from.getCoordinateY(), to.getCoordinateY());
-        int maxY = Math.max(from.getCoordinateY(), to.getCoordinateY());
-
-        return value.keySet().stream()
-                .filter(position -> position.getCoordinateX().equals(from.getCoordinateX()))
-                .filter(position -> position.getCoordinateY() > minY)
-                .anyMatch(position -> position.getCoordinateY() < maxY);
+    private boolean hasPieceInPath(final Position from, final Position to) {
+        Position next = nextPosition(from, to);
+        while (next != to) {
+            if (hasPiece(next)) {
+                return true;
+            }
+            next = nextPosition(next, to);
+        }
+        return false;
     }
 
-    public boolean hasPieceInYAxis(final Position from, final Position to) {
-        int minX = CoordinateX.min(from.getCoordinateX(), to.getCoordinateX());
-        int maxX = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX());
-
-        return value.keySet().stream()
-                .filter(position -> position.getCoordinateY() == from.getCoordinateY())
-                .filter(position -> position.getCoordinateXOrder() > minX)
-                .anyMatch(position -> position.getCoordinateXOrder() < maxX);
-    }
-
-    public boolean hasPieceInDiagonal(final Position from, final Position to) {
-        return hasRisingDiagonal(from, to) || hasDescendingDiagonal(from, to);
+    private Position nextPosition(final Position from, final Position to) {
+        return from.next(to);
     }
 
     private void showColorStatus(final BiConsumer<String, Double> printScore, final Color color) {
@@ -101,33 +94,6 @@ public class Board {
                 .filter(piece -> !piece.isPawn())
                 .map(Piece::getScore)
                 .reduce(0.0, Double::sum);
-    }
-
-    private boolean hasRisingDiagonal(final Position from, final Position to) {
-        int minX = CoordinateX.min(from.getCoordinateX(), to.getCoordinateX());
-        int maxX = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX());
-        int minY = Math.min(from.getCoordinateY(), to.getCoordinateY());
-
-        int y = minY + NEXT;
-        for (int x = minX + NEXT; x < maxX; x++, y++) {
-            if (hasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasDescendingDiagonal(final Position from, final Position to) {
-        int nextY = Math.min(from.getCoordinateY(), to.getCoordinateY()) + NEXT;
-        int maxY = Math.max(from.getCoordinateY(), to.getCoordinateY());
-        int x = CoordinateX.max(from.getCoordinateX(), to.getCoordinateX()) - NEXT;
-
-        for (int y = nextY; y < maxY; y++, x--) {
-            if (hasPiece(Position.of(CoordinateX.from(x), CoordinateY.from(y)))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean hasKing(final Color color) {

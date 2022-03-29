@@ -16,22 +16,20 @@ public class Queen extends Piece {
         return Direction.isVertical(from, to) || Direction.isHorizontal(from, to) || Direction.isDiagonal(from, to);
     }
 
-    private boolean hasAnyPiece(final Board board, final Position from, final Position to) {
-        return board.hasPieceInXAxis(from, to) || board.hasPieceInYAxis(from, to) || board.hasPieceInDiagonal(from, to);
-    }
-
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
         if (!isQueenMoving(from, to)) {
             throw new IllegalArgumentException("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
         }
-        if (hasAnyPiece(board, from, to)) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
     }
 
     @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKnight() {
         return false;
     }
 

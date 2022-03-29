@@ -14,6 +14,18 @@ public class Position {
 
     private static final List<Position> TOTAL = new ArrayList<>();
 
+    static {
+        for (CoordinateX x : CoordinateX.values()) {
+            addPosition(x);
+        }
+    }
+
+    private static void addPosition(final CoordinateX x) {
+        for (CoordinateY y : CoordinateY.values()) {
+            TOTAL.add(Position.of(x, y));
+        }
+    }
+
     private Position(final CoordinateX coordinateX, final CoordinateY coordinateY) {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
@@ -30,6 +42,13 @@ public class Position {
     public static Position from(final String position) {
         CoordinateX coordinateX = CoordinateX.from(position.substring(COORDINATE_X_INDEX, COORDINATE_Y_INDEX));
         CoordinateY coordinateY = CoordinateY.from(Integer.parseInt(position.substring(COORDINATE_Y_INDEX)));
+
+        return Position.of(coordinateX, coordinateY);
+    }
+
+    public Position next(final Position to) {
+        CoordinateX coordinateX = this.coordinateX.next(to.coordinateX);
+        CoordinateY coordinateY = this.coordinateY.next(to.coordinateY);
 
         return Position.of(coordinateX, coordinateY);
     }
