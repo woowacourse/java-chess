@@ -78,11 +78,11 @@ public class Board {
     }
 
     public double calculateBlackScore() {
-        return calculateScore(new BlackChoicePieceCondition());
+        return calculateScore(Piece::isBlack);
     }
 
     public double calculateWhiteScore() {
-        return calculateScore(new WhiteChoicePieceCondition());
+        return calculateScore(piece -> !piece.isBlack() && !piece.isBlank());
     }
 
     private double calculateScore(ChoicePieceCondition choicePieceCondition) {
