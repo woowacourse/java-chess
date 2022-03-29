@@ -25,22 +25,22 @@ public final class Pieces {
     public static Pieces createInit() {
         char[] files = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(makePieces('8', Team.BLACK));
-        pieces.addAll(makePawns(files, '7', Team.BLACK));
-        pieces.addAll(makeEmpty(files));
-        pieces.addAll(makePawns(files, '2', Team.WHITE));
-        pieces.addAll(makePieces('1', Team.WHITE));
+        pieces.addAll(initPieces('8', Team.BLACK));
+        pieces.addAll(initPawns(files, '7', Team.BLACK));
+        pieces.addAll(initBlanks(files));
+        pieces.addAll(initPawns(files, '2', Team.WHITE));
+        pieces.addAll(initPieces('1', Team.WHITE));
         return new Pieces(pieces);
     }
 
-    private static List<Piece> makePieces(char rank, Team team) {
+    private static List<Piece> initPieces(char rank, Team team) {
         return List.of(new Rook(Position.of('a', rank), team), new Knight(Position.of('b', rank), team),
                 new Bishop(Position.of('c', rank), team), new Queen(Position.of('d', rank), team),
                 new King(Position.of('e', rank), team), new Bishop(Position.of('f', rank), team),
                 new Knight(Position.of('g', rank), team), new Rook(Position.of('h', rank), team));
     }
 
-    private static List<Piece> makePawns(char[] files, char rank, Team team) {
+    private static List<Piece> initPawns(char[] files, char rank, Team team) {
         List<Piece> pawns = new ArrayList<>();
         for (char file : files) {
             pawns.add(new Pawn(Position.of(file, rank), team));
@@ -48,7 +48,7 @@ public final class Pieces {
         return pawns;
     }
 
-    private static List<Piece> makeEmpty(char[] files) {
+    private static List<Piece> initBlanks(char[] files) {
         List<Piece> emptys = new ArrayList<>();
         for (char c = '6'; c > '2'; c--) {
             createEmpty(files, emptys, c);
