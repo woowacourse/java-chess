@@ -32,6 +32,11 @@ public enum Direction {
         this.rank = rank;
     }
 
+    public boolean isDiagonal(Direction direction) {
+        return direction.equals(TOP_RIGHT) || direction.equals(TOP_LEFT) ||
+                direction.equals(BOTTOM_RIGHT) || direction.equals(BOTTOM_LEFT);
+    }
+
     public static List<Direction> getRookDirection() {
         return List.of(TOP, RIGHT, LEFT, BOTTOM);
     }
@@ -51,25 +56,29 @@ public enum Direction {
     }
 
     public static List<Direction> getWhitePawnDirection() {
-        return List.of(TOP);
+        return List.of(TOP, TOP_RIGHT, TOP_LEFT);
     }
 
     public static List<Direction> getBlackPawnDirection() {
-        return List.of(BOTTOM);
+        return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
     }
 
     public static Direction beMoveDirection(List<Direction> directions, Position source, Position target) {
         return directions.stream()
                 .filter(direction -> Direction.isRightDirection(direction, source, target))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 방향입니다."));
     }
 
     public static boolean isRightDirection(Direction direction, Position source, Position target) {
         Position currentPosition = source;
-
         for (int i = 0; i < 8; i++) {
             currentPosition = currentPosition.from(direction);
+
+            if(currentPosition.isNothing()) {
+                break;
+            }
+
             if (currentPosition.equals(target)) {
                 return true;
             }

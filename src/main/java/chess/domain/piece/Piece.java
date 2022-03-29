@@ -25,4 +25,12 @@ public abstract class Piece {
     public Team team() {
         return team;
     }
+
+    public boolean isEnemy(Piece other) {
+        return !this.team.equals(other.team);
+    }
+
+    public void checkPawn(Position source, Position target, Direction direction, Piece other) {
+        throw new IllegalArgumentException("이 기물은 폰이 아닙니다.");
+    }
 }

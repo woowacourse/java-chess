@@ -16,7 +16,6 @@ public class Position {
     public Position from(Direction direction) {
         File nextFile = File.from((char) (file.getName() + direction.file()));
         Rank nextRank = Rank.from(rank.getNumber() + direction.rank());
-
         return new Position(nextFile, nextRank);
     }
 
@@ -46,6 +45,7 @@ public class Position {
                 == rank.calculateAbsoluteValue(other.rank));
     }
 
+    // TODO: 메서드 이름 변경해야 할듯
     public boolean isInOneSquare(Position other) {
         int fileAbsoluteValue = file.calculateAbsoluteValue(other.file);
         int rankAbsoluteValue = rank.calculateAbsoluteValue(other.rank);
@@ -59,5 +59,28 @@ public class Position {
         }
 
         return false;
+    }
+
+    public boolean isTwoRankDifference(Position other) {
+        int fileAbsoluteValue = file.calculateAbsoluteValue(other.file);
+        int rankAbsoluteValue = rank.calculateAbsoluteValue(other.rank);
+
+        return rankAbsoluteValue == 2 && fileAbsoluteValue == 0;
+    }
+
+    public boolean isInitPawnRank() {
+        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    }
+
+    public boolean isNothing() {
+        return file.isNothing() || rank.isNothing();
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
