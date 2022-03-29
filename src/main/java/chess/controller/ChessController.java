@@ -31,10 +31,7 @@ public class ChessController {
         }
 
         if (command == Command.MOVE) {
-            String from = Command.getFromPosition(text);
-            String to = Command.getToPosition(text);
-
-            runMoveCommand(from, to, chessBoard);
+            runMoveCommand(chessBoard, text);
             playTurn(chessBoard);
         }
 
@@ -60,8 +57,10 @@ public class ChessController {
         }
     }
 
-    private void runMoveCommand(String from, String to, ChessBoard chessBoard) {
+    private void runMoveCommand(ChessBoard chessBoard, String text) {
         try {
+            String from = Command.getFromPosition(text);
+            String to = Command.getToPosition(text);
             checkBeforePlaying(chessBoard);
             chessBoard.move(new Position(from), new Position(to));
             OutputView.printChessBoard(chessBoard);
