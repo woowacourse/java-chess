@@ -21,7 +21,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovableRange(Position position) {
         return isCorrectDirection(position) && isCorrectDistance(position);
     }
 

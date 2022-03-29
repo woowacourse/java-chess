@@ -22,9 +22,9 @@ class QueenTest {
         Queen queen = new Queen(Position.of('a', '1'), Team.WHITE);
 
         assertAll(
-                () -> assertThat(queen.isMovable(Position.of('f', '6'))).isTrue(),
-                () -> assertThat(queen.isMovable(Position.of('a', '5'))).isTrue(),
-                () -> assertThat(queen.isMovable(Position.of('f', '1'))).isTrue()
+                () -> assertThat(queen.isMovableRange(Position.of('f', '6'))).isTrue(),
+                () -> assertThat(queen.isMovableRange(Position.of('a', '5'))).isTrue(),
+                () -> assertThat(queen.isMovableRange(Position.of('f', '1'))).isTrue()
         );
     }
 

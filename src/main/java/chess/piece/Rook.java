@@ -22,7 +22,7 @@ public final class Rook extends Piece implements RookMovable {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovableRange(Position position) {
         return isCorrectDirection(position);
     }
 

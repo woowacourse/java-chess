@@ -20,7 +20,7 @@ class BishopTest {
     void correctMove() {
         Bishop bishop = new Bishop(Position.of('a', '1'), Team.WHITE);
 
-        assertThat(bishop.isMovable(Position.of('f', '6'))).isTrue();
+        assertThat(bishop.isMovableRange(Position.of('f', '6'))).isTrue();
     }
 
     @Test

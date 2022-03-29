@@ -20,7 +20,7 @@ class KnightTest {
     void isCorrectMovable() {
         Knight knight = new Knight(Position.of('a', '1'), Team.WHITE);
 
-        assertThat(knight.isMovable(Position.of('b', '3'))).isTrue();
+        assertThat(knight.isMovableRange(Position.of('b', '3'))).isTrue();
     }
 
     @Test
@@ -28,7 +28,7 @@ class KnightTest {
     void isNotCorrectMovable() {
         Knight knight = new Knight(Position.of('a', '1'), Team.WHITE);
 
-        assertThat(knight.isMovable(Position.of('b', '2'))).isFalse();
+        assertThat(knight.isMovableRange(Position.of('b', '2'))).isFalse();
     }
 
     @Test

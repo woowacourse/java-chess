@@ -22,9 +22,9 @@ class KingTest {
         King king = new King(Position.of('a', '1'), Team.WHITE);
 
         assertAll(
-                () -> assertThat(king.isMovable(Position.of('a', '2'))).isTrue(),
-                () -> assertThat(king.isMovable(Position.of('a', '2'))).isTrue(),
-                () -> assertThat(king.isMovable(Position.of('b', '1'))).isTrue()
+                () -> assertThat(king.isMovableRange(Position.of('a', '2'))).isTrue(),
+                () -> assertThat(king.isMovableRange(Position.of('a', '2'))).isTrue(),
+                () -> assertThat(king.isMovableRange(Position.of('b', '1'))).isTrue()
         );
     }
 
@@ -33,7 +33,7 @@ class KingTest {
     void noCorrectDistanceMove() {
         King king = new King(Position.of('a', '1'), Team.WHITE);
 
-        assertThat(king.isMovable(Position.of('c', '3'))).isFalse();
+        assertThat(king.isMovableRange(Position.of('c', '3'))).isFalse();
     }
 
 

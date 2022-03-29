@@ -36,7 +36,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovableRange(Position position) {
         if (isInitPosition()) {
             return this.position.isStepForward(position, team.getForwardDirection(), ONE_STEP) ||
                     this.position.isStepForward(position, team.getForwardDirection(), INIT_DISTANCE);

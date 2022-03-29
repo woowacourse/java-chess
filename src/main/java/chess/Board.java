@@ -30,11 +30,8 @@ public final class Board {
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         Piece targetPiece = pieces.findByPosition(targetPosition);
         validateTurn(thisTurn, sourcePiece);
-        if (canMove(targetPosition, sourcePiece, targetPiece)) {
-            move(sourcePosition, targetPosition, sourcePiece, targetPiece);
-            return;
-        }
-        throw new IllegalArgumentException("움직일수 없습니다.");
+        validateMovable(targetPosition, sourcePiece, targetPiece);
+        move(sourcePosition, targetPosition, sourcePiece, targetPiece);
     }
 
     private void validateTurn(Turn thisTurn, Piece sourcePiece) {
@@ -43,9 +40,15 @@ public final class Board {
         }
     }
 
-    private boolean canMove(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece)) ||
-                sourcePiece.isKill(targetPiece);
+    private void validateMovable(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        if (isNotMovable(targetPosition, sourcePiece, targetPiece)) {
+            throw new IllegalArgumentException("[ERROR] 움직일수 없습니다.");
+        }
+    }
+
+    private boolean isNotMovable(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        return (!sourcePiece.isMovableRange(targetPosition) || hasBlock(sourcePiece, targetPiece)) &&
+                !sourcePiece.isKill(targetPiece);
     }
 
     private void move(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {

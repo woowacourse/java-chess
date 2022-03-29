@@ -21,7 +21,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovableRange(Position position) {
         return this.position.isKnightDirection(position);
     }
 

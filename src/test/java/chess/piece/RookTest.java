@@ -20,7 +20,7 @@ class RookTest {
     void correctMove() {
         Rook rook = new Rook(Position.of('a', '1'), Team.WHITE);
 
-        assertThat(rook.isMovable(Position.of('f', '1'))).isTrue();
+        assertThat(rook.isMovableRange(Position.of('f', '1'))).isTrue();
     }
 
     @Test

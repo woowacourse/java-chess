@@ -76,7 +76,7 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
 
-    public abstract boolean isMovable(Position position);
+    public abstract boolean isMovableRange(Position position);
 
     public abstract String getName();
 

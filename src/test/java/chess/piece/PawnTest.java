@@ -22,8 +22,8 @@ class PawnTest {
         Pawn pawn = new Pawn(Position.of('a', '2'), Team.WHITE);
 
         assertAll(
-                () -> assertThat(pawn.isMovable(Position.of('a', '3'))).isTrue(),
-                () -> assertThat(pawn.isMovable(Position.of('a', '4'))).isTrue()
+                () -> assertThat(pawn.isMovableRange(Position.of('a', '3'))).isTrue(),
+                () -> assertThat(pawn.isMovableRange(Position.of('a', '4'))).isTrue()
         );
     }
 
@@ -32,7 +32,7 @@ class PawnTest {
     void isNotCorrectInitMovable() {
         Pawn pawn = new Pawn(Position.of('a', '2'), Team.WHITE);
 
-        assertThat(pawn.isMovable(Position.of('a', '5'))).isFalse();
+        assertThat(pawn.isMovableRange(Position.of('a', '5'))).isFalse();
     }
 
     @Test
@@ -40,7 +40,7 @@ class PawnTest {
     void isNotCorrectMovable() {
         Pawn pawn = new Pawn(Position.of('a', '3'), Team.WHITE);
 
-        assertThat(pawn.isMovable(Position.of('a', '5'))).isFalse();
+        assertThat(pawn.isMovableRange(Position.of('a', '5'))).isFalse();
     }
 
     @Test
@@ -48,7 +48,7 @@ class PawnTest {
     void isNotCorrectBackMovable() {
         Pawn pawn = new Pawn(Position.of('a', '3'), Team.WHITE);
 
-        assertThat(pawn.isMovable(Position.of('a', '2'))).isFalse();
+        assertThat(pawn.isMovableRange(Position.of('a', '2'))).isFalse();
     }
 
     @Test
@@ -56,7 +56,7 @@ class PawnTest {
     void isCorrectMovableWhenTeamIsBlack() {
         Pawn pawn = new Pawn(Position.of('a', '7'), Team.BLACK);
 
-        assertThat(pawn.isMovable(Position.of('a', '6'))).isTrue();
+        assertThat(pawn.isMovableRange(Position.of('a', '6'))).isTrue();
     }
 
     @Test

@@ -22,7 +22,7 @@ public final class Queen extends Piece implements RookMovable, BishopMovable {
     }
 
     @Override
-    public boolean isMovable(Position position) {
+    public boolean isMovableRange(Position position) {
         return isCorrectDirection(position);
     }
 
