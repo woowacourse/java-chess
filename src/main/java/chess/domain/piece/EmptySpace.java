@@ -20,7 +20,7 @@ public class EmptySpace {
 
     private static class EmptyPiece extends Piece {
 
-        public EmptyPiece() {
+        private EmptyPiece() {
             super(PieceType.NONE, Color.NONE);
         }
 
