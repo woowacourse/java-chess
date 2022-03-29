@@ -85,15 +85,14 @@ public class Board {
         return board.values()
             .stream()
             .filter(Piece::isKing)
-            .map(piece -> 1)
-            .reduce(0, Integer::sum) == 2;
+            .count() == 2;
     }
 
     public double calculateScore(Color color) {
         return board.values().stream()
             .filter(piece -> piece.isSameColor(color))
-            .map(Piece::getScore)
-            .reduce(0.0, Double::sum) - calculateSameLinePawnScore(color);
+            .mapToDouble(Piece::getScore)
+            .sum() - calculateSameLinePawnScore(color);
     }
 
     private boolean isSameLine(List<Position> pawnPositions, Position position) {
