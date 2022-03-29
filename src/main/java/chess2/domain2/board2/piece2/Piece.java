@@ -17,7 +17,7 @@ public abstract class Piece {
 
     public final boolean canAttack(Position from, Position to, Piece targetPiece) {
         if (targetPiece.hasColorOf(color)) {
-            throw new IllegalArgumentException("아군은 공격할 수 없습니다.");
+            throw new IllegalArgumentException("공격할 수 없는 대상입니다.");
         }
         return isAttackableRoute(from, to);
     }
