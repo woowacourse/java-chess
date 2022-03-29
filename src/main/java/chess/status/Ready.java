@@ -25,7 +25,7 @@ public final class Ready implements State {
 
     @Override
     public State turn(final Command command) {
-        throw new RuntimeException();
+        throw new IllegalStateException("게임이 시작되지 않았습니다.");
     }
 
     @Override
