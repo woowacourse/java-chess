@@ -17,8 +17,8 @@ public class None extends Piece {
     }
 
     @Override
-    protected boolean canMove(Position sourcePosition, Position targetPosition) {
-        return super.canApproach(sourcePosition, targetPosition);
+    protected boolean canNotMove(Position sourcePosition, Position targetPosition) {
+        return super.canNotApproach(sourcePosition, targetPosition);
     }
 
     @Override

@@ -45,8 +45,8 @@ public enum Type {
         return columnDistance == DISTANCE_KNIGHT_FIRST_STEP && rowDistance == DISTANCE_KNIGHT_SECOND_STEP;
     }
 
-    public boolean canApproach(Position sourcePosition, Position targetPosition) {
-        return this.distanceChecker.test(sourcePosition, targetPosition);
+    public boolean canNotApproach(Position sourcePosition, Position targetPosition) {
+        return !this.distanceChecker.test(sourcePosition, targetPosition);
     }
 
     public double getScore() {

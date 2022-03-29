@@ -21,7 +21,7 @@ public final class Pawn extends Piece {
 
     @Override
     public void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
-        if (!canMove(sourcePosition, targetPosition)) {
+        if (canNotMove(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
         moveApplier.accept(this);
@@ -30,7 +30,7 @@ public final class Pawn extends Piece {
 
     @Override
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
-        if (!canCapture(sourcePosition, targetPosition)) {
+        if (canNotCapture(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_CAPTURE);
         }
         moveApplier.accept(this);
@@ -38,42 +38,42 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    protected boolean canMove(Position sourcePosition, Position targetPosition) {
+    protected boolean canNotMove(Position sourcePosition, Position targetPosition) {
         if (!sourcePosition.inSameColumnWith(targetPosition)) {
-            return false;
-        }
-        int rowDirectedDistance = targetPosition.rowDirectedDistance(sourcePosition);
-        if (!checkDirection(rowDirectedDistance)) {
-            return false;
-        }
-        if (firstMove && checkFirstMove(sourcePosition, targetPosition)) {
             return true;
         }
-        return super.canApproach(sourcePosition, targetPosition);
+        int rowDirectedDistance = targetPosition.rowDirectedDistance(sourcePosition);
+        if (isInWrongDirection(rowDirectedDistance)) {
+            return true;
+        }
+        if (firstMove && canMoveInFirst(sourcePosition, targetPosition)) {
+            return false;
+        }
+        return super.canNotApproach(sourcePosition, targetPosition);
     }
 
-    private boolean checkFirstMove(Position sourcePosition, Position targetPosition) {
+    private boolean canMoveInFirst(Position sourcePosition, Position targetPosition) {
         if (this.isCamp(BLACK)) {
-            return super.canApproach(sourcePosition,
+            return !super.canNotApproach(sourcePosition,
                     targetPosition.goDown(BLACK.giveVerticalDirectionTo(DISTANCE_ADDITIONAL_IN_FIRST_MOVE)));
         }
-        return super.canApproach(sourcePosition,
+        return !super.canNotApproach(sourcePosition,
                 targetPosition.goDown(WHITE.giveVerticalDirectionTo(DISTANCE_ADDITIONAL_IN_FIRST_MOVE)));
     }
 
-    private boolean canCapture(Position sourcePosition, Position targetPosition) {
+    private boolean canNotCapture(Position sourcePosition, Position targetPosition) {
         if (!sourcePosition.inDiagonalWith(targetPosition)) {
-            return false;
+            return true;
         }
         int rowDirectedDistance = targetPosition.rowDirectedDistance(sourcePosition);
-        return checkDirection(rowDirectedDistance) && super.canApproach(sourcePosition, targetPosition);
+        return isInWrongDirection(rowDirectedDistance) || super.canNotApproach(sourcePosition, targetPosition);
     }
 
-    private boolean checkDirection(int distance) {
+    private boolean isInWrongDirection(int distance) {
         int undirectedDistance = Math.abs(distance);
         if (this.isCamp(BLACK)) {
-            return BLACK.giveVerticalDirectionTo(undirectedDistance) == distance;
+            return BLACK.giveVerticalDirectionTo(undirectedDistance) != distance;
         }
-        return WHITE.giveVerticalDirectionTo(undirectedDistance) == distance;
+        return WHITE.giveVerticalDirectionTo(undirectedDistance) != distance;
     }
 }

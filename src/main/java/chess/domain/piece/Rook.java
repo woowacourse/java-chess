@@ -13,15 +13,15 @@ public final class Rook extends Piece {
 
     @Override
     public void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
-        if (!canMove(sourcePosition, targetPosition)) {
+        if (canNotMove(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(ERROR_CANT_MOVE);
         }
         moveApplier.accept(this);
     }
 
     @Override
-    protected boolean canMove(Position sourcePosition, Position targetPosition) {
-        return super.canApproach(sourcePosition, targetPosition);
+    protected boolean canNotMove(Position sourcePosition, Position targetPosition) {
+        return super.canNotApproach(sourcePosition, targetPosition);
     }
 
     @Override

@@ -25,8 +25,8 @@ public abstract class Piece {
         return this.type == type;
     }
 
-    public final boolean canApproach(Position sourcePosition, Position targetPosition) {
-        return this.type.canApproach(sourcePosition, targetPosition);
+    public final boolean canNotApproach(Position sourcePosition, Position targetPosition) {
+        return this.type.canNotApproach(sourcePosition, targetPosition);
     }
 
     public final double getScore() {
@@ -35,7 +35,7 @@ public abstract class Piece {
 
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
-    protected abstract boolean canMove(Position sourcePosition, Position targetPosition);
+    protected abstract boolean canNotMove(Position sourcePosition, Position targetPosition);
 
     public abstract void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 }
