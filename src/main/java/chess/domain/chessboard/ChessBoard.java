@@ -3,13 +3,13 @@ package chess.domain.chessboard;
 import chess.domain.GameStatus;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
-import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -61,7 +61,8 @@ public class ChessBoard {
     }
 
     private void movePiece(final Position from, final Position to) {
-        if (chessBoard.get(to) instanceof King) {
+        final ChessPiece chessPiece = chessBoard.get(to);
+        if (Objects.nonNull(chessPiece) && chessPiece.isKing()) {
             gameStatus = GameStatus.END;
         }
 

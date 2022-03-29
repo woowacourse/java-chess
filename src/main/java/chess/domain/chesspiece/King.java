@@ -43,6 +43,11 @@ public final class King extends ChessPiece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public double value() {
         return VALUE;
     }

@@ -52,6 +52,10 @@ public abstract class ChessPiece {
         return this.color.equals(color);
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public final String name() {
         return name;
     }
