@@ -45,7 +45,7 @@ class PlayTest {
     void executeExit() {
         state = state.execute("end");
         assertThat(state)
-                .isInstanceOf(ExitEnd.class);
+                .isInstanceOf(ExitFinished.class);
     }
 
     @Test
@@ -65,7 +65,8 @@ class PlayTest {
     @Test
     @DisplayName("킹이 잡혔을 시 Result 상태로 이동한다.")
     void goEnd() {
-        String boardString = "........ "
+        String boardString = ""
+                + "........ "
                 + "........ "
                 + "........ "
                 + "........ "
@@ -91,7 +92,7 @@ class PlayTest {
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusEnd())
+        assertThat(state.isStatusFinished())
                 .isFalse();
     }
 }

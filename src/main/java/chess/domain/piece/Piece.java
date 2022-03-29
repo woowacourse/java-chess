@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 
 public abstract class Piece {
-
     protected final Name name;
     protected final Team team;
     protected final MoveStrategy moveStrategy;

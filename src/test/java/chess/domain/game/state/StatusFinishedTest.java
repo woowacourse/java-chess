@@ -8,14 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StatusEndTest {
+class StatusFinishedTest {
     private final ChessGame chessGame = new ChessGame();
     private State state;
 
     @BeforeEach
     void setup() {
         chessGame.start();
-        state = new StatusEnd(chessGame);
+        state = new StatusFinished(chessGame);
     }
 
     @Test
@@ -29,7 +29,7 @@ class StatusEndTest {
     @Test
     @DisplayName("isStatus()로 스테이터스가 호출되었는지 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusEnd())
+        assertThat(state.isStatusFinished())
                 .isTrue();
     }
 

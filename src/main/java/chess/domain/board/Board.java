@@ -34,32 +34,31 @@ public final class Board {
     }
 
     private void validateMove(Position from, Position to) {
-        validateNotSameTeam(from, to);
-        validateCanMove(from, to);
-        validateNotHurdle(from, to);
+        checkNotSameTeam(from, to);
+        checkCanMove(from, to);
+        checkRoute(from, to);
     }
 
-    private void validateNotSameTeam(Position from, Position to) {
+    private void checkNotSameTeam(Position from, Position to) {
         if (squares.get(from).isSameTeam(squares.get(to))) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void validateCanMove(Position from, Position to) {
-        if (!squares.get(from).canMove(squares.get(to), from, to)
-                && squares.get(to).isPiece()) {
+    private void checkCanMove(Position from, Position to) {
+        if (!squares.get(from).canMove(squares.get(to), from, to) && squares.get(to).isPiece()) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
     }
 
-    private void validateNotHurdle(Position from, Position to) {
+    private void checkRoute(Position from, Position to) {
         List<Position> route = findByPosition(from).getRoute(from, to);
         for (Position position : route) {
-            validateIsPiece(position);
+            checkIsPiece(position);
         }
     }
 
-    private void validateIsPiece(Position position) {
+    private void checkIsPiece(Position position) {
         if (findByPosition(position).isPiece()) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
@@ -92,7 +91,7 @@ public final class Board {
         return new HashMap<>(squares);
     }
 
-    public boolean isKing(Position to) {
+    public boolean isCheckmate(Position to) {
         return findByPosition(to).isKing();
     }
 }

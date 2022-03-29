@@ -8,7 +8,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.state.Play;
 import chess.domain.game.state.Result;
 import chess.domain.game.state.State;
-import chess.domain.game.state.StatusEnd;
+import chess.domain.game.state.StatusFinished;
 import chess.domain.piece.attribute.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class StateTest {
                 .isInstanceOf(Result.class);
         state = state.go("status");
         assertThat(state)
-                .isInstanceOf(StatusEnd.class);
+                .isInstanceOf(StatusFinished.class);
         assertThat(chessGame.getStatus().getWinner())
                 .isEqualTo(Team.WHITE);
     }

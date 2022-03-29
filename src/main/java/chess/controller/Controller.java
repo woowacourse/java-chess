@@ -28,7 +28,7 @@ public class Controller {
     }
 
     private void printStatusEnd(State state, ChessGame chessGame) {
-        if (state.isStatusEnd()) {
+        if (state.isStatusFinished()) {
             OutputView.printStatus(chessGame.getStatus());
         }
     }

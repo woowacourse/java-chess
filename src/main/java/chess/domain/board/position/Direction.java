@@ -31,7 +31,6 @@ public enum Direction {
     Direction(int x, int y) {
         this.x = x;
         this.y = y;
-
     }
 
     public static Direction of(Position from, Position to) {

@@ -8,14 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ExitEndTest {
+class ExitFinishedTest {
     private final ChessGame chessGame = new ChessGame();
     private State state;
 
     @BeforeEach
     void setup() {
         chessGame.start();
-        state = new ExitEnd(chessGame);
+        state = new ExitFinished(chessGame);
     }
 
 
@@ -37,7 +37,7 @@ class ExitEndTest {
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusEnd())
+        assertThat(state.isStatusFinished())
                 .isFalse();
     }
 
