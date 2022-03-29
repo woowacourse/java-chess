@@ -32,7 +32,7 @@ class PawnTest {
     void movePawn(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThat(pawn.transfer(to, new Pieces(List.of(pawn))))
+        assertThat(pawn.transfer(to))
                 .isEqualTo(new Pawn(color, to));
     }
 
@@ -50,7 +50,7 @@ class PawnTest {
     void throwExceptionMovePawnOverTwoSpaceWhenFirstMove() {
         Pawn pawn = new Pawn(Color.BLACK, new Position(A, SEVEN));
 
-        assertThatThrownBy(() -> pawn.transfer(new Position(A, FOUR), new Pieces(List.of(pawn))))
+        assertThatThrownBy(() -> pawn.transfer(new Position(A, FOUR)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -60,7 +60,7 @@ class PawnTest {
     void throwExceptionMovePawnOverOneSpaceAfterFirstMove(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
+        assertThatThrownBy(() -> pawn.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -77,7 +77,7 @@ class PawnTest {
     void throwExceptionMovePawnBackward(Color color, Position from, Position to) {
         Pawn pawn = new Pawn(color, from);
 
-        assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
+        assertThatThrownBy(() -> pawn.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -94,13 +94,13 @@ class PawnTest {
     void throwExceptionPawnMoveSide(Position from, Position to) {
         Pawn pawn = new Pawn(Color.WHITE, from);
 
-        assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
+        assertThatThrownBy(() -> pawn.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideMoveSidePawn() {
         return Stream.of(
-                Arguments.of(new Position(A, TWO), new Position(B, THREE)),
+//                Arguments.of(new Position(A, TWO), new Position(B, THREE)),
                 Arguments.of(new Position(A, TWO), new Position(B, TWO)),
                 Arguments.of(new Position(B, TWO), new Position(A, TWO))
         );
@@ -110,10 +110,7 @@ class PawnTest {
     @DisplayName("폰이 이동하는 위치에 기물이 있으면 예외 발생")
     void throwExceptionMovePawnAlreadyExistPiecePosition() {
         Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
-        Pawn targetPawn = new Pawn(Color.BLACK, new Position(D, FIVE));
-
-        assertThatThrownBy(() -> pickedPawn.transfer(new Position(D, FIVE),
-                new Pieces(List.of(pickedPawn, targetPawn)))).isInstanceOf(IllegalArgumentException.class);
+        assertThat(pickedPawn.isUncapturablePosition(new Position(D, FIVE))).isTrue();
     }
 
     @Test
@@ -121,8 +118,7 @@ class PawnTest {
     void throwExceptionWhenPawnMoveToNotHasTargetPieceDiagonalPosition() {
         Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
 
-        assertThatThrownBy(() -> pickedPawn.transfer(new Position(E, FIVE), new Pieces(List.of(pickedPawn))))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThat(pickedPawn.isCapturablePosition(new Position(E, FIVE))).isTrue();
     }
 
     @Test
@@ -131,7 +127,7 @@ class PawnTest {
         Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
         Pawn targetPawn = new Pawn(Color.BLACK, new Position(E, FIVE));
 
-        assertThat(pickedPawn.transfer(new Position(E, FIVE), new Pieces(List.of(pickedPawn, targetPawn))))
+        assertThat(pickedPawn.transfer(new Position(E, FIVE)))
                 .isEqualTo(new Pawn(Color.WHITE, new Position(E, FIVE)));
     }
 }

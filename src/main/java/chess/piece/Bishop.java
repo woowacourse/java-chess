@@ -15,16 +15,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, Pieces pieces) {
-        return isValidWay(to) && !hasObstacle(to, pieces);
-    }
-
-    private boolean isValidWay(Position to) {
+    protected boolean isPossibleMovement(Position to) {
         return getPosition().isDiagonalWay(to);
-    }
-
-    private boolean hasObstacle(Position to, Pieces pieces) {
-        return pieces.hasObstacleOnLinearPath(getPosition(), to);
     }
 
     @Override

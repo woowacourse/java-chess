@@ -31,7 +31,7 @@ class KnightTest {
         Knight knight = new Knight(Color.BLACK, new Position(G, EIGHT));
 
         assertThatThrownBy(
-                () -> knight.transfer(new Position(F, FIVE), new Pieces(List.of(knight))))
+                () -> knight.transfer(new Position(F, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +41,7 @@ class KnightTest {
     void moveKnightToValidPosition(Position from, Position to) {
         Knight knight = new Knight(Color.BLACK, from);
 
-        assertThat(knight.transfer(to, new Pieces(List.of(knight))))
+        assertThat(knight.transfer(to))
                 .isEqualTo(new Knight(Color.BLACK, to));
     }
 

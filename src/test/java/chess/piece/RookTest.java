@@ -29,7 +29,7 @@ class RookTest {
     void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
         Rook rook = new Rook(Color.BLACK, from);
 
-        assertThat(rook.transfer(to, new Pieces(List.of(rook))))
+        assertThat(rook.transfer(to))
                 .isEqualTo(new Rook(Color.BLACK, to));
     }
 
@@ -48,7 +48,7 @@ class RookTest {
     void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
         Rook rook = new Rook(Color.BLACK, from);
 
-        assertThatThrownBy(() -> rook.transfer(to, new Pieces(List.of(rook))))
+        assertThatThrownBy(() -> rook.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

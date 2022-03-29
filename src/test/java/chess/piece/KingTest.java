@@ -28,7 +28,7 @@ class KingTest {
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
         King king = new King(Color.BLACK, from);
 
-        assertThatThrownBy(() -> king.transfer(to, new Pieces(List.of(king))))
+        assertThatThrownBy(() -> king.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -48,7 +48,7 @@ class KingTest {
     void moveKingOneSquareToAdjacent(Position from, Position to) {
         King king = new King(Color.BLACK, from);
 
-        assertThat(king.transfer(to, new Pieces(List.of(king)))).isEqualTo(new King(Color.BLACK, to));
+        assertThat(king.transfer(to)).isEqualTo(new King(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideValidMoveKing() {

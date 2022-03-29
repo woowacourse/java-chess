@@ -78,7 +78,7 @@ public class Position {
         if (isDiagonalWay(to)) {
             return getDiagonalPath(to);
         }
-        throw new IllegalArgumentException("일직선 상의 경로가 없습니다.");
+        return List.of();
     }
 
     private List<Position> getVerticalPath(Position to) {

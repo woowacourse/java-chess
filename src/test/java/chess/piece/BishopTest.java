@@ -32,7 +32,7 @@ class BishopTest {
     void throwExceptionInvalidMoveBishop(Position from, Position to) {
         Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThatThrownBy(() -> bishop.transfer(to, new Pieces(List.of(bishop))))
+        assertThatThrownBy(() -> bishop.transfer(to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -51,7 +51,7 @@ class BishopTest {
     void moveCrossBishop(Position from, Position to) {
         Bishop bishop = new Bishop(Color.BLACK, from);
 
-        assertThat(bishop.transfer(to, new Pieces(List.of(bishop)))).isEqualTo(new Bishop(Color.BLACK, to));
+        assertThat(bishop.transfer(to)).isEqualTo(new Bishop(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideCrossMoveBishop() {

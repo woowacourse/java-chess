@@ -16,6 +16,7 @@ import static chess.position.Rank.SEVEN;
 import static chess.position.Rank.SIX;
 import static chess.position.Rank.THREE;
 import static chess.position.Rank.TWO;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -231,6 +232,34 @@ class ChessBoardTest {
                 new King(Color.BLACK, new Position(H, SEVEN)),
                 new Pawn(Color.WHITE, new Position(E, FIVE))
         );
+    }
+
+    @Test
+    @DisplayName("폰은 앞으로 이동할 때 기물이 있으면 움직일 수 없다.")
+    void throwExceptionWhenPawnVerticallyMoveToHasTargetPiece() {
+        ChessBoard chessBoard = new ChessBoard(
+                List.of(
+                        new King(Color.WHITE, new Position(H, FIVE)),
+                        new King(Color.BLACK, new Position(H, SEVEN)),
+                        new Pawn(Color.WHITE, new Position(D, FOUR)),
+                        new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
+
+        assertThatThrownBy(() -> chessBoard.move(new Position(D, FOUR), new Position(D, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 대각선으로 이동할 때 기물이 없으면 이동할 수 없다.")
+    void throwExceptionWhenPawnDiagonalMoveToNotHasTargetPiece() {
+        ChessBoard chessBoard = new ChessBoard(
+                List.of(
+                        new King(Color.WHITE, new Position(H, FIVE)),
+                        new King(Color.BLACK, new Position(H, SEVEN)),
+                        new Pawn(Color.WHITE, new Position(D, FOUR)),
+                        new Pawn(Color.BLACK, new Position(D, FIVE))), Color.WHITE);
+
+        assertThatThrownBy(() -> chessBoard.move(new Position(D, FOUR), new Position(C, FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

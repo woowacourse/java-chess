@@ -19,17 +19,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPossibleMovement(Position to, Pieces pieces) {
-        if (isUncapturablePosition(to)) {
-            return !hasTargetPiece(to, pieces) && !hasObstacle(to, pieces);
-        }
-        if (isCapturablePosition(to)) {
-            return hasTargetPiece(to, pieces);
-        }
-        return false;
+    protected boolean isPossibleMovement(Position to) {
+        return isUncapturablePosition(to) || isCapturablePosition(to);
     }
 
-    private boolean isUncapturablePosition(Position to) {
+    public boolean isUncapturablePosition(Position to) {
         return isForward(to) && isVerticalWay(to) && isValidDistance(to);
     }
 
@@ -70,15 +64,7 @@ public class Pawn extends Piece {
         return getPosition().getHorizontalDistance(to);
     }
 
-    private boolean hasTargetPiece(Position to, Pieces pieces) {
-        return pieces.hasPieceByPosition(to);
-    }
-
-    private boolean hasObstacle(Position to, Pieces pieces) {
-        return pieces.hasObstacleOnLinearPath(getPosition(), to);
-    }
-
-    private boolean isCapturablePosition(Position to) {
+    public boolean isCapturablePosition(Position to) {
         return isForward(to) && isDiagonalWay(to) && isValidDistance(to);
     }
 

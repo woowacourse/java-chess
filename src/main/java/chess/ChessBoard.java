@@ -3,8 +3,8 @@ package chess;
 import static java.util.stream.Collectors.toMap;
 
 import chess.piece.Color;
+import chess.piece.Pawn;
 import chess.piece.Piece;
-import chess.piece.Pieces;
 import chess.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +56,55 @@ public class ChessBoard {
         if (isFinished()) {
             throw new IllegalStateException("체스 게임이 종료되었습니다.");
         }
+
         if (!isCurrentColorPiece(from)) {
             throw new IllegalArgumentException(String.format(
                     "%s 색깔의 기물을 움직일 수 있습니다.", currentColor));
         }
+
+        Piece piece = findPieceByPosition(from);
+
+        if (hasObstacle(from, to)) {
+            throw new IllegalArgumentException(String.format(
+                    "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", piece.getClass().getSimpleName(), from, to));
+        }
+
+        if (!isMovable(from, to)) {
+            throw new IllegalArgumentException(String.format(
+                    "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", piece.getClass().getSimpleName(), from, to));
+        }
+
         movePickedPiece(from, to);
+    }
+
+    private boolean isMovable(Position from, Position to) {
+        Piece pickedPiece = findPieceByPosition(from);
+
+        if (pickedPiece.isPawn()) {
+            Pawn pawn = (Pawn) pickedPiece;
+            if (pawn.isUncapturablePosition(to)) {
+                return !hasPieceByPosition(to);
+            }
+            if (pawn.isCapturablePosition(to)) {
+                return hasPieceByPosition(to);
+            }
+        }
+
+        if (!hasPieceByPosition(to)) {
+            return true;
+        }
+
+        Piece targetPiece = findPieceByPosition(to);
+        return !targetPiece.isSameColor(pickedPiece.getColor());
+    }
+
+    private boolean hasObstacle(Position from, Position to) {
+        return from.getLinearPath(to)
+            .stream().anyMatch(this::hasPieceByPosition);
+    }
+
+    private boolean hasPieceByPosition(Position position) {
+        return board.containsKey(position);
     }
 
     private boolean isCurrentColorPiece(Position position) {
@@ -84,7 +128,7 @@ public class ChessBoard {
 
     private Piece transferPickedPiece(Position from, Position to) {
         Piece pickedPiece = findPieceByPosition(from);
-        return pickedPiece.transfer(to, new Pieces(getPieces()));
+        return pickedPiece.transfer(to);
     }
 
     public boolean isFinished() {
