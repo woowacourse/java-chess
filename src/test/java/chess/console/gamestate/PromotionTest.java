@@ -1,13 +1,12 @@
 package chess.console.gamestate;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.single.King;
 import java.util.Map;
@@ -22,9 +21,9 @@ public class PromotionTest {
     @BeforeEach
     void setUp() {
         chessBoard = new ChessBoard(Map.of(
-                Position.of('a', '8'), new Piece(WHITE, new WhitePawn()),
-                Position.of('a', '1'), new Piece(WHITE, new King()),
-                Position.of('a', '2'), new Piece(BLACK, new King())
+                Position.of('a', '8'), createWhitePiece(new WhitePawn()),
+                Position.of('a', '1'), createWhitePiece(new King()),
+                Position.of('a', '2'), createBlackPiece(new King())
         ));
     }
 

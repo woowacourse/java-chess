@@ -1,13 +1,12 @@
 package chess.domain.piece.single;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ class KnightTest {
     @DisplayName("나이트의 빈곳 이동 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new Knight())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, createWhitePiece(new Knight())));
 
         assertThatThrownBy(() -> knight.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -50,8 +49,8 @@ class KnightTest {
     void isMovableToDifferentPiecePosition() {
         Position target = Position.of('b', '3');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new Knight()),
-                target, new Piece(BLACK, new Knight())
+                source, createWhitePiece(new Knight()),
+                target, createBlackPiece(new Knight())
         ));
 
         assertThat(knight.move(source, target, chessBoard)).isInstanceOf(Knight.class);

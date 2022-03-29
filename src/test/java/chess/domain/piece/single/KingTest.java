@@ -1,13 +1,12 @@
 package chess.domain.piece.single;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ class KingTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
     void isMovableToEmptyPosition(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new King())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, createWhitePiece(new King())));
 
         assertThatThrownBy(() -> king.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -50,8 +49,8 @@ class KingTest {
     void isMovableToDifferentPiecePosition() {
         Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new King()),
-                target, new Piece(BLACK, new King())
+                source, createWhitePiece(new King()),
+                target, createBlackPiece(new King())
         ));
 
         assertThat(king.move(source, target, chessBoard)).isInstanceOf(King.class);

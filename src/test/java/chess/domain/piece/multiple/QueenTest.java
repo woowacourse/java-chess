@@ -1,13 +1,12 @@
 package chess.domain.piece.multiple;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ class QueenTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
     void emptyDirection(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new Queen())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, createWhitePiece(new Queen())));
 
         assertThatThrownBy(() -> queen.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -50,8 +49,8 @@ class QueenTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new Queen()),
-                Position.of('d', '7'), new Piece(WHITE, new Queen())));
+                source, createWhitePiece(new Queen()),
+                Position.of('d', '7'), createWhitePiece(new Queen())));
 
         assertThatThrownBy(() -> queen.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -63,9 +62,9 @@ class QueenTest {
     void isMovableToNotClearPiecePosition() {
         Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new Queen()),
-                Position.of('d', '7'), new Piece(BLACK, new Queen()),
-                target, new Piece(BLACK, new Queen())));
+                source, createWhitePiece(new Queen()),
+                Position.of('d', '7'), createBlackPiece(new Queen()),
+                target, createBlackPiece(new Queen())));
 
         assertThatThrownBy(() -> queen.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)

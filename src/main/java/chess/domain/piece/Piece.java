@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
+
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
@@ -12,6 +15,14 @@ public final class Piece {
     public Piece(Color color, PieceRule pieceRule) {
         this.color = color;
         this.pieceRule = pieceRule;
+    }
+
+    public static Piece createWhitePiece(PieceRule pieceRule) {
+        return new Piece(WHITE, pieceRule);
+    }
+
+    public static Piece createBlackPiece(PieceRule pieceRule) {
+        return new Piece(BLACK, pieceRule);
     }
 
     public Piece move(Position source, Position target, ChessBoard chessBoard) {

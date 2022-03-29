@@ -1,13 +1,12 @@
 package chess.domain.piece.multiple;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ class BishopTest {
     @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
     void emptyDirection(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new Bishop())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, createWhitePiece(new Bishop())));
 
         assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -50,8 +49,8 @@ class BishopTest {
     void isMovableToNotClearEmptyPosition() {
         Position target = Position.of('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new Bishop()),
-                Position.of('c', '5'), new Piece(BLACK, new Bishop())));
+                source, createWhitePiece(new Bishop()),
+                Position.of('c', '5'), createBlackPiece(new Bishop())));
 
         assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -63,9 +62,9 @@ class BishopTest {
     void isMovableToNotClearPiecePosition() {
         Position target = Position.of('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new Bishop()),
-                Position.of('c', '5'), new Piece(BLACK, new Bishop()),
-                target, new Piece(BLACK, new Bishop())));
+                source, createWhitePiece(new Bishop()),
+                Position.of('c', '5'), createBlackPiece(new Bishop()),
+                target, createBlackPiece(new Bishop())));
 
         assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)

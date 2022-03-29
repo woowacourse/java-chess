@@ -1,7 +1,7 @@
 package chess.domain.piece.pawn;
 
-import static chess.domain.Color.BLACK;
-import static chess.domain.Color.WHITE;
+import static chess.domain.piece.Piece.createBlackPiece;
+import static chess.domain.piece.Piece.createWhitePiece;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
@@ -33,7 +33,7 @@ class WhiteFirstMovePawnTest {
     @DisplayName("폰의 빈곳 전진 가능 여부 확인")
     void isMovableToEmptyPosition(char col, char row, boolean expected) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new WhitePawn())));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, createWhitePiece(new WhitePawn())));
 
         assertThatThrownBy(() -> pawn.move(source, target, chessBoard))
                 .isInstanceOf(IllegalStateException.class)
@@ -45,7 +45,7 @@ class WhiteFirstMovePawnTest {
     @DisplayName("기물이 가로막을 경우의 전진 불가능")
     void cannotMoveToPiecePosition(Position target, Piece piece) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Piece(WHITE, new WhitePawn()),
+                source, createWhitePiece(new WhitePawn()),
                 target, piece));
 
         assertThatThrownBy(() -> pawn.move(source, target, chessBoard))
@@ -55,10 +55,10 @@ class WhiteFirstMovePawnTest {
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
         return Stream.of(
-                Arguments.of(Position.of('b', '2'), new Piece(WHITE, new WhitePawn())),
-                Arguments.of(Position.of('b', '3'), new Piece(WHITE, new WhitePawn())),
-                Arguments.of(Position.of('b', '2'), new Piece(BLACK, new BlackPawn())),
-                Arguments.of(Position.of('b', '3'), new Piece(BLACK, new BlackPawn()))
+                Arguments.of(Position.of('b', '2'), createWhitePiece(new WhitePawn())),
+                Arguments.of(Position.of('b', '3'), createWhitePiece(new WhitePawn())),
+                Arguments.of(Position.of('b', '2'), createBlackPiece(new BlackPawn())),
+                Arguments.of(Position.of('b', '3'), createBlackPiece(new BlackPawn()))
         );
     }
 }
