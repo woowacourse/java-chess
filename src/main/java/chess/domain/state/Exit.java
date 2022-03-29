@@ -13,7 +13,6 @@ public final class Exit extends State {
         throw new IllegalStateException("게임이 종료됐습니다.");
     }
 
-
     @Override
     public boolean isExit() {
         return true;

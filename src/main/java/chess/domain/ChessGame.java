@@ -7,7 +7,7 @@ import chess.domain.state.State;
 
 import java.util.Map;
 
-public class ChessGame {
+public final class ChessGame {
 
     private static final int FROM = 1;
     private static final int TO = 2;
