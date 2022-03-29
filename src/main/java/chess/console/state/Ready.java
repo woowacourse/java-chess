@@ -1,5 +1,7 @@
 package chess.console.state;
 
+import static chess.console.view.InputView.MENU_INDEX;
+
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import chess.domain.board.generator.BasicBoardGenerator;
@@ -16,7 +18,7 @@ public class Ready implements State {
 
     @Override
     public State run(String[] inputs) {
-        Command command = Command.of(inputs[0]);
+        Command command = Command.of(inputs[MENU_INDEX]);
 
         if (command.isEnd()) {
             return new End();

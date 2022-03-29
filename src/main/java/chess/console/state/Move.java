@@ -1,5 +1,8 @@
 package chess.console.state;
 
+import static chess.console.view.InputView.FROM_POSITION_INDEX;
+import static chess.console.view.InputView.TO_POSITION_INDEX;
+
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
@@ -26,7 +29,7 @@ public class Move implements State {
         }
 
         try {
-            board.move(Position.of(inputs[1]), Position.of(inputs[2]));
+            board.move(Position.of(inputs[FROM_POSITION_INDEX]), Position.of(inputs[TO_POSITION_INDEX]));
             OutputView.printBoard(board.getBoard());
 
         } catch (IllegalArgumentException e) {
