@@ -26,7 +26,7 @@ public class ChessGame {
             state = state.move(command.from(), command.to());
             return;
         }
-        throw new IllegalArgumentException("[ERROR] 명령어 입력이 잘못되었습니다.");
+        throw new IllegalArgumentException("명령어 입력이 잘못되었습니다.");
     }
 
     public boolean isFinished() {

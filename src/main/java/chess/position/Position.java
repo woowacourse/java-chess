@@ -37,7 +37,7 @@ public class Position {
 
     public static Position from(String key) {
         if (!CACHE.containsKey(key)) {
-            throw new IllegalArgumentException("[ERROR] 체스 보드 position의 범위를 넘어갑니다.");
+            throw new IllegalArgumentException("체스 보드 position의 범위를 넘어갑니다.");
         }
         return CACHE.get(key);
     }
@@ -92,7 +92,7 @@ public class Position {
         if (isDiagonalWay(to)) {
             return getDiagonalPath(to);
         }
-        throw new IllegalArgumentException("[ERROR] 일직선 상의 경로가 없습니다.");
+        throw new IllegalArgumentException("일직선 상의 경로가 없습니다.");
     }
 
     private List<Position> getVerticalPath(Position to) {
