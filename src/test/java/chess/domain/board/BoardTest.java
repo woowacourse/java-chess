@@ -17,6 +17,13 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("Position 피스의 색을 가져온다.")
+    void getPieceColorByPosition() {
+        Board board = Board.create();
+        assertThat(board.getPieceColorByPosition(Position.valueOf("a8"))).isEqualTo(Color.BLACK);
+    }
+
+    @Test
     @DisplayName("Position을 입력하면 piece를 반환한다.")
     void getPiece() {
         Board board = Board.create();

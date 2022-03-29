@@ -19,10 +19,8 @@ public class WhitePawnMoveStrategy extends PawnMoveStrategy{
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-        final Piece targetPiece = board.getPiece(target);
-        final Color color = board.getPiece(source).getColor();
 
-        return isRightMovePattern(movePattern, board, source, targetPiece, color);
+        return isRightMovePattern(movePattern, board, source, board.getPiece(target), board.getPieceColorByPosition(source));
     }
 
     @Override

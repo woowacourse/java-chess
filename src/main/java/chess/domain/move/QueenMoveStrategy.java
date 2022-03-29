@@ -27,7 +27,7 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
             return false;
         }
 
-        return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+        return isTargetPositionMovable(board.getPiece(target), board.getPieceColorByPosition(source));
     }
 
     private boolean isQueenMovePattern(final Distance distance) {

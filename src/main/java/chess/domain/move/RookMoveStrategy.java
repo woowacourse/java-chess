@@ -23,7 +23,7 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
             return false;
         }
 
-        return isTargetPositionMovable(board.getPiece(target), board.getPiece(source).getColor());
+        return isTargetPositionMovable(board.getPiece(target), board.getPieceColorByPosition(source));
     }
 
     private boolean isRookMovePattern(final Distance distance) {
