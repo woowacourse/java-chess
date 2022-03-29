@@ -58,6 +58,7 @@ public class BoardInitializer {
 
     private Map<Position, Piece> makePawns(Team team, Rank rank, String symbol) {
         return Arrays.stream(File.values())
+                .filter(file -> !file.equals(File.NOTHING))
                 .collect(Collectors
                         .toMap(file -> new Position(file, rank), file -> new Pawn(team, symbol)));
     }
