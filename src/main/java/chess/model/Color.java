@@ -28,4 +28,8 @@ public enum Color {
     public boolean isEmpty() {
         return this.equals(Color.NOTHING);
     }
+
+    public boolean isWhite() {
+        return this.equals(WHITE);
+    }
 }

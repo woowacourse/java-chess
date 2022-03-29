@@ -22,14 +22,14 @@ public final class ChessController {
         this.service = service;
     }
 
-    private static void runUntilValid(Runnable runner) {
+    private void runUntilValid(Runnable runner) {
         boolean runSuccess;
         do {
             runSuccess = tryRun(runner);
         } while (!runSuccess);
     }
 
-    private static boolean tryRun(Runnable runner) {
+    private boolean tryRun(Runnable runner) {
         try {
             runner.run();
             return true;
@@ -45,7 +45,7 @@ public final class ChessController {
 
     private void playGame() {
         GameState gameState = new Ready();
-        while (!gameState.isEnd(service)) {
+        while (gameState.isRunning(service)) {
             GameCommandRequest request = GameCommandRequest.of(InputView.inputStartOrEndGame());
             gameState = gameState.execute(request.getGameCommand());
             requestMapper.get(request.getGameCommand()).accept(request);

@@ -36,8 +36,8 @@ public abstract class Piece {
         return color.isAlly(targetPiece.color);
     }
 
-    public boolean isEmpty() {
-        return color.isEmpty();
+    public boolean isPlayerPiece() {
+        return color.isBlack() || color.isWhite();
     }
 
     public Direction findDirectionTo(Piece target) {
@@ -70,6 +70,10 @@ public abstract class Piece {
 
     public int getDistance(Piece target) {
         return this.square.getDistance(target.square);
+    }
+
+    public boolean isDifferent(Piece other) {
+        return !this.equals(other);
     }
 
     protected Color color() {

@@ -66,6 +66,10 @@ public final class Square {
         return this.file.equals(other.file);
     }
 
+    public boolean isDifferent(Square other) {
+        return !this.equals(other);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

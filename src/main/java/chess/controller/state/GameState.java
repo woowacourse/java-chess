@@ -6,7 +6,12 @@ import chess.service.ChessService;
 public interface GameState {
     GameState execute(GameCommand gameCommand);
 
-    default boolean isEnd(ChessService service) {
-        return this.getClass().equals(End.class) || !service.checkKingsAlive();
+    default boolean isRunning(ChessService service) {
+        return isNotEnd() && service.isBoardReadyOrRunning();
+    }
+
+    private boolean isNotEnd() {
+        return this.getClass().equals(Playing.class)
+                || this.getClass().equals(Ready.class);
     }
 }

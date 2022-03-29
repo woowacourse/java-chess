@@ -28,12 +28,12 @@ public class ChessService {
         return toDto(board);
     }
 
-    public boolean checkKingsAlive() {
-        return board.aliveTwoKings();
-    }
-
     public Map<String, Double> getScores() {
         return Color.getPlayerColors().stream()
                 .collect(Collectors.toMap(Color::name, color -> board.calculatePoint(color)));
+    }
+
+    public boolean isBoardReadyOrRunning() {
+        return board == null || board.aliveTwoKings();
     }
 }

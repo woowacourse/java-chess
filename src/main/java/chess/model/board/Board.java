@@ -45,14 +45,14 @@ public final class Board {
 
     private void checkRoute(Square sourceSquare, Square targetSquare, Direction direction) {
         Square tempSquare = sourceSquare;
-        while (!tempSquare.equals(targetSquare)) {
+        while (tempSquare.isDifferent(targetSquare)) {
             tempSquare = tempSquare.move(direction);
             checkHasPieceInSquare(targetSquare, tempSquare);
         }
     }
 
     private void checkHasPieceInSquare(Square targetSquare, Square tempSquare) {
-        if (!findPieceBySquare(tempSquare).isEmpty() && !tempSquare.equals(targetSquare)) {
+        if (findPieceBySquare(tempSquare).isPlayerPiece() && tempSquare.isDifferent(targetSquare)) {
             throw new IllegalArgumentException("경로 중 기물이 존재하여 이동할 수 없습니다.");
         }
     }
@@ -86,6 +86,6 @@ public final class Board {
     private boolean isPawnInSameFile(Piece other) {
         return board.stream()
                 .filter(piece -> piece.isPawn() && piece.isAlly(other))
-                .anyMatch(piece -> piece.isSameFile(other) && !piece.equals(other));
+                .anyMatch(piece -> piece.isSameFile(other) && piece.isDifferent(other));
     }
 }
