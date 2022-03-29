@@ -3,13 +3,14 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ExitFinishedTest {
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
     private State state;
 
     @BeforeEach

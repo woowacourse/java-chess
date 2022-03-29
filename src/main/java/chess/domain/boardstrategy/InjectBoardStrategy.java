@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.boardstrategy;
 
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
@@ -15,8 +15,8 @@ import chess.domain.piece.attribute.Team;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Fixtures {
-
+public class InjectBoardStrategy implements BoardStrategy {
+    private final Map<Position, Piece> positionPieceMap;
     private static final Map<String, Piece> stringPieceMap = new HashMap<>();
 
     static {
@@ -33,24 +33,36 @@ public class Fixtures {
         stringPieceMap.put("q", new Queen(Team.WHITE));
         stringPieceMap.put("k", new King(Team.WHITE));
         stringPieceMap.put("p", new Pawn(Team.WHITE));
-
     }
 
-    public static Map<Position, Piece> stringToBoard(String text) {
+    public InjectBoardStrategy(String text) {
+        this.positionPieceMap = stringToBoard(text);
+    }
+
+    @Override
+    public Map<Position, Piece> create() {
+        return positionPieceMap;
+    }
+
+    private static Map<Position, Piece> stringToBoard(String text) {
         Map<Position, Piece> board = new HashMap<>();
         int rankY = 8;
         for (String rank : text.split(" ")) {
-            int fileX = 1;
-            for (String pieceString : rank.split("")) {
-                board.put(new Position(
-                                Column.numberOf(fileX), Rank.numberOf(rankY)
-                        ),
-                        stringPieceMap.get(pieceString)
-                );
-                fileX++;
-            }
+            setBoardRank(board, rankY, rank);
             rankY--;
         }
         return board;
     }
+
+    private static void setBoardRank(Map<Position, Piece> board, int rankY, String rank) {
+        int fileX = 1;
+        for (String pieceString : rank.split("")) {
+            board.put(new Position(Column.numberOf(fileX), Rank.numberOf(rankY)),
+                    stringPieceMap.get(pieceString)
+            );
+            fileX++;
+        }
+    }
+
+
 }

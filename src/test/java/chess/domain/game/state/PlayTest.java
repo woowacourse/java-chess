@@ -4,9 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Fixtures;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.boardstrategy.BoardStrategy;
+import chess.domain.boardstrategy.InitBoardStrategy;
+import chess.domain.boardstrategy.InjectBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
@@ -15,7 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayTest {
-    private final ChessGame chessGame = new ChessGame();
+    private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
 
     private State state;
 
@@ -75,7 +77,8 @@ class PlayTest {
                 + "........ "
                 + "R......q";
 
-        State state = new Play(new ChessGame(new Board(Fixtures.stringToBoard(boardString))));
+        BoardStrategy boardStrategy = new InjectBoardStrategy(boardString);
+        State state = new Play(new ChessGame(boardStrategy));
 
         state = state.go("move h1 h4");
         assertThat(state)

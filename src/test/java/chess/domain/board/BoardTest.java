@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
+import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
@@ -25,7 +26,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판 중 Pawn을 제외한 기물을 생성할 수 있다.")
     void createBoardOfExcludePawn() {
-        Board board = new ChessGame().getBoard();
+        Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
         assertAll(
                 () -> assertThat(board.findByPosition(new Position(Column.A, Rank.ONE))).isInstanceOf(Rook.class),
@@ -42,7 +43,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판 중 Pawn 기물을 생성할 수 있다.")
     void createBoardOfPawn() {
-        Board board = new ChessGame().getBoard();
+        Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
         assertThat(board.findByPosition(new Position(Column.A, Rank.TWO))).isInstanceOf(Pawn.class);
     }
@@ -50,7 +51,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판의 말을 이동할 수 있다.")
     void movePiece() {
-        Board board = new ChessGame().getBoard();
+        Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
         board.move(new Position(Column.A, Rank.TWO), new Position(Column.A, Rank.THREE));
 
@@ -65,7 +66,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판의 말이 이동할 수 없는 경우 예외가 발생한다.")
     void canNotMovePiece() {
-        Board board = new ChessGame().getBoard();
+        Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
         assertThatThrownBy(() -> board.move(new Position(Column.A, Rank.ONE), new Position(Column.A, Rank.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -74,7 +75,7 @@ class BoardTest {
     @Test
     @DisplayName("각 진영의 점수를 계산할 수 있다.")
     void calculateScoreOfTeam() {
-        Board board = new ChessGame().getBoard();
+        Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
         Map<Team, Double> colorsTotalScore = board.getTotalStatus();
 
