@@ -13,7 +13,7 @@ public abstract class Command implements State {
 
     private void validateCommand(String input) {
         if (!input.contains("move") && !"start".equals(input) && !"end".equals(input) && !"status".equals(input)) {
-            throw new IllegalArgumentException("명령어는 start, move, end, status 중 하나여야합니다.");
+            throw new IllegalArgumentException("[ERROR] 명령어는 start, move, end, status 중 하나여야합니다.");
         }
     }
 
@@ -39,6 +39,6 @@ public abstract class Command implements State {
 
     @Override
     public List<String> getCommandPosition() {
-        throw new IllegalArgumentException("명령어에서 위치를 얻을수 없습니다.");
+        throw new IllegalStateException("[ERROR] 명령어에서 위치를 얻을수 없습니다.");
     }
 }

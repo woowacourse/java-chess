@@ -31,7 +31,7 @@ public final class Empty extends Piece {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        throw new IllegalArgumentException("사이의 값을 셀수 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 사이의 값을 셀수 없습니다.");
     }
 
 }

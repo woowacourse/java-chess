@@ -30,7 +30,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 값입니다 "));
     }
 
     public boolean isLessThan(Rank rank) {

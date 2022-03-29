@@ -14,7 +14,7 @@ public final class Start extends Command {
         if (input.contains("move")) {
             return new Move(input);
         }
-        throw new IllegalArgumentException("없는 명령어입니다.");
+        throw new IllegalArgumentException("[ERROR] 없는 명령어입니다.");
     }
 
     @Override

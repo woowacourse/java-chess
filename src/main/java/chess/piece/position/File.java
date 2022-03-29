@@ -22,7 +22,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 값입니다 "));
     }
 
     public int absMinus(File file) {

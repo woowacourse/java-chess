@@ -45,7 +45,7 @@ public final class Rook extends Piece implements RookMovable {
         if (position.isVertical(targetPiece.position)) {
             return getVerticalPositions(list);
         }
-        throw new IllegalArgumentException("갈수없는 공간입니다.");
+        throw new IllegalArgumentException("[ERROR] 갈 수 없는 공간입니다.");
     }
 
     private boolean isCorrectDirection(Position position) {

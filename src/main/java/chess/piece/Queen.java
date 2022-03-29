@@ -50,7 +50,7 @@ public final class Queen extends Piece implements RookMovable, BishopMovable {
         if (position.isNegativeDiagonal(targetPiece.position)) {
             return getNegativeDiagonal(list);
         }
-        throw new IllegalArgumentException("갈수없는 공간입니다.");
+        throw new IllegalArgumentException("[ERROR] 갈 수 없는 공간입니다.");
     }
 
     private boolean isCorrectDirection(Position position) {

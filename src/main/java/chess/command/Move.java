@@ -25,7 +25,7 @@ public final class Move extends Command {
         if (input.contains("move")) {
             return new Move(input);
         }
-        throw new IllegalArgumentException("command has only move or end ");
+        throw new IllegalArgumentException("[ERROR] 명령어는 move 또는 end 여야만 합니다. ");
     }
 
     public Command turnFinalState(String input) {
