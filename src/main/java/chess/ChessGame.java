@@ -52,6 +52,9 @@ public class ChessGame {
     }
 
     public Status getStatus() {
+        if (!gameState.isRunning() && !gameState.isFinished()) {
+            throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
+        }
         return new Status(board);
     }
 }
