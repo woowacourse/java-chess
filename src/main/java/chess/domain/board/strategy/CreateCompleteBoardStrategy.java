@@ -46,12 +46,18 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     @Override
     public Map<Position, Piece> createPieces() {
         final Map<Position, Piece> pieces = new HashMap<>();
+        pieces.putAll(createPiecesWithPawn());
+        pieces.putAll(createPiecesWithoutPawn());
+        return pieces;
+    }
+
+    public Map<Position, Piece> createPiecesWithPawn() {
+        final Map<Position, Piece> pieces = new HashMap<>();
         final List<Map.Entry<Row, Color>> rowAndColors = List.of(entry(Row.SECOND, Color.WHITE),
                 entry(Row.SEVENTH, Color.BLACK));
         for (Entry<Row, Color> rowAndColor : rowAndColors) {
             pieces.putAll(fillRowWith(rowAndColor));
         }
-        pieces.putAll(createPiecesWithoutPawn());
         return pieces;
     }
 
