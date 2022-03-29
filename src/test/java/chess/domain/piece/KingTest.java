@@ -64,7 +64,6 @@ public class KingTest {
         board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
 
         assertThatThrownBy(() -> king.validateMove(board, kingSourcePosition, targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
