@@ -11,7 +11,7 @@ import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 
-public class Chess {
+public class ChessLauncher {
 
     private static final String COMMAND_DISTRIBUTOR = " ";
     private static final String INVALID_MOVING_COMMAND = "올바르지 않은 이동 명령입니다.";
