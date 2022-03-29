@@ -1,6 +1,8 @@
 package chess.model;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum File {
 
@@ -27,11 +29,17 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_FILE));
     }
 
+    public List<File> betweenFiles(File other) {
+        return Arrays.stream(File.values())
+            .filter(file -> file.isBetween(this, other))
+            .collect(Collectors.toList());
+    }
+
     public boolean isBetween(File source, File target) {
         if (source.isBiggerThan(target)) {
-            return this.isBiggerThan(target) && source.isBiggerThan(this) || source == target;
+            return this.isBiggerThan(target) && source.isBiggerThan(this);
         }
-        return this.isBiggerThan(source) && target.isBiggerThan(this) || source == target;
+        return this.isBiggerThan(source) && target.isBiggerThan(this);
     }
 
     private boolean isBiggerThan(File other) {

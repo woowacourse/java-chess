@@ -64,7 +64,7 @@ public class Path {
 
     public List<Position> possiblePositions() {
         return source.between(target).stream()
-            .filter(position -> isAllDirectional())
+            .filter(position -> new Path(source, position).isAllDirectional())
             .collect(Collectors.toUnmodifiableList());
     }
 }

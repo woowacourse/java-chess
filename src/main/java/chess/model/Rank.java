@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -42,11 +43,17 @@ public enum Rank {
         return other.value - this.value;
     }
 
+    public List<Rank> betweenRanks(Rank other) {
+        return Arrays.stream(Rank.values())
+            .filter(rank -> rank.isBetween(this, other))
+            .collect(Collectors.toList());
+    }
+
     public boolean isBetween(Rank source, Rank target) {
         if (source.isBiggerThan(target)) {
-            return this.isBiggerThan(target) && source.isBiggerThan(this) || source == target;
+            return this.isBiggerThan(target) && source.isBiggerThan(this);
         }
-        return this.isBiggerThan(source) && target.isBiggerThan(this) || source == target;
+        return this.isBiggerThan(source) && target.isBiggerThan(this);
     }
 
     private boolean isBiggerThan(Rank other) {

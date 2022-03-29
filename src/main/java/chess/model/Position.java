@@ -3,9 +3,9 @@ package chess.model;
 import static java.lang.String.*;
 import static java.util.stream.Collectors.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position {
 
@@ -50,17 +50,24 @@ public class Position {
     }
 
     public List<Position> between(Position other) {
-        return Rank.reverseValues()
-            .stream()
-            .flatMap(rank -> betweenOneFile(other, rank).stream())
+        List<Rank> ranks = rank.betweenRanks(other.rank);
+        List<File> files = file.betweenFiles(other.file);
+
+        if (ranks.isEmpty()) {
+            return files.stream().map(file -> new Position(this.rank, file)).collect(Collectors.toList());
+        }
+
+        if (files.isEmpty()) {
+            return ranks.stream().map(rank -> new Position(rank, this.file)).collect(Collectors.toList());
+        }
+
+        return ranks.stream()
+            .flatMap(rank -> positionsBetweenTwoFiles(files, rank).stream())
             .collect(toList());
     }
 
-    private List<Position> betweenOneFile(Position other, Rank rank) {
-        return Arrays.stream(File.values())
-            .filter(file -> rank.isBetween(this.rank, other.rank) && file.isBetween(this.file, other.file))
-            .map(file -> new Position(rank, file))
-            .collect(toList());
+    private List<Position> positionsBetweenTwoFiles(List<File> files, Rank rank) {
+        return files.stream().map(file -> new Position(rank, file)).collect(toList());
     }
 
     @Override
