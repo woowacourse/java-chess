@@ -17,9 +17,8 @@ public class PiecesTest {
         Pieces pieces = new Pieces(List.of(new King(WHITE, Position.of("e1"))));
 
         boolean actual = pieces.hasLessThanTotalKingCount();
-        boolean expected = true;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("King의 갯수가 2개면 false를 반환한다.")
@@ -29,9 +28,8 @@ public class PiecesTest {
             new King(BLACK, Position.of("e8"))));
 
         boolean actual = pieces.hasLessThanTotalKingCount();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("positions리스트에 해당하는 piece가 있으면 true를 반환한다.")
@@ -41,9 +39,8 @@ public class PiecesTest {
         Pieces pieces = new Pieces(List.of(new King(WHITE, Position.of("e1"))));
 
         boolean actual = pieces.isAnyPieceExistInPositions(positions);
-        boolean expected = true;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("positions리스트에 해당하는 piece가 없으면 false를 반환한다.")
@@ -53,9 +50,8 @@ public class PiecesTest {
         Pieces pieces = new Pieces(List.of(new King(WHITE, Position.of("e1"))));
 
         boolean actual = pieces.isAnyPieceExistInPositions(positions);
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("가지고 있는 piece들을 리스트로 반환한다.")

@@ -14,11 +14,11 @@ public class BishopTest {
     @Test
     void move() {
         Bishop bishop = new Bishop(Color.WHITE, Position.of("c1"));
-        bishop.move(Position.of("d2"));
+        Position d2 = Position.of("d2");
 
-        Bishop expected = new Bishop(Color.WHITE, Position.of("d2"));
+        bishop.move(d2);
 
-        assertThat(bishop).isEqualTo(expected);
+        assertThat(bishop.getPosition()).isEqualTo(d2);
     }
 
     @DisplayName("비숍이 대각선이 아닌 방향으로 이동하려는 경우 예외가 발생한다.")
@@ -35,11 +35,11 @@ public class BishopTest {
     @Test
     void attack_likeMove() {
         Bishop bishop = new Bishop(Color.WHITE, Position.of("d1"));
-        bishop.attack(Position.of("a4"));
+        Position a4 = Position.of("a4");
 
-        Bishop expected = new Bishop(Color.WHITE, Position.of("a4"));
+        bishop.attack(a4);
 
-        assertThat(bishop).isEqualTo(expected);
+        assertThat(bishop.getPosition()).isEqualTo(a4);
     }
 
     @DisplayName("비숍이 d1에서 a4로 이동할 시, 사이에 있는 position은 c2, b3이다.")
@@ -59,9 +59,8 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE, Position.of("a1"));
 
         boolean actual = bishop.isKing();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("흑색의 비숍의 display는 ♙이다.")

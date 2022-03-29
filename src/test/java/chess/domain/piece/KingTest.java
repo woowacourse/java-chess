@@ -14,11 +14,11 @@ public class KingTest {
     @Test
     void move() {
         King king = new King(Color.WHITE, Position.of("e1"));
-        king.move(Position.of("d2"));
+        Position d2 = Position.of("d2");
 
-        King expected = new King(Color.WHITE, Position.of("d2"));
+        king.move(d2);
 
-        assertThat(king).isEqualTo(expected);
+        assertThat(king.getPosition()).isEqualTo(d2);
     }
 
     @DisplayName("킹은 두칸 이상 이동하려는 경우 예외가 발생한다.")
@@ -35,11 +35,11 @@ public class KingTest {
     @Test
     void attack_likeMove() {
         King king = new King(Color.WHITE, Position.of("d1"));
-        king.attack(Position.of("d2"));
+        Position d2 = Position.of("d2");
 
-        King expected = new King(Color.WHITE, Position.of("d2"));
+        king.attack(d2);
 
-        assertThat(king).isEqualTo(expected);
+        assertThat(king.getPosition()).isEqualTo(d2);
     }
 
     @DisplayName("킹은 이동시 Path를 가지고 있지 않다.")
@@ -59,9 +59,8 @@ public class KingTest {
         King king = new King(Color.WHITE, Position.of("a1"));
 
         boolean actual = king.isKing();
-        boolean expected = true;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("흑색의 킹의 display는 ♔이다.")

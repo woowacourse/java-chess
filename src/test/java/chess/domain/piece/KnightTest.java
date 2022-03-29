@@ -14,11 +14,11 @@ public class KnightTest {
     @Test
     void move() {
         Knight knight = new Knight(Color.WHITE, Position.of("b1"));
-        knight.move(Position.of("c3"));
+        Position c3 = Position.of("c3");
 
-        Knight expected = new Knight(Color.WHITE, Position.of("c3"));
+        knight.move(c3);
 
-        assertThat(knight).isEqualTo(expected);
+        assertThat(knight.getPosition()).isEqualTo(c3);
     }
 
     @DisplayName("나이트는 이동할 수 없는 방향으로 이동하려는 경우 예외가 발생한다.")
@@ -35,11 +35,11 @@ public class KnightTest {
     @Test
     void attack_likeMove() {
         Knight knight = new Knight(Color.WHITE, Position.of("b1"));
-        knight.attack(Position.of("c3"));
+        Position c3 = Position.of("c3");
 
-        Knight expected = new Knight(Color.WHITE, Position.of("c3"));
+        knight.attack(c3);
 
-        assertThat(knight).isEqualTo(expected);
+        assertThat(knight.getPosition()).isEqualTo(c3);
     }
 
     @DisplayName("나이트는 이동 시 Path를 가지고 있지 않다..")
@@ -59,9 +59,8 @@ public class KnightTest {
         Knight knight = new Knight(Color.WHITE, Position.of("a1"));
 
         boolean actual = knight.isKing();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("흑색의 나이트의 display는 ♘이다.")

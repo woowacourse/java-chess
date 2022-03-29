@@ -15,22 +15,22 @@ public class PawnTest {
     @Test
     void move_whiteForward() {
         Pawn pawn = new Pawn(WHITE, Position.of("a2"));
-        pawn.move(Position.of("a3"));
+        Position a3 = Position.of("a3");
 
-        Pawn expected = new Pawn(WHITE, Position.of("a3"));
+        pawn.move(a3);
 
-        assertThat(pawn).isEqualTo(expected);
+        assertThat(pawn.getPosition()).isEqualTo(a3);
     }
 
     @DisplayName("흑색 폰은 앞으로 한칸 전진할 수 있다.")
     @Test
     void move_blackForward() {
         Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
-        pawn.move(Position.of("a6"));
+        Position a6 = Position.of("a6");
 
-        Pawn expected = new Pawn(Color.BLACK, Position.of("a6"));
+        pawn.move(a6);
 
-        assertThat(pawn).isEqualTo(expected);
+        assertThat(pawn.getPosition()).isEqualTo(a6);
     }
 
     @DisplayName("폰이 후진하려는 경우, 예외가 발생한다.")
@@ -57,11 +57,11 @@ public class PawnTest {
     @Test
     void move_canJumpOnInitialPosition() {
         Pawn pawn = new Pawn(WHITE, Position.of("a2"));
-        pawn.move(Position.of("a4"));
+        Position a4 = Position.of("a4");
 
-        Pawn expected = new Pawn(WHITE, Position.of("a4"));
+        pawn.move(a4);
 
-        assertThat(pawn).isEqualTo(expected);
+        assertThat(pawn.getPosition()).isEqualTo(a4);
     }
 
     @DisplayName("초기화된 위치가 아닌 경우 두칸 전진하려는 경우 예외가 발생한다.")
@@ -78,11 +78,12 @@ public class PawnTest {
     @Test
     void attack_likeMoveWhite() {
         Pawn pawn = new Pawn(Color.WHITE, Position.of("a2"));
-        pawn.attack(Position.of("b3"));
+        Position b3 = Position.of("b3");
 
-        Pawn expected = new Pawn(Color.WHITE, Position.of("b3"));
+        pawn.attack(b3);
 
-        assertThat(pawn).isEqualTo(expected);
+        assertThat(pawn.getPosition()).isEqualTo(b3);
+
     }
 
     @DisplayName("white폰은 attack시 대각선 아래 방향으로 한칸이 아닌 곳으로 이동할 시 예외가 발생한다.")
@@ -99,11 +100,11 @@ public class PawnTest {
     @Test
     void attack_likeMoveBlack() {
         Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
-        pawn.attack(Position.of("b6"));
+        Position b6 = Position.of("b6");
 
-        Pawn expected = new Pawn(Color.BLACK, Position.of("b6"));
+        pawn.attack(b6);
 
-        assertThat(pawn).isEqualTo(expected);
+        assertThat(pawn.getPosition()).isEqualTo(b6);
     }
 
     @DisplayName("black폰은 attack시 대각선 방향으로 한칸이 아닌 곳으로 이동할 시 예외가 발생한다.")
@@ -133,9 +134,8 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE, Position.of("a1"));
 
         boolean actual = pawn.isKing();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("흑색의 폰의 display는 ♗이다.")

@@ -14,22 +14,22 @@ public class QueenTest {
     @Test
     void move_horizontal() {
         Queen queen = new Queen(Color.WHITE, Position.of("d1"));
-        queen.move(Position.of("d8"));
+        Position d8 = Position.of("d8");
 
-        Queen expected = new Queen(Color.WHITE, Position.of("d8"));
+        queen.move(d8);
 
-        assertThat(queen).isEqualTo(expected);
+        assertThat(queen.getPosition()).isEqualTo(d8);
     }
 
     @DisplayName("퀸은 대각선 방향으로 이동할 수 있다.")
     @Test
     void move_diagonal() {
         Queen queen = new Queen(Color.WHITE, Position.of("d1"));
-        queen.move(Position.of("a4"));
+        Position a4 = Position.of("a4");
 
-        Queen expected = new Queen(Color.WHITE, Position.of("a4"));
+        queen.move(a4);
 
-        assertThat(queen).isEqualTo(expected);
+        assertThat(queen.getPosition()).isEqualTo(a4);
     }
 
     @DisplayName("퀸은 상하좌우 혹은 대각선 이외의 방향으로 이동하려는 경우 예외가 발생한다.")
@@ -38,19 +38,19 @@ public class QueenTest {
         Queen queen = new Queen(Color.WHITE, Position.of("d1"));
 
         assertThatCode(() -> queen.move(Position.of("e3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("퀸은 attack시 move와 같은 방향으로 이동한다.")
     @Test
     void attack_likeMove() {
         Queen queen = new Queen(Color.WHITE, Position.of("d1"));
-        queen.attack(Position.of("a4"));
+        Position a4 = Position.of("a4");
 
-        Queen expected = new Queen(Color.WHITE, Position.of("a4"));
+        queen.attack(a4);
 
-        assertThat(queen).isEqualTo(expected);
+        assertThat(queen.getPosition()).isEqualTo(a4);
     }
 
     @DisplayName("퀸이 d1에서 a4로 이동할 시, 사이에 있는 position은 c2, b3이다.")
@@ -70,9 +70,8 @@ public class QueenTest {
         Queen queen = new Queen(Color.WHITE, Position.of("a1"));
 
         boolean actual = queen.isKing();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("흑색의 퀸의 display는 ♕이다.")

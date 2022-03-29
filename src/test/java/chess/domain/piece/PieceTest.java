@@ -13,12 +13,12 @@ public class PieceTest {
     @Test
     void attack_likeMove() {
         Piece piece = new Queen(Color.WHITE, Position.of("d1"));
-        Piece enemy = new Queen(Color.BLACK, Position.of("d2"));
+        Position d2 = Position.of("d2");
+        Piece enemy = new Queen(Color.BLACK, d2);
 
         piece.kill(enemy);
-        Piece expected = new Queen(Color.WHITE, Position.of("d2"));
 
-        assertThat(piece).isEqualTo(expected);
+        assertThat(piece.getPosition()).isEqualTo(d2);
     }
 
     @DisplayName("Piece는 아군을 kill하면 예외가 발생한다.")

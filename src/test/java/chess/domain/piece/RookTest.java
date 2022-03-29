@@ -13,11 +13,11 @@ public class RookTest {
     @Test
     void move() {
         Rook rook = new Rook(Color.WHITE, Position.of("a1"));
-        rook.move(Position.of("a8"));
+        Position a8 = Position.of("a8");
 
-        Rook expected = new Rook(Color.WHITE, Position.of("a8"));
+        rook.move(a8);
 
-        assertThat(rook).isEqualTo(expected);
+        assertThat(rook.getPosition()).isEqualTo(a8);
     }
 
     @DisplayName("룩은 상하좌우가 방향으로 이동하려는 경우 예외가 발생한다.")
@@ -26,19 +26,19 @@ public class RookTest {
         Rook rook = new Rook(Color.WHITE, Position.of("a1"));
 
         assertThatCode(() -> rook.move(Position.of("b3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("룩은 attack시 move와 같은 방향으로 이동한다.")
     @Test
     void attack_exception() {
         Rook rook = new Rook(Color.WHITE, Position.of("a1"));
-        rook.attack(Position.of("a8"));
+        Position a8 = Position.of("a8");
 
-        Rook expected = new Rook(Color.WHITE, Position.of("a8"));
+        rook.move(a8);
 
-        assertThat(rook).isEqualTo(expected);
+        assertThat(rook.getPosition()).isEqualTo(a8);
     }
 
     @DisplayName("룩은 King이 아니다.")
@@ -47,9 +47,8 @@ public class RookTest {
         Rook rook = new Rook(Color.WHITE, Position.of("a1"));
 
         boolean actual = rook.isKing();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("흑색의 룩의 display는 ♖이다.")

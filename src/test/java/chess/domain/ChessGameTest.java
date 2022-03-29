@@ -128,9 +128,8 @@ public class ChessGameTest {
     @Test
     void isEnd_false() {
         boolean actual = chessGame.isEnd();
-        boolean expected = false;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("King이 한 개라도 죽으면 게임은 끝난다.")
@@ -139,9 +138,8 @@ public class ChessGameTest {
         chessGame = ChessGame.of(new Pieces(List.of(new King(WHITE, Position.of("e1")))));
 
         boolean actual = chessGame.isEnd();
-        boolean expected = true;
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("최초의 게임 점수는 각각 38.0점이다.")
