@@ -1,8 +1,11 @@
 package chess.domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,15 @@ public class ChessGameTest {
     @BeforeEach
     void setUp() {
         chessGame = new ChessGame(Board.create());
+    }
+
+    @Test
+    @DisplayName("기물 이동후 턴이 바뀐다.")
+    void move() {
+        chessGame.move("a2", "a4");
+        assertThatThrownBy(() -> chessGame.move("a4", "a5"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 당신의 차례가 아닙니다.");
     }
 
     @Test
@@ -30,5 +42,23 @@ public class ChessGameTest {
         assertThatThrownBy(() -> chessGame.move("a1", "a2"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("게임 종료")
+    void turnOff() {
+        chessGame.turnOff();
+        assertThat(chessGame.isOn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Score 생성")
+    void calculateScore() {
+        Score score = chessGame.calculateScore();
+        assertAll(
+                () -> assertThat(score.getWinColor()).isEqualTo(Color.BLACK),
+                () -> assertThat(score.getWhiteScore()).isEqualTo(38.0),
+                () -> assertThat(score.getBlackScore()).isEqualTo(38.0)
+        );
     }
 }

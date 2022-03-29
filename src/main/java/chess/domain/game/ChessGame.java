@@ -44,10 +44,9 @@ public class ChessGame {
         }
     }
 
-    //TODO
     private void turnOffWhenKingDie(final Piece targetPiece) {
         if (targetPiece.isKing()) {
-            gameSwitch.turnOff();
+            turnOff();
         }
     }
 
