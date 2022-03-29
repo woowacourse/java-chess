@@ -19,7 +19,7 @@ public enum Command {
 
     private final Pattern commandPattern;
 
-    Command(final Pattern commandPattern) {
+    Command(Pattern commandPattern) {
         this.commandPattern = commandPattern;
     }
 

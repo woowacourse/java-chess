@@ -9,7 +9,7 @@ public final class Piece {
     private final Color color;
     private final PieceRule pieceRule;
 
-    public Piece(final Color color, final PieceRule pieceRule) {
+    public Piece(Color color, PieceRule pieceRule) {
         this.color = color;
         this.pieceRule = pieceRule;
     }

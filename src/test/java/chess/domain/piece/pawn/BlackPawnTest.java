@@ -27,7 +27,7 @@ class BlackPawnTest {
     void setUp() {
         source = Position.of('b', '7');
 
-        final ChessBoard chessBoard = new ChessBoard(
+        ChessBoard chessBoard = new ChessBoard(
                 Map.of(Position.of('b', '8'), new Piece(BLACK, new BlackPawn())));
         pawn = new BlackPawn()
                 .move(Position.of('b', '8'), source, chessBoard);

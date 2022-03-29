@@ -27,7 +27,7 @@ class WhitePawnTest {
     void setUp() {
         source = Position.of('b', '2');
 
-        final ChessBoard chessBoard = new ChessBoard(
+        ChessBoard chessBoard = new ChessBoard(
                 Map.of(Position.of('b', '1'), new Piece(WHITE, new WhitePawn())));
         pawn = new WhitePawn()
                 .move(Position.of('b', '1'), source, chessBoard);
