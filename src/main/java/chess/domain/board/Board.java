@@ -46,7 +46,8 @@ public final class Board {
     }
 
     private void validateCanMove(Position from, Position to) {
-        if (!squares.get(from).canMove(squares.get(to), from, to) && squares.get(to).isPiece()) {
+        if (!squares.get(from).canMove(squares.get(to), from, to)
+                && squares.get(to).isPiece()) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
     }
@@ -80,15 +81,15 @@ public final class Board {
         return totalScore;
     }
 
-    public Map<Position, Piece> getSquares() {
-        return new HashMap<>(squares);
-    }
-
     private double getScore(Team team) {
         return squares.entrySet().stream()
-                .filter(positionPiece -> isSameColor(positionPiece.getKey(), team))
+                .filter(entry -> isSameColor(entry.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
+    }
+
+    public Map<Position, Piece> getSquares() {
+        return new HashMap<>(squares);
     }
 
     public boolean isKing(Position to) {

@@ -1,6 +1,9 @@
 package chess.domain.board.position;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -26,6 +29,12 @@ public enum Rank {
                 .filter(rank -> rank.number == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
+    }
+
+    public static List<Rank> reverseRanks() {
+        return Arrays.stream(values())
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
     }
 
     public int getNumber() {
