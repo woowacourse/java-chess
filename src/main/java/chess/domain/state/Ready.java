@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.board.Status;
 import chess.domain.position.Position;
 
 import java.util.function.BiConsumer;
@@ -36,7 +37,8 @@ public class Ready extends State {
         if (board.isInitialized(new BoardInitializer())) {
             throw new IllegalStateException("게임을 시작해주세요.");
         }
-        board.showStatus(printScore);
+        Status status = new Status(board);
+        status.show(printScore);
     }
 
     @Override
