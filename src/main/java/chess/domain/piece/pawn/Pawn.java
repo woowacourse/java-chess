@@ -51,7 +51,7 @@ public abstract class Pawn implements PieceRule {
     }
 
     @Override
-    public final String convertedName(final Color color) {
+    public final String convertedName(Color color) {
         return color.convertToCase(PAWN_NAME);
     }
 

@@ -26,7 +26,7 @@ public final class King extends SingleMovePiece {
     }
 
     @Override
-    public String convertedName(final Color color) {
+    public String convertedName(Color color) {
         return color.convertToCase(KING_NAME);
     }
 
