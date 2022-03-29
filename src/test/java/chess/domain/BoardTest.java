@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Team;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
@@ -18,7 +19,7 @@ public class BoardTest {
     void movePiece1() {
         Board board = BoardFixture.setup();
 
-        Board newBoard = board.movePiece(WHITE_SOURCE, WHITE_TARGET);
+        Board newBoard = board.movePiece(WHITE_SOURCE, WHITE_TARGET, Team.WHITE);
         var cells = newBoard.cells();
 
         assertThat(cells.containsKey(WHITE_TARGET)).isTrue();
@@ -29,7 +30,7 @@ public class BoardTest {
     void movePiece2() {
         Board board = BoardFixture.setup();
 
-        Board newBoard = board.movePiece(WHITE_SOURCE, WHITE_TARGET);
+        Board newBoard = board.movePiece(WHITE_SOURCE, WHITE_TARGET, Team.WHITE);
         var cells = newBoard.cells();
 
         assertThat(cells.containsKey(WHITE_SOURCE)).isFalse();
@@ -39,7 +40,7 @@ public class BoardTest {
     @Test
     void invalidPath1() {
         Board board = BoardFixture.setup();
-        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX)))
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -47,16 +48,15 @@ public class BoardTest {
     @Test
     void notExistInSource() {
         Board board = BoardFixture.setup();
-        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX)))
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("target 위치체 같은 팀 기물이 있는 경우 에러 테스트")
+    @DisplayName("target 위치에 같은 팀 기물이 있는 경우 에러 테스트")
     @Test
     void sameTeamInTarget() {
         Board board = BoardFixture.setup();
-        board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO));
-        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO)))
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
