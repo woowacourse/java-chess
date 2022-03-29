@@ -20,7 +20,6 @@ public class ChessGameController {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
         final Player blackPlayer = new Player(new BlackGenerator(), Team.BLACK);
         final ChessGame chessGame = initializeChessGame(whitePlayer, blackPlayer);
-        showMap(chessGame.createMap());
         progressGame(chessGame, whitePlayer, blackPlayer);
         showWinner(chessGame, whitePlayer, blackPlayer);
         showScore(chessGame, whitePlayer, blackPlayer);
