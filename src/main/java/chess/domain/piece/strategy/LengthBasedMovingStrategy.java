@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.function.IntPredicate;
 
-public class LengthBasedMovingStrategy {
+public class LengthBasedMovingStrategy implements MovingStrategy {
 
     private final IntPredicate condition;
 

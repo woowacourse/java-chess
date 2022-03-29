@@ -7,11 +7,11 @@ import java.util.List;
 public class EmptyPiece extends Piece {
 
     public EmptyPiece() {
-        super(PieceType.EMPTY, Color.NONE, null);
+        super(PieceType.EMPTY, Color.NONE);
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public void validateMove(List<List<Piece>> board, Position source, Position target) {
         throw new UnsupportedOperationException();
     }
 

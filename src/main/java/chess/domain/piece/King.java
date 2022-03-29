@@ -2,15 +2,16 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.piece.strategy.LengthBasedMovingStrategy;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class King extends Piece {
 
-    private static final LengthBasedMovingStrategy MOVING_STRATEGY = new LengthBasedMovingStrategy(distance -> distance <= 2);
+    private static final MovingStrategy MOVING_STRATEGY = new LengthBasedMovingStrategy(distance -> distance <= 2);
 
     public King(Color color) {
-        super(PieceType.KING, color, null);
+        super(PieceType.KING, color);
     }
 
     @Override

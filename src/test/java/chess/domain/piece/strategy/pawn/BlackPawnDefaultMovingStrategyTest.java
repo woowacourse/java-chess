@@ -8,6 +8,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class BlackPawnDefaultMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"a6,a5,true", "a5,a4,true", "a6,a4,false", "a6,b5,false", "a6,b4,false"})
     void pawn_1칸_이동_가능하다(String source, String target, boolean expected) {
-        PawnMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
+        MovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.BLACK));
@@ -34,7 +35,7 @@ class BlackPawnDefaultMovingStrategyTest {
     @DisplayName("Pawn은 앞에 기물이 존재하는 경우 이동할 수 없다.")
     @Test
     void pawn_이동할_때_기물이_존재하면_이동_불가능하다() {
-        PawnMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
+        MovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, "a6", new Pawn(Color.BLACK));

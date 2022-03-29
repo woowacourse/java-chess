@@ -8,6 +8,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class WhitePawnStartingPointMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"a2,a4,true", "a2,a3,true", "a2,a5,false", "a2,a1,false", "a3,a4,false"})
     void pawn_시작점에서_1칸_2칸_이동_가능하다(String source, String target, boolean expected) {
-        PawnMovingStrategy movingStrategy = new WhitePawnStartingPointMovingStrategy();
+        MovingStrategy movingStrategy = new WhitePawnStartingPointMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.WHITE));
@@ -34,7 +35,7 @@ class WhitePawnStartingPointMovingStrategyTest {
     @DisplayName("Pawn은 시작점에서 2칸 이동할 때 앞에 기물이 존재하면 이동할 수 없다.")
     @Test
     void pawn_시작점에서_2칸_이동할_때_기물이_존재하면_이동_불가능하다() {
-        PawnMovingStrategy movingStrategy = new WhitePawnStartingPointMovingStrategy();
+        MovingStrategy movingStrategy = new WhitePawnStartingPointMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, "a3", new Pawn(Color.WHITE));

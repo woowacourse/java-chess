@@ -8,6 +8,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +21,7 @@ class WhitePawnCaptureMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"b2,a3,true", "b2,c3,true", "b2,b3,false", "c2,a3,false", "c3,d4,true"})
     void white_pawn은_위_오른쪽_왼쪽_capture_가능하다(String source, String target, boolean expected) {
-        PawnMovingStrategy movingStrategy = new WhitePawnCaptureMovingStrategy();
+        MovingStrategy movingStrategy = new WhitePawnCaptureMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.WHITE));

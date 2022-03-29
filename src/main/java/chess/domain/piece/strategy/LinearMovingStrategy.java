@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinearMovingStrategy {
+public class LinearMovingStrategy implements MovingStrategy {
 
     private final List<Direction> directions;
 

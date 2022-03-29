@@ -1,11 +1,12 @@
 package chess.domain.piece.strategy.pawn;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class BlackPawnDefaultMovingStrategy implements PawnMovingStrategy {
+public class BlackPawnDefaultMovingStrategy implements MovingStrategy {
 
     private static final Direction MOVABLE_DIRECTION = Direction.BOTTOM;
 

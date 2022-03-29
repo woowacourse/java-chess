@@ -1,11 +1,12 @@
 package chess.domain.piece.strategy.pawn;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class WhitePawnCaptureMovingStrategy implements PawnMovingStrategy {
+public class WhitePawnCaptureMovingStrategy implements MovingStrategy {
 
     private static final List<Direction> CAPTURABLE_DIRECTIONS = List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT);
 

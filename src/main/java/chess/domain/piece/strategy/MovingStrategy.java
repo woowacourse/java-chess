@@ -7,5 +7,5 @@ import java.util.List;
 @FunctionalInterface
 public interface MovingStrategy {
 
-    void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition);
+    boolean canMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition);
 }
