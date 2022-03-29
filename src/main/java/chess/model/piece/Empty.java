@@ -33,9 +33,4 @@ public class Empty extends Piece {
     public List<Position> getIntervalPosition(Piece targetPiece) {
         return null;
     }
-
-    @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
 }

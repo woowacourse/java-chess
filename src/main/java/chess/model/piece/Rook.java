@@ -52,9 +52,4 @@ public class Rook extends Piece implements RookMovable {
     private boolean isCorrectDirection(Position position) {
         return this.position.isVertical(position) || this.position.isHorizontal(position);
     }
-
-    @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
 }

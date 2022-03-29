@@ -49,11 +49,6 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isKill(Piece piece) {
-        return false;
-    }
-
-    @Override
     public boolean isKing() {
         return true;
     }

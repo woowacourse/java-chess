@@ -7,7 +7,7 @@ import chess.model.Turn;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Comparable<Piece>, KillStrategy {
+public abstract class Piece implements Comparable<Piece> {
     protected Position position;
     protected final Team team;
 
@@ -84,6 +84,10 @@ public abstract class Piece implements Comparable<Piece>, KillStrategy {
     public boolean isPawn() {
         return false;
     }
+
+    public boolean isKill(Piece piece) {
+        return false;
+    };
 
     @Override
     public int compareTo(Piece piece) {

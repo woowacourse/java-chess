@@ -11,11 +11,10 @@ import chess.view.OutputView;
 public class ChessController {
     public void run() {
         OutputView.startGame();
-
         String input = InputView.inputCommand();
+
         Command command = new Init(input);
-        Pieces pieces = Pieces.create();
-        Board board = Board.create(pieces);
+        Board board = Board.create(Pieces.create());
         Turn turn = Turn.init();
         command = command.turnState(input);
         while (!command.isEnd() || board.isDeadKing()) {
