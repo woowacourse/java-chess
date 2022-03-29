@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-
     private static final Pattern START_END_PATTERN = Pattern.compile("(start)|(end)", CASE_INSENSITIVE);
     private static final Pattern END_MOVE_PATTERN =
             Pattern.compile("(end)|(status)|(move [a-h][1-8] [a-h][1-8])", CASE_INSENSITIVE);

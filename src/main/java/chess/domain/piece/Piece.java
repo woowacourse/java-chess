@@ -14,15 +14,6 @@ public abstract class Piece {
         this.pieceColor = pieceColor;
     }
 
-    public String getEmblem() {
-        if (pieceColor == PieceColor.WHITE) {
-            return getConcreteEmblem().toLowerCase();
-        }
-        return getConcreteEmblem();
-    }
-
-    public abstract String getConcreteEmblem();
-
     public abstract boolean isMovable(Position source, Position target, MoveType moveType);
 
     public boolean isMyTeam(Piece other) {
@@ -41,6 +32,15 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return this instanceof Pawn;
+    }
+
+    public abstract String getConcreteEmblem();
+
+    public String getEmblem() {
+        if (pieceColor == PieceColor.WHITE) {
+            return getConcreteEmblem().toLowerCase();
+        }
+        return getConcreteEmblem();
     }
 
     @Override
