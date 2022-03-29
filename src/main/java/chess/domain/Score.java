@@ -39,15 +39,16 @@ public class Score {
     }
 
     private double sumPawnScore(final Color color, final Map<Position, ChessPiece> pieceByPosition) {
-        return Arrays.stream(Rank.values())
+        return Arrays.stream(File.values())
                 .mapToInt(rank -> countSameRankPawn(color, rank, pieceByPosition))
                 .mapToDouble(Pawn::calculateScore)
                 .sum();
     }
 
-    private int countSameRankPawn(final Color color, final Rank rank, final Map<Position, ChessPiece> pieceByPosition) {
-        return (int) Arrays.stream(File.values())
-                .map(file -> pieceByPosition.get(Position.of(rank, file)))
+    private int countSameRankPawn(final Color color, final File file,
+                                  final Map<Position, ChessPiece> pieceByPosition) {
+        return (int) Arrays.stream(Rank.values())
+                .map(rank -> pieceByPosition.get(Position.of(file, rank)))
                 .filter(Objects::nonNull)
                 .filter(ChessPiece::isPawn)
                 .filter(pawn -> pawn.isSameColor(color))

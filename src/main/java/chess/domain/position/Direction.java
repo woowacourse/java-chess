@@ -13,27 +13,27 @@ public enum Direction {
     W(-1, 0),
     NW(-1, 1);
 
-    private final int rankGap;
     private final int fileGap;
+    private final int rankGap;
 
-    Direction(final int rankGap, final int fileGap) {
-        this.rankGap = rankGap;
+    Direction(final int fileGap, final int rankGap) {
         this.fileGap = fileGap;
+        this.rankGap = rankGap;
     }
 
-    static Direction of(final int rankDistance, final int fileDistance) {
+    static Direction of(final int fileDistance, final int rankDistance) {
         return Arrays.stream(values())
-                .filter(it -> it.rankGap == rankDistance)
                 .filter(it -> it.fileGap == fileDistance)
+                .filter(it -> it.rankGap == rankDistance)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
-    int rankGap() {
-        return rankGap;
-    }
-
     int fileGap() {
         return fileGap;
+    }
+
+    int rankGap() {
+        return rankGap;
     }
 }

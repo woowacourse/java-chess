@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum File {
 
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h");
 
     private final String value;
 
@@ -20,18 +20,18 @@ public enum File {
     }
 
     static File of(final String value) {
-        return Arrays.stream(File.values())
-                .filter((it) -> it.value.equals(value))
+        return Arrays.stream(values())
+                .filter(it -> it.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 범위입니다."));
     }
 
     File add(final int gap) {
-        return File.of(String.valueOf(Integer.parseInt(value) + gap));
+        return File.of(String.valueOf((char) (value.charAt(0) + gap)));
     }
 
     int calculateDistance(final File target) {
-        return Integer.parseInt(value) - Integer.parseInt(target.value);
+        return value.charAt(0) - target.value.charAt(0);
     }
 
     String value() {

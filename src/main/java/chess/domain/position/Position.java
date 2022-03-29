@@ -10,22 +10,22 @@ public class Position {
     private static final Map<String, Position> cache;
 
     static {
-        cache = Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values())
+        cache = Arrays.stream(File.values())
+                .flatMap(rank -> Arrays.stream(Rank.values())
                         .map(file -> new Position(rank, file))
                         .collect(Collectors.toList())
                         .stream())
                 .collect(Collectors.toMap(
-                        position -> position.rank.value() + position.file.value(),
+                        position -> position.file.value() + position.rank.value(),
                         Function.identity()));
     }
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    private Position(final Rank rank, final File file) {
-        this.rank = rank;
+    private Position(final File file, final Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public static Position from(final String value) {
@@ -35,8 +35,8 @@ public class Position {
         return cache.get(value);
     }
 
-    public static Position of(final Rank rank, final File file) {
-        final String key = rank.value() + file.value();
+    public static Position of(final File file, final Rank rank) {
+        final String key = file.value() + rank.value();
         return cache.get(key);
     }
 
@@ -52,6 +52,10 @@ public class Position {
         return rank.equals(target.rank);
     }
 
+    public boolean isSameRank(final String targe) {
+        return rank.equals(Rank.of(targe));
+    }
+
     public boolean isSameFile(final Position target) {
         return file.equals(target.file);
     }
@@ -61,10 +65,10 @@ public class Position {
     }
 
     public Direction findDirection(final Position target) {
-        final int rankDistance = calculateRankGap(target);
         final int fileDistance = calculateFileGap(target);
+        final int rankDistance = calculateRankGap(target);
 
-        return Direction.of(rankDistance, fileDistance);
+        return Direction.of(fileDistance, rankDistance);
     }
 
     private int calculateRankGap(final Position target) {
@@ -80,17 +84,17 @@ public class Position {
     }
 
     public Position toNextPosition(final Direction direction) {
-        final Rank nextRank = rank.add(direction.rankGap());
         final File nextFile = file.add(direction.fileGap());
+        final Rank nextRank = rank.add(direction.rankGap());
 
-        return Position.of(nextRank, nextFile);
+        return Position.of(nextFile, nextRank);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "rank=" + rank +
-                ", file=" + file +
+                "file=" + file +
+                ", rank=" + rank +
                 '}';
     }
 }

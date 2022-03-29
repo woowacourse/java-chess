@@ -13,7 +13,7 @@ public class Status extends Command {
     public static Status getInstance() {
         return INSTANCE;
     }
-    
+
     @Override
     public void execute(final ChessGame chessGame) {
         try {

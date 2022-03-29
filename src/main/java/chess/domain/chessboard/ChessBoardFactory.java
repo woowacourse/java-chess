@@ -90,9 +90,9 @@ public class ChessBoardFactory {
 
     private static Map<Position, ChessPiece> pawnInitPosition() {
         final Map<Position, ChessPiece> map = new HashMap<>();
-        for (final Rank rank : Rank.values()) {
-            map.put(Position.of(rank, File.TWO), Pawn.from(WHITE));
-            map.put(Position.of(rank, File.SEVEN), Pawn.from(BLACK));
+        for (final File file : File.values()) {
+            map.put(Position.of(file, Rank.TWO), Pawn.from(WHITE));
+            map.put(Position.of(file, Rank.SEVEN), Pawn.from(BLACK));
         }
 
         return map;

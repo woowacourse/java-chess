@@ -20,8 +20,8 @@ public final class Pawn extends ChessPiece {
     private static final String NAME = "P";
     private static final Double VALUE = 1.0;
     private static final Double VALUE_BY_SAME_RANK = 0.5;
-    private static final String WHITE_INIT_FILE = "2";
-    private static final String BLACK_INIT_FILE = "7";
+    private static final String WHITE_INIT_RANK = "2";
+    private static final String BLACK_INIT_RANK = "7";
     private static final int BLACK_MOVABLE_MAX_DISTANCE = 2;
     private static final int BLACK_MOVABLE_DEFAULT_DISTANCE = 1;
     private static final int WHITE_MOVABLE_MAX_DISTANCE = -2;
@@ -55,7 +55,7 @@ public final class Pawn extends ChessPiece {
     @Override
     public void checkMovablePosition(final Position from, final Position to,
                                      final Optional<ChessPiece> possiblePiece) {
-        if (from.isSameRank(to)) {
+        if (from.isSameFile(to)) {
             validateStraightMove(from, to, possiblePiece);
             return;
         }
@@ -80,11 +80,11 @@ public final class Pawn extends ChessPiece {
     }
 
     private boolean isMovableDistance(final Position from, final Position to) {
-        final int distance = from.fileDistance(to);
+        final int distance = from.rankDistance(to);
         if (isDefaultDistance(distance)) {
             return true;
         }
-        if (isInitFilePosition(from)) {
+        if (isInitRankPosition(from)) {
             return isMaxDistance(distance);
         }
         return false;
@@ -97,11 +97,11 @@ public final class Pawn extends ChessPiece {
         return distance == WHITE_MOVABLE_DEFAULT_DISTANCE;
     }
 
-    private boolean isInitFilePosition(final Position from) {
+    private boolean isInitRankPosition(final Position from) {
         if (color.isBlack()) {
-            return from.isSameFile(BLACK_INIT_FILE);
+            return from.isSameRank(BLACK_INIT_RANK);
         }
-        return from.isSameFile(WHITE_INIT_FILE);
+        return from.isSameRank(WHITE_INIT_RANK);
     }
 
     private boolean isMaxDistance(final int distance) {
@@ -112,10 +112,14 @@ public final class Pawn extends ChessPiece {
     }
 
     private boolean isCross(final Position from, final Position to) {
-        return findCrossDirection()
-                .stream()
-                .map(from::toNextPosition)
-                .anyMatch(position -> position.equals(to));
+        try {
+            return findCrossDirection()
+                    .stream()
+                    .map(from::toNextPosition)
+                    .anyMatch(position -> position.equals(to));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private List<Direction> findCrossDirection() {

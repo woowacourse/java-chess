@@ -12,7 +12,7 @@ public class End extends Command {
     public static End getInstance() {
         return INSTANCE;
     }
-    
+
     @Override
     public void execute(final ChessGame chessGame) {
         chessGame.end();

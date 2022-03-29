@@ -74,6 +74,22 @@ class PawnTest {
     }
 
     @ParameterizedTest
+    @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
+    @CsvSource(value = {"WHITE:a2:b2", "WHITE:a2:b1", "WHITE:a2:a1",
+            "BLACK:a7:a8", "BLACK:a7:b8", "BLACK:a7:b7"}, delimiter = ':')
+    void canMove_exception2(final Color color, final String fromValue, final String target) {
+        // given
+        final Position from = Position.from(fromValue);
+        final Position to = Position.from(target);
+        final ChessPiece pawn = from(color);
+
+        // then
+        assertThatThrownBy(() -> pawn.checkMovablePosition(from, to, Optional.empty()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
+    }
+
+    @ParameterizedTest
     @DisplayName("처음 위치에서 2칸 이상 이동하면 예외를 던진다.")
     @CsvSource(value = {"BLACK:d7:d4", "WHITE:d2:d5"}, delimiter = ':')
     void canMove_initFile_exception(final Color color, final String from, final String to) {

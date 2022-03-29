@@ -29,7 +29,7 @@ class PositionTest {
         final Position targetPosition = Position.from(target);
 
         // when
-        final boolean actual = position.isSameFile(targetPosition);
+        final boolean actual = position.isSameRank(targetPosition);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -43,7 +43,7 @@ class PositionTest {
         final Position position = Position.from("a1");
 
         // when
-        final boolean actual = position.isSameFile(target);
+        final boolean actual = position.isSameRank(target);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -58,7 +58,7 @@ class PositionTest {
         final Position targetPosition = Position.from(target);
 
         // when
-        final boolean actual = position.isSameRank(targetPosition);
+        final boolean actual = position.isSameFile(targetPosition);
 
         // then
         assertThat(actual).isEqualTo(expected);
