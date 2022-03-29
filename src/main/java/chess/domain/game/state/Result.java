@@ -14,7 +14,7 @@ public final class Result extends State {
     protected State execute(String input) {
         Command command = Command.from(input);
         if (command == Command.STATUS) {
-            return new StatusEnd(chessGame);
+            return new StatusFinished(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }

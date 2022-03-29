@@ -37,13 +37,13 @@ public final class ChessGame {
         if (!isTurn(from)) {
             throw new IllegalArgumentException(NO_TURN_MESSAGE);
         }
-        boolean isKing = isKing(to);
+        boolean isCheckmate = isCheckmate(to);
         board.move(from, to);
-        if (isKing) {
+        if (isCheckmate) {
             gameState = GameState.END;
             return;
         }
-        turn = turn.oppositeColor();
+        turn = turn.changeTeam();
     }
 
     private boolean isTurn(Position position) {
@@ -54,8 +54,8 @@ public final class ChessGame {
         return new Status(board.getTotalStatus(), turn);
     }
 
-    public boolean isKing(Position to) {
-        return board.isKing(to);
+    public boolean isCheckmate(Position to) {
+        return board.isCheckmate(to);
     }
 
     private Map<Position, Piece> createBoard() {

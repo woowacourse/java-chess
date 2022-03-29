@@ -16,7 +16,7 @@ public final class Play extends State {
     protected State execute(String input) {
         Command command = Command.from(input);
         if (command == Command.END) {
-            return new ExitEnd(chessGame);
+            return new ExitFinished(chessGame);
         }
         if (command == Command.MOVE) {
             move(input, chessGame);

@@ -2,13 +2,13 @@ package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
 
-public final class StatusEnd extends End {
-    public StatusEnd(ChessGame chessGame) {
+public final class StatusFinished extends Finished {
+    public StatusFinished(ChessGame chessGame) {
         super(chessGame);
     }
 
     @Override
-    public boolean isStatusEnd() {
+    public boolean isStatusFinished() {
         return true;
     }
 }

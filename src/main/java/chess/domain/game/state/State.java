@@ -29,7 +29,7 @@ public abstract class State {
         return false;
     }
 
-    public boolean isStatusEnd() {
+    public boolean isStatusFinished() {
         return false;
     }
 }

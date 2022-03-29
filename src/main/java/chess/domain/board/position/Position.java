@@ -22,11 +22,15 @@ public final class Position {
 
     public static Position from(String position) {
         String[] attribute = position.split("");
+        validateSize(attribute);
+        return new Position(Column.valueOf(attribute[0].toUpperCase(Locale.ROOT)),
+                Rank.numberOf(Integer.parseInt(attribute[1])));
+    }
+
+    private static void validateSize(String[] attribute) {
         if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
-        return new Position(Column.valueOf(attribute[0].toUpperCase(Locale.ROOT)),
-                Rank.numberOf(Integer.parseInt(attribute[1])));
     }
 
     public static List<Position> inputToPositions(String input) {

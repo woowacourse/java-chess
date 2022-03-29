@@ -2,8 +2,8 @@ package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
 
-public final class ExitEnd extends End {
-    public ExitEnd(ChessGame chessGame) {
+public final class ExitFinished extends Finished {
+    public ExitFinished(ChessGame chessGame) {
         super(chessGame);
     }
 }

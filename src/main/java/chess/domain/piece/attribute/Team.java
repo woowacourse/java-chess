@@ -5,7 +5,7 @@ public enum Team {
     WHITE,
     NONE;
 
-    public Team oppositeColor() {
+    public Team changeTeam() {
         if (this == BLACK) {
             return WHITE;
         }
