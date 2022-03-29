@@ -5,7 +5,7 @@ import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
 import chess.domain.piece.strategy.BishopMoveStrategy;
 
-public final class Bishop extends Piece {
+public final class Bishop extends AbstractPiece {
 
     public Bishop(Team team) {
         super(new Name("B"), team, new BishopMoveStrategy());
