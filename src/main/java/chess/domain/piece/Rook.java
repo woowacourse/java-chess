@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceName.ROOK;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
@@ -10,7 +12,7 @@ public final class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(Camp camp) {
-        super(camp);
+        super(camp, ROOK);
     }
 
     @Override
@@ -72,7 +74,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean isNull() {
+    public boolean isNullPiece() {
         return false;
     }
 

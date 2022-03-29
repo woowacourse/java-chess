@@ -16,14 +16,6 @@ public class OutputView {
     private static final String RESULT_MESSAGE_SUFFIX = "입니다.";
     private static final int BOARD_ROW_AND_COLUMN_UNIT = 8;
     private static final int UNIT_DIVISION_REMAINDER = 0;
-    private static final String EMPTY_PIECE_CHARACTER = ".";
-    private static final String INITIAL_LETTER_BISHOP = "b";
-    private static final String INITIAL_LETTER_KING = "k";
-    private static final String INITIAL_LETTER_KNIGHT = "n";
-    private static final String INITIAL_LETTER_PAWN = "p";
-    private static final String INITIAL_LETTER_QUEEN = "q";
-    private static final String INITIAL_LETTER_ROOK = "r";
-    private static final String ERROR_NOT_EXISTING_PIECE_MESSAGE = "존재하지 않는 기물입니다.";
     private static final String END_GAME_MESSAGE = "해당 게임이 종료되었습니다.";
     private static final String RESULT_SCORE_FORMAT = "백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n";
 
@@ -37,7 +29,8 @@ public class OutputView {
     public void printBoard(Map<Position, Piece> board) {
         int count = 0;
         for (Position position : board.keySet()) {
-            String content = makeBoardContentString(board.get(position));
+            final Piece piece = board.get(position);
+            String content = makeBoardContentString(piece);
             System.out.print(content);
             count++;
             if (count % BOARD_ROW_AND_COLUMN_UNIT == UNIT_DIVISION_REMAINDER) {
@@ -47,40 +40,17 @@ public class OutputView {
     }
 
     private String makeBoardContentString(Piece piece) {
-        if (piece.isNull()) {
-            return EMPTY_PIECE_CHARACTER;
+        if (piece.isNullPiece()) {
+            return piece.getPieceNameCharacter();
         }
         return decideCaseByCamp(piece);
     }
 
     private String decideCaseByCamp(Piece piece) {
-        String convertedString = convertPieceToString(piece);
         if (piece.isBlack()) {
-            return convertedString.toUpperCase();
+            return piece.getPieceNameCharacter().toUpperCase();
         }
-        return convertedString;
-    }
-
-    private String convertPieceToString(Piece piece) {
-        if (piece.isBishop()) {
-            return INITIAL_LETTER_BISHOP;
-        }
-        if (piece.isKing()) {
-            return INITIAL_LETTER_KING;
-        }
-        if (piece.isKnight()) {
-            return INITIAL_LETTER_KNIGHT;
-        }
-        if (piece.isPawn()) {
-            return INITIAL_LETTER_PAWN;
-        }
-        if (piece.isQueen()) {
-            return INITIAL_LETTER_QUEEN;
-        }
-        if (piece.isRook()) {
-            return INITIAL_LETTER_ROOK;
-        }
-        throw new IllegalArgumentException(ERROR_NOT_EXISTING_PIECE_MESSAGE);
+        return piece.getPieceNameCharacter();
     }
 
     public void printFinishMessage() {

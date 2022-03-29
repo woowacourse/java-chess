@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceName.BISHOP;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
@@ -9,7 +11,7 @@ public final class Bishop extends Piece {
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
 
     public Bishop(Camp camp) {
-        super(camp);
+        super(camp, BISHOP);
     }
 
     @Override
@@ -70,7 +72,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isNull() {
+    public boolean isNullPiece() {
         return false;
     }
 }

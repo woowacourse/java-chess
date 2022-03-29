@@ -6,9 +6,11 @@ import java.util.function.Consumer;
 
 public abstract class Piece {
     private final Camp camp;
+    private final PieceName pieceName;
 
-    protected Piece(Camp camp) {
+    protected Piece(final Camp camp, final PieceName pieceName) {
         this.camp = camp;
+        this.pieceName = pieceName;
     }
 
     public final boolean isBlack() {
@@ -29,6 +31,14 @@ public abstract class Piece {
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
+    public PieceName pieceName() {
+        return this.pieceName;
+    }
+
+    public final String getPieceNameCharacter() {
+        return this.pieceName.getValue();
+    }
+
     public abstract double getScore();
 
     public abstract boolean isBishop();
@@ -43,5 +53,5 @@ public abstract class Piece {
 
     public abstract boolean isRook();
 
-    public abstract boolean isNull();
+    public abstract boolean isNullPiece();
 }

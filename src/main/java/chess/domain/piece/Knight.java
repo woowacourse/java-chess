@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceName.KNIGHT;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
@@ -11,7 +13,7 @@ public final class Knight extends Piece {
     private static final double SCORE = 2.5;
 
     public Knight(Camp camp) {
-        super(camp);
+        super(camp, KNIGHT);
     }
 
     @Override
@@ -73,7 +75,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isNull() {
+    public boolean isNullPiece() {
         return false;
     }
 }

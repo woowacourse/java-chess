@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceName.PAWN;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
@@ -13,7 +15,7 @@ public final class Pawn extends Piece {
     private boolean firstMove;
 
     public Pawn(Camp camp) {
-        super(camp);
+        super(camp, PAWN);
         this.firstMove = true;
     }
 
@@ -98,7 +100,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isNull() {
+    public boolean isNullPiece() {
         return false;
     }
 }

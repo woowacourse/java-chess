@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceName.NULL_PIECE;
+
 import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
@@ -10,7 +12,7 @@ public final class NullPiece extends Piece {
     private static final int SCORE = 0;
 
     public NullPiece(final Camp camp) {
-        super(camp);
+        super(camp, NULL_PIECE);
     }
 
     @Override
@@ -66,7 +68,7 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    public boolean isNull() {
+    public boolean isNullPiece() {
         return true;
     }
 }

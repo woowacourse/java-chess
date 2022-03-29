@@ -18,14 +18,14 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position of(Column column, Row row) {
-        return CACHE.computeIfAbsent(column.name() + row.name(), ignored -> new Position(column, row));
-    }
-
     public static Position from(String rawPosition) {
         String rawColumn = rawPosition.substring(0, 1);
         String rawRow = rawPosition.substring(1);
-        return new Position(Column.from(rawColumn), Row.from(rawRow));
+        return Position.of(Column.from(rawColumn), Row.from(rawRow));
+    }
+
+    public static Position of(Column column, Row row) {
+        return CACHE.computeIfAbsent(column.name() + row.name(), ignored -> new Position(column, row));
     }
 
     public int columnDistance(Position otherPosition) {

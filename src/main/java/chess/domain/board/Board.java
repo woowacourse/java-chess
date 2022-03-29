@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceName;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +55,7 @@ public final class Board {
     }
 
     private boolean isBlank(Position afterPosition) {
-        return value.get(afterPosition).isNull();
+        return value.get(afterPosition).isNullPiece();
     }
 
     private boolean isCapturing(Piece piece, Position afterPosition) {
@@ -68,8 +69,7 @@ public final class Board {
     private List<Piece> collectKing() {
         return this.value.values()
             .stream()
-            .filter(Objects::nonNull)
-            .filter(Piece::isKing)
+            .filter(piece -> piece.pieceName() == PieceName.KING)
             .collect(Collectors.toList());
     }
 
