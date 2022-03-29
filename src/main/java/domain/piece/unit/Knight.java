@@ -3,7 +3,7 @@ package domain.piece.unit;
 import static domain.utils.Direction.knightDirections;
 
 import domain.piece.property.PieceInfo;
-import domain.piece.property.PieceSymbol;
+import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.utils.Direction;
 import java.util.List;
@@ -17,7 +17,7 @@ public final class Knight extends SpecificMovablePiece {
     }
 
     public Knight(final Team team) {
-        super(new PieceInfo(team, PieceSymbol.Knight));
+        super(new PieceInfo(team, PieceFeature.KNIGHT));
     }
 
     @Override

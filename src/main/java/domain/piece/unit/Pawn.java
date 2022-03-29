@@ -1,7 +1,7 @@
 package domain.piece.unit;
 
 import domain.piece.property.PieceInfo;
-import domain.piece.property.PieceSymbol;
+import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.position.Position;
 import domain.utils.Direction;
@@ -17,7 +17,7 @@ public final class Pawn extends SpecificMovablePiece {
     private final List<Direction> directions;
 
     public Pawn(final Team team) {
-        super(new PieceInfo(team, PieceSymbol.Pawn));
+        super(new PieceInfo(team, PieceFeature.PAWN));
         if (team == Team.BLACK) {
             directions = Direction.oneSpaceForwardDownDirections();
             return;

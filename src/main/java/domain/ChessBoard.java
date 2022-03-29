@@ -1,13 +1,12 @@
 package domain;
 
-import domain.piece.property.PieceSymbol;
+import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
-import domain.utils.PieceScore;
 import domain.utils.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,7 +171,7 @@ public final class ChessBoard {
 
     private double calculateXPositionScore(final List<Piece> pieces) {
         List<Double> scores = new ArrayList<>();
-        pieces.forEach(piece -> scores.add(PieceScore.createScore(piece.symbol(), checkDuplicatePawn(pieces))));
+        pieces.forEach(piece -> scores.add(PieceFeature.createScore(piece.symbol(), checkDuplicatePawn(pieces))));
 
         return scores.stream()
                 .filter(score -> score != null)
@@ -181,7 +180,7 @@ public final class ChessBoard {
 
     private boolean checkDuplicatePawn(List<Piece> pieces) {
         return pieces.stream()
-                .filter(piece -> piece.symbol().equals(PieceSymbol.Pawn.symbol()))
+                .filter(piece -> piece.symbol().equals(PieceFeature.PAWN.symbol()))
                 .count() >= PAWN_DUPLICATE_CONDITION;
     }
 
@@ -212,7 +211,7 @@ public final class ChessBoard {
     public boolean checkKingExist() {
         return board.values().stream()
                 .filter(piece -> piece != null)
-                .filter(piece -> piece.symbol().equals(PieceSymbol.King.symbol()))
+                .filter(piece -> piece.symbol().equals(PieceFeature.KING.symbol()))
                 .count() == DEFAULT_KING_COUNT;
     }
 

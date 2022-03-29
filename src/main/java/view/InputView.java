@@ -18,6 +18,7 @@ public class InputView {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int POSITION_SIZE = 2;
+    public static final String ERROR_MOVE_FORM = "[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.";
 
     public static String responseUserStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -75,13 +76,13 @@ public class InputView {
 
     private static void validateMoveCommandFirstIsMove(final List<String> moveCommand) {
         if (!moveCommand.get(MOVE_COMMAND_INDEX).equals(MOVE)) {
-            throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
+            throw new IllegalArgumentException(ERROR_MOVE_FORM);
         }
     }
 
     private static void validateMoveCommandSize(final List<String> moveCommand) {
         if (moveCommand.size() != MOVE_COMMAND_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
+            throw new IllegalArgumentException(ERROR_MOVE_FORM);
         }
     }
 
@@ -92,7 +93,7 @@ public class InputView {
 
     private static void validateInputPositionSize(final List<String> moveCommand, int index) {
         if (moveCommand.get(index).length() != POSITION_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.");
+            throw new IllegalArgumentException(ERROR_MOVE_FORM);
         }
     }
 

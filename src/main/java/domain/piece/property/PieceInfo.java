@@ -3,11 +3,11 @@ package domain.piece.property;
 public final class PieceInfo {
 
     private Team team;
-    private PieceSymbol pieceSymbol;
+    private PieceFeature pieceFeature;
 
-    public PieceInfo(final Team team, final PieceSymbol pieceSymbol) {
+    public PieceInfo(final Team team, final PieceFeature pieceFeature) {
         this.team = team;
-        this.pieceSymbol = pieceSymbol;
+        this.pieceFeature = pieceFeature;
     }
 
     public boolean checkSameTeam(final Team team) {
@@ -15,10 +15,10 @@ public final class PieceInfo {
     }
 
     public String getSymbolByTeam() {
-        return pieceSymbol.symbol(team);
+        return pieceFeature.symbol(team);
     }
 
     public String symbol() {
-        return pieceSymbol.symbol();
+        return pieceFeature.symbol();
     }
 }
