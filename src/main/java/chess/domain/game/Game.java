@@ -30,14 +30,14 @@ public final class Game {
 
     private void validateNotEquals(final Position sourcePosition, final Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
+            throw new IllegalArgumentException("출발지와 목적지가 동일할 수 없습니다.");
         }
     }
 
     private void validateCorrectTurn(final Position sourcePosition) {
         final Optional<Piece> wrappedPiece = board.piece(sourcePosition);
         if (wrappedPiece.isPresent() && !wrappedPiece.get().isSameColor(turn)) {
-            throw new IllegalArgumentException("[ERROR] 지금은 " + turn.value() + "의 턴입니다.");
+            throw new IllegalArgumentException("지금은 " + turn.value() + "의 턴입니다.");
         }
     }
 

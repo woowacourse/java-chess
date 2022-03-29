@@ -23,7 +23,7 @@ public class GameTest {
         Game game = new Game(new BoardInitializer());
         assertThatThrownBy(() -> game.move("a2", "a2"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 출발지와 목적지가 동일할 수 없습니다.");
+                .hasMessage("출발지와 목적지가 동일할 수 없습니다.");
     }
 
     @Test
@@ -41,6 +41,6 @@ public class GameTest {
         game.move("a5", "a6");
         assertThatThrownBy(() -> game.move("a4", "a5"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 지금은 검은말의 턴입니다.");
+                .hasMessage("지금은 검은말의 턴입니다.");
     }
 }

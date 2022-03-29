@@ -25,7 +25,7 @@ public final class Position {
 
     private static void validateValue(final String value) {
         if (value.length() != 2) {
-            throw new IllegalArgumentException("[ERROR] 위치는 열과 행으로 이루어져야 합니다.");
+            throw new IllegalArgumentException("위치는 열과 행으로 이루어져야 합니다.");
         }
     }
 
