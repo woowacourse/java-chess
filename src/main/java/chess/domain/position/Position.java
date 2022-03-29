@@ -17,7 +17,7 @@ public class Position {
     }
 
     public static Position create(final String position) {
-        final File file = File.of(position.charAt(FILE_INDEX));
+        final File file = File.of(position.substring(FILE_INDEX, RANK_INDEX));
         final Rank rank = Rank.of(position.substring(RANK_INDEX));
         return new Position(file, rank);
     }

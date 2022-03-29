@@ -16,46 +16,64 @@ public class FileTest {
     }
 
     @Test
-    @DisplayName("값을 이용해 File을 찾는다.")
-    void findFile() {
-        assertThat(File.of('c')).isEqualTo(File.C);
+    @DisplayName("이름을 이용해 File을 찾는다.")
+    void findFileByName() {
+        assertThat(File.of("c")).isEqualTo(File.C);
+    }
+
+    @Test
+    @DisplayName("이름을 이용해 File을 찾는다.")
+    void findFileByValue() {
+        assertThat(File.of(5)).isEqualTo(File.E);
     }
 
     @Test
     @DisplayName("a~h 이외의 값이 들어오는 경우 예외를 발생시킨다.")
-    void exception() {
-        assertThatThrownBy(() -> File.of('i'))
+    void exceptionIllegalName() {
+        assertThatThrownBy(() -> File.of("i"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 존재하지 않는 File 값 입니다.");
+                .hasMessage("[ERROR] 존재하지 않는 File입니다.");
+    }
+
+    @Test
+    @DisplayName("a~h 이외의 값이 들어오는 경우 예외를 발생시킨다.")
+    void exceptionIllegalValue() {
+        assertThatThrownBy(() -> File.of(9))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 존재하지 않는 File입니다.");
     }
 
     @Test
     @DisplayName("File을 1 증가시킨다.")
     void plus() {
-        File file = File.of('b');
+        File file = File.of("b");
         assertThat(file.move(1)).isEqualTo(File.C);
     }
 
     @Test
     @DisplayName("File을 1 감소시킨다.")
     void minus() {
-        File file = File.of('b');
+        File file = File.of("b");
         assertThat(file.move(-1)).isEqualTo(File.A);
     }
 
     @Test
     @DisplayName("File을 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void plusOutOfBounds() {
-        File file = File.of('h');
+    void exceptionPlusOutOfBounds() {
+        File file = File.of("h");
 
-        assertThat(file.move(1)).isNull();
+        assertThatThrownBy(() -> file.move(1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] File을 해당 거리만큼 이동시킬 수 없습니다.");
     }
 
     @Test
     @DisplayName("File을 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void minusOutOfBounds() {
-        File file = File.of('a');
+    void exceptionMinusOutOfBounds() {
+        File file = File.of("b");
 
-        assertThat(file.move(-1)).isNull();
+        assertThatThrownBy(() -> file.move(-2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] File을 해당 거리만큼 이동시킬 수 없습니다.");
     }
 }
