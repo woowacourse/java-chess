@@ -4,7 +4,9 @@ public enum GameStatus {
 
     READY,
     PLAYING,
-    END;
+    END,
+    KING_DIE,
+    ;
 
     public boolean isReady() {
         return this.equals(READY);
@@ -15,6 +17,10 @@ public enum GameStatus {
     }
 
     public boolean isEnd() {
-        return this.equals(END);
+        return this.equals(END) || this.equals(KING_DIE);
+    }
+
+    public boolean isKingDie() {
+        return this.equals(KING_DIE);
     }
 }

@@ -23,7 +23,7 @@ public class ChessGame {
         checkCurrentTurn(from);
         chessBoard.move(from, to);
         if (chessBoard.isKingDie(to)) {
-            gameStatus = GameStatus.END;
+            gameStatus = GameStatus.KING_DIE;
         }
         currentTurnColor = currentTurnColor.toOpposite();
     }
@@ -57,6 +57,10 @@ public class ChessGame {
 
     public boolean isPlaying() {
         return gameStatus.isPlaying();
+    }
+
+    public boolean isKingDie() {
+        return gameStatus.isKingDie();
     }
 
     public void start() {
