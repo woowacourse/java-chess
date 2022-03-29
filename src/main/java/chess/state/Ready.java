@@ -12,7 +12,7 @@ public class Ready implements State {
     private final Chessboard chessboard;
 
     public Ready() {
-        chessboard = new Chessboard(() -> new HashMap<>());
+        chessboard = new Chessboard(HashMap::new);
     }
 
     @Override

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final int X_OF_FIST_WHITE = 6;
+    private static final int X_OF_FIST_BLACK = 1;
     private static final List<Position> COORDINATES_OF_WHITE_DIAGONAL_MOVABLE = List.of(
             new Position(-1, -1),
             new Position(-1, 1));
@@ -56,14 +58,14 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovableWhenWhite(MovingPosition movingPosition) {
-        if (movingPosition.isSameFromX(6)) {
+        if (movingPosition.isSameFromX(X_OF_FIST_WHITE)) {
             return movingPosition.isAnyPossible(COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE);
         }
         return movingPosition.isAnyPossible(COORDINATES_OF_WHITE_TURN_MOVABLE);
     }
 
     private boolean isMovableWhenBlack(MovingPosition movingPosition) {
-        if (movingPosition.isSameFromX(1)) {
+        if (movingPosition.isSameFromX(X_OF_FIST_BLACK)) {
             return movingPosition.isAnyPossible(COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE);
         }
         return movingPosition.isAnyPossible(COORDINATES_OF_BLACK_TURN_MOVABLE);
