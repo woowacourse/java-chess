@@ -25,8 +25,8 @@ public class FinishedTest {
     @Test
     void finished_move_exception() {
         State state = new Finished(new Board());
-        Position a2 = new Position(Column.A, Row.TWO);
-        Position a3 = new Position(Column.A, Row.THREE);
+        Position a2 = Position.of(Column.A, Row.TWO);
+        Position a3 = Position.of(Column.A, Row.THREE);
 
         assertThatThrownBy(() -> state.move(a2, a3))
             .isInstanceOf(IllegalStateException.class)

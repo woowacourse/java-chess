@@ -16,8 +16,8 @@ public class BishopTest {
     void move_d1_g4() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position d1 = new Position(Column.D, Row.ONE);
-        Position g4 = new Position(Column.G, Row.FOUR);
+        Position d1 = Position.of(Column.D, Row.ONE);
+        Position g4 = Position.of(Column.G, Row.FOUR);
 
         assertThat(bishop.canMove(d1, g4)).isTrue();
     }
@@ -27,8 +27,8 @@ public class BishopTest {
     void move_d1_d6() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position d1 = new Position(Column.D, Row.ONE);
-        Position d6 = new Position(Column.D, Row.SIX);
+        Position d1 = Position.of(Column.D, Row.ONE);
+        Position d6 = Position.of(Column.D, Row.SIX);
 
         assertThat(bishop.canMove(d1, d6)).isFalse();
     }
@@ -38,8 +38,8 @@ public class BishopTest {
     void move_d6_d1() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position d6 = new Position(Column.D, Row.SEVEN);
-        Position d1 = new Position(Column.D, Row.ONE);
+        Position d6 = Position.of(Column.D, Row.SEVEN);
+        Position d1 = Position.of(Column.D, Row.ONE);
 
         assertThat(bishop.canMove(d6, d1)).isFalse();
     }
@@ -49,8 +49,8 @@ public class BishopTest {
     void move_d1_e1() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position d1 = new Position(Column.D, Row.ONE);
-        Position e1 = new Position(Column.E, Row.ONE);
+        Position d1 = Position.of(Column.D, Row.ONE);
+        Position e1 = Position.of(Column.E, Row.ONE);
 
         assertThat(bishop.canMove(d1, e1)).isFalse();
     }
@@ -60,8 +60,8 @@ public class BishopTest {
     void move_e1_d1() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position e1 = new Position(Column.E, Row.ONE);
-        Position d1 = new Position(Column.D, Row.ONE);
+        Position e1 = Position.of(Column.E, Row.ONE);
+        Position d1 = Position.of(Column.D, Row.ONE);
 
         assertThat(bishop.canMove(e1, d1)).isFalse();
     }
@@ -71,8 +71,8 @@ public class BishopTest {
     void move_d1_f2() {
         Bishop bishop = new Bishop(Camp.WHITE);
 
-        Position d1 = new Position(Column.D, Row.ONE);
-        Position f2 = new Position(Column.F, Row.TWO);
+        Position d1 = Position.of(Column.D, Row.ONE);
+        Position f2 = Position.of(Column.F, Row.TWO);
 
         assertThat(bishop.canMove(d1, f2)).isFalse();
     }

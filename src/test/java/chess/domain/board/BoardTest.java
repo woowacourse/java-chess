@@ -110,7 +110,7 @@ public class BoardTest {
 
         Map<Position, Piece> boardValue = board.getValue();
         for (Column column : Column.values()) {
-            Piece piece = boardValue.get(new Position(column, row));
+            Piece piece = boardValue.get(Position.of(column, row));
             assertThat(piece.isBlack()).isFalse();
         }
     }
@@ -122,7 +122,7 @@ public class BoardTest {
 
         Map<Position, Piece> boardValue = board.getValue();
         for (Column column : Column.values()) {
-            Piece piece = boardValue.get(new Position(column, row));
+            Piece piece = boardValue.get(Position.of(column, row));
             assertThat(piece.isBlack()).isTrue();
         }
     }
@@ -132,8 +132,8 @@ public class BoardTest {
     void move_h1_h2() {
         Board board = new Board();
 
-        Position h1 = new Position(Column.H, Row.ONE);
-        Position h2 = new Position(Column.H, Row.TWO);
+        Position h1 = Position.of(Column.H, Row.ONE);
+        Position h2 = Position.of(Column.H, Row.TWO);
 
         assertThatThrownBy(() -> board.move(h1, h2))
             .isInstanceOf(IllegalArgumentException.class)
@@ -145,8 +145,8 @@ public class BoardTest {
     void move_a2_a4() {
         Board board = new Board();
 
-        Position a2 = new Position(Column.A, Row.TWO);
-        Position a4 = new Position(Column.A, Row.FOUR);
+        Position a2 = Position.of(Column.A, Row.TWO);
+        Position a4 = Position.of(Column.A, Row.FOUR);
 
         assertThatNoException().isThrownBy(() -> board.move(a2, a4));
     }
@@ -155,8 +155,8 @@ public class BoardTest {
     @Test
     void move_blank_exception() {
         Board board = new Board();
-        Position a3 = new Position(Column.A, Row.THREE);
-        Position a4 = new Position(Column.A, Row.FOUR);
+        Position a3 = Position.of(Column.A, Row.THREE);
+        Position a4 = Position.of(Column.A, Row.FOUR);
         assertThatThrownBy(() -> board.move(a3, a4))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이동할 수 있는 기물이 없습니다.");
@@ -166,8 +166,8 @@ public class BoardTest {
     @Test
     void move_obstacle_exception() {
         Board board = new Board();
-        Position a1 = new Position(Column.A, Row.ONE);
-        Position a4 = new Position(Column.A, Row.FOUR);
+        Position a1 = Position.of(Column.A, Row.ONE);
+        Position a4 = Position.of(Column.A, Row.FOUR);
         assertThatThrownBy(() -> board.move(a1, a4))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
@@ -185,12 +185,12 @@ public class BoardTest {
     @Test
     void calculateScoreOfBlack_37() {
         Board board = new Board();
-        Position b2 = new Position(Column.B, Row.TWO);
-        Position b4 = new Position(Column.B, Row.FOUR);
-        Position c7 = new Position(Column.C, Row.SEVEN);
-        Position c5 = new Position(Column.C, Row.FIVE);
-        Position d2 = new Position(Column.D, Row.TWO);
-        Position d4 = new Position(Column.D, Row.FOUR);
+        Position b2 = Position.of(Column.B, Row.TWO);
+        Position b4 = Position.of(Column.B, Row.FOUR);
+        Position c7 = Position.of(Column.C, Row.SEVEN);
+        Position c5 = Position.of(Column.C, Row.FIVE);
+        Position d2 = Position.of(Column.D, Row.TWO);
+        Position d4 = Position.of(Column.D, Row.FOUR);
 
         board.move(b2, b4);
         board.move(c7, c5);
@@ -211,10 +211,10 @@ public class BoardTest {
     @Test
     void calculateScoreOfWhite_37() {
         Board board = new Board();
-        Position b2 = new Position(Column.B, Row.TWO);
-        Position b4 = new Position(Column.B, Row.FOUR);
-        Position c7 = new Position(Column.C, Row.SEVEN);
-        Position c5 = new Position(Column.C, Row.FIVE);
+        Position b2 = Position.of(Column.B, Row.TWO);
+        Position b4 = Position.of(Column.B, Row.FOUR);
+        Position c7 = Position.of(Column.C, Row.SEVEN);
+        Position c5 = Position.of(Column.C, Row.FIVE);
         board.move(b2, b4);
         board.move(c7, c5);
         board.move(b4, c5);
@@ -223,63 +223,63 @@ public class BoardTest {
 
     private static Stream<Arguments> provideRookPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.A, Row.ONE)),
-            Arguments.of(new Position(Column.H, Row.ONE)),
-            Arguments.of(new Position(Column.A, Row.EIGHT)),
-            Arguments.of(new Position(Column.H, Row.EIGHT))
+            Arguments.of(Position.of(Column.A, Row.ONE)),
+            Arguments.of(Position.of(Column.H, Row.ONE)),
+            Arguments.of(Position.of(Column.A, Row.EIGHT)),
+            Arguments.of(Position.of(Column.H, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideBishopPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.C, Row.ONE)),
-            Arguments.of(new Position(Column.F, Row.ONE)),
-            Arguments.of(new Position(Column.C, Row.EIGHT)),
-            Arguments.of(new Position(Column.F, Row.EIGHT))
+            Arguments.of(Position.of(Column.C, Row.ONE)),
+            Arguments.of(Position.of(Column.F, Row.ONE)),
+            Arguments.of(Position.of(Column.C, Row.EIGHT)),
+            Arguments.of(Position.of(Column.F, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideKnightPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.B, Row.ONE)),
-            Arguments.of(new Position(Column.G, Row.ONE)),
-            Arguments.of(new Position(Column.B, Row.EIGHT)),
-            Arguments.of(new Position(Column.G, Row.EIGHT))
+            Arguments.of(Position.of(Column.B, Row.ONE)),
+            Arguments.of(Position.of(Column.G, Row.ONE)),
+            Arguments.of(Position.of(Column.B, Row.EIGHT)),
+            Arguments.of(Position.of(Column.G, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideQueenPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.D, Row.ONE)),
-            Arguments.of(new Position(Column.D, Row.EIGHT))
+            Arguments.of(Position.of(Column.D, Row.ONE)),
+            Arguments.of(Position.of(Column.D, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> provideKingPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.E, Row.ONE)),
-            Arguments.of(new Position(Column.E, Row.EIGHT))
+            Arguments.of(Position.of(Column.E, Row.ONE)),
+            Arguments.of(Position.of(Column.E, Row.EIGHT))
         );
     }
 
     private static Stream<Arguments> providePawnPosition() {
         return Stream.of(
-            Arguments.of(new Position(Column.A, Row.TWO)),
-            Arguments.of(new Position(Column.B, Row.TWO)),
-            Arguments.of(new Position(Column.C, Row.TWO)),
-            Arguments.of(new Position(Column.D, Row.TWO)),
-            Arguments.of(new Position(Column.E, Row.TWO)),
-            Arguments.of(new Position(Column.F, Row.TWO)),
-            Arguments.of(new Position(Column.G, Row.TWO)),
-            Arguments.of(new Position(Column.H, Row.TWO)),
-            Arguments.of(new Position(Column.A, Row.SEVEN)),
-            Arguments.of(new Position(Column.B, Row.SEVEN)),
-            Arguments.of(new Position(Column.C, Row.SEVEN)),
-            Arguments.of(new Position(Column.D, Row.SEVEN)),
-            Arguments.of(new Position(Column.E, Row.SEVEN)),
-            Arguments.of(new Position(Column.F, Row.SEVEN)),
-            Arguments.of(new Position(Column.G, Row.SEVEN)),
-            Arguments.of(new Position(Column.H, Row.SEVEN))
+            Arguments.of(Position.of(Column.A, Row.TWO)),
+            Arguments.of(Position.of(Column.B, Row.TWO)),
+            Arguments.of(Position.of(Column.C, Row.TWO)),
+            Arguments.of(Position.of(Column.D, Row.TWO)),
+            Arguments.of(Position.of(Column.E, Row.TWO)),
+            Arguments.of(Position.of(Column.F, Row.TWO)),
+            Arguments.of(Position.of(Column.G, Row.TWO)),
+            Arguments.of(Position.of(Column.H, Row.TWO)),
+            Arguments.of(Position.of(Column.A, Row.SEVEN)),
+            Arguments.of(Position.of(Column.B, Row.SEVEN)),
+            Arguments.of(Position.of(Column.C, Row.SEVEN)),
+            Arguments.of(Position.of(Column.D, Row.SEVEN)),
+            Arguments.of(Position.of(Column.E, Row.SEVEN)),
+            Arguments.of(Position.of(Column.F, Row.SEVEN)),
+            Arguments.of(Position.of(Column.G, Row.SEVEN)),
+            Arguments.of(Position.of(Column.H, Row.SEVEN))
         );
     }
 

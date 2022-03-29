@@ -43,3 +43,4 @@ docker/db/mysql/init/*
 /src/main/java/chess/dao/MemberDao.java
 /src/test/java/chess/dao/MemberDaoTest.java
 /src/main/java/chess/Role.java
+/src/test/java/chess/dao/

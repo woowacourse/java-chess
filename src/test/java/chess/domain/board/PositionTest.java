@@ -11,8 +11,8 @@ public class PositionTest {
     @Test
     void flip_horizontal_a1_to_h1() {
         //given
-        Position a1 = new Position(Column.A, Row.ONE);
-        Position expected = new Position(Column.H, Row.ONE);
+        Position a1 = Position.of(Column.A, Row.ONE);
+        Position expected = Position.of(Column.H, Row.ONE);
 
         //when
         Position actual = a1.flipHorizontally();
@@ -25,8 +25,8 @@ public class PositionTest {
     @Test
     void flip_horizontal_a1_to_a8() {
         //given
-        Position a1 = new Position(Column.A, Row.ONE);
-        Position expected = new Position(Column.A, Row.EIGHT);
+        Position a1 = Position.of(Column.A, Row.ONE);
+        Position expected = Position.of(Column.A, Row.EIGHT);
 
         //when
         Position actual = a1.flipVertically();
@@ -39,8 +39,8 @@ public class PositionTest {
     @Test
     void flip_diagonally_a1_to_h8() {
         //given
-        Position a1 = new Position(Column.A, Row.ONE);
-        Position expected = new Position(Column.H, Row.EIGHT);
+        Position a1 = Position.of(Column.A, Row.ONE);
+        Position expected = Position.of(Column.H, Row.EIGHT);
 
         //when
         Position actual = a1.flipDiagonally();
@@ -53,8 +53,8 @@ public class PositionTest {
     @Test
     void a1_greater_than_a8() {
         //given
-        Position A1 = new Position(Column.A, Row.ONE);
-        Position A8 = new Position(Column.A, Row.EIGHT);
+        Position A1 = Position.of(Column.A, Row.ONE);
+        Position A8 = Position.of(Column.A, Row.EIGHT);
 
         // when & then
         assertThat(A1).isGreaterThan(A8);
@@ -64,8 +64,8 @@ public class PositionTest {
     @Test
     void a2_less_than_b2() {
         //given
-        Position A2 = new Position(Column.A, Row.TWO);
-        Position B2 = new Position(Column.B, Row.TWO);
+        Position A2 = Position.of(Column.A, Row.TWO);
+        Position B2 = Position.of(Column.B, Row.TWO);
 
         //when & then
         assertThat(A2).isLessThan(B2);
@@ -75,8 +75,8 @@ public class PositionTest {
     @Test
     void a7_greater_than_a8() {
         //given
-        Position A7 = new Position(Column.A, Row.SEVEN);
-        Position A8 = new Position(Column.A, Row.EIGHT);
+        Position A7 = Position.of(Column.A, Row.SEVEN);
+        Position A8 = Position.of(Column.A, Row.EIGHT);
 
         //when & then
         assertThat(A7).isGreaterThan(A8);
@@ -86,8 +86,8 @@ public class PositionTest {
     @Test
     void h1_greater_than_b2() {
         //given
-        Position B2 = new Position(Column.B, Row.TWO);
-        Position H1 = new Position(Column.H, Row.ONE);
+        Position B2 = Position.of(Column.B, Row.TWO);
+        Position H1 = Position.of(Column.H, Row.ONE);
 
         //when & then
         assertThat(H1).isGreaterThan(B2);

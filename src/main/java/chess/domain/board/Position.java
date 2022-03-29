@@ -1,18 +1,25 @@
 package chess.domain.board;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
+    private static final HashMap<String, Position> CACHE = new HashMap<>();
+
     private final Column column;
     private final Row row;
 
-    public Position(Column column, Row row) {
+    private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static Position of(Column column, Row row) {
+        return CACHE.computeIfAbsent(column.name() + row.name(), ignored -> new Position(column, row));
     }
 
     public static Position from(String rawPosition) {
@@ -50,20 +57,15 @@ public class Position implements Comparable<Position> {
         List<Column> columnPath = this.column.pathTo(otherPosition.column);
 
         if (rowPath.size() == 0) {
-            return columnPath.stream()
-                .map(column -> new Position(column, this.row))
-                .collect(Collectors.toList());
+            return columnPath.stream().map(column -> new Position(column, this.row)).collect(Collectors.toList());
         }
 
         if (columnPath.size() == 0) {
-            return rowPath.stream()
-                .map(row -> new Position(this.column, row))
-                .collect(Collectors.toList());
+            return rowPath.stream().map(row -> new Position(this.column, row)).collect(Collectors.toList());
         }
 
         return IntStream.range(0, rowPath.size())
-            .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
-            .collect(Collectors.toList());
+            .mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index))).collect(Collectors.toList());
     }
 
     public Column getColumn() {
@@ -76,8 +78,7 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(Position o) {
-        return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
-            .thenComparing(Position::getColumn)
+        return Comparator.comparing(Position::getRow, Comparator.reverseOrder()).thenComparing(Position::getColumn)
             .compare(this, o);
     }
 
