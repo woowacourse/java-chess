@@ -3,8 +3,8 @@ package chess2.domain2.game2;
 import static chess2.domain2.board2.piece2.PieceType.KING;
 
 import chess2.domain2.board2.Board;
-import chess2.domain2.board2.position.Position;
 import chess2.domain2.board2.piece2.Color;
+import chess2.domain2.board2.position.Position;
 import chess2.dto2.MoveCommandDto;
 
 abstract class Running extends Started {
