@@ -27,7 +27,7 @@ public enum Direction {
     private final int file;
     private final int rank;
 
-    Direction(int file, int rank) {
+    Direction(final int file, final int rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -58,14 +58,14 @@ public enum Direction {
         return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
     }
 
-    public static Direction beMoveDirection(List<Direction> directions, Position source, Position target) {
+    public static Direction beMoveDirection(final List<Direction> directions, final Position source, final Position target) {
         return directions.stream()
                 .filter(direction -> Direction.isRightDirection(direction, source, target))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 방향입니다."));
     }
 
-    private static boolean isRightDirection(Direction direction, Position source, Position target) {
+    private static boolean isRightDirection(final Direction direction, final Position source, final Position target) {
         Position currentPosition = source;
         for (int i = 0; i < 8; i++) {
             currentPosition = currentPosition.from(direction);

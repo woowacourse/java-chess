@@ -45,7 +45,6 @@ public class Position {
                 == rank.calculateAbsoluteValue(other.rank));
     }
 
-    // TODO: 메서드 이름 변경해야 할듯
     public boolean isInOneSquare(Position other) {
         int fileAbsoluteValue = file.calculateAbsoluteValue(other.file);
         int rankAbsoluteValue = rank.calculateAbsoluteValue(other.rank);
@@ -54,11 +53,7 @@ public class Position {
             return true;
         }
 
-        if (fileAbsoluteValue == 1 && rankAbsoluteValue == 1) {
-            return true;
-        }
-
-        return false;
+        return fileAbsoluteValue == 1 && rankAbsoluteValue == 1;
     }
 
     public boolean isTwoRankDifference(Position other) {

@@ -5,7 +5,7 @@ import chess.domain.piece.strategy.RookMoveStrategy;
 
 import java.util.List;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     private final String symbol;
     private static final double SCORE = 5.0;

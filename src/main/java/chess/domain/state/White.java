@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.piece.Team;
 import chess.domain.postion.Position;
 
-public class White extends Started {
+public final class White extends Started {
 
     public White(final Board board) {
         super(board);

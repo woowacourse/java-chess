@@ -2,7 +2,8 @@ package chess.domain.piece.strategy;
 
 import chess.domain.postion.Position;
 
-public class KingMoveStrategy extends AbstractCommonMoveStrategy {
+public final class KingMoveStrategy extends AbstractCommonMoveStrategy {
+
     @Override
     public void isMovable(Position source, Position target) {
         validateSamePosition(source, target);

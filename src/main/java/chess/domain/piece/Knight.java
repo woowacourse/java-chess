@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.piece.strategy.KingMoveStrategy;
 import chess.domain.piece.strategy.KnightMoveStrategy;
 
 import java.util.List;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
 
     private final String symbol;
     private static final double SCORE = 2.5;

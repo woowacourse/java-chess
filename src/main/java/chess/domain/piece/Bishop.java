@@ -5,7 +5,7 @@ import chess.domain.piece.strategy.BishopMoveStrategy;
 
 import java.util.List;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     private final String symbol;
     private static final double SCORE = 3.0;

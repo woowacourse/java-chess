@@ -6,7 +6,7 @@ import chess.domain.postion.Position;
 
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     public static final double SCORE = 1.0;
     public static final double HALF_SCORE = 0.5;

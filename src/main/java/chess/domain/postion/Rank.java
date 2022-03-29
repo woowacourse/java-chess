@@ -26,15 +26,15 @@ public enum Rank {
                 .orElse(NOTHING);
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public int calculateAbsoluteValue(Rank rank) {
         return Math.abs(number - rank.getNumber());
     }
 
     public boolean isNothing() {
         return this.equals(NOTHING);
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

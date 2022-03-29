@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.Score;
 import chess.domain.postion.Position;
 
-public class End implements State {
+public final class End implements State {
 
     private final Board board;
 
@@ -23,7 +23,7 @@ public class End implements State {
     }
 
     @Override
-    public State changeTurn(Position source, Position target) {
+    public State changeTurn(final Position source, final Position target) {
         throw new IllegalArgumentException("End 상태에서는 chageTurn할 수 없습니다.");
     }
 

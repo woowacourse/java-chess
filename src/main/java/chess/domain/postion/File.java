@@ -26,15 +26,15 @@ public enum File {
                 .orElse(NOTHING);
     }
 
-    public char getName() {
-        return name;
-    }
-
     public int calculateAbsoluteValue(File file) {
         return Math.abs(name - file.getName());
     }
 
     public boolean isNothing() {
         return this.equals(NOTHING);
+    }
+
+    public char getName() {
+        return name;
     }
 }

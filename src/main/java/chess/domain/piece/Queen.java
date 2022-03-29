@@ -5,7 +5,7 @@ import chess.domain.piece.strategy.QueenMoveStrategy;
 
 import java.util.List;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     private final String symbol;
     private static final double SCORE = 9.0;

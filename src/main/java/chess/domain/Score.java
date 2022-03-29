@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Score {
+public final class Score {
 
     private static final int CONDITION_FOR_PAWN_SCORE_HALF = 2;
 
@@ -65,7 +65,7 @@ public class Score {
         return score;
     }
 
-    private static double decidePawnScore(List<Position> positions, Position position) {
+    private static double decidePawnScore(final List<Position> positions, final Position position) {
         if (isBePawnScoreHalf(positions, position)) {
             return Pawn.HALF_SCORE;
         }
@@ -73,7 +73,7 @@ public class Score {
         return Pawn.SCORE;
     }
 
-    private static boolean isBePawnScoreHalf(List<Position> positions, Position position) {
+    private static boolean isBePawnScoreHalf(final List<Position> positions, final Position position) {
         int count = (int) positions.stream()
                 .filter(it -> it.isSameFile(position))
                 .count();

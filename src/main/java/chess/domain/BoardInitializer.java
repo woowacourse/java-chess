@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BoardInitializer {
+public final class BoardInitializer {
 
     public Board init() {
         Map<Position, Piece> pieces = initWhite();
@@ -56,7 +56,7 @@ public class BoardInitializer {
         return BlackPieces;
     }
 
-    private Map<Position, Piece> makePawns(Team team, Rank rank, String symbol) {
+    private Map<Position, Piece> makePawns(final Team team, final Rank rank, final String symbol) {
         return Arrays.stream(File.values())
                 .filter(file -> !file.equals(File.NOTHING))
                 .collect(Collectors
