@@ -14,4 +14,10 @@ public abstract class Piece {
                 "color=" + color +
                 '}';
     }
+
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
+
+    public abstract String name();
 }
