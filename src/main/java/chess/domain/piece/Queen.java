@@ -1,26 +1,26 @@
-package chess.domain.chessPiece;
+package chess.domain.piece;
 
 import chess.domain.position.Position;
 
 import java.util.List;
 
-public class King extends ChessPiece {
+public class Queen extends ChessPiece {
 
-    private static final String NAME = "K";
-    private static final Double VALUE = 0.0;
+    private static final String NAME = "Q";
+    private static final Double VALUE = 9.0;
 
-    public King(Color color) {
+    public Queen(Color color) {
         super(color, NAME, VALUE);
     }
 
     @Override
     public List<Position> getInitWhitePosition() {
-        return List.of(new Position("e1"));
+        return List.of(new Position("d1"));
     }
 
     @Override
     public List<Position> getInitBlackPosition() {
-        return List.of(new Position("e8"));
+        return List.of(new Position("d8"));
     }
 
     @Override
@@ -28,7 +28,10 @@ public class King extends ChessPiece {
         int fileDistance = Math.abs(from.fileDistance(to));
         int rankDistance = Math.abs(from.rankDistance(to));
 
-        if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
+        boolean sameFile = from.isSameFile(to);
+        boolean sameRank = from.isSameRank(to);
+
+        if ((!sameFile && !sameRank) && (fileDistance != rankDistance)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
     }

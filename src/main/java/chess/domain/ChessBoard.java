@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.chessPiece.*;
+import chess.domain.piece.*;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Score;
 import chess.domain.position.Direction;
