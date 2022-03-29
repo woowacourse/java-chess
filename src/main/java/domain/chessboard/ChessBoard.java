@@ -31,7 +31,7 @@ public class ChessBoard {
     public void move(final Position source, final Position target) {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
-        if (isPawn(source)) {
+        if (board.get(source).isPawn()) {
             validateTargetRouteForPawn(source, target);
             movePiece(source, target);
             return;
@@ -61,10 +61,6 @@ public class ChessBoard {
         if (!board.get(source).isAvailableMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 위치입니다.");
         }
-    }
-
-    private boolean isPawn(final Position source) {
-        return board.get(source).symbolByPlayer().equals(PieceSymbol.PAWN.symbol(currentPlayer));
     }
 
     private void validateTargetRouteForPawn(final Position source, final Position target) {

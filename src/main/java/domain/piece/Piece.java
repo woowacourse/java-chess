@@ -77,6 +77,10 @@ public abstract class Piece {
         return Position.of(File.of(file), Rank.of(rank));
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public boolean isSamePlayer(Player player) {
         return this.player == player;
     }

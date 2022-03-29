@@ -15,7 +15,7 @@
     - 관례적으로 Enum 상수는 대문자로 작성
 - [ ] `Pawn`
     - [ ] `calculateAvailablePosition()` null 대신 빈 컬렉션을 반환하는 것은 어떤지.
-    - [ ] `ChessBoard`에서 해당 Piece가 `Pawn`인지 검사하는 코드가 존재.
+    - [x] `ChessBoard`에서 해당 Piece가 `Pawn`인지 검사하는 코드가 존재.
         - `Piece` 클래스에서 검사하도록 수정하는건 어떤지
     - [ ] `ChessBoard` - `validateTargetRoutePawn()` 폰의 기본 이동 규칙을 폰 내부로 옮길 수 있는 방법
     - [ ] `BlackPawn`, `WhitePawn`을 나눠야할 필요가 없음.
