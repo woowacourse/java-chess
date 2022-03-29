@@ -21,8 +21,21 @@ public abstract class Piece {
 
     public abstract boolean canMove(Piece targetPiece, Position from, Position to);
 
-    public Team getColor() {
-        return team;
+    public boolean isSameTeam(Piece targetPiece) {
+        return this.team == targetPiece.team;
+    }
+
+    public boolean isOppositeTeam(Team team) {
+        return (team == Team.WHITE && this.team == Team.BLACK) ||
+                (team == Team.BLACK && this.team == Team.WHITE);
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPiece() {
+        return true;
     }
 
     public String getName() {
@@ -32,24 +45,11 @@ public abstract class Piece {
         return name.getValue();
     }
 
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isSameTeam(Piece targetPiece) {
-        return this.team == targetPiece.team;
-    }
-
-    public boolean isOppositeColor(Team team) {
-        return (team == Team.WHITE && this.team == Team.BLACK) ||
-                (team == Team.BLACK && this.team == Team.WHITE);
+    public Team getTeam() {
+        return team;
     }
 
     public List<Position> getRoute(Position from, Position to) {
         return moveStrategy.getRoute(from, to);
-    }
-
-    public boolean isPiece() {
-        return true;
     }
 }

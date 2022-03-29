@@ -26,10 +26,9 @@ public final class Position {
         if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
-        Column column = Column.valueOf(attribute[0].toUpperCase(Locale.ROOT));
-        Rank rank = Rank.numberOf(Integer.parseInt(attribute[1]));
-
-        return new Position(column, rank);
+        return new Position(
+                Column.valueOf(attribute[0].toUpperCase(Locale.ROOT)),
+                Rank.numberOf(Integer.parseInt(attribute[1])));
     }
 
     public static List<Position> inputToPositions(String input) {
@@ -42,8 +41,7 @@ public final class Position {
     public Position advancePosition(Direction direction) {
         return new Position(
                 Column.numberOf(column.getNumber() + direction.getX()),
-                Rank.numberOf(rank.getNumber() + direction.getY())
-        );
+                Rank.numberOf(rank.getNumber() + direction.getY()));
     }
 
     public int getXDistance(Position to) {

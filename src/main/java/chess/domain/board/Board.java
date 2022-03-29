@@ -71,7 +71,7 @@ public final class Board {
     }
 
     public boolean isSameColor(Position position, Team team) {
-        return findByPosition(position).getColor() == team;
+        return findByPosition(position).getTeam() == team;
     }
 
     public Map<Team, Double> getTotalStatus() {
