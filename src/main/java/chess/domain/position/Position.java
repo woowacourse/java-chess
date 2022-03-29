@@ -1,15 +1,17 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class Position {
+public final class Position {
+
+    private static final int RANK_INDEX = 1;
+    private static final int FILE_INDEX = 0;
+    private static final Map<String, Position> cache = new HashMap<>();
 
     private final File file;
     private final Rank rank;
-
-    private static final List<Position> TOTAL = new ArrayList<>();
 
     private Position(final File file, final Rank rank) {
         this.file = file;
@@ -17,18 +19,22 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        Position newPosition = new Position(file, rank);
-        return TOTAL.stream()
-                .filter(position -> position.equals(newPosition))
-                .findFirst()
-                .orElse(newPosition);
+        final String position = file.getFile() + rank.getRank();
+
+        return from(position);
     }
 
     public static Position from(final String position) {
-        final File file = File.from(position.substring(0, 1));
-        final Rank rank = Rank.from(Integer.parseInt(position.substring(1)));
+        final var cachedPosition = cache.get(position);
 
-        return Position.of(file, rank);
+        if (cachedPosition == null) {
+            final File file = File.from(position.substring(FILE_INDEX, RANK_INDEX));
+            final Rank rank = Rank.from(position.substring(RANK_INDEX));
+            final Position newPosition = new Position(file, rank);
+            cache.put(position, newPosition);
+            return newPosition;
+        }
+        return cachedPosition;
     }
 
     @Override
