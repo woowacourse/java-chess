@@ -55,7 +55,7 @@ class KnightTest {
 
     @DisplayName("EES 위치로 움직일 수 있으면 EES 방향의 Route를 반환한다.")
     @Test
-    void findRoute_EES() {
+    void findRoute_ees() {
         Piece knight = new Knight(BLACK, "N");
         Route route = knight.findRoute(Position.of(FIVE, B), Position.of(FOUR, D));
 
@@ -65,7 +65,7 @@ class KnightTest {
 
     @DisplayName("EEN 위치로 움직일 수 있으면 EEN 방향의 Route를 반환한다.")
     @Test
-    void canMove_true() {
+    void findRoute_een() {
         Piece knight = new Knight(BLACK, "N");
         Route route = knight.findRoute(Position.of(FIVE, B), Position.of(SIX, D));
 
