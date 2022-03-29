@@ -43,11 +43,14 @@ public class Pawn extends Piece {
     public Position capture(final Position currentPosition, final Position destinationPosition, final Team team) {
         final boolean isMoveForwardDiagonal = currentPosition.isMoveDiagonalForward(destinationPosition, team);
         final int moveDistance = currentPosition.calculateDistance(destinationPosition);
-
-        if (!isMoveForwardDiagonal || moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
-            throw new IllegalArgumentException("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
+        if (!isMoveForwardDiagonal) {
+            throw new IllegalArgumentException("폰은 캡쳐 목적으로는 대각선으로만 이동할 수 있습니다.");
         }
-        return position = destinationPosition;
+        if (moveDistance != PAWN_DIAGONAL_MOVE_DISTANCE) {
+            throw new IllegalArgumentException("폰은 대각선으로 1칸만 이동할 수 있습니다.");
+        }
+        this.position = destinationPosition;
+        return position;
     }
 
     @Override
