@@ -23,6 +23,7 @@ public class ChessBoard {
     public void movePiece(Position source, Position target, Color color) {
         validateFinishedGame();
         validateMovableColor(source, color);
+        validateSameColor(source, target);
 
         Piece movedPiece = pieceByPosition(source).move(source, target, this);
         pieces.remove(source);
@@ -38,6 +39,12 @@ public class ChessBoard {
     private void validateMovableColor(Position source, Color color) {
         if (!pieceByPosition(source).isSameColor(color)) {
             throw new IllegalStateException("상대 진영의 기물을 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateSameColor(Position source, Position target) {
+        if (pieces.containsKey(target) && pieceByPosition(source).isSameTeamPiece(pieceByPosition(target))) {
+            throw new IllegalStateException("같은 색의 기물 위치로는 이동할 수 없습니다.");
         }
     }
 

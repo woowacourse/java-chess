@@ -68,6 +68,21 @@ class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("동일한 색상의 기물 위치로 이동하려할 때 예외발생")
+    void moveSamTeamPieceException() {
+        Position position = Position.of('a', '1');
+        Position target = Position.of('a', '2');
+        ChessBoard chessBoard = new ChessBoard(Map.of(
+                position, new WhitePawn(),
+                target, new WhitePawn()
+        ));
+
+        assertThatThrownBy(() -> chessBoard.movePiece(position, target, WHITE))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("같은 색의 기물 위치로는 이동할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("프로모션이 불가능할 때 예외발생")
     void promotionExceptionByStatus() {
         ChessBoard chessBoard = new ChessBoard(Map.of(Position.of('a','2'), new WhitePawn()));
