@@ -26,8 +26,8 @@ public class ChessGame {
     }
 
     public void moveChessmen(MovePositionCommandDto dto) {
-        Piece sourcePiece = chessmen.extractPiece(Position.of(dto.source()));
-        Position toPosition = Position.of(dto.target());
+        Piece sourcePiece = chessmen.extractPiece(Position.of(dto.getSource()));
+        Position toPosition = Position.of(dto.getTarget());
 
         checkMovable(sourcePiece, toPosition);
 

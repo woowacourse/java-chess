@@ -14,11 +14,11 @@ public class CommandDto {
         this.gameState = command.split(COMMAND_INPUT_DELIMITER)[COMMAND_POSITION];
     }
 
-    public String command() {
+    public String getCommand() {
         return command;
     }
 
-    public String gameState() {
+    public String getGameState() {
         return gameState;
     }
 

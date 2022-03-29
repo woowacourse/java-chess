@@ -55,14 +55,14 @@ public class ChessController {
     }
 
     private ChessGame progressByCommand(ChessGame chessGame, CommandDto commandDto) {
-        String state = commandDto.gameState();
+        String state = commandDto.getGameState();
         if (state.equals(START)) {
             return initAndShowBoard();
         }
         if (state.equals(END)) {
             return end(chessGame);
         }
-        return move(chessGame, commandDto.command());
+        return move(chessGame, commandDto.getCommand());
     }
 
     private ChessGame end(ChessGame chessGame) {

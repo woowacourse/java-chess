@@ -13,11 +13,11 @@ public class MovePositionCommandDto {
         this.target = commandInput[2];
     }
 
-    public String source() {
+    public String getSource() {
         return source;
     }
 
-    public String target() {
+    public String getTarget() {
         return target;
     }
 
