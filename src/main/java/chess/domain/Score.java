@@ -35,7 +35,7 @@ public class Score {
                                       final Map<Position, ChessPiece> pieceByPosition) {
         return pieceByPosition.values().stream()
                 .filter(chessPiece -> chessPiece.isSameColor(color))
-                .filter(chessPiece -> !(chessPiece instanceof Pawn))
+                .filter(chessPiece -> !chessPiece.isPawn())
                 .mapToDouble(ChessPiece::value)
                 .sum();
     }
@@ -53,7 +53,7 @@ public class Score {
         return (int) Arrays.stream(File.values())
                 .map(file -> pieceByPosition.get(Position.of(rank, file)))
                 .filter(Objects::nonNull)
-                .filter(chessPiece -> chessPiece instanceof Pawn)
+                .filter(ChessPiece::isPawn)
                 .filter(pawn -> pawn.isSameColor(color))
                 .count();
     }

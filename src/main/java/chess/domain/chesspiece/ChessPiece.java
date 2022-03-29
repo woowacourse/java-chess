@@ -56,6 +56,10 @@ public abstract class ChessPiece {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public final String name() {
         return name;
     }

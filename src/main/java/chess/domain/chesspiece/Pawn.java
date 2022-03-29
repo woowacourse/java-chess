@@ -140,6 +140,11 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public double value() {
         return VALUE;
     }
