@@ -13,6 +13,8 @@ public class Application {
 
 	private static final ChessController chessController = new ChessController();
 	private static final int COMMAND_INDEX = 0;
+	public static final int SOURCE_INDEX = 1;
+	public static final int TARGET_INDEX = 2;
 
 	private static Map<Command, Runnable> functionByCommand = createFunctionByCommand();
 
@@ -35,7 +37,7 @@ public class Application {
 		List<String> userInput = InputView.requestCommand();
 		Command command = Command.find(userInput.get(COMMAND_INDEX));
 		if (command.isMove()) {
-			move(userInput.get(1), userInput.get(2));
+			move(userInput.get(SOURCE_INDEX), userInput.get(TARGET_INDEX));
 			return;
 		}
 		functionByCommand.get(command).run();
