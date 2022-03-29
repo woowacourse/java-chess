@@ -30,6 +30,10 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public boolean isEmpty() {
+        return pieceType == PieceType.NONE;
+    }
+
     public PieceType getPieceType() {
         return pieceType;
     }
