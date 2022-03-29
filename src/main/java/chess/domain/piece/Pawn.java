@@ -8,11 +8,10 @@ import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 
-    private static final String NAME = "p";
     private static final double SCORE = 1;
 
     public Pawn(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     private boolean isPawnMoving(final Board board, final Position from, final Position to) {

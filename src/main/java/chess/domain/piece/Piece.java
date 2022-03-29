@@ -3,17 +3,14 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
-    private final String name;
 
-    protected Piece(final Color color, final String name) {
+    protected Piece(final Color color) {
         this.color = color;
-        this.name = name;
     }
 
     public abstract void checkMovingRange(final Board board, final Position from, final Position to);
@@ -28,13 +25,6 @@ public abstract class Piece {
         return color == other;
     }
 
-    public String getName() {
-        if (color.equals(Color.BLACK)) {
-            return name.toUpperCase(Locale.ROOT);
-        }
-        return name;
-    }
-
     public Color getColor() {
         return color;
     }
@@ -46,11 +36,11 @@ public abstract class Piece {
 
         Piece piece = (Piece) other;
 
-        return name.equals(piece.name) && color == piece.color;
+        return color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color);
+        return Objects.hash(color);
     }
 }

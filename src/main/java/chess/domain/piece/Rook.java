@@ -6,11 +6,10 @@ import chess.domain.position.Position;
 
 public class Rook extends Piece {
 
-    private static final String NAME = "r";
     private static final double SCORE = 5;
 
     public Rook(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static boolean isRookMoving(final Position from, final Position to) {

@@ -6,11 +6,10 @@ import chess.domain.position.Position;
 
 public class Bishop extends Piece {
 
-    private static final String NAME = "b";
     private static final double SCORE = 3;
 
     public Bishop(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static boolean isBishopMoving(final Position from, final Position to) {

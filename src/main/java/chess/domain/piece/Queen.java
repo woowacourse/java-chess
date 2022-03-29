@@ -6,11 +6,10 @@ import chess.domain.position.Position;
 
 public class Queen extends Piece {
 
-    private static final String NAME = "q";
     private static final double SCORE = 9;
 
     public Queen(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static boolean isQueenMoving(final Position from, final Position to) {

@@ -6,11 +6,10 @@ import chess.domain.position.Position;
 
 public class Knight extends Piece {
 
-    private static final String NAME = "n";
     private static final double SCORE = 0;
 
     public Knight(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static boolean isKnightMoving(final Position from, final Position to) {
