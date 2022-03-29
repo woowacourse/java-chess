@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
@@ -43,7 +43,7 @@ public class Fixtures {
             int fileX = 1;
             for (String pieceString : rank.split("")) {
                 board.put(new Position(
-                                File.numberOf(fileX), Rank.numberOf(rankY)
+                                Column.numberOf(fileX), Rank.numberOf(rankY)
                         ),
                         stringPieceMap.get(pieceString)
                 );

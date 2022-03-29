@@ -3,7 +3,7 @@ package chess.domain.piece.strategy;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.attribute.Team;
@@ -20,11 +20,11 @@ class RookMoveStrategyTest {
             "C,THREE,A,THREE"
     })
     @DisplayName("룩이 갈 수 있는 위치 중 하나여야 한다.")
-    void canValidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
+    void canValidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertDoesNotThrow(() -> new RookMoveStrategy()
                 .isValidateCanMove(Team.WHITE,
-                        new Position(fileA, rankA),
-                        new Position(fileB, rankB)
+                        new Position(columnA, rankA),
+                        new Position(columnB, rankB)
                 )
         );
     }
@@ -35,11 +35,11 @@ class RookMoveStrategyTest {
             "A,THREE,B,FOUR"
     })
     @DisplayName("룩이 갈 수 위치가 아니면 에러가 발생해야 한다.")
-    void canInvalidMove(File fileA, Rank rankA, File fileB, Rank rankB) {
+    void canInvalidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertThatThrownBy(() -> new RookMoveStrategy()
                 .isValidateCanMove(Team.WHITE,
-                        new Position(fileA, rankA),
-                        new Position(fileB, rankB)
+                        new Position(columnA, rankA),
+                        new Position(columnB, rankB)
                 ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("룩이 이동할 수 없는 위치입니다.");

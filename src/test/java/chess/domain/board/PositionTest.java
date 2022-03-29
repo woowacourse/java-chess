@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +17,9 @@ class PositionTest {
     @Test
     @DisplayName("위치를 생성할 수 있다.")
     void createPosition() {
-        Position position = new Position(File.A, Rank.ONE);
+        Position position = new Position(Column.A, Rank.ONE);
 
-        assertThat(position).isEqualTo(new Position(File.A, Rank.ONE));
+        assertThat(position).isEqualTo(new Position(Column.A, Rank.ONE));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
@@ -43,8 +42,8 @@ public final class OutputView {
     }
 
     private static void printChessBoardOfRank(Map<Position, Piece> squares, Rank rank) {
-        for (File file : File.values()) {
-            System.out.print(squares.get(new Position(file, rank)).getName());
+        for (Column column : Column.values()) {
+            System.out.print(squares.get(new Position(column, rank)).getName());
         }
     }
 
