@@ -23,16 +23,16 @@ public final class Board {
 
     private static final int COUNT_INITIAL_KING = 2;
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> squares;
     private boolean whiteTurn;
 
-    Board(Map<Position, Piece> value) {
-        this.value = new TreeMap<>(value);
+    Board(Map<Position, Piece> squares) {
+        this.squares = new TreeMap<>(squares);
         this.whiteTurn = true;
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
-        Piece source = this.value.get(sourcePosition);
+        Piece source = this.squares.get(sourcePosition);
 
         checkSource(sourcePosition, source);
         checkPath(sourcePosition, targetPosition, source);
@@ -79,20 +79,20 @@ public final class Board {
     }
 
     private void checkTargetCamp(Position targetPosition, Piece source) {
-        if (source.isSameCampWith(this.value.get(targetPosition))) {
+        if (source.isSameCampWith(this.squares.get(targetPosition))) {
             throw new IllegalArgumentException(ERROR_SAME_CAMP_TARGET);
         }
     }
 
     private Consumer<Piece> moveFunction(Position sourcePosition, Position targetPosition) {
         return (piece) -> {
-            this.value.put(targetPosition, piece);
-            this.value.put(sourcePosition, new None());
+            this.squares.put(targetPosition, piece);
+            this.squares.put(sourcePosition, new None());
         };
     }
 
     private boolean isBlank(Position position) {
-        return value.get(position).isType(Type.NONE);
+        return squares.get(position).isType(Type.NONE);
     }
 
     public boolean hasKingCaptured() {
@@ -115,7 +115,7 @@ public final class Board {
     }
 
     private List<Piece> collectKing() {
-        return this.value.values()
+        return this.squares.values()
                 .stream()
                 .filter(piece -> piece.isType(Type.KING))
                 .collect(Collectors.toList());
@@ -142,7 +142,7 @@ public final class Board {
 
     private List<Piece> collectPiecesOfCampIn(Column column, Camp camp) {
         return Arrays.stream(Row.values())
-                .map(row -> this.value.get(Position.of(column, row)))
+                .map(row -> this.squares.get(Position.of(column, row)))
                 .filter(piece -> piece.isCamp(camp))
                 .collect(Collectors.toList());
     }
@@ -178,7 +178,7 @@ public final class Board {
                 .collect(Collectors.toList());
     }
 
-    public Map<Position, Piece> getValue() {
-        return Collections.unmodifiableMap(value);
+    public Map<Position, Piece> getSquares() {
+        return Collections.unmodifiableMap(squares);
     }
 }

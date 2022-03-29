@@ -10,7 +10,7 @@ public class Start implements Command {
     @Override
     public void execute(ChessGame chessGame, OutputView outputView) {
         chessGame.start();
-        outputView.printBoard(chessGame.getBoard().getValue());
+        outputView.printBoard(chessGame.getBoard().getSquares());
     }
 
     @Override

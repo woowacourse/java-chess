@@ -16,7 +16,7 @@ public class Move implements Command {
     @Override
     public void execute(ChessGame chessGame, OutputView outputView) {
         chessGame.move(this.sourcePosition, this.targetPosition);
-        outputView.printBoard(chessGame.getBoard().getValue());
+        outputView.printBoard(chessGame.getBoard().getSquares());
         if (chessGame.isFinished()) {
             outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
             outputView.printWinner(chessGame.getWinner());

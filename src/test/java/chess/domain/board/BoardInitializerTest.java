@@ -19,53 +19,53 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class BoardInitializerTest {
-    private static Map<Position, Piece> value = BoardInitializer.get().getValue();
+    private static Map<Position, Piece> squares = BoardInitializer.get().getSquares();
 
     @DisplayName("체스판은 64칸이다.")
     @Test
     void chess_board_size_64() {
-        assertThat(value).hasSize(64);
+        assertThat(squares).hasSize(64);
     }
 
     @MethodSource("provideRookPosition")
     @ParameterizedTest(name = "{0}에 룩이 있다")
     void check_rook_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(Rook.class);
     }
 
     @MethodSource("provideBishopPosition")
     @ParameterizedTest(name = "{0}에 비숍이 있다")
     void check_bishop_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(Bishop.class);
     }
 
     @MethodSource("provideKnightPosition")
     @ParameterizedTest(name = "{0}에 나이트가 있다")
     void check_knight_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(Knight.class);
     }
 
     @MethodSource("provideQueenPosition")
     @ParameterizedTest(name = "{0}에 퀸이 있다")
     void check_queen_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(Queen.class);
     }
 
     @MethodSource("provideKingPosition")
     @ParameterizedTest(name = "{0}에 킹이 있다")
     void check_king_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(King.class);
     }
 
     @MethodSource("providePawnPosition")
     @ParameterizedTest(name = "{0}에 폰이 있다")
     void check_pawn_positions(Position expectedPosition) {
-        assertThat(value.get(expectedPosition))
+        assertThat(squares.get(expectedPosition))
                 .isInstanceOf(Pawn.class);
     }
 
@@ -73,7 +73,7 @@ public class BoardInitializerTest {
     @ParameterizedTest(name = "{0}행의 모든 말은 white이다.")
     void check_camp_white(Row row) {
         for (Column column : Column.values()) {
-            Piece piece = value.get(Position.of(column, row));
+            Piece piece = squares.get(Position.of(column, row));
             assertThat(piece.isCamp(Camp.WHITE)).isTrue();
         }
     }
@@ -82,7 +82,7 @@ public class BoardInitializerTest {
     @ParameterizedTest(name = "{0}행의 모든 말은 black이다.")
     void check_camp_black(Row row) {
         for (Column column : Column.values()) {
-            Piece piece = value.get(Position.of(column, row));
+            Piece piece = squares.get(Position.of(column, row));
             assertThat(piece.isCamp(Camp.BLACK)).isTrue();
         }
     }
