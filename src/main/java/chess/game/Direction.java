@@ -1,5 +1,6 @@
 package chess.game;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
@@ -22,6 +23,7 @@ public enum Direction {
     WNW(-2, 1),
     NNW(-1, 2);
 
+    private static final double ONE_RADIAN = 180 / Math.PI;
     private static final int WHITE_PAWN_BEGINNING_DISTANCE = 2;
     private static final int BLACK_PAWN_BEGINNING_DISTANCE = -2;
     private static final int NOT_MOVE = 0;
@@ -32,6 +34,13 @@ public enum Direction {
     Direction(final int column, final int row) {
         this.column = column;
         this.row = row;
+    }
+
+    public static Direction find(final Position from, final Position to) {
+        return Arrays.stream(Direction.values())
+                .filter(value -> isEqualDirection(from, to, value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
     }
 
     public static List<Direction> getWhitePawnDirections() {
@@ -80,6 +89,16 @@ public enum Direction {
             return isEqualTo(columnDistance, rowDistance + 1);
         }
         return isEqualTo(columnDistance, rowDistance);
+    }
+
+    private static boolean isEqualDirection(final Position from, final Position to, final Direction value) {
+        final int columnDistance = to.getColumnDistance(from);
+        final int rowDistance = to.getRowDistance(from);
+        return angle(value.column, value.row) == angle(columnDistance, rowDistance);
+    }
+
+    private static double angle(final int column, final int row) {
+        return Math.atan2(column, row) * ONE_RADIAN;
     }
 
     public boolean isEqualTo(final int columnDistance, final int rowDistance) {

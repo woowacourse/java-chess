@@ -52,7 +52,7 @@ public class Board {
     private void validateMove(final Color color, final Position from, final Position to, final Piece piece) {
         validatePieceExist(from);
         validateSameTeam(from, to);
-        validatePiece(from, to, piece);
+        validatePieceBlock(from, to);
         validateColor(piece, color);
         validatePawnMove(from, to, piece);
     }
@@ -69,14 +69,8 @@ public class Board {
         }
     }
 
-    private void validatePiece(final Position from, final Position to, final Piece piece) {
-        if (!piece.isKnight()) {
-            validatePieceBlock(from, to);
-        }
-    }
-
     private void validatePieceBlock(final Position from, final Position to) {
-        final Direction direction = from.findDirection(to);
+        final Direction direction = Direction.find(from, to);
         Position movedPosition = from.shift(direction);
         while (!movedPosition.equals(to)) {
             validateBlock(movedPosition);

@@ -24,11 +24,6 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public boolean isKnight() {
-        return true;
-    }
-
-    @Override
     public double getScore() {
         return SCORE;
     }

@@ -29,11 +29,6 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
     public boolean isKing() {
         return false;
     }
