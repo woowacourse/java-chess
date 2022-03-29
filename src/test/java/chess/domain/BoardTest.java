@@ -45,9 +45,18 @@ public class BoardTest {
 
     @DisplayName("source 위치에 기물이 존재하지 않는 경우 에러 테스트")
     @Test
-    void invalidPath2() {
+    void notExistInSource() {
         Board board = BoardFixture.setup();
         assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.SIX)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("target 위치체 같은 팀 기물이 있는 경우 에러 테스트")
+    @Test
+    void sameTeamInTarget() {
+        Board board = BoardFixture.setup();
+        board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO));
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.ONE), new Position(File.A, Rank.TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

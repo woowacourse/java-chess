@@ -43,20 +43,27 @@ public class Board {
 
         piece.checkPawn(source, target, direction, pieceInTarget);
 
-        isMovablePath(direction, source, target);
+        validateIsMovablePath(direction, source, target);
+        validateSameTeamInTarget(piece, target);
     }
 
-    private void isMovablePath(Direction direction, Position source, Position target) {
+    private void validateIsMovablePath(Direction direction, Position source, Position target) {
         Position currentPosition = source.from(direction);
         while (!currentPosition.equals(target)) {
-            hasPieceInPath(currentPosition);
+            hasPieceInPosition(currentPosition);
             currentPosition = currentPosition.from(direction);
         }
     }
 
-    private void hasPieceInPath(Position position) {
+    private void hasPieceInPosition(Position position) {
         if (cells.containsKey(position)) {
             throw new IllegalArgumentException("경로에 기물이 존재합니다.");
+        }
+    }
+
+    private void validateSameTeamInTarget(Piece piece, Position target) {
+        if(cells.containsKey(target) && !piece.isEnemy(cells.get(target))) {
+            throw new IllegalArgumentException("목적지에 같은 팀 기물이 있습니다.");
         }
     }
 

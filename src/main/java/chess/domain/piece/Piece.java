@@ -31,7 +31,5 @@ public abstract class Piece {
         return !this.team.equals(other.team);
     }
 
-    public void checkPawn(Position source, Position target, Direction direction, Piece other) {
-        throw new IllegalArgumentException("이 기물은 폰이 아닙니다.");
-    }
+    public void checkPawn(Position source, Position target, Direction direction, Piece other) {}
 }
