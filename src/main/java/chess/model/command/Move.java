@@ -21,11 +21,6 @@ public class Move extends Command {
         return getCommandPosition().get(1);
     }
 
-    private List<String> getCommandPosition() {
-        String[] split = input.split(EMPTY_DELIMITER);
-        return Arrays.asList(split[1], split[2]);
-    }
-
     @Override
     public Command turnState(String input) {
         if ("end".equals(input)) {
@@ -53,5 +48,10 @@ public class Move extends Command {
     @Override
     public boolean isMove() {
         return true;
+    }
+
+    private List<String> getCommandPosition() {
+        String[] split = input.split(EMPTY_DELIMITER);
+        return Arrays.asList(split[1], split[2]);
     }
 }
