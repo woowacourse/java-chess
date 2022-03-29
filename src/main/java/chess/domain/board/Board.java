@@ -3,6 +3,7 @@ package chess.domain.board;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 
+import chess.domain.GameState;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
@@ -23,9 +24,11 @@ public class Board {
     private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
+    private GameState gameState;
 
     public Board(final Map<Position, Piece> pieces) {
         this.pieces = pieces;
+        gameState = GameState.READY;
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
@@ -157,6 +160,37 @@ public class Board {
                 .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
                 .sum();
         return score - board.countDeductedPawns(color) * PAWN_MINUS_SCORE;
+    }
+
+    public boolean isEnd() {
+        return gameState == GameState.END;
+    }
+
+    public boolean isReady() {
+        return gameState == GameState.READY;
+    }
+
+    public boolean isRunning() {
+        return gameState.isRunning();
+    }
+
+    public void startFirstTurn() {
+        gameState = GameState.WHITE_RUNNING;
+    }
+
+    public void changeTurn() {
+        gameState = gameState.getOpposite();
+    }
+
+    public void terminateGame() {
+        gameState = GameState.END;
+    }
+
+    public Color getCurrentColor() {
+        if (gameState == GameState.BLACK_RUNNING) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 
     public Map<Position, Piece> getPieces() {
