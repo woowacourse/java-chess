@@ -7,8 +7,15 @@ public class Position {
     private File file;
 
     public Position(String text) {
+        validate(text);
         this.rank = Rank.of(String.valueOf(text.charAt(0)));
         this.file = File.of(String.valueOf(text.charAt(1)));
+    }
+
+    private void validate(String text) {
+        if(text.length() != 2){
+            throw new IllegalArgumentException("위치는 가로줄과 세로줄의 정보를 전부 포함해야합니다.");
+        }
     }
 
     public int fileDistance(Position target) {
