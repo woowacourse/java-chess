@@ -10,8 +10,10 @@ import static chess.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.File;
 import chess.Player;
 import chess.Position;
+import chess.Rank;
 import chess.direction.route.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,10 +25,10 @@ class RookTest {
     @DisplayName("움직일 수 없는 방향이 입력되면 예외를 발생한다.")
     @ParameterizedTest
     @CsvSource(value = {"TWO, B", "THREE, D", "SEVEN, H"})
-    void findRoute_exception() {
+    void findRoute_exception(Rank rank, File file) {
         Piece rook = new Rook(Player.BLACK, "R");
 
-        assertThatThrownBy(() -> rook.findRoute(Position.of(FOUR, D), Position.of(TWO, B)))
+        assertThatThrownBy(() -> rook.findRoute(Position.of(FOUR, D), Position.of(rank, file)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
     }

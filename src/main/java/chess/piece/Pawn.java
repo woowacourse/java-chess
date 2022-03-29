@@ -1,70 +1,60 @@
 package chess.piece;
 
-import chess.Direction;
+import static chess.Player.BLACK;
+import static chess.Player.WHITE;
+
 import chess.Player;
 import chess.Position;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static chess.Direction.*;
-import static chess.Player.BLACK;
-import static chess.Player.NONE;
+import chess.direction.route.Route;
+import chess.direction.strategy.RouteStrategy;
+import chess.direction.strategy.RoyaltyRouteFinder;
 
 public class Pawn extends Piece {
 
+    private static final int MAX_MOVABLE_DISTANCE = 2;
+    private static final int BASE_MOVABLE_DISTANCE = 1;
     private static final double SCORE = 1;
+
+    private final RouteStrategy routeStrategy;
 
     public Pawn(Player player, String symbol) {
         super(player, symbol);
+        this.routeStrategy = new RoyaltyRouteFinder();
     }
 
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Direction> directions = getDirection();
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(findCatchPositions(source, board, directions.subList(0, 2)));
-        positions.addAll(findMovedOnePosition(source, board, directions.get(2)));
-        positions.addAll(findMovedTwoPosition(source, board, directions.subList(2, 4)));
-        return positions.contains(target);
+    public Route findRoute(Position source, Position target) {
+        Route route = routeStrategy.findRoute(source, target);
+        checkMovableRoute(route);
+        checkFirstMovePosition(source, target);
+        checkMovableDistance(source, target);
+        return route;
     }
 
-    private List<Position> findCatchPositions(Position source, Map<Position, Piece> board, List<Direction> directions) {
-        return directions.stream()
-                .filter(source::isInBoardAfterMoved)
-                .map(source::createMovablePosition)
-                .filter(position -> board.get(position).isOpponent(player))
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private List<Position> findMovedOnePosition(Position source, Map<Position, Piece> board, Direction direction) {
-        List<Direction> directions = List.of(direction);
-        return directions.stream()
-                .filter(source::isInBoardAfterMoved)
-                .map(source::createMovablePosition)
-                .filter(position -> board.get(position).isSame(NONE))
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    private List<Position> findMovedTwoPosition(Position source, Map<Position, Piece> board, List<Direction> directions) {
-        if (!source.isInBoardAfterMoved(directions.get(1))) {
-            return new ArrayList<>();
+    private void checkMovableRoute(Route route) {
+        if (this.player == WHITE) {
+            route.checkWhitePawnRoute();
         }
-        Position position = source.createMovablePosition(directions.get(0));
-        Position position2 = source.createMovablePosition(directions.get(1));
-        if (source.isStart() && board.get(position).isSame(NONE) && board.get(position2).isSame(NONE)) {
-            return List.of(position2);
+        if (this.player == BLACK) {
+            route.checkBlackPawnRoute();
         }
-        return new ArrayList<>();
     }
 
-    @Override
-    protected List<Direction> getDirection() {
-        if (player.equals(BLACK)) {
-            return List.of(SOUTHEAST, SOUTHWEST, SOUTH, SS);
+    private void checkFirstMovePosition(Position source, Position target) {
+        int rankDifference = Math.abs(source.subtractRankFrom(target));
+        if (rankDifference == MAX_MOVABLE_DISTANCE && source.isNotInitialPawnPosition()) {
+            throw new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
-        return List.of(NORTHEAST, NORTHWEST, NORTH, NN);
+    }
+
+    private void checkMovableDistance(Position source, Position target) {
+        int rankDifference = Math.abs(source.subtractRankFrom(target));
+        int fileDifference = Math.abs(source.subtractFileFrom(target));
+        if (rankDifference > MAX_MOVABLE_DISTANCE) {
+            throw new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+        }
+        if (fileDifference > BASE_MOVABLE_DISTANCE) {
+            throw new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+        }
     }
 
     @Override

@@ -8,13 +8,13 @@ import chess.direction.route.Route;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoyaltyRouteFinder implements RouteStrategy {
+public class PawnRouteFinder implements RouteStrategy {
 
     @Override
     public Route findRoute(final Position source, final Position target) {
         final int rankDifference = source.subtractRankFrom(target);
         final int fileDifference = source.subtractFileFrom(target);
-        List<Direction> directions = createRoyaltyDirections();
+        List<Direction> directions = createPawnDirections();
         return directions.stream()
                 .filter(direction -> direction.findRouteFrom(rankDifference, fileDifference))
                 .map(Direction::getRoute)
@@ -22,7 +22,7 @@ public class RoyaltyRouteFinder implements RouteStrategy {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다."));
     }
 
-    private List<Direction> createRoyaltyDirections() {
+    private List<Direction> createPawnDirections() {
         List<Direction> directions = new ArrayList<>();
         directions.addAll(List.of(CardinalDirection.values()));
         directions.addAll(List.of(DiagonalDirection.values()));

@@ -2,7 +2,6 @@ package chess.direction.strategy;
 
 import chess.Position;
 import chess.direction.CardinalDirection;
-import chess.direction.DiagonalDirection;
 import chess.direction.route.Route;
 import java.util.Arrays;
 

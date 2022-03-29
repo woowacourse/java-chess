@@ -21,14 +21,6 @@ public class Position {
         return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
     }
 
-    public boolean isInBoardAfterMoved(Direction direction) {
-        return direction.isMovablePosition(rank, file);
-    }
-
-    public Position createMovablePosition(Direction direction) {
-        return direction.createMovablePosition(rank, file);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,10 +38,6 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public boolean isStart() {
-        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
-    }
-
     public int subtractRankFrom(final Position otherPosition) {
         return rank.subtractFrom(otherPosition.rank);
     }
@@ -64,5 +52,9 @@ public class Position {
 
     public boolean canCreatePositionTo(Route route) {
         return route.canCreatePosition(rank, file);
+    }
+
+    public boolean isNotInitialPawnPosition() {
+        return !rank.equals(Rank.TWO) && !rank.equals(Rank.SEVEN);
     }
 }
