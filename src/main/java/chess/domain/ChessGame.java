@@ -22,7 +22,7 @@ public class ChessGame {
     public void move(final Position from, final Position to) {
         checkCurrentTurn(from);
         chessBoard.move(from, to);
-        if (chessBoard.isKingDie(to)) {
+        if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
         }
         currentTurnColor = currentTurnColor.toOpposite();

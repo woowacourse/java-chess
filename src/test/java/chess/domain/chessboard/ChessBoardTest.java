@@ -111,7 +111,7 @@ class ChessBoardTest {
 
         // when
         chessBoard.move(from, to);
-        final boolean actual = chessBoard.isKingDie(to);
+        final boolean actual = chessBoard.isKingDie();
 
         // then
         assertThat(actual).isEqualTo(true);

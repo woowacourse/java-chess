@@ -48,12 +48,12 @@ public class ChessBoard {
         pieceByPosition.put(to, movablePiece);
     }
 
-    public boolean isKingDie(final Position to) {
-        final ChessPiece chessPiece = pieceByPosition.get(to);
-        if (Objects.isNull(chessPiece)) {
-            return false;
-        }
-        return chessPiece.isKing();
+    public boolean isKingDie() {
+        final long kingCount = pieceByPosition.values()
+                .stream()
+                .filter(ChessPiece::isKing)
+                .count();
+        return kingCount != 2;
     }
 
     public Map<Position, ChessPiece> findAllPiece() {
