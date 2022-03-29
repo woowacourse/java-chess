@@ -3,7 +3,6 @@ package chess.domain;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class Position {
 
@@ -34,8 +33,10 @@ public class Position {
     }
 
     public static Position valueOf(final String key) {
-        return Optional.ofNullable(CACHE.get(key))
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_POSITION));
+        if (!CACHE.containsKey(key)) {
+            throw new IllegalArgumentException(NOT_EXIST_POSITION);
+        }
+        return CACHE.get(key);
     }
 
     public static Position valueOf(final File file, final Rank rank) {
