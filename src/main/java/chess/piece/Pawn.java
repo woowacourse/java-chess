@@ -16,7 +16,7 @@ public class Pawn extends Piece {
     @Override
     public MovementCondition identifyMovementCondition(Position from, Position to) {
         if (isForward(from, to) && isVerticalWay(from, to) && isValidDistance(from, to)) {
-            return MovementCondition.UNCATCABLE_AND_UNOBSTRUCTED;
+            return MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED;
         }
 
         if (isForward(from, to) && isDiagonalWay(from, to) && isValidDistance(from, to)) {

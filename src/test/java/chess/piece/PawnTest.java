@@ -31,7 +31,7 @@ class PawnTest {
         Pawn pawn = new Pawn(color);
 
         assertThat(pawn.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.UNCATCABLE_AND_UNOBSTRUCTED);
+                .isEqualTo(MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED);
     }
 
     private static Stream<Arguments> provideFirstMoveForwardPawn() {

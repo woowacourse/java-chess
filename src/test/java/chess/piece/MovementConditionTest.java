@@ -72,7 +72,7 @@ public class MovementConditionTest {
     @DisplayName("기존에 위치한 기물과 장애물이 없는 경우에만 이동 가능")
     @MethodSource("provideUncatchableAndUnobstructed")
     void uncatcableAndUnobstructed(Position from, Position to, Map<Position, Piece> board, boolean expect) {
-        MovementCondition condition = MovementCondition.UNCATCABLE_AND_UNOBSTRUCTED;
+        MovementCondition condition = MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED;
         assertThat(condition.isPossibleMovement(from, to, board)).isEqualTo(expect);
     }
 

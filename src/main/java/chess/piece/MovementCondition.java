@@ -30,7 +30,7 @@ public enum MovementCondition {
             return board.containsKey(to);
         }
     },
-    UNCATCABLE_AND_UNOBSTRUCTED {
+    UNCATCHABLE_AND_UNOBSTRUCTED {
         @Override
         public boolean isPossibleMovement(Position from, Position to, Map<Position, Piece> board) {
             return !board.containsKey(to) && from.getLinearPath(to).stream()
