@@ -5,14 +5,17 @@ import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
+import java.util.Collections;
 import java.util.Map;
 
-public class Ready implements State {
+public class Sleep implements State {
 
     private final Board board;
+    private final Map<Team, Double> scores;
 
-    public Ready() {
-        this.board = Board.init();
+    public Sleep(Board board, Map<Team, Double> scores) {
+        this.board = board;
+        this.scores = scores;
     }
 
     @Override
@@ -22,24 +25,24 @@ public class Ready implements State {
 
     @Override
     public boolean isSleep() {
-        return false;
+        return true;
     }
 
     @Override
     public Map<Team, Double> getScores() {
-        throw new IllegalArgumentException("[ERROR] 점수를 집계 할 수 없습니다.");
+        return Collections.unmodifiableMap(scores);
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작하지 않았습니다.");
+        return board.getBoard();
     }
 
     @Override
     public State execute(Command command) {
-        if (command.isStart()) {
+        if (!command.isStart()) {
             return command.executeTo(board);
         }
-        throw new IllegalArgumentException("[ERROR] 게임을 시작하기 위한 명령어가 아닙니다.");
+        throw new IllegalArgumentException("[ERROR] 게임이 진행 중 이여서 새로운 게임을 시작 할 수 없습니다.");
     }
 }

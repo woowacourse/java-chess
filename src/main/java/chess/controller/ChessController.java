@@ -21,6 +21,7 @@ public class ChessController {
         while (!state.isFinished()) {
             state = proceed(state);
             outputView.printBoard(state.getBoard());
+            printScoreIn(state);
         }
     }
 
@@ -53,6 +54,15 @@ public class ChessController {
         if (command.startsWith("move")) {
             return new Move(command);
         }
+        if (command.equals("status")) {
+            return new Status();
+        }
         throw new IllegalArgumentException("[ERROR] 올바른 명령어를 입력 해주세요.");
+    }
+
+    private void printScoreIn(State state) {
+        if (state.isSleep()) {
+            outputView.printScores(state.getScores());
+        }
     }
 }

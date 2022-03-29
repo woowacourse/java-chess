@@ -7,11 +7,11 @@ import chess.model.Team;
 import chess.model.direction.route.Route;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
-import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.position.Rank;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -81,26 +81,19 @@ public class Board {
                 .count() < 2;
     }
 
-    public boolean checkRightTurn(Team team, Position source) {
-        return board.get(source).isSame(team);
-    }
-
     public double calculateScore(Team team) {
+        List<Piece> teamPieces = findPiecesOf(team);
         double score = 0;
-        for (Rank rank : Rank.values()) {
-            int PawnCountInFile = 0;
-            for (File file : File.values()) {
-                if (board.get(Position.of(rank, file)).isSame(team)) {
-                    score = board.get(Position.of(rank, file)).addTo(score);
-                    if (board.get(Position.of(rank, file)).isPawn()) {
-                        PawnCountInFile += 1;
-                    }
-                }
-            }
-            if (PawnCountInFile >= 2) {
-                score -= 0.5 * PawnCountInFile;
-            }
+        for (Piece piece : teamPieces) {
+            score = piece.addTo(score);
         }
         return score;
+    }
+
+    private List<Piece> findPiecesOf(Team team) {
+        return board.keySet().stream()
+                .filter(position -> board.get(position).isSame(team))
+                .map(board::get)
+                .collect(Collectors.toList());
     }
 }

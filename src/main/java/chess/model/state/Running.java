@@ -1,6 +1,7 @@
 package chess.model.state;
 
 import chess.controller.Command;
+import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public class Running implements State {
 
-    private final Board board;
+    protected final Board board;
 
     public Running(Board board) {
         this.board = board;
@@ -17,6 +18,16 @@ public class Running implements State {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public boolean isSleep() {
+        return false;
+    }
+
+    @Override
+    public Map<Team, Double> getScores() {
+        throw new IllegalArgumentException("[ERROR] 점수를 집계 할 수 없습니다.");
     }
 
     @Override

@@ -11,7 +11,6 @@ public abstract class Piece {
     protected final Team team;
     private final String symbol;
 
-
     protected Piece(Team team, String symbol) {
         this.team = team;
         this.symbol = symbol;

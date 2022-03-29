@@ -9,7 +9,6 @@ import chess.model.direction.strategy.OrdinalRouteFinder;
 public class King extends Piece {
 
     private static final int MOVABLE_DISTANCE = 1;
-
     private static final double SCORE = 0;
 
     private final RouteStrategy routeStrategy;

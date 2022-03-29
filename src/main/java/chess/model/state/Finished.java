@@ -1,6 +1,7 @@
 package chess.model.state;
 
 import chess.controller.Command;
+import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -17,6 +18,16 @@ public class Finished implements State {
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public boolean isSleep() {
+        return false;
+    }
+
+    @Override
+    public Map<Team, Double> getScores() {
+        throw new IllegalArgumentException("[ERROR] 점수를 집계 할 수 없습니다.");
     }
 
     @Override
