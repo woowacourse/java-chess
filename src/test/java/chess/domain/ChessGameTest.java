@@ -6,6 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import chess.domain.piece.ChessmenInitializer;
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -33,13 +34,15 @@ public class ChessGameTest {
     @Test
     void move_success() {
         MovePositionCommandDto command = new MovePositionCommandDto("move a2 a4");
+        Position a4 = Position.of("a4");
 
         chessGame.moveChessmen(command);
 
-        Piece actual = chessGame.getChessmen().extractPiece(Position.of("a4"));
-        Pawn expected = new Pawn(WHITE, Position.of("a4"));
+        Position actual = chessGame.getChessmen()
+            .extractPiece(Position.of("a4"))
+            .getPosition();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(a4);
     }
 
     @DisplayName("체스말이 이동할 수 없는 위치면 예외가 발생한다.")
@@ -95,10 +98,9 @@ public class ChessGameTest {
         MovePositionCommandDto command1 = new MovePositionCommandDto("move a2 a4");
         chessGame.moveChessmen(command1);
 
-        Piece actual = chessGame.getChessmen().extractPiece(Position.of("a4"));
-        Pawn expected = new Pawn(WHITE, Position.of("a4"));
+        Color actual = chessGame.getChessmen().extractPiece(Position.of("a4")).getColor();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(WHITE);
     }
 
     @DisplayName("게임 시작시 처음에 흑색말을 움직이려는 경우 예외가 발생한다.")
@@ -145,10 +147,12 @@ public class ChessGameTest {
     @DisplayName("최초의 게임 점수는 각각 38.0점이다.")
     @Test
     void calculateGameResult() {
-        GameResultDto actual = chessGame.calculateGameResult();
-        GameResultDto expected = new GameResultDto(BLACK, 38.0, 38.0);
+        double actual = chessGame.calculateGameResult()
+            .getBlackScore();
+        double expected = new GameResultDto(BLACK, 38.0, 38.0)
+            .getBlackScore();
 
-        assertThat(actual.getBlackScore()).isEqualTo(expected.getBlackScore());
+        assertThat(actual).isEqualTo(expected);
     }
 
 }
