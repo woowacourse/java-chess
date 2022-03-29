@@ -6,12 +6,9 @@ import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public final class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
@@ -30,13 +27,9 @@ public final class OutputView {
     }
 
     public static void printChessBoard(Map<Position, Piece> squares) {
-        List<Rank> ranks = Arrays.stream(Rank.values())
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-
+        List<Rank> ranks = Rank.reverseRanks();
         for (Rank rank : ranks) {
             printChessBoardOfRank(squares, rank);
-            System.out.println();
         }
         System.out.println();
     }
@@ -45,6 +38,7 @@ public final class OutputView {
         for (Column column : Column.values()) {
             System.out.print(squares.get(new Position(column, rank)).getName());
         }
+        System.out.println();
     }
 
     public static void printStatus(Status status) {
