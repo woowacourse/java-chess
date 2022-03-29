@@ -25,7 +25,7 @@ public class RookTest {
         Piece rook = Rook.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = rook.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then
@@ -40,7 +40,7 @@ public class RookTest {
         Piece rook = Rook.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = rook.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then

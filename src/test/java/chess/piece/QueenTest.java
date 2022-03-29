@@ -26,7 +26,7 @@ public class QueenTest {
         Piece queen = Queen.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = queen.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then
@@ -41,7 +41,7 @@ public class QueenTest {
         Piece queen = Queen.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = queen.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = queen.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then

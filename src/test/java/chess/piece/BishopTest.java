@@ -25,8 +25,8 @@ class BishopTest {
     void isMovable(Rank rank, File file) {
         //given
         Piece bishop = Bishop.colorOf(PieceColor.WHITE);
-        Position source = new Position(THREE, C);
-        Position target = new Position(rank, file);
+        Position source = Position.of(THREE, C);
+        Position target = Position.of(rank, file);
 
         //when
         boolean actual = bishop.isMovable(new Path(source, target), MoveType.EMPTY);
@@ -41,8 +41,8 @@ class BishopTest {
     void cantMovable(Rank rank, File file) {
         //given
         Piece bishop = Bishop.colorOf(PieceColor.WHITE);
-        Position source = new Position(THREE, C);
-        Position target = new Position(rank, file);
+        Position source = Position.of(THREE, C);
+        Position target = Position.of(rank, file);
 
         //when
         boolean actual = bishop.isMovable(new Path(source, target), MoveType.EMPTY);

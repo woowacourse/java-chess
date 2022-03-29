@@ -3,7 +3,10 @@ package chess.model;
 import static java.lang.String.*;
 import static java.util.stream.Collectors.*;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -11,18 +14,30 @@ public class Position {
 
     private static final int INDEX_FILE = 0;
     private static final int INDEX_RANK = 1;
+    private static final Map<Rank, Map<File, Position>> CACHE = new HashMap<>();
+
+    static {
+        for (Rank rank : Rank.values()) {
+            CACHE.put(rank, Arrays.stream(File.values())
+                .collect(toUnmodifiableMap(file -> file, file -> new Position(rank, file))));
+        }
+    }
 
     private final Rank rank;
     private final File file;
 
-    public Position(Rank rank, File file) {
+    private Position(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public Position(String rankFile) {
-        this(Rank.of(valueOf(rankFile.charAt(INDEX_RANK))),
-            File.of(valueOf(rankFile.charAt(INDEX_FILE))));
+    public static Position of(Rank rank, File file) {
+        return CACHE.get(rank).get(file);
+    }
+
+    public static Position of(String rankFile) {
+        return CACHE.get(Rank.of(valueOf(rankFile.charAt(INDEX_RANK))))
+            .get(File.of(valueOf(rankFile.charAt(INDEX_FILE))));
     }
 
     public boolean isRankOf(Rank otherRank) {
@@ -68,19 +83,19 @@ public class Position {
 
     private List<Position> straightVerticalFiles(List<File> files) {
         return files.stream()
-            .map(file -> new Position(this.rank, file))
+            .map(file -> Position.of(this.rank, file))
             .collect(Collectors.toList());
     }
 
     private List<Position> straightHorizontalRanks(List<Rank> ranks) {
         return ranks.stream()
-            .map(rank -> new Position(rank, this.file))
+            .map(rank -> Position.of(rank, this.file))
             .collect(Collectors.toList());
     }
 
     private List<Position> positionsBetweenTwoFiles(List<File> files, Rank rank) {
         return files.stream()
-            .map(file -> new Position(rank, file))
+            .map(file -> Position.of(rank, file))
             .collect(toList());
     }
 

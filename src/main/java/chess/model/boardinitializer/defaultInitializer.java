@@ -49,7 +49,7 @@ public class defaultInitializer implements BoardInitializer {
 
     private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(rank, file), EMPTY_PIECE);
+            result.put(Position.of(rank, file), EMPTY_PIECE);
         }
     }
 
@@ -65,7 +65,7 @@ public class defaultInitializer implements BoardInitializer {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(rank, file), Pawn.colorOf(color));
+            result.put(Position.of(rank, file), Pawn.colorOf(color));
         }
     }
 
@@ -73,7 +73,7 @@ public class defaultInitializer implements BoardInitializer {
         ListIterator<Piece> piecesIterator = INIT_PIECE_FUNCTION.apply(color).listIterator();
 
         for (File file : File.values()) {
-            result.put(new Position(rank, file), piecesIterator.next());
+            result.put(Position.of(rank, file), piecesIterator.next());
         }
     }
 }

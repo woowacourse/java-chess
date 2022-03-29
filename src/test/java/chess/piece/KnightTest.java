@@ -26,7 +26,7 @@ public class KnightTest {
         Piece knight = Knight.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = knight.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = knight.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then
@@ -41,7 +41,7 @@ public class KnightTest {
         Piece knight = Knight.colorOf(PieceColor.WHITE);
 
         //when
-        boolean actual = knight.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
+        boolean actual = knight.isMovable(new Path(Position.of(Rank.THREE, File.C), Position.of(rank, file)),
             MoveType.EMPTY);
 
         //then

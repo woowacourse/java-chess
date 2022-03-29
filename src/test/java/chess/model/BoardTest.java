@@ -63,7 +63,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
+            .map(file -> piecesByPositions.get(Position.of(Rank.TWO, file)))
             .collect(Collectors.toList());
 
         assertThat(actual).isEqualTo(expected);
@@ -81,7 +81,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(Rank.TWO, file)))
+            .map(file -> piecesByPositions.get(Position.of(Rank.TWO, file)))
             .collect(Collectors.toList());
 
         //then
@@ -91,7 +91,7 @@ public class BoardTest {
     @Test
     @DisplayName("체스 말이 없는 곳에서 이동 시키면 예외를 던진다.")
     void move_exception() {
-        assertThatThrownBy(() -> board.move(new Position(Rank.THREE, A), new Position(Rank.THREE, B)))
+        assertThatThrownBy(() -> board.move(Position.of(Rank.THREE, A), Position.of(Rank.THREE, B)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ERROR_SOURCE_PIECE_EMPTY);
     }
@@ -100,11 +100,11 @@ public class BoardTest {
     @DisplayName("체스 말이 입력한 target으로 정상 이동했는지 확인한다.")
     void move_test() {
         //when
-        board.move(new Position(Rank.TWO, A), new Position(Rank.THREE, A));
+        board.move(Position.of(Rank.TWO, A), Position.of(Rank.THREE, A));
         Map<Position, Piece> piecesByPositions = board.getValues();
 
         //then
-        assertThat(piecesByPositions.get(new Position(Rank.THREE, A))).isEqualTo(Pawn.colorOf(PieceColor.WHITE));
+        assertThat(piecesByPositions.get(Position.of(Rank.THREE, A))).isEqualTo(Pawn.colorOf(PieceColor.WHITE));
     }
 
     @ParameterizedTest
@@ -112,7 +112,7 @@ public class BoardTest {
     @DisplayName("퀸은 경로에 다른 기물 있으면 이동할 수 없다")
     void isBlocked(Rank rank, File file) {
         assertThatThrownBy(() ->
-            board.move(new Position(ONE, File.C), new Position(rank, file))
+            board.move(Position.of(ONE, File.C), Position.of(rank, file))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -121,16 +121,16 @@ public class BoardTest {
     @DisplayName("나이트는 경로에 다른 기물 있으면 이동할 수 있다")
     void isNonBlocked(Rank rank, File file) {
         assertDoesNotThrow(() ->
-            board.move(new Position(ONE, B), new Position(rank, file))
+            board.move(Position.of(ONE, B), Position.of(rank, file))
         );
     }
 
     @DisplayName("기물이 다른 기물의 이동경로를 막고 있다면 이동이 불가하다")
     @Test
     void isBlockedAfterNightMoved() {
-        board.move(new Position(ONE, B), new Position(THREE, C));
+        board.move(Position.of(ONE, B), Position.of(THREE, C));
         assertThatThrownBy(() ->
-            board.move(new Position(TWO, C), new Position(FOUR, C))
+            board.move(Position.of(TWO, C), Position.of(FOUR, C))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -138,15 +138,15 @@ public class BoardTest {
     @Test
     void isMyTeam() {
         assertThatThrownBy(() ->
-            board.move(new Position(ONE, A), new Position(TWO, A))
+            board.move(Position.of(ONE, A), Position.of(TWO, A))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰을 A2 에서 A4로 이동시켰다면 A4에는 폰이 있다")
     @Test
     void move_pawn_and_now_pawn_is_at_target_pos() {
-        board.move(new Position(TWO, A), new Position(FOUR, A));
-        Piece findPiece = board.getValues().get(new Position(FOUR, A));
+        board.move(Position.of(TWO, A), Position.of(FOUR, A));
+        Piece findPiece = board.getValues().get(Position.of(FOUR, A));
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
@@ -155,7 +155,7 @@ public class BoardTest {
     void move_return_true_when_king_captured() {
         Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
 
-        boolean isFinished = board.move(new Position(TWO, A), new Position(THREE, A));
+        boolean isFinished = board.move(Position.of(TWO, A), Position.of(THREE, A));
         assertThat(isFinished).isTrue();
     }
 
@@ -163,7 +163,7 @@ public class BoardTest {
     @Test
     void score_is_5_when_king_captured() {
         Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
-        board.move(new Position(TWO, A), new Position(THREE, A));
+        board.move(Position.of(TWO, A), Position.of(THREE, A));
         double actual = board.calculateScore();
         assertThat(actual).isEqualTo(5);
     }
@@ -184,8 +184,8 @@ public class BoardTest {
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
             putAllEmptyPieces(result);
-            result.put(new Position(TWO, A), Rook.colorOf(PieceColor.WHITE));
-            result.put(new Position(THREE, A), King.colorOf(PieceColor.BLACK));
+            result.put(Position.of(TWO, A), Rook.colorOf(PieceColor.WHITE));
+            result.put(Position.of(THREE, A), King.colorOf(PieceColor.BLACK));
             return result;
         }
 
@@ -197,7 +197,7 @@ public class BoardTest {
 
         private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
             for (File file : File.values()) {
-                result.put(new Position(rank, file), EMPTY_PIECE);
+                result.put(Position.of(rank, file), EMPTY_PIECE);
             }
         }
     }

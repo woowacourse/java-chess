@@ -15,17 +15,17 @@ public class PositionTest {
     @DisplayName("위치 값의 동일성을 테스트한다.")
     void position_equals() {
         //given
-        Position position = new Position(Rank.ONE, File.A);
+        Position position = Position.of(Rank.ONE, File.A);
 
         //then
-        assertThat(position).isEqualTo(new Position(Rank.ONE, File.A));
+        assertThat(position).isEqualTo(Position.of(Rank.ONE, File.A));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"a9", "i7", "a0", "A1"})
     @DisplayName("위치 범위를 벗어나면 예외를 던진다.")
     void position_exception() {
-        assertThatThrownBy(() -> new Position("a9"))
+        assertThatThrownBy(() -> Position.of("a9"))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("[ERROR]");
     }
@@ -34,13 +34,13 @@ public class PositionTest {
     @DisplayName("두 Position 사이에 위치하는 모든 Position을 담아 List로 반환한다")
     void between() {
         //given
-        Position source = new Position(Rank.ONE, File.A);
-        Position target = new Position(Rank.FOUR, File.D);
+        Position source = Position.of(Rank.ONE, File.A);
+        Position target = Position.of(Rank.FOUR, File.D);
 
         List<Position> traceGroup = source.between(target);
 
         //then
-        assertThat(traceGroup).contains(new Position(Rank.TWO, File.B), new Position(Rank.THREE, File.C)
-            , new Position(Rank.TWO, File.C), new Position(Rank.THREE, File.B));
+        assertThat(traceGroup).contains(Position.of(Rank.TWO, File.B), Position.of(Rank.THREE, File.C)
+            , Position.of(Rank.TWO, File.C), Position.of(Rank.THREE, File.B));
     }
 }

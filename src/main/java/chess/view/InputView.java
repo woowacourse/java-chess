@@ -27,7 +27,7 @@ public class InputView {
         }
 
         List<String> inputs = List.of(input.split(" "));
-        return new MoveRequest(command, new Position(inputs.get(1)), new Position(inputs.get(2)));
+        return new MoveRequest(command, Position.of(inputs.get(1)), Position.of(inputs.get(2)));
     }
 
 }

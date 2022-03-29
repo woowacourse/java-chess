@@ -55,10 +55,10 @@ public class ScoreCalculatorTest {
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
             putAllEmptyPieces(result);
-            result.put(new Position(FOUR, A), Pawn.colorOf(WHITE));
-            result.put(new Position(THREE, A), Pawn.colorOf(WHITE));
-            result.put(new Position(THREE, B), Pawn.colorOf(WHITE));
-            result.put(new Position(FIVE, A), Pawn.colorOf(BLACK));
+            result.put(Position.of(FOUR, A), Pawn.colorOf(WHITE));
+            result.put(Position.of(THREE, A), Pawn.colorOf(WHITE));
+            result.put(Position.of(THREE, B), Pawn.colorOf(WHITE));
+            result.put(Position.of(FIVE, A), Pawn.colorOf(BLACK));
             return result;
         }
 
@@ -70,7 +70,7 @@ public class ScoreCalculatorTest {
 
         private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
             for (File file : File.values()) {
-                result.put(new Position(rank, file), EMPTY_PIECE);
+                result.put(Position.of(rank, file), EMPTY_PIECE);
             }
         }
     }
