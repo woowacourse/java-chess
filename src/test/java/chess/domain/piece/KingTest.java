@@ -21,8 +21,6 @@ class KingTest {
     void canMove_cantGo() {
         // given
         ChessPiece king = new King(Color.BLACK);
-
-        // when
         // then
         assertThatThrownBy(() -> king.canMove(initialPosition, new Position("d7")))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -35,8 +33,6 @@ class KingTest {
     void canMove_canGo(String target) {
         // given
         ChessPiece king = new King(Color.BLACK);
-
-        // when
         // then
         Assertions.assertThatCode(() -> king.canMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();

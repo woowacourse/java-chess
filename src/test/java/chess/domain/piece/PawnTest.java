@@ -19,8 +19,6 @@ class PawnTest {
     void canMove_cantGo(Color color, String target) {
         // given
         ChessPiece pawn = new Pawn(color);
-
-        // when
         // then
         assertThatThrownBy(() -> pawn.canMove(initialPosition, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -32,8 +30,6 @@ class PawnTest {
     void canMove_canGo() {
         // given
         ChessPiece pawn = new Pawn(Color.BLACK);
-
-        // when
         // then
         Assertions.assertThatCode(() -> pawn.canMove(initialPosition, new Position("d4")))
                 .doesNotThrowAnyException();
@@ -46,8 +42,6 @@ class PawnTest {
     void canMove_canGoInit(Color color, String from, String to) {
         // given
         ChessPiece pawn = new Pawn(color);
-
-        // when
         // then
         Assertions.assertThatCode(() -> pawn.canMove(new Position(from), new Position(to)))
                 .doesNotThrowAnyException();
@@ -59,8 +53,6 @@ class PawnTest {
     void canCatch_canCatch(Color color, String target) {
         // given
         ChessPiece pawn = new Pawn(color);
-
-        // when
         // then
         Assertions.assertThatCode(() -> ((Pawn) pawn).checkCrossMove(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();

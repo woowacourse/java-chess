@@ -16,10 +16,8 @@ class PositionTest {
     void isSameFile(String target, boolean expected) {
         //given
         Position targetPosition = new Position(target);
-
         // when
         boolean actual = position.isSameFile(targetPosition);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -30,7 +28,6 @@ class PositionTest {
     void testIsSameFile(String target, boolean expected) {
         // when
         boolean actual = position.isSameFile(target);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -41,10 +38,8 @@ class PositionTest {
     void isSameRank(String target, boolean expected) {
         //given
         Position targetPosition = new Position(target);
-
         // when
         boolean actual = position.isSameRank(targetPosition);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }
@@ -58,7 +53,6 @@ class PositionTest {
         Position targetPosition = new Position(target);
         // when
         Direction actual = targetPosition.findDirection(position);
-
         // then
         assertThat(actual).isEqualTo(expected);
     }

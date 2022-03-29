@@ -22,8 +22,6 @@ class BishopTest {
     void canMove_cantGo() {
         // given
         ChessPiece bishop = new Bishop(Color.BLACK);
-
-        // when
         // then
         assertThatThrownBy(() -> bishop.canMove(initialPosition, new Position("d6")))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -36,8 +34,6 @@ class BishopTest {
     void canMove_canGo() {
         // given
         ChessPiece bishop = new Bishop(Color.BLACK);
-
-        // when
         // then
         Assertions.assertThatCode(() -> bishop.canMove(initialPosition, new Position("c4")))
                 .doesNotThrowAnyException();

@@ -13,10 +13,8 @@ class ChessPieceTest {
         // given
         ChessPiece me = new Pawn(Color.BLACK);
         ChessPiece target = new Pawn(Color.WHITE);
-
         // when
         boolean actual = me.isSameColor(target);
-
         // then
         assertThat(actual).isFalse();
     }

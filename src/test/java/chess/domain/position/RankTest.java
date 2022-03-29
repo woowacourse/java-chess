@@ -13,11 +13,9 @@ class RankTest {
     void of() {
         // given
         String value = "a";
-
         // when
         Rank rank = Rank.of(value);
         String actual = rank.getValue();
-
         // then
         assertThat(actual).isEqualTo(value);
     }
@@ -27,8 +25,6 @@ class RankTest {
     void of_exception() {
         // given
         String value = "i";
-
-        // when
         // then
         assertThatThrownBy(() -> File.of(value))
                 .isInstanceOf(IllegalArgumentException.class)

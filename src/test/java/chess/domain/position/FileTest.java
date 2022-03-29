@@ -13,11 +13,9 @@ class FileTest {
     void of() {
         // given
         String value = "1";
-
         // when
         File file = File.of(value);
         String actual = file.getValue();
-
         // then
         assertThat(actual).isEqualTo(value);
     }
@@ -27,8 +25,6 @@ class FileTest {
     void of_exception() {
         // given
         String value = "9";
-
-        // when
         // then
         assertThatThrownBy(() -> File.of(value))
                 .isInstanceOf(IllegalArgumentException.class)
