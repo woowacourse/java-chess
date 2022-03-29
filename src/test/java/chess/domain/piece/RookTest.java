@@ -16,7 +16,7 @@ public class RookTest {
     void samePosition() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(A, THREE)))
+        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(A, TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
