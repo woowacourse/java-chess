@@ -32,6 +32,10 @@ public class Position {
         return Math.abs(targetPosition.rankIdx - rankIdx);
     }
 
+    public boolean hasRankIdxOf(int rankIdx) {
+        return this.rankIdx == rankIdx;
+    }
+
     public boolean isHorizontal(Position toPosition) {
         return fileDifference(toPosition) == 0
                 && rankDifference(toPosition) > 0;
@@ -61,6 +65,13 @@ public class Position {
         return from + Integer.compare(to, from);
     }
 
+    public boolean checkDirection(Position targetPosition, Direction direction) {
+        int fileDiff =  targetPosition.fileIdx - fileIdx;
+        int rankDiff =  targetPosition.rankIdx - rankIdx;
+
+        return direction.checkByPositionDifference(fileDiff, rankDiff);
+    }
+
     @Override
     public String toString() {
         return "Position{fileIdx=" + fileIdx + ", rankIdx=" + rankIdx + '}';
@@ -75,7 +86,7 @@ public class Position {
             return cache.computeIfAbsent(key, (k) -> new Position(fileIdx, rankIdx));
         }
 
-        private static String toKey(int fileIdx, int rankIdx) {
+        static String toKey(int fileIdx, int rankIdx) {
             return fileIdx + "" + rankIdx;
         }
     }
