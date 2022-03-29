@@ -24,7 +24,7 @@ public class RunningTest {
     @Test
     void running_start_exception() {
         assertThatThrownBy(state::start)
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("이미 시작되었습니다.");
     }
 

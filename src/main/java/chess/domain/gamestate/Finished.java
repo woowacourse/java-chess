@@ -21,7 +21,7 @@ public class Finished implements State {
 
     @Override
     public State move(Position sourcePosition, Position targetPosition) {
-        throw new IllegalStateException(ERROR_CANT_MOVE);
+        throw new UnsupportedOperationException(ERROR_CANT_MOVE);
     }
 
     @Override

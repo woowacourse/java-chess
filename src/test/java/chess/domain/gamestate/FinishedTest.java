@@ -33,7 +33,7 @@ public class FinishedTest {
         Position a3 = Position.of(Column.A, Row.THREE);
 
         assertThatThrownBy(() -> state.move(a2, a3))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 종료되어 기물을 이동할 수 없습니다.");
     }
 

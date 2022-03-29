@@ -31,7 +31,7 @@ public class ReadyTest {
         Position a3 = Position.of(Column.A, Row.THREE);
 
         assertThatThrownBy(() -> state.move(a2, a3))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 시작되지 않아 기물을 이동할 수 없습니다.");
     }
 
@@ -39,7 +39,7 @@ public class ReadyTest {
     @Test
     void ready_status_exception() {
         assertThatThrownBy(state::statusOfBlack)
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 시작되지 않아 상태를 확인할 수 없습니다.");
     }
 }

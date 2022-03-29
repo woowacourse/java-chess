@@ -16,7 +16,7 @@ public class Running implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException(ERROR_ALREADY_STARTED);
+        throw new UnsupportedOperationException(ERROR_ALREADY_STARTED);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class Running implements State {
 
     @Override
     public Camp getWinner() {
-        throw new IllegalStateException(ERROR_NO_WINNER);
+        throw new UnsupportedOperationException(ERROR_NO_WINNER);
     }
 }

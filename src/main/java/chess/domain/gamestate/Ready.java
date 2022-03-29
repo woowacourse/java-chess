@@ -18,7 +18,7 @@ public class Ready implements State {
 
     @Override
     public State move(Position sourcePosition, Position targetPosition) {
-        throw new IllegalStateException(ERROR_CANT_MOVE);
+        throw new UnsupportedOperationException(ERROR_CANT_MOVE);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class Ready implements State {
 
     @Override
     public double statusOfBlack() {
-        throw new IllegalStateException(ERROR_NO_STATUS);
+        throw new UnsupportedOperationException(ERROR_NO_STATUS);
     }
 
     @Override
     public double statusOfWhite() {
-        throw new IllegalStateException(ERROR_NO_STATUS);
+        throw new UnsupportedOperationException(ERROR_NO_STATUS);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class Ready implements State {
 
     @Override
     public Board getBoard() {
-        throw new IllegalStateException(ERROR_NO_BOARD);
+        throw new UnsupportedOperationException(ERROR_NO_BOARD);
     }
 
     @Override
     public Camp getWinner() {
-        throw new IllegalStateException(ERROR_NO_WINNER);
+        throw new UnsupportedOperationException(ERROR_NO_WINNER);
     }
 }
