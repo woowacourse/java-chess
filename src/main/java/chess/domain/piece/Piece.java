@@ -32,21 +32,25 @@ public abstract class Piece {
         return this;
     }
 
-    protected List<Position> findLinearRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-
-        int routeLength = source.calculateMaxLinearLengthTo(target);
-        int xChangeRatio = source.calculateXSlope(target, routeLength);
-        int yChangeRatio = source.calculateYSlope(target, routeLength);
-
-        for (int step = 1; step < routeLength; step++) {
-            Position routeNode = source.displacedOf(xChangeRatio * step, yChangeRatio * step);
-            route.add(routeNode);
-        }
-        return route;
+    public boolean isBlank(){
+        return false;
     }
 
-    public abstract boolean isEnPassantAvailable();
+    public boolean isPawn(){
+        return false;
+    }
+
+    public boolean isKing(){
+        return false;
+    }
+
+    public boolean isRook(){
+        return false;
+    }
+
+    public boolean isEnPassantAvailable(){
+        return false;
+    }
 
     protected abstract String baseSignature();
 
@@ -55,12 +59,4 @@ public abstract class Piece {
     public abstract List<Position> findRoute(Position source, Position target);
 
     public abstract double score();
-
-    public abstract boolean isBlank();
-
-    public abstract boolean isPawn();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isRook();
 }

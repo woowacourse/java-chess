@@ -34,24 +34,4 @@ public class Blank extends Piece {
     public boolean isBlank() {
         return true;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return false;
-    }
 }

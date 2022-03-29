@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Bishop extends LinearMovePiece {
     public Bishop(Color color) {
         super(color);
     }
@@ -39,30 +39,5 @@ public class Bishop extends Piece {
     @Override
     public double score() {
         return 3;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return false;
     }
 }

@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends LinearMovePiece {
     public Rook(Color color) {
         super(color);
     }
@@ -42,27 +42,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public boolean isRook() {
         return true;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return false;
     }
 }

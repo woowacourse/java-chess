@@ -1,10 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Blank;
+import chess.domain.piece.InitialPieces;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
+import chess.domain.position.PositionY;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,27 +19,46 @@ public class Board {
 
     private final Map<Position, Piece> board;
 
-    public Board(Map<Position, Piece> board) {
+    private Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    public boolean isCastable(Color turnColor, Position source, Position target) {
+    public static Board of(Map<Position, Piece> pieces) {
+        return new Board(pieces);
+    }
+
+    public static Board initialBoard() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        Arrays.stream(PositionY.values())
+                .forEach(positionY -> fillRankWithBlank(pieces, positionY));
+        Arrays.stream(InitialPieces.values())
+                .forEach(piece -> piece.addTo(pieces));
+        return new Board(pieces);
+    }
+
+    private static void fillRankWithBlank(Map<Position, Piece> pieces, PositionY positionY) {
+        Arrays.stream(PositionX.values())
+                .map(positionX -> new Position(positionX, positionY))
+                .forEach(position -> pieces.put(position, new Blank()));
+    }
+
+    public boolean isCastable(Color turn, Position source, Position target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
-        return isCastablePieces(turnColor, sourcePiece, targetPiece) && isEmptyBetween(source, target);
+        return isCastablePieces(turn, sourcePiece, targetPiece) && isEmptyBetween(source, target);
     }
 
-    private boolean isCastablePieces(Color turnColor, Piece sourcePiece, Piece targetPiece) {
-        return isCastableSourcePiece(turnColor, sourcePiece) && isCastableTargetPiece(turnColor, targetPiece);
+    private boolean isCastablePieces(Color turn, Piece sourcePiece, Piece targetPiece) {
+        return isCastableSourcePiece(turn, sourcePiece) && isCastableTargetPiece(turn, targetPiece);
     }
 
-    private boolean isCastableSourcePiece(Color turnColor, Piece sourcePiece) {
-        return sourcePiece.isSameColor(turnColor) && sourcePiece.isKing() && sourcePiece.isNeverDisplaced();
+    private boolean isCastableSourcePiece(Color turn, Piece sourcePiece) {
+        return sourcePiece.isSameColor(turn) && sourcePiece.isKing() && sourcePiece.isNeverDisplaced();
     }
 
-    private boolean isCastableTargetPiece(Color turnColor, Piece targetPiece) {
-        return targetPiece.isSameColor(turnColor) && targetPiece.isRook() && targetPiece.isNeverDisplaced();
+    private boolean isCastableTargetPiece(Color turn, Piece targetPiece) {
+        return targetPiece.isSameColor(turn) && targetPiece.isRook() && targetPiece.isNeverDisplaced();
     }
 
     private boolean isEmptyBetween(Position source, Position target) {
@@ -77,87 +99,87 @@ public class Board {
         board.replace(target.displacedOf(3, 0), targetPiece.displaced());
     }
 
-    public boolean isEnPassantAvailable(Color turnColor, Position source, Position target) {
+    public boolean isEnPassantAvailable(Color turn, Position source, Position target) {
         Piece sourcePiece = board.get(source);
 
-        return sourcePiece.isSameColor(turnColor)
+        return sourcePiece.isSameColor(turn)
                 && sourcePiece.isPawn()
-                && isEnPassant(target, turnColor);
+                && isEnPassant(target, turn);
     }
 
-    private boolean isEnPassant(Position target, Color turnColor) {
-        Color enemyColor = turnColor.nextTurnColor();
-        Position enPassantPosition = target.displacedOf(0, enemyColor.direction());
+    private boolean isEnPassant(Position target, Color turn) {
+        Color enemy = turn.nextTurn();
+        Position enPassantPosition = target.displacedOf(0, enemy.direction());
         Piece enPassantPiece = board.get(enPassantPosition);
 
-        return enPassantPiece.isSameColor(enemyColor) && enPassantPiece.isEnPassantAvailable();
+        return enPassantPiece.isSameColor(enemy) && enPassantPiece.isEnPassantAvailable();
     }
 
-    public void doEnPassant(Color turnColor, Position source, Position target) {
+    public void doEnPassant(Color turn, Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        Color enemyColor = turnColor.nextTurnColor();
-        Position enPassantPosition = target.displacedOf(0, enemyColor.direction());
+        Color enemy = turn.nextTurn();
+        Position enPassantPosition = target.displacedOf(0, enemy.direction());
 
         board.replace(source, new Blank());
         board.replace(target, sourcePiece.displaced());
         board.replace(enPassantPosition, new Blank());
     }
 
-    public void validateMovement(Color turnColor, Position source, Position target) {
-        validatePieceChoice(turnColor, source);
-        validateTargetChoice(turnColor, target);
-        validateMovable(turnColor, source, target);
+    public void validateMovement(Color turn, Position source, Position target) {
+        validatePieceChoice(turn, source);
+        validateTargetChoice(turn, target);
+        validateMovable(turn, source, target);
         validateRoute(source, target);
     }
 
-    private void validatePieceChoice(Color turnColor, Position source) {
+    private void validatePieceChoice(Color turn, Position source) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isSameColor(turnColor)) {
+        if (!sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
     }
 
-    private void validateMovable(Color turnColor, Position source, Position target) {
+    private void validateMovable(Color turn, Position source, Position target) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isMovable(source, target)) {
             throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
         }
 
         if (sourcePiece.isPawn()) {
-            validatePawnMovable(turnColor, source, target);
+            validatePawnMovable(turn, source, target);
         }
     }
 
-    private void validatePawnMovable(Color turnColor, Position source, Position target) {
-        Color enemyColor = turnColor.nextTurnColor();
+    private void validatePawnMovable(Color turn, Position source, Position target) {
+        Color enemy = turn.nextTurn();
         if (isStraightMove(source, target)) {
-            validateStraightMove(target, enemyColor);
+            validateStraightMove(target, enemy);
             return;
         }
-        validateDiagonalMove(target, enemyColor);
+        validateDiagonalMove(target, enemy);
     }
 
     private boolean isStraightMove(Position source, Position target) {
         return Math.abs(source.calculateDisplacementXTo(target)) == 0;
     }
 
-    private void validateStraightMove(Position target, Color enemyColor) {
+    private void validateStraightMove(Position target, Color enemy) {
         Piece targetPiece = board.get(target);
-        if (targetPiece.isSameColor(enemyColor)) {
+        if (targetPiece.isSameColor(enemy)) {
             throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
         }
     }
 
-    private void validateDiagonalMove(Position target, Color enemyColor) {
+    private void validateDiagonalMove(Position target, Color enemy) {
         Piece targetPiece = board.get(target);
-        if (!targetPiece.isSameColor(enemyColor)) {
+        if (!targetPiece.isSameColor(enemy)) {
             throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
         }
     }
 
-    private void validateTargetChoice(Color turnColor, Position target) {
+    private void validateTargetChoice(Color turn, Position target) {
         Piece targetPiece = board.get(target);
-        if (targetPiece.isSameColor(turnColor)) {
+        if (targetPiece.isSameColor(turn)) {
             throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
         }
     }
@@ -219,10 +241,10 @@ public class Board {
     }
 
     public boolean isBothKingsAlive() {
-        return countKingsOnBoard() == INITIAL_KING_COUNT;
+        return countKings() == INITIAL_KING_COUNT;
     }
 
-    private long countKingsOnBoard() {
+    private long countKings() {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)

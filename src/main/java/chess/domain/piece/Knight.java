@@ -37,29 +37,4 @@ public class Knight extends Piece {
     public double score() {
         return 2.5;
     }
-
-    @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return false;
-    }
 }

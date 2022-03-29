@@ -14,6 +14,8 @@ public class ChessController {
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
     private static final String MOVE_COMMAND_DELIMITER = " ";
+    private static final int SOURCE_POSITION = 1;
+    private static final int TARGET_POSITION = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -33,7 +35,7 @@ public class ChessController {
     }
 
     private void startGame() {
-        ChessGame game = new ChessGame();
+        ChessGame game = ChessGame.newGame();
         outputView.printBoard(game.getBoard());
         while (game.isRunning()) {
             play(game);
@@ -62,16 +64,12 @@ public class ChessController {
 
     private void playTurn(String moveCommand, ChessGame game) {
         String[] commands = moveCommand.split(MOVE_COMMAND_DELIMITER);
-        game.movePiece(commands[1], commands[2]);
+        game.movePiece(commands[SOURCE_POSITION], commands[TARGET_POSITION]);
     }
 
     private void showStatus(ChessGame game) {
         Map<Color, Double> scores = game.calculateScore();
-        Comparator<Color> comparator = Comparator.comparing(scores::get);
-        Color winningColor = Arrays.stream(Color.values())
-                .max(comparator)
-                .orElse(Color.NONE);
-
-        outputView.printStatus(scores, winningColor);
+        Color winner = game.decideWinner();
+        outputView.printStatus(scores, winner);
     }
 }

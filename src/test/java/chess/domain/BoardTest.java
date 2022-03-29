@@ -29,7 +29,7 @@ public class BoardTest {
         pieces.put(new Position(PositionX.A, PositionY.RANK_2), new Pawn(Color.WHITE));
         pieces.put(new Position(PositionX.A, PositionY.RANK_7), new Pawn(Color.WHITE));
 
-        Board board = new Board(pieces);
+        Board board = Board.of(pieces);
         double score = board.calculateScoreOf(Color.BLACK);
 
         assertThat(score).isEqualTo(12.0);
@@ -50,7 +50,7 @@ public class BoardTest {
         pieces.put(new Position(PositionX.A, PositionY.RANK_2), new Pawn(Color.WHITE));
         pieces.put(new Position(PositionX.A, PositionY.RANK_7), new Pawn(Color.WHITE));
 
-        Board board = new Board(pieces);
+        Board board = Board.of(pieces);
 
         assertThat(board.isBothKingsAlive()).isTrue();
     }
@@ -68,7 +68,7 @@ public class BoardTest {
         pieces.put(new Position(PositionX.A, PositionY.RANK_2), new Pawn(Color.WHITE));
         pieces.put(new Position(PositionX.A, PositionY.RANK_7), new Pawn(Color.WHITE));
 
-        Board board = new Board(pieces);
+        Board board = Board.of(pieces);
 
         assertThat(board.isBothKingsAlive()).isFalse();
     }

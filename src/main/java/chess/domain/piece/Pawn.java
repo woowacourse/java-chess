@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn extends LinearMovePiece {
 
     public Pawn(Color color) {
         super(color);
@@ -42,23 +42,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
     public boolean isPawn() {
         return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
     }
 
     @Override

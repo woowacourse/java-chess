@@ -21,7 +21,7 @@ public enum Color {
         return signature;
     }
 
-    public Color nextTurnColor() {
+    public Color nextTurn() {
         if (this == BLACK) {
             return WHITE;
         }

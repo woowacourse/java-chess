@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Queen extends Piece {
+public class Queen extends LinearMovePiece {
     public Queen(Color color) {
         super(color);
     }
@@ -44,30 +44,5 @@ public class Queen extends Piece {
     @Override
     public double score() {
         return 9;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnPassantAvailable() {
-        return false;
     }
 }

@@ -53,12 +53,10 @@ public enum PositionY {
                 .max(comparatorByCoordination)
                 .orElseThrow(() -> new IllegalArgumentException("세로줄은 1개 이상 존재해야 합니다."));
 
-        return (this.equals(firstRank) || this.equals(lastRank));
+        return this == firstRank || this == lastRank;
     }
 
     public String getName() {
         return name;
     }
-
-
 }
