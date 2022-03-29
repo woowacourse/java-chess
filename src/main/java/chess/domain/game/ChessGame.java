@@ -1,21 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
 import chess.domain.boardstrategy.BoardStrategy;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Team;
-import java.util.HashMap;
-import java.util.Map;
 
 public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
@@ -35,9 +23,7 @@ public final class ChessGame {
     }
 
     public void play(Position from, Position to) {
-        if (!isTurn(from)) {
-            throw new IllegalArgumentException(NO_TURN_MESSAGE);
-        }
+        validateTurn(from);
         boolean isCheckmate = isCheckmate(to);
         board.move(from, to);
         if (isCheckmate) {
@@ -45,6 +31,12 @@ public final class ChessGame {
             return;
         }
         turn = turn.changeTeam();
+    }
+
+    private void validateTurn(Position from) {
+        if (!isTurn(from)) {
+            throw new IllegalArgumentException(NO_TURN_MESSAGE);
+        }
     }
 
     private boolean isTurn(Position position) {
