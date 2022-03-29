@@ -5,10 +5,10 @@ import chess.piece.Color;
 
 public abstract class ChessGameState implements State {
 
-    public static final String UNSUPPORTED_SCORE = "score를 지원하지 않습니다.";
-    public static final String UNSUPPORTED_WINNER = "winner를 지원하지 않습니다.";
-    public static final String UNSUPPORTED_MOVE = "move를 지원하지 않습니다.";
-    public static final String UNSUPPORTED_START = "start를 지원하지 않습니다.";
+    protected static final String UNSUPPORTED_SCORE = "score를 지원하지 않습니다.";
+    protected static final String UNSUPPORTED_WINNER = "winner를 지원하지 않습니다.";
+    protected static final String UNSUPPORTED_MOVE = "move를 지원하지 않습니다.";
+    protected static final String UNSUPPORTED_START = "start를 지원하지 않습니다.";
 
     private final ChessBoard chessBoard;
     private final Color color;

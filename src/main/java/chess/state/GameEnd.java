@@ -7,7 +7,7 @@ import chess.position.Position;
 
 public class GameEnd extends ChessGameState {
 
-    public GameEnd(ChessBoard chessBoard, Color color) {
+    protected GameEnd(ChessBoard chessBoard, Color color) {
         super(chessBoard, color);
     }
 

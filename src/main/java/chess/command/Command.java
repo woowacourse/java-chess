@@ -17,7 +17,7 @@ public interface Command {
         if (command.equals("status")) {
             return new StatusCommand();
         }
-        throw new IllegalArgumentException("[ERROR] 잘못된 명령어를 입력하셨습니다.");
+        throw new IllegalArgumentException("잘못된 명령어를 입력하셨습니다.");
     }
 
     boolean isFinished();
