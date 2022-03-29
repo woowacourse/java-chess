@@ -6,6 +6,7 @@ import chess2.domain2.board2.piece2.PieceType;
 import chess2.domain2.board2.position.Position;
 import chess2.util2.PositionUtil;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
 
@@ -87,6 +88,23 @@ public class Board {
 
     public Map<Position, Piece> toMap() {
         return boardMap;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Board board = (Board) o;
+        return Objects.equals(boardMap, board.boardMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(boardMap);
     }
 
     @Override
