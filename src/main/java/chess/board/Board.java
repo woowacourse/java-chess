@@ -9,6 +9,7 @@ import chess.Rank;
 import chess.piece.Blank;
 import chess.piece.Piece;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -24,12 +25,24 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
+        checkPieceIn(source);
+        checkPieceCanMove(source, target);
+        movePiece(source, target);
+    }
+
+    private void checkPieceIn(Position source) {
         if (board.get(source).isSame(NONE)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
         }
+    }
+
+    private void checkPieceCanMove(Position source, Position target) {
         if (!board.get(source).canMove(source, target, board)) {
             throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
         }
+    }
+
+    private void movePiece(Position source, Position target) {
         board.put(target, board.get(source));
         board.put(source, new Blank(NONE, "."));
     }

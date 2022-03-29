@@ -1,5 +1,6 @@
 package chess;
 
+import chess.direction.Route;
 import java.util.Objects;
 
 public class Position {
@@ -30,8 +31,12 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return rank == position.rank && file == position.file;
     }
@@ -43,5 +48,17 @@ public class Position {
 
     public boolean isStart() {
         return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    }
+
+    public int subtractRankFrom(final Position otherPosition) {
+        return rank.subtractFrom(otherPosition.rank);
+    }
+
+    public int subtractFileFrom(final Position otherPosition) {
+        return file.subtractFrom(otherPosition.file);
+    }
+
+    public Position createPositionFrom(Route route) {
+        return route.createPositionFrom(rank, file);
     }
 }

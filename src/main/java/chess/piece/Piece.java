@@ -4,6 +4,7 @@ import chess.Direction;
 import chess.Player;
 import chess.Position;
 
+import chess.direction.Route;
 import java.util.List;
 import java.util.Map;
 
@@ -26,10 +27,6 @@ public abstract class Piece {
         return player.equals(this.player);
     }
 
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        return true;
-    }
-
     protected List<Direction> getDirection() {
         return null;
     }
@@ -46,5 +43,15 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
+    }
+
+    public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
+
+    public boolean canMove_2(Position source, Position target, Map<Position, Piece> board) {
+        return true;
+    }
+
+    public Route findRoute(Position source, Position target) {
+        return null;
     }
 }

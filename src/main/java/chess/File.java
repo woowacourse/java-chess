@@ -22,7 +22,10 @@ public enum File {
     }
 
     public File add(int file) {
-        return File.of(value + file);
+        if (canAdd(file)) {
+            return File.of(value + file);
+        }
+        throw new IllegalArgumentException("[ERROR] 보드판의 가로줄은 a부터 h 입니다.");
     }
 
     public boolean canAdd(int file) {
@@ -41,5 +44,9 @@ public enum File {
                 .filter(file -> file.name == name)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
+    }
+
+    public int subtractFrom(final File otherFile) {
+        return this.value - otherFile.value;
     }
 }

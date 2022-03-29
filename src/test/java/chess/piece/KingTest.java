@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.*;
 import chess.board.Board;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,6 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Map;
 
+import static chess.File.*;
+import static chess.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {
@@ -17,8 +20,8 @@ public class KingTest {
     @Test
     void canMove_false() {
         Map<Position, Piece> board = new Board().getBoard();
-        Piece king = board.get(Position.of(Rank.EIGHT, File.E));
-        boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), board);
+        Piece king = board.get(Position.of(EIGHT, E));
+        boolean actual = king.canMove_2(Position.of(EIGHT, E), Position.of(SEVEN, E), board);
 
         assertThat(actual).isFalse();
     }
@@ -29,7 +32,7 @@ public class KingTest {
     void canMove_true(Rank rank, File file) {
         Map<Position, Piece> board = new Board().getBoard();
         Piece king = new King(Player.BLACK, "K");
-        boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), board);
+        boolean actual = king.canMove_2(Position.of(FIVE, D), Position.of(rank, file), board);
 
         assertThat(actual).isTrue();
     }
