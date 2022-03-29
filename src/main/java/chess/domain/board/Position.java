@@ -30,10 +30,10 @@ public class Position {
     }
 
     public List<Integer> calculateDistance(Position another) {
-        int columnDistance = this.file.calculate(another.file);
-        int rowDistance = this.rank.calculate(another.rank);
+        int fileDistance = this.file.calculateDistance(another.file);
+        int rankDistance = this.rank.calculateDistance(another.rank);
 
-        return List.of(columnDistance, rowDistance);
+        return List.of(fileDistance, rankDistance);
     }
 
     public List<Position> getPositionBetween(Position target) {

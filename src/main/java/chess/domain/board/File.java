@@ -69,7 +69,7 @@ public enum File {
         return to;
     }
 
-    public int calculate(File other) {
+    public int calculateDistance(File other) {
         return Math.abs(order - other.order);
     }
 }
