@@ -6,7 +6,9 @@ import chess.domain.piece.strategy.BishopMoveStrategy;
 import java.util.List;
 
 public class Bishop extends Piece {
+
     private final String symbol;
+    private static final double SCORE = 3.0;
 
     public Bishop(final Team team, final String symbol) {
         super(team, new BishopMoveStrategy());
@@ -21,5 +23,10 @@ public class Bishop extends Piece {
     @Override
     public String symbol() {
         return symbol;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

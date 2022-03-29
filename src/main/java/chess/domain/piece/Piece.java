@@ -14,6 +14,8 @@ public abstract class Piece {
 
     public abstract List<Direction> possibleDirections();
 
+    public abstract double score();
+
     public Piece(final Team team, final MoveStrategy moveStrategy) {
         this.team = team;
         this.moveStrategy = moveStrategy;

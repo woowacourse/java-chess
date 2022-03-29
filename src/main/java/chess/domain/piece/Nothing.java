@@ -26,4 +26,9 @@ public final class Nothing extends Piece {
     public List<Direction> possibleDirections() {
         return null;
     }
+
+    @Override
+    public double score() {
+        return 0;
+    }
 }

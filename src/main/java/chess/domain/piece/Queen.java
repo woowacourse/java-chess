@@ -6,7 +6,9 @@ import chess.domain.piece.strategy.QueenMoveStrategy;
 import java.util.List;
 
 public class Queen extends Piece {
+
     private final String symbol;
+    private static final double SCORE = 9.0;
 
     public Queen(final Team team, final String symbol) {
         super(team, new QueenMoveStrategy());
@@ -21,5 +23,10 @@ public class Queen extends Piece {
     @Override
     public String symbol() {
         return symbol;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

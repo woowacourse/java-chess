@@ -1,13 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
+import chess.domain.Score;
 import chess.domain.piece.strategy.PawnMoveStrategy;
 import chess.domain.postion.Position;
 
 import java.util.List;
 
 public class Pawn extends Piece {
+
     private final String symbol;
+    private static final double SCORE = 1.0;
 
     public Pawn(final Team team, final String symbol) {
         super(team, new PawnMoveStrategy());
@@ -50,5 +53,10 @@ public class Pawn extends Piece {
     @Override
     public String symbol() {
         return symbol;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }
