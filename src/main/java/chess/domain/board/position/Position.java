@@ -2,6 +2,7 @@ package chess.domain.board.position;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public final class Position {
         if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
-        Column column = Column.letterOf(attribute[0]);
+        Column column = Column.valueOf(attribute[0].toUpperCase(Locale.ROOT));
         Rank rank = Rank.conditionOf(attribute[1]);
 
         return new Position(column, rank);
