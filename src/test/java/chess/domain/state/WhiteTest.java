@@ -3,15 +3,13 @@ package chess.domain.state;
 import chess.domain.Board;
 import chess.domain.BoardFixture;
 import chess.domain.Score;
-import chess.domain.postion.File;
 import chess.domain.postion.Position;
-import chess.domain.postion.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.PositionFixture.WHITE_SOURCE;
-import static chess.domain.PositionFixture.WHITE_TARGET;
+import static chess.domain.postion.File.A;
+import static chess.domain.postion.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -29,7 +27,7 @@ public class WhiteTest {
     void changeTurn() {
         White white = new White(board);
 
-        assertThat(white.changeTurn(WHITE_SOURCE, WHITE_TARGET)).isInstanceOf(Black.class);
+        assertThat(white.changeTurn(new Position(A, TWO), new Position(A, THREE))).isInstanceOf(Black.class);
     }
 
     @DisplayName("White 상태에서 게임이 종료되면 end 상태로 되는지 테스트")
@@ -45,7 +43,7 @@ public class WhiteTest {
     void isNotWhitePiece() {
         White white = new White(board);
 
-        assertThatThrownBy( () -> white.changeTurn(new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.SIX)));
+        assertThatThrownBy( () -> white.changeTurn(new Position(A, SEVEN), new Position(A, SIX)));
     }
 
     @DisplayName("status시 Board로 부터 Map으로된 점수를 받아오는지 테스트")

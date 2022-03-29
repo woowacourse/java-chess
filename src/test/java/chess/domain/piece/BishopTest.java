@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.postion.File;
 import chess.domain.postion.Position;
-import chess.domain.postion.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.PieceFixture.WHITE_BISHOP;
-import static chess.domain.PositionFixture.WHITE_SOURCE;
+import static chess.domain.postion.File.A;
+import static chess.domain.postion.File.C;
+import static chess.domain.postion.Rank.FIVE;
+import static chess.domain.postion.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BishopTest {
@@ -16,9 +17,7 @@ public class BishopTest {
     void notSameDiagonal() {
         Bishop bishop = WHITE_BISHOP;
 
-        assertThatThrownBy(() -> bishop.canMove(WHITE_SOURCE, new Position(File.C, Rank.FIVE)))
+        assertThatThrownBy(() -> bishop.canMove(new Position(A, TWO), new Position(C, FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }

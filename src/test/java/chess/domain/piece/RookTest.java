@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Rook;
-import chess.domain.postion.File;
 import chess.domain.postion.Position;
-import chess.domain.postion.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.PieceFixture.WHITE_ROOK;
-import static chess.domain.PositionFixture.WHITE_SOURCE;
+import static chess.domain.postion.File.*;
+import static chess.domain.postion.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RookTest {
@@ -18,7 +16,7 @@ public class RookTest {
     void samePosition() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(WHITE_SOURCE, WHITE_SOURCE))
+        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(A, THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -27,7 +25,7 @@ public class RookTest {
     void notSameFile() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(File.C, Rank.THREE), new Position(File.B, Rank.TWO)))
+        assertThatThrownBy(() -> rook.canMove(new Position(C, THREE), new Position(B, TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -36,7 +34,7 @@ public class RookTest {
     void notSameRank() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(File.A, Rank.TWO), new Position(File.B, Rank.EIGHT)))
+        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(B, EIGHT)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

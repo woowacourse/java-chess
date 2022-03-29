@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.*;
-
 public class PieceFixture {
 
     private static final Team WHITE_TEAM = Team.WHITE;
@@ -15,9 +13,4 @@ public class PieceFixture {
     public static final King WHITE_KING = new King(WHITE_TEAM, "k");
 
     public static final Pawn BLACK_PAWN = new Pawn(BLACK_TEAM, "P");
-    public static final Rook BLACK_ROOK = new Rook(BLACK_TEAM, "R");
-    public static final Knight BLACK_KNIGHT = new Knight(BLACK_TEAM, "N");
-    public static final Bishop BLACK_BISHOP = new Bishop(BLACK_TEAM, "B");
-    public static final Queen BLACK_QUEEN = new Queen(BLACK_TEAM, "Q");
-    public static final King BLACK_KING = new King(BLACK_TEAM, "K");
 }
