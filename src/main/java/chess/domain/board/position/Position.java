@@ -27,7 +27,7 @@ public final class Position {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
         Column column = Column.valueOf(attribute[0].toUpperCase(Locale.ROOT));
-        Rank rank = Rank.conditionOf(attribute[1]);
+        Rank rank = Rank.numberOf(Integer.parseInt(attribute[1]));
 
         return new Position(column, rank);
     }
