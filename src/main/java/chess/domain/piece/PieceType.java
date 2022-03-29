@@ -17,7 +17,7 @@ public enum PieceType {
         this.score = score;
     }
 
-    public double calculateScore(final double count) {
+    public double calculateScore(final int count) {
         return score * count;
     }
 

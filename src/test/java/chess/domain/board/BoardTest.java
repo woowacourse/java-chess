@@ -272,9 +272,9 @@ class BoardTest {
     void count_Specific_Piece() {
         final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
         Board board = new Board(initialPieces);
-        final double actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
+        final int actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
 
-        assertThat(actualCount).isEqualTo(2.0);
+        assertThat(actualCount).isEqualTo(2);
     }
 }
 
