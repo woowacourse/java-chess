@@ -14,6 +14,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -38,7 +39,7 @@ public class Board {
         putPiecesWithoutPawn(board, Rank.EIGHT, Color.BLACK);
         putPiecesOnRank(board, Rank.SEVEN, new PawnPiece(Color.BLACK));
 
-        for (int i = 3; i <= 6; i++) {
+        for (int i = 6; i >= 3; i--) {
             putPiecesOnRank(board, Rank.of(i), new EmptyPiece());
         }
 
@@ -59,7 +60,9 @@ public class Board {
         board.put(new Position(File.H, rank), new RookPiece(color));
     }
 
-    private static void putPiecesOnRank(final Map<Position, Piece> board, final Rank rank, final Piece piece) {
+    private static void putPiecesOnRank(final Map<Position, Piece> board,
+                                        final Rank rank,
+                                        final Piece piece) {
         for (File file : File.values()) {
             board.put(new Position(file, rank), piece);
         }
