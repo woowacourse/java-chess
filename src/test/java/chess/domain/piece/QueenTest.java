@@ -19,7 +19,7 @@ class QueenTest {
 	@CsvSource(value = {"5:5", "3:3", "7:7", "8:4", "4:7", "1:1"}, delimiter = ':')
 	@DisplayName("Queen을 이동시킨다.")
 	void moveQueen(int row, int column) {
-		Direction direction = queen.matchDirection(
+		Direction direction = queen.checkMovableRange(
 			new Position(4, 4),
 			new Position(row, column));
 		assertThat(direction).isInstanceOfAny(BasicDirection.class, DiagonalDirection.class);
@@ -29,7 +29,7 @@ class QueenTest {
 	@CsvSource(value = {"2:3", "1:8", "5:6"}, delimiter = ':')
 	@DisplayName("Queen은 Rook과 Bishop의 규칙이 적용되지 않는 곳은 이동할 수 없다.")
 	void moveQueenInvalid(int row, int column) {
-		assertThatThrownBy(() -> queen.matchDirection(
+		assertThatThrownBy(() -> queen.checkMovableRange(
 			new Position(4, 4),
 			new Position(row, column))
 		).isInstanceOf(IllegalArgumentException.class);

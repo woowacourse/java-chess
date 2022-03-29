@@ -36,7 +36,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public Direction matchDirection(Position from, Position to) {
+	public Direction checkMovableRange(Position from, Position to) {
 		Direction direction = directionStrategy.find(from, to);
 		if (checkFirstMove(from, to, direction) || checkMove(from, to, direction)) {
 			return direction;
@@ -55,6 +55,16 @@ public class Pawn extends Piece {
 
 	private boolean checkMove(Position from, Position to, Direction direction) {
 		return from.canReach(to, direction.getUnitPosition(), PAWN_BASIC_DISTANCE);
+	}
+
+	@Override
+	public boolean isMovable(Position from, Position to) {
+		return !checkMovableRange(from, to).isDiagonal();
+	}
+
+	@Override
+	public boolean isMovable(Position from, Position to, Piece target) {
+		return !this.isSameColor(target) && checkMovableRange(from, to).isDiagonal();
 	}
 
 	@Override

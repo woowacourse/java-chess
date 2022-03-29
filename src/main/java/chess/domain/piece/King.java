@@ -31,7 +31,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public Direction matchDirection(Position from, Position to) {
+	public Direction checkMovableRange(Position from, Position to) {
 		Direction direction = directionStrategy.find(from, to);
 		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
 			return direction;

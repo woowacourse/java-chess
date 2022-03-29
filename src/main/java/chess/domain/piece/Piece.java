@@ -13,7 +13,7 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	public abstract Direction matchDirection(Position from, Position to);
+	public abstract Direction checkMovableRange(Position from, Position to);
 
 	public boolean isSameColor(Piece piece) {
 		return this.color == piece.color;
@@ -32,4 +32,17 @@ public abstract class Piece {
 	public abstract boolean isKing();
 
 	public abstract double getScore();
+
+	public boolean isMovable(Position from, Position to) {
+		try {
+			checkMovableRange(from, to);
+			return true;
+		} catch (IllegalArgumentException exception) {
+			return false;
+		}
+	}
+
+	public boolean isMovable(Position from, Position to, Piece target) {
+		return !this.isSameColor(target);
+	}
 }

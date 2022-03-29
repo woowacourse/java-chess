@@ -28,7 +28,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public Direction matchDirection(Position from, Position to) {
+	public Direction checkMovableRange(Position from, Position to) {
 		return directionStrategy.find(from, to);
 	}
 

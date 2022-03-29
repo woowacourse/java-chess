@@ -21,9 +21,7 @@ public class Board {
 
 	private static final String NO_PIECE = "해당 위치에 말이 없습니다.";
 	private static final String PIECE_BLOCK = "가려는 위치 중간에 말이 존재합니다.";
-	private static final String CANNOT_MOVE_SAME_COLOR = "아군이 있는 위치에 갈 수 없습니다.";
-	private static final String PAWN_ONLY_DIAGONAL_CATCH = "폰은 본인 진행 방향 대각선에 있는 적만 잡을 수 있습니다.";
-	private static final String CANNOT_MOVE_DIAGONAL_NOT_ENEMY = "폰은 적이 없으면 대각선으로 갈 수 없습니다.";
+	private static final String INVALID_MOVE = "갈 수 없는 위치입니다.";
 
 	private static final int CRITERIA_COUNT_OF_PAWN_SCORE = 1;
 
@@ -38,7 +36,7 @@ public class Board {
 	}
 
 	public boolean isWhite(Position position) {
-		return checkFromPieceEmpty(position).isWhite();
+		return checkPositionEmpty(position).isWhite();
 	}
 
 	public Optional<Piece> findPiece(Position position) {
@@ -46,15 +44,15 @@ public class Board {
 	}
 
 	public void movePiece(Position from, Position to) {
-		Piece fromPiece = checkFromPieceEmpty(from);
-		Direction direction = fromPiece.matchDirection(from, to);
+		Piece fromPiece = checkPositionEmpty(from);
+		Direction direction = fromPiece.checkMovableRange(from, to);
 		searchPiece(from, to, direction);
-		checkTargetPosition(to, fromPiece, direction);
+		validateMovableToTarget(from, to, fromPiece);
 
 		move(from, to, fromPiece);
 	}
 
-	private Piece checkFromPieceEmpty(Position from) {
+	private Piece checkPositionEmpty(Position from) {
 		return findPiece(from)
 			.orElseThrow(() -> new NoSuchElementException(NO_PIECE));
 	}
@@ -73,37 +71,14 @@ public class Board {
 		}
 	}
 
-	private void checkTargetPosition(Position to, Piece fromPiece, Direction direction) {
-		findPiece(to).ifPresentOrElse(
-			toPiece -> {
-				validateSameColor(fromPiece, toPiece);
-				checkPieceIsPawn(fromPiece, direction, toPiece);
-			},
-			() -> validatePawnDiagonalMove(fromPiece, direction)
-		);
-	}
-
-	private void validateSameColor(Piece fromPiece, Piece toPiece) {
-		if (fromPiece.isSameColor(toPiece)) {
-			throw new IllegalArgumentException(CANNOT_MOVE_SAME_COLOR);
+	private void validateMovableToTarget(Position from, Position to, Piece fromPiece) {
+		Optional<Piece> nullablePiece = findPiece(to);
+		if (nullablePiece.isPresent() && !fromPiece.isMovable(from, to, nullablePiece.get())) {
+			throw new IllegalArgumentException(INVALID_MOVE);
 		}
-	}
 
-	private void checkPieceIsPawn(Piece fromPiece, Direction direction, Piece toPiece) {
-		if (fromPiece.isPawn()) {
-			validateDiagonalEnemy(fromPiece, toPiece, direction);
-		}
-	}
-
-	private void validateDiagonalEnemy(Piece fromPiece, Piece toPiece, Direction direction) {
-		if (!direction.isDiagonal() || fromPiece.isSameColor(toPiece)) {
-			throw new IllegalArgumentException(PAWN_ONLY_DIAGONAL_CATCH);
-		}
-	}
-
-	private void validatePawnDiagonalMove(Piece fromPiece, Direction direction) {
-		if (fromPiece.isPawn() && direction.isDiagonal()) {
-			throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL_NOT_ENEMY);
+		if (nullablePiece.isEmpty() && !fromPiece.isMovable(from, to)) {
+			throw new IllegalArgumentException(INVALID_MOVE);
 		}
 	}
 
