@@ -2,8 +2,8 @@ package chess.piece;
 
 import chess.Player;
 import chess.Position;
-import chess.direction.Route;
-import chess.direction.strategy.KingRouteFinder;
+import chess.direction.route.Route;
+import chess.direction.strategy.RoyaltyRouteFinder;
 import chess.direction.strategy.RouteStrategy;
 
 public class King extends Piece {
@@ -14,7 +14,7 @@ public class King extends Piece {
 
     public King(Player player, String symbol) {
         super(player, symbol);
-        this.routeStrategy = new KingRouteFinder();
+        this.routeStrategy = new RoyaltyRouteFinder();
     }
 
     public Route findRoute(Position source, Position target) {

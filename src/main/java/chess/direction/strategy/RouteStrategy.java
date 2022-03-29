@@ -1,7 +1,7 @@
 package chess.direction.strategy;
 
 import chess.Position;
-import chess.direction.Route;
+import chess.direction.route.Route;
 
 public interface RouteStrategy {
 

@@ -1,6 +1,6 @@
 package chess;
 
-import chess.direction.Route;
+import chess.direction.route.Route;
 import java.util.Objects;
 
 public class Position {

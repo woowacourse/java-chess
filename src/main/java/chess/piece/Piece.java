@@ -4,7 +4,7 @@ import chess.Direction;
 import chess.Player;
 import chess.Position;
 
-import chess.direction.Route;
+import chess.direction.route.Route;
 import java.util.List;
 import java.util.Map;
 

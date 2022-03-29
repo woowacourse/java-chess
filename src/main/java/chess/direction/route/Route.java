@@ -1,4 +1,4 @@
-package chess.direction;
+package chess.direction.route;
 
 import chess.File;
 import chess.Position;

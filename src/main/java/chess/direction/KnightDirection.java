@@ -1,9 +1,9 @@
 package chess.direction;
 
-import java.util.Arrays;
+import chess.direction.route.Route;
 import java.util.function.BiPredicate;
 
-public enum KnightDirection {
+public enum KnightDirection implements Direction {
 
     EEN((y, x) -> y == 1 && x == -2, new Route(-1, 2)),
     EES((y, x) -> y == -1 && x == -2, new Route(1, 2)),
@@ -23,11 +23,13 @@ public enum KnightDirection {
         this.route = route;
     }
 
-    public static Route findRouteFrom(final int y, final int x) {
-        KnightDirection direction = Arrays.stream(values())
-                .filter(value -> value.routeFinder.test(y, x))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 기물이 이동할수 없는 Target이 입력 됬습니다."));
-        return direction.route;
+    @Override
+    public boolean findRouteFrom(int rankDifference, int fileDifference) {
+        return routeFinder.test(rankDifference, fileDifference);
+    }
+
+    @Override
+    public Route getRoute() {
+        return route;
     }
 }

@@ -2,7 +2,7 @@ package chess.piece;
 
 import chess.Player;
 import chess.Position;
-import chess.direction.Route;
+import chess.direction.route.Route;
 import chess.direction.strategy.KnightRouteFinder;
 import chess.direction.strategy.RouteStrategy;
 

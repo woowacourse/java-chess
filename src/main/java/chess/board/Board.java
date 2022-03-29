@@ -6,7 +6,6 @@ import chess.File;
 import chess.Player;
 import chess.Position;
 import chess.Rank;
-import chess.direction.Route;
 import chess.piece.Blank;
 import chess.piece.Piece;
 import java.util.Collections;

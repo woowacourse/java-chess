@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.Player;
 import chess.Position;
-import chess.direction.Route;
+import chess.direction.route.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
