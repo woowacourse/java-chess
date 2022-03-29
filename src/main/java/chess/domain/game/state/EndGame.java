@@ -11,22 +11,22 @@ public class EndGame implements GameState {
 
     @Override
     public GameState start() {
-        throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
     }
 
     @Override
     public GameState move(Position source, Position target) {
-        throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
     }
 
     @Override
     public Map<Color, Double> status() {
-        throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
     }
 
     @Override
     public GameState end() {
-        throw new IllegalArgumentException("이미 종료된 게임입니다.");
+        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
     }
 
     @Override
