@@ -1,4 +1,4 @@
-package chess.domain.piece.strategy;
+package chess.domain.piece.strategy.pawn;
 
 import static chess.domain.BoardFixtures.generateEmptyChessBoard;
 import static chess.domain.BoardFixtures.setPiece;
