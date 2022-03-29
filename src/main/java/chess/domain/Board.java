@@ -103,18 +103,18 @@ public class Board {
 
     private double calculateSameLinePawnScore(Color color) {
         List<Position> pawnPositions = board.keySet().stream()
-            .filter(position -> board.get(position).isSameColor(color))
-            .filter(position -> board.get(position).isPawn())
+            .filter(
+                position -> board.get(position).isSameColor(color) && board.get(position).isPawn())
             .collect(Collectors.toList());
 
         return pawnPositions.stream()
             .filter(position -> isSameLine(pawnPositions, position))
-            .map(position -> 0.5)
-            .reduce(0.0, Double::sum);
+            .mapToDouble(position -> 0.5)
+            .sum();
     }
 
     public Color getWinnerTeamColor() {
-        if(isAllKingExist()) {
+        if (isAllKingExist()) {
             throw new IllegalStateException(ALL_KING_EXIST);
         }
         return board.values().stream()
