@@ -84,7 +84,7 @@ class PlayerTest {
         final Player player = new Player(List.of(piece1, piece2, piece3), Team.WHITE);
         final double expected = 2;
 
-        final double actual = player.calculateScore();
+        final double actual = player.calculateScore().getScore();
 
         assertThat(actual).isEqualTo(expected);
     }
