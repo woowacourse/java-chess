@@ -5,7 +5,6 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
 import chess.domain.piece.AbstractPiece;
-import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,8 +23,7 @@ public abstract class MultipleMovePiece extends AbstractPiece {
         if (route.isEmpty()) {
             return false;
         }
-        return isEmptyRouteWithoutTargetPosition(target, chessBoard, route)
-                && !isTargetSameColor(source, target, chessBoard);
+        return isEmptyRouteWithoutTargetPosition(target, chessBoard, route);
     }
 
     private List<Position> calculateRoute(Position source, Position target) {
@@ -40,10 +38,5 @@ public abstract class MultipleMovePiece extends AbstractPiece {
         return route.stream()
                 .filter(position -> !position.equals(target))
                 .allMatch(chessBoard::isPositionEmpty);
-    }
-
-    private boolean isTargetSameColor(Position source, Position target, ChessBoard chessBoard) {
-        Piece piece = chessBoard.pieceByPosition(source);
-        return !chessBoard.isPositionEmpty(target) && chessBoard.pieceByPosition(target).isSameTeamPiece(piece);
     }
 }

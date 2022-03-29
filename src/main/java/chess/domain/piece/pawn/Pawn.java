@@ -5,7 +5,6 @@ import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
 import chess.domain.piece.AbstractPiece;
-import chess.domain.piece.Piece;
 import java.util.List;
 
 public abstract class Pawn extends AbstractPiece {
@@ -27,15 +26,10 @@ public abstract class Pawn extends AbstractPiece {
 
     @Override
     public final boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
-        if (existDirectionToEnemyPiecePosition(source, target, chessBoard)) {
-            return isMovableToEnemyPosition(source, target);
+        if (chessBoard.isPositionEmpty(target)) {
+            return isMovableToPosition(source, target, chessBoard);
         }
-        return isMovableToPosition(source, target, chessBoard);
-    }
-
-    private boolean existDirectionToEnemyPiecePosition(Position source, Position target, ChessBoard chessBoard) {
-        Piece piece = chessBoard.pieceByPosition(source);
-        return !chessBoard.isPositionEmpty(target) && !piece.isSameTeamPiece(chessBoard.pieceByPosition(target));
+        return isMovableToEnemyPosition(source, target);
     }
 
     private boolean isMovableToEnemyPosition(Position source, Position target) {

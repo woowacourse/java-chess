@@ -44,16 +44,15 @@ class RookTest {
         assertThat(rook.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"WHITE,false", "BLACK,true"})
+    @Test
     @DisplayName("가로막히지 않고 목표지점에 기물이 존재시 이동 가능 여부")
-    void isMovableToClearPiecePosition(Color color, boolean expected) {
+    void isMovableToClearPiecePosition() {
         Position target = Position.of('d', '8');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new Rook(WHITE),
-                target, new Rook(color)));
+                target, new Rook(BLACK)));
 
-        assertThat(rook.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThat(rook.isMovable(source, target, chessBoard)).isTrue();
     }
 
     @Test

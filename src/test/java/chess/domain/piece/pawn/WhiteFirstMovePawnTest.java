@@ -69,9 +69,7 @@ class WhiteFirstMovePawnTest {
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {
         return Stream.of(
                 Arguments.of(Position.of('a', '2'), new BlackPawn(), true),
-                Arguments.of(Position.of('c', '2'), new BlackPawn(), true),
-                Arguments.of(Position.of('a', '2'), new WhitePawn(), false),
-                Arguments.of(Position.of('c', '2'), new WhitePawn(), false)
+                Arguments.of(Position.of('c', '2'), new BlackPawn(), true)
         );
     }
 }

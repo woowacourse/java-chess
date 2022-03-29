@@ -71,9 +71,7 @@ class BlackPawnTest {
     private static Stream<Arguments> canMoveToEnemyPiecePosition() {
         return Stream.of(
                 Arguments.of(Position.of('a', '6'), new BlackPawn(), true),
-                Arguments.of(Position.of('c', '6'), new BlackPawn(), true),
-                Arguments.of(Position.of('a', '6'), new WhitePawn(), false),
-                Arguments.of(Position.of('c', '6'), new WhitePawn(), false)
+                Arguments.of(Position.of('c', '6'), new BlackPawn(), true)
         );
     }
 }

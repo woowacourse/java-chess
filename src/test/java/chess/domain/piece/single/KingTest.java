@@ -1,5 +1,6 @@
 package chess.domain.piece.single;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,6 +11,7 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -43,16 +45,15 @@ class KingTest {
         assertThat(king.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"WHITE,false", "BLACK,true"})
+    @Test
     @DisplayName("기물이 존재할 경우의 이동 가능 여부 확인")
-    void isMovableToDifferentPiecePosition(Color color, boolean expected) {
+    void isMovableToDifferentPiecePosition() {
         Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new King(WHITE),
-                target, new King(color)
+                target, new King(BLACK)
         ));
 
-        assertThat(king.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThat(king.isMovable(source, target, chessBoard)).isTrue();
     }
 }

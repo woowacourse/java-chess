@@ -1,10 +1,10 @@
 package chess.domain.piece.single;
 
+import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -41,16 +41,15 @@ class KnightTest {
         assertThat(knight.isMovable(source, target, chessBoard)).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"c,2,WHITE,false", "b,3,BLACK,true"})
+    @Test
     @DisplayName("기물이 존재할 경우의 이동 가능 여부 확인")
-    void isMovableToDifferentPiecePosition(char col, char row, Color color, boolean expected) {
-        Position target = Position.of(col, row);
+    void isMovableToDifferentPiecePosition() {
+        Position target = Position.of('b', '3');
         ChessBoard chessBoard = new ChessBoard(Map.of(
                 source, new Knight(WHITE),
-                target, new Knight(color)
+                target, new Knight(BLACK)
         ));
 
-        assertThat(knight.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThat(knight.isMovable(source, target, chessBoard)).isTrue();
     }
 }
