@@ -161,6 +161,20 @@ public class BoardTest {
         assertThat(isFinished).isTrue();
     }
 
+    @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
+    @Test
+    void score_is_5_when_king_captured() {
+        Board board = new Board(new AlternatingTurnDecider(), () -> {
+            Map<Position, Piece> boardMap = new LinkedHashMap<>();
+            boardMap.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
+            boardMap.put(new Position(THREE, A), new King(PieceColor.BLACK));
+            return boardMap;
+        });
+        board.move(new Position(TWO, A), new Position(THREE, A));
+        double actual = board.calculateScore();
+        assertThat(actual).isEqualTo(5);
+    }
+
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {

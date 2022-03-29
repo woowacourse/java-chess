@@ -3,6 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -44,5 +45,11 @@ public class KingTest {
 
         //then
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("isKing의 return 값이 true이다.")
+    void isKing() {
+        assertThat(new King(PieceColor.WHITE).isKing()).isTrue();
     }
 }

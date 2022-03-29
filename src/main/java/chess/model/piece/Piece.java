@@ -45,4 +45,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(pieceColor);
     }
+
+    public abstract boolean isKnight();
+
+    public abstract boolean isKing();
 }

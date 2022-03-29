@@ -8,8 +8,6 @@ import java.util.Map;
 
 import chess.model.boardinitializer.BoardInitializer;
 import chess.model.piece.EmptyPiece;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.turndecider.TurnDecider;
@@ -32,7 +30,7 @@ public class Board {
     public boolean move(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
-        boolean isFinished = pieceAt(target) instanceof King;
+        boolean isFinished = pieceAt(target).isKing();
 
         changePiecePositions(source, target);
 
@@ -86,7 +84,7 @@ public class Board {
     }
 
     private boolean isBlocked(Position source, Position target) {
-        if (pieceAt(source) instanceof Knight) {
+        if (pieceAt(source).isKnight()) {
             return false;
         }
 

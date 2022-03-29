@@ -67,4 +67,14 @@ public class Pawn extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public boolean isKnight() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
