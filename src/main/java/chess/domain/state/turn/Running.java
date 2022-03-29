@@ -28,6 +28,7 @@ public abstract class Running implements State {
         }
         return next();
     }
+
     @Override
     public final State finish() {
         return new Finish();

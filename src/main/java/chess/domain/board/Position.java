@@ -12,6 +12,12 @@ import java.util.Optional;
 public class Position {
 
     private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
+    public static final int MIN_ROW = 1;
+    public static final int MAX_ROW = 8;
+    public static final int MIN_COLUMN = 1;
+    public static final int MAX_COLUMN = 8;
+    public static final int BLACK_PAWN_DEFAULT_ROW = 7;
+    public static final int WHITE_PAWN_DEFAULT_ROW = 2;
 
     private final int row;
     private final int column;
@@ -37,12 +43,12 @@ public class Position {
     }
 
     private static boolean isOverRange(final int row, final int column) {
-        return row < 1 || row > 8 || column < 1 || column > 8;
+        return row < MIN_ROW || row > MAX_ROW || column < MIN_COLUMN || column > MAX_COLUMN;
     }
 
     public static List<Position> getPositions() {
         List<Position> positions = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
+        for (int i = MIN_ROW; i <= MAX_ROW; i++) {
             positions.addAll(createRowPositions(i));
         }
         return positions;
@@ -79,7 +85,7 @@ public class Position {
 
     private static List<Position> createRowPositions(final int row) {
         List<Position> rowPositions = new ArrayList<>();
-        for (int j = 1; j < 9; j++) {
+        for (int j = MIN_COLUMN; j <= MAX_COLUMN; j++) {
             rowPositions.add(Position.of(row, j));
         }
         return rowPositions;
@@ -87,21 +93,29 @@ public class Position {
 
     public static List<Position> getReversePositions() {
         List<Position> positions = new ArrayList<>();
-        for (int i = 8; i >= 1; i--) {
+        for (int i = MAX_ROW; i >= MIN_ROW; i--) {
             positions.addAll(createRowPositions(i));
         }
         return positions;
     }
 
     public boolean isEndColumn() {
-        return column == 8;
+        return column == MAX_COLUMN;
     }
 
     public boolean isDefaultRow(final Team team) {
         if (team.isBlack()) {
-            return this.row == 7;
+            return this.row == BLACK_PAWN_DEFAULT_ROW;
         }
-        return this.row == 2;
+        return this.row == WHITE_PAWN_DEFAULT_ROW;
+    }
+
+    public int subtractRow(Position target) {
+        return this.row - target.row;
+    }
+
+    public int subtractColumn(Position target) {
+        return this.column - target.column;
     }
 
     @Override
@@ -119,13 +133,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
-    }
-
-    public int subtractRow(Position target) {
-        return this.row - target.row;
-    }
-
-    public int subtractColumn(Position target) {
-        return this.column - target.column;
     }
 }
