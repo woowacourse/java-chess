@@ -36,24 +36,6 @@ public class Position {
         return this.rankIdx == rankIdx;
     }
 
-    public boolean isHorizontal(Position toPosition) {
-        return fileDifference(toPosition) == 0
-                && rankDifference(toPosition) > 0;
-    }
-
-    public boolean isVertical(Position toPosition) {
-        return fileDifference(toPosition) > 0
-                && rankDifference(toPosition) == 0;
-    }
-
-    public boolean isDiagonal(Position toPosition) {
-        return fileDifference(toPosition) == rankDifference(toPosition);
-    }
-
-    public boolean isStraightPath(Position toPosition) {
-        return isHorizontal(toPosition) || isVertical(toPosition) || isDiagonal(toPosition);
-    }
-
     public Position oneStepToward(Position targetPosition) {
         int nextFileIdx = incrementToward(fileIdx, targetPosition.fileIdx);
         int nextRankIdx = incrementToward(rankIdx, targetPosition.rankIdx);

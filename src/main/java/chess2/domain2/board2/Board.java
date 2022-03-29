@@ -79,4 +79,9 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return board;
     }
+
+    @Override
+    public String toString() {
+        return "Board{board=" + board + '}';
+    }
 }

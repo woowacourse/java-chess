@@ -17,8 +17,8 @@ public final class Pawn extends Piece {
     private static final int WHITE_INIT_RANK_IDX = 1;
     private static final int BLACK_INIT_RANK_IDX = 6;
 
-    private static final Direction WHITE_MOVE_DIRECTION = UP;
-    private static final Direction BLACK_MOVE_DIRECTION = DOWN;
+    private static final int ADJACENT_DISTANCE = 1;
+    private static final int DOUBLE_STEP_DISTANCE = 2;
 
     private static final List<Direction> WHITE_ATTACK_DIRECTION = List.of(UP_LEFT, UP_RIGHT);
     private static final List<Direction> BLACK_ATTACK_DIRECTION = List.of(DOWN_LEFT, DOWN_RIGHT);
@@ -29,25 +29,25 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position from, Position to) {
-        if (!isMovableDirection(from, to)) {
+        if (!isForward(from, to)) {
             return false;
         }
         return isOneOrTwoStepsAway(from, to);
     }
 
-    private boolean isMovableDirection(Position from, Position to) {
+    private boolean isForward(Position from, Position to) {
         if (hasColorOf(WHITE)) {
-            return from.checkDirection(to, WHITE_MOVE_DIRECTION);
+            return from.checkDirection(to, UP);
         }
-        return from.checkDirection(to, BLACK_MOVE_DIRECTION);
+        return from.checkDirection(to, DOWN);
     }
 
     private boolean isOneOrTwoStepsAway(Position from, Position to) {
         int rankDiff = from.rankDifference(to);
-        if (rankDiff == 2) {
+        if (rankDiff == DOUBLE_STEP_DISTANCE) {
             return atInitialPosition(from);
         }
-        return rankDiff == 1;
+        return rankDiff == ADJACENT_DISTANCE;
     }
 
     private boolean atInitialPosition(Position currentPosition) {
@@ -69,7 +69,7 @@ public final class Pawn extends Piece {
         int fileDiff = from.fileDifference(to);
         int rankDiff = from.rankDifference(to);
 
-        return fileDiff == 1 && rankDiff == 1;
+        return fileDiff == ADJACENT_DISTANCE && rankDiff == ADJACENT_DISTANCE;
     }
 
     private boolean isAttackDirection(Position from, Position to) {

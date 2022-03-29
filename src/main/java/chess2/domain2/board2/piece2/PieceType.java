@@ -2,14 +2,15 @@ package chess2.domain2.board2.piece2;
 
 import chess2.domain2.board2.Position;
 import chess2.strategy.RouteChecker;
+import chess2.util2.PositionUtil;
 
 public enum PieceType {
 
     PAWN(PieceType::isPawnMovable),
     KNIGHT(PieceType::isKnightMovable),
-    BISHOP(Position::isDiagonal),
-    ROOK(PieceType::isRookMovable),
-    QUEEN(Position::isStraightPath),
+    BISHOP(PositionUtil::isDiagonal),
+    ROOK(PositionUtil::isHorizontalOrVertical),
+    QUEEN(PositionUtil::isStraightPath),
     KING(PieceType::isKingMovable);
 
     private static final int KNIGHT_SUB_MOVE_DIFF = 1;
@@ -36,11 +37,6 @@ public enum PieceType {
 
         return (fileDiff == KNIGHT_SUB_MOVE_DIFF && rankDiff == KNIGHT_MAIN_MOVE_DIFF)
                 || (fileDiff == KNIGHT_MAIN_MOVE_DIFF && rankDiff == KNIGHT_SUB_MOVE_DIFF);
-    }
-
-    private static boolean isRookMovable(Position fromPosition, Position toPosition) {
-        return fromPosition.isHorizontal(toPosition)
-                || fromPosition.isVertical(toPosition);
     }
 
     private static boolean isKingMovable(Position fromPosition, Position toPosition) {
