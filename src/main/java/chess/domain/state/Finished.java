@@ -17,11 +17,6 @@ public class Finished implements ChessState {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }

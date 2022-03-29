@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface ChessState {
 
-    boolean isRunning();
-
     boolean isFinished();
 
     ChessState start();

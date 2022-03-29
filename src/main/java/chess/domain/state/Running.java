@@ -21,10 +21,6 @@ public abstract class Running implements ChessState {
         this.color = color;
     }
 
-    @Override
-    public boolean isRunning() {
-        return true;
-    }
 
     @Override
     public boolean isFinished() {

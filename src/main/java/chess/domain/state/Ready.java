@@ -12,10 +12,6 @@ public class Ready implements ChessState {
     private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-    @Override
     public boolean isFinished() {
         return false;
     }
