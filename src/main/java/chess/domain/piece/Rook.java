@@ -1,14 +1,18 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.RookMoveStrategy;
 
 public class Rook extends Piece {
 
     private static final double ROOK_SCORE = 5;
 
+    private final MoveStrategy moveStrategy;
+
     public Rook(Color color) {
-        super(new RookMoveStrategy(), color, ROOK_SCORE);
+        super(color, ROOK_SCORE);
+        this.moveStrategy = new RookMoveStrategy();
     }
 
     @Override

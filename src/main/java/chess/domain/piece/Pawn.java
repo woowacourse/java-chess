@@ -2,14 +2,18 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.Position;
+import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
 
     private static final double PAWN_SCORE = 1;
 
+    private final MoveStrategy moveStrategy;
+
     public Pawn(Color color) {
-        super(new PawnMoveStrategy(), color, PAWN_SCORE);
+        super(color, PAWN_SCORE);
+        this.moveStrategy = new PawnMoveStrategy();
     }
 
     @Override
