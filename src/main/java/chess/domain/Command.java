@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.state.State;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Command {
 
@@ -24,7 +25,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
     }
 
-    public State run(final State state, final String[] commands) {
+    public State run(final State state, final List<String> commands) {
         if (this == START) {
             return state.start();
         }

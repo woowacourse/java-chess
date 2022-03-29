@@ -6,6 +6,7 @@ import chess.domain.Score;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.OutputView;
+import java.util.List;
 
 public class Started implements State {
 
@@ -33,7 +34,7 @@ public class Started implements State {
     }
 
     @Override
-    public State move(final String[] commands) {
+    public State move(final List<String> commands) {
         final Position from = Position.create(toPosition(commands, SOURCE_INDEX));
         final Position to = Position.create(toPosition(commands, TARGET_INDEX));
 
@@ -45,10 +46,10 @@ public class Started implements State {
         return runMovePiece(from, to);
     }
 
-    private String toPosition(final String[] commands, final int index) {
+    private String toPosition(final List<String> commands, final int index) {
         try {
-            return commands[index];
-        } catch (ArrayIndexOutOfBoundsException exception) {
+            return commands.get(index);
+        } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("[ERROR] source 위치와 target 위치를 입력해주세요.");
         }
     }

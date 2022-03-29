@@ -1,5 +1,7 @@
 package chess.state;
 
+import java.util.List;
+
 public class Ended implements State {
 
     @Override
@@ -13,7 +15,7 @@ public class Ended implements State {
     }
 
     @Override
-    public State move(final String[] commands) {
+    public State move(final List<String> commands) {
         return new Ended();
     }
 

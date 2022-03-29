@@ -2,6 +2,7 @@ package chess.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ class EndedTest {
 
     @Test
     void move() {
-        String[] commands = {"move", "b2", "b3"};
+        List<String> commands = List.of("move", "b2", "b3");
         assertThat(ended.move(commands)).isInstanceOf(Ended.class);
     }
 

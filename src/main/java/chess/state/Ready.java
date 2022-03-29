@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
+import java.util.List;
 
 public class Ready implements State {
 
@@ -20,7 +21,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(final String[] commands) {
+    public State move(final List<String> commands) {
         OutputView.printErrorMessage("[ERROR] start를 하지 않아 move 할 수 없습니다.");
         return new Ready();
     }
