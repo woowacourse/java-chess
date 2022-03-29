@@ -22,9 +22,9 @@ class WhitePawnTest {
     @BeforeEach
     void setUp() {
         source = Position.of('b', '2');
-        ChessBoard chessBoard = new ChessBoard(
-                Map.of(Position.of('b', '1'), new WhitePawn()));
 
+        final ChessBoard chessBoard = new ChessBoard(
+                Map.of(Position.of('b', '1'), new WhitePawn()));
         pawn = new WhitePawn()
                 .move(Position.of('b', '1'), source, chessBoard);
     }

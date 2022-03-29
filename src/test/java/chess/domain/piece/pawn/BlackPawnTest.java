@@ -22,9 +22,11 @@ class BlackPawnTest {
     @BeforeEach
     void setUp() {
         source = Position.of('b', '7');
-        pawn = new BlackPawn().move(Position.of('b', '8'), source, new ChessBoard(Map.of(
-                Position.of('b', '8'), new BlackPawn()
-        )));
+
+        final ChessBoard chessBoard = new ChessBoard(
+                Map.of(Position.of('b', '8'), new BlackPawn()));
+        pawn = new BlackPawn()
+                .move(Position.of('b', '8'), source, chessBoard);
     }
 
     @ParameterizedTest
