@@ -46,7 +46,7 @@ public class PawnTest {
     void bottom_whitePawn() {
         Board board = BoardFixture.setup();
 
-        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.TWO), new Position(File.A, Rank.ONE)))
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.TWO), new Position(File.A, Rank.ONE), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -55,7 +55,7 @@ public class PawnTest {
     void top_blackPawn() {
         Board board = BoardFixture.setup();
 
-        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.EIGHT)))
+        assertThatThrownBy(() -> board.movePiece(new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.EIGHT), Team.BLACK))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

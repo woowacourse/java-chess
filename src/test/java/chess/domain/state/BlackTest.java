@@ -4,6 +4,9 @@ import chess.domain.Board;
 
 
 import chess.domain.BoardFixture;
+import chess.domain.postion.File;
+import chess.domain.postion.Position;
+import chess.domain.postion.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import static chess.domain.PositionFixture.BLACK_SOURCE;
 import static chess.domain.PositionFixture.BLACK_TARGET;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BlackTest {
 
@@ -27,5 +31,13 @@ public class BlackTest {
         Black black = new Black(board);
 
         assertThat(black.changeTurn(BLACK_SOURCE, BLACK_TARGET)).isInstanceOf(White.class);
+    }
+
+    @DisplayName("검은색 턴에 흰색 기물을 움직이도록 하면 에러 테스트")
+    @Test
+    void isNotBlackPiece() {
+        Black black = new Black(board);
+
+        assertThatThrownBy( () -> black.changeTurn(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE)));
     }
 }

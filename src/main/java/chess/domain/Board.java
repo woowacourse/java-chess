@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Nothing;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.postion.Position;
 
 import java.util.HashMap;
@@ -15,8 +16,9 @@ public class Board {
         this.cells = cells;
     }
 
-    public Board movePiece(Position source, Position target) {
+    public Board movePiece(Position source, Position target, Team team) {
         validateSource(source);
+        validateTurn(team, source);
         Piece piece = cells.get(source);
         validateMoving(piece, source, target);
 
@@ -30,6 +32,13 @@ public class Board {
     private void validateSource(Position position) {
         if (!cells.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+        }
+    }
+
+    public void validateTurn(Team currentTeam, Position source) {
+        Team sourceTeam = cells.get(source).team();
+        if (!currentTeam.equals(sourceTeam)) {
+            throw new IllegalArgumentException("상대 편 기물을 움직일 수는 없습니다.");
         }
     }
 

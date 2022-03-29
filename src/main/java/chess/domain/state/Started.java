@@ -10,7 +10,7 @@ public abstract class Started implements State {
         this.board = board;
     }
 
-    @Override
+   @Override
     public State start() {
         throw new IllegalArgumentException("현재 상태에서는 start할 수 없습니다.");
     }

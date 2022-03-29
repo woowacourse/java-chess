@@ -2,6 +2,9 @@ package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.BoardFixture;
+import chess.domain.postion.File;
+import chess.domain.postion.Position;
+import chess.domain.postion.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import static chess.domain.PositionFixture.WHITE_SOURCE;
 import static chess.domain.PositionFixture.WHITE_TARGET;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class WhiteTest {
 
@@ -19,7 +23,7 @@ public class WhiteTest {
         board = BoardFixture.setup();
     }
 
-    @DisplayName("White 상태에서 턴이 바뀌면 Black 상태로 되는 지 테스트")
+    @DisplayName("White 상태에서 턴이 바뀌면 Black 상태로 되는지 테스트")
     @Test
     void changeTurn() {
         White white = new White(board);
@@ -27,11 +31,19 @@ public class WhiteTest {
         assertThat(white.changeTurn(WHITE_SOURCE, WHITE_TARGET)).isInstanceOf(Black.class);
     }
 
-    @DisplayName("White 상태에서 게임이 종료되면 end 상태로 되는 지 테스트")
+    @DisplayName("White 상태에서 게임이 종료되면 end 상태로 되는지 테스트")
     @Test
     void end() {
         White white = new White(board);
 
         assertThat(white.end()).isInstanceOf(End.class);
+    }
+
+    @DisplayName("흰색 턴에 검은색 기물을 움직이도록 하면 에러 테스트")
+    @Test
+    void isNotWhitePiece() {
+        White white = new White(board);
+
+        assertThatThrownBy( () -> white.changeTurn(new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.SIX)));
     }
 }
