@@ -1,7 +1,10 @@
 package chess;
 
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class WebApplication {
 
@@ -11,7 +14,8 @@ public class WebApplication {
         //     return render(model, "index.html");
         // });
 
-        Chess chess = new Chess(new Board(new CreateCompleteBoardStrategy()));
+        final Map<Position, Piece> pieces = (new CreateCompleteBoardStrategy()).createPieces();
+        Chess chess = new Chess(new Board(pieces));
         chess.run();
     }
 

@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.strategy.CreateMockBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -21,7 +20,7 @@ class StatusTest {
     @Test
     @DisplayName("킹이 없으면 -1점을 반환한다")
     void check_Score_Without_King() {
-        Board board = new Board(new CreateMockBoardStrategy(new HashMap<>()));
+        Board board = new Board(new HashMap<>());
 
         Status status = new Status(board);
 
@@ -35,8 +34,7 @@ class StatusTest {
         Piece queen = new Queen(Color.BLACK);
         Position p1 = CachedPosition.a1;
         Position p2 = CachedPosition.a3;
-        Map<Position, Piece> pieces = Map.of(p1, king, p2, queen);
-        Board board = new Board(new CreateMockBoardStrategy(pieces));
+        Board board = new Board(Map.of(p1, king, p2, queen));
 
         Status status = new Status(board);
 
@@ -51,8 +49,7 @@ class StatusTest {
         Position p2 = CachedPosition.a3;
         Piece king = new King(Color.BLACK);
         Position p3 = CachedPosition.a2;
-        Map<Position, Piece> pieces = Map.of(p1, pawn, p2, pawn, p3, king);
-        Board board = new Board(new CreateMockBoardStrategy(pieces));
+        Board board = new Board(Map.of(p1, pawn, p2, pawn, p3, king));
 
         Status status = new Status(board);
 

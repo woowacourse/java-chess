@@ -3,14 +3,12 @@ package chess.domain.board;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.board.strategy.CreateBoardStrategy;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -26,8 +24,8 @@ public class Board {
 
     private final Map<Position, Piece> pieces;
 
-    public Board(final CreateBoardStrategy strategy) {
-        pieces = new HashMap<>(strategy.createPieces());
+    public Board(final Map<Position, Piece> pieces) {
+        this.pieces = pieces;
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
