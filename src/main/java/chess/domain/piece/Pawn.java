@@ -22,7 +22,9 @@ public class Pawn extends Piece {
             validateDefaultMoveDistance(currentPosition.calculateDistance(destinationPosition));
         }
         validateFirstTurnMove(currentPosition, destinationPosition);
-        return position = destinationPosition;
+
+        position = destinationPosition;
+        return position;
     }
 
     private void validateFirstTurnMove(final Position currentPosition, final Position destinationPosition) {

@@ -17,7 +17,9 @@ public class Bishop extends Piece {
         if (currentPosition.calculateDistance(destinationPosition) == 0) {
             throw new IllegalArgumentException("비숍은 1칸 이상 이동해야 합니다.");
         }
-        return position = destinationPosition;
+
+        position = destinationPosition;
+        return position;
     }
 
     @Override

@@ -14,7 +14,9 @@ public class Knight extends Piece {
         if (!currentPosition.isMoveOfKnight(destinationPosition)) {
             throw new IllegalArgumentException("나이트는 상하좌우로 1칸 이동 후 대각선으로 1칸 이동해야 합니다.");
         }
-        return position = destinationPosition;
+
+        position = destinationPosition;
+        return position;
     }
 
     @Override
