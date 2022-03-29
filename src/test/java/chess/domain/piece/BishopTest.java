@@ -22,8 +22,8 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop이 오른쪽 위 대각선으로 움직일 수 있는 경우 True를 반환한다")
     void isMovableRightUpTest() {
-        Position from = Position.valueOf(File.c, Rank.ONE);
-        Position to = Position.valueOf(File.d, Rank.TWO);
+        Position from = Position.valueOf(File.C, Rank.ONE);
+        Position to = Position.valueOf(File.D, Rank.TWO);
 
         assertThat(whiteBishop.isMovable(from, to)).isTrue();
     }
@@ -31,8 +31,8 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop이 왼쪽 위 대각선으로 움직일 수 있는 경우 True를 반환한다")
     void isMovableLeftUpTest() {
-        Position from = Position.valueOf(File.c, Rank.ONE);
-        Position to = Position.valueOf(File.b, Rank.TWO);
+        Position from = Position.valueOf(File.C, Rank.ONE);
+        Position to = Position.valueOf(File.B, Rank.TWO);
 
         assertThat(whiteBishop.isMovable(from, to)).isTrue();
     }
@@ -40,8 +40,8 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop이 왼쪽 아래 대각선으로 움직일 수 있는 경우 True를 반환한다")
     void isMovableLeftDownTest() {
-        Position from = Position.valueOf(File.b, Rank.TWO);
-        Position to = Position.valueOf(File.a, Rank.ONE);
+        Position from = Position.valueOf(File.B, Rank.TWO);
+        Position to = Position.valueOf(File.A, Rank.ONE);
 
         assertThat(whiteBishop.isMovable(from, to)).isTrue();
     }
@@ -49,8 +49,8 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop이 오른쪽 아래 대각선으로 움직일 수 있는 경우 True를 반환한다")
     void isMovableRightDownTest() {
-        Position from = Position.valueOf(File.b, Rank.TWO);
-        Position to = Position.valueOf(File.c, Rank.ONE);
+        Position from = Position.valueOf(File.B, Rank.TWO);
+        Position to = Position.valueOf(File.C, Rank.ONE);
 
         assertThat(whiteBishop.isMovable(from, to)).isTrue();
     }
@@ -58,8 +58,8 @@ public class BishopTest {
     @Test
     @DisplayName("Bishop이 움직일 수 없는 경우 False 를 반환한다")
     void isNotMovableTest() {
-        Position from = Position.valueOf(File.b, Rank.TWO);
-        Position to = Position.valueOf(File.b, Rank.ONE);
+        Position from = Position.valueOf(File.B, Rank.TWO);
+        Position to = Position.valueOf(File.B, Rank.ONE);
 
         assertThat(whiteBishop.isMovable(from, to)).isFalse();
     }

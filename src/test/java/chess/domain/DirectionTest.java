@@ -21,45 +21,45 @@ public class DirectionTest {
 
     private static Stream<Arguments> providePositionDirection() {
         return Stream.of(
-            Arguments.of(Position.valueOf(File.a, Rank.ONE),
-                Position.valueOf(File.b, Rank.ONE), Direction.RIGHT),
-            Arguments.of(Position.valueOf(File.b, Rank.ONE),
-                Position.valueOf(File.a, Rank.ONE), Direction.LEFT),
-            Arguments.of(Position.valueOf(File.a, Rank.ONE),
-                Position.valueOf(File.a, Rank.TWO), Direction.UP),
-            Arguments.of(Position.valueOf(File.a, Rank.TWO),
-                Position.valueOf(File.a, Rank.ONE), Direction.DOWN),
-            Arguments.of(Position.valueOf(File.a, Rank.ONE),
-                Position.valueOf(File.b, Rank.TWO), Direction.RIGHTUP),
-            Arguments.of(Position.valueOf(File.a, Rank.TWO),
-                Position.valueOf(File.b, Rank.ONE), Direction.RIGHTDOWN),
-            Arguments.of(Position.valueOf(File.b, Rank.ONE),
-                Position.valueOf(File.a, Rank.TWO), Direction.LEFTUP),
-            Arguments.of(Position.valueOf(File.b, Rank.TWO),
-                Position.valueOf(File.a, Rank.ONE), Direction.LEFTDOWN));
+            Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                Position.valueOf(File.B, Rank.ONE), Direction.RIGHT),
+            Arguments.of(Position.valueOf(File.B, Rank.ONE),
+                Position.valueOf(File.A, Rank.ONE), Direction.LEFT),
+            Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                Position.valueOf(File.A, Rank.TWO), Direction.UP),
+            Arguments.of(Position.valueOf(File.A, Rank.TWO),
+                Position.valueOf(File.A, Rank.ONE), Direction.DOWN),
+            Arguments.of(Position.valueOf(File.A, Rank.ONE),
+                Position.valueOf(File.B, Rank.TWO), Direction.RIGHTUP),
+            Arguments.of(Position.valueOf(File.A, Rank.TWO),
+                Position.valueOf(File.B, Rank.ONE), Direction.RIGHTDOWN),
+            Arguments.of(Position.valueOf(File.B, Rank.ONE),
+                Position.valueOf(File.A, Rank.TWO), Direction.LEFTUP),
+            Arguments.of(Position.valueOf(File.B, Rank.TWO),
+                Position.valueOf(File.A, Rank.ONE), Direction.LEFTDOWN));
     }
 
     @Test
     @DisplayName("출발 Position에서 목적지 position으로 가는 경로 중 오른 쪽 위로 한칸 움직인 Position을 반환한다")
     void moveRightUpOneStep() {
-        Position from = Position.valueOf(File.a, Rank.ONE);
-        Position to = Position.valueOf(File.c, Rank.THREE);
+        Position from = Position.valueOf(File.A, Rank.ONE);
+        Position to = Position.valueOf(File.C, Rank.THREE);
         Direction direction = Direction.judge(from, to);
 
         Position stepPosition = Direction.getNextPosition(from, direction);
 
-        assertThat(stepPosition).isEqualTo(Position.valueOf(File.b, Rank.TWO));
+        assertThat(stepPosition).isEqualTo(Position.valueOf(File.B, Rank.TWO));
     }
 
     @Test
     @DisplayName("출발 Position에서 목적지 position으로 가는 경로 중 위로 한칸 움직인 Position을 반환한다")
     void moveUpOneStep() {
-        Position from = Position.valueOf(File.a, Rank.ONE);
-        Position to = Position.valueOf(File.a, Rank.THREE);
+        Position from = Position.valueOf(File.A, Rank.ONE);
+        Position to = Position.valueOf(File.A, Rank.THREE);
         Direction direction = Direction.judge(from, to);
 
         Position stepPosition = Direction.getNextPosition(from, direction);
 
-        assertThat(stepPosition).isEqualTo(Position.valueOf(File.a, Rank.TWO));
+        assertThat(stepPosition).isEqualTo(Position.valueOf(File.A, Rank.TWO));
     }
 }

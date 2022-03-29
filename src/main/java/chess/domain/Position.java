@@ -30,7 +30,7 @@ public class Position {
     }
 
     private static String makeKey(final File file, final Rank rank) {
-        return file.toString() + rank.getValue();
+        return file.toString().toLowerCase() + rank.getValue();
     }
 
     public static Position valueOf(final String key) {
@@ -55,7 +55,7 @@ public class Position {
     }
 
     public int getRankDifference(Position position) {
-        return rank.getCoordinate() - position.rank.getCoordinate();
+        return rank.getValue() - position.rank.getValue();
     }
 
     public int getFileDifference(Position position) {
@@ -64,7 +64,7 @@ public class Position {
 
     public Position getNextPosition(int fileDifference, int rankDifference) {
         int newFile = file.getCoordinate() + fileDifference;
-        int newRank = rank.getCoordinate() + rankDifference;
+        int newRank = rank.getValue() + rankDifference;
 
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
     }

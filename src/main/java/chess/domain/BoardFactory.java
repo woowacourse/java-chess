@@ -34,7 +34,7 @@ public class BoardFactory {
     }
 
     private static void placeRooks(Map<Position, Piece> pieces) {
-        List<File> rookFiles = List.of(File.a, File.h);
+        List<File> rookFiles = List.of(File.A, File.H);
         for (File file : rookFiles) {
             pieces.put(Position.valueOf(file, Rank.ONE), new Rook(Color.WHITE));
             pieces.put(Position.valueOf(file, Rank.EIGHT), new Rook(Color.BLACK));
@@ -42,7 +42,7 @@ public class BoardFactory {
     }
 
     private static void placeKnights(Map<Position, Piece> pieces) {
-        List<File> knightFiles = List.of(File.b, File.g);
+        List<File> knightFiles = List.of(File.B, File.G);
         for (File file : knightFiles) {
             pieces.put(Position.valueOf(file, Rank.ONE), new Knight(Color.WHITE));
             pieces.put(Position.valueOf(file, Rank.EIGHT), new Knight(Color.BLACK));
@@ -50,7 +50,7 @@ public class BoardFactory {
     }
 
     private static void placeBishops(Map<Position, Piece> pieces) {
-        List<File> bishopFiles = List.of(File.c, File.f);
+        List<File> bishopFiles = List.of(File.C, File.F);
         for (File file : bishopFiles) {
             pieces.put(Position.valueOf(file, Rank.ONE), new Bishop(Color.WHITE));
             pieces.put(Position.valueOf(file, Rank.EIGHT), new Bishop(Color.BLACK));
@@ -58,12 +58,12 @@ public class BoardFactory {
     }
 
     private static void placeQueens(Map<Position, Piece> pieces) {
-        pieces.put(Position.valueOf(File.d, Rank.ONE), new Queen(Color.WHITE));
-        pieces.put(Position.valueOf(File.d, Rank.EIGHT), new Queen(Color.BLACK));
+        pieces.put(Position.valueOf(File.D, Rank.ONE), new Queen(Color.WHITE));
+        pieces.put(Position.valueOf(File.D, Rank.EIGHT), new Queen(Color.BLACK));
     }
 
     private static void placeKings(Map<Position, Piece> pieces) {
-        pieces.put(Position.valueOf(File.e, Rank.ONE), new King(Color.WHITE));
-        pieces.put(Position.valueOf(File.e, Rank.EIGHT), new King(Color.BLACK));
+        pieces.put(Position.valueOf(File.E, Rank.ONE), new King(Color.WHITE));
+        pieces.put(Position.valueOf(File.E, Rank.EIGHT), new King(Color.BLACK));
     }
 }

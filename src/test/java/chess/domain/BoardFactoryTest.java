@@ -26,8 +26,8 @@ public class BoardFactoryTest {
     void initPawnPosition() {
         List<Position> expected = new ArrayList<>();
         for (File value : File.values()) {
-            expected.add(Position.valueOf(value + Rank.TWO.getValue()));
-            expected.add(Position.valueOf(value + Rank.SEVEN.getValue()));
+            expected.add(Position.valueOf(value.toString().toLowerCase() + "2"));
+            expected.add(Position.valueOf(value.toString().toLowerCase() + "7"));
         }
 
         assertThat(board.keySet()).containsAll(expected);
