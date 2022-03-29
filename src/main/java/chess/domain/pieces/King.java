@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public final class King implements Type {
 
-    public static final int MOVEMENT_LIMIT = 1;
+    private static final int MOVEMENT_LIMIT = 1;
 
     @Override
     public boolean isMovable(final Position source, final Position target) {

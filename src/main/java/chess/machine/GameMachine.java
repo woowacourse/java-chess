@@ -1,7 +1,7 @@
 package chess.machine;
 
 import chess.domain.manager.BoardInitializer;
-import chess.domain.manager.GameManager;
+import chess.domain.manager.Game;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,41 +17,41 @@ public final class GameMachine {
 
     public void run() {
         InputView.announceStart();
-        GameManager gameManager = initializeGameManager();
+        Game game = initializeGame();
         String command = InputView.requestCommand();
-        while (!Command.isEnd(command) && !gameManager.isEnd()) {
-            play(gameManager, command);
+        while (!Command.isEnd(command) && !game.isEnd()) {
+            play(game, command);
             command = InputView.requestCommand();
         }
     }
 
-    private GameManager initializeGameManager() {
+    private Game initializeGame() {
         while (!Command.isStart(InputView.requestCommand())) {
             OutputView.announceNotStarted();
         }
-        return makeGameManager();
+        return makeGame();
     }
 
-    private GameManager makeGameManager() {
-        GameManager gameManager = new GameManager(new BoardInitializer());
-        OutputView.printBoard(gameManager);
-        return gameManager;
+    private Game makeGame() {
+        Game game = new Game(new BoardInitializer());
+        OutputView.printBoard(game);
+        return game;
     }
 
-    private void play(GameManager gameManager, final String command) {
+    private void play(Game game, final String command) {
         if (Command.isStart(command)) {
             OutputView.announceCanNotRestart();
         }
         if (Command.isMove(command)) {
-            movePiece(gameManager, Arrays.asList(command.split(MOVE_DELIMITER)));
+            movePiece(game, Arrays.asList(command.split(MOVE_DELIMITER)));
         }
         if (Command.isStatus(command)) {
-            OutputView.printScore(gameManager);
+            OutputView.printScore(game);
         }
     }
 
-    private void movePiece(GameManager gameManager, final List<String> commands) {
-        if (gameManager == null) {
+    private void movePiece(Game game, final List<String> commands) {
+        if (game == null) {
             OutputView.announceNotStarted();
             return;
         }
@@ -59,13 +59,13 @@ public final class GameMachine {
             OutputView.announceBadMoveCommand();
             return;
         }
-        movePieceOnBoard(gameManager, commands);
-        OutputView.printBoard(gameManager);
+        movePieceOnBoard(game, commands);
+        OutputView.printBoard(game);
     }
 
-    private void movePieceOnBoard(GameManager board, final List<String> commands) {
+    private void movePieceOnBoard(Game game, final List<String> commands) {
         try {
-            board.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+            game.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         } catch (IllegalArgumentException e) {
             OutputView.announceBadMovement(e.getMessage());
         }

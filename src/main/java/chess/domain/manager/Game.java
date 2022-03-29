@@ -7,12 +7,12 @@ import chess.domain.position.Position;
 
 import java.util.*;
 
-public final class GameManager {
+public final class Game {
 
     private final Board board;
     private Color turn = Color.WHITE;
 
-    public GameManager(final Initializer initiator) {
+    public Game(final Initializer initiator) {
         board = new Board(initiator);
     }
 
