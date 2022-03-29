@@ -17,7 +17,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
+    public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = pawnDirection(team);
         Direction nowDirection = Direction.of(from, to);
 
@@ -27,12 +27,12 @@ public final class PawnMoveStrategy extends MoveStrategy {
         if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
-
         return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
     }
 
-    private boolean isDiagonal(Direction now, List<Direction> directions) {
-        return now == directions.get(1) || now == directions.get(2);
+    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
+        return directions.stream()
+                .noneMatch(direction -> direction.isSameDistance(from, to));
     }
 
     private void validateInitDirection(Team team, Position from, Position to, List<Direction> directions) {
@@ -52,8 +52,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
                 && direction.getY() * from.getYDistance(to) <= INIT_MAX_DISTANCE;
     }
 
-    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .noneMatch(direction -> direction.isSameDistance(from, to));
+    private boolean isDiagonal(Direction now, List<Direction> directions) {
+        return now == directions.get(1) || now == directions.get(2);
     }
 }

@@ -11,7 +11,7 @@ public final class KingMoveStrategy extends MoveStrategy {
     private static final String NO_MOVE_MESSAGE = "킹이 이동할 수 없는 위치입니다.";
 
     @Override
-    public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
+    public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = Direction.royalDirection(team);
 
         if (isInvalidDistance(from, to, directions)) {

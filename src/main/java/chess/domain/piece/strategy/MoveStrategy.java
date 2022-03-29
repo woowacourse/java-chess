@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MoveStrategy {
-    public abstract boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to);
+    public abstract boolean canMove(Team team, Piece targetPiece, Position from, Position to);
 
     protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
         return directions.stream()
