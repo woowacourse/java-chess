@@ -16,8 +16,8 @@ public class ChessMap {
     public static ChessMap of(final List<Piece> whitePieces, final List<Piece> blackPieces) {
         final char[][] chessMap = initializeChessMap();
 
-        showWhitePieces(chessMap, whitePieces);
-        showBlackPieces(chessMap, blackPieces);
+        markWhitePieces(chessMap, whitePieces);
+        markBlackPieces(chessMap, blackPieces);
 
         return new ChessMap(chessMap);
     }
@@ -35,7 +35,7 @@ public class ChessMap {
         };
     }
 
-    private static void showWhitePieces(final char[][] chessMap, final List<Piece> whitePieces) {
+    private static void markWhitePieces(final char[][] chessMap, final List<Piece> whitePieces) {
         for (Piece piece : whitePieces) {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank();
@@ -44,7 +44,7 @@ public class ChessMap {
         }
     }
 
-    private static void showBlackPieces(final char[][] chessMap, final List<Piece> blackPieces) {
+    private static void markBlackPieces(final char[][] chessMap, final List<Piece> blackPieces) {
         for (Piece piece : blackPieces) {
             final Position position = piece.getPosition();
             final int rank = 8 - position.getRank();
