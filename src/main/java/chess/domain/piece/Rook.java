@@ -10,6 +10,23 @@ public class Rook extends ChessPiece {
     private static final int NO_DIFFERENCE = 0;
     private static final String NAME = "ROOK";
     private static final double SCORE = 5.0;
+    private static final List<ChessPiece> blackTeamRook = new ArrayList<>();
+    private static final List<ChessPiece> whiteTeamRook = new ArrayList<>();
+
+    static {
+        blackTeamRook.add(new Rook(Team.BLACK, new ChessBoardPosition('a', 8)));
+        blackTeamRook.add(new Rook(Team.BLACK, new ChessBoardPosition('h', 8)));
+
+        whiteTeamRook.add(new Rook(Team.WHITE, new ChessBoardPosition('a', 1)));
+        whiteTeamRook.add(new Rook(Team.WHITE, new ChessBoardPosition('h', 1)));
+    }
+
+    public static List<ChessPiece> create(Team team) {
+        if (team.isBlack()) {
+            return new ArrayList<>(blackTeamRook);
+        }
+        return new ArrayList<>(whiteTeamRook);
+    }
 
     public Rook(Team team, ChessBoardPosition position) {
         super(NAME, SCORE, team, position);

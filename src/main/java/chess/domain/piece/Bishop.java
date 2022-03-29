@@ -9,6 +9,23 @@ import java.util.List;
 public class Bishop extends ChessPiece {
     private static final String NAME = "BISHOP";
     private static final double SCORE = 3.0;
+    private static final List<ChessPiece> blackTeamBishop = new ArrayList<>();
+    private static final List<ChessPiece> whiteTeamBishop = new ArrayList<>();
+
+    static {
+        blackTeamBishop.add(new Bishop(Team.BLACK, new ChessBoardPosition('c', 8)));
+        blackTeamBishop.add(new Bishop(Team.BLACK, new ChessBoardPosition('f', 8)));
+
+        whiteTeamBishop.add(new Bishop(Team.WHITE, new ChessBoardPosition('c', 1)));
+        whiteTeamBishop.add(new Bishop(Team.WHITE, new ChessBoardPosition('f', 1)));
+    }
+
+    public static List<ChessPiece> create(Team team) {
+        if (team.isBlack()) {
+            return new ArrayList<>(blackTeamBishop);
+        }
+        return new ArrayList<>(whiteTeamBishop);
+    }
 
     public Bishop(Team team, ChessBoardPosition position) {
         super(NAME, SCORE, team, position);

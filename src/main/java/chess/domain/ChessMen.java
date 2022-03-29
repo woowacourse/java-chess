@@ -1,8 +1,13 @@
 package chess.domain;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.ChessPiece;
 import chess.domain.piece.King;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +20,41 @@ public class ChessMen implements Iterable<ChessPiece> {
 
     public ChessMen(List<ChessPiece> chessPieces) {
         this.chessPieces = chessPieces;
+    }
+
+    public static ChessMen create(Team team) {
+        List<ChessPiece> chessPieces = new ArrayList<>();
+        createPawn(chessPieces, team);
+        createKnight(chessPieces, team);
+        createBishop(chessPieces, team);
+        createRook(chessPieces, team);
+        createQueen(chessPieces, team);
+        createKing(chessPieces, team);
+        return new ChessMen(chessPieces);
+    }
+
+    private static void createPawn(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(Pawn.create(team));
+    }
+
+    private static void createKnight(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(Knight.create(team));
+    }
+
+    private static void createBishop(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(Bishop.create(team));
+    }
+
+    private static void createRook(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(Rook.create(team));
+    }
+
+    private static void createQueen(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(Queen.create(team));
+    }
+
+    private static void createKing(List<ChessPiece> chessPieces, Team team) {
+        chessPieces.addAll(King.create(team));
     }
 
     public ChessPiece getChessPieceAt(ChessBoardPosition position) {

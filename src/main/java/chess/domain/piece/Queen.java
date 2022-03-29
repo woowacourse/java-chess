@@ -12,6 +12,21 @@ public class Queen extends ChessPiece {
     private static final String UNEXPECTED_MOVEMENT_EXCEPTION = "[ERROR] 퀸이 이동할 수 없는 위치입니다.";
 
     private static final double SCORE = 9.0;
+    private static final List<ChessPiece> blackTeamQueen = new ArrayList<>();
+    private static final List<ChessPiece> whiteTeamQueen = new ArrayList<>();
+
+    static {
+        blackTeamQueen.add(new Queen(Team.BLACK, new ChessBoardPosition('d', 8)));
+
+        whiteTeamQueen.add(new Queen(Team.WHITE, new ChessBoardPosition('d', 1)));
+    }
+
+    public static List<ChessPiece> create(Team team) {
+        if (team.isBlack()) {
+            return new ArrayList<>(blackTeamQueen);
+        }
+        return new ArrayList<>(whiteTeamQueen);
+    }
 
     public Queen(Team team, ChessBoardPosition position) {
         super(NAME, SCORE, team, position);

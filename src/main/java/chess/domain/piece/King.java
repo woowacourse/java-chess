@@ -3,10 +3,27 @@ package chess.domain.piece;
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessMen;
 import chess.domain.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 public class King extends ChessPiece {
     private static final String NAME = "KING";
     private static final double SCORE = 0;
+    private static final List<ChessPiece> blackTeamKing = new ArrayList<>();
+    private static final List<ChessPiece> whiteTeamKing = new ArrayList<>();
+
+    static {
+        blackTeamKing.add(new King(Team.BLACK, new ChessBoardPosition('e', 8)));
+
+        whiteTeamKing.add(new King(Team.WHITE, new ChessBoardPosition('e', 1)));
+    }
+
+    public static List<ChessPiece> create(Team team) {
+        if (team.isBlack()) {
+            return new ArrayList<>(blackTeamKing);
+        }
+        return new ArrayList<>(whiteTeamKing);
+    }
 
     public King(Team team, ChessBoardPosition position) {
         super(NAME, SCORE, team, position);
