@@ -65,13 +65,6 @@ public final class Pawn extends Piece {
         return isDiagonallyAdjacentRoute(from, to);
     }
 
-    private boolean isDiagonallyAdjacentRoute(Position from, Position to) {
-        int fileDiff = from.fileDifference(to);
-        int rankDiff = from.rankDifference(to);
-
-        return fileDiff == ADJACENT_DISTANCE && rankDiff == ADJACENT_DISTANCE;
-    }
-
     private boolean isAttackDirection(Position from, Position to) {
         if (hasColorOf(WHITE)) {
             return WHITE_ATTACK_DIRECTION.stream()
@@ -79,5 +72,12 @@ public final class Pawn extends Piece {
         }
         return BLACK_ATTACK_DIRECTION.stream()
                         .anyMatch(direction -> from.checkDirection(to, direction));
+    }
+
+    private boolean isDiagonallyAdjacentRoute(Position from, Position to) {
+        int fileDiff = from.fileDifference(to);
+        int rankDiff = from.rankDifference(to);
+
+        return fileDiff == ADJACENT_DISTANCE && rankDiff == ADJACENT_DISTANCE;
     }
 }

@@ -58,7 +58,7 @@ public class BlackPawnTest {
         }
 
         @Test
-        void 흑색_폰은_초기화된_위치가_아니면_두칸_위로_전진_시도시_예외발생() {
+        void 흑색_폰은_초기화된_위치가_아니면_두칸_아래로_전진_시도시_예외발생() {
             Pawn pawn = new BlackPawn(Position.of("a6"));
 
             assertThatCode(() -> pawn.move(Position.of("a8"), CLEAR_PATH_STRATEGY))
