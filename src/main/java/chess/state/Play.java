@@ -26,17 +26,14 @@ public class Play implements State {
 
     @Override
     public State move(MovingPosition movingPosition, Turn turn) {
-        boolean isKing = chessboard.move(movingPosition, turn);
-        if (isKing) {
+        chessboard.move(movingPosition, turn);
+
+        if (chessboard.isOver()) {
             return new Finish(chessboard);
         }
+
         turn.nextTurn();
         return new Play(chessboard);
-    }
-
-    @Override
-    public State end() {
-        return new Finish(chessboard);
     }
 
     @Override
@@ -53,4 +50,5 @@ public class Play implements State {
     public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
         return chessboard.computeScore(color, minusScoreOfSameColumnPawn);
     }
+
 }

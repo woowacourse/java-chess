@@ -94,36 +94,4 @@ class MovingPositionTest {
                         new Position(2, 4)
                 ));
     }
-
-    @Test
-    @DisplayName("두 점 사이의 거리가 2이상이라면 한칸 위 계산")
-    void computeOneUp() {
-        assertThat(new MovingPosition("f2", "f4").computeOneUp())
-                .isEqualTo(List.of(
-                        new Position(5, 5)
-                ));
-    }
-
-    @Test
-    @DisplayName("두 점 사이의 거리가 1이라면 빈 리스트 반환 - up")
-    void computeEmptyOneUp() {
-        assertThat(new MovingPosition("f2", "f3").computeOneUp())
-                .isEqualTo(List.of());
-    }
-
-    @Test
-    @DisplayName("두 점 사이의 거리가 2이상이라면 한칸 아래 계산")
-    void computeOneDown() {
-        assertThat(new MovingPosition("c7", "c5").computeOneDown())
-                .isEqualTo(List.of(
-                        new Position(2, 2)
-                ));
-    }
-
-    @Test
-    @DisplayName("두 점 사이의 거리가 1이라면 빈 리스트 반환 - down")
-    void computeEmptyOneDown() {
-        assertThat(new MovingPosition("c7", "c6").computeOneDown())
-                .isEqualTo(List.of());
-    }
 }

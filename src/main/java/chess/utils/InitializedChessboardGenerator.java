@@ -1,61 +1,62 @@
 package chess.utils;
 
+import chess.chessgame.Position;
 import chess.piece.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class InitializedChessboardGenerator implements ChessboardGenerator {
 
+    Map<Position, Piece> board = new LinkedHashMap<>();
+
     private static final int SIZE_OF_BOARD = 8;
+    private static final int ROW_OF_BLACK_WITHOUT_PAWN = 0;
+    private static final int ROW_OF_BLACK_PAWN = 1;
+    private static final int ROW_OF_WHITE_WITHOUT_PAWN = 7;
+    private static final int ROW_OF_WHITE_PAWN = 6;
+    private static final int START_ROW_OF_BLANK = 2;
+    private static final int END_ROW_OF_BLANK = 6;
 
-    public List<List<Piece>> generate() {
-        List<List<Piece>> board = new ArrayList<>();
 
-        board.add(withoutPawn(Color.BLACK));
-        board.add(pawn(Color.BLACK));
+    public Map<Position, Piece> generate() {
+        addWithoutPawn(ROW_OF_BLACK_WITHOUT_PAWN, Color.BLACK);
+        addPawn(ROW_OF_BLACK_PAWN, Color.BLACK);
 
-        for (int i = 0; i < 4; i++) {
-            board.add(blank());
-        }
+        addAllBlank();
 
-        board.add(pawn(Color.WHITE));
-        board.add(withoutPawn(Color.WHITE));
+        addPawn(ROW_OF_WHITE_PAWN, Color.WHITE);
+        addWithoutPawn(ROW_OF_WHITE_WITHOUT_PAWN, Color.WHITE);
 
         return board;
     }
 
-    private List<Piece> withoutPawn(Color color) {
-        List<Piece> line = new ArrayList<>();
-        line.add(new Rook(color));
-        line.add(new Knight(color));
-        line.add(new Bishop(color));
-        line.add(new Queen(color));
-        line.add(new King(color));
-        line.add(new Bishop(color));
-        line.add(new Knight(color));
-        line.add(new Rook(color));
-
-        return line;
+    private void addWithoutPawn(int row, Color color) {
+        board.put(new Position(row, 0), new Rook(color));
+        board.put(new Position(row, 1), new Knight(color));
+        board.put(new Position(row, 2), new Bishop(color));
+        board.put(new Position(row, 3), new Queen(color));
+        board.put(new Position(row, 4), new King(color));
+        board.put(new Position(row, 5), new Bishop(color));
+        board.put(new Position(row, 6), new Knight(color));
+        board.put(new Position(row, 7), new Rook(color));
     }
 
-    private List<Piece> pawn(Color color) {
-        List<Piece> line = new ArrayList<>();
-
-        for (int i = 0; i < SIZE_OF_BOARD; i++) {
-            line.add(new Pawn(color));
+    private void addPawn(int row, Color color) {
+        for (int col = 0; col < SIZE_OF_BOARD; col++) {
+            board.put(new Position(row, col), new Pawn(color));
         }
-
-        return line;
     }
 
-    private List<Piece> blank() {
-        List<Piece> line = new ArrayList<>();
-
-        for (int i = 0; i < SIZE_OF_BOARD; i++) {
-            line.add(new Blank());
+    private void addAllBlank() {
+        for (int row = START_ROW_OF_BLANK; row <= END_ROW_OF_BLANK; row++) {
+            addBlank(row);
         }
+    }
 
-        return line;
+    private void addBlank(int row) {
+        for (int col = 0; col < SIZE_OF_BOARD; col++) {
+            board.put(new Position(row, col), new Blank());
+        }
     }
 }

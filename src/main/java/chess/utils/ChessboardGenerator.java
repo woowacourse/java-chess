@@ -1,10 +1,11 @@
 package chess.utils;
 
+import chess.chessgame.Position;
 import chess.piece.Piece;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ChessboardGenerator {
 
-    List<List<Piece>> generate();
+    Map<Position, Piece> generate();
 }

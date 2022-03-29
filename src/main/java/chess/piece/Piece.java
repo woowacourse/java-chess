@@ -6,8 +6,8 @@ import chess.chessgame.Position;
 import java.util.List;
 
 public abstract class Piece {
-    private Type type;
-    protected Color color;
+    private final Type type;
+    protected final Color color;
 
     public Piece(Type type, Color color) {
         this.type = type;
@@ -34,7 +34,7 @@ public abstract class Piece {
         return type.getScore();
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return color;
     }
 }

@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.chessgame.Chessboard;
+import chess.chessgame.Position;
 import chess.dto.ScoreDto;
 import chess.piece.Piece;
 
-import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -21,9 +21,9 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(Chessboard chessboard) {
-        for (List<Piece> line : chessboard.getBoard()) {
-            printBoardLine(line);
+    public static void printBoard(Map<Position, Piece> chessboard) {
+        for (int i = 0; i < 8; i++) {
+            printBoardLine(chessboard, i);
         }
         System.out.println();
     }
@@ -35,10 +35,11 @@ public class OutputView {
         System.out.println("승리 : " + score.getWinner());
     }
 
-    private static void printBoardLine(List<Piece> line) {
-        for (Piece piece : line) {
-            System.out.print(piece.getSymbolByColor());
+    private static void printBoardLine(Map<Position, Piece> chessboard, int x) {
+        for (int i = 0; i < 8; i++) {
+            System.out.print(chessboard.get(new Position(x, i)).getSymbolByColor());
         }
         System.out.println();
     }
+
 }

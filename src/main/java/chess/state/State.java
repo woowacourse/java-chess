@@ -11,8 +11,6 @@ public interface State {
 
     State move(MovingPosition movingPosition, Turn turn);
 
-    State end();
-
     Chessboard getChessboard();
 
     boolean isFinished();

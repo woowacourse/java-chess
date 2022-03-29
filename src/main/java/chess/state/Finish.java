@@ -24,11 +24,6 @@ public class Finish implements State {
     }
 
     @Override
-    public State end() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Chessboard getChessboard() {
         return chessboard;
     }
@@ -42,4 +37,5 @@ public class Finish implements State {
     public double computeScore(Color color, double minusScoreOfSameColumnPawn) {
         return chessboard.computeScore(color, minusScoreOfSameColumnPawn);
     }
+
 }

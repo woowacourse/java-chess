@@ -16,20 +16,12 @@ public class MovingPosition {
         this.to = PositionParser.parse(to.charAt(0), to.charAt(1));
     }
 
-    public int getFromX() {
-        return from.getX();
+    public Position getFrom() {
+        return from;
     }
 
-    public int getFromY() {
-        return from.getY();
-    }
-
-    public int getToX() {
-        return to.getX();
-    }
-
-    public int getToY() {
-        return to.getY();
+    public Position getTo() {
+        return to;
     }
 
     private void validateSamePosition(String from, String to) {
@@ -39,11 +31,15 @@ public class MovingPosition {
     }
 
     public boolean isLinear() {
-        return (from.getX() == to.getX()) || (from.getY() == to.getY());
+        return (from.isSameX(to) || from.isSameY(to));
     }
 
     public boolean isCross() {
-        return Math.abs(from.getX() - to.getX()) == Math.abs(from.getY() - to.getY());
+        return from.isCross(to);
+    }
+
+    public boolean isSameFromX(int x) {
+        return from.isSameX(x);
     }
 
     public boolean isAnyPossible(List<Position> coordinates) {
@@ -52,81 +48,42 @@ public class MovingPosition {
     }
 
     public List<Position> computeLinearMiddle() {
-        if (from.getX() == to.getX()) {
-            return row();
+        if (from.isSameX(to)) {
+            return x();
         }
-        if (from.getY() == to.getY()) {
-            return col();
+        if (from.isSameY(to)) {
+            return y();
         }
         return new ArrayList<>();
     }
 
     public List<Position> computeCrossMiddle() {
-        if ((from.getX() - to.getX()) == (-1) * (from.getY() - to.getY())) {
+        if (from.computeInclination(to) == -1) {
             return rightUp();
         }
-        if ((from.getX() - to.getX()) == (from.getY() - to.getY())) {
+        if (from.computeInclination(to) == 1) {
             return rightDown();
         }
         return new ArrayList<>();
     }
 
-    public List<Position> computeOneUp() {
-        List<Position> list = new ArrayList<>();
-        if (from.getX() - 1 > to.getX()) {
-            list.add(new Position(from.getX() - 1, from.getY()));
-        }
-        return list;
+    private List<Position> x() {
+        return from.computeBetweenSameX(to);
     }
 
-    public List<Position> computeOneDown() {
-        List<Position> list = new ArrayList<>();
-        if (from.getX() + 1 < to.getX()) {
-            list.add(new Position(from.getX() + 1, from.getY()));
-        }
-        return list;
-    }
-
-
-    private List<Position> row() {
-        List<Position> list = new ArrayList<>();
-        for (int i = Math.min(from.getY(), to.getY()) + 1; i < Math.max(from.getY(), to.getY()); i++) {
-            list.add(new Position(from.getX(), i));
-        }
-        return list;
-    }
-
-    private List<Position> col() {
-        List<Position> list = new ArrayList<>();
-        for (int i = Math.min(from.getX(), to.getX()) + 1; i < Math.max(from.getX(), to.getX()); i++) {
-            list.add(new Position(i, from.getY()));
-        }
-        return list;
+    private List<Position> y() {
+        return from.computeBetweenSameY(to);
     }
 
     private List<Position> rightUp() {
-        List<Position> list = new ArrayList<>();
-        int startX = Math.max(from.getX(), to.getX());
-        int startY = Math.min(from.getY(), to.getY());
-
-        for (int i = 1; i < Math.abs(from.getX() - to.getX()); i++) {
-            list.add(new Position(startX - i, startY + i));
-        }
-        return list;
+        return from.computeBetweenRightUp(to);
     }
 
     private List<Position> rightDown() {
-        List<Position> list = new ArrayList<>();
-        int startX = Math.min(from.getX(), to.getX());
-        int startY = Math.min(from.getY(), to.getY());
-
-        for (int i = 1; i < Math.abs(from.getX() - to.getX()); i++) {
-            list.add(new Position(startX + i, startY + i));
-        }
-        return list;
+        return from.computeBetweenRightDown(to);
     }
 
     private boolean isTarget(Position coordinate) {
-        return from.getX() + coordinate.getX() == to.getX() && from.getY() + coordinate.getY() == to.getY();
+        return from.isTarget(coordinate, to);
     }
 }

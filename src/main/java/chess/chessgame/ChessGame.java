@@ -2,13 +2,16 @@ package chess.chessgame;
 
 import chess.dto.ScoreDto;
 import chess.piece.Color;
+import chess.piece.Piece;
 import chess.state.Finish;
 import chess.state.Ready;
 import chess.state.State;
 
+import java.util.Map;
+
 public class ChessGame {
 
-    private static final double MINUS_SCORE_OF_SAME_COLUMN_PAWN = 0.5;
+    private static final double MINUS_SCORE_OF_SAME_Y_PAWN = 0.5;
 
     private final Turn turn;
     private State state;
@@ -27,11 +30,11 @@ public class ChessGame {
     }
 
     public void end() {
-        state = new Finish(getChessBoard());
+        state = new Finish(state.getChessboard());
     }
 
-    public Chessboard getChessBoard() {
-        return state.getChessboard();
+    public Map<Position, Piece> getChessBoard() {
+        return state.getChessboard().getBoard();
     }
 
     public boolean isFinished() {
@@ -39,8 +42,8 @@ public class ChessGame {
     }
 
     public ScoreDto computeScore() {
-        double scoreOfBlack = state.computeScore(Color.BLACK, MINUS_SCORE_OF_SAME_COLUMN_PAWN);
-        double scoreOfWhite = state.computeScore(Color.WHITE, MINUS_SCORE_OF_SAME_COLUMN_PAWN);
+        double scoreOfBlack = state.computeScore(Color.BLACK, MINUS_SCORE_OF_SAME_Y_PAWN);
+        double scoreOfWhite = state.computeScore(Color.WHITE, MINUS_SCORE_OF_SAME_Y_PAWN);
 
         if (scoreOfBlack > scoreOfWhite) {
             return new ScoreDto(scoreOfBlack, scoreOfWhite, Color.BLACK);
@@ -51,5 +54,6 @@ public class ChessGame {
 
         return new ScoreDto(scoreOfBlack, scoreOfWhite);
     }
+
 
 }

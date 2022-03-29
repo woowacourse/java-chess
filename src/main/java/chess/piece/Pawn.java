@@ -3,7 +3,6 @@ package chess.piece;
 import chess.chessgame.MovingPosition;
 import chess.chessgame.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -43,13 +42,7 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> computeMiddlePosition(MovingPosition movingPosition) {
-        if (color == Color.WHITE && isFirstTurn(color, movingPosition.getFromX())) {
-            return movingPosition.computeOneUp();
-        }
-        if (color == Color.BLACK && isFirstTurn(color, movingPosition.getFromX())) {
-            return movingPosition.computeOneDown();
-        }
-        return new ArrayList<>();
+        return movingPosition.computeLinearMiddle();
     }
 
     public boolean isDiagonal(MovingPosition movingPosition) {
@@ -63,28 +56,17 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovableWhenWhite(MovingPosition movingPosition) {
-        if (isFirstTurn(color, movingPosition.getFromX())) {
+        if (movingPosition.isSameFromX(6)) {
             return movingPosition.isAnyPossible(COORDINATES_OF_WHITE_FIRST_TURN_MOVABLE);
         }
         return movingPosition.isAnyPossible(COORDINATES_OF_WHITE_TURN_MOVABLE);
     }
 
     private boolean isMovableWhenBlack(MovingPosition movingPosition) {
-        if (isFirstTurn(color, movingPosition.getFromX())) {
+        if (movingPosition.isSameFromX(1)) {
             return movingPosition.isAnyPossible(COORDINATES_OF_BLACK_FIRST_TURN_MOVABLE);
         }
-
         return movingPosition.isAnyPossible(COORDINATES_OF_BLACK_TURN_MOVABLE);
-    }
-
-    private boolean isFirstTurn(Color color, int index) {
-        if (color == Color.WHITE) {
-            return index == 6;
-        }
-        if (color == Color.BLACK) {
-            return index == 1;
-        }
-        return false;
     }
 
 }

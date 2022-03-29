@@ -111,6 +111,7 @@ public class PawnTest {
     @DisplayName("from과 to 사이에 폰이 이동가능한 위치 리스트 반환 - white")
     void checkAllPositionOfPossibleWhite() {
         Pawn pawn = new Pawn(Color.WHITE);
+        List<Position> l = pawn.computeMiddlePosition(new MovingPosition("c2", "c4"));
         assertThat(pawn.computeMiddlePosition(new MovingPosition("c2", "c4")))
                 .isEqualTo(List.of(new Position(5, 2)));
     }

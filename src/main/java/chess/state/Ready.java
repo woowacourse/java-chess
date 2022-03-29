@@ -5,14 +5,14 @@ import chess.chessgame.MovingPosition;
 import chess.chessgame.Turn;
 import chess.piece.Color;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Ready implements State {
 
     private final Chessboard chessboard;
 
     public Ready() {
-        chessboard = new Chessboard(() -> new ArrayList<>());
+        chessboard = new Chessboard(() -> new HashMap<>());
     }
 
     @Override
@@ -25,10 +25,6 @@ public class Ready implements State {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public State end() {
-        return new Finish(chessboard);
-    }
 
     @Override
     public Chessboard getChessboard() {
