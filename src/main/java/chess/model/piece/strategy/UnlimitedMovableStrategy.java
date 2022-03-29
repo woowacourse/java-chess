@@ -13,10 +13,7 @@ public class UnlimitedMovableStrategy implements MovableStrategy {
     }
 
     public boolean movable(Piece source, Piece target) {
-        if (!target.isAlly(source) && canMoveTo(source, target, movableDirections)) {
-            return true;
-        }
-        return false;
+        return !target.isAlly(source) && canMoveTo(source, target, movableDirections);
     }
 
     private boolean canMoveTo(Piece source, Piece target, List<Direction> movableDirections) {

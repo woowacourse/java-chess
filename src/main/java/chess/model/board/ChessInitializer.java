@@ -32,9 +32,7 @@ public class ChessInitializer implements BoardInitializer {
     }
 
     private void initBaseLine(List<Piece> pieces, Rank rank, Color color) {
-        for (Piece piece : lineUpRoyalPieces(color, rank)) {
-            pieces.add(piece);
-        }
+        pieces.addAll(lineUpRoyalPieces(color, rank));
     }
 
     private List<Piece> lineUpRoyalPieces(Color color, Rank rank) {
