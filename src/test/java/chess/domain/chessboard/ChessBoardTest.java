@@ -100,18 +100,6 @@ class ChessBoardTest {
                 .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
     }
 
-    @Test
-    @DisplayName("순서에 맞지않는 색의 기물을 이동시키면 예외를 발생시킵니다.")
-    void chessBoard_turn() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-
-        // then
-        assertThatThrownBy(() -> chessBoard.move(Position.from("a7"), Position.from("a6")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("WHITE의 차례입니다.");
-    }
-
     @ParameterizedTest
     @DisplayName("폰이 같은 세로줄에 있는 경우의 점수를 구한다.")
     @CsvSource(value = {"BLACK:1.5", "WHITE:1"}, delimiter = ':')
@@ -159,44 +147,17 @@ class ChessBoardTest {
     @DisplayName("킹을 잡으면 게임이 끝난다.")
     void game_end() {
         // given
-        final Position from = Position.from("d2");
+        final Position from = Position.from("f3");
         final Position to = Position.from("f4");
 
         final ChessBoard chessBoard = PieceByPosition.create()
-                .add(from, Bishop.from(Color.WHITE))
+                .add(from, King.from(Color.WHITE))
                 .add(to, King.from(Color.BLACK))
                 .toChessBoard();
 
         // when
         chessBoard.move(from, to);
-        final boolean actual = chessBoard.isEnd();
-
-        // then
-        assertThat(actual).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("start 명령이 입력되기 전에는 ready 상태이다.")
-    void isReady() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-
-        // when
-        final boolean actual = chessBoard.isReady();
-
-        // then
-        assertThat(actual).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("start 명령이 입력되면 playing 상태이다.")
-    void isPlaying() {
-        // given
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-
-        // when
-        chessBoard.start();
-        final boolean actual = chessBoard.isPlaying();
+        final boolean actual = chessBoard.isKingDie(to);
 
         // then
         assertThat(actual).isEqualTo(true);

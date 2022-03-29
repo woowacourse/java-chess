@@ -5,6 +5,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class OutputView {
@@ -30,26 +31,27 @@ public class OutputView {
         System.out.println(START_MESSAGE);
     }
 
-    public static void printChessBoard(final ChessBoard chessBoard) {
+    public static void printChessBoard(final Map<Position, ChessPiece> pieceByPosition) {
         for (int file = FILE_END; file >= FILE_START; file--) {
-            printRank(chessBoard, file);
+            printRank(pieceByPosition, file);
         }
     }
 
-    private static void printRank(final ChessBoard chessBoard, final int file) {
+    private static void printRank(final Map<Position, ChessPiece> pieceByPosition, final int file) {
         for (int rank = RANK_START; rank <= RANK_END; rank++) {
-            printPosition(chessBoard, (char) rank, file);
+            printPosition(pieceByPosition, (char) rank, file);
         }
         System.out.println();
     }
 
-    private static void printPosition(final ChessBoard chessBoard, final char rank, final int file) {
+    private static void printPosition(final Map<Position, ChessPiece> chessBoard, final char rank, final int file) {
         final String position = rank + String.valueOf(file);
-
-        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
-        possiblePiece.ifPresentOrElse(
-                piece -> System.out.print(piece.name()),
-                () -> System.out.print(EMPTY));
+        final ChessPiece chessPiece = chessBoard.get(Position.from(position));
+        if (Objects.isNull(chessPiece)) {
+            System.out.print(EMPTY);
+            return;
+        }
+        System.out.print(chessPiece.name());
     }
 
     public static void printStatus(final Map<Color, Double> scoreByColor) {

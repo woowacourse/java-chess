@@ -1,6 +1,5 @@
 package chess.domain.chessboard;
 
-import chess.domain.GameStatus;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.chesspiece.Pawn;
@@ -16,17 +15,14 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private final Map<Position, ChessPiece> chessBoard;
-    private GameStatus gameStatus;
-    private Color currentTurnColor = Color.WHITE;
+    private final Map<Position, ChessPiece> pieceByPosition;
 
-    ChessBoard(final Map<Position, ChessPiece> chessBoard) {
-        this.chessBoard = chessBoard;
-        this.gameStatus = GameStatus.READY;
+    ChessBoard(final Map<Position, ChessPiece> pieceByPosition) {
+        this.pieceByPosition = pieceByPosition;
     }
 
     public Optional<ChessPiece> findPiece(final Position position) {
-        final ChessPiece piece = chessBoard.get(position);
+        final ChessPiece piece = pieceByPosition.get(position);
         return Optional.ofNullable(piece);
     }
 
@@ -39,15 +35,8 @@ public class ChessBoard {
     }
 
     private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
-        checkCurrentTurn(movablePiece);
         movablePiece.checkMovablePosition(from, to, findPiece(to));
         checkHurdle(from, to, movablePiece);
-    }
-
-    private void checkCurrentTurn(final ChessPiece movablePiece) {
-        if (!movablePiece.isSameColor(currentTurnColor)) {
-            throw new IllegalArgumentException(currentTurnColor.name() + "의 차례입니다.");
-        }
     }
 
     private void checkHurdle(final Position from, final Position to, final ChessPiece movablePiece) {
@@ -61,14 +50,16 @@ public class ChessBoard {
     }
 
     private void movePiece(final Position from, final Position to) {
-        final ChessPiece chessPiece = chessBoard.get(to);
-        if (Objects.nonNull(chessPiece) && chessPiece.isKing()) {
-            gameStatus = GameStatus.END;
-        }
+        final ChessPiece movablePiece = pieceByPosition.remove(from);
+        pieceByPosition.put(to, movablePiece);
+    }
 
-        final ChessPiece movablePiece = chessBoard.remove(from);
-        chessBoard.put(to, movablePiece);
-        currentTurnColor = currentTurnColor.toOpposite();
+    public boolean isKingDie(final Position to) {
+        final ChessPiece chessPiece = pieceByPosition.get(to);
+        if (Objects.isNull(chessPiece)) {
+            return false;
+        }
+        return chessPiece.isKing();
     }
 
     public Map<Color, Double> calculateScore() {
@@ -79,7 +70,7 @@ public class ChessBoard {
     }
 
     private double sumScoreExceptPawn(final Color color) {
-        return chessBoard.values().stream()
+        return pieceByPosition.values().stream()
                 .filter(chessPiece -> chessPiece.isSameColor(color))
                 .filter(chessPiece -> !(chessPiece instanceof Pawn))
                 .mapToDouble(ChessPiece::value)
@@ -103,19 +94,7 @@ public class ChessBoard {
                 .count();
     }
 
-    public boolean isReady() {
-        return gameStatus.isReady();
-    }
-
-    public boolean isEnd() {
-        return gameStatus.isEnd();
-    }
-
-    public boolean isPlaying() {
-        return gameStatus.isPlaying();
-    }
-
-    public void start() {
-        gameStatus = GameStatus.PLAYING;
+    public Map<Position, ChessPiece> findAllPiece() {
+        return pieceByPosition;
     }
 }
