@@ -32,7 +32,7 @@ public class Board {
     }
 
     public void placePieces(final Map<Position, Piece> board) {
-        if (!board.isEmpty()) {
+        if (!this.board.isEmpty()) {
             throw new IllegalArgumentException(NOT_EMPTY_CHESS_BOARD);
         }
         this.board.putAll(new HashMap<>(board));
