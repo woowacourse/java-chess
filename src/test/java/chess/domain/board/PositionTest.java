@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@DisplayName("Position 테스트")
+@DisplayName("Position 은")
 class PositionTest {
 
     @DisplayName("좌표값을 입력해 위치를 지정할 떄 올바른 위치가 들어오면 인스턴스를 생성한다")

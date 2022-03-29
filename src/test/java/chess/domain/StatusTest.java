@@ -15,7 +15,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Status 테스트")
+@DisplayName("Status 는")
 class StatusTest {
 
     @Test

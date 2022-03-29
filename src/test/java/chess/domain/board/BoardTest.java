@@ -26,7 +26,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("Board 테스트")
+@DisplayName("Board 는")
 class BoardTest {
 
     @DisplayName("알맞은 개수의 말이 생성된다.")

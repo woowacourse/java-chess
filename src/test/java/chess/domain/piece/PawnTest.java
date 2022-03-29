@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@DisplayName("Pawn 테스트")
+@DisplayName("Pawn 은")
 class PawnTest {
 
     @DisplayName("입력된 방향에 대해")
