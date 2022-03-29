@@ -16,6 +16,8 @@ public class CommandFactory {
     private static final int POSITION_ARGUMENT_LENGTH = 2;
     private static final int ROW_INDEX = 0;
     private static final int COLUMN_INDEX = 1;
+    private static final String INVALID_COMMAND_INPUT = "입력에 맞는 명령을 찾을 수 없습니다.";
+    private static final String INVALID_MOVING_ARGUMENTS = "잘못된 이동 명령입니다.";
 
     private static final Map<String, Supplier<Command>> commands = new HashMap<>();
 
@@ -36,12 +38,12 @@ public class CommandFactory {
         if (command.equals("move")) {
             return move(moveArgs);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(INVALID_COMMAND_INPUT);
     }
 
     private static Command move(final List<String> moveArgs) {
         if (moveArgs.size() != MOVE_ARGUMENTS_SIZE) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_MOVING_ARGUMENTS);
         }
         final Position start = parseStringToPosition(moveArgs.get(START_POSITION_INDEX));
         final Position target = parseStringToPosition(moveArgs.get(TARGET_POSITION_INDEX));
@@ -50,7 +52,7 @@ public class CommandFactory {
 
     private static Position parseStringToPosition(final String rawPosition) {
         if (rawPosition.length() != POSITION_ARGUMENT_LENGTH) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_MOVING_ARGUMENTS);
         }
         final String[] separatedPosition = rawPosition.split("");
         final Column column = Column.from(separatedPosition[ROW_INDEX]);

@@ -12,13 +12,15 @@ class CommandFactoryTest {
     @Test
     void invalid_Command() {
         assertThatThrownBy(() -> CommandFactory.find("invalid", Collections.emptyList()))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("입력에 맞는 명령을 찾을 수 없습니다.");
     }
 
     @DisplayName("move Command가 들어올 때 위치 인수가 없으면 예외를 반환한다.")
     @Test
     void invalid_Moving_Argument() {
         assertThatThrownBy(() -> CommandFactory.find("move", Collections.emptyList()))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 이동 명령입니다.");
     }
 }
