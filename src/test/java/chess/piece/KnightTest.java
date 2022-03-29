@@ -1,16 +1,21 @@
 package chess.piece;
 
+import static chess.File.A;
 import static chess.File.B;
-import static chess.File.E;
-import static chess.Rank.EIGHT;
+import static chess.File.C;
+import static chess.File.D;
+import static chess.Player.BLACK;
+import static chess.Rank.FIVE;
+import static chess.Rank.FOUR;
+import static chess.Rank.SEVEN;
+import static chess.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.File;
 import chess.Position;
 import chess.Rank;
-import chess.board.Board;
-import java.util.Map;
+import chess.direction.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,22 +26,49 @@ class KnightTest {
     @DisplayName("target 값이 이동법위를 벗어나면 예외를 발생한다.")
     @ParameterizedTest()
     @CsvSource(value = {"SIX,A", "SEVEN,E"})
-    void canMove_exception(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece knight = board.get(Position.of(Rank.EIGHT, B));
-        assertThatThrownBy(() -> knight.canMove_2(Position.of(EIGHT, B), Position.of(rank, file), board))
+    void findRoute_exception(Rank rank, File file) {
+        Piece knight = new Knight(BLACK, "N");
+        assertThatThrownBy(() -> knight.findRoute(Position.of(FIVE, B), Position.of(rank, file)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 기물이 이동할수 없는 Target이 입력 됬습니다.");
     }
 
-    @DisplayName("target 위치로 움직일 수 있으면 true를 반환한다.")
-    @ParameterizedTest()
-    @CsvSource(value = {"SIX,C", "SIX,A"})
-    void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece knight = board.get(Position.of(Rank.EIGHT, B));
-        boolean actual = knight.canMove_2(Position.of(Rank.EIGHT, B), Position.of(rank, file), board);
+    @DisplayName("SSE 위치로 움직일 수 있으면 SSE 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_sse() {
+        Piece knight = new Knight(BLACK, "N");
+        Route route = knight.findRoute(Position.of(FIVE, B), Position.of(SEVEN, C));
 
-        assertThat(actual).isTrue();
+        assertThat(route).isEqualTo(new Route(-2, 1));
+    }
+
+
+    @DisplayName("SSW 위치로 움직일 수 있으면 SSW 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_ssw() {
+        Piece knight = new Knight(BLACK, "N");
+        Route route = knight.findRoute(Position.of(FIVE, B), Position.of(SEVEN, A));
+
+        assertThat(route).isEqualTo(new Route(-2, -1));
+    }
+
+
+    @DisplayName("EES 위치로 움직일 수 있으면 EES 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_EES() {
+        Piece knight = new Knight(BLACK, "N");
+        Route route = knight.findRoute(Position.of(FIVE, B), Position.of(FOUR, D));
+
+        assertThat(route).isEqualTo(new Route(1, 2));
+    }
+
+
+    @DisplayName("EEN 위치로 움직일 수 있으면 EEN 방향의 Route를 반환한다.")
+    @Test
+    void canMove_true() {
+        Piece knight = new Knight(BLACK, "N");
+        Route route = knight.findRoute(Position.of(FIVE, B), Position.of(SIX, D));
+
+        assertThat(route).isEqualTo(new Route(-1, 2));
     }
 }
