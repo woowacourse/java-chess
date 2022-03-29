@@ -10,11 +10,11 @@ import java.util.*;
 public class OutputView {
 
     private static final Map<Class<? extends Piece>, String> PIECE_SYMBOL = Map.of(King.class, "K",
-            Queen.class, "Q",
-            Rook.class, "R",
-            Bishop.class, "B",
-            Pawn.class, "P",
-            Knight.class, "N");
+        Queen.class, "Q",
+        Rook.class, "R",
+        Bishop.class, "B",
+        Pawn.class, "P",
+        Knight.class, "N");
 
     private OutputView() {
     }

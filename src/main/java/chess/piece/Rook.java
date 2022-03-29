@@ -4,7 +4,7 @@ import chess.position.Position;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
 
     private static final String ROOK_SCORE = "5";
 

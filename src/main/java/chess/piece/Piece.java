@@ -53,8 +53,10 @@ public abstract class Piece {
     }
 
     private Piece findPieceByPosition(Position position, List<Piece> pieces) {
-        return pieces.stream().filter(piece -> piece.isSamePosition(position))
-            .findFirst().get();
+        return pieces.stream()
+            .filter(piece -> piece.isSamePosition(position))
+            .findFirst()
+            .get();
     }
 
     private boolean hasPieceByPosition(Position position, List<Piece> pieces) {
