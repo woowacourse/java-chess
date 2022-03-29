@@ -34,4 +34,8 @@ public enum Rank {
     public int calculateAbsoluteValue(Rank rank) {
         return Math.abs(number - rank.getNumber());
     }
+
+    public boolean isNothing() {
+        return this.equals(NOTHING);
+    }
 }
