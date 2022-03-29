@@ -5,18 +5,16 @@ import java.math.BigDecimal;
 
 public class Rook extends Piece {
 
-    public Rook(Color color, Position position) {
-        super(color, position);
+    public Rook(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new Rook(getColor(), to);
-    }
-
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        return getPosition().isVerticalWay(to) || getPosition().isHorizontalWay(to);
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (from.isVerticalWay(to) || from.isHorizontalWay(to)) {
+            return MovementCondition.UNOBSTRUCTED;
+        }
+        return MovementCondition.IMPOSSIBLE;
     }
 
     @Override

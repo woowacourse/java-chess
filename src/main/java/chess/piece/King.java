@@ -5,23 +5,16 @@ import java.math.BigDecimal;
 
 public class King extends Piece {
 
-    public King(Color color, Position position) {
-        super(color, position);
+    public King(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new King(getColor(), to);
-    }
-
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        return getPosition().isAdjacent(to);
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (from.isAdjacent(to)) {
+            return MovementCondition.POSSIBLE;
+        }
+        return MovementCondition.IMPOSSIBLE;
     }
 
     @Override

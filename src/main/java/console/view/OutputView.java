@@ -12,7 +12,6 @@ import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -31,32 +30,33 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printChessBoard(List<Piece> pieces) {
+    public static void printChessBoard(Map<Position, Piece> board) {
         for (Rank rank : Rank.orderedValues()) {
-            printEachColumn(pieces, rank);
+            printEachColumn(board, rank);
         }
         System.out.println();
     }
 
-    private static void printEachColumn(List<Piece> pieces, Rank rank) {
+    private static void printEachColumn(Map<Position, Piece> board, Rank rank) {
         for (File file : File.orderedValues()) {
-            printEachRow(pieces, rank, file);
+            printEachRow(board, rank, file);
         }
         System.out.println();
     }
 
-    private static void printEachRow(List<Piece> pieces, Rank rank, File file) {
+    private static void printEachRow(Map<Position, Piece> board, Rank rank, File file) {
         Position position = new Position(file, rank);
-        Optional<Piece> pieceOptional = findByPosition(pieces, position);
+        Optional<Piece> pieceOptional = findByPosition(board, position);
         pieceOptional.ifPresentOrElse(
                 piece -> System.out.print(pieceSymbol(piece)),
                 () -> System.out.print("."));
     }
 
-    private static Optional<Piece> findByPosition(List<Piece> pieces, Position position) {
-        return pieces.stream()
-                .filter(piece -> piece.isSamePosition(position))
-                .findFirst();
+    private static Optional<Piece> findByPosition(Map<Position, Piece> board, Position position) {
+        if (board.containsKey(position)) {
+            return Optional.of(board.get(position));
+        }
+        return Optional.empty();
     }
 
     private static String pieceSymbol(Piece piece) {

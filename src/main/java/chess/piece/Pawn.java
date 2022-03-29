@@ -9,76 +9,66 @@ public class Pawn extends Piece {
     private static final Rank BLACK_START_RANK = Rank.SEVEN;
     private static final Rank WHITE_START_RANK = Rank.TWO;
 
-    public Pawn(Color color, Position position) {
-        super(color, position);
+    public Pawn(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new Pawn(getColor(), to);
-    }
-
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        return isUncapturablePosition(to) || isCapturablePosition(to);
-    }
-
-    public boolean isUncapturablePosition(Position to) {
-        return isForward(to) && isVerticalWay(to) && isValidDistance(to);
-    }
-
-    private boolean isForward(Position to) {
-        return getColor().isForward(getPosition(), to);
-    }
-
-    private boolean isVerticalWay(Position to) {
-        return getPosition().isVerticalWay(to);
-    }
-
-    private boolean isValidDistance(Position to) {
-        if (isVerticalWay(to)) {
-            return getVerticalDistance(to) <= movableDistance();
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (isForward(from, to) && isVerticalWay(from, to) && isValidDistance(from, to)) {
+            return MovementCondition.UNCATCABLE_AND_UNOBSTRUCTED;
         }
-        return getVerticalDistance(to) == 1 && getHorizontalDistance(to) == 1;
+
+        if (isForward(from, to) && isDiagonalWay(from, to) && isValidDistance(from, to)) {
+            return MovementCondition.CATCHABLE;
+        }
+
+        return MovementCondition.IMPOSSIBLE;
     }
 
-    private int getVerticalDistance(Position to) {
-        return getPosition().getVerticalDistance(to);
+    private boolean isForward(Position from, Position to) {
+        return getColor().isForward(from, to);
     }
 
-    private int movableDistance() {
-        if (isStartPawnPosition()) {
+    private boolean isVerticalWay(Position from, Position to) {
+        return from.isVerticalWay(to);
+    }
+
+    private boolean isValidDistance(Position from, Position to) {
+        if (isVerticalWay(from, to)) {
+            return getVerticalDistance(from, to) <= movableDistance(from);
+        }
+        return getVerticalDistance(from, to) == 1 && getHorizontalDistance(from, to) == 1;
+    }
+
+    private int getVerticalDistance(Position from, Position to) {
+        return from.getVerticalDistance(to);
+    }
+
+    private int movableDistance(Position from) {
+        if (isStartPawnPosition(from)) {
             return 2;
         }
         return 1;
     }
 
-    private boolean isStartPawnPosition() {
+    private boolean isStartPawnPosition(Position position) {
         if (getColor() == Color.BLACK) {
-            return getPosition().isSameRank(BLACK_START_RANK);
+            return position.isSameRank(BLACK_START_RANK);
         }
-        return getPosition().isSameRank(WHITE_START_RANK);
+        return position.isSameRank(WHITE_START_RANK);
     }
 
-    private int getHorizontalDistance(Position to) {
-        return getPosition().getHorizontalDistance(to);
+    private int getHorizontalDistance(Position from, Position to) {
+        return from.getHorizontalDistance(to);
     }
 
-    public boolean isCapturablePosition(Position to) {
-        return isForward(to) && isDiagonalWay(to) && isValidDistance(to);
-    }
-
-    private boolean isDiagonalWay(Position to) {
-        return getPosition().isDiagonalWay(to);
+    private boolean isDiagonalWay(Position from, Position to) {
+        return from.isDiagonalWay(to);
     }
 
     @Override
     public BigDecimal getPoint() {
         return BigDecimal.ONE;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 }

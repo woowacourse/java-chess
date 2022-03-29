@@ -5,18 +5,16 @@ import java.math.BigDecimal;
 
 public class Bishop extends Piece {
 
-    public Bishop(Color color, Position position) {
-        super(color, position);
+    public Bishop(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new Bishop(getColor(), to);
-    }
-
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        return getPosition().isDiagonalWay(to);
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (from.isDiagonalWay(to)) {
+            return MovementCondition.UNOBSTRUCTED;
+        }
+        return MovementCondition.IMPOSSIBLE;
     }
 
     @Override

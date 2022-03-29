@@ -10,10 +10,8 @@ import static chess.position.Rank.FOUR;
 import static chess.position.Rank.SIX;
 import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.position.Position;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,10 +24,10 @@ class KingTest {
     @MethodSource("provideInvalidMoveKing")
     @DisplayName("킹이 인접한 칸 외에 이동 시 예외 발생")
     void throwExceptionKingMoveOverOneSquare(Position from, Position to) {
-        King king = new King(Color.BLACK, from);
+        King king = new King(Color.BLACK);
 
-        assertThatThrownBy(() -> king.transfer(to))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThat(king.identifyMovementCondition(from, to))
+                .isEqualTo(MovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideInvalidMoveKing() {
@@ -46,9 +44,10 @@ class KingTest {
     @MethodSource("provideValidMoveKing")
     @DisplayName("킹은 인접한 칸으로만 이동할 수 있다.")
     void moveKingOneSquareToAdjacent(Position from, Position to) {
-        King king = new King(Color.BLACK, from);
+        King king = new King(Color.BLACK);
 
-        assertThat(king.transfer(to)).isEqualTo(new King(Color.BLACK, to));
+        assertThat(king.identifyMovementCondition(from, to))
+                .isEqualTo(MovementCondition.POSSIBLE);
     }
 
     private static Stream<Arguments> provideValidMoveKing() {

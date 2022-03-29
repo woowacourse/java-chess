@@ -5,19 +5,21 @@ import java.math.BigDecimal;
 
 public class Knight extends Piece {
 
-    public Knight(Color color, Position position) {
-        super(color, position);
+    public Knight(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new Knight(getColor(), to);
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (isPossibleMovement(from, to)) {
+            return MovementCondition.POSSIBLE;
+        }
+        return MovementCondition.IMPOSSIBLE;
     }
 
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        int horizontalDistance = getPosition().getHorizontalDistance(to);
-        int verticalDistance = getPosition().getVerticalDistance(to);
+    private boolean isPossibleMovement(Position from, Position to) {
+        int horizontalDistance = from.getHorizontalDistance(to);
+        int verticalDistance = from.getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||
                 (horizontalDistance == 2 && verticalDistance == 1);
     }

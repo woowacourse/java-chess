@@ -37,7 +37,7 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
-    public static int calculateDistance(File from, File to) {
+    public static int distanceBetween(File from, File to) {
         return Math.abs(from.value - to.value);
     }
 }

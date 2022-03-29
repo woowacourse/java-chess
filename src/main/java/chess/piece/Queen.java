@@ -5,19 +5,20 @@ import java.math.BigDecimal;
 
 public class Queen extends Piece {
 
-    public Queen(Color color, Position position) {
-        super(color, position);
+    public Queen(Color color) {
+        super(color);
     }
 
     @Override
-    protected Piece createNewPiece(Position to) {
-        return new Queen(getColor(), to);
+    public MovementCondition identifyMovementCondition(Position from, Position to) {
+        if (isPossibleMovement(from, to)) {
+            return MovementCondition.UNOBSTRUCTED;
+        }
+        return MovementCondition.IMPOSSIBLE;
     }
 
-    @Override
-    protected boolean isPossibleMovement(Position to) {
-        return getPosition().isDiagonalWay(to) || getPosition().isVerticalWay(to)
-                || getPosition().isHorizontalWay(to);
+    private boolean isPossibleMovement(Position from, Position to) {
+        return from.isDiagonalWay(to) || from.isVerticalWay(to) || from.isHorizontalWay(to);
     }
 
     @Override

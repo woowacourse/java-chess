@@ -11,10 +11,8 @@ import static chess.position.Rank.ONE;
 import static chess.position.Rank.SEVEN;
 import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.position.Position;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,10 +25,10 @@ class RookTest {
     @MethodSource("provideMoveCollinearRook")
     @DisplayName("룩은 동일선상으로 제한 없이 이동")
     void moveRookCollinearPositionUnlimitedDistance(Position from, Position to) {
-        Rook rook = new Rook(Color.BLACK, from);
+        Rook rook = new Rook(Color.BLACK);
 
-        assertThat(rook.transfer(to))
-                .isEqualTo(new Rook(Color.BLACK, to));
+        assertThat(rook.identifyMovementCondition(from, to))
+                .isEqualTo(MovementCondition.UNOBSTRUCTED);
     }
 
     private static Stream<Arguments> provideMoveCollinearRook() {
@@ -46,10 +44,10 @@ class RookTest {
     @MethodSource("provideInvalidMoveRook")
     @DisplayName("룩이 전후양옆외의 방향으로 이동 시 예외 발생")
     void throwExceptionWhenRookMoveInvalidPosition(Position from, Position to) {
-        Rook rook = new Rook(Color.BLACK, from);
+        Rook rook = new Rook(Color.BLACK);
 
-        assertThatThrownBy(() -> rook.transfer(to))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThat(rook.identifyMovementCondition(from, to))
+                .isEqualTo(MovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideInvalidMoveRook() {
