@@ -65,14 +65,15 @@ public class PositionTest {
     @DisplayName("해당 위치가 체스판 범위 내에 있는지 확인한다.")
     @Test
     void isValidPosition() {
-        assertThat(Position.isValidPosition(new Position(-1, -1))).isFalse();
+        assertThat(Position.isValidPosition(
+                Position.createNextPosition(new Position("a1"), Direction.SOUTHWEST))).isFalse();
     }
 
     @DisplayName("두 위치의 직선 거리를 계산한다.")
     @Test
     void calculateStraightDistance() {
-        Position position1 = new Position(0, 0);
-        Position position2 = new Position(7, 7);
+        Position position1 = new Position("a1");
+        Position position2 = new Position("h8");
 
         assertThat(position1.calculateStraightDistance(position2))
                 .isEqualTo(7);
