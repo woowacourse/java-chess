@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.CoordinateX;
 import chess.domain.position.Position;
 import chess.domain.position.CoordinateY;
+import chess.dto.PieceDto;
 
 import java.util.Map;
 
@@ -44,9 +45,10 @@ public class Output {
     }
 
     private static void printBoard(final CoordinateX coordinateX, final CoordinateY coordinateY, final Map<Position, Piece> board) {
-        final Piece target = board.get(Position.of(coordinateX, coordinateY));
-        if (target != null) {
-            System.out.print(target.getName());
+        Piece piece = board.get(Position.of(coordinateX, coordinateY));
+        String pieceName = PieceDto.getName(piece);
+        if (piece != null) {
+            System.out.print(pieceName);
             return;
         }
         System.out.print(".");
