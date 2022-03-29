@@ -2,6 +2,7 @@ package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.command.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class CommandTest {
         final String input = "s t a r t";
 
         // then
-        assertThatThrownBy(() -> Command.validate(input))
+        assertThatThrownBy(() -> Command.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 명령입니다.");
     }
@@ -26,7 +27,7 @@ class CommandTest {
         final String input = "move a2";
 
         // then
-        assertThatThrownBy(() -> Command.getFromPosition(input))
+        assertThatThrownBy(() -> Command.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 명령입니다.");
     }

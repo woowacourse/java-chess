@@ -59,4 +59,8 @@ public class ChessGame {
     public void start() {
         gameStatus = GameStatus.PLAYING;
     }
+
+    public void end() {
+        gameStatus = GameStatus.END;
+    }
 }

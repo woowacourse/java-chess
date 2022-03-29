@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.command.Command;
 import java.util.Scanner;
 
 public class InputView {
@@ -9,21 +10,18 @@ public class InputView {
     private InputView() {
     }
 
-    public static String requestCommand() {
+    public static Command requestCommand() {
         try {
             return getCommand();
         } catch (final IllegalArgumentException e) {
-            System.out.println("[ERROR] : " + e.getMessage());
+            OutputView.printError(e.getMessage());
             return requestCommand();
         }
     }
 
-    private static String getCommand() {
+    private static Command getCommand() {
         final String input = SCANNER.nextLine();
         final String text = input.toLowerCase();
-
-        Command.validate(text);
-
-        return text;
+        return Command.from(text);
     }
 }
