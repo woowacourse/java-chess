@@ -4,7 +4,7 @@ import chess.model.Team;
 import chess.model.position.Position;
 import chess.model.direction.route.Route;
 import chess.model.direction.strategy.RouteStrategy;
-import chess.model.direction.strategy.RoyaltyRouteFinder;
+import chess.model.direction.strategy.OrdinalRouteFinder;
 
 public class King extends Piece {
 
@@ -16,7 +16,7 @@ public class King extends Piece {
 
     public King(Team team, String symbol) {
         super(team, symbol);
-        this.routeStrategy = new RoyaltyRouteFinder();
+        this.routeStrategy = new OrdinalRouteFinder();
     }
 
     public Route findRoute(Position source, Position target) {

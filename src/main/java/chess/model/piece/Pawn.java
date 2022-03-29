@@ -7,7 +7,7 @@ import chess.model.Team;
 import chess.model.position.Position;
 import chess.model.direction.route.Route;
 import chess.model.direction.strategy.RouteStrategy;
-import chess.model.direction.strategy.RoyaltyRouteFinder;
+import chess.model.direction.strategy.OrdinalRouteFinder;
 
 public class Pawn extends Piece {
 
@@ -19,7 +19,7 @@ public class Pawn extends Piece {
 
     public Pawn(Team team, String symbol) {
         super(team, symbol);
-        this.routeStrategy = new RoyaltyRouteFinder();
+        this.routeStrategy = new OrdinalRouteFinder();
     }
 
     public Route findRoute(Position source, Position target) {

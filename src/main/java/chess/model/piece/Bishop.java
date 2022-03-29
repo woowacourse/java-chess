@@ -3,7 +3,7 @@ package chess.model.piece;
 import chess.model.Team;
 import chess.model.position.Position;
 import chess.model.direction.route.Route;
-import chess.model.direction.strategy.BishopRouteFinder;
+import chess.model.direction.strategy.DiagonalRouteFinder;
 import chess.model.direction.strategy.RouteStrategy;
 
 public class Bishop extends Piece {
@@ -14,7 +14,7 @@ public class Bishop extends Piece {
 
     public Bishop(Team team, String symbol) {
         super(team, symbol);
-        this.routeStrategy = new BishopRouteFinder();
+        this.routeStrategy = new DiagonalRouteFinder();
     }
 
     public Route findRoute(Position source, Position target) {

@@ -8,7 +8,7 @@ import chess.model.direction.route.Route;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoyaltyRouteFinder implements RouteStrategy {
+public class OrdinalRouteFinder implements RouteStrategy {
 
     @Override
     public Route findRoute(final Position source, final Position target) {

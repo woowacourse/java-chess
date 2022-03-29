@@ -3,7 +3,7 @@ package chess.model.piece;
 import chess.model.Team;
 import chess.model.position.Position;
 import chess.model.direction.route.Route;
-import chess.model.direction.strategy.RookRouteFinder;
+import chess.model.direction.strategy.CardinalRouteFinder;
 import chess.model.direction.strategy.RouteStrategy;
 
 public class Rook extends Piece {
@@ -14,7 +14,7 @@ public class Rook extends Piece {
 
     public Rook(Team team, String symbol) {
         super(team, symbol);
-        this.routeStrategy = new RookRouteFinder();
+        this.routeStrategy = new CardinalRouteFinder();
     }
 
     public Route findRoute(Position source, Position target) {
