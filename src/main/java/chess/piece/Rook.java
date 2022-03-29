@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Rook extends Piece implements RookMovable {
+public final class Rook extends Piece implements HorizontalAndVerticalMovable {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
     private static final double SCORE = 5D;

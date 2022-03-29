@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Queen extends Piece implements RookMovable, BishopMovable {
+public final class Queen extends Piece implements HorizontalAndVerticalMovable, DiagonalMovable {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;

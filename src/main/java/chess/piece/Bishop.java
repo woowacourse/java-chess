@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Bishop extends Piece implements BishopMovable {
+public final class Bishop extends Piece implements DiagonalMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;

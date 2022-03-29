@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public interface RookMovable {
+public interface HorizontalAndVerticalMovable {
 
     default List<Position> getHorizontalPositions(List<Piece> list) {
         Piece left = list.get(0);

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public interface BishopMovable {
+public interface DiagonalMovable {
 
     default List<Position> getPositiveDiagonal(List<Piece> list) {
         Piece rightUpper = list.get(0);
