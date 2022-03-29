@@ -6,49 +6,49 @@ import java.util.Arrays;
 
 public enum Direction {
 
-    E(0, 1),
-    S(-1, 0),
-    W(0, -1),
-    N(1, 0),
+    E(1, 0),
+    S(0, -1),
+    W(-1, 0),
+    N(0, 1),
     NE(1, 1),
-    SE(-1, 1),
+    SE(1, -1),
     SW(-1, -1),
-    NW(1, -1),
-    NNE(2, 1),
-    NEE(1, 2),
-    SEE(-1, 2),
-    SSE(-2, 1),
-    SSW(-2, -1),
-    SWW(-1, -2),
-    NWW(1, -2),
-    NNW(2, -1);
+    NW(-1, 1),
+    NNE(1, 2),
+    NEE(2, 1),
+    SEE(2, -1),
+    SSE(1, -2),
+    SSW(-1, -2),
+    SWW(-2, -1),
+    NWW(-2, 1),
+    NNW(-1, 2);
 
-    private final int row;
     private final int column;
+    private final int row;
 
-    Direction(final int row, final int column) {
-        this.row = row;
+    Direction(final int column, final int row) {
         this.column = column;
+        this.row = row;
     }
 
-    public static Direction of(final int row, final int column) {
+    public static Direction of(final int column, final int row) {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.row == row && direction.column == column)
+                .filter(direction -> direction.column == column && direction.row == row)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
-    public static Direction calculate(final int rowDifference, final int columnDifference) {
-        if (abs(rowDifference) == abs(columnDifference)) {
-            return Direction.of(rowDifference / abs(rowDifference), columnDifference / abs(columnDifference));
+    public static Direction calculate(final int columnDifference, final int rowDifference) {
+        if (abs(columnDifference) == abs(rowDifference)) {
+            return Direction.of(columnDifference / abs(columnDifference), rowDifference / abs(rowDifference));
         }
-        if (rowDifference == 0 && columnDifference != 0) {
-            return Direction.of(0, columnDifference / abs(columnDifference));
+        if (columnDifference != 0 && rowDifference == 0) {
+            return Direction.of(columnDifference / abs(columnDifference), 0);
         }
         if (columnDifference == 0 && rowDifference != 0) {
-            return Direction.of(rowDifference / abs(rowDifference), 0);
+            return Direction.of(0, rowDifference / abs(rowDifference));
         }
-        return Direction.of(rowDifference, columnDifference);
+        return Direction.of(columnDifference, rowDifference);
     }
 
     public boolean isDiagonal() {

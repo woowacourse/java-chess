@@ -18,9 +18,9 @@ public class Bishop extends Piece {
 
     @Override
     public Direction findValidDirection(Position current, Position target) {
-        final int rowDifference = target.calculateRowDifference(current);
         final int columnDifference = target.calculateColumnDifference(current);
-        final Direction direction = Direction.calculate(rowDifference, columnDifference);
+        final int rowDifference = target.calculateRowDifference(current);
+        final Direction direction = Direction.calculate(columnDifference, rowDifference);
         validateDirection(direction);
         return direction;
     }
