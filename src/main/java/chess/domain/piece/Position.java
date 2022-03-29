@@ -24,7 +24,7 @@ public class Position {
         this.y = charPosition.charAt(SECOND_INDEX) - ASCII_NUMBER;
     }
 
-    public Position(int x, int y) {
+    private Position(int x, int y) {
         this.x = x;
         this.y = y;
     }

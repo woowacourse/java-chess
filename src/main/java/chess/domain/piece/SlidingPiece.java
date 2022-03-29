@@ -26,8 +26,8 @@ public abstract class SlidingPiece extends Piece {
 
     private void addPossibleTargetPositions(Position targetPosition, List<Position> inRangePosition) {
         for (Direction direction : findPossibleDirections()) {
-            List<Position> directionPositions = IntStream
-                    .rangeClosed(1, position.calculateStraightDistance(targetPosition))
+            List<Position> directionPositions = IntStream.rangeClosed(1,
+                            position.calculateStraightDistance(targetPosition))
                     .mapToObj(product -> Position.createNextPosition(position, direction, product))
                     .filter(Position::isValidPosition)
                     .collect(Collectors.toList());

@@ -47,8 +47,7 @@ public enum Direction {
 
     private static Optional<Position> findPositionInDirection(Position start, Position target, Direction direction) {
         return IntStream.rangeClosed(1, start.calculateStraightDistance(target))
-                .mapToObj(number -> new Position(start.getX() + direction.getXDegree() * number,
-                        start.getY() + direction.getYDegree() * number))
+                .mapToObj(number -> Position.createNextPosition(start, direction, number))
                 .filter(position -> position.equals(target))
                 .findAny();
     }
