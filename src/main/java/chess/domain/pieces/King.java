@@ -27,7 +27,7 @@ public final class King implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "K";
+    public Symbol symbol() {
+        return Symbol.KING;
     }
 }

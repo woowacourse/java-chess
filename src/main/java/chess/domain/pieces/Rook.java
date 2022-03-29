@@ -25,7 +25,7 @@ public final class Rook implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "R";
+    public Symbol symbol() {
+        return Symbol.ROOK;
     }
 }

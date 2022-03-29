@@ -25,7 +25,7 @@ public final class Queen implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "Q";
+    public Symbol symbol() {
+        return Symbol.QUEEN;
     }
 }

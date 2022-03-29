@@ -56,7 +56,7 @@ public final class Pawn implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "P";
+    public Symbol symbol() {
+        return Symbol.PAWN;
     }
 }

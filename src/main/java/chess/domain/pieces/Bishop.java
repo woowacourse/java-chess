@@ -25,7 +25,7 @@ public final class Bishop implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "B";
+    public Symbol symbol() {
+        return Symbol.BISHOP;
     }
 }

@@ -12,5 +12,5 @@ public interface Type {
 
     double score();
 
-    String symbol();
+    Symbol symbol();
 }

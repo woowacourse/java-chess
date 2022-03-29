@@ -38,7 +38,7 @@ public final class Knight implements Type {
     }
 
     @Override
-    public String symbol() {
-        return "N";
+    public Symbol symbol() {
+        return Symbol.KNIGHT;
     }
 }

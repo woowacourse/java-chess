@@ -18,17 +18,17 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBoard(final Game board) {
+    public static void printBoard(final Game game) {
         for (int row : Row.valuesByDescending()) {
-            printRow(board, row);
+            printRow(game, row);
             System.out.println();
         }
     }
 
-    private static void printRow(final Game board, final int row) {
+    private static void printRow(final Game game, final int row) {
         for (Column column : Column.values()) {
             Position position = Position.of(column.name() + row);
-            printSymbol(board, position);
+            printSymbol(game, position);
         }
     }
 
