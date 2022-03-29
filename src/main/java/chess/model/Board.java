@@ -1,9 +1,7 @@
 package chess.model;
 
 import static chess.model.PieceColor.*;
-import static chess.model.Rank.*;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import chess.model.boardinitializer.BoardInitializer;
@@ -99,31 +97,11 @@ public class Board {
         return values.get(position);
     }
 
-    public double calculateScore() {
-        return values.values()
-            .stream()
-            .filter(turnDecider::isTurnOf)
-            .mapToDouble(Piece::getScore)
-            .sum() - adjustPawnScore();
-    }
-
-    public double adjustPawnScore() {
-        return Arrays.stream(File.values())
-            .map(this::getPawnCountInOneFile)
-            .filter(count -> count > 1)
-            .mapToDouble(count -> count * 0.5)
-            .sum();
-
-    }
-
-    private long getPawnCountInOneFile(File file) {
-        return reverseValues().stream()
-            .map(rank -> new Position(rank, file))
-            .filter(position -> pieceAt(position).isPawn() && turnDecider.isTurnOf(pieceAt(position)))
-            .count();
-    }
-
     public Map<Position, Piece> getValues() {
         return values;
+    }
+
+    public double calculateScore() {
+        return new ScoreCalculator(values, turnDecider).calculate();
     }
 }
