@@ -35,7 +35,7 @@ public final class Board {
     private void initEmpty() {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                Square square = new Square(rank, file);
+                Square square = Square.of(rank, file);
                 if (!board.containsKey(square)) {
                     board.put(square, new Empty(Color.EMPTY));
                 }
@@ -45,14 +45,14 @@ public final class Board {
 
     private void initPawns(Color color, Rank rank, List<File> files) {
         for (int i = 0; i < 8; i++) {
-            board.put(new Square(rank, files.get(i)), new Pawn(color));
+            board.put(Square.of(rank, files.get(i)), new Pawn(color));
         }
     }
 
     private void initChivalry(Color color, Rank rank, List<File> files) {
         List<Piece> chivalryLineup = chivalryLineup(color);
         for (int i = 0; i < chivalryLineup.size(); i++) {
-            board.put(new Square(rank, files.get(i)), chivalryLineup.get(i));
+            board.put(Square.of(rank, files.get(i)), chivalryLineup.get(i));
         }
     }
 

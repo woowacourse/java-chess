@@ -2,12 +2,21 @@ package chessrefactor.square;
 
 public class Square {
 
+    private static Square instance;
+
     private final Rank rank;
     private final File file;
 
-    public Square(Rank rank, File file) {
+    private Square(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public static Square of(Rank rank, File file) {
+        if (instance == null) {
+            instance = new Square(rank, file);
+        }
+        return instance;
     }
 
     @Override
