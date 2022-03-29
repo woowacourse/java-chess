@@ -65,7 +65,7 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 방향입니다."));
     }
 
-    public static boolean isRightDirection(Direction direction, Position source, Position target) {
+    private static boolean isRightDirection(Direction direction, Position source, Position target) {
         Position currentPosition = source;
         for (int i = 0; i < 8; i++) {
             currentPosition = currentPosition.from(direction);
