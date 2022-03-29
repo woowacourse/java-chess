@@ -64,7 +64,6 @@ class KnightTest {
         board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
 
         assertThatThrownBy(() -> knight.validateMove(board, knightSourcePosition, targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

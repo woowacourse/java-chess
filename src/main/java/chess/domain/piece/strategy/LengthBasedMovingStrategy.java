@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.function.IntPredicate;
 
-public class LengthBasedMovingStrategy implements MovingStrategy {
+public class LengthBasedMovingStrategy {
 
     private final IntPredicate condition;
 
@@ -13,32 +13,29 @@ public class LengthBasedMovingStrategy implements MovingStrategy {
         this.condition = condition;
     }
 
-    @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        validateTargetPosition(sourcePosition, targetPosition);
-        validateSameColor(board, sourcePosition, targetPosition);
+    public boolean canMove(List<List<Piece>> board, Position source, Position target) {
+        int distance = calculateDistance(source, target);
+
+        return condition.test(distance)
+                && (findPiece(board, target).isEmpty() || isCapture(board, source, target));
     }
 
-    private void validateTargetPosition(Position sourcePosition, Position targetPosition) {
-        int rankLength = Math.abs(sourcePosition.getRankIndex() - targetPosition.getRankIndex());
-        int fileLength = Math.abs(sourcePosition.getFileIndex() - targetPosition.getFileIndex());
+    private int calculateDistance(Position source, Position target) {
+        int rankLength = Math.abs(source.getRankIndex() - target.getRankIndex());
+        int fileLength = Math.abs(source.getFileIndex() - target.getFileIndex());
 
-        if (condition.test(square(rankLength) + square(fileLength))) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
-        }
+        return square(rankLength) + square(fileLength);
     }
 
     private int square(int value) {
         return value * value;
     }
 
-    private void validateSameColor(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = findPiece(board, sourcePosition);
-        Piece targetPiece = findPiece(board, targetPosition);
+    private boolean isCapture(List<List<Piece>> board, Position source, Position target) {
+        Piece sourcePiece = findPiece(board, source);
+        Piece targetPiece = findPiece(board, target);
 
-        if (sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("같은 진영 기물은 공격할 수 없습니다.");
-        }
+        return !targetPiece.isEmpty() && !sourcePiece.isSameColor(targetPiece);
     }
 
     private Piece findPiece(List<List<Piece>> board, Position position) {
