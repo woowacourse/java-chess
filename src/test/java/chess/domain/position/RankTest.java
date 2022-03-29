@@ -18,13 +18,13 @@ public class RankTest {
     @Test
     @DisplayName("값을 이용해 Rank를 찾는다.")
     void findRank() {
-        assertThat(Rank.of(7)).isEqualTo(Rank.SEVEN);
+        assertThat(Rank.from(7)).isEqualTo(Rank.SEVEN);
     }
 
     @Test
     @DisplayName("1~8 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
-        assertThatThrownBy(() -> Rank.of(9))
+        assertThatThrownBy(() -> Rank.from(9))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 존재하지 않는 Rank 값 입니다.");
     }
@@ -32,21 +32,21 @@ public class RankTest {
     @Test
     @DisplayName("Rank를 1 증가시킨다.")
     void plus() {
-        Rank rank = Rank.of(5);
+        Rank rank = Rank.from(5);
         assertThat(rank.move(1)).isEqualTo(Rank.SIX);
     }
 
     @Test
     @DisplayName("Rank를 1 감소시킨다.")
     void minus() {
-        Rank rank = Rank.of(5);
+        Rank rank = Rank.from(5);
         assertThat(rank.move(-1)).isEqualTo(Rank.FOUR);
     }
 
     @Test
     @DisplayName("Rank를 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
     void plusOutOfBounds() {
-        Rank rank = Rank.of(7);
+        Rank rank = Rank.from(7);
 
         assertThat(rank.move(2)).isNull();
     }
@@ -54,7 +54,7 @@ public class RankTest {
     @Test
     @DisplayName("Rank를 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
     void minusOutOfBounds() {
-        Rank rank = Rank.of(2);
+        Rank rank = Rank.from(2);
 
         assertThat(rank.move(-2)).isNull();
     }

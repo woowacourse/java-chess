@@ -19,7 +19,7 @@ public enum File {
         this.value = value;
     }
 
-    public static File of(final char value) {
+    public static File from(final char value) {
         return Arrays.stream(File.values())
             .filter(file -> file.value == value)
             .findFirst()
@@ -32,7 +32,7 @@ public enum File {
 
     public File move(final int distance) {
         try {
-            return of((char) (value + (char) distance));
+            return from((char) (value + (char) distance));
         } catch (IllegalArgumentException exception) {
             return null;
         }
