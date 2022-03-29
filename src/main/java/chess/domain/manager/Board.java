@@ -38,14 +38,14 @@ public final class Board {
     private Piece findPiece(final Position sourcePosition) {
         final Optional<Piece> wrappedPiece = piece(sourcePosition);
         if (wrappedPiece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 말이 존재하지 않습니다.");
+            throw new IllegalArgumentException("말이 존재하지 않습니다.");
         }
         return wrappedPiece.get();
     }
 
     private void validateTargetNotSameColor(final Position targetPosition, final Piece piece) {
         if (pieces.containsKey(targetPosition) && piece.isSameColorPiece(findPiece(targetPosition))) {
-            throw new IllegalArgumentException("[ERROR] 목적지에 같은 색의 기물이 있으면 움직일 수 없다.");
+            throw new IllegalArgumentException("목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.");
         }
     }
 
@@ -76,7 +76,7 @@ public final class Board {
 
     private void validatePieceNotExist(final Position position) {
         if (pieces.containsKey(position)) {
-            throw new IllegalArgumentException("[ERROR] 이동경로에 다른 기물이 있으면 움직일 수 없다.");
+            throw new IllegalArgumentException("이동경로에 다른 기물이 있으면 움직일 수 없습니다.");
         }
     }
 
@@ -91,13 +91,13 @@ public final class Board {
 
     private void checkPawnTargetExist(final Position targetPosition) {
         if (!pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있다.");
+            throw new IllegalArgumentException("폰은 상대기물이 목적지에 존재해야 대각선으로 움직일 수 있습니다.");
         }
     }
 
     private void checkPawnTargetNotExist(final Position targetPosition) {
         if (pieces.containsKey(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 목적지에 다른 기물이 존재하면 움직일 수 없다.");
+            throw new IllegalArgumentException("목적지에 다른 기물이 존재하면 움직일 수 없습니다.");
         }
     }
 
