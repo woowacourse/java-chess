@@ -41,8 +41,7 @@ public final class Bishop extends Piece implements BishopMovable {
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list); // rank 큰게 먼저
-        // rank 같다면, file이 작은게 먼저
+        Collections.sort(list);
         if (position.isPositiveDiagonal(targetPiece.position)) {
             return getPositiveDiagonal(list);
         }

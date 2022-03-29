@@ -37,8 +37,7 @@ public final class Rook extends Piece implements RookMovable {
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list); // rank 큰게 먼저
-        // rank 같다면, file이 작은게 먼저
+        Collections.sort(list);
         if (position.isHorizontal(targetPiece.position)) {
             return getHorizontalPositions(list);
         }
