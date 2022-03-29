@@ -31,7 +31,6 @@ public class Ready implements ChessState {
         throw new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND);
     }
 
-
     @Override
     public Map<Position, Piece> getPieces() {
         throw new UnsupportedOperationException(CANNOT_IMPLEMENT_COMMAND);

@@ -12,7 +12,6 @@ public abstract class Running implements ChessState {
 
     private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
 
-
     protected final Board board;
     protected final Color color;
 
@@ -20,7 +19,6 @@ public abstract class Running implements ChessState {
         this.board = board;
         this.color = color;
     }
-
 
     @Override
     public boolean isFinished() {
