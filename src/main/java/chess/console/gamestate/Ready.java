@@ -2,6 +2,7 @@ package chess.console.gamestate;
 
 import chess.console.view.OutputView;
 import chess.domain.ChessBoard;
+import chess.domain.piece.PieceFactory;
 
 public final class Ready implements GameState {
 
@@ -11,7 +12,7 @@ public final class Ready implements GameState {
         if (!command.isStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않아 다른 명령을 실행할 수 없습니다.");
         }
-        ChessBoard chessBoard = ChessBoard.createNewChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.createNewChessBoard());
         OutputView.printChessBoard(chessBoard.getPieces());
         return Running.createFirstTurnRunning(chessBoard);
     }

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.multiple.Bishop;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.multiple.Rook;
@@ -37,7 +38,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("새로운 기본 체스판 생성")
     void createNewChessBoard() {
-        ChessBoard chessBoard = ChessBoard.createNewChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.createNewChessBoard());
         assertThat(chessBoard.getPieces()).hasSize(32);
     }
 
@@ -167,7 +168,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("종료되지 않은 게임의 우승자 반환 시 예외발생")
     void winnerExceptionByNotFinishedGame() {
-        ChessBoard chessBoard = ChessBoard.createNewChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.createNewChessBoard());
 
         assertThatThrownBy(() -> chessBoard.winner())
                 .isInstanceOf(IllegalStateException.class)

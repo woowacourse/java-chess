@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +18,6 @@ public class ChessBoard {
     public ChessBoard(Map<Position, Piece> pieces) {
         Objects.requireNonNull(pieces, "pieces는 null이 들어올 수 없습니다.");
         this.pieces = new HashMap<>(pieces);
-    }
-
-    public static ChessBoard createNewChessBoard() {
-        return new ChessBoard(PieceFactory.createNewChessBoard());
     }
 
     public void movePiece(Position source, Position target, Color color) {
