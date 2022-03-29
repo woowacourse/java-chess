@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.player.Team;
+
 import java.util.Objects;
 
 public abstract class Piece {
@@ -17,7 +18,9 @@ public abstract class Piece {
 
     public abstract Position move(Position currentPosition, Position destinationPosition, Team team);
 
-    public abstract boolean exist(Position checkingPosition);
+    public boolean exist(final Position checkingPosition) {
+        return position.equals(checkingPosition);
+    }
 
     public Position capture(Position currentPosition, Position destinationPosition, Team team) {
         return move(currentPosition, destinationPosition, team);

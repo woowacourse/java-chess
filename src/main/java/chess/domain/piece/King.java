@@ -32,11 +32,6 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean exist(final Position checkingPosition) {
-        return position.equals(checkingPosition);
-    }
-
-    @Override
     public boolean isKing() {
         return true;
     }
