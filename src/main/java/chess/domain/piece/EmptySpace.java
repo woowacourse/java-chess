@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 public class EmptySpace extends Piece {
 
     public EmptySpace() {
-        super(PieceType.NONE, Color.BLACK);
+        super(PieceType.NONE, Color.NONE);
     }
 
     @Override
