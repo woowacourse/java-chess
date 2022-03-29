@@ -28,7 +28,7 @@ class PawnMoveStrategyTest {
     @DisplayName("폰이 갈 수 있는 위치 중 하나여야 한다.")
     void movePossibilityOfTrue(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertDoesNotThrow(() -> new PawnMoveStrategy()
-                .isValidateCanMove(Team.WHITE,
+                .canMove(Team.WHITE,
                         new Pawn(Team.BLACK),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
@@ -39,7 +39,7 @@ class PawnMoveStrategyTest {
     @Test
     @DisplayName("폰의 이동방향이 TOP, DOWN 일 경우에는 추가 검증을 해야한다.")
     void canMoveAdditionalValidation() {
-        assertThat(new PawnMoveStrategy().isValidateCanMove(Team.WHITE,
+        assertThat(new PawnMoveStrategy().canMove(Team.WHITE,
                 new Pawn(Team.WHITE),
                 new Position(Column.A, Rank.TWO),
                 new Position(Column.A, Rank.THREE)))
@@ -49,7 +49,7 @@ class PawnMoveStrategyTest {
     @Test
     @DisplayName("폰의 이동방향이 TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT 일 경우에는 검증이 필요없다.")
     void canMoveAdditionalInValidation() {
-        assertThat(new PawnMoveStrategy().isValidateCanMove(Team.WHITE,
+        assertThat(new PawnMoveStrategy().canMove(Team.WHITE,
                 new Pawn(Team.BLACK),
                 new Position(Column.A, Rank.ONE),
                 new Position(Column.B, Rank.TWO)))

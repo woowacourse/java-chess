@@ -16,7 +16,7 @@ public final class RookMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
+    public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = rookDirection(team);
 
         if (isInvalidDirection(from, to, directions)) {

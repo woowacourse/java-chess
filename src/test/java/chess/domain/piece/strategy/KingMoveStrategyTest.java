@@ -28,7 +28,7 @@ class KingMoveStrategyTest {
     @DisplayName("킹이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertDoesNotThrow(() -> new KingMoveStrategy()
-                .isValidateCanMove(Team.WHITE, new King(Team.WHITE),
+                .canMove(Team.WHITE, new King(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 )
@@ -43,7 +43,7 @@ class KingMoveStrategyTest {
     @DisplayName("킹이 갈 수 있는 위치가 아니면 에러가 발생한다.")
     void canInvalidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertThatThrownBy(() -> new KingMoveStrategy()
-                .isValidateCanMove(Team.WHITE,new King(Team.WHITE),
+                .canMove(Team.WHITE,new King(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 ))
