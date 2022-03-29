@@ -34,15 +34,27 @@ public abstract class Piece {
 
 	public abstract double getScore();
 
-	public abstract boolean isBishop();
+	public boolean isBishop() {
+		return false;
+	}
 
-	public abstract boolean isKing();
+	public boolean isKing() {
+		return false;
+	}
 
-	public abstract boolean isKnight();
+	public boolean isKnight() {
+		return false;
+	}
 
-	public abstract boolean isPawn();
+	public boolean isPawn() {
+		return false;
+	}
 
-	public abstract boolean isQueen();
+	public boolean isQueen() {
+		return false;
+	}
 
-	public abstract boolean isRook();
+	public boolean isRook() {
+		return false;
+	}
 }
