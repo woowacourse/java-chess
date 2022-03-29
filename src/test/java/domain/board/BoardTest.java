@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Team;
+import chess.domain.Team;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {

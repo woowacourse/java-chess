@@ -3,15 +3,14 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
+import chess.domain.Team;
 import chess.domain.result.StatusResult;
 
 import java.util.Map;
 
 public class OutputView {
 
-    public static void printBoard(final Board board) {
-        final Map<Position, Piece> boardInformation = board.getBoard();
+    public static void printBoard(final Map<Position, Piece> boardInformation) {
         for (Position position : Position.getReversePositions()) {
             System.out.print(boardInformation.get(position).getSymbol());
             printBlank(position);

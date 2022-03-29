@@ -1,6 +1,6 @@
-package chess.domain.state;
+package chess.domain.state.turn;
 
-import chess.domain.piece.Team;
+import chess.domain.Team;
 
 public final class BlackTurn extends Running {
 

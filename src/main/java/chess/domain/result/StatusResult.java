@@ -1,6 +1,6 @@
 package chess.domain.result;
 
-import chess.domain.piece.Team;
+import chess.domain.Team;
 
 public class StatusResult {
 

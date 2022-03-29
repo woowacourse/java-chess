@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
+import chess.domain.Team;
 import org.junit.jupiter.api.Test;
 
 public class RookTest {

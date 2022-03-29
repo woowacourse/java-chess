@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Knight extends Piece {
 

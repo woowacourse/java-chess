@@ -1,8 +1,9 @@
 package chess.domain.board;
 
+import chess.domain.Team;
 import chess.domain.piece.*;
-import chess.domain.state.State;
-import chess.domain.state.WhiteTurn;
+import chess.domain.state.turn.State;
+import chess.domain.state.turn.WhiteTurn;
 
 import java.util.*;
 
@@ -155,7 +156,7 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
     }
 
     public Team getWinner() {
