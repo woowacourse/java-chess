@@ -15,7 +15,6 @@ public class ChessController {
         Output.printChessGameStart();
 
         ChessGame chessGame = new ChessGame();
-
         while (!chessGame.isEnded()) {
             command(chessGame);
         }

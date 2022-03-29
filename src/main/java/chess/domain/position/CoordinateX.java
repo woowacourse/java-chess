@@ -42,10 +42,6 @@ public enum CoordinateX {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int difference(final CoordinateX from, final CoordinateX to) {
-        return Math.abs(from.order - to.order);
-    }
-
     public static int min(final CoordinateX from, final CoordinateX to) {
         return Math.min(from.order, to.order);
     }

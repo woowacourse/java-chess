@@ -37,10 +37,6 @@ public enum CoordinateY {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static int difference(int from, int to) {
-        return Math.abs(from - to);
-    }
-
     public int getOrder() {
         return order;
     }

@@ -3,7 +3,6 @@ package chess.domain.state;
 import chess.domain.position.Position;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class End extends State {
 
