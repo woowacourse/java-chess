@@ -10,12 +10,12 @@ public class End extends CommandChain {
     }
 
     @Override
-    protected boolean canDoAction(Command command, Board board) {
+    protected boolean canDoAction(final Command command, final Board board) {
         return command == Command.END;
     }
 
     @Override
-    protected void doAction(String[] rawCommand, Board board) {
+    protected void doAction(final ParsedCommand parsedCommand, final Board board) {
         board.terminateGame();
     }
 }

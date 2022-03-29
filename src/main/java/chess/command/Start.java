@@ -11,12 +11,12 @@ public class Start extends CommandChain {
     }
 
     @Override
-    protected boolean canDoAction(Command command, Board board) {
+    protected boolean canDoAction(final Command command, final Board board) {
         return command == Command.START && board.isReady();
     }
 
     @Override
-    protected void doAction(String[] rawCommand, Board board) {
+    protected void doAction(final ParsedCommand parsedCommand, final Board board) {
         board.startFirstTurn();
         OutputView.printBoard(board.getPieces());
     }

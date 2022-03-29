@@ -9,27 +9,19 @@ import java.util.Optional;
 
 public class Move extends CommandChain {
 
-    private static final String INVALID_MOVING_COMMAND = "올바르지 않은 이동 명령입니다.";
-    private static final int MOVE_COMMAND_LENGTH = 3;
-    private static final int STARTING_POINT = 1;
-    private static final int DESTINATION = 2;
-
     Move() {
         super(Optional.of(new Status()));
     }
 
     @Override
-    protected boolean canDoAction(Command command, Board board) {
+    protected boolean canDoAction(final Command command, final Board board) {
         return command == Command.MOVE && board.isRunning();
     }
 
     @Override
-    protected void doAction(String[] rawCommand, Board board) {
-        if (rawCommand.length != MOVE_COMMAND_LENGTH) {
-            throw new IllegalArgumentException(INVALID_MOVING_COMMAND);
-        }
-        final Position start = Position.from(rawCommand[STARTING_POINT]);
-        final Position target = Position.from(rawCommand[DESTINATION]);
+    protected void doAction(final ParsedCommand parsedCommand, final Board board) {
+        final Position start = parsedCommand.getStart();
+        final Position target = parsedCommand.getDestination();
         final Color currentColor = board.getCurrentColor();
         if (board.move(start, target, currentColor).isSamePiece(PieceType.KING)) {
             board.terminateGame();

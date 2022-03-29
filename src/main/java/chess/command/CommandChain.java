@@ -6,7 +6,6 @@ import java.util.Optional;
 public abstract class CommandChain {
 
     private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
-    private static final int COMMAND = 0;
 
     protected Optional<CommandChain> nextCommand;
 
@@ -14,17 +13,16 @@ public abstract class CommandChain {
         this.nextCommand = nextCommand;
     }
 
-    public void doCommandAction(final String[] rawCommand, final Board board) {
-        final Command command = Command.from(rawCommand[COMMAND]);
-        if (canDoAction(command, board)) {
-            doAction(rawCommand, board);
+    public void doCommandAction(final ParsedCommand parsedCommand, final Board board) {
+        if (canDoAction(parsedCommand.getCommand(), board)) {
+            doAction(parsedCommand, board);
             return;
         }
         nextCommand.orElseThrow(() -> new IllegalArgumentException(CANNOT_IMPLEMENT_COMMAND))
-                .doCommandAction(rawCommand, board);
+                .doCommandAction(parsedCommand, board);
     }
 
     protected abstract boolean canDoAction(final Command command, final Board board);
 
-    protected abstract void doAction(final String[] rawCommand, final Board board);
+    protected abstract void doAction(final ParsedCommand parsedCommand, final Board board);
 }

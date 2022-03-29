@@ -11,12 +11,12 @@ public class Status extends CommandChain {
     }
 
     @Override
-    protected boolean canDoAction(Command command, Board board) {
+    protected boolean canDoAction(final Command command, final Board board) {
         return command == Command.STATUS && board.isRunning();
     }
 
     @Override
-    protected void doAction(String[] rawCommand, Board board) {
+    protected void doAction(final ParsedCommand parsedCommand, final Board board) {
         OutputView.printStatus(new chess.domain.Status(board));
     }
 }
