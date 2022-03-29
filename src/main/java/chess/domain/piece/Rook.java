@@ -12,6 +12,6 @@ public final class Rook extends Piece {
 
     @Override
     public boolean canMove(Piece targetPiece, Position from, Position to) {
-        return moveStrategy.isValidateCanMove(team, from, to);
+        return moveStrategy.isValidateCanMove(team, targetPiece, from, to);
     }
 }

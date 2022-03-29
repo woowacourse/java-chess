@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Position {
-
     private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
     private static final int POSITION_BEGIN_INDEX = 5;
     private static final String SEPARATOR = " ";
@@ -26,21 +25,18 @@ public final class Position {
         if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
-        return new Position(
-                Column.valueOf(attribute[0].toUpperCase(Locale.ROOT)),
+        return new Position(Column.valueOf(attribute[0].toUpperCase(Locale.ROOT)),
                 Rank.numberOf(Integer.parseInt(attribute[1])));
     }
 
     public static List<Position> inputToPositions(String input) {
-        return Arrays.stream(input.substring(POSITION_BEGIN_INDEX)
-                        .split(SEPARATOR))
+        return Arrays.stream(input.substring(POSITION_BEGIN_INDEX).split(SEPARATOR))
                 .map(Position::from)
                 .collect(Collectors.toList());
     }
 
     public Position advancePosition(Direction direction) {
-        return new Position(
-                Column.numberOf(column.getNumber() + direction.getX()),
+        return new Position(Column.numberOf(column.getNumber() + direction.getX()),
                 Rank.numberOf(rank.getNumber() + direction.getY()));
     }
 

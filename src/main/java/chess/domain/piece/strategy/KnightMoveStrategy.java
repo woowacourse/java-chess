@@ -2,6 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public final class KnightMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public boolean isValidateCanMove(Team team, Position from, Position to) {
+    public boolean isValidateCanMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = knightDirection(team);
         if (isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
