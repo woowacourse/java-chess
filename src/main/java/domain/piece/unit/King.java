@@ -21,7 +21,7 @@ public final class King extends SpecificMovablePiece {
     }
 
     @Override
-    protected List<Direction> directions() {
+    protected List<Direction> getDirections() {
         return directions;
     }
 }

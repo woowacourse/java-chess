@@ -21,7 +21,7 @@ public final class Knight extends SpecificMovablePiece {
     }
 
     @Override
-    protected List<Direction> directions() {
+    protected List<Direction> getDirections() {
         return directions;
     }
 }

@@ -59,7 +59,7 @@ public final class ChessBoard {
     private void checkGoThroughPosition(final Position source, final Position target) {
         Piece piece = board.get(source);
         checkUnavailableMove(source, target, piece);
-        if (board.get(source) instanceof Pawn) {
+        if (piece instanceof Pawn) {
             checkPawnMovement(source, target);
             return;
         }

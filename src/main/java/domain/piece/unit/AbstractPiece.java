@@ -35,8 +35,8 @@ public abstract class AbstractPiece implements Piece {
 
     protected void calculateAvailableDirectionalPositions(final Position source) {
         initializeDirectionalPositions();
-        for (Direction direction : directions()) {
-            calculateAvailableDirectionalPositions(source, direction);
+        for (Direction direction : getDirections()) {
+            calculateAvailableDirectionPosition(source, direction);
         }
     }
 
@@ -44,10 +44,10 @@ public abstract class AbstractPiece implements Piece {
         directionalPositions = new HashMap<>();
     }
 
-    protected abstract void calculateAvailableDirectionalPositions(final Position source, final Direction direction);
+    protected abstract void calculateAvailableDirectionPosition(final Position source, final Direction direction);
 
     protected boolean containsPosition(final Position position) {
-        return directions().stream()
+        return getDirections().stream()
                 .map(direction -> directionalPositions.get(direction))
                 .anyMatch(positions -> positions.contains(position));
     }
@@ -57,7 +57,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public List<Position> calculateRoute(final Position target) {
-        return directions().stream()
+        return getDirections().stream()
                 .map(direction -> directionalPositions.get(direction))
                 .filter(positions -> positions.contains(target))
                 .findFirst()
@@ -72,7 +72,7 @@ public abstract class AbstractPiece implements Piece {
         return pieceInfo.symbol();
     }
 
-    protected abstract List<Direction> directions();
+    protected abstract List<Direction> getDirections();
 
     @Override
     public String toString() {
