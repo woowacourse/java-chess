@@ -12,7 +12,20 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(final Color color) {
-        super(color, NAME, SCORE);
+        super(color, NAME);
+    }
+
+    private boolean isPawnMoving(final Board board, final Position from, final Position to) {
+        Movable movable = getMovingStrategy();
+
+        return movable.isPawnMoving(board, from, to);
+    }
+
+    private Movable getMovingStrategy() {
+        if (getColor() == Color.WHITE) {
+            return new WhitePawnMoving();
+        }
+        return new BlackPawnMoving();
     }
 
     @Override
@@ -33,16 +46,8 @@ public class Pawn extends Piece {
         return false;
     }
 
-    private boolean isPawnMoving(final Board board, final Position from, final Position to) {
-        Movable movable = getMovingStrategy();
-
-        return movable.isPawnMoving(board, from, to);
-    }
-
-    private Movable getMovingStrategy() {
-        if (color == Color.WHITE) {
-            return new WhitePawnMoving();
-        }
-        return new BlackPawnMoving();
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

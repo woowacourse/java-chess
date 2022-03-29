@@ -10,7 +10,7 @@ public class King extends Piece {
     private static final double SCORE = 0;
 
     public King(final Color color) {
-        super(color, NAME, SCORE);
+        super(color, NAME);
     }
 
     public static boolean isKingMoving(final Position from, final Position to) {
@@ -35,5 +35,10 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

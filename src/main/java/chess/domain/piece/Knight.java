@@ -10,7 +10,7 @@ public class Knight extends Piece {
     private static final double SCORE = 0;
 
     public Knight(final Color color) {
-        super(color, NAME, SCORE);
+        super(color, NAME);
     }
 
     public static boolean isKnightMoving(final Position from, final Position to) {
@@ -35,5 +35,10 @@ public class Knight extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
