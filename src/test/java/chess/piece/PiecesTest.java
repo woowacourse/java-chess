@@ -47,4 +47,25 @@ class PiecesTest {
         double totalScore = pieces.getTotalScore(Team.WHITE);
         assertThat(totalScore).isEqualTo(5.5D);
     }
+
+
+    @Test
+    @DisplayName("초기 체스판에는 킹의 개수가 2개이다.")
+    void countOfKing_2_Test() {
+        Pieces pieces = Pieces.createInit();
+        assertThat(pieces.countOfKing()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("체스판에는 킹이 1개 있으면 1개 카운팅한다.")
+    void countOfKing_1_Test() {
+        Pieces pieces = Pieces.from(
+                List.of(
+                        new King(Position.of('a','2'), Team.WHITE),
+                        new Pawn(Position.of('b','4'), Team.WHITE)
+                )
+        );
+        assertThat(pieces.countOfKing()).isEqualTo(1);
+    }
+
 }

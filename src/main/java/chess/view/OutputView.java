@@ -18,7 +18,6 @@ public final class OutputView {
     }
 
     public static void printBoard(List<PieceDto> pieceDtos) {
-
         for (PieceDto pieceDto : pieceDtos) {
             System.out.print(pieceDto.getName());
             printNewLine(pieceDto);

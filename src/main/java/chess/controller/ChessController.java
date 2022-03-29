@@ -36,7 +36,7 @@ public class ChessController {
         return command;
     }
 
-    public List<PieceDto> convertToPieceDtos(Pieces pieces) {
+    private List<PieceDto> convertToPieceDtos(Pieces pieces) {
         return pieces.getPieces().stream()
                 .sorted(Comparator.comparing(piece -> piece))
                 .map(piece -> new PieceDto(piece.getName(), piece.isLastFile()))
