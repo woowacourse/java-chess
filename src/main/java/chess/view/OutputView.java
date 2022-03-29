@@ -1,12 +1,12 @@
 package chess.view;
 
-import chess.domain.chessboard.ChessBoard;
+import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public class OutputView {
 
@@ -54,31 +54,29 @@ public class OutputView {
         System.out.print(chessPiece.name());
     }
 
-    public static void printStatus(final Map<Color, Double> scoreByColor) {
+    public static void printStatus(final Score score) {
         System.out.println(STATUS_PREFIX);
-        printTotalScore(scoreByColor);
+        printTotalScore(score);
     }
 
-    public static void printResult(final Map<Color, Double> scoreByColor) {
+    public static void printResult(final Score score) {
         System.out.println(RESULT_PREFIX);
-        printTotalScore(scoreByColor);
+        printTotalScore(score);
     }
 
-    private static void printTotalScore(final Map<Color, Double> scoreByColor) {
-        for (final Map.Entry<Color, Double> entry : scoreByColor.entrySet()) {
-            printScore(entry);
-        }
+    private static void printTotalScore(final Score score) {
+        Arrays.stream(Color.values())
+                .forEach(color -> printScore(color, score));
     }
 
-    private static void printScore(final Map.Entry<Color, Double> entry) {
-        System.out.print(entry.getKey().name() + DELIMITER);
-
-        final double score = entry.getValue();
-        if (score == (int) score) {
-            System.out.printf("%d%n", (int) score);
+    private static void printScore(final Color color, final Score score) {
+        System.out.print(color.name() + DELIMITER);
+        final double value = score.findScore(color);
+        if (value == (int) value) {
+            System.out.printf("%d%n", (int) value);
             return;
         }
-        System.out.printf("%s%n", score);
+        System.out.printf("%s%n", value);
     }
 
     public static void printError(final String errorMessage) {

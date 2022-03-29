@@ -36,8 +36,12 @@ public class ChessGame {
         }
     }
 
-    public Map<Color, Double> calculateScore() {
+    public Score calculateScore() {
         return chessBoard.calculateScore();
+    }
+
+    public Map<Position, ChessPiece> findAllPiece() {
+        return chessBoard.findAllPiece();
     }
 
     public boolean isReady() {
@@ -54,9 +58,5 @@ public class ChessGame {
 
     public void start() {
         gameStatus = GameStatus.PLAYING;
-    }
-
-    public Map<Position, ChessPiece> findAllPiece() {
-        return chessBoard.findAllPiece();
     }
 }

@@ -1,23 +1,17 @@
 package chess.domain.chessboard;
 
+import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
-import chess.domain.chesspiece.Color;
-import chess.domain.chesspiece.Pawn;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ChessBoard {
 
     private final Map<Position, ChessPiece> pieceByPosition;
 
-    ChessBoard(final Map<Position, ChessPiece> pieceByPosition) {
+    public ChessBoard(final Map<Position, ChessPiece> pieceByPosition) {
         this.pieceByPosition = pieceByPosition;
     }
 
@@ -62,39 +56,11 @@ public class ChessBoard {
         return chessPiece.isKing();
     }
 
-    public Map<Color, Double> calculateScore() {
-        return Arrays.stream(Color.values())
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        color -> sumScoreExceptPawn(color) + sumPawnScore(color)));
-    }
-
-    private double sumScoreExceptPawn(final Color color) {
-        return pieceByPosition.values().stream()
-                .filter(chessPiece -> chessPiece.isSameColor(color))
-                .filter(chessPiece -> !(chessPiece instanceof Pawn))
-                .mapToDouble(ChessPiece::value)
-                .sum();
-    }
-
-    private double sumPawnScore(final Color color) {
-        return Arrays.stream(Rank.values())
-                .mapToInt(rank -> countSameRankPawn(color, rank))
-                .mapToDouble(Pawn::calculateScore)
-                .sum();
-    }
-
-    private int countSameRankPawn(final Color color, final Rank rank) {
-        return (int) Arrays.stream(File.values())
-                .map(file -> findPiece(Position.of(rank, file)))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .filter(chessPiece -> chessPiece instanceof Pawn)
-                .filter(pawn -> pawn.isSameColor(color))
-                .count();
-    }
-
     public Map<Position, ChessPiece> findAllPiece() {
         return pieceByPosition;
+    }
+
+    public Score calculateScore() {
+        return new Score(pieceByPosition);
     }
 }
