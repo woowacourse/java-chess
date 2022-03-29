@@ -17,7 +17,7 @@ public class ReadyTest {
 	@Test
 	@DisplayName("Ready는 Move 커맨드를 받을 수 없다.")
 	void ready_cannot_proceed_move() {
-		State state = new Ready(new HashMap<>());
+		GameState state = new Ready(new HashMap<>());
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(1, 1), new Position(2, 2)))
 		).isInstanceOf(IllegalStateException.class);
@@ -26,7 +26,7 @@ public class ReadyTest {
 	@Test
 	@DisplayName("Ready가 End 커맨드를 받으면 Finished 상태가 된다.")
 	void ready_proceed_end() {
-		State state = new Ready(new HashMap<>());
+		GameState state = new Ready(new HashMap<>());
 		assertThat(state.proceed(new End()))
 			.isInstanceOf(Finished.class);
 	}
@@ -34,7 +34,7 @@ public class ReadyTest {
 	@Test
 	@DisplayName("Ready가 start 커맨드를 받으면 Started 상태가 된다")
 	void started() {
-		State state = new Ready(new HashMap<>())
+		GameState state = new Ready(new HashMap<>())
 			.proceed(new Start());
 		assertThat(state).isInstanceOf(Running.class);
 	}

@@ -15,7 +15,7 @@ public class RunningTest {
 	@Test
 	@DisplayName("Running 상태에서 Start 커맨드를 받을 수 없다")
 	void running_cannot_start() {
-		State state = new Ready(new HashMap<>())
+		GameState state = new Ready(new HashMap<>())
 			.proceed(new Start());
 		assertThatThrownBy(() -> state.proceed(new Start()))
 			.isInstanceOf(IllegalStateException.class);
@@ -24,7 +24,7 @@ public class RunningTest {
 	@Test
 	@DisplayName("Running 상태에서 end 커맨드를 받으면 Finished이다.")
 	void running_end() {
-		State state = new Ready(new HashMap<>())
+		GameState state = new Ready(new HashMap<>())
 			.proceed(new Start());
 
 		assertThat(state.proceed(new End()))

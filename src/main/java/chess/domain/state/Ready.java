@@ -4,13 +4,12 @@ import java.util.Map;
 
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 
-public class Ready extends State {
+public class Ready extends GameState {
 
 	private static final String CANNOT_MOVE = "게임 시작 전에는 움직일 수 없습니다.";
 	private static final String CANNOT_GENERATE_SCORE = "게임 시작 전에는 점수를 불러올 수 없습니다.";
@@ -21,7 +20,7 @@ public class Ready extends State {
 	}
 
 	@Override
-	public State proceed(Command command) {
+	public GameState proceed(Command command) {
 		if (command.isMove()) {
 			throw new IllegalStateException(CANNOT_MOVE);
 		}

@@ -8,7 +8,7 @@ import chess.domain.ChessScore;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.state.Ready;
-import chess.domain.state.State;
+import chess.domain.state.GameState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -19,13 +19,13 @@ public class ChessController {
 
 	public void run() {
 		outputView.displayGameRule();
-		State state = new Ready(BoardInitializer.generate());
+		GameState state = new Ready(BoardInitializer.generate());
 		while (!state.isFinished()) {
 			state = processOneTurn(state);
 		}
 	}
 
-	private State processOneTurn(State state) {
+	private GameState processOneTurn(GameState state) {
 		try {
 			checkTurn(state);
 			Command command = StringToCommandConverter.from(inputView.askCommand());
@@ -38,13 +38,13 @@ public class ChessController {
 		return state;
 	}
 
-	private void checkTurn(State state) {
+	private void checkTurn(GameState state) {
 		if (state.isRunning()) {
 			outputView.displayTurn(state.getColor());
 		}
 	}
 
-	private void checkScore(State state, Command command) {
+	private void checkScore(GameState state, Command command) {
 		if (command.isStatus()) {
 			ChessScore chessScore = state.generateScore();
 			outputView.displayScore(chessScore);

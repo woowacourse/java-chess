@@ -22,7 +22,7 @@ public class RunningBlackTurnTest {
 	@Test
 	@DisplayName("RunningBlackTurn 상태에서 Move 커맨드를 받으면 RunningWhiteTurn 상태가 된다.")
 	void blackTurn_to_whiteTurn() {
-		State state = new RunningBlackTurn(board);
+		GameState state = new RunningBlackTurn(board);
 
 		state = state.proceed(
 			new Move(new Position(7, 2), new Position(6, 3)));
@@ -33,7 +33,7 @@ public class RunningBlackTurnTest {
 	@Test
 	@DisplayName("RunningBlackTurn일 때 Move 커맨드로 움직인다.")
 	void movePiece() {
-		State state = new RunningBlackTurn(board)
+		GameState state = new RunningBlackTurn(board)
 			.proceed(new Move(new Position(7, 2), new Position(6, 3)));
 
 		assertThat(state.getBoard().get(new Position(6, 3)))
@@ -43,7 +43,7 @@ public class RunningBlackTurnTest {
 	@Test
 	@DisplayName("RunningBlackTurn일 때 White을 움직일 수 없다.")
 	void movePieceException() {
-		State state = new RunningBlackTurn(board);
+		GameState state = new RunningBlackTurn(board);
 
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(6, 2), new Position(5, 2))))
@@ -53,7 +53,7 @@ public class RunningBlackTurnTest {
 	@Test
 	@DisplayName("RunningBlackTurn일 때 상대방의 King을 잡으면 Finished로 전환")
 	void killOpponentKing() {
-		State state = new RunningBlackTurn(board);
+		GameState state = new RunningBlackTurn(board);
 		state = state.proceed(
 			new Move(new Position(7, 2), new Position(6, 2)));
 
@@ -63,7 +63,7 @@ public class RunningBlackTurnTest {
 	@Test
 	@DisplayName("RunningBlackTurn일 때 Staus 커맨드이면 자기 자신을 유지해야 한다")
 	void statusCommand() {
-		State state = new RunningBlackTurn(board);
+		GameState state = new RunningBlackTurn(board);
 		state = state.proceed(new Status());
 
 		assertThat(state).isInstanceOf(RunningBlackTurn.class);

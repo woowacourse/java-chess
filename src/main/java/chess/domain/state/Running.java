@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 
-public abstract class Running extends State {
+public abstract class Running extends GameState {
 
 	protected static final String CANNOT_MOVE_OPPONENT_PIECE = "상대 말을 움지이게 할 수 없습니다.";
 	private static final String CANNOT_START_AGAIN = "게임이 시작된 이후에 또 시작할 수 없습니다.";
@@ -18,7 +18,7 @@ public abstract class Running extends State {
 	}
 
 	@Override
-	public abstract State proceed(Command command);
+	public abstract GameState proceed(Command command);
 
 	@Override
 	public boolean isFinished() {
@@ -30,7 +30,7 @@ public abstract class Running extends State {
 		return true;
 	}
 
-	protected State checkFinished(Command command) {
+	protected GameState checkFinished(Command command) {
 		if (command.isStart()) {
 			throw new IllegalStateException(CANNOT_START_AGAIN);
 		}

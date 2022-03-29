@@ -14,7 +14,7 @@ public class RunningBlackTurn extends Running {
 	}
 
 	@Override
-	public State proceed(Command command) {
+	public GameState proceed(Command command) {
 		if (!command.isMove()) {
 			return checkFinished(command);
 		}
@@ -29,7 +29,7 @@ public class RunningBlackTurn extends Running {
 		}
 	}
 
-	private State checkWhiteKingExist() {
+	private GameState checkWhiteKingExist() {
 		if (board.isKingNotExist(Color.WHITE)) {
 			return new Finished(this.board.getPieces());
 		}

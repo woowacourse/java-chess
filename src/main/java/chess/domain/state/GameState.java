@@ -9,11 +9,11 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public abstract class State {
+public abstract class GameState {
 
 	protected Board board;
 
-	public abstract State proceed(Command command);
+	public abstract GameState proceed(Command command);
 
 	public abstract boolean isFinished();
 
