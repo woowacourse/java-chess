@@ -23,6 +23,9 @@ public class OutputView {
     private static final String ERROR = "[ERROR] : ";
     private static final String STATUS = "## 중간점수 ##";
     private static final String RESULT = "## 최종결과 ##";
+    private static final String FILE_FORMAT = "abcdefgh";
+    private static final String RANK_INFO = " (rank %d)";
+    private static final String RANK_FORMAT = "  %d";
 
     private OutputView() {
     }
@@ -34,7 +37,23 @@ public class OutputView {
     public static void printChessBoard(ChessBoard chessBoard) {
         for (int j = FILE_END; j >= FILE_START; j--) {
             printRank(chessBoard, j);
+            System.out.printf(String.format(RANK_FORMAT, j));
+
+            printRankFormat(j);
         }
+        printFileFormat();
+    }
+
+    private static void printFileFormat() {
+        System.out.println();
+        System.out.println(FILE_FORMAT);
+    }
+
+    private static void printRankFormat(int j) {
+        if(j == FILE_START || j == FILE_END){
+            System.out.printf(String.format(RANK_INFO, j));
+        }
+        System.out.println();
     }
 
     private static void printRank(ChessBoard chessBoard, int j) {
@@ -43,10 +62,9 @@ public class OutputView {
 
             Optional<ChessPiece> possiblePiece = chessBoard.findPiece(new Position(position));
             possiblePiece.ifPresentOrElse(
-                    (piece) -> System.out.print(piece.getName()),
+                    (piece) -> System.out.printf(piece.getName()),
                     () -> System.out.print(EMPTY));
         }
-        System.out.println();
     }
 
     public static void printError(String errorMessage) {
