@@ -51,7 +51,7 @@ public final class ChessBoard {
     }
 
     private void checkAvailableTarget(final Position target) {
-        if (board.get(target) != null && board.get(target).checkSameTeam(currentTurn)) {
+        if (!(board.get(target) == null || !board.get(target).checkSameTeam(currentTurn))) {
             throw new IllegalArgumentException("[ERROR] 자신의 기물이 위치한 곳으로 이동할 수 없습니다.");
         }
     }
