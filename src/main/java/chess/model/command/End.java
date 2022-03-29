@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.model.command;
 
 import chess.model.board.Board;
 import chess.model.state.Finished;

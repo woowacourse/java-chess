@@ -1,5 +1,10 @@
 package chess.controller;
 
+import chess.model.command.Command;
+import chess.model.command.End;
+import chess.model.command.Move;
+import chess.model.command.Start;
+import chess.model.command.Status;
 import chess.model.state.Ready;
 import chess.model.state.State;
 import chess.view.InputView;
@@ -20,7 +25,7 @@ public class ChessController {
         outputView.printGameRule();
         while (!state.isFinished()) {
             state = proceed(state);
-            outputView.printBoard(state.getBoard());
+            printBoardIn(state);
             printScoreIn(state);
         }
     }
@@ -58,6 +63,12 @@ public class ChessController {
             return new Status();
         }
         throw new IllegalArgumentException("[ERROR] 올바른 명령어를 입력 해주세요.");
+    }
+
+    private void printBoardIn(State state) {
+        if (!state.isFinished()) {
+            outputView.printBoard(state.getBoard());
+        }
     }
 
     private void printScoreIn(State state) {

@@ -1,7 +1,8 @@
-package chess.controller;
+package chess.model.command;
 
 import chess.model.board.Board;
 import chess.model.position.Position;
+import chess.model.state.Finished;
 import chess.model.state.Running;
 import chess.model.state.State;
 import java.util.List;
@@ -31,6 +32,9 @@ public class Move implements Command {
     @Override
     public State executeTo(Board board) {
         Board movedBoard = board.move(source, target);
+        if (board.isKingDead()) {
+            return new Finished(Board.of(movedBoard));
+        }
         return new Running(Board.of(movedBoard));
     }
 

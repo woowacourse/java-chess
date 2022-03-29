@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.model.command;
 
 import static chess.model.Team.BLACK;
 import static chess.model.Team.WHITE;

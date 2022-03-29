@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    public static final int KING_COUNT = 2;
     private final Map<Position, Piece> board;
     private final Team currentTeam;
 
@@ -74,11 +75,11 @@ public class Board {
         board.put(source, new Blank(NONE, "."));
     }
 
-    public boolean isKilledKing() {
+    public boolean isKingDead() {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count() < 2;
+                .count() < KING_COUNT;
     }
 
     public double calculateScore(Team team) {

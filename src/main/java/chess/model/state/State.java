@@ -1,6 +1,6 @@
 package chess.model.state;
 
-import chess.controller.Command;
+import chess.model.command.Command;
 import chess.model.Team;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
