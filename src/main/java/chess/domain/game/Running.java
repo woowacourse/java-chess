@@ -1,47 +1,34 @@
 package chess.domain.game;
 
-import chess.domain.piece.ActivePieces;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import static chess.domain.board.piece.PieceType.KING;
+
+import chess.domain.board.Board;
+import chess.domain.board.piece.Color;
+import chess.domain.board.position.Position;
 import chess.dto.MoveCommandDto;
 
 abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
 
-    Running(ActivePieces chessmen) {
-        super(chessmen);
+    Running(Board board) {
+        super(board);
     }
 
     @Override
-    public final Game moveChessmen(MoveCommandDto dto) {
-        Piece sourcePiece = chessmen.findByPosition(fromPosition(dto));
-        Position targetPosition = toPosition(dto);
-        validateTurn(sourcePiece);
+    public final Game moveChessmen(MoveCommandDto moveCommand) {
+        Position from = fromPosition(moveCommand);
+        Position to = toPosition(moveCommand);
 
-        if (chessmen.isOccupied(targetPosition)) {
-            return attack(sourcePiece, chessmen.findByPosition(targetPosition));
-        }
-        sourcePiece.move(targetPosition, chessmen::isOccupied);
-        return continueGame();
+        board.movePiece(from, to, currentTurnColor());
+        return moveResult();
     }
 
-    private Game attack(Piece sourcePiece, Piece targetPiece) {
-        sourcePiece.kill(targetPiece, chessmen::isOccupied);
-        chessmen.delete(targetPiece);
-
-        if (chessmen.countKings() < ONGOING_GAME_KING_COUNT) {
-            return new GameOver(chessmen);
+    private Game moveResult() {
+        if (board.countByType(KING) < ONGOING_GAME_KING_COUNT) {
+            return new GameOver(board);
         }
         return continueGame();
-    }
-
-    private void validateTurn(Piece sourcePiece) {
-        Color currentColor = currentTurnColor();
-        if (!sourcePiece.hasColorOf(currentColor)) {
-            throw new IllegalArgumentException(currentColor + " 진영이 움직일 차례입니다!");
-        }
     }
 
     abstract protected Color currentTurnColor();
@@ -56,6 +43,11 @@ abstract class Running extends Started {
     private Position toPosition(MoveCommandDto moveCommand) {
         String target = moveCommand.target();
         return Position.of(target);
+    }
+
+    @Override
+    public final GameResult result() {
+        throw new UnsupportedOperationException("아직 종료되지 않은 게임입니다.");
     }
 
     @Override

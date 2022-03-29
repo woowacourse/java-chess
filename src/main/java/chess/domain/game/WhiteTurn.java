@@ -1,14 +1,16 @@
 package chess.domain.game;
 
-import static chess.domain.piece.Color.WHITE;
 
-import chess.domain.piece.ActivePieces;
-import chess.domain.piece.Color;
+import static chess.domain.board.piece.Color.WHITE;
+
+import chess.domain.board.piece.Color;
+import chess.domain.board.Board;
+import java.util.Objects;
 
 final class WhiteTurn extends Running {
 
-    WhiteTurn(ActivePieces chessmen) {
-        super(chessmen);
+    WhiteTurn(Board board) {
+        super(board);
     }
 
     @Override
@@ -18,11 +20,28 @@ final class WhiteTurn extends Running {
 
     @Override
     protected Game continueGame() {
-        return new BlackTurn(chessmen);
+        return new BlackTurn(board);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WhiteTurn whiteTurn = (WhiteTurn) o;
+        return Objects.equals(board, whiteTurn.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board);
     }
 
     @Override
     public String toString() {
-        return "WhiteTurn{" + "chessmen=" + chessmen + '}';
+        return "WhiteTurn{" + "board=" + board + '}';
     }
 }

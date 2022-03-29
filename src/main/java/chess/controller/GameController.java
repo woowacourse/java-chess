@@ -3,9 +3,9 @@ package chess.controller;
 import static chess.view.OutputView.print;
 
 import chess.domain.game.Game;
+import chess.domain.game.GameResult;
 import chess.domain.game.NewGame;
 import chess.dto.BoardViewDto;
-import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -46,13 +46,14 @@ public class GameController {
     }
 
     private void printBoardDisplay(Game game) {
-        outputView.printBoard(new BoardViewDto(game));
+        BoardViewDto boardView = game.boardView();
+        outputView.printBoard(boardView);
     }
 
     public void printGameOver(Game game) {
         outputView.printGameOverInstructions();
         while (inputView.requestValidStatusOrEndInput()) {
-            GameResultDto gameResult = game.getGameResult();
+            GameResult gameResult = game.result();
             outputView.printStatus(gameResult);
         }
     }

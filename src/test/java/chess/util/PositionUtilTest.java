@@ -1,46 +1,154 @@
 package chess.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
+import chess.domain.board.position.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-public class PositionUtilTest {
+@SuppressWarnings("NonAsciiCharacters")
+class PositionUtilTest {
 
-    @DisplayName("toFileIdx 메서드는 문자열의 첫번째 값이 a~h인 경우 0~7로 변환하여 반환한다.")
-    @ParameterizedTest(name = "rank {0}: index {1}")
-    @CsvSource(value = {"a1,0", "b2,1", "c1,2", "d5,3", "e2,4", "f4,5", "g2,6", "h4,7"})
-    void toFileIdx_ok(String positionKey, int expected) {
-        int actual = PositionUtil.toFileIdx(positionKey);
+    @DisplayName("positionsStraightBetween 메서드는 대상 위치 사이에 존재하는 위치들의 리스트를 반환")
+    @Nested
+    class PositionsStraightBetweenTest {
 
-        assertThat(actual).isEqualTo(expected);
+        @Test
+        void 상하() {
+            Position from = Position.of(4, 4);
+            Position to = Position.of(4, 0);
+
+            List<Position> actual = PositionUtil.positionsStraightBetween(from, to);
+            List<Position> expected = List.of(
+                    Position.of(4, 3),
+                    Position.of(4, 2),
+                    Position.of(4, 1));
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 좌우() {
+            Position from = Position.of(4, 4);
+            Position to = Position.of(0, 4);
+
+            List<Position> actual = PositionUtil.positionsStraightBetween(from, to);
+            List<Position> expected = List.of(
+                    Position.of(3, 4),
+                    Position.of(2, 4),
+                    Position.of(1, 4));
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 대각선() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(4, 4);
+
+            List<Position> actual = PositionUtil.positionsStraightBetween(from, to);
+            List<Position> expected = List.of(
+                    Position.of(1, 1),
+                    Position.of(2, 2),
+                    Position.of(3, 3));
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 인접하면_빈_리스트() {
+            Position from = Position.of(4, 4);
+            Position to = Position.of(4, 3);
+
+            List<Position> actual = PositionUtil.positionsStraightBetween(from, to);
+            List<Position> expected = List.of();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        void 일직선이_아니면_빈_리스트() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(1, 2);
+
+            List<Position> actual = PositionUtil.positionsStraightBetween(from, to);
+            List<Position> expected = List.of();
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 
-    @DisplayName("toFileIdx 메서드는 문자열의 첫번째 값이 a~h이 아닌 경우 예외를 발생시킨다.")
-    @Test
-    void toFileIdx_exceptionOnInvalidRange() {
-        assertThatCode(() -> PositionUtil.toFileIdx("z1"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
+    @Nested
+    class IsStraightPathTest {
+
+        @Test
+        void 일직선이면_참() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(5, 5);
+
+            boolean actual = PositionUtil.isStraightPath(from, to);
+
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        void 일직선이_아니면_거짓() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(2, 3);
+
+            boolean actual = PositionUtil.isStraightPath(from, to);
+
+            assertThat(actual).isFalse();
+        }
     }
 
-    @DisplayName("toRankIdx 메서드는 문자열의 두번째 값이 1~8인 경우 0~7로 변환하여 반환한다.")
-    @ParameterizedTest(name = "file {0}: index {1}")
-    @CsvSource(value = {"a1,0", "b2,1", "a3,2", "f4,3", "h5,4", "a6,5", "c7,6", "e8,7"})
-    void toRankIdx_ok(String positionKey, int expected) {
-        int actual = PositionUtil.toRankIdx(positionKey);
+    @Nested
+    class IsDiagonalTest {
 
-        assertThat(actual).isEqualTo(expected);
+        @Test
+        void 대각선이면_참() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(5, 5);
+
+            boolean actual = PositionUtil.isDiagonal(from, to);
+
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        void 대각선이_아니면_거짓() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(1, 0);
+
+            boolean actual = PositionUtil.isDiagonal(from, to);
+
+            assertThat(actual).isFalse();
+        }
     }
 
-    @DisplayName("toRankIdx 메서드는 문자열의 두번째 값이 1~8이 아닌 경우 예외를 발생시킨다.")
-    @Test
-    void toRankIdx_exceptionOnInvalidRange() {
-        assertThatCode(() -> PositionUtil.toRankIdx("a0"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 포지션입니다. (a1~h8)");
+    @Nested
+    class IsHorizontalOrVerticalTest {
+
+        @Test
+        void 수직이면_참() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(5, 0);
+
+            boolean actual = PositionUtil.isHorizontalOrVertical(from, to);
+
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        void 수직이_아니면_거짓() {
+            Position from = Position.of(0, 0);
+            Position to = Position.of(1, 1);
+
+            boolean actual = PositionUtil.isHorizontalOrVertical(from, to);
+
+            assertThat(actual).isFalse();
+        }
     }
 }

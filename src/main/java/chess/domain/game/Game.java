@@ -1,18 +1,17 @@
 package chess.domain.game;
 
-import chess.domain.piece.ActivePieces;
-import chess.dto.GameResultDto;
 import chess.dto.MoveCommandDto;
+import chess.dto.BoardViewDto;
 
 public interface Game {
 
     Game init();
 
-    Game moveChessmen(MoveCommandDto dto);
+    Game moveChessmen(MoveCommandDto moveCommand);
 
     boolean isEnd();
 
-    GameResultDto getGameResult();
+    GameResult result();
 
-    ActivePieces getChessmen();
+    BoardViewDto boardView();
 }

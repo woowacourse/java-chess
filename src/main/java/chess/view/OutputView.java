@@ -1,11 +1,11 @@
 package chess.view;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.board.piece.Color.BLACK;
+import static chess.domain.board.piece.Color.WHITE;
 
-import chess.domain.piece.Color;
+import chess.domain.board.piece.Color;
+import chess.domain.game.GameResult;
 import chess.dto.BoardViewDto;
-import chess.dto.GameResultDto;
 
 public class OutputView {
 
@@ -32,12 +32,13 @@ public class OutputView {
 
     public void printBoard(BoardViewDto dto) {
         StringBuilder builder = new StringBuilder();
-        for (String rowDisplay : dto.boardDisplay()) {
+        for (String rowDisplay : dto.display()) {
             builder.append(rowDisplay)
                     .append(BLANK_LINE);
         }
         print(builder.toString());
     }
+
 
     public void printGameOverInstructions() {
         String instructionMessage = GAME_OVER_MESSAGE + BLANK_LINE
@@ -47,10 +48,10 @@ public class OutputView {
         print(instructionMessage);
     }
 
-    public void printStatus(GameResultDto dto) {
-        Color winnerColor = dto.winnerColor();
-        double whiteScore = dto.whiteScore();
-        double blackScore = dto.blackScore();
+    public void printStatus(GameResult gameResult) {
+        Color winnerColor = gameResult.winnerColor();
+        double whiteScore = gameResult.whiteScore();
+        double blackScore = gameResult.blackScore();
 
         String statusText = String.format(WINNER_ANNOUNCEMENT_FORMAT, winnerColor)
                 + String.format(SCORE_DISPLAY_FORMAT, WHITE, whiteScore)

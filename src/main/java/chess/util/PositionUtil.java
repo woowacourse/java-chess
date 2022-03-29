@@ -1,73 +1,51 @@
 package chess.util;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
+import chess.domain.board.position.Position;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PositionUtil {
-
-    private static final String VALID_FILES = "abcdefgh";
-    private static final String VALID_RANKS = "12345678";
-
-    public static final int RANKS_TOTAL_SIZE = 8;
-    public static final int FILES_TOTAL_SIZE = 8;
-
-    private static final int FILE_KEY_IDX = 0;
-    private static final int RANK_KEY_IDX = 1;
-
-    private static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
-
-    private static final String POSITION_INPUT_FORMAT_REGEX = "([" + VALID_FILES + "][" + VALID_RANKS + "])";
-    private static final Pattern PATTERN = Pattern.compile(POSITION_INPUT_FORMAT_REGEX);
-
-    private static final Map<Character, Integer> fileIdxMap;
-    private static final Map<Character, Integer> rankIdxMap;
-
-    static {
-        fileIdxMap = initializeFileIdxMap();
-        rankIdxMap = initializeRankIdxMap();
-    }
 
     private PositionUtil() {
     }
 
-    private static Map<Character, Integer> initializeFileIdxMap() {
-        final Map<Character, Integer> fileMap = new HashMap<>(FILES_TOTAL_SIZE);
-        final char[] fileKeys = VALID_FILES.toCharArray();
-
-        IntStream.range(0, FILES_TOTAL_SIZE)
-                .forEach(idx -> fileMap.put(fileKeys[idx], idx));
-        return fileMap;
-    }
-
-    private static Map<Character, Integer> initializeRankIdxMap() {
-        final Map<Character, Integer> rankMap = new HashMap<>(RANKS_TOTAL_SIZE);
-        final char[] rankKeys = VALID_RANKS.toCharArray();
-
-        IntStream.range(0, RANKS_TOTAL_SIZE)
-                .forEach(idx -> rankMap.put(rankKeys[idx], idx));
-        return rankMap;
-
-    }
-
-    public static int toFileIdx(String positionKey) {
-        validatePositionFormat(positionKey);
-        char file = positionKey.charAt(FILE_KEY_IDX);
-        return fileIdxMap.get(file);
-    }
-
-    public static int toRankIdx(String positionKey) {
-        validatePositionFormat(positionKey);
-        char rank = positionKey.charAt(RANK_KEY_IDX);
-        return rankIdxMap.get(rank);
-    }
-
-    public static void validatePositionFormat(String position) {
-        Matcher matcher = PATTERN.matcher(position);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException(INVALID_POSITION_RANGE_EXCEPTION_MESSAGE);
+    public static List<Position> positionsStraightBetween(Position from, Position to) {
+        if (!isStraightPath(from, to)) {
+            return List.of();
         }
+        return positionsBetween(from, to);
+    }
+
+    private static List<Position> positionsBetween(Position from, Position to) {
+        List<Position> positions = new ArrayList<>();
+        Position next = from.oneStepToward(to);
+        while (next != to) {
+            positions.add(next);
+            next = next.oneStepToward(to);
+        }
+        return positions;
+    }
+
+    public static boolean isStraightPath(Position from, Position to) {
+        return isHorizontalOrVertical(from, to) || isDiagonal(from, to);
+    }
+
+    public static boolean isDiagonal(Position from, Position to) {
+        return from.fileDifference(to)
+                == from.rankDifference(to);
+    }
+
+    public static boolean isHorizontalOrVertical(Position from, Position to) {
+        return isHorizontal(from, to) || isVertical(from, to);
+    }
+
+    private static boolean isHorizontal(Position from, Position to) {
+        return from.fileDifference(to) == 0
+                && from.rankDifference(to) > 0;
+    }
+
+    private static boolean isVertical(Position from, Position to) {
+        return from.fileDifference(to) > 0
+                && from.rankDifference(to) == 0;
     }
 }

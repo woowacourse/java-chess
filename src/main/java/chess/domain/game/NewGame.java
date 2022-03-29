@@ -1,10 +1,9 @@
 package chess.domain.game;
 
-import static chess.util.PieceGeneratorUtil.initAllChessmen;
-
-import chess.domain.piece.ActivePieces;
-import chess.dto.GameResultDto;
+import chess.domain.board.Board;
 import chess.dto.MoveCommandDto;
+import chess.dto.BoardViewDto;
+import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {
 
@@ -12,7 +11,8 @@ public final class NewGame implements Game {
 
     @Override
     public Game init() {
-        return new WhiteTurn(new ActivePieces(initAllChessmen()));
+        Board board = new Board(BoardMapGeneratorUtil.initFullChessBoard());
+        return new WhiteTurn(board);
     }
 
     @Override
@@ -26,12 +26,12 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public GameResultDto getGameResult() {
+    public GameResult result() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public ActivePieces getChessmen() {
+    public BoardViewDto boardView() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 }
