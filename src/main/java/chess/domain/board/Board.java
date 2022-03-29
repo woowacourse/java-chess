@@ -51,12 +51,24 @@ public final class Board {
 		if (isBlank(beforePosition)) {
 			throw new IllegalArgumentException(EMPTY_SPACE_EXCEPTION);
 		}
-		if (piece.isBlack() == whiteTurn) {
+		if (isValidTurn(piece)) {
 			throw new IllegalArgumentException(INVALID_TURN_EXCEPTION);
 		}
-		if (!piece.isKnight() && !beforePosition.existObstacleToOtherPosition(afterPosition, this::isBlank)) {
+		if (existObstacle(beforePosition, afterPosition, piece)) {
 			throw new IllegalArgumentException(INVALID_MOVING_PATH_EXCEPTION);
 		}
+	}
+
+	private boolean isBlank(Position afterPosition) {
+		return value.get(afterPosition) == null;
+	}
+
+	private boolean isValidTurn(final Piece piece) {
+		return piece.isBlack() == whiteTurn;
+	}
+
+	private boolean existObstacle(final Position beforePosition, final Position afterPosition, final Piece piece) {
+		return !piece.isKnight() && !beforePosition.existObstacleToOtherPosition(afterPosition, this::isBlank);
 	}
 
 	private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
@@ -64,10 +76,6 @@ public final class Board {
 			this.value.put(afterPosition, piece);
 			this.value.put(beforePosition, null);
 		};
-	}
-
-	private boolean isBlank(Position afterPosition) {
-		return value.get(afterPosition) == null;
 	}
 
 	private boolean isCapturing(Piece piece, Position afterPosition) {
