@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 
+import chess.domain.Distance;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,11 +30,11 @@ public class Position {
         return new Position(rank, file);
     }
 
-    public List<Integer> calculateDistance(Position another) {
+    public Distance calculateDistance(Position another) {
         int fileDistance = this.file.calculateDistance(another.file);
         int rankDistance = this.rank.calculateDistance(another.rank);
 
-        return List.of(fileDistance, rankDistance);
+        return new Distance(fileDistance, rankDistance);
     }
 
     public List<Position> getPositionBetween(Position target) {

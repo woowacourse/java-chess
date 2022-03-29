@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import java.util.List;
+import chess.domain.Distance;
 
 public final class Rook extends Piece {
     public Rook(Color color) {
@@ -9,12 +9,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean movable(List<Integer> distances, Piece target) {
-        boolean isMovableDistance = distances.stream()
-                .filter(integer -> integer == 0)
-                .count() == 1;
-        boolean isOpponent = isOpponent(target);
-
-        return isMovableDistance && isOpponent;
+    public boolean movable(Distance distance, Piece target) {
+        return (distance.isHorizontal() || distance.isVertical()) && isOpponent(target);
     }
 }

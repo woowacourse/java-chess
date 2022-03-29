@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import java.util.List;
+import chess.domain.Distance;
 
 public final class InvalidPiece extends Piece {
 
@@ -16,7 +16,7 @@ public final class InvalidPiece extends Piece {
     }
 
     @Override
-    public boolean movable(List<Integer> distances, Piece target) {
+    public boolean movable(Distance distance, Piece target) {
         return false;
     }
 

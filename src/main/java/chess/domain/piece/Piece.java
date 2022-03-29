@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import java.util.List;
+import chess.domain.Distance;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -11,7 +11,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean movable(List<Integer> distances, Piece target);
+    public abstract boolean movable(Distance distance, Piece target);
 
     protected boolean isOpponent(Piece another) {
         return this.color != another.color;

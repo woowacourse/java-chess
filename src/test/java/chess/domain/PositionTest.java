@@ -47,10 +47,10 @@ class PositionTest {
         Position position2 = Position.of("c3");
 
         // when
-        List<Integer> distance = position1.calculateDistance(position2);
+        Distance distance = position1.calculateDistance(position2);
 
         // then
-        assertThat(distance).containsExactly(1, 2);
+        assertThat(distance).isEqualTo(new Distance(1,2));
     }
 
     @Test

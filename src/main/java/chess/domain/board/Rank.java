@@ -73,7 +73,7 @@ public enum Rank {
         return to;
     }
 
-    public int calculateDistance(Rank other) {
-        return Math.abs(order - other.order);
+    public int calculateDistance(Rank targetRank) {
+        return Math.abs(order - targetRank.order);
     }
 }

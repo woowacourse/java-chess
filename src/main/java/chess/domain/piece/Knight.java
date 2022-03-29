@@ -1,20 +1,21 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Distance;
 import java.util.List;
 
 public final class Knight extends Piece {
 
-    private static final List<List<Integer>> MOVABLE_DISTANCES = List.of(
-            List.of(1, 2), List.of(2, 1));
+    private static final List<Distance> MOVABLE_DISTANCES
+            = List.of(new Distance(1, 2), new Distance(2, 1));
 
     public Knight(Color color) {
         super(color);
     }
 
     @Override
-    public boolean movable(List<Integer> distances, Piece target) {
-        boolean isMovableDistance = MOVABLE_DISTANCES.contains(distances);
+    public boolean movable(Distance distance, Piece target) {
+        boolean isMovableDistance = MOVABLE_DISTANCES.contains(distance);
         boolean isOpponent = isOpponent(target);
 
         return isMovableDistance && isOpponent;
