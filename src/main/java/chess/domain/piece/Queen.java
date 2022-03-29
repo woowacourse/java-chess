@@ -17,7 +17,8 @@ public class Queen extends Piece {
         if (!isMoveLinear && !isMoveDiagonal) {
             throw new IllegalArgumentException("퀸은 상하좌우, 대각선 중 한 방향으로 이동해야 합니다.");
         }
-        return position = destinationPosition;
+        this.position = destinationPosition;
+        return position;
     }
 
     @Override

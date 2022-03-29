@@ -20,7 +20,8 @@ public class King extends Piece {
             throw new IllegalArgumentException("킹은 상하좌우, 대각선 중 한 방향으로 이동해야 합니다.");
         }
         validateMoveDistance(currentPosition.calculateDistance(destinationPosition), isMoveLinear, isMoveDiagonal);
-        return position = destinationPosition;
+        this.position = destinationPosition;
+        return position;
     }
 
     private void validateMoveDistance(final int distance, final boolean isMoveLinear, final boolean isMoveDiagonal) {
