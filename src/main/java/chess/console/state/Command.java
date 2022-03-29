@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.state;
 
 import java.util.Arrays;
 
