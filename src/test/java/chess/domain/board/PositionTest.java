@@ -58,7 +58,7 @@ public class PositionTest {
 		Position A1 = new Position(Column.A, Row.ONE);
 		Position A8 = new Position(Column.A, Row.EIGHT);
 
-		// when & then
+		//then
 		assertThat(A1).isGreaterThan(A8);
 	}
 
@@ -68,7 +68,6 @@ public class PositionTest {
 		//given
 		Position A2 = new Position(Column.A, Row.TWO);
 		Position B2 = new Position(Column.B, Row.TWO);
-		//when
 		//then
 		assertThat(A2).isLessThan(B2);
 	}
@@ -79,7 +78,6 @@ public class PositionTest {
 		//given
 		Position A7 = new Position(Column.A, Row.SEVEN);
 		Position A8 = new Position(Column.A, Row.EIGHT);
-		//when
 		//then
 		assertThat(A7).isGreaterThan(A8);
 	}
@@ -90,7 +88,6 @@ public class PositionTest {
 		//given
 		Position B2 = new Position(Column.B, Row.TWO);
 		Position H1 = new Position(Column.H, Row.ONE);
-		//when
 		//then
 		assertThat(H1).isGreaterThan(B2);
 	}

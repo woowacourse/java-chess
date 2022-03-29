@@ -17,7 +17,6 @@ public class RunningTest {
 	void running_start_exception() {
 		//given
 		State state = new Running(new Board());
-		//when
 		//then
 		assertThatThrownBy(state::start)
 			.isInstanceOf(IllegalStateException.class)
@@ -29,7 +28,6 @@ public class RunningTest {
 	void running_end_finished() {
 		//given
 		State state = new Running(new Board());
-		//when
 		//then
 		assertThat(state.end()).isInstanceOf(Finished.class);
 	}
@@ -41,7 +39,6 @@ public class RunningTest {
 		State state = new Running(new Board());
 		Position a2 = new Position(Column.A, Row.TWO);
 		Position a3 = new Position(Column.A, Row.THREE);
-		//when
 		//then
 		assertThatNoException().isThrownBy(() -> state.move(a2, a3));
 	}
@@ -51,7 +48,6 @@ public class RunningTest {
 	void running_status_no_exception() {
 		//given
 		State state = new Running(new Board());
-		//when
 		//then
 		assertThatNoException().isThrownBy(state::statusOfBlack);
 	}

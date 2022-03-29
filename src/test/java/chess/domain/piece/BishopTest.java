@@ -20,7 +20,6 @@ public class BishopTest {
         //given
         Position d1 = new Position(Column.D, Row.ONE);
         Position g4 = new Position(Column.G, Row.FOUR);
-        //when
         //then
         assertThat(bishop.canMove(d1, g4)).isTrue();
     }
@@ -31,7 +30,6 @@ public class BishopTest {
         //given
         Position d1 = new Position(Column.D, Row.ONE);
         Position d6 = new Position(Column.D, Row.SIX);
-        //when
         //then
         assertThat(bishop.canMove(d1, d6)).isFalse();
     }
@@ -42,7 +40,6 @@ public class BishopTest {
         //given
         Position d6 = new Position(Column.D, Row.SEVEN);
         Position d1 = new Position(Column.D, Row.ONE);
-        //when
         //then
         assertThat(bishop.canMove(d6, d1)).isFalse();
     }
@@ -53,7 +50,6 @@ public class BishopTest {
         //given
         Position d1 = new Position(Column.D, Row.ONE);
         Position e1 = new Position(Column.E, Row.ONE);
-        //when
         //then
         assertThat(bishop.canMove(d1, e1)).isFalse();
     }
@@ -64,7 +60,6 @@ public class BishopTest {
         //given
         Position e1 = new Position(Column.E, Row.ONE);
         Position d1 = new Position(Column.D, Row.ONE);
-        //when
         //then
         assertThat(bishop.canMove(e1, d1)).isFalse();
     }
@@ -75,7 +70,6 @@ public class BishopTest {
         //given
         Position d1 = new Position(Column.D, Row.ONE);
         Position f2 = new Position(Column.F, Row.TWO);
-        //when
         //then
         assertThat(bishop.canMove(d1, f2)).isFalse();
     }

@@ -20,7 +20,6 @@ class KingTest {
 		//given
 		Position f1 = new Position(Column.F, Row.ONE);
 		Position f2 = new Position(Column.F, Row.TWO);
-		//when
 		//then
 		assertThat(king.canMove(f1, f2)).isTrue();
 	}
@@ -31,7 +30,6 @@ class KingTest {
 		//given
 		Position f1 = new Position(Column.F, Row.ONE);
 		Position g2 = new Position(Column.G, Row.TWO);
-		//when
 		//then
 		assertThat(king.canMove(f1, g2)).isTrue();
 	}
@@ -42,7 +40,6 @@ class KingTest {
 		//given
 		Position f1 = new Position(Column.F, Row.ONE);
 		Position f3 = new Position(Column.F, Row.THREE);
-		//when
 		//then
 		assertThat(king.canMove(f1, f3)).isFalse();
 	}

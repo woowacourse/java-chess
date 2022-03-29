@@ -21,7 +21,6 @@ class PawnTest {
 		//given
 		Position a2 = new Position(Column.A, Row.TWO);
 		Position a4 = new Position(Column.A, Row.FOUR);
-		//when
 		//then
 		assertThat(whitePawn.canMove(a2, a4)).isTrue();
 	}
@@ -32,7 +31,6 @@ class PawnTest {
 		//given
 		Position a7 = new Position(Column.A, Row.SEVEN);
 		Position a5 = new Position(Column.A, Row.FIVE);
-		//when
 		//then
 		assertThat(blackPawn.canMove(a7, a5)).isTrue();
 	}
@@ -46,7 +44,6 @@ class PawnTest {
 		Position a6 = new Position(Column.A, Row.SIX);
 		whitePawn.move(a2, a4, (piece -> {
 		}));
-		//when
 		//then
 		assertThat(whitePawn.canMove(a4, a6)).isFalse();
 	}
@@ -57,7 +54,6 @@ class PawnTest {
 		//given
 		Position a5 = new Position(Column.A, Row.FIVE);
 		Position a4 = new Position(Column.A, Row.FOUR);
-		//when
 		//then
 		assertThat(whitePawn.canMove(a5, a4)).isFalse();
 	}
@@ -68,7 +64,6 @@ class PawnTest {
 		//given
 		Position a5 = new Position(Column.A, Row.FIVE);
 		Position a6 = new Position(Column.A, Row.SIX);
-		//when
 		//then
 		assertThat(blackPawn.canMove(a5, a6)).isFalse();
 	}
@@ -82,7 +77,6 @@ class PawnTest {
 		Position a5 = new Position(Column.A, Row.FIVE);
 		whitePawn.move(a2, a4, (piece -> {
 		}));
-		//when
 		//then
 		assertThat(whitePawn.canMove(a4, a5)).isTrue();
 	}
@@ -96,7 +90,6 @@ class PawnTest {
 		Position a4 = new Position(Column.A, Row.FOUR);
 		blackPawn.move(a7, a5, (piece -> {
 		}));
-		//when
 		//then
 		assertThat(blackPawn.canMove(a5, a4)).isTrue();
 	}
@@ -107,7 +100,7 @@ class PawnTest {
 		//given
 		Position d3 = new Position(Column.D, Row.THREE);
 		Position e3 = new Position(Column.E, Row.THREE);
-		//when
+		//then
 		assertThat(blackPawn.canMove(d3, e3)).isFalse();
 	}
 
@@ -117,7 +110,6 @@ class PawnTest {
 		//given
 		Position d2 = new Position(Column.D, Row.TWO);
 		Position e3 = new Position(Column.E, Row.THREE);
-		//when
 		//then
 		assertThat(blackPawn.canMove(d2, e3)).isFalse();
 	}
@@ -128,7 +120,6 @@ class PawnTest {
 		//given
 		Position f6 = new Position(Column.F, Row.SIX);
 		Position g7 = new Position(Column.G, Row.SEVEN);
-		//when
 		//then
 		assertThatNoException().isThrownBy(() -> whitePawn.capture(f6, g7, (piece -> {
 		})));
@@ -140,7 +131,6 @@ class PawnTest {
 		//given
 		Position f6 = new Position(Column.F, Row.SIX);
 		Position f7 = new Position(Column.F, Row.SEVEN);
-		//when
 		//then
 		assertThatThrownBy(() -> whitePawn.capture(f6, f7, (piece -> {
 		})))

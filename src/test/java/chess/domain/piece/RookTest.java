@@ -20,7 +20,6 @@ public class RookTest {
 		//given
 		Position d1 = new Position(Column.D, Row.ONE);
 		Position d6 = new Position(Column.D, Row.SIX);
-		//when
 		//then
 		assertThat(rook.canMove(d1, d6)).isTrue();
 	}
@@ -31,7 +30,6 @@ public class RookTest {
 		//given
 		Position d6 = new Position(Column.D, Row.SIX);
 		Position d1 = new Position(Column.D, Row.ONE);
-		//when
 		//then
 		assertThat(rook.canMove(d6, d1)).isTrue();
 	}
@@ -42,7 +40,6 @@ public class RookTest {
 		//given
 		Position d1 = new Position(Column.D, Row.ONE);
 		Position e1 = new Position(Column.E, Row.ONE);
-		//when
 		//then
 		assertThat(rook.canMove(d1, e1)).isTrue();
 	}
@@ -53,7 +50,6 @@ public class RookTest {
 		//given
 		Position e1 = new Position(Column.E, Row.ONE);
 		Position d1 = new Position(Column.D, Row.ONE);
-		//when
 		//then
 		assertThat(rook.canMove(e1, d1)).isTrue();
 	}
@@ -64,7 +60,6 @@ public class RookTest {
 		//given
 		Position d1 = new Position(Column.D, Row.ONE);
 		Position g4 = new Position(Column.G, Row.FOUR);
-		//when
 		//then
 		assertThat(rook.canMove(d1, g4)).isFalse();
 	}
@@ -75,7 +70,6 @@ public class RookTest {
 		//given
 		Position d1 = new Position(Column.D, Row.ONE);
 		Position f2 = new Position(Column.F, Row.TWO);
-		//when
 		//then
 		assertThat(rook.canMove(d1, f2)).isFalse();
 	}
