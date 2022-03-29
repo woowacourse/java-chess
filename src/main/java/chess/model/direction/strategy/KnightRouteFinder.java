@@ -1,14 +1,14 @@
 package chess.model.direction.strategy;
 
-import chess.model.position.Position;
 import chess.model.direction.KnightDirection;
 import chess.model.direction.route.Route;
+import chess.model.position.Position;
 import java.util.Arrays;
 
 public class KnightRouteFinder implements RouteStrategy {
 
     @Override
-    public Route findRoute(Position source, Position target) {
+    public Route findRoute(final Position source, final Position target) {
         final int rankDifference = source.subtractRankFrom(target);
         final int fileDifference = source.subtractFileFrom(target);
         return Arrays.stream(KnightDirection.values())

@@ -36,7 +36,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State execute(Command command) {
+    public State execute(final Command command) {
         if (command.isStart()) {
             return command.executeTo(board);
         }

@@ -18,21 +18,21 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(Map<Position, Piece> board) {
+    public void printBoard(final Map<Position, Piece> board) {
         for (Rank rank : Rank.values()) {
             printFilesIn(board, rank);
             System.out.println();
         }
     }
 
-    private void printFilesIn(Map<Position, Piece> board, Rank rank) {
+    private void printFilesIn(final Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
             Piece piece = board.get(Position.of(rank, file));
             System.out.print(piece.getSymbol());
         }
     }
 
-    public void printScores(Map<Team, Double> scores) {
+    public void printScores(final Map<Team, Double> scores) {
         for (Team team : scores.keySet()) {
             System.out.printf(SCORE_MESSAGE_FORMAT, team.getValue(), scores.get(team));
             System.out.println();

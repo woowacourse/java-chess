@@ -5,7 +5,7 @@ import chess.model.state.State;
 
 public interface Command {
 
-    State executeTo(Board board);
+    State executeTo(final Board board);
 
     boolean isStart();
 }

@@ -11,6 +11,6 @@ class RankTest {
     @DisplayName("Rank을 이동한다.")
     @Test
     void add() {
-        assertThat(ONE.add(1)).isEqualTo(TWO);
+        assertThat(ONE.add(-1)).isEqualTo(TWO);
     }
 }

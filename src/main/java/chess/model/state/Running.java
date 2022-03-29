@@ -11,7 +11,7 @@ public class Running implements State {
 
     protected final Board board;
 
-    public Running(Board board) {
+    public Running(final Board board) {
         this.board = board;
     }
 
@@ -36,7 +36,7 @@ public class Running implements State {
     }
 
     @Override
-    public State execute(Command command) {
+    public State execute(final Command command) {
         if (!command.isStart()) {
             return command.executeTo(board);
         }

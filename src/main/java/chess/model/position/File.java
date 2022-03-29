@@ -16,23 +16,23 @@ public enum File {
     private final int value;
     private final char name;
 
-    File(int value, char name) {
+    File(final int value, final char name) {
         this.value = value;
         this.name = name;
     }
 
-    public File add(int file) {
+    public File add(final int file) {
         return File.of(value + file);
     }
 
-    public static File of(int otherValue) {
+    public static File of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(file -> file.value == otherValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
     }
 
-    public static File of(char name) {
+    public static File of(final char name) {
         return Arrays.stream(values())
                 .filter(file -> file.name == name)
                 .findAny()

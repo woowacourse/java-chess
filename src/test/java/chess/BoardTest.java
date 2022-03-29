@@ -29,4 +29,14 @@ public class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 선택한 위치에 기물이 없습니다.");
     }
+
+    @DisplayName("선택한 위치에 기물이 상대방 기물이면 예외를 발생 시킨다.")
+    @Test
+    void move_opposite_exception() {
+        Board board = Board.init();
+
+        assertThatThrownBy(() -> board.move(Position.of(Rank.SEVEN, File.D), Position.of(Rank.FIVE, File.D)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 상대편 기물은 움직일 수 없습니다.");
+    }
 }

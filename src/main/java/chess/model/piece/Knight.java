@@ -12,17 +12,18 @@ public class Knight extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Knight(Team team, String symbol) {
+    public Knight(final Team team, final String symbol) {
         super(team, symbol);
         this.routeStrategy = new KnightRouteFinder();
     }
 
-    public Route findRoute(Position source, Position target) {
+    @Override
+    public Route findRoute(final Position source, final Position target) {
         return routeStrategy.findRoute(source, target);
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score + SCORE;
     }
 }

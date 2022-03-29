@@ -17,23 +17,23 @@ public enum Rank {
     private final int value;
     private final char name;
 
-    Rank(int value, char name) {
+    Rank(final int value, final char name) {
         this.value = value;
         this.name = name;
     }
 
-    public Rank add(int row) {
+    public Rank add(final int row) {
         return Rank.of(value + row);
     }
 
-    public static Rank of(int otherValue) {
+    public static Rank of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == otherValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
     }
 
-    public static Rank of(char name) {
+    public static Rank of(final char name) {
         return Arrays.stream(values())
                 .filter(rank -> rank.name == name)
                 .findAny()

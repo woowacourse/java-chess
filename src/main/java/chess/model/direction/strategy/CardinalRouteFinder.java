@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class CardinalRouteFinder implements RouteStrategy {
 
     @Override
-    public Route findRoute(Position source, Position target) {
+    public Route findRoute(final Position source, final Position target) {
         final int rankDifference = source.subtractRankFrom(target);
         final int fileDifference = source.subtractFileFrom(target);
         return Arrays.stream(CardinalDirection.values())

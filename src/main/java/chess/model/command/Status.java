@@ -13,8 +13,8 @@ import java.util.Map;
 public class Status implements Command {
 
     @Override
-    public State executeTo(Board board) {
-        Map<Team, Double> scores = new LinkedHashMap<>();
+    public State executeTo(final Board board) {
+        final Map<Team, Double> scores = new LinkedHashMap<>();
         scores.put(WHITE, board.calculateScore(WHITE));
         scores.put(BLACK, board.calculateScore(BLACK));
         return new Sleep(board, scores);

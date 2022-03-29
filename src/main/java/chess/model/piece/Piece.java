@@ -11,7 +11,7 @@ public abstract class Piece {
     protected final Team team;
     private final String symbol;
 
-    protected Piece(Team team, String symbol) {
+    protected Piece(final Team team, final String symbol) {
         this.team = team;
         this.symbol = symbol;
     }
@@ -20,15 +20,15 @@ public abstract class Piece {
         return symbol;
     }
 
-    public boolean isOpponent(Team team) {
-        return !team.equals(this.team) && !team.equals(NONE);
+    public boolean isOpponent(final Team team) {
+        return !team.equals(NONE) && !team.equals(this.team);
     }
 
-    public boolean isSame(Team team) {
+    public boolean isSame(final Team team) {
         return team.equals(this.team);
     }
 
-    public boolean isSame(Piece otherPiece) {
+    public boolean isSame(final Piece otherPiece) {
         return otherPiece.team.equals(this.team);
     }
 
@@ -38,11 +38,5 @@ public abstract class Piece {
 
     public abstract double addTo(double score);
 
-    public boolean isPawn() {
-        return false;
-    }
-
-    public Route findRoute(Position source, Position target) {
-        return null;
-    }
+    public abstract Route findRoute(final Position source, final Position target);
 }

@@ -7,7 +7,7 @@ import chess.model.state.State;
 public class Start implements Command {
 
     @Override
-    public State executeTo(Board board) {
+    public State executeTo(final Board board) {
         return new Running(board);
     }
 

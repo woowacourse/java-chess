@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    public static final int KING_COUNT = 2;
+    private static final int KING_COUNT = 2;
+
     private final Map<Position, Piece> board;
     private final Team currentTeam;
 
@@ -28,7 +29,7 @@ public class Board {
         return new Board(BoardCreator.create(), WHITE);
     }
 
-    public static Board of(Board otherBoard) {
+    public static Board of(final Board otherBoard) {
         return new Board(otherBoard.board, otherBoard.currentTeam.opponent());
     }
 
@@ -36,21 +37,21 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public Board move(Position source, Position target) {
-        checkSameWithCurrentTeam(source);
+    public Board move(final Position source, final Position target) {
         checkMovablePiece(source, target);
+        checkSameWithCurrentTeam(source);
         checkPieceCanMove(source, target);
         movePiece(source, target);
         return new Board(board, currentTeam);
     }
 
-    private void checkSameWithCurrentTeam(Position source) {
+    private void checkSameWithCurrentTeam(final Position source) {
         if (board.get(source).isOpponent(currentTeam)) {
             throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직일 수 없습니다.");
         }
     }
 
-    private void checkMovablePiece(Position source, Position target) {
+    private void checkMovablePiece(final Position source, final Position target) {
         if (board.get(source).isSame(NONE)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
         }
@@ -59,7 +60,7 @@ public class Board {
         }
     }
 
-    private void checkPieceCanMove(Position source, Position target) {
+    private void checkPieceCanMove(final Position source, final Position target) {
         Route route = board.get(source).findRoute(source, target);
         Position nowPosition = source.createPositionTo(route);
         while (!target.equals(nowPosition) && board.get(nowPosition).isSame(NONE)) {
@@ -70,7 +71,7 @@ public class Board {
         }
     }
 
-    private void movePiece(Position source, Position target) {
+    private void movePiece(final Position source, final Position target) {
         board.put(target, board.get(source));
         board.put(source, new Blank(NONE, "."));
     }
@@ -82,7 +83,7 @@ public class Board {
                 .count() < KING_COUNT;
     }
 
-    public double calculateScore(Team team) {
+    public double calculateScore(final Team team) {
         List<Piece> teamPieces = findPiecesOf(team);
         double score = 0;
         for (Piece piece : teamPieces) {
@@ -91,7 +92,7 @@ public class Board {
         return score;
     }
 
-    private List<Piece> findPiecesOf(Team team) {
+    private List<Piece> findPiecesOf(final Team team) {
         return board.keySet().stream()
                 .filter(position -> board.get(position).isSame(team))
                 .map(board::get)

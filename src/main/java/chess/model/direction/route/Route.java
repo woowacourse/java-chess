@@ -22,7 +22,7 @@ public class Route {
         this.x = x;
     }
 
-    public Position createPositionFrom(Rank rank, File file) {
+    public Position createPositionFrom(final Rank rank, final File file) {
         return Position.of(rank.add(y), file.add(x));
     }
 

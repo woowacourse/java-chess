@@ -1,10 +1,10 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
 import chess.model.direction.strategy.CardinalRouteFinder;
 import chess.model.direction.strategy.RouteStrategy;
+import chess.model.position.Position;
 
 public class Rook extends Piece {
 
@@ -17,12 +17,13 @@ public class Rook extends Piece {
         this.routeStrategy = new CardinalRouteFinder();
     }
 
-    public Route findRoute(Position source, Position target) {
+    @Override
+    public Route findRoute(final Position source, final Position target) {
         return routeStrategy.findRoute(source, target);
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score + SCORE;
     }
 }

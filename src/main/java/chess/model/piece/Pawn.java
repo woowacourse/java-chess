@@ -4,10 +4,10 @@ import static chess.model.Team.BLACK;
 import static chess.model.Team.WHITE;
 
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
-import chess.model.direction.strategy.RouteStrategy;
 import chess.model.direction.strategy.OrdinalRouteFinder;
+import chess.model.direction.strategy.RouteStrategy;
+import chess.model.position.Position;
 
 public class Pawn extends Piece {
 
@@ -17,12 +17,13 @@ public class Pawn extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Pawn(Team team, String symbol) {
+    public Pawn(final Team team, final String symbol) {
         super(team, symbol);
         this.routeStrategy = new OrdinalRouteFinder();
     }
 
-    public Route findRoute(Position source, Position target) {
+    @Override
+    public Route findRoute(final Position source, final Position target) {
         Route route = routeStrategy.findRoute(source, target);
         checkMovableRoute(route);
         checkFirstMovePosition(source, target);
@@ -30,7 +31,7 @@ public class Pawn extends Piece {
         return route;
     }
 
-    private void checkMovableRoute(Route route) {
+    private void checkMovableRoute(final Route route) {
         if (this.team == WHITE) {
             route.checkWhitePawnRoute();
         }
@@ -39,14 +40,14 @@ public class Pawn extends Piece {
         }
     }
 
-    private void checkFirstMovePosition(Position source, Position target) {
+    private void checkFirstMovePosition(final Position source, final Position target) {
         int rankDifference = Math.abs(source.subtractRankFrom(target));
         if (rankDifference == MAX_MOVABLE_DISTANCE && source.isNotInitialPawnPosition()) {
             throw new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
     }
 
-    private void checkMovableDistance(Position source, Position target) {
+    private void checkMovableDistance(final Position source, final Position target) {
         int rankDifference = Math.abs(source.subtractRankFrom(target));
         int fileDifference = Math.abs(source.subtractFileFrom(target));
         if (rankDifference > MAX_MOVABLE_DISTANCE) {
@@ -60,10 +61,5 @@ public class Pawn extends Piece {
     @Override
     public double addTo(double score) {
         return score + SCORE;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 }

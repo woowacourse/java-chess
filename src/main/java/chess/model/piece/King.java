@@ -1,10 +1,10 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
-import chess.model.direction.strategy.RouteStrategy;
 import chess.model.direction.strategy.OrdinalRouteFinder;
+import chess.model.direction.strategy.RouteStrategy;
+import chess.model.position.Position;
 
 public class King extends Piece {
 
@@ -13,17 +13,18 @@ public class King extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public King(Team team, String symbol) {
+    public King(final Team team, final String symbol) {
         super(team, symbol);
         this.routeStrategy = new OrdinalRouteFinder();
     }
 
-    public Route findRoute(Position source, Position target) {
+    @Override
+    public Route findRoute(final Position source, final Position target) {
         checkMovableDistance(source, target);
         return routeStrategy.findRoute(source, target);
     }
 
-    private void checkMovableDistance(Position source, Position target) {
+    private void checkMovableDistance(final Position source, final Position target) {
         int rankDifference = Math.abs(source.subtractRankFrom(target));
         int fileDifference = Math.abs(source.subtractFileFrom(target));
         if (rankDifference > MOVABLE_DISTANCE || fileDifference > MOVABLE_DISTANCE) {

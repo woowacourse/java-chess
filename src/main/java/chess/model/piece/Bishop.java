@@ -1,10 +1,10 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
 import chess.model.direction.strategy.DiagonalRouteFinder;
 import chess.model.direction.strategy.RouteStrategy;
+import chess.model.position.Position;
 
 public class Bishop extends Piece {
 
@@ -12,17 +12,18 @@ public class Bishop extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Bishop(Team team, String symbol) {
+    public Bishop(final Team team, final String symbol) {
         super(team, symbol);
         this.routeStrategy = new DiagonalRouteFinder();
     }
 
-    public Route findRoute(Position source, Position target) {
+    @Override
+    public Route findRoute(final Position source, final Position target) {
         return routeStrategy.findRoute(source, target);
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score + SCORE;
     }
 }

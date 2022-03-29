@@ -8,16 +8,16 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    private Position(Rank rank, File file) {
+    private Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Position of(Rank rank, File file) {
+    public static Position of(final Rank rank, final File file) {
         return new Position(rank, file);
     }
 
-    public static Position from(String position) {
+    public static Position from(final String position) {
         return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
     }
 
@@ -29,7 +29,7 @@ public class Position {
         return file.subtractFrom(otherPosition.file);
     }
 
-    public Position createPositionTo(Route route) {
+    public Position createPositionTo(final Route route) {
         return route.createPositionFrom(rank, file);
     }
 

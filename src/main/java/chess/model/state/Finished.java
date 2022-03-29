@@ -11,7 +11,7 @@ public class Finished implements State {
 
     private final Board board;
 
-    public Finished(Board board) {
+    public Finished(final Board board) {
         this.board = board;
     }
 
@@ -36,7 +36,7 @@ public class Finished implements State {
     }
 
     @Override
-    public State execute(Command command) {
+    public State execute(final Command command) {
         return command.executeTo(board);
     }
 }

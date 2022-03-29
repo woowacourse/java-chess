@@ -39,7 +39,7 @@ public class Sleep implements State {
     }
 
     @Override
-    public State execute(Command command) {
+    public State execute(final Command command) {
         if (!command.isStart()) {
             return command.executeTo(board);
         }

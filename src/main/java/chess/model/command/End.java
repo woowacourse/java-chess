@@ -7,7 +7,7 @@ import chess.model.state.State;
 public class End implements Command {
 
     @Override
-    public State executeTo(Board board) {
+    public State executeTo(final Board board) {
         return new Finished(Board.of(board));
     }
 

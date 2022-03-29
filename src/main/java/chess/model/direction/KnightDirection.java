@@ -18,13 +18,13 @@ public enum KnightDirection implements Direction {
     private final BiPredicate<Integer, Integer> routeFinder;
     private final Route route;
 
-    KnightDirection(BiPredicate<Integer, Integer> routeFinder, Route route) {
+    KnightDirection(final BiPredicate<Integer, Integer> routeFinder, final Route route) {
         this.routeFinder = routeFinder;
         this.route = route;
     }
 
     @Override
-    public boolean findRouteFrom(int rankDifference, int fileDifference) {
+    public boolean findRouteFrom(final int rankDifference, final int fileDifference) {
         return routeFinder.test(rankDifference, fileDifference);
     }
 

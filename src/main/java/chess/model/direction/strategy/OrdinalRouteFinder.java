@@ -1,10 +1,10 @@
 package chess.model.direction.strategy;
 
-import chess.model.direction.DiagonalDirection;
-import chess.model.position.Position;
 import chess.model.direction.CardinalDirection;
+import chess.model.direction.DiagonalDirection;
 import chess.model.direction.Direction;
 import chess.model.direction.route.Route;
+import chess.model.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class OrdinalRouteFinder implements RouteStrategy {
     }
 
     private List<Direction> createRoyaltyDirections() {
-        List<Direction> directions = new ArrayList<>();
+        final List<Direction> directions = new ArrayList<>();
         directions.addAll(List.of(CardinalDirection.values()));
         directions.addAll(List.of(DiagonalDirection.values()));
         return directions;

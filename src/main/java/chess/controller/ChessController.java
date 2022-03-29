@@ -39,9 +39,9 @@ public class ChessController {
         }
     }
 
-    private State proceed(State state) {
+    private State proceed(final State state) {
         try {
-            Command command = createCommand(inputView.inputCommand());
+            final Command command = createCommand(inputView.inputCommand());
             return state.execute(command);
         } catch (IllegalArgumentException error) {
             System.out.println(error.getMessage());
@@ -49,7 +49,7 @@ public class ChessController {
         }
     }
 
-    private Command createCommand(String command) {
+    private Command createCommand(final String command) {
         if (command.equals("start")) {
             return new Start();
         }
@@ -65,13 +65,13 @@ public class ChessController {
         throw new IllegalArgumentException("[ERROR] 올바른 명령어를 입력 해주세요.");
     }
 
-    private void printBoardIn(State state) {
+    private void printBoardIn(final State state) {
         if (!state.isFinished()) {
             outputView.printBoard(state.getBoard());
         }
     }
 
-    private void printScoreIn(State state) {
+    private void printScoreIn(final State state) {
         if (state.isSleep()) {
             outputView.printScores(state.getScores());
         }
