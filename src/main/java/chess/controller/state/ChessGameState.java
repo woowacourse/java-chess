@@ -1,4 +1,4 @@
-package chess.state;
+package chess.controller.state;
 
 public interface ChessGameState {
     ChessGameState start();

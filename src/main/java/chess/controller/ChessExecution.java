@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.controller;
 
-import chess.state.ChessGameState;
+import chess.controller.state.ChessGameState;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.BiFunction;

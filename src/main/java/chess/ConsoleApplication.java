@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.InitialExecution;
+import chess.controller.InitialExecution;
 import chess.view.InputView;
 import chess.view.OutputView;
 

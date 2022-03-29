@@ -1,6 +1,5 @@
-package chess.domain;
+package chess.controller;
 
-import chess.controller.ChessController;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 

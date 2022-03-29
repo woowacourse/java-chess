@@ -1,4 +1,4 @@
-package chess.state;
+package chess.controller.state;
 
 import chess.domain.board.MoveResult;
 import chess.domain.board.Board;

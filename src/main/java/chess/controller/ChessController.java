@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessExecution;
-import chess.state.Ready;
-import chess.state.ChessGameState;
+import chess.controller.state.Ready;
+import chess.controller.state.ChessGameState;
 import chess.view.InputView;
 
 public class ChessController {
