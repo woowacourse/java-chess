@@ -34,16 +34,12 @@ public final class Board {
     public void move(Position sourcePosition, Position targetPosition) {
         Piece source = this.squares.get(sourcePosition);
 
-        checkSource(sourcePosition, source);
+        checkBlank(sourcePosition);
+        checkTurn(source);
         checkPath(sourcePosition, targetPosition, source);
 
         this.whiteTurn = !whiteTurn;
         move(sourcePosition, targetPosition, source);
-    }
-
-    private void checkSource(Position sourcePosition, Piece source) {
-        checkBlank(sourcePosition);
-        checkTurn(source);
     }
 
     private void checkBlank(Position sourcePosition) {
