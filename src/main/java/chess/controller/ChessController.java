@@ -15,7 +15,6 @@ public class ChessController {
 
         while (true) {
             InputCommand commands = InputView.inputCommand();
-
             if (commands == InputCommand.START) {
                 chessGame.startGame();
                 OutputView.printBoard(chessGame.getBoard());
