@@ -1,12 +1,8 @@
 package chess.piece;
 
-import chess.Direction;
 import chess.Player;
 import chess.Position;
-
 import chess.direction.route.Route;
-import java.util.List;
-import java.util.Map;
 
 public abstract class Piece {
 
@@ -27,12 +23,8 @@ public abstract class Piece {
         return player.equals(this.player);
     }
 
-    protected List<Direction> getDirection() {
-        return null;
-    }
-
-    protected boolean isOpponent(Player player) {
-        return !player.equals(this.player) && !this.player.equals(Player.NONE);
+    public boolean isSame(Piece otherPiece) {
+        return otherPiece.player.equals(this.player);
     }
 
     public boolean isKing() {
@@ -43,14 +35,6 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return false;
-    }
-
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board){
-        return true;
-    }
-
-    public boolean canMove_2(Position source, Position target, Map<Position, Piece> board) {
-        return true;
     }
 
     public Route findRoute(Position source, Position target) {

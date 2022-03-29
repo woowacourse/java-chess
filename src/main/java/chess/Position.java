@@ -21,6 +21,10 @@ public class Position {
         return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
     }
 
+    public static Position from(Position position) {
+        return new Position(position.rank, position.file);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,7 +50,7 @@ public class Position {
         return file.subtractFrom(otherPosition.file);
     }
 
-    public Position createPositionFrom(Route route) {
+    public Position createPositionTo(Route route) {
         return route.createPositionFrom(rank, file);
     }
 

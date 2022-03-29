@@ -6,6 +6,7 @@ import chess.File;
 import chess.Player;
 import chess.Position;
 import chess.Rank;
+import chess.direction.route.Route;
 import chess.piece.Blank;
 import chess.piece.Piece;
 import java.util.Collections;
@@ -24,20 +25,25 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        checkMovablePieceIn(source);
+        checkMovablePieceAt(source);
         checkPieceCanMove(source, target);
         movePiece(source, target);
     }
 
-    private void checkMovablePieceIn(Position source) {
+    private void checkMovablePieceAt(Position source) {
         if (board.get(source).isSame(NONE)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
         }
     }
 
     private void checkPieceCanMove(Position source, Position target) {
-        if (!board.get(source).canMove(source, target, board)) {
-            throw new IllegalArgumentException("[ERROR] 기물이 해당 위치로 갈 수 없습니다.");
+        Route route = board.get(source).findRoute(source, target);
+        Position nextPosition = source.createPositionTo(route);
+        while (!nextPosition.equals(target) && board.get(nextPosition).isSame(NONE)) {
+            nextPosition = nextPosition.createPositionTo(route);
+        }
+        if (!target.equals(nextPosition) || board.get(target).isSame(board.get(source))) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
     }
 
