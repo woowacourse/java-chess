@@ -7,8 +7,8 @@ import java.util.List;
 import chess.dto.MoveRequest;
 import chess.dto.NotMoveRequest;
 import chess.dto.Request;
+import chess.model.Position;
 import chess.vo.Command;
-import chess.vo.Position;
 
 public class InputView {
 

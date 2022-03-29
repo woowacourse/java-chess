@@ -1,7 +1,7 @@
 package chess.model.turndecider;
 
+import chess.model.PieceColor;
 import chess.model.piece.Piece;
-import chess.vo.PieceColor;
 
 public class BlackState implements State {
 

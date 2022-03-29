@@ -4,10 +4,10 @@ import static java.lang.System.*;
 
 import java.util.Map;
 
+import chess.model.File;
+import chess.model.Position;
+import chess.model.Rank;
 import chess.model.piece.Piece;
-import chess.vo.File;
-import chess.vo.Position;
-import chess.vo.Rank;
 
 public class OutputView {
 

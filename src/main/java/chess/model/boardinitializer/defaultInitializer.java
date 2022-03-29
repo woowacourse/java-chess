@@ -1,7 +1,7 @@
 package chess.model.boardinitializer;
 
-import static chess.vo.PieceColor.*;
-import static chess.vo.Rank.*;
+import static chess.model.PieceColor.*;
+import static chess.model.Rank.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,10 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Function;
 
+import chess.model.File;
+import chess.model.PieceColor;
+import chess.model.Position;
+import chess.model.Rank;
 import chess.model.piece.Bishop;
 import chess.model.piece.EmptyPiece;
 import chess.model.piece.King;
@@ -17,10 +21,6 @@ import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
-import chess.vo.File;
-import chess.vo.PieceColor;
-import chess.vo.Position;
-import chess.vo.Rank;
 
 public class defaultInitializer implements BoardInitializer {
 

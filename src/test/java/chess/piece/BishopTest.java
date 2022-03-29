@@ -1,20 +1,20 @@
 package chess.piece;
 
-import static chess.vo.File.*;
-import static chess.vo.Rank.*;
+import static chess.model.File.*;
+import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.model.File;
+import chess.model.MoveType;
+import chess.model.Path;
+import chess.model.PieceColor;
+import chess.model.Position;
+import chess.model.Rank;
 import chess.model.piece.Bishop;
-import chess.vo.File;
-import chess.vo.MoveType;
-import chess.vo.Path;
-import chess.vo.PieceColor;
-import chess.vo.Position;
-import chess.vo.Rank;
 
 class BishopTest {
 

@@ -2,9 +2,9 @@ package chess.model.piece;
 
 import java.util.Objects;
 
-import chess.vo.MoveType;
-import chess.vo.Path;
-import chess.vo.PieceColor;
+import chess.model.MoveType;
+import chess.model.Path;
+import chess.model.PieceColor;
 
 public abstract class Piece {
 

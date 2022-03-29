@@ -1,4 +1,4 @@
-package chess.vo;
+package chess.model;
 
 public enum MoveType {
     FRIENDLY, ENEMY, EMPTY

@@ -1,7 +1,7 @@
 package chess.dto;
 
+import chess.model.Position;
 import chess.vo.Command;
-import chess.vo.Position;
 
 public interface Request {
     Command getCommand();

@@ -1,8 +1,8 @@
 package chess.model.piece;
 
-import chess.vo.MoveType;
-import chess.vo.Path;
-import chess.vo.PieceColor;
+import chess.model.MoveType;
+import chess.model.Path;
+import chess.model.PieceColor;
 
 public class Bishop extends Piece {
 

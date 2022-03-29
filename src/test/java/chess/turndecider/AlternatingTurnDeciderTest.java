@@ -1,6 +1,6 @@
 package chess.turndecider;
 
-import static chess.vo.PieceColor.*;
+import static chess.model.PieceColor.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.model.PieceColor;
 import chess.model.piece.Pawn;
 import chess.model.turndecider.AlternatingTurnDecider;
-import chess.vo.PieceColor;
 
 class AlternatingTurnDeciderTest {
 

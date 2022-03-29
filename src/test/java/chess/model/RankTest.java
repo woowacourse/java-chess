@@ -1,6 +1,6 @@
-package chess.vo;
+package chess.model;
 
-import static chess.vo.Rank.*;
+import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;

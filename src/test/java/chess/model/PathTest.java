@@ -1,4 +1,4 @@
-package chess.vo;
+package chess.model;
 
 import static org.assertj.core.api.Assertions.*;
 

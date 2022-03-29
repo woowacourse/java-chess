@@ -1,7 +1,7 @@
 package chess.model;
 
-import static chess.vo.PieceColor.*;
-import static chess.vo.Rank.*;
+import static chess.model.PieceColor.*;
+import static chess.model.Rank.*;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -13,10 +13,6 @@ import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.turndecider.TurnDecider;
-import chess.vo.File;
-import chess.vo.MoveType;
-import chess.vo.Path;
-import chess.vo.Position;
 
 public class Board {
 

@@ -1,11 +1,11 @@
 package chess.model.piece;
 
-import static chess.vo.PieceColor.*;
+import static chess.model.PieceColor.*;
 
-import chess.vo.MoveType;
-import chess.vo.Path;
-import chess.vo.PieceColor;
-import chess.vo.Rank;
+import chess.model.MoveType;
+import chess.model.Path;
+import chess.model.PieceColor;
+import chess.model.Rank;
 
 public class Pawn extends Piece {
 

@@ -1,4 +1,4 @@
-package chess.vo;
+package chess.model;
 
 import static java.util.stream.Collectors.*;
 

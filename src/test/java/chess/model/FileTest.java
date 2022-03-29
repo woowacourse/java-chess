@@ -1,6 +1,6 @@
-package chess.vo;
+package chess.model;
 
-import static chess.vo.File.*;
+import static chess.model.File.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;

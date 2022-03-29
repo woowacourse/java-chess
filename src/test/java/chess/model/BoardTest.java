@@ -1,8 +1,8 @@
 package chess.model;
 
 import static chess.model.Board.*;
-import static chess.vo.File.*;
-import static chess.vo.Rank.*;
+import static chess.model.File.*;
+import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,10 +25,6 @@ import chess.model.piece.Piece;
 import chess.model.piece.Rook;
 import chess.model.turndecider.AlternatingTurnDecider;
 import chess.model.turndecider.FixedTurnDecider;
-import chess.vo.File;
-import chess.vo.PieceColor;
-import chess.vo.Position;
-import chess.vo.Rank;
 
 public class BoardTest {
 
