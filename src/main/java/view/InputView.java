@@ -42,8 +42,8 @@ public class InputView {
     }
 
     private static void validateNotAllowStartCommand(final String input) {
-        if (!(input.equals(START) || input.equals(END))) {
-            throw new IllegalArgumentException("[ERROR] start, end 이외의 문자는 입력할 수 없습니다.");
+        if (!(input.equals(START))) {
+            throw new IllegalArgumentException("[ERROR] start 이외의 문자는 입력할 수 없습니다.");
         }
     }
 

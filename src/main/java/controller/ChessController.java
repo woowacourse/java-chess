@@ -21,7 +21,7 @@ public final class ChessController {
     public void start() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
         String input = null;
-        input = interactPlayStart(input);
+        input = interactPlayStart();
 
         if (input.equals(END)) {
             return;
@@ -29,12 +29,12 @@ public final class ChessController {
         playStart(chessBoard, input);
     }
 
-    private String interactPlayStart(final String input) {
+    private String interactPlayStart() {
         try {
             return InputView.responseUserStartCommand();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return interactPlayStart(input);
+            return interactPlayStart();
         }
     }
 
