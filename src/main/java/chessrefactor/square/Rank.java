@@ -1,4 +1,4 @@
-package chessrefactor;
+package chessrefactor.square;
 
 public enum Rank {
 
