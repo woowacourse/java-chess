@@ -1,6 +1,7 @@
 package chess.domain.move;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -46,5 +47,25 @@ public class BishopMoveStrategyTest {
         Position target = Position.valueOf("e6");
 
         assertThat(bishopMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
+
+    @Test
+    @DisplayName("수평 기물 확인은 지원하지 않는다.")
+    void isHorizontalMoveUnsupported() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("e6");
+
+        assertThatThrownBy(() -> bishopMoveStrategy.isPieceExistWhenHorizon(board, source, Distance.of(source, target)))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("수직 기물 확인은 지원하지 않는다.")
+    void isVerticalMoveUnsupported() {
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("e6");
+
+        assertThatThrownBy(() -> bishopMoveStrategy.isPieceExistWhenVertical(board, source, Distance.of(source, target)))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

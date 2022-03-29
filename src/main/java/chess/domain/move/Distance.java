@@ -27,15 +27,15 @@ public class Distance {
     }
 
     public boolean isPositiveDiagonal() {
-        return isSameAbs() && vertical / horizon == 1;
+        return isDiagonalMove() && vertical / horizon == 1;
     }
 
     public boolean isNegativeDiagonal() {
-        return isSameAbs() && vertical / horizon == -1;
+        return isDiagonalMove() && vertical / horizon == -1;
     }
 
-    private boolean isSameAbs() {
-        return Math.abs(vertical) == Math.abs(horizon);
+    private boolean isDiagonalMove() {
+        return vertical != NOT_MOVE && horizon != NOT_MOVE;
     }
 
     public int getVertical() {
