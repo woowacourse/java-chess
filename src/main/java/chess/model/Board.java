@@ -18,10 +18,6 @@ public class Board {
         return new Board(pieces);
     }
 
-    public Pieces getPieces() {
-        return pieces;
-    }
-
     public void move(String source, String target, Turn thisTurn) {
         Position sourcePosition = getSource(source);
         Position targetPosition = getTarget(target);
@@ -38,6 +34,28 @@ public class Board {
             return;
         }
         throw new IllegalArgumentException("움직일수 없습니다.");
+    }
+
+    public boolean isDeadKing() {
+        return pieces.countOfKing() == 1;
+    }
+
+    public double getWhiteTeamScore() {
+        return pieces.getTotalScore(Team.WHITE);
+    }
+
+    public double getBlackTeamScore() {
+        return pieces.getTotalScore(Team.BLACK);
+    }
+
+    public Team getWinTeam() {
+        if (getWhiteTeamScore() > getBlackTeamScore()) {
+            return Team.WHITE;
+        }
+        if (getBlackTeamScore() > getWhiteTeamScore()) {
+            return Team.BLACK;
+        }
+        return Team.NONE;
     }
 
     private boolean hasBlock(Piece sourcePiece, Piece targetPiece) {
@@ -62,26 +80,8 @@ public class Board {
         );
     }
 
-    public boolean isDeadKing() {
-        return pieces.countOfKing() == 1;
-    }
-
-    public double getWhiteTeamScore() {
-        return pieces.getTotalScore(Team.WHITE);
-    }
-
-    public double getBlackTeamScore() {
-        return pieces.getTotalScore(Team.BLACK);
-    }
-
-    public Team getWinTeam() {
-        if (getWhiteTeamScore() > getBlackTeamScore()) {
-            return Team.WHITE;
-        }
-        if (getBlackTeamScore() > getWhiteTeamScore()) {
-            return Team.BLACK;
-        }
-        return Team.NONE;
+    public Pieces getPieces() {
+        return pieces;
     }
 }
 

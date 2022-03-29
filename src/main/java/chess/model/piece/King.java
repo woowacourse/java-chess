@@ -25,16 +25,6 @@ public class King extends Piece {
         return isCorrectDirection(position) && isCorrectDistance(position);
     }
 
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isVertical(position) ||
-                this.position.isHorizontal(position) ||
-                this.position.isDiagonal(position);
-    }
-
-    private boolean isCorrectDistance(Position position) {
-        return this.position.isOneStepAway(position);
-    }
-
     @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
@@ -51,5 +41,15 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
+    }
+
+    private boolean isCorrectDirection(Position position) {
+        return this.position.isVertical(position) ||
+                this.position.isHorizontal(position) ||
+                this.position.isDiagonal(position);
+    }
+
+    private boolean isCorrectDistance(Position position) {
+        return this.position.isOneStepAway(position);
     }
 }

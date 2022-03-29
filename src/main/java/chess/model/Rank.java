@@ -18,19 +18,19 @@ public enum Rank {
         this.index = index;
     }
 
+    public static Rank valueOf(int index) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
+    }
+
     public int absMinus(Rank rank) {
         return Math.abs(index - rank.index);
     }
 
     public int minus(Rank rank) {
         return this.index - rank.index;
-    }
-
-    public static Rank valueOf(int index) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.index == index)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
     }
 
     public boolean isLessThan(Rank rank) {

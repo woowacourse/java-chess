@@ -47,36 +47,12 @@ public class Position {
         return isTwoFileOneRankStep(position) || isOneFileTwoRankStep(position);
     }
 
-    private boolean isOneFileTwoRankStep(Position position) {
-        return rank.absMinus(position.rank) == 2 && file.absMinus(position.file) == 1;
-    }
-
-    private boolean isTwoFileOneRankStep(Position position) {
-        return file.absMinus(position.file) == 2 && rank.absMinus(position.rank) == 1;
-    }
-
-    private boolean isOneStepHorizontalOrVertical(Position position) {
-        return rank.absMinus(position.rank) + file.absMinus(position.file) == 1;
-    }
-
-    private boolean isOneStepDiagonal(Position position) {
-        return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
-    }
-
     public boolean isInitPawnPosition(Rank rank) {
         return this.rank.equals(rank);
     }
 
     public boolean isStepForward(Position position, int direction, int distance) {
         return position.rank.minus(rank) == direction * distance && file.absMinus(position.file) == 0;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public File getFile() {
-        return file;
     }
 
     public boolean isBiggerFileThan(Position position) {
@@ -94,24 +70,6 @@ public class Position {
     public boolean isTwoStepAway(Position position) {
         return rank.absMinus(position.rank) == 2;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Position position = (Position) o;
-        return rank == position.rank && file == position.file;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, file);
-    }
-
 
     public Position getRightHorizontalPosition(int distance) {
         return new Position(file.getNext(distance), rank);
@@ -131,5 +89,46 @@ public class Position {
 
     public boolean isOneStepDiagonal(Position position, int forwardDirection) {
         return position.rank.minus(rank) == forwardDirection && file.absMinus(position.file) == 1;
+    }
+
+    private boolean isOneFileTwoRankStep(Position position) {
+        return rank.absMinus(position.rank) == 2 && file.absMinus(position.file) == 1;
+    }
+
+    private boolean isTwoFileOneRankStep(Position position) {
+        return file.absMinus(position.file) == 2 && rank.absMinus(position.rank) == 1;
+    }
+
+    private boolean isOneStepHorizontalOrVertical(Position position) {
+        return rank.absMinus(position.rank) + file.absMinus(position.file) == 1;
+    }
+
+    private boolean isOneStepDiagonal(Position position) {
+        return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position position = (Position) o;
+        return rank == position.rank && file == position.file;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, file);
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public File getFile() {
+        return file;
     }
 }

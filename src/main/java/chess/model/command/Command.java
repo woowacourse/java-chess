@@ -38,11 +38,6 @@ public abstract class Command implements State {
     }
 
     @Override
-    public List<String> getCommandPosition() {
-        throw new IllegalArgumentException("명령어에서 위치를 얻을수 없습니다.");
-    }
-
-    @Override
     public String getSourcePosition() {
         throw new IllegalArgumentException("명령어에서 위치를 얻을수 없습니다.");
     }

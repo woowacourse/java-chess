@@ -13,8 +13,6 @@ public interface State {
 
     boolean isStatus();
 
-    List<String> getCommandPosition();
-
     String getSourcePosition();
 
     String getTargetPosition();

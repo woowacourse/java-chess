@@ -69,14 +69,6 @@ public abstract class Piece implements Comparable<Piece> {
         return turn.isCurrentTeam(team);
     }
 
-    public abstract double getScore();
-
-    public abstract List<Position> getIntervalPosition(Piece targetPiece);
-
-    public abstract boolean isMovable(Position position);
-
-    public abstract String getName();
-
     public boolean isKing() {
         return false;
     }
@@ -89,7 +81,13 @@ public abstract class Piece implements Comparable<Piece> {
         return false;
     }
 
-    ;
+    public abstract double getScore();
+
+    public abstract List<Position> getIntervalPosition(Piece targetPiece);
+
+    public abstract boolean isMovable(Position position);
+
+    public abstract String getName();
 
     @Override
     public int compareTo(Piece piece) {
@@ -101,7 +99,6 @@ public abstract class Piece implements Comparable<Piece> {
         }
         return -1;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -26,10 +26,6 @@ public class Bishop extends Piece implements BishopMovable {
         return isCorrectDirection(position);
     }
 
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isDiagonal(position);
-    }
-
     @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
@@ -42,8 +38,7 @@ public class Bishop extends Piece implements BishopMovable {
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Position> positions = new ArrayList<>();
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list); // rank 큰게 먼저
-        // rank 같다면, file이 작은게 먼저
+        Collections.sort(list);
         if (position.isPositiveDiagonal(targetPiece.position)) {
             return getPositiveDiagonal(positions, list);
         }
@@ -51,5 +46,9 @@ public class Bishop extends Piece implements BishopMovable {
             return getNegativeDiagonal(positions, list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
+    }
+
+    private boolean isCorrectDirection(Position position) {
+        return this.position.isDiagonal(position);
     }
 }

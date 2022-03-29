@@ -18,16 +18,16 @@ public class Pawn extends Piece {
         super(position, team);
     }
 
-    @Override
-    public double getScore() {
-        return SCORE;
-    }
-
     public double getScore(long size) {
         if (size == 1) {
             return SCORE;
         }
         return DUPLICATED_PAWN_SCORE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
@@ -60,15 +60,15 @@ public class Pawn extends Piece {
         return List.of(targetPiece.position);
     }
 
+    @Override
+    public boolean isKill(Piece other) {
+        return this.position.isOneStepDiagonal(other.position, team.getForwardDirection()) && isOtherTeam(other);
+    }
+
     private boolean isInitPosition() {
         if (Team.BLACK.equals(team)) {
             return position.isInitPawnPosition(Rank.SEVEN);
         }
         return position.isInitPawnPosition(Rank.TWO);
-    }
-
-    @Override
-    public boolean isKill(Piece other) {
-        return this.position.isOneStepDiagonal(other.position, team.getForwardDirection()) && isOtherTeam(other);
     }
 }

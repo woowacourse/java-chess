@@ -1,5 +1,8 @@
 package chess.model.command;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Move extends Command {
 
     private static final String EMPTY_DELIMITER = " ";
@@ -18,6 +21,11 @@ public class Move extends Command {
         return getCommandPosition().get(1);
     }
 
+    private List<String> getCommandPosition() {
+        String[] split = input.split(EMPTY_DELIMITER);
+        return Arrays.asList(split[1], split[2]);
+    }
+
     @Override
     public Command turnState(String input) {
         if ("end".equals(input)) {
@@ -29,6 +37,7 @@ public class Move extends Command {
         throw new IllegalArgumentException("command has only move or end ");
     }
 
+    @Override
     public Command turnFinalState(String input) {
         if ("status".equals(input)) {
             return new Status(input);
