@@ -30,7 +30,7 @@ class KnightTest {
         Piece knight = new Knight(BLACK, "N");
         assertThatThrownBy(() -> knight.findRoute(Position.of(FIVE, B), Position.of(rank, file)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 해당 기물이 이동할수 없는 Target이 입력 됬습니다.");
+                .hasMessage("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
     }
 
     @DisplayName("SSE 위치로 움직일 수 있으면 SSE 방향의 Route를 반환한다.")
