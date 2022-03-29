@@ -3,6 +3,7 @@ package chess.dto;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BoardDto {
@@ -17,6 +18,6 @@ public class BoardDto {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
     }
 }

@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.domain.Color;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ScoreDto {
@@ -15,6 +16,6 @@ public class ScoreDto {
     }
 
     public Map<Color, Double> getScore() {
-        return score;
+        return new HashMap<>(score);
     }
 }
