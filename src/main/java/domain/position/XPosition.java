@@ -14,16 +14,16 @@ public enum XPosition {
     H("h", 8);
 
     private final String symbol;
-    private final int x;
+    private final int xPosition;
 
-    XPosition(final String symbol, final int x) {
+    XPosition(final String symbol, final int xPosition) {
         this.symbol = symbol;
-        this.x = x;
+        this.xPosition = xPosition;
     }
 
-    public static XPosition of(final int x) {
+    public static XPosition of(final int xPosition) {
         return Arrays.stream(values())
-                .filter(value -> value.x == x)
+                .filter(value -> value.xPosition == xPosition)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 가로축이 잘못 입력되었습니다."));
     }
@@ -35,17 +35,17 @@ public enum XPosition {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 가로축이 잘못 입력되었습니다."));
     }
 
-    public static boolean checkRange(final int x) {
-        return A.getX() <= x && x <= H.getX();
+    public static boolean checkRange(final int xPosition) {
+        return A.getXPosition() <= xPosition && xPosition <= H.getXPosition();
 
     }
 
-    public int getX() {
-        return x;
+    public int getXPosition() {
+        return xPosition;
     }
 
     @Override
     public String toString() {
-        return "XPosition{" + "x=" + x + '}';
+        return "XPosition{" + "x=" + xPosition + '}';
     }
 }

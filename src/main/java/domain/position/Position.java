@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public final class Position {
 
-    private final XPosition x;
-    private final YPosition y;
+    private final XPosition xPosition;
+    private final YPosition yPosition;
 
-    private Position(final XPosition x, final YPosition y) {
-        this.x = x;
-        this.y = y;
+    private Position(final XPosition xPosition, final YPosition yPosition) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
     public static Position of(final XPosition xPosition, final YPosition yPosition) {
@@ -20,12 +20,12 @@ public final class Position {
         return Position.of(XPosition.of(x), YPosition.of(y));
     }
 
-    public int getX() {
-        return x.getX();
+    public int getXPosition() {
+        return xPosition.getXPosition();
     }
 
-    public int getY() {
-        return y.getY();
+    public int getYPosition() {
+        return yPosition.getYPosition();
     }
 
     @Override
@@ -37,16 +37,16 @@ public final class Position {
             return false;
         }
         final Position position = (Position) o;
-        return y == position.y && x == position.x;
+        return yPosition == position.yPosition && xPosition == position.xPosition;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(y, x);
+        return Objects.hash(yPosition, xPosition);
     }
 
     @Override
     public String toString() {
-        return "{" + x.getX() + ", " + y.getY() + "}";
+        return "{" + xPosition.getXPosition() + ", " + yPosition.getYPosition() + "}";
     }
 }

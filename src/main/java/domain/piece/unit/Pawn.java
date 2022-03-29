@@ -39,16 +39,16 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     private boolean checkFirstDistance(final Position source, final Position target) {
-        return Math.abs(source.getY() - target.getY()) == FIRST_DISTANCE;
+        return Math.abs(source.getYPosition() - target.getYPosition()) == FIRST_DISTANCE;
     }
 
     private boolean checkSameX(final Position source, final Position target) {
-        return source.getX() == target.getX();
+        return source.getXPosition() == target.getXPosition();
     }
 
     private boolean checkTeam(final Position source) {
-        boolean checkBlackTeam = checkSameTeam(Team.BLACK) && source.getY() == START_BLACK_LINE;
-        boolean checkWhiteTeam = checkSameTeam(Team.WHITE) && source.getY() == START_WHITE_LINE;
+        boolean checkBlackTeam = checkSameTeam(Team.BLACK) && source.getYPosition() == START_BLACK_LINE;
+        boolean checkWhiteTeam = checkSameTeam(Team.WHITE) && source.getYPosition() == START_WHITE_LINE;
 
         return checkBlackTeam || checkWhiteTeam;
     }
