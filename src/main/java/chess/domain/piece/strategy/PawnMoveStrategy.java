@@ -3,7 +3,6 @@ package chess.domain.piece.strategy;
 import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import java.util.List;
