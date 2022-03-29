@@ -54,20 +54,28 @@ public class Position {
         List<File> files = file.betweenFiles(other.file);
 
         if (ranks.isEmpty()) {
-            return files.stream()
-                .map(file -> new Position(this.rank, file))
-                .collect(Collectors.toList());
+            return straightVerticalFiles(files);
         }
 
         if (files.isEmpty()) {
-            return ranks.stream()
-                .map(rank -> new Position(rank, this.file))
-                .collect(Collectors.toList());
+            return straightHorizontalRanks(ranks);
         }
 
         return ranks.stream()
             .flatMap(rank -> positionsBetweenTwoFiles(files, rank).stream())
             .collect(toList());
+    }
+
+    private List<Position> straightVerticalFiles(List<File> files) {
+        return files.stream()
+            .map(file -> new Position(this.rank, file))
+            .collect(Collectors.toList());
+    }
+
+    private List<Position> straightHorizontalRanks(List<Rank> ranks) {
+        return ranks.stream()
+            .map(rank -> new Position(rank, this.file))
+            .collect(Collectors.toList());
     }
 
     private List<Position> positionsBetweenTwoFiles(List<File> files, Rank rank) {
