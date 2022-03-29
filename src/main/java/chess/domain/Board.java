@@ -14,10 +14,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Board {
 
@@ -32,33 +29,26 @@ public class Board {
     public static Board create() {
         final Map<Position, Piece> board = new LinkedHashMap<>(INITIAL_CAPACITY);
 
-        initialPositions(board);
         initialPieces(board);
 
         return new Board(board);
     }
 
-    private static void initialPositions(Map<Position, Piece> board) {
-        List<Position> positions = Stream.of(Rank.values())
-                .flatMap(rank ->
-                        Stream.of(File.values()).map(file -> new Position(file, rank)))
-                .collect(Collectors.toList());
+    private static void initialPieces(final Map<Position, Piece> board) {
+        putPiecesWithoutPawn(board, Rank.EIGHT, Color.BLACK);
+        putPiecesOnRank(board, Rank.SEVEN, new PawnPiece(Color.BLACK));
 
-        for (Position position : positions) {
-            board.put(position, new EmptyPiece());
+        for (int i = 3; i <= 6; i++) {
+            putPiecesOnRank(board, Rank.of(i), new EmptyPiece());
         }
+
+        putPiecesOnRank(board, Rank.TWO, new PawnPiece(Color.WHITE));
+        putPiecesWithoutPawn(board, Rank.ONE, Color.WHITE);
     }
 
-    private static void initialPieces(Map<Position, Piece> board) {
-        initialPiecesWithoutPawn(board, Rank.EIGHT, Color.BLACK);
-        initialPawns(board, Rank.SEVEN, Color.BLACK);
-
-        initialPiecesWithoutPawn(board, Rank.ONE, Color.WHITE);
-        initialPawns(board, Rank.TWO, Color.WHITE);
-    }
-
-    private static void initialPiecesWithoutPawn(Map<Position, Piece> board, final Rank rank,
-                                                 final Color color) {
+    private static void putPiecesWithoutPawn(final Map<Position, Piece> board,
+                                             final Rank rank,
+                                             final Color color) {
         board.put(new Position(File.A, rank), new RookPiece(color));
         board.put(new Position(File.B, rank), new KnightPiece(color));
         board.put(new Position(File.C, rank), new BishopPiece(color));
@@ -69,10 +59,9 @@ public class Board {
         board.put(new Position(File.H, rank), new RookPiece(color));
     }
 
-    private static void initialPawns(Map<Position, Piece> board, final Rank rank,
-                                     final Color color) {
+    private static void putPiecesOnRank(final Map<Position, Piece> board, final Rank rank, final Piece piece) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), new PawnPiece(color));
+            board.put(new Position(file, rank), piece);
         }
     }
 
