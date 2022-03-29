@@ -14,14 +14,10 @@ public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
     @Override
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
-        double distance = Math.sqrt(source.calculateDistance(target));
+        double distance = source.calculateDistance(target);
 
         return direction == MOVABLE_DIRECTION
                 && (canMoveTwoPosition(board, distance, source) || canMoveOnePosition(board, distance, source));
-    }
-
-    private int square(int value) {
-        return value * value;
     }
 
     private boolean canMoveTwoPosition(List<List<Piece>> board, double distance, Position source) {
@@ -32,7 +28,7 @@ public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
         Piece targetPiece = findPiece(board, currentPosition);
 
         return source.getRankIndex() == RANK_INDEX_STARTING_POINT
-                && distance == 2
+                && distance == 4
                 && currentPiece.isEmpty()
                 && targetPiece.isEmpty();
     }

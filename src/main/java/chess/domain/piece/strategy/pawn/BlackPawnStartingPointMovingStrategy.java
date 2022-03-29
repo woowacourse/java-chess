@@ -14,7 +14,7 @@ public class BlackPawnStartingPointMovingStrategy implements MovingStrategy {
     @Override
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
-        double distance = Math.sqrt(source.calculateDistance(target));
+        double distance = source.calculateDistance(target);
 
         return direction == MOVABLE_DIRECTION
                 && (canMoveTwoPosition(board, distance, source) || canMoveOnePosition(board, distance, source));
@@ -28,7 +28,7 @@ public class BlackPawnStartingPointMovingStrategy implements MovingStrategy {
         Piece targetPiece = findPiece(board, currentPosition);
 
         return source.getRankIndex() == RANK_INDEX_STARTING_POINT
-                && distance == 2
+                && distance == 4
                 && currentPiece.isEmpty()
                 && targetPiece.isEmpty();
     }
