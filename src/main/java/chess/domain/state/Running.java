@@ -32,7 +32,7 @@ public abstract class Running extends State {
 
 	protected State checkFinished(Command command) {
 		if (command.isStart()) {
-			throw new IllegalArgumentException(CANNOT_START_AGAIN);
+			throw new IllegalStateException(CANNOT_START_AGAIN);
 		}
 		if (command.isStatus()) {
 			return this;

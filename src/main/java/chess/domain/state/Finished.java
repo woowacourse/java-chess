@@ -21,7 +21,7 @@ public class Finished extends State {
 
 	@Override
 	public State proceed(Command command) {
-		throw new IllegalStateException(CANNOT_PROCEED);
+		throw new UnsupportedOperationException(CANNOT_PROCEED);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class Finished extends State {
 
 	@Override
 	public ChessScore generateScore() {
-		throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+		throw new UnsupportedOperationException(CANNOT_GENERATE_SCORE);
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public class Finished extends State {
 
 	@Override
 	public Color getColor() {
-		throw new IllegalStateException(CANNOT_GET_COLOR);
+		throw new UnsupportedOperationException(CANNOT_GET_COLOR);
 	}
 }

@@ -22,7 +22,7 @@ public class Ready extends State {
 	@Override
 	public State proceed(Command command) {
 		if (command.isMove()) {
-			throw new IllegalArgumentException(CANNOT_MOVE);
+			throw new IllegalStateException(CANNOT_MOVE);
 		}
 		if (command.isStart()) {
 			return new RunningWhiteTurn(board.getPieces());
@@ -40,7 +40,7 @@ public class Ready extends State {
 
 	@Override
 	public ChessScore generateScore() {
-		throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+		throw new UnsupportedOperationException(CANNOT_GENERATE_SCORE);
 	}
 
 	@Override
@@ -50,6 +50,6 @@ public class Ready extends State {
 
 	@Override
 	public Color getColor() {
-		throw new IllegalStateException(CANNOT_GET_COLOR);
+		throw new UnsupportedOperationException(CANNOT_GET_COLOR);
 	}
 }

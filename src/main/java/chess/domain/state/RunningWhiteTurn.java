@@ -25,7 +25,7 @@ public class RunningWhiteTurn extends Running {
 
 	private void validateMoveOpponent(Command command) {
 		if (!board.isWhite(command.getFromPosition())) {
-			throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
+			throw new IllegalStateException(CANNOT_MOVE_OPPONENT_PIECE);
 		}
 	}
 

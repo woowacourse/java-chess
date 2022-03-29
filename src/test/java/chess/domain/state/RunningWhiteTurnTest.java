@@ -51,7 +51,7 @@ public class RunningWhiteTurnTest {
 
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(7, 2), new Position(6, 2))))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalStateException.class);
 	}
 
 	@Test

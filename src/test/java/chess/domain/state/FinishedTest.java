@@ -15,6 +15,6 @@ public class FinishedTest {
 		State state = State.create()
 			.proceed(new End());
 		assertThatThrownBy(() -> state.proceed(new End()))
-			.isInstanceOf(IllegalStateException.class);
+			.isInstanceOf(UnsupportedOperationException.class);
 	}
 }

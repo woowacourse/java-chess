@@ -18,7 +18,7 @@ public class ReadyTest {
 		State state = State.create();
 		assertThatThrownBy(() -> state.proceed(
 			new Move(new Position(1, 1), new Position(2, 2)))
-		).isInstanceOf(IllegalArgumentException.class);
+		).isInstanceOf(IllegalStateException.class);
 	}
 
 	@Test

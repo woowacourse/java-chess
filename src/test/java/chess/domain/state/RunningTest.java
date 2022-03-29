@@ -16,7 +16,7 @@ public class RunningTest {
 		State state = State.create()
 			.proceed(new Start());
 		assertThatThrownBy(() -> state.proceed(new Start()))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalStateException.class);
 	}
 
 	@Test
