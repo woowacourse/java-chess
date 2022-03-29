@@ -10,15 +10,11 @@ import chess.utils.ChessMap;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
-
 public class ChessGameController {
 
     private static final String MOVE_COMMAND_DELIMITER = " ";
     private static final int CURRENT_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
-    private static final int POSITION_FILE_INDEX = 0;
-    private static final int POSITION_RANK_INDEX = 1;
 
     public void run() {
         final Player whitePlayer = new Player(new WhiteGenerator(), Team.WHITE);
@@ -27,9 +23,7 @@ public class ChessGameController {
         showMap(chessGame.createMap());
         progressGame(chessGame, whitePlayer, blackPlayer);
         showWinner(chessGame, whitePlayer, blackPlayer);
-        if (!isFinishedByCaptureKing(chessGame, whitePlayer, blackPlayer)) {
-            showScore(chessGame, whitePlayer, blackPlayer);
-        }
+        showScore(chessGame, whitePlayer, blackPlayer);
     }
 
     private ChessGame initializeChessGame(final Player whitePlayer, final Player blackPlayer) {
@@ -76,18 +70,9 @@ public class ChessGameController {
     private void moveTurn(final ChessGame chessGame, final String command,
                           final Player currentPlayer, final Player opponentPlayer) {
         final String[] moveCommand = command.split(MOVE_COMMAND_DELIMITER);
-        List<Position> positions =
-                findMoveCommandPosition(moveCommand[CURRENT_POSITION_INDEX], moveCommand[DESTINATION_POSITION_INDEX]);
-        chessGame.move(currentPlayer, opponentPlayer,
-                positions.get(POSITION_FILE_INDEX), positions.get(POSITION_RANK_INDEX));
-    }
-
-    private List<Position> findMoveCommandPosition(final String currentPosition, final String destinationPosition) {
-        final char currentFile = currentPosition.charAt(POSITION_FILE_INDEX);
-        final int currentRank = currentPosition.charAt(POSITION_RANK_INDEX) - '0';
-        final char destinationFile = destinationPosition.charAt(POSITION_FILE_INDEX);
-        final int destinationRank = destinationPosition.charAt(POSITION_RANK_INDEX) - '0';
-        return List.of(new Position(currentRank, currentFile), new Position(destinationRank, destinationFile));
+        final Position currentPosition = new Position(moveCommand[CURRENT_POSITION_INDEX]);
+        final Position destinationPosition = new Position(moveCommand[DESTINATION_POSITION_INDEX]);
+        chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
     }
 
     private void showWinner(final ChessGame chessGame, final Player whitePlayer, final Player blackPlayer) {

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.player.Team;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,10 +9,14 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int POSITION_FILE_INDEX = 0;
+    private static final int POSITION_RANK_INDEX = 1;
+
     private static final int MIN_RANK_RANGE = 1;
     private static final int MAX_RANK_RANGE = 8;
     private static final char MIN_FILE_RANGE = 'a';
     private static final char MAX_FILE_RANGE = 'h';
+
     private static final int WHITE_PAWN_FIRST_RANK = 2;
     private static final int BLACK_PAWN_FIRST_RANK = 7;
     private static final int KNIGHT_MOVE_DISTANCE = 3;
@@ -24,6 +29,10 @@ public class Position {
         validatePositionRange(rank, lowerCaseFile);
         this.rank = rank;
         this.file = lowerCaseFile;
+    }
+
+    public Position(final String position) {
+        this(Character.getNumericValue(position.charAt(POSITION_RANK_INDEX)), position.charAt(POSITION_FILE_INDEX));
     }
 
     private void validatePositionRange(final int rank, final char file) {
@@ -139,7 +148,7 @@ public class Position {
     }
 
     private void addBetweenDiagonalPosition(final List<Position> positions,
-            final int startRank, final int startFile, final int end) {
+                                            final int startRank, final int startFile, final int end) {
         for (int i = startRank + 1, j = startFile + 1; i < end; i++, j++) {
             positions.add(new Position(i, (char) j));
         }
