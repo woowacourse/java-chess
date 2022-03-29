@@ -29,8 +29,8 @@ public class Board {
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
-        final Piece movingPiece = get(start);
-        final Piece targetPiece = get(target);
+        final Piece movingPiece = getPiece(start);
+        final Piece targetPiece = getPiece(target);
         validatePieceExistIn(movingPiece, currentColor);
         validateMoving(start, target);
         pieces.put(target, movingPiece);
@@ -39,7 +39,7 @@ public class Board {
     }
 
     private void validateMoving(final Position start, final Position target) {
-        final Piece movingPiece = get(start);
+        final Piece movingPiece = getPiece(start);
         if (movingPiece.isSamePiece(KNIGHT)) {
             validateKnight(start, target);
             return;
@@ -52,22 +52,22 @@ public class Board {
     }
 
     private void validateCommonPiece(final Position start, final Position target) {
-        final Piece movingPiece = get(start);
+        final Piece movingPiece = getPiece(start);
         validatePath(movingPiece, start, target);
 
-        final Piece targetPiece = get(target);
+        final Piece targetPiece = getPiece(target);
         validateTarget(movingPiece, targetPiece);
     }
 
     private void validateKnight(final Position start, final Position target) {
-        final Piece movingPiece = get(start);
-        final Piece targetPiece = get(target);
+        final Piece movingPiece = getPiece(start);
+        final Piece targetPiece = getPiece(target);
         validateTarget(movingPiece, targetPiece);
     }
 
     private void validatePawn(final Position start, final Position target) {
-        final Piece movingPiece = get(start);
-        final Piece targetPiece = get(target);
+        final Piece movingPiece = getPiece(start);
+        final Piece targetPiece = getPiece(target);
         final Direction direction = movingPiece.findValidDirection(start, target);
         if (direction.isDiagonal()) {
             validatePawnDiagonalMove(movingPiece, targetPiece);
@@ -104,7 +104,7 @@ public class Board {
     }
 
     private void validateEmpty(Position current) {
-        if (!get(current).equals(new EmptySpace())) {
+        if (!getPiece(current).equals(new EmptySpace())) {
             throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
         }
     }
@@ -115,7 +115,7 @@ public class Board {
         }
     }
 
-    private Piece get(final Position position) {
+    private Piece getPiece(final Position position) {
         return pieces.getOrDefault(position, new EmptySpace());
     }
 
@@ -139,7 +139,7 @@ public class Board {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(piece.getKey().getColumn(), row))
                 .anyMatch(position -> !piece.getKey().equals(position)
-                        && get(position).equals(piece.getValue()));
+                        && getPiece(position).equals(piece.getValue()));
     }
 
     public Map<Position, Piece> getPieces() {
