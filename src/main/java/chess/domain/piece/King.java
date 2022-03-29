@@ -42,6 +42,11 @@ public final class King extends Piece {
 	}
 
 	@Override
+	public String getSymbol() {
+		return "k";
+	}
+
+	@Override
 	public boolean isKing() {
 		return true;
 	}

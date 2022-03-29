@@ -34,6 +34,8 @@ public abstract class Piece {
 
 	public abstract double getScore();
 
+	public abstract String getSymbol();
+
 	public boolean isBishop() {
 		return false;
 	}

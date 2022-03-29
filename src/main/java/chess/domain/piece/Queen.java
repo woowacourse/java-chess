@@ -45,6 +45,11 @@ public final class Queen extends Piece {
 	}
 
 	@Override
+	public String getSymbol() {
+		return "q";
+	}
+
+	@Override
 	public boolean isQueen() {
 		return true;
 	}

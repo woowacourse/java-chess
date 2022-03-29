@@ -43,6 +43,11 @@ public final class Knight extends Piece {
 	}
 
 	@Override
+	public String getSymbol() {
+		return "n";
+	}
+
+	@Override
 	public boolean isKnight() {
 		return true;
 	}

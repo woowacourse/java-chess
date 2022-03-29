@@ -47,33 +47,11 @@ public class OutputView {
 	}
 
 	private String decideCaseByCamp(Piece piece) {
-		final String convertedString = convertPieceToString(piece);
+		final String pieceString = piece.getSymbol();
 		if (piece.isBlack()) {
-			return convertedString.toUpperCase();
+			return pieceString.toUpperCase();
 		}
-		return convertedString;
-	}
-
-	private String convertPieceToString(Piece piece) {
-		if (piece.isBishop()) {
-			return "b";
-		}
-		if (piece.isKing()) {
-			return "k";
-		}
-		if (piece.isKnight()) {
-			return "n";
-		}
-		if (piece.isPawn()) {
-			return "p";
-		}
-		if (piece.isQueen()) {
-			return "q";
-		}
-		if (piece.isRook()) {
-			return "r";
-		}
-		throw new IllegalArgumentException("존재하지 않는 기물입니다.");
+		return pieceString;
 	}
 
 	public void printFinishMessage() {
