@@ -13,15 +13,34 @@ public class ScoreCalculator {
 
     private static final int SUM_BASE_INT = 0;
     private static final double SUM_BASE_DOUBLE = 0;
+    private static final double NO_PAWN_PENALTY_SCORE = 0;
+
+    private static final double PAWN_PENALTY_RATE = 0.5;
 
     public double calculate(List<Piece> sameColorPieces) {
+        double defaultScore = calculateDefaultScore(sameColorPieces);
+        double pawnPenaltyScore = calculatePawnPenalty(sameColorPieces);
+
+        return defaultScore - pawnPenaltyScore;
+    }
+
+    private double calculatePawnPenalty(List<Piece> sameColorPieces) {
         List<Position> pawnPositions = extractPawnPositions(sameColorPieces);
 
-        double defaultScore = sameColorPieces.stream()
+        double penaltyPawnCount = calculateSameFilePawnCount(pawnPositions);
+        double pawnScore = sameColorPieces.stream()
+            .filter(Piece::isPawn)
+            .map(Piece::score)
+            .findAny()
+            .orElse(NO_PAWN_PENALTY_SCORE);
+
+        return pawnScore * penaltyPawnCount * PAWN_PENALTY_RATE;
+    }
+
+    private double calculateDefaultScore(List<Piece> sameColorPieces) {
+        return sameColorPieces.stream()
             .map(Piece::score)
             .reduce(SUM_BASE_DOUBLE, Double::sum);
-
-        return defaultScore - (calculateSameFilePawnCount(pawnPositions) / PAWN_PENALTY_MINIMUM_COUNT);
     }
 
     private double calculateSameFilePawnCount(List<Position> pawnPositions) {
