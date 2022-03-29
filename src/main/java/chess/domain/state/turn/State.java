@@ -9,7 +9,5 @@ public interface State {
 
     State play(Piece source, Piece target);
 
-    State finish();
-
     Team getTeam();
 }

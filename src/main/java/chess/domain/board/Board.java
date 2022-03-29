@@ -14,6 +14,7 @@ public class Board {
     private static final String BOARD_RANGE_ERROR = "체스 판의 범위를 벗어 났습니다.";
     private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
     private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
+    private static final String CATCH_SAME_TEAM_EXCEPTION = "같은 팀의 기물을 잡을 수 없습니다.";
 
     private final Map<Position, Piece> board;
     private State state;
@@ -32,15 +33,20 @@ public class Board {
         board.put(source, new Blank());
     }
 
-    public void endGame() {
-        state = state.finish();
-    }
-
     private void validateMove(final Position source, final Position target) {
         Piece piece = board.get(source);
         checkBlank(piece);
+        checkSameTeam(source, target);
         checkReachable(piece, source, target);
         checkBlocking(source, target);
+    }
+
+    private void checkSameTeam(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+        if (sourcePiece.isSameTeam(targetPiece)) {
+            throw new IllegalArgumentException(CATCH_SAME_TEAM_EXCEPTION);
+        }
     }
 
     private void checkBlank(final Piece piece) {
@@ -49,8 +55,8 @@ public class Board {
         }
     }
 
-    private void checkReachable(Piece piece, Position source, Position target) {
-        piece.checkReachable(source, target);
+    private void checkReachable(Piece sourcePiece, Position source, Position target) {
+        sourcePiece.checkReachable(board.get(target), source, target);
     }
 
     private void checkBlocking(final Position source, final Position target) {
@@ -61,7 +67,7 @@ public class Board {
             checkPosition = moveNextPosition(direction, checkPosition);
             Piece currentPiece = board.get(checkPosition);
             checkCatchable(target, checkPosition, currentPiece);
-            piece.validateCatch(currentPiece, direction);
+            piece.checkReachable(board.get(checkPosition), source, checkPosition);
         }
     }
 
@@ -79,47 +85,9 @@ public class Board {
         return position.get();
     }
 
-    public boolean isFinished() {
-        return state.isFinished();
-    }
-
     public double calculateScore(Team team) {
-        double score = 0;
-        for (int column = 1; column <= 8; column++) {
-            List<Piece> columnPieces = findColumnPieces(team, column);
-            score += calculateColumnScore(columnPieces);
-        }
-        return score;
-    }
-
-    private double calculateColumnScore(final List<Piece> columnPieces) {
-        double sum = 0;
-        long pawnCount = columnPieces.stream()
-                .filter(Piece::isPawn)
-                .count();
-        for (Piece piece : columnPieces) {
-            sum += piece.getScore();
-        }
-        sum = calculatePawnScore(sum, pawnCount);
-        return sum;
-    }
-
-    private double calculatePawnScore(double sum, long pawnCount) {
-        if (pawnCount >= 2) {
-            sum -= 0.5 * pawnCount;
-        }
-        return sum;
-    }
-
-    private List<Piece> findColumnPieces(Team team, final int column) {
-        List<Piece> pieces = new ArrayList<>();
-        for (int row = 1; row <= 8; row++) {
-            Position position = Position.of(row, column);
-            if (board.get(position).isSameTeam(team)) {
-                pieces.add(board.get(position));
-            }
-        }
-        return pieces;
+        ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
+        return calculator.calculateScore(team);
     }
 
     private void initialPlacePiece() {

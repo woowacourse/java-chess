@@ -5,6 +5,4 @@ import chess.domain.Command;
 public interface State {
     State execute(Command command);
     boolean isFinish();
-    boolean isPlaying();
-    boolean isReady();
 }

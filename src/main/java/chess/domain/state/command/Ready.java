@@ -18,14 +18,4 @@ public class Ready implements State{
     public boolean isFinish() {
         return false;
     }
-
-    @Override
-    public boolean isPlaying() {
-        return false;
-    }
-
-    @Override
-    public boolean isReady() {
-        return true;
-    }
 }

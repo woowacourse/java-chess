@@ -9,6 +9,8 @@ public enum Command {
     MOVE("move"),
     STATUS("status");
 
+    private static final String INVALID_COMMAND_ERROR = "[ERROR] 잘못된 명령어 입력입니다.";
+
     private final String command;
 
     Command(String command) {
@@ -35,6 +37,6 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(value -> value.command.equals(input))
                 .findAny()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND_ERROR));
     }
 }

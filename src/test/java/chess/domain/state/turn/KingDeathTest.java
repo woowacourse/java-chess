@@ -1,4 +1,4 @@
-package domain.state.turn;
+package chess.domain.state.turn;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

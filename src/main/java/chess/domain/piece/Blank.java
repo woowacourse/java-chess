@@ -19,7 +19,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public void checkReachable(final Position source, final Position target) {
+    public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
         throw new IllegalArgumentException(CAN_NOT_MOVE_ERROR);
     }
 

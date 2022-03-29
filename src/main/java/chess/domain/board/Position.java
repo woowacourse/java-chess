@@ -18,6 +18,15 @@ public class Position {
     private final int column;
 
     private static final Map<Integer, Map<Integer, Position>> cachedPositions = new HashMap<>();
+    private static final List<Position> positions = getAllPositions();
+
+    private static List<Position> getAllPositions() {
+        List<Position> positions = new ArrayList<>();
+        for (int i = MIN_ROW; i <= MAX_ROW; i++) {
+            positions.addAll(createRowPositions(i));
+        }
+        return positions;
+    }
 
     private Position(final int row, final int column) {
         this.row = row;
@@ -42,10 +51,6 @@ public class Position {
     }
 
     public static List<Position> getPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int i = MIN_ROW; i <= MAX_ROW; i++) {
-            positions.addAll(createRowPositions(i));
-        }
         return positions;
     }
 

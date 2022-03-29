@@ -1,10 +1,11 @@
-package domain.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Knight;
 import chess.domain.Team;
 import org.junit.jupiter.api.Test;
@@ -26,13 +27,13 @@ public class KnightTest {
 	@Test
 	void validateMovement() {
 		Knight knight = new Knight(Team.BLACK);
-		assertDoesNotThrow(() -> knight.checkReachable(Position.of(1, 1), Position.of(3, 2)));
+		assertDoesNotThrow(() -> knight.checkReachable(new Blank(), Position.of(1, 1), Position.of(3, 2)));
 	}
 
 	@Test
 	void validateMovementException() {
 		Knight knight = new Knight(Team.BLACK);
-		assertThatThrownBy(() -> knight.checkReachable(Position.of(1, 1), Position.of(2, 2)))
+		assertThatThrownBy(() -> knight.checkReachable(new Blank(), Position.of(1, 1), Position.of(2, 2)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

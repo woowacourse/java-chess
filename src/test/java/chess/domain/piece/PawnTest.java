@@ -1,10 +1,11 @@
-package domain.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.Team;
 import org.junit.jupiter.api.Test;
@@ -29,14 +30,14 @@ public class PawnTest {
 	@CsvSource(value = {"3, 3, BLACK", "3, 4, BLACK", "3, 5, BLACK", "5, 3, WHITE", "5, 4, WHITE", "5, 5, WHITE"})
 	void validateMovement(int targetRow, int targetColumn, Team team) {
 		Pawn pawn = new Pawn(team);
-		assertDoesNotThrow(() -> pawn.checkReachable(Position.of(4, 4), Position.of(targetRow, targetColumn)));
+		assertDoesNotThrow(() -> pawn.checkReachable(new Blank(), Position.of(4, 4), Position.of(targetRow, targetColumn)));
 	}
 
 	@ParameterizedTest
 	@CsvSource(value = {"3, 3, WHITE", "3, 4, WHITE", "3, 5, WHITE", "5, 3, BLACK", "5, 4, BLACK", "5, 5, BLACK"})
 	void validateMovementException(int targetRow, int targetColumn, Team team) {
 		Pawn pawn = new Pawn(team);
-		assertThatThrownBy(() -> pawn.checkReachable(Position.of(4, 4), Position.of(targetRow, targetColumn)))
+		assertThatThrownBy(() -> pawn.checkReachable(new Blank(), Position.of(4, 4), Position.of(targetRow, targetColumn)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
 	}

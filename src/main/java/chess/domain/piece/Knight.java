@@ -10,7 +10,7 @@ public class Knight extends Piece {
 
 	private static final String BLACK_SYMBOL = "N";
 	private static final String WHITE_SYMBOL = "n";
-	public static final double KNIGHT_SCORE = 2.5;
+	private static final double KNIGHT_SCORE = 2.5;
 
 	public Knight(final Team team) {
 		super(team);
@@ -25,7 +25,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public void checkReachable(final Position source, final Position target) {
+	public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
 		List<Direction> directions = Direction.getKnightDirection();
 		if (!canMove(source, target, directions)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);

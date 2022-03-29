@@ -28,7 +28,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void checkReachable(final Position source, final Position target) {
+    public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
         List<Direction> directions = new ArrayList<>(Direction.getPawnByTeam(team));
         if (source.isDefaultRow(team)) {
             directions.add(Direction.getDefaultPawnByTeam(team));
@@ -37,6 +37,8 @@ public class Pawn extends Piece {
         if (!canMove(source, target, directions)) {
             throw new IllegalArgumentException(MOVEMENT_ERROR);
         }
+
+        checkWrongCatch(targetPiece, Direction.find(target.subtractRow(source), target.subtractColumn(source)));
     }
 
     private boolean canMove(final Position source, final Position target, final List<Direction> directions) {
@@ -47,9 +49,7 @@ public class Pawn extends Piece {
                 .anyMatch(target::equals);
     }
 
-    @Override
-    public void validateCatch(final Piece targetPiece, final Direction direction) {
-        super.validateCatch(targetPiece, direction);
+    private void checkWrongCatch(final Piece targetPiece, final Direction direction) {
         if (isWrongCatchDirection(targetPiece, direction)) {
             throw new IllegalArgumentException(CAN_NOT_CATCH_ERROR);
         }
@@ -63,7 +63,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isDiagonalDirection(Direction direction) {
-        return direction == Direction.NE || direction == Direction.SE
+        return direction == Direction.NE
+                || direction == Direction.SE
                 || direction == Direction.SW
                 || direction == Direction.NW;
     }

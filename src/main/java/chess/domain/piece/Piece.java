@@ -30,19 +30,13 @@ public abstract class Piece {
         return symbol;
     }
 
-    public void validateCatch(final Piece targetPiece, final Direction direction) {
-        if (this.team == targetPiece.team) {
-            throw new IllegalArgumentException(CAN_NOT_CATCH_SAME_TEAM_ERROR);
-        }
-    }
-
     public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
 
     protected abstract String createSymbol(final Team team);
 
-    public abstract void checkReachable(Position source, Position target);
+    public abstract void checkReachable(Piece targetPiece, Position source, Position target);
 
     public abstract boolean isBlank();
 
@@ -67,5 +61,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, team);
+    }
+
+    public boolean isSameTeam(Piece targetPiece) {
+        return team == targetPiece.team;
     }
 }

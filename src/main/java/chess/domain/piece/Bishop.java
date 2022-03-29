@@ -7,7 +7,7 @@ public class Bishop extends Piece {
 
     private static final String BLACK_SYMBOL = "B";
     private static final String WHITE_SYMBOL = "b";
-    public static final int BISHOP_SCORE = 3;
+    private static final int BISHOP_SCORE = 3;
 
     public Bishop(final Team team) {
         super(team);
@@ -22,7 +22,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void checkReachable(final Position source, final Position target) {
+    public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
         if (target.isDifferentDiagonal(source)) {
             throw new IllegalArgumentException(MOVEMENT_ERROR);
         }

@@ -8,32 +8,37 @@ import chess.view.OutputView;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class Application {
 
 	private static final ChessController chessController = new ChessController();
 	private static final int COMMAND_INDEX = 0;
 
-	private static Map<Command, Consumer<List<String>>> functionByCommand = createFunctionByCommand();
+	private static Map<Command, Runnable> functionByCommand = createFunctionByCommand();
 
-	private static Map<Command, Consumer<List<String>>> createFunctionByCommand() {
-		Map<Command, Consumer<List<String>>> functionByCommand = new EnumMap<>(Command.class);
-		functionByCommand.put(Command.START, command -> start());
-		functionByCommand.put(Command.MOVE, command -> move(command.get(1), command.get(2)));
-		functionByCommand.put(Command.STATUS, command -> executeStatus());
-		functionByCommand.put(Command.END, command -> end());
-
+	private static Map<Command, Runnable> createFunctionByCommand() {
+		Map<Command, Runnable> functionByCommand = new EnumMap<>(Command.class);
+		functionByCommand.put(Command.START, Application::start);
+		functionByCommand.put(Command.STATUS, Application::executeStatus);
+		functionByCommand.put(Command.END, Application::end);
 		return functionByCommand;
 	}
 
 	public static void main(String[] args) {
 		InputView.printCommandGuide();
 		while(!chessController.isFinish()) {
-			List<String> userInput = InputView.requestCommand();
-			Command command = Command.find(userInput.get(COMMAND_INDEX));
-			functionByCommand.get(command).accept(userInput);
+			processCommand();
 		}
+	}
+
+	private static void processCommand() {
+		List<String> userInput = InputView.requestCommand();
+		Command command = Command.find(userInput.get(COMMAND_INDEX));
+		if (command.isMove()) {
+			move(userInput.get(1), userInput.get(2));
+			return;
+		}
+		functionByCommand.get(command).run();
 	}
 
 	private static void start() {
