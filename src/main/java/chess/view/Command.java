@@ -9,6 +9,11 @@ public enum Command {
     STATUS("status");
 
     private static final String ERROR_MESSAGE = "잘못된 명령입니다.";
+    private static final String DELIMITER = " ";
+    private static final int COMMAND = 0;
+    private static final int MOVE_COMMAND_INFO = 3;
+    private static final int FROM_POSITION = 1;
+    private static final int TO_POSITION = 2;
 
     private String value;
 
@@ -24,22 +29,26 @@ public enum Command {
     }
 
     public static Command splitCommand(String text) {
-        String[] splitText = text.split(" ");
+        String[] splitText = text.split(DELIMITER);
         return Arrays.stream(values())
-                .filter(it -> it.value.equals(splitText[0]))
+                .filter(it -> it.value.equals(splitText[COMMAND]))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE));
     }
 
     public static String getFromPosition(String text) {
-        String[] splitText = text.split(" ");
-        if (splitText.length != 3) {
+        String[] splitText = text.split(DELIMITER);
+        validateMoveCommandFormat(splitText);
+        return splitText[FROM_POSITION];
+    }
+
+    private static void validateMoveCommandFormat(String[] splitText) {
+        if (splitText.length != MOVE_COMMAND_INFO) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
-        return splitText[1];
     }
 
     public static String getToPosition(String text) {
-        return text.split(" ")[2];
+        return text.split(DELIMITER)[Command.TO_POSITION];
     }
 }
