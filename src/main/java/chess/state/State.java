@@ -12,5 +12,4 @@ public interface State {
 
     boolean isEnded();
 
-
 }
