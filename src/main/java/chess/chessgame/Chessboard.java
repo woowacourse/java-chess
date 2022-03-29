@@ -105,8 +105,7 @@ public class Chessboard {
         return board.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
-                .map(Piece::getScore)
-                .mapToDouble(p -> p)
+                .mapToDouble(Piece::getScore)
                 .sum();
     }
 
