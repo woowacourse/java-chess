@@ -31,7 +31,7 @@ public enum Direction {
     private final int rankDistance;
 
     Direction(final BiPredicate<Integer, Integer> condition,
-        final int fileDistance, final int rankDistance) {
+              final int fileDistance, final int rankDistance) {
         this.condition = condition;
         this.fileDistance = fileDistance;
         this.rankDistance = rankDistance;
@@ -39,9 +39,9 @@ public enum Direction {
 
     public static Direction of(final int fileDistance, final int rankDistance) {
         return Arrays.stream(values())
-            .filter(value -> value.condition.test(fileDistance, rankDistance))
-            .findFirst()
-            .orElse(NONE);
+                .filter(value -> value.condition.test(fileDistance, rankDistance))
+                .findFirst()
+                .orElse(NONE);
     }
 
     public File moveFile(final File file) {

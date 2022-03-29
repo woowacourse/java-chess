@@ -12,7 +12,7 @@ public class RankTest {
     @DisplayName("Rank에 1~8이 있는지 확인한다.")
     void contain() {
         assertThat(Rank.values()).containsOnly(Rank.ONE, Rank.TWO, Rank.THREE, Rank.FOUR,
-            Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT);
+                Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT);
     }
 
     @Test
@@ -25,8 +25,8 @@ public class RankTest {
     @DisplayName("1~8 이외의 값이 들어오는 경우 예외를 발생시킨다.")
     void exception() {
         assertThatThrownBy(() -> Rank.from(9))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 존재하지 않는 Rank 값 입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 존재하지 않는 Rank 값 입니다.");
     }
 
     @Test

@@ -30,7 +30,7 @@ public class CommandTest {
     @DisplayName("존재하지 않는 Command를 입력했을경우 예외를 발생시킨다.")
     void checkNonCommandException() {
         assertThatThrownBy(() -> Command.from("go"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 존재하지 않는 명령어입니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 존재하지 않는 명령어입니다.");
     }
 }

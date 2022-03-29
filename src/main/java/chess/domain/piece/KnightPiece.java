@@ -14,10 +14,10 @@ public class KnightPiece extends Piece {
     public KnightPiece(final Color color) {
         super(color, NAME);
         this.movableDirections = new ArrayList<>(
-            List.of(Direction.KNIGHT_EAST_LEFT, Direction.KNIGHT_EAST_RIGHT,
-                Direction.KNIGHT_WEST_LEFT, Direction.KNIGHT_WEST_RIGHT,
-                Direction.KNIGHT_NORTH_LEFT, Direction.KNIGHT_NORTH_RIGHT,
-                Direction.KNIGHT_SOUTH_LEFT, Direction.KNIGHT_SOUTH_RIGHT));
+                List.of(Direction.KNIGHT_EAST_LEFT, Direction.KNIGHT_EAST_RIGHT,
+                        Direction.KNIGHT_WEST_LEFT, Direction.KNIGHT_WEST_RIGHT,
+                        Direction.KNIGHT_NORTH_LEFT, Direction.KNIGHT_NORTH_RIGHT,
+                        Direction.KNIGHT_SOUTH_LEFT, Direction.KNIGHT_SOUTH_RIGHT));
     }
 
     @Override

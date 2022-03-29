@@ -21,7 +21,7 @@ public abstract class Piece {
     }
 
     public abstract boolean isMovable(final Position from, final Position to,
-        final boolean isEmptyTarget);
+                                      final boolean isEmptyTarget);
 
     public boolean isSameColor(final Color color) {
         return this.color.equals(color);

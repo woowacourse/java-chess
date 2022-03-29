@@ -57,41 +57,41 @@ public class BoardTest {
 
     private static Stream<Arguments> initialPieces() {
         return Stream.of(
-            Arguments.of(new Position(File.A, Rank.EIGHT), new RookPiece(Color.BLACK)),
-            Arguments.of(new Position(File.B, Rank.EIGHT), new KnightPiece(Color.BLACK)),
-            Arguments.of(new Position(File.C, Rank.EIGHT), new BishopPiece(Color.BLACK)),
-            Arguments.of(new Position(File.D, Rank.EIGHT), new QueenPiece(Color.BLACK)),
-            Arguments.of(new Position(File.E, Rank.EIGHT), new KingPiece(Color.BLACK)),
-            Arguments.of(new Position(File.F, Rank.EIGHT), new BishopPiece(Color.BLACK)),
-            Arguments.of(new Position(File.G, Rank.EIGHT), new KnightPiece(Color.BLACK)),
-            Arguments.of(new Position(File.H, Rank.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(new Position(File.A, Rank.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(new Position(File.B, Rank.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(new Position(File.C, Rank.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(new Position(File.D, Rank.EIGHT), new QueenPiece(Color.BLACK)),
+                Arguments.of(new Position(File.E, Rank.EIGHT), new KingPiece(Color.BLACK)),
+                Arguments.of(new Position(File.F, Rank.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(new Position(File.G, Rank.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(new Position(File.H, Rank.EIGHT), new RookPiece(Color.BLACK)),
 
-            Arguments.of(new Position(File.A, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.B, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.C, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.D, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.E, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.F, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.G, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-            Arguments.of(new Position(File.H, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.A, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.B, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.C, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.D, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.E, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.F, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.G, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(File.H, Rank.SEVEN), new PawnPiece(Color.BLACK)),
 
-            Arguments.of(new Position(File.A, Rank.ONE), new RookPiece(Color.WHITE)),
-            Arguments.of(new Position(File.B, Rank.ONE), new KnightPiece(Color.WHITE)),
-            Arguments.of(new Position(File.C, Rank.ONE), new BishopPiece(Color.WHITE)),
-            Arguments.of(new Position(File.D, Rank.ONE), new QueenPiece(Color.WHITE)),
-            Arguments.of(new Position(File.E, Rank.ONE), new KingPiece(Color.WHITE)),
-            Arguments.of(new Position(File.F, Rank.ONE), new BishopPiece(Color.WHITE)),
-            Arguments.of(new Position(File.G, Rank.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(new Position(File.A, Rank.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(new Position(File.B, Rank.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(new Position(File.C, Rank.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(new Position(File.D, Rank.ONE), new QueenPiece(Color.WHITE)),
+                Arguments.of(new Position(File.E, Rank.ONE), new KingPiece(Color.WHITE)),
+                Arguments.of(new Position(File.F, Rank.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(new Position(File.G, Rank.ONE), new KnightPiece(Color.WHITE)),
 
-            Arguments.of(new Position(File.H, Rank.ONE), new RookPiece(Color.WHITE)),
-            Arguments.of(new Position(File.A, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.B, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.C, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.D, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.E, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.F, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.G, Rank.TWO), new PawnPiece(Color.WHITE)),
-            Arguments.of(new Position(File.H, Rank.TWO), new PawnPiece(Color.WHITE))
+                Arguments.of(new Position(File.H, Rank.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(new Position(File.A, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.B, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.C, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.D, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.E, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.F, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.G, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(File.H, Rank.TWO), new PawnPiece(Color.WHITE))
         );
     }
 
@@ -105,8 +105,8 @@ public class BoardTest {
         board.move(from, to);
 
         assertAll(
-            () -> assertThat(board.getBoard().get(from)).isEqualTo(new EmptyPiece()),
-            () -> assertThat(board.getBoard().get(to)).isEqualTo(source)
+                () -> assertThat(board.getBoard().get(from)).isEqualTo(new EmptyPiece()),
+                () -> assertThat(board.getBoard().get(to)).isEqualTo(source)
         );
     }
 
