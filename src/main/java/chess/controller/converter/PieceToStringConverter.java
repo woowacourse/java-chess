@@ -1,4 +1,4 @@
-package chess.view;
+package chess.controller.converter;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 
-public enum PieceView {
+public enum PieceToStringConverter {
 
 	BLACK_KING(King.createBlack(), "♔"),
 	WHITE_KING(King.createWhite(), "♚"),
@@ -30,7 +30,7 @@ public enum PieceView {
 	private final Piece piece;
 	private final String symbol;
 
-	PieceView(Piece piece, String symbol) {
+	PieceToStringConverter(Piece piece, String symbol) {
 		this.piece = piece;
 		this.symbol = symbol;
 	}

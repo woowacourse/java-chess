@@ -2,19 +2,16 @@ package chess.view;
 
 import java.util.Scanner;
 
-import chess.domain.command.Command;
-import chess.view.converter.CommandConverter;
-
 public class InputView {
 
 	private static final String INVALID_INPUT = "유효하지 않은 입력입니다.";
 
 	private final Scanner scanner = new Scanner(System.in);
 
-	public Command askCommand() {
+	public String askCommand() {
 		String input = scanner.nextLine();
 		validateInput(input);
-		return CommandConverter.from(input);
+		return input;
 	}
 
 	private void validateInput(String input) {

@@ -1,4 +1,4 @@
-package chess.view.converter;
+package chess.controller.converter;
 
 import java.util.Arrays;
 
@@ -15,22 +15,26 @@ public enum File {
 
 	private static final String INVALID_FILE_INPUT = "File은 a~h 사이에서 입력해야 합니다.";
 
-	private final String input;
+	private final String name;
 	private final int column;
 
-	File(String input, int column) {
-		this.input = input;
+	File(String name, int column) {
+		this.name = name;
 		this.column = column;
 	}
 
-	static File from(String input) {
+	static File from(String name) {
 		return Arrays.stream(values())
-			.filter(file -> file.input.equals(input))
+			.filter(file -> file.name.equals(name))
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_INPUT));
 	}
 
 	public int getColumn() {
 		return column;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

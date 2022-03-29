@@ -2,22 +2,17 @@ package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.command.Move;
 import chess.domain.command.Status;
 import chess.domain.piece.King;
-import chess.domain.position.Position;
-import chess.domain.command.Move;
-import chess.domain.command.Start;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class RunningBlackTurnTest {
 
 	private final Map<Position, Piece> board = Map.of(
@@ -41,7 +36,7 @@ public class RunningBlackTurnTest {
 		State state = new RunningBlackTurn(board)
 			.proceed(new Move(new Position(7, 2), new Position(6, 3)));
 
-		assertThat(state.getBoard().findPiece(new Position(6, 3)).get())
+		assertThat(state.getBoard().get(new Position(6, 3)))
 			.isInstanceOf(King.class);
 	}
 

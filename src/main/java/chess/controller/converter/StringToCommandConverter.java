@@ -1,4 +1,4 @@
-package chess.view.converter;
+package chess.controller.converter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import chess.domain.command.Start;
 import chess.domain.command.Status;
 import chess.domain.position.Position;
 
-public enum CommandConverter {
+public enum StringToCommandConverter {
 
 	START("start", new Start()),
 	END("end", new End()),
@@ -33,12 +33,12 @@ public enum CommandConverter {
 	private final String input;
 	private Command command;
 
-	CommandConverter(String input, Command command) {
+	StringToCommandConverter(String input, Command command) {
 		this.input = input;
 		this.command = command;
 	}
 
-	CommandConverter(String input) {
+	StringToCommandConverter(String input) {
 		this.input = input;
 	}
 

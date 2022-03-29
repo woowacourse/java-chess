@@ -1,9 +1,13 @@
 package chess.domain.state;
 
+import java.util.Map;
+
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public abstract class State {
 
@@ -19,7 +23,7 @@ public abstract class State {
 
 	public abstract Color getColor();
 
-	public Board getBoard() {
-		return board;
+	public Map<Position, Piece> getBoard() {
+		return board.getPieces();
 	}
 }

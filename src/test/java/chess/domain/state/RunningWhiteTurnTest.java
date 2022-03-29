@@ -8,14 +8,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.command.Move;
-import chess.domain.command.Start;
 import chess.domain.command.Status;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class RunningWhiteTurnTest {
 
 	private final Map<Position, Piece> board = Map.of(
@@ -37,7 +34,7 @@ public class RunningWhiteTurnTest {
 		State state = new RunningWhiteTurn(board)
 			.proceed(new Move(new Position(6, 2), new Position(5, 2)));
 
-		assertThat(state.getBoard().findPiece(new Position(5, 2)).get())
+		assertThat(state.getBoard().get(new Position(5, 2)))
 			.isInstanceOf(King.class);
 	}
 

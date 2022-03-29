@@ -2,6 +2,8 @@ package chess.controller;
 
 import java.util.NoSuchElementException;
 
+import chess.controller.converter.StringToCommandConverter;
+import chess.controller.dto.BoardDto;
 import chess.domain.ChessScore;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
@@ -26,9 +28,9 @@ public class ChessController {
 	private State processOneTurn(State state) {
 		try {
 			checkTurn(state);
-			Command command = inputView.askCommand();
+			Command command = StringToCommandConverter.from(inputView.askCommand());
 			state = state.proceed(command);
-			outputView.displayChessBoard(state.getBoard());
+			outputView.displayChessBoard(new BoardDto(state.getBoard()));
 			checkScore(state, command);
 		} catch (IllegalArgumentException | IllegalStateException | NoSuchElementException exception){
 			outputView.displayErrorMessage(exception);
