@@ -12,9 +12,13 @@ public class Move extends Command {
     }
 
     @Override
-    public List<String> getCommandPosition() {
-        String[] split = input.split(EMPTY_DELIMITER);
-        return Arrays.asList(split[1], split[2]);
+    public String getSourcePosition() {
+        return getCommandPosition().get(0);
+    }
+
+    @Override
+    public String getTargetPosition() {
+        return getCommandPosition().get(1);
     }
 
     @Override

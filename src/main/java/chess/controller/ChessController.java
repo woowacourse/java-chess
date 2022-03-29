@@ -19,7 +19,7 @@ public class ChessController {
         command = command.turnState(input);
         while (!command.isEnd() || board.isDeadKing()) {
             if (command.isMove()) {
-                board.move(command.getCommandPosition(), turn);
+                board.move(command.getSourcePosition(), command.getTargetPosition(), turn);
                 turn = turn.change();
             }
             OutputView.printBoard(board.getPieces());

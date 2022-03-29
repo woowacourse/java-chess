@@ -22,9 +22,9 @@ public class Board {
         return pieces;
     }
 
-    public void move(List<String> commandPosition, Turn thisTurn) {
-        Position sourcePosition = getSource(commandPosition);
-        Position targetPosition = getTarget(commandPosition);
+    public void move(String source, String target, Turn thisTurn) {
+        Position sourcePosition = getSource(source);
+        Position targetPosition = getTarget(target);
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         if (!sourcePiece.isCurrentTurn(thisTurn)) {
@@ -49,16 +49,16 @@ public class Board {
                 .anyMatch(position -> !pieces.findByPosition(position).equals(new Empty(position)));
     }
 
-    private Position getSource(List<String> commandPosition) {
+    private Position getSource(String commandPosition) {
         return Position.of(
-                commandPosition.get(0).charAt(0),
-                commandPosition.get(0).charAt(1));
+                commandPosition.charAt(0),
+                commandPosition.charAt(1));
     }
 
-    private Position getTarget(List<String> commandPosition) {
+    private Position getTarget(String commandPosition) {
         return Position.of(
-                commandPosition.get(1).charAt(0),
-                commandPosition.get(1).charAt(1)
+                commandPosition.charAt(0),
+                commandPosition.charAt(1)
         );
     }
 

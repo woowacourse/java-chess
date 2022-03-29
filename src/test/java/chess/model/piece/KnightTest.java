@@ -39,10 +39,11 @@ class KnightTest {
                 new Pawn(Position.of('b', '6'), Team.WHITE)
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "b6");
+        String source = "a8";
+        String target = "b6";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         );
     }
 
@@ -51,10 +52,11 @@ class KnightTest {
     void moveKnightTest2() {
 
         Board board = Board.create(Pieces.create());
-        List<String> command = List.of("g1", "h3");
+        String source = "g1";
+        String target = "h3";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.WHITE))
+                () -> board.move(source, target, new Turn(Team.WHITE))
         );
     }
 
@@ -66,10 +68,12 @@ class KnightTest {
                 new Pawn(Position.of('c', '7'), Team.WHITE)
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "c7");
+        String source = "a8";
+        String target = "c7";
+
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.WHITE))
+                () -> board.move(source, target, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

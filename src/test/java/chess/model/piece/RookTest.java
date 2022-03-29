@@ -38,9 +38,11 @@ class RookTest {
     @DisplayName("룩의 진행방향에 말이 있으면 예외 처리")
     void moveFailureWhenExistPieceTest() {
         Board board = Board.create(Pieces.create());
-        List<String> command = List.of("a8", "a5");
+        String source = "a8";
+        String target = "a5";
+
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -48,9 +50,11 @@ class RookTest {
     @DisplayName("룩의 target위치에 아군 말이 있으면 예외 처리")
     void moveFailureTest() {
         Board board = Board.create(Pieces.create());
-        List<String> command = List.of("a8", "a7");
+        String source = "a8";
+        String target = "a7";
+
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -64,11 +68,12 @@ class RookTest {
                 new Pawn(Position.of('a', '5'), Team.WHITE)
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "a5");
+        String source = "a8";
+        String target = "a5";
 
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         );
     }
 }

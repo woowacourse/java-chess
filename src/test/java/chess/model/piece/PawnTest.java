@@ -67,10 +67,11 @@ class PawnTest {
                 new Empty(Position.of('a', '7'))
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "a7");
+        String source = "a8";
+        String target = "a7";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         );
     }
 
@@ -82,10 +83,11 @@ class PawnTest {
                 new Empty(Position.of('a', '3'))
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a2", "a3");
+        String source = "a2";
+        String target = "a3";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.WHITE))
+                () -> board.move(source, target, new Turn(Team.WHITE))
         );
     }
 
@@ -97,10 +99,11 @@ class PawnTest {
                 new King(Position.of('a', '7'), Team.WHITE)
         );
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "a7");
+        String source = "a8";
+        String target = "a7";
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -124,10 +127,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a6", "a4");
+        String source = "a6";
+        String target = "a4";
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -140,10 +144,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a6", "a7");
+        String source = "a6";
+        String target = "a7";
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -156,10 +161,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "b7");
+        String source = "a8";
+        String target = "b7";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         );
     }
 
@@ -172,10 +178,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a2", "b3");
+        String source = "a2";
+        String target = "b3";
 
         assertDoesNotThrow(
-                () -> board.move(command, new Turn(Team.WHITE))
+                () -> board.move(source, target, new Turn(Team.WHITE))
         );
     }
 
@@ -188,10 +195,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("a8", "b7");
+        String source = "a8";
+        String target = "b7";
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -204,10 +212,11 @@ class PawnTest {
         );
 
         Board board = Board.create(Pieces.of(pieces));
-        List<String> command = List.of("b7", "a8");
+        String source = "b7";
+        String target = "a8";
 
         assertThatThrownBy(
-                () -> board.move(command, new Turn(Team.BLACK))
+                () -> board.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
