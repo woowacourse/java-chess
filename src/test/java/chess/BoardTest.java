@@ -1,6 +1,9 @@
 package chess;
 
-import chess.board.Board;
+import chess.model.board.Board;
+import chess.model.position.File;
+import chess.model.position.Position;
+import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

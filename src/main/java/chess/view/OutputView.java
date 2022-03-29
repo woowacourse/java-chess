@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.File;
-import chess.Player;
-import chess.Position;
-import chess.Rank;
-import chess.piece.Piece;
+import chess.model.position.File;
+import chess.model.Team;
+import chess.model.position.Position;
+import chess.model.position.Rank;
+import chess.model.piece.Piece;
 
 import java.util.Map;
 
@@ -27,20 +27,20 @@ public class OutputView {
         }
     }
 
-    public void printScores(Map<Player, Double> calculateScore) {
-        for (Player player : calculateScore.keySet()) {
-            if (player == Player.BLACK) {
-                System.out.printf("검은색: %f", calculateScore.get(player));
+    public void printScores(Map<Team, Double> calculateScore) {
+        for (Team team : calculateScore.keySet()) {
+            if (team == Team.BLACK) {
+                System.out.printf("검은색: %f", calculateScore.get(team));
             }
-            if (player == Player.WHITE) {
-                System.out.printf("흰색: %f", calculateScore.get(player));
+            if (team == Team.WHITE) {
+                System.out.printf("흰색: %f", calculateScore.get(team));
             }
         }
         printWinner(calculateScore);
     }
 
-    private void printWinner(Map<Player, Double> calculateScore) {
-        if (calculateScore.get(Player.BLACK) > calculateScore.get(Player.WHITE)) {
+    private void printWinner(Map<Team, Double> calculateScore) {
+        if (calculateScore.get(Team.BLACK) > calculateScore.get(Team.WHITE)) {
             System.out.println("블랙 승");
             return;
         }
