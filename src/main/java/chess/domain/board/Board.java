@@ -125,17 +125,26 @@ public class Board {
     public int countDeductedPawns(final Color color) {
         return (int) pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSamePiece(PAWN)
-                        && entry.getValue().isSameColor(color))
+                .filter(entry -> isPawnWith(entry.getValue(), color))
                 .filter(this::hasAnotherPawnInSameColumn)
                 .count();
+    }
+
+    private boolean isPawnWith(final Piece piece, final Color color) {
+        return piece.isSamePiece(PAWN) && piece.isSameColor(color);
     }
 
     private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece) {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(piece.getKey().getColumn(), row))
-                .anyMatch(position -> !piece.getKey().equals(position)
-                        && get(position).equals(piece.getValue()));
+                .anyMatch(position -> isAnotherPawnInSameColumn(piece, position));
+    }
+
+    private boolean isAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece,
+                                              final Position currentPawnPosition) {
+        final Position pawnPosition = piece.getKey();
+        final Piece pawn = piece.getValue();
+        return !pawnPosition.equals(currentPawnPosition) && get(currentPawnPosition).equals(pawn);
     }
 
     public boolean isEnd(final Color color) {
