@@ -4,10 +4,10 @@ import chess.domain.board.Position;
 import java.util.function.BiPredicate;
 
 public enum Type {
-    BISHOP(Position::inDiagonalWith),
-    KING(Position::isNextTo),
-    KNIGHT(Type::canKnightApproach),
-    PAWN(Position::isNextTo),
+    BISHOP(Position::inDiagonalWith, 3),
+    KING(Position::isNextTo, 0),
+    KNIGHT(Type::canKnightApproach, 2.5),
+    PAWN(Position::isNextTo, 1),
     QUEEN((sourcePosition, targetPosition) -> {
         if (sourcePosition.inSameColumnWith(targetPosition)) {
             return true;
@@ -16,21 +16,24 @@ public enum Type {
             return true;
         }
         return sourcePosition.inDiagonalWith(targetPosition);
-    }),
+    }, 9),
     ROOK((sourcePosition, targetPosition) -> {
         if (sourcePosition.inSameColumnWith(targetPosition)) {
             return true;
         }
         return sourcePosition.inSameRowWith(targetPosition);
-    }),
-    NONE((sourcePosition, targetPosition) -> false);
+    }, 5),
+    NONE((sourcePosition, targetPosition) -> false, 0);
 
     private static final int DISTANCE_KNIGHT_FIRST_STEP = 2;
     private static final int DISTANCE_KNIGHT_SECOND_STEP = 1;
-    private final BiPredicate<Position, Position> distanceChecker;
 
-    Type(BiPredicate<Position, Position> distanceChecker) {
+    private final BiPredicate<Position, Position> distanceChecker;
+    private final double Score;
+
+    Type(BiPredicate<Position, Position> distanceChecker, double score) {
         this.distanceChecker = distanceChecker;
+        Score = score;
     }
 
     private static boolean canKnightApproach(Position sourcePosition, Position targetPosition) {
@@ -44,5 +47,9 @@ public enum Type {
 
     public boolean canApproach(Position sourcePosition, Position targetPosition) {
         return this.distanceChecker.test(sourcePosition, targetPosition);
+    }
+
+    public double getScore() {
+        return Score;
     }
 }

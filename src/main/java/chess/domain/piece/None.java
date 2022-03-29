@@ -25,9 +25,4 @@ public class None extends Piece {
     public void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier) {
         this.move(sourcePosition, targetPosition, moveApplier);
     }
-
-    @Override
-    public double getScore() {
-        return 0;
-    }
 }

@@ -11,7 +11,6 @@ public final class Pawn extends Piece {
     private static final String ERROR_CANT_MOVE = "폰이 이동할 수 없는 위치입니다.";
     private static final String ERROR_CANT_CAPTURE = "폰이 잡을 수 없는 위치입니다.";
     private static final int DISTANCE_ADDITIONAL_IN_FIRST_MOVE = 1;
-    private static final double SCORE = 1;
 
     private boolean firstMove;
 
@@ -76,10 +75,5 @@ public final class Pawn extends Piece {
             return BLACK.giveVerticalDirectionTo(undirectedDistance) == distance;
         }
         return WHITE.giveVerticalDirectionTo(undirectedDistance) == distance;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

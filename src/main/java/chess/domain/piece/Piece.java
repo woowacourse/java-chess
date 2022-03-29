@@ -29,11 +29,13 @@ public abstract class Piece {
         return this.type.canApproach(sourcePosition, targetPosition);
     }
 
+    public final double getScore() {
+        return this.type.getScore();
+    }
+
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
     protected abstract boolean canMove(Position sourcePosition, Position targetPosition);
 
     public abstract void capture(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
-
-    public abstract double getScore();
 }
