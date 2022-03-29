@@ -3,12 +3,8 @@ package chess.status;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
-import chess.game.Board;
-import chess.game.BoardInitializer;
-import chess.game.Command;
-import chess.game.MoveCommand;
+import chess.game.*;
 import chess.piece.Color;
-import java.util.Map;
 
 public class Running implements State {
 
@@ -38,8 +34,8 @@ public class Running implements State {
     }
 
     @Override
-    public Map<Color, Double> score() {
-        return board.getBoardScore();
+    public Score score() {
+        return board.calculateBoardScore();
     }
 
     @Override

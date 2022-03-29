@@ -1,24 +1,20 @@
 package chess.game;
 
-import static chess.piece.Color.BLACK;
-import static chess.piece.Color.WHITE;
-
 import chess.piece.Color;
-import chess.piece.Pawn;
 import chess.piece.Piece;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
 
     private static final int DEAD_KING_COUNT = 1;
-    private static final int PAWN_MINIMUM_REDUCE_ROW_COUNT = 1;
 
     private final Map<Position, Piece> value;
+    private final Score score;
 
     public Board(final Map<Position, Piece> value) {
         this.value = new HashMap<>(value);
+        score = new Score();
     }
 
     public void move(final MoveCommand moveCommand, final Color color) {
@@ -29,15 +25,9 @@ public class Board {
         movePiece(from, to, piece);
     }
 
-    public Map<Color, Double> getBoardScore() {
-        final Map<Color, Double> score = new HashMap<>();
-        score.put(BLACK, calculateScore(BLACK));
-        score.put(WHITE, calculateScore(WHITE));
+    public Score calculateBoardScore() {
+        score.calculate(new HashMap<>(value));
         return score;
-    }
-
-    public double calculateScore(final Color color) {
-        return sumScore(color) - pawnCountOnSameColumn(color) * Pawn.REDUCED_SCORE;
     }
 
     public boolean isKingDead() {
@@ -51,28 +41,6 @@ public class Board {
             return;
         }
         throw new IllegalArgumentException("이동이 불가능 합니다.");
-    }
-
-    private double sumScore(final Color color) {
-        return value.values().stream()
-                .filter(piece -> piece.getColor() == color)
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private double pawnCountOnSameColumn(final Color color) {
-        return Arrays.stream(Column.values())
-                .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
-                .filter(count -> count > PAWN_MINIMUM_REDUCE_ROW_COUNT)
-                .sum();
-    }
-
-    private int countPawnsByColumn(final int column, final Color color) {
-        return (int) value.keySet().stream()
-                .filter(position -> position.equalsColumn(column))
-                .map(value::get)
-                .filter(piece -> piece.isPawn() && piece.getColor().hasSameColor(color))
-                .count();
     }
 
     private int countKingPiece() {
@@ -117,7 +85,7 @@ public class Board {
     }
 
     private void validateColor(final Piece piece, final Color color) {
-        if (piece.getColor() != color) {
+        if (!piece.isEqualColor(color)) {
             throw new IllegalArgumentException(color + "가 둘 차례입니다.");
         }
     }

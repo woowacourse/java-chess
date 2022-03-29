@@ -20,7 +20,7 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public final boolean isSameTeam(final Piece other) {
-        return color.hasSameColor(other.getColor());
+        return other.isEqualColor(color);
     }
 
     @Override
@@ -44,7 +44,12 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public final Color getColor() {
+    public final boolean isEqualColor(final Color color) {
+        return this.color.hasSameColor(color);
+    }
+
+    @Override
+    public Color getColor() {
         return color;
     }
 }

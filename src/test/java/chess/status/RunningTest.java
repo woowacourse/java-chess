@@ -88,7 +88,7 @@ class RunningTest {
     @DisplayName("게임 진행중에 점수를 계산할 수 있다.")
     void score() {
         final State running = new Running();
-        final Map<Color, Double> score = running.score();
+        final Map<Color, Double> score = running.score().getScore();
 
         assertThat(score).containsValues(38.0, 38.0);
     }

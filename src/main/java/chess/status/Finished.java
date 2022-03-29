@@ -3,9 +3,8 @@ package chess.status;
 import chess.game.Board;
 import chess.game.Command;
 import chess.game.MoveCommand;
+import chess.game.Score;
 import chess.piece.Color;
-import java.util.Collections;
-import java.util.Map;
 
 public final class Finished implements State {
 
@@ -25,8 +24,8 @@ public final class Finished implements State {
     }
 
     @Override
-    public Map<Color, Double> score() {
-        return Collections.emptyMap();
+    public Score score() {
+        throw new IllegalStateException(FINISHED_GAME);
     }
 
     @Override

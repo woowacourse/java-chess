@@ -3,8 +3,8 @@ package chess.status;
 import chess.game.Board;
 import chess.game.Command;
 import chess.game.MoveCommand;
+import chess.game.Score;
 import chess.piece.Color;
-import java.util.Map;
 
 public interface State {
 
@@ -12,7 +12,7 @@ public interface State {
 
     State turn(Command command);
 
-    Map<Color, Double> score();
+    Score score();
 
     boolean isRunning();
 

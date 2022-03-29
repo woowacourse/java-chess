@@ -17,11 +17,11 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public boolean canMove(final Position from, final Position to) {
-        if (getColor() == WHITE) {
+        if (isEqualColor(WHITE)) {
             return Direction.getWhitePawnDirections().stream()
                     .anyMatch(direction -> canWhiteMove(from, to, direction));
         }
-        if (getColor() == BLACK) {
+        if (isEqualColor(BLACK)) {
             return Direction.getBlackPawnDirections().stream()
                     .anyMatch(direction -> canBlackMove(from, to, direction));
         }

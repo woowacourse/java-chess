@@ -14,6 +14,8 @@ public interface Piece {
 
     boolean isKing();
 
+    boolean isEqualColor(Color color);
+
     Name getName();
 
     Color getColor();

@@ -28,7 +28,7 @@ public class Game {
         validate(command, inputs);
         state = state.turn(command);
         if (command.isStatus()) {
-            return state.score();
+            return state.score().getScore();
         }
         isMoveStatus(inputs);
         isEndStatus();

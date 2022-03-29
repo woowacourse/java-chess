@@ -79,6 +79,8 @@ class FinishedTest {
     void score() {
         final State state = new Finished();
 
-        assertThat(state.score()).isEmpty();
+        assertThatThrownBy(state::score)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료되었습니다.");
     }
 }
