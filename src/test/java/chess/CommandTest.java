@@ -1,8 +1,8 @@
 package chess;
 
-import chess.command.Command;
-import chess.command.End;
-import chess.command.Init;
+import chess.model.command.Command;
+import chess.model.command.End;
+import chess.model.command.Init;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

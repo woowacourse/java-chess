@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.Team;
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.model.Team;
+import chess.model.piece.Piece;
+import chess.model.piece.Pieces;
 
 import java.util.Collections;
 

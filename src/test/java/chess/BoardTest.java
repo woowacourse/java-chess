@@ -1,10 +1,9 @@
 package chess;
 
-import chess.piece.*;
+import chess.model.Board;
+import chess.model.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

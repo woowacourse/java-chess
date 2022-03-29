@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.Board;
-import chess.Turn;
-import chess.command.Command;
-import chess.command.Init;
-import chess.piece.Pieces;
+import chess.model.Board;
+import chess.model.Turn;
+import chess.model.command.Command;
+import chess.model.command.Init;
+import chess.model.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;
 
