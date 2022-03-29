@@ -54,11 +54,15 @@ public class Position {
         List<File> files = file.betweenFiles(other.file);
 
         if (ranks.isEmpty()) {
-            return files.stream().map(file -> new Position(this.rank, file)).collect(Collectors.toList());
+            return files.stream()
+                .map(file -> new Position(this.rank, file))
+                .collect(Collectors.toList());
         }
 
         if (files.isEmpty()) {
-            return ranks.stream().map(rank -> new Position(rank, this.file)).collect(Collectors.toList());
+            return ranks.stream()
+                .map(rank -> new Position(rank, this.file))
+                .collect(Collectors.toList());
         }
 
         return ranks.stream()
@@ -67,7 +71,9 @@ public class Position {
     }
 
     private List<Position> positionsBetweenTwoFiles(List<File> files, Rank rank) {
-        return files.stream().map(file -> new Position(rank, file)).collect(toList());
+        return files.stream()
+            .map(file -> new Position(rank, file))
+            .collect(toList());
     }
 
     @Override

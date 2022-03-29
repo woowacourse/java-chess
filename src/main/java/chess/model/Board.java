@@ -61,13 +61,9 @@ public class Board {
 
     private void validateChangeable(Position source, Position target, MoveType moveType) {
         if (!pieceAt(source).isMovable(new Path(source, target), moveType) || isBlocked(source, target)
-            || isFriendly(moveType)) {
+            || moveType.isFriendly()) {
             throw new IllegalArgumentException(ERROR_NOT_MOVABLE);
         }
-    }
-
-    private boolean isFriendly(MoveType moveType) {
-        return moveType == MoveType.FRIENDLY;
     }
 
     private MoveType moveType(Piece targetPiece) {

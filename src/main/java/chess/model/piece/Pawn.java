@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Path path, MoveType moveType) {
-        if (moveType == MoveType.ENEMY) {
+        if (moveType.isEnemy()) {
             return isCaptureMoving(path);
         }
 
@@ -35,6 +35,7 @@ public class Pawn extends Piece {
         if (isSameColor(WHITE)) {
             return path.isUpDiagonal();
         }
+
         return path.isDownDiagonal();
     }
 

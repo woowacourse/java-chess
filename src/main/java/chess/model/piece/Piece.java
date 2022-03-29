@@ -17,7 +17,7 @@ public abstract class Piece {
     public abstract boolean isMovable(Path path, MoveType moveType);
 
     public String getEmblem() {
-        if (pieceColor == PieceColor.WHITE) {
+        if (pieceColor.isWhite()) {
             return getConcreteEmblem().toLowerCase();
         }
         return getConcreteEmblem();
@@ -30,6 +30,12 @@ public abstract class Piece {
     }
 
     public abstract double getScore();
+
+    public abstract boolean isKnight();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     @Override
     public boolean equals(Object o) {
@@ -45,10 +51,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(pieceColor);
     }
-
-    public abstract boolean isKnight();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isPawn();
 }
