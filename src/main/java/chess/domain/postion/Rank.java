@@ -1,8 +1,10 @@
 package chess.domain.postion;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum Rank {
+    NOTHING(0),
     ONE(1),
     TWO(2),
     THREE(3),
@@ -22,7 +24,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.getNumber() == candidate)
                 .findAny()
-                .orElse(null);
+                .orElse(NOTHING);
     }
 
     public int getNumber() {
