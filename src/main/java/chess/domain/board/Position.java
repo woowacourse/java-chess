@@ -10,7 +10,8 @@ import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
     private static final int DISTANCE_NOT_MOVED = 0;
-    private static final Map<String, Position> cash = new HashMap<>();
+    private static final int DISTANCE_NEXT_TO = 1;
+    private static final Map<String, Position> CASH = new HashMap<>();
 
     private final Column column;
     private final Row row;
@@ -18,15 +19,36 @@ public class Position implements Comparable<Position> {
     private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
-        cash.put(this.toString(), this);
+        CASH.put(this.toString(), this);
     }
 
     public static Position of(Column column, Row row) {
         String key = "" + column + row;
-        if (cash.containsKey(key)) {
-            return cash.get(key);
+        if (CASH.containsKey(key)) {
+            return CASH.get(key);
         }
         return new Position(column, row);
+    }
+
+    public boolean inSameColumnWith(Position otherPosition) {
+        return this.columnDistance(otherPosition) == DISTANCE_NOT_MOVED;
+    }
+
+    public boolean inSameRowWith(Position otherPosition) {
+        return this.rowDistance(otherPosition) == DISTANCE_NOT_MOVED;
+    }
+
+    public boolean inDiagonalWith(Position otherPosition) {
+        return this.columnDistance(otherPosition) == this.rowDistance(otherPosition);
+    }
+
+    public boolean isNextTo(Position otherPosition) {
+        int columnDistance = this.columnDistance(otherPosition);
+        int rowDistance = this.rowDistance(otherPosition);
+        if (columnDistance + rowDistance == DISTANCE_NEXT_TO) {
+            return true;
+        }
+        return columnDistance == 1 && rowDistance == DISTANCE_NEXT_TO;
     }
 
     public int columnDistance(Position otherPosition) {
@@ -39,6 +61,10 @@ public class Position implements Comparable<Position> {
 
     public int rowDirectedDistance(Position otherPosition) {
         return this.row.directedDistance(otherPosition.row);
+    }
+
+    public Position goDown(int step) {
+        return Position.of(this.column, this.row.goDown(step));
     }
 
     Position flipHorizontally() {

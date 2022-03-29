@@ -22,9 +22,7 @@ public final class Bishop extends Piece {
 
     @Override
     protected boolean canMove(Position sourcePosition, Position targetPosition) {
-        int columnDistance = sourcePosition.columnDistance(targetPosition);
-        int rowDistance = sourcePosition.rowDistance(targetPosition);
-        return columnDistance == rowDistance;
+        return super.canApproach(sourcePosition, targetPosition);
     }
 
     @Override

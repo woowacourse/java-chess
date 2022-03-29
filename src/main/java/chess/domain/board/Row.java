@@ -24,15 +24,19 @@ public enum Row {
         this.value = value;
     }
 
-    Row flip() {
-        return from(MAX_VALUE - this.value);
-    }
-
     private static Row from(int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_ROW));
+    }
+
+    Row goDown(int step) {
+        return from(this.value - step);
+    }
+
+    Row flip() {
+        return from(MAX_VALUE - this.value);
     }
 
     int directedDistance(Row otherRow) {
@@ -44,7 +48,7 @@ public enum Row {
     }
 
     List<Row> pathTo(Row otherRow) {
-        if (this.value < otherRow.value){
+        if (this.value < otherRow.value) {
             return this.rightPathTo(otherRow);
         }
         return this.leftPathTo(otherRow);
@@ -52,7 +56,7 @@ public enum Row {
 
     private List<Row> rightPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value + 1; i <  otherRow.value; i++) {
+        for (int i = this.value + 1; i < otherRow.value; i++) {
             path.add(Row.from(i));
         }
         return path;
@@ -60,7 +64,7 @@ public enum Row {
 
     private List<Row> leftPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value - 1; i >  otherRow.value; i--) {
+        for (int i = this.value - 1; i > otherRow.value; i--) {
             path.add(Row.from(i));
         }
         return path;

@@ -87,8 +87,7 @@ class PawnTest {
         Position a7 = Position.of(Column.A, Row.SEVEN);
         Position a5 = Position.of(Column.A, Row.FIVE);
         Position a4 = Position.of(Column.A, Row.FOUR);
-        pawn.move(a7, a5, (piece -> {
-        }));
+        pawn.move(a7, a5, (piece -> {}));
 
         assertThat(pawn.canMove(a5, a4)).isTrue();
     }

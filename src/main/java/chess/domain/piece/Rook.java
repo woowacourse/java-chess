@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 public final class Rook extends Piece {
     private static final String ERROR_CANT_MOVE = "룩이 이동할 수 없는 위치입니다.";
-    private static final int NOT_MOVED_DISTANCE = 0;
     private static final double SCORE = 5;
 
     public Rook(Camp camp) {
@@ -23,12 +22,7 @@ public final class Rook extends Piece {
 
     @Override
     protected boolean canMove(Position sourcePosition, Position targetPosition) {
-        int columnDistance = sourcePosition.columnDistance(targetPosition);
-        int rowDistance = sourcePosition.rowDistance(targetPosition);
-        if (columnDistance == NOT_MOVED_DISTANCE) {
-            return true;
-        }
-        return rowDistance == NOT_MOVED_DISTANCE;
+        return super.canApproach(sourcePosition, targetPosition);
     }
 
     @Override

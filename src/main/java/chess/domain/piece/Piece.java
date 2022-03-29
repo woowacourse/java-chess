@@ -25,6 +25,10 @@ public abstract class Piece {
         return this.type == type;
     }
 
+    public final boolean canApproach(Position sourcePosition, Position targetPosition) {
+        return this.type.canApproach(sourcePosition, targetPosition);
+    }
+
     public abstract void move(Position sourcePosition, Position targetPosition, Consumer<Piece> moveApplier);
 
     protected abstract boolean canMove(Position sourcePosition, Position targetPosition);
