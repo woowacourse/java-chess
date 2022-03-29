@@ -29,59 +29,25 @@ public class Pawn extends Piece {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
-        validateDirection(direction);
+        validateDirection(direction, getProperDirection());
         if (isFirstMove(current.getRow())) {
-            validateInitialRange(rowDifference, columnDifference);
+            validateRange(rowDifference, columnDifference, POSSIBLE_INITIAL_DISTANCE);
             return direction;
         }
-        validateRange(rowDifference, columnDifference);
+        validateRange(rowDifference, columnDifference, POSSIBLE_DISTANCE);
         return direction;
     }
 
-    private void validateInitialRange(final int rowDifference, final int columnDifference) {
-        if (isValidInitialRange(rowDifference, columnDifference)) {
-            throw new IllegalArgumentException(INVALID_POSITION);
-        }
-    }
-
-    private boolean isValidInitialRange(final int rowDifference, final int columnDifference) {
-        return Math.abs(rowDifference) > POSSIBLE_INITIAL_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
-    }
-
-    private void validateDirection(final Direction direction) {
-        if (isInvalidDirection(direction)) {
-            throw new IllegalArgumentException(INVALID_DIRECTION);
-        }
-    }
-
-    private boolean isInvalidDirection(final Direction direction) {
+    private List<Direction> getProperDirection() {
         if (getColor() == Color.BLACK) {
-            return isInvalidBlackDirection(direction);
+            return BLACK_POSSIBLE_DIRECTIONS;
         }
-        return isInvalidWhiteDirection(direction);
-    }
-
-    private boolean isInvalidBlackDirection(final Direction direction) {
-        return !BLACK_POSSIBLE_DIRECTIONS.contains(direction);
-    }
-
-    private boolean isInvalidWhiteDirection(final Direction direction) {
-        return !WHITE_POSSIBLE_DIRECTIONS.contains(direction);
+        return WHITE_POSSIBLE_DIRECTIONS;
     }
 
     private boolean isFirstMove(final Row row) {
         return (row == WHITE_INITIAL_ROW && getColor() == Color.WHITE)
                 || (row == BLACK_INITIAL_ROW && getColor() == Color.BLACK);
-    }
-
-    private void validateRange(final int rowDifference, final int columnDifference) {
-        if (isInvalidRange(rowDifference, columnDifference)) {
-            throw new IllegalArgumentException(INVALID_POSITION);
-        }
-    }
-
-    private boolean isInvalidRange(final int rowDifference, final int columnDifference) {
-        return Math.abs(rowDifference) > POSSIBLE_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
     }
 
 }

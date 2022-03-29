@@ -25,13 +25,8 @@ public class Queen extends Piece {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
-        validateDirection(direction);
+        validateDirection(direction, POSSIBLE_DIRECTIONS);
         return direction;
     }
 
-    private void validateDirection(final Direction direction) {
-        if (!POSSIBLE_DIRECTIONS.contains(direction)) {
-            throw new IllegalArgumentException(INVALID_DIRECTION);
-        }
-    }
 }

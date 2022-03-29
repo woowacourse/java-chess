@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -17,6 +18,23 @@ public abstract class Piece {
     }
 
     public abstract Direction findValidDirection(Position current, Position target);
+
+
+    protected void validateDirection(Direction direction, final List<Direction> possibleDirections) {
+        if (!possibleDirections.contains(direction)) {
+            throw new IllegalArgumentException(INVALID_DIRECTION);
+        }
+    }
+
+    protected void validateRange(final int rowDifference, final int columnDifference, final int possibleDirection) {
+        if (isInvalidRange(rowDifference, columnDifference, possibleDirection)) {
+            throw new IllegalArgumentException(INVALID_POSITION);
+        }
+    }
+
+    private boolean isInvalidRange(final int rowDifference, final int columnDifference, final int possibleDistance) {
+        return Math.abs(rowDifference) > possibleDistance || Math.abs(columnDifference) > possibleDistance;
+    }
 
     public boolean isSamePiece(final PieceType expected) {
         return pieceType == expected;

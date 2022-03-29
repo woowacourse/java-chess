@@ -26,24 +26,9 @@ public class King extends Piece {
         int rowDifference = target.calculateRowDifference(current);
         int columnDifference = target.calculateColumnDifference(current);
         Direction direction = Direction.calculate(rowDifference, columnDifference);
-        validateDirection(direction);
-        validateRange(rowDifference, columnDifference);
+        validateDirection(direction, POSSIBLE_DIRECTIONS);
+        validateRange(rowDifference, columnDifference, POSSIBLE_DISTANCE);
         return direction;
     }
 
-    private void validateDirection(final Direction direction) {
-        if (!POSSIBLE_DIRECTIONS.contains(direction)) {
-            throw new IllegalArgumentException(INVALID_DIRECTION);
-        }
-    }
-
-    private void validateRange(final int rowDifference, final int columnDifference) {
-        if (isInvalidRange(rowDifference, columnDifference)) {
-            throw new IllegalArgumentException(INVALID_POSITION);
-        }
-    }
-
-    private boolean isInvalidRange(final int rowDifference, final int columnDifference) {
-        return Math.abs(rowDifference) > POSSIBLE_DISTANCE || Math.abs(columnDifference) > POSSIBLE_DISTANCE;
-    }
 }
