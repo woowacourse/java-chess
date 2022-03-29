@@ -18,6 +18,9 @@ public class Move implements Command {
     public ChessState execute(ChessState chessState) {
         ChessState movedState = chessState.move(start, target);
         OutputView.printBoard(movedState.getPieces());
+        if (movedState.isFinished()) {
+            OutputView.printStatus(movedState.createStatus());
+        }
         return movedState;
     }
 }
