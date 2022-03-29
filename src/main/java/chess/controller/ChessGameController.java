@@ -38,7 +38,7 @@ public class ChessGameController {
 			}
 			play(chessGame);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			outputView.printException(e.getMessage());
 			play(chessGame);
 		}
 	}

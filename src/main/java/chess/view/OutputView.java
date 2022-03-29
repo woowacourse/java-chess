@@ -73,4 +73,8 @@ public class OutputView {
 		}
 		System.out.println("무승부입니다.");
 	}
+
+	public void printException(final String message) {
+		System.out.println(message);
+	}
 }
