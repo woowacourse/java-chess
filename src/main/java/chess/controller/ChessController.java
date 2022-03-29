@@ -1,7 +1,7 @@
 package chess.controller;
 
+import static chess.view.InputView.requestMoveOrEndOrStatusInput;
 import static chess.view.InputView.requestStartOrEndInput;
-import static chess.view.InputView.requestStartOrMoveOrEndInput;
 import static chess.view.InputView.requestStatusOrEndInput;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printChessGameInitInstruction;
@@ -9,6 +9,7 @@ import static chess.view.OutputView.printForceEndInstruction;
 import static chess.view.OutputView.printForceQuitStatus;
 import static chess.view.OutputView.printGameInstructions;
 import static chess.view.OutputView.printGameOverInstructions;
+import static chess.view.OutputView.printIntermediateGameResult;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessGame;
@@ -47,15 +48,17 @@ public class ChessController {
 
     private ChessGame progressGameUntilEnd(ChessGame chessGame) {
         while (!chessGame.isEnd() && !playerWantToEndStatus) {
-            chessGame = progressByCommand(chessGame, requestStartOrMoveOrEndInput());
+            chessGame = progressByCommand(chessGame, requestMoveOrEndOrStatusInput());
+            printBoard(new BoardDto(chessGame));
         }
         return chessGame;
     }
 
     private ChessGame progressByCommand(ChessGame chessGame, CommandDto commandDto) {
         Command command = commandDto.getCommand();
-        if (command.isStart()) {
-            return initAndShowBoard();
+        if (command.isStatus()) {
+            intermediateGameResult(chessGame);
+            return chessGame;
         }
         if (command.isEnd()) {
             return end(chessGame);
@@ -73,7 +76,6 @@ public class ChessController {
 
     private ChessGame move(ChessGame chessGame, String command) {
         chessGame.moveChessmen(new MovePositionCommandDto(command));
-        printBoard(new BoardDto(chessGame));
         return chessGame;
     }
 
@@ -82,10 +84,16 @@ public class ChessController {
             forceQuitGameResult(chessGame);
             return;
         }
+
         printGameOverInstructions();
+
         if (requestStatusOrEndInput()) {
             normalQuitGameResult(chessGame);
         }
+    }
+
+    private void intermediateGameResult(ChessGame chessGame) {
+        printIntermediateGameResult(chessGame.calculateGameResult());
     }
 
     private void forceQuitGameResult(ChessGame chessGame) {

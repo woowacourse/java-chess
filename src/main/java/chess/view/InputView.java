@@ -14,7 +14,7 @@ public class InputView {
     private static final int COMMAND_POSITION = 0;
 
     private static final String INVALID_START_OR_END_INPUT_EXCEPTION_MESSAGE = "start 혹은 end만 입력하셔야 합니다.";
-    private static final String INVALID_START_OR_MOVE_OR_END_INPUT_EXCEPTION_MESSAGE = "start 혹은 move 혹은 end만 입력하셔야 합니다.";
+    private static final String INVALID_MOVE_OR_END_OR_STATUS_INPUT_EXCEPTION_MESSAGE = "move 혹은 end 혹은 status만 입력하셔야 합니다.";
     private static final String INVALID_STATUS_OR_END_INPUT_EXCEPTION_MESSAGE = "status 혹은 end만 입력하셔야 합니다.";
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,16 +31,16 @@ public class InputView {
         }
     }
 
-    public static CommandDto requestStartOrMoveOrEndInput() {
+    public static CommandDto requestMoveOrEndOrStatusInput() {
         String input = scanner.nextLine();
-        validateStartOrMoveOrEnd(input);
+        validateMoveOrEndOrStatus(input);
         return new CommandDto(input);
     }
 
-    private static void validateStartOrMoveOrEnd(String input) {
+    private static void validateMoveOrEndOrStatus(String input) {
         String firstInput = input.split(COMMAND_INPUT_DELIMITER)[COMMAND_POSITION];
-        if (!firstInput.equals(START) && !firstInput.equals(END) && !firstInput.equals(MOVE)) {
-            throw new IllegalArgumentException(INVALID_START_OR_MOVE_OR_END_INPUT_EXCEPTION_MESSAGE);
+        if (!firstInput.equals(MOVE) && !firstInput.equals(END) && !firstInput.equals(STATUS)) {
+            throw new IllegalArgumentException(INVALID_MOVE_OR_END_OR_STATUS_INPUT_EXCEPTION_MESSAGE);
         }
     }
 
