@@ -1,34 +1,43 @@
 package view;
 
+import static domain.classification.InputCase.*;
+
+import domain.classification.InputCase;
+import domain.position.Position;
+import domain.position.XPosition;
+import domain.position.YPosition;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
-    public static final String START = "start";
-    public static final String END = "end";
-    public static final String MOVE = "move";
-    public static final String STATUS = "status";
-    public static final String DELIMITER = " ";
-
     private static final Scanner sc = new Scanner(System.in);
+    private static final String DELIMITER = " ";
     private static final int MOVE_COMMAND_LENGTH = 3;
     private static final int MOVE_COMMAND_INDEX = 0;
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int POSITION_SIZE = 2;
+    private static final int FIRST_SINGLE_LETTER = 0;
+    private static final int SECOND_SINGLE_LETTER = 1;
+
     public static final String ERROR_MOVE_FORM = "[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.";
 
-    public static String responseUserStartCommand() {
+    public static InputCase responseUserStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : " + START);
-        System.out.println("> 게임 종료 : " + END);
-        System.out.println("> 게임 점수 : " + STATUS);
-        System.out.println("> 게임 이동 : " + MOVE + " source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 시작 : " + START.getValue());
+        System.out.println("> 게임 종료 : " + END.getValue());
+        System.out.println("> 게임 점수 : " + STATUS.getValue());
+        System.out.println("> 게임 이동 : " + MOVE.getValue());
+        System.out.print("입력 : ");
         final String input = sc.nextLine();
         validateUserCommand(input);
-        return input;
+
+        if (input.equals(START.getValue())) {
+            return START;
+        }
+        return ELSE;
     }
 
     private static void validateUserCommand(final String input) {
@@ -43,68 +52,65 @@ public class InputView {
     }
 
     private static void validateNotAllowStartCommand(final String input) {
-        if (!(input.equals(START))) {
+        if (!(input.equals(START.getValue()))) {
             throw new IllegalArgumentException("[ERROR] start 이외의 문자는 입력할 수 없습니다.");
         }
     }
 
-    public static String responseUserCommand() {
+    public static InputCase responseUserCommand() {
+        System.out.print("입력(end, status, move) : ");
         String input = sc.nextLine();
         validateNullCheck(input);
         validateNotAllowCommand(input);
-        if (input.contains(MOVE)) {
-            List<String> moveCommand = Arrays.asList(input.split(DELIMITER));
-            validateMoveCommand(moveCommand);
-            input = calculateMoveCommand(moveCommand);
+        if (input.equals(STATUS.getValue())) {
+            return STATUS;
         }
-        return input;
+        if (input.equals(MOVE.getValue())) {
+            return MOVE;
+        }
+        if (input.equals(END.getValue())) {
+            return END;
+        }
+        return ELSE;
     }
 
     private static void validateNotAllowCommand(final String input) {
-        if (!(input.equals(END) || input.contains(MOVE) || input.equals(STATUS))) {
-            String message = String.format("[ERROR] %s, %s, %s 이외의 문자는 입력할 수 없습니다.", END, MOVE, STATUS);
+        if (!(input.equals(END.getValue()) || input.equals(MOVE.getValue()) ||
+                input.equals(STATUS.getValue()))) {
+            String message = String.format("[ERROR] %s, %s, %s 이외의 문자는 입력할 수 없습니다.",
+                    END.getValue(), MOVE.getValue(), STATUS.getValue());
             throw new IllegalArgumentException(message);
         }
     }
 
-    private static void validateMoveCommand(final List<String> moveCommand) {
-        validateMoveCommandFirstIsMove(moveCommand);
-        validateMoveCommandSize(moveCommand);
-        validateEachSize(moveCommand);
-        validateDuplicatePosition(moveCommand);
+    public static Position responseSource() {
+        System.out.print("source 위치를 입력하세요(예, b2) : ");
+        String source = sc.nextLine();
+        checkSourceSize(source);
+        return generatePosition(source);
     }
 
-    private static void validateMoveCommandFirstIsMove(final List<String> moveCommand) {
-        if (!moveCommand.get(MOVE_COMMAND_INDEX).equals(MOVE)) {
-            throw new IllegalArgumentException(ERROR_MOVE_FORM);
+    public static Position responseTarget() {
+        System.out.print("target 위치를 입력하세요(예, b7) : ");
+        String source = sc.nextLine();
+        checkSourceSize(source);
+        return generatePosition(source);
+    }
+
+    private static void checkSourceSize(String source) {
+        if (source.length() != POSITION_SIZE) {
+            throw new IllegalArgumentException("[ERROR] source위치가 잘못 입력되었습니다.");
         }
     }
 
-    private static void validateMoveCommandSize(final List<String> moveCommand) {
-        if (moveCommand.size() != MOVE_COMMAND_LENGTH) {
-            throw new IllegalArgumentException(ERROR_MOVE_FORM);
-        }
+    private static Position generatePosition(final String value) {
+        return Position.of(
+                XPosition.of(extractSingleLetter(value, FIRST_SINGLE_LETTER)),
+                YPosition.of(extractSingleLetter(value, SECOND_SINGLE_LETTER))
+        );
     }
 
-    private static void validateEachSize(final List<String> moveCommand) {
-        validateInputPositionSize(moveCommand, SOURCE_POSITION_INDEX);
-        validateInputPositionSize(moveCommand, TARGET_POSITION_INDEX);
-    }
-
-    private static void validateInputPositionSize(final List<String> moveCommand, int index) {
-        if (moveCommand.get(index).length() != POSITION_SIZE) {
-            throw new IllegalArgumentException(ERROR_MOVE_FORM);
-        }
-    }
-
-    private static void validateDuplicatePosition(final List<String> moveCommand) {
-        if (moveCommand.get(SOURCE_POSITION_INDEX).equals(moveCommand.get(TARGET_POSITION_INDEX))) {
-            throw new IllegalArgumentException("[ERROR] source위치와 target위치를 다르게 입력해주세요.");
-        }
-    }
-
-    private static String calculateMoveCommand(final List<String> moveCommand) {
-        return String.join(DELIMITER,
-                moveCommand.subList(SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1));
+    private static String extractSingleLetter(final String value, final int index) {
+        return value.substring(index, index + 1);
     }
 }

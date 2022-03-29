@@ -30,7 +30,7 @@ public final class ChessBoard {
 
     public void move(final Position source, final Position target) {
         checkNullSource(source);
-        checkCurrentTurn(source);
+        checkCurrentTurn(source, target);
         checkAvailableTarget(target);
         checkGoThroughPosition(source, target);
 
@@ -43,8 +43,8 @@ public final class ChessBoard {
         }
     }
 
-    private void checkCurrentTurn(final Position source) {
-        if (!board.get(source).checkSameTeam(this.currentTurn)) {
+    private void checkCurrentTurn(final Position source, final Position target) {
+        if (!board.get(source).checkSameTeam(this.currentTurn) || source.equals(target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 자신의 기물의 위치가 아닙니다.");
         }
     }
