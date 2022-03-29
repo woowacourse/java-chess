@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InjectBoardStrategy implements BoardStrategy {
-    private final Map<Position, Piece> positionPieceMap;
     private static final Map<String, Piece> stringPieceMap = new HashMap<>();
 
     static {
@@ -35,13 +34,10 @@ public class InjectBoardStrategy implements BoardStrategy {
         stringPieceMap.put("p", new Pawn(Team.WHITE));
     }
 
+    private final Map<Position, Piece> positionPieceMap;
+
     public InjectBoardStrategy(String text) {
         this.positionPieceMap = stringToBoard(text);
-    }
-
-    @Override
-    public Map<Position, Piece> create() {
-        return positionPieceMap;
     }
 
     private static Map<Position, Piece> stringToBoard(String text) {
@@ -62,6 +58,11 @@ public class InjectBoardStrategy implements BoardStrategy {
             );
             fileX++;
         }
+    }
+
+    @Override
+    public Map<Position, Piece> create() {
+        return positionPieceMap;
     }
 
 
