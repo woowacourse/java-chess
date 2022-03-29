@@ -25,7 +25,7 @@ public class Position {
             throw new IllegalArgumentException(WRONG_POSITION);
         }
         final Row row = Row.from(rawPosition.substring(ROW_POSITION_FROM, ROW_POSITION_TO));
-        final Column column = Column.valueOf(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
+        final Column column = Column.from(rawPosition.substring(COLUMN_POSITION_FROM, COLUMN_POSITION_TO));
         return new Position(column, row);
     }
 
