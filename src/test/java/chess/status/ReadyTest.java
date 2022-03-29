@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class ReadyTest {
 
     @Test
-    @DisplayName("준비 상태에서 말을 움직일 수 없다.")
+    @DisplayName("준비 상태에서 말을 움직일 경우 예외를 발생한다.")
     void readyCannotMove() {
         assertThatThrownBy(() -> Ready.start(Command.MOVE))
                 .isInstanceOf(IllegalArgumentException.class)
