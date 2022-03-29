@@ -2,12 +2,13 @@ package chess.model;
 
 import static chess.model.Board.*;
 import static chess.model.File.*;
+import static chess.model.PieceColor.*;
 import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +19,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import chess.model.boardinitializer.BoardInitializer;
 import chess.model.boardinitializer.defaultInitializer;
+import chess.model.piece.EmptyPiece;
 import chess.model.piece.King;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
@@ -150,26 +153,16 @@ public class BoardTest {
     @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
     @Test
     void move_return_true_when_king_captured() {
-        Board board = new Board(new AlternatingTurnDecider(), () -> {
-            Map<Position, Piece> boardMap = new LinkedHashMap<>();
-            boardMap.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
-            boardMap.put(new Position(THREE, A), new King(PieceColor.BLACK));
-            return boardMap;
-        });
+        Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
 
         boolean isFinished = board.move(new Position(TWO, A), new Position(THREE, A));
         assertThat(isFinished).isTrue();
     }
 
-    @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
+    @DisplayName("킹이 잡힐 경우 룩 한 개 남은 승자의 점수 5점을 반환한다.")
     @Test
     void score_is_5_when_king_captured() {
-        Board board = new Board(new AlternatingTurnDecider(), () -> {
-            Map<Position, Piece> boardMap = new LinkedHashMap<>();
-            boardMap.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
-            boardMap.put(new Position(THREE, A), new King(PieceColor.BLACK));
-            return boardMap;
-        });
+        Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
         board.move(new Position(TWO, A), new Position(THREE, A));
         double actual = board.calculateScore();
         assertThat(actual).isEqualTo(5);
@@ -195,5 +188,31 @@ public class BoardTest {
         //then
         double actual = board.calculateScore();
         assertThat(actual).isEqualTo(37.0);
+    }
+
+    public static class kingCaptureTestInitializer implements BoardInitializer {
+
+        private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+
+        @Override
+        public Map<Position, Piece> apply() {
+            Map<Position, Piece> result = new HashMap<>();
+            putAllEmptyPieces(result);
+            result.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
+            result.put(new Position(THREE, A), new King(PieceColor.BLACK));
+            return result;
+        }
+
+        private void putAllEmptyPieces(Map<Position, Piece> result) {
+            for (Rank rank : Rank.reverseValues()) {
+                putEmptyPiecesInOneRank(result, rank);
+            }
+        }
+
+        private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
+            for (File file : File.values()) {
+                result.put(new Position(rank, file), EMPTY_PIECE);
+            }
+        }
     }
 }

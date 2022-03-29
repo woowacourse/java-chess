@@ -8,7 +8,6 @@ import java.util.Map;
 
 import chess.model.boardinitializer.BoardInitializer;
 import chess.model.piece.EmptyPiece;
-import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.turndecider.TurnDecider;
 
@@ -114,13 +113,13 @@ public class Board {
             .filter(count -> count > 1)
             .mapToDouble(count -> count * 0.5)
             .sum();
+
     }
 
     private long getPawnCountInOneFile(File file) {
         return reverseValues().stream()
             .map(rank -> new Position(rank, file))
-            .filter(position -> pieceAt(position) instanceof Pawn
-                && turnDecider.isTurnOf(pieceAt(position)))
+            .filter(position -> pieceAt(position).isPawn() && turnDecider.isTurnOf(pieceAt(position)))
             .count();
     }
 
