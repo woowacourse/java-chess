@@ -45,7 +45,9 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board){
+        return true;
+    }
 
     public boolean canMove_2(Position source, Position target, Map<Position, Piece> board) {
         return true;

@@ -4,7 +4,6 @@ import chess.Direction;
 import chess.Player;
 import chess.Position;
 
-import chess.direction.KingDirection;
 import chess.direction.RookDirection;
 import chess.direction.Route;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class Rook extends Piece {
         Route route = findRoute(source, target);
         List<Position> positions = new ArrayList<>();
         Position nowPosition = source.createPositionFrom(route);
-        while (board.get(nowPosition).isSame(NONE) && nowPosition.canCreatePosition(route)) {
+        while (board.get(nowPosition).isSame(NONE) && nowPosition.canCreatePositionTo(route)) {
             positions.add(nowPosition);
             nowPosition = nowPosition.createPositionFrom(route);
         }

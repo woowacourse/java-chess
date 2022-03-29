@@ -6,10 +6,10 @@ import chess.File;
 import chess.Player;
 import chess.Position;
 import chess.Rank;
+import chess.direction.Route;
 import chess.piece.Blank;
 import chess.piece.Piece;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -25,12 +25,12 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        checkPieceIn(source);
+        checkMovablePieceIn(source);
         checkPieceCanMove(source, target);
         movePiece(source, target);
     }
 
-    private void checkPieceIn(Position source) {
+    private void checkMovablePieceIn(Position source) {
         if (board.get(source).isSame(NONE)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
         }
