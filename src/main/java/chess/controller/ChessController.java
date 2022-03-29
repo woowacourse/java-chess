@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.model.state.Start;
+import chess.model.state.Ready;
 import chess.model.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,20 +16,17 @@ public class ChessController {
     }
 
     public void run() {
-        outputView.printGameRule();
         State state = initState();
-        while (state.isRunning()) {
-            outputView.printBoard(state.getBoard());
+        outputView.printGameRule();
+        while (!state.isFinished()) {
             state = proceed(state);
-        }
-        if (state.isStatus()) {
-            outputView.printScores(state.calculateScore());
+            outputView.printBoard(state.getBoard());
         }
     }
 
     private State initState() {
         try {
-            return Start.initState(inputView.inputCommand());
+            return new Ready();
         } catch (IllegalArgumentException error) {
             System.out.println(error.getMessage());
             return initState();
@@ -38,10 +35,24 @@ public class ChessController {
 
     private State proceed(State state) {
         try {
-            return state.proceed(inputView.inputCommand());
+            Command command = createCommand(inputView.inputCommand());
+            return state.execute(command);
         } catch (IllegalArgumentException error) {
             System.out.println(error.getMessage());
             return proceed(state);
         }
+    }
+
+    private Command createCommand(String command) {
+        if (command.equals("start")) {
+            return new Start();
+        }
+        if (command.equals("end")) {
+            return new End();
+        }
+        if (command.startsWith("move")) {
+            return new Move(command);
+        }
+        throw new IllegalArgumentException("[ERROR] 올바른 명령어를 입력 해주세요.");
     }
 }

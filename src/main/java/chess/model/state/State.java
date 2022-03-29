@@ -1,19 +1,15 @@
 package chess.model.state;
 
-import chess.model.Team;
-import chess.model.position.Position;
+import chess.controller.Command;
 import chess.model.piece.Piece;
-
+import chess.model.position.Position;
 import java.util.Map;
 
 public interface State {
-    boolean isRunning();
-
-    State proceed(String command);
+    
+    boolean isFinished();
 
     Map<Position, Piece> getBoard();
 
-    Map<Team, Double> calculateScore();
-
-    boolean isStatus();
+    State execute(Command command);
 }

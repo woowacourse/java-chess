@@ -1,8 +1,10 @@
 package chess.model.piece;
 
+import static chess.model.Team.NONE;
+
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
+import chess.model.position.Position;
 
 public abstract class Piece {
 
@@ -17,6 +19,10 @@ public abstract class Piece {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public boolean isOpponent(Team team) {
+        return !team.equals(this.team) && !team.equals(NONE);
     }
 
     public boolean isSame(Team team) {

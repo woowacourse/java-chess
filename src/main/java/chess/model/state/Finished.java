@@ -1,15 +1,31 @@
 package chess.model.state;
 
+import chess.controller.Command;
 import chess.model.board.Board;
+import chess.model.piece.Piece;
+import chess.model.position.Position;
+import java.util.Map;
 
-public abstract class Finished extends Started {
+public class Finished implements State {
+
+    private final Board board;
 
     public Finished(Board board) {
-        super(board);
+        this.board = board;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public Map<Position, Piece> getBoard() {
+        throw new IllegalArgumentException("[ERROR] 게임이 종료되어 체스판을 확인 할 수 없습니다.");
+    }
+
+    @Override
+    public State execute(Command command) {
+        return command.executeTo(board);
     }
 }

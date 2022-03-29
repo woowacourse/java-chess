@@ -6,4 +6,11 @@ public enum Team {
     WHITE,
     NONE,
     ;
+
+    public Team opponent() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import static chess.model.Team.NONE;
+import static chess.model.Team.WHITE;
 
 import chess.model.Team;
 import chess.model.direction.route.Route;
@@ -15,19 +16,37 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private final Team currentTeam;
 
-    public Board() {
-        board = BoardCreator.create();
+    private Board(Map<Position, Piece> board, Team team) {
+        this.board = board;
+        this.currentTeam = team;
+    }
+
+    public static Board init() {
+        return new Board(BoardCreator.create(), WHITE);
+    }
+
+    public static Board of(Board otherBoard) {
+        return new Board(otherBoard.board, otherBoard.currentTeam.opponent());
     }
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
 
-    public void move(Position source, Position target) {
+    public Board move(Position source, Position target) {
+        checkSameWithCurrentTeam(source);
         checkMovablePiece(source, target);
         checkPieceCanMove(source, target);
         movePiece(source, target);
+        return new Board(board, currentTeam);
+    }
+
+    private void checkSameWithCurrentTeam(Position source) {
+        if (board.get(source).isOpponent(currentTeam)) {
+            throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직일 수 없습니다.");
+        }
     }
 
     private void checkMovablePiece(Position source, Position target) {
