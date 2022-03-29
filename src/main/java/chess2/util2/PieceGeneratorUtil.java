@@ -7,7 +7,7 @@ import static chess2.domain2.board2.piece2.PieceType.QUEEN;
 import static chess2.domain2.board2.piece2.PieceType.ROOK;
 import static chess2.util2.PositionConverterUtil.FILES_TOTAL_SIZE;
 
-import chess2.domain2.board2.Position;
+import chess2.domain2.board2.position.Position;
 import chess2.domain2.board2.piece2.Color;
 import chess2.domain2.board2.piece2.NonPawn;
 import chess2.domain2.board2.piece2.Pawn;

@@ -1,6 +1,6 @@
 package chess2.domain2.board2.piece2;
 
-import chess2.domain2.board2.Position;
+import chess2.domain2.board2.position.Position;
 import java.util.Objects;
 
 public abstract class Piece {

@@ -1,6 +1,6 @@
 package chess2.domain2.board2.piece2;
 
-import chess2.domain2.board2.Position;
+import chess2.domain2.board2.position.Position;
 import chess2.strategy.RouteChecker;
 import chess2.util2.PositionUtil;
 

@@ -4,7 +4,7 @@ import static chess.util.PositionUtil.FILES_TOTAL_SIZE;
 import static chess.util.PositionUtil.RANKS_TOTAL_SIZE;
 
 import chess2.domain2.board2.Board;
-import chess2.domain2.board2.Position;
+import chess2.domain2.board2.position.Position;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.util2.PieceDisplayUtil;
 import java.util.Collections;

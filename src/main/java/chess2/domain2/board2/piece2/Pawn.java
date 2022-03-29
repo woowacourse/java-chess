@@ -1,15 +1,15 @@
 package chess2.domain2.board2.piece2;
 
-import static chess2.domain2.board2.Direction.DOWN;
-import static chess2.domain2.board2.Direction.DOWN_LEFT;
-import static chess2.domain2.board2.Direction.DOWN_RIGHT;
-import static chess2.domain2.board2.Direction.UP;
-import static chess2.domain2.board2.Direction.UP_LEFT;
-import static chess2.domain2.board2.Direction.UP_RIGHT;
+import static chess2.domain2.board2.position.Direction.DOWN;
+import static chess2.domain2.board2.position.Direction.DOWN_LEFT;
+import static chess2.domain2.board2.position.Direction.DOWN_RIGHT;
+import static chess2.domain2.board2.position.Direction.UP;
+import static chess2.domain2.board2.position.Direction.UP_LEFT;
+import static chess2.domain2.board2.position.Direction.UP_RIGHT;
 import static chess2.domain2.board2.piece2.Color.WHITE;
 
-import chess2.domain2.board2.Direction;
-import chess2.domain2.board2.Position;
+import chess2.domain2.board2.position.Direction;
+import chess2.domain2.board2.position.Position;
 import java.util.List;
 
 public final class Pawn extends Piece {

@@ -1,4 +1,4 @@
-package chess2.domain2.board2;
+package chess2.domain2.board2.position;
 
 import java.util.function.BiPredicate;
 
