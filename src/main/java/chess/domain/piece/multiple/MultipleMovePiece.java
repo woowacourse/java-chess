@@ -15,7 +15,8 @@ public abstract class MultipleMovePiece implements PieceRule {
         this.moveDirections = moveDirections;
     }
 
-    public PieceRule move(Position source, Position target, ChessBoard chessBoard) {
+    @Override
+    public final PieceRule move(Position source, Position target, ChessBoard chessBoard) {
         if (isMovable(source, target, chessBoard)) {
             return this;
         }

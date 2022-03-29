@@ -16,7 +16,8 @@ public abstract class SingleMovePiece implements PieceRule {
         this.moveDirections = moveDirections;
     }
 
-    public PieceRule move(Position source, Position target, ChessBoard chessBoard) {
+    @Override
+    public final PieceRule move(Position source, Position target, ChessBoard chessBoard) {
         if (isMovable(source, target)) {
             return this;
         }
