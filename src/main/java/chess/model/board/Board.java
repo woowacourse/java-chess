@@ -2,13 +2,13 @@ package chess.model.board;
 
 import static chess.model.Team.NONE;
 
-import chess.model.position.File;
 import chess.model.Team;
-import chess.model.position.Position;
-import chess.model.position.Rank;
 import chess.model.direction.route.Route;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
+import chess.model.position.File;
+import chess.model.position.Position;
+import chess.model.position.Rank;
 import java.util.Collections;
 import java.util.Map;
 
@@ -25,24 +25,27 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        checkMovablePieceAt(source);
+        checkMovablePiece(source, target);
         checkPieceCanMove(source, target);
         movePiece(source, target);
     }
 
-    private void checkMovablePieceAt(Position source) {
+    private void checkMovablePiece(Position source, Position target) {
         if (board.get(source).isSame(NONE)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
+        }
+        if (board.get(target).isSame(board.get(source))) {
+            throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 편 기물이 있어 이동 할 수 없습니다");
         }
     }
 
     private void checkPieceCanMove(Position source, Position target) {
         Route route = board.get(source).findRoute(source, target);
-        Position nextPosition = source.createPositionTo(route);
-        while (!nextPosition.equals(target) && board.get(nextPosition).isSame(NONE)) {
-            nextPosition = nextPosition.createPositionTo(route);
+        Position nowPosition = source.createPositionTo(route);
+        while (!target.equals(nowPosition) && board.get(nowPosition).isSame(NONE)) {
+            nowPosition = nowPosition.createPositionTo(route);
         }
-        if (!target.equals(nextPosition) || board.get(target).isSame(board.get(source))) {
+        if (!target.equals(nowPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
     }
