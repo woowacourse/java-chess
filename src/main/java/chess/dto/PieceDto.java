@@ -23,21 +23,21 @@ public class PieceDto {
     }
 
     private static void setWhitePiece() {
-        names.put(new Pawn(Color.WHITE), "p");
-        names.put(new Rook(Color.WHITE), "r");
-        names.put(new Knight(Color.WHITE), "n");
-        names.put(new Bishop(Color.WHITE), "b");
-        names.put(new Queen(Color.WHITE), "q");
-        names.put(new King(Color.WHITE), "k");
+        names.put(new Pawn(Color.WHITE), "♙");
+        names.put(new Rook(Color.WHITE), "♖");
+        names.put(new Knight(Color.WHITE), "♘");
+        names.put(new Bishop(Color.WHITE), "♗");
+        names.put(new Queen(Color.WHITE), "♕");
+        names.put(new King(Color.WHITE), "♔");
     }
 
     private static void setBlackPiece() {
-        names.put(new Pawn(Color.BLACK), "P");
-        names.put(new Rook(Color.BLACK), "R");
-        names.put(new Knight(Color.BLACK), "N");
-        names.put(new Bishop(Color.BLACK), "B");
-        names.put(new Queen(Color.BLACK), "Q");
-        names.put(new King(Color.BLACK), "K");
+        names.put(new Pawn(Color.BLACK), "♟");
+        names.put(new Rook(Color.BLACK), "♜");
+        names.put(new Knight(Color.BLACK), "♞");
+        names.put(new Bishop(Color.BLACK), "♝");
+        names.put(new Queen(Color.BLACK), "♛");
+        names.put(new King(Color.BLACK), "♚");
     }
 
     public static String getName(final Piece piece) {
