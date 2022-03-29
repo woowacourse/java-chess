@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Score;
 import chess.domain.piece.attribute.Team;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -57,6 +58,12 @@ public final class Board {
         }
     }
 
+    private void validateIsPiece(Position position) {
+        if (findByPosition(position).isPiece()) {
+            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
+        }
+    }
+
     private void replace(Position from, Position to, Piece sourcePiece) {
         squares.replace(to, sourcePiece);
         squares.replace(from, new EmptyPiece());
@@ -66,17 +73,15 @@ public final class Board {
         return findByPosition(position).getColor() == team;
     }
 
-    private void validateIsPiece(Position position) {
-        if (findByPosition(position).isPiece()) {
-            throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
-        }
-    }
-
     public Map<Team, Double> getTotalStatus() {
         Map<Team, Double> totalScore = new EnumMap<>(Team.class);
         totalScore.put(Team.WHITE, getScore(Team.WHITE));
         totalScore.put(Team.BLACK, getScore(Team.BLACK));
         return totalScore;
+    }
+
+    public Map<Position, Piece> getSquares() {
+        return new HashMap<>(squares);
     }
 
     private double getScore(Team team) {

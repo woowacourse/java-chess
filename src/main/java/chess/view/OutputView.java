@@ -5,6 +5,7 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
+import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -29,18 +30,22 @@ public final class OutputView {
         System.out.println(INIT_MESSAGE);
     }
 
-    public static void printChessBoard(Board board) {
+    public static void printChessBoard(Map<Position, Piece> squares) {
         List<Rank> ranks = Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
         for (Rank rank : ranks) {
-            for (File file : File.values()) {
-                System.out.print(board.findByPosition(new Position(file, rank)).getName());
-            }
+            printChessBoardOfRank(squares, rank);
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printChessBoardOfRank(Map<Position, Piece> squares, Rank rank) {
+        for (File file : File.values()) {
+            System.out.print(squares.get(new Position(file, rank)).getName());
+        }
     }
 
     public static void printStatus(Status status) {
