@@ -6,15 +6,27 @@ import java.util.Map;
 
 public class Position {
 
-    public static final int RANKS_TOTAL_SIZE = 8;
     public static final int FILES_TOTAL_SIZE = 8;
+    public static final int RANKS_TOTAL_SIZE = 8;
+
+    private static final String INVALID_IDX_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 위치입니다. (index 범위: 0~7)";
 
     private final int fileIdx;
     private final int rankIdx;
 
     private Position(int fileIdx, int rankIdx) {
+        validateIdxRange(fileIdx, rankIdx);
         this.fileIdx = fileIdx;
         this.rankIdx = rankIdx;
+    }
+
+    private static void validateIdxRange(int fileIdx, int rankIdx) {
+        boolean invalidFileIdxRange = fileIdx < 0 || fileIdx >= FILES_TOTAL_SIZE;
+        boolean invalidRankIdxRange = rankIdx < 0 || rankIdx >= RANKS_TOTAL_SIZE;
+
+        if (invalidFileIdxRange || invalidRankIdxRange) {
+            throw new IllegalArgumentException(INVALID_IDX_RANGE_EXCEPTION_MESSAGE);
+        }
     }
 
     public static Position of(int fileIdx, int rankIdx) {
