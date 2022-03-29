@@ -8,34 +8,34 @@ public class Position {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
-    private final File file;
+    private final Column column;
     private final Rank rank;
 
-    public Position(final File file, final Rank rank) {
-        this.file = file;
+    public Position(final Column column, final Rank rank) {
+        this.column = column;
         this.rank = rank;
     }
 
     public static Position create(final String position) {
-        final File file = File.of(position.substring(FILE_INDEX, RANK_INDEX));
+        final Column column = Column.of(position.substring(FILE_INDEX, RANK_INDEX));
         final Rank rank = Rank.of(position.substring(RANK_INDEX));
-        return new Position(file, rank);
+        return new Position(column, rank);
     }
 
     public Position move(final Direction direction) {
-        return new Position(direction.moveFile(file), direction.moveRank(rank));
+        return new Position(direction.moveFile(column), direction.moveRank(rank));
     }
 
     public boolean isSameRank(final Rank rank) {
         return rank == this.rank;
     }
 
-    public boolean isSameFile(final File file) {
-        return file == this.file;
+    public boolean isSameColumn(final Column column) {
+        return column == this.column;
     }
 
-    public int calculateFileDistance(final Position from) {
-        return this.file.calculateDistance(from.file);
+    public int calculateColumnDistance(final Position from) {
+        return this.column.calculateDistance(from.column);
     }
 
     public int calculateRankDistance(final Position from) {
@@ -51,11 +51,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return rank == position.rank && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(rank, column);
     }
 }

@@ -20,10 +20,10 @@ public final class BishopPiece extends Piece {
 
     @Override
     public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
-        final int fileDistance = to.calculateFileDistance(from);
+        final int columnDistance = to.calculateColumnDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 
-        final Direction direction = Direction.of(fileDistance, rankDistance);
+        final Direction direction = Direction.of(columnDistance, rankDistance);
 
         return movableDirections.contains(direction);
     }

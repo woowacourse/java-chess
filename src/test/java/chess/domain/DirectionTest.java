@@ -14,8 +14,8 @@ public class DirectionTest {
 
     @ParameterizedTest
     @MethodSource("directions")
-    void calculateDirection(int fileDistance, int rankDistance, Direction direction) {
-        assertThat(Direction.of(fileDistance, rankDistance)).isEqualTo(direction);
+    void calculateDirection(int columnDistance, int rankDistance, Direction direction) {
+        assertThat(Direction.of(columnDistance, rankDistance)).isEqualTo(direction);
     }
 
     static Stream<Arguments> directions() {

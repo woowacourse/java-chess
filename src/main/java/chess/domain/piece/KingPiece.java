@@ -22,13 +22,13 @@ public class KingPiece extends Piece {
 
     @Override
     public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
-        final int fileDistance = to.calculateFileDistance(from);
+        final int columnDistance = to.calculateColumnDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 
-        final Direction direction = Direction.of(fileDistance, rankDistance);
+        final Direction direction = Direction.of(columnDistance, rankDistance);
 
         return movableDirections.contains(direction) &&
-                Math.abs(fileDistance) < LIMIT_DISTANCE && Math.abs(rankDistance) < LIMIT_DISTANCE;
+                Math.abs(columnDistance) < LIMIT_DISTANCE && Math.abs(rankDistance) < LIMIT_DISTANCE;
     }
 
     @Override

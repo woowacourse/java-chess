@@ -9,7 +9,7 @@ import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.LinkedHashMap;
@@ -42,21 +42,21 @@ public class BoardInitializer {
     private static void putPiecesWithoutPawn(final Map<Position, Piece> board,
                                              final Rank rank,
                                              final Color color) {
-        board.put(new Position(File.A, rank), new RookPiece(color));
-        board.put(new Position(File.B, rank), new KnightPiece(color));
-        board.put(new Position(File.C, rank), new BishopPiece(color));
-        board.put(new Position(File.D, rank), new QueenPiece(color));
-        board.put(new Position(File.E, rank), new KingPiece(color));
-        board.put(new Position(File.F, rank), new BishopPiece(color));
-        board.put(new Position(File.G, rank), new KnightPiece(color));
-        board.put(new Position(File.H, rank), new RookPiece(color));
+        board.put(new Position(Column.A, rank), new RookPiece(color));
+        board.put(new Position(Column.B, rank), new KnightPiece(color));
+        board.put(new Position(Column.C, rank), new BishopPiece(color));
+        board.put(new Position(Column.D, rank), new QueenPiece(color));
+        board.put(new Position(Column.E, rank), new KingPiece(color));
+        board.put(new Position(Column.F, rank), new BishopPiece(color));
+        board.put(new Position(Column.G, rank), new KnightPiece(color));
+        board.put(new Position(Column.H, rank), new RookPiece(color));
     }
 
     private static void putPiecesOnRank(final Map<Position, Piece> board,
                                         final Rank rank,
                                         final Piece piece) {
-        for (File file : File.values()) {
-            board.put(new Position(file, rank), piece);
+        for (Column column : Column.values()) {
+            board.put(new Position(column, rank), piece);
         }
     }
 }

@@ -10,7 +10,7 @@ import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ class BoardInitializerTest {
     void create() {
         List<Position> positions = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                positions.add(new Position(file, rank));
+            for (Column column : Column.values()) {
+                positions.add(new Position(column, rank));
             }
         }
 
@@ -51,41 +51,41 @@ class BoardInitializerTest {
 
     private static Stream<Arguments> initialPieces() {
         return Stream.of(
-                Arguments.of(new Position(File.A, Rank.EIGHT), new RookPiece(Color.BLACK)),
-                Arguments.of(new Position(File.B, Rank.EIGHT), new KnightPiece(Color.BLACK)),
-                Arguments.of(new Position(File.C, Rank.EIGHT), new BishopPiece(Color.BLACK)),
-                Arguments.of(new Position(File.D, Rank.EIGHT), new QueenPiece(Color.BLACK)),
-                Arguments.of(new Position(File.E, Rank.EIGHT), new KingPiece(Color.BLACK)),
-                Arguments.of(new Position(File.F, Rank.EIGHT), new BishopPiece(Color.BLACK)),
-                Arguments.of(new Position(File.G, Rank.EIGHT), new KnightPiece(Color.BLACK)),
-                Arguments.of(new Position(File.H, Rank.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.A, Rank.EIGHT), new RookPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.B, Rank.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.C, Rank.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.D, Rank.EIGHT), new QueenPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.E, Rank.EIGHT), new KingPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.F, Rank.EIGHT), new BishopPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.G, Rank.EIGHT), new KnightPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.H, Rank.EIGHT), new RookPiece(Color.BLACK)),
 
-                Arguments.of(new Position(File.A, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.B, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.C, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.D, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.E, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.F, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.G, Rank.SEVEN), new PawnPiece(Color.BLACK)),
-                Arguments.of(new Position(File.H, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.A, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.B, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.C, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.D, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.E, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.F, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.G, Rank.SEVEN), new PawnPiece(Color.BLACK)),
+                Arguments.of(new Position(Column.H, Rank.SEVEN), new PawnPiece(Color.BLACK)),
 
-                Arguments.of(new Position(File.A, Rank.ONE), new RookPiece(Color.WHITE)),
-                Arguments.of(new Position(File.B, Rank.ONE), new KnightPiece(Color.WHITE)),
-                Arguments.of(new Position(File.C, Rank.ONE), new BishopPiece(Color.WHITE)),
-                Arguments.of(new Position(File.D, Rank.ONE), new QueenPiece(Color.WHITE)),
-                Arguments.of(new Position(File.E, Rank.ONE), new KingPiece(Color.WHITE)),
-                Arguments.of(new Position(File.F, Rank.ONE), new BishopPiece(Color.WHITE)),
-                Arguments.of(new Position(File.G, Rank.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.A, Rank.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.B, Rank.ONE), new KnightPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.C, Rank.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.D, Rank.ONE), new QueenPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.E, Rank.ONE), new KingPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.F, Rank.ONE), new BishopPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.G, Rank.ONE), new KnightPiece(Color.WHITE)),
 
-                Arguments.of(new Position(File.H, Rank.ONE), new RookPiece(Color.WHITE)),
-                Arguments.of(new Position(File.A, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.B, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.C, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.D, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.E, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.F, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.G, Rank.TWO), new PawnPiece(Color.WHITE)),
-                Arguments.of(new Position(File.H, Rank.TWO), new PawnPiece(Color.WHITE))
+                Arguments.of(new Position(Column.H, Rank.ONE), new RookPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.A, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.B, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.C, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.D, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.E, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.F, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.G, Rank.TWO), new PawnPiece(Color.WHITE)),
+                Arguments.of(new Position(Column.H, Rank.TWO), new PawnPiece(Color.WHITE))
         );
     }
 }

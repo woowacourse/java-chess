@@ -7,7 +7,7 @@ import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.QueenPiece;
 import chess.domain.piece.RookPiece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -56,8 +56,8 @@ public class Score {
     }
 
     private double calculateScorePawn(final Board board, final Color color) {
-        return Arrays.stream(File.values())
-                .mapToInt(file -> board.countPieceOnSameFile(new PawnPiece(color), file))
+        return Arrays.stream(Column.values())
+                .mapToInt(file -> board.countPieceOnSameColumn(new PawnPiece(color), file))
                 .mapToDouble(this::decidePawnScoreRule)
                 .sum();
     }

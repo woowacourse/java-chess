@@ -37,7 +37,7 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("Pawn Piece가 같은 File에 2개 있는 상태에서 점수를 계산한다.")
+    @DisplayName("Pawn Piece가 같은 Column에 2개 있는 상태에서 점수를 계산한다.")
     void calculateScoreMoveBoardWhite() {
         board.move(Position.create("a2"), Position.create("a4"));
         board.move(Position.create("a4"), Position.create("a5"));

@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -79,7 +79,7 @@ public class Board {
     }
 
     private Direction decideDirection(final Position from, final Position to) {
-        final int fileDistance = to.calculateFileDistance(from);
+        final int fileDistance = to.calculateColumnDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 
         return Direction.of(fileDistance, rankDistance);
@@ -100,10 +100,10 @@ public class Board {
                 .count();
     }
 
-    public int countPieceOnSameFile(final Piece piece, final File file) {
+    public int countPieceOnSameColumn(final Piece piece, final Column column) {
         return (int) board.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().isSameFile(file))
+                .filter(entry -> entry.getKey().isSameColumn(column))
                 .filter(entry -> entry.getValue().equals(piece))
                 .count();
     }

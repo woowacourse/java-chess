@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.Objects;
 
-public abstract class Piece { // 추상이 필요한가?
+public abstract class Piece {
 
     private final Color color;
     private final String name;
@@ -20,7 +20,8 @@ public abstract class Piece { // 추상이 필요한가?
         return name;
     }
 
-    public abstract boolean isRightMovement(final Position from, final Position to,
+    public abstract boolean isRightMovement(final Position from,
+                                            final Position to,
                                             final boolean isEmptyTarget);
 
     public boolean isSameColor(final Color color) {

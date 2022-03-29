@@ -7,7 +7,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,18 +45,18 @@ public class BoardTest {
 
     @Test
     @DisplayName("같은 파일에 Pawn의 개수를 구한다.")
-    void countPawnOnSameFile() {
-        assertThat(board.countPieceOnSameFile(new PawnPiece(Color.BLACK), File.A)).isEqualTo(1);
+    void countPawnOnSameColumn() {
+        assertThat(board.countPieceOnSameColumn(new PawnPiece(Color.BLACK), Column.A)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("같은 파일에 Pawn의 개수를 구한다.")
-    void countTwoPawnOnSameFile() {
+    void countTwoPawnOnSameColumn() {
         board.move(Position.create("a2"), Position.create("a4"));
         board.move(Position.create("a4"), Position.create("a5"));
         board.move(Position.create("a5"), Position.create("a6"));
         board.move(Position.create("a6"), Position.create("b7"));
 
-        assertThat(board.countPieceOnSameFile(new PawnPiece(Color.WHITE), File.B)).isEqualTo(2);
+        assertThat(board.countPieceOnSameColumn(new PawnPiece(Color.WHITE), Column.B)).isEqualTo(2);
     }
 }
