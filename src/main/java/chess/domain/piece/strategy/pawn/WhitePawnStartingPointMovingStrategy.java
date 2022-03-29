@@ -5,11 +5,12 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class WhitePawnStartingPointMovingStrategy {
+public class WhitePawnStartingPointMovingStrategy implements PawnMovingStrategy {
 
     private static final int RANK_INDEX_STARTING_POINT = 6;
     private static final Direction MOVABLE_DIRECTION = Direction.TOP;
 
+    @Override
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
         double distance = calculateDistance(source, target);

@@ -21,7 +21,7 @@ class BlackPawnDefaultMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"a6,a5,true", "a5,a4,true", "a6,a4,false", "a6,b5,false", "a6,b4,false"})
     void pawn_1칸_이동_가능하다(String source, String target, boolean expected) {
-        BlackPawnDefaultMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
+        PawnMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.BLACK));
@@ -34,7 +34,7 @@ class BlackPawnDefaultMovingStrategyTest {
     @DisplayName("Pawn은 앞에 기물이 존재하는 경우 이동할 수 없다.")
     @Test
     void pawn_이동할_때_기물이_존재하면_이동_불가능하다() {
-        BlackPawnDefaultMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
+        PawnMovingStrategy movingStrategy = new BlackPawnDefaultMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, "a6", new Pawn(Color.BLACK));

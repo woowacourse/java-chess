@@ -5,10 +5,11 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class BlackPawnDefaultMovingStrategy {
+public class BlackPawnDefaultMovingStrategy implements PawnMovingStrategy {
 
     private static final Direction MOVABLE_DIRECTION = Direction.BOTTOM;
 
+    @Override
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
         double distance = calculateDistance(source, target);

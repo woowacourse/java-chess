@@ -20,7 +20,7 @@ class WhitePawnCaptureMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"b2,a3,true", "b2,c3,true", "b2,b3,false", "c2,a3,false"})
     void white_pawn은_위_오른쪽_왼쪽_capture_가능하다(String source, String target, boolean expected) {
-        WhitePawnCaptureMovingStrategy movingStrategy = new WhitePawnCaptureMovingStrategy();
+        PawnMovingStrategy movingStrategy = new WhitePawnCaptureMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.WHITE));

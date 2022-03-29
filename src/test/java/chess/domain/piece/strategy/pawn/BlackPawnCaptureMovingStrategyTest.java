@@ -20,7 +20,7 @@ class BlackPawnCaptureMovingStrategyTest {
     @ParameterizedTest
     @CsvSource({"b7,a6,true", "b7,c6,true", "b7,b6,false", "c7,a6,false"})
     void black_pawn은_아래_오른쪽_왼쪽_capture_가능하다(String source, String target, boolean expected) {
-        BlackPawnCaptureMovingStrategy movingStrategy = new BlackPawnCaptureMovingStrategy();
+        PawnMovingStrategy movingStrategy = new BlackPawnCaptureMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
         List<List<Piece>> board = chessBoard.getBoard();
         setPiece(board, source, new Pawn(Color.BLACK));
