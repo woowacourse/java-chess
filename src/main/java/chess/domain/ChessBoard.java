@@ -12,11 +12,10 @@ public class ChessBoard {
 
     private Map<Position, ChessPiece> chessBoard;
     private Color currentTurn = Color.WHITE;
-    private GameStatus gameStatus;
+    private GameStatus gameStatus = GameStatus.READY;
 
     public ChessBoard(Map<Position, ChessPiece> board) {
         this.chessBoard = board;
-        this.gameStatus = GameStatus.READY;
     }
 
     public void move(Position from, Position to) {
