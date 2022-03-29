@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -45,7 +46,12 @@ public class Position implements Comparable<Position> {
 		return new Position(this.column.flip(), this.row.flip());
 	}
 
-	public List<Position> pathTo(Position otherPosition) {
+	public boolean existObstacleToOtherPosition(Position otherPosition, Predicate<Position> positionPredicate) {
+		return pathTo(otherPosition).stream()
+			.allMatch(positionPredicate);
+	}
+
+	private List<Position> pathTo(Position otherPosition) {
 		List<Row> rowPath = this.row.pathTo(otherPosition.row);
 		List<Column> columnPath = this.column.pathTo(otherPosition.column);
 

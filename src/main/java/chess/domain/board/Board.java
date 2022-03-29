@@ -112,7 +112,7 @@ public final class Board {
 		if (piece.isBlack() == whiteTurn) {
 			throw new IllegalArgumentException(INVALID_TURN_EXCEPTION);
 		}
-		if (!piece.isKnight() && !PathCheck.check(beforePosition, afterPosition, this::isBlank)) {
+		if (!piece.isKnight() && !beforePosition.existObstacleToOtherPosition(afterPosition, this::isBlank)) {
 			throw new IllegalArgumentException(INVALID_MOVING_PATH_EXCEPTION);
 		}
 	}
