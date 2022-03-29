@@ -24,14 +24,14 @@ public abstract class Piece {
         this.availableMovePosition = initAvailablePosition(directionsGenerator.generate());
     }
 
-    protected abstract List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction);
-
     private Map<Direction, List<Position>> initAvailablePosition(final List<Direction> directions) {
         Map<Direction, List<Position>> availableMovePosition = new HashMap<>();
         directions.forEach(direction -> availableMovePosition.put(direction, null));
         return availableMovePosition;
     }
+
+    protected abstract List<Position> calculateAvailablePosition(final Position source,
+        final Direction direction);
 
     public boolean isAvailableMove(final Position source, final Position target) {
         generateAvailablePosition(source);
@@ -41,17 +41,19 @@ public abstract class Piece {
             .orElse(null) != null;
     }
 
-    private void generateAvailablePosition(Position source) {
+    public void generateAvailablePosition(Position source) {
         for (Direction direction : availableMovePosition.keySet()) {
             availableMovePosition.put(direction, calculateAvailablePosition(source, direction));
         }
     }
 
     public List<Position> getAvailablePositions(final Position target) {
-        return availableMovePosition.values().stream()
+        List<Position> positions = availableMovePosition.values().stream()
             .filter(value -> value.contains(target))
             .findFirst()
             .orElse(new ArrayList<>());
+        int index = positions.indexOf(target);
+        return positions.subList(0, index);
     }
 
     public Direction getDirection(Position target) {
@@ -59,6 +61,10 @@ public abstract class Piece {
             .filter(direction -> availableMovePosition.get(direction).contains(target))
             .findFirst()
             .orElse(null);
+    }
+
+    public boolean isPawn() {
+        return false;
     }
 
     protected boolean checkOverRange(final Position source, final Direction direction) {
@@ -71,10 +77,6 @@ public abstract class Piece {
         int rank = source.getRank() + direction.getRank();
         int file = source.getFile() + direction.getFile();
         return Position.of(File.of(file), Rank.of(rank));
-    }
-
-    public boolean isPawn() {
-        return false;
     }
 
     public boolean isSamePlayer(Player player) {

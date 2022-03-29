@@ -18,6 +18,19 @@
     - [x] `ChessBoard`에서 해당 Piece가 `Pawn`인지 검사하는 코드가 존재.
         - `Piece` 클래스에서 검사하도록 수정하는건 어떤지
     - [ ] `ChessBoard` - `validateTargetRoutePawn()` 폰의 기본 이동 규칙을 폰 내부로 옮길 수 있는 방법
+      - Pawn과 다른 기물의 차이점
+        - Pawn
+          - 대각선으로만 공격이 가능(즉, 대각선으로 이동하려면 Target이 상대방의 색이어야한다.)
+          - 직진은 Target과 경로가 모두 비어있어야만 이동 가능하다.
+          - 첫 이동이라면 2칸 이동할 수 있다.
+        - 타 기물
+          - 해당 Target까지의 경로가 비어있어야 이동 가능하다.
+      - `수정`
+        - Pawn 
+          - 처음이 아닐 때 2칸 이동하는 경우 -> `Pawn`에서 예외 처리
+          - Target 포함된 방향의 이동 경로 전달 -> `Pawn`에서 반환
+        - Piece
+          - Target 제외 경로가 비어있어야 이동 가능 -> `Piece`에서 이동 가능한 List<Position> 가공
     - [ ] `BlackPawn`, `WhitePawn`을 나눠야할 필요가 없음.
 - [ ] `ChessBoard`
     - [ ] 관리하는 대상을 체스 보드만 관리할 수 있도록

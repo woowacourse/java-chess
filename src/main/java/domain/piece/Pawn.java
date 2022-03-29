@@ -18,21 +18,20 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     protected List<Position> calculateAvailablePosition(final Position source,
         final Direction direction) {
-        if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
-            return new ArrayList<>();
-        }
+        validateMoveTwoSpace(source, direction);
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
         if (checkOverRange(source, direction)) {
             positions.add(createDirectionPosition(source, direction));
         }
         return positions;
+    }
+
+    private void validateMoveTwoSpace(Position source, Direction direction) {
+        if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
+            throw new IllegalArgumentException("[ERROR] Pawn은 처음 이동할 경우에만 2칸 이동이 가능합니다.");
+        }
     }
 
     private boolean isFirstMove(final Position source) {
@@ -68,5 +67,10 @@ public class Pawn extends SpecificLocationPiece {
             return Direction.SOUTH;
         }
         return null;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }
