@@ -21,7 +21,7 @@ final class GameOver extends Started {
 
     @Override
     public GameResult result() {
-        return new GameResult(board.getBoard());
+        return new GameResult(board.toMap());
     }
 
     @Override

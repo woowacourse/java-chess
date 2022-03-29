@@ -40,11 +40,13 @@ public class Position {
     }
 
     public int fileDifference(Position targetPosition) {
-        return Math.abs(fileIdx - targetPosition.fileIdx);
+        int fileRawDifference = targetPosition.fileIdx - fileIdx;
+        return Math.abs(fileRawDifference);
     }
 
     public int rankDifference(Position targetPosition) {
-        return Math.abs(targetPosition.rankIdx - rankIdx);
+        int rankRawDifference = targetPosition.rankIdx - rankIdx;
+        return Math.abs(rankRawDifference);
     }
 
     public boolean hasRankIdxOf(int rankIdx) {
@@ -63,8 +65,8 @@ public class Position {
     }
 
     public boolean checkDirection(Position targetPosition, Direction direction) {
-        int fileDiff =  targetPosition.fileIdx - fileIdx;
-        int rankDiff =  targetPosition.rankIdx - rankIdx;
+        int fileDiff = targetPosition.fileIdx - fileIdx;
+        int rankDiff = targetPosition.rankIdx - rankIdx;
 
         return direction.checkByPositionDifference(fileDiff, rankDiff);
     }

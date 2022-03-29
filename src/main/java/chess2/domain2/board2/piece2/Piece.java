@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
+    private static final String INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE = "공격할 수 없는 대상입니다.";
     protected final Color color;
     protected final PieceType type;
 
@@ -17,7 +18,7 @@ public abstract class Piece {
 
     public final boolean canAttack(Position from, Position to, Piece targetPiece) {
         if (targetPiece.hasColorOf(color)) {
-            throw new IllegalArgumentException("공격할 수 없는 대상입니다.");
+            throw new IllegalArgumentException(INVALID_ATTACK_TARGET_EXCEPTION_MESSAGE);
         }
         return isAttackableRoute(from, to);
     }

@@ -9,15 +9,21 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, Piece> board;
+    private static final String NON_EXISTING_PIECE_EXCEPTION_MESSAGE = "해당 위치에 체스 말은 존재하지 않습니다.";
+    private static final String INVALID_TURN_EXCEPTION_TEXT = " 진영이 움직일 차례입니다!";
+    private static final String INVALID_ATTACK_ROUTE_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
+    private static final String INVALID_MOVE_ROUTE_EXCEPTION_MESSAGE = "해당 위치로 이동할 수 없습니다.";
+    private static final String BLOCKED_PATH_EXCEPTION_MESSAGE = "다른 말이 가로막고 있습니다.";
 
-    public Board(Map<Position, Piece> board) {
-        this.board = board;
+    private final Map<Position, Piece> boardMap;
+
+    public Board(Map<Position, Piece> boardMap) {
+        this.boardMap = boardMap;
     }
 
     public void movePiece(Position from, Position to, Color color) {
         validatePieceAndCurrentTurn(from, color);
-        Piece fromPiece = board.get(from);
+        Piece fromPiece = boardMap.get(from);
         if (isOccupied(to)) {
             confirmAttack(from, to, fromPiece);
             return;
@@ -26,34 +32,36 @@ public class Board {
         confirmMove(from, to);
     }
 
-    private void validatePieceAndCurrentTurn(Position from, Color currentTurnColor) {
+    private void validatePieceAndCurrentTurn(Position from, Color currentTurn) {
         if (!isOccupied(from)) {
-            throw new IllegalArgumentException("해당 위치에 체스 말은 존재하지 않습니다.");
+            throw new IllegalArgumentException(NON_EXISTING_PIECE_EXCEPTION_MESSAGE);
         }
-        Piece fromPiece = board.get(from);
-        if (!fromPiece.hasColorOf(currentTurnColor)) {
-            throw new IllegalArgumentException(currentTurnColor + " 진영이 움직일 차례입니다!");
+        Piece fromPiece = boardMap.get(from);
+        if (!fromPiece.hasColorOf(currentTurn)) {
+            throw new IllegalArgumentException(currentTurn + INVALID_TURN_EXCEPTION_TEXT);
         }
     }
 
     private void confirmAttack(Position from, Position to, Piece fromPiece) {
-        Piece targetPiece = board.get(to);
+        Piece targetPiece = boardMap.get(to);
         if (!fromPiece.canAttack(from, to, targetPiece)) {
-            throw new IllegalArgumentException("공격할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(INVALID_ATTACK_ROUTE_EXCEPTION_MESSAGE);
         }
+
         confirmMove(from, to);
     }
 
     private void validateMovable(boolean movable) {
         if (!movable) {
-            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_MOVE_ROUTE_EXCEPTION_MESSAGE);
         }
     }
 
     private void confirmMove(Position from, Position to) {
         validateClearPath(from, to);
-        Piece fromPiece = board.remove(from);
-        board.put(to, fromPiece);
+
+        Piece fromPiece = boardMap.remove(from);
+        boardMap.put(to, fromPiece);
     }
 
     private void validateClearPath(Position from, Position to) {
@@ -62,27 +70,27 @@ public class Board {
                 .noneMatch(this::isOccupied);
 
         if (!isClear) {
-            throw new IllegalArgumentException("다른 말이 가로막고 있습니다.");
+            throw new IllegalArgumentException(BLOCKED_PATH_EXCEPTION_MESSAGE);
         }
     }
 
     private boolean isOccupied(Position position) {
-        return board.containsKey(position);
+        return boardMap.containsKey(position);
     }
 
     public int countByType(PieceType pieceType) {
-        return (int) board.values()
+        return (int) boardMap.values()
                 .stream()
                 .filter(piece -> piece.hasTypeOf(pieceType))
                 .count();
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    public Map<Position, Piece> toMap() {
+        return boardMap;
     }
 
     @Override
     public String toString() {
-        return "Board{board=" + board + '}';
+        return "Board{" + boardMap + '}';
     }
 }

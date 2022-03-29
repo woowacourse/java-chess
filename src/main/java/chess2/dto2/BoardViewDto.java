@@ -18,7 +18,7 @@ public class BoardViewDto {
     private final List<String> boardDisplay;
 
     public BoardViewDto(Board board) {
-        boardDisplay = toBoardDisplay(board.getBoard());
+        boardDisplay = toBoardDisplay(board.toMap());
     }
 
     private static List<String> toBoardDisplay(Map<Position, Piece> board) {
