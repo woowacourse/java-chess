@@ -1,49 +1,49 @@
 package chess2.domain2.board2.position;
 
-import java.util.function.BiPredicate;
+import chess2.strategy.DirectionChecker;
 
 public enum Direction {
 
-    UP((fileDiff, rankDiff) -> isUpward(rankDiff) && isVertical(fileDiff)),
-    UP_RIGHT((fileDiff, rankDiff) -> isUpward(rankDiff) && isRight(fileDiff)),
-    RIGHT((fileDiff, rankDiff) -> isHorizontal(rankDiff) && isRight(fileDiff)),
-    DOWN_RIGHT((fileDiff, rankDiff) -> isDownward(rankDiff) && isRight(fileDiff)),
-    DOWN((fileDiff, rankDiff) -> isDownward(rankDiff) && isVertical(fileDiff)),
-    DOWN_LEFT((fileDiff, rankDiff) -> isDownward(rankDiff) && isLeft(fileDiff)),
-    LEFT((fileDiff, rankDiff) -> isHorizontal(rankDiff) && isLeft(fileDiff)),
-    UP_LEFT((fileDiff, rankDiff) -> isUpward(rankDiff) && isLeft(fileDiff));
+    UP((eastWardDiff, northWardDiff) -> isUpward(northWardDiff) && isVertical(eastWardDiff)),
+    UP_RIGHT((eastWardDiff, northWardDiff) -> isUpward(northWardDiff) && isRight(eastWardDiff)),
+    RIGHT((eastWardDiff, northWardDiff) -> isHorizontal(northWardDiff) && isRight(eastWardDiff)),
+    DOWN_RIGHT((eastWardDiff, northWardDiff) -> isDownward(northWardDiff) && isRight(eastWardDiff)),
+    DOWN((eastWardDiff, northWardDiff) -> isDownward(northWardDiff) && isVertical(eastWardDiff)),
+    DOWN_LEFT((eastWardDiff, northWardDiff) -> isDownward(northWardDiff) && isLeft(eastWardDiff)),
+    LEFT((eastWardDiff, northWardDiff) -> isHorizontal(northWardDiff) && isLeft(eastWardDiff)),
+    UP_LEFT((eastWardDiff, northWardDiff) -> isUpward(northWardDiff) && isLeft(eastWardDiff));
 
-    private final BiPredicate<Integer, Integer> directionChecker;
+    private final DirectionChecker directionChecker;
 
-    Direction(BiPredicate<Integer, Integer> directionChecker) {
+    Direction(DirectionChecker directionChecker) {
         this.directionChecker = directionChecker;
     }
 
-    public boolean checkByPositionDifference(int fileDiff, int rankDiff) {
-        return directionChecker.test(fileDiff, rankDiff);
+    public boolean checkByPositionDifference(int eastWardDiff, int northWardDiff) {
+        return directionChecker.checkCorrectDirection(eastWardDiff, northWardDiff);
     }
 
-    private static boolean isUpward(Integer rankDiff) {
-        return rankDiff > 0;
+    private static boolean isUpward(Integer northWardDiff) {
+        return northWardDiff > 0;
     }
 
-    private static boolean isDownward(Integer rankDiff) {
-        return rankDiff < 0;
+    private static boolean isDownward(Integer northWardDiff) {
+        return northWardDiff < 0;
     }
 
-    private static boolean isHorizontal(Integer rankDiff) {
-        return rankDiff == 0;
+    private static boolean isHorizontal(Integer northWardDiff) {
+        return northWardDiff == 0;
     }
 
-    private static boolean isRight(Integer fileDiff) {
-        return fileDiff > 0;
+    private static boolean isRight(Integer eastWardDiff) {
+        return eastWardDiff > 0;
     }
 
-    private static boolean isLeft(Integer fileDiff) {
-        return fileDiff < 0;
+    private static boolean isLeft(Integer eastWardDiff) {
+        return eastWardDiff < 0;
     }
 
-    private static boolean isVertical(Integer fileDiff) {
-        return fileDiff == 0;
+    private static boolean isVertical(Integer eastWardDiff) {
+        return eastWardDiff == 0;
     }
 }
