@@ -1,7 +1,18 @@
 package chess.piece;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.D;
+import static chess.position.File.E;
+import static chess.position.File.F;
+import static chess.position.File.H;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.FOUR;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SIX;
+import static chess.position.Rank.THREE;
+import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,15 +33,15 @@ class QueenTest {
         Queen queen = new Queen(Color.BLACK, from);
 
         assertThatThrownBy(() -> queen.transfer(to, new Pieces(List.of(queen))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveQueen() {
         return Stream.of(
-            Arguments.of(new Position(D, EIGHT), new Position(F, FOUR)),
-            Arguments.of(new Position(D, EIGHT), new Position(A, SIX)),
-            Arguments.of(new Position(D, ONE), new Position(E, FIVE)),
-            Arguments.of(new Position(D, ONE), new Position(B, TWO))
+                Arguments.of(new Position(D, EIGHT), new Position(F, FOUR)),
+                Arguments.of(new Position(D, EIGHT), new Position(A, SIX)),
+                Arguments.of(new Position(D, ONE), new Position(E, FIVE)),
+                Arguments.of(new Position(D, ONE), new Position(B, TWO))
         );
     }
 
@@ -41,19 +52,19 @@ class QueenTest {
         Queen queen = new Queen(Color.BLACK, from);
 
         assertThat(queen.transfer(to, new Pieces(List.of(queen))))
-            .isEqualTo(new Queen(Color.BLACK, to));
+                .isEqualTo(new Queen(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideValidMoveQueen() {
         return Stream.of(
-            Arguments.of(new Position(D, EIGHT), new Position(D, FOUR)),
-            Arguments.of(new Position(D, EIGHT), new Position(H, EIGHT)),
-            Arguments.of(new Position(D, EIGHT), new Position(A, EIGHT)),
-            Arguments.of(new Position(D, EIGHT), new Position(F, SIX)),
-            Arguments.of(new Position(D, EIGHT), new Position(A, FIVE)),
-            Arguments.of(new Position(D, ONE), new Position(D, FOUR)),
-            Arguments.of(new Position(D, ONE), new Position(F, THREE)),
-            Arguments.of(new Position(D, ONE), new Position(A, FOUR))
+                Arguments.of(new Position(D, EIGHT), new Position(D, FOUR)),
+                Arguments.of(new Position(D, EIGHT), new Position(H, EIGHT)),
+                Arguments.of(new Position(D, EIGHT), new Position(A, EIGHT)),
+                Arguments.of(new Position(D, EIGHT), new Position(F, SIX)),
+                Arguments.of(new Position(D, EIGHT), new Position(A, FIVE)),
+                Arguments.of(new Position(D, ONE), new Position(D, FOUR)),
+                Arguments.of(new Position(D, ONE), new Position(F, THREE)),
+                Arguments.of(new Position(D, ONE), new Position(A, FOUR))
         );
     }
 }

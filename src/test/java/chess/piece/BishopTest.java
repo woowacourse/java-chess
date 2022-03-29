@@ -1,7 +1,18 @@
 package chess.piece;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.C;
+import static chess.position.File.D;
+import static chess.position.File.E;
+import static chess.position.File.F;
+import static chess.position.File.G;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SIX;
+import static chess.position.Rank.THREE;
+import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,15 +33,15 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK, from);
 
         assertThatThrownBy(() -> bishop.transfer(to, new Pieces(List.of(bishop))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveBishop() {
         return Stream.of(
-            Arguments.of(new Position(C, EIGHT), new Position(D, THREE)),
-            Arguments.of(new Position(C, EIGHT), new Position(G, FIVE)),
-            Arguments.of(new Position(C, ONE), new Position(B, FIVE)),
-            Arguments.of(new Position(C, ONE), new Position(F, SIX))
+                Arguments.of(new Position(C, EIGHT), new Position(D, THREE)),
+                Arguments.of(new Position(C, EIGHT), new Position(G, FIVE)),
+                Arguments.of(new Position(C, ONE), new Position(B, FIVE)),
+                Arguments.of(new Position(C, ONE), new Position(F, SIX))
         );
     }
 
@@ -45,10 +56,10 @@ class BishopTest {
 
     private static Stream<Arguments> provideCrossMoveBishop() {
         return Stream.of(
-            Arguments.of(new Position(C, EIGHT), new Position(F, FIVE)),
-            Arguments.of(new Position(C, EIGHT), new Position(A, SIX)),
-            Arguments.of(new Position(C, ONE), new Position(B, TWO)),
-            Arguments.of(new Position(C, ONE), new Position(E, THREE))
+                Arguments.of(new Position(C, EIGHT), new Position(F, FIVE)),
+                Arguments.of(new Position(C, EIGHT), new Position(A, SIX)),
+                Arguments.of(new Position(C, ONE), new Position(B, TWO)),
+                Arguments.of(new Position(C, ONE), new Position(E, THREE))
         );
     }
 }

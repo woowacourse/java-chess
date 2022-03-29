@@ -21,7 +21,7 @@ public class Queen extends Piece {
 
     private boolean isValidWay(Position to) {
         return getPosition().isDiagonalWay(to) || getPosition().isVerticalWay(to)
-            || getPosition().isHorizontalWay(to);
+                || getPosition().isHorizontalWay(to);
     }
 
     private boolean hasObstacle(Position to, Pieces pieces) {

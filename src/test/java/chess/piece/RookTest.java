@@ -1,7 +1,15 @@
 package chess.piece;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.C;
+import static chess.position.File.H;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.FOUR;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SEVEN;
+import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,15 +30,15 @@ class RookTest {
         Rook rook = new Rook(Color.BLACK, from);
 
         assertThat(rook.transfer(to, new Pieces(List.of(rook))))
-            .isEqualTo(new Rook(Color.BLACK, to));
+                .isEqualTo(new Rook(Color.BLACK, to));
     }
 
     private static Stream<Arguments> provideMoveCollinearRook() {
         return Stream.of(
-            Arguments.of(new Position(A, EIGHT), new Position(A, FIVE)),
-            Arguments.of(new Position(H, EIGHT), new Position(C, EIGHT)),
-            Arguments.of(new Position(H, ONE), new Position(H, THREE)),
-            Arguments.of(new Position(A, ONE), new Position(A, FOUR))
+                Arguments.of(new Position(A, EIGHT), new Position(A, FIVE)),
+                Arguments.of(new Position(H, EIGHT), new Position(C, EIGHT)),
+                Arguments.of(new Position(H, ONE), new Position(H, THREE)),
+                Arguments.of(new Position(A, ONE), new Position(A, FOUR))
         );
     }
 
@@ -41,14 +49,14 @@ class RookTest {
         Rook rook = new Rook(Color.BLACK, from);
 
         assertThatThrownBy(() -> rook.transfer(to, new Pieces(List.of(rook))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveRook() {
         return Stream.of(
-            Arguments.of(new Position(A, EIGHT), new Position(B, FIVE)),
-            Arguments.of(new Position(H, EIGHT), new Position(C, SEVEN)),
-            Arguments.of(new Position(H, ONE), new Position(B, THREE))
+                Arguments.of(new Position(A, EIGHT), new Position(B, FIVE)),
+                Arguments.of(new Position(H, EIGHT), new Position(C, SEVEN)),
+                Arguments.of(new Position(H, ONE), new Position(B, THREE))
         );
     }
 }

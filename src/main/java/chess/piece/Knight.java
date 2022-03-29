@@ -3,7 +3,7 @@ package chess.piece;
 import chess.position.Position;
 import java.math.BigDecimal;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
 
     public Knight(Color color, Position position) {
         super(color, position);
@@ -19,7 +19,7 @@ public class Knight extends Piece{
         int horizontalDistance = getPosition().getHorizontalDistance(to);
         int verticalDistance = getPosition().getVerticalDistance(to);
         return (horizontalDistance == 1 && verticalDistance == 2) ||
-            (horizontalDistance == 2 && verticalDistance == 1);
+                (horizontalDistance == 2 && verticalDistance == 1);
     }
 
     @Override

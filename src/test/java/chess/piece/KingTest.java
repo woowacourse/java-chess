@@ -1,7 +1,14 @@
 package chess.piece;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.C;
+import static chess.position.File.D;
+import static chess.position.File.E;
+import static chess.position.File.F;
+import static chess.position.File.G;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.FOUR;
+import static chess.position.Rank.SIX;
+import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,16 +29,16 @@ class KingTest {
         King king = new King(Color.BLACK, from);
 
         assertThatThrownBy(() -> king.transfer(to, new Pieces(List.of(king))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveKing() {
         return Stream.of(
-            Arguments.of(new Position(E, FIVE), new Position(E, THREE)),
-            Arguments.of(new Position(E, FIVE), new Position(G, THREE)),
-            Arguments.of(new Position(E, FIVE), new Position(C, THREE)),
-            Arguments.of(new Position(E, FIVE), new Position(D, THREE)),
-            Arguments.of(new Position(E, FIVE), new Position(G, FIVE))
+                Arguments.of(new Position(E, FIVE), new Position(E, THREE)),
+                Arguments.of(new Position(E, FIVE), new Position(G, THREE)),
+                Arguments.of(new Position(E, FIVE), new Position(C, THREE)),
+                Arguments.of(new Position(E, FIVE), new Position(D, THREE)),
+                Arguments.of(new Position(E, FIVE), new Position(G, FIVE))
         );
     }
 
@@ -46,14 +53,14 @@ class KingTest {
 
     private static Stream<Arguments> provideValidMoveKing() {
         return Stream.of(
-            Arguments.of(new Position(E, FIVE), new Position(E, FOUR)),
-            Arguments.of(new Position(E, FIVE), new Position(F, SIX)),
-            Arguments.of(new Position(E, FIVE), new Position(F, FIVE)),
-            Arguments.of(new Position(E, FIVE), new Position(F, FOUR)),
-            Arguments.of(new Position(E, FIVE), new Position(D, FOUR)),
-            Arguments.of(new Position(E, FIVE), new Position(D, FIVE)),
-            Arguments.of(new Position(E, FIVE), new Position(D, SIX)),
-            Arguments.of(new Position(E, FIVE), new Position(E, SIX))
+                Arguments.of(new Position(E, FIVE), new Position(E, FOUR)),
+                Arguments.of(new Position(E, FIVE), new Position(F, SIX)),
+                Arguments.of(new Position(E, FIVE), new Position(F, FIVE)),
+                Arguments.of(new Position(E, FIVE), new Position(F, FOUR)),
+                Arguments.of(new Position(E, FIVE), new Position(D, FOUR)),
+                Arguments.of(new Position(E, FIVE), new Position(D, FIVE)),
+                Arguments.of(new Position(E, FIVE), new Position(D, SIX)),
+                Arguments.of(new Position(E, FIVE), new Position(E, SIX))
         );
     }
 }

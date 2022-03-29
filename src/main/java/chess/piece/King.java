@@ -3,7 +3,7 @@ package chess.piece;
 import chess.position.Position;
 import java.math.BigDecimal;
 
-public class King extends Piece{
+public class King extends Piece {
 
     public King(Color color, Position position) {
         super(color, position);

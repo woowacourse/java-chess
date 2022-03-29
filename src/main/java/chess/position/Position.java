@@ -67,14 +67,14 @@ public class Position {
 
     private List<Position> getVerticalPath(Position to) {
         return rank.getPath(to.rank).stream()
-            .map(rank -> new Position(file, rank))
-            .collect(Collectors.toList());
+                .map(rank -> new Position(file, rank))
+                .collect(Collectors.toList());
     }
 
     private List<Position> getHorizontalPath(Position to) {
         return file.getPath(to.file).stream()
-            .map(file -> new Position(file, rank))
-            .collect(Collectors.toList());
+                .map(file -> new Position(file, rank))
+                .collect(Collectors.toList());
     }
 
     private Collection<Position> getDiagonalPath(Position to) {

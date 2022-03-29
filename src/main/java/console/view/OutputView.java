@@ -49,14 +49,14 @@ public class OutputView {
         Position position = new Position(file, rank);
         Optional<Piece> pieceOptional = findByPosition(pieces, position);
         pieceOptional.ifPresentOrElse(
-            piece -> System.out.print(pieceSymbol(piece)),
-            () -> System.out.print("."));
+                piece -> System.out.print(pieceSymbol(piece)),
+                () -> System.out.print("."));
     }
 
     private static Optional<Piece> findByPosition(List<Piece> pieces, Position position) {
         return pieces.stream()
-            .filter(piece -> piece.isSamePosition(position))
-            .findFirst();
+                .filter(piece -> piece.isSamePosition(position))
+                .findFirst();
     }
 
     private static String pieceSymbol(Piece piece) {

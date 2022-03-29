@@ -1,13 +1,20 @@
 package chess.piece;
 
-import static chess.position.File.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.D;
 import static chess.position.File.E;
-import static chess.position.Rank.*;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.FOUR;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SEVEN;
+import static chess.position.Rank.SIX;
+import static chess.position.Rank.THREE;
+import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.ChessBoard;
 import chess.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,15 +33,15 @@ class PawnTest {
         Pawn pawn = new Pawn(color, from);
 
         assertThat(pawn.transfer(to, new Pieces(List.of(pawn))))
-            .isEqualTo(new Pawn(color, to));
+                .isEqualTo(new Pawn(color, to));
     }
 
     private static Stream<Arguments> provideFirstMoveForwardPawn() {
         return Stream.of(
-            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, SIX)),
-            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, FIVE)),
-            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, THREE)),
-            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, FOUR))
+                Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, SIX)),
+                Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, FIVE)),
+                Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, THREE)),
+                Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, FOUR))
         );
     }
 
@@ -44,7 +51,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK, new Position(A, SEVEN));
 
         assertThatThrownBy(() -> pawn.transfer(new Position(A, FOUR), new Pieces(List.of(pawn))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -54,13 +61,13 @@ class PawnTest {
         Pawn pawn = new Pawn(color, from);
 
         assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideInvalidMoveForwardPawn() {
         return Stream.of(
-            Arguments.of(Color.BLACK, new Position(A, SIX), new Position(A, FOUR)),
-            Arguments.of(Color.WHITE, new Position(A, THREE), new Position(A, FIVE))
+                Arguments.of(Color.BLACK, new Position(A, SIX), new Position(A, FOUR)),
+                Arguments.of(Color.WHITE, new Position(A, THREE), new Position(A, FIVE))
         );
     }
 
@@ -71,13 +78,13 @@ class PawnTest {
         Pawn pawn = new Pawn(color, from);
 
         assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideMoveBackwardPawn() {
         return Stream.of(
-            Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, EIGHT)),
-            Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, ONE))
+                Arguments.of(Color.BLACK, new Position(A, SEVEN), new Position(A, EIGHT)),
+                Arguments.of(Color.WHITE, new Position(A, TWO), new Position(A, ONE))
         );
     }
 
@@ -88,14 +95,14 @@ class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE, from);
 
         assertThatThrownBy(() -> pawn.transfer(to, new Pieces(List.of(pawn))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> provideMoveSidePawn() {
         return Stream.of(
-            Arguments.of(new Position(A, TWO), new Position(B, THREE)),
-            Arguments.of(new Position(A, TWO), new Position(B, TWO)),
-            Arguments.of(new Position(B, TWO), new Position(A, TWO))
+                Arguments.of(new Position(A, TWO), new Position(B, THREE)),
+                Arguments.of(new Position(A, TWO), new Position(B, TWO)),
+                Arguments.of(new Position(B, TWO), new Position(A, TWO))
         );
     }
 
@@ -106,7 +113,7 @@ class PawnTest {
         Pawn targetPawn = new Pawn(Color.BLACK, new Position(D, FIVE));
 
         assertThatThrownBy(() -> pickedPawn.transfer(new Position(D, FIVE),
-            new Pieces(List.of(pickedPawn, targetPawn)))).isInstanceOf(IllegalArgumentException.class);
+                new Pieces(List.of(pickedPawn, targetPawn)))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -115,7 +122,7 @@ class PawnTest {
         Pawn pickedPawn = new Pawn(Color.WHITE, new Position(D, FOUR));
 
         assertThatThrownBy(() -> pickedPawn.transfer(new Position(E, FIVE), new Pieces(List.of(pickedPawn))))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -125,6 +132,6 @@ class PawnTest {
         Pawn targetPawn = new Pawn(Color.BLACK, new Position(E, FIVE));
 
         assertThat(pickedPawn.transfer(new Position(E, FIVE), new Pieces(List.of(pickedPawn, targetPawn))))
-            .isEqualTo(new Pawn(Color.WHITE, new Position(E, FIVE)));
+                .isEqualTo(new Pawn(Color.WHITE, new Position(E, FIVE)));
     }
 }

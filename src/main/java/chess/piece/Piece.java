@@ -22,7 +22,7 @@ public abstract class Piece {
 
         if (!isPossibleMovement(to, pieces) || hasSameColorTargetPiece(to, pieces)) {
             throw new IllegalArgumentException(String.format(
-                "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
+                    "%s의 기물을 %s에서 %s로 이동할 수 없습니다.", getClass().getSimpleName(), position, to));
         }
 
         return createNewPiece(to);
@@ -80,8 +80,8 @@ public abstract class Piece {
     @Override
     public String toString() {
         return "Piece{" +
-            "color=" + color +
-            ", type=" + getClass().getSimpleName();
+                "color=" + color +
+                ", type=" + getClass().getSimpleName();
     }
 
     public abstract BigDecimal getPoint();

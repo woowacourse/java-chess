@@ -24,8 +24,8 @@ public enum Rank {
 
     public static List<Rank> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.<Rank>comparingInt(col -> col.value).reversed())
-            .collect(Collectors.toList());
+                .sorted(Comparator.<Rank>comparingInt(col -> col.value).reversed())
+                .collect(Collectors.toList());
     }
 
     public boolean isDownward(Rank destination) {
@@ -45,8 +45,8 @@ public enum Rank {
         int end = Math.max(this.value, to.value);
 
         return orderedValues().stream()
-            .filter(rank -> start < rank.value && rank.value < end)
-            .collect(Collectors.toList());
+                .filter(rank -> start < rank.value && rank.value < end)
+                .collect(Collectors.toList());
     }
 
     @Override

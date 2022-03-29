@@ -1,20 +1,37 @@
 package console.view;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.C;
+import static chess.position.File.D;
+import static chess.position.File.E;
+import static chess.position.File.F;
+import static chess.position.File.G;
+import static chess.position.File.H;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.FOUR;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SEVEN;
+import static chess.position.Rank.SIX;
+import static chess.position.Rank.THREE;
+import static chess.position.Rank.TWO;
 
-import chess.position.*;
-import console.command.*;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
+import console.command.Command;
+import console.command.CommandType;
 import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Map<String, Rank> RANKS = Map.of(
-        "1", ONE, "2", TWO, "3", THREE, "4", FOUR, "5", FIVE, "6", SIX, "7", SEVEN, "8", EIGHT
+            "1", ONE, "2", TWO, "3", THREE, "4", FOUR, "5", FIVE, "6", SIX, "7", SEVEN, "8", EIGHT
     );
     private static final Map<String, File> FILES = Map.of(
-        "a", A, "b", B, "c", C, "d", D, "e", E, "f", F, "g", G, "h", H
+            "a", A, "b", B, "c", C, "d", D, "e", E, "f", F, "g", G, "h", H
     );
     private static final Scanner SCANNER = new Scanner(System.in);
 

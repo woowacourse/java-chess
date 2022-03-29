@@ -13,17 +13,17 @@ public class Pieces {
 
     public boolean hasPieceByPosition(Position position) {
         return pieces.stream()
-            .anyMatch(piece -> piece.isSamePosition(position));
+                .anyMatch(piece -> piece.isSamePosition(position));
     }
 
     public Piece findPieceByPosition(Position position) {
         return pieces.stream().filter(piece -> piece.isSamePosition(position))
-            .findFirst().orElseThrow(() -> new IllegalArgumentException(String.format("%s에 기물이 없습니다.", position)));
+                .findFirst().orElseThrow(() -> new IllegalArgumentException(String.format("%s에 기물이 없습니다.", position)));
     }
 
     public boolean hasObstacleOnLinearPath(Position from, Position to) {
         return from.getLinearPath(to).stream()
-            .anyMatch(this::hasPieceByPosition);
+                .anyMatch(this::hasPieceByPosition);
     }
 
     public boolean hasSameColorPieceByPosition(Position to, Color color) {

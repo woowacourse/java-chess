@@ -22,8 +22,8 @@ public class Score {
 
     private BigDecimal getDefaultScore(List<Piece> pieces) {
         return pieces.stream()
-            .map(Piece::getPoint)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(Piece::getPoint)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private BigDecimal getDeductPointOfPawn(List<Piece> pieces) {
@@ -32,15 +32,15 @@ public class Score {
 
     private long numberOfPawn(List<Piece> pieces) {
         return Arrays.stream(File.values())
-            .mapToLong(file -> numberOfPawnEachFile(pieces, file))
-            .filter(numberOfPawn -> numberOfPawn > 1)
-            .sum();
+                .mapToLong(file -> numberOfPawnEachFile(pieces, file))
+                .filter(numberOfPawn -> numberOfPawn > 1)
+                .sum();
     }
 
     private long numberOfPawnEachFile(List<Piece> pieces, File file) {
         return pieces.stream()
-            .filter(Piece::isPawn)
-            .filter(piece -> piece.isSameFile(file))
-            .count();
+                .filter(Piece::isPawn)
+                .filter(piece -> piece.isSameFile(file))
+                .count();
     }
 }

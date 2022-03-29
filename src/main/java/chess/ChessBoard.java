@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private Map<Position, Piece> board;
+    private final Map<Position, Piece> board;
     private Color currentColor;
 
     public ChessBoard(List<Piece> pieces, Color currentColor) {
@@ -37,8 +37,8 @@ public class ChessBoard {
 
     private boolean hasKingByColor(List<Piece> pieces, Color color) {
         return pieces.stream()
-            .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameColor(color));
+                .filter(Piece::isKing)
+                .anyMatch(piece -> piece.isSameColor(color));
     }
 
     private boolean hasDuplicatePositionPieces(List<Piece> pieces) {
@@ -47,9 +47,9 @@ public class ChessBoard {
 
     private long getDistinctPositionPieceCount(List<Piece> pieces) {
         return pieces.stream()
-            .map(Piece::getPosition)
-            .distinct()
-            .count();
+                .map(Piece::getPosition)
+                .distinct()
+                .count();
     }
 
     public void move(Position from, Position to) {
@@ -58,7 +58,7 @@ public class ChessBoard {
         }
         if (!isCurrentColorPiece(from)) {
             throw new IllegalArgumentException(String.format(
-                "%s 색깔의 기물을 움직일 수 있습니다.", currentColor));
+                    "%s 색깔의 기물을 움직일 수 있습니다.", currentColor));
         }
         movePickedPiece(from, to);
     }
@@ -93,8 +93,8 @@ public class ChessBoard {
 
     private boolean hasKingByColor(Color color) {
         return getPieces().stream()
-            .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameColor(color));
+                .filter(Piece::isKing)
+                .anyMatch(piece -> piece.isSameColor(color));
     }
 
     public List<Piece> getPieces() {
@@ -107,8 +107,8 @@ public class ChessBoard {
 
     private List<Piece> getPiecesByColor(Color color) {
         return getPieces().stream()
-            .filter(piece -> piece.isSameColor(color))
-            .collect(Collectors.toList());
+                .filter(piece -> piece.isSameColor(color))
+                .collect(Collectors.toList());
     }
 
     public Color getWinner() {

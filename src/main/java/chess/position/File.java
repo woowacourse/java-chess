@@ -28,8 +28,8 @@ public enum File {
 
     public static List<File> orderedValues() {
         return Arrays.stream(values())
-            .sorted(Comparator.comparingInt(row -> row.value))
-            .collect(Collectors.toList());
+                .sorted(Comparator.comparingInt(row -> row.value))
+                .collect(Collectors.toList());
     }
 
     public List<File> getPath(File to) {
@@ -37,7 +37,7 @@ public enum File {
         int end = Math.max(this.value, to.value);
 
         return orderedValues().stream()
-            .filter(file -> start < file.value && file.value < end)
-            .collect(Collectors.toList());
+                .filter(file -> start < file.value && file.value < end)
+                .collect(Collectors.toList());
     }
 }
