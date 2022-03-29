@@ -18,7 +18,7 @@ class BishopPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(bishop.isMovable(from, to, false));
+        assertTrue(bishop.isRightMovement(from, to, false));
     }
 
     @Test
@@ -28,7 +28,7 @@ class BishopPieceTest {
         Position from = Position.create("a1");
         Position to = Position.create("a3");
 
-        assertFalse(bishop.isMovable(from, to, false));
+        assertFalse(bishop.isRightMovement(from, to, false));
     }
 
 }

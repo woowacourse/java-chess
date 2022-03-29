@@ -18,7 +18,7 @@ class RookPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(rook.isMovable(from, to, false));
+        assertTrue(rook.isRightMovement(from, to, false));
     }
 
     @Test
@@ -28,7 +28,7 @@ class RookPieceTest {
         Position from = Position.create("a1");
         Position to = Position.create("c3");
 
-        assertFalse(rook.isMovable(from, to, false));
+        assertFalse(rook.isRightMovement(from, to, false));
     }
 
 }

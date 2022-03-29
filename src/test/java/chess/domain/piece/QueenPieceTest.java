@@ -18,7 +18,7 @@ class QueenPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(queen.isMovable(from, to, false));
+        assertTrue(queen.isRightMovement(from, to, false));
     }
 
     @Test
@@ -28,6 +28,6 @@ class QueenPieceTest {
         Position from = Position.create("a1");
         Position to = Position.create("c2");
 
-        assertFalse(queen.isMovable(from, to, false));
+        assertFalse(queen.isRightMovement(from, to, false));
     }
 }

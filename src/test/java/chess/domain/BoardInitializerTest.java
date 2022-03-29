@@ -1,7 +1,6 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;

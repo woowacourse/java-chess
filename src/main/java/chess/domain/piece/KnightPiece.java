@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.move.Direction;
+import chess.domain.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class KnightPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
+    public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         final int fileDistance = to.calculateFileDistance(from);
         final int rankDistance = to.calculateRankDistance(from);
 

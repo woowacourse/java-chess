@@ -19,7 +19,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to, true));
+        assertTrue(pawn.isRightMovement(from, to, true));
     }
 
     @ParameterizedTest
@@ -30,7 +30,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to, false));
+        assertTrue(pawn.isRightMovement(from, to, false));
     }
 
     @ParameterizedTest
@@ -41,7 +41,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to, true));
+        assertTrue(pawn.isRightMovement(from, to, true));
     }
 
     @ParameterizedTest
@@ -52,7 +52,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(pawn.isMovable(from, to, false));
+        assertTrue(pawn.isRightMovement(from, to, false));
     }
 
     @Test
@@ -62,7 +62,7 @@ class PawnPieceTest {
         Position from = Position.create("a2");
         Position to = Position.create("a4");
 
-        assertTrue(pawn.isMovable(from, to, true));
+        assertTrue(pawn.isRightMovement(from, to, true));
     }
 
     @Test
@@ -72,7 +72,7 @@ class PawnPieceTest {
         Position from = Position.create("a7");
         Position to = Position.create("a5");
 
-        assertTrue(pawn.isMovable(from, to, true));
+        assertTrue(pawn.isRightMovement(from, to, true));
     }
 
     @ParameterizedTest
@@ -83,7 +83,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertFalse(pawn.isMovable(from, to, false));
+        assertFalse(pawn.isRightMovement(from, to, false));
     }
 
     @ParameterizedTest
@@ -94,7 +94,7 @@ class PawnPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertFalse(pawn.isMovable(from, to, false));
+        assertFalse(pawn.isRightMovement(from, to, false));
     }
 
     @Test
@@ -104,7 +104,7 @@ class PawnPieceTest {
         Position from = Position.create("b7");
         Position to = Position.create("c6");
 
-        assertFalse(pawn.isMovable(from, to, true));
+        assertFalse(pawn.isRightMovement(from, to, true));
     }
 
     @Test
@@ -114,6 +114,6 @@ class PawnPieceTest {
         Position from = Position.create("b7");
         Position to = Position.create("b6");
 
-        assertFalse(pawn.isMovable(from, to, false));
+        assertFalse(pawn.isRightMovement(from, to, false));
     }
 }

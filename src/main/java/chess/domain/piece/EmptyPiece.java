@@ -11,7 +11,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position from, final Position to, final boolean isEmptyTarget) {
+    public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         return false;
     }
 
@@ -23,6 +23,11 @@ public final class EmptyPiece extends Piece {
     @Override
     public boolean isJumpable() {
         return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 
     @Override

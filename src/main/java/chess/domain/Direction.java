@@ -1,4 +1,4 @@
-package chess.domain.move;
+package chess.domain;
 
 import chess.domain.position.File;
 import chess.domain.position.Rank;

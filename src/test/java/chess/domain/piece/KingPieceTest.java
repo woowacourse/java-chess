@@ -18,7 +18,7 @@ class KingPieceTest {
         Position from = Position.create(source);
         Position to = Position.create(target);
 
-        assertTrue(king.isMovable(from, to, false));
+        assertTrue(king.isRightMovement(from, to, false));
     }
 
     @Test
@@ -28,6 +28,6 @@ class KingPieceTest {
         Position from = Position.create("a1");
         Position to = Position.create("a3");
 
-        assertFalse(king.isMovable(from, to, false));
+        assertFalse(king.isRightMovement(from, to, false));
     }
 }

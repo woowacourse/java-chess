@@ -3,7 +3,6 @@ package chess.state;
 import chess.domain.Board;
 import chess.domain.Result;
 import chess.domain.Score;
-import chess.domain.move.Move;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -38,10 +37,9 @@ public class Started implements State {
         final Position from = Position.create(toPosition(commands, SOURCE_INDEX));
         final Position to = Position.create(toPosition(commands, TARGET_INDEX));
 
-        final Move move = new Move(board, turn);
-        move.isMovable(from, to);
+        board.isMovable(from, to, turn);
 
-        if (move.isCheckmate(to)) {
+        if (board.isCheckmate(to)) {
             return runCheckmate();
         }
         return runMovePiece(from, to);
