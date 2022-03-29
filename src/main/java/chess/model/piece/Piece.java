@@ -87,7 +87,9 @@ public abstract class Piece implements Comparable<Piece> {
 
     public boolean isKill(Piece piece) {
         return false;
-    };
+    }
+
+    ;
 
     @Override
     public int compareTo(Piece piece) {
