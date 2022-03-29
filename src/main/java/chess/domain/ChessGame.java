@@ -29,15 +29,18 @@ public class ChessGame {
     public List<Piece> move(final Player currentPlayer, final Player opponentPlayer,
             final Position currentPosition, final Position destinationPosition) {
         validateMovable(currentPlayer, currentPosition, destinationPosition);
-        final boolean hasPieceOfCurrentPlayer = currentPlayer.hasPiece(destinationPosition);
         final boolean hasPieceOfOpponentPlayer = opponentPlayer.hasPiece(destinationPosition);
-        if (!hasPieceOfCurrentPlayer && !hasPieceOfOpponentPlayer) {
-            currentPlayer.move(currentPosition, destinationPosition);
-        }
         if (hasPieceOfOpponentPlayer) {
-            currentPlayer.capture(currentPosition, destinationPosition);
-            opponentPlayer.remove(destinationPosition);
+            return capture(currentPlayer, opponentPlayer, currentPosition, destinationPosition);
         }
+        currentPlayer.move(currentPosition, destinationPosition);
+        return currentPlayer.findAll();
+    }
+
+    private List<Piece> capture(Player currentPlayer, Player opponentPlayer, Position currentPosition,
+            Position destinationPosition) {
+        currentPlayer.capture(currentPosition, destinationPosition);
+        opponentPlayer.remove(destinationPosition);
         return currentPlayer.findAll();
     }
 
