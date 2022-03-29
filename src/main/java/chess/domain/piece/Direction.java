@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static java.lang.Math.abs;
-
 import java.util.Arrays;
 
 public enum Direction {
@@ -31,24 +29,12 @@ public enum Direction {
         this.row = row;
     }
 
-    public static Direction of(final int column, final int row) {
+    public static Direction calculate(final int columnDifference, final int rowDifference) {
         return Arrays.stream(Direction.values())
-                .filter(direction -> direction.column == column && direction.row == row)
+                .filter(direction ->
+                        Math.atan2(direction.row, direction.column) == Math.atan2(rowDifference, columnDifference))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
-    }
-
-    public static Direction calculate(final int columnDifference, final int rowDifference) {
-        if (abs(columnDifference) == abs(rowDifference)) {
-            return Direction.of(columnDifference / abs(columnDifference), rowDifference / abs(rowDifference));
-        }
-        if (columnDifference != 0 && rowDifference == 0) {
-            return Direction.of(columnDifference / abs(columnDifference), 0);
-        }
-        if (columnDifference == 0 && rowDifference != 0) {
-            return Direction.of(0, rowDifference / abs(rowDifference));
-        }
-        return Direction.of(columnDifference, rowDifference);
     }
 
     public boolean isDiagonal() {
