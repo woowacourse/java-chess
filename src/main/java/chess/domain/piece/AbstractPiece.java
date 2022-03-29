@@ -37,6 +37,10 @@ public abstract class AbstractPiece implements Piece {
         return true;
     }
 
+    public List<Position> getRoute(Position from, Position to) {
+        return moveStrategy.getRoute(from, to);
+    }
+
     public String getName() {
         if (team.equals(Team.WHITE)) {
             return name.getValue().toLowerCase(Locale.ROOT);
@@ -46,9 +50,5 @@ public abstract class AbstractPiece implements Piece {
 
     public Team getTeam() {
         return team;
-    }
-
-    public List<Position> getRoute(Position from, Position to) {
-        return moveStrategy.getRoute(from, to);
     }
 }

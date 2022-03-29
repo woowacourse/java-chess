@@ -1,6 +1,5 @@
 package chess.domain.piece.attribute;
 
-import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Locale;

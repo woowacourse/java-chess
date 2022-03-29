@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Score;
 import chess.domain.piece.attribute.Team;
