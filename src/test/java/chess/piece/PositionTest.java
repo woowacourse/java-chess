@@ -1,7 +1,7 @@
 package chess.piece;
 
+import static chess.piece.Color.WHITE;
 import static chess.piece.Direction.*;
-import static chess.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.position.Position;

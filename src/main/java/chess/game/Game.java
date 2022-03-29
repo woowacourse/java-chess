@@ -3,7 +3,6 @@ package chess.game;
 import chess.piece.Color;
 import chess.status.State;
 import chess.view.Command;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +20,8 @@ public class Game {
         return state.isRunning();
     }
 
-    public Map<Color, Double> run(final String input) {
-        final List<String> inputs = Arrays.asList(input.split(" "));
-        final Command command = Command.of(inputs.get(0));
+    public Map<Color, Double> run(final String commandInput, final List<String> inputs) {
+        final Command command = Command.of(commandInput);
         validate(command, inputs);
 
         state = state.turn(command);

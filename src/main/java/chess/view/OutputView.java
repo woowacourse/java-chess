@@ -1,12 +1,12 @@
 package chess.view;
 
 import chess.game.Board;
-import chess.position.Column;
-import chess.position.Position;
-import chess.position.Row;
 import chess.piece.Color;
 import chess.piece.Name;
 import chess.piece.Piece;
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

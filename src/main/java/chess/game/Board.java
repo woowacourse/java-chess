@@ -1,12 +1,11 @@
 package chess.game;
 
-import static chess.position.Position.of;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
+import static chess.position.Position.of;
 
 import chess.piece.*;
 import chess.position.Column;
-import chess.piece.Direction;
 import chess.position.Position;
 import chess.position.Row;
 import java.util.Arrays;

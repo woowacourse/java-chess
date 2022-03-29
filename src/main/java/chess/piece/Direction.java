@@ -21,8 +21,7 @@ public enum Direction {
     WSW(-2, -1),
     WNW(-2, 1),
     NNW(-1, 2),
-    NONE(0, 0)
-    ;
+    NONE(0, 0);
 
     private final int column;
     private final int row;

@@ -6,6 +6,8 @@ import chess.status.State;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConsoleApplication {
 
@@ -29,7 +31,10 @@ public class ConsoleApplication {
 
     private static void run(final Game game) {
         try {
-            OutputView.printScore(game.run(InputView.input()));
+            final String input = InputView.input();
+            final List<String> splitInput = Arrays.asList(input.split(" "));
+
+            OutputView.printScore(game.run(splitInput.get(0), splitInput));
         } catch (final IllegalArgumentException | IllegalStateException e) {
             System.err.println(e.getMessage());
         }

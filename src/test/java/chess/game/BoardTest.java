@@ -3,8 +3,6 @@ package chess.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.game.Board;
-import chess.game.MoveCommand;
 import chess.piece.Color;
 import chess.piece.Rook;
 import chess.position.Position;
@@ -109,7 +107,7 @@ class BoardTest {
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(33);
     }
-    
+
     @Test
     @DisplayName("나이트를 잃은 팀의 점수를 계산한다.")
     void scoreKnightLoss() {
