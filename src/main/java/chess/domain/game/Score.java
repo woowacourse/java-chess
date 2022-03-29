@@ -15,6 +15,7 @@ import java.util.Optional;
 public class Score {
 
     private static final int INIT_PAWN_SCORE = 0;
+
     private final Map<Position, ChessPiece> currentChessboard;
 
     public Score(Map<Position, ChessPiece> currentChessboard) {
