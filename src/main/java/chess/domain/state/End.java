@@ -6,7 +6,7 @@ import chess.domain.postion.Position;
 public class End implements State {
     @Override
     public State start() {
-       throw new IllegalArgumentException("End 상태에서는 start할 수 없습니다.");
+        throw new IllegalArgumentException("End 상태에서는 start할 수 없습니다.");
     }
 
     @Override

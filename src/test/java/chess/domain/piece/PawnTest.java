@@ -1,15 +1,16 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.piece.Nothing;
-import chess.domain.piece.Pawn;
+import chess.domain.Board;
+import chess.domain.BoardFixture;
+import chess.domain.Direction;
 import chess.domain.postion.File;
 import chess.domain.postion.Position;
 import chess.domain.postion.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.PieceFixture.BLACK_PAWN;
-import static chess.domain.PieceFixture.WHITE_PAWN;
+import static chess.domain.piece.PieceFixture.BLACK_PAWN;
+import static chess.domain.piece.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 

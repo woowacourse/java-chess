@@ -12,6 +12,7 @@ public class Rook extends Piece {
         super(team, new RookMoveStrategy());
         this.symbol = symbol;
     }
+
     @Override
     public List<Direction> possibleDirections() {
         return Direction.getRookDirection();

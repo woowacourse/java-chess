@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.Board;
 
-public abstract class Started implements State{
+public abstract class Started implements State {
 
     private final Board board;
 

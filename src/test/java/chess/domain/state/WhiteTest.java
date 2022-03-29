@@ -1,8 +1,7 @@
-package chess.domain;
+package chess.domain.state;
 
-import chess.domain.state.Black;
-import chess.domain.state.End;
-import chess.domain.state.White;
+import chess.domain.Board;
+import chess.domain.BoardFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

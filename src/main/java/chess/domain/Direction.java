@@ -32,11 +32,6 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public boolean isDiagonal(Direction direction) {
-        return direction.equals(TOP_RIGHT) || direction.equals(TOP_LEFT) ||
-                direction.equals(BOTTOM_RIGHT) || direction.equals(BOTTOM_LEFT);
-    }
-
     public static List<Direction> getRookDirection() {
         return List.of(TOP, RIGHT, LEFT, BOTTOM);
     }
@@ -75,7 +70,7 @@ public enum Direction {
         for (int i = 0; i < 8; i++) {
             currentPosition = currentPosition.from(direction);
 
-            if(currentPosition.isNothing()) {
+            if (currentPosition.isNothing()) {
                 break;
             }
 

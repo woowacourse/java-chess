@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Board;
 import chess.domain.postion.Position;
 
 public interface MoveStrategy {

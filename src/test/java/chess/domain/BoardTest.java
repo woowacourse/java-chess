@@ -10,7 +10,6 @@ import static chess.domain.PositionFixture.WHITE_SOURCE;
 import static chess.domain.PositionFixture.WHITE_TARGET;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class BoardTest {
 

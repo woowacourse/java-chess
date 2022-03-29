@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Nothing;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
-import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.postion.Position;
 
 import java.util.HashMap;
