@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
@@ -34,6 +35,14 @@ public class PositionTest {
     void valueOf() {
         Position position = Position.valueOf("a1");
         assertThat(position).isEqualTo(Position.valueOf("a1"));
+    }
+
+    @Test
+    @DisplayName("범위를 초과한 포지션을 가져오면 에러가 발생한다.")
+    void valueOfException() {
+        assertThatThrownBy(() -> Position.valueOf("i8"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 범위를 초과하였습니다.");
     }
 
     @Test
