@@ -1,36 +1,73 @@
 package chess.piece;
 
-import chess.*;
-import chess.board.Board;
+import static chess.File.A;
+import static chess.File.C;
+import static chess.File.D;
+import static chess.File.E;
+import static chess.File.F;
+import static chess.Rank.FIVE;
+import static chess.Rank.FOUR;
+import static chess.Rank.ONE;
+import static chess.Rank.TWO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.File;
+import chess.Player;
+import chess.Position;
+import chess.Rank;
+import chess.direction.route.Route;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class BishopTest {
 
-    @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
+    @DisplayName("움직일 수 없는 방향이 입력되면 예외를 발생한다.")
     @ParameterizedTest
-    @CsvSource(value = {"SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
-    void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece bishop = new Bishop(Player.BLACK, "B");
-        boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+    @CsvSource(value = {"TWO, C", "THREE, D", "SEVEN, H"})
+    void findRoute_exception(Rank rank, File file) {
+        Piece bishop = new Bishop(Player.BLACK, "R");
 
-        assertThat(actual).isFalse();
+        assertThatThrownBy(() -> bishop.findRoute(Position.of(FOUR, D), Position.of(rank, file)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
     }
 
-    @DisplayName("target 위치로 움직일 수 있으면 true를 반환한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B"})
-    void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> board = new Board().getBoard();
-        Piece bishop = new Bishop(Player.BLACK, "B");
-        boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), board);
+    @DisplayName("북동쪽으로 움직일 수 있으면 북동쪽 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_northeast() {
+        Piece bishop = new Bishop(Player.BLACK, "R");
+        Route route = bishop.findRoute(Position.of(FOUR, D), Position.of(FIVE, E));
 
-        assertThat(actual).isTrue();
+        assertThat(route).isEqualTo(new Route(-1, 1));
+    }
+
+    @DisplayName("남서쪽으로 움직일 수 있으면 남서쪽 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_southwest() {
+        Piece bishop = new Bishop(Player.BLACK, "R");
+        Route route = bishop.findRoute(Position.of(FOUR, D), Position.of(ONE, A));
+
+        assertThat(route).isEqualTo(new Route(1, -1));
+    }
+
+    @DisplayName("남동쪽으로 움직일 수 있으면 남동쪽 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_southeast() {
+        Piece bishop = new Bishop(Player.BLACK, "R");
+        Route route = bishop.findRoute(Position.of(FOUR, D), Position.of(TWO, F));
+
+        assertThat(route).isEqualTo(new Route(1, 1));
+    }
+
+    @DisplayName("북서쪽으로 움직일 수 있으면 북서쪽 방향의 Route를 반환한다.")
+    @Test
+    void findRoute_northwest() {
+        Piece bishop = new Bishop(Player.BLACK, "R");
+        Route route = bishop.findRoute(Position.of(FOUR, D), Position.of(FIVE, C));
+
+        assertThat(route).isEqualTo(new Route(-1, -1));
     }
 }

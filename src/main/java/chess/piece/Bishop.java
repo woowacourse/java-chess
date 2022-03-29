@@ -1,50 +1,24 @@
 package chess.piece;
 
-import chess.Direction;
 import chess.Player;
 import chess.Position;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static chess.Direction.*;
+import chess.direction.route.Route;
+import chess.direction.strategy.BishopRouteFinder;
+import chess.direction.strategy.RouteStrategy;
 
 public class Bishop extends Piece {
 
     private static final double SCORE = 3;
+
+    private final RouteStrategy routeStrategy;
+
     public Bishop(Player player, String symbol) {
         super(player, symbol);
+        this.routeStrategy = new BishopRouteFinder();
     }
 
-    @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
-        for (Direction direction : getDirection()) {
-            positions.addAll(createMovablePositions(direction, source, board));
-        }
-        return positions.contains(target);
-    }
-
-    private List<Position> createMovablePositions(Direction direction, Position source, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
-        if (!source.isInBoardAfterMoved(direction)) {
-            return positions;
-        }
-        Position nextPosition = source.createMovablePosition(direction);
-        while (board.get(nextPosition).isSame(Player.NONE) && nextPosition.isInBoardAfterMoved(direction)) {
-            positions.add(nextPosition);
-            nextPosition = nextPosition.createMovablePosition(direction);
-        }
-        if (!board.get(nextPosition).isSame(this.player)) {
-            positions.add(nextPosition);
-        }
-        return positions;
-    }
-
-    @Override
-    protected List<Direction> getDirection() {
-        return List.of(SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST);
+    public Route findRoute(Position source, Position target) {
+        return routeStrategy.findRoute(source, target);
     }
 
     @Override

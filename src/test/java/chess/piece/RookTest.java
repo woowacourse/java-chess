@@ -6,17 +6,30 @@ import static chess.File.H;
 import static chess.Rank.FIVE;
 import static chess.Rank.FOUR;
 import static chess.Rank.ONE;
-import static chess.Rank.SEVEN;
-import static chess.Rank.THREE;
+import static chess.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.Player;
 import chess.Position;
 import chess.direction.route.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
+
+    @DisplayName("움직일 수 없는 방향이 입력되면 예외를 발생한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"TWO, B", "THREE, D", "SEVEN, H"})
+    void findRoute_exception() {
+        Piece rook = new Rook(Player.BLACK, "R");
+
+        assertThatThrownBy(() -> rook.findRoute(Position.of(FOUR, D), Position.of(TWO, B)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+    }
 
     @DisplayName("북쪽으로 움직일 수 있으면 북쪽 방향의 Route를 반환한다.")
     @Test
