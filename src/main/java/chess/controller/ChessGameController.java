@@ -1,6 +1,5 @@
 package chess.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.ChessGame;
@@ -9,8 +8,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGameController {
-	private static final String MOVE_COMMAND_INPUT_EXCEPTION = "이동 명령을 형식에 맞게 입력하세요.";
-	private static final String COMMAND_DELIMITER = " ";
 
 	private final InputView inputView;
 	private final OutputView outputView;
@@ -28,9 +25,9 @@ public class ChessGameController {
 	}
 
 	private void playGame(ChessGame chessGame) {
-		final String commandInput = inputView.inputCommand();
+		List<String> commandInput = inputView.inputCommand();
 		try {
-			Command command = Command.from(commandInput);
+			Command command = Command.from(commandInput.get(0));
 			checkStartCommand(chessGame, command);
 			checkMoveCommand(chessGame, command, commandInput);
 			if (checkEndSystemForEndCommand(chessGame, command))
@@ -54,32 +51,22 @@ public class ChessGameController {
 		outputView.printBoard(chessGame.getBoard().getValue());
 	}
 
-	private void checkMoveCommand(ChessGame chessGame, Command command, String commandText) {
+	private void checkMoveCommand(ChessGame chessGame, Command command, List<String> commandInput) {
 		if (command == Command.MOVE) {
-			executeMoveCommand(chessGame, commandText);
+			executeMoveCommand(chessGame, commandInput);
 			if (!chessGame.isRunning()) {
 				printResult(chessGame);
 			}
 		}
 	}
 
-	private void executeMoveCommand(ChessGame chessGame, String commandText) {
-		final List<String> commands = Arrays.asList(commandText.split(COMMAND_DELIMITER));
-
-		validateMoveCommandInput(commands);
-
-		Position sourcePosition = Position.from(commands.get(1));
-		Position targetPosition = Position.from(commands.get(2));
+	private void executeMoveCommand(ChessGame chessGame, List<String> commandInput) {
+		Position sourcePosition = Position.from(commandInput.get(1));
+		Position targetPosition = Position.from(commandInput.get(2));
 
 		chessGame.move(sourcePosition, targetPosition);
 
 		outputView.printBoard(chessGame.getBoard().getValue());
-	}
-
-	private void validateMoveCommandInput(List<String> commands) {
-		if (commands.size() != 3) {
-			throw new IllegalArgumentException(MOVE_COMMAND_INPUT_EXCEPTION);
-		}
 	}
 
 	private boolean checkEndSystemForEndCommand(ChessGame chessGame, Command command) {
