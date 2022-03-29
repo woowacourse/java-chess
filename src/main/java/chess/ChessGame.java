@@ -12,9 +12,9 @@ public class ChessGame {
 
     public void init() {
         OutputView.printGuideMessage();
-        boolean play = true;
+        boolean nextStep = true;
 
-        while (play) {
+        while (nextStep) {
             if (board.check()) {
                 OutputView.printMessage("현재 check 상황입니다.");
             }
@@ -22,11 +22,11 @@ public class ChessGame {
             if (board.checkmate()) {
                 break;
             }
-            play = convert(command);
+            nextStep = play(command);
         }
     }
 
-    private boolean convert(Command command) {
+    private boolean play(Command command) {
         return Type.play(board, command);
     }
 }
