@@ -17,6 +17,7 @@ public class InputView {
     private static final String ERROR_BLANK = "명령어를 입력하세요.";
     private static final String ERROR_NO_SUCH_COMMAND = "실행 가능한 명령이 아닙니다.";
     private static final String ERROR_MOVE_COMMAND_FORMAT = "이동 명령을 형식에 맞게 입력하세요.";
+    private static final String ERROR_NO_MORE_POSITION = "더 이상 찾을 수 있는 위치값이 없습니다.";
 
     private static final String DELIMITER_COMMAND_MOVE = " ";
     private static final String REGEX_POSITION = "[a-h][1-8]";
@@ -67,7 +68,9 @@ public class InputView {
     }
 
     private Position findPosition(Matcher positionMatcher) {
-        positionMatcher.find();
+        if (!positionMatcher.find()) {
+            throw new IllegalArgumentException(ERROR_NO_MORE_POSITION);
+        }
         return parsePosition(positionMatcher.group());
     }
 
