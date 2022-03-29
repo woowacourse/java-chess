@@ -32,11 +32,6 @@ public final class PawnMoveStrategy extends MoveStrategy {
         return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
     }
 
-    @Override
-    public boolean isValidateCanMove(Team team, Position from, Position to) {
-        throw new IllegalArgumentException(NO_MOVE_MESSAGE_TARGET);
-    }
-
     private boolean isDiagonal(Direction now, List<Direction> directions) {
         return now == directions.get(1) || now == directions.get(2);
     }

@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +29,7 @@ class KnightMoveStrategyTest {
     @DisplayName("나이트가 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertDoesNotThrow(() -> new KnightMoveStrategy()
-                .isValidateCanMove(Team.WHITE,
+                .isValidateCanMove(Team.WHITE, new Knight(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 )
@@ -48,7 +50,7 @@ class KnightMoveStrategyTest {
     @DisplayName("나이트가 갈 수 있는 위치가 아니면 에러가 발생한다.")
     void canInvalidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertThatThrownBy(() -> new KnightMoveStrategy()
-                .isValidateCanMove(Team.WHITE,
+                .isValidateCanMove(Team.WHITE, new Knight(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 ))
