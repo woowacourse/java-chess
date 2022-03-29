@@ -19,5 +19,4 @@ public class Init extends Command {
         }
         throw new IllegalArgumentException("command has only move or end ");
     }
-
 }

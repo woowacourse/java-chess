@@ -1,5 +1,7 @@
 package chess.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -7,16 +9,26 @@ public class Position {
     private final Rank rank;
     private final File file;
 
+    private static final Map<String, Position> CACHE_POSITION = new HashMap<>(64);
+
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
     public static Position of(char... position) {
-        File file = File.valueOf(position[0] - ASCII_TO_INT);
-        Rank rank = Rank.valueOf(Character.getNumericValue(position[1]));
+        String key = position[0] + String.valueOf(position[1]);
+        return CACHE_POSITION.computeIfAbsent(key, (k) -> new Position(
+                File.valueOf(position[0] - ASCII_TO_INT),
+                Rank.indexOf(Character.getNumericValue(position[1]))
+        ));
+    }
 
-        return new Position(file, rank);
+    public static Position from(String position) {
+        return CACHE_POSITION.computeIfAbsent(position, (p) -> new Position(
+                File.of(position.substring(0, 1)),
+                Rank.of(position.substring(1))
+        ));
     }
 
     public boolean isHorizontal(Position position) {

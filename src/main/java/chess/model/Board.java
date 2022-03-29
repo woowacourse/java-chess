@@ -19,8 +19,8 @@ public class Board {
     }
 
     public void move(String source, String target, Turn thisTurn) {
-        Position sourcePosition = getSource(source);
-        Position targetPosition = getTarget(target);
+        Position sourcePosition = Position.from(source);
+        Position targetPosition = Position.from(target);
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         if (!sourcePiece.isCurrentTurn(thisTurn)) {
@@ -65,19 +65,6 @@ public class Board {
         List<Position> positions = sourcePiece.getIntervalPosition(targetPiece);
         return positions.stream()
                 .anyMatch(position -> !pieces.findByPosition(position).equals(new Empty(position)));
-    }
-
-    private Position getSource(String commandPosition) {
-        return Position.of(
-                commandPosition.charAt(0),
-                commandPosition.charAt(1));
-    }
-
-    private Position getTarget(String commandPosition) {
-        return Position.of(
-                commandPosition.charAt(0),
-                commandPosition.charAt(1)
-        );
     }
 
     public Pieces getPieces() {

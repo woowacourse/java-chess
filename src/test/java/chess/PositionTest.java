@@ -12,7 +12,7 @@ class PositionTest {
     @Test
     @DisplayName("position끼리 수평이면 true를 반환한다.")
     void isHorizontal() {
-        Position source = Position.of('a', '1');
+        Position source = Position.from("a1");
         Position target = Position.of('d', '1');
 
         assertThat(source.isHorizontal(target)).isTrue();

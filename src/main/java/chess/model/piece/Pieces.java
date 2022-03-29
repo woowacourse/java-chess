@@ -34,10 +34,14 @@ public class Pieces {
     }
 
     private static List<Piece> makePieces(char rank, Team team) {
-        return List.of(new Rook(Position.of('a', rank), team), new Knight(Position.of('b', rank), team),
-                new Bishop(Position.of('c', rank), team), new Queen(Position.of('d', rank), team),
-                new King(Position.of('e', rank), team), new Bishop(Position.of('f', rank), team),
-                new Knight(Position.of('g', rank), team), new Rook(Position.of('h', rank), team));
+        return List.of(new Rook(Position.of('a', rank), team),
+                new Knight(Position.of('b', rank), team),
+                new Bishop(Position.of('c', rank), team),
+                new Queen(Position.of('d', rank), team),
+                new King(Position.of('e', rank), team),
+                new Bishop(Position.of('f', rank), team),
+                new Knight(Position.of('g', rank), team),
+                new Rook(Position.of('h', rank), team));
     }
 
     private static List<Piece> makePawns(char[] files, char rank, Team team) {
