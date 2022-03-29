@@ -10,7 +10,6 @@ import java.util.List;
 public final class PawnMoveStrategy extends MoveStrategy {
     private static final String NO_MOVE_MESSAGE = "폰이 이동할 수 없는 위치입니다.";
     private static final String NO_MOVE_MESSAGE_DIAGONAL = "대각선 방향에 상대 기물이 없으면 이동할 수 없습니다.";
-    private static final String NO_MOVE_MESSAGE_TARGET = "상대방 기물을 알 수 없으면 이동할 수 없습니다.";
     private static final int INIT_MAX_DISTANCE = 2;
 
     public static List<Direction> pawnDirection(Team team) {
@@ -57,5 +56,4 @@ public final class PawnMoveStrategy extends MoveStrategy {
         return directions.stream()
                 .noneMatch(direction -> direction.isSameDistance(from, to));
     }
-
 }
