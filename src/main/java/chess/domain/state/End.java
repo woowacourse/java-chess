@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.Command;
+import chess.domain.Status;
 import chess.domain.board.Board;
 
 public class End implements ChessState {
@@ -16,5 +17,20 @@ public class End implements ChessState {
     @Override
     public ChessState execute(Command command, String... commandArgs) {
         throw new UnsupportedOperationException(CANNOT_IMPLEMENT_COMMAND);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
+    }
+
+    @Override
+    public Status createStatus() {
+        return new Status(board);
     }
 }

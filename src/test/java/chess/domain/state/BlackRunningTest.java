@@ -16,7 +16,7 @@ class BlackRunningTest {
         Board board = new Board(new CreateCompleteBoardStrategy());
         ChessState running = new BlackRunning(board);
 
-        ChessState actual = running.execute(Command.MOVE, "a7", "a6");
+        ChessState actual = running.execute(Command.MOVE, "", "a7", "a6");
 
         assertThat(actual).isInstanceOf(WhiteRunning.class);
     }

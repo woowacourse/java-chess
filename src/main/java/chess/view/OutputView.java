@@ -62,17 +62,17 @@ public class OutputView {
     }
 
     private static void printCurrentScore(final double blackScore, final double whiteScore) {
-        System.out.println("현재 까지의 스코어:");
+        System.out.println("현재 까지의 점수:");
         System.out.println("=======================");
-        System.out.println("블랙 스코어: " + blackScore);
-        System.out.println("화이트 스코어: " + whiteScore);
+        System.out.println("흑 점수: " + blackScore);
+        System.out.println("백 점수: " + whiteScore);
     }
 
     private static void printWinner(final double blackScore) {
         if (blackScore == KING_CAUGHT_AND_LOST) {
-            System.out.println("화이트의 승리입니다");
+            System.out.println("흑의 킹이 잡혔습니다. 백의 승리입니다");
             return;
         }
-        System.out.println("블랙의 승리입니다");
+        System.out.println("백의 킹이 잡혔습니다. 흑의 승리입니다");
     }
 }
