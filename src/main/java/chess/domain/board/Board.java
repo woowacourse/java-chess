@@ -21,6 +21,8 @@ public class Board {
     private static final String CANNOT_MOVE_OPPONENT_PIECE = "상대편 말은 욺직일 수 없습니다.";
     private static final String ANOTHER_PIECE_EXIST_IN_PATH = "다른 말이 경로에 존재해 이동할 수 없습니다.";
     private static final String ANOTHER_SAME_COLOR_PIECE_EXIST = "같은 팀의 다른 말이 존재해 이동할 수 없습니다.";
+    private static final int NO_KING_EXIST = 0;
+    private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
 
@@ -138,7 +140,19 @@ public class Board {
                         && get(position).equals(piece.getValue()));
     }
 
+    public boolean isEnd(final Color color) {
+        return countPiece(PieceType.KING, color) == NO_KING_EXIST;
+    }
+
+    public double calculateScore(Board board, Color color) {
+        final double score = Arrays.stream(PieceType.values())
+                .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
+                .sum();
+        return score - board.countDeductedPawns(color) * PAWN_MINUS_SCORE;
+    }
+
     public Map<Position, Piece> getPieces() {
         return pieces;
     }
 }
+
