@@ -23,7 +23,7 @@ public class InputView {
 	private List<String> splitCommand(final String input) {
 		List<String> command;
 		validateEmpty(input);
-		command = Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));
+		command = Arrays.asList(input.split(COMMAND_DELIMITER));
 		if (isMoveCommand(command)) {
 			validateMoveCommandSize(command);
 		}

@@ -11,6 +11,8 @@ public class ChessGameController {
 
 	private final InputView inputView;
 	private final OutputView outputView;
+	
+	private boolean endSystem = false;
 
 	public ChessGameController(InputView inputView, OutputView outputView) {
 		this.inputView = inputView;
@@ -20,47 +22,52 @@ public class ChessGameController {
 	public void run() {
 		outputView.printStartMessage();
 		final ChessGame chessGame = new ChessGame();
-
-		playGame(chessGame);
+		
+		play(chessGame);
 	}
 
-	private void playGame(ChessGame chessGame) {
-		List<String> commandInput = inputView.inputCommand();
+	private void play(final ChessGame chessGame) {
+		List<String> commandInput;
+		Command command;
 		try {
-			Command command = Command.from(commandInput.get(0));
-			checkStartCommand(chessGame, command);
-			checkMoveCommand(chessGame, command, commandInput);
-			if (checkEndSystemForEndCommand(chessGame, command))
+			commandInput = inputView.inputCommand();
+			command = Command.from(commandInput.get(0));
+			executeCommand(chessGame, command, commandInput);
+			if (isEndSystem()) {
 				return;
-			checkStatusCommand(chessGame, command);
-			playGame(chessGame);
+			}
+			play(chessGame);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			playGame(chessGame);
+			play(chessGame);
 		}
 	}
 
-	private void checkStartCommand(ChessGame chessGame, Command command) {
+	private boolean isEndSystem() {
+		return endSystem;
+	}
+
+	private void executeCommand(final ChessGame chessGame, final Command command, final List<String> commandInput) {
 		if (command == Command.START) {
 			executeStartCommand(chessGame);
 		}
+		if (command == Command.MOVE) {
+			executeMoveCommand(chessGame, commandInput);
+		}
+		if (command == Command.END) {
+			executeEndCommand(chessGame);
+		}
+		if (command == Command.STATUS) {
+			executeStatusCommand(chessGame);
+		}
 	}
 
-	private void executeStartCommand(ChessGame chessGame) {
+	private void executeStartCommand(final ChessGame chessGame) {
 		chessGame.start();
 		outputView.printBoard(chessGame.getBoard().getValue());
 	}
 
-	private void checkMoveCommand(ChessGame chessGame, Command command, List<String> commandInput) {
-		if (command == Command.MOVE) {
-			executeMoveCommand(chessGame, commandInput);
-			if (!chessGame.isRunning()) {
-				printResult(chessGame);
-			}
-		}
-	}
-
-	private void executeMoveCommand(ChessGame chessGame, List<String> commandInput) {
+	private void executeMoveCommand(final ChessGame chessGame, final List<String> commandInput) {
 		Position sourcePosition = Position.from(commandInput.get(1));
 		Position targetPosition = Position.from(commandInput.get(2));
 
@@ -69,24 +76,23 @@ public class ChessGameController {
 		outputView.printBoard(chessGame.getBoard().getValue());
 	}
 
-	private boolean checkEndSystemForEndCommand(ChessGame chessGame, Command command) {
-		if (command == Command.END) {
-			if (!chessGame.isRunning()) {
-				return true;
-			}
-			chessGame.end();
-			printResult(chessGame);
-		}
-		return false;
+	private void executeEndCommand(final ChessGame chessGame) {
+		changeEndSystemAtNotRunning(chessGame);
+		chessGame.end();
+		printResult(chessGame);
 	}
 
-	private void checkStatusCommand(ChessGame chessGame, Command command) {
-		if (command == Command.STATUS) {
-			outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+	private void changeEndSystemAtNotRunning(final ChessGame chessGame) {
+		if (!chessGame.isRunning()) {
+			endSystem = true;
 		}
 	}
 
-	private void printResult(ChessGame chessGame) {
+	private void executeStatusCommand(final ChessGame chessGame) {
+		outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+	}
+
+	private void printResult(final ChessGame chessGame) {
 		outputView.printFinishMessage();
 		outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
 		outputView.printWinner(chessGame.findWinner());
