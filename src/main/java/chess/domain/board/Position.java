@@ -52,23 +52,23 @@ public class Position {
         return getDiagonalPositions(fileBetween, rankBetween);
     }
 
-    private List<Position> getVerticalPositions(List<Rank> rankBetween) {
-        return rankBetween.stream()
+    private List<Position> getVerticalPositions(List<Rank> ranksBetween) {
+        return ranksBetween.stream()
                 .map(rank -> Position.of(rank, this.file))
                 .collect(Collectors.toList());
     }
 
-    private List<Position> getHorizontalPositions(List<File> fileBetween) {
-        return fileBetween.stream()
+    private List<Position> getHorizontalPositions(List<File> filesBetween) {
+        return filesBetween.stream()
                 .map(file -> Position.of(this.rank, file))
                 .collect(Collectors.toList());
     }
 
-    private List<Position> getDiagonalPositions(List<File> fileBetween, List<Rank> rankBetween) {
+    private List<Position> getDiagonalPositions(List<File> filesBetween, List<Rank> ranksBetween) {
         List<Position> positions = new ArrayList<>();
 
-        for (int i = 0; i < fileBetween.size(); i++) {
-            positions.add(Position.of(rankBetween.get(i), fileBetween.get(i)));
+        for (int i = 0; i < filesBetween.size(); i++) {
+            positions.add(Position.of(ranksBetween.get(i), filesBetween.get(i)));
         }
 
         return positions;
