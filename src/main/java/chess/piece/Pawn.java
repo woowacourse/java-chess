@@ -3,10 +3,8 @@ package chess.piece;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
-import chess.Direction;
-import chess.MoveCommand;
-import chess.Position;
-import java.util.List;
+import chess.game.MoveCommand;
+import chess.position.Position;
 
 public class Pawn extends AbstractPiece {
 

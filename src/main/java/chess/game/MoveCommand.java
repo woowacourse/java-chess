@@ -1,4 +1,6 @@
-package chess;
+package chess.game;
+
+import chess.position.Position;
 
 public class MoveCommand {
 

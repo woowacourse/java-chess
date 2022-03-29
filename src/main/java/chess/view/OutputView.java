@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.Board;
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.game.Board;
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
 import chess.piece.Color;
 import chess.piece.Name;
 import chess.piece.Piece;
@@ -61,7 +61,7 @@ public class OutputView {
 
     public static void printScore(final Map<Color, Double> score) {
         for (final Color color : score.keySet()) {
-            System.out.println(color + " " + score.get(color).intValue());
+            System.out.println(color + "의 점수는: " + score.get(color).intValue());
         }
     }
 }

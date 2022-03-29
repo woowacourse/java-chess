@@ -1,7 +1,8 @@
-package chess;
+package chess.game;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.game.Game;
 import chess.status.Ready;
 import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;

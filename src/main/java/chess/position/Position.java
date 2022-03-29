@@ -1,6 +1,6 @@
-package chess;
+package chess.position;
 
-import java.util.ArrayList;
+import chess.piece.Direction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

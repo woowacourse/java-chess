@@ -1,4 +1,4 @@
-package chess;
+package chess.game;
 
 import chess.piece.Color;
 import chess.status.State;

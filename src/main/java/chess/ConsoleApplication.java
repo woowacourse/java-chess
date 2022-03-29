@@ -1,5 +1,6 @@
 package chess;
 
+import chess.game.Game;
 import chess.status.Ready;
 import chess.status.State;
 import chess.view.Command;

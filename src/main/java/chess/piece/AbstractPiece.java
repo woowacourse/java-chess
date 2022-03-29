@@ -1,9 +1,7 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.MoveCommand;
-import chess.Position;
-import java.util.List;
+import chess.game.MoveCommand;
+import chess.position.Position;
 
 public abstract class AbstractPiece implements Piece {
 

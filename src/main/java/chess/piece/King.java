@@ -1,8 +1,7 @@
 package chess.piece;
 
-import chess.Direction;
-import chess.MoveCommand;
-import chess.Position;
+import chess.game.MoveCommand;
+import chess.position.Position;
 import java.util.List;
 
 public class King extends AbstractPiece {

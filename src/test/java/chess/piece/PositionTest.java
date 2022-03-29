@@ -1,11 +1,10 @@
 package chess.piece;
 
-import static chess.Direction.*;
+import static chess.piece.Direction.*;
 import static chess.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.Direction;
-import chess.Position;
+import chess.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
