@@ -10,9 +10,6 @@ import static chess.domain.board.Rank.THREE;
 import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +45,7 @@ public class PositionTest {
         Position source = new Position(A, ONE);
         Position target = new Position(D, FOUR);
 
-        List<Position> traceGroup = source.positionsToMove(target);
+        List<Position> traceGroup = source.findPositionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(B, TWO), new Position(C, THREE));
@@ -61,7 +58,7 @@ public class PositionTest {
         Position source = new Position(A, ONE);
         Position target = new Position(D, ONE);
 
-        List<Position> traceGroup = source.positionsToMove(target);
+        List<Position> traceGroup = source.findPositionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(B, ONE), new Position(C, ONE));
@@ -74,7 +71,7 @@ public class PositionTest {
         Position source = new Position(D, ONE);
         Position target = new Position(A, ONE);
 
-        List<Position> traceGroup = source.positionsToMove(target);
+        List<Position> traceGroup = source.findPositionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(B, ONE), new Position(C, ONE));
@@ -87,7 +84,7 @@ public class PositionTest {
         Position source = new Position(A, ONE);
         Position target = new Position(A, FOUR);
 
-        List<Position> traceGroup = source.positionsToMove(target);
+        List<Position> traceGroup = source.findPositionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(A, TWO), new Position(A, THREE));
@@ -100,7 +97,7 @@ public class PositionTest {
         Position source = new Position(A, FOUR);
         Position target = new Position(A, ONE);
 
-        List<Position> traceGroup = source.positionsToMove(target);
+        List<Position> traceGroup = source.findPositionsToMove(target);
 
         //then
         assertThat(traceGroup).contains(new Position(A, TWO), new Position(A, THREE));

@@ -69,12 +69,16 @@ public class Board {
             return false;
         }
 
-        for (Position position : source.positionsToMove(target)) {
-            if (!board.get(position).equals(EMPTY_PIECE)) {
+        for (Position position : source.findPositionsToMove(target)) {
+            if (isEmpty(position)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean isEmpty(Position position) {
+        return !board.get(position).equals(EMPTY_PIECE);
     }
 
     private void validateSourceNotEmpty(Position source) {
@@ -96,7 +100,7 @@ public class Board {
         for (File file : File.values()) {
             long rankDuplicatedPiecesCount = Rank.reverseValues()
                     .stream()
-                    .map(rank -> new Position(file, rank))
+                    .map(rank -> Positions.findPosition(file, rank))
                     .filter(position -> {
                                 Piece piece = board.get(position);
                                 return piece.isPawn() && gameFlow.isCorrectTurn(piece);

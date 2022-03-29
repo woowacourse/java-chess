@@ -4,10 +4,7 @@ import static chess.domain.board.Board.SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE
 import static chess.domain.board.File.A;
 import static chess.domain.board.File.B;
 import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
 import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
 import static chess.domain.board.File.H;
 import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.FIVE;
@@ -75,7 +72,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(file, TWO)))
+            .map(file -> piecesByPositions.get(Positions.findPosition(file, TWO)))
             .collect(Collectors.toList());
 
         assertThat(actual).isEqualTo(expected);
@@ -93,7 +90,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(new Position(file, TWO)))
+            .map(file -> piecesByPositions.get(Positions.findPosition(file, TWO)))
             .collect(Collectors.toList());
 
         //then
@@ -116,7 +113,7 @@ public class BoardTest {
         Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //then
-        assertThat(piecesByPositions.get(new Position(A, THREE))).isEqualTo(new Pawn(WHITE));
+        assertThat(piecesByPositions.get(Positions.findPosition(A, THREE))).isEqualTo(new Pawn(WHITE));
     }
 
     @ParameterizedTest

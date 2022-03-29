@@ -10,6 +10,7 @@ import static chess.domain.piece.constant.PieceColor.WHITE;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
@@ -58,7 +59,8 @@ public class ProductionBoardFactory extends BoardFactory {
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                result.put(new Position(file, rank), EMPTY_PIECE);
+                Position findPosition = Positions.findPosition(file, rank);
+                result.put(findPosition, EMPTY_PIECE);
             }
         }
     }
@@ -75,7 +77,8 @@ public class ProductionBoardFactory extends BoardFactory {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(file, rank), new Pawn(color));
+            Position findPosition = Positions.findPosition(file, rank);
+            result.put(findPosition, new Pawn(color));
         }
     }
 
@@ -83,7 +86,8 @@ public class ProductionBoardFactory extends BoardFactory {
 
         ListIterator<Piece> piecesIterator = PIECES_CREATOR_BY_COLOR.apply(color).listIterator();
         for (File file : File.values()) {
-            result.put(new Position(file, rank), piecesIterator.next());
+            Position findPosition = Positions.findPosition(file, rank);
+            result.put(findPosition, piecesIterator.next());
         }
     }
 }

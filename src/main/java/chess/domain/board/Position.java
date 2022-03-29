@@ -29,12 +29,16 @@ public class Position {
         return this.file == other.file;
     }
 
-    public boolean isRankOf(Rank otherRank) {
-        return rank == otherRank;
-    }
-
     public boolean isSameRank(Position other) {
         return other.isRankOf(rank);
+    }
+
+    public boolean isSameFileAndRank(File file, Rank rank) {
+        return this.file == file && this.rank == rank;
+    }
+
+    public boolean isRankOf(Rank otherRank) {
+        return rank == otherRank;
     }
 
     public int rankDistance(Position other) {
@@ -57,7 +61,7 @@ public class Position {
         return this.isDiagonal(other) || this.isCross(other);
     }
 
-    public List<Position> positionsToMove(Position other) {
+    public List<Position> findPositionsToMove(Position other) {
         List<File> traceFileGroup = File.traceGroup(this.file, other.file);
         List<Rank> traceRankGroup = Rank.traceGroup(this.rank, other.rank);
 
@@ -68,17 +72,17 @@ public class Position {
         List<Position> positions = new ArrayList<>();
 
         if (!rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(file, this.rank)));
+            fileIterator.forEachRemaining(file -> positions.add(Positions.findPosition(file, this.rank)));
             return positions;
         }
 
         if (!fileIterator.hasNext()) {
-            rankIterator.forEachRemaining(rank -> positions.add(new Position(this.file, rank)));
+            rankIterator.forEachRemaining(rank -> positions.add(Positions.findPosition(this.file, rank)));
             return positions;
         }
 
         while (rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(new Position(file, rankIterator.next())));
+            fileIterator.forEachRemaining(file -> positions.add(Positions.findPosition(file, rankIterator.next())));
         }
 
         return positions.stream()
