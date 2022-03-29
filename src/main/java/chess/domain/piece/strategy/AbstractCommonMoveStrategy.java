@@ -11,7 +11,7 @@ public abstract class AbstractCommonMoveStrategy implements MoveStrategy {
     }
 
     protected void validateTopBottomRightLeft(Position source, Position target) {
-        if (!source.isSameRank(target) || !source.isSameFile(target)) {
+        if (!source.isSameRank(target) && !source.isSameFile(target)) {
             throw new IllegalArgumentException("target은 source의 상하좌우에 있어야 합니다.");
         }
     }

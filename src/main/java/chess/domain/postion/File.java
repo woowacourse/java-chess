@@ -3,6 +3,7 @@ package chess.domain.postion;
 import java.util.Arrays;
 
 public enum File {
+    NOTHING('0'),
     A('a'),
     B('b'),
     C('c'),
@@ -22,7 +23,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(file -> file.getName() == candidate)
                 .findAny()
-                .orElse(null);
+                .orElse(NOTHING);
     }
 
     public char getName() {
