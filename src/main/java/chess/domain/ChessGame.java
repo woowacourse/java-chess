@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ChessGame {
 
-    private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int START_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
@@ -29,7 +28,7 @@ public class ChessGame {
 
     private Command requestFirstCommand() {
         try {
-            return Command.firstCommand(InputView.requestCommand());
+            return InputView.requestFirstCommand();
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return requestFirstCommand();
@@ -54,7 +53,7 @@ public class ChessGame {
     }
 
     private void executeCommand(BoardState boardState) {
-        List<String> input = List.of(InputView.requestCommand().split(DELIMITER));
+        List<String> input = InputView.requestCommandLine();
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.END) {
             boardState.terminate();
