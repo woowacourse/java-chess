@@ -16,7 +16,7 @@ public class PawnMoveStrategyTest {
     @BeforeEach
     void setUp() {
         board = Board.create();
-        pawnMoveStrategy = new PawnMoveStrategy();
+        pawnMoveStrategy = new BlackPawnMoveStrategy();
     }
 
     @Test
