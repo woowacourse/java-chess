@@ -23,8 +23,8 @@ public class ChessBoard {
     private final Map<Position, Piece> board;
     private Player currentPlayer;
 
-    public ChessBoard(final BoardGenerator boardGenerator) {
-        this.board = boardGenerator.generate();
+    public ChessBoard(final Map<Position, Piece> board) {
+        this.board = board;
         this.currentPlayer = Player.WHITE;
     }
 

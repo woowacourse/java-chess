@@ -13,7 +13,7 @@ public class ChessController {
     public static final int RANK_INDEX = 1;
 
     public void start() {
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator().generate());
         String input = validateStartCommand();
 
         if (input.equals(InputView.START)) {
