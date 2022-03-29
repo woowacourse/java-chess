@@ -6,6 +6,9 @@ import java.util.Map;
 
 public class Position {
 
+    public static final int RANKS_TOTAL_SIZE = 8;
+    public static final int FILES_TOTAL_SIZE = 8;
+
     private final int fileIdx;
     private final int rankIdx;
 

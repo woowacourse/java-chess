@@ -1,5 +1,8 @@
 package chess2.util2;
 
+import static chess2.domain2.board2.position.Position.FILES_TOTAL_SIZE;
+import static chess2.domain2.board2.position.Position.RANKS_TOTAL_SIZE;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -10,9 +13,6 @@ public class PositionConverterUtil {
 
     private static final String VALID_FILES = "abcdefgh";
     private static final String VALID_RANKS = "12345678";
-
-    public static final int RANKS_TOTAL_SIZE = 8;
-    public static final int FILES_TOTAL_SIZE = 8;
 
     private static final int FILE_KEY_IDX = 0;
     private static final int RANK_KEY_IDX = 1;

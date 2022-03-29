@@ -5,14 +5,14 @@ import static chess2.domain2.board2.piece2.PieceType.KING;
 import static chess2.domain2.board2.piece2.PieceType.KNIGHT;
 import static chess2.domain2.board2.piece2.PieceType.QUEEN;
 import static chess2.domain2.board2.piece2.PieceType.ROOK;
-import static chess2.util2.PositionConverterUtil.FILES_TOTAL_SIZE;
+import static chess2.domain2.board2.position.Position.FILES_TOTAL_SIZE;
 
-import chess2.domain2.board2.position.Position;
 import chess2.domain2.board2.piece2.Color;
 import chess2.domain2.board2.piece2.NonPawn;
 import chess2.domain2.board2.piece2.Pawn;
 import chess2.domain2.board2.piece2.Piece;
 import chess2.domain2.board2.piece2.PieceType;
+import chess2.domain2.board2.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
