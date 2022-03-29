@@ -3,7 +3,9 @@ package chess.controller;
 import java.util.NoSuchElementException;
 
 import chess.domain.ChessScore;
+import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
+import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -15,7 +17,7 @@ public class ChessController {
 
 	public void run() {
 		outputView.displayGameRule();
-		State state = State.create();
+		State state = new Ready(BoardInitializer.generate());
 		while (!state.isFinished()) {
 			state = processOneTurn(state);
 		}

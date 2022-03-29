@@ -4,6 +4,7 @@ import java.util.Map;
 
 import chess.domain.ChessScore;
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.command.Command;
@@ -15,7 +16,7 @@ public class Ready extends State {
 	private static final String CANNOT_GENERATE_SCORE = "게임 시작 전에는 점수를 불러올 수 없습니다.";
 	private static final String CANNOT_GET_COLOR = "게임 시작 전에는 색을 불러올 수 없습니다.";
 
-	protected Ready(Map<Position, Piece> board) {
+	public Ready(Map<Position, Piece> board) {
 		this.board = new Board(board);
 	}
 

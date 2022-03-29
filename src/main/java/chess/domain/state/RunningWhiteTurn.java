@@ -9,7 +9,7 @@ import chess.domain.piece.Piece;
 
 public class RunningWhiteTurn extends Running {
 
-	public RunningWhiteTurn(Map<Position, Piece> pieces) {
+	RunningWhiteTurn(Map<Position, Piece> pieces) {
 		super(pieces);
 	}
 
