@@ -41,6 +41,15 @@ public class Board {
         return targetPiece;
     }
 
+    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
+        if (movingPiece.isEmpty()) {
+            throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
+        }
+        if (movingPiece.getColor() != color) {
+            throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
+        }
+    }
+
     private void validateMoving(final Position start, final Position target) {
         final Piece movingPiece = get(start);
         if (movingPiece.isSamePiece(KNIGHT)) {
@@ -52,14 +61,6 @@ public class Board {
             return;
         }
         validateCommonPiece(start, target);
-    }
-
-    private void validateCommonPiece(final Position start, final Position target) {
-        final Piece movingPiece = get(start);
-        validatePath(movingPiece, start, target);
-
-        final Piece targetPiece = get(target);
-        validateTarget(movingPiece, targetPiece);
     }
 
     private void validateKnight(final Position start, final Position target) {
@@ -88,13 +89,12 @@ public class Board {
         }
     }
 
-    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
-        if (movingPiece.isEmpty()) {
-            throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
-        }
-        if (movingPiece.getColor() != color) {
-            throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
-        }
+    private void validateCommonPiece(final Position start, final Position target) {
+        final Piece movingPiece = get(start);
+        validatePath(movingPiece, start, target);
+
+        final Piece targetPiece = get(target);
+        validateTarget(movingPiece, targetPiece);
     }
 
     private void validatePath(final Piece movingPiece, final Position start, final Position target) {
@@ -109,7 +109,7 @@ public class Board {
     }
 
     private void validateTarget(final Piece movingPiece, final Piece targetPiece) {
-        if (!targetPiece.isEmpty() && movingPiece.getColor() == targetPiece.getColor()) {
+        if (!targetPiece.isEmpty() && movingPiece.hasSameColor(targetPiece)) {
             throw new IllegalArgumentException(ANOTHER_SAME_COLOR_PIECE_EXIST);
         }
     }

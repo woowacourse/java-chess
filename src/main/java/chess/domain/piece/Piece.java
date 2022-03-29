@@ -19,6 +19,21 @@ public abstract class Piece {
 
     public abstract Direction findValidDirection(Position current, Position target);
 
+    public boolean isSamePiece(final PieceType expected) {
+        return pieceType == expected;
+    }
+
+    public boolean hasSameColor(final Piece piece) {
+        return isSameColor(piece.color);
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    public boolean isEmpty() {
+        return pieceType == PieceType.NONE;
+    }
 
     protected void validateDirection(Direction direction, final List<Direction> possibleDirections) {
         if (!possibleDirections.contains(direction)) {
@@ -34,22 +49,6 @@ public abstract class Piece {
 
     private boolean isInvalidRange(final int rowDifference, final int columnDifference, final int possibleDistance) {
         return Math.abs(rowDifference) > possibleDistance || Math.abs(columnDifference) > possibleDistance;
-    }
-
-    public boolean isSamePiece(final PieceType expected) {
-        return pieceType == expected;
-    }
-
-    public boolean hasSameColor(final Piece piece) {
-        return isSameColor(piece.color);
-    }
-
-    public boolean isSameColor(Color color) {
-        return this.color == color;
-    }
-
-    public boolean isEmpty() {
-        return pieceType == PieceType.NONE;
     }
 
     public PieceType getPieceType() {

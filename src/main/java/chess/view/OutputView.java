@@ -38,7 +38,6 @@ public class OutputView {
     private static void printRow(final Map<Position, Piece> pieces, final int rawRow) {
         for (int i = BOARD_ROW_MIN_POSITION; i <= BOARD_ROW_MAX_POSITION; i++) {
             final Position position = new Position(Column.from(i), Row.from(rawRow));
-//            final Piece piece = pieces.getOrDefault(position, new EmptySpace());
             final Piece piece = pieces.getOrDefault(position, EmptySpace.getInstance());
             System.out.print(convertToSymbol(piece));
         }
