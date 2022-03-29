@@ -9,6 +9,8 @@ import domain.piece.property.Direction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -35,16 +37,18 @@ public abstract class AbstractPiece implements Piece {
 
     protected void calculateAvailableDirectionalPositions(final Position source) {
         initializeDirectionalPositions();
-        for (Direction direction : getDirections()) {
-            calculateAvailableDirectionPosition(source, direction);
-        }
+        directionalPositions = getDirections().stream()
+                .collect(
+                        Collectors.toMap(Function.identity(), direction -> calculateAvailableDirectionByPosition(source, direction)
+                        )
+                );
     }
 
     protected void initializeDirectionalPositions() {
         directionalPositions = new HashMap<>();
     }
 
-    protected abstract void calculateAvailableDirectionPosition(final Position source, final Direction direction);
+    protected abstract List<Position> calculateAvailableDirectionByPosition(final Position source, final Direction direction);
 
     protected boolean containsPosition(final Position position) {
         return getDirections().stream()

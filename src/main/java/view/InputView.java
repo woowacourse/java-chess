@@ -6,8 +6,6 @@ import domain.classification.InputCase;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -86,20 +84,20 @@ public class InputView {
     public static Position responseSource() {
         System.out.print("source 위치를 입력하세요(예, b2) : ");
         String source = sc.nextLine();
-        checkSourceSize(source);
+        checkPositionSize(source);
         return generatePosition(source);
     }
 
     public static Position responseTarget() {
         System.out.print("target 위치를 입력하세요(예, b7) : ");
         String source = sc.nextLine();
-        checkSourceSize(source);
+        checkPositionSize(source);
         return generatePosition(source);
     }
 
-    private static void checkSourceSize(String source) {
+    private static void checkPositionSize(String source) {
         if (source.length() != POSITION_SIZE) {
-            throw new IllegalArgumentException("[ERROR] source위치가 잘못 입력되었습니다.");
+            throw new IllegalArgumentException("[ERROR] 위치 입력이 잘못 입력되었습니다.");
         }
     }
 

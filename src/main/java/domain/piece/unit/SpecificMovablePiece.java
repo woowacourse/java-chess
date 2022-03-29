@@ -15,7 +15,7 @@ public abstract class SpecificMovablePiece extends AbstractPiece {
     }
 
     @Override
-    protected void calculateAvailableDirectionPosition(final Position source, final Direction direction) {
+    protected List<Position> calculateAvailableDirectionByPosition(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
         int x = source.getXPosition() + direction.getX();
         int y = source.getYPosition() + direction.getY();
@@ -23,6 +23,6 @@ public abstract class SpecificMovablePiece extends AbstractPiece {
         if (checkOverRange(x, y)) {
             positions.add(Position.of(XPosition.of(x), YPosition.of(y)));
         }
-        addDirectionalPosition(direction, positions);
+        return positions;
     }
 }
