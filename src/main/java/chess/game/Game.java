@@ -46,10 +46,7 @@ public class Game {
     }
 
     private Color reversColor(final Color color) {
-        if (color == BLACK) {
-            return WHITE;
-        }
-        return BLACK;
+        return color.revers();
     }
 
     private void isEndStatus() {
