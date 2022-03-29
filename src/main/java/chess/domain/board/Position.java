@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
-    private static final HashMap<String, Position> CACHE = new HashMap<>();
+    private static final HashMap<String, Position> CACHE = new HashMap<>(64);
 
     private final Column column;
     private final Row row;
