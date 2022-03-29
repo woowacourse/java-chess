@@ -30,7 +30,6 @@ public final class Board {
         initPawns(Color.WHITE, Rank.TWO, files);
         initPawns(Color.BLACK, Rank.SEVEN, files);
         initEmpty();
-        System.out.println(board.size());
     }
 
     private void initEmpty() {
@@ -75,5 +74,9 @@ public final class Board {
         return "Board{" +
                 "board=" + board +
                 '}';
+    }
+
+    public Piece get(Square square) {
+        return board.get(square);
     }
 }
