@@ -29,7 +29,19 @@ public class Position {
     }
 
     public boolean isAdjacent(Position other) {
-        return (getVerticalDistance(other) | getHorizontalDistance(other)) == 1;
+        return isVerticallyAdjacent(other) || isHorizontallyAdjacent(other) || isDiagonallyAdjacent(other);
+    }
+
+    private boolean isVerticallyAdjacent(Position other) {
+        return getVerticalDistance(other) == 1 && getHorizontalDistance(other) == 0;
+    }
+
+    private boolean isHorizontallyAdjacent(Position other) {
+        return getVerticalDistance(other) == 0 && getHorizontalDistance(other) == 1;
+    }
+
+    private boolean isDiagonallyAdjacent(Position other) {
+        return getVerticalDistance(other) == 1 && getHorizontalDistance(other) == 1;
     }
 
     public boolean isUpward(Position other) {
@@ -44,12 +56,16 @@ public class Position {
         return this.rank == rank;
     }
 
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
+
     public int getVerticalDistance(Position other) {
-        return rank.getDistance(other.rank);
+        return Rank.distanceBetween(rank, other.rank);
     }
 
     public int getHorizontalDistance(Position other) {
-        return file.getDistance(other.file);
+        return File.calculateDistance(file, other.file);
     }
 
     public Collection<Position> getLinearPath(Position to) {
@@ -108,9 +124,5 @@ public class Position {
     @Override
     public String toString() {
         return file.toString() + rank.toString();
-    }
-
-    public boolean isSameFile(File file) {
-        return this.file == file;
     }
 }

@@ -22,10 +22,6 @@ public enum File {
         this.value = value;
     }
 
-    public int getDistance(File other) {
-        return Math.abs(this.value - other.value);
-    }
-
     public static List<File> orderedValues() {
         return Arrays.stream(values())
                 .sorted(Comparator.comparingInt(row -> row.value))
@@ -39,5 +35,9 @@ public enum File {
         return orderedValues().stream()
                 .filter(file -> start < file.value && file.value < end)
                 .collect(Collectors.toList());
+    }
+
+    public static int calculateDistance(File from, File to) {
+        return Math.abs(from.value - to.value);
     }
 }

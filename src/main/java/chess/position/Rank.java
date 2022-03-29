@@ -36,10 +36,6 @@ public enum Rank {
         return value < destination.value;
     }
 
-    public int getDistance(Rank rank) {
-        return Math.abs(this.value - rank.value);
-    }
-
     public List<Rank> getPath(Rank to) {
         int start = Math.min(this.value, to.value);
         int end = Math.max(this.value, to.value);
@@ -52,5 +48,9 @@ public enum Rank {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    public static int distanceBetween(Rank from, Rank to) {
+        return Math.abs(from.value - to.value);
     }
 }
