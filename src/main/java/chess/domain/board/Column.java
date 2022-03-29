@@ -17,14 +17,14 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(column -> column.position() == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다.column"));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 위치입니다."));
     }
 
     public static Column from(final String position) {
         if (position.length() != 1) {
             throw new IllegalArgumentException("올바른 세로 위치가 아닙니다.");
         }
-        return from(position.charAt(0) - 'a');
+        return from(position.charAt(0) - 'a' + 1);
     }
 
     public int calculateDifference(final Column target) {
