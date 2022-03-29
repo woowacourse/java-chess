@@ -28,7 +28,7 @@ public class Finished extends ChessGameState {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
