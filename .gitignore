@@ -30,3 +30,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker/db/mysql/data/
+docker/db/mysql/init/*
+!docker/db/mysql/init/init.sql
+
+### 테스트 코드 ###
+src/main/java/db_test/*
+src/test/java/db_test/*
