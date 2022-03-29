@@ -15,7 +15,7 @@ public class King extends AbstractPiece {
     @Override
     public boolean canMove(final Position from, final Position to) {
         return Arrays.stream(Direction.values())
-                .anyMatch(direction -> direction.canKingMove(from, to));
+                .anyMatch(direction -> canMove(from, to, direction));
     }
 
     @Override
@@ -26,5 +26,11 @@ public class King extends AbstractPiece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    private boolean canMove(final Position from, final Position to, final Direction direction) {
+        final int columnDistance = to.getColumnDistance(from);
+        final int rowDistance = to.getRowDistance(from);
+        return direction.isEqualTo(columnDistance, rowDistance);
     }
 }

@@ -47,4 +47,20 @@ public abstract class AbstractPiece implements Piece {
     public Color getColor() {
         return color;
     }
+
+    final boolean canAnyDirectionMove(final Position from, final Position to) {
+        return canHorizontalAndVerticalMove(from, to) || canDiagonalMove(from, to);
+    }
+
+    final boolean canDiagonalMove(final Position from, final Position to) {
+        final int columnDistance = to.getColumnDistance(from);
+        final int rowDistance = to.getRowDistance(from);
+        return Math.abs(columnDistance) == Math.abs(rowDistance);
+    }
+
+    final boolean canHorizontalAndVerticalMove(final Position from, final Position to) {
+        final int columnDistance = to.getColumnDistance(from);
+        final int rowDistance = to.getRowDistance(from);
+        return columnDistance == 0 || rowDistance == 0;
+    }
 }

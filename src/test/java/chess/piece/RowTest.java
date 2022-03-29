@@ -32,6 +32,6 @@ public class RowTest {
     @Test
     @DisplayName("두 열의 거리를 계산한다.")
     void distance() {
-        assertThat(Row.TWO.getDistance(Row.SEVEN)).isEqualTo(-5);
+        assertThat(Row.TWO.distance(Row.SEVEN)).isEqualTo(-5);
     }
 }

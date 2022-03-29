@@ -1,17 +1,11 @@
 package chess.game;
 
-import static chess.game.Direction.*;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
-
-    private static final int MIN_POSITION = 1;
-    private static final int MAX_POSITION = 8;
 
     private static final List<Position> cachedPositions;
 
@@ -22,19 +16,12 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    private Column column;
-    private Row row;
+    private final Column column;
+    private final Row row;
 
     private Position(final Column column, final Row row) {
         this.row = row;
         this.column = column;
-    }
-
-    public static Position of(final String column, final int row) {
-        return cachedPositions.stream()
-                .filter(cachedPositions -> cachedPositions.column == Column.of(column) && cachedPositions.row == Row.of(row))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
     }
 
     public static Position of(final Column column, final Row row) {
@@ -57,11 +44,11 @@ public class Position {
     }
 
     public int getColumnDistance(final Position to) {
-        return this.column.getDistance(to.column);
+        return this.column.distance(to.column);
     }
 
     public int getRowDistance(final Position to) {
-        return this.row.getDistance(to.row);
+        return this.row.distance(to.row);
     }
 
     public boolean isPawnBeginningRow() {

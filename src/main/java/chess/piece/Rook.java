@@ -1,8 +1,6 @@
 package chess.piece;
 
-import chess.game.Direction;
 import chess.game.Position;
-import java.util.Arrays;
 
 public class Rook extends AbstractPiece {
 
@@ -14,8 +12,7 @@ public class Rook extends AbstractPiece {
 
     @Override
     public boolean canMove(final Position from, final Position to) {
-        return Arrays.stream(Direction.values())
-                .anyMatch(direction -> direction.canHorizontalAndVerticalMove(from, to));
+        return canHorizontalAndVerticalMove(from, to);
     }
 
     @Override

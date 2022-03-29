@@ -6,14 +6,15 @@ import chess.game.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PositionTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"a,1", "b,5", "h,8"})
+    @ValueSource(strings = {"a1", "b5", "h8"})
     @DisplayName("행과 열이 같으면 동일하다.")
-    void cachedPosition(final String column, final int row) {
-        assertThat(Position.of(column, row)).isSameAs(Position.of(column, row));
+    void cachedPosition(final String position) {
+        assertThat(Position.of(position)).isSameAs(Position.of(position));
     }
 
 }

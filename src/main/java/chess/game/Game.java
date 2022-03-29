@@ -1,6 +1,6 @@
 package chess.game;
 
-import static chess.piece.Color.*;
+import static chess.piece.Color.NONE;
 
 import chess.dto.CommandRequest;
 import chess.piece.Color;

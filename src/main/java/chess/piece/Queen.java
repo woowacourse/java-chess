@@ -1,8 +1,6 @@
 package chess.piece;
 
-import chess.game.Direction;
 import chess.game.Position;
-import java.util.Arrays;
 
 public class Queen extends AbstractPiece {
 
@@ -14,8 +12,7 @@ public class Queen extends AbstractPiece {
 
     @Override
     public boolean canMove(final Position from, final Position to) {
-        return Arrays.stream(Direction.values())
-                .anyMatch(direction -> direction.canAnyDirectionMove(from, to));
+        return canAnyDirectionMove(from, to);
     }
 
     @Override

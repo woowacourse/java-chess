@@ -1,7 +1,6 @@
 package chess.game;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Direction {
 
@@ -43,48 +42,10 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
     }
 
-    public static List<Direction> getWhitePawnDirections() {
-        return List.of(N, NW, NE);
-    }
-
-    public static List<Direction> getBlackPawnDirections() {
-        return List.of(S, SW, SE);
-    }
-
-    public static List<Direction> getKnightDirections() {
-        return List.of(NNE, ENE, ESE, SSE, SSW, WSW, WNW, NNW);
-    }
-
-    public boolean canDiagonalMove(final Position from, final Position to) {
-        final int columnDistance = to.getColumnDistance(from);
-        final int rowDistance = to.getRowDistance(from);
-        return Math.abs(columnDistance) == Math.abs(rowDistance);
-    }
-
-    public boolean canHorizontalAndVerticalMove(final Position from, final Position to) {
-        final int columnDistance = to.getColumnDistance(from);
-        final int rowDistance = to.getRowDistance(from);
-        return columnDistance == NOT_MOVE || rowDistance == NOT_MOVE;
-    }
-
-    public boolean canAnyDirectionMove(final Position from, final Position to) {
-        return canHorizontalAndVerticalMove(from, to) || canDiagonalMove(from, to);
-    }
-
-    public boolean canKingMove(final Position from, final Position to) {
-        final int columnDistance = to.getColumnDistance(from);
-        final int rowDistance = to.getRowDistance(from);
-        return isEqualTo(columnDistance, rowDistance);
-    }
-
-    public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
+    public boolean canPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == WHITE_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == N && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance - 1);
         }
-        return isEqualTo(columnDistance, rowDistance);
-    }
-
-    public boolean canBlackPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
         if (rowDistance == BLACK_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == S && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance + 1);
         }

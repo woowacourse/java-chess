@@ -32,7 +32,7 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
-    public int getDistance(final Row other) {
+    public int distance(final Row other) {
         return this.value - other.value;
     }
 
