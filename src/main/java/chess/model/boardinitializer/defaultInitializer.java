@@ -24,11 +24,11 @@ import chess.model.piece.Rook;
 
 public class defaultInitializer implements BoardInitializer {
 
-    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+    private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
     private static final Function<PieceColor, List<Piece>> INIT_PIECE_FUNCTION = (PieceColor pieceColor) -> List.of(
-        new Rook(pieceColor), new Knight(pieceColor), new Bishop(pieceColor),
-        new Queen(pieceColor), new King(pieceColor), new Bishop(pieceColor),
-        new Knight(pieceColor), new Rook(pieceColor));
+        Rook.colorOf(pieceColor), Knight.colorOf(pieceColor), Bishop.colorOf(pieceColor),
+        Queen.colorOf(pieceColor), King.colorOf(pieceColor), Bishop.colorOf(pieceColor),
+        Knight.colorOf(pieceColor), Rook.colorOf(pieceColor));
 
     @Override
     public Map<Position, Piece> apply() {
@@ -65,7 +65,7 @@ public class defaultInitializer implements BoardInitializer {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            result.put(new Position(rank, file), new Pawn(color));
+            result.put(new Position(rank, file), Pawn.colorOf(color));
         }
     }
 

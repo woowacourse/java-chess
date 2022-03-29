@@ -9,8 +9,14 @@ public class EmptyPiece extends Piece {
     private static final String EMBLEM = ".";
     private static final double SCORE = 0;
 
-    public EmptyPiece(PieceColor pieceColor) {
+    private static final Piece EMPTY_PIECE = new EmptyPiece(PieceColor.EMPTY);
+
+    private EmptyPiece(PieceColor pieceColor) {
         super(pieceColor);
+    }
+
+    public static Piece of(PieceColor pieceColor) {
+        return EMPTY_PIECE;
     }
 
     @Override

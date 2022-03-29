@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import static chess.model.PieceColor.*;
+
 import chess.model.MoveType;
 import chess.model.Path;
 import chess.model.PieceColor;
@@ -10,8 +12,18 @@ public class King extends Piece {
     private static final double SCORE = 0;
     private static final int MOVE_DISTANCE = 1;
 
-    public King(PieceColor pieceColor) {
+    private static final Piece KING_WHITE = new King(WHITE);
+    private static final Piece KING_BLACK = new King(BLACK);
+
+    private King(PieceColor pieceColor) {
         super(pieceColor);
+    }
+
+    public static Piece colorOf(PieceColor pieceColor) {
+        if (pieceColor.isWhite()) {
+            return KING_WHITE;
+        }
+        return KING_BLACK;
     }
 
     @Override

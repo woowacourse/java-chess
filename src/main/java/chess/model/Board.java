@@ -14,7 +14,7 @@ public class Board {
     static final String ERROR_SOURCE_PIECE_EMPTY = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
     static final String ERROR_NOT_MOVABLE = "[ERROR] 이동할 수 없는 위치입니다.";
-    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+    private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
 
     private final Map<Position, Piece> values;
     private final TurnDecider turnDecider;

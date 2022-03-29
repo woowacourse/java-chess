@@ -27,18 +27,18 @@ class AlternatingTurnDeciderTest {
     @CsvSource(value = {"WHITE:true", "BLACK:false"}, delimiter = ':')
     void when_first_turn_white_is_ok_but_black_is_not_allowed(PieceColor pieceColor, boolean expected) {
 
-        assertThat(turnDecider.isTurnOf(new Pawn(pieceColor))).isEqualTo(expected);
+        assertThat(turnDecider.isTurnOf(Pawn.colorOf(pieceColor))).isEqualTo(expected);
     }
 
     @DisplayName("처음 턴은 백이고 다음 턴은 블랙이다, 세번째 턴은 백이다")
     @Test
     void when_first_turn_white_is_ok_then_next_turn_black_is_black() {
-        assertThat(turnDecider.isTurnOf(new Pawn(WHITE))).isTrue();
+        assertThat(turnDecider.isTurnOf(Pawn.colorOf(WHITE))).isTrue();
 
         turnDecider.nextState();
-        assertThat(turnDecider.isTurnOf(new Pawn(BLACK))).isTrue();
+        assertThat(turnDecider.isTurnOf(Pawn.colorOf(BLACK))).isTrue();
 
         turnDecider.nextState();
-        assertThat(turnDecider.isTurnOf(new Pawn(WHITE))).isTrue();
+        assertThat(turnDecider.isTurnOf(Pawn.colorOf(WHITE))).isTrue();
     }
 }

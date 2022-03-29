@@ -14,6 +14,7 @@ import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Rank;
 import chess.model.piece.Knight;
+import chess.model.piece.Piece;
 
 public class KnightTest {
 
@@ -22,7 +23,7 @@ public class KnightTest {
     @DisplayName("나이트는 앞 2칸, 옆 1칸 이동만 가능하다.")
     void isMovable(Rank rank, File file) {
         //given
-        Knight knight = new Knight(PieceColor.WHITE);
+        Piece knight = Knight.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = knight.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
@@ -37,7 +38,7 @@ public class KnightTest {
     @DisplayName("나이트는 이동불가능 한 곳으로 이동하면 false를 반환한다")
     void knight_cant_move(Rank rank, File file) {
         //given
-        Knight knight = new Knight(PieceColor.WHITE);
+        Piece knight = Knight.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = knight.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
@@ -50,6 +51,6 @@ public class KnightTest {
     @Test
     @DisplayName("isKnight의 return 값이 true이다.")
     void isKnight() {
-        assertThat(new Knight(PieceColor.WHITE).isKnight()).isTrue();
+        assertThat(Knight.colorOf(PieceColor.WHITE).isKnight()).isTrue();
     }
 }

@@ -59,7 +59,7 @@ public class BoardTest {
 
         // when & then
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Pawn(PieceColor.WHITE))
+            .map(value -> Pawn.colorOf(PieceColor.WHITE))
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
@@ -77,7 +77,7 @@ public class BoardTest {
 
         //when
         List<Piece> expected = Arrays.stream(File.values())
-            .map(value -> new Pawn(PieceColor.WHITE))
+            .map(value -> Pawn.colorOf(PieceColor.WHITE))
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
@@ -104,7 +104,7 @@ public class BoardTest {
         Map<Position, Piece> piecesByPositions = board.getValues();
 
         //then
-        assertThat(piecesByPositions.get(new Position(Rank.THREE, A))).isEqualTo(new Pawn(PieceColor.WHITE));
+        assertThat(piecesByPositions.get(new Position(Rank.THREE, A))).isEqualTo(Pawn.colorOf(PieceColor.WHITE));
     }
 
     @ParameterizedTest
@@ -178,14 +178,14 @@ public class BoardTest {
 
     public static class kingCaptureTestInitializer implements BoardInitializer {
 
-        private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+        private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
 
         @Override
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
             putAllEmptyPieces(result);
-            result.put(new Position(TWO, A), new Rook(PieceColor.WHITE));
-            result.put(new Position(THREE, A), new King(PieceColor.BLACK));
+            result.put(new Position(TWO, A), Rook.colorOf(PieceColor.WHITE));
+            result.put(new Position(THREE, A), King.colorOf(PieceColor.BLACK));
             return result;
         }
 

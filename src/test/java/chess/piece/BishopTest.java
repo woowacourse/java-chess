@@ -15,6 +15,7 @@ import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Rank;
 import chess.model.piece.Bishop;
+import chess.model.piece.Piece;
 
 class BishopTest {
 
@@ -23,7 +24,7 @@ class BishopTest {
     @CsvSource(value = {"FOUR:D", "FIVE:E", "FOUR:B", "TWO:B"}, delimiter = ':')
     void isMovable(Rank rank, File file) {
         //given
-        Bishop bishop = new Bishop(PieceColor.WHITE);
+        Piece bishop = Bishop.colorOf(PieceColor.WHITE);
         Position source = new Position(THREE, C);
         Position target = new Position(rank, file);
 
@@ -39,7 +40,7 @@ class BishopTest {
     @DisplayName("비숍은 대각선이 아니면 이동이 불가능하다")
     void cantMovable(Rank rank, File file) {
         //given
-        Bishop bishop = new Bishop(PieceColor.WHITE);
+        Piece bishop = Bishop.colorOf(PieceColor.WHITE);
         Position source = new Position(THREE, C);
         Position target = new Position(rank, file);
 

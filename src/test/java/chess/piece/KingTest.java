@@ -14,6 +14,7 @@ import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Rank;
 import chess.model.piece.King;
+import chess.model.piece.Piece;
 
 public class KingTest {
 
@@ -22,7 +23,7 @@ public class KingTest {
     @DisplayName("킹은 좌우, 대각선 방향으로 한칸만 이동이 가능하다")
     void isMovable(Rank rank, File file) {
         //given
-        King king = new King(PieceColor.WHITE);
+        Piece king = King.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = king.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
@@ -37,7 +38,7 @@ public class KingTest {
     @DisplayName("킹은 좌우, 대각선 방향으로 한 칸 이동이 아니라면 이동이 불가하다")
     void cantMovable(Rank rank, File file) {
         //given
-        King king = new King(PieceColor.WHITE);
+        Piece king = King.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = king.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
@@ -50,6 +51,6 @@ public class KingTest {
     @Test
     @DisplayName("isKing의 return 값이 true이다.")
     void isKing() {
-        assertThat(new King(PieceColor.WHITE).isKing()).isTrue();
+        assertThat(King.colorOf(PieceColor.WHITE).isKing()).isTrue();
     }
 }

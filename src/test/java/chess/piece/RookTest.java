@@ -12,6 +12,7 @@ import chess.model.Path;
 import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Rank;
+import chess.model.piece.Piece;
 import chess.model.piece.Rook;
 
 public class RookTest {
@@ -21,7 +22,7 @@ public class RookTest {
     @DisplayName("Rook은 동일 Rank나 File에 있는 좌표로 이동할 수 있다")
     void isMovable(Rank rank, File file) {
         //given
-        Rook rook = new Rook(PieceColor.WHITE);
+        Piece rook = Rook.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),
@@ -36,7 +37,7 @@ public class RookTest {
     @DisplayName("Rook은 Rank 나 File 모두 동일하지 않다면 이동이 불가하다 (false 반환)")
     void cantMovable(Rank rank, File file) {
         //given
-        Rook rook = new Rook(PieceColor.WHITE);
+        Piece rook = Rook.colorOf(PieceColor.WHITE);
 
         //when
         boolean actual = rook.isMovable(new Path(new Position(Rank.THREE, File.C), new Position(rank, file)),

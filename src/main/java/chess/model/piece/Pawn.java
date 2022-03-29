@@ -14,8 +14,18 @@ public class Pawn extends Piece {
     private static final int FIST_MOVE_DISTANCE = 2;
     private static final int DEFAULT_MOVE_DISTANCE = 1;
 
-    public Pawn(PieceColor pieceColor) {
+    private static final Piece PAWN_WHITE = new Pawn(WHITE);
+    private static final Piece PAWN_BLACK = new Pawn(BLACK);
+
+    private Pawn(PieceColor pieceColor) {
         super(pieceColor);
+    }
+
+    public static Piece colorOf(PieceColor pieceColor) {
+        if (pieceColor.isWhite()) {
+            return PAWN_WHITE;
+        }
+        return PAWN_BLACK;
     }
 
     @Override

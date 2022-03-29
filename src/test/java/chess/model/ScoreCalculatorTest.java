@@ -49,16 +49,16 @@ public class ScoreCalculatorTest {
 
     public static class testInitializer implements BoardInitializer {
 
-        private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+        private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
 
         @Override
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
             putAllEmptyPieces(result);
-            result.put(new Position(FOUR, A), new Pawn(WHITE));
-            result.put(new Position(THREE, A), new Pawn(WHITE));
-            result.put(new Position(THREE, B), new Pawn(WHITE));
-            result.put(new Position(FIVE, A), new Pawn(BLACK));
+            result.put(new Position(FOUR, A), Pawn.colorOf(WHITE));
+            result.put(new Position(THREE, A), Pawn.colorOf(WHITE));
+            result.put(new Position(THREE, B), Pawn.colorOf(WHITE));
+            result.put(new Position(FIVE, A), Pawn.colorOf(BLACK));
             return result;
         }
 
