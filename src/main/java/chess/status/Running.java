@@ -4,6 +4,7 @@ import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 
 import chess.game.Board;
+import chess.game.BoardInitializer;
 import chess.game.Command;
 import chess.game.MoveCommand;
 import chess.piece.Color;
@@ -15,7 +16,7 @@ public class Running implements State {
     private Color color = WHITE;
 
     Running() {
-        this.board = Board.create();
+        this.board = new Board(BoardInitializer.getBoard());
     }
 
     @Override

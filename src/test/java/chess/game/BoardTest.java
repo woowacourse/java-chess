@@ -18,7 +18,7 @@ class BoardTest {
     @CsvSource(value = {"a3,a4", "g3,g4", "a6,a5", "g6,g5", "d3,d4", "d6,e5"})
     @DisplayName("현재 위치에 말이 존재하는지 검증한다.")
     void existPieceInFromPosition(final String from, final String to) {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
 
         assertThatThrownBy(() -> board.move(MoveCommand.of(from, to), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -29,7 +29,7 @@ class BoardTest {
     @CsvSource(value = {"a1,a2", "g1,g2", "a7,a8", "g7,g8", "d2,d1", "d7,d8"})
     @DisplayName("이동할 위치에 말이 존재하는지 검증한다.")
     void existPieceInToPosition(final String from, final String to) {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
 
         assertThatThrownBy(() -> board.move(MoveCommand.of(from, to), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,7 +39,7 @@ class BoardTest {
     @Test
     @DisplayName("폰은 상대말이 가로막고 있을 때 전진할 수 없다.")
     void pawnCannotAttackForward() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("a2", "a4"), Color.WHITE);
         board.move(MoveCommand.of("a4", "a5"), Color.WHITE);
         board.move(MoveCommand.of("a5", "a6"), Color.WHITE);
@@ -52,7 +52,7 @@ class BoardTest {
     @Test
     @DisplayName("룩이 전진해서 상대 말을 잡는다.")
     void rookAttackForward() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("a2", "a4"), Color.WHITE);
         board.move(MoveCommand.of("a1", "a3"), Color.WHITE);
         board.move(MoveCommand.of("a3", "d3"), Color.WHITE);
@@ -64,7 +64,7 @@ class BoardTest {
     @Test
     @DisplayName("남아있는 말에 따라 점수를 계산한다.")
     void score() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         final Map<Color, Double> boardScore = board.getBoardScore();
 
         assertThat(boardScore.get(Color.BLACK)).isEqualTo(38);
@@ -73,7 +73,7 @@ class BoardTest {
     @Test
     @DisplayName("폰을 잃은 팀의 점수를 계산한다.")
     void scorePawnLoss() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("a2", "a4"), Color.WHITE);
         board.move(MoveCommand.of("a4", "a5"), Color.WHITE);
         board.move(MoveCommand.of("a5", "a6"), Color.WHITE);
@@ -87,7 +87,7 @@ class BoardTest {
     @Test
     @DisplayName("룩을 잃은 팀의 점수를 계산한다.")
     void scoreRookLoss() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("b1", "a3"), Color.WHITE);
         board.move(MoveCommand.of("a3", "c4"), Color.WHITE);
         board.move(MoveCommand.of("c4", "b6"), Color.WHITE);
@@ -101,7 +101,7 @@ class BoardTest {
     @Test
     @DisplayName("나이트를 잃은 팀의 점수를 계산한다.")
     void scoreKnightLoss() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("b1", "c3"), Color.WHITE);
         board.move(MoveCommand.of("c3", "a4"), Color.WHITE);
         board.move(MoveCommand.of("a4", "c5"), Color.WHITE);
@@ -116,7 +116,7 @@ class BoardTest {
     @Test
     @DisplayName("비숍를 잃은 팀의 점수를 계산한다.")
     void scoreBishopLoss() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("b1", "c3"), Color.WHITE);
         board.move(MoveCommand.of("c3", "b5"), Color.WHITE);
         board.move(MoveCommand.of("b5", "d6"), Color.WHITE);
@@ -130,7 +130,7 @@ class BoardTest {
     @Test
     @DisplayName("퀸을 잃은 팀의 점수를 계산한다.")
     void scoreQueenLoss() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("b1", "a3"), Color.WHITE);
         board.move(MoveCommand.of("a3", "c4"), Color.WHITE);
         board.move(MoveCommand.of("c4", "a5"), Color.WHITE);
@@ -145,7 +145,7 @@ class BoardTest {
     @Test
     @DisplayName("같은 열에 폰이 2개 있을 경우 점수를 계산한다.")
     void scoreTwoPawnsOnSameColumn() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("a2", "a4"), Color.WHITE);
         board.move(MoveCommand.of("a4", "a5"), Color.WHITE);
         board.move(MoveCommand.of("a5", "a6"), Color.WHITE);
@@ -159,7 +159,7 @@ class BoardTest {
     @Test
     @DisplayName("같은 열에 폰이 3개 있을 경우 점수를 계산한다.")
     void scoreThreePawnsOnSameColumn() {
-        final Board board = Board.create();
+        final Board board = new Board(BoardInitializer.getBoard());
         board.move(MoveCommand.of("b2", "b4"), Color.WHITE);
         board.move(MoveCommand.of("b4", "b5"), Color.WHITE);
         board.move(MoveCommand.of("b5", "b6"), Color.WHITE);

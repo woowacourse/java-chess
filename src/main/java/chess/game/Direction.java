@@ -22,6 +22,10 @@ public enum Direction {
     WNW(-2, 1),
     NNW(-1, 2);
 
+    private static final int WHITE_PAWN_BEGINNING_DISTANCE = 2;
+    private static final int BLACK_PAWN_BEGINNING_DISTANCE = -2;
+    private static final int NOT_MOVE = 0;
+
     private final int column;
     private final int row;
 
@@ -51,7 +55,7 @@ public enum Direction {
     public boolean canHorizontalAndVerticalMove(final Position from, final Position to) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
-        return columnDistance == 0 || rowDistance == 0;
+        return columnDistance == NOT_MOVE || rowDistance == NOT_MOVE;
     }
 
     public boolean canAnyDirectionMove(final Position from, final Position to) {
@@ -65,14 +69,14 @@ public enum Direction {
     }
 
     public boolean canWhitePawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
-        if (rowDistance == 2 && columnDistance == 0 && this == N && pawnAtInitial) {
+        if (rowDistance == WHITE_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == N && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance - 1);
         }
         return isEqualTo(columnDistance, rowDistance);
     }
 
     public boolean canBlackPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
-        if (rowDistance == -2 && columnDistance == 0 && this == S && pawnAtInitial) {
+        if (rowDistance == BLACK_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == S && pawnAtInitial) {
             return isEqualTo(columnDistance, rowDistance + 1);
         }
         return isEqualTo(columnDistance, rowDistance);
