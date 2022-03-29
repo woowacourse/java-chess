@@ -22,6 +22,10 @@ public abstract class Piece {
         return pieceType == expected;
     }
 
+    public boolean hasSameColor(final Piece piece) {
+        return isSameColor(piece.color);
+    }
+
     public boolean isSameColor(Color color) {
         return this.color == color;
     }

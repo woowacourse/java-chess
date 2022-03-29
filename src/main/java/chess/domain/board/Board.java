@@ -80,7 +80,7 @@ public class Board {
     }
 
     private void validatePawnDiagonalMove(final Piece movingPiece, final Piece targetPiece) {
-        if (targetPiece.equals(new EmptySpace()) || targetPiece.getColor() == movingPiece.getColor()) {
+        if (targetPiece.equals(new EmptySpace()) || movingPiece.hasSameColor(targetPiece)) {
             throw new IllegalArgumentException(PAWN_CANNOT_MOVE_DIAGONAL);
         }
     }
