@@ -16,7 +16,7 @@ public class Pieces {
                 .anyMatch(piece -> piece.isSamePosition(position));
     }
 
-    public Piece findPieceByPosition(Position position) {
+    private Piece findPieceByPosition(Position position) {
         return pieces.stream().filter(piece -> piece.isSamePosition(position))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(String.format("%s에 기물이 없습니다.", position)));
     }
