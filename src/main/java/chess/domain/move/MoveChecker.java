@@ -55,7 +55,7 @@ public class MoveChecker {
     }
 
     private void checkMovement(final Position from, final Position to, final Piece source,
-        final Piece target) {
+                               final Piece target) {
         if (!source.isMovable(from, to, target.equals(new EmptyPiece()))) {
             throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
         }
@@ -68,7 +68,7 @@ public class MoveChecker {
     }
 
     private void checkBlocked(final Position from, final Position to, final Piece source,
-        final Direction direction) {
+                              final Direction direction) {
         if (!source.isJumpable() && isBlocked(direction, from, to)) {
             throw new IllegalStateException("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
         }
@@ -79,7 +79,7 @@ public class MoveChecker {
         if (next.equals(to)) {
             return false;
         }
-        if (!board.findPiece(next).equals(new EmptyPiece())) {
+        if (!board.isEmptyPosition(next)) {
             return true;
         }
         return isBlocked(direction, next, to);
