@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.CachedPosition;
+import chess.domain.board.Board;
+import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +14,7 @@ class ReadyTest {
     @DisplayName("move 명령을 실행하면 예외를 반환한다.")
     @Test
     void cannot_Move() {
-        ChessState ready = new Ready();
+        ChessState ready = new Ready(new Board(new CreateCompleteBoardStrategy()));
 
         assertThatThrownBy(() -> ready.move(CachedPosition.a1, CachedPosition.a2))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -22,7 +24,7 @@ class ReadyTest {
     @DisplayName("end 명령을 실행하면 예외를 반환한다.")
     @Test
     void cannot_End() {
-        ChessState ready = new Ready();
+        ChessState ready = new Ready(new Board(new CreateCompleteBoardStrategy()));
 
         assertThatThrownBy(ready::end)
                 .isInstanceOf(IllegalArgumentException.class)
@@ -32,7 +34,7 @@ class ReadyTest {
     @DisplayName("start 명령을 실행하면 Running 상태를 반환한다.")
     @Test
     void start() {
-        ChessState ready = new Ready();
+        ChessState ready = new Ready(new Board(new CreateCompleteBoardStrategy()));
 
         ChessState actual = ready.start();
 

@@ -3,13 +3,18 @@ package chess.domain.state;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class Ready implements ChessState {
 
     private static final String CANNOT_IMPLEMENT_COMMAND = "현재 실행할 수 없는 명령입니다.";
+
+    private final Board board;
+
+    public Ready(Board board) {
+        this.board = board;
+    }
 
     @Override
     public boolean isFinished() {
@@ -18,7 +23,7 @@ public class Ready implements ChessState {
 
     @Override
     public ChessState start() {
-        return new WhiteRunning(new Board(new CreateCompleteBoardStrategy()));
+        return new WhiteRunning(board);
     }
 
     @Override
