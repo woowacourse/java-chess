@@ -12,15 +12,13 @@ import static chess.view.OutputView.printGameOverInstructions;
 import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessGame;
+import chess.domain.command.Command;
 import chess.domain.piece.ChessmenInitializer;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
 
 public class ChessController {
-
-    private static final String START = "start";
-    private static final String END = "end";
 
     private boolean playerWantToEndStatus = false;
 
@@ -55,14 +53,14 @@ public class ChessController {
     }
 
     private ChessGame progressByCommand(ChessGame chessGame, CommandDto commandDto) {
-        String state = commandDto.getGameState();
-        if (state.equals(START)) {
+        Command command = commandDto.getCommand();
+        if (command.isStart()) {
             return initAndShowBoard();
         }
-        if (state.equals(END)) {
+        if (command.isEnd()) {
             return end(chessGame);
         }
-        return move(chessGame, commandDto.getCommand());
+        return move(chessGame, commandDto.getFullCommand());
     }
 
     private ChessGame end(ChessGame chessGame) {
