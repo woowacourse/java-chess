@@ -24,21 +24,21 @@ public final class Board {
     private static final int COUNT_INITIAL_KING = 2;
 
     private final Map<Position, Piece> squares;
-    private boolean whiteTurn;
 
     Board(Map<Position, Piece> squares) {
         this.squares = new TreeMap<>(squares);
-        this.whiteTurn = true;
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
         Piece source = this.squares.get(sourcePosition);
+        System.out.println("백색 진영 : " + source.isCamp(WHITE));
+        System.out.println("백색 진영 isNotTurn : " + WHITE.isNotTurn());
 
         checkBlank(sourcePosition);
         checkTurn(source);
         checkPath(sourcePosition, targetPosition, source);
 
-        this.whiteTurn = !whiteTurn;
+        Camp.switchTurn();
         move(sourcePosition, targetPosition, source);
     }
 
@@ -49,7 +49,7 @@ public final class Board {
     }
 
     private void checkTurn(Piece source) {
-        if (source.isCamp(WHITE) != whiteTurn) {
+        if (source.isNotTurn()) {
             throw new IllegalArgumentException(ERROR_NOT_YOUR_TURN);
         }
     }

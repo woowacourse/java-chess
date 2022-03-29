@@ -15,6 +15,7 @@ public class BoardTest {
     @BeforeEach
     void initializeBoard() {
         this.board = BoardInitializer.get();
+        Camp.initializeTurn();
     }
 
     @DisplayName("이동하려는 위치에 같은 팀 기물이 있으면 갈 수 없다")
@@ -55,6 +56,31 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(a1, a4))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
+    }
+
+    @DisplayName("백색 진영의 턴일 때 흑색 기물을 움직일 수 없다.")
+    @Test
+    void move_black_in_white_turn() {
+        Position c7 = Position.of(Column.C, Row.SEVEN);
+        Position c5 = Position.of(Column.C, Row.FIVE);
+        assertThatThrownBy(() -> board.move(c7, c5))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상대 진영의 차례입니다.");
+    }
+
+    @DisplayName("흑색 진영의 턴일 때 백색 기물을 움직일 수 없다.")
+    @Test
+    void move_white_in_black_turn() {
+        Position a2 = Position.of(Column.A, Row.TWO);
+        Position a4 = Position.of(Column.A, Row.FOUR);
+        Position b2 = Position.of(Column.B, Row.TWO);
+        Position b4 = Position.of(Column.B, Row.FOUR);
+
+        board.move(a2, a4);
+
+        assertThatThrownBy(() -> board.move(b2, b4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상대 진영의 차례입니다.");
     }
 
     @DisplayName("초기 상태의 체스판에서 흑색 진영의 점수는 38점이다.")

@@ -12,6 +12,7 @@ public class Running implements State {
 
     public Running(Board board) {
         this.board = board;
+        Camp.initializeTurn();
     }
 
     @Override

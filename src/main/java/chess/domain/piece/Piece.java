@@ -25,6 +25,10 @@ public abstract class Piece {
         return this.type == type;
     }
 
+    public final boolean isNotTurn() {
+        return this.camp.isNotTurn();
+    }
+
     public final boolean canNotApproach(Position sourcePosition, Position targetPosition) {
         return this.type.canNotApproach(sourcePosition, targetPosition);
     }
