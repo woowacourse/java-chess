@@ -19,7 +19,7 @@ class WhitePawnDefaultMovingStrategyTest {
 
     @DisplayName("Pawn은 보통의 경우 앞으로 1칸 이동 가능하다.")
     @ParameterizedTest
-    @CsvSource({"a3,a4,true", "a4,a5,true", "a3,a5,false", "a3,b4,false"})
+    @CsvSource({"a3,a4,true", "a4,a5,true", "a3,a5,false", "a3,b4,false", "a3,b5,false"})
     void pawn_1칸_이동_가능하다(String source, String target, boolean expected) {
         WhitePawnDefaultMovingStrategy movingStrategy = new WhitePawnDefaultMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();

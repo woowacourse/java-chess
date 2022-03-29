@@ -11,7 +11,8 @@ public enum Direction {
     TOP_RIGHT(-1, 1, true),
     TOP_LEFT(-1, -1, true),
     BOTTOM_RIGHT(1, 1, true),
-    BOTTOM_LEFT(1, -1, true)
+    BOTTOM_LEFT(1, -1, true),
+    NONE(0, 0, false)
     ;
 
     private final int row;
@@ -32,7 +33,7 @@ public enum Direction {
                 .filter(direction -> direction.row == rowWeight && direction.col == colWeight
                         && direction.isDiagonal == isDiagonal(source, target))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElse(NONE);
     }
 
     private static int calculateWeight(int value) {
