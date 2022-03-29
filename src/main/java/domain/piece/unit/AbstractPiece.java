@@ -5,7 +5,7 @@ import domain.piece.property.Team;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
-import domain.utils.Direction;
+import domain.piece.property.Direction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

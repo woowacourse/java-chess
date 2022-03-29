@@ -2,7 +2,7 @@ package domain.piece.unit;
 
 import domain.piece.property.Team;
 import domain.position.Position;
-import domain.utils.Direction;
+import domain.piece.property.Direction;
 import java.util.List;
 
 public interface Piece {

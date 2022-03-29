@@ -12,7 +12,7 @@ import domain.piece.unit.Rook;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
-import domain.utils.Result;
+import utils.Result;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

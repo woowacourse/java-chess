@@ -1,4 +1,4 @@
-package domain.utils;
+package domain.piece.property;
 
 import java.util.List;
 

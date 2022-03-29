@@ -1,11 +1,11 @@
 package domain.piece.unit;
 
-import static domain.utils.Direction.knightDirections;
+import static domain.piece.property.Direction.knightDirections;
 
 import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
-import domain.utils.Direction;
+import domain.piece.property.Direction;
 import java.util.List;
 
 public final class Knight extends SpecificMovablePiece {

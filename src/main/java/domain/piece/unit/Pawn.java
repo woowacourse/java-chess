@@ -4,7 +4,7 @@ import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.position.Position;
-import domain.utils.Direction;
+import domain.piece.property.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
