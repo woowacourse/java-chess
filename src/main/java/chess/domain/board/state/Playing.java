@@ -66,7 +66,7 @@ public abstract class Playing extends GameStarted {
     }
 
     private void checkPath(Position start, Position target, Direction direction) {
-        if (Position.calculateStraightDistance(start, target) == 1) {
+        if (start.calculateStraightDistance(target) == 1) {
             return;
         }
         Position afterStartTarget = Position.createNextPosition(start, direction);

@@ -74,7 +74,7 @@ public class PositionTest {
         Position position1 = new Position(0, 0);
         Position position2 = new Position(7, 7);
 
-        assertThat(Position.calculateStraightDistance(position1, position2))
+        assertThat(position1.calculateStraightDistance(position2))
                 .isEqualTo(7);
     }
 }

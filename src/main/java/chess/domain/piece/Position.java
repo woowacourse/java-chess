@@ -45,10 +45,6 @@ public class Position {
         return position.getX() >= MIN && position.getX() < MAX && position.getY() >= MIN && position.getY() < MAX;
     }
 
-    public static int calculateStraightDistance(Position position1, Position position2) {
-        return Math.max(Math.abs(position1.getX() - position2.getX()), Math.abs(position1.getY() - position2.getY()));
-    }
-
     private void validate(String charPosition) {
         validateLength(charPosition);
         validateAlphabetRange(charPosition);
@@ -73,6 +69,10 @@ public class Position {
                 || charPosition.charAt(SECOND_INDEX) >= ASCII_NUMBER + MAX) {
             throw new IllegalArgumentException(CHAR_POSITION_NUMBER_EXCEPTION_MESSAGE);
         }
+    }
+
+    public int calculateStraightDistance(Position destination) {
+        return Math.max(Math.abs(x - destination.getX()), Math.abs(y - destination.getY()));
     }
 
     public int getX() {
