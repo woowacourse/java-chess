@@ -13,7 +13,7 @@ public class GameEnd extends ChessGameState {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException("[ERROR] start를 지원하지 않습니다.");
+        throw new UnsupportedOperationException(UNSUPPORTED_START);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class GameEnd extends ChessGameState {
 
     @Override
     public State move(Position from, Position to) {
-        throw new UnsupportedOperationException("[ERROR] move를 지원하지 않습니다.");
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class GameEnd extends ChessGameState {
 
     @Override
     public Score score() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_SCORE);
     }
 
     @Override

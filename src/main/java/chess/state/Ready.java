@@ -23,7 +23,7 @@ public class Ready extends ChessGameState {
 
     @Override
     public State move(Position from, Position to) {
-        throw new UnsupportedOperationException("[ERROR] move를 지원하지 않습니다.");
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class Ready extends ChessGameState {
 
     @Override
     public Score score() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_SCORE);
     }
 
     @Override
     public Color winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_WINNER);
     }
 }

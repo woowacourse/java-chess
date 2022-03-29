@@ -13,7 +13,7 @@ public class Running extends ChessGameState {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException("[ERROR] start를 지원하지 않습니다.");
+        throw new UnsupportedOperationException(UNSUPPORTED_START);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class Running extends ChessGameState {
 
     @Override
     public Color winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_WINNER);
     }
 }

@@ -13,17 +13,17 @@ public class Finished extends ChessGameState {
 
     @Override
     public State start() {
-        return null;
+        throw new UnsupportedOperationException(UNSUPPORTED_START);
     }
 
     @Override
     public State finished() {
-        return null;
+        throw new UnsupportedOperationException("finished를 지원하지 않습니다.");
     }
 
     @Override
     public State move(Position from, Position to) {
-        return null;
+        throw new UnsupportedOperationException(UNSUPPORTED_MOVE);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class Finished extends ChessGameState {
 
     @Override
     public Score score() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_SCORE);
     }
 
     @Override
     public Color winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_WINNER);
     }
 }
