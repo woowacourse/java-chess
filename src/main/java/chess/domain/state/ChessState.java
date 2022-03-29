@@ -4,5 +4,5 @@ import chess.Command;
 
 public interface ChessState {
 
-    ChessState execute(Command command);
+    ChessState execute(Command command, String... commandArgs);
 }
