@@ -19,13 +19,16 @@ public final class BoardInitializer implements Initializer {
     private static final Row WHITE_PIECE_ROW = Row.ONE;
     private static final Row BLACK_PIECE_ROW = Row.EIGHT;
 
+    private final Map<Position, Piece> pieces = new HashMap<>();
+
     public Map<Position, Piece> initialize() {
-        final Map<Position, Piece> pieces = new HashMap<>();
-        initGame(pieces);
+        if (pieces.isEmpty()) {
+            initBoard(pieces);
+        }
         return pieces;
     }
 
-    private void initGame(final Map<Position, Piece> pieces) {
+    private void initBoard(final Map<Position, Piece> pieces) {
         initRooks(pieces);
         initKnights(pieces);
         initBishops(pieces);

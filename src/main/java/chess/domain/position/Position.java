@@ -1,13 +1,11 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class Position {
 
     private static final int AROUND_DISTANCE = 1;
+    private static final Map<String, Position> caches = new HashMap<>();
 
     private final Column column;
     private final Row row;
@@ -19,9 +17,10 @@ public final class Position {
 
     public static Position of(final String value) {
         validateValue(value);
-        final Column column = Column.of(value.substring(0, 1));
-        final Row row = Row.of(value.substring(1));
-        return new Position(column, row);
+        if (!caches.containsKey(value)) {
+            caches.put(value, new Position(Column.of(value.substring(0, 1)), Row.of(value.substring(1))));
+        }
+        return caches.get(value);
     }
 
     private static void validateValue(final String value) {
