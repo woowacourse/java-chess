@@ -17,4 +17,8 @@ public class Route {
     public Position createPositionFrom(Rank rank, File file) {
         return Position.of(rank.add(y), file.add(x));
     }
+
+    public boolean canCreatePosition(Rank rank, File file) {
+        return rank.canAdd(y) && file.canAdd(x);
+    }
 }

@@ -4,11 +4,15 @@ import chess.Direction;
 import chess.Player;
 import chess.Position;
 
+import chess.direction.KingDirection;
+import chess.direction.RookDirection;
+import chess.direction.Route;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static chess.Direction.*;
+import static chess.Player.*;
 
 public class Rook extends Piece {
 
@@ -16,6 +20,26 @@ public class Rook extends Piece {
 
     public Rook(Player player, String symbol) {
         super(player, symbol);
+    }
+
+    @Override
+    public boolean canMove_2(Position source, Position target, Map<Position, Piece> board) {
+        Route route = findRoute(source, target);
+        List<Position> positions = new ArrayList<>();
+        Position nowPosition = source.createPositionFrom(route);
+        while (board.get(nowPosition).isSame(NONE) && nowPosition.canCreatePosition(route)) {
+            positions.add(nowPosition);
+            nowPosition = nowPosition.createPositionFrom(route);
+        }
+        positions.add(nowPosition);
+        return positions.contains(target);
+    }
+
+    @Override
+    public Route findRoute(final Position source, final Position target) {
+        final int subtractedRank = source.subtractRankFrom(target);
+        final int subtractedFile = source.subtractFileFrom(target);
+        return RookDirection.findRouteFrom(subtractedRank, subtractedFile);
     }
 
     @Override
@@ -33,7 +57,7 @@ public class Rook extends Piece {
             return positions;
         }
         Position nextPosition = source.createMovablePosition(direction);
-        while (board.get(nextPosition).isSame(Player.NONE) && nextPosition.isInBoardAfterMoved(direction)) {
+        while (board.get(nextPosition).isSame(NONE) && nextPosition.isInBoardAfterMoved(direction)) {
             positions.add(nextPosition);
             nextPosition = nextPosition.createMovablePosition(direction);
         }

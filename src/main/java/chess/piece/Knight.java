@@ -5,6 +5,7 @@ import chess.Player;
 import chess.Position;
 
 import chess.direction.KingDirection;
+import chess.direction.KnightDirection;
 import chess.direction.Route;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class Knight extends Piece {
     public Route findRoute(final Position source, final Position target) {
         final int subtractedRank = source.subtractRankFrom(target);
         final int subtractedFile = source.subtractFileFrom(target);
-        return KingDirection.findRouteFrom(subtractedRank, subtractedFile);
+        return KnightDirection.findRouteFrom(subtractedRank, subtractedFile);
     }
 
     @Override

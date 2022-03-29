@@ -61,4 +61,8 @@ public class Position {
     public Position createPositionFrom(Route route) {
         return route.createPositionFrom(rank, file);
     }
+
+    public boolean canCreatePosition(Route route) {
+        return route.canCreatePosition(rank, file);
+    }
 }
