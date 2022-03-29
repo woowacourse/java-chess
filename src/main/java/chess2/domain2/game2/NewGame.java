@@ -3,7 +3,7 @@ package chess2.domain2.game2;
 import chess2.domain2.board2.Board;
 import chess2.dto2.MoveCommandDto;
 import chess2.dto2.BoardViewDto;
-import chess2.util2.PieceGeneratorUtil;
+import chess2.util2.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {
 
@@ -11,7 +11,7 @@ public final class NewGame implements Game {
 
     @Override
     public Game init() {
-        Board board = new Board(PieceGeneratorUtil.initFullChessBoard());
+        Board board = new Board(BoardMapGeneratorUtil.initFullChessBoard());
         return new WhiteTurn(board);
     }
 

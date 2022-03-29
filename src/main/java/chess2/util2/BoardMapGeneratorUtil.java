@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PieceGeneratorUtil {
+public class BoardMapGeneratorUtil {
 
     private static final int BLACK_NON_PAWN_INIT_RANK_IDX = 7;
     private static final int BLACK_PAWN_INIT_RANK_IDX = 6;
@@ -27,22 +27,22 @@ public class PieceGeneratorUtil {
     private static final List<PieceType> nonPawnOrder = List.of(
             ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
 
-    private PieceGeneratorUtil() {
+    private BoardMapGeneratorUtil() {
     }
 
     public static Map<Position, Piece> initFullChessBoard() {
-        final Map<Position, Piece> board = new HashMap<>();
-        updateBoard(board, initNonPawns(Color.BLACK, BLACK_NON_PAWN_INIT_RANK_IDX));
-        updateBoard(board, initPawns(Color.BLACK, BLACK_PAWN_INIT_RANK_IDX));
-        updateBoard(board, initPawns(Color.WHITE, WHITE_PAWN_INIT_RANK_IDX));
-        updateBoard(board, initNonPawns(Color.WHITE, WHITE_NON_PAWN_INIT_RANK_IDX));
-        return board;
+        final Map<Position, Piece> boardMap = new HashMap<>();
+        updateBoard(boardMap, initNonPawns(Color.BLACK, BLACK_NON_PAWN_INIT_RANK_IDX));
+        updateBoard(boardMap, initPawns(Color.BLACK, BLACK_PAWN_INIT_RANK_IDX));
+        updateBoard(boardMap, initPawns(Color.WHITE, WHITE_PAWN_INIT_RANK_IDX));
+        updateBoard(boardMap, initNonPawns(Color.WHITE, WHITE_NON_PAWN_INIT_RANK_IDX));
+        return boardMap;
     }
 
-    private static void updateBoard(Map<Position, Piece> board, Map<Position, Piece> pieceInfoMap) {
+    private static void updateBoard(Map<Position, Piece> boardMap, Map<Position, Piece> pieceInfoMap) {
         for (Position positionKey : pieceInfoMap.keySet()) {
             Piece pieceValue = pieceInfoMap.get(positionKey);
-            board.put(positionKey, pieceValue);
+            boardMap.put(positionKey, pieceValue);
         }
     }
 
