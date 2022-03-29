@@ -43,19 +43,4 @@ public class RankTest {
         assertThat(rank.move(-1)).isEqualTo(Rank.FOUR);
     }
 
-    @Test
-    @DisplayName("Rank를 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void plusOutOfBounds() {
-        Rank rank = Rank.from(7);
-
-        assertThat(rank.move(2)).isNull();
-    }
-
-    @Test
-    @DisplayName("Rank를 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void minusOutOfBounds() {
-        Rank rank = Rank.from(2);
-
-        assertThat(rank.move(-2)).isNull();
-    }
 }

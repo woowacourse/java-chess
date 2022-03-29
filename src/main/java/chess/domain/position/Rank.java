@@ -43,11 +43,7 @@ public enum Rank {
     }
 
     public Rank move(final int distance) {
-        try {
-            return from(value + distance);
-        } catch (IllegalArgumentException exception) {
-            return null;
-        }
+        return from(value + distance);
     }
 
 }

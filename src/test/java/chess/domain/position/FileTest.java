@@ -43,19 +43,4 @@ public class FileTest {
         assertThat(file.move(-1)).isEqualTo(File.A);
     }
 
-    @Test
-    @DisplayName("File을 1 증가 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void plusOutOfBounds() {
-        File file = File.from('h');
-
-        assertThat(file.move(1)).isNull();
-    }
-
-    @Test
-    @DisplayName("File을 1 감소 시킬 때, 경계선을 넘어가면 null을 반환한다.")
-    void minusOutOfBounds() {
-        File file = File.from('a');
-
-        assertThat(file.move(-1)).isNull();
-    }
 }

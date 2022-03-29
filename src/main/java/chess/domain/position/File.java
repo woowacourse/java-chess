@@ -31,10 +31,6 @@ public enum File {
     }
 
     public File move(final int distance) {
-        try {
-            return from((char) (value + (char) distance));
-        } catch (IllegalArgumentException exception) {
-            return null;
-        }
+        return from((char) (value + (char) distance));
     }
 }
