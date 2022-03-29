@@ -21,8 +21,13 @@ public final class King extends SingleMovePiece {
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(
             UP, DOWN, RIGHT, LEFT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
-    public King(Color color) {
-        super(color, KING_NAME, MOVE_DIRECTIONS);
+    public King() {
+        super(MOVE_DIRECTIONS);
+    }
+
+    @Override
+    public String convertedName(final Color color) {
+        return color.convertToCase(KING_NAME);
     }
 
     @Override

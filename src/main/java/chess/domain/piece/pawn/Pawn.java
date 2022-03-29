@@ -4,10 +4,10 @@ import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceRule;
 import java.util.List;
 
-public abstract class Pawn extends AbstractPiece {
+public abstract class Pawn implements PieceRule {
 
     private static final String PAWN_NAME = "P";
     private static final double PAWN_SCORE = 1;
@@ -17,15 +17,13 @@ public abstract class Pawn extends AbstractPiece {
     private final Direction moveDirection;
     private final List<Direction> moveDirectionToEnemy;
 
-    protected Pawn(Color color, int movableCount, Direction moveDirection, List<Direction> moveDirectionToEnemy) {
-        super(color, PAWN_NAME);
+    protected Pawn(int movableCount, Direction moveDirection, List<Direction> moveDirectionToEnemy) {
         this.movableCount = movableCount;
         this.moveDirection = moveDirection;
         this.moveDirectionToEnemy = moveDirectionToEnemy;
     }
 
-    @Override
-    public final boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
+    protected final boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
         if (chessBoard.isPositionEmpty(target)) {
             return isMovableToPosition(source, target, chessBoard);
         }
@@ -50,6 +48,11 @@ public abstract class Pawn extends AbstractPiece {
     private boolean isClearRoute(List<Position> route, ChessBoard chessBoard) {
         return route.stream()
                 .allMatch(chessBoard::isPositionEmpty);
+    }
+
+    @Override
+    public final String convertedName(final Color color) {
+        return color.convertToCase(PAWN_NAME);
     }
 
     @Override

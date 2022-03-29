@@ -1,10 +1,13 @@
 package chess.domain.piece.pawn;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BlackFirstMovePawnTest {
 
-    private Piece pawn;
+    private PieceRule pawn;
     private Position source;
 
     @BeforeEach
@@ -26,13 +29,15 @@ public class BlackFirstMovePawnTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,7,true", "b,6,true", "b,8,false", "b,4,false", "a,8,false", "a,7,false"})
-    @DisplayName("폰의 빈곳 전진 가능 여부 확인")
-    void isMovableToEmptyPosition(char col, char row, boolean expected) {
+    @CsvSource(value = {"b,8", "b,4", "a,8", "a,7"})
+    @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
+    void isMovableToEmptyPosition(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new BlackPawn()));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(BLACK, new BlackPawn())));
 
-        assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThatThrownBy(() -> pawn.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
     @ParameterizedTest
@@ -40,36 +45,20 @@ public class BlackFirstMovePawnTest {
     @DisplayName("기물이 가로막을 경우의 전진 불가능")
     void cannotMoveToPiecePosition(Position target, Piece piece) {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new WhitePawn(),
+                source, new Piece(WHITE, new WhitePawn()),
                 target, piece));
 
-        assertThat(pawn.isMovable(source, target, chessBoard)).isFalse();
+        assertThatThrownBy(() -> pawn.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
     private static Stream<Arguments> cannotMoveToPiecePosition() {
         return Stream.of(
-                Arguments.of(Position.of('b', '7'), new WhitePawn()),
-                Arguments.of(Position.of('b', '6'), new WhitePawn()),
-                Arguments.of(Position.of('b', '7'), new BlackPawn()),
-                Arguments.of(Position.of('b', '6'), new BlackPawn())
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("canMoveToEnemyPiecePosition")
-    @DisplayName("대각선 방향에 적이 있으면 전진 가능")
-    void canMoveToEnemyPiecePosition(Position target, Piece piece, boolean expected) {
-        ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new WhitePawn(),
-                target, piece));
-
-        assertThat(pawn.isMovable(source, target, chessBoard)).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> canMoveToEnemyPiecePosition() {
-        return Stream.of(
-                Arguments.of(Position.of('a', '7'), new BlackPawn(), true),
-                Arguments.of(Position.of('c', '7'), new BlackPawn(), true)
+                Arguments.of(Position.of('b', '7'), new Piece(WHITE, new WhitePawn())),
+                Arguments.of(Position.of('b', '6'), new Piece(WHITE, new WhitePawn())),
+                Arguments.of(Position.of('b', '7'), new Piece(BLACK, new BlackPawn())),
+                Arguments.of(Position.of('b', '6'), new Piece(BLACK, new BlackPawn()))
         );
     }
 }

@@ -3,46 +3,46 @@ package chess.domain.piece.single;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class KingTest {
 
-    private Piece king;
+    private PieceRule king;
     private Position source;
 
     @BeforeEach
     void setUp() {
-        king = new King(WHITE);
+        king = new King();
         source = Position.of('a', '1');
     }
 
-    @ParameterizedTest
-    @EnumSource(Color.class)
+    @Test
     @DisplayName("킹 기물 생성")
-    void createKing(Color color) {
-        Piece king = new King(color);
+    void createKing() {
         assertThat(king).isInstanceOf(King.class);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,2,true", "b,1,true", "b,2,true", "b,3,false", "c,3,false"})
-    @DisplayName("킹의 빈곳 이동 가능 여부 확인")
-    void isMovableToEmptyPosition(char col, char row, boolean expected) {
+    @CsvSource(value = {"b,3,false", "c,3,false"})
+    @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
+    void isMovableToEmptyPosition(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new King(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new King())));
 
-        assertThat(king.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThatThrownBy(() -> king.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
     @Test
@@ -50,10 +50,10 @@ class KingTest {
     void isMovableToDifferentPiecePosition() {
         Position target = Position.of('a', '2');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new King(WHITE),
-                target, new King(BLACK)
+                source, new Piece(WHITE, new King()),
+                target, new Piece(BLACK, new King())
         ));
 
-        assertThat(king.isMovable(source, target, chessBoard)).isTrue();
+        assertThat(king.move(source, target, chessBoard)).isInstanceOf(King.class);
     }
 }

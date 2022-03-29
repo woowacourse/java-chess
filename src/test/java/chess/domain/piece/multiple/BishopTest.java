@@ -3,80 +3,72 @@ package chess.domain.piece.multiple;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class BishopTest {
 
-    private Piece bishop;
+    private PieceRule bishop;
     private Position source;
 
     @BeforeEach
     void setUp() {
-        bishop = new Bishop(WHITE);
+        bishop = new Bishop();
         source = Position.of('d', '4');
     }
 
-    @ParameterizedTest
-    @EnumSource(Color.class)
+    @Test
     @DisplayName("비숍 기물 생성")
-    void createBishop(Color color) {
-        Piece bishop = new Bishop(color);
+    void createBishop() {
         assertThat(bishop).isInstanceOf(Bishop.class);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,6,true", "c,5,true", "c,3,true", "b,5,false", "d,6,false"})
-    @DisplayName("목표 지점이 이동 가능 경로를 벗어났는지에 따른 이동 가능여부")
-    void emptyDirection(char col, char row, boolean expected) {
+    @CsvSource(value = {"b,5", "c,7", "d,6"})
+    @DisplayName("목표 지점이 이동 가능 경로를 벗어나면 예외 발생")
+    void emptyDirection(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Bishop(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new Bishop())));
 
-        assertThat(bishop.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
     @Test
-    @DisplayName("가로막히지 않고 목표지점에 기물이 존재시 이동 가능 여부")
-    void isMovableToClearPiecePosition() {
-        Position target = Position.of('b', '6');
-        ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Bishop(WHITE),
-                target, new Bishop(BLACK)));
-
-        assertThat(bishop.isMovable(source, target, chessBoard)).isTrue();
-    }
-
-    @Test
-    @DisplayName("가로막히고 목표지점이 비어 있으면 이동 불가능")
+    @DisplayName("가로막히고 목표지점이 비어 있으면 예외 발생")
     void isMovableToNotClearEmptyPosition() {
         Position target = Position.of('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Bishop(WHITE),
-                Position.of('c', '5'), new Bishop(BLACK)));
+                source, new Piece(WHITE, new Bishop()),
+                Position.of('c', '5'), new Piece(BLACK, new Bishop())));
 
-        assertThat(bishop.isMovable(source, target, chessBoard)).isFalse();
+        assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
-    @ParameterizedTest
-    @EnumSource(Color.class)
-    @DisplayName("가로막히고 목표지점에 기물이 존재시 이동 불가능")
-    void isMovableToNotClearPiecePosition(Color color) {
+    @Test
+    @DisplayName("가로막히고 목표지점에 기물이 존재시 예외 발생")
+    void isMovableToNotClearPiecePosition() {
         Position target = Position.of('b', '6');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Bishop(WHITE),
-                Position.of('c', '5'), new Bishop(BLACK),
-                target, new Bishop(color)));
+                source, new Piece(WHITE, new Bishop()),
+                Position.of('c', '5'), new Piece(BLACK, new Bishop()),
+                target, new Piece(BLACK, new Bishop())));
 
-        assertThat(bishop.isMovable(source, target, chessBoard)).isFalse();
+        assertThatThrownBy(() -> bishop.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 }

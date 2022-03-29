@@ -11,10 +11,10 @@ import java.util.function.Function;
 
 public enum PromotionPiece {
 
-    QUEEN("Q", Queen::new),
-    ROOK("R", Rook::new),
-    BISHOP("B", Bishop::new),
-    KNIGHT("N", Knight::new),
+    QUEEN("Q", color -> new Piece(color, new Queen())),
+    ROOK("R", color -> new Piece(color, new Rook())),
+    BISHOP("B", color -> new Piece(color, new Bishop())),
+    KNIGHT("N", color -> new Piece(color, new Knight())),
     ;
 
     private final String value;

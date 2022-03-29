@@ -21,8 +21,13 @@ public final class Queen extends MultipleMovePiece {
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(
             UP, DOWN, RIGHT, LEFT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
-    public Queen(Color color) {
-        super(color, QUEEN_NAME, MOVE_DIRECTIONS);
+    public Queen() {
+        super(MOVE_DIRECTIONS);
+    }
+
+    @Override
+    public String convertedName(Color color) {
+        return color.convertToCase(QUEEN_NAME);
     }
 
     @Override

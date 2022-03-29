@@ -16,8 +16,13 @@ public final class Bishop extends MultipleMovePiece {
     private static final double BISHOP_SCORE = 3;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
-    public Bishop(Color color) {
-        super(color, BISHOP_NAME, MOVE_DIRECTIONS);
+    public Bishop() {
+        super(MOVE_DIRECTIONS);
+    }
+
+    @Override
+    public String convertedName(Color color) {
+        return color.convertToCase(BISHOP_NAME);
     }
 
     @Override

@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.single.King;
 import java.util.Map;
@@ -53,8 +54,8 @@ class RunningTest {
     @DisplayName("킹이 잡혀 게임 종료 시 End 상태로 변경")
     void gameEnd() {
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                Position.of('a', '1'), new King(WHITE),
-                Position.of('a', '2'), new King(BLACK)
+                Position.of('a', '1'), new Piece(WHITE, new King()),
+                Position.of('a', '2'), new Piece(BLACK, new King())
         ));
         GameState gameState = new WhiteRunning(chessBoard);
 

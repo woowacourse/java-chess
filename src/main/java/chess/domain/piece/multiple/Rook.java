@@ -16,8 +16,13 @@ public final class Rook extends MultipleMovePiece {
     private static final double ROOK_SCORE = 5;
     private static final List<Direction> MOVE_DIRECTIONS = Arrays.asList(UP, DOWN, RIGHT, LEFT);
 
-    public Rook(Color color) {
-        super(color, ROOK_NAME, MOVE_DIRECTIONS);
+    public Rook() {
+        super(MOVE_DIRECTIONS);
+    }
+
+    @Override
+    public String convertedName(Color color) {
+        return color.convertToCase(ROOK_NAME);
     }
 
     @Override

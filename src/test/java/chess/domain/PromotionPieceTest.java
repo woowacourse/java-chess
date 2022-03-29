@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.single.Knight;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,6 +42,6 @@ class PromotionPieceTest {
         PromotionPiece promotionPiece = PromotionPiece.createPromotionPiece("N");
         Piece piece = promotionPiece.createPiece(WHITE);
 
-        assertThat(piece).isInstanceOf(Knight.class);
+        assertThat(piece).isInstanceOf(Piece.class);
     }
 }

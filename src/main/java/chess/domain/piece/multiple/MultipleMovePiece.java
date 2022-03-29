@@ -1,24 +1,28 @@
 package chess.domain.piece.multiple;
 
 import chess.domain.ChessBoard;
-import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.direction.Direction;
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceRule;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class MultipleMovePiece extends AbstractPiece {
+public abstract class MultipleMovePiece implements PieceRule {
 
     private final List<Direction> moveDirections;
 
-    protected MultipleMovePiece(Color color, String name, List<Direction> moveDirections) {
-        super(color, name);
+    protected MultipleMovePiece(List<Direction> moveDirections) {
         this.moveDirections = moveDirections;
     }
 
-    @Override
-    public final boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
+    public PieceRule move(Position source, Position target, ChessBoard chessBoard) {
+        if (isMovable(source, target, chessBoard)) {
+            return this;
+        }
+        throw new IllegalStateException("움직일 수 없는 곳입니다.");
+    }
+
+    private boolean isMovable(Position source, Position target, ChessBoard chessBoard) {
         List<Position> route = calculateRoute(source, target);
         if (route.isEmpty()) {
             return false;

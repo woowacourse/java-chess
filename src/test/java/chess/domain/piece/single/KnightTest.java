@@ -3,10 +3,12 @@ package chess.domain.piece.single;
 import static chess.domain.Color.BLACK;
 import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,12 +18,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
-    private Piece knight;
+    private PieceRule knight;
     private Position source;
 
     @BeforeEach
     void setUp() {
-        knight = new Knight(WHITE);
+        knight = new Knight();
         source = Position.of('a', '1');
     }
 
@@ -32,13 +34,15 @@ class KnightTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"c,2,true", "b,3,true", "b,2,false", "b,4,false", "c,5,false"})
+    @CsvSource(value = {"b,2", "b,4", "c,5"})
     @DisplayName("나이트의 빈곳 이동 가능 여부 확인")
-    void isMovableToEmptyPosition(char col, char row, boolean expected) {
+    void isMovableToEmptyPosition(char col, char row) {
         Position target = Position.of(col, row);
-        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Knight(WHITE)));
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, new Piece(WHITE, new Knight())));
 
-        assertThat(knight.isMovable(source, target, chessBoard)).isEqualTo(expected);
+        assertThatThrownBy(() -> knight.move(source, target, chessBoard))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("움직일 수 없는 곳입니다.");
     }
 
     @Test
@@ -46,10 +50,10 @@ class KnightTest {
     void isMovableToDifferentPiecePosition() {
         Position target = Position.of('b', '3');
         ChessBoard chessBoard = new ChessBoard(Map.of(
-                source, new Knight(WHITE),
-                target, new Knight(BLACK)
+                source, new Piece(WHITE, new Knight()),
+                target, new Piece(BLACK, new Knight())
         ));
 
-        assertThat(knight.isMovable(source, target, chessBoard)).isTrue();
+        assertThat(knight.move(source, target, chessBoard)).isInstanceOf(Knight.class);
     }
 }

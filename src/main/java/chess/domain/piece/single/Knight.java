@@ -22,8 +22,13 @@ public final class Knight extends SingleMovePiece {
             UP_UP_RIGHT, UP_RIGHT_RIGHT, DOWN_DOWN_RIGHT, DOWN_RIGHT_RIGHT,
             UP_UP_LEFT, UP_LEFT_LEFT, DOWN_DOWN_LEFT, DOWN_LEFT_LEFT);
 
-    public Knight(Color color) {
-        super(color, KNIGHT_NAME, MOVE_DIRECTIONS);
+    public Knight() {
+        super(MOVE_DIRECTIONS);
+    }
+
+    @Override
+    public String convertedName(final Color color) {
+        return color.convertToCase(KNIGHT_NAME);
     }
 
     @Override
