@@ -3,6 +3,7 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ class InitTest {
 
     @BeforeEach
     void setup() {
-        state = new Init(new ChessGame());
+        state = new Init(new ChessGame(new InitBoardStrategy()));
     }
 
     @Test

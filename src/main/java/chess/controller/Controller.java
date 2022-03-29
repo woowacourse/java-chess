@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
@@ -9,7 +10,7 @@ import chess.view.OutputView;
 public class Controller {
     public void run() {
         OutputView.printInitMessage();
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new ChessGame(new InitBoardStrategy());
         play(new Init(chessGame), chessGame);
     }
 

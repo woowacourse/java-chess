@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
+import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -28,8 +29,8 @@ public final class ChessGame {
         this.gameState = GameState.READY;
     }
 
-    public ChessGame() {
-        this.board = new Board(createBoard());
+    public ChessGame(BoardStrategy boardStrategy) {
+        this.board = new Board(boardStrategy.create());
         this.gameState = GameState.READY;
     }
 
@@ -56,45 +57,6 @@ public final class ChessGame {
 
     public boolean isCheckmate(Position to) {
         return board.isCheckmate(to);
-    }
-
-    private Map<Position, Piece> createBoard() {
-        Map<Position, Piece> squares = new HashMap<>();
-        initEmptyPieces(squares);
-        initNotPawnSquares(squares, Rank.ONE, Team.WHITE);
-        initPawnPieces(squares, Rank.TWO, Team.WHITE);
-        initPawnPieces(squares, Rank.SEVEN, Team.BLACK);
-        initNotPawnSquares(squares, Rank.EIGHT, Team.BLACK);
-        return squares;
-    }
-
-    private void initEmptyPieces(Map<Position, Piece> squares) {
-        for (Column column : Column.values()) {
-            initRankEmpty(squares, column);
-        }
-    }
-
-    private void initRankEmpty(Map<Position, Piece> squares, Column column) {
-        for (Rank rank : Rank.values()) {
-            squares.put(new Position(column, rank), new EmptyPiece());
-        }
-    }
-
-    private void initPawnPieces(Map<Position, Piece> squares, Rank rank, Team team) {
-        for (Column column : Column.values()) {
-            squares.replace(new Position(column, rank), new Pawn(team));
-        }
-    }
-
-    private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Team team) {
-        squares.replace(new Position(Column.A, rank), new Rook(team));
-        squares.replace(new Position(Column.B, rank), new Knight(team));
-        squares.replace(new Position(Column.C, rank), new Bishop(team));
-        squares.replace(new Position(Column.D, rank), new Queen(team));
-        squares.replace(new Position(Column.E, rank), new King(team));
-        squares.replace(new Position(Column.F, rank), new Bishop(team));
-        squares.replace(new Position(Column.G, rank), new Knight(team));
-        squares.replace(new Position(Column.H, rank), new Rook(team));
     }
 
     public void start() {
