@@ -16,8 +16,8 @@ class PieceTest {
         Piece whitePiece = new Pawn(Team.WHITE);
 
         assertAll(
-                () -> assertThat(blackPiece.getColor()).isEqualTo(Team.BLACK),
-                () -> assertThat(whitePiece.getColor()).isEqualTo(Team.WHITE)
+                () -> assertThat(blackPiece.getTeam()).isEqualTo(Team.BLACK),
+                () -> assertThat(whitePiece.getTeam()).isEqualTo(Team.WHITE)
         );
     }
 

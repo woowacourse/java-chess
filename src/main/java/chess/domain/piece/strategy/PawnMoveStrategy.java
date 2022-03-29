@@ -25,7 +25,7 @@ public final class PawnMoveStrategy extends MoveStrategy {
         if (isInvalidDirection(from, to, directions)) {
             validateInitDirection(team, from, to, directions);
         }
-        if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeColor(team)) {
+        if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
 
