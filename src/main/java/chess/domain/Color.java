@@ -1,6 +1,6 @@
 package chess.domain;
 
-public enum Camp {
+public enum Color {
 	WHITE,
 	BLACK
 }

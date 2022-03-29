@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.function.Consumer;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 public final class Knight extends Piece {
@@ -10,8 +10,8 @@ public final class Knight extends Piece {
 	private static final int SECOND_MOVABLE_DISTANCE = 1;
 	private static final double SCORE = 2.5;
 
-	public Knight(Camp camp) {
-		super(camp);
+	public Knight(Color color) {
+		super(color);
 	}
 
 	@Override

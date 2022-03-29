@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 public class RookTest {
 
-	private final Rook rook = new Rook(Camp.WHITE);
+	private final Rook rook = new Rook(Color.WHITE);
 
 	@DisplayName("룩은 앞으로 움직일 수 있다.")
 	@Test

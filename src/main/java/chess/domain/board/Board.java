@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.Camp.*;
+import static chess.domain.Color.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -55,14 +55,14 @@ public final class Board {
 	}
 
 	private void initializeFourPiecesOf(Position pieceInitialPosition,
-		Function<Camp, Piece> pieceConstructor) {
+		Function<Color, Piece> pieceConstructor) {
 		value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
 		value.put(pieceInitialPosition.flipHorizontally(), pieceConstructor.apply(WHITE));
 		value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
 		value.put(pieceInitialPosition.flipDiagonally(), pieceConstructor.apply(BLACK));
 	}
 
-	private void initializeTwoPiecesOf(Position pieceInitialPosition, Function<Camp, Piece> pieceConstructor) {
+	private void initializeTwoPiecesOf(Position pieceInitialPosition, Function<Color, Piece> pieceConstructor) {
 		value.put(pieceInitialPosition, pieceConstructor.apply(WHITE));
 		value.put(pieceInitialPosition.flipVertically(), pieceConstructor.apply(BLACK));
 	}

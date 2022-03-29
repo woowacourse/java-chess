@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 class PawnTest {
 
-	private final Pawn whitePawn = new Pawn(Camp.WHITE);
-	private final Pawn blackPawn = new Pawn(Camp.WHITE);
+	private final Pawn whitePawn = new Pawn(Color.WHITE);
+	private final Pawn blackPawn = new Pawn(Color.BLACK);
 
 	@DisplayName("흰색 진영의 폰은 최초 이동시 위로 2칸 움직일 수 있다.")
 	@Test

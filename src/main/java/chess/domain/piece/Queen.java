@@ -2,15 +2,15 @@ package chess.domain.piece;
 
 import java.util.function.Consumer;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 public final class Queen extends Piece {
 	private static final int NOT_MOVED_DISTANCE = 0;
 	private static final double SCORE = 9;
 
-	public Queen(Camp camp) {
-		super(camp);
+	public Queen(Color color) {
+		super(color);
 	}
 
 	@Override

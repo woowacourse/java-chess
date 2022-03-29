@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 public class KnightTest {
 
-	private final Knight knight = new Knight(Camp.WHITE);
+	private final Knight knight = new Knight(Color.WHITE);
 
 	@DisplayName("나이트는 앞으로 2칸 왼쪽으로 1칸 움직일 수 있다.")
 	@Test

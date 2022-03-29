@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 
 class QueenTest {
 
-	private final Queen queen = new Queen(Camp.WHITE);
+	private final Queen queen = new Queen(Color.WHITE);
 
 	@DisplayName("퀸은 앞으로 움직일 수 있다.")
 	@Test

@@ -2,14 +2,14 @@ package chess.domain.piece;
 
 import java.util.function.Consumer;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 public final class Bishop extends Piece {
 	private static final int SCORE = 3;
 
-	public Bishop(Camp camp) {
-		super(camp);
+	public Bishop(Color color) {
+		super(color);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.function.Consumer;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 public final class Pawn extends Piece {
@@ -12,8 +12,8 @@ public final class Pawn extends Piece {
 
 	private boolean firstMove;
 
-	public Pawn(Camp camp) {
-		super(camp);
+	public Pawn(Color color) {
+		super(color);
 		this.firstMove = true;
 	}
 

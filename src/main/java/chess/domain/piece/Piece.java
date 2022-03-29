@@ -2,20 +2,20 @@ package chess.domain.piece;
 
 import java.util.function.Consumer;
 
-import chess.domain.Camp;
+import chess.domain.Color;
 import chess.domain.board.Position;
 
 public abstract class Piece {
 	protected static final String INVALID_TARGET_POSITION_EXCEPTION = "이동할 수 없는 위치입니다.";
 
-	private final Camp camp;
+	private final Color color;
 
-	protected Piece(Camp camp) {
-		this.camp = camp;
+	protected Piece(Color color) {
+		this.color = color;
 	}
 
 	public final boolean isBlack() {
-		return this.camp == Camp.BLACK;
+		return this.color == Color.BLACK;
 	}
 
 	public abstract void move(Position beforePosition,
@@ -27,7 +27,7 @@ public abstract class Piece {
 		Consumer<Piece> moveFunction);
 
 	public boolean isSameCampWith(Piece targetPiece) {
-		return this.camp == targetPiece.camp;
+		return this.color == targetPiece.color;
 	}
 
 	protected abstract boolean canMove(Position beforePosition, Position afterPosition);
