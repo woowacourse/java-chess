@@ -63,7 +63,7 @@ class RookTest {
                 new Empty(Position.of('a', '6')),
                 new Pawn(Position.of('a', '5'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "a5");
 
 

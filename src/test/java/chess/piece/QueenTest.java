@@ -35,7 +35,7 @@ class QueenTest {
                 new Queen(Position.of('a', '8'), Team.BLACK),
                 new Pawn(Position.of('a', '7'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
@@ -51,7 +51,7 @@ class QueenTest {
                 new Empty(Position.of('b', '7')),
                 new Empty(Position.of('c', '6'))
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "c6");
 
         assertDoesNotThrow(
@@ -67,7 +67,7 @@ class QueenTest {
                 new Empty(Position.of('d', '7')),
                 new Pawn(Position.of('e', '8'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("c6", "e8");
 
         assertThatThrownBy(

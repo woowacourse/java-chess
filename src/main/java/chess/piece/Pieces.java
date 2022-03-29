@@ -18,7 +18,7 @@ public final class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public static Pieces of(List<Piece> pieces) {
+    public static Pieces from(List<Piece> pieces) {
         return new Pieces(pieces);
     }
 

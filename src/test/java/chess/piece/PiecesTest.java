@@ -32,7 +32,7 @@ class PiecesTest {
     @Test
     @DisplayName("체스판에 남은 말들의 점수를 계산한다. - 폰이 세로로 3개, 2개 있고 나머지 3개는 가로로 있을 때")
     void getTotalScoreTest() {
-        Pieces pieces = Pieces.of(List.of(
+        Pieces pieces = Pieces.from(List.of(
                 new Pawn(Position.of('a', '7'), Team.WHITE),
                 new Pawn(Position.of('a', '6'), Team.WHITE),
                 new Pawn(Position.of('a', '5'), Team.WHITE),

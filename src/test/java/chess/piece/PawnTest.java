@@ -66,7 +66,7 @@ class PawnTest {
                 new Pawn(Position.of('a', '8'), Team.BLACK),
                 new Empty(Position.of('a', '7'))
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "a7");
 
         assertDoesNotThrow(
@@ -81,7 +81,7 @@ class PawnTest {
                 new Pawn(Position.of('a', '2'), Team.WHITE),
                 new Empty(Position.of('a', '3'))
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a2", "a3");
 
         assertDoesNotThrow(
@@ -96,7 +96,7 @@ class PawnTest {
                 new Pawn(Position.of('a', '8'), Team.BLACK),
                 new King(Position.of('a', '7'), Team.WHITE)
         );
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "a7");
 
         assertThatThrownBy(
@@ -123,7 +123,7 @@ class PawnTest {
                 new Empty(Position.of('a', '4'))
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a6", "a4");
 
         assertThatThrownBy(
@@ -139,7 +139,7 @@ class PawnTest {
                 new Pawn(Position.of('a', '6'), Team.BLACK)
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a6", "a7");
 
         assertThatThrownBy(
@@ -155,7 +155,7 @@ class PawnTest {
                 new Knight(Position.of('b', '7'), Team.WHITE)
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "b7");
 
         assertDoesNotThrow(
@@ -171,7 +171,7 @@ class PawnTest {
                 new Knight(Position.of('b', '3'), Team.BLACK)
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a2", "b3");
 
         assertDoesNotThrow(
@@ -187,7 +187,7 @@ class PawnTest {
                 new Knight(Position.of('b', '7'), Team.BLACK)
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("a8", "b7");
 
         assertThatThrownBy(
@@ -203,7 +203,7 @@ class PawnTest {
                 new Knight(Position.of('a', '8'), Team.WHITE)
         );
 
-        Board board = Board.create(Pieces.of(pieces));
+        Board board = Board.create(Pieces.from(pieces));
         List<String> command = List.of("b7", "a8");
 
         assertThatThrownBy(
