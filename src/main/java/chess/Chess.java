@@ -1,5 +1,6 @@
 package chess;
 
+import chess.command.Command;
 import chess.command.CommandFactory;
 import chess.domain.state.ChessState;
 import chess.domain.state.Ready;
@@ -15,10 +16,6 @@ public class Chess {
     private static final int COMMAND_INDEX = 0;
     private static final int MOVE_ARGUMENT_START_INDEX = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
-
-    public Chess() {
-
-    }
 
     public void run() {
         OutputView.printStartMessage();
@@ -43,7 +40,7 @@ public class Chess {
         if (args.size() != 1 && args.size() != MOVE_COMMAND_SIZE) {
             throw new IllegalArgumentException(INVALID_MOVING_COMMAND);
         }
-        final chess.command.Command command = CommandFactory.find(args.get(COMMAND_INDEX),
+        final Command command = CommandFactory.find(args.get(COMMAND_INDEX),
                 args.subList(MOVE_ARGUMENT_START_INDEX, args.size()));
         return command.execute(chessState);
     }
