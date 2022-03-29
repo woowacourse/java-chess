@@ -42,6 +42,10 @@ public abstract class Playing extends GameStarted {
     }
 
     private BoardState jump(Position start, Position target) {
+        return executeMove(start, target);
+    }
+
+    private BoardState executeMove(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
 
@@ -53,16 +57,8 @@ public abstract class Playing extends GameStarted {
     }
 
     private BoardState moveStraight(Position start, Position target) {
-        Piece selected = getPiece(start);
-        Piece targetPiece = getPiece(target);
-        Direction direction = Direction.findDirection(start, target);
-
-        checkPath(start, target, direction);
-
-        if (selected.isMovable(targetPiece)) {
-            return updateBoard(target, selected, start, targetPiece);
-        }
-        throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
+        checkPath(start, target, Direction.findDirection(start, target));
+        return executeMove(start, target);
     }
 
     private void checkPath(Position start, Position target, Direction direction) {
