@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class Piece {
 
@@ -37,7 +36,6 @@ public abstract class Piece {
     public boolean isAvailableMove(final Position source, final Position target) {
         generateAvailablePosition(source);
         return availableMovePosition.values().stream()
-            .filter(Objects::nonNull)
             .filter(value -> value.contains(target))
             .findFirst()
             .orElse(null) != null;
@@ -51,7 +49,6 @@ public abstract class Piece {
 
     public List<Position> getAvailablePositions(final Position target) {
         return availableMovePosition.values().stream()
-            .filter(Objects::nonNull)
             .filter(value -> value.contains(target))
             .findFirst()
             .orElse(new ArrayList<>());
@@ -59,7 +56,6 @@ public abstract class Piece {
 
     public Direction getDirection(Position target) {
         return availableMovePosition.keySet().stream()
-            .filter(direction -> availableMovePosition.get(direction) != null)
             .filter(direction -> availableMovePosition.get(direction).contains(target))
             .findFirst()
             .orElse(null);

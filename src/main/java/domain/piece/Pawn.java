@@ -26,7 +26,7 @@ public class Pawn extends SpecificLocationPiece {
     protected List<Position> calculateAvailablePosition(final Position source,
         final Direction direction) {
         if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
-            return null;
+            return new ArrayList<>();
         }
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
         if (checkOverRange(source, direction)) {
