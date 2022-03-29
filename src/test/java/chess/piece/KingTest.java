@@ -7,6 +7,7 @@ import static chess.Rank.FIVE;
 import static chess.Rank.FOUR;
 import static chess.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.Player;
 import chess.Position;
@@ -15,6 +16,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class KingTest {
+
+    @DisplayName("움직일 수 없는 방향이 입력되면 예외를 발생한다.")
+    @Test()
+    void findRoute_exception() {
+        Piece king = new King(Player.BLACK, "K");
+
+        assertThatThrownBy(() -> king.findRoute(Position.of(FOUR, D), Position.of(SIX, F)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+
+    }
 
     @DisplayName("서쪽으로 움직일 수 있으면 서쪽 방향의 Route를 반환한다.")
     @Test()
