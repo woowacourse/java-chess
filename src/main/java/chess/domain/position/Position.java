@@ -34,6 +34,17 @@ public class Position {
         return new Position(fileIndex, rankIndex);
     }
 
+    public int calculateDistance(Position target) {
+        int rankLength = Math.abs(getRankIndex() - target.getRankIndex());
+        int fileLength = Math.abs(getFileIndex() - target.getFileIndex());
+
+        return square(rankLength) + square(fileLength);
+    }
+
+    private int square(int value) {
+        return value * value;
+    }
+
     public int getFileIndex() {
         return file.getIndex();
     }

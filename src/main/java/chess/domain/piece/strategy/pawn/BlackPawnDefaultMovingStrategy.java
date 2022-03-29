@@ -13,20 +13,9 @@ public class BlackPawnDefaultMovingStrategy implements MovingStrategy {
     @Override
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
-        double distance = calculateDistance(source, target);
+        double distance = Math.sqrt(source.calculateDistance(target));
 
         return direction == MOVABLE_DIRECTION && canMoveOnePosition(board, distance, source);
-    }
-
-    private double calculateDistance(Position source, Position target) {
-        int rankLength = Math.abs(source.getRankIndex() - target.getRankIndex());
-        int fileLength = Math.abs(source.getFileIndex() - target.getFileIndex());
-
-        return Math.sqrt(square(rankLength) + square(fileLength));
-    }
-
-    private int square(int value) {
-        return value * value;
     }
 
     private boolean canMoveOnePosition(List<List<Piece>> board, double distance, Position source) {

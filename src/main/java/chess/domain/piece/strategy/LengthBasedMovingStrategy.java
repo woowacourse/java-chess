@@ -14,21 +14,10 @@ public class LengthBasedMovingStrategy implements MovingStrategy {
     }
 
     public boolean canMove(List<List<Piece>> board, Position source, Position target) {
-        int distance = calculateDistance(source, target);
+        int distance = source.calculateDistance(target);
 
         return condition.test(distance)
                 && (findPiece(board, target).isEmpty() || isCapture(board, source, target));
-    }
-
-    private int calculateDistance(Position source, Position target) {
-        int rankLength = Math.abs(source.getRankIndex() - target.getRankIndex());
-        int fileLength = Math.abs(source.getFileIndex() - target.getFileIndex());
-
-        return square(rankLength) + square(fileLength);
-    }
-
-    private int square(int value) {
-        return value * value;
     }
 
     private boolean isCapture(List<List<Piece>> board, Position source, Position target) {
