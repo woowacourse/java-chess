@@ -20,8 +20,6 @@ import java.util.Map;
 public class BoardFixtures {
 
     private static final String NEW_LINE = System.lineSeparator();
-    private static final int START_INCLUSIVE = 0;
-    private static final int END_INCLUSIVE = 7;
 
     public static ChessBoard generateEmptyChessBoard() {
         return new ChessBoard(() -> generateEmptyBoard());
@@ -35,7 +33,7 @@ public class BoardFixtures {
                 .append("........").append(NEW_LINE)
                 .append("........").append(NEW_LINE)
                 .append("........").append(NEW_LINE)
-                .append("p.......").append(NEW_LINE)
+                .append("........").append(NEW_LINE)
                 .append("........").toString();
 
         return parseBoard(inputBoard);
@@ -68,7 +66,7 @@ public class BoardFixtures {
         String[] splitValues = inputBoard.split(NEW_LINE, -1);
 
         return Arrays.stream(splitValues)
-                .map(splitValue -> splitValue.split("", -1))
+                .map(splitValue -> splitValue.split(""))
                 .map(inputPieces -> getPieces(notations, inputPieces))
                 .collect(toList());
     }

@@ -33,7 +33,7 @@ public class BlackPawnCaptureMovingStrategy implements PawnMovingStrategy {
         Piece sourcePiece = findPiece(board, source);
         Piece targetPiece = findPiece(board, target);
 
-        return !sourcePiece.isSameColor(targetPiece);
+        return !targetPiece.isEmpty() && !sourcePiece.isSameColor(targetPiece);
     }
 
     private Piece findPiece(List<List<Piece>> board, Position position) {
