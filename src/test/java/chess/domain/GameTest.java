@@ -1,7 +1,7 @@
 package chess.domain;
 
-import chess.domain.manager.BoardInitializer;
-import chess.domain.manager.Game;
+import chess.domain.game.BoardInitializer;
+import chess.domain.game.Game;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Pawn;
 import chess.domain.pieces.Piece;

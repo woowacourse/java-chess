@@ -1,7 +1,7 @@
 package chess.machine;
 
-import chess.domain.manager.BoardInitializer;
-import chess.domain.manager.Game;
+import chess.domain.game.BoardInitializer;
+import chess.domain.game.Game;
 import chess.view.InputView;
 import chess.view.OutputView;
 

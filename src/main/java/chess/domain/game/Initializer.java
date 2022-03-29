@@ -1,4 +1,4 @@
-package chess.domain.manager;
+package chess.domain.game;
 
 import chess.domain.pieces.Piece;
 import chess.domain.position.Position;

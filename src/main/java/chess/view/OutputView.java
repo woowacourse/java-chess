@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.manager.Game;
+import chess.domain.game.Game;
 import chess.domain.pieces.Color;
 import chess.domain.pieces.Piece;
 import chess.machine.Result;
