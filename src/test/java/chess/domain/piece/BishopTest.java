@@ -71,8 +71,7 @@ public class BishopTest {
         board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
 
         Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, new Position(target)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
@@ -86,7 +85,6 @@ public class BishopTest {
         board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
 
         Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

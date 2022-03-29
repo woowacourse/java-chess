@@ -73,8 +73,7 @@ class RookTest {
         board.get(rookSourcePosition.getRankIndex()).set(rookSourcePosition.getFileIndex(), rook);
 
         assertThatThrownBy(() -> rook.validateMove(board, rookSourcePosition, new Position(target)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
@@ -88,7 +87,6 @@ class RookTest {
         board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
 
         assertThatThrownBy(() -> rook.validateMove(board, rookSourcePosition, targetPosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

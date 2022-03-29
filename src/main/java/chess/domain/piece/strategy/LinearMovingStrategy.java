@@ -3,9 +3,10 @@ package chess.domain.piece.strategy;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
+import java.util.ArrayList;
 import java.util.List;
 
-public class LinearMovingStrategy implements MovingStrategy {
+public class LinearMovingStrategy {
 
     private final List<Direction> directions;
 
@@ -13,40 +14,30 @@ public class LinearMovingStrategy implements MovingStrategy {
         this.directions = directions;
     }
 
-    @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        Direction direction = Direction.of(sourcePosition, targetPosition);
-        validateDirection(direction);
+    public boolean canMove(List<List<Piece>> board, Position source, Position target) {
+        Direction direction = Direction.of(source, target);
 
-        Position currentPosition = sourcePosition.add(direction);
-        while (!currentPosition.equals(targetPosition)) {
-            Piece currentPiece = findPiece(board, currentPosition);
-            validateExistPiece(currentPiece);
-            currentPosition = currentPosition.add(direction);
-        }
-
-        validateSameColor(board, sourcePosition, targetPosition);
+        return directions.contains(direction)
+                && canMovePosition(board, direction, source, target)
+                && (findPiece(board, target).isEmpty() || isCapture(board, source, target));
     }
 
-    private void validateSameColor(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = findPiece(board, sourcePosition);
-        Piece targetPiece = findPiece(board, targetPosition);
-
-        if(sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("같은 진영 기물은 공격할 수 없습니다.");
+    private boolean canMovePosition(List<List<Piece>> board, Direction direction, Position source, Position target) {
+        List<Piece> pathInPieces = new ArrayList<>();
+        Position current = source.add(direction);
+        while (!current.equals(target)) {
+            pathInPieces.add(findPiece(board, current));
+            current = current.add(direction);
         }
+
+        return pathInPieces.stream()
+                .allMatch(Piece::isEmpty);
     }
 
-    private void validateDirection(Direction direction) {
-        if (!directions.contains(direction)) {
-            throw new IllegalArgumentException("해당 기물이 갈 수 없는 경로입니다.");
-        }
-    }
-
-    private void validateExistPiece(Piece currentPiece) {
-        if (!currentPiece.isEmpty()) {
-            throw new IllegalArgumentException("경로에 기물이 존재하여 이동할 수 없습니다.");
-        }
+    private boolean isCapture(List<List<Piece>> board, Position source, Position target) {
+        Piece sourcePiece = findPiece(board, source);
+        Piece targetPiece = findPiece(board, target);
+        return !targetPiece.isEmpty() && !sourcePiece.isSameColor(targetPiece);
     }
 
     private Piece findPiece(List<List<Piece>> board, Position position) {
