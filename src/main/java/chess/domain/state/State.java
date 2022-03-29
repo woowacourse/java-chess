@@ -24,6 +24,6 @@ public abstract class State {
     }
 
     public final Map<Position, Piece> getBoard() {
-        return board.toMap();
+        return board.getValue();
     }
 }

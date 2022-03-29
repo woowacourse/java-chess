@@ -17,7 +17,7 @@ public final class Board {
         this.boardChecker = new BoardChecker(value);
     }
 
-    public Map<Position, Piece> toMap() {
+    public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
     }
 
@@ -46,7 +46,7 @@ public final class Board {
     }
 
     public Map<Color, Double> sumScore(final Color target) {
-        return new BoardCalculator(toMap()).sumScore(target);
+        return new BoardCalculator(getValue()).sumScore(target);
     }
 
     public void checkHasPieceInLiner(final Position from, final Position to) {
