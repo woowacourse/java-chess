@@ -12,7 +12,7 @@ public enum File {
     SEVEN("7"),
     EIGHT("8");
 
-    private String value;
+    private final String value;
 
     File(String value) {
         this.value = value;

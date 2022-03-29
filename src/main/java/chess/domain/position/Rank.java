@@ -12,7 +12,7 @@ public enum Rank {
     G("g"),
     H("h");
 
-    private String value;
+    private final String value;
 
     Rank(String value) {
         this.value = value;

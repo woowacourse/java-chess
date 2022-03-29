@@ -12,8 +12,8 @@ public enum Direction {
     W(-1, 0),
     NW(-1, 1);
 
-    private int rankGap;
-    private int fileGap;
+    private final int rankGap;
+    private final int fileGap;
 
     Direction(int rankGap, int fileGap) {
         this.rankGap = rankGap;

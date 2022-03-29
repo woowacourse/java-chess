@@ -15,7 +15,7 @@ public enum Command {
     private static final int FROM_POSITION = 1;
     private static final int TO_POSITION = 2;
 
-    private String value;
+    private final String value;
 
     Command(String value) {
         this.value = value;
