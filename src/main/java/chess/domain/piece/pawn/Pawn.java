@@ -72,4 +72,8 @@ public abstract class Pawn extends AbstractPiece {
     public final boolean isKing() {
         return false;
     }
+
+    protected final boolean isFirstMovePawn() {
+        return movableCount == 2;
+    }
 }

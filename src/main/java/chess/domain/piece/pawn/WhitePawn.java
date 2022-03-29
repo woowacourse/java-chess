@@ -33,6 +33,9 @@ public final class WhitePawn extends Pawn {
     @Override
     public Piece move(Position source, Position target, ChessBoard chessBoard) {
         super.move(source, target, chessBoard);
-        return new WhitePawn(NORMAL_MOVABLE_COUNT);
+        if (isFirstMovePawn()) {
+            return new WhitePawn(NORMAL_MOVABLE_COUNT);
+        }
+        return this;
     }
 }

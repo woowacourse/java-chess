@@ -33,6 +33,9 @@ public final class BlackPawn extends Pawn {
     @Override
     public Piece move(Position source, Position target, ChessBoard chessBoard) {
         super.move(source, target, chessBoard);
-        return new BlackPawn(NORMAL_MOVABLE_COUNT);
+        if (isFirstMovePawn()) {
+            return new BlackPawn(NORMAL_MOVABLE_COUNT);
+        }
+        return this;
     }
 }
