@@ -3,7 +3,7 @@ package chess.domain.piece.strategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Pawn;
@@ -26,12 +26,12 @@ class PawnMoveStrategyTest {
             "B,THREE,A,FOUR",
     })
     @DisplayName("폰이 갈 수 있는 위치 중 하나여야 한다.")
-    void movePossibilityOfTrue(File fileA, Rank rankA, File fileB, Rank rankB) {
+    void movePossibilityOfTrue(Column columnA, Rank rankA, Column columnB, Rank rankB) {
         assertDoesNotThrow(() -> new PawnMoveStrategy()
                 .isValidateCanMove(Team.WHITE,
                         new Pawn(Team.BLACK),
-                        new Position(fileA, rankA),
-                        new Position(fileB, rankB)
+                        new Position(columnA, rankA),
+                        new Position(columnB, rankB)
                 )
         );
     }
@@ -41,8 +41,8 @@ class PawnMoveStrategyTest {
     void canMoveAdditionalValidation() {
         assertThat(new PawnMoveStrategy().isValidateCanMove(Team.WHITE,
                 new Pawn(Team.WHITE),
-                new Position(File.A, Rank.TWO),
-                new Position(File.A, Rank.THREE)))
+                new Position(Column.A, Rank.TWO),
+                new Position(Column.A, Rank.THREE)))
                 .isFalse();
     }
 
@@ -51,8 +51,8 @@ class PawnMoveStrategyTest {
     void canMoveAdditionalInValidation() {
         assertThat(new PawnMoveStrategy().isValidateCanMove(Team.WHITE,
                 new Pawn(Team.BLACK),
-                new Position(File.A, Rank.ONE),
-                new Position(File.B, Rank.TWO)))
+                new Position(Column.A, Rank.ONE),
+                new Position(Column.B, Rank.TWO)))
                 .isTrue();
     }
 }

@@ -3,7 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.position.Direction;
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.attribute.Team;
@@ -36,19 +36,19 @@ class DirectionTest {
             "B,ONE,A,THREE,TTL"
     })
     @DisplayName("체스 말이 거리가 같은지 확인할 수 있다.")
-    void isSameDistance(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
+    void isSameDistance(Column columnA, Rank rankA, Column columnB, Rank rankB, Direction direction) {
 
         assertThat(direction.isSameDistance(
-                new Position(fileA, rankA),
-                new Position(fileB, rankB)))
+                new Position(columnA, rankA),
+                new Position(columnB, rankB)))
                 .isTrue();
     }
 
     @Test
     @DisplayName("위치 두개로 방향 값을 가져올 수 있다.")
     void getDirection() {
-        assertThat(Direction.of(new Position(File.A, Rank.ONE),
-                new Position(File.C, Rank.THREE)))
+        assertThat(Direction.of(new Position(Column.A, Rank.ONE),
+                new Position(Column.C, Rank.THREE)))
                 .isEqualTo(Direction.TOP_RIGHT);
 
     }
@@ -71,10 +71,10 @@ class DirectionTest {
             "B,TWO,A,TWO,LEFT"
     })
     @DisplayName("체스 말이 해당 방향으로 가는지 확인할 수 있다.")
-    void isSameDirection(File fileA, Rank rankA, File fileB, Rank rankB, Direction direction) {
+    void isSameDirection(Column columnA, Rank rankA, Column columnB, Rank rankB, Direction direction) {
         assertThat(direction.isSameDirection(
-                new Position(fileA, rankA),
-                new Position(fileB, rankB)))
+                new Position(columnA, rankA),
+                new Position(columnB, rankB)))
                 .isTrue();
     }
 }

@@ -3,7 +3,7 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
@@ -18,7 +18,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
 
         assertDoesNotThrow(() -> chessGame.play(
-                new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE)));
+                new Position(Column.A, Rank.TWO), new Position(Column.A, Rank.THREE)));
     }
 
     @Test
@@ -27,7 +27,7 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame();
 
         assertThatThrownBy(() -> chessGame.play(
-                new Position(File.A, Rank.SEVEN), new Position(File.A, Rank.SIX)))
+                new Position(Column.A, Rank.SEVEN), new Position(Column.A, Rank.SIX)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

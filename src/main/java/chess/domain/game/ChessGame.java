@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
@@ -69,32 +69,32 @@ public final class ChessGame {
     }
 
     private void initEmptyPieces(Map<Position, Piece> squares) {
-        for (File file : File.values()) {
-            initRankEmpty(squares, file);
+        for (Column column : Column.values()) {
+            initRankEmpty(squares, column);
         }
     }
 
-    private void initRankEmpty(Map<Position, Piece> squares, File file) {
+    private void initRankEmpty(Map<Position, Piece> squares, Column column) {
         for (Rank rank : Rank.values()) {
-            squares.put(new Position(file, rank), new EmptyPiece());
+            squares.put(new Position(column, rank), new EmptyPiece());
         }
     }
 
     private void initPawnPieces(Map<Position, Piece> squares, Rank rank, Team team) {
-        for (File file : File.values()) {
-            squares.replace(new Position(file, rank), new Pawn(team));
+        for (Column column : Column.values()) {
+            squares.replace(new Position(column, rank), new Pawn(team));
         }
     }
 
     private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Team team) {
-        squares.replace(new Position(File.A, rank), new Rook(team));
-        squares.replace(new Position(File.B, rank), new Knight(team));
-        squares.replace(new Position(File.C, rank), new Bishop(team));
-        squares.replace(new Position(File.D, rank), new Queen(team));
-        squares.replace(new Position(File.E, rank), new King(team));
-        squares.replace(new Position(File.F, rank), new Bishop(team));
-        squares.replace(new Position(File.G, rank), new Knight(team));
-        squares.replace(new Position(File.H, rank), new Rook(team));
+        squares.replace(new Position(Column.A, rank), new Rook(team));
+        squares.replace(new Position(Column.B, rank), new Knight(team));
+        squares.replace(new Position(Column.C, rank), new Bishop(team));
+        squares.replace(new Position(Column.D, rank), new Queen(team));
+        squares.replace(new Position(Column.E, rank), new King(team));
+        squares.replace(new Position(Column.F, rank), new Bishop(team));
+        squares.replace(new Position(Column.G, rank), new Knight(team));
+        squares.replace(new Position(Column.H, rank), new Rook(team));
     }
 
     public void start() {

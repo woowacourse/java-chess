@@ -12,11 +12,11 @@ public final class Position {
     private static final String SEPARATOR = " ";
     private static final int ATTRIBUTE_SIZE = 2;
 
-    private final File file;
+    private final Column column;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
-        this.file = file;
+    public Position(Column column, Rank rank) {
+        this.column = column;
         this.rank = rank;
     }
 
@@ -25,10 +25,10 @@ public final class Position {
         if (attribute.length != ATTRIBUTE_SIZE) {
             throw new IllegalArgumentException(NO_POSITION_FORMAT_ERROR_MESSAGE);
         }
-        File file = File.letterOf(attribute[0]);
+        Column column = Column.letterOf(attribute[0]);
         Rank rank = Rank.conditionOf(attribute[1]);
 
-        return new Position(file, rank);
+        return new Position(column, rank);
     }
 
     public static List<Position> inputToPositions(String input) {
@@ -40,13 +40,13 @@ public final class Position {
 
     public Position advancePosition(Direction direction) {
         return new Position(
-                File.numberOf(file.getNumber() + direction.getX()),
+                Column.numberOf(column.getNumber() + direction.getX()),
                 Rank.numberOf(rank.getNumber() + direction.getY())
         );
     }
 
     public int getXDistance(Position to) {
-        return to.file.getNumber() - this.file.getNumber();
+        return to.column.getNumber() - this.column.getNumber();
     }
 
     public int getYDistance(Position to) {
@@ -66,18 +66,18 @@ public final class Position {
             return false;
         }
         Position position = (Position) o;
-        return Objects.equals(file, position.file) && Objects.equals(rank, position.rank);
+        return Objects.equals(column, position.column) && Objects.equals(rank, position.rank);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, rank);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "file=" + file +
+                "file=" + column +
                 ", rank=" + rank +
                 '}';
     }

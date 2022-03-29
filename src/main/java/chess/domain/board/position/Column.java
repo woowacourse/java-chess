@@ -2,7 +2,7 @@ package chess.domain.board.position;
 
 import java.util.Arrays;
 
-public enum File {
+public enum Column {
 
     A("a", 1),
     B("b", 2),
@@ -19,21 +19,21 @@ public enum File {
     private final String letter;
     private final int number;
 
-    File(String letter, int number) {
+    Column(String letter, int number) {
         this.letter = letter;
         this.number = number;
     }
 
-    public static File numberOf(int number) {
-        return Arrays.stream(File.values())
+    public static Column numberOf(int number) {
+        return Arrays.stream(Column.values())
                 .filter(file -> file.number == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));
 
     }
 
-    public static File letterOf(String letter) {
-        return Arrays.stream(File.values())
+    public static Column letterOf(String letter) {
+        return Arrays.stream(Column.values())
                 .filter(file -> file.letter.equals(letter))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_NUMBER_ERROR_MESSAGE));

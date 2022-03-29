@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.position.File;
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.domain.game.ChessGame;
@@ -28,14 +28,14 @@ class BoardTest {
         Board board = new ChessGame().getBoard();
 
         assertAll(
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.ONE))).isInstanceOf(Rook.class),
-                () -> assertThat(board.findByPosition(new Position(File.B, Rank.ONE))).isInstanceOf(Knight.class),
-                () -> assertThat(board.findByPosition(new Position(File.C, Rank.ONE))).isInstanceOf(Bishop.class),
-                () -> assertThat(board.findByPosition(new Position(File.D, Rank.ONE))).isInstanceOf(Queen.class),
-                () -> assertThat(board.findByPosition(new Position(File.E, Rank.ONE))).isInstanceOf(King.class),
-                () -> assertThat(board.findByPosition(new Position(File.F, Rank.ONE))).isInstanceOf(Bishop.class),
-                () -> assertThat(board.findByPosition(new Position(File.G, Rank.ONE))).isInstanceOf(Knight.class),
-                () -> assertThat(board.findByPosition(new Position(File.H, Rank.ONE))).isInstanceOf(Rook.class)
+                () -> assertThat(board.findByPosition(new Position(Column.A, Rank.ONE))).isInstanceOf(Rook.class),
+                () -> assertThat(board.findByPosition(new Position(Column.B, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(board.findByPosition(new Position(Column.C, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(board.findByPosition(new Position(Column.D, Rank.ONE))).isInstanceOf(Queen.class),
+                () -> assertThat(board.findByPosition(new Position(Column.E, Rank.ONE))).isInstanceOf(King.class),
+                () -> assertThat(board.findByPosition(new Position(Column.F, Rank.ONE))).isInstanceOf(Bishop.class),
+                () -> assertThat(board.findByPosition(new Position(Column.G, Rank.ONE))).isInstanceOf(Knight.class),
+                () -> assertThat(board.findByPosition(new Position(Column.H, Rank.ONE))).isInstanceOf(Rook.class)
         );
     }
 
@@ -44,7 +44,7 @@ class BoardTest {
     void createBoardOfPawn() {
         Board board = new ChessGame().getBoard();
 
-        assertThat(board.findByPosition(new Position(File.A, Rank.TWO))).isInstanceOf(Pawn.class);
+        assertThat(board.findByPosition(new Position(Column.A, Rank.TWO))).isInstanceOf(Pawn.class);
     }
 
     @Test
@@ -52,12 +52,12 @@ class BoardTest {
     void movePiece() {
         Board board = new ChessGame().getBoard();
 
-        board.move(new Position(File.A, Rank.TWO), new Position(File.A, Rank.THREE));
+        board.move(new Position(Column.A, Rank.TWO), new Position(Column.A, Rank.THREE));
 
         assertAll(
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.TWO)))
+                () -> assertThat(board.findByPosition(new Position(Column.A, Rank.TWO)))
                         .isInstanceOf(EmptyPiece.class),
-                () -> assertThat(board.findByPosition(new Position(File.A, Rank.THREE)))
+                () -> assertThat(board.findByPosition(new Position(Column.A, Rank.THREE)))
                         .isInstanceOf(Pawn.class)
         );
     }
@@ -67,7 +67,7 @@ class BoardTest {
     void canNotMovePiece() {
         Board board = new ChessGame().getBoard();
 
-        assertThatThrownBy(() -> board.move(new Position(File.A, Rank.ONE), new Position(File.A, Rank.THREE)))
+        assertThatThrownBy(() -> board.move(new Position(Column.A, Rank.ONE), new Position(Column.A, Rank.THREE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
