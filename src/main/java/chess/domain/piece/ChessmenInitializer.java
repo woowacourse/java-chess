@@ -2,19 +2,21 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import chess.domain.position.PositionUtil;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessmenInitializer {
 
     public Pieces init() {
-        List<Piece> chessmen = new ArrayList<>(32);
-
-        chessmen.addAll(initBlackStrongMen());
-        chessmen.addAll(initBlackPawns());
-        chessmen.addAll(initWhitePawns());
-        chessmen.addAll(initWhiteStrongMen());
+        List<Piece> chessmen = Stream.of(
+                initBlackStrongMen(),
+                initBlackPawns(),
+                initWhitePawns(),
+                initWhiteStrongMen())
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
 
         return new Pieces(chessmen);
     }
