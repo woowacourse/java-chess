@@ -1,7 +1,7 @@
 package chess2.domain2.board2.piece2;
 
 import chess2.domain2.board2.Position;
-import java.util.function.BiPredicate;
+import chess2.strategy.RouteChecker;
 
 public enum PieceType {
 
@@ -16,14 +16,14 @@ public enum PieceType {
     private static final int KNIGHT_MAIN_MOVE_DIFF = 2;
     private static final int KING_MAX_MOVE_DIFF = 1;
 
-    private final BiPredicate<Position, Position> isMovable;
+    private final RouteChecker routeChecker;
 
-    PieceType(BiPredicate<Position, Position> isMovable) {
-        this.isMovable = isMovable;
+    PieceType(RouteChecker routeChecker) {
+        this.routeChecker = routeChecker;
     }
 
     public boolean isMovable(Position from, Position to) {
-        return isMovable.test(from, to);
+        return routeChecker.checkMovable(from, to);
     }
 
     private static boolean isKnightMovable(Position fromPosition, Position toPosition) {
