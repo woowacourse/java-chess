@@ -11,6 +11,8 @@ public final class Pawn extends Piece {
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 1;
+    private static final int DIRECTION_CRITERIA = 0;
+    private static final int NO_DISTANCE = 0;
 
     private boolean firstMove;
 
@@ -47,7 +49,7 @@ public final class Pawn extends Piece {
     protected boolean canMove(Position beforePosition, Position afterPosition) {
         int rowDirectedDistance = afterPosition.rowDirectedDistance(beforePosition);
         int columnDistance = afterPosition.columnDistance(beforePosition);
-        if (columnDistance != 0) {
+        if (columnDistance != NO_DISTANCE) {
             return false;
         }
         if (firstMove) {
@@ -59,44 +61,14 @@ public final class Pawn extends Piece {
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
         if (this.isBlack()) {
-            return -movableDistance <= distance && distance < 0;
+            return -movableDistance <= distance && distance < DIRECTION_CRITERIA;
         }
-        return 0 < distance && distance <= movableDistance;
+        return DIRECTION_CRITERIA < distance && distance <= movableDistance;
     }
 
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
     }
 
     @Override

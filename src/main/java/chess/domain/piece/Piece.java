@@ -41,17 +41,5 @@ public abstract class Piece {
 
     public abstract double getScore();
 
-    public abstract boolean isBishop();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isKnight();
-
-    public abstract boolean isPawn();
-
-    public abstract boolean isQueen();
-
-    public abstract boolean isRook();
-
     public abstract boolean isNullPiece();
 }

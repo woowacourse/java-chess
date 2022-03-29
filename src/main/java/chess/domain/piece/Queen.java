@@ -47,36 +47,6 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return true;
-    }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
-
-    @Override
     public boolean isNullPiece() {
         return false;
     }

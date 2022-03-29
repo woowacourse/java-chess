@@ -2,7 +2,9 @@ package chess.domain.gamestate;
 
 import chess.domain.Result;
 import chess.domain.board.Board;
+import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 
 public class Running implements State {
     private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
@@ -34,12 +36,12 @@ public class Running implements State {
 
     @Override
     public double statusOfBlack() {
-        return board.calculateScoreOfBlack();
+        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
 
     @Override
     public double statusOfWhite() {
-        return board.calculateScoreOfWhite();
+        return new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack());
     }
 
     @Override

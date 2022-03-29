@@ -2,7 +2,9 @@ package chess.domain.gamestate;
 
 import chess.domain.Result;
 import chess.domain.board.Board;
+import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
+import chess.domain.piece.Piece;
 
 public class Finished implements State {
     private static final int RESULT_CRITERIA = 0;
@@ -31,12 +33,12 @@ public class Finished implements State {
 
     @Override
     public double statusOfBlack() {
-        return board.calculateScoreOfBlack();
+        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
 
     @Override
     public double statusOfWhite() {
-        return board.calculateScoreOfWhite();
+        return new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack());
     }
 
     @Override
@@ -47,11 +49,11 @@ public class Finished implements State {
         if (this.board.hasWhiteKingCaptured()) {
             return Result.BLACK_WIN;
         }
-        return getResultWhenNoKingCaputerd();
+        return getResultWhenNoKingCaptured();
     }
 
-    private Result getResultWhenNoKingCaputerd() {
-        final int resultNumber = Double.compare(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+    private Result getResultWhenNoKingCaptured() {
+        final int resultNumber = Double.compare(statusOfBlack(), statusOfWhite());
         if (resultNumber > RESULT_CRITERIA) {
             return Result.BLACK_WIN;
         }

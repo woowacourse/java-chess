@@ -44,36 +44,6 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean isBishop() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return false;
-    }
-
-    @Override
-    public boolean isRook() {
-        return true;
-    }
-
-    @Override
     public boolean isNullPiece() {
         return false;
     }
