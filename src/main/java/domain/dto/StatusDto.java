@@ -2,7 +2,7 @@ package domain.dto;
 
 import domain.ChessBoard;
 import domain.piece.property.Team;
-import utils.Result;
+import domain.classification.Result;
 
 public final class StatusDto {
 

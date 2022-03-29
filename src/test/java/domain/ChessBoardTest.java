@@ -6,17 +6,11 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.unit.Bishop;
-import domain.piece.unit.King;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
 import domain.piece.unit.Rook;
 import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
-import utils.Result;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import domain.classification.Result;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,17 +59,11 @@ class ChessBoardTest {
     void checkTargetSuccess(Piece piece) {
         Position source = A1;
         Position target = A8;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Rook(WHITE));
-                board.put(target, piece);
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(target, piece);
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -89,17 +77,11 @@ class ChessBoardTest {
     void checkTargetFail() {
         Position source = A1;
         Position target = A8;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Rook(WHITE));
-                board.put(target, new Rook(WHITE));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Rook(WHITE));
+        customBoardGenerator.add(target, new Rook(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -110,18 +92,12 @@ class ChessBoardTest {
         Position source = A1;
         Position waypoint = C3;
         Position target = E5;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Bishop(WHITE));
-                board.put(waypoint, new Bishop(WHITE));
-                board.put(target, new Bishop(BLACK));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Bishop(WHITE));
+        customBoardGenerator.add(waypoint, new Bishop(WHITE));
+        customBoardGenerator.add(target, new Bishop(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -142,16 +118,7 @@ class ChessBoardTest {
     @MethodSource("availableMovePawns")
     @DisplayName("Pawn은 상대 말이 없을 때 이동할 수 있다.")
     void checkPawnMoveNoOpponent(Position target) {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(B2, new Pawn(WHITE));
-                return board;
-            }
-        });
+        ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
         assertDoesNotThrow(() -> chessBoard.move(B2, target));
     }
@@ -166,17 +133,11 @@ class ChessBoardTest {
         Position source = B2;
         Position target = B3;
         Position waypoint = B3;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(WHITE));
-                board.put(waypoint, new Pawn(BLACK));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Pawn(WHITE));
+        customBoardGenerator.add(waypoint, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -187,17 +148,11 @@ class ChessBoardTest {
     void checkPawnTwoSpaceImmovableByOpponent(Position waypoint) {
         Position source = B2;
         Position target = B4;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(WHITE));
-                board.put(waypoint, new Pawn(BLACK));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Pawn(WHITE));
+        customBoardGenerator.add(waypoint, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -211,17 +166,11 @@ class ChessBoardTest {
     @DisplayName("Pawn 의 공격은 대각선 한칸이며, target이 항상 존재해야 한다.")
     void checkPawnAttackSucess(Position target) {
         Position source = B2;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(WHITE));
-                board.put(target, new Pawn(BLACK));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Pawn(WHITE));
+        customBoardGenerator.add(target, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertDoesNotThrow(() -> chessBoard.move(source, target));
     }
@@ -231,16 +180,10 @@ class ChessBoardTest {
     @DisplayName("Pawn 의 공격은 대각선 한칸이며, target 이 없다면 실패한다.")
     void checkPawnAttackFail(Position target) {
         Position source = B2;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(WHITE));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Pawn(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -254,17 +197,11 @@ class ChessBoardTest {
     @DisplayName("Pawn 의 공격은 대각선 한칸이다. (실패테스트)")
     void checkPawnAttackFailByUnrelatedPositions(Position target) {
         Position source = B2;
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(source, new Pawn(WHITE));
-                board.put(target, new Pawn(BLACK));
-                return board;
-            }
-        });
+
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(source, new Pawn(WHITE));
+        customBoardGenerator.add(target, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThatThrownBy(() -> chessBoard.move(source, target)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -287,17 +224,10 @@ class ChessBoardTest {
     @Test
     @DisplayName("폰이 같은 세로줄에 있는 경우 1점이 아닌 0.5점을 준다.")
     void checkDuplicatePawnScore() {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(A1, new Pawn(WHITE));
-                board.put(A2, new Pawn(WHITE));
-                return board;
-            }
-        });
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(A1, new Pawn(WHITE));
+        customBoardGenerator.add(A2, new Pawn(WHITE));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThat(chessBoard.calculateTeamScore(WHITE)).isEqualTo(1.0);
     }
@@ -305,18 +235,11 @@ class ChessBoardTest {
     @Test
     @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (승)")
     void checkScoreWhoWinner() {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(A1, new Pawn(WHITE));
-                board.put(B2, new Pawn(WHITE));
-                board.put(A7, new Pawn(BLACK));
-                return board;
-            }
-        });
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(A1, new Pawn(WHITE));
+        customBoardGenerator.add(B2, new Pawn(WHITE));
+        customBoardGenerator.add(A7, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThat(chessBoard.calculateWinner()).isEqualTo(Result.WIN);
     }
@@ -324,18 +247,11 @@ class ChessBoardTest {
     @Test
     @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (패)")
     void checkScoreWhoLoser() {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(A2, new Pawn(WHITE));
-                board.put(A7, new Pawn(BLACK));
-                board.put(B7, new Pawn(BLACK));
-                return board;
-            }
-        });
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(A2, new Pawn(WHITE));
+        customBoardGenerator.add(A7, new Pawn(BLACK));
+        customBoardGenerator.add(B7, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThat(chessBoard.calculateWinner()).isEqualTo(Result.LOSE);
     }
@@ -343,17 +259,10 @@ class ChessBoardTest {
     @Test
     @DisplayName("점수를 비교하여 승, 패, 무승부를 알 수 있다. (무승부) ")
     void checkScoreDraw() {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                Arrays.stream(XPosition.values()).forEach(
-                        x -> Arrays.stream(YPosition.values()).forEach(y -> board.put(Position.of(x, y), null)));
-                board.put(A1, new Pawn(WHITE));
-                board.put(A7, new Pawn(BLACK));
-                return board;
-            }
-        });
+        CustomBoardGenerator customBoardGenerator = new CustomBoardGenerator();
+        customBoardGenerator.add(A1, new Pawn(WHITE));
+        customBoardGenerator.add(A7, new Pawn(BLACK));
+        ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
         assertThat(chessBoard.calculateWinner()).isEqualTo(Result.DRAW);
     }

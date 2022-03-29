@@ -7,7 +7,7 @@ import domain.piece.unit.Piece;
 import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
-import utils.Result;
+import domain.classification.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

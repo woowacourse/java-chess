@@ -1,4 +1,4 @@
-package utils;
+package domain.classification;
 
 public enum Result {
 
