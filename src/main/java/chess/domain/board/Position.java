@@ -54,11 +54,11 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (!(o instanceof Position)) {
             return false;
         }
-        Position position = (Position) o;
+        final Position position = (Position) o;
         return Objects.equals(row, position.row) && Objects.equals(column, position.column);
     }
 

@@ -22,14 +22,14 @@ public class Chess {
 
     public void run() {
         OutputView.printStartMessage();
-        ChessGame chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
+        final ChessGame chessGame = new ChessGame(new Board(new CreateCompleteBoardStrategy()));
         while (chessGame.isNotEnd()) {
             proceed(chessGame);
         }
         OutputView.printStatus(chessGame.getStatus());
     }
 
-    private void proceed(ChessGame chessGame) {
+    private void proceed(final ChessGame chessGame) {
         try {
             proceedOnce(chessGame);
         } catch (IllegalArgumentException e) {

@@ -22,9 +22,9 @@ public class Queen extends Piece {
 
     @Override
     public Direction findValidDirection(final Position current, final Position target) {
-        int rowDifference = target.calculateRowDifference(current);
-        int columnDifference = target.calculateColumnDifference(current);
-        Direction direction = Direction.calculate(rowDifference, columnDifference);
+        final int rowDifference = target.calculateRowDifference(current);
+        final int columnDifference = target.calculateColumnDifference(current);
+        final Direction direction = Direction.calculate(rowDifference, columnDifference);
         validateDirection(direction);
         return direction;
     }

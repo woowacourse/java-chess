@@ -31,11 +31,11 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (!(o instanceof Piece)) {
             return false;
         }
-        Piece piece = (Piece) o;
+        final Piece piece = (Piece) o;
         return Objects.equals(pieceType, piece.pieceType) && Objects.equals(color, piece.color);
     }
 
@@ -44,7 +44,7 @@ public abstract class Piece {
         return Objects.hash(pieceType);
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return this.color == color;
     }
 

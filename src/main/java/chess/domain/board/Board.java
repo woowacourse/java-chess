@@ -103,7 +103,7 @@ public class Board {
         }
     }
 
-    private void validateEmpty(Position current) {
+    private void validateEmpty(final Position current) {
         if (!getPiece(current).equals(new EmptySpace())) {
             throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
         }

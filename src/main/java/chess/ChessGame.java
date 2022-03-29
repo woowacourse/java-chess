@@ -13,7 +13,7 @@ public class ChessGame {
     private final Board board;
     private GameState gameState;
 
-    public ChessGame(Board board) {
+    public ChessGame(final Board board) {
         this.board = board;
         gameState = GameState.READY;
     }
