@@ -28,16 +28,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
-    private static final List<Entry<Column, PieceType>> lineOrder =
-            List.of(entry(a, ROOK), entry(b, KNIGHT), entry(c, BISHOP),
+    private static final TreeMap<Column, PieceType> lineOrder = new TreeMap<>(
+            Map.ofEntries(entry(a, ROOK), entry(b, KNIGHT), entry(c, BISHOP),
                     entry(d, QUEEN), entry(e, KING), entry(f, BISHOP),
-                    entry(g, KNIGHT), entry(h, ROOK));
+                    entry(g, KNIGHT), entry(h, ROOK)));
 
     public CreateCompleteBoardStrategy() {
     }
@@ -72,7 +73,7 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     private Map<Position, Piece> createLineOf(final Entry<Row, Color> rowAndColor) {
         final Row row = rowAndColor.getKey();
         final Color color = rowAndColor.getValue();
-        return lineOrder.stream()
+        return lineOrder.entrySet().stream()
                 .collect(Collectors.toMap(entry -> new Position(entry.getKey(), row),
                         entry -> PieceFactory.createPiece(entry.getValue(), color)));
     }
