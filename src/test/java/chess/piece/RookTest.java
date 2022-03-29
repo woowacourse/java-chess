@@ -24,7 +24,7 @@ class RookTest {
 
     @DisplayName("움직일 수 없는 방향이 입력되면 예외를 발생한다.")
     @ParameterizedTest
-    @CsvSource(value = {"TWO, B", "THREE, D", "SEVEN, H"})
+    @CsvSource(value = {"TWO, B", "THREE, F", "SEVEN, H"})
     void findRoute_exception(Rank rank, File file) {
         Piece rook = new Rook(Player.BLACK, "R");
 
