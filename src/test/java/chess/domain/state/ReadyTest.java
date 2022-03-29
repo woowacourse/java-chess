@@ -40,4 +40,24 @@ class ReadyTest {
 
         assertThat(actual).isInstanceOf(Running.class);
     }
+
+    @DisplayName("ready 상태에서는 보드 정보를 반환할 수 없다.")
+    @Test
+    void cannot_Return_Pieces() {
+        ChessState ready = new Ready(new Board(new CreateCompleteBoardStrategy()));
+
+        assertThatThrownBy(ready::getPieces)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("현재 실행할 수 없는 명령입니다.");
+    }
+
+    @DisplayName("ready 상태에서는 Status를 만들 수 없다.")
+    @Test
+    void cannot_Create_Status() {
+        ChessState ready = new Ready(new Board(new CreateCompleteBoardStrategy()));
+
+        assertThatThrownBy(ready::createStatus)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("현재 실행할 수 없는 명령입니다.");
+    }
 }
