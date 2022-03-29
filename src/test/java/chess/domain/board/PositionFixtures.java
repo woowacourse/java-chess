@@ -1,6 +1,4 @@
-package domain.board;
-
-import chess.domain.board.Position;
+package chess.domain.board;
 
 public class PositionFixtures {
 

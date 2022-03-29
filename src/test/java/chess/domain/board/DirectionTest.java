@@ -1,9 +1,8 @@
-package domain.board;
+package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.board.Direction;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;

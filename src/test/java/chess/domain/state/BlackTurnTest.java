@@ -1,4 +1,4 @@
-package domain.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -6,10 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
-import chess.domain.state.EndGame;
-import chess.domain.state.KingDeath;
-import chess.domain.state.State;
-import chess.domain.state.WhiteTurn;
 import org.junit.jupiter.api.Test;
 
 class BlackTurnTest {

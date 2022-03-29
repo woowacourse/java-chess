@@ -1,11 +1,9 @@
-package domain.board;
+package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
 import chess.domain.piece.Team;
 import java.util.List;
 import java.util.stream.Stream;

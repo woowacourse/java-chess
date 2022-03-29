@@ -1,11 +1,8 @@
-package domain.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {

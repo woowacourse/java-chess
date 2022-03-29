@@ -1,25 +1,22 @@
-package domain.board;
+package chess.domain.board;
 
-import static domain.board.BoardFactory.createBlankBoard;
-import static domain.board.BoardFactory.createBoardWithBlackBlocking;
-import static domain.board.BoardFactory.createCatchKingBoard;
-import static domain.board.BoardFactory.createSameColumnPawnBoard;
-import static domain.board.PositionFixtures.initialBlackKing;
-import static domain.board.PositionFixtures.initialBlackKnight;
-import static domain.board.PositionFixtures.initialBlackQueen;
-import static domain.board.PositionFixtures.initialWhiteBishop;
-import static domain.board.PositionFixtures.initialWhiteKing;
-import static domain.board.PositionFixtures.initialWhiteKnight;
-import static domain.board.PositionFixtures.initialWhiteQueen;
-import static domain.board.PositionFixtures.initialWhiteRook;
+import static chess.domain.board.BoardFactory.createBlankBoard;
+import static chess.domain.board.BoardFactory.createBoardWithBlackBlocking;
+import static chess.domain.board.BoardFactory.createCatchKingBoard;
+import static chess.domain.board.BoardFactory.createSameColumnPawnBoard;
+import static chess.domain.board.PositionFixtures.initialBlackKing;
+import static chess.domain.board.PositionFixtures.initialBlackKnight;
+import static chess.domain.board.PositionFixtures.initialBlackQueen;
+import static chess.domain.board.PositionFixtures.initialWhiteBishop;
+import static chess.domain.board.PositionFixtures.initialWhiteKing;
+import static chess.domain.board.PositionFixtures.initialWhiteKnight;
+import static chess.domain.board.PositionFixtures.initialWhiteQueen;
+import static chess.domain.board.PositionFixtures.initialWhiteRook;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
-import chess.domain.board.Position;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;

@@ -1,11 +1,9 @@
-package domain.piece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Position;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 class BlankTest {
