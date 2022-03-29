@@ -2,16 +2,14 @@ package domain.piece;
 
 import domain.Player;
 import domain.directions.Direction;
-import domain.directions.DirectionsGenerator;
 import domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovableRangePiece extends Piece {
+public abstract class MovableRangePiece extends Piece {
 
-    public MovableRangePiece(Player player, PieceSymbol pieceSymbol,
-        DirectionsGenerator directionsGenerator) {
-        super(player, pieceSymbol, directionsGenerator);
+    public MovableRangePiece(Player player, PieceSymbol pieceSymbol) {
+        super(player, pieceSymbol);
     }
 
     @Override

@@ -2,7 +2,6 @@ package domain.piece;
 
 import domain.Player;
 import domain.directions.Direction;
-import domain.directions.DirectionsGenerator;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -15,20 +14,21 @@ public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
-    private final Map<Direction, List<Position>> availableMovePosition;
+    private Map<Direction, List<Position>> availableMovePosition;
 
-    public Piece(final Player player, final PieceSymbol pieceSymbol,
-        DirectionsGenerator directionsGenerator) {
+    public Piece(final Player player, final PieceSymbol pieceSymbol) {
         this.player = player;
         this.pieceSymbol = pieceSymbol;
-        this.availableMovePosition = initAvailablePosition(directionsGenerator.generate());
+        this.availableMovePosition = new HashMap<>();
     }
 
-    private Map<Direction, List<Position>> initAvailablePosition(final List<Direction> directions) {
+    private Map<Direction, List<Position>> initAvailablePosition() {
         Map<Direction, List<Position>> availableMovePosition = new HashMap<>();
-        directions.forEach(direction -> availableMovePosition.put(direction, null));
+        getDirections().forEach(direction -> availableMovePosition.put(direction, null));
         return availableMovePosition;
     }
+
+    protected abstract List<Direction> getDirections();
 
     protected abstract List<Position> calculateAvailablePosition(final Position source,
         final Direction direction);
@@ -42,9 +42,8 @@ public abstract class Piece {
     }
 
     public void generateAvailablePosition(Position source) {
-        for (Direction direction : availableMovePosition.keySet()) {
-            availableMovePosition.put(direction, calculateAvailablePosition(source, direction));
-        }
+        getDirections().forEach(direction ->
+            availableMovePosition.put(direction, calculateAvailablePosition(source, direction)));
     }
 
     public List<Position> getAvailablePositions(final Position target) {

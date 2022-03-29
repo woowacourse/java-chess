@@ -8,7 +8,7 @@
     - ChessBoard가 정적 팩토리 메서드를 가지고 있어도 되지 않나?
 - [ ] Piece가 null인지 검사하는 코드가 다수 존재
     - Null Object Pattern 학습 및 적용 권장
-- [ ] 말의 이동 방향 생성기(DirectionsGenerator)를 인터페이스로 구현하여 주입하는 이유
+- [x] 말의 이동 방향 생성기(DirectionsGenerator)를 인터페이스로 구현하여 주입하는 이유
     - 클래스 파일이 많아지고 불필요한 의존성도 생기는 것 같음.
     - 각각의 Piece 클래스들이 이동 방향을 가지고 있어도 되지 않을까?
 - [x] Enum 상수 대문자 수정

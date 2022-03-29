@@ -3,9 +3,9 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Player;
-import domain.position.Rank;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +17,7 @@ public class PawnTest {
     @MethodSource("blackPawnTarget")
     @DisplayName("BlackPawn 은 현재 위치에서 아래로 한 칸 또는 대각선(아래)으로 한칸 이동할 수 있다.")
     void moveBlackPawnMove(Position target) {
-        Piece piece = new BlackPawn(Player.BLACK);
+        Piece piece = new Pawn(Player.BLACK);
         Position source = Position.of(File.B, Rank.SEVEN);
 
         assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
@@ -35,7 +35,7 @@ public class PawnTest {
     @MethodSource("whitePawnTarget")
     @DisplayName("WhitePawn 은 현재 위치에서 위로 한 칸 또는 대각선(위)으로 한칸 이동할 수 있다.")
     void moveWhitePawnMove(Position target) {
-        Piece piece = new WhitePawn(Player.WHITE);
+        Piece piece = new Pawn(Player.WHITE);
         Position source = Position.of(File.B, Rank.TWO);
 
         assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);

@@ -1,11 +1,25 @@
 package domain.piece;
 
 import domain.Player;
-import domain.directions.RookDirections;
+import domain.directions.Direction;
+import java.util.List;
 
 public class Rook extends MovableRangePiece {
 
+    private final List<Direction> directions;
+
     public Rook(final Player player) {
-        super(player, PieceSymbol.ROOK, new RookDirections());
+        super(player, PieceSymbol.ROOK);
+        this.directions = List.of(
+            Direction.EAST,
+            Direction.WEST,
+            Direction.SOUTH,
+            Direction.NORTH
+        );
+    }
+
+    @Override
+    protected List<Direction> getDirections() {
+        return directions;
     }
 }

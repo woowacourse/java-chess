@@ -2,16 +2,15 @@ package domain.chessboard;
 
 import domain.Player;
 import domain.piece.Bishop;
-import domain.piece.BlackPawn;
 import domain.piece.King;
 import domain.piece.Knight;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import domain.piece.WhitePawn;
-import domain.position.Rank;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,12 +52,12 @@ public class ChessBoardGenerator implements BoardGenerator {
             Arrays.stream(File.values())
                 .forEach(
                     column -> board.put(Position.of(column, Rank.SEVEN),
-                        new BlackPawn(Player.BLACK)));
+                        new Pawn(Player.BLACK)));
             return;
         }
         Arrays.stream(File.values())
             .forEach(
-                column -> board.put(Position.of(column, Rank.TWO), new WhitePawn(Player.WHITE)));
+                column -> board.put(Position.of(column, Rank.TWO), new Pawn(Player.WHITE)));
     }
 
     private void createInitRook(Map<Position, Piece> board, final Player player) {

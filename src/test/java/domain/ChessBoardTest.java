@@ -7,13 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import domain.chessboard.BoardGenerator;
 import domain.chessboard.ChessBoard;
 import domain.chessboard.ChessBoardGenerator;
-import domain.piece.BlackPawn;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
-import domain.piece.WhitePawn;
-import domain.position.Rank;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +40,7 @@ public class ChessBoardTest {
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
                 board.put(Position.of(File.A, Rank.ONE), new Rook(Player.WHITE));
-                board.put(Position.of(File.A, Rank.SEVEN), new BlackPawn(Player.BLACK));
+                board.put(Position.of(File.A, Rank.SEVEN), new Pawn(Player.BLACK));
                 return board;
             }
         });
@@ -85,7 +84,7 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -102,8 +101,8 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
-                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -121,8 +120,8 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
-                board.put(Position.of(File.D, Rank.THREE), new BlackPawn(Player.BLACK));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+                board.put(Position.of(File.D, Rank.THREE), new Pawn(Player.BLACK));
                 return board;
             }
         });
@@ -139,7 +138,7 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -157,7 +156,7 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -174,8 +173,8 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
-                board.put(Position.of(File.C, Rank.FOUR), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.FOUR), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -193,8 +192,8 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
-                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new Pawn(Player.WHITE));
                 return board;
             }
         });
@@ -220,8 +219,8 @@ public class ChessBoardTest {
             @Override
             public Map<Position, Piece> generate() {
                 Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new WhitePawn(Player.WHITE));
-                board.put(Position.of(File.C, Rank.THREE), new WhitePawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+                board.put(Position.of(File.C, Rank.THREE), new Pawn(Player.WHITE));
                 return board;
             }
         });
