@@ -11,16 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static chess.domain.ChessBoardFactory.initBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
 
-    ChessBoard chessBoard = new ChessBoard();
+    ChessBoard chessBoard = new ChessBoard(initBoard());
 
     @Test
     @DisplayName("체스판을 초기화하고 기물을 배치한다.")
     void init() {
+        ChessBoard chessBoard = new ChessBoard(initBoard());
         int actual = chessBoard.countPiece();
         int expected = 32;
         assertThat(actual).isEqualTo(expected);

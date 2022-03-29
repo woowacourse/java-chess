@@ -6,11 +6,13 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import static chess.domain.ChessBoardFactory.initBoard;
+
 public class ChessController {
 
     public void run() {
         OutputView.printStartMessage();
-        playTurn(new ChessBoard());
+        playTurn(new ChessBoard(initBoard()));
     }
 
     private void playTurn(ChessBoard chessBoard) {

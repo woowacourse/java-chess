@@ -14,54 +14,9 @@ public class ChessBoard {
     private Color currentTurn = Color.WHITE;
     private GameStatus gameStatus;
 
-    public ChessBoard() {
-        this.chessBoard = new HashMap<>();
+    public ChessBoard(Map<Position, ChessPiece> board) {
+        this.chessBoard = board;
         this.gameStatus = GameStatus.READY;
-        init();
-    }
-
-    ChessBoard(Map<Position, ChessPiece> chessBoard) {
-        this.chessBoard = chessBoard;
-        this.gameStatus = GameStatus.READY;
-    }
-
-    private void init() {
-        for (Color value : Color.values()) {
-            List<ChessPiece> pieces = List.of(
-                    new King(value),
-                    new Queen(value),
-                    new Pawn(value),
-                    new Rook(value),
-                    new Bishop(value),
-                    new Knight(value));
-            addPiece(pieces);
-        }
-    }
-
-    private void addPiece(List<ChessPiece> pieces) {
-        for (ChessPiece chessPiece : pieces) {
-            initByPiece(chessPiece);
-        }
-    }
-
-    private void initByPiece(ChessPiece chessPiece) {
-        if (chessPiece.isBlack()) {
-            addBlackPiece(chessPiece);
-            return;
-        }
-        addWhitePiece(chessPiece);
-    }
-
-    private void addWhitePiece(ChessPiece chessPiece) {
-        for (Position position : chessPiece.getInitWhitePosition()) {
-            chessBoard.put(position, chessPiece);
-        }
-    }
-
-    private void addBlackPiece(ChessPiece chessPiece) {
-        for (Position position : chessPiece.getInitBlackPosition()) {
-            chessBoard.put(position, chessPiece);
-        }
     }
 
     public void move(Position from, Position to) {
