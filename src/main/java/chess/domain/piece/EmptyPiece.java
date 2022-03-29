@@ -17,7 +17,7 @@ public final class EmptyPiece extends Piece {
 
     @Override
     public boolean isSameColor(final Color color) {
-        throw new UnsupportedOperationException("[ERROR] 기물이 없어 Color를 확인 할 수 없습니다.");
+        return false;
     }
 
 }
