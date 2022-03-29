@@ -2,6 +2,7 @@ package chess.view;
 
 import java.util.Map;
 
+import chess.domain.Winner;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 
@@ -83,15 +84,15 @@ public class OutputView {
 		System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
 	}
 
-	public void printBlackWin() {
-		System.out.println("흑색 진영의 승리입니다.");
-	}
-
-	public void printWhiteWin() {
-		System.out.println("백색 진영의 승리입니다.");
-	}
-
-	public void printDraw() {
+	public void printWinner(final Winner winner) {
+		if (winner == Winner.BLACK) {
+			System.out.println("흑색 진영의 승리입니다.");
+			return;
+		}
+		if (winner == Winner.WHITE) {
+			System.out.println("백색 진영의 승리입니다.");
+			return;
+		}
 		System.out.println("무승부입니다.");
 	}
 }

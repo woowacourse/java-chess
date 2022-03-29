@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Winner;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -38,14 +39,14 @@ public class Finished implements State {
 	}
 
 	@Override
-	public int hasBlackWon() {
+	public Winner findWinner() {
 		if (this.board.hasBlackKingCaptured()) {
-			return -1;
+			return Winner.WHITE;
 		}
 		if (this.board.hasWhiteKingCaptured()) {
-			return 1;
+			return Winner.BLACK;
 		}
-		return Double.compare(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+		return Winner.of(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
 	}
 
 	@Override

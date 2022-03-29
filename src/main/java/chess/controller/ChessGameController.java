@@ -102,14 +102,6 @@ public class ChessGameController {
 	private void printResult(ChessGame chessGame) {
 		outputView.printFinishMessage();
 		outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-		if (chessGame.hasBlackWon() > 0) {
-			outputView.printBlackWin();
-		}
-		if (chessGame.hasBlackWon() < 0) {
-			outputView.printWhiteWin();
-		}
-		if (chessGame.hasBlackWon() == 0) {
-			outputView.printDraw();
-		}
+		outputView.printWinner(chessGame.findWinner());
 	}
 }

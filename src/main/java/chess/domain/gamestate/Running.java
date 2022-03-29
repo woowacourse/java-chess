@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Winner;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -43,7 +44,7 @@ public class Running implements State {
 	}
 
 	@Override
-	public int hasBlackWon() {
+	public Winner findWinner() {
 		throw new IllegalStateException(INVALID_STATE_RESULT_EXCEPTION);
 	}
 
