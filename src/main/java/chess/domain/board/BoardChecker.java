@@ -55,7 +55,7 @@ public final class BoardChecker {
     }
 
     private void checkHasPiece(final int rank, final int file) {
-        if (value.get(Position.of(File.from(file), Rank.from(rank))) != null) {
+        if (value.get(Position.of(File.findByOrder(file), Rank.from(rank))) != null) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
         }
     }

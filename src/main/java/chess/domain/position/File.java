@@ -17,24 +17,24 @@ public enum File {
     H("h", 8),
     ;
 
-    private final String file;
+    private final String name;
     private final int order;
 
-    File(final String file, final int order) {
-        this.file = file;
+    File(final String name, final int order) {
+        this.name = name;
         this.order = order;
     }
 
-    public static File from(final String other) {
+    public static File from(final String name) {
         return Arrays.stream(File.values())
-                .filter(file -> file.file.equals(other))
+                .filter(file -> file.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
 
-    public static File from(final int other) {
+    public static File findByOrder(final int order) {
         return Arrays.stream(File.values())
-                .filter(file -> file.order == other)
+                .filter(file -> file.order == order)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
     }
@@ -45,8 +45,8 @@ public enum File {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    String getFile() {
-        return file;
+    public String getFile() {
+        return name;
     }
 
     public int getOrder() {

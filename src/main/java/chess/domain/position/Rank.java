@@ -23,11 +23,15 @@ public enum Rank {
         this.rank = rank;
     }
 
-    public static Rank from(final int other) {
+    public static Rank from(final int number) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.rank == other)
+                .filter(rank -> rank.rank == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스판 범위를 벗어납니다."));
+    }
+
+    public static Rank from(final String string) {
+        return from(Integer.parseInt(string));
     }
 
     public static List<Rank> reversed() {
