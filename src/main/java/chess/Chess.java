@@ -50,7 +50,7 @@ public class Chess {
         }
         state = state.execute(command, commandArgs);
         if (!state.isEnd()) {
-            OutputView.printBoard(state.getBoard().getPieces());
+            OutputView.printBoard(state.getPieces());
         }
         return state;
     }

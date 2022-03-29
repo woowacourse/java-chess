@@ -7,6 +7,8 @@ import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public abstract class Running implements ChessState {
 
@@ -68,8 +70,8 @@ public abstract class Running implements ChessState {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public Map<Position, Piece> getPieces() {
+        return board.getPieces();
     }
 
     @Override

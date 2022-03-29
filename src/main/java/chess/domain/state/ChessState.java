@@ -2,7 +2,9 @@ package chess.domain.state;
 
 import chess.Command;
 import chess.domain.Status;
-import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public interface ChessState {
 
@@ -10,7 +12,7 @@ public interface ChessState {
 
     boolean isEnd();
 
-    Board getBoard();
+    Map<Position, Piece> getPieces();
 
     Status createStatus();
 }

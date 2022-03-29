@@ -3,6 +3,9 @@ package chess.domain.state;
 import chess.Command;
 import chess.domain.Status;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class End implements ChessState {
 
@@ -25,8 +28,8 @@ public class End implements ChessState {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public Map<Position, Piece> getPieces() {
+        return board.getPieces();
     }
 
     @Override

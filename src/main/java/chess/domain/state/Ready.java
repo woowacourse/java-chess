@@ -3,7 +3,10 @@ package chess.domain.state;
 import chess.Command;
 import chess.domain.Status;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Ready implements ChessState {
 
@@ -23,7 +26,7 @@ public class Ready implements ChessState {
     }
 
     @Override
-    public Board getBoard() {
+    public Map<Position, Piece> getPieces() {
         throw new UnsupportedOperationException(CANNOT_IMPLEMENT_COMMAND);
     }
 
