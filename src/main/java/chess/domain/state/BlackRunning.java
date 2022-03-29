@@ -12,6 +12,7 @@ public class BlackRunning extends Running {
 
     @Override
     protected ChessState move(Position start, Position target) {
-        return null;
+        board.move(start, target, color);
+        return new WhiteRunning(board);
     }
 }
