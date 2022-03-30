@@ -15,7 +15,7 @@ class CommandTest {
 
         // when
         // then
-        assertThatThrownBy(() -> Command.validate(input))
+        assertThatThrownBy(() -> Command.validateCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 명령입니다.");
     }

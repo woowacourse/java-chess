@@ -20,14 +20,14 @@ public class InputView {
 
     private static String getCommand() {
         String text = input().toLowerCase();
-        validateNull(text);
+        validateNotNull(text);
 
-        Command.validate(text);
+        Command.validateCommand(text);
 
         return text;
     }
 
-    private static void validateNull(String text) {
+    private static void validateNotNull(String text) {
         if (text == null) {
             throw new IllegalArgumentException("null은 허용되지 않습니다.");
         }

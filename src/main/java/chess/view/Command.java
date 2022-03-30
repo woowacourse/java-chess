@@ -21,7 +21,7 @@ public enum Command {
         this.value = value;
     }
 
-    public static void validate(String input) {
+    public static void validateCommand(String input) {
         Arrays.stream(values())
                 .filter(it -> input.startsWith(it.value))
                 .findFirst()
