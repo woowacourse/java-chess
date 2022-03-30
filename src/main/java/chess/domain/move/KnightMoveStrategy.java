@@ -7,14 +7,14 @@ import java.util.List;
 public final class KnightMoveStrategy extends FirstRowMoveStrategy {
 
     private static final List<MovePattern> MOVE_PATTERNS = List.of(
-            MovePattern.NNW,
-            MovePattern.NNE,
-            MovePattern.EEN,
-            MovePattern.EES,
-            MovePattern.SSE,
-            MovePattern.SSW,
-            MovePattern.WWS,
-            MovePattern.WWN
+            MovePattern.NORTH_NORTH_WEST,
+            MovePattern.NORTH_NORTH_EAST,
+            MovePattern.EAST_EAST_NORTH,
+            MovePattern.EAST_EAST_SOUTH,
+            MovePattern.SOUTH_SOUTH_EAST,
+            MovePattern.SOUTH_SOUTH_WEST,
+            MovePattern.WEST_WEST_SOUTH,
+            MovePattern.WEST_WEST_NORTH
     );
 
     @Override
