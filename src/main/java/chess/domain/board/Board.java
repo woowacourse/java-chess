@@ -4,6 +4,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,6 @@ public class Board {
 
     public void initBoard(BoardGenerationStrategy boardGenerator) {
         board.putAll(boardGenerator.create());
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
     }
 
     public boolean check() {
@@ -137,5 +134,9 @@ public class Board {
 
     public Result createResult() {
         return new Result(board);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }
