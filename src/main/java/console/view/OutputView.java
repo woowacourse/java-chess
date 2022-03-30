@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     public static void printChessBoard(Map<Position, Piece> board) {
-        for (Rank rank : Rank.orderedValues()) {
+        for (Rank rank : Rank.reverseOrderedValues()) {
             printEachColumn(board, rank);
         }
         System.out.println();

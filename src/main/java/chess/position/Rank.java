@@ -24,6 +24,12 @@ public enum Rank {
 
     public static List<Rank> orderedValues() {
         return Arrays.stream(values())
+                .sorted(Comparator.comparingInt(col -> col.value))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Rank> reverseOrderedValues() {
+        return Arrays.stream(values())
                 .sorted(Comparator.<Rank>comparingInt(col -> col.value).reversed())
                 .collect(Collectors.toList());
     }
@@ -40,7 +46,15 @@ public enum Rank {
         int start = Math.min(this.value, to.value);
         int end = Math.max(this.value, to.value);
 
-        return orderedValues().stream()
+        if (this.value < to.value) {
+            return getPath(orderedValues(), start, end);
+        }
+
+        return getPath(reverseOrderedValues(), start, end);
+    }
+
+    private List<Rank> getPath(List<Rank> orderedRanks, int start, int end) {
+        return orderedRanks.stream()
                 .filter(rank -> start <= rank.value && rank.value <= end)
                 .collect(Collectors.toList());
     }

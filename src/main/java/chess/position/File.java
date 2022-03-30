@@ -1,7 +1,6 @@
 package chess.position;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,11 +28,25 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
-    public List<File> getPath(File to) {
-        int start = Math.min(this.value, to.value);
-        int end = Math.max(this.value, to.value);
+    public static List<File> reverseOrderedValues() {
+        return Arrays.stream(values())
+                .sorted(Comparator.<File>comparingInt(row -> row.value).reversed())
+                .collect(Collectors.toList());
+    }
 
-        return orderedValues().stream()
+    public List<File> getPath(File to) {
+        int start = Math.min(value, to.value);
+        int end = Math.max(value, to.value);
+
+        if (this.value < to.value) {
+            return getPath(orderedValues(), start, end);
+        }
+
+        return getPath(reverseOrderedValues(), start, end);
+    }
+
+    private List<File> getPath(List<File> orderedFiles, int start, int end) {
+        return orderedFiles.stream()
                 .filter(file -> start <= file.value && file.value <= end)
                 .collect(Collectors.toList());
     }

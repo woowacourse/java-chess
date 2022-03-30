@@ -106,7 +106,7 @@ class PositionTest {
     @DisplayName("일직선 상의 경로 확인")
     @MethodSource("provideLinearPathPositions")
     void getLinearPath(Position from, Position to, Collection<Position> expectedPath) {
-        assertThat(from.getLinearPath(to)).containsExactlyInAnyOrderElementsOf(expectedPath);
+        assertThat(from.getLinearPath(to)).containsExactlyElementsOf(expectedPath);
     }
 
     private static Stream<Arguments> provideLinearPathPositions() {
@@ -114,11 +114,25 @@ class PositionTest {
                 Arguments.of(new Position(A, EIGHT), new Position(A, FIVE),
                         List.of(new Position(A, EIGHT), new Position(A, SEVEN),
                                 new Position(A, SIX), new Position(A, FIVE))),
+                Arguments.of(new Position(A, FIVE), new Position(A, EIGHT),
+                        List.of(new Position(A, FIVE), new Position(A, SIX),
+                                new Position(A, SEVEN), new Position(A, EIGHT))),
                 Arguments.of(new Position(A, EIGHT), new Position(C, EIGHT),
                         List.of(new Position(A, EIGHT), new Position(B, EIGHT), new Position(C, EIGHT))),
+                Arguments.of(new Position(C, EIGHT), new Position(A, EIGHT),
+                        List.of(new Position(C, EIGHT), new Position(B, EIGHT), new Position(A, EIGHT))),
                 Arguments.of(new Position(A, EIGHT), new Position(D, FIVE),
                         List.of(new Position(A, EIGHT), new Position(B, SEVEN),
-                                new Position(C, SIX), new Position(D, FIVE))));
+                                new Position(C, SIX), new Position(D, FIVE))),
+                Arguments.of(new Position(D, FIVE), new Position(A, EIGHT),
+                        List.of(new Position(D, FIVE), new Position(C, SIX),
+                                new Position(B, SEVEN), new Position(A, EIGHT))),
+                Arguments.of(new Position(D, EIGHT), new Position(A, FIVE),
+                        List.of(new Position(D, EIGHT), new Position(C, SEVEN),
+                                new Position(B, SIX), new Position(A, FIVE))),
+                Arguments.of(new Position(A, FIVE), new Position(D, EIGHT),
+                        List.of(new Position(A, FIVE), new Position(B, SIX),
+                                new Position(C, SEVEN), new Position(D, EIGHT))));
     }
 
     @Test
