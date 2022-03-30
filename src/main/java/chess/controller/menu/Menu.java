@@ -1,4 +1,4 @@
-package chess.menu;
+package chess.controller.menu;
 
 import chess.domain.board.Board;
 

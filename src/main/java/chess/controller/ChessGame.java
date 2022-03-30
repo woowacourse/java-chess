@@ -1,10 +1,10 @@
-package chess;
+package chess.controller;
 
 import chess.domain.board.Board;
-import chess.menu.Move;
+import chess.controller.menu.Move;
 import chess.view.MoveInfo;
 import chess.view.InputView;
-import chess.menu.MenuType;
+import chess.controller.menu.MenuType;
 import chess.view.OutputView;
 
 public class ChessGame {

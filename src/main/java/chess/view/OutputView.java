@@ -46,15 +46,15 @@ public class OutputView {
         System.out.print(".");
     }
 
-    public static void printStatus(Map<Team, Double> status, List<Team> result) {
+    public static void printStatus(Map<Team, Double> status, List<Team> winnerResult) {
         for (Entry<Team, Double> value : status.entrySet()) {
             System.out.printf(value.getKey() + " : " + value.getValue() + "점%n");
         }
-        if (result.size() == 2) {
+        if (winnerResult.size() == 2) {
             System.out.println("무승부 입니다!");
             return;
         }
-        System.out.println("승리 팀은 : " + result.get(0) + " 입니다.");
+        System.out.println("승리 팀은 : " + winnerResult.get(0) + " 입니다.");
     }
 
     public static void printMessage(String string) {

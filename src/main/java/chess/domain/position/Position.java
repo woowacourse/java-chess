@@ -24,9 +24,9 @@ public class Position {
                 Row.of(value.substring(SECOND_BEGIN, SECOND_END)));
     }
 
-    public Direction findDirection(Position position, Piece piece) {
-        int x = column.calculateGap(position.column);
-        int y = row.calculateGap(position.row);
+    public Direction findDirection(Position destination, Piece piece) {
+        int x = column.calculateGap(destination.column);
+        int y = row.calculateGap(destination.row);
 
         if (piece.isStep()) {
             return Direction.of(x, y);
