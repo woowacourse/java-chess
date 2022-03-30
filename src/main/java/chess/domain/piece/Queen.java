@@ -8,8 +8,8 @@ import java.util.function.BiPredicate;
 public class Queen extends Piece {
 
     private static final double SCORE = 9;
-    private static final BiPredicate<Integer, Integer> movingCondition =
-            Bishop.movingCondition.or(Rook.movingCondition);
+    private static final BiPredicate<Integer, Integer> movingCondition = (rankDifference, fileDifference) ->
+            rankDifference.equals(fileDifference) || (fileDifference == 0 || rankDifference == 0);
 
     public Queen(final TeamColor teamColor, final Position position) {
         super(teamColor, position);

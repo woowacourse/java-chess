@@ -8,7 +8,7 @@ import java.util.function.BiPredicate;
 public class Bishop extends Piece {
 
     private static final double SCORE = 3;
-    static final BiPredicate<Integer, Integer> movingCondition =
+    private static final BiPredicate<Integer, Integer> movingCondition =
             (rankDifference, fileDifference) -> rankDifference == fileDifference;
 
     public Bishop(final TeamColor teamColor, final Position position) {
