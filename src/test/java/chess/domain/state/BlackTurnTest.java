@@ -34,7 +34,7 @@ public class BlackTurnTest {
     }
 
     @Test
-    @DisplayName("move 시 whiteTurn 상태로 변경")
+    @DisplayName("move 시 WhiteTurn 상태로 변경")
     void move() {
         State blackTurn = new BlackTurn(board);
 
@@ -44,7 +44,7 @@ public class BlackTurnTest {
     }
 
     @Test
-    @DisplayName("move 시 white 킹을 잡으면 ready 상태로 변경")
+    @DisplayName("move 시 white 킹을 잡으면 Ready 상태로 변경")
     void moveToKing() {
         State blackTurn = new BlackTurn(getBoard());
 
