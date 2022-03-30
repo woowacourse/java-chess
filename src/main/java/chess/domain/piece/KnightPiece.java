@@ -24,9 +24,9 @@ public class KnightPiece extends Piece {
     @Override
     public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         final int columnDistance = to.calculateColumnDistance(from);
-        final int rankDistance = to.calculateRankDistance(from);
+        final int rowDistance = to.calculateRowDistance(from);
 
-        final Direction direction = Direction.of(columnDistance, rankDistance);
+        final Direction direction = Direction.of(columnDistance, rowDistance);
 
         return movableDirections.contains(direction);
     }

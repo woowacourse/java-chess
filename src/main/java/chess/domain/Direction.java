@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.position.Column;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 import java.util.Arrays;
 
 public enum Direction {
@@ -25,31 +25,31 @@ public enum Direction {
     ;
 
     private final int columnDistance;
-    private final int rankDistance;
+    private final int rowDistance;
 
-    Direction(final int columDistance, final int rankDistance) {
+    Direction(final int columDistance, final int rowDistance) {
         this.columnDistance = columDistance;
-        this.rankDistance = rankDistance;
+        this.rowDistance = rowDistance;
     }
 
-    public static Direction of(final int columDistance, final int rankDistance) {
+    public static Direction of(final int columDistance, final int rowDistance) {
         return Arrays.stream(values())
-                .filter(value -> isSameDirection(value, columDistance, rankDistance))
+                .filter(value -> isSameDirection(value, columDistance, rowDistance))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 이동할 수 없는 방향입니다."));
     }
 
     private static boolean isSameDirection(final Direction direction,
                                            final int columDistance,
-                                           final int rankDistance) {
-        return Math.atan2(direction.rankDistance, direction.columnDistance) == Math.atan2(rankDistance, columDistance);
+                                           final int rowDistance) {
+        return Math.atan2(direction.rowDistance, direction.columnDistance) == Math.atan2(rowDistance, columDistance);
     }
 
     public Column moveFile(final Column column) {
         return column.move(columnDistance);
     }
 
-    public Rank moveRank(final Rank rank) {
-        return rank.move(rankDistance);
+    public Row moveRow(final Row row) {
+        return row.move(rowDistance);
     }
 }

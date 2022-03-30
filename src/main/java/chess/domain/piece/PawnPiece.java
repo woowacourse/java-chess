@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 
 public class PawnPiece extends Piece {
 
@@ -16,27 +16,27 @@ public class PawnPiece extends Piece {
     @Override
     public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         final int columnDistance = to.calculateColumnDistance(from);
-        final int rankDistance = to.calculateRankDistance(from);
+        final int rowDistance = to.calculateRowDistance(from);
 
-        final Direction direction = Direction.of(columnDistance, rankDistance);
+        final Direction direction = Direction.of(columnDistance, rowDistance);
 
-        return isInitialForwardMove(direction, isEmptyTarget, from, rankDistance) ||
-                isForwardMove(direction, isEmptyTarget, rankDistance) ||
-                isDiagonalMove(direction, isEmptyTarget, rankDistance, columnDistance);
+        return isInitialForwardMove(direction, isEmptyTarget, from, rowDistance) ||
+                isForwardMove(direction, isEmptyTarget, rowDistance) ||
+                isDiagonalMove(direction, isEmptyTarget, rowDistance, columnDistance);
     }
 
     private boolean isInitialForwardMove(final Direction direction, final boolean isEmptyTarget,
                                          final Position from,
-                                         final int rankDistance) {
-        return isEmptyTarget && ((super.isSameColor(Color.BLACK) && from.isSameRank(Rank.SEVEN) &&
-                direction == Direction.SOUTH && Math.abs(rankDistance) <= LIMIT_DISTANCE) ||
-                (super.isSameColor(Color.WHITE) && from.isSameRank(Rank.TWO) &&
-                        direction == Direction.NORTH && Math.abs(rankDistance) <= LIMIT_DISTANCE));
+                                         final int rowDistance) {
+        return isEmptyTarget && ((super.isSameColor(Color.BLACK) && from.isSameRow(Row.SEVEN) &&
+                direction == Direction.SOUTH && Math.abs(rowDistance) <= LIMIT_DISTANCE) ||
+                (super.isSameColor(Color.WHITE) && from.isSameRow(Row.TWO) &&
+                        direction == Direction.NORTH && Math.abs(rowDistance) <= LIMIT_DISTANCE));
     }
 
     private boolean isForwardMove(final Direction direction, final Boolean isEmptyTarget,
-                                  final int rankDistance) {
-        return isForward(direction) && isEmptyTarget && Math.abs(rankDistance) < LIMIT_DISTANCE;
+                                  final int rowDistance) {
+        return isForward(direction) && isEmptyTarget && Math.abs(rowDistance) < LIMIT_DISTANCE;
     }
 
     private boolean isForward(final Direction direction) {
@@ -45,9 +45,9 @@ public class PawnPiece extends Piece {
     }
 
     private boolean isDiagonalMove(final Direction direction, final boolean isEmptyTarget,
-                                   final int rankDistance, final int fileDistance) {
+                                   final int rowDistance, final int fileDistance) {
         return isDiagonal(direction) && !isEmptyTarget && Math.abs(fileDistance) < LIMIT_DISTANCE
-                && Math.abs(rankDistance) < LIMIT_DISTANCE;
+                && Math.abs(rowDistance) < LIMIT_DISTANCE;
     }
 
     private boolean isDiagonal(final Direction direction) {

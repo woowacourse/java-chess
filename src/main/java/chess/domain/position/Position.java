@@ -6,28 +6,28 @@ import java.util.Objects;
 public class Position {
 
     private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
+    private static final int ROW_INDEX = 1;
 
     private final Column column;
-    private final Rank rank;
+    private final Row row;
 
-    public Position(final Column column, final Rank rank) {
+    public Position(final Column column, final Row row) {
         this.column = column;
-        this.rank = rank;
+        this.row = row;
     }
 
     public static Position create(final String position) {
-        final Column column = Column.of(position.substring(FILE_INDEX, RANK_INDEX));
-        final Rank rank = Rank.of(position.substring(RANK_INDEX));
-        return new Position(column, rank);
+        final Column column = Column.of(position.substring(FILE_INDEX, ROW_INDEX));
+        final Row row = Row.of(position.substring(ROW_INDEX));
+        return new Position(column, row);
     }
 
     public Position move(final Direction direction) {
-        return new Position(direction.moveFile(column), direction.moveRank(rank));
+        return new Position(direction.moveFile(column), direction.moveRow(row));
     }
 
-    public boolean isSameRank(final Rank rank) {
-        return rank == this.rank;
+    public boolean isSameRow(final Row row) {
+        return row == this.row;
     }
 
     public boolean isSameColumn(final Column column) {
@@ -38,8 +38,8 @@ public class Position {
         return this.column.calculateDistance(from.column);
     }
 
-    public int calculateRankDistance(final Position from) {
-        return this.rank.calculateDistance(from.rank);
+    public int calculateRowDistance(final Position from) {
+        return this.row.calculateDistance(from.row);
     }
 
     @Override
@@ -51,11 +51,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return rank == position.rank && column == position.column;
+        return row == position.row && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, column);
+        return Objects.hash(row, column);
     }
 }

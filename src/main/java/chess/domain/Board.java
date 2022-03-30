@@ -80,9 +80,9 @@ public class Board {
 
     private Direction decideDirection(final Position from, final Position to) {
         final int fileDistance = to.calculateColumnDistance(from);
-        final int rankDistance = to.calculateRankDistance(from);
+        final int rowDistance = to.calculateRowDistance(from);
 
-        return Direction.of(fileDistance, rankDistance);
+        return Direction.of(fileDistance, rowDistance);
     }
 
     public boolean isCheckmate(final Position to) {
@@ -95,7 +95,8 @@ public class Board {
     }
 
     public int countPiece(final Piece piece) {
-        return (int) board.values().stream()
+        return (int) board.values()
+                .stream()
                 .filter(value -> value.equals(piece))
                 .count();
     }

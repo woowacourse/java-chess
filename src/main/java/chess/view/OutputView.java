@@ -21,22 +21,22 @@ public class OutputView {
 
     public static void printBoard(final Map<Position, Piece> board) {
         final List<Position> pieces = new ArrayList<>(board.keySet());
-        int rankIndex = 8;
+        int rowIndex = 8;
         System.out.println();
         for (int i = 0; i < board.size(); i++) {
             final Piece piece = board.get(pieces.get(i));
             System.out.print(piece.getName());
-            rankIndex = separateRank(i, rankIndex);
+            rowIndex = separateRow(i, rowIndex);
         }
         System.out.println("abcdefgh");
     }
 
-    private static int separateRank(final int index, int rankIndex) {
+    private static int separateRow(final int index, int rowIndex) {
         if (index % FILE_SIZE == FILE_END_NUMBER) {
-            System.out.println(" " + rankIndex);
-            return rankIndex - 1;
+            System.out.println(" " + rowIndex);
+            return rowIndex - 1;
         }
-        return rankIndex;
+        return rowIndex;
     }
 
     public static void printTurnMessage(final String name) {
