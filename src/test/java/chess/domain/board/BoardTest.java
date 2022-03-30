@@ -159,18 +159,7 @@ public class BoardTest {
         Position a4 = Position.of(Column.A, Row.FOUR);
         assertThatThrownBy(() -> board.move(a3, a4))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 있는 기물이 없습니다.");
-    }
-
-    @DisplayName("경로에 기물이 있을 경우 움직일 수 없다.")
-    @Test
-    void move_obstacle_exception() {
-        Board board = new Board();
-        Position a1 = Position.of(Column.A, Row.ONE);
-        Position a4 = Position.of(Column.A, Row.FOUR);
-        assertThatThrownBy(() -> board.move(a1, a4))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
+            .hasMessage("빈 기물을 움직일 수 없습니다.");
     }
 
     @DisplayName("초기 상태의 체스판에서 흑색 진영의 점수는 38점이다.")

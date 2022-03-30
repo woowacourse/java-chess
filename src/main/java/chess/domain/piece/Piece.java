@@ -42,4 +42,8 @@ public abstract class Piece {
     public abstract double getScore();
 
     public abstract boolean isNullPiece();
+
+    public boolean isSameCampWith(final Camp camp) {
+        return this.camp == camp;
+    }
 }

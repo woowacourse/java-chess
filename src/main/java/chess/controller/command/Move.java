@@ -14,6 +14,7 @@ public class Move implements Command {
     @Override
     public void execute(String rawInputCommand, final OutputView outputView) {
         final Positions movePositions = Positions.from(rawInputCommand);
+
         chessGame.move(movePositions.get(0), movePositions.get(1));
 
         outputView.printBoard(chessGame.board().getValue());

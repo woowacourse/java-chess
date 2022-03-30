@@ -17,7 +17,7 @@ public final class NullPiece extends Piece {
 
     @Override
     public void move(final Position beforePosition, final Position afterPosition, final Consumer<Piece> moveFunction) {
-        throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
+        throw new IllegalArgumentException(CANT_MOVE_EMPTY_PIECE);
     }
 
     @Override

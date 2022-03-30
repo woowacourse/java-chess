@@ -48,4 +48,40 @@ public class RunningTest {
 
         assertThatNoException().isThrownBy(state::statusOfBlack);
     }
+
+    @DisplayName("기물이 없는 시작 위치를 입력할 경우 움직일 수 없다.")
+    @Test
+    void move_null_piece_exception() {
+        final State state = new Running(new Board());
+        Position a3 = Position.of(Column.A, Row.THREE);
+        Position a4 = Position.of(Column.A, Row.FOUR);
+
+        assertThatThrownBy(() -> state.move(a3, a4))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 있는 기물이 없습니다.");
+    }
+
+    @DisplayName("해당 진영의 턴이 아닌 경우 움직일 수 없다.")
+    @Test
+    void move_opposite_turn_exception() {
+        final State state = new Running(new Board());
+        Position a3 = Position.of(Column.A, Row.SEVEN);
+        Position a4 = Position.of(Column.A, Row.FIVE);
+
+        assertThatThrownBy(() -> state.move(a3, a4))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("상대 진영의 차례입니다.");
+    }
+
+    @DisplayName("경로에 기물이 있을 경우 움직일 수 없다.")
+    @Test
+    void move_obstacle_exception() {
+        final State state = new Running(new Board());
+        Position a1 = Position.of(Column.A, Row.ONE);
+        Position a4 = Position.of(Column.A, Row.FOUR);
+        
+        assertThatThrownBy(() -> state.move(a1, a4))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");
+    }
 }

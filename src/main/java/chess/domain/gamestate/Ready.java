@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Camp;
 import chess.domain.Result;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -10,13 +11,26 @@ public class Ready implements State {
     private static final String CANT_GET_RESULT_WHEN_NOW = "아직 승패를 판정할 수 없습니다.";
     private static final String NOT_INIT_CHESS_BOARD = "체스판이 아직 준비되지 않았습니다.";
 
+    private final Board board;
+    private final Camp camp;
+
+    public Ready() {
+        this.board = new Board();
+        this.camp = Camp.WHITE;
+    }
+
     @Override
     public State start() {
-        return new Running(new Board());
+        return new Running(this.board, this.camp);
     }
 
     @Override
     public State move(Position beforePosition, Position afterPosition) {
+        throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public Camp switchCamp() {
         throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
     }
 

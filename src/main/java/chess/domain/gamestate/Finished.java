@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.domain.Camp;
 import chess.domain.Result;
 import chess.domain.board.Board;
 import chess.domain.board.BoardStatusCalculator;
@@ -23,6 +24,11 @@ public class Finished implements State {
 
     @Override
     public State move(Position beforePosition, Position afterPosition) {
+        throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public Camp switchCamp() {
         throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
     }
 
@@ -61,7 +67,6 @@ public class Finished implements State {
             return Result.BLACK_LOSE;
         }
         return Result.DRAW;
-
     }
 
     @Override
