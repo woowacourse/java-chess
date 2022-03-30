@@ -1,6 +1,8 @@
 package chess.model.piece;
 
+import chess.Direction;
 import chess.model.square.Square;
+import java.util.List;
 
 public class King extends Piece {
 
@@ -16,5 +18,10 @@ public class King extends Piece {
     @Override
     public boolean movable(Square source, Square target) {
         return false;
+    }
+
+    @Override
+    List<Direction> getDirection() {
+        return null;
     }
 }

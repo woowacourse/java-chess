@@ -21,7 +21,8 @@ public class Knight extends Piece {
                 .anyMatch(direction -> source.findLocation(direction, target));
     }
 
-    public List<Direction> getDirection() {
+    @Override
+    List<Direction> getDirection() {
         return List.of(
                 Direction.NNE,
                 Direction.NNW,

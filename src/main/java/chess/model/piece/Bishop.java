@@ -29,7 +29,7 @@ public class Bishop extends Piece {
                 .collect(Collectors.toList());
     }
 
-    private List<Direction> getDirection() {
+    List<Direction> getDirection() {
         return List.of(Direction.NORTH_WEST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.SOUTH_EAST);
     }
 }

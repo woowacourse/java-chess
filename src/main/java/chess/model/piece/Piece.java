@@ -1,6 +1,8 @@
 package chess.model.piece;
 
+import chess.Direction;
 import chess.model.square.Square;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -24,4 +26,6 @@ public abstract class Piece {
     public abstract String name();
 
     public abstract boolean movable(Square source, Square target);
+
+    abstract List<Direction> getDirection();
 }
