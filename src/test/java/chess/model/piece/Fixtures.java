@@ -23,17 +23,23 @@ public class Fixtures {
 
     // knight
     public static final Square E6 = Square.of(File.E, Rank.SIX);
-    public static final Square F5 = Square.of(File.C, Rank.SIX);
-    public static final Square F3 = Square.of(File.F, Rank.FIVE);
-    public static final Square E2 = Square.of(File.B, Rank.FIVE);
-    public static final Square C2 = Square.of(File.F, Rank.THREE);
+    public static final Square C6 = Square.of(File.C, Rank.SIX);
+    public static final Square F5 = Square.of(File.F, Rank.FIVE);
+    public static final Square B5 = Square.of(File.B, Rank.FIVE);
+    public static final Square F3 = Square.of(File.F, Rank.THREE);
     public static final Square B3 = Square.of(File.B, Rank.THREE);
-    public static final Square B5 = Square.of(File.E, Rank.TWO);
-    public static final Square C6 = Square.of(File.C, Rank.TWO);
+    public static final Square E2 = Square.of(File.E, Rank.TWO);
+    public static final Square C2 = Square.of(File.C, Rank.TWO);
 
-    //
-
-    public static final Square D5 = Square.of(File.D, Rank.FIVE);
+    // king
+    public static final Square C3 = Square.of(File.C, Rank.THREE);
+    public static final Square C4 = Square.of(File.C, Rank.FOUR);
     public static final Square C5 = Square.of(File.C, Rank.FIVE);
+    public static final Square D5 = Square.of(File.D, Rank.FIVE);
+    public static final Square E5 = Square.of(File.E, Rank.FIVE);
+    public static final Square E4 = Square.of(File.E, Rank.FOUR);
+    public static final Square E3 = Square.of(File.E, Rank.THREE);
+    public static final Square D3 = Square.of(File.D, Rank.THREE);
+
     public static final Square A7 = Square.of(File.A, Rank.SEVEN);
 }
