@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -15,7 +16,7 @@ class BishopTest {
     @Test
     void isNotMovable_withSamePosition() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when
@@ -29,7 +30,7 @@ class BishopTest {
     @Test
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when
@@ -43,7 +44,7 @@ class BishopTest {
     @Test
     void isNotMovable_withSameXAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when
@@ -57,7 +58,7 @@ class BishopTest {
     @Test
     void isNotMovable_withSameYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when
@@ -71,7 +72,7 @@ class BishopTest {
     @Test
     void isNotMovable_notOnDiagonal() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when

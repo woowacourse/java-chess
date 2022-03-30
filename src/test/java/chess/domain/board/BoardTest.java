@@ -19,7 +19,7 @@ class BoardTest {
     @Test
     void constructor() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when & then
         assertThat(board).isNotNull();
@@ -29,7 +29,7 @@ class BoardTest {
     @Test
     void findPieceByPosition() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
@@ -43,7 +43,7 @@ class BoardTest {
     @Test
     void findPieceByPosition_returnsEmptyOptionalOnEmpty() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
@@ -57,7 +57,7 @@ class BoardTest {
     @Test
     void movePiece_toEmptyPlace() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when & then
         assertThat(
@@ -69,7 +69,7 @@ class BoardTest {
     @Test
     void movePiece_toEnemyPlace() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when & then
         board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE), PieceColor.WHITE);
@@ -84,7 +84,7 @@ class BoardTest {
     @Test
     void movePiece_toEnemyPlaceAndRemoveEnemy() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when & then
         board.executeCommand(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE), PieceColor.WHITE);
@@ -98,7 +98,7 @@ class BoardTest {
     @Test
     void movePiece_toSameTeamPlaceIsNotAbleToMove() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.TWO),
@@ -112,7 +112,7 @@ class BoardTest {
     @Test
     void move_returnsTruePawnDiagonalForwardInWhite() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
@@ -129,7 +129,7 @@ class BoardTest {
     @Test
     void move_returnsFalsePawnDiagonalForwardInWhite() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
@@ -145,7 +145,7 @@ class BoardTest {
     @Test
     void move_returnsTruePawnDiagonalForwardInBlack() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE), PieceColor.BLACK);
@@ -162,7 +162,7 @@ class BoardTest {
     @Test
     void move_returnsFalsePawnDiagonalForwardInBlack() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE), PieceColor.WHITE);
@@ -178,7 +178,7 @@ class BoardTest {
     @Test
     void moveVertical_returnsFalseRouteHasObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE),
@@ -192,7 +192,7 @@ class BoardTest {
     @Test
     void moveVertical_returnsTrueRouteHasNotObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR),
@@ -206,7 +206,7 @@ class BoardTest {
     @Test
     void moveHorizontal_returnsFalseRouteHasObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
@@ -223,7 +223,7 @@ class BoardTest {
     @Test
     void moveHorizontal_returnsTrueRouteHasNotObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR), PieceColor.WHITE);
@@ -239,7 +239,7 @@ class BoardTest {
     @Test
     void moveRightUpDiagonalDirection_returnsFalseRouteHasObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE),
@@ -253,7 +253,7 @@ class BoardTest {
     @Test
     void moveRightUpDiagonalDirection_returnsTrueRouteHasNotObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.D, YAxis.TWO), Position.from(XAxis.D, YAxis.THREE), PieceColor.WHITE);
@@ -268,7 +268,7 @@ class BoardTest {
     @Test
     void moveLeftUpDiagonalDirection_returnsFalseRouteHasObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.C, YAxis.ONE), Position.from(XAxis.A, YAxis.THREE),
@@ -282,7 +282,7 @@ class BoardTest {
     @Test
     void moveLeftUpDiagonalDirection_returnsTrueRouteHasNotObstacle() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.B, YAxis.THREE), PieceColor.WHITE);
@@ -297,7 +297,7 @@ class BoardTest {
     @Test
     void calculateScore_withWhite() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         double actual = board.calculateScore(PieceColor.WHITE);
@@ -310,7 +310,7 @@ class BoardTest {
     @Test
     void calculateScore_withBlack() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         double actual = board.calculateScore(PieceColor.BLACK);
@@ -323,7 +323,7 @@ class BoardTest {
     @Test
     void calculateScore_withWhitePawnSameColumn() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.B, YAxis.SEVEN), Position.from(XAxis.B, YAxis.FIVE), PieceColor.BLACK);

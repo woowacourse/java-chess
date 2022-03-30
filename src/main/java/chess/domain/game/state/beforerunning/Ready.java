@@ -1,13 +1,14 @@
 package chess.domain.game.state.beforerunning;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
 public class Ready extends BeforeRunning {
 
     public Ready() {
-        super(Board.createInitializedBoard());
+        super(BoardFactory.createInitializedBoard());
     }
 
     @Override

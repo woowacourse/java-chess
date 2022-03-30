@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -18,7 +19,7 @@ class NightTest {
     @CsvSource(value = {"A,THREE", "C,THREE", "D,TWO"})
     void isMovable_withSevenShape(String xAxisName, String yAxisName) {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
 
         // when
@@ -34,7 +35,7 @@ class NightTest {
     @CsvSource(value = {"A,FOUR", "C,FOUR", "D,THREE"})
     void isNotMovable_withNotSevenShape(String xAxisName, String yAxisName) {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
 
         // when

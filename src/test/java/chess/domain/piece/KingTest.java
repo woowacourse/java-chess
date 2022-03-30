@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -18,7 +19,7 @@ class KingTest {
     @Test
     void isNotMovable_withSamePosition() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
@@ -32,7 +33,7 @@ class KingTest {
     @Test
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
@@ -46,7 +47,7 @@ class KingTest {
     @Test
     void isMovable_withSameYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
@@ -60,7 +61,7 @@ class KingTest {
     @Test
     void isMovable_withSameXAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
@@ -74,7 +75,7 @@ class KingTest {
     @Test
     void isNotMovable_notOnDiagonal() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
@@ -88,7 +89,7 @@ class KingTest {
     @CsvSource(value = {"G,THREE", "G,ONE", "C,ONE", "C,THREE", "H,FOUR"})
     void isNotMovable_MoreThanOne(String xAxisName, String yAxisName) {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when

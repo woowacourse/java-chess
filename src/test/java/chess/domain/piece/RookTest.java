@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -16,7 +17,7 @@ class RookTest {
     @Test
     void isNotMovable_withSamePosition() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> bishop = board.find(Position.from(XAxis.C, YAxis.ONE));
 
         // when
@@ -30,7 +31,7 @@ class RookTest {
     @Test
     void isMovable_withSameYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
 
         // when
@@ -44,7 +45,7 @@ class RookTest {
     @Test
     void isMovable_withSameXAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
 
         // when
@@ -58,7 +59,7 @@ class RookTest {
     @Test
     void isNotMovable_withDifferentXAxisDifferentYAxis() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
         Optional<AbstractPiece> rook = board.find(Position.from(XAxis.A, YAxis.ONE));
 
         // when

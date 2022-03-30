@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -15,7 +16,7 @@ class PawnTest {
     @Test
     void movePiece_returnsFalseWithSameFromAndTo() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO),
@@ -29,7 +30,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInWhiteTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.FOUR),
@@ -43,7 +44,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardOnceInWhiteTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
@@ -58,7 +59,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceWhenNotInitialInWhiteTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
@@ -73,7 +74,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInBlackTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.FIVE),
@@ -87,7 +88,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardOnceInBlackTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.BLACK);
@@ -102,7 +103,7 @@ class PawnTest {
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceWhenNotInitialInBlackTeam() {
         // given
-        Board board = Board.createInitializedBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);

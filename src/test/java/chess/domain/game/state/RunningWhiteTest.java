@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.game.state.beforerunning.FinishedKing;
 import chess.domain.game.state.beforerunning.FinishedStatus;
 import chess.domain.game.state.running.RunningBlack;
@@ -19,7 +20,7 @@ class RunningWhiteTest {
     @Test
     void move_returnsRunningBlack() {
         // given
-        State state = new RunningWhite(Board.createInitializedBoard());
+        State state = new RunningWhite(BoardFactory.createInitializedBoard());
 
         // when
         State actual = state.move(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE));
@@ -32,7 +33,7 @@ class RunningWhiteTest {
     @Test
     void startGame_throwsException() {
         // given
-        State state = new RunningWhite(Board.createInitializedBoard());
+        State state = new RunningWhite(BoardFactory.createInitializedBoard());
 
         // when & then
         assertThatThrownBy(state::startGame)
@@ -44,7 +45,7 @@ class RunningWhiteTest {
     @Test
     void move_ifKillKingReturnsFinished() {
         // given
-        State state = new RunningWhite(Board.createInitializedBoard());
+        State state = new RunningWhite(BoardFactory.createInitializedBoard());
 
         // when
         state.move(Position.from(XAxis.B, YAxis.ONE), Position.from(XAxis.C, YAxis.THREE));
@@ -60,7 +61,7 @@ class RunningWhiteTest {
     @Test
     void showStatus_returnsFinished() {
         // given
-        State state = new RunningWhite(Board.createInitializedBoard());
+        State state = new RunningWhite(BoardFactory.createInitializedBoard());
 
         // when
         State actual = state.showStatus();
