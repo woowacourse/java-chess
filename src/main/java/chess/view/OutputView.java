@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {
+
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String GAME_COMMAND_FORMAT = "> %s : %s%n";
     private static final String START_COMMAND = "start";

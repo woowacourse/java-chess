@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Positions {
+
     private static final String SPLIT_DELIMITER = " ";
     private static final String WRONG_PATTERN_MESSAGE = "이동 명령을 형식에 맞게 입력하세요.";
     private static final Pattern POSITION_PATTERN = Pattern.compile("[a-h][1-8]");

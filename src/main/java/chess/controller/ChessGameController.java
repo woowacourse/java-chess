@@ -6,6 +6,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGameController {
+
     private final InputView inputView;
     private final OutputView outputView;
 

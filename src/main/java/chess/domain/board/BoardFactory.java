@@ -26,6 +26,9 @@ public class BoardFactory {
     private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
+    private BoardFactory() {
+    }
+
     public static Map<Position, Piece> generate() {
         final TreeMap<Position, Piece> value = new TreeMap<>();
         initializeEveryFourPiece(value);

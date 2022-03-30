@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.view.OutputView;
 
 public class Status implements Command {
+    
     private final ChessGame chessGame;
 
     public Status(final ChessGame chessGame) {

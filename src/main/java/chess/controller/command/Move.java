@@ -5,6 +5,7 @@ import chess.domain.board.Positions;
 import chess.view.OutputView;
 
 public class Move implements Command {
+    
     private final ChessGame chessGame;
 
     public Move(final ChessGame chessGame) {

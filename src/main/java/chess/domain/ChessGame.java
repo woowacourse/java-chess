@@ -6,6 +6,7 @@ import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 
 public class ChessGame {
+
     private State state;
     public boolean isEnd = false;
 
@@ -41,11 +42,15 @@ public class ChessGame {
         return this.state.getBoard();
     }
 
-    public String getResultMessage() {
-        return Result.from(this.state.getResult()).getMessage();
+    public void off() {
+        this.isEnd = true;
     }
 
     public boolean isEnd() {
         return this.isEnd;
+    }
+
+    public String getResultMessage() {
+        return Result.from(this.state.getResult()).getMessage();
     }
 }

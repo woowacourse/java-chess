@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import java.util.List;
 
 public class Running implements State {
+
     private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
     private static final String CANT_GET_RESULT_WHEN_NOW = "아직 승패를 판정할 수 없습니다.";
     private static final String NO_PIECE_TO_MOVE = "이동할 수 있는 기물이 없습니다.";
@@ -41,6 +42,7 @@ public class Running implements State {
         if (this.board.hasKingCaptured()) {
             return new Finished(this.board);
         }
+
         return new Running(this.board, this.switchCamp());
     }
 
@@ -97,6 +99,11 @@ public class Running implements State {
     }
 
     @Override
+    public boolean isRunning() {
+        return true;
+    }
+
+    @Override
     public double statusOfBlack() {
         return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
@@ -109,11 +116,6 @@ public class Running implements State {
     @Override
     public Result getResult() {
         throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 
     @Override

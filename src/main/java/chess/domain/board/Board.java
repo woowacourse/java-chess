@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public final class Board {
+
     private static final int TOTAL_KING_COUNT = 2;
     private static final String CANT_MOVE_TO_SAME_CAMP = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
 
@@ -20,13 +21,21 @@ public final class Board {
         this.value = BoardFactory.generate();
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        movePiece(beforePosition, afterPosition);
-    }
-
     public boolean checkNotKnight(final Position position) {
         final Piece piece = this.value.get(position);
         return piece.pieceName() != PieceName.KNIGHT;
+    }
+
+    public boolean isNotValidCamp(final Position position, final Camp camp) {
+        return !this.value.get(position).isSameCampWith(camp);
+    }
+
+    public boolean isBlankPosition(final Position position) {
+        return this.value.get(position).isNullPiece();
+    }
+
+    public void move(Position beforePosition, Position afterPosition) {
+        movePiece(beforePosition, afterPosition);
     }
 
     private void movePiece(final Position beforePosition, final Position afterPosition) {
@@ -40,10 +49,6 @@ public final class Board {
             return;
         }
         throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
-    }
-
-    public boolean isBlankPosition(final Position position) {
-        return this.value.get(position).isNullPiece();
     }
 
     private boolean isMoveToBlank(Position position) {
@@ -86,9 +91,5 @@ public final class Board {
 
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
-    }
-
-    public boolean isNotValidCamp(final Position position, final Camp camp) {
-        return !this.value.get(position).isSameCampWith(camp);
     }
 }

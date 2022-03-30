@@ -8,6 +8,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 
 public class Finished implements State {
+
     private static final int RESULT_CRITERIA = 0;
     private static final String CANT_MOVE_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
 
@@ -34,7 +35,7 @@ public class Finished implements State {
 
     @Override
     public State end() {
-        return this;
+        return new Finished(this.board);
     }
 
     @Override

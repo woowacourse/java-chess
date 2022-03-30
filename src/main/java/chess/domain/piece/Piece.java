@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public abstract class Piece {
+
     private final Camp camp;
     private final PieceName pieceName;
 

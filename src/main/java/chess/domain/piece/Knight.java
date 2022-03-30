@@ -7,6 +7,7 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class Knight extends NotNullPiece {
+
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int FIRST_MOVABLE_DISTANCE = 2;
     private static final int SECOND_MOVABLE_DISTANCE = 1;

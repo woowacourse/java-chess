@@ -7,10 +7,10 @@ import chess.domain.board.Position;
 import java.util.function.Consumer;
 
 public final class King extends NotNullPiece {
+
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 0;
-
 
     public King(Camp camp) {
         super(camp, KING);
@@ -36,7 +36,7 @@ public final class King extends NotNullPiece {
         if (columnDistance + rowDistance == MOVABLE_DISTANCE) {
             return true;
         }
-        return columnDistance == 1 && rowDistance == 1;
+        return columnDistance == MOVABLE_DISTANCE && rowDistance == MOVABLE_DISTANCE;
     }
 
     @Override
