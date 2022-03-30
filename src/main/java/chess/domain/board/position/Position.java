@@ -70,8 +70,8 @@ public final class Position {
         return this.rank == rank;
     }
 
-    public boolean isEqualRank(Position position) {
-        return this.rank == position.rank;
+    public boolean isEqualColumn(Column column) {
+        return this.column == column;
     }
 
     @Override
@@ -97,5 +97,9 @@ public final class Position {
                 "file=" + column +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public Column getColumn() {
+        return column;
     }
 }

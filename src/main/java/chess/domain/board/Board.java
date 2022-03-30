@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public final class Board {
     private static final String NO_MOVE_ERROR_MESSAGE = "이동할 수 없는 위치입니다.";
@@ -17,6 +19,10 @@ public final class Board {
 
     public Board(Map<Position, Piece> squares) {
         this.squares = squares;
+    }
+
+    private static double scoreOfPiece(Entry<Position, Piece> entry) {
+        return entry.getValue().getScore();
     }
 
     public Piece findByPosition(Position position) {
@@ -82,22 +88,24 @@ public final class Board {
                 .sum();
     }
 
-    private static double scoreOfPiece(Entry<Position, Piece> entry) {
-        return entry.getValue().getScore();
-    }
-
     private double getPawnMinusScore(Team team) {
-        return (double) squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team))
-                .filter(entry -> entry.getValue().isPawn())
-                .filter(entry -> isOtherPawnInRank(entry.getKey()))
-                .count() / 2;
+        List<Column> pawnsColumns = squares.entrySet().stream()
+                .filter(entry -> isSameColor(entry.getKey(), team) && entry.getValue().isPawn())
+                .map(entry -> entry.getKey().getColumn())
+                .collect(Collectors.toList());
+
+        long oneColumnPawnCount = pawnsColumns.stream()
+                .filter(column -> countSameColumnPawn(column, team) <= 1)
+                .count();
+        return (pawnsColumns.size() - oneColumnPawnCount) * 0.5;
     }
 
-    private boolean isOtherPawnInRank(Position position) {
-        System.out.println();
-        return squares.entrySet().stream()
-                .anyMatch(entry -> entry.getKey().isEqualRank(position) && entry.getValue().isPawn());
+    private int countSameColumnPawn(Column column, Team team) {
+        return (int) squares.entrySet().stream()
+                .filter(entry -> entry.getKey().isEqualColumn(column)
+                        && entry.getValue().isPawn()
+                        && entry.getValue().isSameTeamOrEmpty(team))
+                .count();
     }
 
     public Map<Position, Piece> getSquares() {
