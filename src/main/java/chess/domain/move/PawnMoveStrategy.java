@@ -14,11 +14,12 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
             final MovePattern movePattern,
             final Board board,
             final Position source,
-            final Piece targetPiece,
-            final Color color
+            final Piece targetPiece
     );
 
-    protected boolean isStartMove(final Board board, final Position source, final Piece targetPiece,
+    protected boolean isStartMove(final Board board,
+                                  final Position source,
+                                  final Piece targetPiece,
                                   final Color color) {
         if (!source.isPawnStartPosition(color)) {
             return false;
@@ -27,7 +28,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
         return board.getPiece(forwardPosition).isBlank() && targetPiece.isBlank();
     }
 
-    protected int findForwardDirection(final Color color) {
+    private int findForwardDirection(final Color color) {
         if (color == Color.BLACK) {
             return FORWARD_UNIT_BLACK;
         }

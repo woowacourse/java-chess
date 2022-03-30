@@ -71,6 +71,10 @@ public class Board {
         return targetPiece;
     }
 
+    public Color getColorOfPiece(final Position position) {
+        return board.get(position).getColor();
+    }
+
     public Piece getPiece(final Position position) {
         return board.get(position);
     }

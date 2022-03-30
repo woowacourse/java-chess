@@ -2,7 +2,6 @@ package chess.domain.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -19,28 +18,25 @@ public final class PawnWhiteMoveStrategy extends PawnMoveStrategy {
     public boolean isMovable(final Board board, final Position source, final Position target) {
         final Distance distance = Distance.of(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-        final Piece targetPiece = board.getPiece(target);
-        final Color color = board.getPiece(source).getColor();
-        return isMovePattern(movePattern, board, source, targetPiece, color);
+        return isMovePattern(movePattern, board, source, board.getPiece(target));
     }
 
     @Override
     protected boolean isMovePattern(final MovePattern movePattern,
-                                  final Board board,
-                                  final Position source,
-                                  final Piece targetPiece,
-                                  final Color color) {
+                                    final Board board,
+                                    final Position source,
+                                    final Piece targetPiece) {
         if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
         if (movePattern == MovePattern.PAWN_START_MOVE_OF_WHITE) {
-            return isStartMove(board, source, targetPiece, color);
+            return isStartMove(board, source, targetPiece, board.getColorOfPiece(source));
         }
         if (movePattern == MovePattern.NORTH) {
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.NE || movePattern == MovePattern.NW) {
-            return isCatchable(targetPiece, color);
+            return isCatchable(targetPiece, board.getColorOfPiece(source));
         }
         return false;
     }
