@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.PositionUtil;
+import chess.domain.position.PositionConverter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -44,7 +44,7 @@ public class ScoreCalculator {
     }
 
     private double calculateSameFilePawnCount(List<Position> pawnPositions) {
-        return IntStream.range(0, PositionUtil.FILES_TOTAL_SIZE)
+        return IntStream.range(0, PositionConverter.FILES_TOTAL_SIZE)
             .map(fileIdx -> extractSameFilePositionCount(pawnPositions, fileIdx))
             .filter(count -> count >= PAWN_PENALTY_MINIMUM_COUNT)
             .reduce(SUM_BASE_INT, Integer::sum);

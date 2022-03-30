@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class PositionUtil {
+public class PositionConverter {
 
     public static final String VALID_FILES = "abcdefgh";
     public static final int RANKS_TOTAL_SIZE = 8;
@@ -23,11 +23,11 @@ public class PositionUtil {
 
     static {
         IntStream.rangeClosed(0, 7)
-                .peek(PositionUtil::initializeRankMapValue)
-                .forEach(PositionUtil::initializeFileMapValue);
+                .peek(PositionConverter::initializeRankMapValue)
+                .forEach(PositionConverter::initializeFileMapValue);
     }
 
-    private PositionUtil() {
+    private PositionConverter() {
     }
 
     private static void initializeRankMapValue(int idx) {

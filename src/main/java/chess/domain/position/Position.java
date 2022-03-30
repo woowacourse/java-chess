@@ -1,8 +1,8 @@
 package chess.domain.position;
 
-import static chess.domain.position.PositionUtil.charToMatchingInt;
-import static chess.domain.position.PositionUtil.fileToIdx;
-import static chess.domain.position.PositionUtil.rankToIdx;
+import static chess.domain.position.PositionConverter.charToMatchingInt;
+import static chess.domain.position.PositionConverter.fileToIdx;
+import static chess.domain.position.PositionConverter.rankToIdx;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,18 +42,8 @@ public class Position {
         return targetPosition.rankIdx - rankIdx;
     }
 
-    public boolean isDiagonal(Position toPosition) {
-        return fileDifference(toPosition) == rankDifference(toPosition);
-    }
-
     public boolean isSamePosition(Position position) {
         return this == position;
-    }
-
-    public Position movedBy(int fileDiff, int rankDiff) {
-        int toFileIdx = fileIdx + fileDiff;
-        int toRankIdx = rankIdx + rankDiff;
-        return PositionCache.getCache(toFileIdx, toRankIdx);
     }
 
     public static Position from(int fileIdx, int rankIdx) {

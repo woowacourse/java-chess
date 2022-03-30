@@ -1,7 +1,7 @@
 package chess.dto;
 
-import static chess.domain.position.PositionUtil.FILES_TOTAL_SIZE;
-import static chess.domain.position.PositionUtil.RANKS_TOTAL_SIZE;
+import static chess.domain.position.PositionConverter.FILES_TOTAL_SIZE;
+import static chess.domain.position.PositionConverter.RANKS_TOTAL_SIZE;
 
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;

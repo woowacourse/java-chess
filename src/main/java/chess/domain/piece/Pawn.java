@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.PositionUtil;
+import chess.domain.position.PositionConverter;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +61,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return PositionConverter.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
     }
 
     private boolean isValidWhiteDirection(Position toPosition) {
@@ -86,7 +86,7 @@ public final class Pawn extends Piece {
 
 
     private boolean isBlackJump(int curRankIdx) {
-        return PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return PositionConverter.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
     }
 
     @Override
