@@ -45,7 +45,7 @@ public abstract class Playing implements GameState {
 
     private void validateMovingPath(Piece source, Piece destination, List<Position> positions) {
         if (source.isSameTeam(destination)) {
-            throw new IllegalArgumentException("같은 팀은 kill 할 수 없습니다.");
+            throw new IllegalArgumentException("목적지에 같은 팀 말이 있습니다.");
         }
         if (source.isPawn() && isDiagonal(source.getPosition(), destination.getPosition())){
             validatePawnAttemptKill(destination);

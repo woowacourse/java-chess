@@ -35,7 +35,7 @@ class BlackTurnTest {
         String destination = "f1";
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("같은 팀은 kill 할 수 없습니다.");
+                .hasMessageContaining("목적지에 같은 팀 말이 있습니다.");
     }
 
     @Test
