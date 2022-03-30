@@ -25,8 +25,7 @@ public enum PieceConvertor {
     private final String letter;
     private final Function<Color, Piece> pieceMaker;
 
-    PieceConvertor(String letter,
-                   Function<Color, Piece> pieceMaker) {
+    PieceConvertor(String letter, Function<Color, Piece> pieceMaker) {
         this.letter = letter;
         this.pieceMaker = pieceMaker;
     }
