@@ -1,45 +1,37 @@
 package chess.domain;
 
-import java.util.Locale;
+import java.util.function.Function;
 
 public enum Color {
 
-    BLACK {
+    BLACK(String::toUpperCase) {
         @Override
         public Color next() {
             return WHITE;
         }
-
-        @Override
-        public String correctSignature(String signature) {
-            return signature.toUpperCase(Locale.ROOT);
-
-        }
     },
-    WHITE {
+    WHITE(String::toLowerCase) {
         @Override
         public Color next() {
             return BLACK;
         }
-
-        @Override
-        public String correctSignature(String signature) {
-            return signature.toLowerCase(Locale.ROOT);
-        }
     },
-    NONE {
+    NONE(signature -> signature) {
         @Override
         public Color next() {
             return NONE;
         }
-
-        @Override
-        public String correctSignature(String signature) {
-            return signature;
-        }
     };
 
-    public abstract Color next();
+    private final Function<String, String> signatureFunction;
 
-    public abstract String correctSignature(String signature);
+    Color(Function<String, String> signatureFunction) {
+        this.signatureFunction = signatureFunction;
+    }
+
+    public String correctSignature(String signature) {
+        return signatureFunction.apply(signature);
+    }
+
+    public abstract Color next();
 }
