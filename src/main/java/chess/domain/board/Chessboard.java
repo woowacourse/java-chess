@@ -49,10 +49,8 @@ public class Chessboard {
 
     public void movePiece(Position source, Position target, Turn turn) {
         validate(source, target, turn);
-        if (isMovableLine(source, target)) {
-            board.put(target, board.get(source));
-            board.put(source, new Blank());
-        }
+        board.put(target, board.get(source));
+        board.put(source, new Blank());
     }
 
     private void validate(Position source, Position target, Turn turn) {
