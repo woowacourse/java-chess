@@ -1,9 +1,10 @@
-package chess.piece;
+package chess.piece.movementcondition;
 
+import chess.piece.Piece;
 import chess.position.Position;
 import java.util.Map;
 
-public enum MovementCondition {
+public enum BaseMovementCondition implements MovementCondition {
 
     POSSIBLE {
         @Override
@@ -17,26 +18,25 @@ public enum MovementCondition {
             return false;
         }
     },
-    UNOBSTRUCTED {
+    MUST_OBSTACLE_FREE {
         @Override
         public boolean isPossibleMovement(Position from, Position to, Map<Position, Piece> board) {
             return from.getLinearPath(to).stream()
+                    .filter(position -> !position.equals(from))
+                    .filter(position -> !position.equals(to))
                     .noneMatch(board::containsKey);
         }
     },
-    CATCHABLE {
+    MUST_CAPTURE_PIECE {
         @Override
         public boolean isPossibleMovement(Position from, Position to, Map<Position, Piece> board) {
             return board.containsKey(to);
         }
     },
-    UNCATCHABLE_AND_UNOBSTRUCTED {
+    MUST_EMPTY_DESTINATION {
         @Override
         public boolean isPossibleMovement(Position from, Position to, Map<Position, Piece> board) {
-            return !board.containsKey(to) && from.getLinearPath(to).stream()
-                    .noneMatch(board::containsKey);
+            return !board.containsKey(to);
         }
-    };
-
-    public abstract boolean isPossibleMovement(Position from, Position to, Map<Position, Piece> board);
+    }
 }

@@ -15,6 +15,7 @@ import static chess.position.Rank.THREE;
 import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.movementcondition.BaseMovementCondition;
 import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
 
         assertThat(bishop.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideInvalidMoveBishop() {
@@ -50,7 +51,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
 
         assertThat(bishop.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.UNOBSTRUCTED);
+                .isEqualTo(BaseMovementCondition.MUST_OBSTACLE_FREE);
     }
 
     private static Stream<Arguments> provideCrossMoveBishop() {

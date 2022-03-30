@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.piece.movementcondition;
 
 import static chess.position.File.A;
 import static chess.position.File.B;
@@ -9,8 +9,12 @@ import static chess.position.Rank.SEVEN;
 import static chess.position.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.Color;
+import chess.piece.Pawn;
+import chess.piece.Piece;
 import chess.position.Position;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +27,7 @@ public class MovementConditionTest {
     @Test
     @DisplayName("이동 가능")
     void possible() {
-        MovementCondition condition = MovementCondition.POSSIBLE;
+        BaseMovementCondition condition = BaseMovementCondition.POSSIBLE;
         assertThat(condition.isPossibleMovement(new Position(A, EIGHT), new Position(B, SEVEN), Map.of()))
                 .isTrue();
     }
@@ -31,7 +35,7 @@ public class MovementConditionTest {
     @Test
     @DisplayName("이동 불가능")
     void impossible() {
-        MovementCondition condition = MovementCondition.IMPOSSIBLE;
+        BaseMovementCondition condition = BaseMovementCondition.IMPOSSIBLE;
         assertThat(condition.isPossibleMovement(new Position(A, EIGHT), new Position(B, SEVEN), Map.of()))
                 .isFalse();
     }
@@ -40,7 +44,7 @@ public class MovementConditionTest {
     @DisplayName("장애물이 있는 경우 이동 불가")
     @MethodSource("provideUnobstructed")
     void unobstructed(Position from, Position to, Position obstacle, boolean expect) {
-        MovementCondition condition = MovementCondition.UNOBSTRUCTED;
+        BaseMovementCondition condition = BaseMovementCondition.MUST_OBSTACLE_FREE;
         Map<Position, Piece> board = Map.of(obstacle, new Pawn(Color.WHITE));
         assertThat(condition.isPossibleMovement(from, to, board)).isEqualTo(expect);
     }
@@ -56,7 +60,7 @@ public class MovementConditionTest {
     @DisplayName("포획할 기물이 있는 경우에만 이동 가능")
     @MethodSource("provideCatchable")
     void catchable(Position from, Position to, Map<Position, Piece> board, boolean expect) {
-        MovementCondition condition = MovementCondition.CATCHABLE;
+        BaseMovementCondition condition = BaseMovementCondition.MUST_CAPTURE_PIECE;
         assertThat(condition.isPossibleMovement(from, to, board)).isEqualTo(expect);
     }
 
@@ -72,7 +76,8 @@ public class MovementConditionTest {
     @DisplayName("기존에 위치한 기물과 장애물이 없는 경우에만 이동 가능")
     @MethodSource("provideUncatchableAndUnobstructed")
     void uncatcableAndUnobstructed(Position from, Position to, Map<Position, Piece> board, boolean expect) {
-        MovementCondition condition = MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED;
+        MovementCondition condition = new MovementConditions(
+                Set.of(BaseMovementCondition.MUST_EMPTY_DESTINATION, BaseMovementCondition.MUST_OBSTACLE_FREE));
         assertThat(condition.isPossibleMovement(from, to, board)).isEqualTo(expect);
     }
 

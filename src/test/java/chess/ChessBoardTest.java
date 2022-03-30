@@ -353,7 +353,7 @@ class ChessBoardTest {
                 Color.WHITE
         );
 
-        assertThatThrownBy(() -> chessBoard.getWinner())
+        assertThatThrownBy(chessBoard::getWinner)
                 .isInstanceOf(IllegalStateException.class);
     }
 }

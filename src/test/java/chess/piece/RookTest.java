@@ -12,6 +12,7 @@ import static chess.position.Rank.SEVEN;
 import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.movementcondition.BaseMovementCondition;
 import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +29,7 @@ class RookTest {
         Rook rook = new Rook(Color.BLACK);
 
         assertThat(rook.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.UNOBSTRUCTED);
+                .isEqualTo(BaseMovementCondition.MUST_OBSTACLE_FREE);
     }
 
     private static Stream<Arguments> provideMoveCollinearRook() {
@@ -47,7 +48,7 @@ class RookTest {
         Rook rook = new Rook(Color.BLACK);
 
         assertThat(rook.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideInvalidMoveRook() {

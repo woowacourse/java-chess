@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.piece.movementcondition.MovementCondition;
 import chess.position.Position;
 import java.math.BigDecimal;
 import java.util.Objects;

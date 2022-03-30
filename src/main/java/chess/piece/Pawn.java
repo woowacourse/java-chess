@@ -1,8 +1,16 @@
 package chess.piece;
 
+import static chess.piece.movementcondition.BaseMovementCondition.IMPOSSIBLE;
+import static chess.piece.movementcondition.BaseMovementCondition.MUST_OBSTACLE_FREE;
+import static chess.piece.movementcondition.BaseMovementCondition.MUST_CAPTURE_PIECE;
+import static chess.piece.movementcondition.BaseMovementCondition.MUST_EMPTY_DESTINATION;
+
+import chess.piece.movementcondition.MovementCondition;
+import chess.piece.movementcondition.MovementConditions;
 import chess.position.Position;
 import chess.position.Rank;
 import java.math.BigDecimal;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
@@ -16,14 +24,14 @@ public class Pawn extends Piece {
     @Override
     public MovementCondition identifyMovementCondition(Position from, Position to) {
         if (isForward(from, to) && isVerticalWay(from, to) && isValidDistance(from, to)) {
-            return MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED;
+            return new MovementConditions(Set.of(MUST_EMPTY_DESTINATION, MUST_OBSTACLE_FREE));
         }
 
         if (isForward(from, to) && isDiagonalWay(from, to) && isValidDistance(from, to)) {
-            return MovementCondition.CATCHABLE;
+            return MUST_CAPTURE_PIECE;
         }
 
-        return MovementCondition.IMPOSSIBLE;
+        return IMPOSSIBLE;
     }
 
     private boolean isForward(Position from, Position to) {

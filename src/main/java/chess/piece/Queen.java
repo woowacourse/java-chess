@@ -1,5 +1,9 @@
 package chess.piece;
 
+import static chess.piece.movementcondition.BaseMovementCondition.IMPOSSIBLE;
+import static chess.piece.movementcondition.BaseMovementCondition.MUST_OBSTACLE_FREE;
+
+import chess.piece.movementcondition.MovementCondition;
 import chess.position.Position;
 import java.math.BigDecimal;
 
@@ -12,9 +16,9 @@ public class Queen extends Piece {
     @Override
     public MovementCondition identifyMovementCondition(Position from, Position to) {
         if (isPossibleMovement(from, to)) {
-            return MovementCondition.UNOBSTRUCTED;
+            return MUST_OBSTACLE_FREE;
         }
-        return MovementCondition.IMPOSSIBLE;
+        return IMPOSSIBLE;
     }
 
     private boolean isPossibleMovement(Position from, Position to) {

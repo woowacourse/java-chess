@@ -41,7 +41,7 @@ public enum Rank {
         int end = Math.max(this.value, to.value);
 
         return orderedValues().stream()
-                .filter(rank -> start < rank.value && rank.value < end)
+                .filter(rank -> start <= rank.value && rank.value <= end)
                 .collect(Collectors.toList());
     }
 

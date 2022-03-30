@@ -24,6 +24,7 @@ public class OutputView {
             Bishop.class, "B",
             Pawn.class, "P",
             Knight.class, "N");
+    private static final String EMPTY_SPACE = ".";
 
     public static void printInitChessGameMessage() {
         System.out.println("체스 게임을 시작합니다.");
@@ -49,7 +50,7 @@ public class OutputView {
         Optional<Piece> pieceOptional = findByPosition(board, position);
         pieceOptional.ifPresentOrElse(
                 piece -> System.out.print(pieceSymbol(piece)),
-                () -> System.out.print("."));
+                () -> System.out.print(EMPTY_SPACE));
     }
 
     private static Optional<Piece> findByPosition(Map<Position, Piece> board, Position position) {
@@ -61,7 +62,7 @@ public class OutputView {
 
     private static String pieceSymbol(Piece piece) {
         if (piece.getColor() == Color.WHITE) {
-            return PIECE_SYMBOL.get(piece.getClass()).toLowerCase(Locale.ROOT);
+            return PIECE_SYMBOL.get(piece.getClass()).toLowerCase(Locale.ENGLISH);
         }
         return PIECE_SYMBOL.get(piece.getClass());
     }

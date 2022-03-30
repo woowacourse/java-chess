@@ -14,7 +14,10 @@ import static chess.position.Rank.THREE;
 import static chess.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.movementcondition.BaseMovementCondition;
+import chess.piece.movementcondition.MovementConditions;
 import chess.position.Position;
+import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +34,9 @@ class PawnTest {
         Pawn pawn = new Pawn(color);
 
         assertThat(pawn.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.UNCATCHABLE_AND_UNOBSTRUCTED);
+                .isEqualTo(new MovementConditions(
+                        Set.of(BaseMovementCondition.MUST_EMPTY_DESTINATION,
+                                BaseMovementCondition.MUST_OBSTACLE_FREE)));
     }
 
     private static Stream<Arguments> provideFirstMoveForwardPawn() {
@@ -49,7 +54,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
 
         assertThat(pawn.identifyMovementCondition(new Position(A, SEVEN), new Position(A, FOUR)))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     @ParameterizedTest
@@ -59,7 +64,7 @@ class PawnTest {
         Pawn pawn = new Pawn(color);
 
         assertThat(pawn.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideInvalidMoveForwardPawn() {
@@ -76,7 +81,7 @@ class PawnTest {
         Pawn pawn = new Pawn(color);
 
         assertThat(pawn.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideMoveBackwardPawn() {
@@ -93,7 +98,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE);
 
         assertThat(pawn.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     private static Stream<Arguments> provideMoveSidePawn() {
@@ -108,6 +113,6 @@ class PawnTest {
     void throwExceptionWhenPawnMoveToNotHasTargetPieceDiagonalPosition() {
         Pawn pawn = new Pawn(Color.WHITE);
         assertThat(pawn.identifyMovementCondition(new Position(D, FOUR), new Position(E, FIVE)))
-                .isEqualTo(MovementCondition.CATCHABLE);
+                .isEqualTo(BaseMovementCondition.MUST_CAPTURE_PIECE);
     }
 }

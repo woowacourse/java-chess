@@ -13,6 +13,7 @@ import static chess.position.Rank.SIX;
 import static chess.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.piece.movementcondition.BaseMovementCondition;
 import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +30,7 @@ class KnightTest {
         Knight knight = new Knight(Color.BLACK);
 
         assertThat(knight.identifyMovementCondition(new Position(G, EIGHT), new Position(F, FIVE)))
-                .isEqualTo(MovementCondition.IMPOSSIBLE);
+                .isEqualTo(BaseMovementCondition.IMPOSSIBLE);
     }
 
     @ParameterizedTest
@@ -39,7 +40,7 @@ class KnightTest {
         Knight knight = new Knight(Color.BLACK);
 
         assertThat(knight.identifyMovementCondition(from, to))
-                .isEqualTo(MovementCondition.POSSIBLE);
+                .isEqualTo(BaseMovementCondition.POSSIBLE);
     }
 
     private static Stream<Arguments> provideValidMoveKnight() {

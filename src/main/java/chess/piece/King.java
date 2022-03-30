@@ -1,5 +1,9 @@
 package chess.piece;
 
+import static chess.piece.movementcondition.BaseMovementCondition.IMPOSSIBLE;
+import static chess.piece.movementcondition.BaseMovementCondition.POSSIBLE;
+
+import chess.piece.movementcondition.MovementCondition;
 import chess.position.Position;
 import java.math.BigDecimal;
 
@@ -12,9 +16,9 @@ public class King extends Piece {
     @Override
     public MovementCondition identifyMovementCondition(Position from, Position to) {
         if (from.isAdjacent(to)) {
-            return MovementCondition.POSSIBLE;
+            return POSSIBLE;
         }
-        return MovementCondition.IMPOSSIBLE;
+        return IMPOSSIBLE;
     }
 
     @Override

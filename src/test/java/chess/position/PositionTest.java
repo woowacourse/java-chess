@@ -1,7 +1,15 @@
 package chess.position;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.position.File.A;
+import static chess.position.File.B;
+import static chess.position.File.C;
+import static chess.position.File.D;
+import static chess.position.File.H;
+import static chess.position.Rank.EIGHT;
+import static chess.position.Rank.FIVE;
+import static chess.position.Rank.ONE;
+import static chess.position.Rank.SEVEN;
+import static chess.position.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -104,11 +112,13 @@ class PositionTest {
     private static Stream<Arguments> provideLinearPathPositions() {
         return Stream.of(
                 Arguments.of(new Position(A, EIGHT), new Position(A, FIVE),
-                        List.of(new Position(A, SEVEN), new Position(A, SIX))),
+                        List.of(new Position(A, EIGHT), new Position(A, SEVEN),
+                                new Position(A, SIX), new Position(A, FIVE))),
                 Arguments.of(new Position(A, EIGHT), new Position(C, EIGHT),
-                        List.of(new Position(B, EIGHT))),
+                        List.of(new Position(A, EIGHT), new Position(B, EIGHT), new Position(C, EIGHT))),
                 Arguments.of(new Position(A, EIGHT), new Position(D, FIVE),
-                        List.of(new Position(B, SEVEN), new Position(C, SIX))));
+                        List.of(new Position(A, EIGHT), new Position(B, SEVEN),
+                                new Position(C, SIX), new Position(D, FIVE))));
     }
 
     @Test
