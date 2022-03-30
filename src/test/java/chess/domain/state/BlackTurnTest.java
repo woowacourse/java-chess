@@ -42,8 +42,8 @@ class BlackTurnTest {
     @DisplayName("다른 팀 말을 움직일 시, 예외가 발생한다.")
     void otherTeamPieceMove() {
         GameState board = new WhiteTurn(BoardInitialize.create());
-        String source = "e8";
-        String destination = "e7";
+        String source = "e7";
+        String destination = "e6";
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편 말을 옮길 수 없습니다.");

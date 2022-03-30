@@ -19,7 +19,7 @@ public class BlackTurn extends Playing {
 
     @Override
     void validateTeam(Piece piece) {
-        if (Team.BLACK.matchTeam(piece.getTeam())) {
+        if (!Team.BLACK.matchTeam(piece.getTeam())) {
             throw new IllegalArgumentException("상대편 말을 옮길 수 없습니다.");
         }
     }
