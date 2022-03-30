@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.Command;
+import chess.domain.Command;
 import chess.domain.Board;
 import chess.domain.Score;
 import chess.domain.Team;

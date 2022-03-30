@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import java.util.Arrays;
 
@@ -23,9 +23,5 @@ public enum Command {
 
     public boolean isStart() {
         return this == START;
-    }
-
-    public boolean isEnd() {
-        return this == END;
     }
 }
