@@ -13,8 +13,8 @@ public final class Position {
     private static final String SEPARATOR = " ";
     private static final int ATTRIBUTE_SIZE = 2;
 
-    private final Column column;
-    private final Rank rank;
+    private Column column;
+    private Rank rank;
 
     public Position(Column column, Rank rank) {
         this.column = column;
@@ -43,18 +43,19 @@ public final class Position {
     public static List<Position> calculateRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> positions = new ArrayList<>();
-        Position movedPosition = from.advancePosition(direction);
+        Position movedPosition = new Position(from.column, from.rank);
 
         while (!movedPosition.equals(to)) {
-            positions.add(movedPosition);
-            movedPosition = movedPosition.advancePosition(direction);
+            movedPosition.advancePosition(direction);
+            positions.add(new Position(movedPosition.column, movedPosition.rank));
         }
-        return positions;
+
+        return positions.subList(0, positions.size()-1);
     }
 
-    public Position advancePosition(Direction direction) {
-        return new Position(Column.numberOf(column.getNumber() + direction.getX()),
-                Rank.numberOf(rank.getNumber() + direction.getY()));
+    private void advancePosition(Direction direction) {
+        this.column = Column.numberOf(column.getNumber() + direction.getX());
+        this.rank = Rank.numberOf(rank.getNumber() + direction.getY());
     }
 
     public int getXDistance(Position to) {
