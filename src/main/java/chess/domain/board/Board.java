@@ -5,6 +5,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceScore;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class Board {
     private final Map<Position, AbstractPiece> value;
 
     public Board(Map<Position, AbstractPiece> value) {
-        this.value = value;
+        this.value = new HashMap<>(value);
     }
 
     public Optional<AbstractPiece> find(Position position) {
