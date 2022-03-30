@@ -67,15 +67,32 @@ class KingTest {
         }
     }
 
-    @DisplayName("경로를 구한다.")
-    @Test
-    void calculate_Path() {
-        Position current = CachedPosition.a1;
-        Position target = CachedPosition.b2;
-        King king = new King(Color.BLACK);
+    @DisplayName("검증 경로를 구할 때")
+    @Nested
+    class pathTest {
 
-        List<Position> path = king.calculatePath(current, target);
+        @DisplayName("목표 지점에 상대 말이 있으면 경로에 포함하지 않는다.")
+        @Test
+        void calculate_Path_With_Other_Color() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.b2;
+            King king = new King(Color.BLACK);
 
-        assertThat(path).isEmpty();
+            List<Position> path = king.calculatePathToValidate(current, target, new Bishop(Color.WHITE));
+
+            assertThat(path).isEmpty();
+        }
+
+        @DisplayName("목표 지점에 같은 팀 말이 있으면 경로에 포함한다.")
+        @Test
+        void calculate_Path_With_Same_Color() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.b2;
+            King king = new King(Color.BLACK);
+
+            List<Position> path = king.calculatePathToValidate(current, target, new Bishop(Color.BLACK));
+
+            assertThat(path).containsOnly(target);
+        }
     }
 }

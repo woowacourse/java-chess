@@ -46,9 +46,38 @@ class KnightTest {
             Position target = CachedPosition.b3;
             Knight knight = new Knight(Color.BLACK);
 
-            List<Position> path = knight.calculatePath(current, target);
+            List<Position> path = knight.calculatePathToValidate(current, target, new Knight(Color.WHITE));
 
             assertThat(path).isEmpty();
+        }
+    }
+
+    @DisplayName("검증 경로를 구할 때")
+    @Nested
+    class pathTest {
+
+        @DisplayName("목표 지점에 상대 말이 있으면 경로에 포함하지 않는다.")
+        @Test
+        void calculate_Path_With_Other_Color() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.b3;
+            Knight knight = new Knight(Color.BLACK);
+
+            List<Position> path = knight.calculatePathToValidate(current, target, new Knight(Color.WHITE));
+
+            assertThat(path).isEmpty();
+        }
+
+        @DisplayName("목표 지점에 같은 팀 말이 있으면 경로에 포함한다.")
+        @Test
+        void calculate_Path_With_Same_Color() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.b3;
+            Knight knight = new Knight(Color.BLACK);
+
+            List<Position> path = knight.calculatePathToValidate(current, target, new Knight(Color.BLACK));
+
+            assertThat(path).containsOnly(target);
         }
     }
 }

@@ -54,44 +54,6 @@ class BoardTest {
         );
     }
 
-    @DisplayName("나이트를 이동시킬 때")
-    @Nested
-    class KnightMovingTest {
-        @DisplayName("도착 지점에 같은 팀의 말이 존재할 경우 예외를 반환한다.")
-        @Test
-        void same_Color_Piece_In_Target_Point() {
-            Piece startPiece = new Knight(Color.BLACK);
-            Piece existPiece = new Knight(Color.BLACK);
-            Position start = CachedPosition.a1;
-            Position target = CachedPosition.b3;
-
-            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
-
-            assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
-        }
-
-        @DisplayName("경로에 말 존재 여부와 관련 없이 말이 이동한다.")
-        @Test
-        void success_Move() {
-            Piece startPiece = new Knight(Color.BLACK);
-            Piece existPiece = new Knight(Color.BLACK);
-            Position start = CachedPosition.a1;
-            Position midPoint = CachedPosition.a2;
-            Position target = CachedPosition.b3;
-
-            Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, midPoint, existPiece)));
-
-            board.move(start, target, Color.BLACK);
-            Map<Position, Piece> pieces = board.getPieces();
-
-            Assertions.assertAll(
-                    () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
-                    () -> assertThat(pieces.get(start)).isNull());
-        }
-    }
-
     @DisplayName("폰을 이동시킬 때")
     @Nested
     class PawnTest {
@@ -156,7 +118,7 @@ class BoardTest {
 
             assertThatThrownBy(() -> board.move(start, target, Color.WHITE))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("다른 말이 존재해 이동할 수 없습니다.");
+                    .hasMessageContaining("다른 말이 경로에 존재해 이동할 수 없습니다.");
         }
 
         @DisplayName("직진 성공")
@@ -220,7 +182,7 @@ class BoardTest {
 
             assertThatThrownBy(() -> board.move(start, target, Color.BLACK))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("같은 팀의 다른 말이 존재해 이동할 수 없습니다.");
+                    .hasMessageContaining("다른 말이 경로에 존재해 이동할 수 없습니다.");
         }
 
         @DisplayName("경로에 아무런 말이 없을 경우 말이 이동한다.")
@@ -265,4 +227,3 @@ class BoardTest {
         assertThat(actualCount).isEqualTo(2.0);
     }
 }
-

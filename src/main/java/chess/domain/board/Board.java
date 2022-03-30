@@ -5,7 +5,6 @@ import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.board.strategy.CreateBoardStrategy;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -16,12 +15,9 @@ import java.util.Map;
 
 public class Board {
 
-    private static final String HAS_ANOTHER_PIECE_ERROR = "다른 말이 존재해 이동할 수 없습니다.";
-    private static final String PAWN_CANNOT_MOVE_DIAGONAL = "폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.";
     private static final String PIECE_DOES_NOT_EXIST = "해당 위치에 말이 존재하지 않습니다.";
     private static final String CANNOT_MOVE_OPPONENT_PIECE = "상대편 말은 욺직일 수 없습니다.";
     private static final String ANOTHER_PIECE_EXIST_IN_PATH = "다른 말이 경로에 존재해 이동할 수 없습니다.";
-    private static final String ANOTHER_SAME_COLOR_PIECE_EXIST = "같은 팀의 다른 말이 존재해 이동할 수 없습니다.";
     private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
@@ -51,53 +47,17 @@ public class Board {
 
     private void validateMoving(final Position start, final Position target) {
         final Piece movingPiece = getPiece(start);
-        if (movingPiece.isSamePiece(PAWN)) {
-            validatePawn(start, target);
-            return;
-        }
-        validateCommonPiece(start, target);
-    }
-
-    private void validateCommonPiece(final Position start, final Position target) {
-        final Piece movingPiece = getPiece(start);
-        validatePath(movingPiece.calculatePath(start, target));
         final Piece targetPiece = getPiece(target);
-        validateTarget(movingPiece, targetPiece);
+        validatePath(movingPiece.calculatePathToValidate(start, target, targetPiece));
     }
 
-    private void validatePath(List<Position> path) {
-        path.forEach(this::validateEmpty);
-    }
-
-    private void validatePawn(final Position start, final Position target) {
-        final Piece movingPiece = getPiece(start);
-        final Piece targetPiece = getPiece(target);
-        final Direction direction = movingPiece.findValidDirection(start, target);
-        if (direction.isDiagonal()) {
-            validatePawnDiagonalMove(movingPiece, targetPiece);
-            return;
-        }
-        validatePath(movingPiece.calculatePath(start, target));
-        if (!targetPiece.isEmpty()) {
-            throw new IllegalArgumentException(HAS_ANOTHER_PIECE_ERROR);
-        }
-    }
-
-    private void validatePawnDiagonalMove(final Piece movingPiece, final Piece targetPiece) {
-        if (targetPiece.isEmpty() || targetPiece.hasSameColor(movingPiece)) {
-            throw new IllegalArgumentException(PAWN_CANNOT_MOVE_DIAGONAL);
-        }
+    private void validatePath(List<Position> pathToValidate) {
+        pathToValidate.forEach(this::validateEmpty);
     }
 
     private void validateEmpty(final Position current) {
         if (!getPiece(current).isEmpty()) {
             throw new IllegalArgumentException(ANOTHER_PIECE_EXIST_IN_PATH);
-        }
-    }
-
-    private void validateTarget(final Piece movingPiece, final Piece targetPiece) {
-        if (!targetPiece.isEmpty() && targetPiece.hasSameColor(movingPiece)) {
-            throw new IllegalArgumentException(ANOTHER_SAME_COLOR_PIECE_EXIST);
         }
     }
 

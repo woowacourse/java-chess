@@ -9,10 +9,12 @@ import static chess.domain.piece.Direction.SW;
 
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final String CANNOT_MOVE_DIAGONAL = "폰은 상대 말을 공격할 때만 대각선으로 이동할 수 있습니다.";
     private static final List<Direction> WHITE_POSSIBLE_DIRECTIONS = List.of(N, NE, NW);
     private static final List<Direction> BLACK_POSSIBLE_DIRECTIONS = List.of(S, SE, SW);
     private static final int POSSIBLE_DISTANCE = 1;
@@ -41,6 +43,34 @@ public class Pawn extends Piece {
         }
         validateRange(columnDifference, rowDifference);
         return direction;
+    }
+
+    @Override
+    public List<Position> calculatePathToValidate(final Position current, final Position target,
+                                                  final Piece targetPiece) {
+        Direction direction = findValidDirection(current, target);
+        if (direction.isDiagonal()) {
+            return calculateDiagonalPath(targetPiece);
+        }
+        return calculateStraightPath(current, target, direction);
+    }
+
+    private List<Position> calculateStraightPath(Position current, Position target, Direction direction) {
+        List<Position> path = new ArrayList<>();
+        Position moved = current.move(direction);
+        while (!moved.equals(target)) {
+            path.add(moved);
+            moved = moved.move(direction);
+        }
+        path.add(target);
+        return path;
+    }
+
+    private List<Position> calculateDiagonalPath(final Piece targetPiece) {
+        if (hasSameColor(targetPiece) || targetPiece.isEmpty()) {
+            throw new IllegalArgumentException(CANNOT_MOVE_DIAGONAL);
+        }
+        return new ArrayList<>();
     }
 
     private void validateInitialRange(final int columnDifference, final int rowDifference) {
@@ -88,5 +118,4 @@ public class Pawn extends Piece {
     private boolean isInvalidRange(final int columnDifference, final int rowDifference) {
         return Math.abs(columnDifference) > POSSIBLE_DISTANCE || Math.abs(rowDifference) > POSSIBLE_DISTANCE;
     }
-
 }

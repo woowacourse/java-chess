@@ -38,17 +38,34 @@ class BishopTest {
 
             assertThat(actual).isEqualTo(Direction.NE);
         }
+    }
 
-        @DisplayName("경로를 구한다.")
+    @DisplayName("검증 경로를 구할 때")
+    @Nested
+    class pathTest {
+
+        @DisplayName("목표 지점에 상대 말이 있으면 경로에 포함하지 않는다.")
         @Test
-        void calculate_Path() {
+        void calculate_Path_With_Other_Color() {
             Position current = CachedPosition.a1;
             Position target = CachedPosition.c3;
             Bishop bishop = new Bishop(Color.BLACK);
 
-            List<Position> path = bishop.calculatePath(current, target);
+            List<Position> path = bishop.calculatePathToValidate(current, target, new Bishop(Color.WHITE));
 
             assertThat(path).containsOnly(CachedPosition.b2);
+        }
+
+        @DisplayName("목표 지점에 같은 팀 말이 있으면 경로에 포함한다.")
+        @Test
+        void calculate_Path_With_Same_Color() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.c3;
+            Bishop bishop = new Bishop(Color.BLACK);
+
+            List<Position> path = bishop.calculatePathToValidate(current, target, new Bishop(Color.BLACK));
+
+            assertThat(path).containsOnly(CachedPosition.b2, target);
         }
     }
 }

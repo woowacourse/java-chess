@@ -39,16 +39,33 @@ class RookTest {
             assertThat(actual).isEqualTo(Direction.N);
         }
 
-        @DisplayName("경로를 구한다.")
-        @Test
-        void calculate_Path() {
-            Position current = CachedPosition.a1;
-            Position target = CachedPosition.a4;
-            Rook rook = new Rook(Color.BLACK);
+        @DisplayName("검증 경로를 구할 때")
+        @Nested
+        class pathTest {
 
-            List<Position> path = rook.calculatePath(current, target);
+            @DisplayName("목표 지점에 상대 말이 있으면 경로에 포함하지 않는다.")
+            @Test
+            void calculate_Path_With_Other_Color() {
+                Position current = CachedPosition.a1;
+                Position target = CachedPosition.a3;
+                Rook rook = new Rook(Color.BLACK);
 
-            assertThat(path).containsOnly(CachedPosition.a2, CachedPosition.a3);
+                List<Position> path = rook.calculatePathToValidate(current, target, new Bishop(Color.WHITE));
+
+                assertThat(path).containsOnly(CachedPosition.a2);
+            }
+
+            @DisplayName("목표 지점에 같은 팀 말이 있으면 경로에 포함한다.")
+            @Test
+            void calculate_Path_With_Same_Color() {
+                Position current = CachedPosition.a1;
+                Position target = CachedPosition.a3;
+                Rook rook = new Rook(Color.BLACK);
+
+                List<Position> path = rook.calculatePathToValidate(current, target, new Bishop(Color.BLACK));
+
+                assertThat(path).containsOnly(CachedPosition.a2, target);
+            }
         }
     }
 }

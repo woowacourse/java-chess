@@ -20,13 +20,17 @@ public abstract class Piece {
 
     public abstract Direction findValidDirection(Position current, Position target);
 
-    public List<Position> calculatePath(final Position current, final Position target) {
+    public List<Position> calculatePathToValidate(final Position current, final Position target,
+                                                  final Piece targetPiece) {
         Direction direction = findValidDirection(current, target);
         List<Position> path = new ArrayList<>();
         Position moved = current.move(direction);
         while (!moved.equals(target)) {
             path.add(moved);
             moved = moved.move(direction);
+        }
+        if (hasSameColor(targetPiece)) {
+            path.add(target);
         }
         return path;
     }
@@ -36,7 +40,6 @@ public abstract class Piece {
     public boolean isSamePiece(final PieceType expected) {
         return pieceType == expected;
     }
-
 
     public boolean isSameColor(final Color color) {
         return this.color == color;
@@ -63,5 +66,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(pieceType);
     }
-
 }
