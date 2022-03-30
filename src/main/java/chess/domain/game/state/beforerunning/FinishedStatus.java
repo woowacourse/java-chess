@@ -22,7 +22,6 @@ public class FinishedStatus extends BeforeRunning {
 
     @Override
     public State showStatus() {
-        // TODO: 점수를 출력하는 로직
         return new Ready();
     }
 }
