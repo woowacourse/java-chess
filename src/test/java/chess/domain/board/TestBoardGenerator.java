@@ -25,7 +25,7 @@ public class TestBoardGenerator implements BoardGenerator {
     private void generateLine(int i) {
         for (int j = 1; j <= 8; j++) {
             Point point = Point.of(i, j);
-            custom.computeIfAbsent(point, ignored -> new Empty());
+            custom.computeIfAbsent(point, ignored -> Empty.getInstance());
         }
     }
 }

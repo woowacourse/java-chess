@@ -55,6 +55,6 @@ public class InitialBoardGenerator implements BoardGenerator {
     private Map<Point, Piece> generateEmptyLine(int lineNumber) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
             .mapToObj(i -> Point.of(i, lineNumber))
-            .collect(toMap(Function.identity(), it -> new Empty()));
+            .collect(toMap(Function.identity(), it -> Empty.getInstance()));
     }
 }

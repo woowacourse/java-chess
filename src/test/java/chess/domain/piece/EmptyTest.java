@@ -15,7 +15,7 @@ class EmptyTest {
     @Test
     @DisplayName("빈공간을 만든다.")
     void createEmpty() {
-        Piece piece = new Empty();
+        Piece piece = Empty.getInstance();
 
         assertThat(piece).isNotNull();
     }
@@ -23,7 +23,7 @@ class EmptyTest {
     @Test
     @DisplayName("빈공간은 움직일 수 없다.")
     void throwsExceptionWithTryToMove() {
-        Piece piece = new Empty();
+        Piece piece = Empty.getInstance();
         Route route = Route.of(List.of("a3", "a4"));
         EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 

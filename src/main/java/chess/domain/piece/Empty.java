@@ -6,8 +6,16 @@ import chess.domain.board.Route;
 
 public class Empty extends Piece {
 
-    public Empty() {
+    private static class EmptyHelper {
+        public static final Piece INSTANCE = new Empty();
+    }
+
+    private Empty() {
         super(Color.NONE, PieceType.EMPTY);
+    }
+
+    public static Piece getInstance() {
+        return EmptyHelper.INSTANCE;
     }
 
     @Override

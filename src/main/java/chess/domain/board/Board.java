@@ -58,7 +58,7 @@ public class Board {
     private Board replacePiecePoint(Route route) {
         Map<Point, Piece> newPointPieces = new HashMap<>(this.pointPieces);
         newPointPieces.put(route.getDestination(), newPointPieces.get(route.getSource()));
-        newPointPieces.put(route.getSource(), new Empty());
+        newPointPieces.put(route.getSource(), Empty.getInstance());
         return new Board(newPointPieces);
     }
 
