@@ -2,10 +2,9 @@ package chess.domain.piece;
 
 import java.util.List;
 
-import chess.domain.position.Direction;
 import chess.domain.position.UnitDirection;
 
-public final class Rook extends Piece {
+public final class Rook extends MovingMultipleSquarePiece {
 	private static final String BUG_MESSAGE_COLOR = "[BUG] 룩은 색상을 가져야합니다.";
 	private static final String WHITE_ROOK = "♜";
 	private static final String BLACK_ROOK = "♖";
@@ -18,7 +17,7 @@ public final class Rook extends Piece {
 	);
 
 	Rook(Color color) {
-		super(color, 5);
+		super(color, 5, MOVABLE_UNIT_DIRECTIONS);
 	}
 
 	@Override
@@ -32,11 +31,5 @@ public final class Rook extends Piece {
 		}
 
 		return WHITE_ROOK;
-	}
-
-	@Override
-	public boolean canMove(Direction direction, Piece target) {
-		checkSameTeam(target);
-		return direction.hasMultiple(MOVABLE_UNIT_DIRECTIONS);
 	}
 }

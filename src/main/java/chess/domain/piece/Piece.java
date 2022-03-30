@@ -5,7 +5,7 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 
 public abstract class Piece {
-	private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
+	private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><\n";
 
 	final Color color;
 	double score;
@@ -32,7 +32,7 @@ public abstract class Piece {
 	public boolean isSameColor(Color color) {
 		return color == this.color;
 	}
-	
+
 	public boolean isNone() {
 		return false;
 	}

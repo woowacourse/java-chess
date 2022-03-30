@@ -2,14 +2,13 @@ package chess.domain.piece;
 
 import java.util.List;
 
-import chess.domain.position.Direction;
 import chess.domain.position.UnitDirection;
 
-public final class Bishop extends Piece {
+public final class Bishop extends MovingMultipleSquarePiece {
 	private final static String BUG_MESSAGE_COLOR = "[BUG] 비숍은 색상을 가져야합니다.";
 	private static final String BLACK_BISHOP = "♗";
 	private static final String WHITE_BISHOP = "♝";
-	
+
 	private static final List<UnitDirection> MOVABLE_UNIT_DIRECTIONS = List.of(
 		UnitDirection.NORTH_EAST,
 		UnitDirection.NORTH_WEST,
@@ -18,7 +17,7 @@ public final class Bishop extends Piece {
 	);
 
 	Bishop(Color color) {
-		super(color, 3);
+		super(color, 3, MOVABLE_UNIT_DIRECTIONS);
 	}
 
 	@Override
@@ -32,11 +31,5 @@ public final class Bishop extends Piece {
 		}
 
 		return WHITE_BISHOP;
-	}
-
-	@Override
-	public boolean canMove(Direction direction, Piece target) {
-		checkSameTeam(target);
-		return direction.hasMultiple(MOVABLE_UNIT_DIRECTIONS);
 	}
 }
