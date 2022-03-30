@@ -18,7 +18,9 @@ import static java.util.stream.Collectors.toMap;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PieceFactory {
@@ -27,46 +29,63 @@ public class PieceFactory {
     }
 
     public static Map<Position, Piece> createPieces() {
-        Map<Position, Piece> pieces = blackPieces();
+        Map<Position, Piece> pieces = new HashMap<>();
 
         pieces.putAll(whitePieces());
+        pieces.putAll(blackPieces());
 
         return pieces;
     }
 
     private static Map<Position, Piece> whitePieces() {
-        Map<Position, Piece> pieces = Arrays.stream(File.values())
-                .collect(toMap(
-                        file -> Position.of(file, TWO), file -> new Pawn(WHITE, "p")
-                ));
+        Map<Position, Piece> pieces = createPawn(TWO, WHITE, "p");
 
-        pieces.put(Position.of(A, ONE), new Rook(WHITE, "r"));
-        pieces.put(Position.of(B, ONE), new Knight(WHITE, "n"));
-        pieces.put(Position.of(C, ONE), new Bishop(WHITE, "b"));
-        pieces.put(Position.of(D, ONE), new Queen(WHITE, "q"));
-        pieces.put(Position.of(E, ONE), new King(WHITE, "k"));
-        pieces.put(Position.of(F, ONE), new Bishop(WHITE, "b"));
-        pieces.put(Position.of(G, ONE), new Knight(WHITE, "n"));
-        pieces.put(Position.of(H, ONE), new Rook(WHITE, "r"));
+        Map<String, String> symbols = Map.of(
+                "rook", "r",
+                "knight", "n",
+                "bishop", "b",
+                "queen", "q",
+                "king", "k"
+        );
+
+        createPieces(pieces, ONE, WHITE, symbols);
 
         return pieces;
     }
 
     private static Map<Position, Piece> blackPieces() {
-        Map<Position, Piece> pieces = Arrays.stream(File.values())
-                .collect(toMap(
-                        file -> Position.of(file, SEVEN), file -> new Pawn(BLACK, "P")
-                ));
+        Map<Position, Piece> pieces = createPawn(SEVEN, BLACK, "P");
 
-        pieces.put(Position.of(A, EIGHT), new Rook(BLACK, "R"));
-        pieces.put(Position.of(B, EIGHT), new Knight(BLACK, "N"));
-        pieces.put(Position.of(C, EIGHT), new Bishop(BLACK, "B"));
-        pieces.put(Position.of(D, EIGHT), new Queen(BLACK, "Q"));
-        pieces.put(Position.of(E, EIGHT), new King(BLACK, "K"));
-        pieces.put(Position.of(F, EIGHT), new Bishop(BLACK, "B"));
-        pieces.put(Position.of(G, EIGHT), new Knight(BLACK, "N"));
-        pieces.put(Position.of(H, EIGHT), new Rook(BLACK, "R"));
+        Map<String, String> symbols = Map.of(
+                "rook", "R",
+                "knight", "N",
+                "bishop", "B",
+                "queen", "Q",
+                "king", "K"
+        );
+
+        createPieces(pieces, EIGHT, BLACK, symbols);
 
         return pieces;
+    }
+
+    private static Map<Position, Piece> createPawn(Rank two, Team white, String p) {
+        Map<Position, Piece> pieces = Arrays.stream(File.values())
+                .collect(toMap(
+                        file -> Position.of(file, two), file -> new Pawn(white, p)
+                ));
+        return pieces;
+    }
+
+    private static void createPieces(Map<Position, Piece> pieces, Rank rank, Team team,
+                                     Map<String, String> symbols) {
+        pieces.put(Position.of(A, rank), new Rook(team, symbols.get("rook")));
+        pieces.put(Position.of(B, rank), new Knight(team, symbols.get("knight")));
+        pieces.put(Position.of(C, rank), new Bishop(team, symbols.get("bishop")));
+        pieces.put(Position.of(D, rank), new Queen(team, symbols.get("queen")));
+        pieces.put(Position.of(E, rank), new King(team, symbols.get("king")));
+        pieces.put(Position.of(F, rank), new Bishop(team, symbols.get("bishop")));
+        pieces.put(Position.of(G, rank), new Knight(team, symbols.get("knight")));
+        pieces.put(Position.of(H, rank), new Rook(team, symbols.get("rook")));
     }
 }
