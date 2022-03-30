@@ -26,7 +26,7 @@ public class Controller {
 
 	private void inGame() {
 		try {
-			executeCommand(InputView.requireCommand2());
+			executeCommand(InputView.requireCommand());
 		} catch (IllegalArgumentException e) {
 			OutputView.printMessage(e.getMessage());
 		}

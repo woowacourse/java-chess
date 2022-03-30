@@ -24,29 +24,22 @@ public class InputView {
 	private static final int POSITION_SIZE = 2;
 	private static final int COMMAND_NOT_MOVE_FORMAT_SIZE = 1;
 
-	public static Map.Entry<Command, List<Square>> requireCommand2() {
+	public static Map.Entry<Command, List<Square>> requireCommand() {
 		try {
 			List<String> commands = getCommands();
 			Command command = Command.from(commands.get(COMMAND_INDEX));
-
 			validateCommandFormatSize(command, commands);
 			if (command == Command.MOVE) {
 				return Map.entry(command, getSourceAndTarget(commands));
 			}
-
 			return Map.entry(command, List.of());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			return requireCommand2();
+			return requireCommand();
 		}
 	}
 
 	private static List<String> getCommands() {
-		List<String> commands = splitCommands();
-		return commands;
-	}
-
-	private static List<String> splitCommands() {
 		String answer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
 		return Arrays.stream(answer.split(SPLIT_REGEX))
 			.filter(cmd -> !cmd.isBlank())
