@@ -9,6 +9,9 @@ public class Position {
 
     private static final List<Position> cachedPositions;
 
+    private static final int NOT_MOVE = 0;
+    private static final int TWO_DISTANCE= 2;
+
     static {
         cachedPositions = Arrays.stream(Column.values())
                 .flatMap(column -> Arrays.stream(Row.values())
@@ -43,6 +46,12 @@ public class Position {
                 cachedPositions.row == Row.of(position.substring(1, 2));
     }
 
+    public Position shift(final Direction direction) {
+        final Column column = Column.of(this.column.getValue() + direction.getColumn());
+        final Row row = Row.of(this.row.getValue() + direction.getRow());
+        return Position.of(column, row);
+    }
+
     public int getColumnDistance(final Position to) {
         return this.column.distance(to.column);
     }
@@ -59,14 +68,16 @@ public class Position {
         return column == other.column;
     }
 
-    public Position shift(final Direction direction) {
-        final Column column = Column.of(this.column.getValue() + direction.getColumn());
-        final Row row = Row.of(this.row.getValue() + direction.getRow());
-        return Position.of(column, row);
+    public boolean isTwoPointDistance(final Position to) {
+        return Math.abs(row.distance(to.row)) == TWO_DISTANCE;
     }
 
     public boolean equalsColumn(final int column) {
         return this.column.getValue() == column;
+    }
+
+    public boolean isNotColumnMove(final Position to) {
+        return this.column.distance(to.column) == NOT_MOVE;
     }
 
     @Override

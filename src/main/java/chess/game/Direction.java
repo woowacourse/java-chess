@@ -23,9 +23,6 @@ public enum Direction {
     NNW(-1, 2);
 
     private static final double ONE_RADIAN = 180 / Math.PI;
-    private static final int WHITE_PAWN_BEGINNING_DISTANCE = 2;
-    private static final int BLACK_PAWN_BEGINNING_DISTANCE = -2;
-    private static final int NOT_MOVE = 0;
 
     private final int column;
     private final int row;
@@ -42,16 +39,6 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
     }
 
-    public boolean canPawnMove(final int columnDistance, final int rowDistance, final boolean pawnAtInitial) {
-        if (rowDistance == WHITE_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == N && pawnAtInitial) {
-            return isEqualTo(columnDistance, rowDistance - 1);
-        }
-        if (rowDistance == BLACK_PAWN_BEGINNING_DISTANCE && columnDistance == NOT_MOVE && this == S && pawnAtInitial) {
-            return isEqualTo(columnDistance, rowDistance + 1);
-        }
-        return isEqualTo(columnDistance, rowDistance);
-    }
-
     private static boolean isEqualDirection(final Position from, final Position to, final Direction value) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
@@ -60,6 +47,14 @@ public enum Direction {
 
     private static double angle(final int column, final int row) {
         return Math.atan2(column, row) * ONE_RADIAN;
+    }
+
+    public boolean isN() {
+        return this == N;
+    }
+
+    public boolean isS() {
+        return this == S;
     }
 
     public boolean isEqualTo(final int columnDistance, final int rowDistance) {

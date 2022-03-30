@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Pawn extends AbstractPiece {
 
-    private static final List<Direction> whiteDirections =  List.of(N, NW, NE);
-    private static final List<Direction> blackDirections =  List.of(S, SW, SE);
+    private static final List<Direction> whiteDirections = List.of(N, NW, NE);
+    private static final List<Direction> blackDirections = List.of(S, SW, SE);
 
     public static double SCORE = 1;
     public static double REDUCED_SCORE = 0.5;
@@ -46,6 +46,17 @@ public class Pawn extends AbstractPiece {
     private boolean canMove(final Position from, final Position to, final Direction direction) {
         final int columnDistance = to.getColumnDistance(from);
         final int rowDistance = to.getRowDistance(from);
-        return direction.canPawnMove(columnDistance, rowDistance, from.isPawnBeginningRow());
+        if (canPawnMove(from, to) && direction.isN()) {
+            return direction.isEqualTo(columnDistance, rowDistance - 1);
+        }
+        if (canPawnMove(from, to) && direction.isS() ) {
+            return direction.isEqualTo(columnDistance, rowDistance + 1);
+        }
+        return direction.isEqualTo(columnDistance, rowDistance);
     }
+
+    private boolean canPawnMove(final Position from, final Position to) {
+        return from.isTwoPointDistance(to) && from.isNotColumnMove(to) && from.isPawnBeginningRow();
+    }
+
 }
