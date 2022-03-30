@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
+import java.util.List;
 
 public class Bishop extends Piece {
 
@@ -12,9 +14,9 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getRankDifference(toPosition);
-        int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height, 2) == Math.pow(width, 2);
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        List<Direction> movableDirections = Direction.diagonals();
+        return movableDirections.contains(direction);
     }
 
     @Override
