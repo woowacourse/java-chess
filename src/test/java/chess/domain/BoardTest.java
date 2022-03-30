@@ -20,19 +20,15 @@ public class BoardTest {
 
     @Test
     void movePiece() {
-        String source = "f2";
-        String destination = "f4";
-        board.movePiece(source, destination, Team.WHITE);
-        assertThat(board.getPiece(Position.from(destination)).isPawn()).isTrue();
-        assertThat(board.getPiece(Position.from(source)).isBlank()).isTrue();
+        board.movePiece(Position.from("f2"), Position.from("f4"), Team.WHITE);
+        assertThat(board.getPiece(Position.from("f4")).isPawn()).isTrue();
+        assertThat(board.getPiece(Position.from("f2")).isBlank()).isTrue();
     }
 
     @Test
-    @DisplayName("같은 팀 말 kill을 시도할 시, 예외가 발생한다.")
+    @DisplayName("같은 팀 말 공격을 시도할 시, 예외가 발생한다.")
     void killSameTeam() {
-        String source = "e1";
-        String destination = "f1";
-        Assertions.assertThatThrownBy(() -> board.movePiece(source, destination, Team.WHITE))
+        Assertions.assertThatThrownBy(() -> board.movePiece(Position.from("e1"), Position.from("f1"), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("같은 팀은 kill 할 수 없습니다.");
     }
@@ -40,22 +36,8 @@ public class BoardTest {
     @Test
     @DisplayName("다른 팀 말을 움직일 시, 예외가 발생한다.")
     void otherTeamPieceMove() {
-        String source = "e8";
-        String destination = "e7";
-        Assertions.assertThatThrownBy(() -> board.movePiece(source, destination, Team.WHITE))
+        Assertions.assertThatThrownBy(() -> board.movePiece(Position.from("e8"), Position.from("e7"), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 팀 말을 옮길 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("화이트팀 말 점수를 조회한다.")
-    void getWhiteTeamScore() {
-        assertThat(board.getTeamScore(Team.WHITE)).isEqualTo(38);
-    }
-
-    @Test
-    @DisplayName("블랙팀 말 점수를 조회한다.")
-    void getBlackTeamScore() {
-        assertThat(board.getTeamScore(Team.BLACK)).isEqualTo(38);
     }
 }

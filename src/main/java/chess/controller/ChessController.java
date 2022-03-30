@@ -59,8 +59,8 @@ public class ChessController {
     }
 
     private void displayTeamStatus(Board board) {
-        OutputView.printStatus(new Score(board.getBoard(), Team.WHITE).getTotalScore(),
-                new Score(board.getBoard(), Team.BLACK).getTotalScore());
+        OutputView.printStatus(Score.calculateScore(board.getBoard(), Team.WHITE).getTotalScore(),
+                Score.calculateScore(board.getBoard(), Team.BLACK).getTotalScore());
     }
 
     private Piece movePiece(List<String> input, Board board, Team team) {
