@@ -66,19 +66,19 @@ public class Board {
         try {
             Position kingPosition = findKingPosition(turn);
             List<Position> kingPaths = board.get(kingPosition).findMovablePosition(kingPosition);
-            return !canMoveKing(kingPaths);
+            return cannotMoveKing(kingPaths);
         } catch (IllegalArgumentException e) {
             return true;
         }
     }
 
-    private boolean canMoveKing(List<Position> kingPaths) {
+    private boolean cannotMoveKing(List<Position> kingPaths) {
         for (Position to : kingPaths) {
             if (!hasCheckKing(to)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public void move(Position from, Position to) {
