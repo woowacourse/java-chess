@@ -33,6 +33,20 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("체스말을 움직이면 board상의 체스말의 Position이 이동한 곳으로 변해야 한다.")
+    void chessBoardTest() {
+        Position source = Position.of(File.a, Rank.Eight);
+        Position target = Position.of(File.b, Rank.Eight);
+
+        Piece rook = new Rook(Color.Black);
+        board.putPiece(source, rook);
+        board.move(source, target);
+        Piece movedPiece = board.getPiece(target);
+
+        assertThat(movedPiece).isEqualTo(rook);
+    }
+
+    @Test
     @DisplayName("체스말을 움직이면 원래자리는 빈 자리가 된다.")
     void chessBoardTest1() {
         Position source = Position.of(File.a, Rank.Eight);
