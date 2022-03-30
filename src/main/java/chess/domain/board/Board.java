@@ -99,6 +99,6 @@ public class Board {
         final List<Piece> teamPieces = pieces.stream()
                 .filter(piece -> piece.isTeamOf(teamColor))
                 .collect(Collectors.toUnmodifiableList());
-        return TotalScore.getTotalPoint(teamPieces);
+        return TotalScore.getTotalScore(teamPieces);
     }
 }

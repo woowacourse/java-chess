@@ -14,7 +14,7 @@ public class TotalScore {
         throw new AssertionError();
     }
 
-    public static double getTotalPoint(final List<Piece> pieces) {
+    public static double getTotalScore(final List<Piece> pieces) {
         double totalPoint = getDefaultPoints(pieces);
         final List<Pawn> pawns = findPawns(pieces);
 
