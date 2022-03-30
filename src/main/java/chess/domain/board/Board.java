@@ -2,12 +2,9 @@ package chess.domain.board;
 
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceFactory;
 import chess.domain.piece.PieceScore;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
-import chess.domain.position.YAxis;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

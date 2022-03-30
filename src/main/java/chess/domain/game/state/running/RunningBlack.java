@@ -18,7 +18,7 @@ public class RunningBlack extends Running {
         Board board = getBoard();
         MoveResult moveResult = board.executeCommand(from, to, PieceColor.BLACK);
 
-        if (moveResult.isMoveResult(MoveResult.KILL_KING)) {
+        if (moveResult == MoveResult.KILL_KING) {
             return new FinishedKing(getBoard());
         }
 
