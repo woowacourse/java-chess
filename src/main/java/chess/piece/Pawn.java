@@ -11,7 +11,7 @@ import chess.position.Position;
 
 public class Pawn extends AbstractPiece {
 
-    public static double REDUCED_PAWN_SCORE = 0.5;
+    public static final double REDUCED_PAWN_SCORE = 0.5;
 
     public Pawn(final Color color) {
         super(Name.PAWN, color);
