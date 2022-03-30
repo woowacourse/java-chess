@@ -76,16 +76,34 @@ public final class Command {
         validatePositionInput(sourceInput);
         validatePositionInput(targetInput);
 
-        Position source = Position.of(sourceInput.charAt(FILE_INDEX), sourceInput.charAt(RANK_INDEX));
-        Position target = Position.of(targetInput.charAt(FILE_INDEX), targetInput.charAt(RANK_INDEX));
-
-        return List.of(source, target);
+        return positions(sourceInput, targetInput);
     }
 
     private void validatePositionInput(final String input) {
         if (input.length() != INPUT_POSITION_LENGTH) {
             throw new IllegalArgumentException("위치는 file, rank 하나씩 입력되어야 합니다. (file: a~h, rank: 1~8)");
         }
+    }
+
+    private List<Position> positions(String sourceInput, String targetInput) {
+        final int sourceFile = inputToFile(sourceInput.charAt(FILE_INDEX));
+        final int sourceRank = inputToRank(sourceInput.charAt(RANK_INDEX));
+
+        final int targetFile = inputToFile(targetInput.charAt(FILE_INDEX));
+        final int targetRank = inputToRank(targetInput.charAt(RANK_INDEX));
+
+        Position source = Position.of(sourceFile, sourceRank);
+        Position target = Position.of(targetFile, targetRank);
+
+        return List.of(source, target);
+    }
+
+    private int inputToFile(char input) {
+        return input - '`';
+    }
+
+    private int inputToRank(char input) {
+        return Character.getNumericValue(input);
     }
 
     public boolean isEnd() {
