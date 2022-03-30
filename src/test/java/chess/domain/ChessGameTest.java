@@ -23,20 +23,20 @@ class ChessGameTest {
     @DisplayName("우승자를 반환한다.")
     void judgeWinner() {
         ChessGame chessGame = ChessGame.create();
-        chessGame.move(new ChessBoardPosition('f', 7), new ChessBoardPosition('f', 6));
         chessGame.move(new ChessBoardPosition('a', 2), new ChessBoardPosition('a', 4));
+        chessGame.move(new ChessBoardPosition('f', 7), new ChessBoardPosition('f', 6));
 
-        chessGame.move(new ChessBoardPosition('f', 6), new ChessBoardPosition('f', 5));
         chessGame.move(new ChessBoardPosition('a', 4), new ChessBoardPosition('a', 5));
+        chessGame.move(new ChessBoardPosition('f', 6), new ChessBoardPosition('f', 5));
 
-        chessGame.move(new ChessBoardPosition('f', 5), new ChessBoardPosition('f', 4));
         chessGame.move(new ChessBoardPosition('a', 5), new ChessBoardPosition('a', 6));
+        chessGame.move(new ChessBoardPosition('f', 5), new ChessBoardPosition('f', 4));
 
-        chessGame.move(new ChessBoardPosition('f', 4), new ChessBoardPosition('f', 3));
         chessGame.move(new ChessBoardPosition('a', 6), new ChessBoardPosition('b', 7));
+        chessGame.move(new ChessBoardPosition('f', 4), new ChessBoardPosition('f', 3));
 
-        chessGame.move(new ChessBoardPosition('h', 7), new ChessBoardPosition('h', 6));
         chessGame.move(new ChessBoardPosition('b', 7), new ChessBoardPosition('c', 8));
-        assertThat(chessGame.judgeWinner()).isEqualTo(Team.BLACK);
+        chessGame.move(new ChessBoardPosition('h', 7), new ChessBoardPosition('h', 6));
+        assertThat(chessGame.judgeWinner()).isEqualTo(Team.WHITE);
     }
 }
