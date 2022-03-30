@@ -6,7 +6,7 @@ import chess.domain.board.position.Position;
 public interface Request {
     Command getCommand();
 
-    Position getSource();
+    Position getSourcePosition();
 
-    Position getTarget();
+    Position getTargetPosition();
 }

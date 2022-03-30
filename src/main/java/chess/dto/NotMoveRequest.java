@@ -17,12 +17,12 @@ public class NotMoveRequest implements Request {
     }
 
     @Override
-    public Position getSource() {
+    public Position getSourcePosition() {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 기능입니다.");
     }
 
     @Override
-    public Position getTarget() {
+    public Position getTargetPosition() {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 기능입니다.");
     }
 }

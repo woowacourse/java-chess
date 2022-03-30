@@ -24,4 +24,12 @@ public enum Command {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
     }
+
+    public static boolean isEnd(Command command) {
+        return END == command;
+    }
+
+    public static boolean isStatus(Command command) {
+        return STATUS == command;
+    }
 }

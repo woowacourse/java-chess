@@ -6,13 +6,13 @@ import chess.domain.board.position.Position;
 public class MoveRequest implements Request {
 
     private final Command command;
-    private final Position source;
-    private final Position target;
+    private final Position sourcePosition;
+    private final Position targetPosition;
 
-    public MoveRequest(Command command, Position source, Position target) {
+    public MoveRequest(Command command, Position sourcePosition, Position targetPosition) {
         this.command = command;
-        this.source = source;
-        this.target = target;
+        this.sourcePosition = sourcePosition;
+        this.targetPosition = targetPosition;
     }
 
     @Override
@@ -21,12 +21,12 @@ public class MoveRequest implements Request {
     }
 
     @Override
-    public Position getSource() {
-        return source;
+    public Position getSourcePosition() {
+        return sourcePosition;
     }
 
     @Override
-    public Position getTarget() {
-        return target;
+    public Position getTargetPosition() {
+        return targetPosition;
     }
 }

@@ -24,7 +24,7 @@ public class Board {
         this.gameFlow = gameFlow;
     }
 
-    public void move(Position source, Position target) {
+    public void movePiece(Position source, Position target) {
         turnDecide(source);
         validateSourceNotEmpty(source);
         boolean isGameFinished = isTargetKing(target);

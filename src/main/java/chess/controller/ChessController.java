@@ -1,7 +1,7 @@
 package chess.controller;
 
-import static chess.constant.Command.END;
-import static chess.constant.Command.STATUS;
+import static chess.constant.Command.isEnd;
+import static chess.constant.Command.isStatus;
 
 import chess.constant.Command;
 import chess.domain.board.Board;
@@ -24,23 +24,24 @@ public class ChessController {
         Board board = new Board(boardFactory.create(), gameFlow);
         Command beginCommand = InputView.inputStartCommand();
 
-        if (beginCommand == END) {
+        if (isEnd(beginCommand)) {
             return;
         }
 
         OutputView.printChessGameBoard(board.getBoard());
+
         while (gameFlow.isRunning()) {
             Request request = InputView.inputCommandInGaming();
-            if (request.getCommand() == END) {
+            if (isEnd(request.getCommand())) {
                 break;
             }
 
-            if (request.getCommand() == STATUS) {
+            if (isStatus(request.getCommand())) {
                 OutputView.printCurrentTeamGameScore(board.calculateScore());
                 continue;
             }
 
-            board.move(request.getSource(), request.getTarget());
+            board.movePiece(request.getSourcePosition(), request.getTargetPosition());
             OutputView.printChessGameBoard(board.getBoard());
         }
     }
