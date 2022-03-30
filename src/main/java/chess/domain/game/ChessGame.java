@@ -30,6 +30,10 @@ public class ChessGame {
         return state.isFinished();
     }
 
+    public StatusCalculator status() {
+        return new StatusCalculator(getValue());
+    }
+
     public Map<Coordinate, Piece> getValue() {
         return state.getValue();
     }

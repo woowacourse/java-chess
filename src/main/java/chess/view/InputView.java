@@ -8,9 +8,7 @@ public class InputView {
 
 	private static final Scanner scanner = new Scanner(System.in);
 
-	private InputView() {
-
-	}
+	private InputView() {}
 
 	public static List<String> inputGameFunction() {
 		return Arrays.asList(scanner.nextLine().split(" ", -1));
