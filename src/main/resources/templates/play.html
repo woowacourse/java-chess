@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {{turn}} 차례입니다.
+        <table>
+            <thead>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th>g</th>
+                <th>h</th>
+                <th></th>
+            </thead>
+            <tbody>
+            {{#ranks}}
+            <tr>
+                {{#pieces}}
+                <td>{{this}}</td>
+                {{/pieces}}
+                <td>{{rankLine}}</td>
+            </tr>
+            {{/ranks}}
+            </tbody>
+        </table>
+</body>
+</html>

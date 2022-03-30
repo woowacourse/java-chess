@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.state.GameState;
 import chess.domain.piece.Position;
 import chess.view.InputView;
@@ -13,7 +14,7 @@ public class ChessGame {
         this.state = state;
     }
 
-    public void run() {
+    public void consoleRun() {
         OutputView.printStartView();
 
         if (requestFirstCommand() != Command.START) {
@@ -64,5 +65,20 @@ public class ChessGame {
         if (Command.inGameCommand(input.get(0)) == Command.MOVE && input.size() == 3) {
             state = state.move(new Position(input.get(1)), new Position(input.get(2)));
         }
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public Board getBoard() {
+        return state.getBoard();
+    }
+
+    public String getTurn() {
+        if (state.isBlackTurn()) {
+            return "흑팀";
+        }
+        return "백팀";
     }
 }
