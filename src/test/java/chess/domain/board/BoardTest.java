@@ -107,7 +107,7 @@ public class BoardTest {
         board.initBoard(new WhiteCheckBoardStrategy());
 
         // then
-        assertThat(board.check()).isTrue();
+        assertThat(board.isCheck()).isTrue();
     }
 
     @DisplayName("폰이 이동할 수 없는 대각선 위치에 왕이 존재하는 경우 check 아님")
@@ -124,7 +124,7 @@ public class BoardTest {
         board.initBoard(boardGenerator);
 
         // then
-        assertThat(board.check()).isFalse();
+        assertThat(board.isCheck()).isFalse();
     }
 
     @DisplayName("폰이 이동 가능한 위치에 왕이 존재하는 경우 check")
@@ -141,7 +141,7 @@ public class BoardTest {
         board.initBoard(boardGenerator);
 
         // then
-        assertThat(board.check()).isTrue();
+        assertThat(board.isCheck()).isTrue();
     }
 
     @DisplayName("체크메이트")
@@ -151,7 +151,7 @@ public class BoardTest {
         board.initBoard(new CheckmateBoardStrategy());
 
         // then
-        assertThat(board.checkmate()).isTrue();
+        assertThat(board.isCheckmate()).isTrue();
     }
 
     @DisplayName("체크메이트 아닌 경우")
@@ -161,7 +161,7 @@ public class BoardTest {
         board.initBoard(new NotCheckmateBoardStrategy());
 
         // then
-        assertThat(board.checkmate()).isFalse();
+        assertThat(board.isCheckmate()).isFalse();
     }
 
     @DisplayName("체크인 상황에서 벗어나지 않을 경우")

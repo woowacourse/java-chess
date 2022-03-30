@@ -18,10 +18,10 @@ public class ChessGame {
         boolean shouldContinue = true;
 
         while (shouldContinue) {
-            if (board.check()) {
+            if (board.isCheck()) {
                 OutputView.printMessage("현재 check 상황입니다.");
             }
-            if (board.checkmate()) {
+            if (board.isCheckmate()) {
                 break;
             }
             shouldContinue = hasNext();

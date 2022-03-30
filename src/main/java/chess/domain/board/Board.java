@@ -19,12 +19,12 @@ public class Board {
         board.putAll(boardGenerator.create());
     }
 
-    public boolean check() {
+    public boolean isCheck() {
         if (board.isEmpty()) {
             return false;
         }
         Position to = findKingPosition(turn);
-        return checkKingAnyMatch(to);
+        return hasCheckKing(to);
     }
 
     private Position findKingPosition(Team team) {
@@ -36,10 +36,10 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
     }
 
-    private boolean checkKingAnyMatch(Position to) {
+    private boolean hasCheckKing(Position to) {
         return findSameTeamPieces(turn.change())
                 .stream()
-                .anyMatch(entry -> validCheck(entry.getKey(), to, entry.getValue()));
+                .anyMatch(entry -> canKillKing(entry.getKey(), to, entry.getValue()));
     }
 
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
@@ -49,7 +49,7 @@ public class Board {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private boolean validCheck(Position from, Position to, Piece fromPiece) {
+    private boolean canKillKing(Position from, Position to, Piece fromPiece) {
         try {
             fromPiece.movable(from, to);
             validatePath(from, to, fromPiece.findDirection(from, to));
@@ -59,7 +59,7 @@ public class Board {
         return true;
     }
 
-    public boolean checkmate() {
+    public boolean isCheckmate() {
         if (board.isEmpty()) {
             return false;
         }
@@ -74,7 +74,7 @@ public class Board {
 
     private boolean canMoveKing(List<Position> kingPaths) {
         for (Position to : kingPaths) {
-            if (!checkKingAnyMatch(to)) {
+            if (!hasCheckKing(to)) {
                 return true;
             }
         }
@@ -120,7 +120,7 @@ public class Board {
         Piece toPiece = board.get(to);
         board.put(to, fromPiece);
         board.remove(from);
-        if (check()) {
+        if (isCheck()) {
             board.put(to, toPiece);
             board.put(from, fromPiece);
             throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
