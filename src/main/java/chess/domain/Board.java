@@ -30,8 +30,8 @@ public class Board {
     private void initializeBoard() {
         initializeEmptyBoard();
 
-        initializePiece(Rank.ONE, Team.WHITE);
-        initializePiece(Rank.EIGHT, Team.BLACK);
+        initializePieceExceptPawn(Rank.ONE, Team.WHITE);
+        initializePieceExceptPawn(Rank.EIGHT, Team.BLACK);
 
         initializePawn(Rank.TWO, Team.WHITE);
         initializePawn(Rank.SEVEN, Team.BLACK);
@@ -45,7 +45,7 @@ public class Board {
         }
     }
 
-    private void initializePiece(Rank rank, Team team) {
+    private void initializePieceExceptPawn(Rank rank, Team team) {
         chessBoard.put(Location.of(File.A, rank), new Rook(team));
         chessBoard.put(Location.of(File.B, rank), new Knight(team));
         chessBoard.put(Location.of(File.C, rank), new Bishop(team));
