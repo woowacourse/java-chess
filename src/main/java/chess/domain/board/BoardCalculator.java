@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceNotation;
+import chess.domain.piece.notation.Color;
+import chess.domain.piece.notation.PieceNotation;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -14,11 +14,11 @@ public final class BoardCalculator {
 
     private final Map<Position, Piece> board;
 
-    BoardCalculator(final Map<Position, Piece> board) {
+    public BoardCalculator(final Map<Position, Piece> board) {
         this.board = board;
     }
 
-    Map<Color, Double> sumScore(final Color targetColor) {
+    public Map<Color, Double> sumScore(final Color targetColor) {
         final double sum = board.entrySet().stream()
                 .filter(e -> e.getValue().isSameColor(targetColor))
                 .mapToDouble(this::getScore)
