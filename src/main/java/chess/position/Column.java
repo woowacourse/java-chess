@@ -33,6 +33,10 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
+    public Column add(final int number) {
+        return of(this.value + number);
+    }
+
     public int getDistance(final Column other) {
         return this.value - other.value;
     }

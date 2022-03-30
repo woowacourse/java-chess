@@ -17,8 +17,8 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    private Column column;
-    private Row row;
+    private final Column column;
+    private final Row row;
 
     private Position(final Column column, final Row row) {
         this.row = row;
@@ -46,9 +46,65 @@ public class Position {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치입니다."));
     }
 
+    public int getColumnDistance(final Position to) {
+        return this.column.getDistance(to.column);
+    }
+
+    public int getRowDistance(final Position to) {
+        return this.row.getDistance(to.row);
+    }
+
+    public boolean isSameColumn(final Position other) {
+        return column == other.column;
+    }
+
+    public boolean canMoveToCurrentDirection(Direction direction, Position to) {
+        return isValidPosition(this, to, direction);
+    }
+
+    public Position shift(final Direction direction) {
+        final Column column = Column.of(this.column.getValue() + direction.getColumn());
+        final Row row = Row.of(this.row.getValue() + direction.getRow());
+        return Position.of(column, row);
+    }
+
+    public boolean equalsColumn(final int column) {
+        return this.column.getValue() == column;
+    }
+
+    public boolean isRowAt(final int number) {
+        return row.isAt(number);
+    }
+
     private static boolean isExist(final String position, final Position cachedPositions) {
         return cachedPositions.column == Column.of(position.substring(0, 1)) &&
                 cachedPositions.row == Row.of(position.substring(1, 2));
+    }
+
+    private boolean isValidPosition(Position from, Position to, Direction direction) {
+        final int columnVal = from.column.getValue() + direction.getColumn();
+        final int rowVal = from.row.getValue() + direction.getRow();
+        if (!from.canShift(columnVal, rowVal)) {
+            return false;
+        }
+        Position nextPosition = checkerShift(from, direction);
+        if (nextPosition.equals(to)) {
+            return true;
+        }
+        return isValidPosition(nextPosition, to, direction);
+    }
+
+    private boolean canShift(final int column, final int row) {
+        return column >= 1 && row >= 1 && column <= 8 && row <= 8;
+    }
+
+    private Position checkerShift(final Position position, final Direction direction) {
+        return position.moveTo(direction);
+    }
+    private Position moveTo(final Direction direction) {
+        final Column column = this.column.add(direction.getColumn());
+        final Row row = this.row.add(direction.getRow());
+        return Position.of(column, row);
     }
 
     @Override
@@ -70,59 +126,5 @@ public class Position {
                 "column=" + column +
                 ", row=" + row +
                 '}';
-    }
-
-    public int getColumnDistance(final Position to) {
-        return this.column.getDistance(to.column);
-    }
-
-    public int getRowDistance(final Position to) {
-        return this.row.getDistance(to.row);
-    }
-
-    public boolean isPawnInitial() {
-        return row.isPawnRow();
-    }
-
-    public boolean isSameColumn(final Position other) {
-        return column == other.column;
-    }
-
-    public boolean canMoveToCurrentDirection(Direction direction, Position to) {
-        return isValidPosition(this, to, direction);
-    }
-
-    private boolean isValidPosition(Position from, Position to, Direction direction) {
-        final int columnVal = from.column.getValue() + direction.getColumn();
-        final int rowVal = from.row.getValue() + direction.getRow();
-        if (!from.canShift(columnVal, rowVal)) {
-            return false;
-        }
-        Position nextPosition = otherShift(from, direction);
-        if (nextPosition.equals(to)) {
-            return true;
-        }
-        return isValidPosition(nextPosition, to, direction);
-    }
-
-    private Position otherShift(final Position position, final Direction direction) {
-        final Column column = Column.of(position.column.getValue() + direction.getColumn());
-        final Row row = Row.of(position.row.getValue() + direction.getRow());
-        return Position.of(column, row);
-
-    }
-
-    private boolean canShift(final int column, final int row) {
-        return column >= 1 && row >= 1 && column <= 8 && row <= 8;
-    }
-
-    public Position shift(final Direction direction) {
-        final Column column = Column.of(this.column.getValue() + direction.getColumn());
-        final Row row = Row.of(this.row.getValue() + direction.getRow());
-        return Position.of(column, row);
-    }
-
-    public boolean equalsColumn(final int column) {
-        return this.column.getValue() == column;
     }
 }
