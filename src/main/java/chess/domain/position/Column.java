@@ -35,7 +35,7 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 컬럼입니다."));
     }
 
-    public int calculateIndex(Column column) {
+    public int calculateGap(Column column) {
         return column.index - this.index;
     }
 

@@ -43,7 +43,7 @@ public enum Row {
         return rows;
     }
 
-    public int calculateIndex(Row row) {
+    public int calculateGap(Row row) {
         return row.index - this.index;
     }
 

@@ -25,31 +25,40 @@ public class Position {
     }
 
     public Direction findDirection(Position position, Piece piece) {
-        int x = column.calculateIndex(position.column);
-        int y = row.calculateIndex(position.row);
+        int x = column.calculateGap(position.column);
+        int y = row.calculateGap(position.row);
 
         if (piece.isStep()) {
             return Direction.of(x, y);
         }
 
-        int nx = convertCompactValue(x, y);
-        int ny = convertCompactValue(y, x);
+        return summarizeDirection(x, y);
+    }
+
+    private Direction summarizeDirection(int x, int y) {
+        int nx = summarizeStep(x, y);
+        int ny = summarizeStep(y, x);
 
         return Direction.of(nx, ny);
     }
 
-    private int convertCompactValue(int target, int other) {
-        if (target == 0) {
+    private int summarizeStep(int targetStep, int contrastStep) {
+        if (targetStep == 0) {
             return 0;
         }
-        if (check((float) other / Math.abs(target))) {
-            return target / Math.abs(target);
+        if (isSteps(targetStep, contrastStep)) {
+            return summarize(targetStep);
         }
-        return target;
+        return targetStep;
     }
 
-    private boolean check(float target) {
-        return target == 0 || target == 1 || target == -1;
+    private boolean isSteps(int targetStep, int contrastStep) {
+        float countingStep = (float) contrastStep / Math.abs(targetStep);
+        return countingStep == 0 || countingStep == 1 || countingStep == -1;
+    }
+
+    private int summarize(int step) {
+        return step / Math.abs(step);
     }
 
     public boolean isSameRow(Row row) {
