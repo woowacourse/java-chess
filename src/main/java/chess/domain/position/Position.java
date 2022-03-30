@@ -60,10 +60,6 @@ public class Position {
         return file.equals(target.file);
     }
 
-    public boolean isSameFile(final String target) {
-        return file.equals(File.of(target));
-    }
-
     public Direction findDirection(final Position target) {
         final int fileDistance = calculateFileGap(target);
         final int rankDistance = calculateRankGap(target);
