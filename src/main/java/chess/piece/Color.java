@@ -7,7 +7,7 @@ public enum Color {
 
     BLACK(Rank.SEVEN), WHITE(Rank.TWO);
 
-    private Rank rankOfStartPawn;
+    private final Rank rankOfStartPawn;
 
     Color(Rank rankOfStartPawn) {
         this.rankOfStartPawn = rankOfStartPawn;

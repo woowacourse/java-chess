@@ -17,7 +17,7 @@ public abstract class Piece {
     }
 
     public Piece transfer(Position to, List<Piece> pieces) {
-        if (getPosition().equals(to)) {
+        if (position.equals(to)) {
             throw new IllegalArgumentException("동일한 위치로 기물을 움직일 수 없습니다.");
         }
         if (!isPossibleMovement(to, pieces)) {
@@ -32,11 +32,11 @@ public abstract class Piece {
     }
 
     private boolean hasObstacleBetweenPositions(Position to, List<Piece> pieces) {
-        if (!getPosition().hasLinearPath(to)) {
+        if (!position.hasLinearPath(to)) {
             return false;
         }
 
-        return getPosition().getLinearPath(to).stream()
+        return this.position.getLinearPath(to).stream()
             .anyMatch(position -> hasPieceByPosition(position, pieces));
     }
 
@@ -53,7 +53,7 @@ public abstract class Piece {
         return pieces.stream()
             .filter(piece -> piece.isSamePosition(position))
             .findFirst()
-            .get();
+            .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
     }
 
     private boolean hasPieceByPosition(Position position, List<Piece> pieces) {
