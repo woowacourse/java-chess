@@ -17,6 +17,8 @@ public enum Direction {
     RIGHTDOWN(1, -1,
         (p1, p2) -> p1.getFileDifference(p2) < 0 && p1.getRankDifference(p2) > 0);
 
+    private static final String NON_MOVABLE_DIRECTION = "[ERROR] 지정한 목적지는 갈 수 있는 방향이 존재하지 않습니다.";
+
     private final int xPoint;
     private final int yPoint;
     private BiPredicate<Position, Position> condition;
@@ -32,7 +34,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.condition.test(p1, p2))
             .findAny()
-            .get();
+            .orElseThrow(() -> new IllegalArgumentException(NON_MOVABLE_DIRECTION));
     }
 
     public static Position step(Position from, Direction direction) {
