@@ -16,7 +16,8 @@ public class OutputView {
         System.out.println("> 체스 게임을 시작합니다." + NEW_LINE +
                 "> 게임 시작 : start" + NEW_LINE +
                 "> 게임 종료 : end" + NEW_LINE +
-                "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+                "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"+ NEW_LINE +
+                "> 게임 설명 : 대문자는 Black Piece, 소문자는 White Piece를 의미");
     }
 
     public static void printBoard(final Map<Position, Piece> board) {
@@ -43,11 +44,11 @@ public class OutputView {
         System.out.printf("%s의 턴입니다.%n", name);
     }
 
-    public static void printResult(final String turn, final String result) {
-        System.out.printf("%s은 %s하셨습니다.%n", turn, result);
-    }
-
     public static void printScore(final String turn, final double score) {
         System.out.printf("%s은 %.1f점 입니다.%n", turn, score);
+    }
+
+    public static void printResult(final String turn, final String result) {
+        System.out.printf("%s은 %s하셨습니다.%n%n", turn, result);
     }
 }

@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.state.State;
+import chess.domain.state.State;
 import java.util.Arrays;
 
 public enum Command {

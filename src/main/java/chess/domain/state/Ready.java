@@ -1,15 +1,13 @@
-package chess.state;
+package chess.domain.state;
 
 import chess.domain.Board;
 import chess.domain.piece.Color;
-import chess.view.OutputView;
 
 public class Ready implements State {
 
     @Override
     public State start() {
         final Board board = Board.create();
-        OutputView.printBoard(board.getBoard());
         return new Started(Color.WHITE, board);
     }
 
@@ -31,6 +29,21 @@ public class Ready implements State {
     @Override
     public boolean isEnded() {
         return false;
+    }
+
+    @Override
+    public boolean isStarted() {
+        return false;
+    }
+
+    @Override
+    public Color getColor() {
+        throw new UnsupportedOperationException("[ERROR] 아직 게임을 시작하지 않았습니다.");
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new UnsupportedOperationException("[ERROR] 아직 게임을 시작하지 않았습니다.");
     }
 
 }

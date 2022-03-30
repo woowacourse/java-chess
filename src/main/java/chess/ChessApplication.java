@@ -1,6 +1,6 @@
 package chess;
 
-import chess.state.Ready;
+import chess.domain.state.Ready;
 import chess.view.OutputView;
 
 public class ChessApplication {

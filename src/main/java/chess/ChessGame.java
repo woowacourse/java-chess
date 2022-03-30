@@ -1,7 +1,11 @@
 package chess;
 
+import chess.domain.Board;
 import chess.domain.Command;
-import chess.state.State;
+import chess.domain.Result;
+import chess.domain.Score;
+import chess.domain.piece.Color;
+import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -16,8 +20,19 @@ public class ChessGame {
     }
 
     public void run() {
-        while (!state.isEnded()) {
-            state = runCommand();
+        printCurrentTurn();
+        state = runCommand();
+        if (state.isStarted()) {
+            printThisTurnResult();
+        }
+        if (!state.isEnded()) {
+            run();
+        }
+    }
+
+    private void printCurrentTurn() {
+        if (state.isStarted()){
+            OutputView.printTurnMessage(state.getColor().getName());
         }
     }
 
@@ -26,9 +41,22 @@ public class ChessGame {
             final String[] commands = InputView.requestCommands();
             final Command command = Command.from(commands[MAIN_COMMAND_INDEX]);
             return command.run(state, commands);
-        } catch (IllegalArgumentException | IllegalStateException exception) {
+        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return runCommand();
         }
     }
+
+    private void printThisTurnResult() {
+        Board board = state.getBoard();
+        Color thisTurn = state.getColor();
+        final Score myScore = new Score(board, thisTurn);
+        final Score opponentScore = new Score(board,thisTurn.getOpposite());
+
+        OutputView.printScore(thisTurn.getName(), myScore.getValue());
+        OutputView.printScore(thisTurn.getOpposite().getName(), opponentScore.getValue());
+        OutputView.printResult(thisTurn.getName(), Result.decide(myScore, opponentScore).getName());
+        OutputView.printBoard(board.getBoard());
+    }
+
 }

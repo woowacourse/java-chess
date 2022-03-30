@@ -1,9 +1,12 @@
-package chess.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
 import chess.domain.piece.Color;
+import chess.domain.state.Ended;
+import chess.domain.state.Started;
+import chess.domain.state.State;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
