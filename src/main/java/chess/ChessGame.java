@@ -20,17 +20,17 @@ public class ChessGame {
     }
 
     public void run() {
-        printCurrentTurn();
+        printCurrentTurnPlayer();
         state = runCommand();
         if (state.isStarted()) {
-            printThisTurnResult();
+            printCurrentTurnResult();
         }
         if (!state.isEnded()) {
             run();
         }
     }
 
-    private void printCurrentTurn() {
+    private void printCurrentTurnPlayer() {
         if (state.isStarted()){
             OutputView.printTurnMessage(state.getColor().getName());
         }
@@ -47,7 +47,7 @@ public class ChessGame {
         }
     }
 
-    private void printThisTurnResult() {
+    private void printCurrentTurnResult() {
         Board board = state.getBoard();
         Color thisTurn = state.getColor();
         final Score myScore = new Score(board, thisTurn);
