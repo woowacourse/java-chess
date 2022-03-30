@@ -15,7 +15,7 @@ public class ChessGameTest {
     void start() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        assertThat(chessGame.getValue()).isEqualTo(InitialBoard.init());
+        assertThat(chessGame.getValue()).isEqualTo(InitialBoard.initialize());
     }
 
     @Test
