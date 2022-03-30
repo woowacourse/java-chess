@@ -23,11 +23,9 @@ public class King extends Piece {
 
     @Override
     public Direction findValidDirection(final Position current, final Position target) {
-        int rowDifference = target.calculateRowDifference(current);
-        int columnDifference = target.calculateColumnDifference(current);
-        Direction direction = Direction.calculate(rowDifference, columnDifference);
+        Direction direction = calculateDirection(current, target);
         validateDirection(direction, POSSIBLE_DIRECTIONS);
-        validateRange(rowDifference, columnDifference, POSSIBLE_DISTANCE);
+        validateRange(current, target, POSSIBLE_DISTANCE);
         return direction;
     }
 

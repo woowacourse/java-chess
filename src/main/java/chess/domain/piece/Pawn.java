@@ -26,15 +26,13 @@ public class Pawn extends Piece {
 
     @Override
     public Direction findValidDirection(final Position current, final Position target) {
-        int rowDifference = target.calculateRowDifference(current);
-        int columnDifference = target.calculateColumnDifference(current);
-        Direction direction = Direction.calculate(rowDifference, columnDifference);
+        final Direction direction = calculateDirection(current, target);
         validateDirection(direction, getProperDirection());
         if (isFirstMove(current.getRow())) {
-            validateRange(rowDifference, columnDifference, POSSIBLE_INITIAL_DISTANCE);
+            validateRange(current, target, POSSIBLE_INITIAL_DISTANCE);
             return direction;
         }
-        validateRange(rowDifference, columnDifference, POSSIBLE_DISTANCE);
+        validateRange(current, target, POSSIBLE_DISTANCE);
         return direction;
     }
 

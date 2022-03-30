@@ -41,7 +41,9 @@ public abstract class Piece {
         }
     }
 
-    protected void validateRange(final int rowDifference, final int columnDifference, final int possibleDirection) {
+    protected void validateRange(final Position current, final Position target, final int possibleDirection) {
+        final int rowDifference = calculateRowDifference(current, target);
+        final int columnDifference = calculateColumnDifference(current, target);
         if (isInvalidRange(rowDifference, columnDifference, possibleDirection)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }
@@ -49,6 +51,20 @@ public abstract class Piece {
 
     private boolean isInvalidRange(final int rowDifference, final int columnDifference, final int possibleDistance) {
         return Math.abs(rowDifference) > possibleDistance || Math.abs(columnDifference) > possibleDistance;
+    }
+
+    protected Direction calculateDirection(final Position current, final Position target) {
+        int rowDifference = calculateRowDifference(current, target);
+        int columnDifference = calculateColumnDifference(current, target);
+        return Direction.calculate(rowDifference, columnDifference);
+    }
+
+    private int calculateRowDifference(final Position current, final Position target) {
+        return target.calculateRowDifference(current);
+    }
+
+    private int calculateColumnDifference(final Position current, final Position target) {
+        return target.calculateColumnDifference(current);
     }
 
     public PieceType getPieceType() {
