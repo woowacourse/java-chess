@@ -81,11 +81,12 @@ public class Board {
                 .count();
     }
 
-    private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece) {
+    private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> entry) {
+        Position current = entry.getKey();
+        Piece piece = entry.getValue();
         return Arrays.stream(Row.values())
-                .map(row -> new Position(piece.getKey().getColumn(), row))
-                .anyMatch(position -> !piece.getKey().equals(position)
-                        && getPiece(position).equals(piece.getValue()));
+                .map(row -> new Position(current.getColumn(), row))
+                .anyMatch(position -> !current.equals(position) && getPiece(position).equals(piece));
     }
 
     public boolean isKingCaught(Color color) {
