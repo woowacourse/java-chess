@@ -15,6 +15,10 @@ import java.util.TreeMap;
 
 public class BoardInitializer {
 
+    private BoardInitializer() {
+
+    }
+
     public static Map<Position, Piece> initialize() {
         Map<Position, Piece> board = initEmptyBoard();
 
