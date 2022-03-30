@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class BishopMoveStrategyTest {
+class BishopTest {
 
     @ParameterizedTest
     @CsvSource(value = {
@@ -30,8 +30,8 @@ class BishopMoveStrategyTest {
     })
     @DisplayName("비숍이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
-        assertDoesNotThrow(() -> new BishopMoveStrategy()
-                .canMove(Team.WHITE, new Bishop(Team.WHITE),
+        assertDoesNotThrow(() -> new Bishop(Team.WHITE)
+                .canMove(new Bishop(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 )
@@ -44,8 +44,8 @@ class BishopMoveStrategyTest {
     })
     @DisplayName("비숍이 갈 수 있는 위치가 아니면 에러가 발생해야 한다.")
     void canInvalidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
-        assertThatThrownBy(() -> new BishopMoveStrategy()
-                .canMove(Team.WHITE,new Bishop(Team.WHITE),
+        assertThatThrownBy(() -> new Bishop(Team.WHITE)
+                .canMove(new Bishop(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 ))
@@ -56,9 +56,9 @@ class BishopMoveStrategyTest {
     @Test
     @DisplayName("비숍이 이동하는 경로를 반환할 수 있다.")
     void getRoute() {
-        BishopMoveStrategy bishopMoveStrategy = new BishopMoveStrategy();
+        Bishop bishop = new Bishop(Team.WHITE);
 
-        List<Position> route = bishopMoveStrategy.calculateRoute(
+        List<Position> route = bishop.calculateRoute(
                 new Position(Column.C, Rank.ONE), new Position(Column.G, Rank.FIVE));
 
         assertThat(route).containsAll(

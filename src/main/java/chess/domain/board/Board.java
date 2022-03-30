@@ -52,7 +52,7 @@ public final class Board {
     }
 
     private void checkRoute(Position from, Position to) {
-        List<Position> route = findByPosition(from).getRoute(from, to);
+        List<Position> route = findByPosition(from).calculateRoute(from, to);
         for (Position position : route) {
             checkIsPiece(position);
         }

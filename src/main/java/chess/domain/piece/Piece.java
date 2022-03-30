@@ -9,7 +9,7 @@ public interface Piece {
 
     boolean isSameTeam(Piece targetPiece);
 
-    boolean isOppositeTeam(Team team);
+    boolean isSameTeamOrEmpty(Team team);
 
     boolean isKing();
 
@@ -19,5 +19,7 @@ public interface Piece {
 
     Team getTeam();
 
-    List<Position> getRoute(Position from, Position to);
+    List<Position> calculateRoute(Position from, Position to);
+
+
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class RookMoveStrategyTest {
+class RookTest {
 
     @ParameterizedTest
     @CsvSource(value = {
@@ -22,8 +22,8 @@ class RookMoveStrategyTest {
     })
     @DisplayName("룩이 갈 수 있는 위치 중 하나여야 한다.")
     void canValidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
-        assertDoesNotThrow(() -> new RookMoveStrategy()
-                .canMove(Team.WHITE, new Rook(Team.WHITE),
+        assertDoesNotThrow(() -> new Rook(Team.WHITE)
+                .canMove(new Rook(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 )
@@ -37,8 +37,8 @@ class RookMoveStrategyTest {
     })
     @DisplayName("룩이 갈 수 위치가 아니면 에러가 발생해야 한다.")
     void canInvalidMove(Column columnA, Rank rankA, Column columnB, Rank rankB) {
-        assertThatThrownBy(() -> new RookMoveStrategy()
-                .canMove(Team.WHITE, new Rook(Team.WHITE),
+        assertThatThrownBy(() -> new Rook(Team.WHITE)
+                .canMove(new Rook(Team.WHITE),
                         new Position(columnA, rankA),
                         new Position(columnB, rankB)
                 ))

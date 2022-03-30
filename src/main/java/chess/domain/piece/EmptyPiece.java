@@ -9,7 +9,7 @@ public final class EmptyPiece extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE = "해당 칸에는 움직일 기물이 없습니다.";
 
     public EmptyPiece() {
-        super(new Name("."), Team.NONE, null);
+        super(new Name("."), Team.NONE);
     }
 
     @Override

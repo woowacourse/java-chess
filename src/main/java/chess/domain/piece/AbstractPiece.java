@@ -3,19 +3,16 @@ package chess.domain.piece;
 import chess.domain.board.position.Position;
 import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
-import chess.domain.piece.strategy.MoveStrategy;
 import java.util.List;
 import java.util.Locale;
 
 public abstract class AbstractPiece implements Piece {
     protected final Name name;
     protected final Team team;
-    protected final MoveStrategy moveStrategy;
 
-    public AbstractPiece(Name name, Team team, MoveStrategy moveStrategy) {
+    public AbstractPiece(Name name, Team team) {
         this.name = name;
         this.team = team;
-        this.moveStrategy = moveStrategy;
     }
 
     public abstract boolean canMove(Piece targetAbstractPiece, Position from, Position to);
@@ -24,9 +21,9 @@ public abstract class AbstractPiece implements Piece {
         return this.team == targetPiece.getTeam();
     }
 
-    public boolean isOppositeTeam(Team team) {
-        return (team == Team.WHITE && this.team == Team.BLACK) ||
-                (team == Team.BLACK && this.team == Team.WHITE);
+    public boolean isSameTeamOrEmpty(Team team) {
+        return (team != Team.WHITE || this.team != Team.BLACK) &&
+                (team != Team.BLACK || this.team != Team.WHITE);
     }
 
     public boolean isKing() {
@@ -37,8 +34,8 @@ public abstract class AbstractPiece implements Piece {
         return true;
     }
 
-    public List<Position> getRoute(Position from, Position to) {
-        return moveStrategy.calculateRoute(from, to);
+    public List<Position> calculateRoute(Position from, Position to) {
+        return Position.calculateRoute(from, to);
     }
 
     public String getName() {
