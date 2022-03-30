@@ -198,14 +198,14 @@ class ChessBoardTest {
                 Map.of(new Position(H, FIVE), new King(Color.WHITE),
                         new Position(H, SEVEN), new King(Color.BLACK),
                         new Position(D, FOUR), new Queen(Color.WHITE),
-                        new Position(D, FIVE), new Pawn(Color.BLACK)), Color.WHITE);
+                        new Position(E, FIVE), new Pawn(Color.BLACK)), Color.WHITE);
 
-        chessBoard.move(new Position(D, FOUR), new Position(D, FIVE));
+        chessBoard.move(new Position(D, FOUR), new Position(E, FIVE));
 
         assertThat(chessBoard.getBoard()).isEqualTo(
                 Map.of(new Position(H, FIVE), new King(Color.WHITE),
                         new Position(H, SEVEN), new King(Color.BLACK),
-                        new Position(D, FIVE), new Queen(Color.WHITE)));
+                        new Position(E, FIVE), new Queen(Color.WHITE)));
     }
 
     @Test
