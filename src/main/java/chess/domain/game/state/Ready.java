@@ -49,11 +49,4 @@ public class Ready implements GameState{
     public Color judgeWinner() {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
-
-    @Override
-    public boolean isAllKingExist() {
-        throw new IllegalStateException(NOT_STARTED_GAME);
-    }
-
-
 }

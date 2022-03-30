@@ -45,8 +45,4 @@ public class ChessGame {
     public Board getBoard() {
         return state.getBoard();
     }
-
-    public boolean isAllKingExist() {
-        return state.isAllKingExist();
-    }
 }

@@ -4,9 +4,9 @@ import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public class End implements GameState{
+public abstract class End implements GameState{
 
-    private Board board;
+    protected final Board board;
 
     public End(Board board) {
         this.board = board;
@@ -42,15 +42,5 @@ public class End implements GameState{
     @Override
     public double calculateScore(Color color) {
         throw new IllegalStateException(ALREADY_END_GAME);
-    }
-
-    @Override
-    public Color judgeWinner() {
-        return board.getWinnerTeamColor();
-    }
-
-    @Override
-    public boolean isAllKingExist() {
-        return board.isAllKingExist();
     }
 }

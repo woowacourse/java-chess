@@ -115,9 +115,6 @@ public class Board {
     }
 
     public Color getWinnerTeamColor() {
-        if (isAllKingExist()) {
-            throw new IllegalStateException(ALL_KING_EXIST);
-        }
         return board.values().stream()
             .filter(Piece::isKing)
             .findAny()

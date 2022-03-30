@@ -13,6 +13,11 @@ public class ChessController {
         while (!chessGame.isFinish()) {
             selectMenu(chessGame);
         }
+        try {
+            OutputView.printWinner(chessGame.judgeWinner());
+        } catch (IllegalStateException exception) {
+            OutputView.printError(exception.getMessage());
+        }
     }
 
     public void selectMenu(ChessGame chessGame) {
@@ -38,9 +43,6 @@ public class ChessController {
             return;
         }
         OutputView.printInitialChessBoard(chessGame.getBoard());
-        if (!chessGame.isAllKingExist()) {
-            OutputView.printWinner(chessGame.judgeWinner());
-        }
     }
 
     public static void showStatus(ChessGame chessGame, String input) {

@@ -24,14 +24,14 @@ public class Running implements GameState{
     public GameState movePiece(Position fromPosition, Position toPosition) {
         board.movePiece(fromPosition,toPosition);
         if (!board.isAllKingExist()) {
-            return new End(board);
+            return new Complete(board);
         }
         return new Running(board);
     }
 
     @Override
     public GameState end() {
-        return new End(board);
+        return new Terminate(board);
     }
 
     @Override
@@ -52,10 +52,5 @@ public class Running implements GameState{
     @Override
     public Color judgeWinner() {
         throw new IllegalStateException(NOT_ENDED_GAME);
-    }
-
-    @Override
-    public boolean isAllKingExist() {
-        return board.isAllKingExist();
     }
 }
