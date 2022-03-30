@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
+import java.util.List;
 
 public class Knight extends Piece {
 
@@ -12,13 +14,9 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return isDiagonalLengthFive(fromPosition, toPosition);
-    }
-
-    private boolean isDiagonalLengthFive(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getRankDifference(toPosition);
-        int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height, 2) + Math.pow(width, 2) == 5;
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        List<Direction> directions = Direction.knightDirections();
+        return directions.contains(direction);
     }
 
     @Override

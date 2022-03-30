@@ -53,4 +53,8 @@ public enum Direction {
     public static List<Direction> diagonals() {
         return List.of(LEFTUP, RIGHTUP, LEFTDOWN, RIGHTDOWN);
     }
+
+    public static List<Direction> knightDirections() {
+        return List.of(UUR, UUL, RRD, RRU, LLD, LLU, DDL, DDR);
+    }
 }
