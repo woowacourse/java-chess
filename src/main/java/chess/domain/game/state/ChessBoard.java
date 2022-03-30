@@ -110,8 +110,8 @@ public class ChessBoard {
 
     public Map<Color, Double> computeScore() {
         Map<Color, Double> scores = new HashMap<>();
-        scores.put(Color.White, score(Color.White));
-        scores.put(Color.Black, score(Color.Black));
+        scores.put(Color.WHITE, score(Color.WHITE));
+        scores.put(Color.BLACK, score(Color.BLACK));
 
         return scores;
     }

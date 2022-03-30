@@ -20,7 +20,7 @@ public class Position {
 
     public boolean isBlocked(Direction direction) {
         Position next = getNext(direction);
-        return next.getFile() == File.Out || next.getRank() == Rank.Out;
+        return next.getFile() == File.OUT || next.getRank() == Rank.OUT;
     }
 
     public File getFile() {

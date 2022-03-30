@@ -25,14 +25,14 @@ public class KnightTest {
     @BeforeEach
     void initBoard() {
         board = new ChessBoard();
-        Position source = Position.of(File.d, Rank.Four);
-        sourcePiece = new Knight(Color.Black);
+        Position source = Position.of(File.D, Rank.FOUR);
+        sourcePiece = new Knight(Color.BLACK);
 
         board.putPiece(source, sourcePiece);
-        board.putPiece(Position.of(File.b, Rank.Three), new Knight(Color.White));
+        board.putPiece(Position.of(File.B, Rank.THREE), new Knight(Color.WHITE));
 
         for (Direction direction : Direction.all()) {
-            board.putPiece(source.getNext(direction), new Knight(Color.Black));
+            board.putPiece(source.getNext(direction), new Knight(Color.BLACK));
         }
     }
 
@@ -40,7 +40,7 @@ public class KnightTest {
     @MethodSource("invalidParameters")
     @DisplayName("나이트가 이동할 수 없는 곳으로 이동")
     void knightInvalidTest(Position target, String testName) {
-        Position source = Position.of(File.d, Rank.Four);
+        Position source = Position.of(File.D, Rank.FOUR);
 
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -48,14 +48,14 @@ public class KnightTest {
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.d, Rank.Five), "나이트는 위로 이동할 수 없다."),
-            Arguments.of(Position.of(File.e, Rank.Five), "나이트는 오른쪽위로 이동할 수 없다."),
-            Arguments.of(Position.of(File.e, Rank.Four), "나이트는 오른쪽으로 이동할 수 없다."),
-            Arguments.of(Position.of(File.e, Rank.Three), "나이트는 오른쪽아래로 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Three), "나이트는 아래로 이동할 수 없다."),
-            Arguments.of(Position.of(File.c, Rank.Three), "나이트는 왼쪽아래로 이동할 수 없다."),
-            Arguments.of(Position.of(File.c, Rank.Four), "나이트는 왼쪽으로 이동할 수 없다."),
-            Arguments.of(Position.of(File.c, Rank.Five), "나이트는 왼쪽위로 이동할 수 없다.")
+            Arguments.of(Position.of(File.D, Rank.FIVE), "나이트는 위로 이동할 수 없다."),
+            Arguments.of(Position.of(File.E, Rank.FIVE), "나이트는 오른쪽위로 이동할 수 없다."),
+            Arguments.of(Position.of(File.E, Rank.FOUR), "나이트는 오른쪽으로 이동할 수 없다."),
+            Arguments.of(Position.of(File.E, Rank.THREE), "나이트는 오른쪽아래로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), "나이트는 아래로 이동할 수 없다."),
+            Arguments.of(Position.of(File.C, Rank.THREE), "나이트는 왼쪽아래로 이동할 수 없다."),
+            Arguments.of(Position.of(File.C, Rank.FOUR), "나이트는 왼쪽으로 이동할 수 없다."),
+            Arguments.of(Position.of(File.C, Rank.FIVE), "나이트는 왼쪽위로 이동할 수 없다.")
         );
     }
 
@@ -63,7 +63,7 @@ public class KnightTest {
     @MethodSource("validParameters")
     @DisplayName("나이트가 기물이 있을 경우에도 뛰어넘어 이동할 수 있는 곳으로 이동")
     void knightValidTest(Position target, String testName) {
-        Position source = Position.of(File.d, Rank.Four);
+        Position source = Position.of(File.D, Rank.FOUR);
         board.move(source, target);
 
         assertThat(board.getPiece(target)).isSameAs(sourcePiece);
@@ -71,14 +71,14 @@ public class KnightTest {
 
     private static Stream<Arguments> validParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.b, Rank.Five), "나이트는 위 왼쪽 왼쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.c, Rank.Six), "나이트는 위 위 왼쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.e, Rank.Six), "나이트는 위 위 오른쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.f, Rank.Five), "나이트는 위 오른쪽 오른쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.f, Rank.Three), "나이트는 아래 오른쪽 오른쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.e, Rank.Two), "나이트는 아래 아래 오른쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.c, Rank.Two), "나이트는 아래 아래 왼쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.b, Rank.Three), "나이트는 기물이 있을 경우 잡고 이동한다.")
+            Arguments.of(Position.of(File.B, Rank.FIVE), "나이트는 위 왼쪽 왼쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.C, Rank.SIX), "나이트는 위 위 왼쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.E, Rank.SIX), "나이트는 위 위 오른쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.F, Rank.FIVE), "나이트는 위 오른쪽 오른쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.F, Rank.THREE), "나이트는 아래 오른쪽 오른쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.E, Rank.TWO), "나이트는 아래 아래 오른쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.C, Rank.TWO), "나이트는 아래 아래 왼쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.B, Rank.THREE), "나이트는 기물이 있을 경우 잡고 이동한다.")
         );
     }
 }

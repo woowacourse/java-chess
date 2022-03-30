@@ -24,20 +24,20 @@ public class KingTest {
     @BeforeEach
     void initBoard() {
         board = new ChessBoard();
-        sourcePiece = new King(Color.Black);
+        sourcePiece = new King(Color.BLACK);
 
-        board.putPiece(Position.of(File.c, Rank.Three), sourcePiece);
+        board.putPiece(Position.of(File.C, Rank.THREE), sourcePiece);
 
-        board.putPiece(Position.of(File.c, Rank.Four), new King(Color.White));
-        board.putPiece(Position.of(File.f, Rank.Six), new King(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Seven), new King(Color.Black));
+        board.putPiece(Position.of(File.C, Rank.FOUR), new King(Color.WHITE));
+        board.putPiece(Position.of(File.F, Rank.SIX), new King(Color.BLACK));
+        board.putPiece(Position.of(File.G, Rank.SEVEN), new King(Color.BLACK));
     }
 
     @ParameterizedTest(name = "{index}: {1}")
     @MethodSource("invalidParameters")
     @DisplayName("킹이 이동할 수 없는 곳으로 이동")
     void kingInvalidTest(Position target, String testName) {
-        Position source = Position.of(File.f, Rank.Six);
+        Position source = Position.of(File.F, Rank.SIX);
 
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -45,8 +45,8 @@ public class KingTest {
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.f, Rank.Eight), "킹은 2칸 이상 움직일 수 없다."),
-            Arguments.of(Position.of(File.g, Rank.Seven), "킹은 이동하려는 칸에 같은 색의 기물이 있을경우 이동할 수 없다.")
+            Arguments.of(Position.of(File.F, Rank.EIGHT), "킹은 2칸 이상 움직일 수 없다."),
+            Arguments.of(Position.of(File.G, Rank.SEVEN), "킹은 이동하려는 칸에 같은 색의 기물이 있을경우 이동할 수 없다.")
         );
     }
 
@@ -54,7 +54,7 @@ public class KingTest {
     @MethodSource("validParameters")
     @DisplayName("킹이 이동할 수 있는 곳으로 이동")
     void kingValidTest(Position target, String testName) {
-        Position source = Position.of(File.c, Rank.Three);
+        Position source = Position.of(File.C, Rank.THREE);
         board.move(source, target);
 
         assertThat(board.getPiece(target)).isSameAs(sourcePiece);
@@ -62,14 +62,14 @@ public class KingTest {
 
     private static Stream<Arguments> validParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.d, Rank.Four), "킹은 오른쪽위로 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Three), "킹은 오른쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Two), "킹은 오른쪽아래로 이동할 수 있다."),
-            Arguments.of(Position.of(File.c, Rank.Two), "킹은 아래로 이동할 수 있다."),
-            Arguments.of(Position.of(File.b, Rank.Two), "킹은 왼쪽아래로 이동할 수 있다."),
-            Arguments.of(Position.of(File.b, Rank.Three), "킹은 왼쪽으로 이동할 수 있다."),
-            Arguments.of(Position.of(File.b, Rank.Four), "킹은 왼쪽위로 이동할 수 있다."),
-            Arguments.of(Position.of(File.c, Rank.Four), "킹은 이동하려는 칸에 다른 색의 기물이 있을경우 기물을 잡고 그 위치로 이동한다.")
+            Arguments.of(Position.of(File.D, Rank.FOUR), "킹은 오른쪽위로 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), "킹은 오른쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), "킹은 오른쪽아래로 이동할 수 있다."),
+            Arguments.of(Position.of(File.C, Rank.TWO), "킹은 아래로 이동할 수 있다."),
+            Arguments.of(Position.of(File.B, Rank.TWO), "킹은 왼쪽아래로 이동할 수 있다."),
+            Arguments.of(Position.of(File.B, Rank.THREE), "킹은 왼쪽으로 이동할 수 있다."),
+            Arguments.of(Position.of(File.B, Rank.FOUR), "킹은 왼쪽위로 이동할 수 있다."),
+            Arguments.of(Position.of(File.C, Rank.FOUR), "킹은 이동하려는 칸에 다른 색의 기물이 있을경우 기물을 잡고 그 위치로 이동한다.")
         );
     }
 }

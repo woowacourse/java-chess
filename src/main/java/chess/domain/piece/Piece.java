@@ -70,7 +70,7 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
-        return new King(Color.White).isSame(this)
-            || new King(Color.Black).isSame(this);
+        return new King(Color.WHITE).isSame(this)
+            || new King(Color.BLACK).isSame(this);
     }
 }

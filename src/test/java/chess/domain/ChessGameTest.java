@@ -38,8 +38,8 @@ public class ChessGameTest {
     void turnTest() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        Position source = Position.of(File.a, Rank.Two);
-        Position target = Position.of(File.a, Rank.Three);
+        Position source = Position.of(File.A, Rank.TWO);
+        Position target = Position.of(File.A, Rank.THREE);
 
         assertThatCode(() -> chessGame.move(source, target))
             .doesNotThrowAnyException();
@@ -50,8 +50,8 @@ public class ChessGameTest {
     void turnTest1() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        Position source = Position.of(File.a, Rank.Seven);
-        Position target = Position.of(File.a, Rank.Six);
+        Position source = Position.of(File.A, Rank.SEVEN);
+        Position target = Position.of(File.A, Rank.SIX);
 
         assertThatThrownBy(() -> chessGame.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -62,10 +62,10 @@ public class ChessGameTest {
     void move1() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        chessGame.move(Position.of(File.a, Rank.Two), Position.of(File.a, Rank.Three));
+        chessGame.move(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE));
 
-        Position source = Position.of(File.a, Rank.Seven);
-        Position target = Position.of(File.a, Rank.Six);
+        Position source = Position.of(File.A, Rank.SEVEN);
+        Position target = Position.of(File.A, Rank.SIX);
 
         assertThatCode(() -> chessGame.move(source, target))
             .doesNotThrowAnyException();
@@ -76,10 +76,10 @@ public class ChessGameTest {
     void move2() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
-        chessGame.move(Position.of(File.a, Rank.Two), Position.of(File.a, Rank.Three));
+        chessGame.move(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE));
 
-        Position source = Position.of(File.a, Rank.Three);
-        Position target = Position.of(File.a, Rank.Four);
+        Position source = Position.of(File.A, Rank.THREE);
+        Position target = Position.of(File.A, Rank.FOUR);
 
         assertThatThrownBy(() -> chessGame.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
@@ -87,41 +87,41 @@ public class ChessGameTest {
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.a, Rank.Eight), Rook.class, "black Rook"),
-            Arguments.of(Position.of(File.b, Rank.Eight), Knight.class, "black Night"),
-            Arguments.of(Position.of(File.c, Rank.Eight), Bishop.class, "black Bishop"),
-            Arguments.of(Position.of(File.d, Rank.Eight), Queen.class, "black Queen"),
-            Arguments.of(Position.of(File.e, Rank.Eight), King.class, "black King"),
-            Arguments.of(Position.of(File.f, Rank.Eight), Bishop.class, "black Bishop"),
-            Arguments.of(Position.of(File.g, Rank.Eight), Knight.class, "black Night"),
-            Arguments.of(Position.of(File.h, Rank.Eight), Rook.class, "black Rook"),
+            Arguments.of(Position.of(File.A, Rank.EIGHT), Rook.class, "black Rook"),
+            Arguments.of(Position.of(File.B, Rank.EIGHT), Knight.class, "black Night"),
+            Arguments.of(Position.of(File.C, Rank.EIGHT), Bishop.class, "black Bishop"),
+            Arguments.of(Position.of(File.D, Rank.EIGHT), Queen.class, "black Queen"),
+            Arguments.of(Position.of(File.E, Rank.EIGHT), King.class, "black King"),
+            Arguments.of(Position.of(File.F, Rank.EIGHT), Bishop.class, "black Bishop"),
+            Arguments.of(Position.of(File.G, Rank.EIGHT), Knight.class, "black Night"),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Rook.class, "black Rook"),
 
-            Arguments.of(Position.of(File.a, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.b, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.c, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.d, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.e, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.f, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.g, Rank.Seven), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.h, Rank.Seven), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.A, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.B, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.C, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.E, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.F, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.G, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.H, Rank.SEVEN), Pawn.class, "black Pawn"),
 
-            Arguments.of(Position.of(File.a, Rank.One), Rook.class, "white Rook"),
-            Arguments.of(Position.of(File.b, Rank.One), Knight.class, "white Night"),
-            Arguments.of(Position.of(File.c, Rank.One), Bishop.class, "white Bishop"),
-            Arguments.of(Position.of(File.d, Rank.One), Queen.class, "white Queen"),
-            Arguments.of(Position.of(File.e, Rank.One), King.class, "white King"),
-            Arguments.of(Position.of(File.f, Rank.One), Bishop.class, "white Bishop"),
-            Arguments.of(Position.of(File.g, Rank.One), Knight.class, "white Night"),
-            Arguments.of(Position.of(File.h, Rank.One), Rook.class, "white Rook"),
+            Arguments.of(Position.of(File.A, Rank.ONE), Rook.class, "white Rook"),
+            Arguments.of(Position.of(File.B, Rank.ONE), Knight.class, "white Night"),
+            Arguments.of(Position.of(File.C, Rank.ONE), Bishop.class, "white Bishop"),
+            Arguments.of(Position.of(File.D, Rank.ONE), Queen.class, "white Queen"),
+            Arguments.of(Position.of(File.E, Rank.ONE), King.class, "white King"),
+            Arguments.of(Position.of(File.F, Rank.ONE), Bishop.class, "white Bishop"),
+            Arguments.of(Position.of(File.G, Rank.ONE), Knight.class, "white Night"),
+            Arguments.of(Position.of(File.H, Rank.ONE), Rook.class, "white Rook"),
 
-            Arguments.of(Position.of(File.a, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.b, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.c, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.d, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.e, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.f, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.g, Rank.Two), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.h, Rank.Two), Pawn.class, "white Pawn")
+            Arguments.of(Position.of(File.A, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.B, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.C, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.D, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.E, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.F, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.G, Rank.TWO), Pawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.H, Rank.TWO), Pawn.class, "white Pawn")
         );
     }
 }

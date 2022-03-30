@@ -23,7 +23,7 @@ public class StartedGame implements GameState {
         initBlack();
         initWhite();
 
-        return new RunningGame(board, Player.White);
+        return new RunningGame(board, Player.WHITE);
     }
 
     @Override
@@ -57,25 +57,25 @@ public class StartedGame implements GameState {
     }
 
     private void initBlackRankEight() {
-        board.putPiece(Position.of(File.a, Rank.Eight), new Rook(Color.Black));
-        board.putPiece(Position.of(File.b, Rank.Eight), new Knight(Color.Black));
-        board.putPiece(Position.of(File.c, Rank.Eight), new Bishop(Color.Black));
-        board.putPiece(Position.of(File.d, Rank.Eight), new Queen(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Eight), new King(Color.Black));
-        board.putPiece(Position.of(File.f, Rank.Eight), new Bishop(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Eight), new Knight(Color.Black));
-        board.putPiece(Position.of(File.h, Rank.Eight), new Rook(Color.Black));
+        board.putPiece(Position.of(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+        board.putPiece(Position.of(File.B, Rank.EIGHT), new Knight(Color.BLACK));
+        board.putPiece(Position.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
+        board.putPiece(Position.of(File.D, Rank.EIGHT), new Queen(Color.BLACK));
+        board.putPiece(Position.of(File.E, Rank.EIGHT), new King(Color.BLACK));
+        board.putPiece(Position.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
+        board.putPiece(Position.of(File.G, Rank.EIGHT), new Knight(Color.BLACK));
+        board.putPiece(Position.of(File.H, Rank.EIGHT), new Rook(Color.BLACK));
     }
 
     private void initBlackRankSeven() {
-        board.putPiece(Position.of(File.a, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.b, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.c, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.d, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.f, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.g, Rank.Seven), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.h, Rank.Seven), new Pawn(Color.Black));
+        board.putPiece(Position.of(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.B, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.E, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.F, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.G, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.H, Rank.SEVEN), new Pawn(Color.BLACK));
     }
 
     private void initWhite() {
@@ -84,24 +84,24 @@ public class StartedGame implements GameState {
     }
 
     private void initWhiteRankTwo() {
-        board.putPiece(Position.of(File.a, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.b, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.c, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.d, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.e, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.f, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.g, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.h, Rank.Two), new Pawn(Color.White));
+        board.putPiece(Position.of(File.A, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.B, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.C, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.D, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.E, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.F, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.G, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.H, Rank.TWO), new Pawn(Color.WHITE));
     }
 
     private void initWhiteRankOne() {
-        board.putPiece(Position.of(File.a, Rank.One), new Rook(Color.White));
-        board.putPiece(Position.of(File.b, Rank.One), new Knight(Color.White));
-        board.putPiece(Position.of(File.c, Rank.One), new Bishop(Color.White));
-        board.putPiece(Position.of(File.d, Rank.One), new Queen(Color.White));
-        board.putPiece(Position.of(File.e, Rank.One), new King(Color.White));
-        board.putPiece(Position.of(File.f, Rank.One), new Bishop(Color.White));
-        board.putPiece(Position.of(File.g, Rank.One), new Knight(Color.White));
-        board.putPiece(Position.of(File.h, Rank.One), new Rook(Color.White));
+        board.putPiece(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+        board.putPiece(Position.of(File.B, Rank.ONE), new Knight(Color.WHITE));
+        board.putPiece(Position.of(File.C, Rank.ONE), new Bishop(Color.WHITE));
+        board.putPiece(Position.of(File.D, Rank.ONE), new Queen(Color.WHITE));
+        board.putPiece(Position.of(File.E, Rank.ONE), new King(Color.WHITE));
+        board.putPiece(Position.of(File.F, Rank.ONE), new Bishop(Color.WHITE));
+        board.putPiece(Position.of(File.G, Rank.ONE), new Knight(Color.WHITE));
+        board.putPiece(Position.of(File.H, Rank.ONE), new Rook(Color.WHITE));
     }
 }

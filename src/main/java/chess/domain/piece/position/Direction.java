@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Direction {
-    Up(0, 1),
-    Right(1, 0),
-    Down(0, -1),
-    Left(-1, 0),
+    UP(0, 1),
+    RIGHT(1, 0),
+    DOWN(0, -1),
+    LEFT(-1, 0),
 
-    UpRight(1, 1),
-    DownRight(1, -1),
-    DownLeft(-1, -1),
-    UpLeft(-1, 1),
+    UP_RIGHT(1, 1),
+    DOWN_RIGHT(1, -1),
+    DOWN_LEFT(-1, -1),
+    UP_LEFT(-1, 1),
 
-    UpUpRight(1, 2),
-    UpRightRight(2, 1),
-    DownRightRight(2, -1),
-    DownDownRight(1, -2),
-    DownDownLeft(-1, -2),
-    DownLeftLeft(-2, -1),
-    UpLeftLeft(-2, 1),
-    UpUpLeft(-1, 2),
+    UP_UP_RIGHT(1, 2),
+    UP_RIGHT_RIGHT(2, 1),
+    DOWN_RIGHT_RIGHT(2, -1),
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+    DOWN_LEFT_LEFT(-2, -1),
+    UP_LEFT_LEFT(-2, 1),
+    UP_UP_LEFT(-1, 2),
 
-    UpUp(0, 2),
-    DownDown(0, -2)
+    UP_UP(0, 2),
+    DOWN_DOWN(0, -2)
     ;
 
     private final int file;
@@ -37,32 +37,32 @@ public enum Direction {
 
     public static List<Direction> knight() {
         List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UpUpRight);
-        directions.add(Direction.UpRightRight);
-        directions.add(Direction.DownRightRight);
-        directions.add(Direction.DownDownRight);
-        directions.add(Direction.DownDownLeft);
-        directions.add(Direction.DownLeftLeft);
-        directions.add(Direction.UpLeftLeft);
-        directions.add(Direction.UpUpLeft);
+        directions.add(Direction.UP_UP_RIGHT);
+        directions.add(Direction.UP_RIGHT_RIGHT);
+        directions.add(Direction.DOWN_RIGHT_RIGHT);
+        directions.add(Direction.DOWN_DOWN_RIGHT);
+        directions.add(Direction.DOWN_DOWN_LEFT);
+        directions.add(Direction.DOWN_LEFT_LEFT);
+        directions.add(Direction.UP_LEFT_LEFT);
+        directions.add(Direction.UP_UP_LEFT);
         return directions;
     }
 
     public static List<Direction> upDownLeftRight() {
         List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.Up);
-        directions.add(Direction.Down);
-        directions.add(Direction.Left);
-        directions.add(Direction.Right);
+        directions.add(Direction.UP);
+        directions.add(Direction.DOWN);
+        directions.add(Direction.LEFT);
+        directions.add(Direction.RIGHT);
         return directions;
     }
 
     public static List<Direction> diagonal() {
         List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.UpRight);
-        directions.add(Direction.UpLeft);
-        directions.add(Direction.DownRight);
-        directions.add(Direction.DownLeft);
+        directions.add(Direction.UP_RIGHT);
+        directions.add(Direction.UP_LEFT);
+        directions.add(Direction.DOWN_RIGHT);
+        directions.add(Direction.DOWN_LEFT);
         return directions;
     }
 
@@ -75,8 +75,8 @@ public enum Direction {
 
     public static List<Direction> leftRight() {
         List<Direction> directions = new ArrayList<>();
-        directions.add(Direction.Left);
-        directions.add(Direction.Right);
+        directions.add(Direction.LEFT);
+        directions.add(Direction.RIGHT);
         return directions;
     }
 

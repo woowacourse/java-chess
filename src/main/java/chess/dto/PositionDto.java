@@ -6,7 +6,7 @@ import chess.domain.piece.position.Rank;
 
 public class PositionDto {
     private static final int MAX_RANK = 8;
-    private static final char SMALL_LETTER_A = 'a';
+    private static final char UPPER_CASE_A = 'A';
 
     private final int x;
     private final int y;
@@ -21,7 +21,7 @@ public class PositionDto {
         File file = position.getFile();
 
         int newX = MAX_RANK - rank.getValue();
-        int newY = file.name().charAt(0) - SMALL_LETTER_A;
+        int newY = file.name().charAt(0) - UPPER_CASE_A;
 
         return new PositionDto(newX, newY);
     }

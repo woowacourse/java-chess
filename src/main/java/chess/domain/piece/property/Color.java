@@ -3,8 +3,8 @@ package chess.domain.piece.property;
 import chess.domain.piece.position.Direction;
 
 public enum Color {
-    Black (Direction.Down),
-    White (Direction.Up)
+    BLACK(Direction.DOWN),
+    WHITE(Direction.UP)
     ;
 
     private final Direction forward;
@@ -14,7 +14,7 @@ public enum Color {
     }
 
     public String convertName(String name) {
-        if (this == Black) {
+        if (this == BLACK) {
             name = name.toUpperCase();
         }
 

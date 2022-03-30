@@ -19,29 +19,29 @@ class PositionTest {
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.a, Rank.One), Direction.UpUpLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.UpLeftLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.UpLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.Left, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownLeftLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.Down, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownRight, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownRightRight, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownDownLeft, ""),
-            Arguments.of(Position.of(File.a, Rank.One), Direction.DownDownRight, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.UP_UP_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.UP_LEFT_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.UP_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_LEFT_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_RIGHT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_RIGHT_RIGHT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_DOWN_LEFT, ""),
+            Arguments.of(Position.of(File.A, Rank.ONE), Direction.DOWN_DOWN_RIGHT, ""),
 
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpUpLeft, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpUpRight, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpLeftLeft, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpLeft, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.Up, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpRight, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.UpRightRight, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.Right, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.DownRight, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.DownRightRight, ""),
-            Arguments.of(Position.of(File.h, Rank.Eight), Direction.DownDownRight, "")
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_UP_LEFT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_UP_RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_LEFT_LEFT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_LEFT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.UP_RIGHT_RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.DOWN_RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.DOWN_RIGHT_RIGHT, ""),
+            Arguments.of(Position.of(File.H, Rank.EIGHT), Direction.DOWN_DOWN_RIGHT, "")
         );
     }
 }

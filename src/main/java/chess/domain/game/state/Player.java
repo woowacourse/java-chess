@@ -6,8 +6,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
 public enum Player {
-    White(Color.White),
-    Black(Color.Black)
+    WHITE(Color.WHITE),
+    BLACK(Color.BLACK)
     ;
 
     private final Color color;

@@ -3,15 +3,15 @@ package chess.domain.piece.position;
 import java.util.Arrays;
 
 public enum File {
-    a(1, "a"),
-    b(2, "b"),
-    c(3, "c"),
-    d(4, "d"),
-    e(5, "e"),
-    f(6, "f"),
-    g(7, "g"),
-    h(8, "h"),
-    Out(-1, "Out");
+    A(1, "a"),
+    B(2, "b"),
+    C(3, "c"),
+    D(4, "d"),
+    E(5, "e"),
+    F(6, "f"),
+    G(7, "g"),
+    H(8, "h"),
+    OUT(-1, "Out");
 
     private final int value;
     private final String name;
@@ -37,7 +37,7 @@ public enum File {
 
     public File getNext(int next) {
         if (value + next < 1 || value + next > 8) {
-            return Out;
+            return OUT;
         }
 
         return File.of(value + next);

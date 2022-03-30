@@ -23,56 +23,56 @@ public class PawnTest {
     @BeforeEach
     void initBoard() {
         board = new ChessBoard();
-        Position white = Position.of(File.d, Rank.Two);
-        Position black = Position.of(File.d, Rank.Seven);
+        Position white = Position.of(File.D, Rank.TWO);
+        Position black = Position.of(File.D, Rank.SEVEN);
 
-        board.putPiece(white, new Pawn(Color.White));
-        board.putPiece(black, new Pawn(Color.Black));
+        board.putPiece(white, new Pawn(Color.WHITE));
+        board.putPiece(black, new Pawn(Color.BLACK));
 
-        board.putPiece(Position.of(File.c, Rank.Three), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Three), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.c, Rank.Six), new Pawn(Color.White));
-        board.putPiece(Position.of(File.e, Rank.Six), new Pawn(Color.White));
+        board.putPiece(Position.of(File.C, Rank.THREE), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.E, Rank.THREE), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.C, Rank.SIX), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.E, Rank.SIX), new Pawn(Color.WHITE));
 
-        board.putPiece(Position.of(File.a, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.a, Rank.Three), new Pawn(Color.Black));
+        board.putPiece(Position.of(File.A, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.A, Rank.THREE), new Pawn(Color.BLACK));
 
-        board.putPiece(Position.of(File.h, Rank.Four), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.h, Rank.Two), new Pawn(Color.White));
+        board.putPiece(Position.of(File.H, Rank.FOUR), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.H, Rank.TWO), new Pawn(Color.WHITE));
     }
 
     @ParameterizedTest(name = "{index}: {2}")
     @MethodSource("invalidParameters")
     @DisplayName("폰이 이동할 수 없는 곳으로 이동")
     void pawnInvalidTest(Position source, Position target, String testName) {
-        board.move(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Three));
-        board.move(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Six));
+        board.move(Position.of(File.D, Rank.TWO), Position.of(File.D, Rank.THREE));
+        board.move(Position.of(File.D, Rank.SEVEN), Position.of(File.D, Rank.SIX));
 
-        board.putPiece(Position.of(File.d, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.d, Rank.Seven), new Pawn(Color.Black));
+        board.putPiece(Position.of(File.D, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.d, Rank.Five), "한번 움직인 화이트 폰은 두칸 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.d, Rank.Four), "한번 움직인 블랙 폰은 두칸 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), Position.of(File.D, Rank.FIVE), "한번 움직인 화이트 폰은 두칸 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.SIX), Position.of(File.D, Rank.FOUR), "한번 움직인 블랙 폰은 두칸 이동할 수 없다."),
 
-            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.d, Rank.Two), "화이트 폰은 뒤로 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.d, Rank.Seven), "블랙 폰은 뒤로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), Position.of(File.D, Rank.TWO), "화이트 폰은 뒤로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.SIX), Position.of(File.D, Rank.SEVEN), "블랙 폰은 뒤로 이동할 수 없다."),
 
-            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.c, Rank.Four), "화이트 폰은 잡을 기물이 없으면 왼쪽위로 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.e, Rank.Four), "화이트 폰은 잡을 기물이 없으면 오른쪽위로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), Position.of(File.C, Rank.FOUR), "화이트 폰은 잡을 기물이 없으면 왼쪽위로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.THREE), Position.of(File.E, Rank.FOUR), "화이트 폰은 잡을 기물이 없으면 오른쪽위로 이동할 수 없다."),
 
-            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.c, Rank.Five), "블랙 폰은 잡을 기물이 없으면 왼쪽아래로 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.e, Rank.Five), "블랙 폰은 잡을 기물이 없으면 오른쪽아래로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.SIX), Position.of(File.C, Rank.FIVE), "블랙 폰은 잡을 기물이 없으면 왼쪽아래로 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.SIX), Position.of(File.E, Rank.FIVE), "블랙 폰은 잡을 기물이 없으면 오른쪽아래로 이동할 수 없다."),
 
-            Arguments.of(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Four), "화이트 폰은 기물을 뛰어넘어 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Five), "블랙 폰은 기물을 뛰어넘어 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), Position.of(File.D, Rank.FOUR), "화이트 폰은 기물을 뛰어넘어 이동할 수 없다."),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Position.of(File.D, Rank.FIVE), "블랙 폰은 기물을 뛰어넘어 이동할 수 없다."),
 
-            Arguments.of(Position.of(File.a, Rank.Two), Position.of(File.a, Rank.Three), "폰은 앞에 있는 기물을 잡을 수 없다."),
-            Arguments.of(Position.of(File.h, Rank.Four), Position.of(File.h, Rank.Two), "폰은 두칸 앞에 있는 기물을 잡을 수 없다.")
+            Arguments.of(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE), "폰은 앞에 있는 기물을 잡을 수 없다."),
+            Arguments.of(Position.of(File.H, Rank.FOUR), Position.of(File.H, Rank.TWO), "폰은 두칸 앞에 있는 기물을 잡을 수 없다.")
         );
     }
 
@@ -88,15 +88,15 @@ public class PawnTest {
 
     private static Stream<Arguments> validParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Three), "화이트는 위로 한칸 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Four), "화이트는 위로 두칸 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Two), Position.of(File.c, Rank.Three), "화이트는 왼쪽 위의 기물을 잡고 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Two), Position.of(File.e, Rank.Three), "화이트는 오른쪽 위의 기물을 잡고 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), Position.of(File.D, Rank.THREE), "화이트는 위로 한칸 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), Position.of(File.D, Rank.FOUR), "화이트는 위로 두칸 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), Position.of(File.C, Rank.THREE), "화이트는 왼쪽 위의 기물을 잡고 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.TWO), Position.of(File.E, Rank.THREE), "화이트는 오른쪽 위의 기물을 잡고 이동할 수 있다."),
 
-            Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Six), "블랙은 아래로 한칸 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Five), "블랙은 아래로 두칸 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.c, Rank.Six), "블랙 왼쪽 아래의 기물을 잡고 이동할 수 있다."),
-            Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.e, Rank.Six), "블랙 오른쪽 아래의 기물을 잡고 이동할 수 있다.")
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Position.of(File.D, Rank.SIX), "블랙은 아래로 한칸 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Position.of(File.D, Rank.FIVE), "블랙은 아래로 두칸 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Position.of(File.C, Rank.SIX), "블랙 왼쪽 아래의 기물을 잡고 이동할 수 있다."),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), Position.of(File.E, Rank.SIX), "블랙 오른쪽 아래의 기물을 잡고 이동할 수 있다.")
         );
     }
 }

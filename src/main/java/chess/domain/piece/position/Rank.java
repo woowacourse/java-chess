@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum Rank {
-    One(1),
-    Two(2),
-    Three(3),
-    Four(4),
-    Five(5),
-    Six(6),
-    Seven(7),
-    Eight(8),
-    Out(-1)
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    OUT(-1)
     ;
 
     private final int value;
@@ -33,8 +33,8 @@ public enum Rank {
     }
 
     public Rank getNext(int next) {
-        if (value + next < One.value || value + next > Eight.value) {
-            return Out;
+        if (value + next < ONE.value || value + next > EIGHT.value) {
+            return OUT;
         }
 
         return Rank.of(value + next);
