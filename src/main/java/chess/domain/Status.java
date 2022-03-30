@@ -20,7 +20,7 @@ public class Status {
             return TERMINATE_GAME;
         }
 
-        return board.calculateScore(board, color);
+        return board.calculateScore(color);
     }
 
     public double getWhiteScore() {

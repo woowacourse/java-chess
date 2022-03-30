@@ -145,11 +145,11 @@ public class Board {
         return countPiece(PieceType.KING, color) == NO_KING_EXIST;
     }
 
-    public double calculateScore(Board board, Color color) {
+    public double calculateScore(Color color) {
         final double score = Arrays.stream(PieceType.values())
-                .mapToDouble(piece -> piece.calculateScore(board.countPiece(piece, color)))
+                .mapToDouble(piece -> piece.calculateScore(countPiece(piece, color)))
                 .sum();
-        return score - board.countDeductedPawns(color) * PAWN_MINUS_SCORE;
+        return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
     }
 
     private int countDeductedPawns(final Color color) {
