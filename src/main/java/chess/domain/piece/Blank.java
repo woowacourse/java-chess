@@ -23,7 +23,7 @@ public class Blank extends Piece {
 
     @Override
     public List<Position> findPath(Position destination) {
-        return null;
+        throw new IllegalArgumentException("Blank는 움직일 수 없습니다.");
     }
 
     @Override
