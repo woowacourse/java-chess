@@ -33,7 +33,18 @@ public class PawnTest {
         assertThat(pawn.getPosition()).isEqualTo(a6);
     }
 
-    @DisplayName("폰이 후진하려는 경우, 예외가 발생한다.")
+    @DisplayName("흑색 폰이 후진하려는 경우, 예외가 발생한다.")
+    @Test
+    void move_blackBackward_exception() {
+        Pawn pawn = new Pawn(Color.BLACK, Position.of("a7"));
+        Position a8 = Position.of("a8");
+
+        assertThatCode(()-> pawn.move(a8))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
+    }
+
+    @DisplayName("백색 폰이 후진하려는 경우, 예외가 발생한다.")
     @Test
     void move_exceptionOnMovingBackwards() {
         Pawn pawn = new Pawn(WHITE, Position.of("a4"));
