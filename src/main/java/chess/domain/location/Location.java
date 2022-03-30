@@ -13,16 +13,16 @@ public class Location {
                         .forEach(rank -> CACHE.put(toKey(file, rank), new Location(file, rank))));
     }
 
-    private static String toKey(File file, Rank rank) {
-        return file.name() + rank.name();
-    }
-
     private final File file;
-    private final Rank rank;
 
+    private final Rank rank;
     private Location(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 
     public static Location of(File file, Rank rank) {

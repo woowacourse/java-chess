@@ -15,10 +15,10 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
-    private final int rank;
+    private final int value;
 
-    Rank(int rank) {
-        this.rank = rank;
+    Rank(int value) {
+        this.value = value;
     }
 
     public static List<Rank> reverseValues() {
@@ -29,7 +29,7 @@ public enum Rank {
 
     public static Rank of(String value) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.rank == toInteger(value))
+                .filter(rank -> rank.value == toInteger(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 rank축은 없습니다."));
     }
@@ -43,10 +43,10 @@ public enum Rank {
     }
 
     public int computeDiff(Rank target) {
-        return target.rank - rank;
+        return target.value - value;
     }
 
     public Rank add(int value) {
-        return Rank.of(String.valueOf(rank + value));
+        return Rank.of(String.valueOf(this.value + value));
     }
 }
