@@ -13,15 +13,11 @@ public class LineNumber {
     private final int number;
 
     private LineNumber(int number) {
+        validateRange(number);
         this.number = number;
     }
 
-    public static LineNumber of(String input) {
-        return of(Integer.parseInt(input));
-    }
-
     public static LineNumber of(int number) {
-        validateRange(number);
         return LINE_NUMBER_CACHE.computeIfAbsent(number, ignored -> new LineNumber(number));
     }
 
@@ -43,8 +39,8 @@ public class LineNumber {
         return number - other.number;
     }
 
-    public int next(int degree) {
-        return number + degree;
+    public LineNumber next(int degree) {
+        return LineNumber.of(number + degree);
     }
 
     @Override

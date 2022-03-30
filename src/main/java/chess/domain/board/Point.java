@@ -46,7 +46,7 @@ public class Point {
     }
 
     public Point next(Direction direction) {
-        return Point.of(horizontal.next(direction.getDx()),
+        return new Point(horizontal.next(direction.getDx()),
                 vertical.next(direction.getDy()));
     }
 

@@ -19,14 +19,6 @@ class LineNumberTest {
     }
 
     @ParameterizedTest(name = "{index} {displayName} input = {0}")
-    @DisplayName("문자열로 위치를 생성할 수 있다.")
-    @ValueSource(strings = {"1", "2", "3", "4", "5", "6","7", "8"})
-    void createLineNumberByString(final String input) {
-        assertThatCode(() -> LineNumber.of(input))
-                .doesNotThrowAnyException();
-    }
-
-    @ParameterizedTest(name = "{index} {displayName} input = {0}")
     @DisplayName("라인 번호는 1~8사이여야 한다.")
     @ValueSource(ints = {0, 9, 10})
     void throwsExceptionWithNumberOutOfRange(final int number) {
