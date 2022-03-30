@@ -28,7 +28,7 @@ public class OutputView {
     private void printFilesIn(final Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
             Piece piece = board.get(Position.of(rank, file));
-            System.out.print(piece.getSymbol());
+            PieceView.printSymbolOf(piece);
         }
     }
 

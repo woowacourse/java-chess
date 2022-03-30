@@ -1,10 +1,10 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.position.Position;
 import chess.model.direction.route.Route;
 import chess.model.direction.strategy.KnightRouteFinder;
 import chess.model.direction.strategy.RouteStrategy;
+import chess.model.position.Position;
 
 public class Knight extends Piece {
 
@@ -12,8 +12,8 @@ public class Knight extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Knight(final Team team, final String symbol) {
-        super(team, symbol);
+    public Knight(final Team team) {
+        super(team);
         this.routeStrategy = new KnightRouteFinder();
     }
 

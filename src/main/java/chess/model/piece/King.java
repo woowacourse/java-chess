@@ -13,8 +13,8 @@ public class King extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public King(final Team team, final String symbol) {
-        super(team, symbol);
+    public King(final Team team) {
+        super(team);
         this.routeStrategy = new OrdinalRouteFinder();
     }
 

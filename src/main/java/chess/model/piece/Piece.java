@@ -6,19 +6,14 @@ import chess.model.Team;
 import chess.model.direction.route.Route;
 import chess.model.position.Position;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Piece {
 
     protected final Team team;
-    private final String symbol;
 
-    protected Piece(final Team team, final String symbol) {
+    protected Piece(final Team team) {
         this.team = team;
-        this.symbol = symbol;
-    }
-
-    public String getSymbol() {
-        return symbol;
     }
 
     public boolean isOpponent(final Team team) {
@@ -47,5 +42,22 @@ public abstract class Piece {
 
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Piece that = (Piece) obj;
+        return this.team == that.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team);
     }
 }

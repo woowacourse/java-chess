@@ -12,8 +12,8 @@ public class Bishop extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Bishop(final Team team, final String symbol) {
-        super(team, symbol);
+    public Bishop(final Team team) {
+        super(team);
         this.routeStrategy = new DiagonalRouteFinder();
     }
 

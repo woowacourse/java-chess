@@ -12,8 +12,8 @@ public class Rook extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Rook(Team team, String symbol) {
-        super(team, symbol);
+    public Rook(Team team) {
+        super(team);
         this.routeStrategy = new CardinalRouteFinder();
     }
 

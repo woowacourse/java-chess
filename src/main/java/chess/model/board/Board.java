@@ -80,7 +80,7 @@ public class Board {
 
     private void movePiece(final Position source, final Position target) {
         board.put(target, board.get(source));
-        board.put(source, new Blank(NONE, "."));
+        board.put(source, new Blank(NONE));
     }
 
     public boolean isKingDead() {

@@ -12,8 +12,8 @@ public class Queen extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public Queen(final Team team, final String symbol) {
-        super(team, symbol);
+    public Queen(final Team team) {
+        super(team);
         this.routeStrategy = new OrdinalRouteFinder();
     }
 

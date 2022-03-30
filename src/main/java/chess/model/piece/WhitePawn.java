@@ -19,8 +19,8 @@ public class WhitePawn extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public WhitePawn(final Team team, final String symbol) {
-        super(team, symbol);
+    public WhitePawn(final Team team) {
+        super(team);
         this.routeStrategy = new PawnRouteFinder(team);
     }
 

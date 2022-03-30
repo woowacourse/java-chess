@@ -19,8 +19,8 @@ public class BlackPawn extends Piece {
 
     private final RouteStrategy routeStrategy;
 
-    public BlackPawn(Team team, String symbol) {
-        super(team, symbol);
+    public BlackPawn(Team team) {
+        super(team);
         this.routeStrategy = new PawnRouteFinder(team);
     }
 

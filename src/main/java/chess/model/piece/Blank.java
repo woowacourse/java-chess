@@ -6,8 +6,8 @@ import chess.model.position.Position;
 
 public class Blank extends Piece {
 
-    public Blank(final Team team, final String symbol) {
-        super(team, symbol);
+    public Blank(final Team team) {
+        super(team);
     }
 
     @Override
