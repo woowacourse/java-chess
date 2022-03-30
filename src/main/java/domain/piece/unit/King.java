@@ -26,7 +26,7 @@ public final class King extends SpecificMovablePiece {
     }
 
     @Override
-    public boolean isPawn(){
+    public boolean isPawn() {
         return false;
     }
 }

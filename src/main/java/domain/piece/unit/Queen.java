@@ -26,7 +26,7 @@ public final class Queen extends CommonMovablePiece {
     }
 
     @Override
-    public boolean isPawn(){
+    public boolean isPawn() {
         return false;
     }
 }

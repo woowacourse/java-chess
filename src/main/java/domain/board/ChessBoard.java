@@ -83,7 +83,7 @@ public final class ChessBoard {
 
     private void validateBoardPositionIsNull(final Position position) {
         if (board.get(position) != null) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 다른 기물이 존재합니다.");
         }
     }
 

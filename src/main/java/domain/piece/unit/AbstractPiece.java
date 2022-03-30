@@ -72,7 +72,7 @@ public abstract class AbstractPiece implements Piece {
                 .filter(direction -> directionalPositions.get(direction).contains(target))
                 .filter(direction -> directionalPositions.get(direction) != null)
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 잘못된 타켓 입력입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 타켓 입력입니다."));
 
     }
 

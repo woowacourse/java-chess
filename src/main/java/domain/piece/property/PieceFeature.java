@@ -29,12 +29,12 @@ public enum PieceFeature {
     }
 
     public static Double createScore(final String symbol, final boolean duplicatedPawn) {
-        Double score =  Arrays.stream(PieceFeature.values())
+        Double score = Arrays.stream(PieceFeature.values())
                 .filter(pieceFeature -> pieceFeature.symbol.equals(symbol))
                 .map(pieceFeature -> pieceFeature.score)
                 .findFirst()
                 .orElse(null);
-        if(duplicatedPawn && score == PAWN.score){
+        if (duplicatedPawn && score == PAWN.score) {
             return DUPLICATE_PAWN;
         }
         return score;

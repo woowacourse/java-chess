@@ -67,7 +67,7 @@ public final class ChessController {
     }
 
     private void playMove(final InputCase input, ChessBoard chessBoard) {
-        if (!input.equals(MOVE)){
+        if (!input.equals(MOVE)) {
             return;
         }
         Position source = InputView.responseSource();
