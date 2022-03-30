@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -30,6 +32,22 @@ public class Position {
 
     public Row getRow() {
         return row;
+    }
+
+    public List<Position> getPathToDst(Position destination, Direction direction) {
+        List<Position> positions = new ArrayList<>();
+        addPositions(destination, direction, positions);
+        return positions;
+    }
+
+    private void addPositions(Position destination, Direction direction, List<Position> positions) {
+        char colValue = (char) (col.getValue() + direction.getXDegree());
+        int rowValue = row.getValue() + direction.getYDegree();
+        while (!(colValue == destination.getCol().getValue() && rowValue == destination.getRow().getValue())) {
+            positions.add(new Position(Column.find(colValue), Row.find(rowValue)));
+            colValue += direction.getXDegree();
+            rowValue += direction.getYDegree();
+        }
     }
 
     @Override

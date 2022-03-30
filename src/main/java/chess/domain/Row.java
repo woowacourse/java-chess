@@ -32,4 +32,8 @@ public enum Row {
     public Row plusRow(int number) {
         return find(value + number);
     }
+
+    public int getValue() {
+        return value;
+    }
 }

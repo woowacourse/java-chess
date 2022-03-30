@@ -27,19 +27,15 @@ public class Pawn extends Piece {
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
         if (isBlackTeam()) {
             Direction direction = findDirection(Direction.blackPawnDirection(isFirstTurn()), destination);
-            return getPath(destination, direction, position.getCol(), position.getRow());
+            return getPath(destination, direction);
         }
         Direction direction = findDirection(Direction.whitePawnDirection(isFirstTurn()), destination);
-        return getPath(destination, direction, position.getCol(), position.getRow());
+        return getPath(destination, direction);
     }
 
-    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
-        List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
-            col = col.plusColumn(direction.getXDegree());
-            row = row.plusRow(direction.getYDegree());
-            positions.add(new Position(col, row));
-        }
+    private List<Position> getPath(Position destination, Direction direction) {
+        List<Position> positions = position.getPathToDst(destination, direction);
+        positions.add(destination);
         return positions;
     }
 
