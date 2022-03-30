@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final double DUPLICATE_PAWN_SCORE = 0.5;
     private final Map<Location, Piece> chessBoard;
 
     public Board() {
@@ -88,47 +87,14 @@ public class Board {
         }
     }
 
-    public double computeTotalScore(Team team) {
-        double score = 0;
-        for (File file : File.values()) {
-            List<Piece> pieceList = collectFilePieceByTeam(file, team);
-            score += computeScore(pieceList);
-            score -= computeDuplicatePawnScore(pieceList);
-        }
-        return score;
-    }
-
-    private List<Piece> collectFilePieceByTeam(File file, Team team) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> Location.of(file, rank))
-                .map(chessBoard::get)
-                .filter(piece -> piece.isSameTeam(team))
-                .collect(Collectors.toList());
-    }
-
-    private double computeDuplicatePawnScore(List<Piece> pieceList) {
-        if (countPawn(pieceList) > 1) {
-            return countPawn(pieceList) * DUPLICATE_PAWN_SCORE;
-        }
-        return 0;
-    }
-
-    private long countPawn(List<Piece> pieceList) {
-        return pieceList.stream()
-                .filter(Piece::isPawn)
-                .count();
-    }
-
-    private double computeScore(List<Piece> pieces) {
-        return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
     public List<Piece> collectRankPiece(Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Location.of(file, rank))
                 .map(chessBoard::get)
                 .collect(Collectors.toList());
+    }
+
+    public Piece get(Location location) {
+        return chessBoard.get(location);
     }
 }

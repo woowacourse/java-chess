@@ -31,8 +31,7 @@ public class Black extends Running {
 
     @Override
     public TeamScore getScore() {
-        double score = getBoard().computeTotalScore(Team.BLACK);
-        return new TeamScore(Team.BLACK, score);
+        return new TeamScore(Team.BLACK,  getBoard());
     }
 
 }

@@ -18,8 +18,7 @@ public class White extends Running {
 
     @Override
     public TeamScore getScore() {
-        double score = getBoard().computeTotalScore(Team.WHITE);
-        return new TeamScore(Team.WHITE, score);
+        return new TeamScore(Team.WHITE, getBoard());
     }
 
     @Override

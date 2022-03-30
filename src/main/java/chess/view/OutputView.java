@@ -34,6 +34,7 @@ public class OutputView {
     }
 
     public static void printScore(TeamScore score) {
-        System.out.printf("%s팀 점수: %2f", score.getTeam(), score.getScore());
+        System.out.printf("%s팀 점수: %.1f", score.getTeam(), score.getScore());
+        System.out.println();
     }
 }

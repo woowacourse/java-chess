@@ -72,7 +72,7 @@ public class BoardTest {
     @Test
     @DisplayName("점수 계산하는 로직 확인")
     void getScore() {
-        Board board = new Board();
-        assertThat(board.computeTotalScore(WHITE)).isEqualTo(38);
+        TeamScore teamScore = new TeamScore(WHITE, new Board());
+        assertThat(teamScore.getScore()).isEqualTo(38);
     }
 }
