@@ -161,10 +161,6 @@ public class ChessBoard {
         }
     }
 
-    public Color getColor(Position position) {
-        return selectPiece(position).getColor();
-    }
-
     public Piece selectPiece(Position position) {
         return pieces.get(position);
     }

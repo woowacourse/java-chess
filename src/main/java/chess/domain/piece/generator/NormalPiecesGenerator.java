@@ -28,7 +28,7 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         createPawn();
     }
 
-    private NormalPiecesGenerator() {
+    public NormalPiecesGenerator() {
     }
 
     public static PiecesGenerator getInstance() {

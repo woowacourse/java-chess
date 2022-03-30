@@ -7,9 +7,9 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.Map;
 
-public class ResultView {
+public class OutputView {
 
-    private ResultView() {
+    private OutputView() {
     }
 
     public static void printStartMessage() {
