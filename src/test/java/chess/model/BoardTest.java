@@ -2,7 +2,6 @@ package chess.model;
 
 import static chess.model.Board.*;
 import static chess.model.File.*;
-import static chess.model.PieceColor.*;
 import static chess.model.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +20,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.model.boardinitializer.BoardInitializer;
 import chess.model.boardinitializer.defaultInitializer;
-import chess.model.piece.EmptyPiece;
 import chess.model.piece.King;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
@@ -46,7 +44,7 @@ public class BoardTest {
         int actual = piecesByPositions.keySet().size();
 
         //then
-        assertThat(actual).isEqualTo(64);
+        assertThat(actual).isEqualTo(32);
     }
 
     @Test
@@ -191,27 +189,12 @@ public class BoardTest {
 
     public static class kingCaptureTestInitializer implements BoardInitializer {
 
-        private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
-
         @Override
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
-            putAllEmptyPieces(result);
             result.put(Position.of(TWO, A), Rook.colorOf(PieceColor.WHITE));
             result.put(Position.of(THREE, A), King.colorOf(PieceColor.BLACK));
             return result;
-        }
-
-        private void putAllEmptyPieces(Map<Position, Piece> result) {
-            for (Rank rank : Rank.reverseValues()) {
-                putEmptyPiecesInOneRank(result, rank);
-            }
-        }
-
-        private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
-            for (File file : File.values()) {
-                result.put(Position.of(rank, file), EMPTY_PIECE);
-            }
         }
     }
 }

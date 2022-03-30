@@ -11,9 +11,9 @@ public enum File {
     C("c"),
     D("d"),
     E("e"),
+    H("h"),
     F("f"),
-    G("g"),
-    H("h");
+    G("g");
 
     private static final String ERROR_NOT_EXIST_FILE = "[ERROR] 존재 하지 않는 파일입니다.";
     private final String value;

@@ -3,6 +3,7 @@ package chess.view;
 import static java.lang.System.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.model.File;
 import chess.model.Position;
@@ -39,6 +40,10 @@ public class OutputView {
     private static void printPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
         StringBuilder builder = new StringBuilder();
         for (File file : File.values()) {
+            if (Objects.isNull(piecesByPositions.get(Position.of(rank, file)))) {
+                builder.append(".");
+                continue;
+            }
             builder.append(piecesByPositions.get(Position.of(rank, file)).getEmblem());
         }
         out.println(builder);

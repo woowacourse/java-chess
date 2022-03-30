@@ -1,11 +1,9 @@
 package chess.model;
 
-import static chess.model.PieceColor.*;
-
 import java.util.Map;
+import java.util.Objects;
 
 import chess.model.boardinitializer.BoardInitializer;
-import chess.model.piece.EmptyPiece;
 import chess.model.piece.Piece;
 
 public class Board {
@@ -14,7 +12,6 @@ public class Board {
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
     static final String ERROR_NOT_MOVABLE = "[ERROR] 이동할 수 없는 위치입니다.";
     static final String ERROR_NOT_MOVABLE_CHESS_FINISHED = "[ERROR] 체스 게임이 종료되어 이동할 수 없습니다.";
-    private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
 
     private final Map<Position, Piece> values;
     private final TurnDecider turnDecider;
@@ -25,19 +22,19 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        validateMovableState(source, target);
+        validateMovableState(source);
         changePiecePositions(source, target);
         turnDecider.nextState();
     }
 
-    private void validateMovableState(Position source, Position target) {
+    private void validateMovableState(Position source) {
         validateSourceNotEmpty(source);
         validateCorrectTurn(source);
         validateNotFinished();
     }
 
     private void validateSourceNotEmpty(Position source) {
-        if (isEmptyPiece(pieceAt(source))) {
+        if (isEmpty(pieceAt(source))) {
             throw new IllegalArgumentException(ERROR_SOURCE_PIECE_EMPTY);
         }
     }
@@ -66,10 +63,14 @@ public class Board {
         finishIfKingCaptured(targetPiece);
 
         values.put(target, sourcePiece);
-        values.put(source, EMPTY_PIECE);
+        values.remove(source);
     }
 
     private void finishIfKingCaptured(Piece targetPiece) {
+        if (isEmpty(targetPiece)) {
+            return;
+        }
+
         if (targetPiece.isKing()) {
             turnDecider.finish();
         }
@@ -83,7 +84,7 @@ public class Board {
     }
 
     private MoveType moveType(Piece targetPiece) {
-        if (isEmptyPiece(targetPiece)) {
+        if (isEmpty(targetPiece)) {
             return MoveType.EMPTY;
         }
         if (turnDecider.isTurnOf(targetPiece)) {
@@ -98,11 +99,11 @@ public class Board {
         }
 
         return new Path(source, target).possiblePositions().stream()
-            .anyMatch(position -> !isEmptyPiece(pieceAt(position)));
+            .anyMatch(position -> !isEmpty(pieceAt(position)));
     }
 
-    private boolean isEmptyPiece(Piece piece) {
-        return piece.equals(EMPTY_PIECE);
+    private boolean isEmpty(Piece piece) {
+        return Objects.isNull(piece);
     }
 
     private Piece pieceAt(Position position) {

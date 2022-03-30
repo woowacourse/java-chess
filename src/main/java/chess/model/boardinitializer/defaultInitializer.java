@@ -14,7 +14,6 @@ import chess.model.PieceColor;
 import chess.model.Position;
 import chess.model.Rank;
 import chess.model.piece.Bishop;
-import chess.model.piece.EmptyPiece;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
@@ -26,7 +25,6 @@ public class defaultInitializer implements BoardInitializer {
 
     public static final Rank PAWN_WHITE_INIT_RANK = TWO;
     public static final Rank PAWN_BLACK_INIT_RANK = SEVEN;
-    private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
     private static final Function<PieceColor, List<Piece>> INIT_PIECE_FUNCTION = (PieceColor pieceColor) -> List.of(
         Rook.colorOf(pieceColor), Knight.colorOf(pieceColor), Bishop.colorOf(pieceColor),
         Queen.colorOf(pieceColor), King.colorOf(pieceColor), Bishop.colorOf(pieceColor),
@@ -36,23 +34,10 @@ public class defaultInitializer implements BoardInitializer {
     public Map<Position, Piece> apply() {
         Map<Position, Piece> result = new HashMap<>();
 
-        putAllEmptyPieces(result);
         putBlackPieces(result);
         putWhitePieces(result);
 
         return result;
-    }
-
-    private void putAllEmptyPieces(Map<Position, Piece> result) {
-        for (Rank rank : Rank.reverseValues()) {
-            putEmptyPiecesInOneRank(result, rank);
-        }
-    }
-
-    private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
-        for (File file : File.values()) {
-            result.put(Position.of(rank, file), EMPTY_PIECE);
-        }
     }
 
     private void putBlackPieces(Map<Position, Piece> result) {

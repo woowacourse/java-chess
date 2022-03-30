@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import chess.model.boardinitializer.BoardInitializer;
 import chess.model.boardinitializer.defaultInitializer;
-import chess.model.piece.EmptyPiece;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
@@ -48,29 +47,14 @@ public class ScoreCalculatorTest {
 
     public static class testInitializer implements BoardInitializer {
 
-        private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
-
         @Override
         public Map<Position, Piece> apply() {
             Map<Position, Piece> result = new HashMap<>();
-            putAllEmptyPieces(result);
             result.put(Position.of(FOUR, A), Pawn.colorOf(WHITE));
             result.put(Position.of(THREE, A), Pawn.colorOf(WHITE));
             result.put(Position.of(THREE, B), Pawn.colorOf(WHITE));
             result.put(Position.of(FIVE, A), Pawn.colorOf(BLACK));
             return result;
-        }
-
-        private void putAllEmptyPieces(Map<Position, Piece> result) {
-            for (Rank rank : Rank.reverseValues()) {
-                putEmptyPiecesInOneRank(result, rank);
-            }
-        }
-
-        private void putEmptyPiecesInOneRank(Map<Position, Piece> result, Rank rank) {
-            for (File file : File.values()) {
-                result.put(Position.of(rank, file), EMPTY_PIECE);
-            }
         }
     }
 }
