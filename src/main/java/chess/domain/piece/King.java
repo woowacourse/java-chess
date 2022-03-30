@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
+import java.util.ArrayList;
+import java.util.List;
 
 public class King extends Piece {
 
@@ -13,29 +16,15 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return isSameRowOrColAndOneDifference(fromPosition, toPosition)
-            || isOneDifferenceDiagonal(fromPosition, toPosition);
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        List<Direction> movableDirections = new ArrayList<>(Direction.rowAndColumns());
+        movableDirections.addAll(Direction.diagonals());
+        return movableDirections.contains(direction) && isOneStep(fromPosition, toPosition);
     }
 
-    private boolean isSameRowOrColAndOneDifference(Position fromPosition, Position toPosition) {
-        return isSameColAndOneDifference(fromPosition, toPosition)
-            || isSameRowAndOneDifference(fromPosition, toPosition);
-    }
-
-    private boolean isSameColAndOneDifference(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameFile(toPosition)
-            && Math.abs(fromPosition.getRankDifference(toPosition)) == SCOPE_DIFFERENCE;
-    }
-
-    private boolean isSameRowAndOneDifference(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameRank(toPosition)
-            && Math.abs(fromPosition.getFileDifference(toPosition)) == SCOPE_DIFFERENCE;
-    }
-
-    private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getRankDifference(toPosition);
-        int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height, 2) + Math.pow(width, 2) == 2;
+    private boolean isOneStep(Position fromPosition, Position toPosition) {
+        return toPosition.getRankDifference(fromPosition) <= SCOPE_DIFFERENCE
+            && toPosition.getFileDifference(fromPosition) <= SCOPE_DIFFERENCE;
     }
 
     @Override
