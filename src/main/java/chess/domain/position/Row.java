@@ -42,7 +42,7 @@ public enum Row {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 헹은 숫자로 입력되어야 합니다.");
+            throw new IllegalArgumentException("헹은 숫자로 입력되어야 합니다.");
         }
     }
 
