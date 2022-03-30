@@ -8,7 +8,7 @@ public final class InvalidPiece extends Piece {
     private static final Piece INVALID_PIECE = new InvalidPiece(Color.EMPTY);
 
     private InvalidPiece(Color color) {
-        super(color);
+        super(color, PieceType.INVALID);
     }
 
     public static Piece getInstance() {
@@ -18,10 +18,5 @@ public final class InvalidPiece extends Piece {
     @Override
     public boolean movable(Distance distance, Piece target) {
         return false;
-    }
-
-    @Override
-    public boolean isInValid() {
-        return true;
     }
 }

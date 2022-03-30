@@ -5,7 +5,7 @@ import chess.domain.Distance;
 
 public final class King extends Piece {
     public King(Color color) {
-        super(color);
+        super(color, PieceType.KING);
     }
 
     @Override

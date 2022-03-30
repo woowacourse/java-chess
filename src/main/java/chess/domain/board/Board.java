@@ -7,7 +7,8 @@ import chess.domain.Color;
 import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceClassChecker;
+import chess.domain.piece.PieceType;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +34,9 @@ public class Board {
         Piece pieceAtFrom = board.get(fromPosition);
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
 
-        if (!pieceAtFrom.isRightColor(color) || isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
+        if (!pieceAtFrom.matchColor(color) || isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
             return MoveResult.FAIL;
         }
-
         movePiece(fromPosition, toPosition, pieceAtFrom);
         return getMoveResult(pieceAtTo);
     }
@@ -47,7 +47,7 @@ public class Board {
     }
 
     private boolean isInvalidFrom(Piece pieceAtFrom) {
-        return pieceAtFrom.isInValid();
+        return pieceAtFrom.matchType(PieceType.INVALID);
     }
 
     private boolean isNotMovable(Position from, Position to, Piece pieceAtFrom, Piece pieceAtTo) {
@@ -55,7 +55,7 @@ public class Board {
     }
 
     private boolean canNotGoOnTheWay(Position from, Position to, Piece pieceAtFrom) {
-        return PieceClassChecker.from(pieceAtFrom) != PieceClassChecker.KNIGHT && isPieceOnTheWay(from, to);
+        return !pieceAtFrom.matchType(PieceType.KNIGHT) && isPieceOnTheWay(from, to);
     }
 
     private boolean isPieceOnTheWay(Position fromPosition, Position toPosition) {
@@ -71,15 +71,15 @@ public class Board {
     }
 
     private MoveResult getMoveResult(Piece pieceAtTo) {
-        if (PieceClassChecker.from(pieceAtTo) == PieceClassChecker.KING) {
+        if (pieceAtTo.matchType(PieceType.KING)) {
             return MoveResult.ENDED;
         }
         return MoveResult.SUCCESS;
     }
 
     public Map<Color, Double> getScore() {
-        List<Position> whitePawnPositions = getPawnPositionsByColor(Piece::isWhite);
-        List<Position> blackPawnPositions = getPawnPositionsByColor(Piece::isBlack);
+        List<Position> whitePawnPositions = getPawnPositionsByColor(piece -> piece.matchColor(Color.WHITE));
+        List<Position> blackPawnPositions = getPawnPositionsByColor(piece -> piece.matchColor(Color.BLACK));
 
         double whitePawnScore = calculatePawnScore(whitePawnPositions);
         double blackPawnScore = calculatePawnScore(blackPawnPositions);
@@ -90,7 +90,7 @@ public class Board {
     private List<Position> getPawnPositionsByColor(Predicate<Piece> condition) {
         return board.entrySet()
                 .stream()
-                .filter(entry -> PieceClassChecker.from(entry.getValue()) == PieceClassChecker.PAWN)
+                .filter(entry -> entry.getValue().matchType(PieceType.PAWN))
                 .filter(entry -> condition.test(entry.getValue()))
                 .map(Entry::getKey)
                 .collect(Collectors.toList());
@@ -116,19 +116,29 @@ public class Board {
     }
 
     private Map<Color, Double> calculateChessScore(double whitePawnScore, double blackPawnScore) {
-        Map<Color, Double> chessScore = getChessScoreWithoutPawn();
+        Map<Color, Double> scoreWithoutPawn = getChessScoreWithoutPawn();
+        Map<Color, Double> score = new HashMap<>();
 
-        chessScore.put(Color.WHITE, chessScore.getOrDefault(Color.WHITE, DEFAULT_SCORE) + whitePawnScore);
-        chessScore.put(Color.BLACK, chessScore.getOrDefault(Color.BLACK, DEFAULT_SCORE) + blackPawnScore);
+        score.put(Color.WHITE, scoreWithoutPawn.get(Color.WHITE) + whitePawnScore);
+        score.put(Color.BLACK, scoreWithoutPawn.get(Color.BLACK) + blackPawnScore);
 
-        return chessScore;
+        return score;
     }
 
     private Map<Color, Double> getChessScoreWithoutPawn() {
-        return board.values()
+        Map<Boolean, Double> scoreKeyByBoolean = board.values()
                 .stream()
-                .filter(piece -> PieceClassChecker.from(piece) != PieceClassChecker.PAWN)
-                .collect(groupingBy(Color::from, summingDouble(Score::from)));
+                .filter(piece -> !piece.matchType(PieceType.PAWN))
+                .collect(groupingBy(piece -> piece.matchColor(Color.WHITE), summingDouble(Score::from)));
+
+        return convertScoreKeyByColor(scoreKeyByBoolean);
+    }
+
+    private Map<Color, Double> convertScoreKeyByColor(Map<Boolean, Double> scoreKeyByBoolean) {
+        Map<Color, Double> score = new HashMap<>();
+        score.put(Color.WHITE, scoreKeyByBoolean.getOrDefault(true, DEFAULT_SCORE));
+        score.put(Color.BLACK, scoreKeyByBoolean.getOrDefault(false, DEFAULT_SCORE));
+        return score;
     }
 
     public Map<Position, Piece> getBoard() {

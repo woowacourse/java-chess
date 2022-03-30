@@ -5,7 +5,7 @@ import chess.domain.Distance;
 
 public final class Bishop extends Piece {
     public Bishop(Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override

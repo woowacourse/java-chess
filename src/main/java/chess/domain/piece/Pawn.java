@@ -13,7 +13,7 @@ public final class Pawn extends Piece {
     private boolean isFirstMove = true;
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     @Override
@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isDiagonalMove(Distance distance, Piece target) {
-        return !target.isInValid() && isOpponent(target) && distance.isDiagonal();
+        return !target.matchType(PieceType.INVALID) && isOpponent(target) && distance.isDiagonal();
     }
 
     private boolean isForwardMove(Distance distance, Piece target) {

@@ -6,9 +6,11 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final Color color;
+    private final PieceType pieceType;
 
-    public Piece(Color color) {
+    public Piece(Color color, PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean movable(Distance distance, Piece target);
@@ -17,21 +19,14 @@ public abstract class Piece {
         return this.color != another.color;
     }
 
-    public boolean isInValid() {
-        return false;
-    }
-
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-
-    public boolean isRightColor(Color color) {
+    public boolean matchColor(Color color) {
         return this.color == color;
     }
+
+    public boolean matchType(PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
 
     @Override
     public boolean equals(Object o) {

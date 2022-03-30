@@ -10,7 +10,7 @@ public final class Knight extends Piece {
             = List.of(new Distance(1, 2), new Distance(2, 1));
 
     public Knight(Color color) {
-        super(color);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
