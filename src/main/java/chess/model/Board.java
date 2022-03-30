@@ -24,7 +24,7 @@ public class Board {
 
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         if (!sourcePiece.isCurrentTurn(thisTurn)) {
-            throw new IllegalArgumentException("움직일 수 없습니다");
+            throw new IllegalArgumentException("본인의 말을 움직여야 합니다.");
         }
         Piece targetPiece = pieces.findByPosition(targetPosition);
         if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece))
@@ -33,7 +33,7 @@ public class Board {
             pieces.arrange(targetPiece, sourcePosition);
             return;
         }
-        throw new IllegalArgumentException("움직일수 없습니다.");
+        throw new IllegalArgumentException("움직일 수 없습니다.");
     }
 
     public boolean isKingDead() {

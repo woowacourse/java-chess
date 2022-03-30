@@ -6,6 +6,7 @@ import java.util.List;
 public class Move extends Command {
 
     private static final String EMPTY_DELIMITER = " ";
+    private static final int MOVE_COMMAND_LENGTH = 3;
 
     public Move(String input) {
         super(input);
@@ -52,7 +53,7 @@ public class Move extends Command {
     }
 
     private void validateSplit(String[] split) {
-        if (split.length != 3) {
+        if (split.length != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException("move의 형식이 올바르지 않습니다.");
         }
     }
