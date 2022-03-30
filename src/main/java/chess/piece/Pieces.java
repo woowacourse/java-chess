@@ -50,15 +50,15 @@ public final class Pieces {
 
     private static List<Piece> initBlanks(char[] files) {
         List<Piece> emptys = new ArrayList<>();
-        for (char c = '6'; c > '2'; c--) {
-            createEmpty(files, emptys, c);
+        for (char rank = '6'; rank > '2'; rank--) {
+            createEmpty(files, emptys, rank);
         }
         return emptys;
     }
 
-    private static void createEmpty(char[] files, List<Piece> emptys, char c) {
+    private static void createEmpty(char[] files, List<Piece> emptys, char rank) {
         for (char file : files) {
-            emptys.add(new Empty(Position.of(file, c)));
+            emptys.add(new Empty(Position.of(file, rank)));
         }
     }
 
