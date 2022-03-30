@@ -36,7 +36,7 @@ public class ChessController {
             }
 
             if (command.equals("end")) {
-                chessGame.endGame();
+                break;
             }
         }
     }
