@@ -1,19 +1,22 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.controller.menu.Move;
-import chess.view.MoveInfo;
-import chess.view.InputView;
 import chess.controller.menu.MenuType;
+import chess.controller.menu.Move;
+import chess.domain.board.Board;
+import chess.view.InputView;
+import chess.view.MoveInfo;
 import chess.view.OutputView;
 
-public class ChessGame {
+public class ConsoleApplication {
 
     private static final int MENU_INDEX = 0;
+    private static final Board board = new Board();
 
-    private final Board board = new Board();
+    public static void main(String[] args) {
+        start();
+    }
 
-    public void start() {
+    private static void start() {
         OutputView.printGuideMessage();
         boolean shouldContinue = true;
 
@@ -28,7 +31,7 @@ public class ChessGame {
         }
     }
 
-    private boolean hasNext() {
+    private static boolean hasNext() {
         String[] inputValue = InputView.inputMenu();
         MenuType menuType;
         try {
@@ -40,7 +43,7 @@ public class ChessGame {
         }
     }
 
-    private boolean play(MenuType menuType, String[] inputValue) {
+    private static boolean play(MenuType menuType, String[] inputValue) {
         if (menuType.isMove()) {
             return new Move().play(board, new MoveInfo(inputValue));
         }
