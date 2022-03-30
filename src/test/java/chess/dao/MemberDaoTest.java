@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import chess.Member;
+import chess.model.Member;
 
 class MemberDaoTest {
 	@Test
