@@ -6,6 +6,8 @@ import chess.domain.piece.strategy.Movable;
 import chess.domain.piece.strategy.WhitePawnMoving;
 import chess.domain.position.Position;
 
+import java.util.Objects;
+
 public class Pawn extends Piece {
 
     private static final double SCORE = 1;
@@ -53,5 +55,20 @@ public class Pawn extends Piece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof Pawn)) return false;
+
+        Pawn piece = (Pawn) other;
+
+        return getColor() == piece.getColor();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor());
     }
 }

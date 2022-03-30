@@ -18,6 +18,7 @@ public enum Command {
 
     private static final int COMMAND_LOCATION = 0;
     private static final int MOVE_COMMAND_LENGTH = 3;
+    private static final String DELIMITER = " ";
 
     private final String command;
     private final BiConsumer<String[], ChessGame> operate;
@@ -28,7 +29,7 @@ public enum Command {
     }
 
     public static void execute(final String input, final ChessGame chessGame) {
-        String[] commands = input.split(" ");
+        String[] commands = input.split(DELIMITER);
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))
                 .findFirst()

@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final List<Position> TOTAL = new ArrayList<>();
+
     private static final int COORDINATE_X_INDEX = 0;
     private static final int COORDINATE_Y_INDEX = 1;
 
     private final CoordinateX coordinateX;
     private final CoordinateY coordinateY;
-
-    private static final List<Position> TOTAL = new ArrayList<>();
 
     static {
         for (CoordinateX x : CoordinateX.values()) {

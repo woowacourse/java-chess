@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.Objects;
+
 public class King extends Piece {
 
     private static final double SCORE = 0;
@@ -44,5 +46,20 @@ public class King extends Piece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof King)) return false;
+
+        King piece = (King) other;
+
+        return getColor() == piece.getColor();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor());
     }
 }

@@ -47,10 +47,6 @@ public class Output {
     private static void printBoard(final CoordinateX coordinateX, final CoordinateY coordinateY, final Map<Position, Piece> board) {
         Piece piece = board.get(Position.of(coordinateX, coordinateY));
         String pieceName = PieceDto.getName(piece);
-        if (piece != null) {
-            System.out.print(pieceName);
-            return;
-        }
-        System.out.print(".");
+        System.out.print(pieceName);
     }
 }
