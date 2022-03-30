@@ -16,7 +16,6 @@ public final class Init extends AbstractState {
             return new ExitFinished(chessGame);
         }
         if (commandDto.getCommand() == Command.START) {
-            chessGame.start();
             return new Play(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);

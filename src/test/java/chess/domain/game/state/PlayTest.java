@@ -23,7 +23,6 @@ class PlayTest {
 
     @BeforeEach
     void setup() {
-        chessGame.start();
         state = new Play(chessGame);
     }
 
@@ -53,7 +52,7 @@ class PlayTest {
     @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
+        assertThatThrownBy(() -> state.execute(new CommandDto("start")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

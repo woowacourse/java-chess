@@ -4,7 +4,7 @@ import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
 
 public final class Play extends AbstractState {
-    private static final String INVALID_COMMEND_MESSAGE = "end, move 만 입력할 수 있습니다.";
+    private static final String INVALID_COMMEND_MESSAGE = "end, status, move 만 입력할 수 있습니다.";
 
     public Play(ChessGame chessGame) {
         super(chessGame);

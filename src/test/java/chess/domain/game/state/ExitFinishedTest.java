@@ -16,7 +16,6 @@ class ExitFinishedTest {
 
     @BeforeEach
     void setup() {
-        chessGame.start();
         state = new ExitFinished(chessGame);
     }
 

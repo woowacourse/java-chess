@@ -16,7 +16,6 @@ class StatusFinishedTest {
 
     @BeforeEach
     void setup() {
-        chessGame.start();
         state = new StatusFinished(chessGame);
     }
 

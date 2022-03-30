@@ -14,11 +14,6 @@ class ResultTest {
     private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
     private State state = new Result(chessGame);
 
-    @BeforeEach
-    void setup() {
-        chessGame.start();
-    }
-
     @Test
     @DisplayName("status 커멘드를 입력할 시 StatusEnd 상태로 이동한다.")
     void execute() {
