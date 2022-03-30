@@ -4,11 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
 import java.util.List;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class MemberDaoTest {
 
     @Test
+    @Disabled
     void connection() {
         final MemberDao memberDao = new MemberDao();
         final Connection connection = memberDao.getConnection();
@@ -16,12 +18,14 @@ class MemberDaoTest {
     }
 
     @Test
+    @Disabled
     void save() {
         final MemberDao memberDao = new MemberDao();
         memberDao.save(new Member("sudal", "수달"));
     }
 
     @Test
+    @Disabled
     void findById() {
         final MemberDao memberDao = new MemberDao();
         final Member member = new Member("sudal", "수달");
@@ -30,6 +34,7 @@ class MemberDaoTest {
     }
 
     @Test
+    @Disabled
     void findWithRoleById() {
         final MemberDao memberDao = new MemberDao();
         final Member member = new Member("sudal", "수달");
@@ -39,6 +44,7 @@ class MemberDaoTest {
 
 
     @Test
+    @Disabled
     void findAll() {
         final MemberDao memberDao = new MemberDao();
         final List<Member> members = memberDao.findAll();
