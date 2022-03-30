@@ -3,6 +3,7 @@ package chess.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.Board;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import org.junit.jupiter.api.Test;

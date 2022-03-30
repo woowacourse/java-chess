@@ -1,9 +1,9 @@
-package chessrefactor;
+package chess;
 
-import chessrefactor.piece.Piece;
-import chessrefactor.square.File;
-import chessrefactor.square.Rank;
-import chessrefactor.square.Square;
+import chess.piece.Piece;
+import chess.square.File;
+import chess.square.Rank;
+import chess.square.Square;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

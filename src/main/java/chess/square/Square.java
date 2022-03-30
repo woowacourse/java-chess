@@ -1,4 +1,4 @@
-package chessrefactor.square;
+package chess.square;
 
 public class Square {
 

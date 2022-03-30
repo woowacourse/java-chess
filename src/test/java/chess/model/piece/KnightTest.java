@@ -3,31 +3,31 @@ package chess.model.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.model.Color;
-import chess.model.File;
-import chess.model.Rank;
-import chess.model.Square;
+import chess.piece.Color;
+import chess.piece.Empty;
+import chess.piece.Knight;
+import chess.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 public class KnightTest {
 
     @Test
     void createKnight() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.E, Rank.EIGHT));
+        Knight knight = new Knight(Color.BLACK);
         assertThat(knight).isInstanceOf(Knight.class);
     }
 
     @Test
     void movable() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.E, Rank.FOUR));
-        Empty NNE = new Empty(new Square(File.F, Rank.SIX));
-        Empty NNW = new Empty(new Square(File.D, Rank.SIX));
-        Empty SSE = new Empty(new Square(File.F, Rank.TWO));
-        Empty SSW = new Empty(new Square(File.D, Rank.TWO));
-        Piece EEN = new Empty(new Square(File.G, Rank.FIVE));
-        Piece EES = new Empty(new Square(File.G, Rank.THREE));
-        Piece WWN = new Knight(Color.WHITE, new Square(File.C, Rank.FIVE));
-        Piece WWS = new Empty(new Square(File.C, Rank.THREE));
+        Knight knight = new Knight(Color.BLACK);
+        Empty NNE = new Empty();
+        Empty NNW = new Empty();
+        Empty SSE = new Empty();
+        Empty SSW = new Empty();
+        Piece EEN = new Empty();
+        Piece EES = new Empty();
+        Piece WWN = new Knight(Color.WHITE);
+        Piece WWS = new Empty();
         assertAll(
                 () -> assertThat(knight.movable(NNE)).isTrue(),
                 () -> assertThat(knight.movable(NNW)).isTrue(),
@@ -41,11 +41,11 @@ public class KnightTest {
 
     @Test
     void cannotMovable() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece d6 = new Empty(new Square(File.D, Rank.SIX));
-        Piece a4 = new Empty(new Square(File.A, Rank.FOUR));
-        Piece f6 = new Knight(Color.WHITE, new Square(File.F, Rank.SIX));
-        Piece a1 = new Empty(new Square(File.A, Rank.ONE));
+        Knight knight = new Knight(Color.BLACK);
+        Piece d6 = new Empty();
+        Piece a4 = new Empty();
+        Piece f6 = new Knight(Color.WHITE);
+        Piece a1 = new Empty();
 
         assertAll(
                 () -> assertThat(knight.movable(d6)).isFalse(),
@@ -56,8 +56,8 @@ public class KnightTest {
 
     @Test
     void cannotMovableToSameColor() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece linearBlackPiece = new Knight(Color.BLACK, new Square(File.F, Rank.FIVE));
+        Knight knight = new Knight(Color.BLACK);
+        Piece linearBlackPiece = new Knight(Color.BLACK);
         assertThat(knight.movable(linearBlackPiece)).isFalse();
     }
 }
