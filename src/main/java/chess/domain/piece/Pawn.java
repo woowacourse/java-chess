@@ -12,7 +12,7 @@ public class Pawn extends Piece {
         super(color, PAWN_SCORE);
     }
 
-    public boolean isInitialPosition(Position fromPosition) {
+    private boolean isInitialPosition(Position fromPosition) {
         return fromPosition.isSameRank(Rank.TWO)
             || fromPosition.isSameRank(Rank.SEVEN);
     }
