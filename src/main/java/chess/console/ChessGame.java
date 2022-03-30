@@ -21,10 +21,9 @@ public class ChessGame {
         State state = new Ready(board);
 
         while (!state.isEnd()) {
-            if (check(board)) {
-                OutputView.printCheck();
-            }
+            check(board);
             state = play(state);
+            printBoard(board, state);
         }
     }
 
@@ -34,11 +33,13 @@ public class ChessGame {
         return board;
     }
 
-    private boolean check(Board board) {
+    private void check(Board board) {
         try {
-            return !board.isEmpty() && board.check();
+            if (!board.isEmpty() && board.check()) {
+                OutputView.printCheck();
+            }
         } catch (IllegalArgumentException e) {
-            return false;
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 
@@ -48,6 +49,12 @@ public class ChessGame {
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return play(state);
+        }
+    }
+
+    private void printBoard(Board board, State state) {
+        if (state.isStart()) {
+            OutputView.printBoard(board.getBoard());
         }
     }
 }

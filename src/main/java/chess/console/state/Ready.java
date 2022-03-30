@@ -1,17 +1,22 @@
 package chess.console.state;
 
-import static chess.console.view.InputView.MENU_INDEX;
+import static chess.console.view.InputView.COMMAND_INDEX;
 
-import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import java.util.List;
 
 public class Ready implements State {
 
+    private boolean isStart = false;
     private final Board board;
 
     public Ready(Board board) {
         this.board = board;
+    }
+
+    @Override
+    public boolean isStart() {
+        return isStart;
     }
 
     @Override
@@ -21,7 +26,7 @@ public class Ready implements State {
 
     @Override
     public State run(List<String> inputs) {
-        Command command = Command.of(inputs.get(MENU_INDEX));
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
 
         if (command.isEnd()) {
             return new End();
@@ -31,7 +36,7 @@ public class Ready implements State {
             throw new IllegalArgumentException("게임이 시작하지 않았습니다.");
         }
 
-        OutputView.printBoard(board.getBoard());
+        isStart = true;
         return new Running(board);
     }
 }

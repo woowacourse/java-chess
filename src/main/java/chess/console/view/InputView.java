@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final int MENU_INDEX = 0;
+    public static final int COMMAND_INDEX = 0;
     public static final int FROM_POSITION_INDEX = 1;
     public static final int TO_POSITION_INDEX = 2;
     private static final int COMMAND_MIN_COUNT = 1;

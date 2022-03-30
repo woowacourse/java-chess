@@ -5,6 +5,11 @@ import java.util.List;
 public class End implements State {
 
     @Override
+    public boolean isStart() {
+        return false;
+    }
+
+    @Override
     public boolean isEnd() {
         return true;
     }

@@ -1,6 +1,6 @@
 package chess.console.state;
 
-import static chess.console.view.InputView.MENU_INDEX;
+import static chess.console.view.InputView.COMMAND_INDEX;
 
 import chess.domain.board.Board;
 import java.util.List;
@@ -14,13 +14,18 @@ public class Running implements State {
     }
 
     @Override
+    public boolean isStart() {
+        return true;
+    }
+
+    @Override
     public boolean isEnd() {
         return false;
     }
 
     @Override
     public State run(List<String> inputs) {
-        Command command = Command.of(inputs.get(MENU_INDEX));
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isEnd()) {
             return new End();
         }

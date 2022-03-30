@@ -5,17 +5,13 @@ import chess.domain.board.Board;
 import chess.domain.board.Score;
 import java.util.List;
 
-public class Status implements State {
+public class Status extends Running {
 
     private final Board board;
 
     public Status(Board board) {
+        super(board);
         this.board = board;
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
     }
 
     @Override
