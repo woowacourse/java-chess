@@ -1,10 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.Pawn;
-import chess.domain.piece.pawn.WhitePawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -20,7 +18,7 @@ public class PawnTest {
         Pawn pawn = new WhitePawn();
         Position position = Position.of("d4");
         Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
-        System.out.println(positions);
+
         assertThat(positions).containsEntry(
                 Direction.NORTH, List.of(Position.of("d5"), Position.of("d6"))
         );
@@ -30,6 +28,7 @@ public class PawnTest {
     @DisplayName("폰은 1점이다.")
     void getPoint() {
         Piece pawn = new BlackPawn();
+
         assertThat(pawn.getPoint()).isEqualTo(1);
     }
 }

@@ -22,9 +22,9 @@ public enum Row {
         this.value = value;
     }
 
-    public static Row of(int targetValue) {
+    public static Row of(int value) {
         return Arrays.stream(values())
-                .filter(row -> row.value == targetValue)
+                .filter(row -> row.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 행 이름이 들어왔습니다."));
     }

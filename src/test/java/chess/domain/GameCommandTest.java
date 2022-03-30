@@ -32,7 +32,7 @@ public class GameCommandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 타입의 커맨드는 인자가 하나여야합니다.");
     }
-    
+
     @Test
     @DisplayName("Move 커맨드는 인자가 3개여야합니다.")
     void constructMoveCommandThrowExceptionByArgumentLength() {
@@ -45,6 +45,7 @@ public class GameCommandTest {
     @DisplayName("Start 커맨드인지 확인한다.")
     void isStart() {
         GameCommand gameCommand = new GameCommand("start");
+
         assertThat(gameCommand.isSameCommandType(CommandType.START)).isTrue();
     }
 
@@ -52,6 +53,7 @@ public class GameCommandTest {
     @DisplayName("End 커맨드인지 확인한다.")
     void isEnd() {
         GameCommand gameCommand = new GameCommand("end");
+
         assertThat(gameCommand.isSameCommandType(CommandType.END)).isTrue();
     }
 
@@ -60,6 +62,7 @@ public class GameCommandTest {
     @DisplayName("이동할 말의 위치를 반환한다.")
     void getFromPosition() {
         GameCommand gameCommand = new GameCommand("move", "a1", "a2");
+
         assertThat(gameCommand.getFromPosition()).isEqualTo(Position.of("a1"));
     }
 
@@ -67,6 +70,7 @@ public class GameCommandTest {
     @DisplayName("이동할 말의 위치를 반환한다.")
     void getFromPositionThrowException() {
         GameCommand gameCommand = new GameCommand("start");
+
         assertThatThrownBy(gameCommand::getFromPosition)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 커맨드는 이 작업을 할 수 없습니다.");
@@ -76,6 +80,7 @@ public class GameCommandTest {
     @DisplayName("말의 이동할 위치를 반환한다.")
     void getToPosition() {
         GameCommand gameCommand = new GameCommand("move", "a1", "a2");
+
         assertThat(gameCommand.getToPosition()).isEqualTo(Position.of("a2"));
     }
 
@@ -83,6 +88,7 @@ public class GameCommandTest {
     @DisplayName("이동할 말의 위치를 반환한다.")
     void getToPositionThrowException() {
         GameCommand gameCommand = new GameCommand("end");
+
         assertThatThrownBy(gameCommand::getToPosition)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 커맨드는 이 작업을 할 수 없습니다.");

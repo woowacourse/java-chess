@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.fixedmovablepiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.fixedmovablepiece.King;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class KingTest {
                         Map.entry(Direction.SOUTH_WEST, List.of(Position.of("c3")))
                 )
         );
+
         assertThat(positions).isEqualTo(expected);
     }
 
@@ -37,6 +39,7 @@ public class KingTest {
     @DisplayName("킹은 0점이다.")
     void getPoint() {
         Piece king = new King(Color.BLACK);
+
         assertThat(king.getPoint()).isEqualTo(0);
     }
 }

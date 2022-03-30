@@ -12,12 +12,16 @@ class CommandTypeTest {
     @CsvSource(value = {"start, START", "end, END", "MOVE, MOVE", "staTus, STATUS"})
     @DisplayName("문자열을 입력받아 커맨드를 얻는다.")
     void of(String commandName, CommandType expected) {
-        assertThat(CommandType.of(commandName)).isEqualTo(expected);
+        CommandType type = CommandType.of(commandName);
+
+        assertThat(type).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"START, true", "END, true", "STATUS, true", "MOVE, false"})
     void isSingleCommand(CommandType commandType, boolean expected) {
-        assertThat(CommandType.isSingleCommand(commandType)).isEqualTo(expected);
+        boolean isSingleCommand = CommandType.isSingleCommand(commandType);
+
+        assertThat(isSingleCommand).isEqualTo(expected);
     }
 }

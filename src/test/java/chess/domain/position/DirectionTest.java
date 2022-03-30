@@ -1,9 +1,8 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.position.Direction;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ public class DirectionTest {
     @DisplayName("columnValue, rowValue를 이용해 Direction을 구한다.")
     void getDirectionByValues() {
         Direction directionByValues = Direction.getDirectionByValues(1, 0);
+
         assertThat(directionByValues).isEqualTo(Direction.EAST);
     }
 
@@ -29,6 +29,7 @@ public class DirectionTest {
     @DisplayName("현재 방향에서의 대각선 방향들을 구한다.")
     void getDiagonal() {
         List<Direction> diagonal = Direction.EAST.getDiagonal();
+
         assertThat(diagonal).contains(Direction.NORTH_EAST, Direction.SOUTH_EAST);
     }
 

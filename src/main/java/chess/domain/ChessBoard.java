@@ -1,12 +1,12 @@
 package chess.domain;
 
-import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
-import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.generator.PiecesGenerator;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -48,10 +48,13 @@ public class ChessBoard {
     public void move(GameCommand gameCommand) {
         Position from = gameCommand.getFromPosition();
         Position to = gameCommand.getToPosition();
+
         Piece piece = selectPiece(from);
         Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
         refinePawnMovablePositions(from, piece, movablePositions);
+
         List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
+
         checkMovable(to, finalMovablePositions);
         movePiece(from, to, piece);
     }
@@ -64,10 +67,7 @@ public class ChessBoard {
     }
 
     public boolean isFirstMovePawn(Position position) {
-        if (firstPositionsOfPawn.contains(position)) {
-            return true;
-        }
-        return false;
+        return firstPositionsOfPawn.contains(position);
     }
 
     private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {

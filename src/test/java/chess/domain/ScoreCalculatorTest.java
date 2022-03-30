@@ -2,10 +2,10 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import java.util.List;
@@ -20,6 +20,7 @@ public class ScoreCalculatorTest {
         List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK));
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
+
         assertThat(score).isEqualTo(5.5);
     }
 
@@ -30,6 +31,7 @@ public class ScoreCalculatorTest {
                 new BlackPawn(), new BlackPawn(), new BlackPawn());
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
+
         assertThat(score).isEqualTo(7);
     }
 
@@ -43,6 +45,7 @@ public class ScoreCalculatorTest {
         );
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateColumns(pieces);
+
         assertThat(score).isEqualTo(17);
     }
 }

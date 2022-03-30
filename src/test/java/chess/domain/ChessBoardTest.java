@@ -4,16 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
-import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.fixedmovablepiece.Knight;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.generator.PiecesGenerator;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import chess.domain.piece.straightmovablepiece.Rook;
@@ -38,6 +38,7 @@ public class ChessBoardTest {
                 Map.entry(Position.of("a2"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
         assertThat(chessBoard.getPieces()).containsAllEntriesOf(pieces);
     }
 
@@ -49,6 +50,7 @@ public class ChessBoardTest {
                 Map.entry(Position.of("a2"), new BlackPawn())
         ));
         ChessBoard chessBoard = new ChessBoard(() -> pieces);
+
         assertThat(chessBoard.getPieces()).contains(Map.entry(Position.of("a3"), EmptyPiece.getInstance()));
     }
 
@@ -58,6 +60,7 @@ public class ChessBoardTest {
         PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         ChessBoard chessBoard = new ChessBoard(piecesGenerator);
         Piece piece = chessBoard.selectPiece(Position.of("a1"));
+
         assertThat(piece).isInstanceOf(Rook.class);
     }
 
@@ -67,6 +70,7 @@ public class ChessBoardTest {
     void isFirstMovePawn(String position, boolean expected) {
         PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+
         assertThat(chessBoard.isFirstMovePawn(Position.of(position))).isEqualTo(expected);
     }
 
@@ -86,6 +90,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("e3"), Position.of("c5"), Position.of("e5"),
                     Position.of("c4"), Position.of("e4"), Position.of("c3"),
@@ -104,6 +109,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("c4"), Position.of("b4"), Position.of("a4"),
                     Position.of("d5"), Position.of("d6"), Position.of("d7"), Position.of("d8"),
@@ -127,6 +133,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("c4"), Position.of("b4"), Position.of("a4"),
                     Position.of("d5"), Position.of("d6"), Position.of("d7"), Position.of("d8"),
@@ -146,6 +153,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("e5"), Position.of("f6"),
                     Position.of("c3"), Position.of("b2"), Position.of("a1"),
@@ -165,6 +173,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("f5"), Position.of("e2"), Position.of("c2"),
                     Position.of("b3"), Position.of("b5"), Position.of("c6"),
@@ -182,6 +191,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
+
             assertThat(positions).contains(
                     Position.of("d5"), Position.of("e5"));
         }
@@ -199,6 +209,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(pawnPosition);
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
+
             assertThat(positions).contains(
                     Position.of("d3"), Position.of("d4"), Position.of("e3"));
         }
@@ -217,6 +228,7 @@ public class ChessBoardTest {
             Piece piece = chessBoard.selectPiece(pawnPosition);
             List<Position> positions = chessBoard.generateMovablePositionsWithBlock(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
+
             assertThat(positions).containsExactly(Position.of("e3"));
         }
     }
@@ -237,6 +249,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.KING)).isTrue()
@@ -256,6 +269,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.QUEEN)).isTrue()
@@ -275,6 +289,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.ROOK)).isTrue()
@@ -294,6 +309,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.BISHOP)).isTrue()
@@ -311,6 +327,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.KNIGHT)).isTrue()
@@ -327,6 +344,7 @@ public class ChessBoardTest {
             chessBoard.move(gameCommand);
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
             assertAll(
                     () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
                     () -> assertThat(toPiece.isSamePieceName(PieceName.PAWN)).isTrue()
@@ -338,8 +356,8 @@ public class ChessBoardTest {
         void pawnCannotMoveThrowException() {
             PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-
             GameCommand gameCommand = new GameCommand("move", "b2", "c3");
+
             assertThatThrownBy(() -> chessBoard.move(gameCommand))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 말은 입력한 위치로 이동할 수 없습니다.");
@@ -353,6 +371,7 @@ public class ChessBoardTest {
         Piece rook = chessBoard.selectPiece(Position.of("a8"));
         Piece pawn = chessBoard.selectPiece(Position.of("a7"));
         List<Piece> pieces = chessBoard.getPiecesOnColumn(Column.A, Color.BLACK);
+
         assertThat(pieces).containsExactly(pawn, rook);
     }
 
@@ -378,6 +397,7 @@ public class ChessBoardTest {
         Piece c = chessBoard.selectPiece(Position.of("c5"));
 
         List<List<Piece>> pieces = chessBoard.getPiecesOnColumns(Color.BLACK);
+
         assertThat(pieces).contains(
                 List.of(a, a2),
                 List.of(b),

@@ -1,10 +1,8 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.position.Column;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +30,7 @@ public class ColumnTest {
     @DisplayName("인덱스로 Column 상수를 얻는다.")
     void ofByInt() {
         Column column = Column.of(1);
+
         assertThat(column).isEqualTo(Column.A);
     }
 
@@ -48,7 +47,8 @@ public class ColumnTest {
     @DisplayName("이동 후 Column을 반환한다.")
     void move(int moveValue, Column expected) {
         Column move = Column.D.move(moveValue);
-        Assertions.assertThat(move).isEqualTo(expected);
+
+        assertThat(move).isEqualTo(expected);
     }
 
     @ParameterizedTest

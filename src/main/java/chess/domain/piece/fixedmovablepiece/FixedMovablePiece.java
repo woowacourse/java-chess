@@ -19,7 +19,8 @@ public abstract class FixedMovablePiece extends Piece {
     @Override
     public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
-    protected final Map<Direction, List<Position>> getMovablePositionsByDirections(Position position, List<Direction> directions) {
+    protected final Map<Direction, List<Position>> getMovablePositionsByDirections(Position position,
+                                                                                   List<Direction> directions) {
         Map<Direction, List<Position>> movable = new HashMap<>();
         for (Direction direction : directions) {
             movable.put(direction, new ArrayList<>());

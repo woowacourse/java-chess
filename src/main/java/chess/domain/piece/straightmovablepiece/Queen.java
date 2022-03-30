@@ -23,12 +23,12 @@ public final class Queen extends StraightMovablePiece {
     }
 
     @Override
-    public final Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(Position position) {
         return super.getMovablePositionsByDirections(position, DIRECTIONS);
     }
 
     @Override
-    public final double getPoint() {
+    public double getPoint() {
         return QUEEN_POINT;
     }
 }

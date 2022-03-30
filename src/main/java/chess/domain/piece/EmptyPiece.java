@@ -5,16 +5,16 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class EmptyPiece extends Piece{
+public class EmptyPiece extends Piece {
 
-    private static final EmptyPiece emptyPiece = new EmptyPiece();
+    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece();
 
     private EmptyPiece() {
         super(Color.EMPTY, PieceName.EMPTY);
     }
 
     public static EmptyPiece getInstance() {
-        return emptyPiece;
+        return EMPTY_PIECE;
     }
 
     @Override

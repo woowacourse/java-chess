@@ -19,9 +19,10 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public abstract Map<Direction, List<Position>> getMovablePositions(Position position) ;
+    public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
-    protected final Map<Direction, List<Position>> getMovablePositionsByDirection(Position position, Direction direction) {
+    protected final Map<Direction, List<Position>> getMovablePositionsByDirection(Position position,
+                                                                                  Direction direction) {
         Map<Direction, List<Position>> movable = new HashMap<>();
         movable.put(direction, new ArrayList<>());
         putFirstMovablePositionByDirection(movable, position, direction);

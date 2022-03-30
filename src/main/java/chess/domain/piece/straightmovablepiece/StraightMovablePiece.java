@@ -19,22 +19,24 @@ public abstract class StraightMovablePiece extends Piece {
     @Override
     public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
-    protected final Map<Direction, List<Position>> getMovablePositionsByDirections(Position position, List<Direction> directions) {
-        Map<Direction, List<Position>> movable = new HashMap<>();
+    protected final Map<Direction, List<Position>> getMovablePositionsByDirections(Position position,
+                                                                                   List<Direction> directions) {
+        Map<Direction, List<Position>> movablePositions = new HashMap<>();
         for (Direction direction : directions) {
-            movable.put(direction, new ArrayList<>());
-            putMovablePositionsByDirection(movable, position, direction);
+            movablePositions.put(direction, new ArrayList<>());
+            putMovablePositionsByDirection(movablePositions, position, direction);
         }
-        return movable;
+        return movablePositions;
     }
 
-    private void putMovablePositionsByDirection(Map<Direction, List<Position>> movable, Position position,
+    private void putMovablePositionsByDirection(Map<Direction, List<Position>> movablePositions, Position position,
                                                 Direction direction) {
         Position nextPosition = position.toDirection(direction);
         if (nextPosition == position) {
             return;
         }
-        movable.get(direction).add(nextPosition);
-        putMovablePositionsByDirection(movable, nextPosition, direction);
+        List<Position> positionsToDirection = movablePositions.get(direction);
+        positionsToDirection.add(nextPosition);
+        putMovablePositionsByDirection(movablePositions, nextPosition, direction);
     }
 }

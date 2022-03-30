@@ -69,6 +69,7 @@ public class PieceTest {
         void isSameColor(Color color, boolean expected) {
             Rook rook = new Rook(Color.BLACK);
             King king = new King(color);
+
             assertThat(rook.isSameColor(king)).isEqualTo(expected);
         }
     }

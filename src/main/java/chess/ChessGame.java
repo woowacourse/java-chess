@@ -1,12 +1,12 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.ScoreCalculator;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
+import chess.domain.ScoreCalculator;
 import chess.domain.piece.Color;
-import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.view.InputView;
 import chess.view.ResultView;
@@ -22,7 +22,7 @@ public class ChessGame {
     }
 
     public void playGame() {
-        ResultView.printStartMessage();
+        InputView.printStartMessage();
         GameCommand gameCommand;
         do {
             gameCommand = requestCommand();

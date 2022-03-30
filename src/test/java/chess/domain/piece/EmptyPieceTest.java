@@ -22,6 +22,7 @@ public class EmptyPieceTest {
     @DisplayName("빈 말은 0점이다.")
     void getPoint() {
         Piece emptyPiece = EmptyPiece.getInstance();
+
         assertThat(emptyPiece.getPoint()).isEqualTo(0);
     }
 }
