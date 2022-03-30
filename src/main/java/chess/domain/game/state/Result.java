@@ -1,6 +1,5 @@
 package chess.domain.game.state;
 
-import chess.controller.Command;
 import chess.domain.game.ChessGame;
 
 public final class Result extends State {

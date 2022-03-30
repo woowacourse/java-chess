@@ -1,6 +1,5 @@
 package chess.domain.game.state;
 
-import chess.controller.Command;
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 import java.util.List;

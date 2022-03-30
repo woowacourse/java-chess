@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.domain.game.state;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
