@@ -1,7 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.mulitiplemovepiece;
 
 import java.util.List;
 
+import chess.domain.piece.Color;
 import chess.domain.position.UnitDirection;
 
 public final class Rook extends MovingMultipleSquarePiece {
@@ -16,7 +17,7 @@ public final class Rook extends MovingMultipleSquarePiece {
 		UnitDirection.SOUTH
 	);
 
-	Rook(Color color) {
+	public Rook(Color color) {
 		super(color, 5, MOVABLE_UNIT_DIRECTIONS);
 	}
 

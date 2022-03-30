@@ -1,7 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.mulitiplemovepiece;
 
 import java.util.List;
 
+import chess.domain.piece.Color;
 import chess.domain.position.UnitDirection;
 
 public final class Bishop extends MovingMultipleSquarePiece {
@@ -16,7 +17,7 @@ public final class Bishop extends MovingMultipleSquarePiece {
 		UnitDirection.SOUTH_WEST
 	);
 
-	Bishop(Color color) {
+	public Bishop(Color color) {
 		super(color, 3, MOVABLE_UNIT_DIRECTIONS);
 	}
 

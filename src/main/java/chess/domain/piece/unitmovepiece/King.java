@@ -1,13 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.unitmovepiece;
 
 import java.util.List;
 
+import chess.domain.piece.Color;
 import chess.domain.position.UnitDirection;
 
-public final class Queen extends MovingMultipleSquarePiece {
-	private final static String BUG_MESSAGE_COLOR = "[BUG] 퀸은 색상을 가져야합니다.";
-	private static final String WHITE_QUEEN = "♛";
-	private static final String BLACK_QUEEN = "♕";
+public final class King extends MovingUnitSquarePiece {
+	private final static String BUG_MESSAGE_COLOR = "[BUG] 킹은 색상을 가져야합니다.";
+	private static final String WHITE_KING = "♚";
+	private static final String BLACK_KING = "♔";
 
 	private static final List<UnitDirection> MOVABLE_UNIT_DIRECTIONS = List.of(
 		UnitDirection.NORTH,
@@ -20,8 +21,8 @@ public final class Queen extends MovingMultipleSquarePiece {
 		UnitDirection.SOUTH_WEST
 	);
 
-	Queen(Color color) {
-		super(color, 9, MOVABLE_UNIT_DIRECTIONS);
+	public King(Color color) {
+		super(color, 0, MOVABLE_UNIT_DIRECTIONS);
 	}
 
 	@Override
@@ -31,10 +32,14 @@ public final class Queen extends MovingMultipleSquarePiece {
 		}
 
 		if (color == Color.BLACK) {
-			return BLACK_QUEEN;
+			return BLACK_KING;
 		}
 
-		return WHITE_QUEEN;
+		return WHITE_KING;
 	}
 
+	@Override
+	public boolean isKing() {
+		return true;
+	}
 }

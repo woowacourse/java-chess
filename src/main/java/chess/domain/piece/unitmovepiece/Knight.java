@@ -1,7 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.unitmovepiece;
 
 import java.util.List;
 
+import chess.domain.piece.Color;
 import chess.domain.position.UnitDirection;
 
 public final class Knight extends MovingUnitSquarePiece {
@@ -20,7 +21,7 @@ public final class Knight extends MovingUnitSquarePiece {
 		UnitDirection.WWS
 	);
 
-	Knight(Color color) {
+	public Knight(Color color) {
 		super(color, 2.5, MOVABLE_UNIT_DIRECTIONS);
 	}
 
@@ -36,10 +37,5 @@ public final class Knight extends MovingUnitSquarePiece {
 
 		return WHITE_KNIGHT;
 	}
-	//
-	// @Override
-	// public boolean canMove(Direction direction, Piece target) {
-	// 	checkSameTeam(target);
-	// 	return direction.hasSame(MOVABLE_UNIT_DIRECTIONS);
-	// }
+
 }

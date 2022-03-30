@@ -1,10 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.multiplemovepiece;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.mulitiplemovepiece.Queen;
+import chess.domain.piece.mulitiplemovepiece.Rook;
+import chess.domain.piece.unitmovepiece.None;
 import chess.domain.position.Direction;
 
 public class QueenTest {

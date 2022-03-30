@@ -1,10 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.unitmovepiece;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.mulitiplemovepiece.Bishop;
 import chess.domain.position.Direction;
 
 public class KingTest {

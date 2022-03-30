@@ -7,10 +7,10 @@ import chess.domain.position.Rank;
 public abstract class Piece {
 	private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><\n";
 
-	final Color color;
-	double score;
+	protected final Color color;
+	protected double score;
 
-	Piece(Color color, double score) {
+	protected Piece(Color color, double score) {
 		this.color = color;
 		this.score = score;
 	}
@@ -23,7 +23,7 @@ public abstract class Piece {
 
 	abstract public boolean canMove(Direction direction, Piece otherPiece);
 
-	void checkSameTeam(Piece otherPiece) {
+	protected void checkSameTeam(Piece otherPiece) {
 		if (isSameColor(otherPiece.color)) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
 		}

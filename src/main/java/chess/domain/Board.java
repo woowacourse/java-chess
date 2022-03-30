@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.None;
 import chess.domain.piece.Piece;
+import chess.domain.piece.unitmovepiece.None;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Rank;

@@ -1,7 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.unitmovepiece;
 
 import java.util.List;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.UnitDirection;
 
@@ -18,7 +20,7 @@ public final class Pawn extends Piece {
 
 	private boolean start;
 
-	Pawn(Color color) {
+	public Pawn(Color color) {
 		super(color, 1);
 		this.start = true;
 	}
