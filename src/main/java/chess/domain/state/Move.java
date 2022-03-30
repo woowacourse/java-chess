@@ -1,4 +1,4 @@
-package chess.console.state;
+package chess.domain.state;
 
 import static chess.console.view.InputView.FROM_POSITION_INDEX;
 import static chess.console.view.InputView.TO_POSITION_INDEX;

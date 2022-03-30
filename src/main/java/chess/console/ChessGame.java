@@ -1,7 +1,7 @@
 package chess.console;
 
-import chess.console.state.Ready;
-import chess.console.state.State;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
