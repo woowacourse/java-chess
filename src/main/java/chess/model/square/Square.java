@@ -1,4 +1,4 @@
-package chess.square;
+package chess.model.square;
 
 import chess.Direction;
 import java.util.ArrayList;

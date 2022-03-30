@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.model.piece;
 
-import chess.square.Square;
+import chess.model.square.Square;
 
 public class Queen extends Piece {
 

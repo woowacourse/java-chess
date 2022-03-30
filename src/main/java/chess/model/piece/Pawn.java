@@ -1,16 +1,16 @@
-package chess.piece;
+package chess.model.piece;
 
-import chess.square.Square;
+import chess.model.square.Square;
 
-public class Rook extends Piece {
+public class Pawn extends Piece {
 
-    public Rook(Color color) {
+    public Pawn(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "r";
+        return "p";
     }
 
     @Override

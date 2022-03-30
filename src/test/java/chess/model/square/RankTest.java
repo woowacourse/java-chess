@@ -1,8 +1,9 @@
-package chess.square;
+package chess.model.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.model.square.Rank;
 import org.junit.jupiter.api.Test;
 
 class RankTest {

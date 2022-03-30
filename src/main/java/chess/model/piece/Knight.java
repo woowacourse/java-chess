@@ -1,7 +1,7 @@
-package chess.piece;
+package chess.model.piece;
 
 import chess.Direction;
-import chess.square.Square;
+import chess.model.square.Square;
 import java.util.List;
 
 public class Knight extends Piece {

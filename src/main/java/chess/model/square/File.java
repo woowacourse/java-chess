@@ -1,4 +1,4 @@
-package chess.square;
+package chess.model.square;
 
 import java.util.Arrays;
 
