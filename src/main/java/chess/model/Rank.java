@@ -37,4 +37,8 @@ public enum Rank {
     public int calculateGap(Rank target) {
         return target.col - this.col;
     }
+
+    public String getName() {
+        return String.valueOf(col);
+    }
 }

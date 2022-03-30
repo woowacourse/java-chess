@@ -28,14 +28,14 @@ public class BoardTest {
 
     @Test
     void findPiece() {
-        Piece a2 = board.findPieceBySquare(new Square(File.A, Rank.TWO));
-        assertThat(a2).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.TWO)));
+        Piece a2 = board.findPieceBySquare(Square.of("a2"));
+        assertThat(a2).isEqualTo(new Pawn(Color.WHITE, Square.of(File.A, Rank.TWO)));
     }
 
     @Test
     void getTest() {
-        Piece a1Piece = board.findPieceBySquare(new Square(File.A, Rank.ONE));
-        Piece h8Piece = board.findPieceBySquare(new Square(File.H, Rank.EIGHT));
+        Piece a1Piece = board.findPieceBySquare(Square.of(File.A, Rank.ONE));
+        Piece h8Piece = board.findPieceBySquare(Square.of(File.H, Rank.EIGHT));
 
         assertAll(
                 () -> assertThat(a1Piece.getClass()).isEqualTo(Rook.class),
@@ -45,11 +45,11 @@ public class BoardTest {
 
     @Test
     void move() {
-        board.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
-        Piece a3Piece = board.findPieceBySquare(new Square(File.A, Rank.THREE));
+        board.move(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.THREE));
+        Piece a3Piece = board.findPieceBySquare(Square.of(File.A, Rank.THREE));
         board.move(Square.of("e2"), Square.of("e3"));
         Piece e3 = board.findPieceBySquare(Square.of("e3"));
-        assertThat(a3Piece).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.THREE)));
+        assertThat(a3Piece).isEqualTo(new Pawn(Color.WHITE, Square.of(File.A, Rank.THREE)));
         assertThat(e3).isEqualTo(new Pawn(Color.WHITE, Square.of("e3")));
     }
 

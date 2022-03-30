@@ -13,15 +13,15 @@ class PieceTest {
 
     @Test
     void createPiece() {
-        Piece rook = new Rook(Color.WHITE, new Square(File.A, Rank.ONE));
+        Piece rook = new Rook(Color.WHITE, Square.of(File.A, Rank.ONE));
         assertThat(rook).isInstanceOf(Piece.class);
     }
 
     @Test
     void isBlack() {
-        Piece blackPiece = new Rook(Color.BLACK, new Square(File.A, Rank.EIGHT));
-        Piece whitePiece = new Rook(Color.WHITE, new Square(File.A, Rank.ONE));
-        Piece nothing = new Empty(new Square(File.A, Rank.THREE));
+        Piece blackPiece = new Rook(Color.BLACK, Square.of(File.A, Rank.EIGHT));
+        Piece whitePiece = new Rook(Color.WHITE, Square.of(File.A, Rank.ONE));
+        Piece nothing = new Empty(Square.of(File.A, Rank.THREE));
         assertAll(
                 () -> assertThat(blackPiece.isBlack()).isTrue(),
                 () -> assertThat(whitePiece.isBlack()).isFalse(),

@@ -9,24 +9,31 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class SquareTest {
 
-    @Test
-    void createSquare() {
-        Square a1 = new Square(File.A, Rank.ONE);
-        assertThat(a1).isInstanceOf(Square.class);
+    @ParameterizedTest
+    @CsvSource(value = {"a1", "a8", "h1", "h8"})
+    void createSquare(String squareName) {
+        assertThat(Square.of(squareName)).isInstanceOf(Square.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a0", "a9", "h0", "h9", "i1", "i8", "a11"})
+    void invalidCreateSquare(String squareName) {
+        assertThatThrownBy(() -> Square.of(squareName))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void distinguishSameSquare() {
-        Square a1 = new Square(File.A, Rank.ONE);
-        Square anotherA1 = new Square(File.A, Rank.ONE);
+        Square a1 = Square.of(File.A, Rank.ONE);
+        Square anotherA1 = Square.of(File.A, Rank.ONE);
 
         assertThat(a1).isEqualTo(anotherA1);
     }
 
     @Test
     void distinguishDifferentSquare() {
-        Square a1 = new Square(File.A, Rank.ONE);
-        Square a2 = new Square(File.A, Rank.TWO);
+        Square a1 = Square.of(File.A, Rank.ONE);
+        Square a2 = Square.of(File.A, Rank.TWO);
 
         assertThat(a1).isNotEqualTo(a2);
     }

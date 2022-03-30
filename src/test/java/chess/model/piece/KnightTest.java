@@ -13,21 +13,21 @@ public class KnightTest {
 
     @Test
     void createKnight() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.E, Rank.EIGHT));
+        Knight knight = new Knight(Color.BLACK, Square.of(File.E, Rank.EIGHT));
         assertThat(knight).isInstanceOf(Knight.class);
     }
 
     @Test
     void movable() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.E, Rank.FOUR));
-        Empty NNE = new Empty(new Square(File.F, Rank.SIX));
-        Empty NNW = new Empty(new Square(File.D, Rank.SIX));
-        Empty SSE = new Empty(new Square(File.F, Rank.TWO));
-        Empty SSW = new Empty(new Square(File.D, Rank.TWO));
-        Piece EEN = new Empty(new Square(File.G, Rank.FIVE));
-        Piece EES = new Empty(new Square(File.G, Rank.THREE));
-        Piece WWN = new Knight(Color.WHITE, new Square(File.C, Rank.FIVE));
-        Piece WWS = new Empty(new Square(File.C, Rank.THREE));
+        Knight knight = new Knight(Color.BLACK, Square.of(File.E, Rank.FOUR));
+        Empty NNE = new Empty(Square.of(File.F, Rank.SIX));
+        Empty NNW = new Empty(Square.of(File.D, Rank.SIX));
+        Empty SSE = new Empty(Square.of(File.F, Rank.TWO));
+        Empty SSW = new Empty(Square.of(File.D, Rank.TWO));
+        Piece EEN = new Empty(Square.of(File.G, Rank.FIVE));
+        Piece EES = new Empty(Square.of(File.G, Rank.THREE));
+        Piece WWN = new Knight(Color.WHITE, Square.of(File.C, Rank.FIVE));
+        Piece WWS = new Empty(Square.of(File.C, Rank.THREE));
         assertAll(
                 () -> assertThat(knight.movable(NNE)).isTrue(),
                 () -> assertThat(knight.movable(NNW)).isTrue(),
@@ -41,11 +41,11 @@ public class KnightTest {
 
     @Test
     void cannotMovable() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece d6 = new Empty(new Square(File.D, Rank.SIX));
-        Piece a4 = new Empty(new Square(File.A, Rank.FOUR));
-        Piece f6 = new Knight(Color.WHITE, new Square(File.F, Rank.SIX));
-        Piece a1 = new Empty(new Square(File.A, Rank.ONE));
+        Knight knight = new Knight(Color.BLACK, Square.of(File.D, Rank.FOUR));
+        Piece d6 = new Empty(Square.of(File.D, Rank.SIX));
+        Piece a4 = new Empty(Square.of(File.A, Rank.FOUR));
+        Piece f6 = new Knight(Color.WHITE, Square.of(File.F, Rank.SIX));
+        Piece a1 = new Empty(Square.of(File.A, Rank.ONE));
 
         assertAll(
                 () -> assertThat(knight.movable(d6)).isFalse(),
@@ -56,8 +56,8 @@ public class KnightTest {
 
     @Test
     void cannotMovableToSameColor() {
-        Knight knight = new Knight(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece linearBlackPiece = new Knight(Color.BLACK, new Square(File.F, Rank.FIVE));
+        Knight knight = new Knight(Color.BLACK, Square.of(File.D, Rank.FOUR));
+        Piece linearBlackPiece = new Knight(Color.BLACK, Square.of(File.F, Rank.FIVE));
         assertThat(knight.movable(linearBlackPiece)).isFalse();
     }
 }

@@ -32,4 +32,8 @@ public enum File {
     public int calculateGap(File file) {
         return file.row - this.row;
     }
+
+    public String getName() {
+        return this.name().toLowerCase();
+    }
 }

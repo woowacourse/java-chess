@@ -1,12 +1,15 @@
 package chess.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Square {
+    private static final Map<String, Square> squareCache = new HashMap<>();
     private final File file;
     private final Rank rank;
 
-    public Square(final File file, final Rank rank) {
+    private Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -17,7 +20,13 @@ public final class Square {
         }
         File file = File.valueOf(String.valueOf(Character.toUpperCase(squareName.charAt(0))));
         Rank rank = Rank.of(Character.getNumericValue(squareName.charAt(1)));
-        return new Square(file, rank);
+        return Square.of(file, rank);
+    }
+
+    public static Square of(File file, Rank rank) {
+        String squareName = file.getName() + rank.getName();
+        squareCache.putIfAbsent(squareName, new Square(file, rank));
+        return squareCache.get(squareName);
     }
 
     private static int gcd(int fileDistance, int rankDistance) {

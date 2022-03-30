@@ -13,17 +13,17 @@ public class RookTest {
 
     @Test
     void createRook() {
-        Rook rook = new Rook(Color.BLACK, new Square(File.A, Rank.EIGHT));
+        Rook rook = new Rook(Color.BLACK, Square.of(File.A, Rank.EIGHT));
         assertThat(rook).isInstanceOf(Rook.class);
     }
 
     @Test
     void movable() {
-        Rook rook = new Rook(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece south = new Empty(new Square(File.D, Rank.ONE));
-        Piece east = new Empty(new Square(File.G, Rank.FOUR));
-        Piece west = new Knight(Color.WHITE, new Square(File.A, Rank.FOUR));
-        Piece north = new Empty(new Square(File.D, Rank.EIGHT));
+        Rook rook = new Rook(Color.BLACK, Square.of(File.D, Rank.FOUR));
+        Piece south = new Empty(Square.of(File.D, Rank.ONE));
+        Piece east = new Empty(Square.of(File.G, Rank.FOUR));
+        Piece west = new Knight(Color.WHITE, Square.of(File.A, Rank.FOUR));
+        Piece north = new Empty(Square.of(File.D, Rank.EIGHT));
 
         assertAll(
                 () -> assertThat(rook.movable(south)).isTrue(),
@@ -34,11 +34,11 @@ public class RookTest {
 
     @Test
     void cannotMovable() {
-        Rook rook = new Rook(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece a1 = new Empty(new Square(File.A, Rank.ONE));
-        Piece a8 = new Empty(new Square(File.A, Rank.EIGHT));
-        Piece h8 = new Knight(Color.WHITE, new Square(File.H, Rank.EIGHT));
-        Piece h1 = new Empty(new Square(File.H, Rank.ONE));
+        Rook rook = new Rook(Color.BLACK, Square.of(File.D, Rank.FOUR));
+        Piece a1 = new Empty(Square.of(File.A, Rank.ONE));
+        Piece a8 = new Empty(Square.of(File.A, Rank.EIGHT));
+        Piece h8 = new Knight(Color.WHITE, Square.of(File.H, Rank.EIGHT));
+        Piece h1 = new Empty(Square.of(File.H, Rank.ONE));
 
         assertAll(
                 () -> assertThat(rook.movable(a1)).isFalse(),
@@ -49,8 +49,8 @@ public class RookTest {
 
     @Test
     void cannotMovableToSameColor() {
-        Rook rook = new Rook(Color.BLACK, new Square(File.D, Rank.FOUR));
-        Piece allyPawn = new Pawn(Color.BLACK, new Square(File.D, Rank.ONE));
+        Rook rook = new Rook(Color.BLACK, Square.of(File.D, Rank.FOUR));
+        Piece allyPawn = new Pawn(Color.BLACK, Square.of(File.D, Rank.ONE));
         assertThat(rook.movable(allyPawn)).isFalse();
     }
 }
