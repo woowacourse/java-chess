@@ -16,10 +16,4 @@ public class Start extends Command {
         }
         throw new IllegalArgumentException("없는 명령어입니다.");
     }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
-
 }
