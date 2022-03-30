@@ -45,9 +45,4 @@ public class Blank extends Piece {
     public boolean isKing() {
         return false;
     }
-
-    @Override
-    public boolean isRook() {
-        return false;
-    }
 }
