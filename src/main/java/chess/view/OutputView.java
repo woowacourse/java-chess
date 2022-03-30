@@ -21,11 +21,6 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printEndWithoutWinTeam() {
-        printEndMessage();
-        System.out.println("> 승패와 점수를 보려면 status 를 입력해주세요.");
-    }
-
     public void printChessBoard(List<String> symbols) {
         int count = 0;
 
@@ -54,27 +49,11 @@ public class OutputView {
         Double whiteScore = teamScores.get(WHITE);
         Double blackScore = teamScores.get(BLACK);
 
-        if (whiteScore > blackScore) {
-            System.out.println("승리: 흰팀");
-        }
-
-        if (blackScore > whiteScore) {
-            System.out.println("승리: 검은팀");
-        }
-
-        if (blackScore.equals(whiteScore)) {
-            System.out.println("무승부");
-        }
-
         System.out.println("흰팀 점수: " + whiteScore);
         System.out.println("검은팀 점수: " + blackScore);
     }
 
     public void printWinTeam(String winTeamName) {
         System.out.println("승리: " + winTeamName);
-    }
-
-    public void printEndMessage() {
-        System.out.println("> 게임을 종료합니다.");
     }
 }

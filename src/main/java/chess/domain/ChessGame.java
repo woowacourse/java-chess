@@ -1,11 +1,15 @@
 package chess.domain;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,8 +35,8 @@ public class ChessGame {
         return chessBoard.isExistKing();
     }
 
-    public Team getWinTeam() {
-        return chessBoard.findWinTeam();
+    public String getWinTeam(Map<Team, Double> teamScores) {
+        return chessBoard.findWinTeam(teamScores);
     }
 
     public void progress(Command command) {
@@ -56,7 +60,18 @@ public class ChessGame {
     }
 
     public Map<Team, Double> calculateResult() {
-        return state.status(chessBoard);
+        Double whiteScore = calculateScore(chessBoard, WHITE);
+        Double blackScore = calculateScore(chessBoard, BLACK);
+
+        Map<Team, Double> result = new HashMap<>();
+        result.put(WHITE, whiteScore);
+        result.put(BLACK, blackScore);
+
+        return result;
+    }
+
+    private double calculateScore(ChessBoard chessBoard, Team team) {
+        return chessBoard.calculateByTeam(team);
     }
 
     public boolean isEnd() {

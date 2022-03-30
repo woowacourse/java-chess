@@ -1,5 +1,7 @@
 package chess.domain;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -122,13 +124,20 @@ public class ChessBoard {
         return kingCount == 2;
     }
 
-    public Team findWinTeam() {
+    public String findWinTeam(Map<Team, Double> teamScores) {
+        Double whiteScore = teamScores.get(WHITE);
+        Double blackScore = teamScores.get(BLACK);
+
+        if (isExistKing() || whiteScore.equals(blackScore)) {
+            return "무승부";
+        }
+
         Piece winKing = cells.values()
                 .stream()
                 .filter(Piece::isKing)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
 
-        return winKing.getTeam();
+        return winKing.getTeam().toString();
     }
 }

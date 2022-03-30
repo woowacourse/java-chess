@@ -43,50 +43,7 @@ public class ChessController {
 
         progress(chessGame);
 
-        if (!chessGame.isExistKing()) {
-            showWinTeam(chessGame);
-            return;
-        }
-
-        showStatus(chessGame);
-    }
-
-    private void showWinTeam(ChessGame chessGame) {
-        outputView.printEndMessage();
-
-        Team winTeam = chessGame.getWinTeam();
-
-        outputView.printWinTeam(winTeam.toString());
-    }
-
-    private void showStatus(ChessGame chessGame) {
-        try {
-            outputView.printEndWithoutWinTeam();
-
-            Command command = Command.from(inputView.inputCommand());
-
-            checkFinalCommand(command);
-
-            processStatus(chessGame, command);
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-
-            showStatus(chessGame);
-        }
-    }
-
-    private void checkFinalCommand(Command command) {
-        if (!command.isEnd() && !command.isStatus()) {
-            throw new IllegalArgumentException("end 혹은 status를 입력해주세요.");
-        }
-    }
-
-    private void processStatus(ChessGame chessGame, Command command) {
-        if (command.isStatus()) {
-            Map<Team, Double> teamScores = chessGame.calculateResult();
-
-            outputView.printResult(teamScores);
-        }
+        showWinTeam(chessGame);
     }
 
     private boolean checkEnd(ChessGame chessGame) {
@@ -118,8 +75,34 @@ public class ChessController {
 
             Command command = Command.from(inputView.inputCommand());
 
-            chessGame.progress(command);
+            if (command.isStatus()) {
+                showStatus(chessGame);
+            } else {
+                chessGame.progress(command);
+            }
         }
+    }
+
+    private void showStatus(ChessGame chessGame) {
+        try {
+            Map<Team, Double> teamScores = chessGame.calculateResult();
+
+            outputView.printResult(teamScores);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            showStatus(chessGame);
+        }
+    }
+
+    private void showWinTeam(ChessGame chessGame) {
+        Map<Team, Double> teamScores = chessGame.calculateResult();
+
+        String winTeamName = chessGame.getWinTeam(teamScores);
+
+        outputView.printWinTeam(winTeamName);
+
+        showStatus(chessGame);
     }
 
     private void printChessBoard(ChessGame chessGame) {

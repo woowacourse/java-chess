@@ -20,11 +20,6 @@ public class Black implements State {
     }
 
     @Override
-    public Map<Team, Double> status(ChessBoard chessBoard) {
-        throw new IllegalArgumentException("지금은 점수를 계산할 수 없습니다.");
-    }
-
-    @Override
     public State changeTurn(Command command, ChessBoard chessBoard) {
         checkTeam(command, chessBoard);
 
