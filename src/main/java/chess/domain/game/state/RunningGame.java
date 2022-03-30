@@ -2,8 +2,8 @@ package chess.domain.game.state;
 
 import java.util.Map;
 
-import chess.domain.piece.Piece;
 import chess.domain.game.state.position.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
 public class RunningGame extends StartedGame {
@@ -24,13 +24,12 @@ public class RunningGame extends StartedGame {
     @Override
     public GameState move(Position source, Position target) {
         validatePosition(source);
+        board.move(source, target);
+        player = player.change();
 
         if (board.isKing(target)) {
             return new EndGame();
         }
-
-        board.move(source, target);
-        player = player.change();
 
         return new RunningGame(board, player);
     }
