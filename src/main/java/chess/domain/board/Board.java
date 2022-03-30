@@ -4,7 +4,9 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -45,14 +47,21 @@ public class Board {
     }
 
     private boolean hasPieceInPath(final Position from, final Position to) {
+        return getPath(from, to).stream()
+                .map(this::hasPiece)
+                .filter(hasPiece -> hasPiece)
+                .findFirst()
+                .orElse(false);
+    }
+
+    private List<Position> getPath(final Position from, final Position to) {
+        List<Position> paths = new ArrayList<>();
         Position next = nextPosition(from, to);
         while (next != to) {
-            if (hasPiece(next)) {
-                return true;
-            }
+            paths.add(next);
             next = nextPosition(next, to);
         }
-        return false;
+        return paths;
     }
 
     private Position nextPosition(final Position from, final Position to) {
