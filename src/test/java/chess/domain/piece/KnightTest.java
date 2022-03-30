@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class NightTest {
+class KnightTest {
 
     @DisplayName("나이트는 한쪽 좌표의 차이가 1, 그리고 다른쪽 좌표의 차이가 2가 나는 위치로 이동가능하다.")
     @ParameterizedTest
