@@ -10,6 +10,10 @@ public class Position {
     private static final int COMPACT_VALUE_ONE = 1;
     private static final int COMPACT_VALUE_ZERO = 0;
     private static final int COMPACT_VALUE_MINUS_ONE = -1;
+    private static final int INPUT_LENGTH = 2;
+    private static final int COLUMN_START_INDEX = 0;
+    private static final int ROW_START_INDEX = 1;
+    private static final int ROW_END_INDEX = 2;
     private static final Map<String, Position> CACHE = new HashMap<>();
 
     private final Column column;
@@ -35,11 +39,12 @@ public class Position {
 
     public static Position of(String value) {
         validInput(value);
-        return of(Column.of(value.substring(0, 1)), Row.of(value.substring(1, 2)));
+        return of(Column.of(value.substring(COLUMN_START_INDEX, ROW_START_INDEX))
+                , Row.of(value.substring(ROW_START_INDEX, ROW_END_INDEX)));
     }
 
     private static void validInput(String value) {
-        if (value.length() != 2) {
+        if (value.length() != INPUT_LENGTH) {
             throw new IllegalArgumentException("올바른 값으로 Position 을 생성해주세요.");
         }
     }
