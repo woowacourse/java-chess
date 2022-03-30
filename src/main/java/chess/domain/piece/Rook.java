@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
+import java.util.List;
 
 public class Rook extends Piece {
 
@@ -12,7 +14,9 @@ public class Rook extends Piece {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameFile(toPosition) || fromPosition.isSameRank(toPosition);
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        List<Direction> movableDirections = Direction.rowAndColumns();
+        return movableDirections.contains(direction);
     }
 
     @Override
