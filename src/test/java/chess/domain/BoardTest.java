@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;
@@ -63,6 +64,34 @@ public class BoardTest {
         assertThatThrownBy(() -> board.movePiece(fromPosition, toPosition))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 해당 위치는 말이 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Knight는 가는 경로에 말이 존재하여도 움직일 수 있다")
+    void moveKnight() {
+        Map<Position, Piece> testBoard = new HashMap<>();
+        testBoard.put(Position.valueOf(File.a, Rank.ONE), new Knight(Color.WHITE));
+        testBoard.put(Position.valueOf(File.a, Rank.TWO), new Pawn(Color.WHITE));
+
+        Board board = new Board(testBoard);
+
+        board.movePiece(Position.valueOf(File.a, Rank.ONE), Position.valueOf(File.b, Rank.THREE));
+        assertThat(board.getBoard().containsKey(Position.valueOf(File.b, Rank.THREE))).isTrue();
+    }
+
+    @Test
+    @DisplayName("Knight의 도착 지점에 말이 없으면 움직일 수 없다.")
+    void knightNonMovablePosition() {
+        Map<Position, Piece> testBoard = new HashMap<>();
+        testBoard.put(Position.valueOf(File.a, Rank.ONE), new Knight(Color.WHITE));
+        testBoard.put(Position.valueOf(File.b, Rank.THREE), new Pawn(Color.WHITE));
+
+        Board board = new Board(testBoard);
+
+        assertThatThrownBy(() -> board.movePiece(Position.valueOf(File.a, Rank.ONE),
+            Position.valueOf(File.b, Rank.THREE)))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 잡을 수 없는 말 입니다.");
     }
 
     @Test
