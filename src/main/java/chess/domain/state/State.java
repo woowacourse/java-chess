@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
-import chess.domain.result.StatusResult;
+import chess.domain.score.ScoreResult;
 
 public interface State {
 
@@ -11,7 +11,7 @@ public interface State {
 
 	State play(Position source, Position target);
 
-	StatusResult createStatus();
+	ScoreResult createStatus();
 
 	State finish();
 

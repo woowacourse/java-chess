@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static chess.domain.board.BoardFactory.createBlankBoard;
 import static chess.domain.board.BoardFactory.createBoardWithBlackBlocking;
-import static chess.domain.board.BoardFactory.createSameColumnPawnBoard;
 import static chess.domain.board.PositionFixtures.initialBlackKing;
 import static chess.domain.board.PositionFixtures.initialBlackQueen;
 import static chess.domain.board.PositionFixtures.initialWhiteBishop;
@@ -17,8 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -109,26 +110,17 @@ class BoardTest {
 	}
 
 	@Test
-	void calculateScore() {
-		Board board = new Board(InitialBoard.createBoard());
-
-		assertAll(
-				() -> assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38),
-				() -> assertThat(board.calculateScore(Team.WHITE)).isEqualTo(38)
-		);
-	}
-
-	@Test
-	void calculateScoreWithSameColumnPawn() {
-		Board board = new Board(createSameColumnPawnBoard());
-
-		assertThat(board.calculateScore(Team.WHITE)).isEqualTo(1.5);
-	}
-
-	@Test
 	void startWithWhiteTeam() {
 		Board board = new Board(InitialBoard.createBoard());
 
 		assertDoesNotThrow(() -> board.move(initialWhiteKnight, Position.of(3, 3)));
+	}
+
+	@Test
+	void getAllyPiecesByColumn() {
+		Board board = new Board(InitialBoard.createBoard());
+		List<Piece> blackPieces = board.getAllyPiecesByColumn(Team.BLACK, 1);
+
+		assertThat(blackPieces.size()).isEqualTo(2);
 	}
 }

@@ -1,13 +1,13 @@
-package chess.domain.result;
+package chess.domain.score;
 
 import chess.domain.piece.Team;
 
-public class StatusResult {
+public class ScoreResult {
 
 	private final double blackScore;
 	private final double whiteScore;
 
-	public StatusResult(double blackScore, double whiteScore) {
+	public ScoreResult(double blackScore, double whiteScore) {
 		this.blackScore = blackScore;
 		this.whiteScore = whiteScore;
 	}

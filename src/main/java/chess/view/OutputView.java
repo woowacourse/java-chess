@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.domain.result.StatusResult;
+import chess.domain.score.ScoreResult;
 import java.util.Map;
 
 public class OutputView {
@@ -34,7 +34,7 @@ public class OutputView {
 		}
 	}
 
-	public static void printScore(final StatusResult result) {
+	public static void printScore(final ScoreResult result) {
 		System.out.println(BLACK_TEAM + DELIMITER + result.getBlackScore());
 		System.out.println(WHITE_TEAM + DELIMITER + result.getWhiteScore());
 		if (result.getWinner() == Team.NEUTRALITY) {

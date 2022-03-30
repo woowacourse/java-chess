@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
-import chess.domain.result.StatusResult;
+import chess.domain.score.ScoreResult;
 
 public abstract class Finished implements State {
 
@@ -28,7 +28,7 @@ public abstract class Finished implements State {
 	}
 
 	@Override
-	public final StatusResult createStatus() {
+	public final ScoreResult createStatus() {
 		throw new IllegalArgumentException(FINISH_GAME_ERROR);
 	}
 

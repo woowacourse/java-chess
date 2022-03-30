@@ -6,18 +6,17 @@ import static chess.domain.board.Position.MIN_POSITION;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class Board {
 
 	private static final String BLOCK_ERROR = "해당 위치로 기물을 옮길 수 없습니다.";
 	private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
-	private static final int SAME_COLUMN_PAWN_COUNT = 2;
-	private static final double DUPLICATION_PAWN_SCORE = 0.5;
 
 	private final Map<Position, Piece> board;
 
@@ -60,37 +59,12 @@ public class Board {
 		}
 	}
 
-	public double calculateScore(Team team) {
-		double score = 0;
-		for (int column = MIN_POSITION; column <= MAX_POSITION; column++) {
-			List<Piece> columnPieces = findColumnPieces(team, column);
-			score += calculateColumnScore(columnPieces);
-		}
-		return score;
-	}
-
-	private double calculateColumnScore(final List<Piece> columnPieces) {
-		long pawnCount = columnPieces.stream()
-				.filter(Piece::isPawn)
-				.count();
-		double sum = columnPieces.stream()
-				.mapToDouble(Piece::getScore)
-				.sum();
-		if (pawnCount >= SAME_COLUMN_PAWN_COUNT) {
-			sum -= DUPLICATION_PAWN_SCORE * pawnCount;
-		}
-		return sum;
-	}
-
-	private List<Piece> findColumnPieces(Team team, final int column) {
-		List<Piece> pieces = new ArrayList<>();
-		for (int row = MIN_POSITION; row <= MAX_POSITION; row++) {
-			Position position = Position.of(row, column);
-			if (board.get(position).isAlly(team)) {
-				pieces.add(board.get(position));
-			}
-		}
-		return pieces;
+	public List<Piece> getAllyPiecesByColumn(final Team team, final int column) {
+		return IntStream.rangeClosed(MIN_POSITION, MAX_POSITION)
+				.mapToObj(row -> Position.of(row, column))
+				.map(board::get)
+				.filter(piece -> piece.isAlly(team))
+				.collect(Collectors.toList());
 	}
 
 	public Map<Position, Piece> getBoard() {

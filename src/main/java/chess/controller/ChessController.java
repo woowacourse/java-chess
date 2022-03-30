@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoard;
 import chess.domain.board.Position;
-import chess.domain.result.StatusResult;
+import chess.domain.score.ScoreResult;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.Command;
@@ -71,7 +71,7 @@ public class ChessController {
 			return processMove(state, inputCommand);
 		}
 		if (command.isStatus()) {
-			StatusResult result = state.createStatus();
+			ScoreResult result = state.createStatus();
 			OutputView.printScore(result);
 			return state;
 		}

@@ -4,7 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.domain.result.StatusResult;
+import chess.domain.score.ScoreCalculator;
+import chess.domain.score.ScoreResult;
 
 public abstract class Running implements State {
 
@@ -31,10 +32,12 @@ public abstract class Running implements State {
 	}
 
 	@Override
-	public final StatusResult createStatus() {
-		double blackScore = board.calculateScore(Team.BLACK);
-		double whiteScore = board.calculateScore(Team.WHITE);
-		return new StatusResult(blackScore, whiteScore);
+	public final ScoreResult createStatus() {
+		ScoreCalculator scoreCalculator = new ScoreCalculator();
+		double blackScore = scoreCalculator.calculate(board, Team.BLACK);
+		double whiteScore = scoreCalculator.calculate(board, Team.WHITE);
+
+		return new ScoreResult(blackScore, whiteScore);
 	}
 
 	@Override
