@@ -16,7 +16,9 @@ public class Running implements State {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand, color);
+        final Position from = moveCommand.getFrom();
+        final Position to = moveCommand.getTo();
+        board.movePiece(from, to, color);
         this.color = color.revers();
     }
 

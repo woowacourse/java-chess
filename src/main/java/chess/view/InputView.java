@@ -7,8 +7,8 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String MOVE_COMMAND = "move";
     private static final String COMMAND_DELIMITER = " ";
-    private static final int FROM_INDEX = 0;
-    private static final int TO_INDEX = 0;
+    private static final int FROM_INDEX = 1;
+    private static final int TO_INDEX = 2;
 
     public static String inputStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -23,7 +23,7 @@ public class InputView {
 
     public static CommandRequest inputPlayCommand() {
         final String input = scanner.nextLine();
-        if (input.startsWith(MOVE_COMMAND.toUpperCase())) {
+        if (input.toLowerCase().startsWith(MOVE_COMMAND)) {
             return createCommandRequest(input);
         }
         return new CommandRequest(input);

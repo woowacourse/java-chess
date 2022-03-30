@@ -17,11 +17,12 @@ public class Board {
         score = new Score();
     }
 
-    public void move(final MoveCommand moveCommand, final Color color) {
-        final Position from = moveCommand.getFrom();
-        final Position to = moveCommand.getTo();
-        final Piece piece = value.get(from);
-        validateMove(color, from, to, piece);
+    public void movePiece(final Position from, final Position to, final Color color) {
+        final Piece piece = findPiece(from);
+        validateColor(piece, color);
+        validateSameTeam(from, to);
+        validatePieceBlock(from, to);
+        validatePawnMove(from, to, piece);
         movePiece(from, to, piece);
     }
 
@@ -32,6 +33,13 @@ public class Board {
 
     public boolean isKingDead() {
         return countKingPiece() == DEAD_KING_COUNT;
+    }
+
+    private Piece findPiece(final Position position) {
+        if (!value.containsKey(position)) {
+            throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+        }
+        return value.get(position);
     }
 
     private void movePiece(final Position from, final Position to, final Piece piece) {
@@ -49,17 +57,9 @@ public class Board {
                 .count();
     }
 
-    private void validateMove(final Color color, final Position from, final Position to, final Piece piece) {
-        validatePieceExist(from);
-        validateSameTeam(from, to);
-        validatePieceBlock(from, to);
-        validateColor(piece, color);
-        validatePawnMove(from, to, piece);
-    }
-
-    private void validatePieceExist(final Position position) {
-        if (!value.containsKey(position)) {
-            throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+    private void validateColor(final Piece piece, final Color color) {
+        if (!piece.isEqualColor(color)) {
+            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
         }
     }
 
@@ -75,12 +75,6 @@ public class Board {
         while (!movedPosition.equals(to)) {
             validateBlock(movedPosition);
             movedPosition = movedPosition.shift(direction);
-        }
-    }
-
-    private void validateColor(final Piece piece, final Color color) {
-        if (!piece.isEqualColor(color)) {
-            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
         }
     }
 
