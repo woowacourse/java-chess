@@ -14,14 +14,14 @@ public enum Direction {
     TOP_RIGHT(1, 1),
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(1, -1),
-    TTR(1, 2),
-    RRT(2, 1),
-    RRD(2, -1),
-    DDR(1, -2),
-    DDL(-1, -2),
-    LLD(-2, -1),
-    LLT(-2, 1),
-    TTL(-1, 2);
+    TOP_TOP_RIGHT(1, 2),
+    RIGHT_RIGHT_TOP(2, 1),
+    RIGHT_RIGHT_DOWN(2, -1),
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+    LEFT_LEFT_DOWN(-2, -1),
+    LEFT_LEFT_TOP(-2, 1),
+    TOP_TOP_LEFT(-1, 2);
 
     private static final String NO_DIRECTION_ERROR_MESSAGE = "해당하는 방향이 없습니다.";
 

@@ -12,8 +12,8 @@ public final class KnightMoveStrategy extends MoveStrategy {
     private static final String NO_MOVE_MESSAGE = "나이트가 이동할 수 없는 위치입니다.";
 
     public static List<Direction> knightDirection(Team team) {
-        return Direction.getAbsoluteDirections(team, List.of(Direction.TTR, Direction.RRT, Direction.RRD, Direction.DDR,
-                Direction.DDL, Direction.LLD, Direction.LLT, Direction.TTL));
+        return Direction.getAbsoluteDirections(team, List.of(Direction.TOP_TOP_RIGHT, Direction.RIGHT_RIGHT_TOP, Direction.RIGHT_RIGHT_DOWN, Direction.DOWN_DOWN_RIGHT,
+                Direction.DOWN_DOWN_LEFT, Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_TOP, Direction.TOP_TOP_LEFT));
     }
 
     @Override

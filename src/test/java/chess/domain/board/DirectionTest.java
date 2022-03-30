@@ -26,14 +26,14 @@ class DirectionTest {
             "B,TWO,A,THREE,TOP_LEFT",
             "A,SEVEN,B,SIX,DOWN_RIGHT",
             "B,SEVEN,A,SIX,DOWN_LEFT",
-            "B,ONE,C,THREE,TTR",
-            "B,ONE,D,TWO,RRT",
-            "B,TWO,D,ONE,RRD",
-            "B,THREE,C,ONE,DDR",
-            "B,THREE,A,ONE,DDL",
-            "C,TWO,A,ONE,LLD",
-            "C,TWO,A,THREE,LLT",
-            "B,ONE,A,THREE,TTL"
+            "B,ONE,C,THREE,TOP_TOP_RIGHT",
+            "B,ONE,D,TWO,RIGHT_RIGHT_TOP",
+            "B,TWO,D,ONE,RIGHT_RIGHT_DOWN",
+            "B,THREE,C,ONE,DOWN_DOWN_RIGHT",
+            "B,THREE,A,ONE,DOWN_DOWN_LEFT",
+            "C,TWO,A,ONE,LEFT_LEFT_DOWN",
+            "C,TWO,A,THREE,LEFT_LEFT_TOP",
+            "B,ONE,A,THREE,TOP_TOP_LEFT"
     })
     @DisplayName("체스 말이 거리가 같은지 확인할 수 있다.")
     void isSameDistance(Column columnA, Rank rankA, Column columnB, Rank rankB, Direction direction) {
