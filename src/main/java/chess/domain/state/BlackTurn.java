@@ -14,7 +14,7 @@ final class BlackTurn extends Running {
     public State movePiece(Position src, Position dest) {
         board.move(src, dest, Color.BLACK);
         if (!board.hasKing(Color.WHITE)) {
-            return new BlackWin();
+            return new BlackWin(board);
         }
         return new WhiteTurn(board);
     }

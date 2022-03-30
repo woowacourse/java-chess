@@ -141,7 +141,16 @@
     - 이름을 통해 구체적인 의도를 드러내는 것도 좋지만 이름은 결국 해당 메서드의 행위를 드러내야합니다.
     - `requestStartOrEnd()`와 `requestCommand()`는 이름은 다르지만 결국 명령어를 입력받아서 반환하는 메서드이다.
     - `requestStartOrEnd()` 메서드를 사용하는 곳에서 `requestCommand()`를 사용하도록 바꾸고 `requestStartOrEnd()`를 제거했다.
-- [ ] Ready와 Running의 상태가 크게 다르지 않은 것 같아요. 어떤 의도로 Ready를 만들었을까요?
+- [x] Ready와 Running의 상태가 크게 다르지 않은 것 같아요. 어떤 의도로 Ready를 만들었을까요?
+    - 미션 구현을 하다보니 생각한대로 구현하지 못한것 같다.
+    - 원래 의도는 이 모든 상태의 첫 시작점은 무조건 Ready의 `start()`를 통해서 시작하게 하기 위해서 Ready를 만들었다.
+    - 그래서 그 외 모든 상태는 package-private 형식으로 생성자를 만들어 외부에서 직접 만들지 못하게 했다.
+    - 그리고 Running에서 시작해도 되지만 Running과 Finished의 중복 코드가 있어서 Ready에서 Running과 Finished의 중복 코드도 가지고 있게 하려했다.
+    - Running과 Finished를 만든 이유는 중복 제거의 의미도 있지만 추상화 레벨을 맞추기 위함도 있다. 상태 패턴 수업을들으면서 추상화 레벨을 맞춰주면 좋다고 이야기를 들었기 때문이다.
+    - 코드를 다시 확인하면서 Finished 클래스가 Ready를 상속받는게 아니라 State를 구현하고 있는것을 알게되었다.
+        - 원래 의도대로 Finished가 Ready를 상속받도록 수정했다.
+        - BlackWin, WhiteWin의 생성자를 package-private로 수정했다.
+        - 예외가 발생할 때 에러 메시지를 추가했다.
 - [ ] Ready에서 보드를 가져오는 `getBoard()`메서드는 매번 새로운 객체로 넘겨주는데 이유가 있나요?
 - [ ] 축약해서 사용하는 변수명이 있어요!
 - [ ] Piece에서 색상만 관리하는 것이 아니라 타입을 같이 관리하면 어떨까요?

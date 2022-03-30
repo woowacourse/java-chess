@@ -17,18 +17,6 @@ abstract class Running extends Ready {
     public abstract State movePiece(Position src, Position dest);
 
     @Override
-    public final ScoreResult getScore() {
-        double whiteScore = board.calculateScore(Color.WHITE);
-        double blackScore = board.calculateScore(Color.BLACK);
-
-        Map<Color, Score> scoreByColor = new HashMap<>();
-        scoreByColor.put(Color.WHITE, new Score(whiteScore));
-        scoreByColor.put(Color.BLACK, new Score(blackScore));
-
-        return new ScoreResult(scoreByColor);
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }

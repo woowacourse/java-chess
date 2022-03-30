@@ -4,21 +4,15 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.ScoreResult;
 
-abstract class Finished implements State {
+abstract class Finished extends Ready {
+
+    Finished(Board board) {
+        super(board);
+    }
 
     @Override
     public State movePiece(Position src, Position dest) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Board getBoard() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ScoreResult getScore() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("게임이 종료되어 말을 움직일 수 없습니다.");
     }
 
     @Override
