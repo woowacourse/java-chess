@@ -10,13 +10,13 @@ public enum PieceName {
     PAWN("P"),
     EMPTY(".");
 
-    private final String symbol;
+    private final String value;
 
-    PieceName(String symbol) {
-        this.symbol = symbol;
+    PieceName(String value) {
+        this.value = value;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getValue() {
+        return value;
     }
 }

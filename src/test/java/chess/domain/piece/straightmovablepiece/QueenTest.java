@@ -15,8 +15,16 @@ import org.junit.jupiter.api.Test;
 public class QueenTest {
 
     @Test
+    @DisplayName("퀸을 생성한다.")
+    void constructQueen() {
+        final var piece = new Queen(Color.BLACK);
+
+        assertThat(piece).isInstanceOf(Queen.class);
+    }
+
+    @Test
     @DisplayName("퀸이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByRook() {
+    void getMovablePositionsByQueen() {
         Queen queen = new Queen(Color.BLACK);
         Map<Direction, List<Position>> positions = queen.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(

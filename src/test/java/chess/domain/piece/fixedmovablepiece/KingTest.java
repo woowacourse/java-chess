@@ -15,8 +15,16 @@ import org.junit.jupiter.api.Test;
 public class KingTest {
 
     @Test
+    @DisplayName("킹을 생성한다.")
+    void constructKing() {
+        final var piece = new King(Color.BLACK);
+
+        assertThat(piece).isInstanceOf(King.class);
+    }
+
+    @Test
     @DisplayName("킹이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByRook() {
+    void getMovablePositionsByKing() {
         King king = new King(Color.BLACK);
         Map<Direction, List<Position>> positions = king.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(

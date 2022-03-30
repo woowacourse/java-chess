@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
+    private static final int KING_COUNTS = 2;
+
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class ChessBoard {
         Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
         refinePawnMovablePositions(from, piece, movablePositions);
 
-        List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
+        List<Position> finalMovablePositions = generateMovablePositionsBlockedByObstacles(from, piece, movablePositions);
 
         checkMovable(to, finalMovablePositions);
         movePiece(from, to, piece);
@@ -62,7 +64,7 @@ public class ChessBoard {
     private void refinePawnMovablePositions(Position from, Piece piece,
                                             Map<Direction, List<Position>> movablePositions) {
         if (!isFirstMovePawn(from) && piece.isSamePieceName(PieceName.PAWN)) {
-            removeSecondMove(piece, movablePositions);
+            removeFirstMovablePositionForPawn(piece, movablePositions);
         }
     }
 
@@ -70,7 +72,7 @@ public class ChessBoard {
         return firstPositionsOfPawn.contains(position);
     }
 
-    private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {
+    private void removeFirstMovablePositionForPawn(Piece piece, Map<Direction, List<Position>> movablePositions) {
         List<Position> positions = movablePositions.get(Direction.NORTH);
         if (piece.isBlack()) {
             positions = movablePositions.get(Direction.SOUTH);
@@ -94,8 +96,8 @@ public class ChessBoard {
         }
     }
 
-    public List<Position> generateMovablePositionsWithBlock(Position nowPosition, Piece piece,
-                                                            Map<Direction, List<Position>> movablePositions) {
+    public List<Position> generateMovablePositionsBlockedByObstacles(Position nowPosition, Piece piece,
+                                                                     Map<Direction, List<Position>> movablePositions) {
         List<Position> result = new ArrayList<>();
         for (Direction direction : movablePositions.keySet()) {
             List<Position> positions = movablePositions.get(direction);
@@ -171,29 +173,29 @@ public class ChessBoard {
         return Collections.unmodifiableMap(pieces);
     }
 
-    public List<Piece> getPiecesOnColumn(Column column, Color color) {
+    public List<Pieces> getPiecesOnColumns(Color color) {
+        List<Pieces> result = new ArrayList<>();
+        for (Column column : Column.values()) {
+            result.add(getPiecesOnColumn(column, color));
+        }
+        return result;
+    }
+
+    public Pieces getPiecesOnColumn(Column column, Color color) {
         List<Piece> result = new ArrayList<>();
         for (Row row : Row.values()) {
             result.add(pieces.get(Position.of(column, row)));
         }
-        return result.stream()
+        List<Piece> value =  result.stream()
                 .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.toList());
-    }
-
-    public List<List<Piece>> getPiecesOnColumns(Color color) {
-        List<List<Piece>> result = new ArrayList<>();
-        for (Column column : Column.values()) {
-            result.add(getPiecesOnColumn(column, color));
-        }
-
-        return result;
+        return new Pieces(value);
     }
 
     public boolean isEnd() {
         long kingCount = pieces.values().stream()
                 .filter(p -> p.isSamePieceName(PieceName.KING))
                 .count();
-        return kingCount != 2;
+        return kingCount != KING_COUNTS;
     }
 }

@@ -15,8 +15,16 @@ import org.junit.jupiter.api.Test;
 public class BishopTest {
 
     @Test
+    @DisplayName("비숍을 생성한다.")
+    void constructBishop() {
+        final var piece = new Bishop(Color.BLACK);
+
+        assertThat(piece).isInstanceOf(Bishop.class);
+    }
+
+    @Test
     @DisplayName("비숍이 갈 수있는 방향으로 위치리스트를 반환한다.")
-    void getMovablePositionsByRook() {
+    void getMovablePositionsByBishop() {
         Bishop bishop = new Bishop(Color.BLACK);
         Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(

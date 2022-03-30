@@ -3,7 +3,6 @@ package chess.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.fixedmovablepiece.Knight;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
@@ -17,7 +16,7 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("한 컬럼의 점수를 계산한다.")
     void calculateOneColumn() {
-        List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK));
+        Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK)));
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
 
@@ -27,8 +26,8 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("폰이 두 개 이상 포함된 한 컬럼의 점수를 계산한다.")
     void calculateOneColumnWithPawns() {
-        List<Piece> pieces = List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                new BlackPawn(), new BlackPawn(), new BlackPawn());
+        Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
+                new BlackPawn(), new BlackPawn(), new BlackPawn()));
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateOneColumn(pieces);
 
@@ -38,10 +37,10 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("여러 컬럼의 점수를 계산한다.")
     void calculateColumns() {
-        List<List<Piece>> pieces = List.of(
-                List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                        new BlackPawn(), new BlackPawn(), new BlackPawn()),
-                List.of(new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK))
+        List<Pieces> pieces = List.of(
+                new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
+                        new BlackPawn(), new BlackPawn(), new BlackPawn())),
+                new Pieces(List.of(new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK)))
         );
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateColumns(pieces);

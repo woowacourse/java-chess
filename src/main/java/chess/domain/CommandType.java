@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum CommandType {
+
     START(true),
     END(true),
     STATUS(true),

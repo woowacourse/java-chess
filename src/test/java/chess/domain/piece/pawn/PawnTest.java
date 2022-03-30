@@ -13,6 +13,14 @@ import org.junit.jupiter.api.Test;
 public class PawnTest {
 
     @Test
+    @DisplayName("흑색 폰을 생성한다.")
+    void constructPawn() {
+        final var piece = new BlackPawn();
+
+        assertThat(piece).isInstanceOf(BlackPawn.class);
+    }
+
+    @Test
     @DisplayName("폰은 2칸 움직일 수 있다.")
     void firstMove() {
         Pawn pawn = new WhitePawn();

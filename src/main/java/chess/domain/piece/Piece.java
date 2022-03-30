@@ -21,11 +21,11 @@ public abstract class Piece {
     public abstract double getPoint();
 
     public final String getName() {
-        String symbol = name.getSymbol();
+        String value = name.getValue();
         if (color == Color.WHITE) {
-            return symbol.toLowerCase(Locale.ROOT);
+            return value.toLowerCase(Locale.ROOT);
         }
-        return symbol;
+        return value;
     }
 
     public final boolean isBlack() {

@@ -3,9 +3,9 @@ package chess;
 import chess.domain.ChessBoard;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
+import chess.domain.Pieces;
 import chess.domain.ScoreCalculator;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.view.InputView;
@@ -65,14 +65,14 @@ public class ChessGame {
     }
 
     private void printStatusByColor(Color color) {
-        List<List<Piece>> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
+        List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
         ScoreCalculator calculator = ScoreCalculator.getInstance();
         double score = calculator.calculateColumns(piecesOnColumns);
         ResultView.printStatus(color, score);
     }
 
     private void initChessBoard() {
-        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+        PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
         chessBoard = new ChessBoard(piecesGenerator);
         turn = Color.WHITE;
         ResultView.printChessBoard(chessBoard.getPieces());

@@ -15,6 +15,14 @@ import org.junit.jupiter.api.Test;
 public class RookTest {
 
     @Test
+    @DisplayName("룩을 생성한다.")
+    void constructRook() {
+        final var piece = new Rook(Color.BLACK);
+
+        assertThat(piece).isInstanceOf(Rook.class);
+    }
+
+    @Test
     @DisplayName("룩이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByRook() {
         Rook rook = new Rook(Color.BLACK);

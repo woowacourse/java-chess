@@ -1,12 +1,11 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
 import java.util.List;
 
 public class ScoreCalculator {
 
     private static final double SCORE_REDUCTION_RATE = 2.0;
+
     private static ScoreCalculator instance;
 
     private ScoreCalculator() {
@@ -19,20 +18,15 @@ public class ScoreCalculator {
         return instance;
     }
 
-    public double calculateColumns(List<List<Piece>> pieces) {
+    public double calculateColumns(List<Pieces> pieces) {
         return pieces.stream()
                 .mapToDouble(this::calculateOneColumn)
                 .sum();
     }
 
-    public double calculateOneColumn(List<Piece> pieces) {
-        long pawnCount = pieces.stream()
-                .filter(p -> p.isSamePieceName(PieceName.PAWN))
-                .count();
-        double sum = pieces.stream()
-                .mapToDouble(Piece::getPoint)
-                .sum();
-
+    public double calculateOneColumn(Pieces pieces) {
+        long pawnCount = pieces.getPawnCount();
+        double sum = pieces.getSumOfScore();
         if (pawnCount == 1) {
             return sum;
         }
