@@ -9,7 +9,7 @@ import chess.piece.Color;
 import chess.view.Command;
 import java.util.Map;
 
-public class Running implements State {
+public final class Running implements State {
 
     private final Board board;
     private Color color = WHITE;
