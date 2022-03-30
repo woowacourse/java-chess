@@ -14,11 +14,22 @@ import chess.domain.piece.PieceType;
 
 public class Board {
 
-    public static final int TOTAL_KING_COUNT = 2;
+    private static final int TOTAL_PIECE_COUNT = LineNumber.MAX * LineNumber.MAX;
+    private static final int TOTAL_KING_COUNT = 2;
+
     private final Map<Point, Piece> pointPieces;
 
     private Board(Map<Point, Piece> pointPieces) {
+        validateCounts(pointPieces);
         this.pointPieces = new HashMap<>(pointPieces);
+    }
+
+    private void validateCounts(Map<Point, Piece> pointPieces) {
+        if (pointPieces.size() != TOTAL_PIECE_COUNT) {
+            throw new IllegalArgumentException(
+                String.format("[ERROR] 말의 개수가 %d개가 아닙니다.", TOTAL_PIECE_COUNT)
+            );
+        }
     }
 
     public static Board of(BoardGenerator generator) {
