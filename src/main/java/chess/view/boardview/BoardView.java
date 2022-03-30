@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.view.boardview;
 
 import static chess.domain.position.PositionConverter.FILES_TOTAL_SIZE;
 import static chess.domain.position.PositionConverter.RANKS_TOTAL_SIZE;
@@ -6,20 +6,21 @@ import static chess.domain.position.PositionConverter.RANKS_TOTAL_SIZE;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.ChessGameDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class BoardDto {
+public class BoardView {
 
     private static final String EMPTY_SQUARE_DISPLAY = ".";
 
     private final List<String> boardDisplay;
 
-    public BoardDto(ChessGame game) {
+    public BoardView(ChessGameDto chessGameDto) {
         boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
-            .mapToObj(rowIdx -> extractCurrentRowChessmen(game, rowIdx))
-            .map(BoardDto::initRowDisplay)
+            .mapToObj(rowIdx -> extractCurrentRowChessmen(chessGameDto.getChessGame(), rowIdx))
+            .map(BoardView::initRowDisplay)
             .collect(Collectors.toList());
     }
 

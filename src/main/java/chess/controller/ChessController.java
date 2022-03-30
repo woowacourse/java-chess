@@ -15,9 +15,10 @@ import static chess.view.OutputView.printStatus;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.piece.ChessmenInitializer;
-import chess.dto.BoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.CommandDto;
 import chess.dto.MovePositionCommandDto;
+import chess.view.boardview.BoardView;
 
 public class ChessController {
 
@@ -41,7 +42,7 @@ public class ChessController {
         ChessmenInitializer chessmenInitializer = new ChessmenInitializer();
         ChessGame game = ChessGame.of(chessmenInitializer.init());
 
-        printBoard(new BoardDto(game));
+        printBoard(new BoardView(new ChessGameDto(game)));
 
         return game;
     }
@@ -49,7 +50,7 @@ public class ChessController {
     private ChessGame progressGameUntilEnd(ChessGame chessGame) {
         while (!chessGame.isEnd() && !playerWantToEndStatus) {
             chessGame = progressByCommand(chessGame, requestMoveOrEndOrStatusInput());
-            printBoard(new BoardDto(chessGame));
+            printBoard(new BoardView(new ChessGameDto(chessGame)));
         }
         return chessGame;
     }

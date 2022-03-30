@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.view.boardview;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
@@ -46,4 +46,5 @@ public enum PieceSymbol {
             .findFirst()
             .orElse(EMPTY_SQUARE_DISPLAY);
     }
+
 }

@@ -4,8 +4,8 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.piece.Color;
-import chess.dto.BoardDto;
 import chess.dto.GameResultDto;
+import chess.view.boardview.BoardView;
 
 public class OutputView {
 
@@ -44,9 +44,9 @@ public class OutputView {
         print(FORCE_END_MESSAGE);
     }
 
-    public static void printBoard(BoardDto dto) {
+    public static void printBoard(BoardView boardView) {
         StringBuilder builder = new StringBuilder();
-        for (String rowDisplay : dto.getDisplay()) {
+        for (String rowDisplay : boardView.getDisplay()) {
             builder.append(rowDisplay)
                 .append(BLANK_LINE);
         }
