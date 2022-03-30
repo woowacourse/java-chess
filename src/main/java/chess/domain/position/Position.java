@@ -69,8 +69,8 @@ public class Position {
         return this.column == position.column;
     }
 
-    public boolean movable(Direction direction) {
-        return column.movable(direction.getColumn()) && row.movable(direction.getRow());
+    public boolean isMovable(Direction direction) {
+        return column.isMovable(direction.getColumn()) && row.isMovable(direction.getRow());
     }
 
     public Position move(Direction direction) {

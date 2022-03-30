@@ -99,7 +99,7 @@ public class Pawn extends Piece {
     @Override
     public List<Position> findMovablePosition(Position now) {
         return directions.stream()
-                .filter(now::movable)
+                .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
     }

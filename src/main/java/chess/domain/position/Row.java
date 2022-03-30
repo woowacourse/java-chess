@@ -47,7 +47,7 @@ public enum Row {
         return row.index - this.index;
     }
 
-    public boolean movable(int distance) {
+    public boolean isMovable(int distance) {
         int moveIndex = this.index + distance;
         return moveIndex <= EIGHT.index && moveIndex >= ONE.index;
     }

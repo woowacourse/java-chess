@@ -13,7 +13,7 @@ public class ChessGame {
 
     private final Board board = new Board();
 
-    public void init() {
+    public void start() {
         OutputView.printGuideMessage();
         boolean shouldContinue = true;
 
