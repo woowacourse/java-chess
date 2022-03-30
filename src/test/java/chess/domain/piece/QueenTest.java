@@ -79,8 +79,6 @@ public class QueenTest {
         Position from = Position.valueOf(File.d, Rank.FOUR);
         Position to = Position.valueOf(File.b, Rank.THREE);
 
-        assertThatThrownBy(() -> whiteQueen.isMovable(from, to))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 지정한 목적지는 갈 수 있는 방향이 존재하지 않습니다.");
+        assertThat(whiteQueen.isMovable(from, to)).isTrue();
     }
 }

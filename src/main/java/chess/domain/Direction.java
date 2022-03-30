@@ -13,7 +13,15 @@ public enum Direction {
     LEFTUP(-1, 1),
     RIGHTUP(1, 1),
     LEFTDOWN(-1, -1),
-    RIGHTDOWN(1, -1);
+    RIGHTDOWN(1, -1),
+    UUR(1,2),
+    UUL(-1,2),
+    RRU(2,1),
+    LLU(-2,1),
+    RRD(2,-1),
+    DDR(1,-2),
+    LLD(-2,-1),
+    DDL(-1, -2);
 
     private static final String NON_MOVABLE_DIRECTION = "[ERROR] 지정한 목적지는 갈 수 있는 방향이 존재하지 않습니다.";
 
