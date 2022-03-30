@@ -16,10 +16,9 @@ public class ChessController {
     }
 
     public void selectMenu(ChessGame chessGame) {
-        String option = InputView.inputOption();
         try {
-            Command.playCommand(chessGame, option);
-        } catch (IllegalStateException exception) {
+            Command.playCommand(chessGame, InputView.inputOption());
+        } catch (IllegalStateException | IllegalArgumentException exception) {
             OutputView.printError(exception.getMessage());
             selectMenu(chessGame);
         }
