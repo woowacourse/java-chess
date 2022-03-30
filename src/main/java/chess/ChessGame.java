@@ -15,16 +15,16 @@ public class ChessGame {
 
     public void init() {
         OutputView.printGuideMessage();
-        boolean nextStep = true;
+        boolean shouldContinue = true;
 
-        while (nextStep) {
+        while (shouldContinue) {
             if (board.check()) {
                 OutputView.printMessage("현재 check 상황입니다.");
             }
             if (board.checkmate()) {
                 break;
             }
-            nextStep = hasNext();
+            shouldContinue = hasNext();
         }
     }
 
