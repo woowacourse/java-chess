@@ -13,6 +13,8 @@ public interface State {
 
     State end();
 
+    boolean isGameOver();
+
     State changeTurn(List<Position> positions);
 
     Score status();

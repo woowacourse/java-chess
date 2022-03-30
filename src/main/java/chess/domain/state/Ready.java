@@ -25,6 +25,11 @@ public final class Ready implements State {
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public State changeTurn(final List<Position> positions) {
         throw new IllegalArgumentException("Ready 상태에서는 chageTurn할 수 없습니다.");
     }
