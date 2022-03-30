@@ -32,46 +32,6 @@ public enum Direction {
         this.y = y;
     }
 
-    public static boolean isBlackPawnDirection(Direction direction) {
-        return List.of(D, DR, DL).contains(direction);
-    }
-
-    public static boolean isWhitePawnDirection(Direction direction) {
-        return List.of(U, UR, UL).contains(direction);
-    }
-
-    public static boolean isRookDirection(Direction direction) {
-        return isCardinalDirection(direction);
-    }
-
-    public static boolean isKnightDirection(Direction direction) {
-        return List.of(UUR, UUL, URR, ULL, DDR, DDL, DRR, DLL).contains(direction);
-    }
-
-    public static boolean isBishopDirection(Direction direction) {
-        return isDiagonalDirection(direction);
-    }
-
-    public static boolean isQueenDirection(Direction direction) {
-        return isEveryDirection(direction);
-    }
-
-    public static boolean isKingDirection(Direction direction) {
-        return isEveryDirection(direction);
-    }
-
-    private static boolean isEveryDirection(Direction direction) {
-        return isDiagonalDirection(direction) || isCardinalDirection(direction);
-    }
-
-    private static boolean isDiagonalDirection(Direction direction) {
-        return List.of(UR, UL, DR, DL).contains(direction);
-    }
-
-    private static boolean isCardinalDirection(Direction direction) {
-        return List.of(U, D, R, L).contains(direction);
-    }
-
     public static Direction of(int x, int y) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.equals(x, y))
