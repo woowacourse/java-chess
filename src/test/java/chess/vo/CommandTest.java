@@ -56,4 +56,18 @@ class CommandTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(Command.NOT_FOUND_COMMAND_EXCEPTION);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"END:true", "STATUS:false", "START:false"}, delimiter = ':')
+    @DisplayName("isEnd 메서드 검증")
+    void isEnd(Command command, boolean expected) {
+        assertThat(command.isEnd()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"END:false", "STATUS:true", "START:false"}, delimiter = ':')
+    @DisplayName("isStatus 메서드 검증")
+    void isStatus(Command command, boolean expected) {
+        assertThat(command.isStatus()).isEqualTo(expected);
+    }
 }

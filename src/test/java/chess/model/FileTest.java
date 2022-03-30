@@ -19,4 +19,11 @@ public class FileTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a:A", "b:B", "c:C", "d:D", "e:E", "f:F", "g:G", "h:H"}, delimiter = ':')
+    @DisplayName("문자열로부터 생성을 검증한다.")
+    void of(String input, File file) {
+        assertThat(File.of(input)).isEqualTo(file);
+    }
 }

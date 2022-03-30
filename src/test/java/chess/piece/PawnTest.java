@@ -65,12 +65,25 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"B:true", "A:false"}, delimiter = ':')
-    @DisplayName("폰은 대각선으로만 공격할 수 있다")
-    void when_pawn_can_attack_diagonal(File file, boolean expected) {
+    @DisplayName("폰은 대각선으로만 공격할 수 있다(백색)")
+    void when_pawn_can_attack_diagonal_white(File file, boolean expected) {
         Piece pawn = Pawn.colorOf(PieceColor.WHITE);
 
         Position source = Position.of(FOUR, A);
         Position target = Position.of(FIVE, file);
+
+        boolean actual = pawn.isMovable(new Path(source, target), MoveType.ENEMY);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"B:true", "A:false"}, delimiter = ':')
+    @DisplayName("폰은 대각선으로만 공격할 수 있다(흑색)")
+    void when_pawn_can_attack_diagonal_black(File file, boolean expected) {
+        Piece pawn = Pawn.colorOf(PieceColor.BLACK);
+
+        Position source = Position.of(FIVE, A);
+        Position target = Position.of(FOUR, file);
 
         boolean actual = pawn.isMovable(new Path(source, target), MoveType.ENEMY);
         assertThat(actual).isEqualTo(expected);
