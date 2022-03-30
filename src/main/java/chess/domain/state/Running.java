@@ -77,9 +77,13 @@ public abstract class Running implements State {
     }
 
     private void checkPawnTargetLocation(Piece targetPiece, LocationDiff locationDiff) {
-        if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
-        }
+        checkDiagonalDirection(targetPiece, locationDiff);
+        checkForwardDirection(targetPiece, locationDiff);
+    }
+
+    abstract void checkDiagonalDirection(Piece targetPiece, LocationDiff locationDiff);
+
+    private void checkForwardDirection(Piece targetPiece, LocationDiff locationDiff) {
         if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
         }

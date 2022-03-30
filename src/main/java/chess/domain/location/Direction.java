@@ -43,6 +43,10 @@ public enum Direction {
         return List.of(D, U).contains(direction);
     }
 
+    public static boolean isDiagonal(Direction direction) {
+        return List.of(UR, UL, DR, DL).contains(direction);
+    }
+
     private boolean equals(int x, int y) {
         return this.x == x && this.y == y;
     }
