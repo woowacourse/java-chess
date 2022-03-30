@@ -8,47 +8,50 @@ import java.util.Objects;
 
 public final class Position {
 
-    private final PositionX positionX;
-    private final PositionY positionY;
+    private final Column column;
+    private final Row row;
 
-    public Position(PositionX positionX, PositionY positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+    public Position(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     public static Position of(String value) {
-        PositionX positionX = PositionX.of(value.substring(0, 1));
-        PositionY positionY = PositionY.of(value.substring(1));
-        return new Position(positionX, positionY);
+        Column column = Column.of(value.substring(0, 1));
+        Row row = Row.of(value.substring(1));
+        return new Position(column, row);
     }
 
-    public static Map<PositionY, List<Position>> groupByPositionY(List<Position> pawnPositions) {
+    public static Map<Row, List<Position>> groupByRank(List<Position> pawnPositions) {
         return pawnPositions.stream()
-                .collect(groupingBy(position -> position.positionY));
+                .collect(groupingBy(position -> position.row));
     }
 
-    public int calculateDisplacementXTo(Position position) {
-        return positionX.displacementTo(position.positionX);
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+    public int calculateColumnDifferenceTo(Position position) {
+        return column.displacementTo(position.column);
     }
 
-    public int calculateDisplacementYTo(Position position) {
-        return positionY.displacementTo(position.positionY);
+    public int calculateRowDifferenceTo(Position position) {
+        return row.displacementTo(position.row);
     }
 
     public int calculateMaxLinearLengthTo(Position position) {
-        return Math.max(Math.abs(calculateDisplacementYTo(position)), Math.abs(calculateDisplacementXTo(position)));
+        return Math.max(Math.abs(calculateRowDifferenceTo(position)), Math.abs(calculateColumnDifferenceTo(position)));
     }
 
     public int calculateXSlope(Position target, int routeLength) {
-        return calculateDisplacementXTo(target) / routeLength;
+        return calculateColumnDifferenceTo(target) / routeLength;
     }
 
     public int calculateYSlope(Position target, int routeLength) {
-        return calculateDisplacementYTo(target) / routeLength;
+        return calculateRowDifferenceTo(target) / routeLength;
     }
 
     public Position displacedOf(int xDisplacement, int yDisplacement) {
-        return new Position(positionX.displacedOf(xDisplacement), positionY.displacedOf(yDisplacement));
+        return new Position(column.displacedOf(xDisplacement), row.displacedOf(yDisplacement));
     }
 
     @Override
@@ -60,11 +63,11 @@ public final class Position {
             return false;
         }
         Position position = (Position) o;
-        return positionX == position.positionX && positionY == position.positionY;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(positionX, positionY);
+        return Objects.hash(column, row);
     }
 }

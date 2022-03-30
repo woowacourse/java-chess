@@ -6,19 +6,19 @@ public enum Color {
 
     BLACK(String::toUpperCase) {
         @Override
-        public Color next() {
+        public Color enemyColor() {
             return WHITE;
         }
     },
     WHITE(String::toLowerCase) {
         @Override
-        public Color next() {
+        public Color enemyColor() {
             return BLACK;
         }
     },
     NONE(signature -> signature) {
         @Override
-        public Color next() {
+        public Color enemyColor() {
             return NONE;
         }
     };
@@ -33,5 +33,13 @@ public enum Color {
         return signatureFunction.apply(signature);
     }
 
-    public abstract Color next();
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
+    public abstract Color enemyColor();
 }

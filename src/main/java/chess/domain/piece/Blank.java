@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Movement;
 import java.util.List;
 
 import chess.domain.Color;
@@ -12,12 +13,17 @@ public class Blank extends Piece {
     }
 
     @Override
+    protected List<Movement> chooseMovements() {
+        return List.of();
+    }
+
+    @Override
     public String baseSignature() {
         return ".";
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isCorrectMovement(Position source, Position target, Piece targetPiece) {
         throw new IllegalArgumentException("기물이 없는 위치입니다.");
     }
 

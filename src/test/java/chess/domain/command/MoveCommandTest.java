@@ -3,12 +3,12 @@ package chess.domain.command;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.domain.position.Column;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import chess.domain.position.Row;
 
 public class MoveCommandTest {
 
@@ -18,8 +18,8 @@ public class MoveCommandTest {
         MoveCommand moveCommand = MoveCommand.of("move a1 a2");
 
         assertAll(
-            () -> assertThat(moveCommand.from()).isEqualTo(new Position(PositionX.A, PositionY.RANK_1)),
-            () -> assertThat(moveCommand.to()).isEqualTo(new Position(PositionX.A, PositionY.RANK_2))
+            () -> assertThat(moveCommand.from()).isEqualTo(new Position(Column.A, Row.RANK_1)),
+            () -> assertThat(moveCommand.to()).isEqualTo(new Position(Column.A, Row.RANK_2))
         );
     }
 }

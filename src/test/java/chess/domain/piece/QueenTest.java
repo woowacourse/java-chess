@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.position.Column;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.Color;
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import chess.domain.position.Row;
 
 public class QueenTest {
 
@@ -29,27 +29,27 @@ public class QueenTest {
     @DisplayName("Queen 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         Queen queen = new Queen(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.H, PositionY.RANK_5);
-        assertThat(queen.isMovable(source, target)).isTrue();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.H, Row.RANK_5);
+        assertThat(queen.isCorrectMovement(source, target)).isTrue();
     }
 
     @Test
     @DisplayName("Queen 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         Queen queen = new Queen(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.H, PositionY.RANK_7);
-        assertThat(queen.isMovable(source, target)).isFalse();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.H, Row.RANK_7);
+        assertThat(queen.isCorrectMovement(source, target)).isFalse();
     }
 
     @Test
     @DisplayName("Queen 이 움직이는 경로를 얻어오는지")
     void findRoute() {
         Queen queen = new Queen(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.F, PositionY.RANK_5);
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.F, Row.RANK_5);
         List<Position> route = queen.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(PositionX.D, PositionY.RANK_5), new Position(PositionX.E, PositionY.RANK_5));
+        assertThat(route).containsExactly(new Position(Column.D, Row.RANK_5), new Position(Column.E, Row.RANK_5));
     }
 }

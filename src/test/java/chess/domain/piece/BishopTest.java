@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.position.Column;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.Color;
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import chess.domain.position.Row;
 
 public class BishopTest {
 
@@ -29,27 +29,27 @@ public class BishopTest {
     @DisplayName("Bishop 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.F, PositionY.RANK_2);
-        assertThat(bishop.isMovable(source, target)).isTrue();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.F, Row.RANK_2);
+        assertThat(bishop.isCorrectMovement(source, target)).isTrue();
     }
 
     @Test
     @DisplayName("Bishop 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.G, PositionY.RANK_6);
-        assertThat(bishop.isMovable(source, target)).isFalse();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.G, Row.RANK_6);
+        assertThat(bishop.isCorrectMovement(source, target)).isFalse();
     }
 
     @Test
     @DisplayName("Bishop 이 움직이는 경로를 얻어오는지")
     void findRoute() {
         Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.F, PositionY.RANK_2);
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.F, Row.RANK_2);
         List<Position> route = bishop.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(PositionX.D, PositionY.RANK_4), new Position(PositionX.E, PositionY.RANK_3));
+        assertThat(route).containsExactly(new Position(Column.D, Row.RANK_4), new Position(Column.E, Row.RANK_3));
     }
 }

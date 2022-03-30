@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.Color;
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import chess.domain.position.Column;
+import chess.domain.position.Row;
 
 public class KingTest {
 
@@ -29,26 +29,26 @@ public class KingTest {
     @DisplayName("King 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         King king = new King(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.D, PositionY.RANK_6);
-        assertThat(king.isMovable(source, target)).isTrue();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.D, Row.RANK_6);
+        assertThat(king.isCorrectMovement(source, target)).isTrue();
     }
 
     @Test
     @DisplayName("King 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         King king = new King(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.D, PositionY.RANK_7);
-        assertThat(king.isMovable(source, target)).isFalse();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.D, Row.RANK_7);
+        assertThat(king.isCorrectMovement(source, target)).isFalse();
     }
 
     @Test
     @DisplayName("King 이 움직이는 경로를 얻어오는지")
     void findRoute() {
         King king = new King(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.C, PositionY.RANK_4);
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.C, Row.RANK_4);
         List<Position> route = king.findRoute(source, target);
         assertThat(route).isEmpty();
     }

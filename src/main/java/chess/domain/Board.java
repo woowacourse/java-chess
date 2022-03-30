@@ -8,7 +8,7 @@ import chess.domain.command.MoveCommand;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.PositionY;
+import chess.domain.position.Row;
 
 public class Board {
 
@@ -21,7 +21,7 @@ public class Board {
     public void validateMovement(Color turnColor, MoveCommand command) {
         validatePieceChoice(turnColor, command.from());
         validateTargetChoice(turnColor, command.to());
-        validateMovable(turnColor, command.from(), command.to());
+        validateMovable(command.from(), command.to());
         validateRoute(command.from(), command.to());
     }
 
@@ -39,40 +39,11 @@ public class Board {
         }
     }
 
-    private void validateMovable(Color turnColor, Position source, Position target) {
+    private void validateMovable(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
-        if (!sourcePiece.isMovable(source, target)) {
-            throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
-        }
-
-        if (sourcePiece.isPawn()) {
-            validatePawnMovable(turnColor, source, target);
-        }
-    }
-
-    private void validatePawnMovable(Color turnColor, Position source, Position target) {
         Piece targetPiece = pieces.get(target);
-        Color enemyColor = turnColor.next();
-        if (isStraightMove(source, target)) {
-            validateStraightMove(targetPiece, enemyColor);
-            return;
-        }
-        validateDiagonalMove(targetPiece, enemyColor);
-    }
-
-    private boolean isStraightMove(Position source, Position target) {
-        return Math.abs(source.calculateDisplacementXTo(target)) == 0;
-    }
-
-    private void validateStraightMove(Piece targetPiece, Color enemyColor) {
-        if (targetPiece.isSameColor(enemyColor)) {
-            throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void validateDiagonalMove(Piece targetPiece, Color enemyColor) {
-        if (!targetPiece.isSameColor(enemyColor)) {
-            throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
+        if (!sourcePiece.isCorrectMovement(source, target, targetPiece)) {
+            throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
         }
     }
 
@@ -109,7 +80,7 @@ public class Board {
 
     private long countSameRankPawnsOf(Color color) {
         List<Position> pawnPositions = findPawnPositionsOf(color);
-        Map<PositionY, List<Position>> pawnGroup = Position.groupByPositionY(pawnPositions);
+        Map<Row, List<Position>> pawnGroup = Position.groupByRank(pawnPositions);
 
         return pawnGroup.values()
                 .stream()

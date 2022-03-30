@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.Color;
 import chess.domain.position.Position;
-import chess.domain.position.PositionX;
-import chess.domain.position.PositionY;
+import chess.domain.position.Column;
+import chess.domain.position.Row;
 
 public class RookTest {
 
@@ -29,27 +29,27 @@ public class RookTest {
     @DisplayName("Rook 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.H, PositionY.RANK_5);
-        assertThat(rook.isMovable(source, target)).isTrue();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.H, Row.RANK_5);
+        assertThat(rook.isCorrectMovement(source, target)).isTrue();
     }
 
     @Test
     @DisplayName("Rook 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.H, PositionY.RANK_8);
-        assertThat(rook.isMovable(source, target)).isFalse();
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.H, Row.RANK_8);
+        assertThat(rook.isCorrectMovement(source, target)).isFalse();
     }
 
     @Test
     @DisplayName("Rook 이 움직이는 경로를 얻어오는지")
     void findRoute() {
         Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(PositionX.C, PositionY.RANK_5);
-        Position target = new Position(PositionX.C, PositionY.RANK_8);
+        Position source = new Position(Column.C, Row.RANK_5);
+        Position target = new Position(Column.C, Row.RANK_8);
         List<Position> route = rook.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(PositionX.C, PositionY.RANK_6), new Position(PositionX.C, PositionY.RANK_7));
+        assertThat(route).containsExactly(new Position(Column.C, Row.RANK_6), new Position(Column.C, Row.RANK_7));
     }
 }

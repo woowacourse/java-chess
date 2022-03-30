@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
+import chess.domain.Movement;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
-
-import chess.domain.Color;
-import chess.domain.position.Position;
 
 public class Queen extends Piece {
 
@@ -13,25 +13,30 @@ public class Queen extends Piece {
     }
 
     @Override
+    protected List<Movement> chooseMovements() {
+        return List.of(
+                Movement.EAST_UNLIMITED,
+                Movement.WEST_UNLIMITED,
+                Movement.SOUTH_UNLIMITED,
+                Movement.NORTH_UNLIMITED,
+                Movement.SOUTH_EAST_UNLIMITED,
+                Movement.SOUTH_WEST_UNLIMITED,
+                Movement.NORTH_EAST_UNLIMITED,
+                Movement.NORTH_WEST_UNLIMITED
+        );
+    }
+
+    @Override
     protected String baseSignature() {
         return "q";
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        int distanceX = Math.abs(source.calculateDisplacementXTo(target));
-        int distanceY = Math.abs(source.calculateDisplacementYTo(target));
+    public boolean isCorrectMovement(Position source, Position target, Piece targetPiece) {
+        int columnDifference = source.calculateColumnDifferenceTo(target);
+        int rowDifference = source.calculateRowDifferenceTo(target);
 
-        if (distanceY >= 1 && distanceX == 0) {
-            return true;
-        }
-        if (distanceY == 0 && distanceX >= 1) {
-            return true;
-        }
-        if (distanceY >= 1 && distanceX == distanceY) {
-            return true;
-        }
-        return false;
+        return movements.contains(Movement.find(columnDifference, rowDifference));
     }
 
     @Override

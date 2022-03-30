@@ -24,7 +24,7 @@ public final class ChessGame {
     }
 
     private void changeTurn() {
-        turnColor = turnColor.next();
+        turnColor = turnColor.enemyColor();
     }
 
     public boolean isRunning() {

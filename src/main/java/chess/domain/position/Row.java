@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum PositionY {
+public enum Row {
 
     RANK_1("1", 7),
     RANK_2("2", 6),
@@ -14,33 +14,33 @@ public enum PositionY {
     RANK_8("8", 0);
 
     private final String name;
-    private final int coordination;
+    private final int rank;
 
-    PositionY(final String name, final int coordination) {
+    Row(final String name, final int rank) {
         this.name = name;
-        this.coordination = coordination;
+        this.rank = rank;
     }
 
-    public static PositionY of(String name) {
+    public static Row of(String name) {
         return Arrays.stream(values())
-                .filter(positionY -> positionY.name.equals(name))
+                .filter(rank -> rank.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."));
     }
 
-    public static PositionY of(int coordination) {
+    public static Row of(int coordination) {
         return Arrays.stream(values())
-                .filter(positionY -> positionY.coordination == coordination)
+                .filter(rank -> rank.rank == coordination)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
 
-    public int displacementTo(PositionY positionY) {
-        return positionY.coordination - coordination;
+    public int displacementTo(Row row) {
+        return row.rank - rank;
     }
 
-    public PositionY displacedOf(int displacement) {
-        return PositionY.of(coordination + displacement);
+    public Row displacedOf(int displacement) {
+        return Row.of(rank + displacement);
     }
 
     public String getName() {
