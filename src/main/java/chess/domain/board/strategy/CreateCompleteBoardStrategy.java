@@ -61,7 +61,8 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     }
 
     private Map<Position, Piece> createPiecesWithoutPawn() {
-        final Map<Position, Piece> pieces = new HashMap<>(createLineOf(Row.FIRST, Color.WHITE));
+        final Map<Position, Piece> pieces = new HashMap<>();
+        pieces.putAll(createLineOf(Row.FIRST, Color.WHITE));
         pieces.putAll(createLineOf(Row.EIGHTH, Color.BLACK));
         return pieces;
     }
