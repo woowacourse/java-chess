@@ -21,7 +21,7 @@ public class BoardTest {
 		Board chessBoard = new Board(board);
 		assertThatThrownBy(() -> chessBoard.checkCanMove(new Square("c3"), new Square("d4")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("[ERROR] 사격 중지!! 아군이다!! ><");
+			.hasMessage("[ERROR] 사격 중지!! 아군이다!! ><\n");
 	}
 
 	@Test
@@ -32,7 +32,7 @@ public class BoardTest {
 		Board chessBoard = new Board(board);
 		assertThatThrownBy(() -> chessBoard.checkCanMove(new Square("c3"), new Square("e6")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("[ERROR] 허걱... 거긴 못가... 미안..");
+			.hasMessage("[ERROR] 허걱... 거긴 못가... 미안..\n");
 	}
 
 	@Test
@@ -44,6 +44,6 @@ public class BoardTest {
 		Board chessBoard = new Board(board);
 		assertThatThrownBy(() -> chessBoard.checkCanMove(new Square("c3"), new Square("e5")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("[ERROR] 길이 막혔다...!");
+			.hasMessage("[ERROR] 길이 막혔다...!\n");
 	}
 }

@@ -24,7 +24,7 @@ public class ChessGameTest {
 		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE);
 		assertThatThrownBy(() -> chessGame.move(new Square("d4"), new Square("e5")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("[ERROR] 순서 지키시지?!");
+			.hasMessage("[ERROR] 순서 지키시지?!\n");
 	}
 
 	@Test
@@ -37,6 +37,6 @@ public class ChessGameTest {
 		chessGame.move(new Square("c3"), new Square("d4"));
 		assertThatThrownBy(() -> chessGame.move(new Square("d4"), new Square("e5")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("[ERROR] 순서 지키시지?!");
+			.hasMessage("[ERROR] 순서 지키시지?!\n");
 	}
 }
