@@ -40,17 +40,32 @@ class KnightTest {
 
             assertThat(actual).isEqualTo(Direction.NNE);
         }
+    }
 
-        @DisplayName("경로를 구한다.")
+    @DisplayName("입력된 범위에 대해")
+    @Nested
+    class RangeTest {
+
+        @DisplayName("유효하지 않으면 예외를 반환한다.")
         @Test
-        void calculate_Path() {
+        void invalid_Range() {
+            Position current = CachedPosition.a1;
+            Position invalidTarget = CachedPosition.c5;
+            Knight knight = new Knight(Color.BLACK);
+
+            assertThatThrownBy(() -> knight.findValidDirection(current, invalidTarget));
+        }
+
+        @DisplayName("유효하면 방향 객체를 반환한다.")
+        @Test
+        void valid_Direction() {
             Position current = CachedPosition.a1;
             Position target = CachedPosition.b3;
             Knight knight = new Knight(Color.BLACK);
 
-            List<Position> path = knight.calculatePathToValidate(current, target, new Knight(Color.WHITE));
+            Direction actual = knight.findValidDirection(current, target);
 
-            assertThat(path).isEmpty();
+            assertThat(actual).isEqualTo(Direction.NNE);
         }
     }
 
