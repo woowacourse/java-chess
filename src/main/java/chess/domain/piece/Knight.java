@@ -30,8 +30,8 @@ public class Knight extends Piece {
     private boolean isInRange(Position targetPosition) {
         List<Position> inRangePosition = Stream.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
                         Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS)
-                .filter(direction -> Position.isValidPosition(Position.createNextPosition(position, direction)))
-                .map(direction -> Position.createNextPosition(position, direction))
+                .filter(direction -> Position.isValidPosition(position.createNextPosition(direction)))
+                .map(direction -> position.createNextPosition(direction))
                 .collect(Collectors.toList());
 
         return inRangePosition.contains(targetPosition);

@@ -50,11 +50,11 @@ public abstract class Playing extends GameStarted {
         if (start.calculateStraightDistance(target) == 1) {
             return;
         }
-        Position afterStartTarget = Position.createNextPosition(start, direction);
+        Position afterStartTarget = start.createNextPosition(direction);
 
         for (Position position = afterStartTarget;
              !position.equals(target);
-             position = Position.createNextPosition(position, direction)) {
+             position = position.createNextPosition(direction)) {
             validateCollision(position);
         }
     }

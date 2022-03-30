@@ -40,7 +40,7 @@ public enum Direction {
 
     private static boolean findPositionInDirection(Position start, Position target, Direction direction) {
         return IntStream.rangeClosed(1, start.calculateStraightDistance(target))
-                .mapToObj(number -> Position.createNextPosition(start, direction, number))
+                .mapToObj(number -> start.createNextPosition(direction, number))
                 .anyMatch(position -> position.equals(target));
     }
 

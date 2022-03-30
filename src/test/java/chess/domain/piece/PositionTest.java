@@ -49,7 +49,7 @@ public class PositionTest {
     void createNextPosition() {
         Position position = new Position("a1");
 
-        assertThat(Position.createNextPosition(position, Direction.NORTH))
+        assertThat(position.createNextPosition(Direction.NORTH))
                 .isEqualTo(new Position("a2"));
     }
 
@@ -58,7 +58,7 @@ public class PositionTest {
     void createNextPositionExistProduct() {
         Position position = new Position("a1");
 
-        assertThat(Position.createNextPosition(position, Direction.NORTH, 3))
+        assertThat(position.createNextPosition(Direction.NORTH, 3))
                 .isEqualTo(new Position("a4"));
     }
 
@@ -66,7 +66,7 @@ public class PositionTest {
     @Test
     void isValidPosition() {
         assertThat(Position.isValidPosition(
-                Position.createNextPosition(new Position("a1"), Direction.SOUTHWEST))).isFalse();
+                new Position("a1").createNextPosition(Direction.SOUTHWEST))).isFalse();
     }
 
     @DisplayName("두 위치의 직선 거리를 계산한다.")

@@ -29,8 +29,8 @@ public class King extends Piece {
     private boolean isInRange(Position targetPosition) {
         List<Position> inRangePosition = Direction.getEightStraightDirections()
                 .stream()
-                .filter(direction -> Position.isValidPosition(Position.createNextPosition(position, direction)))
-                .map(direction -> Position.createNextPosition(position, direction))
+                .filter(direction -> Position.isValidPosition(position.createNextPosition(direction)))
+                .map(direction -> position.createNextPosition(direction))
                 .collect(Collectors.toList());
 
         return inRangePosition.contains(targetPosition);
