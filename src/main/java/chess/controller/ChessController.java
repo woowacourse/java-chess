@@ -15,29 +15,40 @@ import java.util.stream.Collectors;
 
 public class ChessController {
     public void run() {
-        OutputView.startGame();
-        String input = InputView.inputCommand();
-        Command command = new Init(input);
-        command = command.turnState(input);
 
+        Command command = startGame();
         Board board = Board.create(Pieces.createInit());
-        command = playGame(command, board);
+        Turn turn = Turn.init();
+        command = playGame(turn, command, board);
         OutputView.printFinishMessage();
         finishGame(command, board);
     }
 
-    private Command playGame(Command command, Board board) {
-        Turn turn = Turn.init();
+    private Command startGame() {
+        try {
+            OutputView.startGame();
+            String input = InputView.inputCommand();
+            Command command = new Init(input);
+            command = command.turnState(input);
+            return command;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return startGame();
+        }
+
+    }
+
+    private Command playGame(Turn turn, Command command, Board board) {
         while (isRunning(command, board)) {
             turn = nextTurn(command, board, turn);
             OutputView.printBoard(convertToPieceDtos(board.getPieces()));
-            command = command.turnState(InputView.inputCommand());
+            command = turnState(command);
         }
         return command;
     }
 
     private boolean isRunning(Command command, Board board) {
-        return !command.isEnd() || board.isDeadKing();
+        return !command.isEnd() && !board.isDeadKing();
     }
 
     private List<PieceDto> convertToPieceDtos(Pieces pieces) {
@@ -49,17 +60,34 @@ public class ChessController {
     }
 
     private Turn nextTurn(Command command, Board board, Turn turn) {
-        if (command.isMove()) {
-            board.move(command.getCommandPosition(), turn);
-            turn = turn.change();
+        try {
+            if (command.isMove()) {
+                board.move(command.getCommandPosition(), turn);
+                turn = turn.change();
+            }
+            return turn;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            OutputView.printBoard(convertToPieceDtos(board.getPieces()));
+            command = turnState(command);
+            return nextTurn(command, board, turn);
         }
-        return turn;
+
     }
 
     private void finishGame(Command command, Board board) {
         command = command.turnFinalState(InputView.inputCommand());
         if (command.isStatus()) {
             OutputView.printFinalResult(board.getWinTeam(), board.getWhiteTeamScore(), board.getBlackTeamScore());
+        }
+    }
+
+    private Command turnState(Command command) {
+        try {
+            return command.turnState(InputView.inputCommand());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return turnState(command);
         }
     }
 }
