@@ -20,7 +20,7 @@ public class ChessBoardTest {
     @DisplayName("잘못된 위치 정보인 경우 예외를 던진다.")
     @Test
     void 잘못된_위치_정보인_경우_예외를_던진다() {
-        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
+        ChessBoard chessBoard = BoardFixtures.generateInitChessBoard();
 
         assertThatThrownBy(() -> chessBoard.move("i1", "a1"))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -38,7 +38,7 @@ public class ChessBoardTest {
     @DisplayName("source와 target이 동일한 경우 예외를 던진다.")
     @Test
     void source와_target이_동일한_경우_예외를_던진다() {
-        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
+        ChessBoard chessBoard = BoardFixtures.generateInitChessBoard();
 
         assertThatThrownBy(() -> chessBoard.move("b8", "b8"))
                 .isInstanceOf(IllegalArgumentException.class)
