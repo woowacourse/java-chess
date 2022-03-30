@@ -11,14 +11,14 @@ public final class Knight implements Type {
     public boolean isMovable(final Position source, final Position target) {
         final int columnGap = source.columnGap(target);
         final int rowGap = source.rowGap(target);
-        return moveVertical(columnGap, rowGap) || moveHorizontal(columnGap, rowGap);
+        return movableVertically(columnGap, rowGap) || movableHorizontally(columnGap, rowGap);
     }
 
-    private boolean moveHorizontal(final int columnGap, final int rowGap) {
+    private boolean movableHorizontally(final int columnGap, final int rowGap) {
         return rowGap == FIRST_MOVEMENT_LIMIT && columnGap == SECOND_MOVEMENT_LIMIT;
     }
 
-    private boolean moveVertical(final int columnGap, final int rowGap) {
+    private boolean movableVertically(final int columnGap, final int rowGap) {
         return columnGap == FIRST_MOVEMENT_LIMIT && rowGap == SECOND_MOVEMENT_LIMIT;
     }
 
