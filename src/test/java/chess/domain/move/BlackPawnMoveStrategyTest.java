@@ -3,6 +3,7 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ public class BlackPawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = new Board(BoardInitializer.initialize());
         pawnMoveStrategy = new BlackPawnMoveStrategy();
     }
 

@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.view.InputView;
@@ -19,7 +20,7 @@ public class ChessGameController {
     public void run() {
         OutputView.printStartGame();
         if (InputView.inputInitialCommand()) {
-            ChessGame chessGame = new ChessGame(Board.create());
+            ChessGame chessGame = new ChessGame(new Board(BoardInitializer.initialize()));
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }
