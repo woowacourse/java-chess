@@ -18,6 +18,8 @@ public abstract class Piece {
 
     public abstract boolean isMovableLine(Position source, Position target, Map<Position, Piece> board);
 
+    public abstract boolean isDotPiece();
+
     public boolean isSameType(Type type) {
         return this.type == type;
     }

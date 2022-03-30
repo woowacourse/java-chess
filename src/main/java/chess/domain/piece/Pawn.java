@@ -49,4 +49,9 @@ public class Pawn extends Piece {
     public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
         return false;
     }
+
+    @Override
+    public boolean isDotPiece() {
+        return true;
+    }
 }

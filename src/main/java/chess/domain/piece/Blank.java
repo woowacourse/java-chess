@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -18,6 +17,11 @@ public class Blank extends Piece {
 
     @Override
     public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
+        return false;
+    }
+
+    @Override
+    public boolean isDotPiece() {
         return false;
     }
 }

@@ -31,6 +31,11 @@ public class Queen extends Piece {
         return isPossibleMoveStraightLine(source, target, board);
     }
 
+    @Override
+    public boolean isDotPiece() {
+        return false;
+    }
+
     private boolean isPossibleMoveDiagonal(Position source, Position target, Map<Position, Piece> board) {
         List<List<Integer>> possibleDot = List.of(List.of(1, 1), List.of(1, -1));
         List<Position> positions = new ArrayList<>(List.of(source, target));

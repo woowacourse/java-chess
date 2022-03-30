@@ -29,4 +29,9 @@ public class Bishop extends Piece {
         Collections.reverse(positions);
         return PossibleMoveLinePositionChecker.isPossibleMovePosition(positions, possibleDot, board);
     }
+
+    @Override
+    public boolean isDotPiece() {
+        return false;
+    }
 }
