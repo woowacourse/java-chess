@@ -9,6 +9,7 @@ import chess.domain.board.boardGenerator.NotCheckmateBoardGenerator;
 import chess.domain.board.boardGenerator.TestBoardGenerator;
 import chess.domain.board.boardGenerator.WhiteCheckBoardGenerator;
 import chess.domain.board.generator.BasicBoardGenerator;
+import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
@@ -21,25 +22,12 @@ import org.junit.jupiter.api.Test;
 
 public class BoardTest {
 
-    private Board board;
-
-    @BeforeEach
-    void init() {
-        board = new Board();
-    }
-
-    @DisplayName("체스판이 비어있는지 확인한다.")
-    @Test
-    void empty_board() {
-        // then
-        assertThat(board.isEmpty()).isTrue();
-    }
-
     @DisplayName("체스판이 초기화 되었는지 확인한다.")
     @Test
     void empty_board_false() {
         // given
-        board.initBoard(new BasicBoardGenerator());
+        BoardGenerator boardGenerator = new BasicBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.isEmpty()).isFalse();
@@ -49,7 +37,8 @@ public class BoardTest {
     @Test
     void move() {
         // given
-        board.initBoard(new BasicBoardGenerator());
+        BoardGenerator boardGenerator = new BasicBoardGenerator();
+        Board board = boardGenerator.create();
 
         Position from = Position.of(Column.E, Row.TWO);
         Position to = Position.of(Column.E, Row.THREE);
@@ -63,7 +52,8 @@ public class BoardTest {
     @Test
     void valid_path() {
         // given
-        board.initBoard(new BasicBoardGenerator());
+        BoardGenerator boardGenerator = new BasicBoardGenerator();
+        Board board = boardGenerator.create();
 
         Position from = Position.of(Column.D, Row.ONE);
         Position to = Position.of(Column.F, Row.THREE);
@@ -77,7 +67,8 @@ public class BoardTest {
     @Test
     void valid_arrive() {
         // given
-        board.initBoard(new BasicBoardGenerator());
+        BoardGenerator boardGenerator = new BasicBoardGenerator();
+        Board board = boardGenerator.create();
 
         Position from = Position.of(Column.D, Row.ONE);
         Position to = Position.of(Column.E, Row.TWO);
@@ -91,7 +82,8 @@ public class BoardTest {
     @Test
     void valid_turn() {
         // given
-        board.initBoard(new BasicBoardGenerator());
+        BoardGenerator boardGenerator = new BasicBoardGenerator();
+        Board board = boardGenerator.create();
 
         Position from = Position.of(Column.A, Row.SEVEN);
         Position to = Position.of(Column.A, Row.SIX);
@@ -105,7 +97,8 @@ public class BoardTest {
     @Test
     void valid_black_check() {
         // given
-        board.initBoard(new WhiteCheckBoardGenerator());
+        BoardGenerator boardGenerator = new WhiteCheckBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.check()).isTrue();
@@ -122,7 +115,7 @@ public class BoardTest {
         boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
         boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
 
-        board.initBoard(boardGenerator);
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.check()).isFalse();
@@ -139,7 +132,7 @@ public class BoardTest {
         boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
         boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
 
-        board.initBoard(boardGenerator);
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.check()).isTrue();
@@ -149,7 +142,8 @@ public class BoardTest {
     @Test
     void checkmate() {
         // given
-        board.initBoard(new CheckmateBoardGenerator());
+        BoardGenerator boardGenerator = new CheckmateBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.checkmate()).isTrue();
@@ -159,7 +153,8 @@ public class BoardTest {
     @Test
     void checkmate_failed() {
         // given
-        board.initBoard(new NotCheckmateBoardGenerator());
+        BoardGenerator boardGenerator = new NotCheckmateBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThat(board.checkmate()).isFalse();
@@ -169,7 +164,8 @@ public class BoardTest {
     @Test
     void valid_black_check_move() {
         // given
-        board.initBoard(new WhiteCheckBoardGenerator());
+        BoardGenerator boardGenerator = new WhiteCheckBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThatThrownBy(() -> board.move(Position.of("a8"), Position.of("a7")))
@@ -180,7 +176,8 @@ public class BoardTest {
     @Test
     void valid_black_check_move_false() {
         // given
-        board.initBoard(new WhiteCheckBoardGenerator());
+        BoardGenerator boardGenerator = new WhiteCheckBoardGenerator();
+        Board board = boardGenerator.create();
 
         // then
         assertThatNoException()

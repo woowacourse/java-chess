@@ -1,5 +1,6 @@
 package chess.domain.board.boardGenerator;
 
+import chess.domain.board.Board;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -17,10 +18,10 @@ public class NotCheckmateBoardGenerator implements BoardGenerator {
     private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
-    public Map<Position, Piece> create() {
+    public Board create() {
         board.put(Position.of(Column.D, Row.EIGHT), new King(Team.WHITE));
         board.put(Position.of(Column.D, Row.SIX), new Rook(Team.BLACK));
         board.put(Position.of(Column.E, Row.SIX), new Queen(Team.BLACK));
-        return Map.copyOf(board);
+        return new Board(board);
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.board.generator;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -15,13 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BasicBoardGenerator implements BoardGenerator {
+
     private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
-    public Map<Position, Piece> create() {
+    public Board create() {
         initBlackPieces();
         initWhitePieces();
-        return Map.copyOf(board);
+        return new Board(board);
     }
 
     private void initBlackPieces() {

@@ -1,11 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private final Map<Position, Piece> board = new HashMap<>();
+    private final Map<Position, Piece> board;
     private Team turn = Team.WHITE;
 
-    public void initBoard(BoardGenerator boardGenerator) {
-        board.putAll(boardGenerator.create());
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public Map<Position, Piece> getBoard() {

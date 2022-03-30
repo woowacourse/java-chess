@@ -17,7 +17,7 @@ public class ChessGame {
 
     public void init() {
         OutputView.printGuideMessage();
-        Board board = createBoard();
+        Board board = boardGenerator.create();
         State state = new Ready(board);
 
         while (!state.isEnd()) {
@@ -25,12 +25,6 @@ public class ChessGame {
             state = play(state);
             printBoard(board, state);
         }
-    }
-
-    private Board createBoard() {
-        Board board = new Board();
-        board.initBoard(boardGenerator);
-        return board;
     }
 
     private void check(Board board) {

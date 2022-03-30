@@ -1,5 +1,6 @@
 package chess.domain.board.boardGenerator;
 
+import chess.domain.board.Board;
 import chess.domain.board.generator.BoardGenerator;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -11,8 +12,8 @@ public class TestBoardGenerator implements BoardGenerator {
     private final Map<Position, Piece> board = new HashMap<>();
 
     @Override
-    public Map<Position, Piece> create() {
-        return Map.copyOf(board);
+    public Board create() {
+        return new Board(board);
     }
 
     public void put(Position position, Piece piece) {
