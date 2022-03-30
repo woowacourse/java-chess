@@ -21,14 +21,10 @@ public class Board {
     public void move(String source, String target, Turn thisTurn) {
         Position sourcePosition = Position.from(source);
         Position targetPosition = Position.from(target);
-
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
-        if (!sourcePiece.isCurrentTurn(thisTurn)) {
-            throw new IllegalArgumentException("본인의 말을 움직여야 합니다.");
-        }
+        validateCurrentTurn(thisTurn, sourcePiece);
         Piece targetPiece = pieces.findByPosition(targetPosition);
-        if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece))
-                || sourcePiece.isKill(targetPiece)) {
+        if (canMove(targetPosition, sourcePiece, targetPiece)) {
             sourcePiece.moveTo(targetPiece);
             pieces.arrange(targetPiece, sourcePosition);
             return;
@@ -58,6 +54,11 @@ public class Board {
         return Team.NONE;
     }
 
+    private boolean canMove(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece))
+                || sourcePiece.isKill(targetPiece);
+    }
+
     private boolean hasBlock(Piece sourcePiece, Piece targetPiece) {
         if (sourcePiece.isSameTeam(targetPiece)) {
             return true;
@@ -65,6 +66,12 @@ public class Board {
         List<Position> positions = sourcePiece.getIntervalPosition(targetPiece);
         return positions.stream()
                 .anyMatch(position -> !pieces.findByPosition(position).equals(new Empty(position)));
+    }
+
+    private void validateCurrentTurn(Turn thisTurn, Piece sourcePiece) {
+        if (!sourcePiece.isCurrentTurn(thisTurn)) {
+            throw new IllegalArgumentException("본인의 말을 움직여야 합니다.");
+        }
     }
 
     public Pieces getPieces() {
