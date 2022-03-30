@@ -12,6 +12,8 @@ public enum File {
     g(7),
     h(8);
 
+    private static final String NOT_EXSIT_VALUE_IN_FILE = "[ERROR] File에 해당하는 번호가 없다.";
+
     private final int coordinate;
 
     File(int coordinate) {
@@ -26,6 +28,6 @@ public enum File {
         return Arrays.stream(File.values())
             .filter(abscissa -> abscissa.coordinate == value)
             .findAny()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXSIT_VALUE_IN_FILE));
     }
 }

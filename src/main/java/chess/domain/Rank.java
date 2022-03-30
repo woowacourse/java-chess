@@ -13,6 +13,8 @@ public enum Rank {
     TWO("2"),
     ONE("1");
 
+    private static final String NOT_EXSIT_VALUE_IN_RANK = "[ERROR] Rank에 해당하는 번호가 없다.";
+
     private final String value;
 
     Rank(final String value) {
@@ -31,6 +33,6 @@ public enum Rank {
         return Arrays.stream(Rank.values())
             .filter(ordinate -> Integer.parseInt(ordinate.value) == value)
             .findAny()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXSIT_VALUE_IN_RANK));
     }
 }
