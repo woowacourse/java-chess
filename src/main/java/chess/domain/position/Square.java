@@ -3,11 +3,14 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Square {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
     public Square(String position) {
-        this(File.find(position.substring(0, 1)), Rank.find(position.substring(1, 2)));
+        this(File.find(position.charAt(FILE_INDEX)), Rank.find(position.charAt(RANK_INDEX)));
     }
 
     public Square(File file, Rank rank) {
