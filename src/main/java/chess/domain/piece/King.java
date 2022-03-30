@@ -14,7 +14,7 @@ public class King extends Piece {
         super(color);
     }
 
-    public static boolean isKingMoving(final Position from, final Position to) {
+    private static boolean isKingMoving(final Position from, final Position to) {
         Direction direction = Direction.getDirection(from, to);
 
         return Direction.kingStep().contains(direction);
