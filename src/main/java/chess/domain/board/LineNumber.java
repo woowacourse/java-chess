@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class LineNumber {
 
+    private static final int RADIX = 10;
     public static final int MIN = 1;
     public static final int MAX = 8;
     private static final Map<Integer, LineNumber> LINE_NUMBER_CACHE = new HashMap<>();
@@ -13,16 +14,8 @@ public class LineNumber {
     private final int number;
 
     private LineNumber(int number) {
-        this.number = number;
-    }
-
-    public static LineNumber of(String input) {
-        return of(Integer.parseInt(input));
-    }
-
-    public static LineNumber of(int number) {
         validateRange(number);
-        return LINE_NUMBER_CACHE.computeIfAbsent(number, ignored -> new LineNumber(number));
+        this.number = number;
     }
 
     private static void validateRange(int number) {
@@ -33,6 +26,18 @@ public class LineNumber {
 
     private static boolean isInRange(int number) {
         return MIN <= number && number <= MAX;
+    }
+
+    public static LineNumber of(int number) {
+        return LINE_NUMBER_CACHE.computeIfAbsent(number, ignored -> new LineNumber(number));
+    }
+
+    public static LineNumber of(char input) {
+        return of(Character.digit(input, RADIX));
+    }
+
+    public static LineNumber ofAlphabet(char alphabet) {
+        return of(alphabet - 'a' + 1);
     }
 
     public boolean isInRangeNext(int degree) {
@@ -60,6 +65,10 @@ public class LineNumber {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override

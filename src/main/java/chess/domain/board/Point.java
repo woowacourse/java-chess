@@ -9,7 +9,8 @@ import chess.domain.piece.move.Direction;
 public class Point {
 
     private static final Map<Integer, Point> POINT_CACHE = new HashMap<>();
-    public static final int DECIMAL = 10;
+    private static final int LINE_NUMBER_COUNT = 2;
+    private static final int DECIMAL = 10;
 
     private final LineNumber horizontal;
     private final LineNumber vertical;
@@ -19,20 +20,32 @@ public class Point {
         this.vertical = vertical;
     }
 
+    public static Point of(LineNumber horizontal, LineNumber vertical) {
+        return POINT_CACHE.computeIfAbsent(toKey(horizontal, vertical),
+            ignored -> new Point(horizontal, vertical));
+    }
+
+    private static Integer toKey(LineNumber horizontal, LineNumber vertical) {
+        return horizontal.getNumber() * DECIMAL + vertical.getNumber();
+    }
+
     public static Point of(int horizontal, int vertical) {
         LineNumber horizontalNumber = LineNumber.of(horizontal);
         LineNumber verticalNumber = LineNumber.of(vertical);
-        return POINT_CACHE.computeIfAbsent(toKey(horizontal, vertical),
-            ignored -> new Point(horizontalNumber, verticalNumber));
-    }
-
-    private static Integer toKey(int horizontal, int vertical) {
-        return horizontal * DECIMAL + vertical;
+        return of(horizontalNumber, verticalNumber);
     }
 
     public static Point of(String argument) {
-        return Point.of(argument.charAt(0) - 'a' + 1,
-            Integer.parseInt(argument.substring(1, 2)));
+        validateArgumentSize(argument);
+        LineNumber horizontalNumber = LineNumber.ofAlphabet(argument.charAt(0));
+        LineNumber verticalNumber = LineNumber.of(argument.charAt(1));
+        return of(horizontalNumber, verticalNumber);
+    }
+
+    private static void validateArgumentSize(String argument) {
+        if (argument.length() != LINE_NUMBER_COUNT) {
+            throw new IllegalArgumentException(String.format("[ERROR] 좌표의 크기는 %d 여야 합니다.", DECIMAL));
+        }
     }
 
     public int subtractHorizontal(Point other) {

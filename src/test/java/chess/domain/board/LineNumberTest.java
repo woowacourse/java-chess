@@ -18,10 +18,18 @@ class LineNumberTest {
     }
 
     @ParameterizedTest(name = "{index} {displayName} input = {0}")
-    @DisplayName("문자열로 위치를 생성할 수 있다.")
-    @ValueSource(strings = {"1", "2", "3", "4", "5", "6", "7", "8"})
-    void createLineNumberByString(final String input) {
+    @DisplayName("캐릭터로 위치를 생성할 수 있다.")
+    @ValueSource(chars = {'1', '2', '3', '4', '5', '6', '7', '8'})
+    void createLineNumberByChar(final char input) {
         assertThatCode(() -> LineNumber.of(input))
+            .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest(name = "{index} {displayName} input = {0}")
+    @DisplayName("알파벳 캐릭터로 위치를 생성할 수 있다.")
+    @ValueSource(chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'})
+    void createLineNumberByAlphabet(final char input) {
+        assertThatCode(() -> LineNumber.ofAlphabet(input))
             .doesNotThrowAnyException();
     }
 
