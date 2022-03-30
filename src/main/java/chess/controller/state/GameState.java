@@ -7,7 +7,7 @@ public interface GameState {
     GameState execute(GameCommand gameCommand);
 
     default boolean isRunning(ChessService service) {
-        return isNotEnd() && service.isBoardReadyOrRunning();
+        return isNotEnd() && service.isWaitingOrRunning();
     }
 
     private boolean isNotEnd() {

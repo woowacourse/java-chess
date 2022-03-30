@@ -54,7 +54,7 @@ public final class ChessController {
 
     private void start(GameCommandRequest request) {
         OutputView.startGame();
-        OutputView.printBoard(service.initBoard());
+        OutputView.printBoard(service.initGame());
     }
 
     private void move(GameCommandRequest request) {

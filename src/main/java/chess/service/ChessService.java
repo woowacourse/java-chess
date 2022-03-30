@@ -1,23 +1,23 @@
 package chess.service;
 
-import chess.model.Color;
+import chess.model.ChessGame;
 import chess.model.File;
 import chess.model.Rank;
 import chess.model.board.Square;
 import chess.model.board.Board;
-import chess.model.board.ChessInitializer;
 import chess.util.PieceToLetterConvertor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class ChessService {
-    private Board board;
+    private ChessGame chessGame;
 
-    public List<List<String>> initBoard() {
-        board = new Board(new ChessInitializer());
-        return getAllPieceLetter(board);
+    public List<List<String>> initGame() {
+        chessGame = new ChessGame();
+        return getAllPieceLetter(chessGame.getBoard());
     }
 
     private List<List<String>> getAllPieceLetter(final Board board) {
@@ -34,16 +34,17 @@ public class ChessService {
     }
 
     public List<List<String>> move(String from, String to) {
-        board.move(Square.of(from), Square.of(to));
-        return getAllPieceLetter(board);
+        chessGame.move(Square.of(from), Square.of(to));
+        return getAllPieceLetter(chessGame.getBoard());
     }
 
     public Map<String, Double> getScores() {
-        return Color.getPlayerColors().stream()
-                .collect(Collectors.toMap(Color::name, color -> board.calculatePoint(color)));
+        return chessGame.status().entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), Entry::getValue));
     }
 
-    public boolean isBoardReadyOrRunning() {
-        return board == null || board.aliveTwoKings();
+    public boolean isWaitingOrRunning() {
+        return chessGame == null || chessGame.isRunning();
     }
 }
