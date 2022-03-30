@@ -41,15 +41,6 @@ public final class Running implements State {
         reverseColor(this.color);
     }
 
-    private void reverseColor(final Color color) {
-        if (WHITE == color) {
-            this.color = BLACK;
-        }
-        if (BLACK == color) {
-            this.color = WHITE;
-        }
-    }
-
     @Override
     public boolean canMove() {
         return true;
@@ -69,6 +60,15 @@ public final class Running implements State {
     public Color getColor() {
         reverseColor(color);
         return color;
+    }
+
+    private void reverseColor(final Color color) {
+        if (WHITE == color) {
+            this.color = BLACK;
+        }
+        if (BLACK == color) {
+            this.color = WHITE;
+        }
     }
 
     @Override

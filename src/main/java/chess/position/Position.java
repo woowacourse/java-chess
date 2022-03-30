@@ -1,5 +1,8 @@
 package chess.position;
 
+import static chess.game.Board.MAXIMUM_BOARD_INDEX;
+import static chess.game.Board.MINIMUM_BOARD_INDEX;
+
 import chess.piece.detail.Direction;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +12,8 @@ import java.util.stream.Collectors;
 public class Position {
 
     private static final List<Position> cachedPositions;
+    private static final int COLUMN_END_INDEX = 1;
+    private static final int ROW_END_INDEX = 2;
 
     static {
         cachedPositions = Arrays.stream(Column.values())
@@ -77,8 +82,8 @@ public class Position {
     }
 
     private static boolean isExist(final String position, final Position cachedPositions) {
-        return cachedPositions.column == Column.of(position.substring(0, 1)) &&
-                cachedPositions.row == Row.of(position.substring(1, 2));
+        return cachedPositions.column == Column.of(position.substring(0, COLUMN_END_INDEX)) &&
+                cachedPositions.row == Row.of(position.substring(COLUMN_END_INDEX, ROW_END_INDEX));
     }
 
     private boolean isValidPosition(Position from, Position to, Direction direction) {
@@ -95,7 +100,8 @@ public class Position {
     }
 
     private boolean canShift(final int column, final int row) {
-        return column >= 1 && row >= 1 && column <= 8 && row <= 8;
+        return column >= MINIMUM_BOARD_INDEX && row >= MINIMUM_BOARD_INDEX &&
+                column <= MAXIMUM_BOARD_INDEX && row <= MAXIMUM_BOARD_INDEX;
     }
 
     private Position checkerShift(final Position position, final Direction direction) {

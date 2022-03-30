@@ -40,11 +40,11 @@ public enum Row {
         return of(value + number);
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public int getDistance(final Row other) {
         return this.value - other.value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }

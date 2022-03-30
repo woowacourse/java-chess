@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Queen extends AbstractPiece {
 
+    private static final int QUEEN_SCORE = 9;
+
     public Queen(final Color color) {
         super(Name.QUEEN, color);
     }
@@ -45,6 +47,6 @@ public class Queen extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 9;
+        return QUEEN_SCORE;
     }
 }

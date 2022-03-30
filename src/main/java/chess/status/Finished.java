@@ -43,11 +43,11 @@ public final class Finished implements State {
 
     @Override
     public Color getColor() {
-        throw new IllegalStateException();
+        throw new IllegalCallerException("게임이 종료되어 색을 불러올 수 없습니다.");
     }
 
     @Override
     public Map<Color, Double> getStatus() {
-        throw new IllegalStateException();
+        throw new IllegalCallerException("게임이 종료되어 상태를 불러올 수 없습니다.");
     }
 }

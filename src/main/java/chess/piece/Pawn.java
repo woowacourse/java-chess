@@ -14,6 +14,7 @@ public class Pawn extends AbstractPiece {
     public static final double REDUCED_PAWN_SCORE = 0.5;
     private static final int WHITE_INITIAL_ROW = 2;
     private static final int BLACK_INITIAL_ROW = 7;
+    private static final int PAWN_SCORE = 1;
 
     public Pawn(final Color color) {
         super(Name.PAWN, color);
@@ -61,6 +62,6 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 1;
+        return PAWN_SCORE;
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Rook extends AbstractPiece {
 
+    private static final int ROOK_SCORE = 5;
+
     public Rook(final Color color) {
         super(Name.ROOK, color);
     }
@@ -41,6 +43,6 @@ public class Rook extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 5;
+        return ROOK_SCORE;
     }
 }

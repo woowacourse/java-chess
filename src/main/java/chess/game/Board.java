@@ -13,6 +13,9 @@ import java.util.*;
 
 public class Board {
 
+    public static final int MINIMUM_BOARD_INDEX = 1;
+    public static final int MAXIMUM_BOARD_INDEX = 8;
+    private static final int MINIMUM_PIECE_COUNT = 1;
     private final Map<Position, Piece> value;
 
     private Board(final Map<Position, Piece> value) {
@@ -21,10 +24,6 @@ public class Board {
 
     public static Board create() {
         return new Board(BoardInitializer.init());
-    }
-
-    public Map<Position, Piece> getValue() {
-        return value;
     }
 
     public void move(final MoveCommand moveCommand, Color color) {
@@ -44,7 +43,7 @@ public class Board {
                 .filter(Piece::isKing)
                 .count();
 
-        return kingCount == 1;
+        return kingCount == MINIMUM_PIECE_COUNT;
     }
 
     public Map<Color, Double> getBoardScore() {
@@ -140,7 +139,7 @@ public class Board {
     private double pawnCountOnSameColumn(final Color color) {
         return Arrays.stream(Column.values())
                 .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
-                .filter(count -> count > 1)
+                .filter(count -> count > MINIMUM_PIECE_COUNT)
                 .sum();
     }
 
@@ -150,6 +149,10 @@ public class Board {
                 .map(value::get)
                 .filter(piece -> piece.isPawn() && piece.getColor().hasSameColor(color))
                 .count();
+    }
+
+    public Map<Position, Piece> getValue() {
+        return value;
     }
 
     @Override

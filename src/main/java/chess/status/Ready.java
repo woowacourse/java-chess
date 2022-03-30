@@ -55,11 +55,11 @@ public final class Ready implements State {
 
     @Override
     public Color getColor() {
-        throw new IllegalStateException();
+        throw new IllegalCallerException("게임이 시작되지 않아 색을 불러올 수 없습니다.");
     }
 
     @Override
     public Map<Color, Double> getStatus() {
-        throw new IllegalStateException();
+        throw new IllegalCallerException("게임이 시작되지 않아 상태를 불러올 수 없습니다.");
     }
 }

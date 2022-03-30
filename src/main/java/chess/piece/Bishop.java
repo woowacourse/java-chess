@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Bishop extends AbstractPiece {
 
+    private static final int BISHOP_SCORE = 3;
+
     public Bishop(final Color color) {
         super(Name.BISHOP, color);
     }
@@ -41,6 +43,6 @@ public class Bishop extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 3;
+        return BISHOP_SCORE;
     }
 }

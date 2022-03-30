@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Knight extends AbstractPiece {
 
+    private static final double KNIGHT_SCORE = 2.5;
+
     public Knight(final Color color) {
         super(Name.KNIGHT, color);
     }
@@ -46,6 +48,6 @@ public class Knight extends AbstractPiece {
 
     @Override
     public double getScore() {
-        return 2.5;
+        return KNIGHT_SCORE;
     }
 }

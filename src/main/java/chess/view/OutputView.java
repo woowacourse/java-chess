@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String EMPTY_POSITION = ".";
+
     public static void printBoard(final Board board) {
         printBoardRow(board.getValue());
     }
@@ -21,6 +23,12 @@ public class OutputView {
     public static void printGameEnd(final Color winColor) {
         System.out.println("게임이 종료되었습니다.");
         System.out.println(winColor + "(이)가 승리했습니다.");
+    }
+
+    public static void printScore(final Map<Color, Double> score) {
+        for (final Color color : score.keySet()) {
+            System.out.println(color + "의 점수는: " + score.get(color).intValue());
+        }
     }
 
     private static void printBoardRow(final Map<Position, Piece> board) {
@@ -47,7 +55,7 @@ public class OutputView {
             printByColor(value, color);
             return;
         }
-        System.out.print(".");
+        System.out.print(EMPTY_POSITION);
     }
 
     private static void printByColor(final Name value, final Color color) {
@@ -57,11 +65,5 @@ public class OutputView {
             return;
         }
         System.out.print(name.toLowerCase());
-    }
-
-    public static void printScore(final Map<Color, Double> score) {
-        for (final Color color : score.keySet()) {
-            System.out.println(color + "의 점수는: " + score.get(color).intValue());
-        }
     }
 }

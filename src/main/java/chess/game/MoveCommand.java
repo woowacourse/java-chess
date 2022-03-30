@@ -4,6 +4,9 @@ import chess.position.Position;
 
 public class MoveCommand {
 
+    private static final int COMMAND_INDEX = 0;
+    public static final int FROM_POSITION_INDEX = 1;
+    public static final int TO_POSITION_INDEX = 2;
     private final Position from;
     private final Position to;
 
@@ -15,8 +18,8 @@ public class MoveCommand {
 
     public static MoveCommand of(final String value) {
         final String[] splitValue = value.split(" ");
-        final Position from = Position.of(splitValue[0]);
-        final Position to = Position.of(splitValue[1]);
+        final Position from = Position.of(splitValue[COMMAND_INDEX]);
+        final Position to = Position.of(splitValue[FROM_POSITION_INDEX]);
 
         return new MoveCommand(from, to);
     }
