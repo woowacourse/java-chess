@@ -26,6 +26,10 @@ public enum Rank {
                 .orElse(NOTHING);
     }
 
+    public int calculateDifference(final Rank rank) {
+        return number - rank.getNumber();
+    }
+
     public int calculateAbsoluteValue(Rank rank) {
         return Math.abs(number - rank.getNumber());
     }

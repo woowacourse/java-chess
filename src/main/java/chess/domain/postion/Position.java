@@ -4,7 +4,7 @@ import chess.domain.Direction;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private File file;
     private Rank rank;
 
@@ -32,19 +32,6 @@ public class Position {
         Rank nextRank = Rank.from(rank.getNumber() + direction.rank());
 
         return new Position(nextFile, nextRank);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Position)) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
     }
 
     public boolean isSameRank(Position other) {
@@ -87,10 +74,40 @@ public class Position {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public int compareTo(final Position other) {
+        if (rank == other.getRank()) {
+            return file.calculateDifference(other.getFile());
+        }
+
+        return other.getRank().calculateDifference(rank);
+    }
+
+    @Override
     public String toString() {
         return "Position{" +
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

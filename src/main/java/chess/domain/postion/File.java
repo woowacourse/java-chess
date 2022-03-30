@@ -26,6 +26,10 @@ public enum File {
                 .orElse(NOTHING);
     }
 
+    public int calculateDifference(final File file) {
+        return name - file.getName();
+    }
+
     public int calculateAbsoluteValue(File file) {
         return Math.abs(name - file.getName());
     }
