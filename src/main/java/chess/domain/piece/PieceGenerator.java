@@ -9,8 +9,6 @@ import chess.domain.piece.mulitiplemovepiece.Queen;
 import chess.domain.piece.mulitiplemovepiece.Rook;
 import chess.domain.piece.unitmovepiece.King;
 import chess.domain.piece.unitmovepiece.Knight;
-import chess.domain.piece.unitmovepiece.None;
-import chess.domain.piece.unitmovepiece.Pawn;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 

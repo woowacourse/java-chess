@@ -1,14 +1,11 @@
-package chess.domain.piece.specialmovepiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.mulitiplemovepiece.Bishop;
-import chess.domain.piece.unitmovepiece.None;
-import chess.domain.piece.unitmovepiece.Pawn;
 import chess.domain.position.Direction;
 
 public class PawnTest {

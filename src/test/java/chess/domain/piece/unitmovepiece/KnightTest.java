@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.None;
 import chess.domain.piece.mulitiplemovepiece.Bishop;
 import chess.domain.position.Direction;
 

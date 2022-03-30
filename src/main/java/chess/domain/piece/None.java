@@ -1,7 +1,5 @@
-package chess.domain.piece.unitmovepiece;
+package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 
 public final class None extends Piece {
