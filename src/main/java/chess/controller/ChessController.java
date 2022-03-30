@@ -28,14 +28,14 @@ public class ChessController {
         ChessGame chessGame = ChessGame.create();
         sendDataForPrintCurrentChessBoard(chessGame);
 
-        while (!chessGame.isGameEnd()) {
+        /*while (!chessGame.isGameEnd()) {
             doTurn(chessGame);
-        }
+        }*/
     }
 
     private void sendDataForPrintCurrentChessBoard(ChessGame chessGame) {
-        OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
-                ChessMenDto.of(chessGame.getWhiteChessMen()));
+        /*OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
+                ChessMenDto.of(chessGame.getWhiteChessMen()));*/
     }
 
     private void doTurn(ChessGame chessGame) {
@@ -57,9 +57,9 @@ public class ChessController {
     }
 
     private void moveCommand(ChessGame chessGame, List<String> command) {
-        ChessBoardPosition sourcePosition = ChessBoardPosition.of(command.get(SOURCE_POSITION_INDEX));
+        /*ChessBoardPosition sourcePosition = ChessBoardPosition.of(command.get(SOURCE_POSITION_INDEX));
         ChessBoardPosition targetPosition = ChessBoardPosition.of(command.get(TARGET_POSITION_INDEX));
         chessGame.move(sourcePosition, targetPosition);
-        sendDataForPrintCurrentChessBoard(chessGame);
+        sendDataForPrintCurrentChessBoard(chessGame);*/
     }
 }

@@ -1,66 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.ChessMen;
 import chess.domain.Team;
-import java.util.Objects;
+import java.util.List;
 
 public abstract class ChessPiece {
-    protected final String name;
-    protected final double score;
-    protected final Team team;
-    protected ChessBoardPosition position;
+    protected Team team;
+    private double score;
 
-    protected ChessPiece(String name, double score, Team team, ChessBoardPosition position) {
-        this.name = name;
-        this.score = score;
+    ChessPiece(Team team, double score) {
         this.team = team;
-        this.position = position;
+        this.score = score;
     }
 
-    public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen);
+    public abstract List<ChessBoard> makePath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
 
-    public abstract void move(ChessBoardPosition targetPosition);
-
-    public String getName() {
-        return name;
-    }
-
-    public ChessBoardPosition getPosition() {
-        return position;
-    }
-
-    public boolean isSamePosition(ChessBoardPosition other) {
-        return position.equals(other);
-    }
-
-    public boolean myTeamExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen myTeamChessMen) {
-        return myTeamChessMen.existChessPieceAt(targetPosition);
-    }
-
-    public boolean enemyExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen enemyChessMen) {
-        return enemyChessMen.existChessPieceAt(targetPosition);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ChessPiece that = (ChessPiece) o;
-        return Objects.equals(name, that.name) && team == that.team && Objects.equals(position,
-                that.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, team, position);
-    }
-
-    public double getScore() {
-        return score;
-    }
 }
