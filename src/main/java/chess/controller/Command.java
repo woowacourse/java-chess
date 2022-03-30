@@ -32,4 +32,8 @@ public enum Command {
     public boolean isMove() {
         return this == MOVE;
     }
+
+    public boolean isStatus() {
+        return this == STATUS;
+    }
 }

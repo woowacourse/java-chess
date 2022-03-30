@@ -50,7 +50,7 @@ public class ChessGameController {
         if (command.isMove()) {
             gameState = pieceMove(gameState, input);
         }
-        if (command == Command.STATUS) {
+        if (command.isStatus()) {
             printStatus(gameState);
         }
         if (command.isEnd()) {
