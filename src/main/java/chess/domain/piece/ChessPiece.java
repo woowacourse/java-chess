@@ -25,14 +25,6 @@ public abstract class ChessPiece {
 
     public abstract void canMove(Position from, Position to);
 
-    public boolean isBlack() {
-        return color.isBlack();
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public Stack<Position> findRoute(final Position from, Position to) {
         Stack<Position> routes = new Stack<>();
         Direction direction = to.findDirection(from);
@@ -62,8 +54,22 @@ public abstract class ChessPiece {
         return !this.color.equals(color);
     }
 
+    public boolean isBlack() {
+        return color.isBlack();
+    }
     public double getValue() {
         return value;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public boolean isKing(){
+        return false;
+    }
+
+    public boolean isPawn(){
+        return false;
     }
 
 }

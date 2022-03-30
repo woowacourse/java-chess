@@ -46,7 +46,7 @@ public class ChessBoard {
     }
 
     private void checkPawnStraightMove(Position from, Position to, ChessPiece me) {
-        if (me instanceof Pawn && isCross(from, to)) {
+        if (me.isPawn() && isCross(from, to)) {
             throw new IllegalArgumentException("폰은 대각선에 상대 기물이 존재해야합니다");
         }
     }
@@ -56,7 +56,7 @@ public class ChessBoard {
     }
 
     private void checkPawnCrossMove(Position from, Position to, ChessPiece me) {
-        if (me instanceof Pawn && isStraight(from, to)) {
+        if (me.isPawn() && isStraight(from, to)) {
             throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
         }
     }
@@ -88,7 +88,9 @@ public class ChessBoard {
     }
 
     private void checkMate(Position to) {
-        if (chessBoard.get(to) instanceof King) {
+        ChessPiece pieceOfTo = chessBoard.get(to);
+        if(pieceOfTo != null && pieceOfTo.isKing()){
+            System.out.println("sdf");
             gameStatus = GameStatus.END;
         }
     }

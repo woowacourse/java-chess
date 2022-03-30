@@ -32,7 +32,7 @@ public class Score {
     private double getSum(Color color, Map<Position, ChessPiece> chessBoard) {
         double sumExceptPawnScore = chessBoard.values().stream()
                 .filter((chessPiece) -> chessPiece.isSameColor(color))
-                .filter((chessPiece) -> !(chessPiece instanceof Pawn))
+                .filter((chessPiece) -> !(chessPiece.isPawn()))
                 .mapToDouble(ChessPiece::getValue)
                 .sum();
 
@@ -69,7 +69,7 @@ public class Score {
         }
 
         ChessPiece chessPiece = possiblePiece.get();
-        if (!(chessPiece instanceof Pawn) || !chessPiece.isSameColor(color)) {
+        if (!(chessPiece.isPawn()) || !chessPiece.isSameColor(color)) {
             return false;
         }
 

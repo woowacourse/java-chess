@@ -84,4 +84,9 @@ public class Pawn extends ChessPiece {
     private boolean isPawnMoveableDistanceRange(Position from, Position to) {
         return Math.abs(from.rankDistance(to)) == PAWN_MOVE_RANGE;
     }
+
+    @Override
+    public boolean isPawn(){
+        return true;
+    }
 }

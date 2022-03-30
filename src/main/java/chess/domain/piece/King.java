@@ -33,4 +33,9 @@ public class King extends ChessPiece {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
     }
+
+    @Override
+    public boolean isKing(){
+        return true;
+    }
 }
