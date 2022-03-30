@@ -18,6 +18,8 @@ public abstract class Piece {
 
     public abstract Direction findValidDirection(Position current, Position target);
 
+    public abstract boolean isEmpty();
+
     public boolean isSamePiece(final PieceType expected) {
         return pieceType == expected;
     }

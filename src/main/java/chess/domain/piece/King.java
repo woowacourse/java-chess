@@ -22,6 +22,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public Direction findValidDirection(final Position current, final Position target) {
         final int columnDifference = target.calculateColumnDifference(current);
         final int rowDifference = target.calculateRowDifference(current);

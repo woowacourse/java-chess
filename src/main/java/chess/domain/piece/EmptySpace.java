@@ -9,6 +9,11 @@ public class EmptySpace extends Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
     public Direction findValidDirection(Position current, Position target) {
         throw new UnsupportedOperationException();
     }
