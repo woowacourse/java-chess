@@ -27,8 +27,8 @@ public enum CoordinateX {
         this.order = order;
     }
 
-    public static CoordinateX from(final int other) {
-        return CoordinateX.from(getName(other));
+    public static CoordinateX from(final int order) {
+        return CoordinateX.from(getName(order));
     }
 
     public static CoordinateX from(final String other) {
@@ -42,14 +42,6 @@ public enum CoordinateX {
         return Arrays.stream(CoordinateX.values())
                 .sorted(Comparator.comparing(CoordinateX::getOrder))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public static int min(final CoordinateX from, final CoordinateX to) {
-        return Math.min(from.order, to.order);
-    }
-
-    public static int max(final CoordinateX from, final CoordinateX to) {
-        return Math.max(from.order, to.order);
     }
 
     public CoordinateX next(final CoordinateX to) {
