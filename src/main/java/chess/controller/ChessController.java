@@ -25,7 +25,7 @@ public class ChessController {
             CommandRequest commandRequest = InputView.inputCommand();
             Command command = commandRequest.getCommand();
 
-            command.accept(chessGame, commandRequest.getSource(), commandRequest.getTarget());
+            command.excute(chessGame, commandRequest.getSource(), commandRequest.getTarget());
         } catch (IllegalArgumentException | UnsupportedOperationException e) {
             OutputView.printErrorMessage(e.getMessage());
             playChess(chessGame);

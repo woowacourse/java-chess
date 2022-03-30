@@ -44,7 +44,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령입니다."));
     }
 
-    public void accept(ChessGame chessGame, String source, String target) {
+    public void excute(ChessGame chessGame, String source, String target) {
         consumer.accept(chessGame, List.of(source, target));
     }
 }
