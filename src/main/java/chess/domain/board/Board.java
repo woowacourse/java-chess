@@ -17,7 +17,7 @@ public class Board {
     }
 
     public static Board create() {
-        return new Board(InitialBoard.init());
+        return new Board(InitialBoard.initialize());
     }
 
     public Board move(String from, String to) {
@@ -26,21 +26,19 @@ public class Board {
 
     public Board move(Coordinate from, Coordinate to) {
         Piece piece = findPiece(from);
-
-        if (!piece.isMovable(value, from, to)) {
+        if (piece.isEmpty()) {
+            throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
+        }
+        if (!piece.isMovable(this, from, to)) {
             throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
 
         swapPiece(from, to);
-        return new Board(value);
+        return this;
     }
 
     public Piece findPiece(Coordinate coordinate) {
-        Piece piece = value.get(coordinate);
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다.");
-        }
-        return piece;
+        return value.get(coordinate);
     }
 
     private void swapPiece(Coordinate from, Coordinate to) {
