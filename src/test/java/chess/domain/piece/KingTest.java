@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;

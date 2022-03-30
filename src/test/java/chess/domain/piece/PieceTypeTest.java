@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.Color;
 import chess.domain.board.InitialBoardGenerator;
 import chess.domain.board.Point;
 import chess.domain.board.TestBoardGenerator;

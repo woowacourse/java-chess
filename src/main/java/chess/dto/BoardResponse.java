@@ -6,7 +6,7 @@ import java.util.Map;
 
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.view.PieceRepresentation;
 

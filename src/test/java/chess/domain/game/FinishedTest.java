@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.BoardFixtures;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.dto.EmptyResponse;
 import chess.dto.Response;
 

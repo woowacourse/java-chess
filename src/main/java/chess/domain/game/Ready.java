@@ -4,7 +4,7 @@ import java.util.List;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.dto.Response;
 
 public class Ready extends Started {

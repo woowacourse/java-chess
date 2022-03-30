@@ -3,7 +3,7 @@ package chess.domain.game;
 import java.util.List;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.dto.BoardResponse;
 import chess.dto.Response;
 

@@ -3,14 +3,12 @@ package chess.domain.board;
 import static java.util.stream.Collectors.*;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;

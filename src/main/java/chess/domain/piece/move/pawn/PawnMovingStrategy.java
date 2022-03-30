@@ -2,7 +2,7 @@ package chess.domain.piece.move.pawn;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.move.MovingStrategy;
 
 public class PawnMovingStrategy implements MovingStrategy {

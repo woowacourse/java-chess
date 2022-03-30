@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Map;
 
+import chess.domain.Color;
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
 

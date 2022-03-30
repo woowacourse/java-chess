@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
+import chess.domain.Color;
 
 public abstract class Started implements GameState {
 

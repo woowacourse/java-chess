@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.MovingStrategy;

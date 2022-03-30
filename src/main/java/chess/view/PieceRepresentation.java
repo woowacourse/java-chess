@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 
-import chess.domain.piece.Color;
+import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 

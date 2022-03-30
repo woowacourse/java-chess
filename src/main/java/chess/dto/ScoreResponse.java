@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.Color;
+import chess.domain.Color;
 
 public class ScoreResponse implements Response {
 
