@@ -128,7 +128,7 @@ public class ChessBoard {
         Double whiteScore = teamScores.get(WHITE);
         Double blackScore = teamScores.get(BLACK);
 
-        if (isExistKing() || whiteScore.equals(blackScore)) {
+        if (isExistKing() && whiteScore.equals(blackScore)) {
             return "무승부";
         }
 

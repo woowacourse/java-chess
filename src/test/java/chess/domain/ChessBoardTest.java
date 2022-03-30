@@ -3,6 +3,8 @@ package chess.domain;
 import static chess.domain.piece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Team;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -68,5 +70,27 @@ public class ChessBoardTest {
 
         //then
         assertThat(existKing).isFalse();
+    }
+
+    @DisplayName("이긴 팀 구하는 findWinTeam 테스트")
+    @Test
+    public void findWinTeam() {
+        //given
+        ChessGame chessGame = new ChessGame();
+
+        chessGame.progress(Command.from("start"));
+        chessGame.progress(Command.from("move e2 e4"));
+        chessGame.progress(Command.from("move f7 f5"));
+        chessGame.progress(Command.from("move d1 h5"));
+        chessGame.progress(Command.from("move a7 a5"));
+        chessGame.progress(Command.from("move h5 e8"));
+
+        Map<Team, Double> teamScores = chessGame.calculateResult();
+
+        //when
+        String winTeam = chessGame.getWinTeam(teamScores);
+
+        //then
+        assertThat(winTeam).isEqualTo("WHITE");
     }
 }
