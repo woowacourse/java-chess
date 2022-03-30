@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private Map<Position, Piece> board;
+    public static final String SAME_FILE_PAWN_SCORE = "0.5";
+
+    private final Map<Position, Piece> board;
 
     public ChessBoard(List<Piece> pieces) {
         this.board = pieces.stream()
@@ -75,7 +77,7 @@ public class ChessBoard {
     }
 
     private BigDecimal getDeductionOfPawn(Color color) {
-        return new BigDecimal("0.5").multiply(new BigDecimal(numberOfPawn(color)));
+        return new BigDecimal(SAME_FILE_PAWN_SCORE).multiply(new BigDecimal(numberOfPawn(color)));
     }
 
     private long numberOfPawn(Color color) {
