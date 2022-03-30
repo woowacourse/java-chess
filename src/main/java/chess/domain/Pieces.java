@@ -40,6 +40,14 @@ public final class Pieces {
                 .count() != KINGS_BOTH_ALIVE;
     }
 
+    public Piece findAliveKing() {
+        return pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .get();
+    }
+
     public double calculateBasicScore(Color color) {
         return pieces.values()
                 .stream()

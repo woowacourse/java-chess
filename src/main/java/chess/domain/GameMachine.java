@@ -21,6 +21,10 @@ public class GameMachine {
             command = InputView.requestCommand();
             board = play(board, command);
         } while (!Command.isEnd(command) && !board.isEnd());
+
+        if (board != null) {
+            OutputView.printFinalResult(board);
+        }
     }
 
     private Board play(Board board, String command) {
@@ -32,7 +36,7 @@ public class GameMachine {
             movePiece(board, Arrays.asList(command.split(MOVE_DELIMITER)));
         }
         if (Command.isStatus(command)) {
-            OutputView.printScore(board);
+            OutputView.printScoreAndResult(board);
         }
         return board;
     }

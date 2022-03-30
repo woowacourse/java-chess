@@ -123,6 +123,14 @@ public final class Board {
         return pieces.kingCaught();
     }
 
+    public Color winnersColor() {
+        Piece aliveKing = pieces.findAliveKing();
+        if (aliveKing.isSameColor(Color.WHITE)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
     public double calculateScore(Color color) {
         return pieces.calculateBasicScore(color) - pieces.countPenaltyPawns(color) * PAWN_PENALTY_SCORE;
     }
