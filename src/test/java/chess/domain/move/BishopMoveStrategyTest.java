@@ -15,7 +15,7 @@ public class BishopMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = Board.createChessBoard();
         bishopMoveStrategy = new BishopMoveStrategy();
     }
 

@@ -22,7 +22,7 @@ public class Board {
         this.board = new TreeMap<>(board);
     }
 
-    public static Board create() {
+    public static Board createChessBoard() {
         Map<Position, Piece> emptyBoard = initEmptyBoard();
         initFirstLine(Color.BLACK, Row.EIGHT, emptyBoard);
         initPawn(Color.BLACK, Row.SEVEN, emptyBoard);

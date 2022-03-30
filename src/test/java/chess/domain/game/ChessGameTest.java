@@ -13,7 +13,7 @@ public class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(Board.create());
+        chessGame = new ChessGame(Board.createChessBoard());
     }
 
     @Test

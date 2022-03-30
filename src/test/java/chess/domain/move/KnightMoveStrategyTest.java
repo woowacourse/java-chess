@@ -15,7 +15,7 @@ public class KnightMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = Board.createChessBoard();
         knightMoveStrategy = new KnightMoveStrategy();
     }
 

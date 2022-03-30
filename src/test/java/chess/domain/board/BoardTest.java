@@ -13,20 +13,20 @@ public class BoardTest {
     @Test
     @DisplayName("Board를 초기화한다.")
     void create() {
-        assertThat(Board.create()).isInstanceOf(Board.class);
+        assertThat(Board.createChessBoard()).isInstanceOf(Board.class);
     }
 
     @Test
     @DisplayName("Position을 입력하면 piece를 반환한다.")
     void getPiece() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         assertThat(board.getPiece(Position.valueOf("a8"))).isEqualTo(new Rook(Color.BLACK));
     }
 
     @Test
     @DisplayName("Board가 move하면 타겟의 기물을 반환한다.")
     void move() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         assertThat(board.movePiece(Position.valueOf("a7"), Position.valueOf("a6"))).isInstanceOf(Blank.class);
     }
 }

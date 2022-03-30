@@ -21,14 +21,15 @@ public final class PawnWhiteMoveStrategy extends PawnMoveStrategy {
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
-        return isWhiteMovePattern(movePattern, board, source, targetPiece, color);
+        return isMovePattern(movePattern, board, source, targetPiece, color);
     }
 
-    private boolean isWhiteMovePattern(final MovePattern movePattern,
-                                       final Board board,
-                                       final Position source,
-                                       final Piece targetPiece,
-                                       final Color color) {
+    @Override
+    protected boolean isMovePattern(final MovePattern movePattern,
+                                  final Board board,
+                                  final Position source,
+                                  final Piece targetPiece,
+                                  final Color color) {
         if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }

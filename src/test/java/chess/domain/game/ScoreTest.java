@@ -13,7 +13,7 @@ public class ScoreTest {
     @Test
     @DisplayName("폰이 수직으로 존재할 경우 총점을 계산한다.")
     void getWhiteScoreWhenPawnVertical() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         board.movePiece(Position.valueOf("a2"), Position.valueOf("b3"));
         board.movePiece(Position.valueOf("c2"), Position.valueOf("b4"));
 
@@ -24,7 +24,7 @@ public class ScoreTest {
     @Test
     @DisplayName("queen이 없고 폰이 수직으로 존재하는 경우 총점을 계산한다.")
     void getWhiteScoreWhenNoQueenPawnVertical() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
         Score score = new Score(board.getBoard());
@@ -34,7 +34,7 @@ public class ScoreTest {
     @Test
     @DisplayName("게임에서 이긴 플레이어의 Color 를 반환")
     void getWinColorWhenBlackWin() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
         Score score = new Score(board.getBoard());
@@ -44,7 +44,7 @@ public class ScoreTest {
     @Test
     @DisplayName("게임에서 이긴 플레이어의 Color 를 반환")
     void getWinColorWhenWhiteWin() {
-        Board board = Board.create();
+        Board board = Board.createChessBoard();
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
 
         Score score = new Score(board.getBoard());

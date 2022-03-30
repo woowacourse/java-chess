@@ -19,7 +19,7 @@ public class ChessGameController {
     public void run() {
         OutputView.printStartGame();
         if (InputView.inputInitialCommand()) {
-            ChessGame chessGame = new ChessGame(Board.create());
+            ChessGame chessGame = new ChessGame(Board.createChessBoard());
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }

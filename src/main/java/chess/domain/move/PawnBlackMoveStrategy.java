@@ -21,14 +21,15 @@ public final class PawnBlackMoveStrategy extends PawnMoveStrategy {
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         final Piece targetPiece = board.getPiece(target);
         final Color color = board.getPiece(source).getColor();
-        return isBlackMovePattern(movePattern, board, source, targetPiece, color);
+        return isMovePattern(movePattern, board, source, targetPiece, color);
     }
 
-    private boolean isBlackMovePattern(final MovePattern movePattern,
-                                       final Board board,
-                                       final Position source,
-                                       final Piece targetPiece,
-                                       final Color color) {
+    @Override
+    protected boolean isMovePattern(final MovePattern movePattern,
+                                  final Board board,
+                                  final Position source,
+                                  final Piece targetPiece,
+                                  final Color color) {
         if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
