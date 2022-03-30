@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Init;
-import chess.domain.game.state.AbstractState;
+import chess.domain.game.state.State;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.view.InputView;
@@ -16,23 +16,23 @@ public class Controller {
         play(new Init(chessGame), chessGame);
     }
 
-    private void play(AbstractState abstractState, ChessGame chessGame) {
-        while (abstractState.isRun()) {
-            printPlayingChessBoard(abstractState, chessGame);
-            abstractState = abstractState.go(new CommandDto(InputView.inputCommend()));
+    private void play(State state, ChessGame chessGame) {
+        while (state.isRun()) {
+            printPlayingChessBoard(state, chessGame);
+            state = state.go(new CommandDto(InputView.inputCommend()));
         }
-        printStatusEnd(abstractState, chessGame);
+        printStatusEnd(state, chessGame);
     }
 
-    private void printPlayingChessBoard(AbstractState abstractState, ChessGame chessGame) {
-        if (abstractState.isPlay()) {
+    private void printPlayingChessBoard(State state, ChessGame chessGame) {
+        if (state.isPlay()) {
             OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
         }
     }
 
-    private void printStatusEnd(AbstractState abstractState, ChessGame chessGame) {
-        if (abstractState.isStatusFinished()) {
-            OutputView.printStatus(chessGame.getStatus());
+    private void printStatusEnd(State state, ChessGame chessGame) {
+        if (state.isStatusFinished()) {
+            OutputView.printStatus(chessGame.getScoreOfTeams(), chessGame.getWinner());
         }
     }
 }

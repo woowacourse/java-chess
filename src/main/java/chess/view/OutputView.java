@@ -26,13 +26,13 @@ public final class OutputView {
         System.out.println(boardDto.getBoardString());
     }
 
-    public static void printStatus(Status status) {
-        printColorsTotalScore(status.getStatusOfTeams());
-        printGameResult(status.getWinner());
+    public static void printStatus(Map<Team, Double> scores, Team winner) {
+        printScoreOfTeams(scores);
+        printGameResult(winner);
     }
 
-    private static void printColorsTotalScore(Map<Team, Double> colorsTotalScore) {
-        for (Entry<Team, Double> entry : colorsTotalScore.entrySet()) {
+    private static void printScoreOfTeams(Map<Team, Double> scores) {
+        for (Entry<Team, Double> entry : scores.entrySet()) {
             System.out.printf(TEAM_STATUS, entry.getKey().name(), entry.getValue());
         }
     }

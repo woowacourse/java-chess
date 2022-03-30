@@ -5,16 +5,16 @@ import java.util.Map;
 
 public final class Status {
 
-    private final Map<Team, Double> statusOfTeams;
+    private final Map<Team, Double> scoreOfTeams;
     private final Team winner;
 
-    public Status(Map<Team, Double> statusOfTeams, Team team) {
-        this.statusOfTeams = statusOfTeams;
+    public Status(Map<Team, Double> scoreOfTeams, Team team) {
+        this.scoreOfTeams = scoreOfTeams;
         this.winner = team;
     }
 
-    public Map<Team, Double> getStatusOfTeams() {
-        return statusOfTeams;
+    public Map<Team, Double> getScoreOfTeams() {
+        return scoreOfTeams;
     }
 
     public Team getWinner() {

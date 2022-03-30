@@ -77,7 +77,7 @@ class BoardTest {
     void calculateScoreOfTeam() {
         Board board = new ChessGame(new InitBoardStrategy()).getBoard();
 
-        Map<Team, Double> colorsTotalScore = board.getTotalStatus();
+        Map<Team, Double> colorsTotalScore = board.getScoreOfTeams();
         assertAll(
                 () -> assertThat(colorsTotalScore.get(Team.BLACK)).isEqualTo(38),
                 () -> assertThat(colorsTotalScore.get(Team.WHITE)).isEqualTo(38)

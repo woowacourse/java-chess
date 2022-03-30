@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.boardstrategy.BoardStrategy;
 import chess.domain.piece.attribute.Team;
+import java.util.Map;
 
 public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
@@ -43,8 +44,12 @@ public final class ChessGame {
         return board.isSameColor(position, turn);
     }
 
-    public Status getStatus() {
-        return new Status(board.getTotalStatus(), turn);
+    public Map<Team, Double> getScoreOfTeams() {
+        return board.getScoreOfTeams();
+    }
+
+    public Team getWinner() {
+        return turn;
     }
 
     public boolean isCheckmate(Position to) {

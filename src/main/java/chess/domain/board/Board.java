@@ -69,11 +69,11 @@ public final class Board {
         return findByPosition(position).getTeam() == team;
     }
 
-    public Map<Team, Double> getTotalStatus() {
-        Map<Team, Double> totalScore = new EnumMap<>(Team.class);
-        totalScore.put(Team.WHITE, getInitScore(Team.WHITE) - getPawnMinusScore(Team.WHITE));
-        totalScore.put(Team.BLACK, getInitScore(Team.BLACK) - getPawnMinusScore(Team.BLACK));
-        return totalScore;
+    public Map<Team, Double> getScoreOfTeams() {
+        Map<Team, Double> scoreOfTeams = new EnumMap<>(Team.class);
+        scoreOfTeams.put(Team.WHITE, getInitScore(Team.WHITE) - getPawnMinusScore(Team.WHITE));
+        scoreOfTeams.put(Team.BLACK, getInitScore(Team.BLACK) - getPawnMinusScore(Team.BLACK));
+        return scoreOfTeams;
     }
 
     private double getInitScore(Team team) {
