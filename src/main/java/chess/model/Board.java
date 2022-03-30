@@ -30,8 +30,7 @@ public class Board {
         if ((sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece))
                 || sourcePiece.isKill(targetPiece)) {
             sourcePiece.moveTo(targetPiece);
-            pieces.remove(targetPiece);
-            pieces.add(new Empty(sourcePosition));
+            pieces.arrange(targetPiece, sourcePosition);
             return;
         }
         throw new IllegalArgumentException("움직일수 없습니다.");

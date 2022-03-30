@@ -89,12 +89,9 @@ public class Pieces {
         return scoreExcludingPawn + pawnScore(team);
     }
 
-    public void remove(Piece piece) {
-        pieces.remove(piece);
-    }
-
-    public void add(Piece piece) {
-        pieces.add(piece);
+    public void arrange(Piece targetPiece, Position sourcePosition) {
+        pieces.remove(targetPiece);
+        pieces.add(new Empty(sourcePosition));
     }
 
     private double pawnScore(Team team) {
@@ -114,4 +111,5 @@ public class Pieces {
     public List<Piece> getPieces() {
         return pieces;
     }
+
 }
