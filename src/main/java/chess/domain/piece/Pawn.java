@@ -3,12 +3,13 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.piece.movepattern.AbstractPawnMovePattern;
+import chess.domain.piece.movepattern.MovePattern;
 
 public final class Pawn extends Piece {
 
     private static final double POINT = 1.0;
 
-    private final AbstractPawnMovePattern pattern;
+    private final MovePattern pattern;
 
     public Pawn(Color color) {
         super(color);

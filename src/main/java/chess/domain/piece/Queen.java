@@ -2,14 +2,14 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.piece.movepattern.AbstractStraightMovePattern;
+import chess.domain.piece.movepattern.MovePattern;
 import chess.domain.piece.movepattern.QueenMovePattern;
 
 public final class Queen extends Piece {
 
     private static final double POINT = 9.0;
 
-    private final AbstractStraightMovePattern pattern = new QueenMovePattern();
+    private final MovePattern pattern = new QueenMovePattern();
 
     public Queen(Color color) {
         super(color);
