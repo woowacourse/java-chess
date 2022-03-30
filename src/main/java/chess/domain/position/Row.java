@@ -27,7 +27,7 @@ public enum Row {
 
     public static Row of(final String value) {
         return Arrays.stream(values())
-                .filter(it -> it.value.equalsIgnoreCase(value))
+                .filter(it -> it.value.equals(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_ROW));
     }
