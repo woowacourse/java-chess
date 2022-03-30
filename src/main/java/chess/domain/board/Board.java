@@ -143,7 +143,7 @@ public class Board {
 
     private List<Position> getPositionsByColumn(File file) {
         return Arrays.stream(Rank.values())
-                .map(row -> new Position(file, row))
+                .map(rank -> Position.withFileAndRank(file, rank))
                 .collect(Collectors.toList());
     }
 

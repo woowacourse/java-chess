@@ -68,4 +68,13 @@ class PositionTest {
         Position source = Position.of("a2");
         assertThat(source.isSameRow(Rank.RANK_2)).isTrue();
     }
+
+    @DisplayName("Position은 캐싱되어 사용한다.")
+    @Test
+    void testCache() {
+        Position position1 = Position.of("a2");
+        Position position2 = Position.of("a2");
+
+        assertThat(position1 == position2).isTrue();
+    }
 }

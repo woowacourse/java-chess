@@ -19,7 +19,7 @@ public class OutputView {
     public static void printBoard(Board board) {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                Piece piece = board.findPieceBy(new Position(file, rank)).orElse(null);
+                Piece piece = board.findPieceBy(Position.withFileAndRank(file, rank)).orElse(null);
                 System.out.print(PieceOutputText.of(piece));
             }
             System.out.println();

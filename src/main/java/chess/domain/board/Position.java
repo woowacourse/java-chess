@@ -1,27 +1,43 @@
 package chess.domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
+    // key의 형식은 "File.name() + Rank.name()"으로 한다.
+    private static final Map<String, Position> cachePosition = new HashMap<>(64);
+
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
     private static final int VALID_SIZE = 2;
 
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position withFileAndRank(File file, Rank rank) {
+        String key = file.name() + rank.name();
+
+        if (!cachePosition.containsKey(key)) {
+            cachePosition.put(key, new Position(file, rank));
+        }
+        return cachePosition.get(key);
     }
 
     public static Position of(String input) {
         validateBlank(input);
         validateSize(input);
 
-        String[] values = input.split("");
-        return new Position(File.of(values[COLUMN_INDEX]), Rank.of(values[ROW_INDEX]));
+        File file = File.of(input.substring(FILE_INDEX, FILE_INDEX + 1));
+        Rank rank = Rank.of(input.substring(RANK_INDEX, RANK_INDEX + 1));
+
+        return withFileAndRank(file, rank);
     }
 
     private static void validateBlank(String input) {
