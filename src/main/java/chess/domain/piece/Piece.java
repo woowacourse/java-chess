@@ -18,13 +18,13 @@ public abstract class Piece {
 
     public boolean isMovable(Board board, Coordinate from, Coordinate to) {
         Piece toPiece = board.findPiece(to);
-        if (isSameTeam(toPiece.team) || !hasDirection(Direction.of(from, to))) {
+        if (isSameTeam(toPiece.team) || hasNotDirection(Direction.of(from, to))) {
             return false;
         }
         return moveStrategy().isMovable(board, from, to);
     }
 
-    public abstract boolean hasDirection(Direction direction);
+    public abstract boolean hasNotDirection(Direction direction);
 
     public abstract MoveStrategy moveStrategy();
 
@@ -42,6 +42,10 @@ public abstract class Piece {
 
     public boolean isEmpty() {
         return false;
+    }
+
+    public boolean isExist() {
+        return true;
     }
 
     public boolean isBlack() {

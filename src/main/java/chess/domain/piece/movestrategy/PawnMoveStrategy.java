@@ -21,7 +21,7 @@ public class PawnMoveStrategy implements MoveStrategy {
     private boolean moveVertical(Board board, Coordinate from, Coordinate to, Direction direction) {
         Coordinate nextCoordinate = from.next(direction);
         Piece nextPiece = board.findPiece(nextCoordinate);
-        if (!nextPiece.isEmpty()) {
+        if (nextPiece.isExist()) {
             return false;
         }
         return nextCoordinate == to || moveTwice(board, from, to, direction);
@@ -40,6 +40,6 @@ public class PawnMoveStrategy implements MoveStrategy {
     private boolean moveDiagonal(Board board, Coordinate from, Coordinate to, Direction direction) {
         Coordinate nextCoordinate = from.next(direction);
         Piece toPiece = board.findPiece(to);
-        return !toPiece.isEmpty() && nextCoordinate == to;
+        return toPiece.isExist() && nextCoordinate == to;
     }
 }

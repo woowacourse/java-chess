@@ -5,18 +5,18 @@ import chess.domain.piece.movestrategy.MoveStrategy;
 import chess.domain.piece.movestrategy.RepeatableMoveStrategy;
 
 public class Queen extends Piece {
-	public Queen(Symbol symbol, Team team) {
-		super(symbol, team);
-	}
+    public Queen(Symbol symbol, Team team) {
+        super(symbol, team);
+    }
 
-	@Override
-	public boolean hasDirection(Direction direction) {
-		return Direction.queenDirection()
-			.contains(direction);
-	}
+    @Override
+    public boolean hasNotDirection(Direction direction) {
+        return !Direction.queenDirection()
+                .contains(direction);
+    }
 
-	@Override
-	public MoveStrategy moveStrategy() {
-		return new RepeatableMoveStrategy();
-	}
+    @Override
+    public MoveStrategy moveStrategy() {
+        return new RepeatableMoveStrategy();
+    }
 }

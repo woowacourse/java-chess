@@ -6,18 +6,18 @@ import chess.domain.piece.movestrategy.RepeatableMoveStrategy;
 
 public class Bishop extends Piece {
 
-	public Bishop(Symbol symbol, Team team) {
-		super(symbol, team);
-	}
+    public Bishop(Symbol symbol, Team team) {
+        super(symbol, team);
+    }
 
-	@Override
-	public boolean hasDirection(Direction direction) {
-		return Direction.bishopDirection()
-			.contains(direction);
-	}
+    @Override
+    public boolean hasNotDirection(Direction direction) {
+        return !Direction.bishopDirection()
+                .contains(direction);
+    }
 
-	@Override
-	public MoveStrategy moveStrategy() {
-		return new RepeatableMoveStrategy();
-	}
+    @Override
+    public MoveStrategy moveStrategy() {
+        return new RepeatableMoveStrategy();
+    }
 }

@@ -5,18 +5,18 @@ import chess.domain.piece.movestrategy.MoveStrategy;
 import chess.domain.piece.movestrategy.RepeatableMoveStrategy;
 
 public class Rook extends Piece {
-	public Rook(Symbol symbol, Team team) {
-		super(symbol, team);
-	}
+    public Rook(Symbol symbol, Team team) {
+        super(symbol, team);
+    }
 
-	@Override
-	public boolean hasDirection(Direction direction) {
-		return Direction.rookDirection()
-			.contains(direction);
-	}
+    @Override
+    public boolean hasNotDirection(Direction direction) {
+        return !Direction.rookDirection()
+                .contains(direction);
+    }
 
-	@Override
-	public MoveStrategy moveStrategy() {
-		return new RepeatableMoveStrategy();
-	}
+    @Override
+    public MoveStrategy moveStrategy() {
+        return new RepeatableMoveStrategy();
+    }
 }

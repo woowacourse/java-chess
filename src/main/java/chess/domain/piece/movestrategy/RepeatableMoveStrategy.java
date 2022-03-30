@@ -22,7 +22,7 @@ public class RepeatableMoveStrategy implements MoveStrategy {
         }
 
         Piece piece = board.findPiece(nextCoordinate);
-        if (!piece.isEmpty()) {
+        if (piece.isExist()) {
             return false;
         }
 

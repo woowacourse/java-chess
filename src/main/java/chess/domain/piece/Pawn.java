@@ -6,22 +6,22 @@ import chess.domain.piece.movestrategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
 
-	public Pawn(Symbol symbol, Team team) {
-		super(symbol, team);
-	}
+    public Pawn(Symbol symbol, Team team) {
+        super(symbol, team);
+    }
 
-	@Override
-	public boolean hasDirection(Direction direction) {
-		if (team.isSame(Team.BLACK)) {
-			return Direction.blackPawnDirection()
-				.contains(direction);
-		}
-		return Direction.whitePawnDirection()
-			.contains(direction);
-	}
+    @Override
+    public boolean hasNotDirection(Direction direction) {
+        if (team.isSame(Team.BLACK)) {
+            return !Direction.blackPawnDirection()
+                    .contains(direction);
+        }
+        return !Direction.whitePawnDirection()
+                .contains(direction);
+    }
 
-	@Override
-	public MoveStrategy moveStrategy() {
-		return new PawnMoveStrategy();
-	}
+    @Override
+    public MoveStrategy moveStrategy() {
+        return new PawnMoveStrategy();
+    }
 }
