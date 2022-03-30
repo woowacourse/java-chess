@@ -1,6 +1,8 @@
 package chess.repository;
 
 import chess.domain.ChessGame;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +22,11 @@ public class MemoryGameRepository implements GameRepository {
     @Override
     public Optional<ChessGame> findById(Long id) {
         return Optional.of(store.get(id));
+    }
+
+    @Override
+    public List<ChessGame> findAll() {
+        return new ArrayList<>(store.values());
     }
 
     void deleteAll() {

@@ -12,24 +12,19 @@ import org.junit.jupiter.api.Test;
 
 class MemoryMemberRepositoryTest {
 
-    MemoryMemberRepository repository = new MemoryMemberRepository();
-
-    @BeforeEach
-    void beforeEach() {
-        repository.deleteAll();
-    }
-
     @Test
     @DisplayName("멤버를 저장소에 저장한다.")
     void save() {
+        MemoryMemberRepository repository = new MemoryMemberRepository();
         Member member = new Member("alex");
         repository.save(member);
-        assertThat(repository.findById(1L).get()).isEqualTo(member);
+        assertThat(repository.findById(1L).get().getName()).isEqualTo(member.getName());
     }
 
     @Test
     @DisplayName("저장소에 저장된 모든 멤버를 불러온다.")
     void findAll() {
+        MemoryMemberRepository repository = new MemoryMemberRepository();
         List<String> memberNames = new ArrayList<>();
         memberNames.add("alex");
         memberNames.add("eve");
