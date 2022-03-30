@@ -16,7 +16,7 @@ import chess.domain.position.PositionY;
 public final class ChessGame {
 
     private final Board board;
-    private Color currentTurnColor = Color.WHITE;
+    private Color turnColor = Color.WHITE;
 
     public ChessGame() {
         board = initializeBoard();
@@ -44,13 +44,13 @@ public final class ChessGame {
     }
 
     public void movePiece(MoveCommand moveCommand) {
-        board.validateMovement(currentTurnColor, moveCommand);
+        board.validateMovement(turnColor, moveCommand);
         board.movePiece(moveCommand);
         changeTurn();
     }
 
     private void changeTurn() {
-        currentTurnColor = currentTurnColor.nextTurnColor();
+        turnColor = turnColor.next();
     }
 
     public boolean isRunning() {

@@ -4,27 +4,42 @@ import java.util.Locale;
 
 public enum Color {
 
-    BLACK,
-    WHITE,
-    NONE;
-
-    public String correctSignature(String signature) {
-        if (this == BLACK) {
-            return signature.toUpperCase(Locale.ROOT);
-        }
-        if (this == WHITE) {
-            return signature.toLowerCase(Locale.ROOT);
-        }
-        return signature;
-    }
-
-    public Color nextTurnColor() {
-        if (this == BLACK) {
+    BLACK {
+        @Override
+        public Color next() {
             return WHITE;
         }
-        if (this == WHITE) {
+
+        @Override
+        public String correctSignature(String signature) {
+            return signature.toUpperCase(Locale.ROOT);
+
+        }
+    },
+    WHITE {
+        @Override
+        public Color next() {
             return BLACK;
         }
-        return NONE;
-    }
+
+        @Override
+        public String correctSignature(String signature) {
+            return signature.toLowerCase(Locale.ROOT);
+        }
+    },
+    NONE {
+        @Override
+        public Color next() {
+            return NONE;
+        }
+
+        @Override
+        public String correctSignature(String signature) {
+            return signature;
+        }
+    };
+
+    public abstract Color next();
+
+    public abstract String correctSignature(String signature);
 }

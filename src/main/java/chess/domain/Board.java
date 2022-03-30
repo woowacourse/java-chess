@@ -52,7 +52,7 @@ public class Board {
 
     private void validatePawnMovable(Color turnColor, Position source, Position target) {
         Piece targetPiece = board.get(target);
-        Color enemyColor = turnColor.nextTurnColor();
+        Color enemyColor = turnColor.next();
         if (isStraightMove(source, target)) {
             validateStraightMove(targetPiece, enemyColor);
             return;
@@ -99,10 +99,10 @@ public class Board {
 
     public double calculateScoreOf(Color color) {
         double score = board.values()
-            .stream()
-            .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::score)
-            .sum();
+                .stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::score)
+                .sum();
 
         return score - 0.5 * countSameRankPawnsOf(color);
     }
@@ -112,17 +112,17 @@ public class Board {
         Map<PositionY, List<Position>> pawnGroup = Position.groupByPositionY(pawnPositions);
 
         return pawnGroup.values()
-            .stream()
-            .filter(list -> list.size() > 1)
-            .mapToInt(List::size)
-            .sum();
+                .stream()
+                .filter(list -> list.size() > 1)
+                .mapToInt(List::size)
+                .sum();
     }
 
     private List<Position> findPawnPositionsOf(Color color) {
         return board.keySet().stream()
-            .filter(position -> board.get(position).isSameColor(color))
-            .filter(position -> board.get(position).isPawn())
-            .collect(Collectors.toList());
+                .filter(position -> board.get(position).isSameColor(color))
+                .filter(position -> board.get(position).isPawn())
+                .collect(Collectors.toList());
     }
 
     public boolean isBothKingsAlive() {
@@ -131,9 +131,9 @@ public class Board {
 
     private long countKingsOnBoard() {
         return board.values()
-            .stream()
-            .filter(Piece::isKing)
-            .count();
+                .stream()
+                .filter(Piece::isKing)
+                .count();
     }
 
     public Map<Position, Piece> getBoard() {
