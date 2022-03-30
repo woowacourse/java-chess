@@ -5,10 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
 import chess.domain.player.Team;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
@@ -37,14 +40,20 @@ class PawnTest {
                 .hasMessage("폰은 첫번째 턴에는 1칸 또는 2칸만 이동할 수 있습니다.");
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideFirstTurnPosition")
     @DisplayName("첫번째 턴에선 1칸 또는 2칸 이동 가능하다.")
-    void moveFirstTurn() {
-        final Position expected = new Position(3, 'g');
-
-        final Position actual = pawn.move(currentPosition, new Position(3, 'g'), Team.WHITE);
+    void moveFirstTurn(final Position expected) {
+        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> provideFirstTurnPosition() {
+        return Stream.of(Arguments.of(
+                new Position(3, 'g'),
+                new Position(4, 'g')
+        ));
     }
 
     @ParameterizedTest
