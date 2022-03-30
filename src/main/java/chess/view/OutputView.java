@@ -27,17 +27,29 @@ public class OutputView {
 
     public static void printBoard(Map<Position, Piece> board) {
         for (int rank = 0; rank < 8; rank++) {
-            for (int column = 0; column < 8; column++) {
-                Position position = new Position(PositionX.of(column), PositionY.of(rank));
-                System.out.print(board.get(position).signature());
-            }
-            System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
+            printBoardInRank(board, rank);
+            printPositionY(rank);
         }
         System.out.println();
+        printPositionX();
+        System.out.println();
+    }
+
+    private static void printBoardInRank(Map<Position, Piece> board, int rank) {
+        for (int column = 0; column < 8; column++) {
+            Position position = new Position(PositionX.of(column), PositionY.of(rank));
+            System.out.print(board.get(position).signature());
+        }
+    }
+
+    private static void printPositionY(int rank) {
+        System.out.println("\t(rank" + PositionY.of(rank).getName() + ")");
+    }
+
+    private static void printPositionX() {
         for (PositionX positionX : PositionX.values()) {
             System.out.print(positionX.getName());
         }
-        System.out.println();
     }
 
     public static void printErrorMessage(String message) {
@@ -48,7 +60,6 @@ public class OutputView {
         for (Color color : scores.keySet()) {
             System.out.println(color.name() + ": " + scores.get(color) + "점");
         }
-
         if (winningColor == Color.NONE) {
             System.out.println("동점입니다.");
             return;
