@@ -29,6 +29,6 @@ public class ChessGameTest {
     void pieceIsNotMovable() {
         assertThatThrownBy(() -> chessGame.move("a1", "a2"))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 이동할 수 없습니다.");
+                .hasMessage("[ERROR] 기물을 이동할 수 없습니다.");
     }
 }
