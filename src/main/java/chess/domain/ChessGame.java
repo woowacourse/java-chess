@@ -81,4 +81,16 @@ public class ChessGame {
         }
         return "백팀";
     }
+
+    public void terminate() {
+        state = state.terminate();
+    }
+
+    public void move(String position1, String position2) {
+        state = state.move(new Position(position1), new Position(position2));
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
+    }
 }
