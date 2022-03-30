@@ -133,7 +133,7 @@ public final class Board {
             gameResult.put(Result.WIN, Color.WHITE);
         }
         if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.WHITE);
+            gameResult.put(Result.WIN, Color.BLACK);
         }
         return gameResult;
     }
