@@ -13,7 +13,7 @@ public class Position {
     }
 
     private void validate(String text) {
-        if(text.length() != 2){
+        if (text.length() != 2) {
             throw new IllegalArgumentException("위치는 가로줄과 세로줄의 정보를 전부 포함해야합니다.");
         }
     }

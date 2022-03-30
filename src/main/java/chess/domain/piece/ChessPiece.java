@@ -57,18 +57,20 @@ public abstract class ChessPiece {
     public boolean isBlack() {
         return color.isBlack();
     }
+
     public double getValue() {
         return value;
     }
+
     public String getName() {
         return name;
     }
 
-    public boolean isKing(){
+    public boolean isKing() {
         return false;
     }
 
-    public boolean isPawn(){
+    public boolean isPawn() {
         return false;
     }
 

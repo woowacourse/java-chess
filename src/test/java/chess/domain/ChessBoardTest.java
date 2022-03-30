@@ -4,7 +4,6 @@ import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ class ChessBoardTest {
     private ChessBoard chessBoard;
 
     @BeforeEach
-    void set(){
+    void set() {
         chessBoard = new ChessBoard(initBoard());
     }
 

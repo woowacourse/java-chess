@@ -86,7 +86,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public boolean isPawn(){
+    public boolean isPawn() {
         return true;
     }
 }

@@ -1,13 +1,15 @@
 package chess.domain.game.board;
 
 import chess.domain.game.Color;
-import chess.domain.piece.*;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Score;
+import chess.domain.piece.ChessPiece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Stack;
 
 public class ChessBoard {
 
@@ -96,7 +98,7 @@ public class ChessBoard {
 
     private void checkMate(Position to) {
         ChessPiece pieceOfTo = chessBoard.get(to);
-        if(pieceOfTo != null && pieceOfTo.isKing()){
+        if (pieceOfTo != null && pieceOfTo.isKing()) {
             System.out.println("sdf");
             gameStatus = GameStatus.END;
         }

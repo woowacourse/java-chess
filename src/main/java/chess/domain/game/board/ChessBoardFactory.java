@@ -27,16 +27,16 @@ public class ChessBoardFactory {
 
     private static void addPiece(List<ChessPiece> pieces, Map<Position, ChessPiece> board) {
         for (ChessPiece chessPiece : pieces) {
-            initByPiece(chessPiece,board);
+            initByPiece(chessPiece, board);
         }
     }
 
     private static void initByPiece(ChessPiece chessPiece, Map<Position, ChessPiece> board) {
         if (chessPiece.isBlack()) {
-            addBlackPiece(chessPiece,board);
+            addBlackPiece(chessPiece, board);
             return;
         }
-        addWhitePiece(chessPiece,board);
+        addWhitePiece(chessPiece, board);
     }
 
     private static void addWhitePiece(ChessPiece chessPiece, Map<Position, ChessPiece> board) {

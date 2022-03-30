@@ -1,8 +1,8 @@
 package chess.view;
 
+import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.ChessPiece;
-import chess.domain.game.Color;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     private static void printRankFormat(int j) {
-        if(j == FILE_START || j == FILE_END){
+        if (j == FILE_START || j == FILE_END) {
             System.out.printf(String.format(RANK_INFO, j));
         }
         System.out.println();

@@ -35,7 +35,7 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public boolean isKing(){
+    public boolean isKing() {
         return true;
     }
 }
