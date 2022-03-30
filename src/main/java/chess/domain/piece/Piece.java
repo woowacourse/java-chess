@@ -22,4 +22,5 @@ public interface Piece {
     List<Position> calculateRoute(Position from, Position to);
 
 
+    boolean isPawn();
 }

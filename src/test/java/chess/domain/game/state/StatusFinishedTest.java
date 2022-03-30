@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class StatusFinishedTest {
     @Test
     @DisplayName("execute()를 호출 시 예외처리가 되어있다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute("status"))
+        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }

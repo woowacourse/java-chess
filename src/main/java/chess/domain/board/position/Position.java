@@ -70,6 +70,10 @@ public final class Position {
         return this.rank == rank;
     }
 
+    public boolean isEqualRank(Position position) {
+        return this.rank == position.rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

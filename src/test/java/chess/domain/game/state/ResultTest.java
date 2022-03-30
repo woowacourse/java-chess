@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class ResultTest {
     @Test
     @DisplayName("status 커멘드를 입력할 시 StatusEnd 상태로 이동한다.")
     void execute() {
-        state = state.execute("status");
+        state = state.execute(new CommandDto("status"));
         assertThat(state)
                 .isInstanceOf(StatusFinished.class);
     }
@@ -29,7 +30,7 @@ class ResultTest {
     @Test
     @DisplayName("이외 커멘드 입력 시 오류를 출력한다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute("move a2 a3"))
+        assertThatThrownBy(() -> state.execute(new CommandDto("move a2 a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("status 를 입력하세요.");
     }

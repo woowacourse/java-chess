@@ -11,6 +11,7 @@ import chess.domain.boardstrategy.InjectBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
+import chess.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class PlayTest {
     @Test
     @DisplayName("플레이 중 move 커맨드대로 실행할 수 있다.")
     void execute() {
-        state = state.execute("move a2 a3");
+        state = state.execute(new CommandDto("move a2 a3"));
         State finalState = state;
         assertAll(
                 () -> assertThat(finalState)
@@ -44,7 +45,7 @@ class PlayTest {
     @Test
     @DisplayName("플레이 중 end 커맨드 실행 시 강제종료 된다.")
     void executeExit() {
-        state = state.execute("end");
+        state = state.execute(new CommandDto("end"));
         assertThat(state)
                 .isInstanceOf(ExitFinished.class);
     }
@@ -52,7 +53,7 @@ class PlayTest {
     @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute("status"))
+        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,7 +80,7 @@ class PlayTest {
         BoardStrategy boardStrategy = new InjectBoardStrategy(boardString);
         State state = new Play(new ChessGame(boardStrategy));
 
-        state = state.go("move h1 h4");
+        state = state.go(new CommandDto("move h1 h4"));
         assertThat(state)
                 .isInstanceOf(Result.class);
     }

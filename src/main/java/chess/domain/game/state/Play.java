@@ -2,6 +2,7 @@ package chess.domain.game.state;
 
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
+import chess.dto.CommandDto;
 import java.util.List;
 
 public final class Play extends State {
@@ -12,21 +13,15 @@ public final class Play extends State {
     }
 
     @Override
-    protected State execute(String input) {
-        Command command = Command.from(input);
-        if (command == Command.END) {
+    protected State execute(CommandDto commandDto) {
+        if (commandDto.getCommand() == Command.END) {
             return new ExitFinished(chessGame);
         }
-        if (command == Command.MOVE) {
-            move(input, chessGame);
+        if (commandDto.getCommand() == Command.MOVE) {
+            chessGame.play(commandDto.ToSourcePosition(), commandDto.ToTargetPosition());
             return playOrResult(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
-    }
-
-    private void move(String input, ChessGame chessGame) {
-        List<Position> positions = Position.inputToPositions(input);
-        chessGame.play(positions.get(0), positions.get(1));
     }
 
     private State playOrResult(ChessGame chessGame) {

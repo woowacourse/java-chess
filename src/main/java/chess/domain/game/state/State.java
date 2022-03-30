@@ -1,6 +1,7 @@
 package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
+import chess.dto.CommandDto;
 import chess.view.OutputView;
 
 public abstract class State {
@@ -10,7 +11,7 @@ public abstract class State {
         this.chessGame = chessGame;
     }
 
-    public State go(String input) {
+    public State go(CommandDto input) {
         try {
             return execute(input);
         } catch (IllegalArgumentException e) {
@@ -19,7 +20,7 @@ public abstract class State {
         }
     }
 
-    protected abstract State execute(String input);
+    protected abstract State execute(CommandDto input);
 
     public boolean isRun() {
         return true;

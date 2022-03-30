@@ -48,4 +48,8 @@ public abstract class AbstractPiece implements Piece {
     public Team getTeam() {
         return team;
     }
+
+    public boolean isPawn() {
+        return false;
+    }
 }

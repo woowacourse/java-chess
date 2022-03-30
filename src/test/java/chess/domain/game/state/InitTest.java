@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.dto.CommandDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class InitTest {
     void execute() {
         assertThat(state)
                 .isInstanceOf(Init.class);
-        state = state.execute("start");
+        state = state.execute(new CommandDto("start"));
         assertThat(state)
                 .isInstanceOf(Play.class);
     }
@@ -33,7 +34,7 @@ class InitTest {
     void exitEnd() {
         assertThat(state)
                 .isInstanceOf(Init.class);
-        state = state.go("end");
+        state = state.go(new CommandDto("end"));
         assertThat(state)
                 .isInstanceOf(ExitFinished.class);
     }
@@ -41,7 +42,7 @@ class InitTest {
     @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute("status"))
+        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

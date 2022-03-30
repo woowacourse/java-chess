@@ -54,4 +54,9 @@ public final class Pawn extends AbstractPiece {
     private boolean isDiagonal(Direction now, List<Direction> directions) {
         return now == directions.get(1) || now == directions.get(2);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

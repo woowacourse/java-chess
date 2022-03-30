@@ -20,10 +20,6 @@ public final class Board {
         this.squares = squares;
     }
 
-    private static double scoreOfPiece(Entry<Position, Piece> positionPiece) {
-        return Score.valueOf(positionPiece.getValue()).getValue();
-    }
-
     public Piece findByPosition(Position position) {
         return squares.get(position);
     }
@@ -75,16 +71,34 @@ public final class Board {
 
     public Map<Team, Double> getTotalStatus() {
         Map<Team, Double> totalScore = new EnumMap<>(Team.class);
-        totalScore.put(Team.WHITE, getScore(Team.WHITE));
-        totalScore.put(Team.BLACK, getScore(Team.BLACK));
+        totalScore.put(Team.WHITE, getInitScore(Team.WHITE) - getPawnMinusScore(Team.WHITE));
+        totalScore.put(Team.BLACK, getInitScore(Team.BLACK) - getPawnMinusScore(Team.BLACK));
         return totalScore;
     }
 
-    private double getScore(Team team) {
+    private double getInitScore(Team team) {
         return squares.entrySet().stream()
                 .filter(entry -> isSameColor(entry.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
+    }
+
+    private static double scoreOfPiece(Entry<Position, Piece> entry) {
+        return Score.valueOf(entry.getValue()).getValue();
+    }
+
+    private double getPawnMinusScore(Team team) {
+        return (double) squares.entrySet().stream()
+                .filter(entry -> isSameColor(entry.getKey(), team))
+                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> isOtherPawnInRank(entry.getKey()))
+                .count() / 2;
+    }
+
+    private boolean isOtherPawnInRank(Position position) {
+        System.out.println();
+        return squares.entrySet().stream()
+                .anyMatch(entry -> entry.getKey().isEqualRank(position) && entry.getValue().isPawn());
     }
 
     public Map<Position, Piece> getSquares() {
