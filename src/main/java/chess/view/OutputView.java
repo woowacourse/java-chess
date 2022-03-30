@@ -53,12 +53,12 @@ public class OutputView {
         return result;
     }
 
-    public static void printMessage(String message) {
-        System.out.println(message);
-    }
-
     public static void showScore(Status status, Color color) {
         System.out.printf(RESULT_FORMAT, color.getName(), status.calculateScore(color));
+    }
+
+    public static void printMessage(String message) {
+        System.out.println(message);
     }
 
     public static void printKingDieMessage() {
