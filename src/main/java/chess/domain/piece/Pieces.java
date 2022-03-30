@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Color;
+import chess.domain.board.Initiator;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;

@@ -1,4 +1,4 @@
-package chess.domain.pieces;
+package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 import chess.domain.position.Row;

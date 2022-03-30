@@ -1,7 +1,12 @@
-package chess.domain.pieces;
+package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.Piece;
+import chess.domain.piece.role.Bishop;
+import chess.domain.piece.role.King;
+import chess.domain.piece.role.Knight;
+import chess.domain.piece.role.Pawn;
+import chess.domain.piece.role.Queen;
+import chess.domain.piece.role.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,17 +1,17 @@
-package chess.domain.pieces;
+package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 
-public class Queen implements Role {
+public class Rook implements Role {
 
     @Override
     public String getSymbol() {
-        return "Q";
+        return "R";
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.isStraight(target) || source.isDiagonal(target);
+        return source.isStraight(target);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class Queen implements Role {
 
     @Override
     public double score() {
-        return 9;
+        return 5;
     }
 }

@@ -1,19 +1,17 @@
-package chess.domain.pieces;
+package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 
-public class King implements Role {
-
-    public static final int MOVEMENT_LIMIT = 1;
+public class Bishop implements Role {
 
     @Override
     public String getSymbol() {
-        return "K";
+        return "B";
     }
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.columnGap(target) <= MOVEMENT_LIMIT && source.rowGap(target) <= MOVEMENT_LIMIT;
+        return source.isDiagonal(target);
     }
 
     @Override
@@ -23,11 +21,11 @@ public class King implements Role {
 
     @Override
     public boolean isKing() {
-        return true;
+        return false;
     }
 
     @Override
     public double score() {
-        return 0;
+        return 3;
     }
 }

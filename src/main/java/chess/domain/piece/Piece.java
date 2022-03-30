@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
 
-import chess.domain.pieces.Role;
+import chess.domain.Color;
+import chess.domain.piece.role.Role;
 import chess.domain.position.Position;
 
 import java.util.Objects;

@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Color;
+import chess.domain.Result;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 

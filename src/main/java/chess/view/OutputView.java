@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.Color;
-import chess.domain.Piece;
+import chess.domain.piece.Piece;
 import chess.domain.Result;
 import chess.domain.position.Column;
 import chess.domain.position.Position;

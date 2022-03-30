@@ -2,12 +2,14 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.pieces.Bishop;
-import chess.domain.pieces.King;
-import chess.domain.pieces.Knight;
-import chess.domain.pieces.Pawn;
-import chess.domain.pieces.Queen;
-import chess.domain.pieces.Rook;
+import chess.domain.piece.role.Bishop;
+import chess.domain.piece.role.King;
+import chess.domain.piece.role.Knight;
+import chess.domain.piece.role.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.role.Queen;
+import chess.domain.piece.role.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;

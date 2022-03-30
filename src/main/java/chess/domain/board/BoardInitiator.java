@@ -1,6 +1,14 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.pieces.*;
+import chess.domain.Color;
+import chess.domain.piece.*;
+import chess.domain.piece.role.Bishop;
+import chess.domain.piece.role.King;
+import chess.domain.piece.role.Knight;
+import chess.domain.piece.role.Pawn;
+import chess.domain.piece.role.Queen;
+import chess.domain.piece.role.Role;
+import chess.domain.piece.role.Rook;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
