@@ -1,55 +1,57 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.notation.Color;
+import chess.domain.piece.notation.PieceNotation;
 import chess.domain.position.Position;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public final class Board {
 
     private final Map<Position, Piece> value;
-    private final BoardChecker boardChecker;
 
     public Board(final Initializable initializable) {
         value = initializable.init();
-        this.boardChecker = new BoardChecker(value);
     }
 
     public Map<Position, Piece> getValue() {
         return Collections.unmodifiableMap(value);
     }
 
-    public void move(final Position from, final Position to, final Color currentColor) {
-        boardChecker.checkPosition(from, to, currentColor);
+    public void move(final Position from, final Position to) {
         final var fromPiece = value.get(from);
 
         fromPiece.checkMoveRange(this, from, to);
-        putPiece(from, to);
-    }
-
-    private void putPiece(final Position from, final Position to) {
-        final var toPiece = value.get(to);
 
         value.put(to, value.remove(from));
-
-        boardChecker.checkRemovedKing(toPiece);
-    }
-
-    public void checkHasPieceInDiagonal(final Position from, final Position to) {
-        boardChecker.checkPieceInDiagonal(from, to);
     }
 
     public boolean hasPiece(final Position position) {
         return value.get(position) != null;
     }
 
-    public Map<Color, Double> sumScore(final Color target) {
-        return new BoardCalculator(getValue()).sumScore(target);
+    public void checkHasPiece(final List<Position> positions) {
+        for (final Position position : positions) {
+            checkHasPiece(position);
+        }
     }
 
-    public void checkHasPieceInLiner(final Position from, final Position to) {
-        boardChecker.checkHasPieceInLiner(from, to);
+    private void checkHasPiece(final Position position) {
+        if (value.get(position) != null) {
+            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
+        }
+    }
+
+    public Piece getPiece(final Position position) {
+        return value.get(position);
+    }
+
+    public boolean hasKing(final Color color) {
+        return value.values().stream()
+                .filter(piece -> piece.getNotation() == PieceNotation.KING)
+                .anyMatch(piece -> piece.isSameColor(color));
     }
 }
