@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.CachedPosition;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
@@ -17,7 +18,6 @@ import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -88,7 +88,7 @@ class BoardTest {
             board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
 
-            Assertions.assertAll(
+            assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
                     () -> assertThat(pieces.get(start)).isNull());
         }
@@ -111,7 +111,7 @@ class BoardTest {
             board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
 
-            Assertions.assertAll(
+            assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
                     () -> assertThat(pieces.get(start)).isNull());
         }
@@ -176,7 +176,7 @@ class BoardTest {
             Board board = new Board(initialPieces);
             board.move(start, target, Color.WHITE);
             Map<Position, Piece> pieces = board.getPieces();
-            Assertions.assertAll(
+            assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
                     () -> assertThat(pieces.get(start)).isNull());
         }
@@ -245,7 +245,7 @@ class BoardTest {
             board.move(start, target, Color.BLACK);
             Map<Position, Piece> pieces = board.getPieces();
 
-            Assertions.assertAll(
+            assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
                     () -> assertThat(pieces.get(start)).isNull());
         }
@@ -275,6 +275,20 @@ class BoardTest {
         final int actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
 
         assertThat(actualCount).isEqualTo(2);
+    }
+
+    @DisplayName("현재 보드에 있는 말들의 올바른 총 점수를 계산해야 한다")
+    @Test
+    void calculate_Score() {
+        final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
+        Board board = new Board(initialPieces);
+        final double actualBlackScore = board.calculateScore(Color.BLACK);
+        final double actualWhiteScore = board.calculateScore(Color.WHITE);
+
+        assertAll(
+                () -> assertThat(actualBlackScore).isEqualTo(38.0),
+                () -> assertThat(actualWhiteScore).isEqualTo(38.0)
+        );
     }
 }
 
