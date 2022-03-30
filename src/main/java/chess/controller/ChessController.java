@@ -10,40 +10,40 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-	private final InputView inputView = new InputView();
-	private final OutputView outputView = new OutputView();
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
 
-	public void run() {
-		outputView.displayGameRule();
-		State state = State.create();
-		while (!state.isFinished()) {
-			state = processOneTurn(state);
-		}
-	}
+    public void run() {
+        outputView.displayGameRule();
+        State state = State.create();
+        while (!state.isFinished()) {
+            state = processOneTurn(state);
+        }
+    }
 
-	private State processOneTurn(State state) {
-		try {
-			checkTurn(state);
-			Command command = inputView.askCommand();
-			state = state.proceed(command);
-			outputView.displayChessBoard(state.getBoard());
-			checkScore(state, command);
-		} catch (IllegalArgumentException | IllegalStateException | NoSuchElementException exception){
-			outputView.displayErrorMessage(exception);
-		}
-		return state;
-	}
+    private State processOneTurn(State state) {
+        try {
+            checkTurn(state);
+            Command command = inputView.askCommand();
+            state = state.proceed(command);
+            outputView.displayChessBoard(state.getBoard());
+            checkScore(state, command);
+        } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException exception) {
+            outputView.displayErrorMessage(exception);
+        }
+        return state;
+    }
 
-	private void checkTurn(State state) {
-		if (state.isRunning()) {
-			outputView.displayTurn(state.getColor());
-		}
-	}
+    private void checkTurn(State state) {
+        if (state.isRunning()) {
+            outputView.displayTurn(state.getColor());
+        }
+    }
 
-	private void checkScore(State state, Command command) {
-		if (command.isStatus()) {
-			ChessScore chessScore = state.generateScore();
-			outputView.displayScore(chessScore);
-		}
-	}
+    private void checkScore(State state, Command command) {
+        if (command.isStatus()) {
+            ChessScore chessScore = state.generateScore();
+            outputView.displayScore(chessScore);
+        }
+    }
 }

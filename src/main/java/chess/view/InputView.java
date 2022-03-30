@@ -7,19 +7,19 @@ import chess.view.converter.CommandConverter;
 
 public class InputView {
 
-	private static final String INVALID_INPUT = "유효하지 않은 입력입니다.";
+    private static final String INVALID_INPUT = "유효하지 않은 입력입니다.";
 
-	private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-	public Command askCommand() {
-		String input = scanner.nextLine();
-		validateInput(input);
-		return CommandConverter.from(input);
-	}
+    public Command askCommand() {
+        String input = scanner.nextLine();
+        validateInput(input);
+        return CommandConverter.from(input);
+    }
 
-	private void validateInput(String input) {
-		if (input.isEmpty() || input.isBlank()) {
-			throw new IllegalArgumentException(INVALID_INPUT);
-		}
-	}
+    private void validateInput(String input) {
+        if (input.isEmpty() || input.isBlank()) {
+            throw new IllegalArgumentException(INVALID_INPUT);
+        }
+    }
 }

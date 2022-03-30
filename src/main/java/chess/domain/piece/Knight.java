@@ -9,48 +9,48 @@ import chess.domain.direction.strategy.KnightDirectionStrategy;
 
 public class Knight extends Piece {
 
-	private static final String INVALID_DIRECTION_KNIGHT = "Knight가 갈 수 없는 방향입니다.";
-	private static final double KNIGHT_SCORE = 2.5;
+    private static final String INVALID_DIRECTION_KNIGHT = "Knight가 갈 수 없는 방향입니다.";
+    private static final double KNIGHT_SCORE = 2.5;
 
-	private static final Knight whiteKing = new Knight(Color.WHITE);
-	private static final Knight blackKing = new Knight(Color.BLACK);
+    private static final Knight whiteKing = new Knight(Color.WHITE);
+    private static final Knight blackKing = new Knight(Color.BLACK);
 
-	private final DirectionStrategy directionStrategy;
+    private final DirectionStrategy directionStrategy;
 
-	private Knight(Color color) {
-		super(color);
-		directionStrategy = new KnightDirectionStrategy();
-	}
+    private Knight(Color color) {
+        super(color);
+        directionStrategy = new KnightDirectionStrategy();
+    }
 
-	public static Knight createWhite() {
-		return whiteKing;
-	}
+    public static Knight createWhite() {
+        return whiteKing;
+    }
 
-	public static Knight createBlack() {
-		return blackKing;
-	}
+    public static Knight createBlack() {
+        return blackKing;
+    }
 
-	@Override
-	public Direction matchDirection(Position from, Position to) {
-		Optional<? extends Direction> direction = directionStrategy.find(from, to);
-		if (direction.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_DIRECTION_KNIGHT);
-		}
-		return direction.get();
-	}
+    @Override
+    public Direction matchDirection(Position from, Position to) {
+        Optional<? extends Direction> direction = directionStrategy.find(from, to);
+        if (direction.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_DIRECTION_KNIGHT);
+        }
+        return direction.get();
+    }
 
-	@Override
-	public boolean isPawn() {
-		return false;
-	}
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 
-	@Override
-	public boolean isKing() {
-		return false;
-	}
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 
-	@Override
-	public double getScore() {
-		return KNIGHT_SCORE;
-	}
+    @Override
+    public double getScore() {
+        return KNIGHT_SCORE;
+    }
 }

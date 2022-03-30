@@ -4,13 +4,13 @@ import chess.domain.position.Position;
 
 public interface Command {
 
-	boolean isStart();
+    boolean isStart();
 
-	boolean isMove();
+    boolean isMove();
 
-	boolean isStatus();
+    boolean isStatus();
 
-	Position getFromPosition();
+    Position getFromPosition();
 
-	Position getToPosition();
+    Position getToPosition();
 }

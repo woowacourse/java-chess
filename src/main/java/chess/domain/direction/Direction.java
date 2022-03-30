@@ -5,9 +5,9 @@ import chess.domain.position.UnitPosition;
 
 public interface Direction {
 
-	boolean confirm(Position from, Position to);
+    boolean confirm(Position from, Position to);
 
-	boolean isDiagonal();
+    boolean isDiagonal();
 
-	UnitPosition getUnitPosition();
+    UnitPosition getUnitPosition();
 }

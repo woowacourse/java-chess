@@ -7,5 +7,5 @@ import chess.domain.direction.Direction;
 
 public interface DirectionStrategy {
 
-	Optional<? extends Direction> find(Position from, Position to);
+    Optional<? extends Direction> find(Position from, Position to);
 }
