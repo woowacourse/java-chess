@@ -13,13 +13,15 @@ public enum Rank {
     SEVEN(7, "7"),
     EIGHT(8, "8");
 
+    private static final int MINIMUM = 1;
+    private static final int MAXIMUM = 8;
+
     private final int number;
+    private final String letter;
 
-    private final String condition;
-
-    Rank(int number, String condition) {
+    Rank(int number, String letter) {
         this.number = number;
-        this.condition = condition;
+        this.letter = letter;
     }
 
     public static Rank numberOf(int value) {
@@ -29,15 +31,26 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
     }
 
-    public static Rank conditionOf(String value) {
+    public static Rank letterOf(String value) {
         return Arrays.stream(values())
-                .filter(rank -> rank.condition.equals(value))
+                .filter(rank -> rank.letter.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
     }
 
-    public String getCondition() {
-        return condition;
+    public Rank plus(int value) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.number == (number + value))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 위치 값 입니다."));
+    }
+
+    public boolean isMoveInRange(int value) {
+        return MINIMUM <= value && value <= MAXIMUM;
+    }
+
+    public String getLetter() {
+        return letter;
     }
 
     public int getNumber() {
