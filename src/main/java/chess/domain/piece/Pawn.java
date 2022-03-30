@@ -1,29 +1,33 @@
 package chess.domain.piece;
 
+import static chess.domain.position.Direction.BOTTOM;
+import static chess.domain.position.Direction.BOTTOM_LEFT;
+import static chess.domain.position.Direction.BOTTOM_RIGHT;
+import static chess.domain.position.Direction.TOP;
+import static chess.domain.position.Direction.TOP_LEFT;
+import static chess.domain.position.Direction.TOP_RIGHT;
+
 import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.MovingStrategy;
-import chess.domain.piece.strategy.pawn.BlackPawnDefaultMovingStrategy;
-import chess.domain.piece.strategy.pawn.BlackPawnStartingPointMovingStrategy;
+import chess.domain.piece.strategy.pawn.PawnStartingPointMovingStrategy;
 import chess.domain.piece.strategy.pawn.PawnCaptureMovingStrategy;
-import chess.domain.piece.strategy.pawn.WhitePawnDefaultMovingStrategy;
-import chess.domain.piece.strategy.pawn.WhitePawnStartingPointMovingStrategy;
-import chess.domain.position.Direction;
+import chess.domain.piece.strategy.pawn.PawnDefaultMovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
 
     private static final List<MovingStrategy> BLACK_STRATEGIES = List.of(
-            new BlackPawnStartingPointMovingStrategy(),
-            new BlackPawnDefaultMovingStrategy(),
-            new PawnCaptureMovingStrategy(List.of(Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT))
+            new PawnStartingPointMovingStrategy(1, BOTTOM),
+            new PawnDefaultMovingStrategy(BOTTOM),
+            new PawnCaptureMovingStrategy(List.of(BOTTOM_LEFT, BOTTOM_RIGHT))
     );
 
     private static final List<MovingStrategy> WHITE_STRATEGIES = List.of(
-            new WhitePawnStartingPointMovingStrategy(),
-            new WhitePawnDefaultMovingStrategy(),
-            new PawnCaptureMovingStrategy(List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT))
+            new PawnStartingPointMovingStrategy(6, TOP),
+            new PawnDefaultMovingStrategy(TOP),
+            new PawnCaptureMovingStrategy(List.of(TOP_LEFT, TOP_RIGHT))
     );
 
     private final List<MovingStrategy> movingStrategies;
