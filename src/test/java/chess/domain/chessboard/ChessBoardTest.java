@@ -1,5 +1,6 @@
 package chess.domain.chessboard;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -11,6 +12,7 @@ import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -83,7 +85,7 @@ class ChessBoardTest {
 
     @Test
     @DisplayName("이동 경로 사이에 다른 기물이 있으면 예외를 발생시킵니다.")
-    void move_exception() {
+    void move_exception1() {
         // given
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
         final Position from = Position.from("a1");
@@ -93,6 +95,34 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로 사이에 다른 기물이 있습니다.");
+    }
+
+    @Test
+    @DisplayName("이동 시키려는 기물이 존재하지 않으면 예외가 터진다.")
+    void move_exception2() {
+        // given
+        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
+
+        // then
+        assertThatThrownBy(() -> chessBoard.move(Position.from("d5"), Position.from("d6")))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("킹이 모두 살아있으면 게임이 끝난 상태가 아니다.")
+    void isKingDie() {
+        // given
+        final ChessBoard chessBoard = PieceByPosition.create()
+                .add(Position.from("a1"), King.from(Color.WHITE))
+                .add(Position.from("a2"), King.from(Color.BLACK))
+                .toChessBoard();
+
+        // when
+        final boolean actual = chessBoard.isKingDie();
+
+        // then
+        assertThat(actual).isEqualTo(false);
     }
 
     @Test
