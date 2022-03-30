@@ -40,17 +40,6 @@ public class BishopTest {
         assertThatThrownBy(() -> bishop.movable(to, from)).hasMessageContaining("Bishop");
     }
 
-    @DisplayName("이름")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,B", "WHITE,b"})
-    void name(Team team, String expect) {
-        // given
-        Bishop bishop = new Bishop(team);
-
-        // then
-        assertThat(bishop.getName()).isEqualTo(expect);
-    }
-
     @DisplayName("비숍의 방향을 체크한다.")
     @ParameterizedTest
     @CsvSource(value = {"c3,a1,SOUTH_WEST", "a1,c3,NORTH_EAST"})

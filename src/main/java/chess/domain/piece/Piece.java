@@ -21,7 +21,7 @@ public abstract class Piece {
     public abstract List<Position> findMovablePosition(Position now);
 
     public final String getName() {
-        return team.convert(info.getName());
+        return info.getName();
     }
 
     public final boolean isSameTeam(Piece piece) {

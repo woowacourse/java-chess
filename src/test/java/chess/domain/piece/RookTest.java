@@ -39,17 +39,6 @@ class RookTest {
         assertThatThrownBy(() -> rook.movable(to, from)).hasMessageContaining("Rook");
     }
 
-    @DisplayName("이름")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,R", "WHITE,r"})
-    void name(Team team, String expect) {
-        // given
-        Rook rook = new Rook(team);
-
-        // then
-        assertThat(rook.getName()).isEqualTo(expect);
-    }
-
     @DisplayName("룩의 방향을 체크한다.")
     @ParameterizedTest
     @CsvSource(value = {"a1,a3,NORTH", "a3,a1,SOUTH"})

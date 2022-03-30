@@ -40,17 +40,6 @@ public class PawnTest {
         assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
     }
 
-    @DisplayName("이름 확인")
-    @ParameterizedTest(name = "{0}팀은 {1} 반환")
-    @CsvSource(value = {"BLACK,P", "WHITE,p"})
-    void name(Team team, String expect) {
-        // given
-        Pawn pawn = new Pawn(team);
-
-        // then
-        assertThat(pawn.getName()).isEqualTo(expect);
-    }
-
     @DisplayName("폰의 방향을 체크")
     @ParameterizedTest(name = "{2}팀은 {3} 쪽으로 이동 가능")
     @CsvSource(value = {"a2,a3,WHITE,NORTH", "a2,a4,WHITE,NORTH", "a2,a1,BLACK,SOUTH", "a7,a5,BLACK,SOUTH"})

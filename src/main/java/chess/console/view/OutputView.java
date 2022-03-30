@@ -42,9 +42,16 @@ public class OutputView {
 
     private static String drawPrintString(Piece piece) {
         if (piece != null) {
-            return piece.getName();
+            return drawName(piece);
         }
         return EMPTY_PIECE;
+    }
+
+    private static String drawName(Piece piece) {
+        if (piece.isSameTeam(Team.BLACK)) {
+            return piece.getName().toUpperCase();
+        }
+        return piece.getName().toLowerCase();
     }
 
     public static void printStatus(Map<Team, Double> status, Team result) {

@@ -40,17 +40,6 @@ public class KnightTest {
         assertThatThrownBy(() -> knight.movable(to, from)).hasMessageContaining("Knight");
     }
 
-    @DisplayName("이름")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,N", "WHITE,n"})
-    void name(Team team, String expect) {
-        // given
-        Knight knight = new Knight(team);
-
-        // then
-        assertThat(knight.getName()).isEqualTo(expect);
-    }
-
     @DisplayName("나이트의 방향을 체크한다.")
     @ParameterizedTest
     @CsvSource(value = {"a1,B3,NNE", "b3,a1,SSW"})

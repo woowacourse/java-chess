@@ -39,17 +39,6 @@ class QueenTest {
         assertThatThrownBy(() -> queen.movable(to, from)).hasMessageContaining("Queen");
     }
 
-    @DisplayName("이름")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,Q", "WHITE,q"})
-    void name(Team team, String expect) {
-        // given
-        Queen queen = new Queen(team);
-
-        // then
-        assertThat(queen.getName()).isEqualTo(expect);
-    }
-
     @DisplayName("퀸의 방향을 체크한다.")
     @ParameterizedTest
     @CsvSource(value = {"a1,c3,NORTH_EAST", "c3,a1,SOUTH_WEST"})

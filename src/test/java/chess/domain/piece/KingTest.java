@@ -38,18 +38,6 @@ class KingTest {
         assertThatThrownBy(() -> king.movable(to, from)).hasMessageContaining("King");
     }
 
-    @DisplayName("이름")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,K", "WHITE,k"})
-    void name(Team team, String expect) {
-        // given
-        King king = new King(team);
-
-        // then
-        assertThat(king.getName()).isEqualTo(expect);
-    }
-
-
     @DisplayName("킹의 방향을 체크한다.")
     @ParameterizedTest
     @CsvSource(value = {"a2,a1,SOUTH", "a1,a2,NORTH"})
