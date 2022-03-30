@@ -1,8 +1,18 @@
 package chess.util;
 
+import static chess.domain.board.position.Direction.DOWN;
+import static chess.domain.board.position.Direction.DOWN_LEFT;
+import static chess.domain.board.position.Direction.DOWN_RIGHT;
+import static chess.domain.board.position.Direction.LEFT;
+import static chess.domain.board.position.Direction.RIGHT;
+import static chess.domain.board.position.Direction.UP;
+import static chess.domain.board.position.Direction.UP_LEFT;
+import static chess.domain.board.position.Direction.UP_RIGHT;
+
 import chess.domain.board.position.Position;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PositionUtil {
 
@@ -30,22 +40,13 @@ public class PositionUtil {
         return isHorizontalOrVertical(from, to) || isDiagonal(from, to);
     }
 
-    public static boolean isDiagonal(Position from, Position to) {
-        return from.fileDifference(to)
-                == from.rankDifference(to);
-    }
-
     public static boolean isHorizontalOrVertical(Position from, Position to) {
-        return isHorizontal(from, to) || isVertical(from, to);
+        return Stream.of(UP, DOWN, RIGHT, LEFT)
+                .anyMatch(direction -> from.checkDirection(to, direction));
     }
 
-    private static boolean isHorizontal(Position from, Position to) {
-        return from.fileDifference(to) == 0
-                && from.rankDifference(to) > 0;
-    }
-
-    private static boolean isVertical(Position from, Position to) {
-        return from.fileDifference(to) > 0
-                && from.rankDifference(to) == 0;
+    public static boolean isDiagonal(Position from, Position to) {
+        return Stream.of(UP_RIGHT, UP_LEFT, DOWN_LEFT, DOWN_RIGHT)
+                .anyMatch(direction -> from.checkDirection(to, direction));
     }
 }
