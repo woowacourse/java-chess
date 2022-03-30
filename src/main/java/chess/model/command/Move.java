@@ -12,16 +12,6 @@ public class Move extends Command {
     }
 
     @Override
-    public String getSourcePosition() {
-        return getCommandPosition().get(0);
-    }
-
-    @Override
-    public String getTargetPosition() {
-        return getCommandPosition().get(1);
-    }
-
-    @Override
     public Command turnState(String input) {
         if (Command.END.equals(input)) {
             return new End(input);
@@ -41,13 +31,18 @@ public class Move extends Command {
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public boolean isMove() {
+        return true;
     }
 
     @Override
-    public boolean isMove() {
-        return true;
+    public String getSourcePosition() {
+        return getCommandPosition().get(0);
+    }
+
+    @Override
+    public String getTargetPosition() {
+        return getCommandPosition().get(1);
     }
 
     private List<String> getCommandPosition() {
