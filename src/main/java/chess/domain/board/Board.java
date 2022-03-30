@@ -61,14 +61,10 @@ public class Board {
     }
 
     private void movePiece(Point from, Point to, Piece fromPiece) {
-        fromPiece.move(this, from, to);
+        Map<Point, Piece> copyOfPointPieces = Map.copyOf(pointPieces);
+        fromPiece.move(copyOfPointPieces, from, to);
         pointPieces.put(to, fromPiece);
         pointPieces.put(from, new Empty());
-    }
-
-    public boolean isEmpty(Point point) {
-        Piece piece = pointPieces.get(point);
-        return piece.isSameType(PieceType.EMPTY);
     }
 
     public Map<Color, Double> calculateScore() {

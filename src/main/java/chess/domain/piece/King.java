@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.StraightDirection;
+
+import java.util.Map;
 
 public class King extends Piece {
 
@@ -11,7 +12,7 @@ public class King extends Piece {
     }
 
     @Override
-    public void move(Board ignored, Point from, Point to) {
+    public void move(Map<Point, Piece> ignored, Point from, Point to) {
         StraightDirection direction = StraightDirection.find(from, to);
         Point next = from.next(direction);
         if (!next.equals(to)) {

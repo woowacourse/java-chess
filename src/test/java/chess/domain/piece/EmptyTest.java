@@ -28,6 +28,6 @@ class EmptyTest {
         Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 }

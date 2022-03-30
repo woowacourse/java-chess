@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.pawn.PawnMoveChain;
 import chess.domain.piece.move.pawn.PawnMoveForwardChain;
 import chess.domain.piece.move.pawn.PawnSupport;
+
+import java.util.Map;
 
 public class Pawn extends Piece {
 
@@ -13,9 +14,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         PawnSupport support = new PawnSupport(color);
         PawnMoveChain chain = new PawnMoveForwardChain(support);
-        chain.move(board, from, to);
+        chain.move(pointPieces, from, to);
     }
 }

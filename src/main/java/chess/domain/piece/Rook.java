@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.move.StraightDirection;
+
+import java.util.Map;
 
 public class Rook extends Piece {
 
@@ -11,12 +12,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         StraightDirection direction = findDirection(from, to);
 
         Point next = from.next(direction);
         while (!next.equals(to)) {
-            validateEmpty(board, next);
+            validateEmpty(pointPieces, next);
             next = next.next(direction);
         }
     }
@@ -33,8 +34,8 @@ public class Rook extends Piece {
         }
     }
 
-    private void validateEmpty(Board board, Point point) {
-        if (!board.isEmpty(point)) {
+    private void validateEmpty(Map<Point, Piece> pointPieces, Point point) {
+        if (!isEmptyPoint(pointPieces, point)) {
             throw new IllegalArgumentException("[ERROR] 이동 과정 중에 장애물이 있습니다.");
         }
     }

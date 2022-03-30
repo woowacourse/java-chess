@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
+
+import java.util.Map;
 
 public class Empty extends Piece {
 
@@ -10,7 +11,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public void move(Map<Point, Piece> ignored, Point from, Point to) {
         throw new UnsupportedOperationException("[ERROR] 빈 칸은 이동할 수 없습니다.");
     }
 }

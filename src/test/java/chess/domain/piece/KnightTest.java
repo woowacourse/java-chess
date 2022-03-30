@@ -28,7 +28,7 @@ class KnightTest {
         Point to = Point.of("c3");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -41,7 +41,7 @@ class KnightTest {
         Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -53,7 +53,7 @@ class KnightTest {
 
         Board board = BoardFixtures.create(Map.of(Point.of("c3"), new Pawn(Color.BLACK)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -66,7 +66,7 @@ class KnightTest {
 
         Board board = BoardFixtures.create(Map.of(Point.of("b2"), new Pawn(Color.WHITE)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 

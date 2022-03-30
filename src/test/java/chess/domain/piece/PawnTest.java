@@ -29,7 +29,7 @@ class PawnTest {
         Point to = Point.of("a3");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -42,7 +42,7 @@ class PawnTest {
         Point to = Point.of("b6");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -55,7 +55,7 @@ class PawnTest {
         Point to = Point.of("a4");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -68,7 +68,7 @@ class PawnTest {
         Point to = Point.of("b5");
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -83,7 +83,7 @@ class PawnTest {
                 Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -97,7 +97,7 @@ class PawnTest {
                 Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -110,7 +110,7 @@ class PawnTest {
         Board board = BoardFixtures.create(
                 Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -124,7 +124,7 @@ class PawnTest {
         Board board = BoardFixtures.create(
                 Map.of(Point.of(2, 4), new Rook(Color.WHITE)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -138,7 +138,7 @@ class PawnTest {
         Board board = BoardFixtures.create(
                 Map.of(to, new Rook(Color.BLACK)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -152,7 +152,7 @@ class PawnTest {
         Board board = BoardFixtures.create(
                 Map.of(to, new Rook(Color.WHITE)));
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 }

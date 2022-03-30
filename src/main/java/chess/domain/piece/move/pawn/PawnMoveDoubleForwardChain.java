@@ -1,8 +1,10 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.piece.Piece;
 import chess.domain.piece.move.StraightDirection;
+
+import java.util.Map;
 
 public class PawnMoveDoubleForwardChain extends PawnMoveChain {
 
@@ -14,24 +16,24 @@ public class PawnMoveDoubleForwardChain extends PawnMoveChain {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
         Point middle = from.next(StraightDirection.find(from, to));
         if (isStartLine(from) &&
                 isToPoint(horizontal, vertical) &&
-                isNoObstacle(board, to, middle)) {
+                isNoObstacle(pointPieces, to, middle)) {
             return;
         }
-        next.move(board, from, to);
+        next.move(pointPieces, from, to);
     }
 
     private boolean isStartLine(Point from) {
         return support.isStartLine(from);
     }
 
-    private boolean isNoObstacle(Board board, Point to, Point middle) {
-        return board.isEmpty(to) && board.isEmpty(middle);
+    private boolean isNoObstacle(Map<Point, Piece> pointPieces, Point to, Point middle) {
+        return isEmptyPoint(pointPieces, to) && isEmptyPoint(pointPieces, middle);
     }
 
     private boolean isToPoint(int horizontal, int vertical) {

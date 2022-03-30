@@ -3,9 +3,11 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
+import chess.domain.board.TestBoardGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -28,7 +30,7 @@ class QueenTest {
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -40,7 +42,7 @@ class QueenTest {
         Piece piece = new Queen(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -53,7 +55,7 @@ class QueenTest {
         Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -67,7 +69,7 @@ class QueenTest {
         ));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -81,6 +83,6 @@ class QueenTest {
         ));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 }

@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
+
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -25,5 +26,10 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
-    public abstract void move(Board board, Point from, Point to);
+    protected boolean isEmptyPoint(Map<Point, Piece> pointPieces, Point point) {
+        Piece piece = pointPieces.get(point);
+        return piece.isSameType(PieceType.EMPTY);
+    }
+
+    public abstract void move(Map<Point, Piece> pointPieces, Point from, Point to);
 }

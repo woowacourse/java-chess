@@ -28,7 +28,7 @@ class BishopTest {
         Piece piece = new Bishop(Color.WHITE);
         Board board = BoardFixtures.empty();
 
-        assertThatCode(() -> piece.move(board, from, to))
+        assertThatCode(() -> piece.move(board.getPointPieces(), from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -41,7 +41,7 @@ class BishopTest {
         Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -55,7 +55,7 @@ class BishopTest {
         ));
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 
     @Test
@@ -67,6 +67,6 @@ class BishopTest {
         Board board = BoardFixtures.empty();
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> piece.move(board, from, to));
+                .isThrownBy(() -> piece.move(board.getPointPieces(), from, to));
     }
 }

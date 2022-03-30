@@ -1,7 +1,9 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.piece.Piece;
+
+import java.util.Map;
 
 public class PawnMoveForwardChain extends PawnMoveChain {
 
@@ -13,12 +15,12 @@ public class PawnMoveForwardChain extends PawnMoveChain {
     }
 
     @Override
-    public void move(Board board, Point from, Point to) {
+    public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
-        if (vertical == 1 && horizontal == 0 && board.isEmpty(to)) {
+        if (vertical == 1 && horizontal == 0 && isEmptyPoint(pointPieces, to)) {
             return;
         }
-        next.move(board, from, to);
+        next.move(pointPieces, from, to);
     }
 }
