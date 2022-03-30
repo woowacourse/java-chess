@@ -4,6 +4,7 @@ import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
+import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -24,7 +25,7 @@ public class Controller {
 
     private void printPlayingChessBoard(State state, ChessGame chessGame) {
         if (state.isPlay()) {
-            OutputView.printChessBoard(chessGame.getBoard().getSquares());
+            OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
         }
     }
 

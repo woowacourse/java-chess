@@ -6,6 +6,7 @@ import chess.domain.board.position.Rank;
 import chess.domain.game.Status;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
+import chess.dto.BoardDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,19 +27,8 @@ public final class OutputView {
         System.out.println(INIT_MESSAGE);
     }
 
-    public static void printChessBoard(Map<Position, Piece> squares) {
-        List<Rank> ranks = Rank.reverseRanks();
-        for (Rank rank : ranks) {
-            printChessBoardOfRank(squares, rank);
-        }
-        System.out.println();
-    }
-
-    private static void printChessBoardOfRank(Map<Position, Piece> squares, Rank rank) {
-        for (Column column : Column.values()) {
-            System.out.print(squares.get(new Position(column, rank)).getName());
-        }
-        System.out.println();
+    public static void printChessBoard(BoardDto boardDto) {
+        System.out.println(boardDto.getBoardString());
     }
 
     public static void printStatus(Status status) {
