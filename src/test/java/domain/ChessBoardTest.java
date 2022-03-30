@@ -50,8 +50,8 @@ public class ChessBoardTest {
 
         chessBoard.move(source, target);
 
-        assertThat(chessBoard.getSymbol(source)).isEqualTo(".");
-        assertThat(chessBoard.getSymbol(target)).isEqualTo("r");
+        assertThat(chessBoard.findPiece(source).symbolByPlayer()).isEqualTo(".");
+        assertThat(chessBoard.findPiece(target).symbolByPlayer()).isEqualTo("r");
     }
 
     @Test

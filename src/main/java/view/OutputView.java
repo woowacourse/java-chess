@@ -27,7 +27,7 @@ public class OutputView {
 
     private static void printBoardByRank(final ChessBoard chessBoard, final Rank rank) {
         for (File file : File.values()) {
-            System.out.print(chessBoard.getSymbol(Position.of(file, rank)));
+            System.out.print(chessBoard.findPiece(Position.of(file, rank)).symbolByPlayer());
         }
         System.out.println();
     }

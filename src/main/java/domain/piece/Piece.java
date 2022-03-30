@@ -22,12 +22,6 @@ public abstract class Piece {
         this.availableMovePosition = new HashMap<>();
     }
 
-    private Map<Direction, List<Position>> initAvailablePosition() {
-        Map<Direction, List<Position>> availableMovePosition = new HashMap<>();
-        getDirections().forEach(direction -> availableMovePosition.put(direction, null));
-        return availableMovePosition;
-    }
-
     protected abstract List<Direction> getDirections();
 
     protected abstract List<Position> calculateAvailablePosition(final Position source,
@@ -41,7 +35,7 @@ public abstract class Piece {
             .orElse(null) != null;
     }
 
-    public void generateAvailablePosition(Position source) {
+    protected void generateAvailablePosition(Position source) {
         getDirections().forEach(direction ->
             availableMovePosition.put(direction, calculateAvailablePosition(source, direction)));
     }
@@ -63,6 +57,10 @@ public abstract class Piece {
     }
 
     public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isBlank() {
         return false;
     }
 

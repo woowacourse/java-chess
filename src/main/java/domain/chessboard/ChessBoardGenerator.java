@@ -2,6 +2,7 @@ package domain.chessboard;
 
 import domain.Player;
 import domain.piece.Bishop;
+import domain.piece.Blank;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
@@ -34,7 +35,7 @@ public class ChessBoardGenerator implements BoardGenerator {
 
     private void initializeByRow(Map<Position, Piece> board, final Rank rank) {
         for (File file : File.values()) {
-            board.put(Position.of(file, rank), null);
+            board.put(Position.of(file, rank), new Blank());
         }
     }
 

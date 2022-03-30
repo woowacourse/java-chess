@@ -8,7 +8,8 @@ public enum PieceSymbol {
     BISHOP("B"),
     KNIGHT("N"),
     ROOK("R"),
-    PAWN("P");
+    PAWN("P"),
+    NULL(".");
 
     private final String symbol;
 
@@ -21,6 +22,9 @@ public enum PieceSymbol {
     }
 
     public String symbol(final Player player) {
+        if (player.equals(Player.NULL)) {
+            return NULL.symbol;
+        }
         if (player == Player.BLACK) {
             return symbol;
         }
