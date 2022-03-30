@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,21 @@ public class BishopTest {
         Bishop bishop = Bishop.createBlack(new Position("a1"));
 
         assertThat(bishop.getSignature()).isEqualTo("B");
+    }
+
+    @DisplayName("비숍의 이동 벡터 리스트를 반환한다.")
+    @Test
+    void getBishopDirections() {
+        Bishop bishop = Bishop.createBlack(new Position("a1"));
+
+        List<Direction> bishopDirections = List.of(
+                Direction.NORTHEAST,
+                Direction.SOUTHEAST,
+                Direction.SOUTHWEST,
+                Direction.NORTHWEST
+        );
+
+        assertThat(bishop.findPossibleDirections()).isEqualTo(bishopDirections);
     }
 
     @DisplayName("타겟 위치가 빈칸일 경우 이동에 성공한다.")

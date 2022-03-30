@@ -22,7 +22,7 @@ public class Bishop extends SlidingPiece {
 
     @Override
     protected List<Direction> findPossibleDirections() {
-        return Direction.getDiagonalDirections();
+        return List.of(Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
     }
 
     @Override

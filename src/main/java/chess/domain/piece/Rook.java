@@ -22,7 +22,7 @@ public class Rook extends SlidingPiece {
 
     @Override
     protected List<Direction> findPossibleDirections() {
-        return Direction.getPerpendicularDirections();
+        return List.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     }
 
     @Override

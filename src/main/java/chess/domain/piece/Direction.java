@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum Direction {
-    
+
     NORTH(0, 1),
     NORTHEAST(1, 1),
     EAST(1, 0),
@@ -52,28 +52,8 @@ public enum Direction {
                 .findAny();
     }
 
-    public static List<Direction> getKnightDirections() {
-        return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-    }
-
-    public static List<Direction> getDiagonalDirections() {
-        return List.of(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-    }
-
-    public static List<Direction> getPerpendicularDirections() {
-        return List.of(NORTH, EAST, SOUTH, WEST);
-    }
-
     public static List<Direction> getEightStraightDirections() {
         return List.of(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST);
-    }
-
-    public static List<Direction> getBlackPawnAttackDirections() {
-        return List.of(SOUTHWEST, SOUTHEAST);
-    }
-
-    public static List<Direction> getWhitePawnAttackDirections() {
-        return List.of(NORTHWEST, NORTHEAST);
     }
 
     public int getXDegree() {

@@ -51,9 +51,9 @@ public class Pawn extends Piece {
 
     private boolean isEnemyTarget(Piece piece) {
         if (isBlack()) {
-            return isInRange(piece.getPosition(), Direction.getBlackPawnAttackDirections());
+            return isInRange(piece.getPosition(), List.of(Direction.SOUTHWEST, Direction.SOUTHEAST));
         }
-        return isInRange(piece.getPosition(), Direction.getWhitePawnAttackDirections());
+        return isInRange(piece.getPosition(), List.of(Direction.NORTHWEST, Direction.NORTHEAST));
     }
 
     private boolean isInRange(Position targetPosition, List<Direction> directions) {
