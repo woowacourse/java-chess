@@ -8,26 +8,35 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class Controller {
+    private final ChessGame chessGame;
 
-    public Map<Position, Piece> start(ChessGame chessGame) {
+    public Controller() {
+        this.chessGame = new ChessGame();
+    }
+
+    public Map<Position, Piece> start() {
         chessGame.start();
         return chessGame.getBoard().getSquares();
     }
 
-    public Map<Position, Piece> move(ChessGame chessGame, Position sourcePosition, Position targetPosition) {
+    public Map<Position, Piece> move(Position sourcePosition, Position targetPosition) {
         chessGame.move(sourcePosition, targetPosition);
         return chessGame.getBoard().getSquares();
     }
 
-    public Map<Camp, Score> status(ChessGame chessGame) {
+    public Map<Camp, Score> status() {
         return chessGame.getScores();
     }
 
-    public void end(ChessGame chessGame) {
+    public void end() {
         chessGame.end();
     }
 
-    public Camp getWinner(ChessGame chessGame) {
+    public boolean isGameFinished() {
+        return this.chessGame.isFinished();
+    }
+
+    public Camp getWinner() {
         return chessGame.getWinner();
     }
 }
