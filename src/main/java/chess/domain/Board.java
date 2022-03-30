@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Nothing;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -75,6 +76,12 @@ public final class Board {
         if(cells.containsKey(target) && !piece.isEnemy(cells.get(target))) {
             throw new IllegalArgumentException("목적지에 같은 팀 기물이 있습니다.");
         }
+    }
+
+    public boolean isKingAlive(final Team team) {
+        return cells.values()
+                .stream()
+                .anyMatch(piece -> team.equals(piece.team()) && piece instanceof King);
     }
 
     public Map<Position, Piece> cells() {
