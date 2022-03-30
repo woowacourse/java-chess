@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.position.direction.DiagonalDirection;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,7 +81,7 @@ class PositionTest {
         Position position2 = Position.from(XAxis.H, YAxis.EIGHT);
 
         // when
-        boolean actual = position1.isOnDiagonal(position2);
+        boolean actual = DiagonalDirection.isOnDiagonal(position1, position2);
 
         // then
         assertThat(actual).isTrue();
@@ -142,19 +143,7 @@ class PositionTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("isInVerticalRange는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있는지 체크한다.")
-    @Test
-    void isInVerticalRange_returnsTrue() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.C, YAxis.ONE);
 
-        // when
-        boolean actual = position1.isInVerticalRange(position2, 2);
-
-        // then
-        assertThat(actual).isTrue();
-    }
 
     @DisplayName("isInVerticalRangeAndSameXAxis는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있고, 같은 X좌표를 갖는다면 true 를 반환한다.")
     @Test
@@ -182,22 +171,5 @@ class PositionTest {
 
         // then
         assertThat(actual).isFalse();
-    }
-
-    @DisplayName("getPositionsSameDirectionDiagonalBetween 은 대각방향의 두 위치 사이의 위치 리스트를 반환한다.")
-    @Test
-    void getPositionsSameDirectionDiagonalBetween() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.D, YAxis.FOUR);
-
-        // when
-        List<Position> positions = position1.getPositionsSameDirectionDiagonalBetween(position2);
-
-        // then
-        assertThat(positions).containsAll(List.of(
-                Position.from(XAxis.B, YAxis.TWO),
-                Position.from(XAxis.C, YAxis.THREE)
-        ));
     }
 }

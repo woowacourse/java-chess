@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.direction.DiagonalDirection;
 
 public class King extends AbstractPiece {
     public King(PieceColor pieceColor) {
@@ -11,7 +12,7 @@ public class King extends AbstractPiece {
         if (from.isFarFromMoreThanOne(to)) {
             return false;
         }
-        return from.isOnDiagonal(to) || from.isSameXAxis(to) || from.isSameYAxis(to);
+        return DiagonalDirection.isOnDiagonal(from, to) || from.isSameXAxis(to) || from.isSameYAxis(to);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.direction.KnightDirection;
 
 public class Knight extends AbstractPiece {
     public Knight(PieceColor pieceColor) {
@@ -8,7 +9,7 @@ public class Knight extends AbstractPiece {
     }
 
     private static boolean useKnightStrategy(Position from, Position to) {
-        return from.isOnSevenShape(to);
+        return KnightDirection.isOnSevenShape(from, to);
     }
 
     @Override

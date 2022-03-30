@@ -37,7 +37,7 @@ public enum YAxis {
                 .collect(Collectors.toList());
     }
 
-    int subtract(YAxis other) {
+    public int subtract(YAxis other) {
         return this.value - other.value;
     }
 

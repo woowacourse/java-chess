@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.direction.DiagonalDirection;
 
 public class Bishop extends AbstractPiece {
     public Bishop(PieceColor pieceColor) {
@@ -8,7 +9,7 @@ public class Bishop extends AbstractPiece {
     }
 
     private static boolean useBishopStrategy(Position from, Position to) {
-        return from.isOnDiagonal(to);
+        return DiagonalDirection.isOnDiagonal(from, to);
     }
 
     @Override

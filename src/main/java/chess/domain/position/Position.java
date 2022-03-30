@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.domain.position.direction.VerticalDirection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -53,13 +54,6 @@ public class Position {
         return this.yAxis.subtract(other.yAxis);
     }
 
-    public boolean isOnDiagonal(Position other) {
-        int xAxisDelta = Math.abs(other.xAxis.getValue() - this.xAxis.getValue());
-        int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
-
-        return xAxisDelta == yAxisDelta;
-    }
-
     public boolean isUpperThan(Position other) {
         return this.subtractYAxis(other) > 0;
     }
@@ -68,12 +62,8 @@ public class Position {
         return this.subtractYAxis(other) < 0;
     }
 
-    public boolean isInVerticalRange(Position other, int range) {
-        return Math.abs(this.yAxis.subtract(other.yAxis)) <= range;
-    }
-
     public boolean isInVerticalRangeAndSameXAxis(Position other, int range) {
-        return isInVerticalRange(other, range) && isSameXAxis(other);
+        return VerticalDirection.isInVerticalRange(this, other, range) && isSameXAxis(other);
     }
 
     public boolean isFarFromMoreThanOne(Position other) {
@@ -81,16 +71,6 @@ public class Position {
         int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
 
         return xAxisDelta > 1 || yAxisDelta > 1;
-    }
-
-    public boolean isOnSevenShape(Position other) {
-        boolean condition1 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 2
-                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 1;
-
-        boolean condition2 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 1
-                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 2;
-
-        return condition1 || condition2;
     }
 
     public List<Position> getPositionsSameYAxisBetween(Position other) {
@@ -105,64 +85,12 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    public List<Position> getPositionsSameDirectionDiagonalBetween(Position to) {
-        int xAxisDelta = xAxis.getValue() - to.xAxis.getValue();
-        int yAxisDelta = yAxis.getValue() - to.yAxis.getValue();
-        int time = Math.abs(xAxisDelta);
-
-        int xDirection = -(xAxisDelta / time);
-        int yDirection = -(yAxisDelta / time);
-
-        return IntStream.range(1, time)
-                .mapToObj(idx -> getPositionWith(xDirection, yDirection, idx))
-                .collect(Collectors.toList());
-    }
-
-    private Position getPositionWith(int xDir, int yDir, int idx) {
-        XAxis xAxis1 = XAxis.getByValue(this.xAxis.getValue() + xDir * idx);
-        YAxis yAxis1 = YAxis.getByValue(this.yAxis.getValue() + yDir * idx);
-
-        return Position.from(xAxis1, yAxis1);
-    }
-
     public XAxis getXAxis() {
         return xAxis;
     }
 
     public YAxis getYAxis() {
         return yAxis;
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "XAxis=" + xAxis +
-                ", YAxis=" + yAxis +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Position position = (Position) o;
-
-        if (xAxis != position.xAxis) {
-            return false;
-        }
-        return yAxis == position.yAxis;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = xAxis != null ? xAxis.hashCode() : 0;
-        result = 31 * result + (yAxis != null ? yAxis.hashCode() : 0);
-        return result;
     }
 
     private static class Cache {

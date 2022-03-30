@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.position.direction.DiagonalDirection;
 
 public class Queen extends AbstractPiece {
 
@@ -9,7 +10,7 @@ public class Queen extends AbstractPiece {
     }
 
     private static boolean useQueenStrategy(Position from, Position to) {
-        return from.isOnDiagonal(to) || from.isSameXAxis(to) || from.isSameYAxis(to);
+        return DiagonalDirection.isOnDiagonal(from, to) || from.isSameXAxis(to) || from.isSameYAxis(to);
     }
 
     @Override

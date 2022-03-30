@@ -5,6 +5,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
+import chess.domain.position.direction.DiagonalDirection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +54,8 @@ public class Board {
             return hasAnyPiece(from.getPositionsSameXAxisBetween(to));
         }
 
-        if (from.isOnDiagonal(to)) {
-            return hasAnyPiece(from.getPositionsSameDirectionDiagonalBetween(to));
+        if (DiagonalDirection.isOnDiagonal(from, to)) {
+            return hasAnyPiece(DiagonalDirection.getPositionsSameDirectionDiagonalBetween(from, to));
         }
 
         return false;
