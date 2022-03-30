@@ -21,35 +21,24 @@ public class ConsoleApplication {
         } while (!command.isType(Type.END) && !controller.isGameFinished());
     }
 
-    private static void executeCommand(Controller controller,
-                                       Command command,
-                                       OutputView outputView) {
+    private static void executeCommand(Controller controller, Command command, OutputView outputView) {
         if (command.isType(Type.START)) {
             outputView.printBoard(controller.start());
         }
         if (command.isType(Type.MOVE)) {
-            executeMove(controller, (Move) command, outputView);
+            Move move = (Move) command;
+            outputView.printBoard(controller.move(move.getSourcePosition(), move.getTargetPosition()));
+            printResultIfGameIsFinished(controller, outputView);
         }
         if (command.isType(Type.STATUS)) {
             outputView.printScore(controller.status());
         }
         if (command.isType(Type.END)) {
-            executeEnd(controller, outputView);
-        }
+            controller.end();
+            printResultIfGameIsFinished(controller, outputView);        }
     }
 
-    private static void executeMove(Controller controller,
-                                    Move move,
-                                    OutputView outputView) {
-        outputView.printBoard(controller.move(move.getSourcePosition(), move.getTargetPosition()));
-        if (controller.isGameFinished()) {
-            outputView.printResult(controller.status(), controller.getWinner());
-        }
-    }
-
-    private static void executeEnd(Controller controller,
-                                   OutputView outputView) {
-        controller.end();
+    private static void printResultIfGameIsFinished(Controller controller, OutputView outputView) {
         if (controller.isGameFinished()) {
             outputView.printResult(controller.status(), controller.getWinner());
         }
