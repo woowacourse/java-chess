@@ -27,11 +27,6 @@ public class Pawn extends SpecificLocationPiece {
         return WHITE_START_LINE;
     }
 
-    @Override
-    protected List<Direction> getDirections() {
-        return directions;
-    }
-
     private List<Direction> initDirections(Player player) {
         List<Direction> directions = new ArrayList<>();
         if (player.equals(Player.BLACK)) {
@@ -49,20 +44,25 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     @Override
+    public List<Position> getAvailablePositions(Position source, final Position target) {
+        Direction direction = getDirection(target);
+        List<Position> positions = getAvailableMovePosition().get(direction);
+        if (isTwoSpaceMoveDirection(direction)) {
+            validateMoveTwoSpace(source);
+            return positions;
+        }
+        int index = positions.indexOf(target);
+        return positions.subList(0, index);
+    }
+
+    @Override
     protected List<Position> calculateAvailablePosition(final Position source,
         final Direction direction) {
-        validateMoveTwoSpace(source, direction);
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
         if (checkOverRange(source, direction)) {
             positions.add(createDirectionPosition(source, direction));
         }
         return positions;
-    }
-
-    private void validateMoveTwoSpace(Position source, Direction direction) {
-        if (!isFirstMove(source) && isTwoSpaceMoveDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] Pawn은 처음 이동할 경우에만 2칸 이동이 가능합니다.");
-        }
     }
 
     private boolean isFirstMove(final Position source) {
@@ -82,6 +82,12 @@ public class Pawn extends SpecificLocationPiece {
         return positions;
     }
 
+    private void validateMoveTwoSpace(Position source) {
+        if (!isFirstMove(source)) {
+            throw new IllegalArgumentException("[ERROR] Pawn은 처음 이동할 경우에만 2칸 이동이 가능합니다.");
+        }
+    }
+
     private Position calculatePawnWayPoint(final Position source, final Direction direction) {
         Direction addDirection = generateAddDirection(direction);
         if (addDirection != null && checkOverRange(source, addDirection)) {
@@ -98,6 +104,11 @@ public class Pawn extends SpecificLocationPiece {
             return Direction.SOUTH;
         }
         return null;
+    }
+
+    @Override
+    protected List<Direction> getDirections() {
+        return directions;
     }
 
     @Override

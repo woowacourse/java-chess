@@ -34,11 +34,10 @@ public class ChessBoard {
 
     public void move(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
-        validateSourceNotNull(source);
+        validateTargetPosition(source, target);
         validateTargetPiece(source, target);
-        sourcePiece.generateAvailablePosition(source);
         validatePawnAttack(sourcePiece, target);
-        validateRoutePositions(target, sourcePiece);
+        validateRoutePositions(source, target);
         movePiece(source, target);
     }
 
@@ -50,14 +49,15 @@ public class ChessBoard {
         }
     }
 
-    private void validateRoutePositions(Position target, Piece sourcePiece) {
-        List<Position> positions = sourcePiece.getAvailablePositions(target);
+    private void validateRoutePositions(Position source, Position target) {
+        List<Position> positions = board.get(source).getAvailablePositions(source, target);
+        System.out.println(positions);
         positions.forEach(this::validateNullPosition);
     }
 
-    private void validateSourceNotNull(final Position source) {
-        if (board.get(source) == null) {
-            throw new IllegalArgumentException("[ERROR] 선택한 출발지에 기물이 없습니다.");
+    private void validateTargetPosition(final Position source, final Position target) {
+        if (!board.get(source).isAvailableMove(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다.");
         }
     }
 

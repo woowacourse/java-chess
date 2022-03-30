@@ -46,7 +46,7 @@ public abstract class Piece {
             availableMovePosition.put(direction, calculateAvailablePosition(source, direction)));
     }
 
-    public List<Position> getAvailablePositions(final Position target) {
+    public List<Position> getAvailablePositions(final Position source, final Position target) {
         List<Position> positions = availableMovePosition.values().stream()
             .filter(value -> value.contains(target))
             .findFirst()
@@ -80,6 +80,10 @@ public abstract class Piece {
 
     public boolean isSamePlayer(Player player) {
         return this.player == player;
+    }
+
+    protected Map<Direction, List<Position>> getAvailableMovePosition() {
+        return availableMovePosition;
     }
 
     public boolean isSamePlayer(Piece comparePiece) {

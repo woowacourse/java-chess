@@ -44,11 +44,14 @@ public class ChessController {
 
     private void playTurn(ChessGame chessGame) {
         String input = InputView.playCommand();
-        if (isEndCommand(input) || chessGame.isFinished()) {
+        if (isEndCommand(input)) {
             return;
         }
         status(input, chessGame);
         move(input, chessGame);
+        if (chessGame.isFinished()) {
+            return;
+        }
         play(chessGame);
     }
 

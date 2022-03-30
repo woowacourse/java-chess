@@ -16,7 +16,6 @@ public class ChessGame {
     }
 
     public void move(Position source, Position target) {
-        // source 검증
         validateTurn(source);
         chessBoard.move(source, target);
         changeTurn();
@@ -26,17 +25,10 @@ public class ChessGame {
         double whiteScore = chessBoard.calculateScoreByPlayer(Player.WHITE);
         double blackScore = chessBoard.calculateScoreByPlayer(Player.BLACK);
         return new Status(whiteScore, blackScore);
-//        if (currentPlayerScore > opponentScore) {
-//            return Result.WIN;
-//        }
-//        if (currentPlayerScore == opponentScore) {
-//            return Result.DRAW;
-//        }
-//        return Result.LOSE;
     }
     private void validateTurn(final Position source) {
         Piece sourcePiece = chessBoard.findPiece(source);
-        if (!sourcePiece.isSamePlayer(currentPlayer)) {
+        if (sourcePiece != null && !sourcePiece.isSamePlayer(currentPlayer)) {
             throw new IllegalArgumentException("[ERROR] 상대방의 기물을 움직일 수 없습니다.");
         }
     }
