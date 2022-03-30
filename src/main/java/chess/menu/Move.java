@@ -1,7 +1,7 @@
 package chess.menu;
 
 import chess.domain.board.Board;
-import chess.view.Command;
+import chess.view.MoveInfo;
 import chess.view.OutputView;
 
 public class Move implements Menu {
@@ -11,7 +11,7 @@ public class Move implements Menu {
         return true;
     }
 
-    public boolean play(Board board, Command command) {
+    public boolean play(Board board, MoveInfo command) {
         if (board.isEmpty()) {
             OutputView.printMessage("체스 게임을 시작해야 합니다.");
             return true;

@@ -1,12 +1,15 @@
 package chess;
 
 import chess.domain.board.Board;
-import chess.view.Command;
+import chess.menu.Move;
+import chess.view.MoveInfo;
 import chess.view.InputView;
-import chess.menu.Type;
+import chess.menu.MenuType;
 import chess.view.OutputView;
 
 public class ChessGame {
+
+    private static final int MENU_INDEX = 0;
 
     private final Board board = new Board();
 
@@ -18,15 +21,29 @@ public class ChessGame {
             if (board.check()) {
                 OutputView.printMessage("현재 check 상황입니다.");
             }
-            Command command = InputView.inputCommand();
             if (board.checkmate()) {
                 break;
             }
-            nextStep = play(command);
+            nextStep = hasNext();
         }
     }
 
-    private boolean play(Command command) {
-        return Type.play(board, command);
+    private boolean hasNext() {
+        String[] inputValue = InputView.inputMenu();
+        MenuType menuType;
+        try {
+            menuType = MenuType.of(inputValue[MENU_INDEX]);
+            return play(menuType, inputValue);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return hasNext();
+        }
+    }
+
+    private boolean play(MenuType menuType, String[] inputValue) {
+        if (menuType.isMove()) {
+            return new Move().play(board, new MoveInfo(inputValue));
+        }
+        return menuType.play(board);
     }
 }

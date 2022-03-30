@@ -1,21 +1,23 @@
 package chess.view;
 
+import chess.menu.MenuType;
 import java.util.Scanner;
 
 public class InputView {
 
+    private static final String EMPTY_REGEX = " ";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
     }
 
-    public static Command inputCommand() {
+    public static String[] inputMenu() {
         try {
-            return new Command(scanner.nextLine());
+            return scanner.nextLine().split(EMPTY_REGEX);
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return inputCommand();
+            return inputMenu();
         }
     }
 }
