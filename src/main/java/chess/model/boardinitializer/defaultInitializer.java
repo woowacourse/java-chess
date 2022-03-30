@@ -24,6 +24,8 @@ import chess.model.piece.Rook;
 
 public class defaultInitializer implements BoardInitializer {
 
+    public static final Rank PAWN_WHITE_INIT_RANK = TWO;
+    public static final Rank PAWN_BLACK_INIT_RANK = SEVEN;
     private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
     private static final Function<PieceColor, List<Piece>> INIT_PIECE_FUNCTION = (PieceColor pieceColor) -> List.of(
         Rook.colorOf(pieceColor), Knight.colorOf(pieceColor), Bishop.colorOf(pieceColor),
@@ -54,12 +56,12 @@ public class defaultInitializer implements BoardInitializer {
     }
 
     private void putBlackPieces(Map<Position, Piece> result) {
-        putPawns(result, BLACK, SEVEN);
+        putPawns(result, BLACK, PAWN_BLACK_INIT_RANK);
         putRemainPiecesExceptPawn(result, BLACK, EIGHT);
     }
 
     private void putWhitePieces(Map<Position, Piece> result) {
-        putPawns(result, WHITE, TWO);
+        putPawns(result, WHITE, PAWN_WHITE_INIT_RANK);
         putRemainPiecesExceptPawn(result, WHITE, ONE);
     }
 
