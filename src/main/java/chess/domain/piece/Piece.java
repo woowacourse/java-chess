@@ -13,6 +13,10 @@ public abstract class Piece {
         this.point = point;
     }
 
+    public final boolean isSameTeam(final Team team) {
+        return this.team == team;
+    }
+
     public final Team getColor() {
         return team;
     }

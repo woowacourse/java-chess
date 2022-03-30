@@ -8,7 +8,7 @@ public abstract class FirstRowMoveStrategy extends MoveStrategy {
     @Override
     protected boolean isTargetPositionMovable(Piece targetPiece, Team team) {
         if (!targetPiece.isBlank()) {
-            return targetPiece.getColor() == team.oppositeColor();
+            return !targetPiece.isSameTeam(team);
         }
         return true;
     }

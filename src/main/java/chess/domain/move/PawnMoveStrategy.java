@@ -29,6 +29,6 @@ public abstract class PawnMoveStrategy extends MoveStrategy {
 
     @Override
     protected boolean isTargetPositionMovable(final Piece targetPiece, final Team team) {
-        return !targetPiece.isBlank() && targetPiece.getColor() == team.oppositeColor();
+        return !targetPiece.isBlank() && !targetPiece.isSameTeam(team);
     }
 }
