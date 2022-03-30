@@ -13,12 +13,13 @@ public class RookMoveStrategyTest {
 
     Board board;
     RookMoveStrategy rookMoveStrategy;
-    CatchPieces catchPieces = new CatchPieces();
+    CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
         board = Board.createChessBoard();
         rookMoveStrategy = new RookMoveStrategy();
+        catchPieces = new CatchPieces();
     }
 
     @Test

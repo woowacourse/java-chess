@@ -13,12 +13,13 @@ public class KnightMoveStrategyTest {
 
     Board board;
     KnightMoveStrategy knightMoveStrategy;
-    CatchPieces catchPieces = new CatchPieces();
+    CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
         board = Board.createChessBoard();
         knightMoveStrategy = new KnightMoveStrategy();
+        catchPieces = new CatchPieces();
     }
 
     @Test

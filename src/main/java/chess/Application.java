@@ -1,3 +1,5 @@
+package chess;
+
 import chess.controller.ChessGameController;
 
 public class Application {

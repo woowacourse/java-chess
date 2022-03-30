@@ -13,12 +13,13 @@ public class BishopMoveStrategyTest {
 
     Board board;
     BishopMoveStrategy bishopMoveStrategy;
-    CatchPieces catchPieces = new CatchPieces();
+    CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
         board = Board.createChessBoard();
         bishopMoveStrategy = new BishopMoveStrategy();
+        catchPieces = new CatchPieces();
     }
 
     @Test

@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -26,16 +25,15 @@ public class ChessGame {
         Position source = Position.valueOf(rawSource);
         Position target = Position.valueOf(rawTarget);
         movePiece(source, target);
+        turnOffWhenKingDie();
         turn.nextTurn();
     }
 
     private void movePiece(final Position source, final Position target) {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
-        MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
-        validateMove(source, target, moveStrategy);
+        validateMove(source, target, sourcePiece.getMoveStrategy());
         board.movePiece(source, target, catchPieces);
-        turnOffWhenKingDie(sourcePiece.getColor());
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {
@@ -50,8 +48,8 @@ public class ChessGame {
         }
     }
 
-    private void turnOffWhenKingDie(final Color color) {
-        if (catchPieces.isKingCatch(color)) {
+    private void turnOffWhenKingDie() {
+        if (catchPieces.isKingCatch()) {
             gameSwitch.turnOff();
         }
     }

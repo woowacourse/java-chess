@@ -27,7 +27,7 @@ public enum PieceSymbol {
 
     PieceSymbol(String symbol, Predicate<Piece> predicate) {
         this.symbol = symbol;
-        isMatch = predicate;
+        this.isMatch = predicate;
     }
 
     public static String getSymbol(final Piece piece) {

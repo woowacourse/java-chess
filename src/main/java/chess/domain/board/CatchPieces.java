@@ -25,10 +25,7 @@ public class CatchPieces {
         whitePieces.add(piece);
     }
 
-    public boolean isKingCatch(final Color color) {
-        if (color == Color.BLACK) {
-            return blackPieces.stream().anyMatch(Piece::isKing);
-        }
-        return whitePieces.stream().anyMatch(Piece::isKing);
+    public boolean isKingCatch() {
+        return blackPieces.stream().anyMatch(Piece::isKing) || whitePieces.stream().anyMatch(Piece::isKing);
     }
 }
