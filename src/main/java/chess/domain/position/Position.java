@@ -50,6 +50,11 @@ public class Position {
         return PositionCache.getCache(fileIdx, rankIdx);
     }
 
+    public double findRelativeDegree(Position target) {
+        return Math.round(Math.atan2(fileRawDifference(target), rankRawDifference(target))
+            * (180 / Math.PI));
+    }
+
     public int getFileIdx() {
         return fileIdx;
     }
@@ -64,11 +69,6 @@ public class Position {
             "fileIdx=" + fileIdx +
             ", rankIdx=" + rankIdx +
             '}';
-    }
-
-    public double findRelativeDegree(Position target) {
-        return Math.round(Math.atan2(fileRawDifference(target), rankRawDifference(target))
-            * (180 / Math.PI));
     }
 
     private static class PositionCache {
