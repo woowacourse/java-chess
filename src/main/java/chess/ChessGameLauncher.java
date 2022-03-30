@@ -23,7 +23,7 @@ public final class ChessGameLauncher {
         }
 
         ChessGame game = new ChessGame();
-        OutputView.showBoard(game.collectPieceNames());
+        OutputView.showBoard(game.getBoard());
         return game;
     }
 
@@ -42,7 +42,7 @@ public final class ChessGameLauncher {
             String source = squares.get(0);
             String target = squares.get(1);
             game.move(new Square(source), new Square(target));
-            OutputView.showBoard(game.collectPieceNames());
+            OutputView.showBoard(game.getBoard());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
         }

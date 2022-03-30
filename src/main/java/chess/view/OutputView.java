@@ -1,9 +1,17 @@
 package chess.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.google.common.collect.Lists;
+
+import chess.domain.Board;
 import chess.domain.Status;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Rank;
+import chess.domain.position.Square;
 
 public class OutputView {
     private static final String MESSAGE_START = "> 체스 게임을 시작합니다.";
@@ -22,11 +30,27 @@ public class OutputView {
         System.out.println(MESSAGE_INPUT_STATUS);
     }
 
-    public static void showBoard(List<List<String>> board) {
-        for (List<String> pieces : board) {
-            pieces.forEach(System.out::print);
+    public static void showBoard(Board board) {
+        for (List<Piece> pieces : splitByRank(board.getBoard())) {
+            pieces.stream()
+                    .map(Piece::getEmoji)
+                    .forEach(System.out::print);
             System.out.println();
         }
+    }
+
+    private static List<List<Piece>> splitByRank(Map<Square, Piece> board) {
+        List<Piece> pieces = new ArrayList<>(board.values());
+        List<List<Piece>> splitPieces = Lists.partition(pieces, Rank.values().length);
+        return reverse(splitPieces);
+    }
+
+    private static List<List<Piece>> reverse(List<List<Piece>> splitPieces) {
+        List<List<Piece>> result = new ArrayList<>();
+        for (List<Piece> splitPiece : splitPieces) {
+            result.add(0, splitPiece);
+        }
+        return result;
     }
 
     public static void printMessage(String message) {

@@ -23,20 +23,6 @@ public final class ChessGame {
         this.turn = turn;
     }
 
-    public List<List<String>> collectPieceNames() {
-        List<List<String>> pieceNames = new ArrayList<>();
-        for (List<Piece> piecesByRank : board.splitByRank()) {
-            pieceNames.add(collectPieceNamesByRank(piecesByRank));
-        }
-        return pieceNames;
-    }
-
-    private List<String> collectPieceNamesByRank(List<Piece> piecesByRank) {
-        return piecesByRank.stream()
-                .map(Piece::getEmoji)
-                .collect(Collectors.toList());
-    }
-
     public void move(Square source, Square target) {
         checkTurn(source);
         board.checkCanMove(source, target);
@@ -63,5 +49,9 @@ public final class ChessGame {
 
     public Status saveStatus() {
         return new Status(board);
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
