@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-	protected static final String MOVEMENT_ERROR = "해당 기물은 그곳으로 이동할 수 없습니다.";
+	protected static final String MOVEMENT_ERROR = "해당 기물이 움직일 수 있는 위치가 아닙니다.";
 
 	private static final String CAN_NOT_CATCH_AllY_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
 

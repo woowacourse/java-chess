@@ -43,7 +43,7 @@ public class KingTest {
 
 		assertThatThrownBy(() -> king.validateMovement(source, target, blank))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
+				.hasMessageContaining("해당 기물이 움직일 수 있는 위치가 아닙니다.");
 	}
 
 	@Test

@@ -79,7 +79,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("해당 위치로 기물을 옮길 수 없습니다.");
+				.hasMessageContaining("다른 기물에 막혀 해당 위치로 기물을 옮길 수 없습니다.");
 	}
 
 	private static Stream<Arguments> createSourceAndTarget() {
@@ -126,7 +126,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(whitePawn, Position.of(5, 4)))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("해당 기물은 그곳으로 이동할 수 없습니다.");
+				.hasMessageContaining("해당 기물이 움직일 수 있는 위치가 아닙니다.");
 	}
 
 	@Test
