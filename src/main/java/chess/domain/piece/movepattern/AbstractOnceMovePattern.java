@@ -4,7 +4,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 
-public abstract class AbstractOnceMovePattern implements MovePattern {
+public abstract class AbstractOnceMovePattern extends AbstractMovePattern {
 
     private static final int ONCE_TIME = 1;
 
@@ -21,7 +21,4 @@ public abstract class AbstractOnceMovePattern implements MovePattern {
                 .findFirst()
                 .orElse(null);
     }
-
-    @Override
-    public abstract List<Direction> getDirections();
 }

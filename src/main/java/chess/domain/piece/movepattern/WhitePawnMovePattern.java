@@ -9,12 +9,12 @@ public final class WhitePawnMovePattern extends AbstractPawnMovePattern {
     private static final Row WHITE_PAWN_START_ROW = Row.RANK_2;
 
     @Override
-    protected Row getStartRow() {
+    Row getStartRow() {
         return WHITE_PAWN_START_ROW;
     }
 
     @Override
-    public List<Direction> getDirections() {
+    List<Direction> getDirections() {
         return Direction.getWhitePawnDirections();
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class KnightMovePattern extends AbstractOnceMovePattern {
     @Override
-    public List<Direction> getDirections() {
+    List<Direction> getDirections() {
         return Direction.getKnightDirections();
     }
 }

@@ -4,7 +4,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 
-public abstract class AbstractStraightMovePattern implements MovePattern {
+public abstract class AbstractStraightMovePattern extends AbstractMovePattern {
 
     @Override
     public boolean canMove(Position source, Position destination) {
@@ -19,7 +19,4 @@ public abstract class AbstractStraightMovePattern implements MovePattern {
                 .findFirst()
                 .orElse(null);
     }
-
-    @Override
-    public abstract List<Direction> getDirections();
 }

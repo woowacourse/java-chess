@@ -11,7 +11,7 @@ public class WhitePawnMovePatternTest {
     @DisplayName("1칸 앞으로 이동하는 경우")
     @Test
     void testOne() {
-        AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
+        MovePattern pattern = new WhitePawnMovePattern();
         Position source = Position.of("a2");
         Position destination = Position.of("a3");
 
@@ -21,7 +21,7 @@ public class WhitePawnMovePatternTest {
     @DisplayName("첫 번째 이동일 때 2칸 앞으로 이동하는 경우")
     @Test
     void testTwo() {
-        AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
+        MovePattern pattern = new WhitePawnMovePattern();
         Position source = Position.of("a2");
         Position destination = Position.of("a4");
 
@@ -31,7 +31,7 @@ public class WhitePawnMovePatternTest {
     @DisplayName("첫 번째 이동이 아닌데 두 칸 움직이는 경우 false")
     @Test
     void testThree() {
-        AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
+        MovePattern pattern = new WhitePawnMovePattern();
         Position source = Position.of("a3");
         Position destination = Position.of("a5");
 
@@ -41,7 +41,7 @@ public class WhitePawnMovePatternTest {
     @DisplayName("뒤로 이동할 수 없다.")
     @Test
     void testBack() {
-        AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
+        MovePattern pattern = new WhitePawnMovePattern();
         Position source = Position.of("a2");
         Position destination = Position.of("a1");
 

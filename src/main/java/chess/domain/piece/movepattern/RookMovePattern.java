@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class RookMovePattern extends AbstractStraightMovePattern {
     @Override
-    public List<Direction> getDirections() {
+    List<Direction> getDirections() {
         return Direction.getRookDirections();
     }
 }

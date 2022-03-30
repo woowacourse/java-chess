@@ -9,12 +9,12 @@ public final class BlackPawnMovePattern extends AbstractPawnMovePattern {
     private static final Row BLACK_PAWN_START_ROW = Row.RANK_7;
 
     @Override
-    protected Row getStartRow() {
+    Row getStartRow() {
         return BLACK_PAWN_START_ROW;
     }
 
     @Override
-    public List<Direction> getDirections() {
+    List<Direction> getDirections() {
         return Direction.getBlackPawnDirections();
     }
 }

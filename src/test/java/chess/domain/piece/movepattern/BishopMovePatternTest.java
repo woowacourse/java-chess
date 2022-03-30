@@ -16,7 +16,7 @@ public class BishopMovePatternTest {
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMovePatternTestSet")
     void test(Position source, Position destination) {
-        AbstractStraightMovePattern pattern = new BishopMovePattern();
+        MovePattern pattern = new BishopMovePattern();
 
         assertThat(pattern.canMove(source, destination)).isTrue();
     }

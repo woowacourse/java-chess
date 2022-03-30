@@ -16,7 +16,7 @@ public class RookMovePatternTest {
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMovePatternTestSet")
     void test(Position source, Position destination) {
-        AbstractStraightMovePattern pattern = new RookMovePattern();
+        MovePattern pattern = new RookMovePattern();
 
         assertThat(pattern.canMove(source, destination)).isTrue();
     }

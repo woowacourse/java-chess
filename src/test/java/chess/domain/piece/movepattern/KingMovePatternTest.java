@@ -16,7 +16,7 @@ public class KingMovePatternTest {
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("kingMovePatternTestSet")
     void test(Position source, Position destination) {
-        AbstractOnceMovePattern pattern = new KingMovePattern();
+        MovePattern pattern = new KingMovePattern();
 
         assertThat(pattern.canMove(source, destination)).isTrue();
     }

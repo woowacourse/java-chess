@@ -6,7 +6,7 @@ import chess.domain.board.Row;
 import chess.domain.piece.Color;
 import java.util.List;
 
-public abstract class AbstractPawnMovePattern implements MovePattern {
+public abstract class AbstractPawnMovePattern extends AbstractMovePattern {
 
     public static final int ONCE_TIME = 1;
     public static final int TWICE_TIME = 2;
@@ -54,8 +54,5 @@ public abstract class AbstractPawnMovePattern implements MovePattern {
         return source.isSameRow(getStartRow());
     }
 
-    protected abstract Row getStartRow();
-
-    @Override
-    public abstract List<Direction> getDirections();
+    abstract Row getStartRow();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class QueenMovePattern extends AbstractStraightMovePattern {
     @Override
-    public List<Direction> getDirections() {
+    List<Direction> getDirections() {
         return Direction.getQueenDirections();
     }
 }

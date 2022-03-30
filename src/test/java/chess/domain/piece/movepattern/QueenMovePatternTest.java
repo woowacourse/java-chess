@@ -16,7 +16,7 @@ public class QueenMovePatternTest {
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("queenMovePatternTestSet")
     void test(Position source, Position destination) {
-        AbstractStraightMovePattern pattern = new QueenMovePattern();
+        MovePattern pattern = new QueenMovePattern();
 
         assertThat(pattern.canMove(source, destination)).isTrue();
     }
