@@ -84,7 +84,7 @@ class PawnTest {
         Board board = boardFactory.createBoard();
 
         // when
-        MoveResult result = board.move(from, to);
+        MoveResult result = board.move(from, to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.SUCCESS);
@@ -101,7 +101,7 @@ class PawnTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("F5", "F6");
+        MoveResult result = board.move("F5", "F6", Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);

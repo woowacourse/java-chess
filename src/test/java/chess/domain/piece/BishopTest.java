@@ -54,7 +54,7 @@ class BishopTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("E4", to);
+        MoveResult result = board.move("E4", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.SUCCESS);
@@ -74,7 +74,7 @@ class BishopTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("E4", to);
+        MoveResult result = board.move("E4", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);
@@ -94,7 +94,7 @@ class BishopTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("E4", to);
+        MoveResult result = board.move("E4", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);

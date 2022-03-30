@@ -29,6 +29,10 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public boolean isRightColor(Color color) {
+        return this.color == color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

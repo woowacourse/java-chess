@@ -54,7 +54,7 @@ class KingTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("D5", to);
+        MoveResult result = board.move("D5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.SUCCESS);
@@ -74,7 +74,7 @@ class KingTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("D5", to);
+        MoveResult result = board.move("D5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);

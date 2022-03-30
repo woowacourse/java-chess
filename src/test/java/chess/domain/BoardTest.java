@@ -36,7 +36,7 @@ class BoardTest {
         Board board = boardFactory.createBoard();
 
         // when
-        MoveResult result = board.move(from, to);
+        MoveResult result = board.move(from, to, Color.WHITE);
         System.out.println(result == MoveResult.FAIL);
 
         // then

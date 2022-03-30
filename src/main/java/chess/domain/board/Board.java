@@ -26,14 +26,14 @@ public class Board {
         this.board = new LinkedHashMap<>(board);
     }
 
-    public MoveResult move(String from, String to) {
+    public MoveResult move(String from, String to, Color color) {
         Position fromPosition = Position.of(from);
         Position toPosition = Position.of(to);
 
-        Piece pieceAtFrom = board.getOrDefault(fromPosition, InvalidPiece.getInstance());
+        Piece pieceAtFrom = board.get(fromPosition);
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
 
-        if (isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
+        if (!pieceAtFrom.isRightColor(color) || isInValidMove(fromPosition, toPosition, pieceAtFrom, pieceAtTo)) {
             return MoveResult.FAIL;
         }
 

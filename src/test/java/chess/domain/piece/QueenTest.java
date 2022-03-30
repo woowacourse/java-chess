@@ -54,7 +54,7 @@ class QueenTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("d5", to);
+        MoveResult result = board.move("d5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.SUCCESS);
@@ -74,7 +74,7 @@ class QueenTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("d5", to);
+        MoveResult result = board.move("d5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);
@@ -94,7 +94,7 @@ class QueenTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("d5", to);
+        MoveResult result = board.move("d5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);

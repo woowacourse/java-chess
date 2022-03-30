@@ -55,7 +55,7 @@ class RookTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("f5", to);
+        MoveResult result = board.move("f5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.SUCCESS);
@@ -75,7 +75,7 @@ class RookTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("f5", to);
+        MoveResult result = board.move("f5", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);
@@ -95,7 +95,7 @@ class RookTest {
         Board board = testBoardFactory.createBoard();
 
         // when
-        MoveResult result = board.move("e4", to);
+        MoveResult result = board.move("e4", to, Color.WHITE);
 
         // then
         assertThat(result).isEqualTo(MoveResult.FAIL);

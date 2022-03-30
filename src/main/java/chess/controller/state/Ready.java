@@ -14,7 +14,7 @@ public class Ready implements ChessGameState {
         Board board = boardFactory.createBoard();
         outputView.printBoard(BoardDto.from(board));
 
-        return new Playing(board);
+        return new WhitePlaying(board);
     }
 
     @Override
