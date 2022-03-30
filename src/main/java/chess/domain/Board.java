@@ -40,7 +40,7 @@ public class Board {
 
     private void checkRoute(Position fromPosition, Position toPosition) {
         Position initialPosition = fromPosition;
-        Direction direction = Direction.judge(fromPosition, toPosition);
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
         while (initialPosition != toPosition) {
             initialPosition = Direction.step(initialPosition, direction);
             validateRoute(initialPosition, toPosition);

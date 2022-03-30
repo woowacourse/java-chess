@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Queen extends Piece {
 
@@ -12,21 +15,14 @@ public class Queen extends Piece {
 
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        return isSameRowOrCol(fromPosition, toPosition) || isDiagonal(fromPosition, toPosition);
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        List<Direction> movableDirections = new ArrayList<>(Direction.rowAndColumns());
+        movableDirections.addAll(Direction.diagonals());
+        return movableDirections.contains(direction);
     }
 
     @Override
     public boolean isCatchable(Position fromPosition, Position toPosition) {
         return isMovable(fromPosition, toPosition);
-    }
-
-    private boolean isSameRowOrCol(Position fromPosition, Position toPosition) {
-        return fromPosition.isSameFile(toPosition) || fromPosition.isSameRank(toPosition);
-    }
-
-    private boolean isDiagonal(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getRankDifference(toPosition);
-        int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height, 2) == Math.pow(width, 2);
     }
 }

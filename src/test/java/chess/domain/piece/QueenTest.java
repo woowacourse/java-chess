@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.File;
 import chess.domain.Rank;
@@ -78,6 +79,8 @@ public class QueenTest {
         Position from = Position.valueOf(File.d, Rank.FOUR);
         Position to = Position.valueOf(File.b, Rank.THREE);
 
-        assertThat(whiteQueen.isMovable(from, to)).isFalse();
+        assertThatThrownBy(() -> whiteQueen.isMovable(from, to))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 지정한 목적지는 갈 수 있는 방향이 존재하지 않습니다.");
     }
 }

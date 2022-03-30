@@ -15,7 +15,7 @@ public class DirectionTest {
     @MethodSource("providePositionDirection")
     @DisplayName("출발 Position에서 목적지 Position으로 가는 방향을 반환하여 확인한다.")
     void checkDirection(Position fromPosition,Position toPosition,Direction direction) {
-        assertThat(Direction.judge(fromPosition,toPosition)).isEqualTo(direction);
+        assertThat(Direction.giveDirection(fromPosition,toPosition)).isEqualTo(direction);
     }
 
     private static Stream<Arguments> providePositionDirection() {
@@ -43,7 +43,7 @@ public class DirectionTest {
     void moveRightUpOneStep() {
         Position from = Position.valueOf(File.a, Rank.ONE);
         Position to = Position.valueOf(File.c, Rank.THREE);
-        Direction direction = Direction.judge(from, to);
+        Direction direction = Direction.giveDirection(from, to);
 
         Position stepPosition = Direction.step(from, direction);
 
@@ -55,7 +55,7 @@ public class DirectionTest {
     void moveUpOneStep() {
         Position from = Position.valueOf(File.a, Rank.ONE);
         Position to = Position.valueOf(File.a, Rank.THREE);
-        Direction direction = Direction.judge(from, to);
+        Direction direction = Direction.giveDirection(from, to);
 
         Position stepPosition = Direction.step(from, direction);
 

@@ -64,6 +64,12 @@ public class Position {
         return file.getFile() - position.file.getFile();
     }
 
+    public double getAngle(Position toPosition) {
+        int x = toPosition.file.getFile() - this.file.getFile();
+        int y = toPosition.rank.getRank() - this.rank.getRank();
+        return Math.atan2(y, x);
+    }
+
     public Position getIncreasedOneStepPosition(int xDifference, int yDifference) {
         int newX = file.getFile() + xDifference;
         int newY = rank.getRank() + yDifference;
