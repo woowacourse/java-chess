@@ -6,7 +6,6 @@ import chess.domain.board.Result;
 import chess.domain.board.Row;
 import chess.domain.command.StatusResult;
 import chess.domain.piece.Piece;
-
 import java.util.Map;
 
 public class OutputView {

@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
-
 import java.util.Map;
 
 public abstract class Command {

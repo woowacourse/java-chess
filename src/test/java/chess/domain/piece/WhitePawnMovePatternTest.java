@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import chess.domain.piece.movePattern.AbstractPawnMovePattern;
+import chess.domain.piece.movePattern.WhitePawnMovePattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

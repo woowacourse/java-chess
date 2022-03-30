@@ -5,7 +5,6 @@ import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.Map;
 
 public class ConsoleController {

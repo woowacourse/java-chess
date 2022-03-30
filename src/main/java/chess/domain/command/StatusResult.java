@@ -2,7 +2,6 @@ package chess.domain.command;
 
 import chess.domain.board.Result;
 import chess.domain.piece.Color;
-
 import java.util.Map;
 
 public class StatusResult {

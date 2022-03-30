@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-
+import chess.domain.piece.movePattern.AbstractSingleMovePattern;
 import java.util.List;
 
 public final class King extends Piece {

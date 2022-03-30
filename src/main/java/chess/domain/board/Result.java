@@ -3,8 +3,7 @@ package chess.domain.board;
 public enum Result {
     WHITE_WIN,
     BLACK_WIN,
-    DRAW
-    ;
+    DRAW;
 
     public static Result calculateResult(double whiteScore, double blackScore) {
         if (whiteScore > blackScore) {

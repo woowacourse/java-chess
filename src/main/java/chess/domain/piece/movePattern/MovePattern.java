@@ -1,8 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.movePattern;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-
 import java.util.List;
 
 public interface MovePattern {

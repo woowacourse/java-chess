@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-
+import chess.domain.piece.movePattern.AbstractStraightMovePattern;
 import java.util.List;
 
 public final class Bishop extends Piece {

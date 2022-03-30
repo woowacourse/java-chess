@@ -2,7 +2,6 @@ package chess.domain.command;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-
 import java.util.Map;
 
 public final class End extends Command {
