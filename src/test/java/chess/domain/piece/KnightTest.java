@@ -20,7 +20,7 @@ public class KnightTest {
     }
 
     @Test
-    @DisplayName("Knight가 왼쪽으로 두 칸 이동 후 아래로 한칸 내려갈 경우  True를 반환한다")
+    @DisplayName("Knight가 왼쪽으로 두 칸 이동 후 아래로 한칸 내려갈 경우 True를 반환한다")
     void isMovableLeftDownTest() {
         Position from = Position.valueOf(File.C, Rank.TWO);
         Position to = Position.valueOf(File.A, Rank.ONE);
@@ -98,5 +98,20 @@ public class KnightTest {
         Position to = Position.valueOf(File.B, Rank.THREE);
 
         assertThat(whiteKnight.isMovable(from, to)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Knight가 잡을 수 없는 위치인 경우 False를 반환한다.")
+    void isNotCatchableTest() {
+        Position from = Position.valueOf(File.B, Rank.ONE);
+        Position to = Position.valueOf(File.B, Rank.THREE);
+
+        assertThat(whiteKnight.isMovable(from, to)).isFalse();
+    }
+
+    @Test
+    @DisplayName("Knight가 맞으면 True를 반환한다.")
+    void isKnight() {
+        assertThat(whiteKnight.isKnight()).isTrue();
     }
 }

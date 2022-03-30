@@ -63,4 +63,13 @@ public class BishopTest {
 
         assertThat(whiteBishop.isMovable(from, to)).isFalse();
     }
+
+    @Test
+    @DisplayName("Bishop이 오른쪽 위 대각선으로 말을 잡을 수 있는 경우 True를 반환한다")
+    void isCatchableRightUpTest() {
+        Position from = Position.valueOf(File.C, Rank.ONE);
+        Position to = Position.valueOf(File.D, Rank.TWO);
+
+        assertThat(whiteBishop.isCatchable(from, to)).isTrue();
+    }
 }

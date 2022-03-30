@@ -45,4 +45,13 @@ public class RookTest {
 
         assertThat(whiteRook.isMovable(from, to)).isFalse();
     }
+
+    @Test
+    @DisplayName("Rook이 세로로 잡을 수 있는 경우 True를 반환한다")
+    void isCatchableColumnTest() {
+        Position from = Position.valueOf(File.A, Rank.ONE);
+        Position to = Position.valueOf(File.A, Rank.FIVE);
+
+        assertThat(whiteRook.isCatchable(from, to)).isTrue();
+    }
 }

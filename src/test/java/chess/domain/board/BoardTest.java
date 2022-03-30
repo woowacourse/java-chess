@@ -2,10 +2,16 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -60,5 +66,15 @@ public class BoardTest {
         assertThatThrownBy(() -> board.movePiece(fromPosition, toPosition))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 해당 위치는 말이 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("해당 포지션의 체스 말 색깔을 구한다")
+    void getPositionPieceColor() {
+        Map<Position, Piece> initialPieces = new HashMap<>();
+        initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
+        Board board = new Board(initialPieces);
+
+        assertThat(board.getPieceColor(Position.valueOf(File.A, Rank.ONE))).isEqualTo(Color.BLACK);
     }
 }

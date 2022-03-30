@@ -81,4 +81,13 @@ public class QueenTest {
 
         assertThat(whiteQueen.isMovable(from, to)).isFalse();
     }
+
+    @Test
+    @DisplayName("Queen이 오른쪽 위 대각선으로 잡을 수 있는 경우 True를 반환한다")
+    void isCatchableRightUpTest() {
+        Position from = Position.valueOf(File.C, Rank.ONE);
+        Position to = Position.valueOf(File.D, Rank.TWO);
+
+        assertThat(whiteQueen.isCatchable(from, to)).isTrue();
+    }
 }
