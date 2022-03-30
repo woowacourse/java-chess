@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
-import java.util.Optional;
 import java.util.Stack;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ class KnightTest {
         final ChessPiece knight = Knight.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> knight.checkMovablePosition(from, to, Optional.empty()))
+        assertThatThrownBy(() -> knight.checkMovablePosition(from, to, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -39,7 +38,7 @@ class KnightTest {
         final ChessPiece knight = Knight.from(Color.BLACK);
 
         // then
-        Assertions.assertThatCode(() -> knight.checkMovablePosition(from, to, Optional.empty()))
+        Assertions.assertThatCode(() -> knight.checkMovablePosition(from, to, null))
                 .doesNotThrowAnyException();
 
     }

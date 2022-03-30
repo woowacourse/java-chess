@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -54,28 +54,28 @@ public final class Pawn extends ChessPiece {
 
     @Override
     public void checkMovablePosition(final Position from, final Position to,
-                                     final Optional<ChessPiece> possiblePiece) {
+                                     final ChessPiece targetPiece) {
         if (from.isSameFile(to)) {
-            validateStraightMove(from, to, possiblePiece);
+            validateStraightMove(from, to, targetPiece);
             return;
         }
         if (isCross(from, to)) {
-            validateCrossMove(possiblePiece);
+            validateCrossMove(targetPiece);
             return;
         }
         throw new IllegalArgumentException(INVALID_TARGET_POSITION);
     }
 
     private void validateStraightMove(final Position from, final Position to,
-                                      final Optional<ChessPiece> possiblePiece) {
+                                      final ChessPiece targetPiece) {
         if (!isMovableDistance(from, to)) {
             throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
-        if (possiblePiece.isEmpty()) {
+        if (Objects.isNull(targetPiece)) {
             return;
         }
 
-        checkTargetIsSameColor(possiblePiece.get());
+        checkTargetIsSameColor(targetPiece);
         throw new IllegalArgumentException(STRAIGHT_MOVE_TO_ENEMY);
     }
 
@@ -129,12 +129,12 @@ public final class Pawn extends ChessPiece {
         return List.of(NE, NW);
     }
 
-    private void validateCrossMove(final Optional<ChessPiece> possiblePiece) {
-        if (possiblePiece.isEmpty()) {
+    private void validateCrossMove(final ChessPiece targetPiece) {
+        if (Objects.isNull(targetPiece)) {
             throw new IllegalArgumentException(CROSS_MOVE_TO_EMPTY);
         }
 
-        checkTargetIsSameColor(possiblePiece.get());
+        checkTargetIsSameColor(targetPiece);
     }
 
     private void checkTargetIsSameColor(final ChessPiece targetPiece) {

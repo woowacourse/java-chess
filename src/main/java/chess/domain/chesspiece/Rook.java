@@ -3,7 +3,6 @@ package chess.domain.chesspiece;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public final class Rook extends ChessPiece {
 
     @Override
     public void checkMovablePosition(final Position from, final Position to,
-                                     final Optional<ChessPiece> possiblePiece) {
+                                     final ChessPiece chessPiece) {
         final boolean sameFile = from.isSameFile(to);
         final boolean sameRank = from.isSameRank(to);
 
@@ -38,7 +37,7 @@ public final class Rook extends ChessPiece {
             throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }
 
-        checkTargetPosition(possiblePiece);
+        checkTargetPosition(chessPiece);
     }
 
     @Override

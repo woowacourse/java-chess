@@ -2,7 +2,7 @@ package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Stack;
 
 public abstract class ChessPiece {
@@ -19,15 +19,14 @@ public abstract class ChessPiece {
     }
 
     public abstract void checkMovablePosition(final Position from, final Position to,
-                                              final Optional<ChessPiece> possiblePiece);
+                                              final ChessPiece chessPiece);
 
-    protected void checkTargetPosition(final Optional<ChessPiece> possiblePiece) {
-        if (possiblePiece.isEmpty()) {
+    protected void checkTargetPosition(final ChessPiece chessPiece) {
+        if (Objects.isNull(chessPiece)) {
             return;
         }
 
-        final ChessPiece targetPiece = possiblePiece.get();
-        if (targetPiece.isSameColor(color)) {
+        if (chessPiece.isSameColor(color)) {
             throw new IllegalArgumentException(TARGET_SAME_COLOR_MESSAGE);
         }
     }

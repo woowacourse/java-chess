@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Optional;
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class BishopTest {
         final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, Optional.empty()))
+        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -39,7 +38,7 @@ class BishopTest {
         final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
-        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, Optional.of(Bishop.from(Color.BLACK))))
+        assertThatThrownBy(() -> bishop.checkMovablePosition(from, to, Bishop.from(Color.BLACK)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은색 기물입니다.");
     }
@@ -54,7 +53,7 @@ class BishopTest {
         final ChessPiece bishop = Bishop.from(Color.BLACK);
 
         // then
-        assertThatCode(() -> bishop.checkMovablePosition(from, to, Optional.empty()))
+        assertThatCode(() -> bishop.checkMovablePosition(from, to, null))
                 .doesNotThrowAnyException();
 
     }

@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
-import java.util.Optional;
+import java.util.Objects;
 
 public class GameStatus {
 
@@ -31,9 +31,11 @@ public class GameStatus {
         return !progress.isEnd();
     }
 
-    public void checkCanMove(Optional<ChessPiece> possibleChessPiece) {
+    public void checkCanMove(ChessPiece chessPiece) {
         progress.checkPlaying();
-        possibleChessPiece.ifPresent(this::checkTurn);
+        if (Objects.nonNull(chessPiece)) {
+            checkTurn(chessPiece);
+        }
     }
 
     private void checkTurn(final ChessPiece piece) {

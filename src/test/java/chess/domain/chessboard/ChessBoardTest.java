@@ -11,7 +11,6 @@ import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,8 +26,7 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
 
         // when
-        final Optional<ChessPiece> possiblePiece = chessBoard.findPiece(Position.from(position));
-        final ChessPiece actual = possiblePiece.get();
+        final ChessPiece actual = chessBoard.findPiece(Position.from(position));
 
         // then
         assertThat(actual.name()).isEqualTo(expected);
@@ -41,10 +39,10 @@ class ChessBoardTest {
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
 
         // when
-        final Optional<ChessPiece> actual = chessBoard.findPiece(Position.from("a3"));
+        final ChessPiece actual = chessBoard.findPiece(Position.from("a3"));
 
         // then
-        assertThat(actual.isEmpty()).isEqualTo(true);
+        assertThat(actual).isNull();
     }
 
     @Test
@@ -57,7 +55,7 @@ class ChessBoardTest {
 
         // when
         chessBoard.move(from, to);
-        final ChessPiece actual = chessBoard.findPiece(to).get();
+        final ChessPiece actual = chessBoard.findPiece(to);
 
         // then
         assertThat(actual.name()).isEqualTo("n");
@@ -77,7 +75,7 @@ class ChessBoardTest {
 
         // when
         chessBoard.move(from, to);
-        final ChessPiece actual = chessBoard.findPiece(to).get();
+        final ChessPiece actual = chessBoard.findPiece(to);
 
         // then
         assertThat(actual.name()).isEqualTo("b");

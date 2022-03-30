@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.chesspiece.Pawn;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,7 @@ public class GameStatusTest {
         // given
         final GameStatus gameStatus = new GameStatus();
         gameStatus.start();
-        final Optional<ChessPiece> chessPiece = Optional.of(Pawn.from(Color.WHITE));
+        final ChessPiece chessPiece = Pawn.from(Color.WHITE);
 
         // then
         assertThatCode(() -> gameStatus.checkCanMove(chessPiece))
@@ -45,7 +44,7 @@ public class GameStatusTest {
         final GameStatus gameStatus = new GameStatus();
 
         // then
-        assertThatThrownBy(() -> gameStatus.checkCanMove(Optional.empty()))
+        assertThatThrownBy(() -> gameStatus.checkCanMove(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -58,7 +57,7 @@ public class GameStatusTest {
         gameStatus.end();
 
         // then
-        assertThatThrownBy(() -> gameStatus.checkCanMove(Optional.empty()))
+        assertThatThrownBy(() -> gameStatus.checkCanMove(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 이미 종료되었습니다.");
     }
@@ -71,7 +70,7 @@ public class GameStatusTest {
         gameStatus.kingDie();
 
         // then
-        assertThatThrownBy(() -> gameStatus.checkCanMove(Optional.empty()))
+        assertThatThrownBy(() -> gameStatus.checkCanMove(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 이미 종료되었습니다.");
     }
@@ -84,7 +83,7 @@ public class GameStatusTest {
         gameStatus.start();
 
         // then
-        assertThatThrownBy(() -> gameStatus.checkCanMove(Optional.of(Pawn.from(Color.BLACK))))
+        assertThatThrownBy(() -> gameStatus.checkCanMove(Pawn.from(Color.BLACK)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Color.WHITE.name() + "의 차례입니다.");
     }

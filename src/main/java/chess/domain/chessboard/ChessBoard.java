@@ -4,7 +4,7 @@ import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 public class ChessBoard {
 
@@ -14,14 +14,15 @@ public class ChessBoard {
         this.pieceByPosition = pieceByPosition;
     }
 
-    public Optional<ChessPiece> findPiece(final Position position) {
-        final ChessPiece piece = pieceByPosition.get(position);
-        return Optional.ofNullable(piece);
+    public ChessPiece findPiece(final Position position) {
+        return pieceByPosition.get(position);
     }
 
     public void move(final Position from, final Position to) {
-        final ChessPiece movablePiece = findPiece(from)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
+        final ChessPiece movablePiece = findPiece(from);
+        if (Objects.isNull(movablePiece)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+        }
 
         checkCanMove(from, to, movablePiece);
         movePiece(from, to);
@@ -35,7 +36,7 @@ public class ChessBoard {
     private void checkHurdle(final Position from, final Position to, final ChessPiece movablePiece) {
         final boolean hurdleExist = movablePiece.findRoute(from, to).stream()
                 .map(this::findPiece)
-                .anyMatch(Optional::isPresent);
+                .anyMatch(Objects::nonNull);
 
         if (hurdleExist) {
             throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
