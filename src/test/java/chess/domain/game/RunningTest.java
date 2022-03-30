@@ -21,7 +21,7 @@ class RunningTest {
     @Test
     @DisplayName("게임 시작시 에러가 발생한다.")
     void startTest() {
-        GameState gameState = new Running(BoardFixtures.initial(), Color.WHITE);
+        GameState gameState = new Running(BoardFixtures.INITIAL, Color.WHITE);
 
         assertThatThrownBy(gameState::start)
             .isInstanceOf(UnsupportedOperationException.class)
@@ -31,7 +31,7 @@ class RunningTest {
     @Test
     @DisplayName("게임 종료시 종료 상태로 변한다.")
     void finishTest() {
-        GameState gameState = new Running(BoardFixtures.initial(), Color.WHITE);
+        GameState gameState = new Running(BoardFixtures.INITIAL, Color.WHITE);
 
         assertThat(gameState.finish()).isInstanceOf(Finished.class);
     }
@@ -40,7 +40,7 @@ class RunningTest {
     @DisplayName("move 명령시 running 상태로 변한다.")
     void moveToRunningTest() {
         List<String> arguments = List.of("a2", "a3");
-        GameState gameState = new Running(BoardFixtures.initial(), Color.WHITE);
+        GameState gameState = new Running(BoardFixtures.INITIAL, Color.WHITE);
 
         GameState movedState = gameState.move(arguments);
 
@@ -64,7 +64,7 @@ class RunningTest {
     @Test
     @DisplayName("status 상태로 변한다.")
     void turnIntoStatusState() {
-        GameState state = new Running(BoardFixtures.empty(), Color.WHITE);
+        GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
 
         GameState changed = state.status();
 
@@ -74,7 +74,7 @@ class RunningTest {
     @Test
     @DisplayName("진행상태는 실행가능한 상태이다.")
     void runningIsRunnable() {
-        GameState state = new Running(BoardFixtures.empty(), Color.WHITE);
+        GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
 
         boolean isRunnable = state.isRunnable();
 
@@ -84,7 +84,7 @@ class RunningTest {
     @Test
     @DisplayName("진행상태에서는 응답을 얻을 수 있다.")
     void gettingResponse() {
-        GameState state = new Running(BoardFixtures.empty(), Color.WHITE);
+        GameState state = new Running(BoardFixtures.EMPTY, Color.WHITE);
 
         Response response = state.getResponse();
 

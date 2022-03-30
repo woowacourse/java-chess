@@ -26,7 +26,7 @@ class BoardTest {
     void move() {
         Route route = Route.of(List.of("a2", "a3"));
         Color turnColor = Color.WHITE;
-        Board board = BoardFixtures.initial();
+        Board board = BoardFixtures.INITIAL;
 
         assertThatCode(() -> board.move(route, turnColor))
             .doesNotThrowAnyException();
@@ -37,7 +37,7 @@ class BoardTest {
     void throwsExceptionWithEnemyMove() {
         Route route = Route.of(List.of("a2", "a3"));
         Color turnColor = Color.BLACK;
-        Board board = BoardFixtures.initial();
+        Board board = BoardFixtures.INITIAL;
 
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> board.move(route, turnColor));
@@ -48,43 +48,43 @@ class BoardTest {
     void throwsExceptionWithAllyAttack() {
         Route route = Route.of(List.of("a1", "a2"));
         Color turnColor = Color.WHITE;
-        Board board = BoardFixtures.initial();
+        Board board = BoardFixtures.INITIAL;
 
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> board.move(route, turnColor));
     }
 
-    // @Test
-    // @DisplayName("왕이 죽으면 true를 반환한다.")
-    // void returnTrueWithKingDead() {
-    //     List<String> arguments = List.of("e1", "e8");
-    //     Board board = BoardFixtures.create(Map.of(
-    //         Point.of("e8"), new King(Color.BLACK),
-    //         Point.of("e1"), new Queen(Color.WHITE)
-    //     ));
-    //
-    //     boolean isKingDead = board.move(arguments, Color.WHITE);
-    //     assertThat(isKingDead).isTrue();
-    // }
-    //
-    // @Test
-    // @DisplayName("왕이 살아있으면 false를 반환한다.")
-    // void returnFalseWithKingAlive() {
-    //     List<String> arguments = List.of("a2", "a3");
-    //     Board board = BoardFixtures.initial();
-    //
-    //     boolean isKingDead = board.move(arguments, Color.WHITE);
-    //     assertThat(isKingDead).isFalse();
-    // }
-    //
-    // @Test
-    // @DisplayName("팀별 점수를 계산할 수 있다.")
-    // void calculateScoreTest() {
-    //     double initialTotalScore = 38;
-    //
-    //     Board board = Board.of(new InitialBoardGenerator());
-    //
-    //     assertThat(board.calculateScore().values())
-    //         .containsExactly(initialTotalScore, initialTotalScore);
-    // }
+    @Test
+    @DisplayName("왕이 살아있는지를 알 수 있다.")
+    void returnTrueWithKingDead() {
+        Board board = BoardFixtures.create(Map.of(
+            Point.of("e8"), new King(Color.BLACK),
+            Point.of("e1"), new Queen(Color.WHITE)
+        ));
+
+        boolean isKingDead = board.isKingDead();
+
+        assertThat(isKingDead).isTrue();
+    }
+
+    @Test
+    @DisplayName("왕이 살아있으면 false를 반환한다.")
+    void returnFalseWithKingAlive() {
+        Board board = BoardFixtures.INITIAL;;
+
+        boolean isKingDead = board.isKingDead();
+
+        assertThat(isKingDead).isFalse();
+    }
+
+    @Test
+    @DisplayName("팀별 점수를 계산할 수 있다.")
+    void calculateScoreTest() {
+        double initialTotalScore = 38;
+
+        Board board = Board.of(new InitialBoardGenerator());
+
+        assertThat(board.calculateScore().values())
+            .containsExactly(initialTotalScore, initialTotalScore);
+    }
 }
