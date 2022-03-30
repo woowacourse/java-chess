@@ -4,6 +4,8 @@ import chess.domain.game.Color;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
+import chess.view.OutputView;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,12 +21,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
 
-    ChessBoard chessBoard = new ChessBoard(initBoard());
+    private ChessBoard chessBoard;
+
+    @BeforeEach
+    void set(){
+        chessBoard = new ChessBoard(initBoard());
+    }
 
     @Test
     @DisplayName("체스판을 초기화하고 기물을 배치한다.")
     void init() {
-        ChessBoard chessBoard = new ChessBoard(initBoard());
         int actual = chessBoard.countPiece();
         int expected = 32;
         assertThat(actual).isEqualTo(expected);
@@ -101,7 +107,6 @@ class ChessBoardTest {
         chessBoard.move(new Position("a7"), new Position("a6")); // Dummy
         chessBoard.move(new Position("b2"), new Position("b4"));
         chessBoard.move(new Position("a6"), new Position("a5")); // Dummy
-
         // then
         assertThatThrownBy(() -> chessBoard.move(new Position("a3"), new Position("b4")))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -125,9 +130,9 @@ class ChessBoardTest {
         pieceByPosition.put(new Position("a5"), new Pawn(Color.BLACK));
         pieceByPosition.put(new Position("a4"), new Pawn(Color.WHITE));
 
-        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+        ChessBoard customChessBoard = new ChessBoard(pieceByPosition);
 
-        assertThatThrownBy(() -> chessBoard.move(new Position("a4"), new Position("a5")))
+        assertThatThrownBy(() -> customChessBoard.move(new Position("a4"), new Position("a5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
 
@@ -145,10 +150,10 @@ class ChessBoardTest {
 
         pieceByPosition.put(new Position("a2"), new Pawn(Color.WHITE));
 
-        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
+        ChessBoard customChessBoard = new ChessBoard(pieceByPosition);
 
         // when
-        Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+        Map<Color, Double> scoreByColor = customChessBoard.calculateScore();
         Double actual = scoreByColor.get(color);
 
         // then
@@ -170,10 +175,9 @@ class ChessBoardTest {
 
         pieceByPosition.put(new Position("h2"), new King(Color.WHITE));
 
-        ChessBoard chessBoard = new ChessBoard(pieceByPosition);
-
+        ChessBoard customChessBoard = new ChessBoard(pieceByPosition);
         // when
-        Map<Color, Double> scoreByColor = chessBoard.calculateScore();
+        Map<Color, Double> scoreByColor = customChessBoard.calculateScore();
         Double actual = scoreByColor.get(color);
 
         // then

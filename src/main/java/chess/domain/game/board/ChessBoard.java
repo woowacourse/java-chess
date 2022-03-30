@@ -23,20 +23,26 @@ public class ChessBoard {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
 
-        validateTurn(me);
-
         checkMove(from, to, me);
 
         if (findPiece(to).isEmpty()) {
-            checkPawnStraightMove(from, to, me);
-            movePiece(from, to, me);
+            moveEmptyPosition(from, to, me);
             return;
         }
 
         if (enemyExist(me, to)) {
-            checkPawnCrossMove(from, to, me);
-            movePiece(from, to, me);
+            catchAndMove(from, to, me);
         }
+    }
+
+    private void catchAndMove(Position from, Position to, ChessPiece me) {
+        checkPawnCrossMove(from, to, me);
+        movePiece(from, to, me);
+    }
+
+    private void moveEmptyPosition(Position from, Position to, ChessPiece me) {
+        checkPawnStraightMove(from, to, me);
+        movePiece(from, to, me);
     }
 
     private void validateTurn(ChessPiece me) {
@@ -66,6 +72,7 @@ public class ChessBoard {
     }
 
     private void checkMove(Position from, Position to, ChessPiece me) {
+        validateTurn(me);
         me.canMove(from, to);
         Stack<Position> routes = me.findRoute(from, to);
 
