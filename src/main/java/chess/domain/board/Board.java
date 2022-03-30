@@ -25,19 +25,19 @@ public class Board {
     }
 
     public void movePiece(Position source, Position target) {
-        turnDecide(source);
+        validateWhiteBlackTeamTurn(source);
         validateSourceNotEmpty(source);
         boolean isGameFinished = isTargetKing(target);
         changePieces(source, target);
         gameFlow.nextState(isGameFinished);
     }
 
-    private boolean isTargetKing(Position target) {
-        return board.get(target).isKing();
+    private boolean isTargetKing(Position position) {
+        return board.get(position).isKing();
     }
 
-    private void turnDecide(Position source) {
-        if (!gameFlow.isCorrectTurn(board.get(source))) {
+    private void validateWhiteBlackTeamTurn(Position position) {
+        if (!gameFlow.isCorrectTurn(board.get(position))) {
             throw new IllegalArgumentException("[ERROR] 현재 올바르지 않은 팀 선택입니다. ");
         }
     }
@@ -47,8 +47,9 @@ public class Board {
         Piece targetPiece = board.get(target);
 
         MoveType moveType = decideMoveType(targetPiece);
-        if (!sourcePiece.isMovable(source, target, moveType) || isBlocked(source, target) || targetPiece.isMyTeam(
-                sourcePiece)) {
+        if (!sourcePiece.isMovable(source, target, moveType) || 
+                isBlocked(source, target) || 
+                targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
@@ -56,11 +57,11 @@ public class Board {
         board.put(source, EMPTY_PIECE);
     }
 
-    private MoveType decideMoveType(Piece targetPiece) {
-        if (targetPiece.equals(EMPTY_PIECE)) {
+    private MoveType decideMoveType(Piece piece) {
+        if (piece.equals(EMPTY_PIECE)) {
             return MoveType.EMPTY;
         }
-        if (gameFlow.isCorrectTurn(targetPiece)) {
+        if (gameFlow.isCorrectTurn(piece)) {
             return MoveType.FRIENDLY;
         }
         return MoveType.ENEMY;
@@ -72,7 +73,7 @@ public class Board {
         }
 
         for (Position position : source.findPositionsToMove(target)) {
-            if (isEmpty(position)) {
+            if (!isEmpty(position)) {
                 return true;
             }
         }
@@ -80,11 +81,11 @@ public class Board {
     }
 
     private boolean isEmpty(Position position) {
-        return !board.get(position).equals(EMPTY_PIECE);
+        return board.get(position).equals(EMPTY_PIECE);
     }
 
-    private void validateSourceNotEmpty(Position source) {
-        if (board.get(source).equals(EMPTY_PIECE)) {
+    private void validateSourceNotEmpty(Position position) {
+        if (isEmpty(position)) {
             throw new IllegalArgumentException(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
         }
     }
