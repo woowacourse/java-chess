@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 import chess.domain.game.ChessGame;
 
-public enum OptionController {
+public enum Command {
 
     START("^start$", ChessController::start),
     END("^end$", ChessController::end),
@@ -17,18 +17,21 @@ public enum OptionController {
     private final String regex;
     private final BiConsumer<ChessGame, String> controllerFunction;
 
-    OptionController(final String regex, final BiConsumer<ChessGame, String> controllerFunction) {
+    Command(final String regex, final BiConsumer<ChessGame, String> controllerFunction) {
         this.regex = regex;
         this.controllerFunction = controllerFunction;
     }
 
     public static void run(ChessGame chessGame, String input) {
-        Arrays.stream(OptionController.values())
+        Command command = Arrays.stream(Command.values())
             .filter(inputOption -> input.matches(inputOption.regex))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION))
-            .controllerFunction
-            .accept(chessGame, input);
+            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION));
+        command.execute(chessGame, input);
+    }
+
+    private void execute(ChessGame chessGame, String input) {
+        controllerFunction.accept(chessGame, input);
     }
 }
 

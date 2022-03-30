@@ -15,7 +15,7 @@ public class ChessController {
 
         while (!chessGame.isFinish()) {
             String input = InputView.inputOption();
-            OptionController.run(chessGame, input);
+            Command.run(chessGame, input);
         }
     }
 

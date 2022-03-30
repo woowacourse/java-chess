@@ -27,7 +27,6 @@ public class Winner {
     private static boolean isAllKingExist(Map<Position, Piece> boardPieces) {
         return boardPieces.values().stream()
             .filter(Piece::isKing)
-            .map(piece -> 1)
-            .reduce(0, Integer::sum) == TOTAL_KING_COUNT;
+            .count() == TOTAL_KING_COUNT;
     }
 }
