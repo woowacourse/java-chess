@@ -37,7 +37,7 @@ public enum Command {
         this.consumer = consumer;
     }
 
-    public static Command of(String input) {
+    public static Command from(String input) {
         return Arrays.stream(values())
                 .filter(command -> input.equals(command.type))
                 .findFirst()

@@ -29,9 +29,9 @@ public class CommandRequest {
     public static CommandRequest of(List<String> inputs) {
         validateLength(inputs);
         if (inputs.size() == 1) {
-            return new CommandRequest(Command.of(inputs.get(COMMAND_INDEX)));
+            return new CommandRequest(Command.from(inputs.get(COMMAND_INDEX)));
         }
-        return new CommandRequest(Command.of(inputs.get(COMMAND_INDEX)), inputs.get(SOURCE_INDEX), inputs.get(
+        return new CommandRequest(Command.from(inputs.get(COMMAND_INDEX)), inputs.get(SOURCE_INDEX), inputs.get(
                 TARGET_INDEX));
     }
 
