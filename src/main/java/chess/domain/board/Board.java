@@ -46,7 +46,7 @@ public class Board {
     public void movePiece(Position from, Position to) {
         Piece fromPiece = checkFromPieceEmpty(from);
         Direction direction = fromPiece.matchDirection(from, to);
-        searchPiece(from, to);
+        validateBlockingPiece(from, to);
         checkTargetPosition(to, fromPiece, direction);
 
         move(from, to, fromPiece);
@@ -60,7 +60,7 @@ public class Board {
         return piece.get();
     }
 
-    private void searchPiece(Position from, Position to) {
+    private void validateBlockingPiece(Position from, Position to) {
         List<Position> path = from.backtrackPath(to);
         for (Position position : path) {
             validateExistPiece(position);
