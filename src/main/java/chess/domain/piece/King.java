@@ -11,6 +11,7 @@ public final class King extends NotNullPiece {
     private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 0;
 
+
     public King(Camp camp) {
         super(camp, KING);
     }

@@ -1,11 +1,11 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.End;
+import chess.controller.command.Move;
+import chess.controller.command.Start;
+import chess.controller.command.Status;
 import chess.domain.ChessGame;
-import chess.domain.command.Command;
-import chess.domain.command.End;
-import chess.domain.command.Move;
-import chess.domain.command.Start;
-import chess.domain.command.Status;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.regex.Pattern;

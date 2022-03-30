@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess.controller.command;
 
 import chess.domain.ChessGame;
 import chess.view.OutputView;
@@ -17,7 +17,7 @@ public class End implements Command {
             return;
         }
         chessGame.end();
-        
+
         outputView.printFinishMessage();
         outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
         outputView.printResultMessage(chessGame.getResultMessage());
