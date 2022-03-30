@@ -4,9 +4,11 @@ import chess.domain.board.Board;
 
 public interface Menu {
     /**
-     * Returns {@code true} if this collection contains no elements.
+     * Returns {@code true} if this interface implements class Start, Move, Status type.
      *
-     * @return {@code true} if this collection contains no elements
+     * Returns {@code false} if this interface implements class End type Or Board status is checkmate.
+     *
+     * @return {@code true}
      */
     boolean play(Board board);
 }
