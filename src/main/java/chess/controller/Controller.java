@@ -13,6 +13,8 @@ import chess.view.OutputView;
 
 public class Controller {
 	private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??\n";
+	public static final int SOURCE_INDEX = 0;
+	public static final int TARGET_INDEX = 1;
 
 	private ChessGame game;
 
@@ -68,8 +70,12 @@ public class Controller {
 		if (game.isKingDie()) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
 		}
-		game.move(commands.getValue().get(0), commands.getValue().get(1));
+		game.move(commands.getValue().get(SOURCE_INDEX), commands.getValue().get(TARGET_INDEX));
 		OutputView.showBoard(game.getBoard());
+
+		if (game.isKingDie()) {
+			OutputView.printKingDieMessage();
+		}
 		return;
 	}
 

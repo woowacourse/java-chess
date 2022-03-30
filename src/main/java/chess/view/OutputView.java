@@ -2,6 +2,7 @@ package chess.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,33 +33,29 @@ public class OutputView {
 
 	public static void showBoard(Map<Square, Piece> board) {
 		List<Piece> pieces = new ArrayList<>(board.values());
-		List<List<String>> pieceNames = reverseAndGetName(Lists.partition(pieces, Rank.values().length));
-		for (List<String> pieceName : pieceNames) {
-			printOneRank(pieceName);
-		}
+		printBoard(pieces);
 		System.out.println();
+	}
+
+	private static void printBoard(List<Piece> pieces) {
+		List<List<Piece>> splitBoardByRank = Lists.partition(pieces, Rank.values().length);
+		ListIterator<List<Piece>> iterator = splitBoardByRank.listIterator(splitBoardByRank.size());
+
+		while (iterator.hasPrevious()) {
+			List<String> names = getNames(iterator.previous());
+			printOneRank(names);
+		}
 	}
 
 	private static void printOneRank(List<String> pieceName) {
-		pieceName.stream()
-			.forEach(System.out::print);
+		pieceName.forEach(System.out::print);
 		System.out.println();
 	}
 
-	private static List<List<String>> reverseAndGetName(List<List<Piece>> splitPieces) {
-		List<List<String>> result = new ArrayList<>();
-		for (List<Piece> splitPiece : splitPieces) {
-			List<String> names = getNames(splitPiece);
-			result.add(0, names);
-		}
-		return result;
-	}
-
 	private static List<String> getNames(List<Piece> splitPiece) {
-		List<String> names = splitPiece.stream()
+		return splitPiece.stream()
 			.map(Piece::getEmoji)
 			.collect(Collectors.toList());
-		return names;
 	}
 
 	public static void printMessage(String message) {
