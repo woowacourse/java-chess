@@ -1,10 +1,11 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
+import chess.domain.Score;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
-import chess.domain.Score;
+import java.util.Map;
 
 public class Ready implements State {
     private static final String ERROR_CANT_MOVE = "게임이 시작되지 않아 기물을 이동할 수 없습니다.";
@@ -28,16 +29,6 @@ public class Ready implements State {
     }
 
     @Override
-    public Score scoreOfWhite() {
-        throw new UnsupportedOperationException(ERROR_NO_STATUS);
-    }
-
-    @Override
-    public Score scoreOfBlack() {
-        throw new UnsupportedOperationException(ERROR_NO_STATUS);
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }
@@ -45,6 +36,11 @@ public class Ready implements State {
     @Override
     public Board getBoard() {
         throw new UnsupportedOperationException(ERROR_NO_BOARD);
+    }
+
+    @Override
+    public Map<Camp, Score> getScores() {
+        throw new UnsupportedOperationException(ERROR_NO_STATUS);
     }
 
     @Override

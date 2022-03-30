@@ -1,7 +1,8 @@
 package chess;
 
-import chess.domain.command.Command;
-import chess.domain.command.Type;
+import chess.command.Command;
+import chess.command.Move;
+import chess.command.Type;
 import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,44 +12,43 @@ public class ConsoleApplication {
         OutputView outputView = new OutputView();
         outputView.printStartMessage();
 
-        ChessGame chessGame = new ChessGame();
         InputView inputView = new InputView();
+        ChessGame chessGame = new ChessGame();
+        Controller controller = new Controller();
+
         Command command;
         do {
             command = inputView.readCommand();
-            command.execute(chessGame);
-            printResult(command, chessGame, outputView);
+            executeCommand(outputView, chessGame, controller, command);
         } while (!command.isType(Type.END) && !chessGame.isFinished());
     }
 
-    private static void printResult(Command command, ChessGame chessGame, OutputView outputView) {
+    private static void executeCommand(OutputView outputView, ChessGame chessGame, Controller controller, Command command) {
         if (command.isType(Type.START)) {
-            outputView.printBoard(chessGame.getBoard().getSquares());
+            outputView.printBoard(controller.start(chessGame));
         }
         if (command.isType(Type.MOVE)) {
-            printMoveResult(chessGame, outputView);
+            executeMove(outputView, chessGame, controller, (Move) command);
         }
         if (command.isType(Type.STATUS)) {
-            outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
+            outputView.printScore(controller.status(chessGame));
         }
         if (command.isType(Type.END)) {
-            printGameResult(chessGame, outputView);
+            executeEnd(outputView, chessGame, controller);
         }
     }
 
-    private static void printMoveResult(ChessGame chessGame, OutputView outputView) {
-        outputView.printBoard(chessGame.getBoard().getSquares());
+    private static void executeMove(OutputView outputView, ChessGame chessGame, Controller controller, Move move) {
+        outputView.printBoard(controller.move(chessGame, move.getSourcePosition(), move.getTargetPosition()));
         if (chessGame.isFinished()) {
-            outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
-            outputView.printWinner(chessGame.getWinner());
+            outputView.printResult(controller.status(chessGame), controller.getWinner(chessGame));
         }
     }
 
-    private static void printGameResult(ChessGame chessGame, OutputView outputView) {
+    private static void executeEnd(OutputView outputView, ChessGame chessGame, Controller controller) {
+        controller.end(chessGame);
         if (chessGame.isFinished()) {
-            outputView.printFinishMessage();
-            outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
-            outputView.printWinner(chessGame.getWinner());
+            outputView.printResult(controller.status(chessGame), controller.getWinner(chessGame));
         }
     }
 }

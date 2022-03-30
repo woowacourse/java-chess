@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
+import java.util.Map;
 
 public class ChessGame {
     private State state;
@@ -24,20 +25,16 @@ public class ChessGame {
         this.state = this.state.end();
     }
 
-    public Score scoreOfWhite() {
-        return this.state.scoreOfWhite();
-    }
-
-    public Score scoreOfBlack() {
-        return this.state.scoreOfBlack();
-    }
-
     public boolean isFinished() {
         return this.state.isFinished();
     }
 
     public Board getBoard() {
         return this.state.getBoard();
+    }
+
+    public Map<Camp, Score> getScores() {
+        return this.state.getScores();
     }
 
     public Camp getWinner() {

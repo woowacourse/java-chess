@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess.command;
 
 public enum Type {
     START,

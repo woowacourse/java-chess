@@ -5,8 +5,8 @@ import static chess.view.Expressions.COMMAND_START;
 import static chess.view.Expressions.PIECE_EXPRESSIONS;
 
 import chess.domain.Camp;
-import chess.domain.board.Position;
 import chess.domain.Score;
+import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,16 +73,23 @@ public class OutputView {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_NO_SUCH_PIECE));
     }
 
-    public void printFinishMessage() {
+    public void printScore(Map<Camp, Score> scores) {
+        for (Camp camp : scores.keySet()) {
+            System.out.printf(FORMAT_SCORE, camp, scores.get(camp).getValue());
+        }
+    }
+
+    public void printResult(Map<Camp, Score> scores, Camp winner) {
+        printFinishMessage();
+        printScore(scores);
+        printWinner(winner);
+    }
+
+    private void printFinishMessage() {
         System.out.println(MESSAGE_GAME_END);
     }
 
-    public void printScore(Score scoreOfWhite, Score scoreOfBlack) {
-        System.out.printf(FORMAT_SCORE, CAMP_WHITE, scoreOfWhite.getValue());
-        System.out.printf(FORMAT_SCORE, CAMP_BLACK, scoreOfBlack.getValue());
-    }
-
-    public void printWinner(Camp winner) {
+    private void printWinner(Camp winner) {
         if (winner == Camp.BLACK) {
             printWinner(CAMP_BLACK);
             return;

@@ -1,9 +1,10 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
+import chess.domain.Score;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.Score;
+import java.util.Map;
 
 public interface State {
 
@@ -13,13 +14,11 @@ public interface State {
 
     State end();
 
-    Score scoreOfWhite();
-
-    Score scoreOfBlack();
-
     boolean isFinished();
 
     Board getBoard();
+
+    Map<Camp, Score> getScores();
 
     Camp getWinner();
 }

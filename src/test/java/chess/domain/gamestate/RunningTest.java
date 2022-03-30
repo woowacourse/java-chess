@@ -46,6 +46,6 @@ public class RunningTest {
     @DisplayName("Running 상태에서 status 명령 호출할 수 있다.")
     @Test
     void running_status_no_exception() {
-        assertThatNoException().isThrownBy(state::scoreOfBlack);
+        assertThatNoException().isThrownBy(state::getScores);
     }
 }

@@ -1,6 +1,5 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Position;
 
 public class Move extends Command {
@@ -13,8 +12,11 @@ public class Move extends Command {
         this.targetPosition = targetPosition;
     }
 
-    @Override
-    public void execute(ChessGame chessGame) {
-        chessGame.move(this.sourcePosition, this.targetPosition);
+    public Position getSourcePosition() {
+        return sourcePosition;
+    }
+
+    public Position getTargetPosition() {
+        return targetPosition;
     }
 }

@@ -8,6 +8,8 @@ import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.piece.Type;
 import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class Score {
     private static final int COUNT_KING_IN_EACH_CAMP = 1;
@@ -19,7 +21,14 @@ public class Score {
         this.value = value;
     }
 
-    public static Score of(Board board, Camp camp) {
+    public static Map<Camp, Score> of(Board board) {
+        Map<Camp, Score> scores = new EnumMap<>(Camp.class);
+        scores.put(WHITE, of(board, WHITE));
+        scores.put(BLACK, of(board, BLACK));
+        return scores;
+    }
+
+    private static Score of(Board board, Camp camp) {
         return new Score(Arrays.stream(Type.values())
                 .mapToDouble(type -> calculatePieceOf(board, camp, type))
                 .sum());

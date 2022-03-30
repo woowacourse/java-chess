@@ -1,10 +1,11 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
+import chess.domain.Score;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
-import chess.domain.Score;
+import java.util.Map;
 
 public class Finished implements State {
     private static final String ERROR_CANT_MOVE = "게임이 종료되어 기물을 이동할 수 없습니다.";
@@ -31,16 +32,6 @@ public class Finished implements State {
     }
 
     @Override
-    public Score scoreOfWhite() {
-        return Score.of(board, Camp.WHITE);
-    }
-
-    @Override
-    public Score scoreOfBlack() {
-        return Score.of(board, Camp.BLACK);
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
@@ -48,6 +39,11 @@ public class Finished implements State {
     @Override
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public Map<Camp, Score> getScores() {
+        return Score.of(this.board);
     }
 
     @Override

@@ -23,7 +23,8 @@ public class ScoreTest {
     @DisplayName("초기 상태의 체스판에서 흑색 진영의 점수는 38점이다.")
     @Test
     void calculateScoreOfBlack_38() {
-        assertThat(Score.of(board, Camp.BLACK).getValue()).isEqualTo(38);
+        Score scoreOfWhite = Score.of(board).get(Camp.WHITE);
+        assertThat(scoreOfWhite.getValue()).isEqualTo(38);
     }
 
     @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 흑색 진영의 점수는 37점이다.")
@@ -41,13 +42,15 @@ public class ScoreTest {
         board.move(d2, d4);
         board.move(c5, b4);
 
-        assertThat(Score.of(board, Camp.BLACK).getValue()).isEqualTo(37);
+        Score scoreOfBlack = Score.of(board).get(Camp.BLACK);
+        assertThat(scoreOfBlack.getValue()).isEqualTo(37);
     }
 
     @DisplayName("초기 상태의 체스판에서 백색 진영의 점수는 38점이다.")
     @Test
     void calculateScoreOfWhite_38() {
-        assertThat(Score.of(board, Camp.WHITE).getValue()).isEqualTo(38);
+        Score scoreOfWhite = Score.of(board).get(Camp.WHITE);
+        assertThat(scoreOfWhite.getValue()).isEqualTo(38);
     }
 
     @DisplayName("체스판에서 두 pawn이 한 열에 있을 떄 백색 진영의 점수는 37점이다.")
@@ -60,7 +63,9 @@ public class ScoreTest {
         board.move(b2, b4);
         board.move(c7, c5);
         board.move(b4, c5);
-        assertThat(Score.of(board, Camp.WHITE).getValue()).isEqualTo(37);
+
+        Score scoreOfWhite = Score.of(board).get(Camp.WHITE);
+        assertThat(scoreOfWhite.getValue()).isEqualTo(37);
     }
 
     @DisplayName("초기 상태의 체스판에서 결과는 무승부이다.")

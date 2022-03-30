@@ -40,6 +40,6 @@ public class FinishedTest {
     @DisplayName("Finished 상태에서 status 명령 호출할 수 있다.")
     @Test
     void finished_status_no_exception() {
-        assertThatNoException().isThrownBy(state::scoreOfBlack);
+        assertThatNoException().isThrownBy(state::getScores);
     }
 }

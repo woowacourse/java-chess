@@ -4,7 +4,7 @@ import static chess.view.Expressions.EXPRESSIONS_COLUMN;
 import static chess.view.Expressions.EXPRESSIONS_COMMAND;
 import static chess.view.Expressions.EXPRESSIONS_ROW;
 
-import chess.domain.command.Command;
+import chess.command.Command;
 import chess.domain.board.Position;
 import java.util.Scanner;
 import java.util.function.Supplier;

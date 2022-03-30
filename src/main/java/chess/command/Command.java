@@ -1,6 +1,5 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Position;
 
 public abstract class Command {
@@ -29,6 +28,4 @@ public abstract class Command {
     public final boolean isType(Type type) {
         return this.type == type;
     }
-
-    public abstract void execute(ChessGame chessGame);
 }
