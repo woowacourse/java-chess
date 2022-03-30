@@ -33,8 +33,8 @@ public class Board {
         this.pieces = new HashMap<>(pieces);
     }
 
-    public boolean isWhite(Position position) {
-        return checkFromPieceEmpty(position).isWhite();
+    public boolean isSameColor(Position position, Color color) {
+        return checkFromPieceEmpty(position).isSameColor(color);
     }
 
     public Optional<Piece> findPiece(Position position) {

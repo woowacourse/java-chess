@@ -2,5 +2,12 @@ package chess.domain.piece;
 
 public enum Color {
     WHITE,
-    BLACK
+    BLACK;
+
+    public Color invert() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }

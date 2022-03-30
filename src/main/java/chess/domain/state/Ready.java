@@ -13,7 +13,7 @@ public class Ready extends State {
 
     private static final String CANNOT_MOVE = "게임 시작 전에는 움직일 수 없습니다.";
     private static final String CANNOT_GENERATE_SCORE = "게임 시작 전에는 점수를 불러올 수 없습니다.";
-    private static final String CANNOT_GET_COLOR = "게임 시작 전에는 색을 불러올 수 없습니다.";
+    private static final String CANNOT_GET_COLOR = "끝난 상태에서는 색을 불러올 수 없습니다.";
 
     protected Ready(Map<Position, Piece> board) {
         this.board = new Board(board);
@@ -25,7 +25,7 @@ public class Ready extends State {
             throw new IllegalArgumentException(CANNOT_MOVE);
         }
         if (command.isStart()) {
-            return new RunningWhiteTurn(board.getPieces());
+            return new Running(board.getPieces(), Color.WHITE);
         }
         if (command.isStatus()) {
             throw new IllegalStateException(CANNOT_GENERATE_SCORE);
