@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum Direction {
@@ -33,23 +32,16 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position start, Position target) {
-        for (Direction direction : getEightStraightDirections()) {
-            Optional<Position> optionalPosition = findPositionInDirection(start, target, direction);
-
-            if (optionalPosition.isEmpty()) {
-                continue;
-            }
-
-            return direction;
-        }
-        throw new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다.");
+        return getEightStraightDirections().stream()
+                .filter(direction -> findPositionInDirection(start, target, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다."));
     }
 
-    private static Optional<Position> findPositionInDirection(Position start, Position target, Direction direction) {
+    private static boolean findPositionInDirection(Position start, Position target, Direction direction) {
         return IntStream.rangeClosed(1, start.calculateStraightDistance(target))
                 .mapToObj(number -> Position.createNextPosition(start, direction, number))
-                .filter(position -> position.equals(target))
-                .findAny();
+                .anyMatch(position -> position.equals(target));
     }
 
     public static List<Direction> getEightStraightDirections() {
