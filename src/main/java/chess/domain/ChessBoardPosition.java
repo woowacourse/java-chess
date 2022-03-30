@@ -29,6 +29,10 @@ public class ChessBoardPosition {
         return new ChessBoardPosition(column, row);
     }
 
+    public static ChessBoardPosition of (char column, int row) {
+        return new ChessBoardPosition(column, row);
+    }
+
     private static char extractColumn(String positionInput) {
         return positionInput.charAt(COLUMN_INDEX);
     }
@@ -109,5 +113,9 @@ public class ChessBoardPosition {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    public ChessBoardPosition hardCopy() {
+        return new ChessBoardPosition(this.column, this.row);
     }
 }

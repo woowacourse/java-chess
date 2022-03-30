@@ -1,9 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.dto.ChessMenDto;
-import chess.dto.ChessStatusDto;
+import chess.dto.ChessBoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -34,8 +32,7 @@ public class ChessController {
     }
 
     private void sendDataForPrintCurrentChessBoard(ChessGame chessGame) {
-        /*OutputView.printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
-                ChessMenDto.of(chessGame.getWhiteChessMen()));*/
+        OutputView.printCurrentChessBoard(ChessBoardDto.of(chessGame.getChessBoardInformation()));
     }
 
     private void doTurn(ChessGame chessGame) {
@@ -44,17 +41,17 @@ public class ChessController {
     }
 
     private void inGameCommand(ChessGame chessGame, List<String> command) {
-        if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+        /*if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
             statusCommand(chessGame);
-        }
+        }*/
         if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
             moveCommand(chessGame, command);
         }
     }
 
-    private void statusCommand(ChessGame chessGame) {
+    /*private void statusCommand(ChessGame chessGame) {
         OutputView.printStatus(ChessStatusDto.of(chessGame));
-    }
+    }*/
 
     private void moveCommand(ChessGame chessGame, List<String> command) {
         /*ChessBoardPosition sourcePosition = ChessBoardPosition.of(command.get(SOURCE_POSITION_INDEX));

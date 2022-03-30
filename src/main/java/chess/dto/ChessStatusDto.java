@@ -1,3 +1,4 @@
+/*
 package chess.dto;
 
 import chess.domain.ChessGame;
@@ -30,3 +31,4 @@ public class ChessStatusDto {
         return winner;
     }
 }
+*/

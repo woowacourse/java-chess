@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.dto.ChessMenDto;
-import chess.dto.ChessPieceDto;
-import chess.dto.ChessStatusDto;
-import com.google.common.base.Joiner;
+import chess.domain.ChessBoardPosition;
+import chess.domain.Team;
+import chess.domain.piece.ChessPiece;
+import chess.dto.ChessBoardDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,6 +24,10 @@ public class OutputView {
     private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
     private static final String TEAM_SCORE_DELIMITER = ": ";
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
+
+    private static final List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
+    private static final List<Character> columns = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
+
 
     static {
         chessPieceNameToCharacter.put("PAWN", 'p');
@@ -46,59 +50,43 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printCurrentChessBoard(ChessMenDto blackChessMenDto, ChessMenDto whiteChessMenDto) {
-        List<List<Character>> chessBoard = initializeChessBoard();
-        setBlackChessMenOnBoard(chessBoard, blackChessMenDto);
-        setWhiteChessMenOnBoard(chessBoard, whiteChessMenDto);
-
-        for (int i = CHESSBOARD_SIZE - 1; i >= 0; i--) {
-            List<Character> chessBoardRow = chessBoard.get(i);
-            String visualizedRow = Joiner.on(EMPTY_STRING).join(chessBoardRow);
-            System.out.println(visualizedRow);
+    public static void printCurrentChessBoard(ChessBoardDto chessBoardDto) {
+        Map<ChessBoardPosition, ChessPiece> mapInformation = chessBoardDto.getMapInformation();
+        for (int row : rows) {
+            printRow(mapInformation, row);
+            System.out.println();
         }
     }
 
-    private static List<List<Character>> initializeChessBoard() {
-        List<List<Character>> chessBoard = new ArrayList<>();
-        for (int i = 0; i < CHESSBOARD_SIZE; i++) {
-            List<Character> emptyRow = new ArrayList<>(Collections.nCopies(8, EMPTY_CHESS_BLOCK));
-            chessBoard.add(emptyRow);
-        }
-        return chessBoard;
-    }
-
-    private static void setBlackChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
-        for (ChessPieceDto chessPieceDto : chessMenDto) {
-            String name = chessPieceDto.getName();
-            char chessPieceAbbreviation = chessTypeToUpperCase(chessPieceNameToCharacter.get(name));
-            chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
+    private static void printRow(Map<ChessBoardPosition, ChessPiece> mapInformation, int row) {
+        for (char column : columns) {
+            printSector(mapInformation, row, column);
         }
     }
 
-    private static void setWhiteChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
-        for (ChessPieceDto chessPieceDto : chessMenDto) {
-            String name = chessPieceDto.getName();
-            Character chessPieceAbbreviation = chessPieceNameToCharacter.get(name);
-            chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
+    private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, char column) {
+        ChessBoardPosition target = ChessBoardPosition.of(column, row);
+        if (mapInformation.keySet().contains(target)) {
+            printChessPiece(mapInformation.get(target));
+            return;
         }
+        System.out.print(".");
     }
 
-    private static int getRowIndex(ChessPieceDto chessPieceDto) {
-        return chessPieceDto.getRow() - ADJUST_ROW_INDEX;
+    private static void printChessPiece(ChessPiece chessPiece) {
+        if (chessPiece.isSameTeam(Team.BLACK)) {
+            System.out.print(ChessPieceName.of(chessPiece).toUpperCase());
+            return;
+        }
+        System.out.print(ChessPieceName.of(chessPiece));
     }
 
-    private static int getColumnIndex(ChessPieceDto chessPieceDto) {
-        return chessPieceDto.getColumn() - ADJUST_COLUMN_INDEX;
-    }
 
-    private static Character chessTypeToUpperCase(Character type) {
-        return Character.toUpperCase(type);
-    }
 
-    public static void printStatus(ChessStatusDto chessStatusDto) {
+    /*public static void printStatus(ChessStatusDto chessStatusDto) {
         for (Entry<String, Double> entry : chessStatusDto.getTeamScore().entrySet()) {
             System.out.println(entry.getKey() + TEAM_SCORE_DELIMITER + entry.getValue());
         }
         System.out.printf(WINNER_FORMAT, chessStatusDto.getWinner());
-    }
+    }*/
 }
