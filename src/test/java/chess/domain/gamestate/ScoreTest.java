@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Column;

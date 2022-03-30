@@ -5,7 +5,7 @@ import static chess.view.Expressions.COMMAND_START;
 import static chess.view.Expressions.PIECE_EXPRESSIONS;
 
 import chess.domain.Camp;
-import chess.domain.Score;
+import chess.domain.gamestate.Score;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;

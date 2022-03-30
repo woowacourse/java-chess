@@ -1,9 +1,10 @@
-package chess.domain;
+package chess.domain.gamestate;
 
 import static chess.domain.Camp.BLACK;
 import static chess.domain.Camp.NONE;
 import static chess.domain.Camp.WHITE;
 
+import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.piece.Type;
@@ -21,7 +22,7 @@ public class Score {
         this.value = value;
     }
 
-    public static Map<Camp, Score> of(Board board) {
+    static Map<Camp, Score> of(Board board) {
         Map<Camp, Score> scores = new EnumMap<>(Camp.class);
         scores.put(WHITE, of(board, WHITE));
         scores.put(BLACK, of(board, BLACK));
@@ -34,7 +35,7 @@ public class Score {
                 .sum());
     }
 
-    public static Camp winnerOf(Board board) {
+    static Camp winnerOf(Board board) {
         Camp winnerByKing = winnerByKing(board);
         if (winnerByKing != NONE) {
             return winnerByKing;

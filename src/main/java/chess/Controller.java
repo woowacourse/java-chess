@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.Camp;
 import chess.domain.ChessGame;
-import chess.domain.Score;
+import chess.domain.gamestate.Score;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
