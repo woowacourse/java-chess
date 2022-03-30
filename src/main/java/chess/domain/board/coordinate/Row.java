@@ -32,4 +32,8 @@ public enum Row {
     public int gap(Row row) {
         return row.value - value;
     }
+
+    public boolean isSame(int row) {
+        return this.value == row;
+    }
 }

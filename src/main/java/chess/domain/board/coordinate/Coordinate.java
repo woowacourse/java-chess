@@ -49,7 +49,7 @@ public class Coordinate {
     }
 
     public boolean isPawnStartRow() {
-        return row.getValue() == BLACK_PAWN_START_ROW || row.getValue() == WHITE_PAWN_START_ROW;
+        return row.isSame(BLACK_PAWN_START_ROW) || row.isSame(WHITE_PAWN_START_ROW);
     }
 
     public int columnGap(Coordinate to) {
