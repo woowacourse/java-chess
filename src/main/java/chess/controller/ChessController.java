@@ -17,18 +17,28 @@ public class ChessController {
         Board board = Board.create(Pieces.create());
         Turn turn = Turn.init();
         command = command.turnState(input);
-        while (!command.isEnd() || board.isKingDead()) {
-            if (command.isMove()) {
-                board.move(command.getSourcePosition(), command.getTargetPosition(), turn);
-                turn = turn.change();
-            }
-            OutputView.printBoard(board.getPieces());
-            command = command.turnState(InputView.inputCommand());
-        }
+        command = progressGame(command, board, turn);
         OutputView.printFinishMessage();
         command = command.turnFinalState(InputView.inputCommand());
         if (command.isStatus()) {
             OutputView.printFinalResult(board.getWinTeam(), board.getWhiteTeamScore(), board.getBlackTeamScore());
         }
+    }
+
+    private Command progressGame(Command command, Board board, Turn turn) {
+        while (!command.isEnd() || board.isKingDead()) {
+            turn = move(command, board, turn);
+            OutputView.printBoard(board.getPieces());
+            command = command.turnState(InputView.inputCommand());
+        }
+        return command;
+    }
+
+    private Turn move(Command command, Board board, Turn turn) {
+        if (command.isMove()) {
+            board.move(command.getSourcePosition(), command.getTargetPosition(), turn);
+            turn = turn.change();
+        }
+        return turn;
     }
 }
