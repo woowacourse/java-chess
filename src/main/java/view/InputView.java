@@ -77,18 +77,18 @@ public class InputView {
     public static Position responseSource() {
         System.out.print("source 위치를 입력하세요(예, b2) : ");
         String source = sc.nextLine();
-        checkPositionSize(source);
+        validatePositionSize(source);
         return generatePosition(source);
     }
 
     public static Position responseTarget() {
         System.out.print("target 위치를 입력하세요(예, b7) : ");
         String source = sc.nextLine();
-        checkPositionSize(source);
+        validatePositionSize(source);
         return generatePosition(source);
     }
 
-    private static void checkPositionSize(final String source) {
+    private static void validatePositionSize(final String source) {
         if (source.length() != POSITION_SIZE) {
             throw new IllegalArgumentException("[ERROR] 위치 입력이 잘못 입력되었습니다.");
         }

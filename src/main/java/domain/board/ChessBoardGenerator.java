@@ -40,7 +40,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createTeamBoard(final Map<Position, Piece> board, final Team team) {
-        checkTeamNull(team);
+        validateTeamNull(team);
         createInitPawn(board, team);
         createInitRook(board, team);
         createInitKnight(board, team);
@@ -49,7 +49,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
         createInitKing(board, team);
     }
 
-    private void checkTeamNull(Team team) {
+    private void validateTeamNull(Team team) {
         if (team == null) {
             throw new IllegalArgumentException("[ERROR] Team 값은 지정되어야 합니다.");
         }
