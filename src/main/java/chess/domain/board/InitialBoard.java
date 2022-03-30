@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import static chess.domain.board.Position.MAX_POSITION;
+import static chess.domain.board.Position.MIN_POSITION;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;
@@ -26,24 +29,41 @@ public class InitialBoard {
 	}
 
 	public static Map<Position, Piece> createBoard() {
+		final Map<Position, Piece> board = createBlankBoard();
+		return addPieces(board);
+	}
+
+	private static Map<Position, Piece> createBlankBoard() {
 		final Map<Position, Piece> board = new HashMap<>();
 		for (Position position : Position.getPositions()) {
 			board.put(position, new Blank());
 		}
-
-		List<Piece> blackSpecials = initSpecialBuilder(Team.BLACK);
-		List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
-		for (int i = Position.MIN_POSITION; i <= Position.MAX_POSITION; i++) {
-			board.put(Position.of(INITIAL_BLACK_ROW, i), blackSpecials.get(i));
-			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i), new Pawn(Team.BLACK));
-
-			board.put(Position.of(INITIAL_WHITE_ROW, i), whiteSpecials.get(i));
-			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i), new Pawn(Team.WHITE));
-		}
 		return board;
 	}
 
-	private static List<Piece> initSpecialBuilder(Team team) {
+	private static Map<Position, Piece> addPieces(final Map<Position, Piece> board) {
+		addBlackPieces(board);
+		addWhitePieces(board);
+		return board;
+	}
+
+	private static void addBlackPieces(final Map<Position, Piece> board) {
+		List<Piece> specialPieces = createInitSpecialPieces(Team.BLACK);
+		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
+			board.put(Position.of(INITIAL_BLACK_ROW, i), specialPieces.get(i));
+			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i), new Pawn(Team.BLACK));
+		}
+	}
+
+	private static void addWhitePieces(final Map<Position, Piece> board) {
+		List<Piece> whiteSpecials = createInitSpecialPieces(Team.WHITE);
+		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
+			board.put(Position.of(INITIAL_WHITE_ROW, i), whiteSpecials.get(i));
+			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i), new Pawn(Team.WHITE));
+		}
+	}
+
+	private static List<Piece> createInitSpecialPieces(Team team) {
 		List<Piece> pieces = new ArrayList<>();
 		pieces.add(new Blank());
 		pieces.add(new Rook(team));
