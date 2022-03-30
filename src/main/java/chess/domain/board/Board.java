@@ -24,7 +24,7 @@ public class Board {
         return new Board(generator.generate());
     }
 
-    public boolean move(List<String> arguments, Color turnColor) {
+    public void move(List<String> arguments, Color turnColor) {
         validateArgumentSize(arguments);
         Point from = Point.of(arguments.get(0));
         Point to = Point.of(arguments.get(1));
@@ -33,8 +33,6 @@ public class Board {
         Piece toPiece = pointPieces.get(to);
         validateFromAndToPlace(turnColor, fromPiece, toPiece);
         movePiece(from, to, fromPiece);
-
-        return toPiece.isSameType(PieceType.KING);
     }
 
     private void validateArgumentSize(List<String> arguments) {
@@ -65,6 +63,12 @@ public class Board {
         fromPiece.move(copyOfPointPieces, from, to);
         pointPieces.put(to, fromPiece);
         pointPieces.put(from, Empty.getInstance());
+    }
+
+    public boolean isKingDead(Color turnColor) {
+        return pointPieces.values().stream()
+                .noneMatch(piece -> piece.isSameType(PieceType.KING) &&
+                        piece.isSameColor(turnColor));
     }
 
     public Map<Color, Double> calculateScore() {

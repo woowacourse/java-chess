@@ -73,8 +73,8 @@ class BoardTest {
                 Point.of("e1"), new Queen(Color.WHITE)
         ));
 
-        boolean isKingDead = board.move(arguments, Color.WHITE);
-        assertThat(isKingDead).isTrue();
+        board.move(arguments, Color.WHITE);
+        assertThat(board.isKingDead(Color.BLACK)).isTrue();
     }
 
     @Test
@@ -83,8 +83,8 @@ class BoardTest {
         List<String> arguments = List.of("a2", "a3");
         Board board = BoardFixtures.initial();
 
-        boolean isKingDead = board.move(arguments, Color.WHITE);
-        assertThat(isKingDead).isFalse();
+        board.move(arguments, Color.WHITE);
+        assertThat(board.isKingDead(Color.BLACK)).isFalse();
     }
 
     @Test
