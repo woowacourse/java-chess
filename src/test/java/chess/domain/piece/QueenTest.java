@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class QueenTest {
 
         assertThatThrownBy(() -> queen.checkMoveRange(emptyBoard, Position.from("e5"), Position.from("f7")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
+                .hasMessage("이동 불가한 위치입니다.");
     }
 
     @DisplayName("퀸의 이동 경로에 다른 기물이 있을 경우 예외 발생")

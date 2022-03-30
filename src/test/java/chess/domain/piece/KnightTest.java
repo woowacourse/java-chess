@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,6 +34,6 @@ class KnightTest {
 
         assertThatThrownBy(() -> knight.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
+                .hasMessage("이동 불가한 위치입니다.");
     }
 }

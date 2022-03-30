@@ -1,15 +1,18 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
+import chess.domain.piece.notation.ColorNotation;
+import chess.domain.piece.notation.PieceNotation;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public final class King extends Piece {
 
-    private static final int KING_SCORE = 0;
     private static final int ONE_STEP = 1;
 
     public King(final Color color) {
-        super(color, PieceNotation.KING, KING_SCORE);
+        super(new ColorNotation(color, PieceNotation.KING), Direction.everyDirection());
     }
 
     @Override

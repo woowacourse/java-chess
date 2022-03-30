@@ -1,12 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class KingTest {
@@ -59,5 +63,13 @@ public class KingTest {
         assertThatThrownBy(() -> new King(Color.WHITE).checkMoveRange(emptyBoard, Position.from("e5"), Position.from("a1")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹은 모든 방향으로 한 칸 이동 가능합니다.");
+    }
+
+    @DisplayName("유효한 범위 이동시")
+    @ParameterizedTest
+    @ValueSource(strings = {"d6", "e6", "f6", "f5", "f4", "e4", "d4", "d5"})
+    void validMove(final String validPosition) {
+        assertThatCode(() -> new King(Color.WHITE).checkMoveRange(emptyBoard, Position.from("e5"), Position.from(validPosition)))
+                .doesNotThrowAnyException();
     }
 }

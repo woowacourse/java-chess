@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +50,7 @@ public class BishopTest {
 
         assertThatThrownBy(() -> bishop.checkMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("비숍은 대각선 방향만 이동할 수 있습니다.");
+                .hasMessageContaining("이동 불가한 위치입니다.");
     }
 
     @DisplayName("비숍 이동 경로에 기물이 있을 경우 예외발생")

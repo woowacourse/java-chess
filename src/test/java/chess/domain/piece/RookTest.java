@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.notation.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -64,7 +65,7 @@ public class RookTest {
 
         assertThatThrownBy(() -> rook.checkMoveRange(emptyBoard, Position.from("d4"), Position.from(toPosition)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("룩은 대각선으로 이동할 수 없습니다.");
+                .hasMessageContaining("이동 불가한 위치입니다.");
     }
 
     @DisplayName("룩 이동거리 사이에 기물이 있는 경우 예외")
