@@ -9,10 +9,9 @@ import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 import static chess.domain.piece.Direction.W;
 
-import chess.domain.board.Position;
 import java.util.List;
 
-public class King extends Piece {
+public class King extends RangedPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(E, S, W, N, NE, SE, SW, NW);
     private static final int POSSIBLE_DISTANCE = 1;
@@ -26,23 +25,14 @@ public class King extends Piece {
         return false;
     }
 
-    @Override
-    public Direction findValidDirection(final Position current, final Position target) {
-        final int columnDifference = target.calculateColumnDifference(current);
-        final int rowDifference = target.calculateRowDifference(current);
-        final Direction direction = Direction.calculate(columnDifference, rowDifference);
-        validateDirection(direction);
-        validateRange(columnDifference, rowDifference);
-        return direction;
-    }
-
-    private void validateDirection(final Direction direction) {
+    protected void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }
     }
 
-    private void validateRange(final int columnDifference, final int rowDifference) {
+    @Override
+    protected void validateRange(final int columnDifference, final int rowDifference) {
         if (isInvalidRange(columnDifference, rowDifference)) {
             throw new IllegalArgumentException(INVALID_POSITION);
         }

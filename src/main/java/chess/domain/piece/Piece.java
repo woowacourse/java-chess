@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,22 +17,12 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Direction findValidDirection(Position current, Position target);
+    public abstract List<Position> calculatePathToValidate(final Position current, final Position target,
+                                                           final Piece targetPiece);
 
-    public List<Position> calculatePathToValidate(final Position current, final Position target,
-                                                  final Piece targetPiece) {
-        Direction direction = findValidDirection(current, target);
-        List<Position> path = new ArrayList<>();
-        Position moved = current.move(direction);
-        while (!moved.equals(target)) {
-            path.add(moved);
-            moved = moved.move(direction);
-        }
-        if (hasSameColor(targetPiece)) {
-            path.add(target);
-        }
-        return path;
-    }
+    protected abstract Direction findValidDirection(Position current, Position target);
+
+    protected abstract void validateDirection(Direction direction);
 
     public abstract boolean isEmpty();
 

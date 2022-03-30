@@ -12,9 +12,10 @@ import static chess.domain.piece.Direction.SWW;
 import chess.domain.board.Position;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends RangedPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+    private static final int POSSIBLE_DISTANCE = 2;
 
     public Knight(final Color color) {
         super(PieceType.KNIGHT, color);
@@ -34,10 +35,20 @@ public class Knight extends Piece {
         return direction;
     }
 
-    private void validateDirection(final Direction direction) {
+    protected void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }
     }
 
+    @Override
+    protected void validateRange(final int columnDifference, final int rowDifference) {
+        if (isInvalidRange(columnDifference, rowDifference)) {
+            throw new IllegalArgumentException(INVALID_POSITION);
+        }
+    }
+
+    private boolean isInvalidRange(final int columnDifference, final int rowDifference) {
+        return Math.abs(columnDifference) > POSSIBLE_DISTANCE || Math.abs(rowDifference) > POSSIBLE_DISTANCE;
+    }
 }

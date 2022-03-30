@@ -12,7 +12,7 @@ import static chess.domain.piece.Direction.W;
 import chess.domain.board.Position;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Queen extends CommonPiece {
 
     private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E, NE, SE, SW, NW);
 
@@ -34,7 +34,8 @@ public class Queen extends Piece {
         return direction;
     }
 
-    private void validateDirection(final Direction direction) {
+    @Override
+    protected void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }

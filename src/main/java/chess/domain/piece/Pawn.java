@@ -32,6 +32,16 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public List<Position> calculatePathToValidate(final Position current, final Position target,
+                                                  final Piece targetPiece) {
+        Direction direction = findValidDirection(current, target);
+        if (direction.isDiagonal()) {
+            return calculateDiagonalPath(targetPiece);
+        }
+        return calculateStraightPath(current, target, direction);
+    }
+
+    @Override
     public Direction findValidDirection(final Position current, final Position target) {
         final int columnDifference = target.calculateColumnDifference(current);
         final int rowDifference = target.calculateRowDifference(current);
@@ -43,16 +53,6 @@ public class Pawn extends Piece {
         }
         validateRange(columnDifference, rowDifference);
         return direction;
-    }
-
-    @Override
-    public List<Position> calculatePathToValidate(final Position current, final Position target,
-                                                  final Piece targetPiece) {
-        Direction direction = findValidDirection(current, target);
-        if (direction.isDiagonal()) {
-            return calculateDiagonalPath(targetPiece);
-        }
-        return calculateStraightPath(current, target, direction);
     }
 
     private List<Position> calculateStraightPath(Position current, Position target, Direction direction) {
@@ -83,7 +83,8 @@ public class Pawn extends Piece {
         return Math.abs(columnDifference) > POSSIBLE_DISTANCE || Math.abs(rowDifference) > POSSIBLE_INITIAL_DISTANCE;
     }
 
-    private void validateDirection(final Direction direction) {
+    @Override
+    protected void validateDirection(final Direction direction) {
         if (isInvalidDirection(direction)) {
             throw new IllegalArgumentException(INVALID_DIRECTION);
         }
