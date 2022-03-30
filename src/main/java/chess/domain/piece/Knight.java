@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private List<Direction> directions = List.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW, Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);
+
     public Knight(Team team, Position position) {
         super(team, "N", position, 2.5);
     }

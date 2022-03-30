@@ -53,7 +53,8 @@ public class Pawn extends Piece {
         return Direction.find(rowDifference, colDifference, directions);
     }
 
-    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
+    @Override
+    protected List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
         while (!(col == destination.getCol() && row == destination.getRow())) {
             col = col.plusColumn(direction.getXDegree());

@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.*;
+import chess.domain.Direction;
+import chess.domain.Position;
+import chess.domain.Team;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -24,15 +25,5 @@ public class Rook extends Piece {
         return getPath(destination, direction,
                 position.getCol().plusColumn(direction.getXDegree()),
                 position.getRow().plusRow(direction.getYDegree()));
-    }
-
-    private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
-        List<Position> positions = new ArrayList<>();
-        while (!(col == destination.getCol() && row == destination.getRow())) {
-            positions.add(new Position(col, row));
-            col = col.plusColumn(direction.getXDegree());
-            row = row.plusRow(direction.getYDegree());
-        }
-        return positions;
     }
 }
