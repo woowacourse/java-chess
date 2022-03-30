@@ -35,7 +35,38 @@ public class Position {
     }
 
     public static Position of(final char column, final char row) {
-        return POSITIONS.computeIfAbsent(Character.toString(column) + Character.toString(row)
+        return POSITIONS.computeIfAbsent(Character.toString(column) + row
                 , k -> new Position(column, row));
+    }
+
+    public static Position of(final int column, final int row) {
+        return Position.of((char) column, (char) row);
+    }
+
+    public static Position from(final String positionString) {
+        validatePositionStringLengthEnough(positionString);
+        char column = positionString.charAt(0);
+        char row = positionString.charAt(1);
+        return Position.of(column, row);
+    }
+
+    private static void validatePositionStringLengthEnough(final String positionString) {
+        if (positionString.length() != 2) {
+            throw new IllegalArgumentException("Position 문자열은 길이가 2여야 합니다.");
+        }
+    }
+
+    public Position move(final int columnAmount, final int rowAmount) {
+        return Position.of(column + columnAmount, row + rowAmount);
+    }
+
+    public boolean isNotMovableWith(final int columnAmount, final int rowAmount) {
+        return COLUMN_RANGE.isOutOfRange(column + columnAmount)
+                || ROW_RANGE.isOutOfRange(row + rowAmount);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" + column + row + '}';
     }
 }

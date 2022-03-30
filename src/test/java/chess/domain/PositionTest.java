@@ -36,4 +36,13 @@ class PositionTest {
         final Position position2 = Position.of(column, row);
         assertThat(position1).isSameAs(position2);
     }
+
+    @DisplayName("Position 문자열의 길이는 2여야 한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"a22", "b2c", "aaa"})
+    void stringOutOfLengthException(final String position) {
+        assertThatThrownBy(() -> Position.from(position))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Position 문자열은 길이가 2여야 합니다.");
+    }
 }

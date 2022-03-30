@@ -18,6 +18,10 @@ public enum PositionRange {
         return (target < allowedMinimum || allowedMaximum < target);
     }
 
+    public boolean isOutOfRange(final int target) {
+        return isOutOfRange((char) target);
+    }
+
     public char getAllowedMinimum() {
         return allowedMinimum;
     }
