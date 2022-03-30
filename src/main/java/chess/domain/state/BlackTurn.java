@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class BlackTurn extends Playing {
-
     public BlackTurn(Map<Position, Piece> board) {
         super(board);
     }

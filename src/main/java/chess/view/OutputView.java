@@ -34,9 +34,9 @@ public class OutputView {
         System.out.println("이긴 팀은 " + gameState.getTeam());
     }
 
-    public static void printStatus(double teamScore, double score) {
-        System.out.printf("WHITE팀 점수는%f\n" +
-                "BLACK팀 점수는%f\n", teamScore, score);
+    public static void printStatus(double whiteScore, double blackScore) {
+        System.out.printf("WHITE팀 점수는%d\n" +
+                "BLACK팀 점수는%d\n", (int) whiteScore, (int) blackScore);
     }
 
     public static void errorMessage(String message) {

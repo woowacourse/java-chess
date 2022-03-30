@@ -3,11 +3,10 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.position.Position;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends Piece {
-    private List<Direction> directions = List.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW, Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);
-
     public Knight(Team team, Position position) {
         super(team, "N", position, 2.5);
     }
@@ -15,7 +14,7 @@ public class Knight extends Piece {
     private Direction findDirection(Position destination) {
         int colDifference = destination.getColDifference(position.getCol());
         int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, directions);
+        return Direction.find(rowDifference, colDifference, getDirections());
     }
 
     @Override
@@ -27,5 +26,10 @@ public class Knight extends Piece {
     @Override
     public boolean isBlank() {
         return false;
+    }
+
+    private List<Direction> getDirections() {
+        return Arrays.asList(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
+                Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);
     }
 }

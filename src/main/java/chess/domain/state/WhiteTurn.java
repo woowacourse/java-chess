@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class WhiteTurn extends Playing {
-
     public WhiteTurn(Map<Position, Piece> board) {
         super(board);
     }

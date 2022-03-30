@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Playing implements GameState {
-
     private final Map<Position, Piece> board;
 
     public Playing(Map<Position, Piece> board) {

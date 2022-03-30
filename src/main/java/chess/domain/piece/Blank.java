@@ -9,7 +9,6 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class Blank extends Piece {
-
     public Blank(Team team, Position position) {
         super(team, ".", position, 0);
     }

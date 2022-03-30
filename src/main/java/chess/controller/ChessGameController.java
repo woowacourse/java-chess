@@ -19,9 +19,9 @@ public class ChessGameController {
     public void run() {
         OutputView.printStartMessage();
         List<String> input = InputView.requestCommand();
-        GameState gameState = new WhiteTurn(BoardInitialize.create());
         Command command = Command.of(input.get(commandIndex));
         if (command.isStart()) {
+            GameState gameState = new WhiteTurn(BoardInitialize.create());
             startGame(gameState);
         }
     }

@@ -3,11 +3,10 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.position.Position;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
-    List<Direction> directions = List.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
-
     public Rook(Team team, Position position) {
         super(team, "R", position, 5);
     }
@@ -15,7 +14,7 @@ public class Rook extends Piece {
     private Direction findDirection(Position destination) {
         int colDifference = destination.getColDifference(position.getCol());
         int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, directions);
+        return Direction.find(rowDifference, colDifference, getDirections());
     }
 
     @Override
@@ -24,5 +23,9 @@ public class Rook extends Piece {
         return getPath(destination, direction,
                 position.getCol().plusColumn(direction.getXDegree()),
                 position.getRow().plusRow(direction.getYDegree()));
+    }
+
+    private List<Direction> getDirections() {
+        return Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     }
 }

@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public interface GameState {
-
     Piece getPiece(Position position);
 
     GameState move(String source, String destination);
