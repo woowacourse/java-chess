@@ -45,20 +45,15 @@ public class PawnTest {
     @MethodSource("invalidParameters")
     @DisplayName("폰이 이동할 수 없는 곳으로 이동")
     void pawnInvalidTest(Position source, Position target, String testName) {
-        board.move(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Three));
-        board.move(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Six));
+        board.putPiece(Position.of(File.d, Rank.Three), new Pawn(Color.White));
+        board.putPiece(Position.of(File.d, Rank.Six), new Pawn(Color.Black));
 
-        board.putPiece(Position.of(File.d, Rank.Two), new Pawn(Color.White));
-        board.putPiece(Position.of(File.d, Rank.Seven), new Pawn(Color.Black));
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> invalidParameters() {
         return Stream.of(
-            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.d, Rank.Five), "한번 움직인 화이트 폰은 두칸 이동할 수 없다."),
-            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.d, Rank.Four), "한번 움직인 블랙 폰은 두칸 이동할 수 없다."),
-
             Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.d, Rank.Two), "화이트 폰은 뒤로 이동할 수 없다."),
             Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.d, Rank.Seven), "블랙 폰은 뒤로 이동할 수 없다."),
 
@@ -97,6 +92,24 @@ public class PawnTest {
             Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Five), "블랙은 아래로 두칸 이동할 수 있다."),
             Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.c, Rank.Six), "블랙 왼쪽 아래의 기물을 잡고 이동할 수 있다."),
             Arguments.of(Position.of(File.d, Rank.Seven), Position.of(File.e, Rank.Six), "블랙 오른쪽 아래의 기물을 잡고 이동할 수 있다.")
+        );
+    }
+
+    @ParameterizedTest(name = "{index}: {2}")
+    @MethodSource("movedPawnInvalidParameters")
+    @DisplayName("한번 움직인 폰이 이동할 수 없는 곳으로 이동")
+    void movedPawnTest(Position source, Position target, String testName) {
+        board.move(Position.of(File.d, Rank.Two), Position.of(File.d, Rank.Three));
+        board.move(Position.of(File.d, Rank.Seven), Position.of(File.d, Rank.Six));
+
+        assertThatThrownBy(() -> board.move(source, target))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> movedPawnInvalidParameters() {
+        return Stream.of(
+            Arguments.of(Position.of(File.d, Rank.Three), Position.of(File.d, Rank.Five), "한번 움직인 화이트 폰은 두칸 이동할 수 없다."),
+            Arguments.of(Position.of(File.d, Rank.Six), Position.of(File.d, Rank.Four), "한번 움직인 블랙 폰은 두칸 이동할 수 없다.")
         );
     }
 }
