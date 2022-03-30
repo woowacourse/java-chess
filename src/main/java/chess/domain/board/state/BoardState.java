@@ -24,4 +24,6 @@ public interface BoardState {
     End judgeWinner();
 
     Playing judgeTurn();
+
+    String findTurn();
 }

@@ -11,29 +11,14 @@ public abstract class Playing extends GameStarted {
 
     private static final String INVALID_MOVEMENT_EXCEPTION_MESSAGE = "이동이 불가능한 위치입니다.";
     private static final String OBSTACLE_EXCEPTION_MESSAGE = "경로에 기물이 존재합니다.";
-    private static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
+    static final String IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE = "본인의 기물이 아닙니다.";
 
     public Playing(Map<Integer, Rank> ranks) {
         super(ranks);
     }
 
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public Winner findWinner() {
-        throw new IllegalStateException("게임이 아직 진행 중 입니다.");
-    }
-
-    @Override
-    public BoardState move(Position start, Position target) {
+    BoardState movePiece(Position start, Position target) {
         Piece selected = getPiece(start);
-
-        if (selected.isBlack() != isBlackTurn()) {
-            throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
-        }
 
         if (selected.isKnight()) {
             return jump(start, target);
@@ -100,10 +85,20 @@ public abstract class Playing extends GameStarted {
         return judgeTurn();
     }
 
-    private Piece getPiece(Position position) {
+    Piece getPiece(Position position) {
         return ranks.get(position.getY())
                 .getPieces()
                 .get(position.getX());
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public Winner findWinner() {
+        throw new IllegalStateException("게임이 아직 진행 중 입니다.");
     }
 
     @Override

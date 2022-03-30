@@ -19,7 +19,7 @@ public class OutputView {
 
     public static void printBoard(BoardState boardState) {
         System.out.println();
-        System.out.printf("   [ %s팀의 차례입니다 ]%n", findTurn(boardState));
+        System.out.printf("   [ %s팀의 차례입니다 ]%n", boardState.findTurn());
         System.out.println("      Black Side");
         System.out.println("    a b c d e f g h");
         System.out.println("  ┌-----------------┐");
@@ -34,13 +34,6 @@ public class OutputView {
         System.out.println("    a b c d e f g h");
         System.out.println("      White Side");
         System.out.println();
-    }
-
-    private static String findTurn(BoardState boardState) {
-        if (boardState.isBlackTurn()) {
-            return "흑";
-        }
-        return "백";
     }
 
     public static void printResult(BoardState boardState) {

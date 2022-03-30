@@ -114,4 +114,19 @@ public abstract class End extends GameStarted {
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
+
+    @Override
+    public End judgeWinner() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
+    }
+
+    @Override
+    public Playing judgeTurn() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
+    }
+
+    @Override
+    public String findTurn() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
+    }
 }
