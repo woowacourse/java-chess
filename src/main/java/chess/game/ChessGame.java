@@ -20,13 +20,10 @@ public class ChessGame {
     public void execute(Command command) {
         if (command.isEnd()) {
             state = state.finished();
-            return;
         }
         if (command.isMove()) {
             state = state.move(command.from(), command.to());
-            return;
         }
-        throw new IllegalArgumentException("명령어 입력이 잘못되었습니다.");
     }
 
     public boolean isFinished() {

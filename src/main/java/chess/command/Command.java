@@ -1,36 +1,62 @@
 package chess.command;
 
 import chess.position.Position;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public interface Command {
+public class Command {
 
-    static Command from(String command) {
-        if (command.equals("start")) {
-            return new StartCommand();
-        }
-        if (command.equals("end")) {
-            return new EndCommand();
-        }
-        if (command.startsWith("move")) {
-            return new MoveCommand(command);
-        }
-        if (command.equals("status")) {
-            return new StatusCommand();
-        }
-        throw new IllegalArgumentException("잘못된 명령어를 입력하셨습니다.");
+    public static final String DELIMITER = " ";
+    public static final int COMMAND_INDEX = 0;
+    public static final int POSITION_FROM = 0;
+    public static final int POSITION_TO = 1;
+    public static final int POSITION_START = 1;
+    public static final int POSITION_END = 3;
+
+    private final CommandType commandType;
+    private final List<String> commandArguments;
+
+    private Command(CommandType commandType, List<String> commandArguments) {
+        this.commandType = commandType;
+        this.commandArguments = commandArguments;
     }
 
-    boolean isFinished();
+    public static Command from(String commands) {
+        List<String> splitCommands = Arrays.stream(commands.split(DELIMITER))
+            .collect(Collectors.toList());
+        List<String> positions = new ArrayList<>();
 
-    boolean isStart();
+        CommandType commandType = CommandType.findByCommand(splitCommands.get(COMMAND_INDEX));
+        if (commandType == CommandType.MOVE) {
+            positions = splitCommands.subList(POSITION_START, POSITION_END);
+        }
 
-    boolean isEnd();
+        return new Command(commandType, positions);
+    }
 
-    boolean isMove();
+    public boolean isStart() {
+        return commandType == CommandType.START;
+    }
 
-    boolean isStatus();
+    public boolean isEnd() {
+        return commandType == CommandType.END;
+    }
 
-    Position from();
+    public boolean isMove() {
+        return commandType == CommandType.MOVE;
+    }
 
-    Position to();
+    public boolean isStatus() {
+        return commandType == CommandType.STATUS;
+    }
+
+    public Position from() {
+        return Position.from(commandArguments.get(POSITION_FROM));
+    }
+
+    public Position to() {
+        return Position.from(commandArguments.get(POSITION_TO));
+    }
 }
