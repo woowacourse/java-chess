@@ -12,19 +12,19 @@ public enum File {
     G(7),
     H(8);
 
-    private final int coordinate;
+    private final int value;
 
-    File(int coordinate) {
-        this.coordinate = coordinate;
+    File(int value) {
+        this.value = value;
     }
 
-    public int getCoordinate() {
-        return coordinate;
+    public int getValue() {
+        return value;
     }
 
     public static File findFile(int value) {
         return Arrays.stream(File.values())
-            .filter(file -> file.coordinate == value)
+            .filter(file -> file.value == value)
             .findAny()
             .orElseThrow();
     }

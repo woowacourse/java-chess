@@ -59,11 +59,11 @@ public class Position {
     }
 
     public int getFileDifference(Position position) {
-        return file.getCoordinate() - position.file.getCoordinate();
+        return file.getValue() - position.file.getValue();
     }
 
     public Position getNextPosition(int fileDifference, int rankDifference) {
-        int newFile = file.getCoordinate() + fileDifference;
+        int newFile = file.getValue() + fileDifference;
         int newRank = rank.getValue() + rankDifference;
 
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
