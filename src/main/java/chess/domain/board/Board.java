@@ -24,7 +24,7 @@ public class Board {
             return false;
         }
         Position to = findKingPosition(turn);
-        return checkAnyMatch(to);
+        return checkKingAnyMatch(to);
     }
 
     private Position findKingPosition(Team team) {
@@ -36,7 +36,7 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("King 이 존재하지 않습니다."));
     }
 
-    private boolean checkAnyMatch(Position to) {
+    private boolean checkKingAnyMatch(Position to) {
         return findSameTeamPieces(turn.change())
                 .stream()
                 .anyMatch(entry -> validCheck(entry.getKey(), to, entry.getValue()));
@@ -74,7 +74,7 @@ public class Board {
 
     private boolean canMoveKing(List<Position> kingPaths) {
         for (Position to : kingPaths) {
-            if (!checkAnyMatch(to)) {
+            if (!checkKingAnyMatch(to)) {
                 return true;
             }
         }
