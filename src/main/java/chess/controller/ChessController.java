@@ -32,7 +32,7 @@ public class ChessController {
             command = command.turnState(input);
             return command;
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return startGame();
         }
 
@@ -66,13 +66,12 @@ public class ChessController {
                 turn = turn.change();
             }
             return turn;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            System.err.println(e.getMessage());
             OutputView.printBoard(convertToPieceDtos(board.getPieces()));
             command = turnState(command);
             return nextTurn(command, board, turn);
         }
-
     }
 
     private void finishGame(Command command, Board board) {
@@ -86,7 +85,7 @@ public class ChessController {
         try {
             return command.turnState(InputView.inputCommand());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             return turnState(command);
         }
     }
