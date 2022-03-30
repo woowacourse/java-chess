@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.controller.Command;
+
 class CommandTest {
 
     @Test
@@ -59,15 +61,4 @@ class CommandTest {
             .isThrownBy(() -> Command.find(input));
     }
 
-    @Test
-    @DisplayName("execute 명령 실행시 변경된 상태를 반환한다.")
-    void returnChangedState() {
-        List<String> ignored = new ArrayList<>();
-        GameState state = new Ready();
-        Command command = Command.START;
-
-        GameState executed = command.execute(state, ignored);
-
-        assertThat(executed).isInstanceOf(Running.class);
-    }
 }

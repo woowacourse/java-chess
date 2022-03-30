@@ -6,6 +6,7 @@ import chess.domain.piece.move.Direction;
 
 public class Route {
 
+    private static final int ARGUMENT_SIZE = 2;
     private static final int ARGUMENT_FROM_INDEX = 0;
     private static final int ARGUMENT_TO_INDEX = 1;
 
@@ -24,7 +25,7 @@ public class Route {
     }
 
     private static void validateSize(List<String> arguments) {
-        if (arguments.size() != 2) {
+        if (arguments.size() != ARGUMENT_SIZE) {
             throw new IllegalArgumentException("[ERROR] 출발지와 도착자가 올바르지 않습니다.(move a1 a2)");
         }
     }

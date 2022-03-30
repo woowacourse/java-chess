@@ -4,20 +4,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import chess.controller.Command;
+
 public class Request {
 
-    private final String command;
+    private static final String DELIMITER = " ";
+
+    private final Command command;
     private final List<String> arguments;
 
-    public Request(String command, List<String> arguments) {
+    public Request(Command command, List<String> arguments) {
         this.command = command;
         this.arguments = arguments;
     }
 
     public static Request of(String input) {
-        String[] split = input.split(" ");
+        validateNull(input);
+        String[] split = input.split(DELIMITER);
+
+        Command command = Command.find(split[0]);
         List<String> arguments = toArguments(split);
-        return new Request(split[0], arguments);
+        return new Request(command, arguments);
+    }
+
+    private static void validateNull(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 입력이 잘못되었습니다.");
+        }
     }
 
     private static List<String> toArguments(String[] split) {
@@ -26,7 +39,7 @@ public class Request {
             .collect(Collectors.toList());
     }
 
-    public String getCommand() {
+    public Command getCommand() {
         return command;
     }
 
