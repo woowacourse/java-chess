@@ -65,8 +65,8 @@ public class Board {
         return pieces.getOrDefault(position, new EmptySpace());
     }
 
-    public double countPiece(final PieceType pieceType, final Color color) {
-        return (double) pieces.values()
+    public int countPiece(final PieceType pieceType, final Color color) {
+        return (int) pieces.values()
                 .stream()
                 .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
                 .count();
