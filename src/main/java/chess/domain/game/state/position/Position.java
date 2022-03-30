@@ -32,6 +32,6 @@ public class Position {
     }
 
     public Position findNext(Direction direction) {
-        return Position.of(file.findNext(direction.file()), rank.findNext(direction.rank()));
+        return Position.of(file.findNext(direction.getFile()), rank.findNext(direction.getRank()));
     }
 }
