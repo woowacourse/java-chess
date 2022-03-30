@@ -20,9 +20,6 @@ public class Score {
     private static final double KNIGHT_SCORE = 2.5;
     private static final int PAWN_INITIAL_SCORE = 1;
     private static final double PAWN_DUPLICATE_SCORE = 0.5;
-    private static final int GRATER = 1;
-    private static final int LESS = -1;
-    private static final int EQUAL = 0;
 
     private final double value;
 
@@ -70,13 +67,13 @@ public class Score {
         return count * PAWN_DUPLICATE_SCORE;
     }
 
-    public int decideResultValue(Score score) {
+    public Result decideResult(final Score score) {
         if (value > score.value) {
-            return GRATER;
+            return Result.WIN;
         } else if (value < score.value) {
-            return LESS;
+            return Result.LOSE;
         }
-        return EQUAL;
+        return Result.DRAW;
     }
 
     public double getValue() {

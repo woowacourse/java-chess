@@ -117,6 +117,20 @@ public class Board {
                 .count();
     }
 
+    public List<Piece> toPieceListWithoutPawn() {
+        return board.values()
+                .stream()
+                .filter(piece -> !piece.isPawn())
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<Piece> toPawnList() {
+        return board.values()
+                .stream()
+                .filter(Piece::isPawn)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(board));
     }

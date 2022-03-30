@@ -73,6 +73,6 @@ public enum Command {
         OutputView.printNewLine();
         OutputView.printScore(chessGame.getTurnName(), myScore.getValue());
         OutputView.printScore(chessGame.getOppositeTurnName(), opponentScore.getValue());
-        OutputView.printResult(chessGame.getTurnName(), Result.decide(myScore, opponentScore).getName());
+        OutputView.printResult(chessGame.getTurnName(), myScore.decideResult(opponentScore).getName());
     }
 }
