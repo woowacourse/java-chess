@@ -44,7 +44,7 @@ public class PawnTest {
         Position from = Position.valueOf(File.a, Rank.TWO);
         Position to = Position.valueOf(File.b, Rank.TWO);
 
-        assertThat(whitePawn.isMovable(from, to));
+        assertThat(whitePawn.isMovable(from, to)).isFalse();
     }
 
     @Test
