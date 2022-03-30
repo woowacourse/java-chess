@@ -4,21 +4,15 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Position;
-import chess.view.Output;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,8 +40,16 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("특정 위치에 있는 피스의 Color 가 일치하는 지 확인")
+    void isMatchedColor() {
+        Board board = new Board(new BoardInitializer());
+
+        assertThat(board.isMatchedColor(Position.from("a2"), Color.WHITE)).isTrue();
+    }
+
+    @Test
     @DisplayName("존재하지 않는 말을 선택한 경우 예외발생")
-    void move() {
+    void moveFromEmptyException() {
         Board emptyBoard = new Board(HashMap::new);
 
         assertThatThrownBy(() -> emptyBoard.move(Position.from("e5"), Position.from("e7")))
@@ -127,5 +129,21 @@ public class BoardTest {
         pieceExistBoard.put(Position.from("a2"), rook);
 
         return new Board(() -> pieceExistBoard);
+    }
+
+    @Test
+    @DisplayName("킹이 존재하는지 확인")
+    void hasKing() {
+        Board board = new Board(new BoardInitializer());
+
+        assertThat(board.hasKing(Color.WHITE)).isTrue();
+    }
+
+    @Test
+    @DisplayName("특정 위치에 피스가 존재하는지 확인")
+    void hasPiece() {
+        Board board = new Board(new BoardInitializer());
+
+        assertThat(board.hasPiece(Position.from("a2"))).isTrue();
     }
 }
