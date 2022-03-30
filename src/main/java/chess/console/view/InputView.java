@@ -1,5 +1,6 @@
 package chess.console.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -15,9 +16,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static String[] inputCommand() {
+    public static List<String> inputCommand() {
         try {
-            String[] inputs = scanner.nextLine().split(SEPERATOR, -1);
+            List<String> inputs = List.of(scanner.nextLine().split(SEPERATOR, -1));
             validInputs(inputs);
             return inputs;
         } catch (IllegalArgumentException e) {
@@ -26,8 +27,8 @@ public class InputView {
         }
     }
 
-    private static void validInputs(String[] inputs) {
-        int size = inputs.length;
+    private static void validInputs(List<String> inputs) {
+        int size = inputs.size();
         if (size != COMMAND_MIN_COUNT && size != COMMAND_MAX_COUNT) {
             throw new IllegalArgumentException("잘못된 명령어를 입력하셨습니다.");
         }

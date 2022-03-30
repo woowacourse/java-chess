@@ -4,6 +4,7 @@ import static chess.console.view.InputView.MENU_INDEX;
 
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
+import java.util.List;
 
 public class Ready implements State {
 
@@ -19,8 +20,8 @@ public class Ready implements State {
     }
 
     @Override
-    public State run(String[] inputs) {
-        Command command = Command.of(inputs[MENU_INDEX]);
+    public State run(List<String> inputs) {
+        Command command = Command.of(inputs.get(MENU_INDEX));
 
         if (command.isEnd()) {
             return new End();

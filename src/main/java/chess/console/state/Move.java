@@ -6,6 +6,7 @@ import static chess.console.view.InputView.TO_POSITION_INDEX;
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import java.util.List;
 
 public class Move implements State {
 
@@ -21,7 +22,7 @@ public class Move implements State {
     }
 
     @Override
-    public State run(String[] inputs) {
+    public State run(List<String> inputs) {
 
         if (board.isEmpty()) {
             OutputView.printStartWarning();
@@ -29,7 +30,7 @@ public class Move implements State {
         }
 
         try {
-            board.move(Position.of(inputs[FROM_POSITION_INDEX]), Position.of(inputs[TO_POSITION_INDEX]));
+            board.move(Position.of(inputs.get(FROM_POSITION_INDEX)), Position.of(inputs.get(TO_POSITION_INDEX)));
             OutputView.printBoard(board.getBoard());
 
         } catch (IllegalArgumentException e) {
