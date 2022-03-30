@@ -44,7 +44,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isOneOrTwoStepsAway(Position from, Position to) {
-        int rankDiff = from.rankDifference(to);
+        int rankDiff = from.rankDistance(to);
         if (rankDiff == DOUBLE_STEP_DISTANCE) {
             return atInitialPosition(from);
         }
@@ -76,8 +76,8 @@ public final class Pawn extends Piece {
     }
 
     private boolean isDiagonallyAdjacentRoute(Position from, Position to) {
-        int fileDiff = from.fileDifference(to);
-        int rankDiff = from.rankDifference(to);
+        int fileDiff = from.fileDistance(to);
+        int rankDiff = from.rankDistance(to);
 
         return fileDiff == ADJACENT_DISTANCE && rankDiff == ADJACENT_DISTANCE;
     }

@@ -23,14 +23,14 @@ public class Position {
         return PositionCache.getCache(positionKey);
     }
 
-    public int fileDifference(Position targetPosition) {
-        int fileRawDifference = file.valueDifference(toFile(targetPosition));
-        return Math.abs(fileRawDifference);
+    public int fileDistance(Position targetPosition) {
+        int fileDifference = file.valueDifference(toFile(targetPosition));
+        return Math.abs(fileDifference);
     }
 
-    public int rankDifference(Position targetPosition) {
-        int rankRawDifference = rank.valueDifference(toRank(targetPosition));
-        return Math.abs(rankRawDifference);
+    public int rankDistance(Position targetPosition) {
+        int rankDifference = rank.valueDifference(toRank(targetPosition));
+        return Math.abs(rankDifference);
     }
 
     public boolean hasRankOf(Rank rank) {
@@ -38,8 +38,8 @@ public class Position {
     }
 
     public Position oneStepToward(Position targetPosition) {
-        File nextFile = this.file.oneFileToward(toFile(targetPosition));
-        Rank nextRank = this.rank.oneRankToward(toRank(targetPosition));
+        File nextFile = file.oneFileToward(toFile(targetPosition));
+        Rank nextRank = rank.oneRankToward(toRank(targetPosition));
 
         return PositionCache.getCache(nextFile, nextRank);
     }
