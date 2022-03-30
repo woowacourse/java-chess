@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.piece.detail;
 
 public enum Name {
     KING("K"),

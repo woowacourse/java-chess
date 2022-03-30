@@ -1,7 +1,7 @@
 package chess.game;
 
-import static chess.piece.Color.BLACK;
-import static chess.piece.Color.WHITE;
+import static chess.piece.detail.Color.BLACK;
+import static chess.piece.detail.Color.WHITE;
 import static chess.position.Position.of;
 
 import chess.piece.*;

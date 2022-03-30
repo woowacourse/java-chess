@@ -1,6 +1,6 @@
 package chess.piece;
 
-import static chess.piece.Color.WHITE;
+import static chess.piece.detail.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.game.MoveCommand;

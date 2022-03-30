@@ -1,10 +1,10 @@
 package chess.game;
 
-import static chess.piece.Color.BLACK;
-import static chess.piece.Color.WHITE;
+import static chess.piece.detail.Color.BLACK;
+import static chess.piece.detail.Color.WHITE;
 
-import chess.piece.Color;
-import chess.piece.Direction;
+import chess.piece.detail.Color;
+import chess.piece.detail.Direction;
 import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.position.Column;

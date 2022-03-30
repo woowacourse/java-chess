@@ -1,11 +1,11 @@
 package chess.status;
 
-import static chess.piece.Color.BLACK;
-import static chess.piece.Color.WHITE;
+import static chess.piece.detail.Color.BLACK;
+import static chess.piece.detail.Color.WHITE;
 
 import chess.game.Board;
 import chess.game.MoveCommand;
-import chess.piece.Color;
+import chess.piece.detail.Color;
 import chess.view.Command;
 import java.util.Map;
 

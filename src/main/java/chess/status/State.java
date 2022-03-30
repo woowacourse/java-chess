@@ -2,7 +2,7 @@ package chess.status;
 
 import chess.game.Board;
 import chess.game.MoveCommand;
-import chess.piece.Color;
+import chess.piece.detail.Color;
 import chess.view.Command;
 import java.util.Map;
 
