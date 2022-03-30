@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.notation.Color;
-import chess.domain.piece.notation.PieceNotation;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -33,25 +32,18 @@ public final class Board {
         return value.get(position) != null;
     }
 
-    public void checkHasPiece(final List<Position> positions) {
-        for (final Position position : positions) {
-            checkHasPiece(position);
-        }
-    }
-
-    private void checkHasPiece(final Position position) {
-        if (value.get(position) != null) {
-            throw new IllegalArgumentException("이동 경로에 기물이 존재합니다.");
-        }
-    }
-
-    public Piece getPiece(final Position position) {
-        return value.get(position);
+    public boolean hasPiece(final List<Position> positions) {
+        return positions.stream()
+                .anyMatch(this::hasPiece);
     }
 
     public boolean hasKing(final Color color) {
         return value.values().stream()
-                .filter(piece -> piece.isKing())
+                .filter(Piece::isKing)
                 .anyMatch(piece -> piece.isSameColor(color));
+    }
+
+    public Piece getPiece(final Position position) {
+        return value.get(position);
     }
 }

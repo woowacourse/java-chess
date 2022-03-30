@@ -57,6 +57,6 @@ public class QueenTest {
         Piece queen = new Queen(Color.WHITE);
         assertThatThrownBy(() -> queen.checkMoveRange(mockBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 기물이 존재합니다.");
+                .hasMessage("이동 불가한 위치입니다.");
     }
 }

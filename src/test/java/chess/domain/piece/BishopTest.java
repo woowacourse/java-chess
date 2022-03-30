@@ -61,6 +61,6 @@ public class BishopTest {
 
         assertThatThrownBy(() -> bishop.checkMoveRange(board, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동 경로에 기물이 존재합니다.");
+                .hasMessageContaining("이동 불가한 위치입니다.");
     }
 }

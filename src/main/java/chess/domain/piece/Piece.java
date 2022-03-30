@@ -34,8 +34,7 @@ public abstract class Piece {
 
     public void checkMoveRange(final Board board, final Position from, final Position to) {
         final var direction = Direction.of(from, to);
-        if (directions.contains(direction)) {
-            board.checkHasPiece(direction.getPositions(from, to));
+        if (directions.contains(direction) && !board.hasPiece(direction.getPositions(from, to))) {
             return;
         }
         throw new IllegalArgumentException("이동 불가한 위치입니다.");
