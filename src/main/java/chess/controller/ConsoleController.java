@@ -17,7 +17,7 @@ public class ConsoleController {
             return;
         }
         playRound(game);
-        OutputView.printResult(game.findWinnerName(),
+        OutputView.printResult(game.getWinnerName(),
                 game.getWhiteScore(),
                 game.getBlackScore());
     }

@@ -3,9 +3,6 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.state.GameState;
 import chess.domain.piece.Position;
-import chess.view.InputView;
-import chess.view.OutputView;
-import java.util.List;
 
 public class ChessGame {
     private Long id;
@@ -51,7 +48,7 @@ public class ChessGame {
         return id;
     }
 
-    public String findWinnerName() {
+    public String getWinnerName() {
         return state.findWinner().getName();
     }
 
