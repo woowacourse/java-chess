@@ -4,9 +4,9 @@ import chess.domain.location.Location;
 import java.util.List;
 
 public class Command {
-    public static final int GAME_COMMAND_INDEX = 0;
-    public static final int SOURCE_LOCATION_INDEX = 1;
-    public static final int TARGET_LOCATION_INDEX = 2;
+    private static final int GAME_COMMAND_INDEX = 0;
+    private static final int SOURCE_LOCATION_INDEX = 1;
+    private static final int TARGET_LOCATION_INDEX = 2;
     private final List<String> commands;
 
     public Command(List<String> commands) {
