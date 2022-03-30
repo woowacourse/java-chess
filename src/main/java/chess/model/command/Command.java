@@ -1,10 +1,10 @@
 package chess.model.command;
 
 public abstract class Command implements State {
-    public static final String START = "start";
-    public static final String MOVE = "move";
-    public static final String END = "end";
-    public static final String STATUS = "status";
+    protected static final String START = "start";
+    protected static final String MOVE = "move";
+    protected static final String END = "end";
+    protected static final String STATUS = "status";
 
     protected final String input;
 
