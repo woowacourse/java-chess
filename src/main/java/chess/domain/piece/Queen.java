@@ -21,7 +21,6 @@ public class Queen extends LinearMovePiece {
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 
         return (isDisplaced(distanceX, distanceY) && (isStraightMove(distanceX, distanceY) || isDiagonalMove(distanceX, distanceY)));
-
     }
 
     private boolean isDisplaced(int distanceX, int distanceY) {

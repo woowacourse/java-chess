@@ -235,8 +235,8 @@ public class Board {
 
     private List<Position> findPawnPositionsOf(Color color) {
         return board.keySet().stream()
-                .filter(position -> board.get(position).isSameColor(color))
-                .filter(position -> board.get(position).isPawn())
+                .filter(position -> board.get(position).isSameColor(color)
+                        && board.get(position).isPawn())
                 .collect(Collectors.toList());
     }
 
