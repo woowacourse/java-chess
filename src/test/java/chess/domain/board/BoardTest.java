@@ -20,8 +20,8 @@ public class BoardTest {
 
     @Test
     @DisplayName("Position 피스의 색을 가져온다.")
-    void getPieceColorByPosition() {
-        assertThat(board.getPieceColorByPosition(Position.valueOf("a8"))).isEqualTo(Team.BLACK);
+    void getPieceTeamByPosition() {
+        assertThat(board.getPieceTeamByPosition(Position.valueOf("a8"))).isEqualTo(Team.BLACK);
     }
 
     @Test

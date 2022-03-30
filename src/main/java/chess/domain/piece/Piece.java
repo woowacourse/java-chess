@@ -17,7 +17,7 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public final Team getColor() {
+    public final Team getTeam() {
         return team;
     }
 

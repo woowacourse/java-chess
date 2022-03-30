@@ -11,7 +11,7 @@ public class Turn {
     }
 
     public void nextTurn() {
-        team = team.oppositeColor();
+        team = team.oppositeTeam();
     }
 
     public boolean isRightTurn(final Team team) {

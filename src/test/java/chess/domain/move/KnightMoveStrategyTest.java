@@ -40,7 +40,7 @@ public class KnightMoveStrategyTest {
 
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
-    void isMovableWhenTargetColorSame() {
+    void isMovableWhenTargetTeamSame() {
         board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"));
 
         Position source = Position.valueOf("b8");

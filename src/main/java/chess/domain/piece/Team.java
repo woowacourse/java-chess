@@ -12,7 +12,7 @@ public enum Team {
         this.value = value;
     }
 
-    public Team oppositeColor() {
+    public Team oppositeTeam() {
         if (this == NONE) {
             throw new IllegalStateException("[ERROR] 상대팀이 없습니다.");
         }

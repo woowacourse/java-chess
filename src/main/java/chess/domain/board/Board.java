@@ -21,8 +21,8 @@ public class Board {
         return targetPiece;
     }
 
-    public Team getPieceColorByPosition(final Position position) {
-        return getPiece(position).getColor();
+    public Team getPieceTeamByPosition(final Position position) {
+        return getPiece(position).getTeam();
     }
 
     public boolean isPieceExist(final Position position) {

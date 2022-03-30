@@ -25,6 +25,6 @@ public final class KingMoveStrategy extends FirstRowMoveStrategy {
         if (!MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
-        return isTargetPositionMovable(board.getPiece(target), board.getPieceColorByPosition(source));
+        return isTargetPositionMovable(board.getPiece(target), board.getPieceTeamByPosition(source));
     }
 }

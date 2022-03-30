@@ -16,7 +16,7 @@ public final class Pawn extends ValidPiece {
 
     @Override
     public MoveStrategy getMoveStrategy() {
-        if (getColor() == Team.BLACK) {
+        if (getTeam() == Team.BLACK) {
             return new BlackPawnMoveStrategy();
         }
         return new WhitePawnMoveStrategy();

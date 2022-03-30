@@ -23,7 +23,7 @@ public class BishopMoveStrategy extends LinearMoveStrategy {
             return false;
         }
 
-        return isTargetPositionMovable(board.getPiece(target), board.getPieceColorByPosition(source));
+        return isTargetPositionMovable(board.getPiece(target), board.getPieceTeamByPosition(source));
     }
 
     private boolean isBishopMovePattern(final Distance distance) {

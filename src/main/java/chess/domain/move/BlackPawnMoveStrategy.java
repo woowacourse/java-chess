@@ -20,7 +20,7 @@ public class BlackPawnMoveStrategy extends PawnMoveStrategy{
         final Distance distance = Distance.of(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
 
-        return isRightMovePattern(movePattern, board, source, board.getPiece(target), board.getPieceColorByPosition(source));
+        return isRightMovePattern(movePattern, board, source, board.getPiece(target), board.getPieceTeamByPosition(source));
     }
 
     @Override

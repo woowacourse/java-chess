@@ -44,7 +44,7 @@ public class KingMoveStrategyTest {
 
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
-    void isMovableWhenTargetColorSame() {
+    void isMovableWhenTargetTeamSame() {
         Position source = Position.valueOf("e8");
         Position target = Position.valueOf("e7");
 

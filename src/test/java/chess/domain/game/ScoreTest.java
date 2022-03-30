@@ -33,8 +33,8 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("게임에서 이긴 플레이어의 Color 를 반환")
-    void getWinColorWhenBlackWin() {
+    @DisplayName("게임에서 이긴 플레이어의 Team을 반환")
+    void getWinTeamWhenBlackWin() {
         Board board = new Board(BoardInitializer.initialize());
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
@@ -44,8 +44,8 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("게임에서 이긴 플레이어의 Color 를 반환")
-    void getWinColorWhenWhiteWin() {
+    @DisplayName("게임에서 이긴 플레이어의 Team을 반환")
+    void getWinTeamWhenWhiteWin() {
         Board board = new Board(BoardInitializer.initialize());
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
 
