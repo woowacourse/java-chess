@@ -27,8 +27,8 @@ public class Position {
         String row = String.valueOf(fileAndRank.charAt(0));
         String column = String.valueOf(fileAndRank.charAt(1));
         validatePosition(row, column);
-        this.row = ROW_CACHE.indexOf(row) + 1;
-        this.column = COLUMN_CACHE.indexOf(column) + 1;
+        this.row = COLUMN_CACHE.indexOf(column) + 1;
+        this.column = ROW_CACHE.indexOf(row) + 1;
     }
 
     private void validatePosition(int row, int column) {

@@ -34,13 +34,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+    public boolean isBishop() {
+        return true;
     }
 
     @Override

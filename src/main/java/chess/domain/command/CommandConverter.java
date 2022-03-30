@@ -6,6 +6,8 @@ import java.util.List;
 
 public class CommandConverter {
 
+    private static final String INVALID_INPUT = "유효한 입력이 아닙니다.";
+
     public static Command convertCommand(List<String> input) {
         validateCommonCondition(input);
         return generateCommand(input);
@@ -13,7 +15,7 @@ public class CommandConverter {
 
     private static void validateCommonCondition(List<String> input) {
         if (Arrays.stream(CommandConditions.values()).noneMatch(each -> each.doesSatisfy(input))) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_INPUT);
         }
     }
 

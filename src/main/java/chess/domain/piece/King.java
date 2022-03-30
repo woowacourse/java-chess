@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 public class King extends Piece {
 
-    private static final String INVALID_DIRECTION_KING = "King이 갈 수 없는 방향입니다.";
     private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
 
     private static final double KING_SCORE = 0;
@@ -44,11 +43,6 @@ public class King extends Piece {
             return direction;
         }
         throw new IllegalArgumentException(INVALID_DISTANCE_KING);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 
     @Override

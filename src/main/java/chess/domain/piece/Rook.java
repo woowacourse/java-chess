@@ -9,7 +9,6 @@ import chess.domain.direction.Direction;
 
 public class Rook extends Piece {
 
-    private static final String INVALID_DIRECTION_ROOK = "Rook이 갈 수 없는 방향입니다.";
     private static final double ROOK_SCORE = 5.0;
 
     private static final Rook whiteRook = new Rook(Color.WHITE);
@@ -35,13 +34,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+    public boolean isRook() {
+        return true;
     }
 
     @Override

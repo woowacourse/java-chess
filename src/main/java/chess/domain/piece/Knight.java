@@ -9,7 +9,6 @@ import chess.domain.direction.Direction;
 
 public class Knight extends Piece {
 
-    private static final String INVALID_DIRECTION_KNIGHT = "Knight가 갈 수 없는 방향입니다.";
     private static final double KNIGHT_SCORE = 2.5;
 
     private static final Knight whiteKing = new Knight(Color.WHITE);
@@ -35,13 +34,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+    public boolean isKnight() {
+        return true;
     }
 
     @Override

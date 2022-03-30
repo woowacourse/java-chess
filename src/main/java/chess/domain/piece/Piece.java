@@ -23,13 +23,32 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return false;
+    }
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isQueen() {
+        return false;
+    }
+
+    public boolean isBishop() {
+        return false;
+    };
+
+    public boolean isRook() {
+        return false;
+    };
+
+    public boolean isKnight() {
+        return false;
+    };
 
     public boolean isWhite() {
         return this.color == Color.WHITE;
     }
-
-    public abstract boolean isKing();
 
     public abstract double getScore();
 }

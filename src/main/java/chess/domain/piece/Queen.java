@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 public class Queen extends Piece {
 
-    private static final String INVALID_DIRECTION_QUEEN = "Queen이 갈 수 없는 방향입니다.";
     private static final double QUEEN_SCORE = 9.0;
 
     private static final Queen whiteQueen = new Queen(Color.WHITE);
@@ -40,13 +39,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
+    public boolean isQueen() {
+        return true;
     }
 
     @Override
