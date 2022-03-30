@@ -13,6 +13,9 @@ public enum File {
     h(8, "h"),
     Out(-1, "Out");
 
+    private static final int MIN = 1;
+    private static final int MAX = 8;
+
     private final int value;
     private final String name;
 
@@ -36,7 +39,7 @@ public enum File {
     }
 
     public File findNext(int next) {
-        if (value + next < 1 || value + next > 8) {
+        if (value + next < MIN || value + next > MAX) {
             return Out;
         }
 
