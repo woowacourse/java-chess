@@ -7,10 +7,13 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final Map<String, Position> cache = new HashMap<>(64);
+
+    private static final int STANDARD_VALUE_LENGTH = 2;
+
     private final Column column;
     private final Row row;
 
-    private static final Map<String, Position> CACHE = new HashMap<>(64);
 
     private Position(Column column, Row row) {
         this.column = column;
@@ -18,16 +21,21 @@ public class Position {
     }
 
     public static Position of(Column column, Row row) {
-        String value = column.name().toLowerCase(Locale.ROOT) + row.getValue();
-        return CACHE.computeIfAbsent(value, ignored -> new Position(column, row));
+        String columnValue = column.name();
+        String value = columnValue.toLowerCase(Locale.ROOT) + row.getValue();
+        return cache.computeIfAbsent(value, ignored -> new Position(column, row));
     }
 
     public static Position of(String value) {
-        validateBlank(value);
-        validateLength(value);
+        validatePosition(value);
         Column column = Column.of(value.substring(0, 1));
         Row row = Row.of(Integer.parseInt(value.substring(1, 2)));
-        return CACHE.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
+        return cache.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
+    }
+
+    private static void validatePosition(String value) {
+        validateBlank(value);
+        validateLength(value);
     }
 
     private static void validateBlank(String value) {
@@ -37,7 +45,7 @@ public class Position {
     }
 
     private static void validateLength(String value) {
-        if (value.length() != 2) {
+        if (value.length() != STANDARD_VALUE_LENGTH) {
             throw new IllegalArgumentException("포지션은 두 글자입니다.");
         }
     }

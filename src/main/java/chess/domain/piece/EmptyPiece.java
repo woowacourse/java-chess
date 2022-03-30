@@ -7,14 +7,17 @@ import java.util.Map;
 
 public class EmptyPiece extends Piece {
 
-    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece();
+    private static EmptyPiece instance;
 
     private EmptyPiece() {
         super(Color.EMPTY, PieceName.EMPTY);
     }
 
     public static EmptyPiece getInstance() {
-        return EMPTY_PIECE;
+        if (instance == null) {
+            instance = new EmptyPiece();
+        }
+        return instance;
     }
 
     @Override

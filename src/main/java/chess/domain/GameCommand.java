@@ -10,8 +10,8 @@ public class GameCommand {
     private static final int FROM_PARAMETER_INDEX = 1;
     private static final int TO_PARAMETER_INDEX = 2;
 
-    private static final int FROM_INDEX_FOR_MOVE = 0;
-    private static final int TO_INDEX_FOR_MOVE = 1;
+    private static final int FROM_POSITION_INDEX_FOR_MOVE = 0;
+    private static final int TO_POSITION_INDEX_FOR_MOVE = 1;
 
     private final CommandType type;
     private final List<Position> movePositions = new ArrayList<>();
@@ -40,14 +40,14 @@ public class GameCommand {
 
     public Position getFromPosition() {
         if (type == CommandType.MOVE) {
-            return movePositions.get(FROM_INDEX_FOR_MOVE);
+            return movePositions.get(FROM_POSITION_INDEX_FOR_MOVE);
         }
         throw new IllegalStateException("해당 커맨드는 이 작업을 할 수 없습니다.");
     }
 
     public Position getToPosition() {
         if (type == CommandType.MOVE) {
-            return movePositions.get(TO_INDEX_FOR_MOVE);
+            return movePositions.get(TO_POSITION_INDEX_FOR_MOVE);
         }
         throw new IllegalStateException("해당 커맨드는 이 작업을 할 수 없습니다.");
     }

@@ -19,10 +19,10 @@ public enum Column {
         this.value = value;
     }
 
-    public static Column of(String value) {
+    public static Column of(String name) {
         return Arrays.stream(values())
                 .filter(column -> column.name()
-                        .equalsIgnoreCase(value))
+                        .equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 열 이름이 들어왔습니다."));
     }
@@ -36,7 +36,7 @@ public enum Column {
 
     public Column move(int value) {
         int indexAfterMove = this.value + value;
-        if (indexAfterMove > 8 || indexAfterMove < 1) {
+        if (indexAfterMove > H.value || indexAfterMove < A.value) {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }
         return of(indexAfterMove);

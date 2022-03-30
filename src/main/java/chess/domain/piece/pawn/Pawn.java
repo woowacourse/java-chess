@@ -23,16 +23,21 @@ public abstract class Pawn extends Piece {
 
     protected final Map<Direction, List<Position>> getMovablePositionsByDirection(Position position,
                                                                                   Direction direction) {
-        Map<Direction, List<Position>> movable = new HashMap<>();
-        movable.put(direction, new ArrayList<>());
-        putFirstMovablePositionByDirection(movable, position, direction);
-        return movable;
+        Map<Direction, List<Position>> movablePositions = initMovablePositions(direction);
+        putFirstMovablePositionByDirection(movablePositions, position, direction);
+        return movablePositions;
     }
 
-    private void putFirstMovablePositionByDirection(Map<Direction, List<Position>> movable, Position position,
+    private Map<Direction, List<Position>> initMovablePositions(Direction direction) {
+        Map<Direction, List<Position>> movablePositions = new HashMap<>();
+        movablePositions.put(direction, new ArrayList<>());
+        return movablePositions;
+    }
+
+    private void putFirstMovablePositionByDirection(Map<Direction, List<Position>> movablePositions, Position position,
                                                     Direction direction) {
-        putMovablePositionByDirection(movable, position, direction);
-        putMovablePositionByDirection(movable, position.toDirection(direction), direction);
+        putMovablePositionByDirection(movablePositions, position, direction);
+        putMovablePositionByDirection(movablePositions, position.toDirection(direction), direction);
     }
 
     private void putMovablePositionByDirection(Map<Direction, List<Position>> movable, Position position,
@@ -41,7 +46,8 @@ public abstract class Pawn extends Piece {
         if (nextPosition == position) {
             return;
         }
-        movable.get(direction).add(nextPosition);
+        List<Position> positionsToDirection = movable.get(direction);
+        positionsToDirection.add(nextPosition);
     }
 
     @Override

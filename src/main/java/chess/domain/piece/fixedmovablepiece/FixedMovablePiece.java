@@ -21,20 +21,28 @@ public abstract class FixedMovablePiece extends Piece {
 
     protected final Map<Direction, List<Position>> getMovablePositionsByDirections(Position position,
                                                                                    List<Direction> directions) {
-        Map<Direction, List<Position>> movable = new HashMap<>();
+        Map<Direction, List<Position>> movablePositions = initMovablePositions(directions);
         for (Direction direction : directions) {
-            movable.put(direction, new ArrayList<>());
-            putMovablePositionsByDirection(movable, position, direction);
+            putMovablePositionsByDirection(movablePositions, position, direction);
         }
-        return movable;
+        return movablePositions;
     }
 
-    private void putMovablePositionsByDirection(Map<Direction, List<Position>> movable, Position position,
+    private Map<Direction, List<Position>> initMovablePositions(List<Direction> directions) {
+        Map<Direction, List<Position>> movablePositions = new HashMap<>();
+        for (Direction direction : directions) {
+            movablePositions.put(direction, new ArrayList<>());
+        }
+        return movablePositions;
+    }
+
+    private void putMovablePositionsByDirection(Map<Direction, List<Position>> movablePositions, Position position,
                                                 Direction direction) {
         Position nextPosition = position.toDirection(direction);
         if (nextPosition == position) {
             return;
         }
-        movable.get(direction).add(nextPosition);
+        List<Position> positionsToDirection = movablePositions.get(direction);
+        positionsToDirection.add(nextPosition);
     }
 }

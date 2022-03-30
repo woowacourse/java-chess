@@ -12,6 +12,14 @@ public class ResultView {
     private ResultView() {
     }
 
+    public static void printStartMessage() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.println("> 게임 현황 : status");
+        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
     public static void printChessBoard(Map<Position, Piece> board) {
         for (Row row : Row.getRowsReverseOrder()) {
             printBoardInRow(board, row);
@@ -22,8 +30,9 @@ public class ResultView {
 
     private static void printBoardInRow(Map<Position, Piece> board, Row row) {
         for (Column column : Column.values()) {
-            System.out.print(board.get(Position.of(column, row))
-                    .getName());
+            Position position = Position.of(column, row);
+            Piece piece = board.get(position);
+            System.out.print(piece.getName());
         }
     }
 

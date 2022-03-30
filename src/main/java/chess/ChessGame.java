@@ -22,7 +22,7 @@ public class ChessGame {
     }
 
     public void playGame() {
-        InputView.printStartMessage();
+        ResultView.printStartMessage();
         GameCommand gameCommand;
         do {
             gameCommand = requestCommand();
