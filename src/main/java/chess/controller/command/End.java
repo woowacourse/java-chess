@@ -12,14 +12,14 @@ public class End implements Command {
 
     @Override
     public void execute(final String rawInputCommand, final OutputView outputView) {
+        outputView.printFinishMessage();
         if (chessGame.isNotRunning()) {
-            this.chessGame.isEnd = !this.chessGame.isEnd;
+            this.chessGame.off();
             return;
         }
         chessGame.end();
-
-        outputView.printFinishMessage();
         outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
         outputView.printResultMessage(chessGame.getResultMessage());
     }
 }
+
