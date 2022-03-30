@@ -11,9 +11,9 @@ import chess.domain.position.Position;
 public class Board {
 
     private static final String NOT_EXIST_PIECE = "[ERROR] 입력한 위치에 말이 존재하지 않습니다.";
-    private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
-    private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
-    private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
+    private static final String CAN_NOT_MOVE_PIECE = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
+    private static final String CAN_NOT_PLACE_PIECE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
+    private static final String CAN_NOT_CATCH_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
 
     private final Map<Position, Piece> value;
 
@@ -31,7 +31,7 @@ public class Board {
 
     private Piece findPiece(Position position) {
         if (!value.containsKey(position)) {
-            throw new IllegalArgumentException(NOT_EXIST_PIECE);
+            throw new IllegalStateException(NOT_EXIST_PIECE);
         }
         return value.get(position);
     }
@@ -48,10 +48,10 @@ public class Board {
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
         if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition, toPosition)) {
-            throw new IllegalArgumentException(NON_MOVABLE_POSITION);
+            throw new IllegalStateException(CAN_NOT_MOVE_PIECE);
         }
         if (value.containsKey(toPosition) && piece.isSameTeam(value.get(toPosition))) {
-            throw new IllegalArgumentException(NON_CATCHABLE_PIECE);
+            throw new IllegalStateException(CAN_NOT_CATCH_PIECE);
         }
     }
 
@@ -70,7 +70,7 @@ public class Board {
 
     private void validateNotExistPiecePosition(Position nextPosition) {
         if (value.containsKey(nextPosition)) {
-            throw new IllegalArgumentException(NON_MOVABLE_ROUTE);
+            throw new IllegalStateException(CAN_NOT_PLACE_PIECE);
         }
     }
 

@@ -10,6 +10,8 @@ import chess.domain.position.Position;
 
 public class End implements GameState {
 
+    private static final String GAME_IS_END_AND_NOT_MOVABLE_PIECE = "게임이 끝나서 말을 옮길 수 없습니다.";
+
     private final Board board;
 
     public End(Board board) {
@@ -18,7 +20,7 @@ public class End implements GameState {
 
     @Override
     public GameState movePiece(Position fromPosition, Position toPosition) {
-        throw new IllegalArgumentException("게임이 끝나서 말을 옮길 수 없습니다.");
+        throw new UnsupportedOperationException(GAME_IS_END_AND_NOT_MOVABLE_PIECE);
     }
 
     @Override
