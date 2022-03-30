@@ -137,6 +137,6 @@ public class Board {
     }
 
     public Map<Position, Piece> getPieces() {
-        return pieces;
+        return Map.copyOf(pieces);
     }
 }
