@@ -25,10 +25,10 @@ public class Point {
     public static Point of(int horizontal, int vertical) {
         LineNumber horizontalNumber = LineNumber.of(horizontal);
         LineNumber verticalNumber = LineNumber.of(vertical);
-        return POINT_CACHE.computeIfAbsent(keys(horizontal, vertical), ignored -> new Point(horizontalNumber, verticalNumber));
+        return POINT_CACHE.computeIfAbsent(toKey(horizontal, vertical), ignored -> new Point(horizontalNumber, verticalNumber));
     }
 
-    private static Integer keys(int horizontal, int vertical) {
+    private static Integer toKey(int horizontal, int vertical) {
         return horizontal * DECIMAL + vertical;
     }
 
