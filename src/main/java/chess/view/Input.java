@@ -7,11 +7,11 @@ public final class Input {
 
     public static String inputCommand(final Enterable enterable) {
         final String command = enterable.enter();
-        checkBlank(command);
+        validateBlank(command);
         return command;
     }
 
-    private static void checkBlank(final String command) {
+    private static void validateBlank(final String command) {
         if (command == null || command.isBlank()) {
             throw new IllegalArgumentException("값을 입력해주세요!");
         }
