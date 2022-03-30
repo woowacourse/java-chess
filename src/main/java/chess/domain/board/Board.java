@@ -6,6 +6,8 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.direction.DiagonalDirection;
+import chess.domain.position.direction.HorizontalDirection;
+import chess.domain.position.direction.VerticalDirection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +49,11 @@ public class Board {
 
     private boolean hasObstacle(Position from, Position to) {
         if (from.isSameXAxis(to)) {
-            return hasAnyPiece(from.getPositionsSameYAxisBetween(to));
+            return hasAnyPiece(HorizontalDirection.getPositionsSameYAxisBetween(from, to));
         }
 
         if (from.isSameYAxis(to)) {
-            return hasAnyPiece(from.getPositionsSameXAxisBetween(to));
+            return hasAnyPiece(VerticalDirection.getPositionsSameXAxisBetween(from, to));
         }
 
         if (DiagonalDirection.isOnDiagonal(from, to)) {

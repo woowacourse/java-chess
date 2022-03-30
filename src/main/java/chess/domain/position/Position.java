@@ -73,18 +73,6 @@ public class Position {
         return xAxisDelta > 1 || yAxisDelta > 1;
     }
 
-    public List<Position> getPositionsSameYAxisBetween(Position other) {
-        return YAxis.getBetween(this.yAxis, other.yAxis).stream()
-                .map(yAxis -> Position.from(this.xAxis, yAxis))
-                .collect(Collectors.toList());
-    }
-
-    public List<Position> getPositionsSameXAxisBetween(Position other) {
-        return XAxis.getBetween(this.xAxis, other.xAxis).stream()
-                .map(xAxis -> Position.from(xAxis, this.yAxis))
-                .collect(Collectors.toList());
-    }
-
     public XAxis getXAxis() {
         return xAxis;
     }
