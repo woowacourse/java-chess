@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.utils.BetweenPositionsGenerator;
+import chess.utils.PossibleMoveLinePositionChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,20 +34,20 @@ public class Queen extends Piece {
     private boolean isPossibleMoveDiagonal(Position source, Position target, Map<Position, Piece> board) {
         List<List<Integer>> possibleDot = List.of(List.of(1, 1), List.of(1, -1));
         List<Position> positions = new ArrayList<>(List.of(source, target));
-        if (BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board)) {
+        if (PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board)) {
             return true;
         }
         Collections.reverse(positions);
-        return BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board);
+        return PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board);
     }
 
     private boolean isPossibleMoveStraightLine(Position source, Position target, Map<Position, Piece> board) {
         List<List<Integer>> possibleDot = List.of(List.of(0, 1), List.of(1, 0));
         List<Position> positions = new ArrayList<>(List.of(source, target));
-        if (BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board)) {
+        if (PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board)) {
             return true;
         }
         Collections.reverse(positions);
-        return BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board);
+        return PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board);
     }
 }

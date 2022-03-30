@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class BetweenPositionsGenerator {
+public class PossibleMoveLinePositionChecker {
 
     private static final String ERROR_OBSTACLE_EXIST_PIECE = "이동 중간에 가로막는 기물이 있습니다.";
     private static final int SOURCE = 0;
@@ -15,7 +15,7 @@ public class BetweenPositionsGenerator {
     private static final int ROW = 0;
     private static final int COLUMN = 1;
 
-    private BetweenPositionsGenerator() {
+    private PossibleMoveLinePositionChecker() {
     }
 
     public static boolean isPossibleMovePosition(Piece piece, List<Position> positions, List<List<Integer>> move,
