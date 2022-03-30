@@ -121,17 +121,17 @@ class BoardTest {
     @DisplayName("폰이 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("pawnMoveTestSet")
-    void whitePawnOneMove(Position src, Position dest, Color color) {
+    void whitePawnOneMove(Position source, Position destination, Color color) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new Pawn(color);
-        value.put(src, piece);
+        value.put(source, piece);
 
         Board board = new Board(value);
-        board.move(src, dest, color);
+        board.move(source, destination, color);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> pawnMoveTestSet() {
@@ -146,17 +146,17 @@ class BoardTest {
     @DisplayName("나이트가 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("knightMoveTestSet")
-    void knightMove(Position src, Position dest) {
+    void knightMove(Position source, Position destination) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new Knight(Color.BLACK);
-        value.put(src, piece);
+        value.put(source, piece);
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> knightMoveTestSet() {
@@ -188,17 +188,17 @@ class BoardTest {
     @DisplayName("킹이 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("kingMoveTestSet")
-    void kingMove(Position src, Position dest) {
+    void kingMove(Position source, Position destination) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new King(Color.BLACK);
-        value.put(src, piece);
+        value.put(source, piece);
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> kingMoveTestSet() {
@@ -230,17 +230,17 @@ class BoardTest {
     @DisplayName("룩이 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("rookMoveTestSet")
-    void rookMove(Position src, Position dest) {
+    void rookMove(Position source, Position destination) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new Rook(Color.BLACK);
-        value.put(src, piece);
+        value.put(source, piece);
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> rookMoveTestSet() {
@@ -300,14 +300,14 @@ class BoardTest {
         Piece rook = new Rook(Color.WHITE);
         Piece obstacle = new Pawn(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position src = Position.of("d3");
-        value.put(src, rook);
+        Position source = Position.of("d3");
+        value.put(source, rook);
         value.put(Position.of("f3"), obstacle);
         Board board = new Board(value);
 
-        Position dest = Position.of("h3");
+        Position destination = Position.of("h3");
 
-        assertThatThrownBy(() -> board.move(src, dest, Color.WHITE))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
     }
@@ -315,17 +315,17 @@ class BoardTest {
     @DisplayName("비숍이 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("bishopMoveTestSet")
-    void bishopMove(Position src, Position dest) {
+    void bishopMove(Position source, Position destination) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new Bishop(Color.BLACK);
-        value.put(src, piece);
+        value.put(source, piece);
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> bishopMoveTestSet() {
@@ -357,14 +357,14 @@ class BoardTest {
         Piece bishop = new Bishop(Color.WHITE);
         Piece obstacle = new Pawn(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position src = Position.of("d3");
-        value.put(src, bishop);
+        Position source = Position.of("d3");
+        value.put(source, bishop);
         value.put(Position.of("f5"), obstacle);
         Board board = new Board(value);
 
-        Position dest = Position.of("g6");
+        Position destination = Position.of("g6");
 
-        assertThatThrownBy(() -> board.move(src, dest, Color.WHITE))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
     }
@@ -372,17 +372,17 @@ class BoardTest {
     @DisplayName("퀸이 성공적으로 이동한다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("queenMoveTestSet")
-    void queenMove(Position src, Position dest) {
+    void queenMove(Position source, Position destination) {
         Map<Position, Piece> value = new HashMap<>();
 
         Piece piece = new Queen(Color.BLACK);
-        value.put(src, piece);
+        value.put(source, piece);
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(piece);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(piece);
     }
 
     static Stream<Arguments> queenMoveTestSet() {
@@ -426,14 +426,14 @@ class BoardTest {
         Piece queen = new Queen(Color.WHITE);
         Piece obstacle = new Pawn(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
-        Position src = Position.of("d3");
-        value.put(src, queen);
+        Position source = Position.of("d3");
+        value.put(source, queen);
         value.put(Position.of("f5"), obstacle);
         Board board = new Board(value);
 
-        Position dest = Position.of("g6");
+        Position destination = Position.of("g6");
 
-        assertThatThrownBy(() -> board.move(src, dest, Color.WHITE))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("다른 기물");
     }
@@ -444,19 +444,19 @@ class BoardTest {
 
         Piece pawn = new Pawn(Color.WHITE);
         Piece target = new Pawn(Color.BLACK);
-        Position src = Position.of("a2");
-        Position dest = Position.of("b3");
+        Position source = Position.of("a2");
+        Position destination = Position.of("b3");
 
         Map<Position, Piece> value = new HashMap<>();
-        value.put(src, pawn);
-        value.put(dest, target);
+        value.put(source, pawn);
+        value.put(destination, target);
 
         Board board = new Board(value);
 
-        board.move(src, dest, Color.WHITE);
+        board.move(source, destination, Color.WHITE);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(pawn);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(pawn);
     }
 
     @DisplayName("블랙 폰이 상대 기물을 잡는다")
@@ -465,19 +465,19 @@ class BoardTest {
 
         Piece pawn = new Pawn(Color.BLACK);
         Piece target = new Pawn(Color.WHITE);
-        Position src = Position.of("a7");
-        Position dest = Position.of("b6");
+        Position source = Position.of("a7");
+        Position destination = Position.of("b6");
 
         Map<Position, Piece> value = new HashMap<>();
-        value.put(src, pawn);
-        value.put(dest, target);
+        value.put(source, pawn);
+        value.put(destination, target);
 
         Board board = new Board(value);
 
-        board.move(src, dest, Color.BLACK);
+        board.move(source, destination, Color.BLACK);
 
-        assertThat(board.findPieceBy(src).isEmpty()).isTrue();
-        assertThat(board.findPieceBy(dest).get()).isEqualTo(pawn);
+        assertThat(board.findPieceBy(source).isEmpty()).isTrue();
+        assertThat(board.findPieceBy(destination).get()).isEqualTo(pawn);
     }
 
     @DisplayName("흰 말의 점수를 계산한다.")

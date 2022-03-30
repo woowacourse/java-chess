@@ -24,9 +24,9 @@ public abstract class Piece {
         return this.color == piece.color;
     }
 
-    public abstract boolean canMove(Position src, Position dest);
+    public abstract boolean canMove(Position source, Position destination);
 
-    public abstract Direction findDirection(Position src, Position dest);
+    public abstract Direction findDirection(Position source, Position destination);
 
     public abstract double getPoint();
 

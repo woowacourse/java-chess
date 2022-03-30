@@ -15,10 +15,10 @@ public class KnightMovePatternTest {
     @DisplayName("나이트는 상하좌우 두칸 앞으로 이동 후 좌우의 위치로 이동한다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("knightMovePatternTestSet")
-    void test(Position src, Position dest) {
+    void test(Position source, Position destination) {
         AbstractOnceMovePattern pattern = new KnightMovePattern();
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> knightMovePatternTestSet() {

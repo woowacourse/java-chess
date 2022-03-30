@@ -22,36 +22,36 @@ public abstract class AbstractPawnMovePattern implements MovePattern {
     }
 
     @Override
-    public final boolean canMove(Position src, Position dest) {
-        return findDirection(src, dest) != null;
+    public final boolean canMove(Position source, Position destination) {
+        return findDirection(source, destination) != null;
     }
 
     @Override
-    public final Direction findDirection(Position src, Position dest) {
+    public final Direction findDirection(Position source, Position destination) {
         List<Direction> directions = getDirections();
         return directions.stream()
-                .filter(direction -> canArrive(direction, src, dest))
+                .filter(direction -> canArrive(direction, source, destination))
                 .findFirst()
                 .orElse(null);
     }
 
-    private boolean canArrive(Direction direction, Position src, Position dest) {
-        return canArriveByOnce(direction, src, dest) || canArriveByTwice(direction, src, dest);
+    private boolean canArrive(Direction direction, Position source, Position destination) {
+        return canArriveByOnce(direction, source, destination) || canArriveByTwice(direction, source, destination);
     }
 
-    private boolean canArriveByOnce(Direction direction, Position src, Position dest) {
-        return src.canMoveByTime(direction, dest, ONCE_TIME);
+    private boolean canArriveByOnce(Direction direction, Position source, Position destination) {
+        return source.canMoveByTime(direction, destination, ONCE_TIME);
     }
 
-    private boolean canArriveByTwice(Direction direction, Position src, Position dest) {
+    private boolean canArriveByTwice(Direction direction, Position source, Position destination) {
         List<Direction> northAndSouth = List.of(Direction.NORTH, Direction.SOUTH);
 
-        return isStartRow(src) && northAndSouth.contains(direction)
-                && src.canMoveByTime(direction, dest, TWICE_TIME);
+        return isStartRow(source) && northAndSouth.contains(direction)
+                && source.canMoveByTime(direction, destination, TWICE_TIME);
     }
 
-    private boolean isStartRow(Position src) {
-        return src.isSameRow(getStartRow());
+    private boolean isStartRow(Position source) {
+        return source.isSameRow(getStartRow());
     }
 
     protected abstract Row getStartRow();

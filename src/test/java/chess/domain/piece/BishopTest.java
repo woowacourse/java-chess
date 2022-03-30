@@ -16,10 +16,10 @@ class BishopTest {
     @DisplayName("비숍은 북동쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMoveNorthEastTestSet")
-    void bishopMoveNorthEast(Position src, Position dest) {
+    void bishopMoveNorthEast(Position source, Position destination) {
         Piece piece = new Bishop(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> bishopMoveNorthEastTestSet() {
@@ -37,10 +37,10 @@ class BishopTest {
     @DisplayName("비숍은 북서쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMoveNorthWestTestSet")
-    void bishopMoveNorthWest(Position src, Position dest) {
+    void bishopMoveNorthWest(Position source, Position destination) {
         Piece piece = new Bishop(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> bishopMoveNorthWestTestSet() {
@@ -58,10 +58,10 @@ class BishopTest {
     @DisplayName("비숍은 남동쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMoveSouthEastTestSet")
-    void bishopMoveSouthEast(Position src, Position dest) {
+    void bishopMoveSouthEast(Position source, Position destination) {
         Piece piece = new Bishop(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> bishopMoveSouthEastTestSet() {
@@ -79,10 +79,10 @@ class BishopTest {
     @DisplayName("비숍은 남서쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMoveSouthWestTestSet")
-    void bishopMoveSouthWest(Position src, Position dest) {
+    void bishopMoveSouthWest(Position source, Position destination) {
         Piece piece = new Bishop(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> bishopMoveSouthWestTestSet() {
@@ -101,9 +101,9 @@ class BishopTest {
     @Test
     void bishopMoveNorth() {
         Piece piece = new Bishop(Color.BLACK);
-        Position src = Position.of("d5");
-        Position dest = Position.of("d6");
+        Position source = Position.of("d5");
+        Position destination = Position.of("d6");
 
-        assertThat(piece.canMove(src, dest)).isFalse();
+        assertThat(piece.canMove(source, destination)).isFalse();
     }
 }

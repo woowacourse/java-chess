@@ -16,10 +16,10 @@ class KingTest {
     @DisplayName("킹은 성공적으로 이동할 수 있다.")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("kingMoveTestSet")
-    void kingMoveTest(Position src, Position dest) {
+    void kingMoveTest(Position source, Position destination) {
         Piece piece = new King(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> kingMoveTestSet() {
@@ -40,9 +40,9 @@ class KingTest {
     @Test
     void kingTest() {
         Piece piece = new King(Color.BLACK);
-        Position src = Position.of("d3");
-        Position dest = Position.of("d5");
+        Position source = Position.of("d3");
+        Position destination = Position.of("d5");
 
-        assertThat(piece.canMove(src, dest)).isFalse();
+        assertThat(piece.canMove(source, destination)).isFalse();
     }
 }

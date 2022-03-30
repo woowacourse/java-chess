@@ -15,10 +15,10 @@ public class KingMovePatternTest {
     @DisplayName("왕은 상하좌우 대각선으로 한칸 이동할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("kingMovePatternTestSet")
-    void test(Position src, Position dest) {
+    void test(Position source, Position destination) {
         AbstractOnceMovePattern pattern = new KingMovePattern();
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> kingMovePatternTestSet() {

@@ -16,10 +16,10 @@ class RookTest {
     @DisplayName("룩은 동쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMoveEastTestSet")
-    void rookMoveEast(Position src, Position dest) {
+    void rookMoveEast(Position source, Position destination) {
         Piece piece = new Rook(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> rookMoveEastTestSet() {
@@ -37,10 +37,10 @@ class RookTest {
     @DisplayName("룩은 서쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMoveWestTestSet")
-    void rookMoveWest(Position src, Position dest) {
+    void rookMoveWest(Position source, Position destination) {
         Piece piece = new Rook(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> rookMoveWestTestSet() {
@@ -58,10 +58,10 @@ class RookTest {
     @DisplayName("룩은 남쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMoveSouthTestSet")
-    void rookMoveSouth(Position src, Position dest) {
+    void rookMoveSouth(Position source, Position destination) {
         Piece piece = new Rook(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> rookMoveSouthTestSet() {
@@ -79,10 +79,10 @@ class RookTest {
     @DisplayName("룩은 북쪽으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMoveNorthTestSet")
-    void rookMoveNorth(Position src, Position dest) {
+    void rookMoveNorth(Position source, Position destination) {
         Piece piece = new Rook(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> rookMoveNorthTestSet() {
@@ -102,9 +102,9 @@ class RookTest {
     void rookCannotMoveNorthEast() {
         Piece piece = new Rook(Color.BLACK);
 
-        Position src = Position.of("d3");
-        Position dest = Position.of("e4");
+        Position source = Position.of("d3");
+        Position destination = Position.of("e4");
 
-        assertThat(piece.canMove(src, dest)).isFalse();
+        assertThat(piece.canMove(source, destination)).isFalse();
     }
 }

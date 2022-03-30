@@ -7,15 +7,15 @@ import java.util.List;
 public abstract class AbstractStraightMovePattern implements MovePattern {
 
     @Override
-    public boolean canMove(Position src, Position dest) {
-        return findDirection(src, dest) != null;
+    public boolean canMove(Position source, Position destination) {
+        return findDirection(source, destination) != null;
     }
 
     @Override
-    public Direction findDirection(Position src, Position dest) {
+    public Direction findDirection(Position source, Position destination) {
         List<Direction> directions = getDirections();
         return directions.stream()
-                .filter(direction -> src.canCrossMovingStraight(direction, dest))
+                .filter(direction -> source.canCrossMovingStraight(direction, destination))
                 .findFirst()
                 .orElse(null);
     }

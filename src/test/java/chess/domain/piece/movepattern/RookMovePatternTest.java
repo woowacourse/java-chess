@@ -15,10 +15,10 @@ public class RookMovePatternTest {
     @DisplayName("룩은 상하좌우로 이동할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("rookMovePatternTestSet")
-    void test(Position src, Position dest) {
+    void test(Position source, Position destination) {
         AbstractStraightMovePattern pattern = new RookMovePattern();
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> rookMovePatternTestSet() {

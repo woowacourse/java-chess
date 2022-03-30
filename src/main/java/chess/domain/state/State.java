@@ -6,7 +6,7 @@ import chess.domain.board.ScoreResult;
 
 public interface State {
 
-    State movePiece(Position src, Position dest);
+    State movePiece(Position source, Position destination);
 
     Board getBoard();
 

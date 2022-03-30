@@ -15,10 +15,10 @@ public class BishopMovePatternTest {
     @DisplayName("비숍은 대각선으로 이동할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("bishopMovePatternTestSet")
-    void test(Position src, Position dest) {
+    void test(Position source, Position destination) {
         AbstractStraightMovePattern pattern = new BishopMovePattern();
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> bishopMovePatternTestSet() {

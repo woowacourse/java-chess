@@ -16,13 +16,13 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Position src, Position dest) {
-        return pattern.canMove(src, dest);
+    public boolean canMove(Position source, Position destination) {
+        return pattern.canMove(source, destination);
     }
 
     @Override
-    public Direction findDirection(Position src, Position dest) {
-        return pattern.findDirection(src, dest);
+    public Direction findDirection(Position source, Position destination) {
+        return pattern.findDirection(source, destination);
     }
 
     @Override

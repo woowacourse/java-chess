@@ -12,39 +12,39 @@ public class WhitePawnMovePatternTest {
     @Test
     void testOne() {
         AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
-        Position src = Position.of("a2");
-        Position dest = Position.of("a3");
+        Position source = Position.of("a2");
+        Position destination = Position.of("a3");
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     @DisplayName("첫 번째 이동일 때 2칸 앞으로 이동하는 경우")
     @Test
     void testTwo() {
         AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
-        Position src = Position.of("a2");
-        Position dest = Position.of("a4");
+        Position source = Position.of("a2");
+        Position destination = Position.of("a4");
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     @DisplayName("첫 번째 이동이 아닌데 두 칸 움직이는 경우 false")
     @Test
     void testThree() {
         AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
-        Position src = Position.of("a3");
-        Position dest = Position.of("a5");
+        Position source = Position.of("a3");
+        Position destination = Position.of("a5");
 
-        assertThat(pattern.canMove(src, dest)).isFalse();
+        assertThat(pattern.canMove(source, destination)).isFalse();
     }
 
     @DisplayName("뒤로 이동할 수 없다.")
     @Test
     void testBack() {
         AbstractPawnMovePattern pattern = new WhitePawnMovePattern();
-        Position src = Position.of("a2");
-        Position dest = Position.of("a1");
+        Position source = Position.of("a2");
+        Position destination = Position.of("a1");
 
-        assertThat(pattern.canMove(src, dest)).isFalse();
+        assertThat(pattern.canMove(source, destination)).isFalse();
     }
 }

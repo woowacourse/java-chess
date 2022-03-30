@@ -15,10 +15,10 @@ public class QueenMovePatternTest {
     @DisplayName("퀸은 상하좌우, 대각선으로 이동할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("queenMovePatternTestSet")
-    void test(Position src, Position dest) {
+    void test(Position source, Position destination) {
         AbstractStraightMovePattern pattern = new QueenMovePattern();
 
-        assertThat(pattern.canMove(src, dest)).isTrue();
+        assertThat(pattern.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> queenMovePatternTestSet() {

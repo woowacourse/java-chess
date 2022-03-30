@@ -11,8 +11,8 @@ final class BlackTurn extends Running {
     }
 
     @Override
-    public State movePiece(Position src, Position dest) {
-        board.move(src, dest, Color.BLACK);
+    public State movePiece(Position source, Position destination) {
+        board.move(source, destination, Color.BLACK);
         if (!board.hasKing(Color.WHITE)) {
             return new BlackWin(board);
         }

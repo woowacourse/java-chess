@@ -35,77 +35,77 @@ public class Board {
         return Optional.of(piece);
     }
 
-    public void move(Position src, Position dest, Color color) {
-        Piece piece = findPieceBy(src)
+    public void move(Position source, Position destination, Color color) {
+        Piece piece = findPieceBy(source)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
 
         if (!piece.isSameColor(color)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다");
         }
 
-        move(src, dest);
+        move(source, destination);
     }
 
-    private void move(Position src, Position dest) {
-        Piece piece = findPieceBy(src)
+    private void move(Position source, Position destination) {
+        Piece piece = findPieceBy(source)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
 
-        checkCanMove(piece, src, dest);
-        checkSameColorInDestination(piece, dest);
-        checkObstacleInPath(src, dest);
+        checkCanMove(piece, source, destination);
+        checkSameColorIndestinationination(piece, destination);
+        checkObstacleInPath(source, destination);
 
-        value.put(dest, piece);
-        value.remove(src);
+        value.put(destination, piece);
+        value.remove(source);
     }
 
-    private void checkCanMove(Piece piece, Position src, Position dest) {
-        validatePawnCatchFront(piece, src, dest);
-        validatePawnCannotCatchDiagonal(piece, src, dest);
-        if (!piece.canMove(src, dest)) {
+    private void checkCanMove(Piece piece, Position source, Position destination) {
+        validatePawnCatchFront(piece, source, destination);
+        validatePawnCannotCatchDiagonal(piece, source, destination);
+        if (!piece.canMove(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다");
         }
     }
 
-    private void validatePawnCatchFront(Piece piece, Position src, Position dest) {
-        boolean destHasPiece = findPieceBy(dest).isPresent();
-        if (piece.isSameType(Pawn.class) && destHasPiece && src.isSameFile(dest)) {
+    private void validatePawnCatchFront(Piece piece, Position source, Position destination) {
+        boolean destinationHasPiece = findPieceBy(destination).isPresent();
+        if (piece.isSameType(Pawn.class) && destinationHasPiece && source.isSameFile(destination)) {
             throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
         }
     }
 
-    private void validatePawnCannotCatchDiagonal(Piece piece, Position src, Position dest) {
-        boolean destHasPiece = findPieceBy(dest).isPresent();
-        if (piece.isSameType(Pawn.class) && !destHasPiece && !src.isSameFile(dest)) {
+    private void validatePawnCannotCatchDiagonal(Piece piece, Position source, Position destination) {
+        boolean destinationHasPiece = findPieceBy(destination).isPresent();
+        if (piece.isSameType(Pawn.class) && !destinationHasPiece && !source.isSameFile(destination)) {
             throw new IllegalArgumentException("폰은 기물을 잡을 수 있을때만 대각선으로 이동할 수 있습니다");
         }
     }
 
-    private void checkSameColorInDestination(Piece piece, Position dest) {
-        Optional<Piece> optionalPiece = findPieceBy(dest);
+    private void checkSameColorIndestinationination(Piece piece, Position destination) {
+        Optional<Piece> optionalPiece = findPieceBy(destination);
         if (optionalPiece.isPresent() && piece.isSameColor(optionalPiece.get())) {
             throw new IllegalArgumentException("도착 위치에 아군이 있어 이동할 수 없습니다.");
         }
     }
 
-    private void checkObstacleInPath(Position src, Position dest) {
-        Piece piece = findPieceBy(src)
+    private void checkObstacleInPath(Position source, Position destination) {
+        Piece piece = findPieceBy(source)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
 
-        Direction direction = piece.findDirection(src, dest);
-        checkObstacle(src, dest, direction);
+        Direction direction = piece.findDirection(source, destination);
+        checkObstacle(source, destination, direction);
     }
 
-    private void checkObstacle(Position src, Position dest, Direction direction) {
-        Position nextPosition = src.move(direction.getX(), direction.getY());
+    private void checkObstacle(Position source, Position destination, Direction direction) {
+        Position nextPosition = source.move(direction.getX(), direction.getY());
 
-        while (!nextPosition.equals(dest)) {
+        while (!nextPosition.equals(destination)) {
             checkObstacleIn(nextPosition);
             nextPosition = nextPosition.move(direction.getX(), direction.getY());
         }
     }
 
-    private void checkObstacleIn(Position src) {
-        if (findPieceBy(src).isPresent()) {
+    private void checkObstacleIn(Position source) {
+        if (findPieceBy(source).isPresent()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
     }

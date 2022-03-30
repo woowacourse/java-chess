@@ -16,10 +16,10 @@ class QueenTest {
     @DisplayName("퀸은 상하좌우 대각으로 직진할 수 있다")
     @ParameterizedTest(name = "{displayName}")
     @MethodSource("queenMoveTestSet")
-    void queenMoveTest(Position src, Position dest) {
+    void queenMoveTest(Position source, Position destination) {
         Piece piece = new Queen(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> queenMoveTestSet() {
@@ -47,9 +47,9 @@ class QueenTest {
     @Test
     void queenCanNotMove() {
         Piece piece = new Queen(Color.BLACK);
-        Position src = Position.of("d5");
-        Position dest = Position.of("e7");
+        Position source = Position.of("d5");
+        Position destination = Position.of("e7");
 
-        assertThat(piece.canMove(src, dest)).isFalse();
+        assertThat(piece.canMove(source, destination)).isFalse();
     }
 }

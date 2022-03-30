@@ -36,34 +36,34 @@ class PositionTest {
     @DisplayName("출발 위치와 도착 위치가 직선상에 존재하면 true를 반환한다 (북)")
     @Test
     void testCanCrossMovingStraightNorth() {
-        Position src = Position.of("d3");
-        Position dest = Position.of("d5");
+        Position source = Position.of("d3");
+        Position destination = Position.of("d5");
 
-        assertThat(src.canCrossMovingStraight(Direction.NORTH, dest)).isTrue();
+        assertThat(source.canCrossMovingStraight(Direction.NORTH, destination)).isTrue();
     }
 
     @DisplayName("출발 위치와 도착 위치가 직선상에 존재하면 true를 반환한다 (북동)")
     @Test
     void testCanCrossMovingStraightCross() {
-        Position src = Position.of("d5");
-        Position dest = Position.of("g8");
+        Position source = Position.of("d5");
+        Position destination = Position.of("g8");
 
-        assertThat(src.canCrossMovingStraight(Direction.NORTH_EAST, dest)).isTrue();
+        assertThat(source.canCrossMovingStraight(Direction.NORTH_EAST, destination)).isTrue();
     }
 
     @DisplayName("출발 위치와 도착 위치가 직선상에 존재하지 않으면 false를 반환한다")
     @Test
     void testCanCrossMovingStraight() {
-        Position src = Position.of("d3");
-        Position dest = Position.of("d1");
+        Position source = Position.of("d3");
+        Position destination = Position.of("d1");
 
-        assertThat(src.canCrossMovingStraight(Direction.NORTH, dest)).isFalse();
+        assertThat(source.canCrossMovingStraight(Direction.NORTH, destination)).isFalse();
     }
 
     @DisplayName("파라미터로 넘어온 Row와 같은지 확인한다")
     @Test
     void testIsStartRow() {
-        Position src = Position.of("a2");
-        assertThat(src.isSameRow(Row.RANK_2)).isTrue();
+        Position source = Position.of("a2");
+        assertThat(source.isSameRow(Row.RANK_2)).isTrue();
     }
 }

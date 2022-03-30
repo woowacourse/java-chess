@@ -48,22 +48,22 @@ public class Position {
         return this.column.equals(position.column);
     }
 
-    public boolean canCrossMovingStraight(Direction direction, Position dest) {
-        return moveToNextPositionCheckingDestination(this, dest, direction.getX(), direction.getY());
+    public boolean canCrossMovingStraight(Direction direction, Position destination) {
+        return moveToNextPositionCheckingdestinationination(this, destination, direction.getX(), direction.getY());
     }
 
-    private boolean moveToNextPositionCheckingDestination(Position start, Position dest, int x, int y) {
+    private boolean moveToNextPositionCheckingdestinationination(Position start, Position destination, int x, int y) {
         if (!start.canMove(x, y)) {
             return false;
         }
         Position nextPosition = start.move(x, y);
-        if (nextPosition.equals(dest)) {
+        if (nextPosition.equals(destination)) {
             return true;
         }
-        return moveToNextPositionCheckingDestination(nextPosition, dest, x, y);
+        return moveToNextPositionCheckingdestinationination(nextPosition, destination, x, y);
     }
 
-    public boolean canMoveByTime(Direction direction, Position dest, int time) {
+    public boolean canMoveByTime(Direction direction, Position destination, int time) {
         int x = direction.getX();
         int y = direction.getY();
 
@@ -74,7 +74,7 @@ public class Position {
             }
             nextPosition = nextPosition.move(x, y);
         }
-        return dest.equals(nextPosition);
+        return destination.equals(nextPosition);
     }
 
     private boolean canMove(int x, int y) {

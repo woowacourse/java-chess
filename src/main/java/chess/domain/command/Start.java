@@ -9,7 +9,7 @@ public class Start extends CommandState {
     private static final String DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
-    private static final int DESTINATION_INDEX = 2;
+    private static final int destinationINATION_INDEX = 2;
     private static final int MOVE_COMMAND_SIZE = 3;
 
     public Start(State state) {
@@ -44,7 +44,7 @@ public class Start extends CommandState {
     }
 
     private CommandState executeMove(String[] commands) {
-        state = state.movePiece(Position.of(commands[SOURCE_INDEX]), Position.of(commands[DESTINATION_INDEX]));
+        state = state.movePiece(Position.of(commands[SOURCE_INDEX]), Position.of(commands[destinationINATION_INDEX]));
         if (state.isFinished()) {
             return new End();
         }

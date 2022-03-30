@@ -16,10 +16,10 @@ class KnightTest {
     @DisplayName("나이트가 성공적으로 이동할 수 있다.")
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("knightMoveTestSet")
-    void moveNNETrue(Position src, Position dest) {
+    void moveNNETrue(Position source, Position destination) {
         Piece piece = new Knight(Color.BLACK);
 
-        assertThat(piece.canMove(src, dest)).isTrue();
+        assertThat(piece.canMove(source, destination)).isTrue();
     }
 
     static Stream<Arguments> knightMoveTestSet() {
@@ -40,9 +40,9 @@ class KnightTest {
     @Test
     void moveNNWTrue() {
         Piece piece = new Knight(Color.BLACK);
-        Position src = Position.of("d5");
-        Position dest = Position.of("d6");
+        Position source = Position.of("d5");
+        Position destination = Position.of("d6");
 
-        assertThat(piece.canMove(src, dest)).isFalse();
+        assertThat(piece.canMove(source, destination)).isFalse();
     }
 }

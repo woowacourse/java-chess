@@ -14,7 +14,7 @@ abstract class Running extends Ready {
         super(board);
     }
 
-    public abstract State movePiece(Position src, Position dest);
+    public abstract State movePiece(Position source, Position destination);
 
     @Override
     public boolean isFinished() {

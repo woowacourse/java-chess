@@ -11,7 +11,7 @@ abstract class Finished extends Ready {
     }
 
     @Override
-    public State movePiece(Position src, Position dest) {
+    public State movePiece(Position source, Position destination) {
         throw new UnsupportedOperationException("게임이 종료되어 말을 움직일 수 없습니다.");
     }
 

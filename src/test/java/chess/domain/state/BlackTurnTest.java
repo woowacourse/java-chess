@@ -19,13 +19,13 @@ class BlackTurnTest {
     void test() {
         Board board = Board.getBasicInstance();
         State blackTurn = new BlackTurn(board);
-        Position src = Position.of("a7");
-        Position dest = Position.of("a6");
+        Position source = Position.of("a7");
+        Position destination = Position.of("a6");
 
-        blackTurn.movePiece(src, dest);
+        blackTurn.movePiece(source, destination);
 
-        assertThat(board.findPieceBy(dest).get().isSameColor(Color.BLACK)).isTrue();
-        assertThat(board.findPieceBy(dest).get().isSameType(Pawn.class)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isSameColor(Color.BLACK)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isSameType(Pawn.class)).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")
@@ -34,10 +34,10 @@ class BlackTurnTest {
         Board board = Board.getBasicInstance();
         State blackTurn = new BlackTurn(board);
 
-        Position src = Position.of("a2");
-        Position dest = Position.of("a3");
+        Position source = Position.of("a2");
+        Position destination = Position.of("a3");
 
-        assertThatThrownBy(() -> blackTurn.movePiece(src, dest))
+        assertThatThrownBy(() -> blackTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대방");
     }
@@ -48,10 +48,10 @@ class BlackTurnTest {
         Board board = Board.getBasicInstance();
         State blackTurn = new BlackTurn(board);
 
-        Position src = Position.of("d5");
-        Position dest = Position.of("a6");
+        Position source = Position.of("d5");
+        Position destination = Position.of("a6");
 
-        assertThatThrownBy(() -> blackTurn.movePiece(src, dest))
+        assertThatThrownBy(() -> blackTurn.movePiece(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("기물이 존재하지 않습니다");
     }
