@@ -43,7 +43,7 @@ public class ChessBoard {
         movePiece(source, target);
     }
 
-    private void validatePawnAttack(Piece sourcePiece, Position target) {
+    private void validatePawnAttack(final Piece sourcePiece, final Position target) {
         Piece targetPiece = board.get(target);
         Direction moveDirection = sourcePiece.findDirection(target);
         if (sourcePiece.isPawn() && isPawnAttackDirection(moveDirection) && targetPiece.isBlank()) {
@@ -51,7 +51,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateRoutePositions(Position source, Position target) {
+    private void validateRoutePositions(final Position source, final Position target) {
         List<Position> positions = board.get(source).getAvailablePositions(source, target);
         positions.forEach(this::validateNullPosition);
     }
@@ -76,7 +76,7 @@ public class ChessBoard {
         board.put(source, new Blank());
     }
 
-    public double calculateScoreByPlayer(Player player) {
+    public double calculateScoreByPlayer(final Player player) {
         double sum = 0;
         for (File file : File.values()) {
             List<PieceScore> pieceScores = generatePieceScoreList(player, file);
@@ -85,7 +85,7 @@ public class ChessBoard {
         return sum;
     }
 
-    private List<PieceScore> generatePieceScoreList(Player player, File file) {
+    private List<PieceScore> generatePieceScoreList(final Player player, final File file) {
         return Arrays.stream(Rank.values())
             .map(rank -> board.get(Position.of(file, rank)))
             .filter(piece -> piece.isSamePlayer(player))
@@ -93,7 +93,7 @@ public class ChessBoard {
             .collect(Collectors.toList());
     }
 
-    private double calculateFileScore(List<PieceScore> pieceScores) {
+    private double calculateFileScore(final List<PieceScore> pieceScores) {
         double sum = pieceScores.stream()
             .map(PieceScore::score)
             .mapToDouble(Double::doubleValue)
@@ -101,7 +101,7 @@ public class ChessBoard {
         return sum - calculatePawnsInFile(pieceScores);
     }
 
-    private double calculatePawnsInFile(List<PieceScore> pieceScores) {
+    private double calculatePawnsInFile(final List<PieceScore> pieceScores) {
         long count = pieceScores.stream()
             .filter(pieceScore -> pieceScore.score() == PieceScore.PAWN.score())
             .count();

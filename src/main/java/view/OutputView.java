@@ -11,10 +11,11 @@ import java.util.Collections;
 
 public class OutputView {
 
-    private static final String STATUS_MESSAGE = "%s 현재 점수 : %.1f" + System.lineSeparator();
-    private static final String KING_ATTACK_MESSAGE =
-        "%s의 King이 공격당하였습니다." + System.lineSeparator();
+    private static final String STATUS_MESSAGE = "%s 현재 점수 : %.1f";
     private static final String GAME_EXIT_MESSAGE = "게임이 종료되었습니다.";
+    private static final String GAME_RESULT_MESSAGE = "[현재 게임 승패 결과]";
+    private static final String RESULT_DRAW = "무승부";
+    private static final String RESULT_WIN = "승자 : ";
 
     public static void printBoard(final ChessBoard chessBoard) {
         Rank[] ranks = Rank.values();
@@ -39,17 +40,18 @@ public class OutputView {
     public static void printStatus(final Status status) {
         printWinner(status);
         System.out.printf(STATUS_MESSAGE, Player.WHITE, status.getWhiteScore());
+        System.out.println();
         System.out.printf(STATUS_MESSAGE, Player.BLACK, status.getBlackScore());
-
+        System.out.println();
     }
 
     private static void printWinner(Status status) {
-        System.out.println("[현재 게임 승패 결과]");
+        System.out.println(GAME_RESULT_MESSAGE);
         if (status.getWinner() == null) {
-            System.out.println("무승부");
+            System.out.println(RESULT_DRAW);
             return;
         }
-        System.out.println("승자 : " + status.getWinner());
+        System.out.println(RESULT_WIN + status.getWinner());
     }
 
     public static void printErrorMessage(final String errorMessage) {

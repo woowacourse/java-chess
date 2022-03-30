@@ -76,7 +76,7 @@ public abstract class Piece {
         return player;
     }
 
-    public boolean isSamePlayer(Piece comparePiece) {
+    public boolean isSamePlayer(final Piece comparePiece) {
         return comparePiece.isSamePlayer(player);
     }
 

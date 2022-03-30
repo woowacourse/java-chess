@@ -2,9 +2,9 @@ package domain;
 
 public class Status {
 
-    private double whiteScore;
-    private double blackScore;
-    private Player winner;
+    private final double whiteScore;
+    private final double blackScore;
+    private final Player winner;
 
     public Status(double whiteScore, double blackScore) {
         this.whiteScore = whiteScore;

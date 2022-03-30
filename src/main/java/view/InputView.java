@@ -18,7 +18,8 @@ public class InputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String START_COMMAND_INFORMATION = "> 게임 시작 : %s" + System.lineSeparator();
     private static final String END_COMMAND_INFORMATION = "> 게임 종료 : %s" + System.lineSeparator();
-    private static final String MOVE_COMMAND_INFORMATION = "> 게임 이동 : %s source위치 target위치 - 예. move b2 b3" + System.lineSeparator();
+    private static final String MOVE_COMMAND_INFORMATION =
+        "> 게임 이동 : %s source위치 target위치 - 예. move b2 b3" + System.lineSeparator();
     private static final String MOVE_COMMAND_FORM_ERROR_MESSAGE = "[ERROR] move source위치 target위치 형식으로 입력해주세요.";
     private static final String INPUT_POSITION_ERROR_MESSAGE = "[ERROR] source위치, target위치의 입력이 잘못되었습니다.";
     private static final String SAME_POSITION_ERROR_MESSAGE = "[ERROR] source위치, target위치가 같을 수 없습니다.";

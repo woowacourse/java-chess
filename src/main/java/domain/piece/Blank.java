@@ -11,7 +11,7 @@ public class Blank extends Piece {
         super(Player.NULL, PieceSymbol.NULL);
     }
 
-    public Blank(Player player) {
+    public Blank(final Player player) {
         super(player, PieceSymbol.NULL);
     }
 

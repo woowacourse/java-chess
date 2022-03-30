@@ -2,9 +2,9 @@ package controller;
 
 import domain.Status;
 import domain.chessgame.ChessBoard;
-import utils.ChessBoardGenerator;
 import domain.chessgame.ChessGame;
 import domain.position.Position;
+import utils.ChessBoardGenerator;
 import view.InputView;
 import view.OutputView;
 

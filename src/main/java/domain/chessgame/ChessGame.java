@@ -7,7 +7,7 @@ import domain.position.Position;
 
 public class ChessGame {
 
-    private ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
     private Player currentPlayer;
 
     public ChessGame(final ChessBoard chessBoard) {
@@ -15,17 +15,18 @@ public class ChessGame {
         this.currentPlayer = Player.WHITE;
     }
 
-    public void move(Position source, Position target) {
+    public void move(final Position source, final Position target) {
         validateTurn(source);
         chessBoard.move(source, target);
         changeTurn();
     }
 
-    public Status status(){
+    public Status status() {
         double whiteScore = chessBoard.calculateScoreByPlayer(Player.WHITE);
         double blackScore = chessBoard.calculateScoreByPlayer(Player.BLACK);
         return new Status(whiteScore, blackScore);
     }
+
     private void validateTurn(final Position source) {
         Piece sourcePiece = chessBoard.findPiece(source);
         if (sourcePiece != null && !sourcePiece.isSamePlayer(currentPlayer)) {
@@ -41,18 +42,11 @@ public class ChessGame {
         this.currentPlayer = Player.WHITE;
     }
 
-    public boolean isFinished(){
+    public boolean isFinished() {
         return chessBoard.isKingOnlyOne();
     }
 
     public ChessBoard getChessBoard() {
         return chessBoard;
-    }
-
-    private Player getOpponent(){
-        return Player.otherPlayer(currentPlayer);
-    }
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 }
