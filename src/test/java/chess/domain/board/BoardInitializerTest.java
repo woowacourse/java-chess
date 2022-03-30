@@ -80,7 +80,7 @@ class BoardInitializerTest {
 
 	@MethodSource("provideWhiteRow")
 	@ParameterizedTest(name = "{0}행의 모든 말은 white이다.")
-	void check_camp_white(Row row) {
+	void check_color_white(Row row) {
 		//then
 		for (Column column : Column.values()) {
 			Piece piece = board.get(Position.of(column, row));
@@ -90,7 +90,7 @@ class BoardInitializerTest {
 
 	@MethodSource("provideBlackRow")
 	@ParameterizedTest(name = "{0}행의 모든 말은 black이다.")
-	void check_camp_black(Row row) {
+	void check_color_black(Row row) {
 		//then
 		for (Column column : Column.values()) {
 			Piece piece = board.get(Position.of(column, row));

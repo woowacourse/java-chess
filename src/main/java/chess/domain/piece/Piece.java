@@ -26,7 +26,7 @@ public abstract class Piece {
 		Position afterPosition,
 		Consumer<Piece> moveFunction);
 
-	public boolean isSameCampWith(Piece targetPiece) {
+	public boolean isSameColorWith(Piece targetPiece) {
 		return this.color == targetPiece.color;
 	}
 

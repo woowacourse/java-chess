@@ -12,7 +12,7 @@ import chess.domain.piece.Piece;
 
 public final class Board {
 
-	private static final String SAME_CAMP_MOVE_EXCEPTION = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
+	private static final String SAME_COLOR_MOVE_EXCEPTION = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
 	private static final String EMPTY_SPACE_EXCEPTION = "이동할 수 있는 기물이 없습니다.";
 	private static final String INVALID_TURN_EXCEPTION = "상대 진영의 차례입니다.";
 	private static final String INVALID_MOVING_PATH_EXCEPTION = "경로에 기물이 있어 움직일 수 없습니다.";
@@ -40,7 +40,7 @@ public final class Board {
 			piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
 			return;
 		}
-		throw new IllegalArgumentException(SAME_CAMP_MOVE_EXCEPTION);
+		throw new IllegalArgumentException(SAME_COLOR_MOVE_EXCEPTION);
 	}
 
 	private void flipTurnToOpponent() {
@@ -79,7 +79,7 @@ public final class Board {
 	}
 
 	private boolean isCapturing(Piece piece, Position afterPosition) {
-		return !piece.isSameCampWith(value.get(afterPosition));
+		return !piece.isSameColorWith(value.get(afterPosition));
 	}
 
 	public boolean hasKingCaptured() {

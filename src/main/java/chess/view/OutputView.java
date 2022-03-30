@@ -43,10 +43,10 @@ public class OutputView {
 		if (piece == null) {
 			return ".";
 		}
-		return decideCaseByCamp(piece);
+		return decideCaseByColor(piece);
 	}
 
-	private String decideCaseByCamp(Piece piece) {
+	private String decideCaseByColor(Piece piece) {
 		final String pieceString = piece.getSymbol();
 		if (piece.isBlack()) {
 			return pieceString.toUpperCase();

@@ -38,7 +38,7 @@ public final class Pawn extends Piece {
 	private boolean canCapture(Position beforePosition, Position afterPosition) {
 		int columnDistance = afterPosition.columnDistance(beforePosition);
 		int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-		return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
+		return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByColor(rowDistance, MOVABLE_DISTANCE);
 	}
 
 	@Override
@@ -49,13 +49,13 @@ public final class Pawn extends Piece {
 			return false;
 		}
 		if (firstMove) {
-			return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
+			return checkMovableLimitByColor(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
 		}
-		return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+		return checkMovableLimitByColor(rowDirectedDistance, MOVABLE_DISTANCE);
 
 	}
 
-	private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
+	private boolean checkMovableLimitByColor(int distance, int movableDistance) {
 		if (this.isBlack()) {
 			return -movableDistance <= distance && distance < 0;
 		}
