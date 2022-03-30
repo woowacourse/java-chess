@@ -13,7 +13,7 @@ public enum CommandType {
     START("start") {
         @Override
         public Board play(Board board, List<String> command) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("이미 시작했습니다.");
         }
     },
     END("end") {
