@@ -20,4 +20,8 @@ public interface BoardState {
     double calculateBlackScore();
 
     double calculateWhiteScore();
+
+    End judgeWinner();
+
+    Playing judgeTurn();
 }

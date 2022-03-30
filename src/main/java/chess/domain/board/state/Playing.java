@@ -100,20 +100,6 @@ public abstract class Playing extends GameStarted {
         return judgeTurn();
     }
 
-    private End judgeWinner() {
-        if (isBlackTurn()) {
-            return new BlackWin(ranks);
-        }
-        return new WhiteWin(ranks);
-    }
-
-    private Playing judgeTurn() {
-        if (isBlackTurn()) {
-            return new WhiteTurn(ranks);
-        }
-        return new BlackTurn(ranks);
-    }
-
     private Piece getPiece(Position position) {
         return ranks.get(position.getY())
                 .getPieces()

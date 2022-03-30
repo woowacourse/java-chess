@@ -20,7 +20,8 @@ public class OutputView {
     public static void printBoard(BoardState boardState) {
         System.out.println();
         System.out.printf("   [ %s팀의 차례입니다 ]%n", findTurn(boardState));
-        System.out.println("흑  a b c d e f g h");
+        System.out.println("      Black Side");
+        System.out.println("    a b c d e f g h");
         System.out.println("  ┌-----------------┐");
         for (int i = 8; i > 0; i--) {
             String rankLine = boardState.getRank(i - 1).getPieces().stream()
@@ -30,7 +31,8 @@ public class OutputView {
             System.out.printf("%d | %s | %d%n", i, rankLine, i);
         }
         System.out.println("  └-----------------┘");
-        System.out.println("백  a b c d e f g h");
+        System.out.println("    a b c d e f g h");
+        System.out.println("      White Side");
         System.out.println();
     }
 
@@ -43,7 +45,7 @@ public class OutputView {
 
     public static void printResult(BoardState boardState) {
         System.out.printf("승자 : %s%n", boardState.findWinner().getName());
-        System.out.printf("백팀 점수 : %.1f%n", boardState.calculateBlackScore());
-        System.out.printf("흑팀 점수 : %.1f%n", boardState.calculateWhiteScore());
+        System.out.printf("흑팀 점수 : %.1f%n", boardState.calculateBlackScore());
+        System.out.printf("백팀 점수 : %.1f%n", boardState.calculateWhiteScore());
     }
 }

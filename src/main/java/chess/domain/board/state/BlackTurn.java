@@ -13,4 +13,14 @@ public final class BlackTurn extends Playing {
     public boolean isBlackTurn() {
         return true;
     }
+
+    @Override
+    public End judgeWinner() {
+        return new BlackWin(ranks);
+    }
+
+    @Override
+    public Playing judgeTurn() {
+        return new WhiteTurn(ranks);
+    }
 }
