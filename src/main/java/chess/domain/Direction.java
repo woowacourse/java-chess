@@ -15,14 +15,14 @@ public enum Direction {
     WEST(-1, 0),
     NORTHWEST(-1, 1),
 
-    NNE(1, 2),
-    NNW(-1, 2),
-    SSE(1, -2),
-    SSW(-1, -2),
-    EEN(2, 1),
-    EES(2, -1),
-    WWN(-2, 1),
-    WWS(-2, -1);
+    NORTH_NORTH_EAST(1, 2),
+    NORTH_NORTH_WEST(-1, 2),
+    SOUTH_SOUTH_EAST(1, -2),
+    SOUTH_SOUTH_WEST(-1, -2),
+    EAST_EAST_NORTH(2, 1),
+    EAST_EAST_SOUTH(2, -1),
+    WEST_WEST_NORTH(-2, 1),
+    WEST_WEST_SOUTH(-2, -1);
 
     private final int xDegree;
     private final int yDegree;
@@ -41,7 +41,8 @@ public enum Direction {
     }
 
     public static List<Direction> knightDirection() {
-        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+        return Arrays.asList(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH,
+                EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
     }
 
     public static List<Direction> whitePawnDirection(boolean isFirstTurn) {
