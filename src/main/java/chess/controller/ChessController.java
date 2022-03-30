@@ -24,7 +24,6 @@ public class ChessController {
             }
 
             if (command.isStatus()) {
-                chessGame.showStatus();
                 OutputView.printScore(chessGame.getBoard());
             }
 

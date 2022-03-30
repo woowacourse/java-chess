@@ -2,7 +2,7 @@ package chess.domain.game.state.running;
 
 import chess.domain.board.Board;
 import chess.domain.board.MoveResult;
-import chess.domain.game.state.beforerunning.FinishedKing;
+import chess.domain.game.state.afterrunning.FinishedKing;
 import chess.domain.game.state.State;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;

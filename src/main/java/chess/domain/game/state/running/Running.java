@@ -1,13 +1,13 @@
 package chess.domain.game.state.running;
 
 import chess.domain.board.Board;
-import chess.domain.game.state.beforerunning.FinishedStatus;
 import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
+import chess.domain.game.state.afterrunning.FinishedEnd;
 
 public abstract class Running extends Started {
 
-    public Running(Board board) {
+    protected Running(Board board) {
         super(board);
     }
 
@@ -18,12 +18,6 @@ public abstract class Running extends Started {
 
     @Override
     public State endGame() {
-        return new FinishedStatus(getBoard());
+        return new FinishedEnd(getBoard());
     }
-
-    @Override
-    public State showStatus() {
-        return new FinishedStatus(getBoard());
-    }
-
 }

@@ -10,7 +10,5 @@ public interface State {
 
     State move(Position from, Position to);
 
-    State showStatus();
-
     Board getBoard();
 }

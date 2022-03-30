@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.game.state.beforerunning.FinishedKing;
+import chess.domain.game.state.afterrunning.FinishedKing;
 import chess.domain.game.state.beforerunning.Ready;
 import chess.domain.game.state.running.RunningWhite;
 import chess.domain.position.Position;
@@ -50,17 +50,5 @@ class ReadyTest {
         assertThatThrownBy(() -> state.move(Position.from(XAxis.B, YAxis.TWO), Position.from(XAxis.A, YAxis.TWO)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임 시작 전 말을 움직일 수 없습니다.");
-    }
-
-    @DisplayName("Ready에서 showStatus 메소드를 호출하면 예외가 발생한다.")
-    @Test
-    void showStatus_throwsException() {
-        // given
-        State state = new Ready();
-
-        // when & then
-        assertThatThrownBy(state::showStatus)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임 시작 전 점수를 보여줄 수 없습니다.");
     }
 }

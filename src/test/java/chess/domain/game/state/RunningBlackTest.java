@@ -3,9 +3,7 @@ package chess.domain.game.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.state.beforerunning.FinishedStatus;
 import chess.domain.game.state.running.RunningBlack;
 import chess.domain.game.state.running.RunningWhite;
 import chess.domain.position.Position;
@@ -38,18 +36,5 @@ class RunningBlackTest {
         assertThatThrownBy(state::startGame)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 게임 중 입니다.");
-    }
-
-    @DisplayName("showStatus를 호출하면 FinishedStatus가 반환된다.")
-    @Test
-    void showStatus_returnsFinished() {
-        // given
-        State state = new RunningBlack(BoardFactory.createInitializedBoard());
-
-        // when
-        State actual = state.showStatus();
-
-        // then
-        assertThat(actual).isInstanceOf(FinishedStatus.class);
     }
 }

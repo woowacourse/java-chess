@@ -1,13 +1,19 @@
-package chess.domain.game.state.beforerunning;
+package chess.domain.game.state.afterrunning;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
-public class FinishedEnd extends BeforeRunning {
+public class AfterRunning extends Started {
 
-    public FinishedEnd(Board board) {
+    public AfterRunning(Board board) {
         super(board);
+    }
+
+    @Override
+    public State startGame() {
+        throw new IllegalStateException("이미 게임 중 입니다.");
     }
 
     @Override
@@ -18,10 +24,5 @@ public class FinishedEnd extends BeforeRunning {
     @Override
     public State move(Position from, Position to) {
         throw new IllegalStateException("게임 중이 아니어서 말을 움직일 수 없습니다.");
-    }
-
-    @Override
-    public State showStatus() {
-        throw new IllegalStateException("게임이 끝나서 상태를 볼 수 없습니다.");
     }
 }

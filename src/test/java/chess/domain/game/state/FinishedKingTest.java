@@ -1,12 +1,9 @@
 package chess.domain.game.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.game.state.beforerunning.FinishedKing;
-import chess.domain.game.state.running.RunningWhite;
+import chess.domain.game.state.afterrunning.FinishedKing;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -14,19 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class FinishedKingTest {
-
-    @DisplayName("startGame을 호출하면 RunningWhite 상태가 된다")
-    @Test
-    void startReturnsRunningWhite() {
-        // given
-        State state = new FinishedKing(BoardFactory.createInitializedBoard());
-
-        // when
-        State actual = state.startGame();
-
-        // then
-        assertThat(actual).isInstanceOf(RunningWhite.class);
-    }
 
     @DisplayName("endGame을 호출하면 예외가 발생한다.")
     @Test

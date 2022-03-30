@@ -21,10 +21,6 @@ public class ChessGame {
         this.state = state.move(from, to);
     }
 
-    public void showStatus() {
-        this.state = state.showStatus();
-    }
-
     public void endGame() {
         this.state = state.endGame();
     }

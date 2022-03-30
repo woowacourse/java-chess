@@ -6,9 +6,9 @@ import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
 import chess.domain.game.state.running.RunningWhite;
 
-abstract class BeforeRunning extends Started {
+public abstract class BeforeRunning extends Started {
 
-    BeforeRunning(Board board) {
+    protected BeforeRunning(Board board) {
         super(board);
     }
 
