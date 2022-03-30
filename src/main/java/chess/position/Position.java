@@ -68,7 +68,7 @@ public class Position {
         return File.distanceBetween(file, other.file);
     }
 
-    public Collection<Position> getLinearPath(Position to) {
+    public List<Position> getLinearPath(Position to) {
         if (isVerticalWay(to)) {
             return getVerticalPath(to);
         }
@@ -93,11 +93,11 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    private Collection<Position> getDiagonalPath(Position to) {
+    private List<Position> getDiagonalPath(Position to) {
         List<Rank> ranks = rank.getPath(to.rank);
         List<File> files = file.getPath(to.file);
 
-        Collection<Position> result = new ArrayList<>();
+        List<Position> result = new ArrayList<>();
         for (int i = 0; i < ranks.size(); i++) {
             result.add(new Position(files.get(i), ranks.get(i)));
         }
