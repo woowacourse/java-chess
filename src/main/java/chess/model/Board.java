@@ -13,6 +13,7 @@ public class Board {
     static final String ERROR_SOURCE_PIECE_EMPTY = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
     static final String ERROR_NOT_CORRECT_TURN = "[ERROR] 현재 올바르지 않은 팀 선택입니다.";
     static final String ERROR_NOT_MOVABLE = "[ERROR] 이동할 수 없는 위치입니다.";
+    static final String ERROR_NOT_MOVABLE_CHESS_FINISHED = "[ERROR] 체스 게임이 종료되어 이동할 수 없습니다.";
     private static final Piece EMPTY_PIECE = EmptyPiece.of(EMPTY);
 
     private final Map<Position, Piece> values;
@@ -24,27 +25,37 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        validateSourceNotEmpty(source);
-        turnDecide(source);
-
+        validateMovableState(source, target);
         changePiecePositions(source, target);
         turnDecider.nextState();
     }
 
-    public boolean isFinished() {
-        return turnDecider.isFinished();
-    }
-
-    private void turnDecide(Position source) {
-        if (!turnDecider.isTurnOf(pieceAt(source))) {
-            throw new IllegalArgumentException(ERROR_NOT_CORRECT_TURN);
-        }
+    private void validateMovableState(Position source, Position target) {
+        validateSourceNotEmpty(source);
+        validateCorrectTurn(source);
+        validateNotFinished();
     }
 
     private void validateSourceNotEmpty(Position source) {
         if (isEmptyPiece(pieceAt(source))) {
             throw new IllegalArgumentException(ERROR_SOURCE_PIECE_EMPTY);
         }
+    }
+
+    private void validateCorrectTurn(Position source) {
+        if (!turnDecider.isTurnOf(pieceAt(source))) {
+            throw new IllegalArgumentException(ERROR_NOT_CORRECT_TURN);
+        }
+    }
+
+    private void validateNotFinished() {
+        if (isFinished()) {
+            throw new IllegalStateException(ERROR_NOT_MOVABLE_CHESS_FINISHED);
+        }
+    }
+
+    public boolean isFinished() {
+        return turnDecider.isFinished();
     }
 
     private void changePiecePositions(Position source, Position target) {
@@ -98,11 +109,11 @@ public class Board {
         return values.get(position);
     }
 
-    public Map<Position, Piece> getValues() {
-        return values;
-    }
-
     public double calculateScore() {
         return new ScoreCalculator(values, turnDecider).currentPlayerScore();
+    }
+
+    public Map<Position, Piece> getValues() {
+        return values;
     }
 }

@@ -157,6 +157,21 @@ public class BoardTest {
         assertThat(board.isFinished()).isTrue();
     }
 
+    @DisplayName("체스 게임이 끝나면 move를 호출할 수 없다.")
+    @Test
+    void cannot_move_after_finished() {
+        //given
+        Board board = new Board(new TurnDecider(), new kingCaptureTestInitializer());
+
+        //when
+        board.move(Position.of(TWO, A), Position.of(THREE, A));
+
+        //then
+        assertThatThrownBy(() -> board.move(Position.of(THREE, A), Position.of(FOUR, A))
+        ).isInstanceOf(IllegalStateException.class)
+            .hasMessage(ERROR_NOT_MOVABLE_CHESS_FINISHED);
+    }
+
     @DisplayName("킹이 잡힐 경우 룩 한 개 남은 승자의 점수 5점을 반환한다.")
     @Test
     void score_is_5_when_king_captured() {
