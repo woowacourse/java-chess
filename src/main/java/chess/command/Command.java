@@ -25,7 +25,7 @@ public abstract class Command {
         return new End();
     }
 
-    public final boolean isType(Type type) {
+    public boolean isType(Type type) {
         return this.type == type;
     }
 }

@@ -2,21 +2,17 @@ package chess.command;
 
 import chess.domain.board.Position;
 
-public class Move extends Command {
-    private final Position sourcePosition;
-    private final Position targetPosition;
+public class Move extends BiCommand<Position> {
 
     protected Move(Position sourcePosition, Position targetPosition) {
-        super(Type.MOVE);
-        this.sourcePosition = sourcePosition;
-        this.targetPosition = targetPosition;
+        super(Type.MOVE, sourcePosition, targetPosition);
     }
 
     public Position getSourcePosition() {
-        return sourcePosition;
+        return super.getFirstArgument();
     }
 
     public Position getTargetPosition() {
-        return targetPosition;
+        return super.getSecondArgument();
     }
 }
