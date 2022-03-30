@@ -14,7 +14,7 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
                                               final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getHorizon()))
                 .mapToObj(moveUnit -> smallerPosition.move(moveUnit, NOT_MOVE))
-                .anyMatch(position -> isPieceExist(board, position));
+                .anyMatch(board::isPieceExist);
     }
 
     protected boolean isPieceExistWhenVertical(final Board board,
@@ -22,7 +22,7 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
                                                final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getVertical()))
                 .mapToObj(moveUnit -> smallerPosition.move(NOT_MOVE, moveUnit * REVERSE_DIRECTION))
-                .anyMatch(position -> isPieceExist(board, position));
+                .anyMatch(board::isPieceExist);
     }
 
     protected boolean isPieceExistWhenPositiveDiagonal(final Board board,
@@ -30,7 +30,7 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
                                                        final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getVertical()))
                 .mapToObj(moveUnit -> smallerPosition.move(moveUnit * REVERSE_DIRECTION, moveUnit * REVERSE_DIRECTION))
-                .anyMatch(position -> isPieceExist(board, position));
+                .anyMatch(board::isPieceExist);
     }
 
     protected boolean isPieceExistWhenNegativeDiagonal(final Board board,
@@ -38,10 +38,6 @@ public abstract class LinearMoveStrategy extends FirstRowMoveStrategy {
                                                        final Distance distance) {
         return IntStream.range(ADD_START_UNIT, Math.abs(distance.getVertical()))
                 .mapToObj(moveUnit -> smallerPosition.move(moveUnit, moveUnit * REVERSE_DIRECTION))
-                .anyMatch(position -> isPieceExist(board, position));
-    }
-
-    protected boolean isPieceExist(final Board board, final Position position) {
-        return !board.getPiece(position).isBlank();
+                .anyMatch(board::isPieceExist);
     }
 }

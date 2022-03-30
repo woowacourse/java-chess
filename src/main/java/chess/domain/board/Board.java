@@ -25,6 +25,10 @@ public class Board {
         return getPiece(position).getColor();
     }
 
+    public boolean isPieceExist(final Position position) {
+        return !board.get(position).isBlank();
+    }
+
     public Piece getPiece(final Position position) {
         return board.get(position);
     }
