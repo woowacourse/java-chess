@@ -9,47 +9,195 @@ import org.junit.jupiter.api.Test;
 
 public class DirectionTest {
 
-    @DisplayName("source: a1, target: b2 일 때 direction은 RIGHT_UP_DIAGONAL을 반환한다.")
+    @DisplayName("source: b1, target: a1 일 때 direction은 LEFT을 반환한다.")
     @Test
-    void right_up_diagonal() {
-        Direction actual = Direction.findDiagonalDirection(Position.of("a1"), Position.of("b2"));
-        Direction expected = Direction.RIGHT_UP_DIAGONAL;
+    void direction_left() {
+        Position source = Position.of("b1");
+        Position target = Position.of("a1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.LEFT;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: a1, target: b1 일 때 direction은 RIGHT을 반환한다.")
+    @Test
+    void direction_right() {
+        Position source = Position.of("a1");
+        Position target = Position.of("b1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: a1, target: a2 일 때 direction은 UP을 반환한다.")
+    @Test
+    void direction_up() {
+        Position source = Position.of("a1");
+        Position target = Position.of("a2");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.UP;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: a2, target: a1 일 때 direction은 DOWN을 반환한다.")
+    @Test
+    void direction_down() {
+        Position source = Position.of("a2");
+        Position target = Position.of("a1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.DOWN;
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("source: b1, target: a2 일 때 direction은 LEFT_UP_DIAGONAL을 반환한다.")
     @Test
-    void left_up_diagonal() {
-        Direction actual = Direction.findDiagonalDirection(Position.of("b1"), Position.of("a2"));
+    void direction_left_up_diagonal() {
+        Position source = Position.of("b1");
+        Position target = Position.of("a2");
+
+        Direction actual = Direction.findDirection(source, target);
         Direction expected = Direction.LEFT_UP_DIAGONAL;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a2, target: b1 일 때 direction은 RIGHT_DOWN_DIAGONAL을 반환한다.")
-    @Test
-    void right_down_diagonal() {
-        Direction actual = Direction.findDiagonalDirection(Position.of("a2"), Position.of("b1"));
-        Direction expected = Direction.RIGHT_DOWN_DIAGONAL;
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("source: b2, target: a1 일 때 direction은 LEFT_DOWN_DIAGONAL을 반환한다.")
     @Test
-    void left_down_diagonal() {
-        Direction actual = Direction.findDiagonalDirection(Position.of("b2"), Position.of("a1"));
+    void direction_left_down_diagonal() {
+        Position source = Position.of("b2");
+        Position target = Position.of("a1");
+
+        Direction actual = Direction.findDirection(source, target);
         Direction expected = Direction.LEFT_DOWN_DIAGONAL;
 
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("source: b3, target: a1 일 때 direction은 NONE을 반환한다.")
+    @DisplayName("source: a1, target: b2 일 때 direction은 RIGHT_UP_DIAGONAL을 반환한다.")
     @Test
-    void NONE_1() {
-        Direction actual = Direction.findDiagonalDirection(Position.of("b3"), Position.of("a1"));
-        Direction expected = Direction.NONE;
+    void direction_right_up_diagonal() {
+        Position source = Position.of("a1");
+        Position target = Position.of("b2");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_UP_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: a2, target: b1 일 때 direction은 RIGHT_DOWN_DIAGONAL을 반환한다.")
+    @Test
+    void direction_right_down_diagonal() {
+        Position source = Position.of("a2");
+        Position target = Position.of("b1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_DOWN_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+
+    @DisplayName("source: c3, target: a4 일 때 direction은 LEFT_LEFT_UP_DIAGONAL을 반환한다.")
+    @Test
+    void direction_left_left_up_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("a4");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.LEFT_LEFT_UP_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: a2 일 때 direction은 LEFT_LEFT_DOWN_DIAGONAL을 반환한다.")
+    @Test
+    void direction_left_left_down_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("a2");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.LEFT_LEFT_DOWN_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: b5 일 때 direction은 LEFT_UP_UP_DIAGONAL을 반환한다.")
+    @Test
+    void direction_left_up_up_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("b5");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.LEFT_UP_UP_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: b1 일 때 direction은 LEFT_DOWN_DOWN_DIAGONAL을 반환한다.")
+    @Test
+    void direction_left_down_down_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("b1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.LEFT_DOWN_DOWN_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: e4 일 때 direction은 RIGHT_RIGHT_UP_DIAGONAL을 반환한다.")
+    @Test
+    void direction_right_right_up_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("e4");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_RIGHT_UP_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: e2 일 때 direction은 RIGHT_RIGHT_DOWN_DIAGONAL을 반환한다.")
+    @Test
+    void direction_right_right_down_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("e2");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_RIGHT_DOWN_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: d5 일 때 direction은 RIGHT_UP_UP_DIAGONAL을 반환한다.")
+    @Test
+    void direction_right_up_up_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("d5");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_UP_UP_DIAGONAL;
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("source: c3, target: d1 일 때 direction은 RIGHT_DOWN_DOWN_DIAGONAL을 반환한다.")
+    @Test
+    void direction_right_down_down_diagonal() {
+        Position source = Position.of("c3");
+        Position target = Position.of("d1");
+
+        Direction actual = Direction.findDirection(source, target);
+        Direction expected = Direction.RIGHT_DOWN_DOWN_DIAGONAL;
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -98,51 +246,6 @@ public class DirectionTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("source: a1, target: a2 일 때 direction은 UP을 반환한다.")
-    @Test
-    void up() {
-        Direction actual = Direction.findCrossDirection(Position.of("a1"), Position.of("a2"));
-        Direction expected = Direction.UP;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a2, target: a1 일 때 direction은 DOWN을 반환한다.")
-    @Test
-    void down() {
-        Direction actual = Direction.findCrossDirection(Position.of("a2"), Position.of("a1"));
-        Direction expected = Direction.DOWN;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: b1, target: a1 일 때 direction은 LEFT를 반환한다.")
-    @Test
-    void left() {
-        Direction actual = Direction.findCrossDirection(Position.of("b1"), Position.of("a1"));
-        Direction expected = Direction.LEFT;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a1, target: b1 일 때 direction은 RIGHT을 반환한다.")
-    @Test
-    void right() {
-        Direction actual = Direction.findCrossDirection(Position.of("a1"), Position.of("b1"));
-        Direction expected = Direction.RIGHT;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a1, target: b3 일 때 direction은 NONE을 반환한다.")
-    @Test
-    void NONE_2() {
-        Direction actual = Direction.findCrossDirection(Position.of("a1"), Position.of("b3"));
-        Direction expected = Direction.NONE;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("source: a1, target: a4 일 때 path는 a2, a3 position이 들어가야한다.")
     @Test
     void up_path() {
@@ -183,24 +286,6 @@ public class DirectionTest {
 
         List<Position> actual = direction.findPositionsInPath(Position.of("a1"), Position.of("d1"));
         List<Position> expected = List.of(Position.of("b1"), Position.of("c1"));
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a1, target: d1 일 때 direction은 RIGHT_UP_DIAGONAL을 반환한다.")
-    @Test
-    void findAllDirection_if_CrossDirection() {
-        Direction actual = Direction.findAllDirection(Position.of("a1"), Position.of("d1"));
-        Direction expected = Direction.RIGHT;
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("source: a2, target: b1 일 때 direction은 RIGHT_DOWN_DIAGONAL을 반환한다.")
-    @Test
-    void findAllDirection_if_DiagonalDirection() {
-        Direction actual = Direction.findAllDirection(Position.of("a2"), Position.of("b1"));
-        Direction expected = Direction.RIGHT_DOWN_DIAGONAL;
 
         assertThat(actual).isEqualTo(expected);
     }

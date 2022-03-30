@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,13 +12,15 @@ public class Queen extends Piece {
     private static final String BLACK_DISPLAY = "♕";
     private static final String WHITE_DISPLAY = "♛";
 
+    private final List<Direction> directions = Direction.getCrossAndDiagonalDirection();
+
     public Queen(Color color, Position position) {
         super(color, position);
     }
 
     @Override
     public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findAllDirection(position, toPosition);
+        Direction direction = Direction.findDirection(position, toPosition);
         return direction.findPositionsInPath(position, toPosition);
     }
 
@@ -36,9 +38,8 @@ public class Queen extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        return position.isHorizontal(toPosition)
-            || position.isVertical(toPosition)
-            || position.isDiagonal(toPosition);
+        Direction targetDirection = Direction.findDirection(position, toPosition);
+        return directions.contains(targetDirection);
     }
 
     @Override

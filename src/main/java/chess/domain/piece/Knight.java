@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +8,12 @@ import java.util.Objects;
 
 public class Knight extends Piece {
 
-    private static final int MAIN_DIRECTION_MOVE_COUNT = 2;
-    private static final int SUB_DIRECTION_MOVE_COUNT = 1;
-
     private static final double SCORE = 2.5;
 
     private static final String BLACK_DISPLAY = "♘";
     private static final String WHITE_DISPLAY = "♞";
+
+    private final List<Direction> directions = Direction.getLShapeDiagonalDirection();
 
     public Knight(Color color, Position position) {
         super(color, position);
@@ -38,11 +38,8 @@ public class Knight extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        int fileDifference = position.fileDifference(toPosition);
-        int rankDifference = position.rankDifference(toPosition);
-
-        return (fileDifference == SUB_DIRECTION_MOVE_COUNT && rankDifference == MAIN_DIRECTION_MOVE_COUNT)
-            || (fileDifference == MAIN_DIRECTION_MOVE_COUNT && rankDifference == SUB_DIRECTION_MOVE_COUNT);
+        Direction targetDirection = Direction.findDirection(position, toPosition);
+        return directions.contains(targetDirection);
     }
 
     @Override

@@ -42,34 +42,8 @@ public class Position {
         return targetPosition.rankIdx - rankIdx;
     }
 
-    public boolean isHorizontal(Position toPosition) {
-        return rankDifference(toPosition) == 0
-                && fileDifference(toPosition) > 0;
-    }
-
-    public boolean isVertical(Position toPosition) {
-        return rankDifference(toPosition) > 0
-                && fileDifference(toPosition) == 0;
-    }
-
     public boolean isDiagonal(Position toPosition) {
         return fileDifference(toPosition) == rankDifference(toPosition);
-    }
-
-    public boolean isLeftSide(Position position) {
-        return fileRawDifference(position) < 0;
-    }
-
-    public boolean isRightSide(Position position) {
-        return fileRawDifference(position) > 0;
-    }
-
-    public boolean isUpSide(Position position) {
-        return rankRawDifference(position) > 0;
-    }
-
-    public boolean isDownSide(Position position) {
-        return rankRawDifference(position) < 0;
     }
 
     public boolean isSamePosition(Position position) {
@@ -97,9 +71,14 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "fileIdx=" + fileIdx +
-                ", rankIdx=" + rankIdx +
-                '}';
+            "fileIdx=" + fileIdx +
+            ", rankIdx=" + rankIdx +
+            '}';
+    }
+
+    public double findRelativeDegree(Position target) {
+        return Math.round(Math.atan2(fileRawDifference(target), rankRawDifference(target))
+            * (180 / Math.PI));
     }
 
     private static class PositionCache {

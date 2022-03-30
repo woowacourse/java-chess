@@ -12,13 +12,15 @@ public class Bishop extends Piece {
     private static final String BLACK_DISPLAY = "♙";
     private static final String WHITE_DISPLAY = "♟";
 
+    private final List<Direction> directions = Direction.getDiagonalDirection();
+
     public Bishop(Color color, Position position) {
         super(color, position);
     }
 
     @Override
     public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findDiagonalDirection(position, toPosition);
+        Direction direction = Direction.findDirection(position, toPosition);
         return direction.findPositionsInPath(position, toPosition);
     }
 
@@ -28,10 +30,16 @@ public class Bishop extends Piece {
         this.position = position;
     }
 
+    @Override
     public void validateMovable(Position toPosition) {
-        if (!position.isDiagonal(toPosition)) {
+        if (!isMovablePosition(toPosition)) {
             throw new IllegalArgumentException(INVALID_MOVABLE_POSITION_EXCEPTION_MESSAGE);
         }
+    }
+
+    private boolean isMovablePosition(Position toPosition) {
+        Direction targetDirection = Direction.findDirection(position, toPosition);
+        return directions.contains(targetDirection);
     }
 
     @Override

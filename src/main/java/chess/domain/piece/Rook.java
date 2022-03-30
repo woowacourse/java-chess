@@ -12,12 +12,14 @@ public class Rook extends Piece {
     private static final String BLACK_DISPLAY = "♖";
     private static final String WHITE_DISPLAY = "♜";
 
+    private final List<Direction> directions = Direction.getCrossDirection();
+
     public Rook(Color color, Position position) {
         super(color, position);
     }
 
     public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findCrossDirection(position, toPosition);
+        Direction direction = Direction.findDirection(position, toPosition);
         return direction.findPositionsInPath(position, toPosition);
     }
 
@@ -35,8 +37,8 @@ public class Rook extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        return position.isHorizontal(toPosition)
-            || position.isVertical(toPosition);
+        Direction targetDirection = Direction.findDirection(position, toPosition);
+        return directions.contains(targetDirection);
     }
 
     @Override
