@@ -1,4 +1,6 @@
-package chessrefactor.piece;
+package chess.piece;
+
+import chess.square.Square;
 
 public class Queen extends Piece {
 
@@ -9,5 +11,10 @@ public class Queen extends Piece {
     @Override
     public String name() {
         return "q";
+    }
+
+    @Override
+    public boolean movable(Square source, Square target) {
+        return false;
     }
 }

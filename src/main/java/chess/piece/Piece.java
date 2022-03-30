@@ -1,4 +1,6 @@
-package chessrefactor.piece;
+package chess.piece;
+
+import chess.square.Square;
 
 public abstract class Piece {
 
@@ -20,4 +22,6 @@ public abstract class Piece {
     }
 
     public abstract String name();
+
+    public abstract boolean movable(Square source, Square target);
 }

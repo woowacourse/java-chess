@@ -1,4 +1,4 @@
-package chessrefactor.piece;
+package chess.piece;
 
 import java.util.List;
 

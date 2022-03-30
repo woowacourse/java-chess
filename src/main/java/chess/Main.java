@@ -1,12 +1,11 @@
-package chess;
-
-import chess.controller.ChessController;
-import chess.controller.ChessService;
+package chessrefactor;
 
 public class Main {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController(new ChessService());
-        chessController.playGame();
+        ChessController chessController = new ChessController();
+        InputView.inputStartOrEndGame();
+        BoardDto boardDto = chessController.startGame();
+        OutputView.announce(boardDto);
     }
 }
