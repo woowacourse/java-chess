@@ -1,7 +1,7 @@
 package chess.model.piece;
 
+import static chess.model.piece.Fixtures.B2;
 import static chess.model.piece.Fixtures.B3;
-import static chess.model.piece.Fixtures.B4;
 import static chess.model.piece.Fixtures.B5;
 import static chess.model.piece.Fixtures.C2;
 import static chess.model.piece.Fixtures.C6;
@@ -9,15 +9,13 @@ import static chess.model.piece.Fixtures.D4;
 import static chess.model.piece.Fixtures.D5;
 import static chess.model.piece.Fixtures.E2;
 import static chess.model.piece.Fixtures.E6;
+import static chess.model.piece.Fixtures.F2;
 import static chess.model.piece.Fixtures.F3;
-import static chess.model.piece.Fixtures.F4;
 import static chess.model.piece.Fixtures.F5;
 import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.piece.Color;
-import chess.piece.Knight;
 import org.junit.jupiter.api.Test;
 
 public class KnightTest {
@@ -50,8 +48,8 @@ public class KnightTest {
 
         assertAll(
                 () -> assertThat(knight.movable(D4, D5)).isFalse(),
-                () -> assertThat(knight.movable(D4, F4)).isFalse(),
-                () -> assertThat(knight.movable(D4, B4)).isFalse(),
+                () -> assertThat(knight.movable(D4, F2)).isFalse(),
+                () -> assertThat(knight.movable(D4, B2)).isFalse(),
                 () -> assertThat(knight.movable(D4, F6)).isFalse());
     }
 

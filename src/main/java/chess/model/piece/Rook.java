@@ -17,11 +17,18 @@ public class Rook extends Piece {
 
     @Override
     public boolean movable(Square source, Square target) {
-        return false;
+        return getDirection().stream()
+                .map(direction -> source.findRoad(direction, 7))
+                .anyMatch(road -> road.contains(target));
     }
 
     @Override
     List<Direction> getDirection() {
-        return null;
+        return List.of(
+                Direction.EAST,
+                Direction.WEST,
+                Direction.SOUTH,
+                Direction.NORTH
+        );
     }
 }
