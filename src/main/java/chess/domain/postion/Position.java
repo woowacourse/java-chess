@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class Position implements Comparable<Position> {
 
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
     public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(final char inputFile, final char inputRank) {
+    public static Position of(final int inputFile, final int inputRank) {
         final File file = File.from(inputFile);
-        final Rank rank = Rank.from(Character.getNumericValue(inputRank));
+        final Rank rank = Rank.from(inputRank);
         validatePosition(file, rank);
 
         return new Position(file, rank);
@@ -29,7 +29,7 @@ public class Position implements Comparable<Position> {
     }
 
     public Position nextPositionBy(Direction direction) {
-        File nextFile = File.from((char) (file.getNumber() + direction.file()));
+        File nextFile = File.from((file.getNumber() + direction.file()));
         Rank nextRank = Rank.from(rank.getNumber() + direction.rank());
 
         return new Position(nextFile, nextRank);
