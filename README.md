@@ -164,7 +164,8 @@
     - MovePattern -> AbstractMovePattern -> AbstractXXXMovePattern -> 기물MovePattern 구현체와 같은 구조를 가지도록 수정했다.
     - 테스트 코드에서도 MovePattern 인터페이스를 쓰도록 수정했다.
 - [ ] MovePattern에서 `findDirection()`은 null을 반환하고 있어요. NPE가 발생할 가능성이 있는 것 같은데 개선해볼까요?
-- [ ] `StatusResult`와 `ScoreResult`는 같은 역할과 책임을 가지는 것 같아요. 해당 클래스를 둔 이유가 있을까요?
+- [x] `StatusResult`와 `ScoreResult`는 같은 역할과 책임을 가지는 것 같아요. 해당 클래스를 둔 이유가 있을까요?
+    - 정확하게 같은 일을 하는데 단순하게 한번 더 감싼 느낌이었다. 두 클래스의 기능을 합친 `StatusResult`를 남기고 `ScoreResult`를 제거했다.
 - [ ] (CommandState) -> 외부에서 Command를 찾고 그 값을 이용해서 CommandState를 찾아보면 어떨까요?
     - [ ] 메서드 이름도 보편적인 정적 팩토리 메서드로 보여서 특정 행위를 한다는걸 나타면 좋을 것 같아요.
 - [ ] CommandState 하위 Start와 같은 클래스는 상태패턴을 사용하기 위해 만든 코드같아요. 심플하게도 풀어낼 수 있을 것 같아요!

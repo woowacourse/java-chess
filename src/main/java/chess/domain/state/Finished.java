@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.ScoreResult;
 
 abstract class Finished extends Ready {
 

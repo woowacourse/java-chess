@@ -1,20 +1,22 @@
 package chess.domain.command;
 
-import chess.domain.board.ScoreResult;
+import chess.domain.board.Score;
+import chess.domain.piece.Color;
+import java.util.Map;
 
 public class StatusResult {
 
-    private final ScoreResult result;
+    private final Map<Color, Score> result;
 
-    public StatusResult(ScoreResult result) {
+    public StatusResult(Map<Color, Score> result) {
         this.result = result;
     }
 
-    public double getWhiteScore() {
-        return result.getWhiteScore().get();
+    public Score getBlackScore() {
+        return result.get(Color.BLACK);
     }
 
-    public double getBlackScore() {
-        return result.getBlackScore().get();
+    public Score getWhiteScore() {
+        return result.get(Color.WHITE);
     }
 }

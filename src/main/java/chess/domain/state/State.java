@@ -2,7 +2,9 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.ScoreResult;
+import chess.domain.board.Score;
+import chess.domain.piece.Color;
+import java.util.Map;
 
 public interface State {
 
@@ -10,7 +12,7 @@ public interface State {
 
     Board getBoard();
 
-    ScoreResult getScore();
+    Map<Color, Score> getScore();
 
     boolean isFinished();
 }

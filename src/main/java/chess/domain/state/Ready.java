@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Score;
-import chess.domain.board.ScoreResult;
 import chess.domain.piece.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,7 @@ public abstract class Ready implements State {
     }
 
     @Override
-    public final ScoreResult getScore() {
+    public final Map<Color, Score> getScore() {
         double whiteScore = board.calculateScore(Color.WHITE);
         double blackScore = board.calculateScore(Color.BLACK);
 
@@ -33,6 +32,6 @@ public abstract class Ready implements State {
         scoreByColor.put(Color.WHITE, new Score(whiteScore));
         scoreByColor.put(Color.BLACK, new Score(blackScore));
 
-        return new ScoreResult(scoreByColor);
+        return scoreByColor;
     }
 }
