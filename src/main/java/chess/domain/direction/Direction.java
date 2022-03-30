@@ -112,16 +112,23 @@ public enum Direction {
             RIGHT_DOWN_DOWN_DIAGONAL);
     }
 
-    public static List<Direction> getAttachedUpwardDirection() {
-        return Arrays.asList(UP,
-            LEFT_UP_DIAGONAL,
-            RIGHT_UP_DIAGONAL);
+    public boolean isAttachedDownDirection() {
+        return this == DOWN;
     }
 
-    public static List<Direction> getAttachedDownwardDirection() {
-        return Arrays.asList(DOWN,
-            LEFT_DOWN_DIAGONAL,
-            RIGHT_DOWN_DIAGONAL);
+    public boolean isAttachedUpDirection() {
+        return this == UP;
+    }
+
+    public boolean isDownwardDiagonalDirection() {
+        return this == LEFT_DOWN_DIAGONAL
+            || this == RIGHT_DOWN_DIAGONAL;
+    }
+
+    public boolean isUpwardDiagonalDirection() {
+        return this == LEFT_UP_DIAGONAL
+            || this == RIGHT_UP_DIAGONAL;
+
     }
 
 }

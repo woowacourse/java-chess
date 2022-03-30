@@ -13,12 +13,8 @@ public final class Pawn extends Piece {
 
     private static final double DEFAULT_SCORE = 1;
 
-    private static final int MOVE_FILE_COUNT = 0;
-    private static final int FORWARD_RANK_COUNT = 1;
-    private static final int JUMP_RANK_COUNT = 2;
-    private static final int BLACK_MOVE_RANK_DIFFERENCE = -1;
-    private static final int ATTACKABLE_FILE_DIFFERENCE = 1;
     private static final int MOVABLE_RANK_DIFFERENCE = 1;
+    private static final int JUMPABLE_RANK_DIFFERENCE = 2;
 
     private static final String BLACK_DISPLAY = "♗";
     private static final String WHITE_DISPLAY = "♝";
@@ -31,7 +27,7 @@ public final class Pawn extends Piece {
 
     @Override
     public List<Position> getPositionsInPath(Position toPosition) {
-        Direction direction = Direction.findCrossDirection(position, toPosition);
+        Direction direction = Direction.findDirection(position, toPosition);
         return direction.findPositionsInPath(position, toPosition);
     }
 
@@ -49,35 +45,49 @@ public final class Pawn extends Piece {
     }
 
     private boolean canMoveForwardOrJump(Position toPosition) {
-        if (canJump() && toPosition.isSamePosition(getMovablePosition(JUMP_RANK_COUNT))) {
+        if (color.isWhite()) {
+            return validateWhiteMovable(toPosition);
+        }
+        return validateBlackMovable(toPosition);
+    }
+
+    private boolean validateWhiteMovable(Position toPosition) {
+        if (!isValidWhiteDirection(toPosition)) {
+            return false;
+        }
+        if (isWhiteJump(position.getRankIdx()) && position.rankDifference(toPosition) == JUMPABLE_RANK_DIFFERENCE) {
             return true;
         }
-        Position forwardPosition = getMovablePosition(FORWARD_RANK_COUNT);
-        return toPosition.isSamePosition(forwardPosition);
-    }
-
-    private Position getMovablePosition(int moveRankDiff) {
-        return position.movedBy(MOVE_FILE_COUNT, moveRankDifference(moveRankDiff));
-    }
-
-    private int moveRankDifference(int moveCount) {
-        if (color == Color.BLACK) {
-            return moveCount * BLACK_MOVE_RANK_DIFFERENCE;
-        }
-        return moveCount;
-    }
-
-    private boolean canJump() {
-        int curRankIdx = position.getRankIdx();
-        return isWhiteJump(curRankIdx) || isBlackJump(curRankIdx);
+        return position.rankDifference(toPosition) == MOVABLE_RANK_DIFFERENCE;
     }
 
     private boolean isWhiteJump(int curRankIdx) {
-        return color.isWhite() && PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return PositionUtil.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
     }
 
+    private boolean isValidWhiteDirection(Position toPosition) {
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isAttachedUpDirection();
+    }
+
+    private boolean validateBlackMovable(Position toPosition) {
+        if (!isValidBlackDirection(toPosition)) {
+            return false;
+        }
+        if (isBlackJump(position.getRankIdx()) && position.rankDifference(toPosition) == JUMPABLE_RANK_DIFFERENCE) {
+            return true;
+        }
+        return position.rankDifference(toPosition) == MOVABLE_RANK_DIFFERENCE;
+    }
+
+    private boolean isValidBlackDirection(Position toPosition) {
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isAttachedDownDirection();
+    }
+
+
     private boolean isBlackJump(int curRankIdx) {
-        return color.isBlack() && PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
+        return PositionUtil.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
     }
 
     @Override
@@ -93,12 +103,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean canAttack(Position enemyPosition) {
-        int fileDifference = position.fileDifference(enemyPosition);
-        int rankRawDifference = position.rankRawDifference(enemyPosition);
-
-        return position.isDiagonal(enemyPosition)
-            && fileDifference == ATTACKABLE_FILE_DIFFERENCE
-            && rankRawDifference == moveRankDifference(MOVABLE_RANK_DIFFERENCE);
+        Direction direction = Direction.findDirection(position, enemyPosition);
+        if (color.isWhite()) {
+            return direction.isUpwardDiagonalDirection();
+        }
+        return direction.isDownwardDiagonalDirection();
     }
 
     @Override
