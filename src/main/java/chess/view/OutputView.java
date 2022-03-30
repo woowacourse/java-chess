@@ -45,7 +45,7 @@ public class OutputView {
 
     private static String convertToSymbol(final Piece piece) {
         final String symbol = piece.getPieceType().getSymbol();
-        if (piece.getColor() == Color.BLACK) {
+        if (piece.isSameColor(Color.BLACK)) {
             return symbol.toUpperCase(Locale.ROOT);
         }
         return symbol;

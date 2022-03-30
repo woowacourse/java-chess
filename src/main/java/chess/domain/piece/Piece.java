@@ -22,12 +22,17 @@ public abstract class Piece {
         return pieceType == expected;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
     }
 
-    public Color getColor() {
-        return color;
+    public boolean hasSameColor(Piece piece) {
+        return piece.isSameColor(color);
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     @Override
@@ -42,10 +47,6 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(pieceType);
-    }
-
-    public boolean isSameColor(final Color color) {
-        return this.color == color;
     }
 
 }

@@ -55,7 +55,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isInvalidDirection(final Direction direction) {
-        if (getColor() == Color.BLACK) {
+        if (isSameColor(Color.BLACK)) {
             return isInvalidBlackDirection(direction);
         }
         return isInvalidWhiteDirection(direction);
@@ -70,8 +70,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isFirstMove(final Row row) {
-        return (row == WHITE_INITIAL_ROW && getColor() == Color.WHITE)
-                || (row == BLACK_INITIAL_ROW && getColor() == Color.BLACK);
+        return (row == WHITE_INITIAL_ROW && isSameColor(Color.WHITE))
+                || (row == BLACK_INITIAL_ROW && isSameColor(Color.BLACK));
     }
 
     private void validateRange(final int columnDifference, final int rowDifference) {

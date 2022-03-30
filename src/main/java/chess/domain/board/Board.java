@@ -82,7 +82,7 @@ public class Board {
     }
 
     private void validatePawnDiagonalMove(final Piece movingPiece, final Piece targetPiece) {
-        if (targetPiece.equals(new EmptySpace()) || targetPiece.getColor() == movingPiece.getColor()) {
+        if (targetPiece.equals(new EmptySpace()) || targetPiece.hasSameColor(movingPiece)) {
             throw new IllegalArgumentException(PAWN_CANNOT_MOVE_DIAGONAL);
         }
     }
@@ -91,7 +91,7 @@ public class Board {
         if (movingPiece.equals(new EmptySpace())) {
             throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
         }
-        if (movingPiece.getColor() != color) {
+        if (!movingPiece.isSameColor(color)) {
             throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
         }
     }
@@ -112,7 +112,7 @@ public class Board {
     }
 
     private void validateTarget(final Piece movingPiece, final Piece targetPiece) {
-        if (!targetPiece.equals(new EmptySpace()) && movingPiece.getColor() == targetPiece.getColor()) {
+        if (!targetPiece.equals(new EmptySpace()) && targetPiece.hasSameColor(movingPiece)) {
             throw new IllegalArgumentException(ANOTHER_SAME_COLOR_PIECE_EXIST);
         }
     }
