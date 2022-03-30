@@ -13,12 +13,14 @@ import org.junit.jupiter.api.Test;
 class EndGameTest {
 
 	@Test
-	void isFinished() {
+	void start() {
 		Board board = new Board(InitialBoard.createBoard());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
-		assertThat(endGame.isFinished()).isTrue();
+		assertThatThrownBy(() -> endGame.start(board))
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}
 
 	@Test
@@ -28,7 +30,18 @@ class EndGameTest {
 		State endGame = state.finish();
 
 		assertThatThrownBy(() -> endGame.play(initialWhitePawn, Position.of(3, 1)))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageContaining("게임이 이미 종료되었습니다.");
+	}
+
+	@Test
+	void createStatus() {
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new WhiteTurn(board);
+		State endGame = state.finish();
+
+		assertThatThrownBy(endGame::createStatus)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}
 
@@ -39,8 +52,17 @@ class EndGameTest {
 		State endGame = state.finish();
 
 		assertThatThrownBy(endGame::finish)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
+	}
+
+	@Test
+	void isFinished() {
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new WhiteTurn(board);
+		State endGame = state.finish();
+
+		assertThat(endGame.isFinished()).isTrue();
 	}
 
 	@Test

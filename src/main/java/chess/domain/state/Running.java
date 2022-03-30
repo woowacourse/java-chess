@@ -12,6 +12,7 @@ public abstract class Running implements State {
 	protected static final String WRONG_SOURCE_ERROR = "상대 팀의 기물을 옮길 수 없습니다.";
 
 	private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
+	private static final String ALREADY_GAME_START = "게임이 이미 시작되었습니다.";
 
 	protected final Board board;
 
@@ -21,7 +22,7 @@ public abstract class Running implements State {
 
 	@Override
 	public final State start(final Board board) {
-		throw new IllegalArgumentException();
+		throw new IllegalStateException(ALREADY_GAME_START);
 	}
 
 	@Override
@@ -36,7 +37,6 @@ public abstract class Running implements State {
 		ScoreCalculator scoreCalculator = new ScoreCalculator();
 		double blackScore = scoreCalculator.calculate(board, Team.BLACK);
 		double whiteScore = scoreCalculator.calculate(board, Team.WHITE);
-
 		return new ScoreResult(blackScore, whiteScore);
 	}
 
@@ -52,7 +52,7 @@ public abstract class Running implements State {
 
 	@Override
 	public final Team judgeWinner() {
-		throw new IllegalArgumentException(NOT_FINISHED_ERROR);
+		throw new IllegalStateException(NOT_FINISHED_ERROR);
 	}
 
 	@Override

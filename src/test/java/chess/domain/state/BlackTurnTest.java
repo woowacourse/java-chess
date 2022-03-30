@@ -7,6 +7,7 @@ import static chess.domain.board.PositionFixtures.initialBlackQueen;
 import static chess.domain.board.PositionFixtures.initialWhitePawn;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoard;
@@ -16,11 +17,13 @@ import org.junit.jupiter.api.Test;
 class BlackTurnTest {
 
 	@Test
-	void isFinished() {
+	void start() {
 		Board board = new Board(InitialBoard.createBoard());
 		State state = new BlackTurn(board);
 
-		assertThat(state.isFinished()).isFalse();
+		assertThatThrownBy(() -> state.start(board))
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageContaining("게임이 이미 시작되었습니다.");
 	}
 
 	@Test
@@ -68,6 +71,14 @@ class BlackTurnTest {
 	}
 
 	@Test
+	void createStatus() {
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+
+		assertDoesNotThrow(state::createStatus);
+	}
+
+	@Test
 	void finish() {
 		Board board = new Board(InitialBoard.createBoard());
 		State state = new BlackTurn(board);
@@ -76,12 +87,20 @@ class BlackTurnTest {
 	}
 
 	@Test
+	void isFinished() {
+		Board board = new Board(InitialBoard.createBoard());
+		State state = new BlackTurn(board);
+
+		assertThat(state.isFinished()).isFalse();
+	}
+
+	@Test
 	void judgeWinnerWithRunning() {
 		Board board = new Board(InitialBoard.createBoard());
 		State state = new BlackTurn(board);
 
 		assertThatThrownBy(state::judgeWinner)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("아직 종료되지 않은 게임입니다.");
 	}
 }

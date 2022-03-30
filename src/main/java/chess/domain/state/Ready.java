@@ -16,17 +16,17 @@ public final class Ready implements State {
 
 	@Override
 	public State play(final Position source, final Position target) {
-		throw new IllegalArgumentException(GAME_START_ERROR);
+		throw new IllegalStateException(GAME_START_ERROR);
 	}
 
 	@Override
 	public ScoreResult createStatus() {
-		throw new IllegalArgumentException(GAME_START_ERROR);
+		throw new IllegalStateException(GAME_START_ERROR);
 	}
 
 	@Override
 	public State finish() {
-		throw new IllegalArgumentException(GAME_START_ERROR);
+		throw new IllegalStateException(GAME_START_ERROR);
 	}
 
 	@Override
@@ -36,11 +36,11 @@ public final class Ready implements State {
 
 	@Override
 	public Team judgeWinner() {
-		throw new IllegalArgumentException(GAME_START_ERROR);
+		throw new IllegalStateException(GAME_START_ERROR);
 	}
 
 	@Override
 	public Board getBoard() {
-		throw new IllegalArgumentException(GAME_START_ERROR);
+		throw new IllegalStateException(GAME_START_ERROR);
 	}
 }

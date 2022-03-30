@@ -12,14 +12,16 @@ import org.junit.jupiter.api.Test;
 class KingDeathTest {
 
 	@Test
-	void isFinished() {
+	void start() {
 		Board board = new Board(BoardFactory.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
 		State kingDeath = state.play(whiteKing, blackKing);
 
-		assertThat(kingDeath.isFinished()).isTrue();
+		assertThatThrownBy(() -> kingDeath.start(board))
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}
 
 	@Test
@@ -31,7 +33,20 @@ class KingDeathTest {
 		State kingDeath = state.play(whiteKing, blackKing);
 
 		assertThatThrownBy(() -> kingDeath.play(Position.of(5, 5), Position.of(5, 6)))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
+				.hasMessageContaining("게임이 이미 종료되었습니다.");
+	}
+
+	@Test
+	void createStatus() {
+		Board board = new Board(BoardFactory.createCatchKingBoard());
+		State state = new WhiteTurn(board);
+		Position whiteKing = Position.of(4, 4);
+		Position blackKing = Position.of(5, 5);
+		State kingDeath = state.play(whiteKing, blackKing);
+
+		assertThatThrownBy(kingDeath::createStatus)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}
 
@@ -44,8 +59,19 @@ class KingDeathTest {
 		State kingDeath = state.play(whiteKing, blackKing);
 
 		assertThatThrownBy(kingDeath::finish)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
+	}
+
+	@Test
+	void isFinished() {
+		Board board = new Board(BoardFactory.createCatchKingBoard());
+		State state = new WhiteTurn(board);
+		Position whiteKing = Position.of(4, 4);
+		Position blackKing = Position.of(5, 5);
+		State kingDeath = state.play(whiteKing, blackKing);
+
+		assertThat(kingDeath.isFinished()).isTrue();
 	}
 
 	@Test

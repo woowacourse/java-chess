@@ -24,7 +24,7 @@ class ReadyTest {
 		State state = new Ready();
 
 		assertThatThrownBy(() -> state.play(initialWhitePawn, Position.of(3, 1)))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}
 
@@ -33,7 +33,7 @@ class ReadyTest {
 		State state = new Ready();
 
 		assertThatThrownBy(state::createStatus)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}
 
@@ -42,7 +42,7 @@ class ReadyTest {
 		State state = new Ready();
 
 		assertThatThrownBy(state::finish)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}
 
@@ -58,7 +58,7 @@ class ReadyTest {
 		State state = new Ready();
 
 		assertThatThrownBy(state::judgeWinner)
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}
 }

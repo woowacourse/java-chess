@@ -19,22 +19,22 @@ public abstract class Finished implements State {
 
 	@Override
 	public final State start(final Board board) {
-		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+		throw new IllegalStateException(FINISH_GAME_ERROR);
 	}
 
 	@Override
 	public final State play(final Position source, final Position target) {
-		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+		throw new IllegalStateException(FINISH_GAME_ERROR);
 	}
 
 	@Override
 	public final ScoreResult createStatus() {
-		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+		throw new IllegalStateException(FINISH_GAME_ERROR);
 	}
 
 	@Override
 	public final State finish() {
-		throw new IllegalArgumentException(FINISH_GAME_ERROR);
+		throw new IllegalStateException(FINISH_GAME_ERROR);
 	}
 
 	@Override
