@@ -45,8 +45,8 @@ public enum Row {
         return rows;
     }
 
-    public int calculateIndex(Row row) {
-        return row.index - this.index;
+    public int calculateDifference(Row row) {
+        return this.index - row.index;
     }
 
     public boolean movable(int distance) {

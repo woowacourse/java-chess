@@ -45,15 +45,15 @@ public class Position {
     }
 
     public Direction findDirection(Position position) {
-        int x = column.calculateIndex(position.column);
-        int y = row.calculateIndex(position.row);
+        int x = position.column.calculateDifference(column);
+        int y = position.row.calculateDifference(row);
 
         return Direction.of(x, y);
     }
 
     public Direction findDirectionByCompactValue(Position position) {
-        int x = column.calculateIndex(position.column);
-        int y = row.calculateIndex(position.row);
+        int x = position.column.calculateDifference(column);
+        int y = position.row.calculateDifference(row);
 
         int nx = convertCompactValue(x, y);
         int ny = convertCompactValue(y, x);

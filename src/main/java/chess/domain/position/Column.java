@@ -37,8 +37,8 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_COLUMN));
     }
 
-    public int calculateIndex(Column column) {
-        return column.index - this.index;
+    public int calculateDifference(Column column) {
+        return this.index - column.index;
     }
 
     public boolean movable(int distance) {
