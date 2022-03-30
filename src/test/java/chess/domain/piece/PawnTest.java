@@ -9,6 +9,7 @@ import chess.domain.board.MoveResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
+import chess.domain.board.TestBoardFactory;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -79,7 +80,8 @@ class PawnTest {
     @DisplayName("폰 앞으로 전진 테스트")
     void pawnMoveForward(String from, String to) {
         // given
-        Board board = BoardFactory.newInstance();
+        BoardFactory boardFactory = new BoardFactory();
+        Board board = boardFactory.createBoard();
 
         // when
         MoveResult result = board.move(from, to);
@@ -95,7 +97,8 @@ class PawnTest {
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         testBoard.put(Position.of("F6"), new Rook(Color.WHITE));
         testBoard.put(Position.of("F5"), new Pawn(Color.WHITE));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         MoveResult result = board.move("F5", "F6");

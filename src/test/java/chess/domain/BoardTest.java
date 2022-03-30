@@ -7,23 +7,33 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.MoveResult;
 import chess.domain.board.Position;
+import chess.domain.board.TestBoardFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardTest {
+    private BoardFactory boardFactory;
+
+    @BeforeEach
+    void init(){
+        boardFactory = new BoardFactory();
+    }
+
+
     @ParameterizedTest(name = "from : {0} | to : {1}")
     @CsvSource(value = {"b2,b3"})
     @DisplayName("말 이동 테스트")
     void movePiece(String from, String to) {
         // given
-        Board board = BoardFactory.newInstance();
+        Board board = boardFactory.createBoard();
 
         // when
         MoveResult result = board.move(from, to);
@@ -40,7 +50,8 @@ class BoardTest {
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         testBoard.put(Position.of("D5"), new Rook(Color.WHITE));
         testBoard.put(Position.of("F5"), new Rook(Color.BLACK));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         Map<Color, Double> score = board.getScore();
@@ -62,7 +73,8 @@ class BoardTest {
         testBoard.put(Position.of("D4"), new Pawn(Color.WHITE));
         testBoard.put(Position.of("F5"), new Pawn(Color.WHITE));
         testBoard.put(Position.of("F6"), new Pawn(Color.WHITE));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         Map<Color, Double> score = board.getScore();

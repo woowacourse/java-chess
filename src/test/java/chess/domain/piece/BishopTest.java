@@ -6,8 +6,8 @@ import chess.domain.Color;
 import chess.domain.Distance;
 import chess.domain.board.MoveResult;
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
+import chess.domain.board.TestBoardFactory;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -50,7 +50,8 @@ class BishopTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         MoveResult result = board.move("E4", to);
@@ -69,7 +70,8 @@ class BishopTest {
                 .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.WHITE)));
 
         testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         MoveResult result = board.move("E4", to);
@@ -88,7 +90,8 @@ class BishopTest {
                 .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
 
         testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
-        Board board = BoardFactory.newInstance(testBoard);
+        TestBoardFactory testBoardFactory = new TestBoardFactory(testBoard);
+        Board board = testBoardFactory.createBoard();
 
         // when
         MoveResult result = board.move("E4", to);
