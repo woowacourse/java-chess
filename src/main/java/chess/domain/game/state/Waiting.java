@@ -1,8 +1,10 @@
 package chess.domain.game.state;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import java.util.Map;
+
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public class Waiting implements GameState {
 
@@ -22,7 +24,7 @@ public class Waiting implements GameState {
     }
 
     @Override
-    public double calculateScore(Color color) {
+    public Map<Color, Double> calculateScore() {
         throw new IllegalArgumentException("대기중이라 점수를 계산할 수 없습니다");
     }
 

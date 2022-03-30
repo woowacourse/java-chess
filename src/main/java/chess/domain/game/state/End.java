@@ -1,8 +1,11 @@
 package chess.domain.game.state;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import java.util.Map;
+
+import chess.domain.board.Board;
+import chess.domain.game.GameResult;
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public class End implements GameState {
 
@@ -28,8 +31,8 @@ public class End implements GameState {
     }
 
     @Override
-    public double calculateScore(Color color) {
-        return board.calculateScore(color);
+    public Map<Color, Double> calculateScore() {
+        return GameResult.calculateTotalScore(board.getBoard());
     }
 
     @Override

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
 import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.RookMoveStrategy;
+import chess.domain.position.Position;
 
 public class Rook extends Piece {
 

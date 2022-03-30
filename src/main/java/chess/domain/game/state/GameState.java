@@ -1,8 +1,10 @@
 package chess.domain.game.state;
 
-import chess.domain.Board;
-import chess.domain.Position;
+import java.util.Map;
+
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public interface GameState {
     GameState movePiece(Position fromPosition, Position toPosition);
@@ -11,7 +13,7 @@ public interface GameState {
 
     boolean isWaiting();
 
-    double calculateScore(Color color);
+    Map<Color, Double> calculateScore();
 
     Color getWinTeamColor();
 

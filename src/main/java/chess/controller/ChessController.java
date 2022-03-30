@@ -1,5 +1,7 @@
 package chess.controller;
 
+import java.util.Map;
+
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Color;
 import chess.view.InputView;
@@ -29,18 +31,19 @@ public class ChessController {
 
     static void end(ChessGame chessGame, String optionInput) {
         if (!chessGame.isWaiting()) {
-            double whiteScore = chessGame.calculateScore(Color.WHITE);
-            double blackScore = chessGame.calculateScore(Color.BLACK);
-            OutputView.printScore(whiteScore, blackScore);
+            printScore(chessGame);
             OutputView.printWinner(chessGame.judgeWinner());
         }
         chessGame.end();
     }
 
     static void status(ChessGame chessGame, String optionInput) {
-        double whiteScore = chessGame.calculateScore(Color.WHITE);
-        double blackScore = chessGame.calculateScore(Color.BLACK);
-        OutputView.printScore(whiteScore, blackScore);
+        printScore(chessGame);
+    }
+
+    private static void printScore(ChessGame chessGame) {
+        Map<Color, Double> scores = chessGame.calculateScore();
+        OutputView.printScore(scores);
     }
 }
 

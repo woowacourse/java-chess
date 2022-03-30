@@ -1,6 +1,6 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public class DiagonalMoveStrategy implements MoveStrategy {
 

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +12,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class BoardFactory {
 

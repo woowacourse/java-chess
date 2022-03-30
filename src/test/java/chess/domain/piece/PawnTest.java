@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class PawnTest {
 
@@ -45,7 +45,7 @@ public class PawnTest {
         Position from = Position.valueOf(File.A, Rank.TWO);
         Position to = Position.valueOf(File.B, Rank.TWO);
 
-        assertThat(whitePawn.isMovable(from, to));
+        assertThat(whitePawn.isMovable(from, to)).isFalse();
     }
 
     @Test

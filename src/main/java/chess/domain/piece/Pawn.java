@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Position;
 import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.PawnMoveStrategy;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 

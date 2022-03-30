@@ -1,14 +1,12 @@
-package chess.domain;
+package chess.domain.board;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
 public class Board {
 
@@ -17,8 +15,6 @@ public class Board {
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
     private static final int TOTAL_KING_COUNT = 2;
-    private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
-    private static final double PAWN_PENALTY_RATE = 0.5;
 
     private final Map<Position, Piece> board;
 
@@ -80,25 +76,6 @@ public class Board {
             .filter(Piece::isKing)
             .map(piece -> 1)
             .reduce(0, Integer::sum) == TOTAL_KING_COUNT;
-    }
-
-    public double calculateScore(Color color) {
-        return board.values().stream()
-            .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::getScore)
-            .sum() - calculateSameLinePawnSubtraction(color);
-    }
-
-    private double calculateSameLinePawnSubtraction(Color color) {
-        List<File> pawnFiles = board.keySet().stream()
-            .filter(position -> board.get(position).isPawn() && board.get(position).isSameColor(color))
-            .map(position -> position.getFile())
-            .collect(Collectors.toList());
-
-        return new HashSet<>(pawnFiles).stream()
-            .filter(file -> Collections.frequency(pawnFiles, file) >= ALLOWED_ONE_LINE_PAWN_COUNT)
-            .mapToDouble(file -> Collections.frequency(pawnFiles, file) * PAWN_PENALTY_RATE)
-            .sum();
     }
 
     public Color getWinnerTeamColor() {

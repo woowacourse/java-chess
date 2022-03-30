@@ -1,14 +1,15 @@
 package chess.view;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
-import chess.domain.Board;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class OutputView {
 
@@ -19,8 +20,6 @@ public class OutputView {
     private static final String NONE_PIECE = ".";
     private static final String SCORE_FORMAT = "%s팀 점수 : %.1f";
     private static final String WINNER_FORMAT = "%s팀이 승리했습니다!";
-    private static final String BLACK_TEAM_NAME = "black";
-    private static final String WHITE_TEAM_NAME = "white";
     public static final String WINNER_NOT_EXIST = "승리한 팀이 없습니다.";
 
     public static void printGameInitMessage() {
@@ -31,9 +30,8 @@ public class OutputView {
     }
 
     public static void printInitialChessBoard(Board board) {
-        for (Rank rank : Rank.values()) {
-            printBoardRowLine(rank, board);
-        }
+        Arrays.stream(Rank.values())
+            .forEach(rank -> printBoardRowLine(rank, board));
         System.out.print(System.lineSeparator());
     }
 
@@ -48,19 +46,18 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    public static void printScore(double whiteScore, double blackScore) {
-        System.out.printf(SCORE_FORMAT, BLACK_TEAM_NAME, blackScore);
-        System.out.print(System.lineSeparator());
-        System.out.printf(SCORE_FORMAT, WHITE_TEAM_NAME, whiteScore);
-        System.out.print(System.lineSeparator());
+    public static void printScore(Map<Color, Double> scores) {
+        for (Color color : scores.keySet()) {
+            System.out.printf(SCORE_FORMAT + System.lineSeparator(), color, scores.get(color));
+        }
         System.out.print(System.lineSeparator());
     }
 
     public static void printWinner(Color color) {
         if (color == Color.NONE) {
-            System.out.printf(WINNER_NOT_EXIST);
+            System.out.print(WINNER_NOT_EXIST + System.lineSeparator());
             return;
         }
-        System.out.printf(WINNER_FORMAT, color);
+        System.out.printf(WINNER_FORMAT + System.lineSeparator(), color);
     }
 }

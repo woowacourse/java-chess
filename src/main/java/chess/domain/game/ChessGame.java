@@ -2,15 +2,16 @@ package chess.domain.game;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Position;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.game.state.End;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.Running;
 import chess.domain.game.state.Waiting;
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public class ChessGame {
 
@@ -46,8 +47,8 @@ public class ChessGame {
         return state.isFinish();
     }
 
-    public double calculateScore(Color color) {
-        return state.calculateScore(color);
+    public Map<Color, Double> calculateScore() {
+        return state.calculateScore();
     }
 
     public Color judgeWinner() {

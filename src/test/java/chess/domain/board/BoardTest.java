@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -11,8 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class BoardTest {
 
@@ -79,43 +81,5 @@ public class BoardTest {
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.WHITE));
         Board testBoard = new Board(initialPieces);
         assertThat(testBoard.isAllKingExist()).isFalse();
-    }
-
-    @Test
-    @DisplayName("보드의 상황에 따라 점수를 잘 계산하는지 확인한다")
-    void calculateScore() {
-        double blackTotalScore = board.calculateScore(Color.BLACK);
-        double whiteTotalScore = board.calculateScore(Color.WHITE);
-
-        assertThat(blackTotalScore).isEqualTo(38);
-        assertThat(whiteTotalScore).isEqualTo(38);
-    }
-
-    @Test
-    @DisplayName("보드의 상황에 따라 점수를 잘 계산하는지 확인한다")
-    void calculatePawnSameRowScore() {
-        Map<Position, Piece> initialPieces = new HashMap<>();
-        initialPieces.put(Position.valueOf(File.A, Rank.ONE), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.A, Rank.TWO), new Pawn(Color.WHITE));
-
-        Board testBoard = new Board(initialPieces);
-
-        assertThat(testBoard.calculateScore(Color.WHITE)).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("보드의 상황에 따라 점수를 잘 계산하는지 확인한다")
-    void calculatePawnSameRowScore2() {
-        Map<Position, Piece> initialPieces = new HashMap<>();
-        initialPieces.put(Position.valueOf(File.A, Rank.ONE), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.A, Rank.TWO), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.B, Rank.ONE), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.B, Rank.TWO), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.B, Rank.FOUR), new Pawn(Color.WHITE));
-        initialPieces.put(Position.valueOf(File.C, Rank.TWO), new Pawn(Color.WHITE));
-
-        Board testBoard = new Board(initialPieces);
-
-        assertThat(testBoard.calculateScore(Color.WHITE)).isEqualTo(3.5);
     }
 }

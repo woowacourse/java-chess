@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Position;
-import chess.domain.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 
 public class PawnMoveStrategy implements MoveStrategy {
 
