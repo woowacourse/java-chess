@@ -3,12 +3,15 @@ package chess.model;
 public class Turn {
     private final Team team;
 
+    private static final Turn TURN_BLACK = new Turn(Team.BLACK);
+    private static final Turn TURN_WHITE = new Turn(Team.WHITE);
+
     public Turn(Team team) {
         this.team = team;
     }
 
     public static Turn init() {
-        return new Turn(Team.WHITE);
+        return TURN_WHITE;
     }
 
     public boolean isCurrentTeam(Team team) {
@@ -17,8 +20,8 @@ public class Turn {
 
     public Turn change() {
         if (team.equals(Team.BLACK)) {
-            return new Turn(Team.WHITE);
+            return TURN_WHITE;
         }
-        return new Turn(Team.BLACK);
+        return TURN_BLACK;
     }
 }
