@@ -53,8 +53,7 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to,
-                                     final ChessPiece targetPiece) {
+    public void checkMovablePosition(final Position from, final Position to, final ChessPiece targetPiece) {
         if (from.isSameFile(to)) {
             validateStraightMove(from, to, targetPiece);
             return;
@@ -66,8 +65,7 @@ public final class Pawn extends ChessPiece {
         throw new IllegalArgumentException(INVALID_TARGET_POSITION);
     }
 
-    private void validateStraightMove(final Position from, final Position to,
-                                      final ChessPiece targetPiece) {
+    private void validateStraightMove(final Position from, final Position to, final ChessPiece targetPiece) {
         if (!isMovableDistance(from, to)) {
             throw new IllegalArgumentException(INVALID_TARGET_POSITION);
         }

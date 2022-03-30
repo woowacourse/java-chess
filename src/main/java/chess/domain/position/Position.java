@@ -52,8 +52,8 @@ public class Position {
         return rank.equals(target.rank);
     }
 
-    public boolean isSameRank(final String targe) {
-        return rank.equals(Rank.of(targe));
+    public boolean isSameRank(final String target) {
+        return rank.equals(Rank.of(target));
     }
 
     public boolean isSameFile(final Position target) {

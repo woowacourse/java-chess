@@ -18,8 +18,7 @@ public abstract class ChessPiece {
         this.name = color.convertByColor(name);
     }
 
-    public abstract void checkMovablePosition(final Position from, final Position to,
-                                              final ChessPiece chessPiece);
+    public abstract void checkMovablePosition(final Position from, final Position to, final ChessPiece chessPiece);
 
     protected void checkTargetPosition(final ChessPiece chessPiece) {
         if (Objects.isNull(chessPiece)) {

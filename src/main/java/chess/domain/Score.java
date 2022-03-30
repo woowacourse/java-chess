@@ -45,8 +45,7 @@ public class Score {
                 .sum();
     }
 
-    private int countSameRankPawn(final Color color, final File file,
-                                  final Map<Position, ChessPiece> pieceByPosition) {
+    private int countSameRankPawn(final Color color, final File file, final Map<Position, ChessPiece> pieceByPosition) {
         return (int) Arrays.stream(Rank.values())
                 .map(rank -> pieceByPosition.get(Position.of(file, rank)))
                 .filter(Objects::nonNull)

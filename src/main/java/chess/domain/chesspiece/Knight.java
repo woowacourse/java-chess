@@ -30,8 +30,7 @@ public final class Knight extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to,
-                                     final ChessPiece chessPiece) {
+    public void checkMovablePosition(final Position from, final Position to, final ChessPiece chessPiece) {
         checkMovableDistance(from, to);
 
         if (from.isSameFile(to) || from.isSameRank(to)) {

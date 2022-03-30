@@ -28,8 +28,7 @@ public final class Queen extends ChessPiece {
     }
 
     @Override
-    public void checkMovablePosition(final Position from, final Position to,
-                                     final ChessPiece chessPiece) {
+    public void checkMovablePosition(final Position from, final Position to, final ChessPiece chessPiece) {
         final int fileDistance = Math.abs(from.fileDistance(to));
         final int rankDistance = Math.abs(from.rankDistance(to));
 
