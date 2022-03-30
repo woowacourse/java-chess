@@ -2,35 +2,35 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.move.PawnMoveStrategy;
+import chess.domain.move.QueenMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PawnTest {
+class QueenTest {
 
-    Pawn pawn = new Pawn(Color.WHITE);
+    Queen queen = new Queen(Color.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")
     void isBlank() {
-        assertThat(pawn.isBlank()).isFalse();
+        assertThat(queen.isBlank()).isFalse();
     }
 
     @Test
     @DisplayName("King 인지 확인")
     void isKing() {
-        assertThat(pawn.isKing()).isFalse();
+        assertThat(queen.isKing()).isFalse();
     }
 
     @Test
     @DisplayName("Pawn 인지 확인")
     void isPawn() {
-        assertThat(pawn.isPawn()).isTrue();
+        assertThat(queen.isPawn()).isFalse();
     }
 
     @Test
-    @DisplayName("Pawn 이동전략을 생성한다.")
+    @DisplayName("Queen 이동전략을 생성한다.")
     void getMoveStrategy() {
-        assertThat(pawn.getMoveStrategy()).isInstanceOf(PawnMoveStrategy.class);
+        assertThat(queen.getMoveStrategy()).isInstanceOf(QueenMoveStrategy.class);
     }
 }

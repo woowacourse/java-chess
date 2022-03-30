@@ -16,11 +16,6 @@ public final class Blank extends Piece {
     }
 
     @Override
-    public MoveStrategy getMoveStrategy() {
-        throw new IllegalStateException("[ERROR] 이동전략을 가져올 수 없는 기물입니다.");
-    }
-
-    @Override
     public boolean isKing() {
         return false;
     }
@@ -28,5 +23,10 @@ public final class Blank extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public MoveStrategy getMoveStrategy() {
+        throw new IllegalStateException("[ERROR] 이동전략을 가져올 수 없는 기물입니다.");
     }
 }

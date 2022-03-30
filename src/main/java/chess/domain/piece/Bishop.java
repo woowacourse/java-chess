@@ -12,11 +12,6 @@ public final class Bishop extends ValidPiece {
     }
 
     @Override
-    public MoveStrategy getMoveStrategy() {
-        return new BishopMoveStrategy();
-    }
-
-    @Override
     public boolean isKing() {
         return false;
     }
@@ -24,5 +19,10 @@ public final class Bishop extends ValidPiece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public MoveStrategy getMoveStrategy() {
+        return new BishopMoveStrategy();
     }
 }

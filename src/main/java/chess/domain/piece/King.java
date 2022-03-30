@@ -12,11 +12,6 @@ public final class King extends ValidPiece {
     }
 
     @Override
-    public MoveStrategy getMoveStrategy() {
-        return new KingMoveStrategy();
-    }
-
-    @Override
     public boolean isKing() {
         return true;
     }
@@ -24,5 +19,10 @@ public final class King extends ValidPiece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public MoveStrategy getMoveStrategy() {
+        return new KingMoveStrategy();
     }
 }
