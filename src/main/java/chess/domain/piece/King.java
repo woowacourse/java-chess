@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class King extends AbstractPiece {
-    King(PieceColor pieceColor) {
+    public King(PieceColor pieceColor) {
         super(pieceColor, PieceType.KING);
     }
 

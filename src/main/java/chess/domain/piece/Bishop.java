@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Bishop extends AbstractPiece {
-    Bishop(PieceColor pieceColor) {
+    public Bishop(PieceColor pieceColor) {
         super(pieceColor, PieceType.BISHOP);
     }
 

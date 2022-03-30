@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class Rook extends AbstractPiece {
 
-    Rook(PieceColor pieceColor) {
+    public Rook(PieceColor pieceColor) {
         super(pieceColor, PieceType.ROOK);
     }
 

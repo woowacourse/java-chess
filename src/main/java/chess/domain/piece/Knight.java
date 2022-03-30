@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Knight extends AbstractPiece {
-    Knight(PieceColor pieceColor) {
+    public Knight(PieceColor pieceColor) {
         super(pieceColor, PieceType.KNIGHT);
     }
 
