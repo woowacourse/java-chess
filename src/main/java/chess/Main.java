@@ -20,6 +20,9 @@ public class Main {
                 BoardDto boardDto = chessController.move(inputCommand.get(1), inputCommand.get(2));
                 OutputView.announce(boardDto);
             }
+            if (command.equals("status")) {
+                chessController.score();
+            }
         }
     }
 }

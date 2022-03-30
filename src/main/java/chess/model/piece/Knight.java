@@ -42,7 +42,17 @@ public class Knight extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return 2.5;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

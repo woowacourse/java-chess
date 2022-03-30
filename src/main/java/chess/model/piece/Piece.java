@@ -24,6 +24,10 @@ public abstract class Piece {
         return color.equals(Color.BLACK);
     }
 
+    public boolean isWhite() {
+        return color.equals(Color.WHITE);
+    }
+
     public abstract String name();
 
     public abstract boolean movable(Square source, Square target);
@@ -40,9 +44,13 @@ public abstract class Piece {
         return this.color != target.color;
     }
 
-    abstract boolean isNotEmpty();
+    public abstract boolean isNotEmpty();
 
-    protected boolean isEmpty() {
-        return !isNotEmpty();
+    public abstract double getPoint();
+
+    public abstract boolean isPawn();
+
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
     }
 }

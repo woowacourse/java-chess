@@ -55,7 +55,17 @@ public class Bishop extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return 3;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

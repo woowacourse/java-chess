@@ -24,6 +24,10 @@ public class ChessController {
         return new BoardDto(toBoardDto(board));
     }
 
+    public void score() {
+        board.calculateScore();
+    }
+
     private List<List<String>> toBoardDto(Board board) {
         List<List<String>> boardDto = new ArrayList<>();
         List<Rank> ranks = Arrays.asList(Rank.values());

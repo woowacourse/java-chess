@@ -1,7 +1,10 @@
 package chess.model.square;
 
+import chess.model.piece.Piece;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public enum File {
 
@@ -38,5 +41,11 @@ public enum File {
                 .filter(file -> file.value == (this.value + value))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int countPawnsInSameFile(Set<Square> blackPawns) {
+        return (int) blackPawns.stream()
+                .filter(square -> square.sameFile(this))
+                .count();
     }
 }

@@ -65,7 +65,17 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return 9;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

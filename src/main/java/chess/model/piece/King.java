@@ -43,7 +43,16 @@ public class King extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
         return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return 0;
+    }
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

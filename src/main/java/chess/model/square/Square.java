@@ -83,4 +83,8 @@ public class Square {
         }
         return rank.equals(Rank.TWO);
     }
+
+    public boolean sameFile(File file) {
+        return this.file.equals(file);
+    }
 }

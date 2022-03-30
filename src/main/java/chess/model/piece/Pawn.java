@@ -77,7 +77,17 @@ public class Pawn extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    @Override
+    public double getPoint() {
+        return 1;
+    }
+
+    @Override
+    public boolean isPawn() {
         return true;
     }
 }

@@ -32,7 +32,17 @@ public class Empty extends Piece {
     }
 
     @Override
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
+        return false;
+    }
+
+    @Override
+    public double getPoint() {
+        return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
         return false;
     }
 }
