@@ -16,14 +16,14 @@ public class CommandDto {
         this.command = Command.from(input);
     }
 
-    public Position ToSourcePosition() {
+    public Position toSourcePosition() {
         if (command == Command.MOVE) {
             return Position.from(input.split(SPLIT_REGEX)[SOURCE_INDEX]);
         }
         throw new IllegalStateException(NOT_MOVE_ERROR_MESSAGE);
     }
 
-    public Position ToTargetPosition() {
+    public Position toTargetPosition() {
         if (command == Command.MOVE) {
             return Position.from(input.split(SPLIT_REGEX)[TARGET_INDEX]);
         }

@@ -11,7 +11,7 @@ public abstract class AbstractState implements State {
         this.chessGame = chessGame;
     }
 
-    public AbstractState go(CommandDto input) {
+    public State go(CommandDto input) {
         try {
             return execute(input);
         } catch (IllegalArgumentException e) {

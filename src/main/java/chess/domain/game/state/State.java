@@ -4,9 +4,9 @@ import chess.dto.CommandDto;
 
 public interface State {
 
-    AbstractState go(CommandDto input);
+    State go(CommandDto input);
 
-    AbstractState execute(CommandDto input);
+    State execute(CommandDto input);
 
     boolean isRun();
 

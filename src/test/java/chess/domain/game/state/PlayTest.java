@@ -19,21 +19,21 @@ import org.junit.jupiter.api.Test;
 class PlayTest {
     private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
 
-    private AbstractState abstractState;
+    private State state;
 
     @BeforeEach
     void setup() {
         chessGame.start();
-        abstractState = new Play(chessGame);
+        state = new Play(chessGame);
     }
 
     @Test
     @DisplayName("플레이 중 move 커맨드대로 실행할 수 있다.")
     void execute() {
-        abstractState = abstractState.execute(new CommandDto("move a2 a3"));
-        AbstractState finalAbstractState = abstractState;
+        state = state.execute(new CommandDto("move a2 a3"));
+        State finalState = state;
         assertAll(
-                () -> assertThat(finalAbstractState)
+                () -> assertThat(finalState)
                         .isInstanceOf(Play.class),
                 () -> assertThat(chessGame.getBoard().findByPosition(Position.from("a2")))
                         .isInstanceOf(EmptyPiece.class),
@@ -45,22 +45,22 @@ class PlayTest {
     @Test
     @DisplayName("플레이 중 end 커맨드 실행 시 강제종료 된다.")
     void executeExit() {
-        abstractState = abstractState.execute(new CommandDto("end"));
-        assertThat(abstractState)
+        state = state.execute(new CommandDto("end"));
+        assertThat(state)
                 .isInstanceOf(ExitFinished.class);
     }
 
     @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
-        assertThatThrownBy(() -> abstractState.execute(new CommandDto("status")))
+        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("해당 상태가 Play 인지 확인할 수 있다.")
     void isPlay() {
-        assertThat(abstractState.isPlay())
+        assertThat(state.isPlay())
                 .isTrue();
     }
 
@@ -78,24 +78,24 @@ class PlayTest {
                 + "R......q";
 
         BoardStrategy boardStrategy = new InjectBoardStrategy(boardString);
-        AbstractState abstractState = new Play(new ChessGame(boardStrategy));
+        State state = new Play(new ChessGame(boardStrategy));
 
-        abstractState = abstractState.go(new CommandDto("move h1 h4"));
-        assertThat(abstractState)
+        state = state.go(new CommandDto("move h1 h4"));
+        assertThat(state)
                 .isInstanceOf(Result.class);
     }
 
     @Test
     @DisplayName("isRun() 실행 시 true를 리턴한다")
     void isRun() {
-        assertThat(abstractState.isRun())
+        assertThat(state.isRun())
                 .isTrue();
     }
 
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(abstractState.isStatusFinished())
+        assertThat(state.isStatusFinished())
                 .isFalse();
     }
 }

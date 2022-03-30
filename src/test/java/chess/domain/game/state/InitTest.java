@@ -12,58 +12,58 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class InitTest {
-    private AbstractState abstractState;
+    private State state;
 
     @BeforeEach
     void setup() {
-        abstractState = new Init(new ChessGame(new InitBoardStrategy()));
+        state = new Init(new ChessGame(new InitBoardStrategy()));
     }
 
     @Test
     @DisplayName("초기화 기능 테스트")
     void execute() {
-        assertThat(abstractState)
+        assertThat(state)
                 .isInstanceOf(Init.class);
-        abstractState = abstractState.execute(new CommandDto("start"));
-        assertThat(abstractState)
+        state = state.execute(new CommandDto("start"));
+        assertThat(state)
                 .isInstanceOf(Play.class);
     }
 
     @Test
     @DisplayName("강제종료 기능 테스트")
     void exitEnd() {
-        assertThat(abstractState)
+        assertThat(state)
                 .isInstanceOf(Init.class);
-        abstractState = abstractState.go(new CommandDto("end"));
-        assertThat(abstractState)
+        state = state.go(new CommandDto("end"));
+        assertThat(state)
                 .isInstanceOf(ExitFinished.class);
     }
 
     @Test
     @DisplayName("잘못된 커맨드 실행 시 예외처리 된다.")
     void executeError() {
-        assertThatThrownBy(() -> abstractState.execute(new CommandDto("status")))
+        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("isRun() 실행 시 true 를 리턴한다")
     void isRun() {
-        assertThat(abstractState.isRun())
+        assertThat(state.isRun())
                 .isTrue();
     }
 
     @Test
     @DisplayName("isPlay() 실행 시 false 를 리턴한다")
     void isPlay() {
-        assertThat(abstractState.isPlay())
+        assertThat(state.isPlay())
                 .isFalse();
     }
 
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        Assertions.assertThat(abstractState.isStatusFinished())
+        Assertions.assertThat(state.isStatusFinished())
                 .isFalse();
     }
 }

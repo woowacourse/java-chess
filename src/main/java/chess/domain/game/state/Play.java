@@ -11,18 +11,21 @@ public final class Play extends AbstractState {
     }
 
     @Override
-    public AbstractState execute(CommandDto commandDto) {
+    public State execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.END) {
             return new ExitFinished(chessGame);
         }
+        if (commandDto.getCommand() == Command.STATUS) {
+            return new StatusFinished(chessGame);
+        }
         if (commandDto.getCommand() == Command.MOVE) {
-            chessGame.play(commandDto.ToSourcePosition(), commandDto.ToTargetPosition());
+            chessGame.play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
             return playOrResult(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
-    private AbstractState playOrResult(ChessGame chessGame) {
+    private State playOrResult(ChessGame chessGame) {
         if (chessGame.isPlaying()) {
             return new Play(chessGame);
         }
