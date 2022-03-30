@@ -5,9 +5,9 @@ import chess.domain.position.Position;
 public abstract class AbstractPiece {
 
     private final PieceColor pieceColor;
-    private final PieceScore pieceType;
+    private final PieceType pieceType;
 
-    public AbstractPiece(PieceColor pieceColor, PieceScore pieceType) {
+    public AbstractPiece(PieceColor pieceColor, PieceType pieceType) {
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
     }
@@ -16,7 +16,7 @@ public abstract class AbstractPiece {
         return pieceColor;
     }
 
-    public PieceScore getPieceType() {
+    public PieceType getPieceType() {
         return pieceType;
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractPiece {
         return this.pieceColor == pieceColor;
     }
 
-    public boolean isPieceType(PieceScore pieceType) {
+    public boolean isPieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }
 

@@ -1,7 +1,7 @@
 package chess.view.dto;
 
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceScore;
+import chess.domain.piece.PieceType;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
@@ -21,7 +21,7 @@ public enum PieceName {
         this.whiteName = whiteName;
     }
 
-    public static PieceName find(PieceScore pieceType) {
+    public static PieceName find(PieceType pieceType) {
         return Stream.of(PieceName.values())
                 .filter(pieceName -> pieceName.name().equals(pieceType.name()))
                 .findFirst()

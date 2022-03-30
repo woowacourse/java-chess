@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class Knight extends AbstractPiece {
     Knight(PieceColor pieceColor) {
-        super(pieceColor, PieceScore.KNIGHT);
+        super(pieceColor, PieceType.KNIGHT);
     }
 
     private static boolean useKnightStrategy(Position from, Position to) {

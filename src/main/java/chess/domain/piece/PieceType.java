@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum PieceScore {
+public enum PieceType {
     PAWN(1),
     ROOK(5),
     KNIGHT(2.5),
@@ -10,7 +10,7 @@ public enum PieceScore {
 
     private final double score;
 
-    PieceScore(double score) {
+    PieceType(double score) {
         this.score = score;
     }
 

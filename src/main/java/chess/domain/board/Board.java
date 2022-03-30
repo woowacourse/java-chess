@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceScore;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import java.util.HashMap;
@@ -98,7 +98,7 @@ public class Board {
         value.put(to, piece);
         value.remove(from);
 
-        if (otherPiece.isPieceType(PieceScore.KING)) {
+        if (otherPiece.isPieceType(PieceType.KING)) {
             return MoveResult.KILL_KING;
         }
 
@@ -142,7 +142,7 @@ public class Board {
                 .map(value::get)
                 .filter(piece -> !Objects.isNull(piece))
                 .filter(piece -> piece.isPieceColor(pieceColor))
-                .filter(piece -> piece.isPieceType(PieceScore.PAWN))
+                .filter(piece -> piece.isPieceType(PieceType.PAWN))
                 .count();
     }
 }

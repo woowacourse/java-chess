@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class King extends AbstractPiece {
     King(PieceColor pieceColor) {
-        super(pieceColor, PieceScore.KING);
+        super(pieceColor, PieceType.KING);
     }
 
     private static boolean useKingStrategy(Position from, Position to) {

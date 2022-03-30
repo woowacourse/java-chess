@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 public class Rook extends AbstractPiece {
 
     Rook(PieceColor pieceColor) {
-        super(pieceColor, PieceScore.ROOK);
+        super(pieceColor, PieceType.ROOK);
     }
 
     private static boolean useRookStrategy(Position from, Position to) {

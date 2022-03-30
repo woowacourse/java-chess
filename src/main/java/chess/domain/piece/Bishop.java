@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 
 public class Bishop extends AbstractPiece {
     Bishop(PieceColor pieceColor) {
-        super(pieceColor, PieceScore.BISHOP);
+        super(pieceColor, PieceType.BISHOP);
     }
 
     private static boolean useBishopStrategy(Position from, Position to) {

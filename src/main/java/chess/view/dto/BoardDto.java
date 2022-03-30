@@ -3,7 +3,7 @@ package chess.view.dto;
 import chess.domain.board.Board;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceScore;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -47,7 +47,7 @@ public class BoardDto {
     }
 
     private String generateExistingPieceName(AbstractPiece piece) {
-        PieceScore pieceType = piece.getPieceType();
+        PieceType pieceType = piece.getPieceType();
         PieceColor pieceColor = piece.getPieceColor();
 
         return PieceName.find(pieceType).getName(pieceColor);

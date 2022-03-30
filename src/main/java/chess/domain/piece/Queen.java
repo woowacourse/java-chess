@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 public class Queen extends AbstractPiece {
 
     Queen(PieceColor pieceColor) {
-        super(pieceColor, PieceScore.QUEEN);
+        super(pieceColor, PieceType.QUEEN);
     }
 
     private static boolean useQueenStrategy(Position from, Position to) {
