@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.board.coordinate.Coordinate;
 import chess.domain.game.ChessGame;
 import chess.domain.game.StatusCalculator;
 import chess.function.Function;
@@ -9,6 +8,8 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
+
+    public static final int COMMAND_INDEX = 0;
 
     public void run() {
         OutputView.printGameStart();
@@ -22,33 +23,20 @@ public class ChessController {
     private void play(ChessGame chessGame) {
         try {
             List<String> commands = InputView.inputGameFunction();
-            Function function = Function.from(commands.get(0));
-
-            doFunction(chessGame, function, commands);
+            Function function = Function.from(commands.get(COMMAND_INDEX));
+            execute(chessGame, function, commands);
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void doFunction(ChessGame chessGame, Function function, List<String> commands) {
-        if (function == Function.START) {
-            chessGame.start();
+    private void execute(ChessGame chessGame, Function function, List<String> commands) {
+        if (!function.isStatus()) {
+            function.doFunction(chessGame, commands);
             OutputView.printBoard(chessGame.getValue());
+            return;
         }
-
-        if (function == Function.MOVE) {
-            chessGame.move(Coordinate.of(commands.get(1)), Coordinate.of(commands.get(2)));
-            OutputView.printBoard(chessGame.getValue());
-        }
-
-        if (function == Function.STATUS) {
-            StatusCalculator statusCalculator = new StatusCalculator(chessGame.getValue());
-            OutputView.printStatus(statusCalculator.createStatus());
-        }
-
-        if (function == Function.END) {
-            chessGame.end();
-            OutputView.printBoard(chessGame.getValue());
-        }
+        StatusCalculator statusCalculator = chessGame.status();
+        OutputView.printStatus(statusCalculator.createStatus());
     }
 }
