@@ -17,10 +17,9 @@ class QueenTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"g6", "f8", "b1", "h1"})
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    @DisplayName("Queen의 이동이 불가능한 경우 테스트")
     void validateIsPossible(String input) {
-        Position position = Position.from("e5");
-        Queen queen = new Queen(Team.BLACK, position);
+        Queen queen = new Queen(Team.BLACK, Position.from("e5"));
         Assertions.assertThatThrownBy(() -> {
                     queen.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
@@ -29,18 +28,16 @@ class QueenTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"f8", "h6", "b6", "f3", "g7", "e7", "e6"})
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    @DisplayName("Queen의 이동이 가능한 경우 테스트")
     void isPossible(String input) {
-        Position position = Position.from("f6");
-        Queen queen = new Queen(Team.BLACK, position);
+        Queen queen = new Queen(Team.BLACK, Position.from("f6"));
         queen.findPath(Position.from(input));
     }
 
     @Test
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    @DisplayName("Queen의 이동 경로 리스트 조회")
     void findPath() {
-        Position position = Position.from("f6");
-        Queen queen = new Queen(Team.BLACK, position);
+        Queen queen = new Queen(Team.BLACK, Position.from("f6"));
         List<Position> path = queen.findPath(Position.from("f3"));
         assertThat(path).containsExactly(Position.from("f5"), Position.from("f4"));
     }

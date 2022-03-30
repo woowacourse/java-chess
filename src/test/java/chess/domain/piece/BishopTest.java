@@ -16,10 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BishopTest {
     @ParameterizedTest
     @ValueSource(strings = {"d4", "c5", "d6", "e5"})
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    @DisplayName("Bishop의 이동이 불가능한 경우 테스트")
     void validateIsPossible(String input) {
-        Position position = Position.from("d5");
-        Bishop bishop = new Bishop(Team.BLACK, position);
+        Bishop bishop = new Bishop(Team.BLACK, Position.from("d5"));
         Assertions.assertThatThrownBy(() -> {
                     bishop.findPath(Position.from(input));
                 }).isInstanceOf(IllegalArgumentException.class)
@@ -28,18 +27,16 @@ class BishopTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"h7", "a8", "b1", "h1"})
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 이동 가능한 경로인지 검증한다.")
+    @DisplayName("Bishop의 이동이 가능한 경우 테스트")
     void isPossible(String input) {
-        Position position = Position.from("e4");
-        Bishop bishop = new Bishop(Team.BLACK, position);
+        Bishop bishop = new Bishop(Team.BLACK, Position.from("e4"));
         bishop.findPath(Position.from(input));
     }
 
     @Test
-    @DisplayName("출발 지점과 도착 지점을 입력 후, 경로 리스트를 조회한다.")
+    @DisplayName("Bishop의 이동 경로 리스트 조회")
     void findPath() {
-        Position position = Position.from("e4");
-        Bishop bishop = new Bishop(Team.BLACK, position);
+        Bishop bishop = new Bishop(Team.BLACK, Position.from("e4"));
         List<Position> path = bishop.findPath(Position.from("h7"));
         assertThat(path).containsExactly(Position.from("f5"), Position.from("g6"));
     }
