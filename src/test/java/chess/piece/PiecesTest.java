@@ -24,9 +24,18 @@ class PiecesTest {
     @Test
     @DisplayName("체스판에 남은 말들의 점수를 계산한다. - 폰이 전부 가로로 있을 때")
     void getTotalScoreWhenPawnIsWithHorizontalTest() {
-        Pieces pieces = Pieces.createInit();
+        Pieces pieces = Pieces.from(List.of(
+                new Pawn(Position.of('a','7'), Team.BLACK),
+                new Pawn(Position.of('b','7'), Team.BLACK),
+                new Pawn(Position.of('c','7'), Team.BLACK),
+                new Pawn(Position.of('d','7'), Team.BLACK),
+                new Pawn(Position.of('e','7'), Team.BLACK),
+                new Pawn(Position.of('f','7'), Team.BLACK),
+                new Pawn(Position.of('g','7'), Team.BLACK),
+                new Pawn(Position.of('h','7'), Team.BLACK)
+        ));
         double totalScore = pieces.getTotalScore(Team.BLACK);
-        assertThat(totalScore).isEqualTo(38D);
+        assertThat(totalScore).isEqualTo(8D);
     }
 
     @Test
