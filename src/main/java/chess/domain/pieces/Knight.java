@@ -16,14 +16,14 @@ public class Knight implements Role {
     public boolean isMovable(Position source, Position target) {
         int columnGap = source.columnGap(target);
         int rowGap = source.rowGap(target);
-        return moveVertical(columnGap, rowGap) || moveHorizontal(columnGap, rowGap);
+        return moveVerticalFirstThenDiagonal(columnGap, rowGap) || moveHorizontalFirstThenDiagonal(columnGap, rowGap);
     }
 
-    private boolean moveHorizontal(int columnGap, int rowGap) {
+    private boolean moveHorizontalFirstThenDiagonal(int columnGap, int rowGap) {
         return rowGap == FIRST_MOVEMENT_LIMIT && columnGap == SECOND_MOVEMENT_LIMIT;
     }
 
-    private boolean moveVertical(int columnGap, int rowGap) {
+    private boolean moveVerticalFirstThenDiagonal(int columnGap, int rowGap) {
         return columnGap == FIRST_MOVEMENT_LIMIT && rowGap == SECOND_MOVEMENT_LIMIT;
     }
 
