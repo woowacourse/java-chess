@@ -9,7 +9,7 @@ public class Knight extends Piece {
 
     private static final String name = "N";
 
-    private static final List<Direction> directions = Direction.pullKnightDirections();
+    private static final List<Direction> directions = Direction.pullTwoStraightAndDiagonalDirections();
 
     public Knight(Team team) {
         super(name, Score.KNIGHT, team);

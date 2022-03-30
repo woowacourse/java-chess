@@ -44,7 +44,7 @@ public enum Direction {
                 .orElse(NONE);
     }
 
-    public static List<Direction> pullKnightDirections() {
+    public static List<Direction> pullTwoStraightAndDiagonalDirections() {
         return Arrays.asList(NNE, NNW, WWN, WWS, EEN, EES, SSW, SSE);
     }
 
