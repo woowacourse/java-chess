@@ -16,9 +16,9 @@ public class PositionTest {
         assertThat(new Position(Column.A, Row.ONE)).isNotNull();
     }
 
-    @DisplayName("좌표 이동")
+    @DisplayName("현재 위치와 이동 위치로 이동할 방향을 찾는다.")
     @Test
-    void move() {
+    void find_direction() {
         // given
         Position from = new Position(Column.A, Row.ONE);
         Position to = new Position(Column.A, Row.TWO);
