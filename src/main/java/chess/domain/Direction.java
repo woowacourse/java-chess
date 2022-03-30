@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.postion.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Direction {
@@ -41,7 +42,7 @@ public enum Direction {
     }
 
     public static List<Direction> getAllDirection() {
-        List<Direction> directions = getRookDirection();
+        List<Direction> directions = new ArrayList<>(getRookDirection());
         directions.addAll(getBishopDirection());
         return directions;
     }
