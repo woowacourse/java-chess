@@ -21,7 +21,7 @@ public class RookTest {
     void move(String from, String to) {
         Board board = Board.create();
         Rook rook = new Rook(Symbol.ROOK, Team.WHITE);
-        boolean actual = rook.isMovable(board.getValue(), Coordinate.of(from), Coordinate.of(to));
+        boolean actual = rook.isMovable(board, Coordinate.of(from), Coordinate.of(to));
         assertThat(actual).isTrue();
     }
 }

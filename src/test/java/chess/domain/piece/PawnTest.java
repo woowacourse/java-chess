@@ -21,7 +21,7 @@ public class PawnTest {
     void white_pawn_move(String from, String to) {
         Board board = Board.create();
         Pawn pawn = new Pawn(Symbol.PAWN, Team.WHITE);
-        boolean actual = pawn.isMovable(board.getValue(), Coordinate.of(from), Coordinate.of(to));
+        boolean actual = pawn.isMovable(board, Coordinate.of(from), Coordinate.of(to));
         assertThat(actual).isTrue();
     }
 
@@ -30,7 +30,7 @@ public class PawnTest {
     void white_pawn_not_move() {
         Board board = Board.create();
         Pawn pawn = new Pawn(Symbol.PAWN, Team.WHITE);
-        boolean actual = pawn.isMovable(board.getValue(), Coordinate.of("c6"), Coordinate.of("c5"));
+        boolean actual = pawn.isMovable(board, Coordinate.of("c6"), Coordinate.of("c5"));
         assertThat(actual).isFalse();
     }
 
@@ -39,7 +39,7 @@ public class PawnTest {
     void black_pawn_not_move() {
         Board board = Board.create();
         Pawn pawn = new Pawn(Symbol.PAWN, Team.BLACK);
-        boolean actual = pawn.isMovable(board.getValue(), Coordinate.of("c4"), Coordinate.of("c5"));
+        boolean actual = pawn.isMovable(board, Coordinate.of("c4"), Coordinate.of("c5"));
         assertThat(actual).isFalse();
     }
 
@@ -49,7 +49,7 @@ public class PawnTest {
         Board board = Board.create();
         Pawn pawn = new Pawn(Symbol.PAWN, Team.WHITE);
 
-        boolean actual = pawn.isMovable(board.getValue(), Coordinate.of("c6"), Coordinate.of("d7"));
+        boolean actual = pawn.isMovable(board, Coordinate.of("c6"), Coordinate.of("d7"));
 
         assertThat(actual).isTrue();
     }

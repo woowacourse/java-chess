@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.direction.Direction;
 import chess.domain.piece.movestrategy.MoveStrategy;
-import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -16,12 +16,12 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public boolean isMovable(Map<Coordinate, Piece> value, Coordinate from, Coordinate to) {
-        Piece toPiece = value.get(to);
+    public boolean isMovable(Board board, Coordinate from, Coordinate to) {
+        Piece toPiece = board.findPiece(to);
         if (isSameTeam(toPiece.team) || !hasDirection(Direction.of(from, to))) {
             return false;
         }
-        return moveStrategy().isMovable(value, from, to);
+        return moveStrategy().isMovable(board, from, to);
     }
 
     public abstract boolean hasDirection(Direction direction);
@@ -33,11 +33,11 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
-        return symbol == Symbol.KING;
+        return symbol.isKing();
     }
 
     public boolean isPawn() {
-        return symbol == Symbol.PAWN;
+        return symbol.isPawn();
     }
 
     public boolean isEmpty() {

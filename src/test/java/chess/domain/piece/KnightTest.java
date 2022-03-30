@@ -21,7 +21,7 @@ class KnightTest {
     void isMovable(String from, String to) {
         Board board = Board.create();
         Knight knight = new Knight(Symbol.KNIGHT, Team.WHITE);
-        boolean actual = knight.isMovable(board.getValue(), Coordinate.of(from), Coordinate.of(to));
+        boolean actual = knight.isMovable(board, Coordinate.of(from), Coordinate.of(to));
         assertThat(actual).isTrue();
     }
 }
