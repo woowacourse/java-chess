@@ -30,6 +30,26 @@ import org.junit.jupiter.params.provider.MethodSource;
 class BoardTest {
 
 	@Test
+	void isAlly() {
+		Board board = new Board(InitialBoard.createBoard());
+
+		assertAll(
+				() -> assertThat(board.isAlly(initialWhiteKing, Team.WHITE)).isTrue(),
+				() -> assertThat(board.isAlly(initialWhiteKing, Team.BLACK)).isFalse()
+		);
+	}
+
+	@Test
+	void isCheck() {
+		Board board = new Board(InitialBoard.createBoard());
+
+		assertAll(
+				() -> assertThat(board.isCheck(initialWhiteKing)).isTrue(),
+				() -> assertThat(board.isCheck(initialBlackQueen)).isFalse()
+		);
+	}
+
+	@Test
 	void moveWithWrongSource() {
 		Board board = new Board(createBlankBoard());
 

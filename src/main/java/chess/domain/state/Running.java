@@ -2,7 +2,6 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.score.ScoreCalculator;
 import chess.domain.score.ScoreResult;
@@ -27,9 +26,10 @@ public abstract class Running implements State {
 
 	@Override
 	public final State play(final Position source, final Position target) {
-		validateTurn(board.getBoard().get(source));
+		validateTurn(source);
+		boolean check = board.isCheck(target);
 		board.move(source, target);
-		return getNextTurn(board.getBoard().get(target).isKing());
+		return getNextTurn(check);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public abstract class Running implements State {
 		return board;
 	}
 
-	protected abstract void validateTurn(final Piece piece);
+	protected abstract void validateTurn(final Position position);
 
-	protected abstract State getNextTurn(boolean kingDeath);
+	protected abstract State getNextTurn(boolean check);
 }

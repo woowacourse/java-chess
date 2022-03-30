@@ -24,6 +24,14 @@ public class Board {
 		this.board = new HashMap<>(board);
 	}
 
+	public boolean isAlly(Position position, Team team) {
+		return board.get(position).isAlly(team);
+	}
+
+	public boolean isCheck(final Position target) {
+		return board.get(target).isKing();
+	}
+
 	public void move(Position source, Position target) {
 		Piece piece = board.get(source);
 		validateMove(source, target, piece);
