@@ -22,18 +22,6 @@ public final class Board {
         pieces = new Pieces(initiator);
     }
 
-    public Optional<Piece> piece(final Position position) {
-        return pieces.findPiece(position);
-    }
-
-    private Piece findPiece(Position source) {
-        Optional<Piece> piece = piece(source);
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
-        }
-        return piece.get();
-    }
-
     public void move(String source, String target) {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
@@ -45,6 +33,50 @@ public final class Board {
         checkMovableAndMovePiece(sourcePosition, targetPosition, piece);
     }
 
+    public boolean isEnd() {
+        return pieces.kingCaught();
+    }
+
+    public Color winnersColor() {
+        Piece aliveKing = pieces.findAliveKing();
+        if (aliveKing.isSameColor(Color.WHITE)) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
+    public double calculateScore(Color color) {
+        return pieces.calculateBasicScore(color) - pieces.countPenaltyPawns(color) * PAWN_PENALTY_SCORE;
+    }
+
+    public Map<Result, Color> gameResult() {
+        Map<Result, Color> gameResult = new HashMap<>();
+        if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
+            gameResult.put(Result.WIN, Color.WHITE);
+        }
+        if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
+            gameResult.put(Result.WIN, Color.BLACK);
+        }
+        return gameResult;
+    }
+
+    public Optional<Piece> piece(final Position position) {
+        return pieces.findPiece(position);
+    }
+
+    private void validatePositionsNotEquals(Position source, Position target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException(ERROR_SOURCE_AND_TARGET_SAME);
+        }
+    }
+
+    private Piece findPiece(Position source) {
+        Optional<Piece> piece = piece(source);
+        if (piece.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
+        }
+        return piece.get();
+    }
 
     private void validateTargetNotSameColor(Position target, Piece piece) {
         if (pieces.pieceExist(target) && piece.isSameColor(findPiece(target))) {
@@ -88,17 +120,6 @@ public final class Board {
         }
     }
 
-    private void movePiece(Position source, Position target) {
-        pieces.move(source, target);
-        turn = Color.opposite(turn);
-    }
-
-    private void validatePositionsNotEquals(Position source, Position target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException(ERROR_SOURCE_AND_TARGET_SAME);
-        }
-    }
-
     private void validatePathEmpty(Position source, Position target) {
         Direction direction = Direction.calculate(source, target);
         if (direction.isIgnore()) {
@@ -119,30 +140,9 @@ public final class Board {
         }
     }
 
-    public boolean isEnd() {
-        return pieces.kingCaught();
+    private void movePiece(Position source, Position target) {
+        pieces.move(source, target);
+        turn = Color.opposite(turn);
     }
 
-    public Color winnersColor() {
-        Piece aliveKing = pieces.findAliveKing();
-        if (aliveKing.isSameColor(Color.WHITE)) {
-            return Color.WHITE;
-        }
-        return Color.BLACK;
-    }
-
-    public double calculateScore(Color color) {
-        return pieces.calculateBasicScore(color) - pieces.countPenaltyPawns(color) * PAWN_PENALTY_SCORE;
-    }
-
-    public Map<Result, Color> gameResult() {
-        Map<Result, Color> gameResult = new HashMap<>();
-        if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.WHITE);
-        }
-        if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.BLACK);
-        }
-        return gameResult;
-    }
 }
