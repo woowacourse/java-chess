@@ -32,7 +32,7 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_INCORRECT_ROW));
     }
 
-    public static Row of(final int value) {
+    private Row of(final int value) {
         return Arrays.stream(values())
                 .filter(it -> it.index == value)
                 .findAny()
