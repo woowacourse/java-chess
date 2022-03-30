@@ -13,14 +13,22 @@
 - [x] 사용자가 end를 입력하면 프로그램을 종료한다.
 - [x] 사용자가 move와 source와 target을 입력하면 piece를 이동시킨다.
 - [x] 사용자가 status를 입력하면 점수를 각 진영의 점수를 출력하고, 어느 진영이 이겼는지 출력한다.
-- [x] King이 잡혔을 때, 게임을 종료한다. (이 때, 어느 진영이 이겼는지 출력한다.)
+- [x] King이 잡혔을 때, 게임을 종료한다.
+
+### Command
+
+- [x] start와 end를 가진다.
+      - [x] [ERROR] start와 end 이외의 값이 오면 예외 처리를 한다.
+- [x] move를 가진다.
+- [x] status를 가진다.
+- [x] 각 명령어에 따라 뷰를 출력하고 ChessGame의 메서드를 실행한다.
+
+## 도메인
 
 ### ChessGame
 
 - [x] 게임을 진행한다.
 - [x] Checkmate 일 경우 게임을 종료한다.
-
-## 도메인
 
 ### Board
 
@@ -48,16 +56,16 @@
 
 - [x] 승패를 계산한다.
 
-### Rank
+### Row
 
-- [x] 행(Rank)은 1~8까지 있다.
+- [x] 행(Row)은 1~8까지 있다.
     - [x] [ERROR] 1~8이외의 값이 오면 예외 처리를 한다.
-- [x] rank를 증가, 감소 시킨다.
+- [x] row를 증가, 감소 시킨다.
     - [x] [ERROR] 1~8을 넘어가면 예외처리를 한다.
 
-### File
+### Column
 
-- [x] 열(File)은 a~h까지 있다.
+- [x] 열(Column)은 a~h까지 있다.
     - [x] [ERROR] a~h이외의 값이 오면 예외 처리를 한다.
 - [x] file을 증가 감소 시킨다.
     - [x] [ERROR] a~h를 넘어가면 예외처리를 한다.
@@ -100,12 +108,6 @@
 - [x] 흑과 백이 있다.
 - [x] 반대 Color를 반환한다.
 
-### Command
-
-- [x] start와 end를 가진다.
-    - [x] [ERROR] start와 end 이외의 값이 오면 예외 처리를 한다.
-- [x] move를 가진다.
-
 ## 행마법
 
 - 킹은 상하좌우, 대각선 방향으로 한 칸만 이동 가능하다.
@@ -128,7 +130,7 @@
 
 - [x]  Board class에서 move를 새로운 클래스로 분리
 - [x]  인터페이스 Piece를 없애고 추상 클래스인 FullPiece를 Piece로 대체하여 사용하기
-- [x]  position에 `toRankValue` 를 랭크 안에서 하도록 수정
+- [x]  position에 `torowValue` 를 랭크 안에서 하도록 수정
 - [x]  매직 넘버 상수화
 - [x]  메서드 10줄 넘지 않도록 수정
 - [x]  outputView를 위한 getter말고 다른 getter가 있는지 확인하기
