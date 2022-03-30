@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum Column {
 
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h;
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H;
 
     public static Column from(final int value) {
         return Arrays.stream(values())

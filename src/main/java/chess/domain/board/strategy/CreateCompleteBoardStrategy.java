@@ -1,13 +1,13 @@
 package chess.domain.board.strategy;
 
-import static chess.domain.board.Column.a;
-import static chess.domain.board.Column.b;
-import static chess.domain.board.Column.c;
-import static chess.domain.board.Column.d;
-import static chess.domain.board.Column.e;
-import static chess.domain.board.Column.f;
-import static chess.domain.board.Column.g;
-import static chess.domain.board.Column.h;
+import static chess.domain.board.Column.A;
+import static chess.domain.board.Column.B;
+import static chess.domain.board.Column.C;
+import static chess.domain.board.Column.D;
+import static chess.domain.board.Column.E;
+import static chess.domain.board.Column.F;
+import static chess.domain.board.Column.G;
+import static chess.domain.board.Column.H;
 import static chess.domain.piece.PieceType.BISHOP;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.KNIGHT;
@@ -33,9 +33,9 @@ import java.util.stream.Collectors;
 public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
     private static final TreeMap<Column, PieceType> lineOrder = new TreeMap<>(
-            Map.ofEntries(entry(a, ROOK), entry(b, KNIGHT), entry(c, BISHOP),
-                    entry(d, QUEEN), entry(e, KING), entry(f, BISHOP),
-                    entry(g, KNIGHT), entry(h, ROOK)));
+            Map.ofEntries(entry(A, ROOK), entry(B, KNIGHT), entry(C, BISHOP),
+                    entry(D, QUEEN), entry(E, KING), entry(F, BISHOP),
+                    entry(G, KNIGHT), entry(H, ROOK)));
 
     public CreateCompleteBoardStrategy() {
     }
