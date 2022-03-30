@@ -47,4 +47,12 @@ class PiecesTest {
         double totalScore = pieces.getTotalScore(Team.WHITE);
         assertThat(totalScore).isEqualTo(5.5D);
     }
+
+    @Test
+    @DisplayName("판에 남은 King의 개수를 반환한다.")
+    void countKingTest() {
+        Pieces pieces = Pieces.create();
+
+        assertThat(pieces.countOfKing()).isEqualTo(2);
+    }
 }
