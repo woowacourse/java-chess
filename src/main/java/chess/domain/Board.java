@@ -14,6 +14,7 @@ public class Board {
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
     private static final String ALL_KING_EXIST = "[ERROR] 킹이 모두 살아 있어, 승자를 구할 수 없습니다.";
+    private static final String ALL_KING_NOT_EXIST = "[ERROR] 킹이 보드에 존재하지 않습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -120,7 +121,7 @@ public class Board {
         return board.values().stream()
             .filter(Piece::isKing)
             .findAny()
-            .get()
+            .orElseThrow(() -> new IllegalStateException(ALL_KING_NOT_EXIST))
             .getColor();
     }
 }
