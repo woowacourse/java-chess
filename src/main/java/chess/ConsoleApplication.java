@@ -19,33 +19,41 @@ public class ConsoleApplication {
         Command command;
         do {
             command = inputView.readCommand();
-            executeCommand(outputView, chessGame, controller, command);
+            executeCommand(controller, command, chessGame, outputView);
         } while (!command.isType(Type.END) && !chessGame.isFinished());
     }
 
-    private static void executeCommand(OutputView outputView, ChessGame chessGame, Controller controller, Command command) {
+    private static void executeCommand(Controller controller,
+                                       Command command,
+                                       ChessGame chessGame,
+                                       OutputView outputView) {
         if (command.isType(Type.START)) {
             outputView.printBoard(controller.start(chessGame));
         }
         if (command.isType(Type.MOVE)) {
-            executeMove(outputView, chessGame, controller, (Move) command);
+            executeMove(controller, (Move) command, chessGame, outputView);
         }
         if (command.isType(Type.STATUS)) {
             outputView.printScore(controller.status(chessGame));
         }
         if (command.isType(Type.END)) {
-            executeEnd(outputView, chessGame, controller);
+            executeEnd(controller, chessGame, outputView);
         }
     }
 
-    private static void executeMove(OutputView outputView, ChessGame chessGame, Controller controller, Move move) {
+    private static void executeMove(Controller controller,
+                                    Move move,
+                                    ChessGame chessGame,
+                                    OutputView outputView) {
         outputView.printBoard(controller.move(chessGame, move.getSourcePosition(), move.getTargetPosition()));
         if (chessGame.isFinished()) {
             outputView.printResult(controller.status(chessGame), controller.getWinner(chessGame));
         }
     }
 
-    private static void executeEnd(OutputView outputView, ChessGame chessGame, Controller controller) {
+    private static void executeEnd(Controller controller,
+                                   ChessGame chessGame,
+                                   OutputView outputView) {
         controller.end(chessGame);
         if (chessGame.isFinished()) {
             outputView.printResult(controller.status(chessGame), controller.getWinner(chessGame));

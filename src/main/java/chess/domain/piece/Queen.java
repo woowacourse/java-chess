@@ -4,7 +4,7 @@ import chess.domain.Camp;
 import chess.domain.board.Position;
 import java.util.function.Consumer;
 
-public final class Queen extends Piece{
+public final class Queen extends Piece {
     private static final String ERROR_CANT_MOVE = "퀸이 이동할 수 없는 위치입니다.";
 
     public Queen(Camp camp) {

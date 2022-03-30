@@ -1,9 +1,9 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
+import chess.domain.Score;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.Score;
 import java.util.Map;
 
 public class Running implements State {

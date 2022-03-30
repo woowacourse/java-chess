@@ -3,8 +3,7 @@ package chess.domain;
 public enum Camp {
     WHITE(1, true),
     BLACK(-1, false),
-    NONE(0, false)
-    ;
+    NONE(0, false);
 
     private final int verticalDirection;
     private boolean turn;

@@ -33,7 +33,7 @@ public enum Column {
 
     Column flip() {
         return Arrays.stream(Column.values())
-                .filter( it -> it.value == (MAX_VALUE - this.value))
+                .filter(it -> it.value == (MAX_VALUE - this.value))
                 .findFirst()
                 .orElseThrow();
     }
@@ -43,7 +43,7 @@ public enum Column {
     }
 
     List<Column> pathTo(Column otherColumn) {
-        if (this.value < otherColumn.value){
+        if (this.value < otherColumn.value) {
             return this.upPathTo(otherColumn);
         }
         return this.downPathTo(otherColumn);
@@ -51,7 +51,7 @@ public enum Column {
 
     private List<Column> upPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value + 1; i <  otherColumn.value; i++) {
+        for (int i = this.value + 1; i < otherColumn.value; i++) {
             path.add(Column.from(i));
         }
         return path;
@@ -59,7 +59,7 @@ public enum Column {
 
     private List<Column> downPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value - 1; i >  otherColumn.value; i--) {
+        for (int i = this.value - 1; i > otherColumn.value; i--) {
             path.add(Column.from(i));
         }
         return path;
