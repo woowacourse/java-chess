@@ -7,7 +7,6 @@ import java.util.Map;
 import chess.model.boardinitializer.BoardInitializer;
 import chess.model.piece.EmptyPiece;
 import chess.model.piece.Piece;
-import chess.model.turndecider.TurnDecider;
 
 public class Board {
 
@@ -25,8 +24,8 @@ public class Board {
     }
 
     public boolean move(Position source, Position target) {
-        turnDecide(source);
         validateSourceNotEmpty(source);
+        turnDecide(source);
         boolean isFinished = pieceAt(target).isKing();
 
         changePiecePositions(source, target);

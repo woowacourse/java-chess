@@ -17,7 +17,6 @@ import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.EmptyPiece;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
-import chess.model.turndecider.AlternatingTurnDecider;
 
 public class ScoreCalculatorTest {
 
@@ -26,8 +25,8 @@ public class ScoreCalculatorTest {
     void apply() {
         //given
         ScoreCalculator scoreCalculator = new ScoreCalculator(
-            new Board(new AlternatingTurnDecider(), new defaultInitializer()).getValues(),
-            new AlternatingTurnDecider());
+            new Board(new TurnDecider(), new defaultInitializer()).getValues(),
+            new TurnDecider());
 
         //when
         double actual = scoreCalculator.calculate();
@@ -39,8 +38,8 @@ public class ScoreCalculatorTest {
     @DisplayName("폰이 같은 File에 두 개, 일반적 폰 1개, 다른 팀 폰 1개 있을 경우 2점으로 계산한다.")
     void when_pawns_in_same_file() {
         ScoreCalculator scoreCalculator = new ScoreCalculator(
-            new Board(new AlternatingTurnDecider(), new testInitializer()).getValues(),
-            new AlternatingTurnDecider());
+            new Board(new TurnDecider(), new testInitializer()).getValues(),
+            new TurnDecider());
 
         //then
         double actual = scoreCalculator.calculate();

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import chess.model.piece.Piece;
-import chess.model.turndecider.TurnDecider;
 
 public class ScoreCalculator {
 

@@ -10,16 +10,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.model.PieceColor;
+import chess.model.TurnDecider;
 import chess.model.piece.Pawn;
-import chess.model.turndecider.AlternatingTurnDecider;
 
-class AlternatingTurnDeciderTest {
+class PlayerStateTest {
 
-    private AlternatingTurnDecider turnDecider;
+    private TurnDecider turnDecider;
 
     @BeforeEach
     void setUp() {
-        turnDecider = new AlternatingTurnDecider();
+        turnDecider = new TurnDecider();
     }
 
     @DisplayName("처음 턴은 백이므로 해당 턴에는 흑은 선택될 수 없다")

@@ -26,8 +26,6 @@ import chess.model.piece.King;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Rook;
-import chess.model.turndecider.AlternatingTurnDecider;
-import chess.model.turndecider.FixedTurnDecider;
 
 public class BoardTest {
 
@@ -35,7 +33,7 @@ public class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(new FixedTurnDecider(), new defaultInitializer());
+        board = new Board(new TurnDecider(), new defaultInitializer());
     }
 
     @Test
@@ -153,7 +151,7 @@ public class BoardTest {
     @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
     @Test
     void move_return_true_when_king_captured() {
-        Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
+        Board board = new Board(new TurnDecider(), new kingCaptureTestInitializer());
 
         boolean isFinished = board.move(Position.of(TWO, A), Position.of(THREE, A));
         assertThat(isFinished).isTrue();
@@ -162,7 +160,7 @@ public class BoardTest {
     @DisplayName("킹이 잡힐 경우 룩 한 개 남은 승자의 점수 5점을 반환한다.")
     @Test
     void score_is_5_when_king_captured() {
-        Board board = new Board(new AlternatingTurnDecider(), new kingCaptureTestInitializer());
+        Board board = new Board(new TurnDecider(), new kingCaptureTestInitializer());
         board.move(Position.of(TWO, A), Position.of(THREE, A));
         double actual = board.calculateScore();
         assertThat(actual).isEqualTo(5);
@@ -171,7 +169,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫판에 점수를 계산하면 38점이 나온다")
     void when_first_turn_cal_score_then_38() {
-        Board board = new Board(new AlternatingTurnDecider(), new defaultInitializer());
+        Board board = new Board(new TurnDecider(), new defaultInitializer());
         double score = board.calculateScore();
         assertThat(score).isEqualTo(38.0);
     }
