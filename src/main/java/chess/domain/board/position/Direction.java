@@ -11,6 +11,8 @@ public enum Direction {
     DOWN(-90),
     DOWN_RIGHT(-45);
 
+    private static final int NO_DIFFERENCE = 0;
+
     private final int angle;
 
     Direction(int angle) {
@@ -21,6 +23,9 @@ public enum Direction {
         double theta = Math.atan2(y, x);
         double targetAngle = Math.toDegrees(theta);
 
+        if (x == NO_DIFFERENCE && y == NO_DIFFERENCE) {
+            return false;
+        }
         return angle == targetAngle;
     }
 }

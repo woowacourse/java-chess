@@ -2,6 +2,7 @@ package chess.domain.board.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -137,6 +138,17 @@ class DirectionTest {
 
         boolean actual = Direction.DOWN_RIGHT
                 .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    void 위치_변화가_없는_경우_무조건_거짓() {
+        int fileDiff = 0;
+        int rankDiff = 0;
+
+        boolean actual = Arrays.stream(Direction.values())
+                .anyMatch(direction -> direction.hasAngleOf(fileDiff, rankDiff));
 
         assertThat(actual).isFalse();
     }

@@ -15,12 +15,20 @@ public class AngleCheckerTest {
         assertThat(Math.toDegrees(Math.atan2(-1, 0))).isEqualTo(-90);
 
     }
+
     @Test
     void mathAtan2_diagonal() {
-        // Math.atan2(y, x)
         assertThat(Math.toDegrees(Math.atan2(1, 1))).isEqualTo(45);
         assertThat(Math.toDegrees(Math.atan2(1, -1))).isEqualTo(135);
         assertThat(Math.toDegrees(Math.atan2(-1, -1))).isEqualTo(-135);
         assertThat(Math.toDegrees(Math.atan2(-1, 1))).isEqualTo(-45);
+    }
+
+    @Test
+    void mathAtan2_problem() {
+        double right = Math.atan2(0, 5);
+        double samePosition = Math.atan2(0, 0);
+
+        assertThat(right).isEqualTo(samePosition);
     }
 }
