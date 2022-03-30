@@ -4,23 +4,20 @@ import chess.domain.ChessBoard;
 import chess.domain.Command;
 
 public final class Ready implements State {
-    @Override
-    public State start() {
-        return new White();
-    }
-
-    @Override
-    public State stop() {
-        return new End();
-    }
-
-    @Override
-    public State changeTurn(Command command, ChessBoard chessBoard) {
-        return new Ready();
-    }
 
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public State execute(Command command, ChessBoard chessBoard) {
+        if (command.isStart()) {
+            return new White();
+        }
+        if (command.isEnd()) {
+            return new End();
+        }
+        return new Ready();
     }
 }

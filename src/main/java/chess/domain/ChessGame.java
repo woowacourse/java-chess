@@ -23,14 +23,6 @@ public class ChessGame {
         chessBoard = new ChessBoard();
     }
 
-    private void start() {
-        state = state.start();
-    }
-
-    private void stop() {
-        state = state.stop();
-    }
-
     public boolean isExistKing() {
         return chessBoard.isExistKing();
     }
@@ -40,21 +32,7 @@ public class ChessGame {
     }
 
     public void progress(Command command) {
-        if (command.isStart()) {
-            start();
-            return;
-        }
-
-        if (command.isEnd()) {
-            stop();
-            return;
-        }
-
-        if (command.isStatus()) {
-            return;
-        }
-
-        state = state.changeTurn(command, chessBoard);
+        state = state.execute(command, chessBoard);
     }
 
     public Set<Position> getPiecePositions() {

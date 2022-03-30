@@ -9,28 +9,25 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class Black implements State {
-    @Override
-    public State start() {
-        throw new IllegalArgumentException("이미 게임을 시작하였습니다.");
-    }
-
-    @Override
-    public State stop() {
-        return new End();
-    }
-
-    @Override
-    public State changeTurn(Command command, ChessBoard chessBoard) {
-        checkTeam(command, chessBoard);
-
-        chessBoard.move(command);
-
-        return new White();
-    }
 
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public State execute(Command command, ChessBoard chessBoard) {
+        if (command.isMoveCommand()) {
+            checkTeam(command, chessBoard);
+
+            chessBoard.move(command);
+
+            return new White();
+        }
+        if (command.isEnd()) {
+            return new End();
+        }
+        return this;
     }
 
     private void checkTeam(Command command, ChessBoard chessBoard) {
