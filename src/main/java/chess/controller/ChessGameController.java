@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.Command;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.state.BoardInitialize;

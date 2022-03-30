@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +37,12 @@ public class Position {
         return position.getCol().getSymbol() + position.getRow().getSymbol();
     }
 
-    public static Position of(Column col, Row row) throws RuntimeException{
+    public static Position of(Column col, Row row) throws RuntimeException {
         String position = col.getSymbol() + row.getSymbol();
         return positions.get(position);
     }
 
-    public static Position from(String position) throws RuntimeException{
+    public static Position from(String position) throws RuntimeException {
         validateLength(position);
         return positions.get(position);
     }

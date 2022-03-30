@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.Arrays;
 
@@ -34,6 +34,6 @@ public enum Column {
     }
 
     public Column plusColumn(int number) {
-        return find((char)(value + number));
+        return find((char) (value + number));
     }
 }

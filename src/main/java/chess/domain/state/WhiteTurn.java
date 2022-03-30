@@ -1,12 +1,12 @@
 package chess.domain.state;
 
-import chess.domain.*;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
-import java.util.EnumMap;
 import java.util.Map;
 
-public class WhiteTurn extends Playing{
+public class WhiteTurn extends Playing {
 
     public WhiteTurn(Map<Position, Piece> board) {
         super(board);

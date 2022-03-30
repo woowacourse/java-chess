@@ -1,8 +1,9 @@
 package chess.domain.state;
 
-import chess.domain.*;
+import chess.domain.Team;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Map;

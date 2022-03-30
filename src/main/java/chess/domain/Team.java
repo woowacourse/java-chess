@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
-
 import java.util.Locale;
 
 public enum Team {
