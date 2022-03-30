@@ -10,11 +10,10 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         OutputView.printGameInitMessage();
-        String input = InputView.inputOption();
 
-        while (!input.equals("end")) {
+        while (!chessGame.isFinish()) {
+            String input = InputView.inputOption();
             OptionController.run(chessGame, input);
-            input = InputView.inputOption();
         }
     }
 
@@ -35,6 +34,7 @@ public class ChessController {
             OutputView.printScore(whiteScore, blackScore);
             OutputView.printWinner(chessGame.judgeWinner());
         }
+        chessGame.end();
     }
 
     static void status(ChessGame chessGame, String optionInput) {

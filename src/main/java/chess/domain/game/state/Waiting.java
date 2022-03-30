@@ -7,8 +7,8 @@ import chess.domain.piece.Color;
 public class Waiting implements GameState {
 
     @Override
-    public GameState movePiece(Board board, Position fromPosition, Position toPosition) {
-        throw new IllegalArgumentException();
+    public GameState movePiece(Position fromPosition, Position toPosition) {
+        throw new IllegalArgumentException("대기중이라 말을 옮길 수 없습니다");
     }
 
     @Override
@@ -22,12 +22,17 @@ public class Waiting implements GameState {
     }
 
     @Override
-    public double calculateScore(Board board, Color color) {
-        throw new IllegalArgumentException();
+    public double calculateScore(Color color) {
+        throw new IllegalArgumentException("대기중이라 점수를 계산할 수 없습니다");
     }
 
     @Override
-    public Color getWinTeamColor(Board board) {
-        throw new IllegalArgumentException();
+    public Color getWinTeamColor() {
+        throw new IllegalArgumentException("대기중이라 우승팀을 구할 수 없습니다");
+    }
+
+    @Override
+    public Board board() {
+        throw new IllegalArgumentException("대기중이라 보드를 가져올 수 없습니다");
     }
 }

@@ -6,13 +6,19 @@ import chess.domain.piece.Color;
 
 public class Running implements GameState {
 
+    private final Board board;
+
+    public Running(Board board) {
+        this.board = board;
+    }
+
     @Override
-    public GameState movePiece(Board board, Position fromPosition, Position toPosition) {
+    public GameState movePiece(Position fromPosition, Position toPosition) {
         board.movePiece(fromPosition, toPosition);
         if (!board.isAllKingExist()) {
-            return new End();
+            return new End(board);
         }
-        return new Running();
+        return new Running(board);
     }
 
     @Override
@@ -26,12 +32,17 @@ public class Running implements GameState {
     }
 
     @Override
-    public double calculateScore(Board board, Color color) {
+    public double calculateScore(Color color) {
         return board.calculateScore(color);
     }
 
     @Override
-    public Color getWinTeamColor(Board board) {
-        throw new IllegalArgumentException();
+    public Color getWinTeamColor() {
+        return board.getWinnerTeamColor();
+    }
+
+    @Override
+    public Board board() {
+        return board;
     }
 }

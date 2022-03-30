@@ -21,6 +21,7 @@ public class OutputView {
     private static final String WINNER_FORMAT = "%s팀이 승리했습니다!";
     private static final String BLACK_TEAM_NAME = "black";
     private static final String WHITE_TEAM_NAME = "white";
+    public static final String WINNER_NOT_EXIST = "승리한 팀이 없습니다.";
 
     public static void printGameInitMessage() {
         System.out.println(CHESS_GAME_INIT_MESSAGE);
@@ -52,13 +53,14 @@ public class OutputView {
         System.out.print(System.lineSeparator());
         System.out.printf(SCORE_FORMAT, WHITE_TEAM_NAME, whiteScore);
         System.out.print(System.lineSeparator());
+        System.out.print(System.lineSeparator());
     }
 
     public static void printWinner(Color color) {
-        if (color == Color.WHITE) {
-            System.out.printf(WINNER_FORMAT, WHITE_TEAM_NAME);
+        if (color == Color.NONE) {
+            System.out.printf(WINNER_NOT_EXIST);
             return;
         }
-        System.out.printf(WINNER_FORMAT, BLACK_TEAM_NAME);
+        System.out.printf(WINNER_FORMAT, color);
     }
 }

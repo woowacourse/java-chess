@@ -16,7 +16,6 @@ public class Board {
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
-    private static final String NOT_EMPTY_CHESS_BOARD = "[ERROR] 체스보드가 비어있지 않습니다.";
     private static final int TOTAL_KING_COUNT = 2;
     private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
     private static final double PAWN_PENALTY_RATE = 0.5;
@@ -29,13 +28,6 @@ public class Board {
 
     public Board(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
-    }
-
-    public void placePieces(final Map<Position, Piece> board) {
-        if (!this.board.isEmpty()) {
-            throw new IllegalArgumentException(NOT_EMPTY_CHESS_BOARD);
-        }
-        this.board.putAll(new HashMap<>(board));
     }
 
     public void movePiece(Position fromPosition, Position toPosition) {
@@ -115,9 +107,9 @@ public class Board {
         }
         return board.values().stream()
             .filter(Piece::isKing)
+            .map(Piece::getColor)
             .findAny()
-            .get()
-            .getColor();
+            .get();
     }
 
     public Map<Position, Piece> getBoard() {

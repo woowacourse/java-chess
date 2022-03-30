@@ -15,25 +15,27 @@ import chess.domain.piece.Color;
 public class ChessGame {
 
     private GameState state;
-    private final Board board;
 
     public ChessGame() {
         state = new Waiting();
-        board = new Board();
     }
 
     public void start() {
-        state = new Running();
-        board.placePieces(BoardFactory.getInitialPieces());
+        Board board = new Board(BoardFactory.getInitialPieces());
+        state = new Running(board);
     }
 
     public void movePiece(String movePositionInformation) {
         List<String> information = Arrays.asList(movePositionInformation.split(" "));
-        state = state.movePiece(board, Position.valueOf(information.get(1)), Position.valueOf(information.get(2)));
+        state = state.movePiece(Position.valueOf(information.get(1)), Position.valueOf(information.get(2)));
     }
 
     public void end() {
-        state = new End();
+        if (state.isWaiting()) {
+            state = new End(new Board());
+            return;
+        }
+        state = new End(state.board());
     }
 
     public boolean isWaiting() {
@@ -45,14 +47,14 @@ public class ChessGame {
     }
 
     public double calculateScore(Color color) {
-        return state.calculateScore(board, color);
+        return state.calculateScore(color);
     }
 
     public Color judgeWinner() {
-        return state.getWinTeamColor(board);
+        return state.getWinTeamColor();
     }
 
     public Board getBoard() {
-        return board;
+        return state.board();
     }
 }
