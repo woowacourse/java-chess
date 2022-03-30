@@ -9,7 +9,7 @@ import java.util.Map;
 
 public abstract class Playing implements GameState {
 
-    private Map<Row, Rank> board;
+    private final Map<Row, Rank> board;
 
     public Playing(Map<Row, Rank> board) {
         this.board = board;
@@ -67,9 +67,13 @@ public abstract class Playing implements GameState {
 
     private void validateExistOtherPiece(List<Position> positions) {
         for (Position position : positions) {
-            if (!getPiece(position).isBlank()) {
-                throw new IllegalArgumentException("해당 위치로 말이 이동할 수 없습니다.");
-            }
+            validateBlackPiece(position);
+        }
+    }
+
+    private void validateBlackPiece(Position position) {
+        if (!getPiece(position).isBlank()) {
+            throw new IllegalArgumentException("해당 위치로 말이 이동할 수 없습니다.");
         }
     }
 
