@@ -32,10 +32,6 @@ public class Board {
         validateMovingPath(source, destination, piece, positions);
     }
 
-    public boolean isKingDead(Piece piece) {
-        return piece.isKing();
-    }
-
     public Piece movePiece(String source, String destination, Team team) {
         Piece srcPiece = getPiece(Position.from(source));
         Piece dstPiece = getPiece(Position.from(destination));
@@ -46,7 +42,7 @@ public class Board {
     }
 
     private void validateTeam(Team team, Piece piece) {
-        if (piece.getTeam() != team) {
+        if (team.matchTeam(piece.getTeam())) {
             throw new IllegalArgumentException("다른 팀 말을 옮길 수 없습니다.");
         }
     }

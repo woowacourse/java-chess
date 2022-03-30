@@ -19,7 +19,7 @@ public class WhiteTurn extends Playing{
 
     @Override
     void validateTeam(Piece piece) {
-        if (piece.getTeam() != Team.WHITE) {
+        if (Team.WHITE.matchTeam(piece.getTeam())) {
             throw new IllegalArgumentException("상대편 말을 옮길 수 없습니다.");
         }
     }
