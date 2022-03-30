@@ -17,18 +17,18 @@ import java.util.Arrays;
 
 public enum PieceView {
 
-    BLACKKING(new King(BLACK), "♚"),
-    BLACKQUEEN(new Queen(BLACK), "♛"),
-    BLACKROOK(new Rook(BLACK), "♜"),
-    BLACKBISHOP(new Bishop(BLACK), "♝"),
-    BLACKKNIGHT(new Knight(BLACK), "♞"),
-    BLACKPAWN(new BlackPawn(BLACK), "♟"),
-    WHITEKING(new King(WHITE), "♔"),
-    WHITEQUEEN(new Queen(WHITE), "♕"),
-    WHITEROOK(new Rook(WHITE), "♖"),
-    WHITEBISHOP(new Bishop(WHITE), "♗"),
-    WHITEKNIGHT(new Knight(WHITE), "♘"),
-    WHITEPAWN(new WhitePawn(WHITE), "♙"),
+    BLACK_KING(new King(BLACK), "♚"),
+    BLACK_QUEEN(new Queen(BLACK), "♛"),
+    BLACK_ROOK(new Rook(BLACK), "♜"),
+    BLACK_BISHOP(new Bishop(BLACK), "♝"),
+    BLACK_KNIGHT(new Knight(BLACK), "♞"),
+    BLACK_PAWN(new BlackPawn(BLACK), "♟"),
+    WHITE_KING(new King(WHITE), "♔"),
+    WHITE_QUEEN(new Queen(WHITE), "♕"),
+    WHITE_ROOK(new Rook(WHITE), "♖"),
+    WHITE_BISHOP(new Bishop(WHITE), "♗"),
+    WHITE_KNIGHT(new Knight(WHITE), "♘"),
+    WHITE_PAWN(new WhitePawn(WHITE), "♙"),
     BLANK(new Blank(NONE), "\uD83D\uDE7E"),
     ;
 

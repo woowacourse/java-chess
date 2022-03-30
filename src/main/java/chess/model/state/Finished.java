@@ -16,6 +16,11 @@ public class Finished implements State {
     }
 
     @Override
+    public State execute(final Command command) {
+        return command.executeTo(board);
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }
@@ -33,10 +38,5 @@ public class Finished implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         throw new IllegalArgumentException("[ERROR] 게임이 종료되어 체스판을 확인 할 수 없습니다.");
-    }
-
-    @Override
-    public State execute(final Command command) {
-        return command.executeTo(board);
     }
 }

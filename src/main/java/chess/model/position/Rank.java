@@ -26,6 +26,10 @@ public enum Rank {
         return Rank.of(value + row);
     }
 
+    public int subtractFrom(final Rank otherRank) {
+        return this.value - otherRank.value;
+    }
+
     public static Rank of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == otherValue)
@@ -38,9 +42,5 @@ public enum Rank {
                 .filter(rank -> rank.name == name)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
-    }
-
-    public int subtractFrom(final Rank otherRank) {
-        return this.value - otherRank.value;
     }
 }

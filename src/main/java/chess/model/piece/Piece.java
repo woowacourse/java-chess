@@ -36,13 +36,13 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract double addTo(double score);
-
-    public abstract Route findRoute(final Position source, final Position target);
-
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         return false;
     }
+
+    public abstract Route findRoute(final Position source, final Position target);
+
+    public abstract double addTo(double score);
 
     @Override
     public boolean equals(Object obj) {

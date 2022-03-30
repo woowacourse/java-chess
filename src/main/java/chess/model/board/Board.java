@@ -33,10 +33,6 @@ public class Board {
         return new Board(otherBoard.board, otherBoard.currentTeam.opponent());
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
-
     public Board move(final Position source, final Position target) {
         checkMovablePiece(source, target);
         checkSameWithCurrentTeam(source);
@@ -83,13 +79,6 @@ public class Board {
         board.put(source, new Blank(NONE));
     }
 
-    public boolean isKingDead() {
-        return board.values()
-                .stream()
-                .filter(Piece::isKing)
-                .count() < KING_COUNT;
-    }
-
     public double calculateScore(final Team team) {
         List<Piece> teamPieces = findPiecesOf(team);
         double score = 0;
@@ -104,5 +93,16 @@ public class Board {
                 .filter(position -> board.get(position).isSame(team))
                 .map(board::get)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isKingDead() {
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() < KING_COUNT;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

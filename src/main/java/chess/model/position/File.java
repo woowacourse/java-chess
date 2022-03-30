@@ -25,6 +25,10 @@ public enum File {
         return File.of(value + file);
     }
 
+    public int subtractFrom(final File otherFile) {
+        return this.value - otherFile.value;
+    }
+
     public static File of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(file -> file.value == otherValue)
@@ -37,9 +41,5 @@ public enum File {
                 .filter(file -> file.name == name)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
-    }
-
-    public int subtractFrom(final File otherFile) {
-        return this.value - otherFile.value;
     }
 }

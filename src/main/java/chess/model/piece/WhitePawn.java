@@ -30,11 +30,6 @@ public class WhitePawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         Route route = routeStrategy.findRoute(source, target);
         if (route.equals(NORTH_WEST) || route.equals(NORTH_EAST)) {
@@ -69,6 +64,11 @@ public class WhitePawn extends Piece {
         if (!source.isTwoRank() || !target.equals(nextPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

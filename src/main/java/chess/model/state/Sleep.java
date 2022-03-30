@@ -18,6 +18,14 @@ public class Sleep implements State {
     }
 
     @Override
+    public State execute(final Command command) {
+        if (!command.isStart()) {
+            return command.executeTo(board);
+        }
+        throw new IllegalArgumentException("[ERROR] 게임이 진행 중 이여서 새로운 게임을 시작 할 수 없습니다.");
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }
@@ -35,13 +43,5 @@ public class Sleep implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
-    }
-
-    @Override
-    public State execute(final Command command) {
-        if (!command.isStart()) {
-            return command.executeTo(board);
-        }
-        throw new IllegalArgumentException("[ERROR] 게임이 진행 중 이여서 새로운 게임을 시작 할 수 없습니다.");
     }
 }
