@@ -32,8 +32,8 @@
         - Piece
           - Target 제외 경로가 비어있어야 이동 가능 -> `Piece`에서 이동 가능한 List<Position> 가공
     - [x] `BlackPawn`, `WhitePawn`을 나눠야할 필요가 없음.
-- [ ] `ChessBoard`
-    - [ ] 관리하는 대상을 체스 보드만 관리할 수 있도록
+- [x] `ChessBoard`
+    - [x] 관리하는 대상을 체스 보드만 관리할 수 있도록
         - Player는 `ChessGame`과 같은 객체가 관리하도록하는 것은 어떨지.
     - [x] 생성자에서 `BoardGenerator`를 받는 것 보다 `Map`을 받는게 명확하지 않나.
 
