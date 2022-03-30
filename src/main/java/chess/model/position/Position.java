@@ -1,12 +1,22 @@
 package chess.model.position;
 
 import chess.model.direction.route.Route;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
+    private final static Map<String, Position> cache = new HashMap<>();
+
     private final Rank rank;
     private final File file;
+
+    static {
+        for (Rank rank : Rank.values()) {
+            createCacheFrom(rank);
+        }
+    }
 
     private Position(final Rank rank, final File file) {
         this.rank = rank;
@@ -14,11 +24,26 @@ public class Position {
     }
 
     public static Position of(final Rank rank, final File file) {
-        return new Position(rank, file);
+        String key = createKey(rank, file);
+        return from(key);
     }
 
-    public static Position from(final String position) {
-        return new Position(Rank.of(position.charAt(1)), File.of(position.charAt(0)));
+    public static Position from(final String key) {
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
+        throw new IllegalArgumentException("[ERROR] 잘못된 값이 입력되었습니다.");
+    }
+
+    private static void createCacheFrom(Rank rank) {
+        for (File file : File.values()) {
+            String key = file.nameOfFile() + rank.nameOfRank();
+            cache.put(key, new Position(rank, file));
+        }
+    }
+
+    private static String createKey(Rank rank, File file) {
+        return file.nameOfFile() + rank.nameOfRank();
     }
 
     public int subtractRankFrom(final Position otherPosition) {
