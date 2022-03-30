@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.domain.ChessGame;
-import chess.domain.Score;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.view.InputView;
@@ -22,13 +21,6 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             final Command command = InputView.requestCommand();
             command.execute(chessGame);
-        }
-        checkKingDie(chessGame);
-    }
-
-    private void checkKingDie(final ChessGame chessGame) {
-        if (chessGame.isKingDie()) {
-            OutputView.printResult(new Score(chessGame.findAllPiece()));
         }
     }
 }
