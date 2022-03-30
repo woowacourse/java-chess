@@ -1,6 +1,7 @@
 package chess.command;
 
 import chess.domain.ChessGame;
+import chess.domain.GameStatus;
 import chess.view.OutputView;
 
 public class Start implements Command {
@@ -26,7 +27,7 @@ public class Start implements Command {
     }
 
     private void checkBeforeStart(final ChessGame chessBoard) {
-        if (chessBoard.isPlaying()) {
+        if (chessBoard.isSameStatus(GameStatus.PLAYING)) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
         }
     }

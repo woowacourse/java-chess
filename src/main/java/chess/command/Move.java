@@ -1,6 +1,7 @@
 package chess.command;
 
 import chess.domain.ChessGame;
+import chess.domain.GameStatus;
 import chess.domain.Score;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -28,13 +29,13 @@ public class Move implements Command {
     }
 
     private void checkBeforePlaying(final ChessGame chessGame) {
-        if (chessGame.isReady()) {
+        if (chessGame.isSameStatus(GameStatus.READY)) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
     }
 
     private void checkKingDie(final ChessGame chessGame) {
-        if (chessGame.isKingDie()) {
+        if (chessGame.isSameStatus(GameStatus.KING_DIE)) {
             OutputView.printResult(new Score(chessGame.findAllPiece()));
         }
     }

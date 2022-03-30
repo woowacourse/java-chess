@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.domain.ChessGame;
+import chess.domain.GameStatus;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.view.InputView;
@@ -18,7 +19,7 @@ public class ChessController {
     }
 
     private void playTurn(final ChessGame chessGame) {
-        while (!chessGame.isEnd()) {
+        while (!chessGame.isSameStatus(GameStatus.END)) {
             final Command command = InputView.requestCommand();
             command.execute(chessGame);
         }

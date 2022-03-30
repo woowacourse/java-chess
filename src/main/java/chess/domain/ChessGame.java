@@ -50,20 +50,8 @@ public class ChessGame {
         return chessBoard.findAllPiece();
     }
 
-    public boolean isReady() {
-        return gameStatus.isReady();
-    }
-
-    public boolean isEnd() {
-        return gameStatus.isEnd();
-    }
-
-    public boolean isPlaying() {
-        return gameStatus.isPlaying();
-    }
-
-    public boolean isKingDie() {
-        return gameStatus.isKingDie();
+    public boolean isSameStatus(GameStatus gameStatus) {
+        return this.gameStatus.equals(gameStatus);
     }
 
     public void start() {

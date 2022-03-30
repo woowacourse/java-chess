@@ -19,7 +19,7 @@ class ChessGameTest {
         final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
 
         // when
-        final boolean actual = chessGame.isReady();
+        final boolean actual = chessGame.isSameStatus(GameStatus.READY);
 
         // then
         assertThat(actual).isEqualTo(true);
@@ -33,7 +33,7 @@ class ChessGameTest {
 
         // when
         chessGame.start();
-        final boolean actual = chessGame.isPlaying();
+        final boolean actual = chessGame.isSameStatus(GameStatus.PLAYING);
 
         // then
         assertThat(actual).isEqualTo(true);
