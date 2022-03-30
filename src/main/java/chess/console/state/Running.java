@@ -9,7 +9,7 @@ public class Running implements State {
 
     private final Board board;
 
-    public Running(Board board) {
+    protected Running(Board board) {
         this.board = board;
     }
 

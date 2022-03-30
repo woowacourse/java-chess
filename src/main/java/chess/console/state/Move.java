@@ -11,7 +11,7 @@ public class Move extends Running {
 
     private final Board board;
 
-    public Move(Board board) {
+    protected Move(Board board) {
         super(board);
         this.board = board;
     }

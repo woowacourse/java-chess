@@ -4,6 +4,9 @@ import java.util.List;
 
 public class End implements State {
 
+    protected End() {
+    }
+
     @Override
     public boolean isStart() {
         return false;

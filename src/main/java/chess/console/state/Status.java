@@ -9,7 +9,7 @@ public class Status extends Running {
 
     private final Board board;
 
-    public Status(Board board) {
+    protected Status(Board board) {
         super(board);
         this.board = board;
     }
