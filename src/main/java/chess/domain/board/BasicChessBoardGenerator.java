@@ -11,10 +11,9 @@ import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasicChessBoardGenerator implements BoardGenerator {
+public class BasicChessBoardGenerator {
 
-    @Override
-    public Map<Position, Piece> generator() {
+    public static Map<Position, Piece> generator() {
         Map<Position, Piece> board = new HashMap<>();
 
         board.put(Position.of("a8"), new Rook(Color.BLACK));

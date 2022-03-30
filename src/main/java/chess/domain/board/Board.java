@@ -24,7 +24,7 @@ public class Board {
     }
 
     public static Board getBasicInstance() {
-        return new Board(new BasicChessBoardGenerator().generator());
+        return new Board(BasicChessBoardGenerator.generator());
     }
 
     public Optional<Piece> findPieceBy(Position position) {
