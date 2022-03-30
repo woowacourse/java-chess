@@ -1,6 +1,10 @@
 package chess.model.command;
 
 public abstract class Command implements State {
+    public static final String START = "start";
+    public static final String MOVE = "move";
+    public static final String END = "end";
+    public static final String STATUS = "status";
 
     protected final String input;
 
@@ -10,7 +14,7 @@ public abstract class Command implements State {
     }
 
     private void validateCommand(String input) {
-        if (!input.contains("move") && !"start".equals(input) && !"end".equals(input) && !"status".equals(input)) {
+        if (!input.contains(MOVE) && !START.equals(input) && !END.equals(input) && !STATUS.equals(input)) {
             throw new IllegalArgumentException("명령어는 start, move, end, status 중 하나여야합니다.");
         }
     }
