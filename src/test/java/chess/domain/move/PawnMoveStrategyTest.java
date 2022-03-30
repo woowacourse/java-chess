@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 public class PawnMoveStrategyTest {
 
     Board board;
-    PawnMoveStrategy pawnMoveStrategy;
+    PawnMoveStrategy pawnBlackMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = Board.create();
-        pawnMoveStrategy = new PawnMoveStrategy();
+        pawnBlackMoveStrategy = new PawnBlackMoveStrategy();
     }
 
     @Test
@@ -25,7 +25,7 @@ public class PawnMoveStrategyTest {
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a6");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isTrue();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
     }
 
     @Test
@@ -34,46 +34,50 @@ public class PawnMoveStrategyTest {
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a8");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
 
     @Test
     @DisplayName("2칸 전진시 Pawn 이 사작위치가 아닌경우 false")
     void isMovableStartMoveNotStartPosition() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("a6"));
+
         Position source = Position.valueOf("a6");
         Position target = Position.valueOf("a4");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
 
     @Test
     @DisplayName("2칸 전진시 기물이 있을 경우 false")
     void isMovableStartMoveHasPieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("a5"));
+
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a5");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
 
     @Test
     @DisplayName("전진시 기물이 있을 경우 false")
     void isMovableSouthHasPieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("a6"));
+
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a6");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isFalse();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
     }
 
     @Test
-    @DisplayName("대각선 이동시 기물이 있을 경우 true")
+    @DisplayName("대각선 이동시 상대편 기물이 있을 경우 true")
     void isMovableSouthEastHasPieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("b6"));
+
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("b6");
 
-        assertThat(pawnMoveStrategy.isMovable(board, source, target)).isTrue();
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isTrue();
     }
 }

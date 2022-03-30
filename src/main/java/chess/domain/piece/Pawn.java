@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.move.MoveStrategy;
+import chess.domain.move.PawnBlackMoveStrategy;
 import chess.domain.move.PawnMoveStrategy;
+import chess.domain.move.PawnWhiteMoveStrategy;
 
 public final class Pawn extends ValidPiece {
 
@@ -25,6 +27,9 @@ public final class Pawn extends ValidPiece {
 
     @Override
     public MoveStrategy getMoveStrategy() {
-        return new PawnMoveStrategy();
+        if (getColor() == Color.BLACK) {
+            return new PawnBlackMoveStrategy();
+        }
+        return new PawnWhiteMoveStrategy();
     }
 }
