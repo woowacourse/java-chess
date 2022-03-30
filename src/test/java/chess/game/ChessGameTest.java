@@ -4,7 +4,15 @@ import static org.assertj.core.api.Assertions.*;
 
 import chess.ChessBoard;
 import chess.command.Command;
+import chess.piece.Bishop;
+import chess.piece.Color;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Rook;
+import chess.position.Position;
 import chess.state.Ready;
+import java.math.BigDecimal;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,5 +53,34 @@ class ChessGameTest {
     @DisplayName("isGameEnd가 정상적으로 실행되는지 확인")
     void isGameEnd() {
         assertThat(chessGame.isGameEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("승자를 정상적으로 가져오는지 확인")
+    void winner() {
+        ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
+            List.of(new King(Color.WHITE, Position.from("a1"))))));
+
+        chessGame.start();
+        chessGame.execute(Command.from("move a1 a2"));
+
+        assertThat(chessGame.winner()).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("점수를 정상적으로 가져오는지 확인")
+    void score() {
+        ChessGame chessGame = new ChessGame(new Ready(new ChessBoard(
+            List.of(new Rook(Color.WHITE, Position.from("e5")),
+                new Knight(Color.WHITE, Position.from("e6")),
+                new Knight(Color.WHITE, Position.from("e7")),
+                new Bishop(Color.BLACK, Position.from("a7")),
+                new Bishop(Color.BLACK, Position.from("a8"))))));
+
+        chessGame.start();
+        Score score = chessGame.score();
+
+        assertThat(score.getBlackScore()).isEqualTo(new BigDecimal("6.0"));
+        assertThat(score.getWhiteScore()).isEqualTo(new BigDecimal("10.0"));
     }
 }
