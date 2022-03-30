@@ -17,10 +17,9 @@ import java.util.stream.Collectors;
 public final class ChessBoard {
 
     private static final int DEFAULT_KING_COUNT = 2;
-    private static final int PAWN_DUPLICATE_CONDITION_FOR_SCORE = 2;
     private static final Team START_TEAM = Team.WHITE;
 
-    private Map<Position, Piece> board;
+    private final Map<Position, Piece> board;
     private Team currentTurn;
 
     public ChessBoard(final BoardGenerator boardGenerator) {
@@ -161,60 +160,11 @@ public final class ChessBoard {
         this.currentTurn = Team.BLACK;
     }
 
-    public double calculateTeamScore(final Team Team) {
-        double sum = 0;
-        for (XPosition x : XPosition.values()) {
-            List<Piece> pieces = calculateTeamPiecesByXPosition(Team, x);
-            sum += calculateXPositionScore(pieces);
-        }
-        return sum;
-    }
-
-    private List<Piece> calculateTeamPiecesByXPosition(final Team Team, final XPosition x) {
-        return Arrays.stream(YPosition.values())
-                .map(yPosition -> board.get(Position.of(x, yPosition)))
-                .filter(piece -> piece != null)
-                .filter(piece -> piece.checkSameTeam(Team))
-                .collect(Collectors.toList());
-    }
-
-    private double calculateXPositionScore(final List<Piece> pieces) {
-        List<Double> scores = new ArrayList<>();
-        pieces.forEach(piece -> scores.add(PieceFeature.createScore(piece.symbol(), checkDuplicatePawn(pieces))));
-
-        return scores.stream()
-                .filter(score -> score != null)
-                .mapToDouble(Double::doubleValue).sum();
-    }
-
-    private boolean checkDuplicatePawn(List<Piece> pieces) {
-        return pieces.stream()
-                .filter(piece -> piece.symbol().equals(PieceFeature.PAWN.symbol()))
-                .count() >= PAWN_DUPLICATE_CONDITION_FOR_SCORE;
-    }
-
-    public Result calculateWinner() {
-        final double currentTeamScore = calculateTeamScore(currentTurn);
-        final double opponentTeamScore = calculateTeamScore(getOpponentTeam());
-
-        return competeScore(currentTeamScore, opponentTeamScore);
-    }
-
-    private Team getOpponentTeam() {
+    public Team getOpponentTeam() {
         if (currentTurn == Team.BLACK) {
             return Team.WHITE;
         }
         return Team.BLACK;
-    }
-
-    private Result competeScore(final double currentTeamScore, final double opponentTeamScore) {
-        if (currentTeamScore > opponentTeamScore) {
-            return Result.WIN;
-        }
-        if (currentTeamScore < opponentTeamScore) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
     }
 
     public boolean checkKingExist() {
@@ -238,6 +188,10 @@ public final class ChessBoard {
             return ".";
         }
         return piece.getSymbolByTeam();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 
     @Override

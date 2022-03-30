@@ -23,55 +23,18 @@ public class InputView {
         System.out.println("> 게임 이동 : " + MOVE.getValue());
         System.out.print("입력 : ");
         final String input = sc.nextLine();
-        validateUserCommand(input);
+        InputCase.validateUserCommand(input);
 
-        if (input.equals(START.getValue())) {
+        if (InputCase.checkStart(input)) {
             return START;
         }
         return ELSE;
     }
 
-    private static void validateUserCommand(final String input) {
-        validateNullCheck(input);
-        validateNotAllowStartCommand(input);
-    }
-
-    private static void validateNullCheck(final String input) {
-        if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 게임 명령에 공백을 입력할 수 없습니다.");
-        }
-    }
-
-    private static void validateNotAllowStartCommand(final String input) {
-        if (!(input.equals(START.getValue()))) {
-            throw new IllegalArgumentException("[ERROR] start 이외의 문자는 입력할 수 없습니다.");
-        }
-    }
-
     public static InputCase responseUserCommand() {
         System.out.print("입력(end, status, move) : ");
         String input = sc.nextLine();
-        validateNullCheck(input);
-        validateNotAllowCommand(input);
-        if (input.equals(STATUS.getValue())) {
-            return STATUS;
-        }
-        if (input.equals(MOVE.getValue())) {
-            return MOVE;
-        }
-        if (input.equals(END.getValue())) {
-            return END;
-        }
-        return ELSE;
-    }
-
-    private static void validateNotAllowCommand(final String input) {
-        if (!(input.equals(END.getValue()) || input.equals(MOVE.getValue()) ||
-                input.equals(STATUS.getValue()))) {
-            String message = String.format("[ERROR] %s, %s, %s 이외의 문자는 입력할 수 없습니다.",
-                    END.getValue(), MOVE.getValue(), STATUS.getValue());
-            throw new IllegalArgumentException(message);
-        }
+        return InputCase.responseUserCommand(input);
     }
 
     public static Position responseSource() {

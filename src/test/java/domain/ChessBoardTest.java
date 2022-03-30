@@ -218,8 +218,8 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
 
         assertAll(
-                () -> assertEquals(chessBoard.calculateTeamScore(WHITE), 38),
-                () -> assertEquals(chessBoard.calculateTeamScore(BLACK), 38)
+                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), WHITE), 38),
+                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), BLACK), 38)
         );
     }
 
@@ -231,7 +231,7 @@ class ChessBoardTest {
         customBoardGenerator.add(A2, new Pawn(WHITE));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
-        assertThat(chessBoard.calculateTeamScore(WHITE)).isEqualTo(1.0);
+        assertThat(Result.calculateTeamScore(chessBoard.getBoard(), WHITE)).isEqualTo(1.0);
     }
 
     @Test
@@ -243,7 +243,7 @@ class ChessBoardTest {
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
-        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.WIN);
+        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -255,7 +255,7 @@ class ChessBoardTest {
         customBoardGenerator.add(B7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
-        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.LOSE);
+        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -266,6 +266,6 @@ class ChessBoardTest {
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
 
-        assertThat(chessBoard.calculateWinner()).isEqualTo(Result.DRAW);
+        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.DRAW);
     }
 }

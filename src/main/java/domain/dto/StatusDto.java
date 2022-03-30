@@ -11,9 +11,9 @@ public final class StatusDto {
     private final double score;
 
     public StatusDto(final ChessBoard chessBoard) {
-        result = chessBoard.calculateWinner();
+        result = Result.calculateWinner(chessBoard);
         turn = chessBoard.getCurrentTurn();
-        score = chessBoard.calculateTeamScore(turn);
+        score = Result.calculateTeamScore(chessBoard.getBoard(), turn);
     }
 
     public Result getResult() {
