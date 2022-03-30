@@ -20,7 +20,7 @@ public class InputView {
     public static Request inputCommandInGaming() {
         String input = readLine();
         Command command = Command.MoveStatusEnd(input);
-        if (command == Command.END || command == Command.STATUS) {
+        if (command.isEnd() || command.isStatus()) {
             return new Request(command);
         }
 

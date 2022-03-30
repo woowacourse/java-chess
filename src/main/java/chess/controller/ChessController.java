@@ -26,11 +26,11 @@ public class ChessController {
     private void playChess(Board board) {
         while (!board.isFinished()) {
             Request request = InputView.inputCommandInGaming();
-            if (request.getCommand() == END) {
+            if (request.getCommand().isEnd()) {
                 break;
             }
 
-            if (request.getCommand() == STATUS) {
+            if (request.getCommand().isStatus()) {
                 OutputView.printScore(board.calculateScore());
                 continue;
             }
