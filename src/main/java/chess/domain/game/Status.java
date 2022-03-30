@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.domain.board.Board;
 import chess.domain.Color;
+import chess.domain.board.Route;
 import chess.dto.Response;
 import chess.dto.ScoreResponse;
 
@@ -25,10 +26,11 @@ public class Status extends Started {
 
     @Override
     public GameState move(List<String> arguments) {
-        if (!board.move(arguments, turnColor)) {
-            return new Running(board, turnColor.toggle());
+        board = board.move(Route.of(arguments), turnColor);
+        if (board.isKingDead()) {
+            return new Finished(board, turnColor);
         }
-        return new Finished(board, turnColor);
+        return new Running(board, turnColor.toggle());
     }
 
     @Override

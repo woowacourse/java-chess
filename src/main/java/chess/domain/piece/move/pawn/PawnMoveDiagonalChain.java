@@ -1,7 +1,7 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 
 public class PawnMoveDiagonalChain extends PawnMoveChain {
 
@@ -10,14 +10,10 @@ public class PawnMoveDiagonalChain extends PawnMoveChain {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
-        int horizontal = Math.abs(to.subtractHorizontal(from));
-        int vertical = support.forwarding(to.subtractVertical(from));
-        return isToPoint(horizontal, vertical) && isEnemyExist(board, to);
-    }
-
-    private boolean isEnemyExist(Board board, Point to) {
-        return !board.isEmpty(to);
+    public boolean move(Route route, EmptyPoints emptyPoints) {
+        int horizontal = Math.abs(route.subtractHorizontal());
+        int vertical = support.forwarding(route.subtractVertical());
+        return isToPoint(horizontal, vertical) && !emptyPoints.contains(route.getDestination());
     }
 
     private boolean isToPoint(int horizontal, int vertical) {

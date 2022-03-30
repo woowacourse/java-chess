@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 import chess.domain.piece.move.Direction;
 
 public enum StraightDirection implements Direction {
@@ -28,11 +29,9 @@ public enum StraightDirection implements Direction {
         this.dy = dy;
     }
 
-    public static StraightDirection find(Point from, Point to) {
-        int h = to.subtractHorizontal(from);
-        int v = to.subtractVertical(from);
-        int dx = toDegree(h);
-        int dy = toDegree(v);
+    public static StraightDirection find(Route route) {
+        int dx = toDegree(route.subtractHorizontal());
+        int dy = toDegree(route.subtractVertical());
         return of(dx, dy);
     }
 

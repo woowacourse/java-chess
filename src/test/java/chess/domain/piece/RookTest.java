@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 
 class RookTest {
 
@@ -25,12 +28,11 @@ class RookTest {
     @Test
     @DisplayName("상하좌우의 직선으로 이동할 수 있다.")
     void movableTest() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(1, 7);
+        Route route = Route.of(List.of("a1", "a7"));
         Piece piece = new Rook(Color.WHITE);
-        Board board = BoardFixtures.empty();
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -38,14 +40,11 @@ class RookTest {
     @Test
     @DisplayName("장애물이 있을 경우 이동할 수 없다.")
     void notMovableWithObstacle() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(1, 7);
+        Route route = Route.of(List.of("a1", "a7"));
         Piece piece = new Rook(Color.WHITE);
-        Board board = BoardFixtures.create(Map.of(
-            Point.of(1, 5), new Pawn(Color.WHITE)
-        ));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("a5"));
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }
@@ -53,12 +52,11 @@ class RookTest {
     @Test
     @DisplayName("대각선으로 이동할 수 없다.")
     void notMovableWithDiagonal() {
-        Point from = Point.of(1, 1);
-        Point to = Point.of(3, 3);
+        Route route = Route.of(List.of("a1", "c3"));
         Piece piece = new Rook(Color.WHITE);
-        Board board = BoardFixtures.empty();
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }

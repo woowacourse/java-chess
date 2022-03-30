@@ -2,8 +2,8 @@ package chess.domain.piece.move.straight;
 
 import java.util.List;
 
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 import chess.domain.piece.move.MovingStrategy;
 
 public class StraightMovingStrategy implements MovingStrategy {
@@ -17,37 +17,27 @@ public class StraightMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
-        StraightDirection direction = StraightDirection.find(from, to);
-        if (!isCorrectDirection(direction, from, to)) {
+    public boolean move(Route route, EmptyPoints emptyPoints) {
+        StraightDirection direction = StraightDirection.find(route);
+        if (!isCorrectDirection(direction, route)) {
             return false;
         }
-
-        Point next;
         do {
-            next = from.next(direction);
-            distance.decreaseOne();
-            from = next;
-        } while (distance.isLeft() && isMovable(to, next) && board.isEmpty(next));
-        return !isMovable(to, next);
+            route = route.moveSource(direction);
+            distance = distance.decreaseOne();
+        } while (distance.isLeft() && !route.isArrived() && emptyPoints.contains(route.getSource()));
+        return route.isArrived();
     }
 
-    private boolean isCorrectDirection(StraightDirection direction, Point from, Point to) {
-        return this.directions.contains(direction) && isExactDirection(direction, from, to);
+    private boolean isCorrectDirection(StraightDirection direction, Route route) {
+        return this.directions.contains(direction) && isExactDirection(direction, route);
     }
 
-    private boolean isExactDirection(StraightDirection direction, Point from, Point to) {
-        if (direction.isCross()) {
-            return true;
-        }
-        return isExactDiagonal(from, to);
+    private boolean isExactDirection(StraightDirection direction, Route route) {
+        return direction.isCross() || isExactDiagonal(route);
     }
 
-    private boolean isExactDiagonal(Point from, Point to) {
-        return Math.abs(from.subtractVertical(to)) == Math.abs(from.subtractHorizontal(to));
-    }
-
-    private boolean isMovable(Point to, Point next) {
-        return !next.equals(to);
+    private boolean isExactDiagonal(Route route) {
+        return Math.abs(route.subtractHorizontal()) == Math.abs(route.subtractVertical());
     }
 }

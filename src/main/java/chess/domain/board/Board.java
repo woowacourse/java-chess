@@ -3,7 +3,6 @@ package chess.domain.board;
 import static java.util.stream.Collectors.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -15,6 +14,7 @@ import chess.domain.piece.PieceType;
 
 public class Board {
 
+    public static final int TOTAL_KING_COUNT = 2;
     private final Map<Point, Piece> pointPieces;
 
     private Board(Map<Point, Piece> pointPieces) {
@@ -25,31 +25,15 @@ public class Board {
         return new Board(generator.generate());
     }
 
-    public boolean move(List<String> arguments, Color turnColor) {
-        validateArgumentSize(arguments);
-        Point from = Point.of(arguments.get(0));
-        Point to = Point.of(arguments.get(1));
-
-        validate(turnColor, from, to);
-        boolean isKingDead = isKingDead(to);
-        movePiece(from, to);
-        return isKingDead;
+    public Board move(Route route, Color turnColor) {
+        validate(turnColor, route);
+        tryMove(route);
+        return replacePiecePoint(route);
     }
 
-    private boolean isKingDead(Point to) {
-        return pointPieces.get(to)
-            .isSameType(PieceType.KING);
-    }
-
-    private void validateArgumentSize(List<String> arguments) {
-        if (arguments.size() != 2) {
-            throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
-        }
-    }
-
-    private void validate(Color turnColor, Point from, Point to) {
-        validateAllyMove(turnColor, pointPieces.get(from));
-        validateNotAllyAttack(turnColor, pointPieces.get(to));
+    private void validate(Color turnColor, Route route) {
+        validateAllyMove(turnColor, pointPieces.get(route.getSource()));
+        validateNotAllyAttack(turnColor, pointPieces.get(route.getDestination()));
     }
 
     private void validateAllyMove(Color turnColor, Piece fromPiece) {
@@ -64,26 +48,18 @@ public class Board {
         }
     }
 
-    private void movePiece(Point from, Point to) {
-        Piece fromPiece = pointPieces.get(from);
-        tryMove(from, to, fromPiece);
-        replacePiecePoint(from, to, fromPiece);
-    }
-
-    private void tryMove(Point from, Point to, Piece fromPiece) {
-        if (!fromPiece.move(this, from, to)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치로 움직일 수 없습니다.");
+    private void tryMove(Route route) {
+        Piece fromPiece = pointPieces.get(route.getSource());
+        if (!fromPiece.move(route, EmptyPoints.of(pointPieces))) {
+            throw new IllegalStateException("[ERROR] 해당 위치로 움직일 수 없습니다.");
         }
     }
 
-    private void replacePiecePoint(Point from, Point to, Piece fromPiece) {
-        pointPieces.put(to, fromPiece);
-        pointPieces.put(from, new Empty());
-    }
-
-    public boolean isEmpty(Point point) {
-        Piece piece = pointPieces.get(point);
-        return piece.isSameType(PieceType.EMPTY);
+    private Board replacePiecePoint(Route route) {
+        Map<Point, Piece> newPointPieces = new HashMap<>(this.pointPieces);
+        newPointPieces.put(route.getDestination(), newPointPieces.get(route.getSource()));
+        newPointPieces.put(route.getSource(), new Empty());
+        return new Board(newPointPieces);
     }
 
     public Map<Color, Double> calculateScore() {
@@ -92,6 +68,13 @@ public class Board {
                 Function.identity(),
                 color -> PieceType.calculateScore(pointPieces, color)
             ));
+    }
+
+    public boolean isKingDead() {
+        return pointPieces.values()
+            .stream()
+            .filter(piece -> piece.isSameType(PieceType.KING))
+            .count() < TOTAL_KING_COUNT;
     }
 
     public Map<Point, Piece> getPointPieces() {

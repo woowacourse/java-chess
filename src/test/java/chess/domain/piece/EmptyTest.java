@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 
 class EmptyTest {
 
@@ -23,12 +24,10 @@ class EmptyTest {
     @DisplayName("빈공간은 움직일 수 없다.")
     void throwsExceptionWithTryToMove() {
         Piece piece = new Empty();
-        Point from = Point.of("a3");
-        Point to = Point.of("a4");
-        Board board = BoardFixtures.empty();
+        Route route = Route.of(List.of("a3", "a4"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
-
-        assertThat(isMovable).isFalse();
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+            .isThrownBy(() -> piece.move(route, emptyPoints));
     }
 }

@@ -2,13 +2,17 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 
 public class KingTest {
 
@@ -24,12 +28,10 @@ public class KingTest {
     @DisplayName("앞으로 한 칸 움직인다.")
     void moveForwardOneStep() {
         Piece piece = new King(Color.BLACK);
+        Route route = Route.of(List.of("e1", "e2"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("e1");
-        Point to = Point.of("e2");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -38,12 +40,10 @@ public class KingTest {
     @DisplayName("대각선으로 한 칸 움직인다.")
     void moveDiagonalOneStep() {
         Piece piece = new King(Color.BLACK);
+        Route route = Route.of(List.of("e1", "d2"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("e1");
-        Point to = Point.of("d2");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -52,12 +52,10 @@ public class KingTest {
     @DisplayName("옆으로 한 칸 움직인다.")
     void moveSideOneStep() {
         Piece piece = new King(Color.BLACK);
+        Route route = Route.of(List.of("e1", "d1"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("e1");
-        Point to = Point.of("d1");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -66,12 +64,10 @@ public class KingTest {
     @DisplayName("킹은 두 칸 이상 움직이지 못한다.")
     void notMovable() {
         Piece piece = new King(Color.BLACK);
+        Route route = Route.of(List.of("e1", "d4"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("e1");
-        Point to = Point.of("d4");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }

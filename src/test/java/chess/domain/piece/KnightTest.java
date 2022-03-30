@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 
 public class KnightTest {
 
@@ -26,11 +29,10 @@ public class KnightTest {
     @DisplayName("나이트를 움직인다.")
     void move() {
         Piece piece = new Knight(Color.WHITE);
-        Point from = Point.of("b1");
-        Point to = Point.of("c3");
-        Board board = BoardFixtures.empty();
+        Route route = Route.of(List.of("b1", "c3"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -39,11 +41,10 @@ public class KnightTest {
     @DisplayName("나이트가 잘못된 위치로 이동할 수 없다.")
     void moveWrongPoint() {
         Piece piece = new Knight(Color.WHITE);
-        Point from = Point.of("b1");
-        Point to = Point.of("c4");
-        Board board = BoardFixtures.empty();
+        Route route = Route.of(List.of("b1", "c4"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }
@@ -52,12 +53,10 @@ public class KnightTest {
     @DisplayName("도착지에 적이 있어도 이동할 수 있다.")
     void moveWithEnemy() {
         Piece piece = new Knight(Color.WHITE);
-        Point from = Point.of("b1");
-        Point to = Point.of("c3");
+        Route route = Route.of(List.of("b1", "c3"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("b3"));
 
-        Board board = BoardFixtures.create(Map.of(Point.of("c3"), new Pawn(Color.BLACK)));
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -66,12 +65,11 @@ public class KnightTest {
     @DisplayName("나이트는 장애물을 뛰어넘을 수 있다.")
     void moveWithObstacle() {
         Piece piece = new Knight(Color.WHITE);
-        Point from = Point.of("b1");
-        Point to = Point.of("c3");
+        Route route = Route.of(List.of("b1", "c3"));
 
-        Board board = BoardFixtures.create(Map.of(Point.of("b2"), new Pawn(Color.WHITE)));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("b2"));
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }

@@ -5,7 +5,7 @@ import chess.domain.Color;
 
 public abstract class Started implements GameState {
 
-    protected final Board board;
+    protected Board board;
     protected final Color turnColor;
 
     public Started(Board board, Color turnColor) {

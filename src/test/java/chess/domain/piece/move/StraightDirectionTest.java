@@ -11,15 +11,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 import chess.domain.piece.move.straight.StraightDirection;
 
-class DirectionTest {
+class StraightDirectionTest {
 
     @ParameterizedTest(name = "{index} {displayName} {2}")
     @DisplayName("출발지와 도착지로 직선 방향을 찾는다.")
     @MethodSource("methodProvider")
-    void findDirection(final Point from, final Point to, StraightDirection direction) {
-        assertThat(find(from, to)).isEqualTo(direction);
+    void findDirection(final Route route, StraightDirection direction) {
+        assertThat(find(route)).isEqualTo(direction);
     }
 
     static Stream<Arguments> methodProvider() {
@@ -27,14 +28,14 @@ class DirectionTest {
         int vertical = 4;
         Point from = Point.of(horizontal, vertical);
         return Stream.of(
-            Arguments.of(from, Point.of(horizontal + 1, vertical + 0), EAST),
-            Arguments.of(from, Point.of(horizontal + 1, vertical + 1), NORTHEAST),
-            Arguments.of(from, Point.of(horizontal + 1, vertical + -1), SOUTHEAST),
-            Arguments.of(from, Point.of(horizontal + -1, vertical + 0), WEST),
-            Arguments.of(from, Point.of(horizontal + -1, vertical + 1), NORTHWEST),
-            Arguments.of(from, Point.of(horizontal + -1, vertical + -1), SOUTHWEST),
-            Arguments.of(from, Point.of(horizontal + 0, vertical + 1), NORTH),
-            Arguments.of(from, Point.of(horizontal + 0, vertical + -1), SOUTH)
+            Arguments.of(new Route(from, Point.of(horizontal + 1, vertical + 0)), EAST),
+            Arguments.of(new Route(from, Point.of(horizontal + 1, vertical + 1)), NORTHEAST),
+            Arguments.of(new Route(from, Point.of(horizontal + 1, vertical + -1)), SOUTHEAST),
+            Arguments.of(new Route(from, Point.of(horizontal + -1, vertical + 0)), WEST),
+            Arguments.of(new Route(from, Point.of(horizontal + -1, vertical + 1)), NORTHWEST),
+            Arguments.of(new Route(from, Point.of(horizontal + -1, vertical + -1)), SOUTHWEST),
+            Arguments.of(new Route(from, Point.of(horizontal + 0, vertical + 1)), NORTH),
+            Arguments.of(new Route(from, Point.of(horizontal + 0, vertical + -1)), SOUTH)
         );
     }
 

@@ -1,7 +1,7 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 
 public abstract class PawnMoveChain {
 
@@ -11,5 +11,5 @@ public abstract class PawnMoveChain {
         this.support = support;
     }
 
-    public abstract boolean move(Board board, Point from, Point to);
+    public abstract boolean move(Route route, EmptyPoints emptyPoints);
 }

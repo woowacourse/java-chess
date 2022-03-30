@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 import chess.domain.piece.move.MovingStrategy;
 import chess.domain.piece.move.knight.KnightMovingStrategy;
 
@@ -16,7 +16,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean move(Board ignored, Point from, Point to) {
-        return strategy.move(ignored, from, to);
+    public boolean move(Route route, EmptyPoints emptyPoints) {
+        return strategy.move(route, emptyPoints);
     }
 }

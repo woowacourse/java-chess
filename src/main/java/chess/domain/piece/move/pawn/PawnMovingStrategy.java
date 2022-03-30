@@ -1,8 +1,8 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
 import chess.domain.Color;
+import chess.domain.board.Route;
 import chess.domain.piece.move.MovingStrategy;
 
 public class PawnMovingStrategy implements MovingStrategy {
@@ -14,8 +14,8 @@ public class PawnMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
+    public boolean move(Route route, EmptyPoints emptyPoints) {
         PawnMoveForwardChain chain = new PawnMoveForwardChain(support);
-        return chain.move(board, from, to);
+        return chain.move(route, emptyPoints);
     }
 }

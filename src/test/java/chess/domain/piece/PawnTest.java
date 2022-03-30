@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 
 public class PawnTest {
 
@@ -27,11 +30,10 @@ public class PawnTest {
     void moveForwardOneStepWhite() {
         Piece piece = new Pawn(Color.WHITE);
 
-        Point from = Point.of("a2");
-        Point to = Point.of("a3");
-        Board board = BoardFixtures.empty();
+        Route route = Route.of(List.of("a2", "a3"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -40,12 +42,10 @@ public class PawnTest {
     @DisplayName("(검정 폰) 한 칸 움직인다.")
     void moveForwardOneStepBlack() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("b7", "b6"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("b7");
-        Point to = Point.of("b6");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -54,12 +54,10 @@ public class PawnTest {
     @DisplayName("(흰색 폰) 초기 위치에서 두 칸 움직인다.")
     void moveForwardTwoStepWhite() {
         Piece piece = new Pawn(Color.WHITE);
+        Route route = Route.of(List.of("a2", "a4"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("a2");
-        Point to = Point.of("a4");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -68,12 +66,10 @@ public class PawnTest {
     @DisplayName("(검정 폰) 초기 위치에서 두 칸 움직인다.")
     void moveForwardTwoStepBlack() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("b7" ,"b5"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.ALL;
 
-        Point from = Point.of("b7");
-        Point to = Point.of("b5");
-        Board board = BoardFixtures.empty();
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -82,13 +78,11 @@ public class PawnTest {
     @DisplayName("폰이 초기 위치에서 두 칸을 움직일 떄, 도착 위치에 말이 있으면 예외가 발생한다.")
     void moveForwardTwoStepExceptionTest() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("b7" ,"b5"));
 
-        Point from = Point.of("b7");
-        Point to = Point.of("b5");
-        Board board = BoardFixtures.create(
-            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("b5"));
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }
@@ -97,13 +91,11 @@ public class PawnTest {
     @DisplayName("폰이 초기 위치에서 두 칸을 움직일 떄, 중간 위치에 말이 있으면 이동할 수 없다.")
     void moveForwardTwoStepExceptionTest2() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("b7" ,"b5"));
 
-        Point from = Point.of("b7");
-        Point to = Point.of("b5");
-        Board board = BoardFixtures.create(
-            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of(2, 5));
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isFalse();
     }
@@ -112,13 +104,10 @@ public class PawnTest {
     @DisplayName("(흰색 폰)적이 있다면 대각선으로 한 칸 이동 가능하다.")
     void moveDiagonalWhite() {
         Piece piece = new Pawn(Color.WHITE);
+        Route route = Route.of(List.of("a4" ,"b5"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of(2, 5));
 
-        Point from = Point.of("a4");
-        Point to = Point.of("b5");
-        Board board = BoardFixtures.create(
-            Map.of(Point.of(2, 5), new Rook(Color.BLACK)));
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -127,13 +116,11 @@ public class PawnTest {
     @DisplayName("(검정 폰)적이 있다면 대각선으로 한 칸 이동 가능하다.")
     void moveDiagonalBlack() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("a5" ,"b4"));
 
-        Point from = Point.of("a5");
-        Point to = Point.of("b4");
-        Board board = BoardFixtures.create(
-            Map.of(Point.of(2, 4), new Rook(Color.WHITE)));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of(2, 4));
 
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
@@ -142,28 +129,23 @@ public class PawnTest {
     @DisplayName("(흰색 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 있다.")
     void moveDiagonalFromStartLineWhite() {
         Piece piece = new Pawn(Color.WHITE);
+        Route route = Route.of(List.of("a2" ,"b3"));
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("b3"));
 
-        Point from = Point.of("a2");
-        Point to = Point.of("b3");
-        Board board = BoardFixtures.create(
-            Map.of(to, new Rook(Color.BLACK)));
-
-        boolean isMovable = piece.move(board, from, to);
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }
 
     @Test
-    @DisplayName("(검정 폰)시작위치에서는 적이 있어도 대각선으로 이동할 수 있다.")
+    @DisplayName("(검정 폰)시작위치에서는 적이 있어도 대각선으₩₩로 이동할 수 있다.")
     void moveDiagonalFromStartLineBlack() {
         Piece piece = new Pawn(Color.BLACK);
+        Route route = Route.of(List.of("a7" ,"b6"));
 
-        Point from = Point.of("a7");
-        Point to = Point.of("b6");
-        Board board = BoardFixtures.create(
-            Map.of(to, new Rook(Color.WHITE)));
-
-        boolean isMovable = piece.move(board, from, to);
+        EmptyPoints emptyPoints = EmptyPointsFixtures.except(Point.of("b6"));
+        
+        boolean isMovable = piece.move(route, emptyPoints);
 
         assertThat(isMovable).isTrue();
     }

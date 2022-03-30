@@ -1,7 +1,8 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.Board;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 import chess.domain.piece.move.straight.StraightDirection;
 
 public class PawnMoveDoubleForwardChain extends PawnMoveChain {
@@ -14,27 +15,28 @@ public class PawnMoveDoubleForwardChain extends PawnMoveChain {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
-        int horizontal = to.subtractHorizontal(from);
-        int vertical = support.forwarding(to.subtractVertical(from));
-        Point middle = from.next(StraightDirection.find(from, to));
-        if (isStartLine(from) &&
+    public boolean move(Route route, EmptyPoints emptyPoints) {
+        int horizontal = route.subtractHorizontal();
+        int vertical = support.forwarding(route.subtractVertical());
+        if (isStartLine(route.getSource()) &&
             isToPoint(horizontal, vertical) &&
-            isNoObstacle(board, to, middle)) {
+            isNoObstacle(route, emptyPoints)) {
             return true;
         }
-        return next.move(board, from, to);
+        return next.move(route, emptyPoints);
     }
 
     private boolean isStartLine(Point from) {
         return support.isStartLine(from);
     }
 
-    private boolean isNoObstacle(Board board, Point to, Point middle) {
-        return board.isEmpty(to) && board.isEmpty(middle);
-    }
-
     private boolean isToPoint(int horizontal, int vertical) {
         return vertical == 2 && horizontal == 0;
+    }
+
+    private boolean isNoObstacle(Route route, EmptyPoints emptyPoints) {
+        Point from = route.getSource();
+        Point next = from.next(StraightDirection.find(route));
+        return emptyPoints.contains(route.getDestination()) && emptyPoints.contains(next);
     }
 }

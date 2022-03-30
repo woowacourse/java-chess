@@ -2,15 +2,16 @@ package chess.domain.piece.move.knight;
 
 import java.util.List;
 
-import chess.domain.board.Board;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
+import chess.domain.board.Route;
 import chess.domain.piece.move.MovingStrategy;
 
 public class KnightMovingStrategy implements MovingStrategy {
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
-        List<Point> candidates = KnightDirection.createNextPointCandidates(from);
-        return candidates.contains(to);
+    public boolean move(Route route, EmptyPoints ignored) {
+        List<Point> candidates = KnightDirection.createNextPointCandidates(route.getSource());
+        return candidates.contains(route.getDestination());
     }
 }

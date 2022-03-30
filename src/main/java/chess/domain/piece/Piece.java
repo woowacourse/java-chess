@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 
 public abstract class Piece {
 
@@ -26,5 +26,5 @@ public abstract class Piece {
         return this.type.getScore();
     }
 
-    public abstract boolean move(Board board, Point from, Point to);
+    public abstract boolean move(Route route, EmptyPoints emptyPoints);
 }

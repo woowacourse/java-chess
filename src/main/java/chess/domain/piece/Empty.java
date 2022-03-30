@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.Point;
+import chess.domain.board.EmptyPoints;
+import chess.domain.board.Route;
 
 public class Empty extends Piece {
 
@@ -11,7 +11,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean move(Board board, Point from, Point to) {
-        return false;
+    public boolean move(Route route, EmptyPoints emptyPoints) {
+        throw new UnsupportedOperationException("[ERROR] 빈 공간은 움직일 수 없습니다.");
     }
 }
