@@ -36,14 +36,13 @@ public class Bishop extends Piece implements BishopMovable {
 
     @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Position> positions = new ArrayList<>();
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list);
         if (position.isPositiveDiagonal(targetPiece.position)) {
-            return getPositiveDiagonal(positions, list);
+            return getPositiveDiagonal(list);
         }
         if (position.isNegativeDiagonal(targetPiece.position)) {
-            return getNegativeDiagonal(positions, list);
+            return getNegativeDiagonal(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
     }

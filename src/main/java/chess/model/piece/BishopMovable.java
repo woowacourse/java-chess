@@ -3,27 +3,27 @@ package chess.model.piece;
 import chess.model.Position;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public interface BishopMovable {
 
-    default List<Position> getPositiveDiagonal(List<Position> positions, List<Piece> list) {
+    default List<Position> getPositiveDiagonal(List<Piece> list) {
         Piece rightUpper = list.get(0);
         Piece leftUnder = list.get(1);
 
         int distance = rightUpper.getVerticalDistance(leftUnder);
-        for (int i = 1; i < distance; i++) {
-            positions.add(leftUnder.getPositiveDiagonalPosition(i));
-        }
-        return positions;
+        return IntStream.range(1, distance)
+                .mapToObj(leftUnder::getPositiveDiagonalPosition)
+                .collect(Collectors.toList());
     }
 
-    default List<Position> getNegativeDiagonal(List<Position> positions, List<Piece> list) {
+    default List<Position> getNegativeDiagonal(List<Piece> list) {
         Piece leftUpper = list.get(0);
         Piece rightUnder = list.get(1);
         int distance = rightUnder.getVerticalDistance(leftUpper);
-        for (int i = 1; i < distance; i++) {
-            positions.add(leftUpper.getNegativeDiagonalPosition(i));
-        }
-        return positions;
+        return IntStream.range(1, distance)
+                .mapToObj(leftUpper::getNegativeDiagonalPosition)
+                .collect(Collectors.toList());
     }
 }

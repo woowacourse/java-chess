@@ -1,7 +1,5 @@
 package chess.model.command;
 
-import java.util.List;
-
 public abstract class Command implements State {
 
     protected final String input;
