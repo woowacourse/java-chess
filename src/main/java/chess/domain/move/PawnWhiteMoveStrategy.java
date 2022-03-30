@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;
 
-public class PawnWhiteMoveStrategy extends PawnMoveStrategy {
+public final class PawnWhiteMoveStrategy extends PawnMoveStrategy {
 
     private final static List<MovePattern> WHITE_MOVE_PATTERNS = List.of(
             MovePattern.NORTH,

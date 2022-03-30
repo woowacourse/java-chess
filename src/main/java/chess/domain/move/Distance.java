@@ -2,7 +2,7 @@ package chess.domain.move;
 
 import chess.domain.board.Position;
 
-public class Distance {
+public final class Distance {
 
     protected static final int NOT_MOVE = 0;
 
