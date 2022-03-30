@@ -14,7 +14,7 @@ public class Knight extends Piece {
         super(color);
     }
 
-    public static boolean isKnightMoving(final Position from, final Position to) {
+    private static boolean isKnightMoving(final Position from, final Position to) {
         Direction direction = Direction.getDirection(from, to);
 
         return Direction.knightStep().contains(direction);

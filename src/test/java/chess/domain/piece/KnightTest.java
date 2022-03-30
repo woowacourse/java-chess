@@ -20,7 +20,7 @@ class KnightTest {
     @DisplayName("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동 가능")
     @ParameterizedTest
     @ValueSource(strings = {"c6", "d7", "f7", "g6", "g4", "f3", "d3", "c4"})
-    void move(String to) {
+    void isKnightMoving(String to) {
         Piece knight = new Knight(Color.WHITE);
 
         assertThatCode(() -> knight.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
@@ -36,6 +36,22 @@ class KnightTest {
         assertThatThrownBy(() -> knight.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰인지 확인")
+    void isPawn() {
+        Piece knight = new Knight(Color.WHITE);
+
+        assertThat(knight.isPawn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("나이트인지 확인")
+    void isKnight() {
+        Piece knight = new Knight(Color.WHITE);
+
+        assertThat(knight.isKnight()).isTrue();
     }
 
     @Test
