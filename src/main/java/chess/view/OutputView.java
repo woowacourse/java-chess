@@ -39,6 +39,7 @@ public class OutputView {
 		System.out.println(WHITE_TEAM + DELIMITER + result.getWhiteScore());
 		if (result.getWinner() == Team.NEUTRALITY) {
 			System.out.println(DRAW_MESSAGE);
+			System.out.println();
 			return;
 		}
 		printScoreWinner(result.getWinner());
