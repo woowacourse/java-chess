@@ -5,6 +5,7 @@ import chess.domain.game.state.Command;
 
 public class CommandDto {
     private static final String NOT_MOVE_ERROR_MESSAGE = "move 커멘드가 아닙니다";
+    private static final String SPLIT_REGEX = " ";
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
     private final Command command;
@@ -17,14 +18,14 @@ public class CommandDto {
 
     public Position ToSourcePosition() {
         if (command == Command.MOVE) {
-            return Position.from(input.split(" ")[SOURCE_INDEX]);
+            return Position.from(input.split(SPLIT_REGEX)[SOURCE_INDEX]);
         }
         throw new IllegalStateException(NOT_MOVE_ERROR_MESSAGE);
     }
 
     public Position ToTargetPosition() {
         if (command == Command.MOVE) {
-            return Position.from(input.split(" ")[TARGET_INDEX]);
+            return Position.from(input.split(SPLIT_REGEX)[TARGET_INDEX]);
         }
         throw new IllegalStateException(NOT_MOVE_ERROR_MESSAGE);
     }

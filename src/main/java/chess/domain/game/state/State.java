@@ -1,36 +1,16 @@
 package chess.domain.game.state;
 
-import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
-import chess.view.OutputView;
 
-public abstract class State {
-    protected final ChessGame chessGame;
+public interface State {
 
-    public State(ChessGame chessGame) {
-        this.chessGame = chessGame;
-    }
+    AbstractState go(CommandDto input);
 
-    public State go(CommandDto input) {
-        try {
-            return execute(input);
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return this;
-        }
-    }
+    AbstractState execute(CommandDto input);
 
-    protected abstract State execute(CommandDto input);
+    boolean isRun();
 
-    public boolean isRun() {
-        return true;
-    }
+    boolean isPlay();
 
-    public boolean isPlay() {
-        return false;
-    }
-
-    public boolean isStatusFinished() {
-        return false;
-    }
+    boolean isStatusFinished();
 }

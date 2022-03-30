@@ -12,18 +12,18 @@ import org.junit.jupiter.api.Test;
 
 class StatusFinishedTest {
     private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
-    private State state;
+    private AbstractState abstractState;
 
     @BeforeEach
     void setup() {
         chessGame.start();
-        state = new StatusFinished(chessGame);
+        abstractState = new StatusFinished(chessGame);
     }
 
     @Test
     @DisplayName("execute()를 호출 시 예외처리가 되어있다.")
     void executeError() {
-        assertThatThrownBy(() -> state.execute(new CommandDto("status")))
+        assertThatThrownBy(() -> abstractState.execute(new CommandDto("status")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임이 종료되었습니다.");
     }
@@ -31,21 +31,21 @@ class StatusFinishedTest {
     @Test
     @DisplayName("isStatus()로 스테이터스가 호출되었는지 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusFinished())
+        assertThat(abstractState.isStatusFinished())
                 .isTrue();
     }
 
     @Test
     @DisplayName("isRun()이 false 를 리턴한다.")
     void isRun() {
-        assertThat(state.isRun())
+        assertThat(abstractState.isRun())
                 .isFalse();
     }
 
     @Test
     @DisplayName("isPlay() 실행 시 false 를 리턴한다")
     void isPlay() {
-        assertThat(state.isPlay())
+        assertThat(abstractState.isPlay())
                 .isFalse();
     }
 }

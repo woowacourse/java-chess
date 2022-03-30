@@ -27,7 +27,7 @@ public final class OutputView {
     }
 
     public static void printStatus(Status status) {
-        printColorsTotalScore(status.getTotalStatus());
+        printColorsTotalScore(status.getStatusOfTeams());
         printGameResult(status.getWinner());
     }
 

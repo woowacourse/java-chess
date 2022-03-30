@@ -1,11 +1,9 @@
 package chess.domain.game.state;
 
-import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
-import java.util.List;
 
-public final class Play extends State {
+public final class Play extends AbstractState {
     private static final String INVALID_COMMEND_MESSAGE = "end, move 만 입력할 수 있습니다.";
 
     public Play(ChessGame chessGame) {
@@ -13,7 +11,7 @@ public final class Play extends State {
     }
 
     @Override
-    protected State execute(CommandDto commandDto) {
+    public AbstractState execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.END) {
             return new ExitFinished(chessGame);
         }
@@ -24,7 +22,7 @@ public final class Play extends State {
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
-    private State playOrResult(ChessGame chessGame) {
+    private AbstractState playOrResult(ChessGame chessGame) {
         if (chessGame.isPlaying()) {
             return new Play(chessGame);
         }
