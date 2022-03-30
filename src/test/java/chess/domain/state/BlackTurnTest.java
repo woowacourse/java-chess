@@ -8,6 +8,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.position.Position;
+import chess.view.Output;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +16,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BlackTurnTest {
 
     private static final Board board = new Board(new BoardInitializer());
+
+    @Test
+    @DisplayName("start 시 예외 발생")
+    void startException() {
+        State blackTurn = new BlackTurn(board);
+
+        assertThatThrownBy(blackTurn::start)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("게임이 이미 시작되었습니다.");
+    }
+
+    @Test
+    @DisplayName("move 시 whiteTurn 상태로 변경")
+    void move() {
+        State blackTurn = new BlackTurn(board);
+
+        blackTurn = blackTurn.move(Position.from("a7"), Position.from("a6"));
+
+        assertThat(blackTurn).isInstanceOf(WhiteTurn.class);
+    }
+
+    @Test
+    @DisplayName("move 시 white 킹을 잡으면 ready 상태로 변경")
+    void moveToKing() {
+        State blackTurn = new BlackTurn(getBoard());
+
+        blackTurn = blackTurn.move(Position.from("a7"), Position.from("b6"));
+
+        assertThat(blackTurn).isInstanceOf(Ready.class);
+    }
+
+    private Board getBoard() {
+        Map<Position, Piece> catchKingBoard = new HashMap<>();
+        catchKingBoard.put(Position.from("b6"), new King(Color.WHITE));
+        catchKingBoard.put(Position.from("a7"), new Pawn(Color.BLACK));
+        return new Board(() -> catchKingBoard);
+    }
 
     @Test
     @DisplayName("출발 지점과 도착 지점이 같을 경우 예외 발생")
@@ -33,10 +72,10 @@ public class BlackTurnTest {
 
     @Test
     @DisplayName("흰색 말을 선택할 경우 예외 발생")
-    void moveWhitePieceException() {
+    void moveFromWhitePieceException() {
         State blackTurn = new BlackTurn(board);
 
-        assertThatThrownBy(() ->  blackTurn.move(Position.from("a1"), Position.from("a2")))
+        assertThatThrownBy(() ->  blackTurn.move(Position.from("a2"), Position.from("a3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("자신의 말을 선택하세요.");
     }
@@ -52,16 +91,37 @@ public class BlackTurnTest {
     }
 
     @Test
-    @DisplayName("킹을 잡을 경우 게임 종료")
-    void isRunningFalse() {
-        Map<Position, Piece> catchKingBoard = new HashMap<>();
-        catchKingBoard.put(Position.from("a1"), new Queen(Color.BLACK));
-        catchKingBoard.put(Position.from("a2"), new King(Color.WHITE));
-        Board board = new Board(() -> catchKingBoard);
-
+    @DisplayName("게임이 정상적으로 end 되는지 확인")
+    void end() {
         State blackTurn = new BlackTurn(board);
-        blackTurn = blackTurn.move(Position.from("a1"), Position.from("a2"));
 
-        assertThat(blackTurn.isRunning()).isFalse();
+        assertThatCode(blackTurn::end)
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("status 시 예외 발생")
+    void statusException() {
+        State blackTurn = new BlackTurn(board);
+
+        assertThatThrownBy(() -> blackTurn.status(Output::printScore))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임이 종료된 이후 점수 조회가 가능합니다.");
+    }
+
+    @Test
+    @DisplayName("게임이 실행중인 것을 확인")
+    void isRunning() {
+        State blackTurn = new BlackTurn(board);
+
+        assertThat(blackTurn.isRunning()).isTrue();
+    }
+
+    @Test
+    @DisplayName("게임이 끝나지 않은 것을 확인")
+    void isEnded() {
+        State blackTurn = new BlackTurn(board);
+
+        assertThat(blackTurn.isEnded()).isFalse();
     }
 }
