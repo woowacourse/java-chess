@@ -33,12 +33,12 @@ public class WhiteTest {
         assertThat(white.changeTurn(positions)).isInstanceOf(Black.class);
     }
 
-    @DisplayName("White 상태에서 게임이 종료되면 end 상태로 되는지 테스트")
+    @DisplayName("White 상태에서 엔드하면 게임이 종료되되는지 테스트")
     @Test
     void end() {
         White white = new White(board);
 
-        assertThat(white.end()).isInstanceOf(End.class);
+        assertThatThrownBy(white::end).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("흰색 턴에 검은색 기물을 움직이도록 하면 에러 테스트")
