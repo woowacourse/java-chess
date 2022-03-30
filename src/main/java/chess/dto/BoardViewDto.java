@@ -1,17 +1,14 @@
 package chess.dto;
 
-import static chess.domain.board.position.Position.FILES_TOTAL_SIZE;
-import static chess.domain.board.position.Position.RANKS_TOTAL_SIZE;
-
 import chess.domain.board.Board;
-import chess.domain.board.position.Position;
 import chess.domain.board.piece.Piece;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.util.PieceDisplayUtil;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BoardViewDto {
 
@@ -22,17 +19,16 @@ public class BoardViewDto {
     }
 
     private static List<String> toBoardDisplay(Map<Position, Piece> board) {
-        List<String> boardDisplay = IntStream.range(0, RANKS_TOTAL_SIZE)
-                .mapToObj(rankIdx -> toRowDisplay(board, rankIdx))
+        return Rank.allRanksDescending()
+                .stream()
+                .map(rank -> toRowDisplay(board, rank))
                 .collect(Collectors.toList());
-
-        Collections.reverse(boardDisplay);
-        return boardDisplay;
     }
 
-    private static String toRowDisplay(Map<Position, Piece> board, int rankIdx) {
-        return IntStream.range(0, FILES_TOTAL_SIZE)
-                .mapToObj(fileIdx -> Position.of(fileIdx, rankIdx))
+    private static String toRowDisplay(Map<Position, Piece> board, Rank rank) {
+        return  File.allFilesAscending()
+                .stream()
+                .map(file -> Position.of(file, rank))
                 .map(board::get)
                 .map(PieceDisplayUtil::toDisplay)
                 .collect(Collectors.joining());

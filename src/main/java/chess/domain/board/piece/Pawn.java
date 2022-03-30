@@ -1,21 +1,22 @@
 package chess.domain.board.piece;
 
+import static chess.domain.board.piece.Color.WHITE;
 import static chess.domain.board.position.Direction.DOWN;
 import static chess.domain.board.position.Direction.DOWN_LEFT;
 import static chess.domain.board.position.Direction.DOWN_RIGHT;
 import static chess.domain.board.position.Direction.UP;
 import static chess.domain.board.position.Direction.UP_LEFT;
 import static chess.domain.board.position.Direction.UP_RIGHT;
-import static chess.domain.board.piece.Color.WHITE;
 
 import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import java.util.List;
 
 public final class Pawn extends Piece {
 
-    private static final int WHITE_INIT_RANK_IDX = 1;
-    private static final int BLACK_INIT_RANK_IDX = 6;
+    private static final Rank BLACK_INIT_RANK = Rank.SEVEN;
+    private static final Rank WHITE_INIT_RANK = Rank.TWO;
 
     private static final int ADJACENT_DISTANCE = 1;
     private static final int DOUBLE_STEP_DISTANCE = 2;
@@ -52,9 +53,9 @@ public final class Pawn extends Piece {
 
     private boolean atInitialPosition(Position currentPosition) {
         if (hasColorOf(Color.BLACK)) {
-            return currentPosition.hasRankIdxOf(BLACK_INIT_RANK_IDX);
+            return currentPosition.hasRankOf(BLACK_INIT_RANK);
         }
-        return currentPosition.hasRankIdxOf(WHITE_INIT_RANK_IDX);
+        return currentPosition.hasRankOf(WHITE_INIT_RANK);
     }
 
     @Override

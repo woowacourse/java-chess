@@ -4,16 +4,15 @@ import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
 import static chess.domain.board.piece.PieceType.KING;
 import static chess.domain.board.piece.PieceType.PAWN;
-import static chess.domain.board.position.Position.FILES_TOTAL_SIZE;
-import static chess.domain.board.position.Position.RANKS_TOTAL_SIZE;
 
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.Piece;
+import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.dto.GameScoreDto;
 import chess.util.PieceScoreUtil;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class GameResult {
 
@@ -60,15 +59,17 @@ public class GameResult {
     }
 
     private int countAllSameFilePawns(Map<Position, Piece> board, Color color) {
-        return IntStream.range(0, FILES_TOTAL_SIZE)
-                .map(fileIdx -> countSameFilePawns(board, fileIdx, color))
+        return  File.allFilesAscending()
+                .stream()
+                .mapToInt(file -> countSameFilePawns(board, file, color))
                 .filter(sameFilePawnCount -> sameFilePawnCount >= SAME_FILE_PAWN_MIN_COUNT)
                 .sum();
     }
 
-    private int countSameFilePawns(Map<Position, Piece> board, int fileIdx, Color color) {
-        return (int) IntStream.range(0, RANKS_TOTAL_SIZE)
-                .mapToObj(rankIdx -> Position.of(fileIdx, rankIdx))
+    private int countSameFilePawns(Map<Position, Piece> board, File file, Color color) {
+        return (int) Rank.allRanksDescending()
+                .stream()
+                .map(rank -> Position.of(file, rank))
                 .filter(board::containsKey)
                 .map(board::get)
                 .filter(piece -> piece.hasColorOf(color))

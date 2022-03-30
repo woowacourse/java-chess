@@ -19,24 +19,17 @@ class PositionTest {
         void 문자열_키_값에_대응되는_인덱스의_위치_인스턴스를_반환() {
             Position actual = Position.of("c1");
 
-            Position expected = Position.of(2, 0);
+            Position expected = Position.of(File.C, Rank.ONE);
 
             assertThat(actual).isEqualTo(expected);
         }
 
         @Test
         void 캐쉬_반환() {
-            Position actual = Position.of(2, 0);
-            Position expected = Position.of(2, 0);
+            Position actual = Position.of(File.C,Rank.ONE);
+            Position expected = Position.of(File.C, Rank.ONE);
 
             assertThat(actual).isEqualTo(expected);
-        }
-
-        @Test
-        void 인덱스가_범위를_벗어나면_예외() {
-            assertThatCode(() -> Position.of(8, 0))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("존재하지 않는 위치입니다. (index 범위: 0~7)");
         }
 
         @Test
@@ -54,45 +47,45 @@ class PositionTest {
 
         @BeforeEach
         void setUp() {
-             from = Position.of(0, 0);
+             from = Position.of(File.A, Rank.ONE);
         }
 
         @Test
         void 상하() {
-            Position to = Position.of(0, 4);
+            Position to = Position.of(File.A, Rank.FIVE);
 
             Position actual = from.oneStepToward(to);
-            Position expected = Position.of(0, 1);
+            Position expected = Position.of(File.A, Rank.TWO);
 
             assertThat(actual).isEqualTo(expected);
         }
 
         @Test
         void 좌우() {
-            Position to = Position.of(4, 0);
+            Position to = Position.of(File.E, Rank.ONE);
 
             Position actual = from.oneStepToward(to);
-            Position expected = Position.of(1, 0);
+            Position expected = Position.of(File.B, Rank.ONE);
 
             assertThat(actual).isEqualTo(expected);
         }
 
         @Test
         void 대각선() {
-            Position to = Position.of(3, 3);
+            Position to = Position.of(File.D, Rank.FOUR);
 
             Position actual = from.oneStepToward(to);
-            Position expected = Position.of(1, 1);
+            Position expected = Position.of(File.B, Rank.TWO);
 
             assertThat(actual).isEqualTo(expected);
         }
 
         @Test
         void 일직선이_아니면_대각선으로_이동() {
-            Position to = Position.of(1, 2);
+            Position to = Position.of(File.B, Rank.THREE);
 
             Position actual = from.oneStepToward(to);
-            Position expected = Position.of(1, 1);
+            Position expected = Position.of(File.B, Rank.TWO);
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -103,8 +96,8 @@ class PositionTest {
 
         @Test
         void 방향이_맞으면_참() {
-            Position from = Position.of(0, 0);
-            Position to = Position.of(1, 1);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.B, Rank.TWO);
 
             boolean actual = from.checkDirection(to, UP_RIGHT);
 
@@ -113,8 +106,8 @@ class PositionTest {
 
         @Test
         void 방향이_틀리면_거짓() {
-            Position from = Position.of(0, 0);
-            Position to = Position.of(1, 0);
+            Position from = Position.of(File.A, Rank.ONE);
+            Position to = Position.of(File.B, Rank.ONE);
 
             boolean actual = from.checkDirection(to, LEFT);
 

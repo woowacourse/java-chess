@@ -1,92 +1,106 @@
 package chess.domain.board.position;
 
-import chess.util.PositionConverterUtil;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Position {
 
-    public static final int FILES_TOTAL_SIZE = 8;
-    public static final int RANKS_TOTAL_SIZE = 8;
+    private final File file;
+    private final Rank rank;
 
-    private static final String INVALID_IDX_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 위치입니다. (index 범위: 0~7)";
-
-    private final int fileIdx;
-    private final int rankIdx;
-
-    private Position(int fileIdx, int rankIdx) {
-        validateIdxRange(fileIdx, rankIdx);
-        this.fileIdx = fileIdx;
-        this.rankIdx = rankIdx;
+    private Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    private static void validateIdxRange(int fileIdx, int rankIdx) {
-        boolean invalidFileIdxRange = fileIdx < 0 || fileIdx >= FILES_TOTAL_SIZE;
-        boolean invalidRankIdxRange = rankIdx < 0 || rankIdx >= RANKS_TOTAL_SIZE;
-
-        if (invalidFileIdxRange || invalidRankIdxRange) {
-            throw new IllegalArgumentException(INVALID_IDX_RANGE_EXCEPTION_MESSAGE);
-        }
-    }
-
-    public static Position of(int fileIdx, int rankIdx) {
-        return PositionCache.getCache(fileIdx, rankIdx);
+    public static Position of(File file, Rank rank) {
+        return PositionCache.getCache(file, rank);
     }
 
     public static Position of(String positionKey) {
-        int fileIdx = PositionConverterUtil.toFileIdx(positionKey);
-        int rankIdx = PositionConverterUtil.toRankIdx(positionKey);
-        return Position.of(fileIdx, rankIdx);
+        return PositionCache.getCache(positionKey);
     }
 
     public int fileDifference(Position targetPosition) {
-        int fileRawDifference = targetPosition.fileIdx - fileIdx;
+        int fileRawDifference = file.valueDifference(toFile(targetPosition));
         return Math.abs(fileRawDifference);
     }
 
     public int rankDifference(Position targetPosition) {
-        int rankRawDifference = targetPosition.rankIdx - rankIdx;
+        int rankRawDifference = rank.valueDifference(toRank(targetPosition));
         return Math.abs(rankRawDifference);
     }
 
-    public boolean hasRankIdxOf(int rankIdx) {
-        return this.rankIdx == rankIdx;
+    public boolean hasRankOf(Rank rank) {
+        return this.rank == rank;
     }
 
     public Position oneStepToward(Position targetPosition) {
-        int nextFileIdx = incrementToward(fileIdx, targetPosition.fileIdx);
-        int nextRankIdx = incrementToward(rankIdx, targetPosition.rankIdx);
+        File nextFile = this.file.oneFileToward(toFile(targetPosition));
+        Rank nextRank = this.rank.oneRankToward(toRank(targetPosition));
 
-        return PositionCache.getCache(nextFileIdx, nextRankIdx);
-    }
-
-    private int incrementToward(int from, int to) {
-        return from + Integer.compare(to, from);
+        return PositionCache.getCache(nextFile, nextRank);
     }
 
     public boolean checkDirection(Position targetPosition, Direction direction) {
-        int x = targetPosition.fileIdx - fileIdx;
-        int y = targetPosition.rankIdx - rankIdx;
+        int x = file.valueDifference(toFile(targetPosition));
+        int y = rank.valueDifference(toRank(targetPosition));
 
         return direction.hasAngleOf(x, y);
     }
 
+    private File toFile(Position position) {
+        return position.file;
+    }
+
+    private Rank toRank(Position position) {
+        return position.rank;
+    }
+
+    private static String toKey(File file, Rank rank) {
+        String fileKey = file.key();
+        String rankKey = rank.key();
+        return fileKey + rankKey;
+    }
+
     @Override
     public String toString() {
-        return "Position{fileIdx=" + fileIdx + ", rankIdx=" + rankIdx + '}';
+        return "Position{" + toKey(file, rank) + '}';
     }
 
     private static class PositionCache {
 
+        static final int FILE_KEY_IDX = 0;
+        static final int RANK_KEY_IDX = 1;
+
+        static final String INVALID_POSITION_RANGE_EXCEPTION_MESSAGE = "존재하지 않는 포지션입니다. (a1~h8)";
+
+        static final Pattern VALID_POSITION_PATTERN = Pattern.compile("([abcdefgh][12345678])");
+
         static Map<String, Position> cache = new HashMap<>(64);
 
-        static Position getCache(int fileIdx, int rankIdx) {
-            String key = toKey(fileIdx, rankIdx);
-            return cache.computeIfAbsent(key, (k) -> new Position(fileIdx, rankIdx));
+        static Position getCache(File file, Rank rank) {
+            String key = toKey(file, rank);
+            return cache.computeIfAbsent(key, (k) -> new Position(file, rank));
         }
 
-        static String toKey(int fileIdx, int rankIdx) {
-            return fileIdx + "" + rankIdx;
+        static Position getCache(String positionKey) {
+            validatePositionFormat(positionKey);
+
+            String[] strings = positionKey.split("");
+            File file = File.of(strings[FILE_KEY_IDX]);
+            Rank rank = Rank.of(strings[RANK_KEY_IDX]);
+
+            return getCache(file, rank);
+        }
+
+        static void validatePositionFormat(String position) {
+            Matcher matcher = VALID_POSITION_PATTERN.matcher(position);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException(INVALID_POSITION_RANGE_EXCEPTION_MESSAGE);
+            }
         }
     }
 }

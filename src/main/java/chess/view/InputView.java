@@ -1,6 +1,5 @@
 package chess.view;
 
-import static chess.util.PositionConverterUtil.validatePositionFormat;
 import static chess.view.OutputView.print;
 
 import chess.dto.MoveCommandDto;
@@ -70,8 +69,6 @@ public class InputView {
         if (!isValidMoveCommand || !isValidCommandLength) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND_FORMAT_EXCEPTION_MESSAGE);
         }
-        validatePositionFormat(input[MOVE_SOURCE_IDX]);
-        validatePositionFormat(input[MOVE_TARGET_IDX]);
     }
 
     public boolean requestValidStatusOrEndInput() {
