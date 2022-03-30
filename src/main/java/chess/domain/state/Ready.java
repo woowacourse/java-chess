@@ -36,7 +36,7 @@ public final class Ready implements State {
 
     @Override
     public Score status() {
-        throw new IllegalArgumentException("Ready 상태에서는 점수를 볼 수 없습니다.");
+        return Score.from(board());
     }
 
     @Override
