@@ -7,7 +7,7 @@ import chess.domain.Color;
 import chess.dto.EmptyResponse;
 import chess.dto.Response;
 
-public class Finished extends Started {
+public class Finished extends GameState {
 
     Finished(Board board, Color turnColor) {
         super(board, turnColor);

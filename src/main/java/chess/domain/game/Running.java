@@ -8,7 +8,7 @@ import chess.domain.board.Route;
 import chess.dto.BoardResponse;
 import chess.dto.Response;
 
-public class Running extends Started {
+public class Running extends GameState {
 
     Running(Board board, Color turnColor) {
         super(board, turnColor);

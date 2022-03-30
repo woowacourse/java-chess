@@ -2,19 +2,29 @@ package chess.domain.game;
 
 import java.util.List;
 
+import chess.domain.board.Board;
+import chess.domain.Color;
 import chess.dto.Response;
 
-public interface GameState {
+public abstract class GameState {
 
-    GameState start();
+    protected Board board;
+    protected final Color turnColor;
 
-    GameState finish();
+    public GameState(Board board, Color turnColor) {
+        this.board = board;
+        this.turnColor = turnColor;
+    }
 
-    boolean isRunnable();
+    public abstract GameState start();
 
-    GameState move(List<String> arguments);
+    public abstract GameState finish();
 
-    GameState status();
+    public abstract boolean isRunnable();
 
-    Response getResponse();
+    public abstract GameState move(List<String> arguments);
+
+    public abstract GameState status();
+
+    public abstract Response getResponse();
 }

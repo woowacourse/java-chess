@@ -8,7 +8,7 @@ import chess.domain.board.Route;
 import chess.dto.Response;
 import chess.dto.ScoreResponse;
 
-public class Status extends Started {
+public class Status extends GameState {
 
     public Status(Board board, Color turnColor) {
         super(board, turnColor);

@@ -7,7 +7,7 @@ import chess.domain.board.InitialBoardGenerator;
 import chess.domain.Color;
 import chess.dto.Response;
 
-public class Ready extends Started {
+public class Ready extends GameState {
 
     public Ready() {
         super(Board.of(new InitialBoardGenerator()), Color.WHITE);
