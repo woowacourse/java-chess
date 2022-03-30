@@ -10,6 +10,8 @@ public class Command {
 
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final String command;
 
@@ -39,14 +41,14 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        if ((!isPosition(token[1])) || (!isPosition(token[2]))) {
+        if ((!isPosition(token[SOURCE_INDEX])) || (!isPosition(token[TARGET_INDEX]))) {
             throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
         }
     }
 
     private static boolean isPosition(String token) {
-        char first = token.charAt(0);
-        char second = token.charAt(1);
+        char first = token.charAt(FILE_INDEX);
+        char second = token.charAt(RANK_INDEX);
 
         return File.isFile(first) && Rank.isRank(Character.getNumericValue(second));
     }
