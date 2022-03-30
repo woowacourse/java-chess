@@ -1,0 +1,41 @@
+package chess.domain;
+
+import static chess.domain.PositionRange.COLUMN_RANGE;
+import static chess.domain.PositionRange.ROW_RANGE;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Position {
+
+    private static final Map<String, Position> POSITIONS = new HashMap<>();
+
+    private final char column;
+    private final char row;
+
+    private Position(final char column, final char row) {
+        validateColumnInRange(column);
+        validateRowInRange(row);
+        this.column = column;
+        this.row = row;
+    }
+
+    private void validateColumnInRange(final char column) {
+        if (COLUMN_RANGE.isOutOfRange(column)) {
+            throw new IllegalArgumentException(String.format("열 위치는 %s~%s 범위에 포함되어야 합니다.",
+                    COLUMN_RANGE.getAllowedMinimum(), COLUMN_RANGE.getAllowedMaximum()));
+        }
+    }
+
+    private void validateRowInRange(final char row) {
+        if (ROW_RANGE.isOutOfRange(row)) {
+            throw new IllegalArgumentException(String.format("행 위치는 %s~%s 범위에 포함되어야 합니다.",
+                    ROW_RANGE.getAllowedMinimum(), ROW_RANGE.getAllowedMaximum()));
+        }
+    }
+
+    public static Position of(final char column, final char row) {
+        return POSITIONS.computeIfAbsent(Character.toString(column) + Character.toString(row)
+                , k -> new Position(column, row));
+    }
+}
