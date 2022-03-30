@@ -19,6 +19,43 @@ class PawnTest {
     private final Pawn pawn = new Pawn(currentPosition);
 
     @Test
+    @DisplayName("앞으로 한 칸 이동한다.")
+    void move() {
+        final Position expected = new Position(3, 'g');
+
+        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFirstTurnPosition")
+    @DisplayName("첫번째 턴에선 1칸 또는 2칸 이동 가능하다.")
+    void moveFirstTurn(final Position expected) {
+        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> provideFirstTurnPosition() {
+        return Stream.of(Arguments.of(
+                new Position(3, 'g'),
+                new Position(4, 'g')
+        ));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"3, 'f'", "3, 'h'"})
+    @DisplayName("대각선에 존재하는 말을 잡는다.")
+    void capture(final int rank, final char file) {
+        final Position expected = new Position(rank, file);
+
+        final Position actual = pawn.capture(currentPosition, new Position(rank, file), Team.WHITE);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("앞이 아닌 방향으로 이동할 경우, 예외를 발생시킨다.")
     void moveDirectionException() {
         final int currentRank = 2;
@@ -40,33 +77,6 @@ class PawnTest {
                 .hasMessage("폰은 첫번째 턴에는 1칸 또는 2칸만 이동할 수 있습니다.");
     }
 
-    @ParameterizedTest
-    @MethodSource("provideFirstTurnPosition")
-    @DisplayName("첫번째 턴에선 1칸 또는 2칸 이동 가능하다.")
-    void moveFirstTurn(final Position expected) {
-        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> provideFirstTurnPosition() {
-        return Stream.of(Arguments.of(
-                new Position(3, 'g'),
-                new Position(4, 'g')
-        ));
-    }
-
-    @ParameterizedTest
-    @DisplayName("대각선에 존재하는 말을 잡는다.")
-    @CsvSource({"3, 'f'", "3, 'h'"})
-    void capture(final int rank, final char file) {
-        final Position expected = new Position(rank, file);
-
-        final Position actual = pawn.capture(currentPosition, new Position(rank, file), Team.WHITE);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @Test
     @DisplayName("상대말을 잡을 때 대각선 이동이 아닐 경우, 예외를 발생시킨다.")
     void moveDiagonalException() {
@@ -86,16 +96,6 @@ class PawnTest {
         assertThatThrownBy(() -> pawn.capture(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("대각선으로 이동하는 거리가 1칸이 아닙니다.");
-    }
-
-    @Test
-    @DisplayName("앞으로 한 칸 이동한다.")
-    void move() {
-        final Position expected = new Position(3, 'g');
-
-        final Position actual = pawn.move(currentPosition, expected, Team.WHITE);
-
-        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
