@@ -13,9 +13,24 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position from(Direction direction) {
+    public static Position of(final char inputFile, final char inputRank) {
+        final File file = File.from(inputFile);
+        final Rank rank = Rank.from(Character.getNumericValue(inputRank));
+        validatePosition(file, rank);
+
+        return new Position(file, rank);
+    }
+
+    private static void validatePosition(final File file, final Rank rank) {
+        if (file.equals(File.NOTHING) || rank.equals(Rank.NOTHING)) {
+            throw new IllegalArgumentException("잘못된 위치 정보입니다.");
+        }
+    }
+
+    public Position nextPositionBy(Direction direction) {
         File nextFile = File.from((char) (file.getName() + direction.file()));
         Rank nextRank = Rank.from(rank.getNumber() + direction.rank());
+
         return new Position(nextFile, nextRank);
     }
 

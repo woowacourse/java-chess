@@ -59,10 +59,10 @@ public final class Board {
     }
 
     private void validateIsMovablePath(final Direction direction, final Position source, final Position target) {
-        Position currentPosition = source.from(direction);
+        Position currentPosition = source.nextPositionBy(direction);
         while (!currentPosition.equals(target)) {
             hasPieceInPosition(currentPosition);
-            currentPosition = currentPosition.from(direction);
+            currentPosition = currentPosition.nextPositionBy(direction);
         }
     }
 

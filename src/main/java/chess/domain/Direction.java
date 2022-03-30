@@ -69,7 +69,7 @@ public enum Direction {
     private static boolean isRightDirection(final Direction direction, final Position source, final Position target) {
         Position currentPosition = source;
         for (int i = 0; i < 8; i++) {
-            currentPosition = currentPosition.from(direction);
+            currentPosition = currentPosition.nextPositionBy(direction);
 
             if (currentPosition.isNothing()) {
                 break;
