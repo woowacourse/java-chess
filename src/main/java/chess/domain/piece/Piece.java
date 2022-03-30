@@ -17,10 +17,6 @@ public abstract class Piece {
         return this.color != another.color;
     }
 
-    public boolean isKnight() {
-        return false;
-    }
-
     public boolean isInValid() {
         return false;
     }

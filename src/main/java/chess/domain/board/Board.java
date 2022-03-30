@@ -55,7 +55,7 @@ public class Board {
     }
 
     private boolean canNotGoOnTheWay(Position from, Position to, Piece pieceAtFrom) {
-        return !pieceAtFrom.isKnight() && isPieceOnTheWay(from, to);
+        return PieceClassChecker.from(pieceAtFrom) != PieceClassChecker.KNIGHT && isPieceOnTheWay(from, to);
     }
 
     private boolean isPieceOnTheWay(Position fromPosition, Position toPosition) {
