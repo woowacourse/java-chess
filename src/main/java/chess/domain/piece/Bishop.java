@@ -10,15 +10,14 @@ import chess.domain.piece.move.straight.StraightMovingStrategy;
 
 public class Bishop extends Piece {
 
-    private final MovingStrategy strategy;
-
     public Bishop(Color color) {
         super(color, PieceType.BISHOP);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getDiagonal(), InfiniteStepDistance.init());
     }
 
     @Override
     public boolean move(Route route, EmptyPoints emptyPoints) {
+        StraightMovingStrategy strategy = new StraightMovingStrategy(StraightDirection.getDiagonal(),
+            InfiniteStepDistance.init());
         return strategy.move(route, emptyPoints);
     }
 }

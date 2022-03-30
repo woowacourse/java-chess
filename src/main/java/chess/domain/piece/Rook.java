@@ -10,15 +10,14 @@ import chess.domain.piece.move.straight.StraightMovingStrategy;
 
 public class Rook extends Piece {
 
-    private final MovingStrategy strategy;
-
     public Rook(Color color) {
         super(color, PieceType.ROOK);
-        this.strategy = new StraightMovingStrategy(StraightDirection.getCross(), InfiniteStepDistance.init());
     }
 
     @Override
     public boolean move(Route route, EmptyPoints emptyPoints) {
+        StraightMovingStrategy strategy =
+            new StraightMovingStrategy(StraightDirection.getCross(), InfiniteStepDistance.init());
         return strategy.move(route, emptyPoints);
     }
 }
