@@ -20,10 +20,9 @@ public class ChessGame {
         state = state.initBoard();
     }
 
-    public void movePiece(String movePositionInformation) {
-        List<String> information = Arrays.asList(movePositionInformation.split(" "));
-        state = state.movePiece(Position.valueOf(information.get(1)),
-            Position.valueOf(information.get(2)));
+    public void movePiece(String fromPosition, String toPosition) {
+        state = state.movePiece(Position.valueOf(fromPosition),
+            Position.valueOf(toPosition));
     }
 
     public void endGame() {
