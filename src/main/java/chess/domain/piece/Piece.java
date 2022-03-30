@@ -21,7 +21,7 @@ public abstract class Piece {
         return team;
     }
 
-    public double getPoint() {
+    public final double getPoint() {
         return point;
     }
 

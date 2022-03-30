@@ -38,7 +38,7 @@ public class Position implements Comparable<Position> {
 
     public static Position valueOf(final String rawPosition) {
         if (!CACHE.containsKey(rawPosition)) {
-            throw new IllegalArgumentException("[ERROR] 범위를 초과하였습니다.");
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 Position 입력입니다.");
         }
         return CACHE.get(rawPosition);
     }
