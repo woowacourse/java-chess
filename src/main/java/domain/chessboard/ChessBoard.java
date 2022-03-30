@@ -1,7 +1,6 @@
 package domain.chessboard;
 
 import domain.Player;
-import domain.Result;
 import domain.directions.Direction;
 import domain.piece.Piece;
 import domain.piece.PieceSymbol;
@@ -21,11 +20,9 @@ public class ChessBoard {
     public static final int PAWN_COUNT_SAME_FILE = 2;
 
     private final Map<Position, Piece> board;
-    private Player currentPlayer;
 
     public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
-        this.currentPlayer = Player.WHITE;
     }
 
     private boolean isPawnAttackDirection(final Direction moveDirection) {
@@ -37,7 +34,7 @@ public class ChessBoard {
 
     public void move(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
-        validateSourcePosition(source);
+        validateSourceNotNull(source);
         validateTargetPiece(source, target);
         sourcePiece.generateAvailablePosition(source);
         validatePawnAttack(sourcePiece, target);
@@ -58,20 +55,9 @@ public class ChessBoard {
         positions.forEach(this::validateNullPosition);
     }
 
-    private void validateSourcePosition(final Position source) {
-        validateSourceNotNull(source);
-        validateTurn(source);
-    }
-
     private void validateSourceNotNull(final Position source) {
         if (board.get(source) == null) {
             throw new IllegalArgumentException("[ERROR] 선택한 출발지에 기물이 없습니다.");
-        }
-    }
-
-    private void validateTurn(final Position source) {
-        if (!board.get(source).isSamePlayer(currentPlayer)) {
-            throw new IllegalArgumentException("[ERROR] 상대방의 기물을 움직일 수 없습니다.");
         }
     }
 
@@ -93,27 +79,6 @@ public class ChessBoard {
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.put(source, null);
-        changeTurn();
-    }
-
-    private void changeTurn() {
-        if (currentPlayer.equals(Player.WHITE)) {
-            this.currentPlayer = Player.BLACK;
-            return;
-        }
-        this.currentPlayer = Player.WHITE;
-    }
-
-    public Result calculateResult() {
-        double currentPlayerScore = calculateScoreByPlayer(currentPlayer);
-        double otherPlayerScore = calculateScoreByPlayer(Player.otherPlayer(currentPlayer));
-        if (currentPlayerScore > otherPlayerScore) {
-            return Result.WIN;
-        }
-        if (currentPlayerScore == otherPlayerScore) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
     }
 
     public double calculateScoreByPlayer(Player player) {
@@ -160,8 +125,8 @@ public class ChessBoard {
         return kingCount != DEFAULT_KING_COUNT;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public Piece findPiece(Position position) {
+        return board.get(position);
     }
 
     public String getSymbol(final Position position) {
