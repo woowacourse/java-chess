@@ -1,12 +1,23 @@
 package chess.model.piece;
 
+import static chess.model.piece.Fixtures.B3;
+import static chess.model.piece.Fixtures.B4;
+import static chess.model.piece.Fixtures.B5;
+import static chess.model.piece.Fixtures.C2;
+import static chess.model.piece.Fixtures.C6;
+import static chess.model.piece.Fixtures.D4;
+import static chess.model.piece.Fixtures.D5;
+import static chess.model.piece.Fixtures.E2;
+import static chess.model.piece.Fixtures.E6;
+import static chess.model.piece.Fixtures.F3;
+import static chess.model.piece.Fixtures.F4;
+import static chess.model.piece.Fixtures.F5;
+import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.piece.Color;
-import chess.piece.Empty;
 import chess.piece.Knight;
-import chess.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 public class KnightTest {
@@ -20,44 +31,34 @@ public class KnightTest {
     @Test
     void movable() {
         Knight knight = new Knight(Color.BLACK);
-        Empty NNE = new Empty();
-        Empty NNW = new Empty();
-        Empty SSE = new Empty();
-        Empty SSW = new Empty();
-        Piece EEN = new Empty();
-        Piece EES = new Empty();
-        Piece WWN = new Knight(Color.WHITE);
-        Piece WWS = new Empty();
         assertAll(
-                () -> assertThat(knight.movable(NNE)).isTrue(),
-                () -> assertThat(knight.movable(NNW)).isTrue(),
-                () -> assertThat(knight.movable(SSE)).isTrue(),
-                () -> assertThat(knight.movable(SSW)).isTrue(),
-                () -> assertThat(knight.movable(EEN)).isTrue(),
-                () -> assertThat(knight.movable(EES)).isTrue(),
-                () -> assertThat(knight.movable(WWN)).isTrue(),
-                () -> assertThat(knight.movable(WWS)).isTrue());
+                () -> assertThat(knight.movable(D4, E6)).isTrue(),
+                () -> assertThat(knight.movable(D4, F5)).isTrue(),
+                () -> assertThat(knight.movable(D4, F3)).isTrue(),
+                () -> assertThat(knight.movable(D4, E2)).isTrue(),
+                () -> assertThat(knight.movable(D4, C2)).isTrue(),
+                () -> assertThat(knight.movable(D4, B3)).isTrue(),
+                () -> assertThat(knight.movable(D4, B5)).isTrue(),
+                () -> assertThat(knight.movable(D4, C6)).isTrue(),
+                () -> assertThat(knight.movable(C2, D4)).isTrue());
+
     }
 
     @Test
     void cannotMovable() {
         Knight knight = new Knight(Color.BLACK);
-        Piece d6 = new Empty();
-        Piece a4 = new Empty();
-        Piece f6 = new Knight(Color.WHITE);
-        Piece a1 = new Empty();
 
         assertAll(
-                () -> assertThat(knight.movable(d6)).isFalse(),
-                () -> assertThat(knight.movable(a4)).isFalse(),
-                () -> assertThat(knight.movable(f6)).isFalse(),
-                () -> assertThat(knight.movable(a1)).isFalse());
+                () -> assertThat(knight.movable(D4, D5)).isFalse(),
+                () -> assertThat(knight.movable(D4, F4)).isFalse(),
+                () -> assertThat(knight.movable(D4, B4)).isFalse(),
+                () -> assertThat(knight.movable(D4, F6)).isFalse());
     }
 
-    @Test
-    void cannotMovableToSameColor() {
-        Knight knight = new Knight(Color.BLACK);
-        Piece linearBlackPiece = new Knight(Color.BLACK);
-        assertThat(knight.movable(linearBlackPiece)).isFalse();
-    }
+//    @Test
+//    void cannotMovableToSameColor() {
+//        Knight knight = new Knight(Color.BLACK);
+//        Piece linearBlackPiece = new Knight(Color.BLACK);
+//        assertThat(knight.movable(linearBlackPiece)).isFalse();
+//    }
 }
