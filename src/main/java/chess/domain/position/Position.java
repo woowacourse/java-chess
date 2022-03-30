@@ -37,6 +37,10 @@ public final class Position {
         return cachedPosition;
     }
 
+    public boolean isSameFile(final File other) {
+        return this.file == other;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

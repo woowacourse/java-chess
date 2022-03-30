@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.notation.Color;
-import chess.domain.piece.notation.PieceNotation;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -29,7 +28,7 @@ public final class BoardCalculator {
     private double getScore(final Map.Entry<Position, Piece> entry) {
         final Piece piece = entry.getValue();
 
-        if (piece.getNotation() == PieceNotation.PAWN) {
+        if (piece.isPawn()) {
             return calculatePawnScore(entry);
         }
         return piece.getScore();
@@ -41,7 +40,7 @@ public final class BoardCalculator {
 
         long pawnCountInSameFile = board.entrySet().stream()
                 .filter(e -> e.getValue().equals(pawn))
-                .filter(e -> e.getKey().getFile() == position.getFile())
+                .filter(e -> e.getKey().isSameFile(position.getFile()))
                 .count();
 
         if (pawnCountInSameFile > MIN_PAWN_COUNT) {
