@@ -39,4 +39,18 @@ public class ChessGameTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 순서 지키시지?!\n");
 	}
+
+	@Test
+	@DisplayName("move가 정상적으로 되었는지 확인한다")
+	void move() {
+		Map<Square, Piece> board = createBlankBoard();
+		board.put(new Square("c3"), WHITE_QUEEN);
+		Board chessBoard = new Board(board);
+		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE);
+		chessGame.move(new Square("c3"), new Square("d4"));
+
+		assertThat(chessBoard.getBoard().get(new Square("d4")))
+			.isEqualTo(WHITE_QUEEN);
+	}
+
 }
