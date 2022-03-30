@@ -42,9 +42,7 @@ public class ChessController {
     }
 
     public StatusResult processStatus() {
-        double blackScore = board.calculateScore(Team.BLACK);
-        double whiteScore = board.calculateScore(Team.WHITE);
-        StatusResult result = new StatusResult(blackScore, whiteScore);
+        StatusResult result = new StatusResult(board);
         state = state.execute(Command.STATUS);
         return result;
     }

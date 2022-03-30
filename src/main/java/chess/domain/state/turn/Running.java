@@ -20,25 +20,11 @@ public abstract class Running implements State {
     }
 
     @Override
-    public final State play(final Piece source, final Piece target) {
-        validateSourcePiece(source);
-        validateTargetPiece(target);
+    public final State play(final Piece target) {
         if (target.isKing()) {
             return new KingDeath(team);
         }
         return next();
-    }
-
-    private void validateSourcePiece(final Piece piece) {
-        if (!piece.isSameTeam(team)) {
-            throw new IllegalArgumentException(WRONG_SOURCE_ERROR);
-        }
-    }
-
-    private void validateTargetPiece(final Piece piece) {
-        if (piece.isSameTeam(team)) {
-            throw new IllegalArgumentException(WRONG_TARGET_ERROR);
-        }
     }
 
     @Override

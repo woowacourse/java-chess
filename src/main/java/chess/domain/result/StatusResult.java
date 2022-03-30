@@ -1,15 +1,18 @@
 package chess.domain.result;
 
 import chess.domain.Team;
+import chess.domain.board.Board;
+import chess.domain.board.ScoreCalculator;
 
 public class StatusResult {
 
     private final double blackScore;
     private final double whiteScore;
 
-    public StatusResult(double blackScore, double whiteScore) {
-        this.blackScore = blackScore;
-        this.whiteScore = whiteScore;
+    public StatusResult(Board board) {
+        ScoreCalculator calculator = new ScoreCalculator(board.getBoard());
+        this.blackScore = calculator.calculateScore(Team.BLACK);
+        this.whiteScore = calculator.calculateScore(Team.WHITE);
     }
 
     public double getBlackScore() {

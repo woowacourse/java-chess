@@ -7,7 +7,7 @@ public interface State {
 
     boolean isFinished();
 
-    State play(Piece source, Piece target);
+    State play(Piece target);
 
     Team getTeam();
 }
