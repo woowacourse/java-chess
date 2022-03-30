@@ -1,4 +1,4 @@
-package domain.directions;
+package domain.direction;
 
 public enum Direction {
     EAST(1, 0),

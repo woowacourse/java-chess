@@ -4,9 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.chessboard.BoardGenerator;
-import domain.chessboard.ChessBoard;
-import domain.chessboard.ChessBoardGenerator;
+import domain.chessgame.ChessBoard;
+import utils.ChessBoardGenerator;
 import domain.piece.Blank;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -151,15 +150,10 @@ public class ChessBoardTest {
     @Test
     @DisplayName("Pawn은 첫 번째 이동이면서 이동 위치에 기물이 있다면 2칸 이동할 수 없다.")
     void moveTwoSpacePawn_FirstTime_Target_fail() {
-        ChessBoard chessBoard = new ChessBoard(new BoardGenerator() {
-            @Override
-            public Map<Position, Piece> generate() {
-                Map<Position, Piece> board = new HashMap<>();
-                board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
-                board.put(Position.of(File.C, Rank.FOUR), new Pawn(Player.WHITE));
-                return board;
-            }
-        }.generate());
+        board.put(Position.of(File.C, Rank.TWO), new Pawn(Player.WHITE));
+        board.put(Position.of(File.C, Rank.FOUR), new Pawn(Player.WHITE));
+        ChessBoard chessBoard = new ChessBoard(board);
+
         Position source = Position.of(File.C, Rank.TWO);
         Position target = Position.of(File.C, Rank.FOUR);
 

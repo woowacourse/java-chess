@@ -1,7 +1,7 @@
 package domain.piece;
 
 import domain.Player;
-import domain.directions.Direction;
+import domain.direction.Direction;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

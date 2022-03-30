@@ -1,4 +1,4 @@
-package domain.chessboard;
+package utils;
 
 import domain.Player;
 import domain.piece.Bishop;

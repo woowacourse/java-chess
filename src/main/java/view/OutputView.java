@@ -2,7 +2,7 @@ package view;
 
 import domain.Player;
 import domain.Status;
-import domain.chessboard.ChessBoard;
+import domain.chessgame.ChessBoard;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

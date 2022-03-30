@@ -1,7 +1,7 @@
-package domain.chessboard;
+package domain.chessgame;
 
 import domain.Player;
-import domain.directions.Direction;
+import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Piece;
 import domain.piece.PieceSymbol;
@@ -17,8 +17,9 @@ import utils.PieceScore;
 public class ChessBoard {
 
     private static final String NULL_PIECE_SYMBOL = ".";
-    public static final int DEFAULT_KING_COUNT = 2;
-    public static final int PAWN_COUNT_SAME_FILE = 2;
+    private static final int DEFAULT_KING_COUNT = 2;
+    private static final int PAWN_COUNT_SAME_FILE = 2;
+    private static final int NOT_FOUND_DUPLICATE_PAWN = 0;
 
     private final Map<Position, Piece> board;
 
@@ -36,7 +37,6 @@ public class ChessBoard {
     public void move(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
         sourcePiece.generateAvailablePosition(source);
-//        validateTargetPosition(source, target);
         validateTargetPiece(source, target);
         validatePawnAttack(sourcePiece, target);
         validateRoutePositions(source, target);
@@ -55,12 +55,6 @@ public class ChessBoard {
         List<Position> positions = board.get(source).getAvailablePositions(source, target);
         positions.forEach(this::validateNullPosition);
     }
-
-//    private void validateTargetPosition(final Position source, final Position target) {
-//        if (!board.get(source).isAvailableMove(source, target)) {
-//            throw new IllegalArgumentException("ChessBoard [ERROR] 선택한 기물이 이동할 수 없는 목적지입니다.");
-//        }
-//    }
 
     private void validateTargetPiece(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
@@ -114,7 +108,7 @@ public class ChessBoard {
         if (count >= PAWN_COUNT_SAME_FILE) {
             return count * PieceScore.DUPLICATE_PAWN;
         }
-        return 0;
+        return NOT_FOUND_DUPLICATE_PAWN;
     }
 
     public boolean isKingOnlyOne() {

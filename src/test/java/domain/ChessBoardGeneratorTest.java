@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.chessboard.ChessBoardGenerator;
+import utils.ChessBoardGenerator;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;

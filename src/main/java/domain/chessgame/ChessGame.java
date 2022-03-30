@@ -1,4 +1,4 @@
-package domain.chessboard;
+package domain.chessgame;
 
 import domain.Player;
 import domain.Status;
