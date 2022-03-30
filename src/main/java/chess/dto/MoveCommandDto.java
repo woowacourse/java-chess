@@ -1,20 +1,22 @@
 package chess.dto;
 
+import chess.domain.board.position.Position;
+
 public class MoveCommandDto {
 
-    private final String from;
-    private final String to;
+    private final Position source;
+    private final Position target;
 
-    public MoveCommandDto(String from, String to) {
-        this.from = from;
-        this.to = to;
+    public MoveCommandDto(String source, String target) {
+        this.source = Position.of(source);
+        this.target = Position.of(target);
     }
 
-    public String source() {
-        return from;
+    public Position source() {
+        return source;
     }
 
-    public String target() {
-        return to;
+    public Position target() {
+        return target;
     }
 }

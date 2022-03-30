@@ -17,8 +17,8 @@ abstract class Running extends Started {
 
     @Override
     public final Game moveChessmen(MoveCommandDto moveCommand) {
-        Position from = fromPosition(moveCommand);
-        Position to = toPosition(moveCommand);
+        Position from = moveCommand.source();
+        Position to = moveCommand.target();
 
         board.movePiece(from, to, currentTurnColor());
         return moveResult();
@@ -34,16 +34,6 @@ abstract class Running extends Started {
     abstract protected Color currentTurnColor();
 
     abstract protected Game continueGame();
-
-    private Position fromPosition(MoveCommandDto moveCommand) {
-        String source = moveCommand.source();
-        return Position.of(source);
-    }
-
-    private Position toPosition(MoveCommandDto moveCommand) {
-        String target = moveCommand.target();
-        return Position.of(target);
-    }
 
     @Override
     public final GameResult result() {
