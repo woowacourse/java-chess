@@ -42,19 +42,19 @@ public class Board {
         }
     }
 
-    private void changePieces(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
+    private void changePieces(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = board.get(sourcePosition);
+        Piece targetPiece = board.get(targetPosition);
 
         MoveType moveType = decideMoveType(targetPiece);
-        if (!sourcePiece.isMovable(source, target, moveType) || 
-                isBlocked(source, target) || 
+        if (!sourcePiece.isMovable(sourcePosition, targetPosition, moveType) ||
+                isBlocked(sourcePosition, targetPosition) ||
                 targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
 
-        board.put(target, sourcePiece);
-        board.put(source, EMPTY_PIECE);
+        board.put(targetPosition, sourcePiece);
+        board.put(sourcePosition, EMPTY_PIECE);
     }
 
     private MoveType decideMoveType(Piece piece) {
