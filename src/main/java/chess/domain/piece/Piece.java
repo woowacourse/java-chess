@@ -41,6 +41,14 @@ public abstract class Piece {
         throw new IllegalArgumentException("이동 불가한 위치입니다.");
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

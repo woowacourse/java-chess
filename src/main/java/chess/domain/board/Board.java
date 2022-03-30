@@ -51,7 +51,7 @@ public final class Board {
 
     public boolean hasKing(final Color color) {
         return value.values().stream()
-                .filter(piece -> piece.getNotation() == PieceNotation.KING)
+                .filter(piece -> piece.isKing())
                 .anyMatch(piece -> piece.isSameColor(color));
     }
 }

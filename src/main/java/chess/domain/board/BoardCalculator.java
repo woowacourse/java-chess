@@ -29,7 +29,7 @@ public final class BoardCalculator {
     private double getScore(final Map.Entry<Position, Piece> entry) {
         final Piece piece = entry.getValue();
 
-        if (piece.getNotation() == PieceNotation.PAWN) {
+        if (piece.isPawn()) {
             return calculatePawnScore(entry);
         }
         return piece.getScore();

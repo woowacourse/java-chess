@@ -21,6 +21,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public void checkMoveRange(final Board board, final Position from, final Position to) {
         final var direction = Direction.of(from, to);
         if (directions.contains(direction) && canMove(board, from, to)) {

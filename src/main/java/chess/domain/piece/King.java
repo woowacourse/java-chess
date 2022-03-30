@@ -16,6 +16,11 @@ public final class King extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public void checkMoveRange(final Board board, final Position from, final Position to) {
         final var fileDifference = Math.abs(from.getFileOrder() - to.getFileOrder());
         final var rankDifference = Math.abs(from.getRankNumber() - to.getRankNumber());
