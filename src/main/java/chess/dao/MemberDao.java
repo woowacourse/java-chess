@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.Member;
-import chess.Role;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +38,7 @@ public class MemberDao {
         final String sql = "insert into member (id, name) values (?, ?)";
         try {
             final PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, member.getId());
+            statement.setLong(1, member.getId());
             statement.setString(2, member.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -57,7 +56,7 @@ public class MemberDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return new Member(resultSet.getString("id"), resultSet.getString("name"));
+            return new Member(resultSet.getLong("id"), resultSet.getString("name"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,12 +72,11 @@ public class MemberDao {
             final PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                members.add(new Member(resultSet.getString("id"), resultSet.getString("name")));
+                members.add(new Member(resultSet.getLong("id"), resultSet.getString("name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return members;
     }
 
@@ -92,7 +90,7 @@ public class MemberDao {
             if (!resultSet.next()) {
                 return null;
             }
-            return new Member(resultSet.getString("id"), resultSet.getString("name"), new Role(resultSet.getString("role")));
+            return new Member(resultSet.getLong("id"), resultSet.getString("name"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

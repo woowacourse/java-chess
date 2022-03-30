@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class MemberDaoTest {
 
-    @Test
+    /*@Test
     void connection() {
         final MemberDao memberDao = new MemberDao();
         final Connection connection = memberDao.getConnection();
@@ -43,5 +43,5 @@ class MemberDaoTest {
         final MemberDao memberDao = new MemberDao();
         final List<Member> members = memberDao.findAll();
         assertThat(members).isNotEmpty();
-    }
+    }*/
 }

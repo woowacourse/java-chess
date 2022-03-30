@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryGameRepository implements GameRepository {
 
-    private static Map<Long, ChessGame> store = new ConcurrentHashMap<>();
+    private final static Map<Long, ChessGame> store = new ConcurrentHashMap<>();
     private static int nextId = 1;
 
 
@@ -20,5 +20,9 @@ public class MemoryGameRepository implements GameRepository {
     @Override
     public Optional<ChessGame> findById(Long id) {
         return Optional.of(store.get(id));
+    }
+
+    void deleteAll() {
+        store.clear();
     }
 }
