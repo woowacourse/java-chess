@@ -50,10 +50,6 @@ public class ChessGame {
         }
     }
 
-    public Score calculateScore() {
-        return new Score(getCurrentBoard());
-    }
-
     public boolean isOn() {
         return gameSwitch.isOn();
     }

@@ -19,7 +19,7 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("c2"), Position.valueOf("b4"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWhiteScore()).isEqualTo(36.5);
+        assertThat(score.calculateScore(Team.WHITE)).isEqualTo(36.5);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWhiteScore()).isEqualTo(28);
+        assertThat(score.calculateScore(Team.WHITE)).isEqualTo(28);
     }
 
     @Test
@@ -39,7 +39,8 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWinColor()).isEqualTo(Team.BLACK);
+        assertThat(score.calculateWinningTeam(score.calculateScore(Team.WHITE),
+                score.calculateScore(Team.BLACK))).isEqualTo(Team.BLACK);
     }
 
     @Test
@@ -49,6 +50,7 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWinColor()).isEqualTo(Team.WHITE);
+        assertThat(score.calculateWinningTeam(score.calculateScore(Team.WHITE),
+                score.calculateScore(Team.BLACK))).isEqualTo(Team.WHITE);
     }
 }

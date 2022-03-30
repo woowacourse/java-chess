@@ -48,7 +48,7 @@ public class PositionTest {
     void valueOfException() {
         assertThatThrownBy(() -> Position.valueOf("i8"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 범위를 초과하였습니다.");
+                .hasMessage("[ERROR] 올바르지 않은 Position 입력입니다.");
     }
 
     @Test

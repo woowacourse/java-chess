@@ -52,14 +52,4 @@ public class ChessGameTest {
         assertThat(chessGame.isOn()).isFalse();
     }
 
-    @Test
-    @DisplayName("Score 생성")
-    void calculateScore() {
-        Score score = chessGame.calculateScore();
-        assertAll(
-                () -> assertThat(score.getWinColor()).isEqualTo(Team.BLACK),
-                () -> assertThat(score.getWhiteScore()).isEqualTo(38.0),
-                () -> assertThat(score.getBlackScore()).isEqualTo(38.0)
-        );
-    }
 }

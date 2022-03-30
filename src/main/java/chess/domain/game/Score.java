@@ -13,25 +13,17 @@ public class Score {
 
     private static final int PAWN_COUNT = 1;
 
-    private final double whiteScore;
-    private final double blackScore;
-    private final Team winTeam;
+    private final Map<Position, Piece> board;
 
     public Score(final Map<Position, Piece> board) {
-        this.whiteScore = calculateScore(board, Team.WHITE);
-        this.blackScore = calculateScore(board, Team.BLACK);
-        if (whiteScore > blackScore) {
-            this.winTeam = Team.WHITE;
-            return;
-        }
-        this.winTeam = Team.BLACK;
+        this.board = board;
     }
 
-    public double calculateScore(final Map<Position, Piece> board, final Team team) {
-        return calculateFirstLinePieces(board, team) + calculatePawn(board, team);
+    public double calculateScore(final Team team) {
+        return calculateFirstLinePieces(team) + calculatePawn(team);
     }
 
-    private double calculateFirstLinePieces(final Map<Position, Piece> board, final Team team) {
+    private double calculateFirstLinePieces(final Team team) {
         return board.values().stream()
                 .filter(piece -> piece.getColor() == team)
                 .filter(piece -> !piece.isPawn())
@@ -39,7 +31,7 @@ public class Score {
                 .sum();
     }
 
-    private double calculatePawn(final Map<Position, Piece> board, final Team team) {
+    private double calculatePawn(final Team team) {
         Map<Column, Integer> pawnCount = new EnumMap<>(Column.class);
         for (final Entry<Position, Piece> boardEntry : board.entrySet()) {
             putPawnCount(team, pawnCount, boardEntry);
@@ -66,15 +58,10 @@ public class Score {
         return count;
     }
 
-    public double getWhiteScore() {
-        return whiteScore;
-    }
-
-    public double getBlackScore() {
-        return blackScore;
-    }
-
-    public Team getWinColor() {
-        return winTeam;
+    public Team calculateWinningTeam(final double whiteScore, final double blackScore) {
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+        return Team.BLACK;
     }
 }

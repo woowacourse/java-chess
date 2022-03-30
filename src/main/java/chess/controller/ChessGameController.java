@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
+import chess.domain.piece.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -64,7 +65,10 @@ public class ChessGameController {
     }
 
     private void printStatus(final ChessGame chessGame) {
-        Score score = chessGame.calculateScore();
-        OutputView.printScore(score.getWhiteScore(), score.getBlackScore(), score.getWinColor().getValue());
+        Score score = new Score(chessGame.getCurrentBoard());
+
+        double whiteScore = score.calculateScore(Team.WHITE);
+        double blackScore = score.calculateScore(Team.BLACK);
+        OutputView.printScore(whiteScore, blackScore, score.calculateWinningTeam(whiteScore, blackScore).getValue());
     }
 }
