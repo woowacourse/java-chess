@@ -53,11 +53,15 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printScore(final Game board) {
+    public static void printScoreResult(final Game board) {
+        printScore(board);
+        printResult(board.calculateScoreWinner());
+    }
+
+    private static void printScore(Game game) {
         for (Color color : Color.values()) {
-            System.out.println(color.value() + "의 점수: " + board.calculateScore(color));
+            System.out.println(color.value() + "의 점수: " + game.calculateScore(color));
         }
-        printResult(board.whoIsWin());
     }
 
     private static void printResult(final Map<Result, Color> gameResult) {
@@ -66,9 +70,5 @@ public class OutputView {
             return;
         }
         System.out.println("현재 무승부입니다.");
-    }
-
-    public static void announceCanNotRestart() {
-        System.out.println("게임을 종료하고 다시 시작해주세요.");
     }
 }

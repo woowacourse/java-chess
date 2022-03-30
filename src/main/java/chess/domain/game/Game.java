@@ -57,7 +57,7 @@ public final class Game {
         return board.calculateScore(color);
     }
 
-    public Map<Result, Color> whoIsWin() {
-        return board.calculateWinner();
+    public Map<Result, Color> calculateScoreWinner() {
+        return board.calculateScoreWinner();
     }
 }

@@ -134,7 +134,7 @@ public final class Board {
                 .count();
     }
 
-    public Map<Result, Color> calculateWinner() {
+    public Map<Result, Color> calculateScoreWinner() {
         Map<Result, Color> gameResult = new HashMap<>();
         if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
             gameResult.put(Result.WIN, Color.WHITE);
@@ -144,4 +144,5 @@ public final class Board {
         }
         return gameResult;
     }
+
 }

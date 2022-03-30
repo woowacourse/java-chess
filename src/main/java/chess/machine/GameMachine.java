@@ -33,7 +33,7 @@ public final class GameMachine {
             movePiece(game, Arrays.asList(command.split(MOVE_DELIMITER)));
         }
         if (Command.isStatus(command)) {
-            OutputView.printScore(game);
+            OutputView.printScoreResult(game);
         }
         return game;
     }
