@@ -17,7 +17,7 @@ public class ConsoleController {
 
     private CommandState inputCommand() {
         try {
-            return CommandState.of(InputView.requestStartOrEnd());
+            return CommandState.of(InputView.requestCommand());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return inputCommand();
