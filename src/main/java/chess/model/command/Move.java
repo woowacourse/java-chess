@@ -47,6 +47,13 @@ public class Move extends Command {
 
     private List<String> getCommandPosition() {
         String[] split = input.split(EMPTY_DELIMITER);
+        validateSplit(split);
         return Arrays.asList(split[1], split[2]);
+    }
+
+    private void validateSplit(String[] split) {
+        if (split.length != 3) {
+            throw new IllegalArgumentException("move의 형식이 올바르지 않습니다.");
+        }
     }
 }
