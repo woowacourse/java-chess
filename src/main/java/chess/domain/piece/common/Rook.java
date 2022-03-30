@@ -1,23 +1,22 @@
-package chess.domain.piece;
+package chess.domain.piece.common;
 
 import static chess.domain.piece.Direction.E;
 import static chess.domain.piece.Direction.N;
-import static chess.domain.piece.Direction.NE;
-import static chess.domain.piece.Direction.NW;
 import static chess.domain.piece.Direction.S;
-import static chess.domain.piece.Direction.SE;
-import static chess.domain.piece.Direction.SW;
 import static chess.domain.piece.Direction.W;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
-public class Queen extends CommonPiece {
+public class Rook extends CommonPiece {
 
-    private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E, NE, SE, SW, NW);
+    private static final List<Direction> POSSIBLE_DIRECTIONS = List.of(N, S, W, E);
 
-    public Queen(final Color color) {
-        super(PieceType.QUEEN, color);
+    public Rook(final Color color) {
+        super(PieceType.ROOK, color);
     }
 
     @Override

@@ -3,6 +3,7 @@ package chess.domain;
 import static chess.domain.board.Column.a;
 import static chess.domain.board.Column.b;
 import static chess.domain.board.Column.c;
+import static chess.domain.board.Row.FIFTH;
 import static chess.domain.board.Row.FIRST;
 import static chess.domain.board.Row.FOURTH;
 import static chess.domain.board.Row.SECOND;
@@ -24,4 +25,5 @@ public class CachedPosition {
     public static final Position c3 = new Position(c, THIRD);
     public static final Position a7 = new Position(a, SEVENTH);
     public static final Position a6 = new Position(a, SIXTH);
+    public static final Position c5 = new Position(c, FIFTH);
 }

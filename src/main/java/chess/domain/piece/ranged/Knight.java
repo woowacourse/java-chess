@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.ranged;
 
 import static chess.domain.piece.Direction.NEE;
 import static chess.domain.piece.Direction.NNE;
@@ -10,6 +10,10 @@ import static chess.domain.piece.Direction.SSW;
 import static chess.domain.piece.Direction.SWW;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class Knight extends RangedPiece {
@@ -27,7 +31,7 @@ public class Knight extends RangedPiece {
     }
 
     @Override
-    public Direction findValidDirection(final Position current, final Position target) {
+    protected Direction findValidDirection(final Position current, final Position target) {
         final int columnDifference = target.calculateColumnDifference(current);
         final int rowDifference = target.calculateRowDifference(current);
         final Direction direction = Direction.calculate(columnDifference, rowDifference);
@@ -37,14 +41,14 @@ public class Knight extends RangedPiece {
 
     protected void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
-            throw new IllegalArgumentException(INVALID_DIRECTION);
+            throw new IllegalArgumentException(Piece.INVALID_DIRECTION);
         }
     }
 
     @Override
     protected void validateRange(final int columnDifference, final int rowDifference) {
         if (isInvalidRange(columnDifference, rowDifference)) {
-            throw new IllegalArgumentException(INVALID_POSITION);
+            throw new IllegalArgumentException(Piece.INVALID_POSITION);
         }
     }
 

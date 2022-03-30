@@ -1,6 +1,10 @@
-package chess.domain.piece;
+package chess.domain.piece.common;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 

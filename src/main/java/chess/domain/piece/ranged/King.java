@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.ranged;
 
 import static chess.domain.piece.Direction.E;
 import static chess.domain.piece.Direction.N;
@@ -9,6 +9,10 @@ import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 import static chess.domain.piece.Direction.W;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class King extends RangedPiece {
@@ -27,14 +31,14 @@ public class King extends RangedPiece {
 
     protected void validateDirection(final Direction direction) {
         if (!POSSIBLE_DIRECTIONS.contains(direction)) {
-            throw new IllegalArgumentException(INVALID_DIRECTION);
+            throw new IllegalArgumentException(Piece.INVALID_DIRECTION);
         }
     }
 
     @Override
     protected void validateRange(final int columnDifference, final int rowDifference) {
         if (isInvalidRange(columnDifference, rowDifference)) {
-            throw new IllegalArgumentException(INVALID_POSITION);
+            throw new IllegalArgumentException(Piece.INVALID_POSITION);
         }
     }
 

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.common;
 
 import static chess.domain.piece.Direction.NE;
 import static chess.domain.piece.Direction.NW;
@@ -6,6 +6,9 @@ import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 
 import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class Bishop extends CommonPiece {
