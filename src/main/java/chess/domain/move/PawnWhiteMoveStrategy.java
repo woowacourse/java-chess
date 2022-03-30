@@ -10,9 +10,9 @@ public class PawnWhiteMoveStrategy extends PawnMoveStrategy {
 
     private final static List<MovePattern> WHITE_MOVE_PATTERNS = List.of(
             MovePattern.NORTH,
-            MovePattern.NORTHEAST,
-            MovePattern.NORTHWEST,
-            MovePattern.PAWN_START_MOVE_WHITE
+            MovePattern.NE,
+            MovePattern.NW,
+            MovePattern.PAWN_START_MOVE_OF_WHITE
     );
 
     @Override
@@ -32,13 +32,13 @@ public class PawnWhiteMoveStrategy extends PawnMoveStrategy {
         if (!WHITE_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
-        if (movePattern == MovePattern.PAWN_START_MOVE_WHITE) {
+        if (movePattern == MovePattern.PAWN_START_MOVE_OF_WHITE) {
             return isStartMove(board, source, targetPiece, color);
         }
         if (movePattern == MovePattern.NORTH) {
             return targetPiece.isBlank();
         }
-        if (movePattern == MovePattern.NORTHEAST || movePattern == MovePattern.NORTHWEST) {
+        if (movePattern == MovePattern.NE || movePattern == MovePattern.NW) {
             return isCatchable(targetPiece, color);
         }
         return false;

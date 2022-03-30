@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
-public abstract class PawnMoveStrategy extends MoveStrategy {
+public abstract class PawnMoveStrategy implements MoveStrategy {
 
     private static final int FORWARD_UNIT_BLACK = -1;
     private static final int FORWARD_UNIT_WHITE = 1;

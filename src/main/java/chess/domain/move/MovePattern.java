@@ -8,12 +8,10 @@ public enum MovePattern {
     SOUTH(0, -1),
     WEST(-1, 0),
     EAST(1, 0),
-    NORTHEAST(1, 1),
-    NORTHWEST(-1, 1),
-    SOUTHEAST(1, -1),
-    SOUTHWEST(-1, -1),
-    PAWN_START_MOVE_BLACK(0, -2),
-    PAWN_START_MOVE_WHITE(0, 2),
+    NE(1, 1),
+    NW(-1, 1),
+    SE(1, -1),
+    SW(-1, -1),
     NNW(-1, 2),
     NNE(1, 2),
     EEN(2, 1),
@@ -21,7 +19,9 @@ public enum MovePattern {
     SSE(1, -2),
     SSW(-1, -2),
     WWS(-2, -1),
-    WWN(-2, 1);
+    WWN(-2, 1),
+    PAWN_START_MOVE_OF_BLACK(0, -2),
+    PAWN_START_MOVE_OF_WHITE(0, 2);
 
     private final int horizon;
     private final int vertical;
