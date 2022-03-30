@@ -12,8 +12,6 @@ public class Bishop extends Piece {
     private static final String BLACK_DISPLAY = "♙";
     private static final String WHITE_DISPLAY = "♟";
 
-    private final List<Direction> directions = Direction.getDiagonalDirection();
-
     public Bishop(Color color, Position position) {
         super(color, position);
     }
@@ -38,8 +36,8 @@ public class Bishop extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        Direction targetDirection = Direction.findDirection(position, toPosition);
-        return directions.contains(targetDirection);
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isDiagonalDirection();
     }
 
     @Override

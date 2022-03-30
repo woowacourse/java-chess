@@ -12,8 +12,6 @@ public class Rook extends Piece {
     private static final String BLACK_DISPLAY = "♖";
     private static final String WHITE_DISPLAY = "♜";
 
-    private final List<Direction> directions = Direction.getCrossDirection();
-
     public Rook(Color color, Position position) {
         super(color, position);
     }
@@ -37,8 +35,8 @@ public class Rook extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        Direction targetDirection = Direction.findDirection(position, toPosition);
-        return directions.contains(targetDirection);
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isCrossDirection();
     }
 
     @Override

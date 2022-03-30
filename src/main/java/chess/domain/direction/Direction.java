@@ -3,10 +3,7 @@ package chess.domain.direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum Direction {
     UP(0, 1, 0),
@@ -81,35 +78,15 @@ public enum Direction {
         return source.findRelativeDegree(target);
     }
 
-    public static List<Direction> getCrossDirection() {
-        return Arrays.asList(UP,
-            DOWN,
-            LEFT,
-            RIGHT);
-    }
-
-    public static List<Direction> getDiagonalDirection() {
-        return Arrays.asList(LEFT_UP_DIAGONAL,
-            LEFT_DOWN_DIAGONAL,
-            RIGHT_UP_DIAGONAL,
-            RIGHT_DOWN_DIAGONAL);
-    }
-
-    public static List<Direction> getCrossAndDiagonalDirection() {
-        return Stream.of(getCrossDirection(), getDiagonalDirection())
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
-    }
-
-    public static List<Direction> getLShapeDiagonalDirection() {
-        return Arrays.asList(LEFT_LEFT_UP_DIAGONAL,
-            LEFT_LEFT_DOWN_DIAGONAL,
-            LEFT_UP_UP_DIAGONAL,
-            LEFT_DOWN_DOWN_DIAGONAL,
-            RIGHT_RIGHT_UP_DIAGONAL,
-            RIGHT_RIGHT_DOWN_DIAGONAL,
-            RIGHT_UP_UP_DIAGONAL,
-            RIGHT_DOWN_DOWN_DIAGONAL);
+    public boolean isLShapeDiagonalDirection() {
+        return this == LEFT_LEFT_UP_DIAGONAL
+            || this == LEFT_LEFT_DOWN_DIAGONAL
+            || this == LEFT_UP_UP_DIAGONAL
+            || this == LEFT_DOWN_DOWN_DIAGONAL
+            || this == RIGHT_RIGHT_UP_DIAGONAL
+            || this == RIGHT_RIGHT_DOWN_DIAGONAL
+            || this == RIGHT_UP_UP_DIAGONAL
+            || this == RIGHT_DOWN_DOWN_DIAGONAL;
     }
 
     public boolean isAttachedDownDirection() {
@@ -128,7 +105,20 @@ public enum Direction {
     public boolean isUpwardDiagonalDirection() {
         return this == LEFT_UP_DIAGONAL
             || this == RIGHT_UP_DIAGONAL;
+    }
 
+    public boolean isDiagonalDirection() {
+        return this == LEFT_DOWN_DIAGONAL
+            || this == RIGHT_DOWN_DIAGONAL
+            || this == LEFT_UP_DIAGONAL
+            || this == RIGHT_UP_DIAGONAL;
+    }
+
+    public boolean isCrossDirection() {
+        return this == LEFT
+            || this == RIGHT
+            || this == UP
+            || this == DOWN;
     }
 
 }

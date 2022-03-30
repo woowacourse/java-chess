@@ -12,8 +12,6 @@ public class Queen extends Piece {
     private static final String BLACK_DISPLAY = "♕";
     private static final String WHITE_DISPLAY = "♛";
 
-    private final List<Direction> directions = Direction.getCrossAndDiagonalDirection();
-
     public Queen(Color color, Position position) {
         super(color, position);
     }
@@ -38,8 +36,9 @@ public class Queen extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        Direction targetDirection = Direction.findDirection(position, toPosition);
-        return directions.contains(targetDirection);
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isCrossDirection()
+            || direction.isDiagonalDirection();
     }
 
     @Override

@@ -13,8 +13,6 @@ public class Knight extends Piece {
     private static final String BLACK_DISPLAY = "♘";
     private static final String WHITE_DISPLAY = "♞";
 
-    private final List<Direction> directions = Direction.getLShapeDiagonalDirection();
-
     public Knight(Color color, Position position) {
         super(color, position);
     }
@@ -38,8 +36,8 @@ public class Knight extends Piece {
     }
 
     private boolean isMovablePosition(Position toPosition) {
-        Direction targetDirection = Direction.findDirection(position, toPosition);
-        return directions.contains(targetDirection);
+        Direction direction = Direction.findDirection(position, toPosition);
+        return direction.isLShapeDiagonalDirection();
     }
 
     @Override
@@ -80,7 +78,7 @@ public class Knight extends Piece {
         }
         Knight knight = (Knight) o;
         return color == knight.color
-                && position == knight.position;
+            && position == knight.position;
     }
 
     @Override
@@ -91,9 +89,9 @@ public class Knight extends Piece {
     @Override
     public String toString() {
         return "Knight{" +
-                "color=" + color +
-                ", position=" + position +
-                '}';
+            "color=" + color +
+            ", position=" + position +
+            '}';
     }
 
 }
