@@ -15,6 +15,6 @@ public class RankTest {
     @Test
     @DisplayName("3가 입력되면 File.THREE을 반환한다")
     void find() {
-        assertThat(Rank.find("3")).isEqualTo(Rank.THREE);
+        assertThat(Rank.find('3')).isEqualTo(Rank.THREE);
     }
 }

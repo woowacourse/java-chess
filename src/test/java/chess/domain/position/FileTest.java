@@ -15,6 +15,6 @@ public class FileTest {
     @Test
     @DisplayName("e가 입력되면 File.E을 반환한다")
     void find() {
-        assertThat(File.find("e")).isEqualTo(File.E);
+        assertThat(File.find('e')).isEqualTo(File.E);
     }
 }
