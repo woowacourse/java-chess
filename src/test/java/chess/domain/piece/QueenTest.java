@@ -17,10 +17,10 @@ class QueenTest {
     void isNotMovable_withSamePosition() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
+        Optional<Piece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
 
         // when
-        boolean actual = queen.get().isMovable(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.D, YAxis.ONE));
+        boolean actual = queen.get().isAbleToMove(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.D, YAxis.ONE));
 
         // then
         assertThat(actual).isFalse();
@@ -31,10 +31,10 @@ class QueenTest {
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
+        Optional<Piece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
 
         // when
-        boolean actual = queen.get().isMovable(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
+        boolean actual = queen.get().isAbleToMove(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -45,10 +45,10 @@ class QueenTest {
     void isMovable_withSameYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
+        Optional<Piece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
 
         // when
-        boolean actual = queen.get().isMovable(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.D, YAxis.TWO));
+        boolean actual = queen.get().isAbleToMove(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.D, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -59,10 +59,10 @@ class QueenTest {
     void isMovable_withSameXAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
+        Optional<Piece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
 
         // when
-        boolean actual = queen.get().isMovable(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.ONE));
+        boolean actual = queen.get().isAbleToMove(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.ONE));
 
         // then
         assertThat(actual).isTrue();
@@ -73,10 +73,11 @@ class QueenTest {
     void isNotMovable_notOnDiagonal() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
+        Optional<Piece> queen = board.find(Position.from(XAxis.D, YAxis.ONE));
 
         // when
-        boolean actual = queen.get().isMovable(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE));
+        boolean actual = queen.get()
+                .isAbleToMove(Position.from(XAxis.D, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE));
 
         // then
         assertThat(actual).isFalse();

@@ -19,10 +19,10 @@ class KingTest {
     void isNotMovable_withSamePosition() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.ONE));
+        boolean actual = king.get().isAbleToMove(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.ONE));
 
         // then
         assertThat(actual).isFalse();
@@ -33,10 +33,10 @@ class KingTest {
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
+        boolean actual = king.get().isAbleToMove(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -47,10 +47,10 @@ class KingTest {
     void isMovable_withSameYAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
+        boolean actual = king.get().isAbleToMove(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
@@ -61,38 +61,40 @@ class KingTest {
     void isMovable_withSameXAxis() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
+        boolean actual = king.get().isAbleToMove(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.TWO));
 
         // then
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹은 대각선과 수직이 아닌 위치로 이동할 수 없다.")
+    @DisplayName("킹은 대각선 혹은 수직, 수평이 아닌 방향으로 이동할 수 없다.")
     @Test
     void isNotMovable_notOnDiagonal() {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.E, YAxis.THREE));
+        boolean actual = king.get()
+                .isAbleToMove(Position.from(XAxis.E, YAxis.ONE), Position.from(XAxis.F, YAxis.THREE));
 
         // then
         assertThat(actual).isFalse();
     }
 
+    @DisplayName("킹은 한번에 두칸 이상 이동할 수 없다.")
     @ParameterizedTest
     @CsvSource(value = {"G,THREE", "G,ONE", "C,ONE", "C,THREE", "H,FOUR"})
     void isNotMovable_MoreThanOne(String xAxisName, String yAxisName) {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
+        Optional<Piece> king = board.find(Position.from(XAxis.E, YAxis.ONE));
 
         // when
-        boolean actual = king.get().isMovable(Position.from(XAxis.E, YAxis.ONE),
+        boolean actual = king.get().isAbleToMove(Position.from(XAxis.E, YAxis.ONE),
                 Position.from(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
 
         // then

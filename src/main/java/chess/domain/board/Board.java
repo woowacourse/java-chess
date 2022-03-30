@@ -1,9 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
-import chess.domain.piece.PieceScore;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -14,9 +13,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Board {
-    private final Map<Position, AbstractPiece> value;
+    private final Map<Position, Piece> value;
 
-    private Board(Map<Position, AbstractPiece> value) {
+    private Board(Map<Position, Piece> value) {
         this.value = value;
     }
 
@@ -24,8 +23,8 @@ public class Board {
         return new Board(initBoard());
     }
 
-    private static Map<Position, AbstractPiece> initBoard() {
-        Map<Position, AbstractPiece> value = new HashMap<>();
+    private static Map<Position, Piece> initBoard() {
+        Map<Position, Piece> value = new HashMap<>();
 
         initializeSpecialPieces(value, YAxis.ONE, PieceColor.WHITE);
         initializeSpecialPieces(value, YAxis.EIGHT, PieceColor.BLACK);
@@ -36,13 +35,13 @@ public class Board {
         return value;
     }
 
-    private static void initializePawns(Map<Position, AbstractPiece> value, YAxis yAxis, PieceColor pieceColor) {
+    private static void initializePawns(Map<Position, Piece> value, YAxis yAxis, PieceColor pieceColor) {
         for (XAxis xAxis : XAxis.values()) {
             value.put(Position.from(xAxis, yAxis), PieceFactory.createPawn(pieceColor));
         }
     }
 
-    private static void initializeSpecialPieces(Map<Position, AbstractPiece> value, YAxis yAxis,
+    private static void initializeSpecialPieces(Map<Position, Piece> value, YAxis yAxis,
                                                 PieceColor pieceColor) {
         value.put(Position.from(XAxis.A, yAxis), PieceFactory.createRook(pieceColor));
         value.put(Position.from(XAxis.B, yAxis), PieceFactory.createNight(pieceColor));
@@ -54,21 +53,21 @@ public class Board {
         value.put(Position.from(XAxis.H, yAxis), PieceFactory.createRook(pieceColor));
     }
 
-    public Optional<AbstractPiece> find(Position position) {
+    public Optional<Piece> find(Position position) {
         return Optional.ofNullable(value.get(position));
     }
 
     // TODO: 실패 원인을 클라이언트가 알 수 있게 개선
     public MoveResult executeCommand(Position from, Position to, PieceColor pieceColor) {
-        AbstractPiece piece = value.get(from);
+        Piece piece = value.get(from);
 
         if (Objects.isNull(piece)) {
             return MoveResult.EMPTY_CELL;
         }
-        if (!piece.isPieceColor(pieceColor)) {
+        if (!piece.isSameColorAs(pieceColor)) {
             return MoveResult.INVALID_TURN;
         }
-        AbstractPiece otherPiece = value.get(to);
+        Piece otherPiece = value.get(to);
 
         if (!piece.isAbleToJump() && hasObstacle(from, to)) {
             return MoveResult.HAS_OBSTACLE;
@@ -104,10 +103,10 @@ public class Board {
     }
 
     private MoveResult move(Position from, Position to) {
-        AbstractPiece piece = value.get(from);
-        AbstractPiece otherPiece = value.get(to);
+        Piece piece = value.get(from);
+        Piece otherPiece = value.get(to);
 
-        if (!piece.isMovable(from, to)) {
+        if (!piece.isAbleToMove(from, to)) {
             return MoveResult.INVALID_MOVE_STRATEGY;
         }
 
@@ -121,8 +120,8 @@ public class Board {
     }
 
     private MoveResult attack(Position from, Position to) {
-        AbstractPiece piece = value.get(from);
-        AbstractPiece otherPiece = value.get(to);
+        Piece piece = value.get(from);
+        Piece otherPiece = value.get(to);
 
         if (!piece.isAbleToAttack(from, to)) {
             return MoveResult.INVALID_MOVE_STRATEGY;
@@ -135,22 +134,22 @@ public class Board {
         value.put(to, piece);
         value.remove(from);
 
-        if (otherPiece.isPieceType(PieceScore.KING)) {
+        if (otherPiece.isKing()) {
             return MoveResult.KILL_KING;
         }
 
         return MoveResult.KILL_ENEMY;
     }
 
-    private boolean isExistingSameTeam(AbstractPiece piece, AbstractPiece otherPiece) {
-        return !Objects.isNull(otherPiece) && otherPiece.isSameTeam(piece);
+    private boolean isExistingSameTeam(Piece piece, Piece otherPiece) {
+        return !Objects.isNull(otherPiece) && otherPiece.isSameColorAs(piece);
     }
 
     public double calculateScore(PieceColor pieceColor) {
         return value.values()
                 .stream()
-                .filter(piece -> piece.isPieceColor(pieceColor))
-                .mapToDouble(AbstractPiece::getScore)
+                .filter(piece -> piece.isSameColorAs(pieceColor))
+                .mapToDouble(Piece::getScore)
                 .sum() - adjustPawnScore(pieceColor);
     }
 
@@ -178,8 +177,8 @@ public class Board {
         return (int) positions.stream()
                 .map(value::get)
                 .filter(piece -> !Objects.isNull(piece))
-                .filter(piece -> piece.isPieceColor(pieceColor))
-                .filter(piece -> piece.isPieceType(PieceScore.PAWN))
+                .filter(piece -> piece.isSameColorAs(pieceColor))
+                .filter(Piece::isPawn)
                 .count();
     }
 }

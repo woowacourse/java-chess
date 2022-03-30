@@ -2,10 +2,9 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.AbstractPiece;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -32,11 +31,10 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
-        Class<Pawn> expected = Pawn.class;
+        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.TWO));
 
         // when & then
-        assertThat(actual.get()).isExactlyInstanceOf(expected);
+        assertThat(actual.get().getPieceType()).isEqualTo(PieceType.PAWN);
     }
 
     @DisplayName("전달된 위치에 말이 없는 경우 빈 옵셔널을 반환한다.")
@@ -46,8 +44,8 @@ class BoardTest {
         Board board = Board.createInitializedBoard();
 
         // when
-        Optional<AbstractPiece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
-        Optional<AbstractPiece> expected = Optional.empty();
+        Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
+        Optional<Piece> expected = Optional.empty();
 
         // when & then
         assertThat(actual).isEqualTo(expected);
@@ -91,7 +89,7 @@ class BoardTest {
         board.executeCommand(Position.from(XAxis.C, YAxis.THREE), Position.from(XAxis.D, YAxis.FIVE), PieceColor.WHITE);
         board.executeCommand(Position.from(XAxis.D, YAxis.FIVE), Position.from(XAxis.E, YAxis.SEVEN), PieceColor.WHITE);
 
-        assertThat(board.find(Position.from(XAxis.E, YAxis.SEVEN)).get()).isInstanceOf(Knight.class);
+        assertThat(board.find(Position.from(XAxis.E, YAxis.SEVEN)).get().getPieceType()).isEqualTo(PieceType.KNIGHT);
     }
 
     @DisplayName("이동할 위치에 아군이 있는 경우 이동이 불가능하다.")

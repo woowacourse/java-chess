@@ -19,10 +19,10 @@ class NightTest {
     void isMovable_withSevenShape(String xAxisName, String yAxisName) {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
+        Optional<Piece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
 
         // when
-        boolean actual = knight.get().isMovable(Position.from(XAxis.B, YAxis.ONE),
+        boolean actual = knight.get().isAbleToMove(Position.from(XAxis.B, YAxis.ONE),
                 Position.from(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
 
         // then
@@ -35,10 +35,10 @@ class NightTest {
     void isNotMovable_withNotSevenShape(String xAxisName, String yAxisName) {
         // given
         Board board = Board.createInitializedBoard();
-        Optional<AbstractPiece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
+        Optional<Piece> knight = board.find(Position.from(XAxis.B, YAxis.ONE));
 
         // when
-        boolean actual = knight.get().isMovable(Position.from(XAxis.B, YAxis.ONE),
+        boolean actual = knight.get().isAbleToMove(Position.from(XAxis.B, YAxis.ONE),
                 Position.from(XAxis.valueOf(xAxisName), YAxis.valueOf(yAxisName)));
 
         // then

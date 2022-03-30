@@ -76,7 +76,7 @@ public class Position {
         return isInVerticalRange(other, range) && isSameXAxis(other);
     }
 
-    public boolean isFarFromMoreThanOne(Position other) {
+    public boolean isFartherThanOneStep(Position other) {
         int xAxisDelta = Math.abs(other.xAxis.getValue() - this.xAxis.getValue());
         int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
 
@@ -84,6 +84,7 @@ public class Position {
     }
 
     public boolean isOnSevenShape(Position other) {
+        // TODO: 리팩토링
         boolean condition1 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 2
                 && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 1;
 

@@ -2,27 +2,27 @@ package chess.domain.piece;
 
 public class PieceFactory {
 
-    public static Pawn createPawn(PieceColor pieceColor) {
-        return new Pawn(pieceColor);
+    public static Piece createPawn(PieceColor pieceColor) {
+        return new Piece(PieceType.PAWN, pieceColor);
     }
 
-    public static Rook createRook(PieceColor pieceColor) {
-        return new Rook(pieceColor);
+    public static Piece createRook(PieceColor pieceColor) {
+        return new Piece(PieceType.ROOK, pieceColor);
     }
 
-    public static Knight createNight(PieceColor pieceColor) {
-        return new Knight(pieceColor);
+    public static Piece createNight(PieceColor pieceColor) {
+        return new Piece(PieceType.KNIGHT, pieceColor);
     }
 
-    public static Bishop createBishop(PieceColor pieceColor) {
-        return new Bishop(pieceColor);
+    public static Piece createBishop(PieceColor pieceColor) {
+        return new Piece(PieceType.BISHOP, pieceColor);
     }
 
-    public static Queen createQueen(PieceColor pieceColor) {
-        return new Queen(pieceColor);
+    public static Piece createQueen(PieceColor pieceColor) {
+        return new Piece(PieceType.QUEEN, pieceColor);
     }
 
-    public static King createKing(PieceColor pieceColor) {
-        return new King(pieceColor);
+    public static Piece createKing(PieceColor pieceColor) {
+        return new Piece(PieceType.KING, pieceColor);
     }
 }
