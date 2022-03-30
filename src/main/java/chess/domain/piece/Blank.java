@@ -33,7 +33,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public void move(Position destination) {
+    public void move(Piece destination) {
         throw new IllegalArgumentException("Blank는 움직일 수 없습니다.");
     }
 }

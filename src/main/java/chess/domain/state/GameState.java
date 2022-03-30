@@ -11,11 +11,9 @@ public interface GameState {
 
     GameState move(String source, String destination);
 
-    Map<Row, Rank> getBoard();
+    Map<Position, Piece> getBoard();
 
     boolean isFinished();
-
-    int getTeamScore();
 
     Team getTeam();
 }

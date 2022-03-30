@@ -1,10 +1,40 @@
 package chess.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import static java.util.stream.Collectors.toMap;
+
 public class Position {
+    private final static Map<String, Position> positions;
+
     private final Column col;
     private final Row row;
+
+    static {
+        positions = createPositions().stream()
+                .collect(toMap(Position::getPositionToString, position -> position));
+    }
+
+    private static List<Position> createPositions() {
+        List<Position> positions = new ArrayList<>();
+        for (Row row : Row.values()) {
+            createPosition(positions, row);
+        }
+        return positions;
+    }
+
+    private static void createPosition(List<Position> positions, Row row) {
+        for (Column col : Column.values()) {
+            positions.add(new Position(col, row));
+        }
+    }
+
+    private static String getPositionToString(Position position) {
+        return position.getCol().getSymbol() + position.getRow().getSymbol();
+    }
 
     public Position(Column col, Row row) {
         this.col = col;
@@ -13,9 +43,7 @@ public class Position {
 
     public static Position from(String position) throws RuntimeException{
         validateLength(position);
-        Column col = Column.find(position.charAt(0));
-        Row row = Row.find(Character.getNumericValue(position.charAt(1)));
-        return new Position(col, row);
+        return positions.get(position);
     }
 
     private static void validateLength(String position) {

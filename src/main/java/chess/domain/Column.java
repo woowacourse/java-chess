@@ -29,6 +29,10 @@ public enum Column {
         return this.value - col.value;
     }
 
+    public String getSymbol() {
+        return String.valueOf(value);
+    }
+
     public Column plusColumn(int number) {
         return find((char)(value + number));
     }

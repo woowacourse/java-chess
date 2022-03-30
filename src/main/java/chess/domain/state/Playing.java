@@ -9,15 +9,14 @@ import java.util.Map;
 
 public abstract class Playing implements GameState {
 
-    private final Map<Row, Rank> board;
+    private final Map<Position, Piece> board;
 
-    public Playing(Map<Row, Rank> board) {
+    public Playing(Map<Position, Piece> board) {
         this.board = board;
     }
 
     public Piece getPiece(Position position) {
-        Rank rank = board.get(position.getRow());
-        return rank.getPiece(position.getCol());
+        return board.get(position);
     }
 
     abstract Playing turn();
@@ -26,16 +25,16 @@ public abstract class Playing implements GameState {
         Piece sourcePiece = getPiece(Position.from(source));
         Piece destinationPiece = getPiece(Position.from(destination));
         validateMovePiece(sourcePiece, destinationPiece);
-        movePiece(source, destination, sourcePiece);
+        movePiece(sourcePiece, destinationPiece);
         if (destinationPiece.isKing()) {
             return finished();
         }
         return turn();
     }
 
-    private void movePiece(String source, String destination, Piece sourcePiece) {
-        sourcePiece.move(Position.from(destination));
-        changePiece(Position.from(source), Position.from(destination), sourcePiece);
+    private void movePiece(Piece sourcePiece, Piece destinationPiece) {
+        changePiece(sourcePiece, destinationPiece);
+        sourcePiece.move(destinationPiece);
     }
 
     private void validateMovePiece(Piece source, Piece destination) {
@@ -80,12 +79,12 @@ public abstract class Playing implements GameState {
 
     abstract void validateTeam(Piece piece);
 
-    private void changePiece(Position source, Position destination, Piece piece) {
-        board.get(source.getRow()).changePiece(source.getCol(), new Blank(Team.NONE, source));
-        board.get(destination.getRow()).changePiece(destination.getCol(), piece);
+    private void changePiece(Piece sourcePiece, Piece destinationPiece) {
+        board.put(destinationPiece.getPosition(), sourcePiece);
+        board.put(sourcePiece.getPosition(), new Blank(Team.NONE, sourcePiece.getPosition()));
     }
 
-    public Map<Row, Rank> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return board;
     }
 

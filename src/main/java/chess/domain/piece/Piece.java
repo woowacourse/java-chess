@@ -38,8 +38,8 @@ public abstract class Piece {
         return false;
     }
 
-    public void move(Position destination) {
-        position = destination;
+    public void move(Piece destination) {
+        position = destination.getPosition();
     }
 
     public double getScore() {

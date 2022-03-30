@@ -29,6 +29,10 @@ public enum Row {
         return this.value - row.value;
     }
 
+    public String getSymbol() {
+        return String.valueOf(value);
+    }
+
     public Row plusRow(int number) {
         return find(value + number);
     }

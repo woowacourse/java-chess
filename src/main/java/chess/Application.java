@@ -1,5 +1,7 @@
 package chess;
 
+import chess.domain.Score;
+import chess.domain.Team;
 import chess.domain.state.BoardInitialize;
 import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
@@ -25,7 +27,9 @@ public class Application {
             List<String> input = InputView.requestCommand();
             Command command = Command.of(input.get(0));
             if (command == Command.STATUS) {
-                OutputView.printStatus(gameState.getTeamScore(), gameState.getTeamScore());
+                double whiteTeamScore = new Score(gameState.getBoard(), Team.WHITE).getTotalScore();
+                double blackTeamScore = new Score(gameState.getBoard(), Team.BLACK).getTotalScore();
+                OutputView.printStatus(whiteTeamScore, blackTeamScore);
                 continue;
             }
             gameState = gameState.move(input.get(1), input.get(2));
