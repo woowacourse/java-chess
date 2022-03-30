@@ -40,6 +40,7 @@ public class ChessGame {
 
     public List<List<Piece>> board() {
         ChessBoard chessBoard = state.chessBoard();
-        return chessBoard.getBoard();
+        Board board = chessBoard.getBoard();
+        return board.getValue();
     }
 }

@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.LengthBasedMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class King extends Piece {
 
@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position source, Position target) {
+    public void validateMove(Board board, Position source, Position target) {
         if (MOVING_STRATEGY.canMove(board, source, target)) {
             return;
         }

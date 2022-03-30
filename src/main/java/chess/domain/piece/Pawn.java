@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.piece.strategy.pawn.BlackPawnCaptureMovingStrategy;
@@ -38,7 +39,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position source, Position target) {
+    public void validateMove(Board board, Position source, Position target) {
         boolean canMove = movingStrategies.stream()
                 .anyMatch(pawnMovingStrategy -> pawnMovingStrategy.canMove(board, source, target));
 

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.position.Position;
-import java.util.List;
 
 public abstract class Piece {
 
@@ -14,11 +14,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract void validateMove(List<List<Piece>> board, Position source, Position target);
-
-    public boolean isBlack() {
-        return color.isBlack();
-    }
+    public abstract void validateMove(Board board, Position source, Position target);
 
     public boolean isSameColor(Color color) {
         return this.color == color;

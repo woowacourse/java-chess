@@ -1,13 +1,15 @@
 package chess.domain.piece;
 
+import static chess.domain.BoardFixtures.generateEmptyChessBoard;
+import static chess.domain.BoardFixtures.setPiece;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import chess.domain.BoardFixtures;
+import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class QueenTest {
 
-    private static final Position queenSourcePosition = new Position("d1");
+    private static final String SOURCE_POSITION = "d1";
 
     private static Stream<Arguments> generatePossiblePositions() {
         List<String> positions = List.of(
@@ -37,24 +39,26 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
     void 이동_가능한_경우_예외를_던지지_않는다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        ChessBoard chessBoard = generateEmptyChessBoard();
+
         Queen queen = new Queen(Color.WHITE);
+        setPiece(chessBoard, SOURCE_POSITION, queen);
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
-
-        assertDoesNotThrow(() -> queen.validateMove(board, queenSourcePosition, targetPosition));
+        assertDoesNotThrow(
+                () -> queen.validateMove(chessBoard.getBoard(), new Position(SOURCE_POSITION), targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
     @ParameterizedTest
     @MethodSource("generateImpossiblePositions")
     void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        ChessBoard chessBoard = generateEmptyChessBoard();
+
         Queen queen = new Queen(Color.WHITE);
+        setPiece(chessBoard, SOURCE_POSITION, queen);
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
-
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, targetPosition))
+        assertThatThrownBy(
+                () -> queen.validateMove(chessBoard.getBoard(), new Position(SOURCE_POSITION), targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -62,26 +66,29 @@ class QueenTest {
     @ParameterizedTest
     @ValueSource(strings = {"d3", "d4", "d5", "d6", "d7", "d8", "b3", "a4", "f3", "g4", "h5"})
     void 이동_가능하고_기물이_위치한_경우_예외를_던진다(String target) {
-        List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
+        ChessBoard chessBoard = generateEmptyChessBoard();
+
         Queen queen = new Queen(Color.WHITE);
+        setPiece(chessBoard, SOURCE_POSITION, queen);
+        setPiece(chessBoard, target, queen);
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
-
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, new Position(target)))
+        assertThatThrownBy(
+                () -> queen.validateMove(chessBoard.getBoard(), new Position(SOURCE_POSITION), new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("target 위치에 같은 진영의 기물이 위치한 경우 경우 예외를 던진다.")
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
-    void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
+    void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(String target) {
+        ChessBoard chessBoard = generateEmptyChessBoard();
+
         Queen queen = new Queen(Color.WHITE);
+        setPiece(chessBoard, SOURCE_POSITION, queen);
+        setPiece(chessBoard, target, new Pawn(Color.WHITE));
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
-        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
-
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, targetPosition))
+        assertThatThrownBy(
+                () -> queen.validateMove(chessBoard.getBoard(), new Position(SOURCE_POSITION), new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

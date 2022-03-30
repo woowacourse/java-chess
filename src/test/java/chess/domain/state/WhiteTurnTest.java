@@ -1,8 +1,8 @@
 package chess.domain.state;
 
+import static chess.domain.BoardFixtures.generateBlackKingChessBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.BoardFixtures;
 import chess.domain.ChessBoard;
 import chess.domain.generator.InitBoardGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ public class WhiteTurnTest {
     @DisplayName("WhiteTurn에서 move를 실행했을때 상대방의 King을 잡았다면 WhiteWin 상태로 변경된다.")
     @Test
     void WhiteTurn에서_move실행_King을_잡은경우_WhiteWin으로_상태가_변경된다() {
-        State state = new WhiteTurn(BoardFixtures.generateBlackKingChessBoard());
+        State state = new WhiteTurn(generateBlackKingChessBoard());
 
         state = state.move("a7", "a8");
 

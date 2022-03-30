@@ -5,6 +5,7 @@ import static chess.domain.position.Direction.LEFT;
 import static chess.domain.position.Direction.RIGHT;
 import static chess.domain.position.Direction.TOP;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.LinearMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
@@ -23,7 +24,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position source, Position target) {
+    public void validateMove(Board board, Position source, Position target) {
         if (MOVING_STRATEGY.canMove(board, source, target)) {
             return;
         }

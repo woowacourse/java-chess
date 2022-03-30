@@ -1,10 +1,10 @@
 package chess.domain.piece.strategy.pawn;
 
+import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
 
@@ -12,7 +12,7 @@ public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
     private static final Direction MOVABLE_DIRECTION = Direction.TOP;
 
     @Override
-    public boolean canMove(List<List<Piece>> board, Position source, Position target) {
+    public boolean canMove(Board board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
         double distance = source.calculateDistance(target);
 
@@ -20,12 +20,12 @@ public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
                 && (canMoveTwoPosition(board, distance, source) || canMoveOnePosition(board, distance, source));
     }
 
-    private boolean canMoveTwoPosition(List<List<Piece>> board, double distance, Position source) {
+    private boolean canMoveTwoPosition(Board board, double distance, Position source) {
         Position currentPosition = source.add(MOVABLE_DIRECTION);
-        Piece currentPiece = findPiece(board, currentPosition);
+        Piece currentPiece = board.findPiece(currentPosition);
 
         currentPosition = currentPosition.add(MOVABLE_DIRECTION);
-        Piece targetPiece = findPiece(board, currentPosition);
+        Piece targetPiece = board.findPiece(currentPosition);
 
         return source.getRankIndex() == RANK_INDEX_STARTING_POINT
                 && distance == 4
@@ -33,18 +33,11 @@ public class WhitePawnStartingPointMovingStrategy implements MovingStrategy {
                 && targetPiece.isEmpty();
     }
 
-    private boolean canMoveOnePosition(List<List<Piece>> board, double distance, Position source) {
-        Piece targetPosition = findPiece(board, source.add(MOVABLE_DIRECTION));
+    private boolean canMoveOnePosition(Board board, double distance, Position source) {
+        Piece targetPosition = board.findPiece(source.add(MOVABLE_DIRECTION));
 
         return source.getRankIndex() == RANK_INDEX_STARTING_POINT
                 && distance == 1
                 && targetPosition.isEmpty();
-    }
-
-    private Piece findPiece(List<List<Piece>> board, Position position) {
-        int rankIndex = position.getRankIndex();
-        int fileIndex = position.getFileIndex();
-
-        return board.get(rankIndex).get(fileIndex);
     }
 }

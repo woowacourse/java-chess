@@ -7,10 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.ChessBoard;
 import chess.domain.Color;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,11 +21,10 @@ class BlackPawnCaptureMovingStrategyTest {
     void black_pawn은_아래_오른쪽_왼쪽_capture_가능하다(String source, String target, boolean expected) {
         MovingStrategy movingStrategy = new BlackPawnCaptureMovingStrategy();
         ChessBoard chessBoard = generateEmptyChessBoard();
-        List<List<Piece>> board = chessBoard.getBoard();
-        setPiece(board, source, new Pawn(Color.BLACK));
-        setPiece(board, target, new Pawn(Color.WHITE));
+        setPiece(chessBoard, source, new Pawn(Color.BLACK));
+        setPiece(chessBoard, target, new Pawn(Color.WHITE));
 
-        boolean result = movingStrategy.canMove(board, new Position(source), new Position(target));
+        boolean result = movingStrategy.canMove(chessBoard.getBoard(), new Position(source), new Position(target));
 
         assertThat(result).isEqualTo(expected);
     }

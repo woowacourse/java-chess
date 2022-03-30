@@ -2,7 +2,6 @@ package chess.domain;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.generator.InitBoardGenerator;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
@@ -71,41 +70,38 @@ public class BoardFixtures {
                 .collect(toList());
     }
 
-    public static ChessBoard generateInitChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
-
-        return chessBoard;
-    }
-
     public static ChessBoard generatePawnChessBoard() {
         ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = chessBoard.getBoard();
+        List<List<Piece>> value = board.getValue();
 
-        board.get(0).set(0, new Pawn(Color.BLACK));
-        board.get(1).set(0, new Pawn(Color.BLACK));
-        board.get(2).set(0, new Pawn(Color.BLACK));
+        value.get(0).set(0, new Pawn(Color.BLACK));
+        value.get(1).set(0, new Pawn(Color.BLACK));
+        value.get(2).set(0, new Pawn(Color.BLACK));
 
         return chessBoard;
     }
 
     public static ChessBoard generateWhiteKingChessBoard() {
         ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = chessBoard.getBoard();
+        List<List<Piece>> value = board.getValue();
 
-        board.get(0).set(0, new King(Color.WHITE));
-        board.get(1).set(0, new Queen(Color.BLACK));
-        board.get(2).set(0, new King(Color.BLACK));
+        value.get(0).set(0, new King(Color.WHITE));
+        value.get(1).set(0, new Queen(Color.BLACK));
+        value.get(2).set(0, new King(Color.BLACK));
 
         return chessBoard;
     }
 
     public static ChessBoard generateBlackKingChessBoard() {
         ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = chessBoard.getBoard();
+        List<List<Piece>> value = board.getValue();
 
-        board.get(0).set(0, new King(Color.BLACK));
-        board.get(1).set(0, new Queen(Color.WHITE));
-        board.get(2).set(0, new King(Color.WHITE));
+        value.get(0).set(0, new King(Color.BLACK));
+        value.get(1).set(0, new Queen(Color.WHITE));
+        value.get(2).set(0, new King(Color.WHITE));
 
         return chessBoard;
     }
@@ -116,10 +112,13 @@ public class BoardFixtures {
                 .collect(toList());
     }
 
-    public static List<List<Piece>> setPiece(List<List<Piece>> board, String inputPosition, Piece piece) {
+    public static List<List<Piece>> setPiece(ChessBoard chessBoard, String inputPosition, Piece piece) {
         Position position = new Position(inputPosition);
-        board.get(position.getRankIndex()).set(position.getFileIndex(), piece);
+        Board board = chessBoard.getBoard();
+        List<List<Piece>> value = board.getValue();
 
-        return board;
+        value.get(position.getRankIndex()).set(position.getFileIndex(), piece);
+
+        return value;
     }
 }
