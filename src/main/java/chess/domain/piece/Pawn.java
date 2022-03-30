@@ -8,16 +8,15 @@ import java.util.Objects;
 
 public final class Pawn extends Piece {
 
-    public static final char BLACK_INIT_RANK = '7';
-    public static final char WHITE_INIT_RANK = '2';
+    private static final String NAME = "Pawn";
 
     private static final double DEFAULT_SCORE = 1;
 
+    public static final char BLACK_INIT_RANK = '7';
+    public static final char WHITE_INIT_RANK = '2';
+
     private static final int MOVABLE_RANK_DIFFERENCE = 1;
     private static final int JUMPABLE_RANK_DIFFERENCE = 2;
-
-    private static final String BLACK_DISPLAY = "♗";
-    private static final String WHITE_DISPLAY = "♝";
 
     private static final String INVALID_ATTACKABLE_POSITION_EXCEPTION_MESSAGE = "공격할 수 없는 위치입니다.";
 
@@ -126,11 +125,8 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public String display() {
-        if (color.isBlack()) {
-            return BLACK_DISPLAY;
-        }
-        return WHITE_DISPLAY;
+    public String name() {
+        return NAME;
     }
 
     @Override

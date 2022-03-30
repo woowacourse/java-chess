@@ -74,20 +74,11 @@ public class QueenTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("흑색의 퀸의 display는 ♕이다.")
+    @DisplayName("퀸의 name은 Queen이다.")
     @Test
-    void display_black() {
-        String actual = new Queen(Color.BLACK, Position.of("a1")).display();
-        String expected = "♕";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 퀸의 display는 ♛이다.")
-    @Test
-    void display_white() {
-        String actual = new Queen(Color.WHITE, Position.of("a1")).display();
-        String expected = "♛";
+    void name() {
+        String actual = new Queen(Color.BLACK, Position.of("a1")).name();
+        String expected = "Queen";
 
         assertThat(actual).isEqualTo(expected);
     }

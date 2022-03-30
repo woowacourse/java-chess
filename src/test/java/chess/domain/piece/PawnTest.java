@@ -138,20 +138,11 @@ public class PawnTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("흑색의 폰의 display는 ♗이다.")
+    @DisplayName("폰의 name은 Pawn이다.")
     @Test
-    void display_black() {
-        String actual = new Pawn(Color.BLACK, Position.of("a1")).display();
-        String expected = "♗";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 폰의 display는 ♝이다.")
-    @Test
-    void display_white() {
-        String actual = new Pawn(Color.WHITE, Position.of("a1")).display();
-        String expected = "♝";
+    void name() {
+        String actual = new Pawn(Color.BLACK, Position.of("a1")).name();
+        String expected = "Pawn";
 
         assertThat(actual).isEqualTo(expected);
     }

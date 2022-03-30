@@ -63,20 +63,11 @@ public class KnightTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("흑색의 나이트의 display는 ♘이다.")
+    @DisplayName("나이트의 이름은 Knight이다.")
     @Test
-    void display_black() {
-        String actual = new Knight(Color.BLACK, Position.of("a1")).display();
-        String expected = "♘";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 나이트의 display는 ♞이다.")
-    @Test
-    void display_white() {
-        String actual = new Knight(Color.WHITE, Position.of("a1")).display();
-        String expected = "♞";
+    void name() {
+        String actual = new Knight(Color.BLACK, Position.of("a1")).name();
+        String expected = "Knight";
 
         assertThat(actual).isEqualTo(expected);
     }

@@ -51,20 +51,11 @@ public class RookTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("흑색의 룩의 display는 ♖이다.")
+    @DisplayName("룩의 name은 Rook이다.")
     @Test
-    void display_black() {
-        String actual = new Rook(Color.BLACK, Position.of("a1")).display();
-        String expected = "♖";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 룩의 display는 ♜이다.")
-    @Test
-    void display_white() {
-        String actual = new Rook(Color.WHITE, Position.of("a1")).display();
-        String expected = "♜";
+    void name() {
+        String actual = new Rook(Color.BLACK, Position.of("a1")).name();
+        String expected = "Rook";
 
         assertThat(actual).isEqualTo(expected);
     }

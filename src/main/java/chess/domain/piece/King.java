@@ -7,11 +7,11 @@ import java.util.Objects;
 
 public class King extends Piece {
 
-    private static final String BLACK_DISPLAY = "♔";
-    private static final String WHITE_DISPLAY = "♚";
-    private static final int MAX_MOVE_DIFFERENCE = 1;
+    private static final String NAME = "King";
 
     private static final double SCORE = 0;
+
+    private static final int MAX_MOVE_DIFFERENCE = 1;
 
     public King(Color color, Position position) {
         super(color, position);
@@ -64,11 +64,8 @@ public class King extends Piece {
     }
 
     @Override
-    public String display() {
-        if (color.isBlack()) {
-            return BLACK_DISPLAY;
-        }
-        return WHITE_DISPLAY;
+    public String name() {
+        return NAME;
     }
 
     @Override

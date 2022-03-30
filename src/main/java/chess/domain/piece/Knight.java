@@ -8,10 +8,9 @@ import java.util.Objects;
 
 public class Knight extends Piece {
 
-    private static final double SCORE = 2.5;
+    private static final String NAME = "Knight";
 
-    private static final String BLACK_DISPLAY = "♘";
-    private static final String WHITE_DISPLAY = "♞";
+    private static final double SCORE = 2.5;
 
     public Knight(Color color, Position position) {
         super(color, position);
@@ -61,11 +60,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public String display() {
-        if (color.isBlack()) {
-            return BLACK_DISPLAY;
-        }
-        return WHITE_DISPLAY;
+    public String name() {
+        return NAME;
     }
 
     @Override

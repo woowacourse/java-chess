@@ -7,10 +7,9 @@ import java.util.Objects;
 
 public class Bishop extends Piece {
 
-    private static final double SCORE = 3;
+    private static final String NAME = "Bishop";
 
-    private static final String BLACK_DISPLAY = "♙";
-    private static final String WHITE_DISPLAY = "♟";
+    private static final double SCORE = 3;
 
     public Bishop(Color color, Position position) {
         super(color, position);
@@ -61,11 +60,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public String display() {
-        if (color.isBlack()) {
-            return BLACK_DISPLAY;
-        }
-        return WHITE_DISPLAY;
+    public String name() {
+        return NAME;
     }
 
     @Override

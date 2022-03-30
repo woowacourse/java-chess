@@ -27,8 +27,8 @@ public class KingTest {
         King king = new King(Color.WHITE, Position.of("e1"));
 
         assertThatCode(() -> king.move(Position.of("c3")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("킹은 attack시 move와 같은 방향으로 이동한다.")
@@ -63,20 +63,11 @@ public class KingTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("흑색의 킹의 display는 ♔이다.")
+    @DisplayName("킹의 name은 King")
     @Test
-    void display_black() {
-        String actual = new King(Color.BLACK, Position.of("a1")).display();
-        String expected = "♔";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 킹의 display는 ♚이다.")
-    @Test
-    void display_white() {
-        String actual = new King(Color.WHITE, Position.of("a1")).display();
-        String expected = "♚";
+    void name() {
+        String actual = new King(Color.BLACK, Position.of("a1")).name();
+        String expected = "King";
 
         assertThat(actual).isEqualTo(expected);
     }

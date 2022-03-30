@@ -7,10 +7,9 @@ import java.util.Objects;
 
 public class Rook extends Piece {
 
-    private static final double SCORE = 5;
+    private static final String NAME = "Rook";
 
-    private static final String BLACK_DISPLAY = "♖";
-    private static final String WHITE_DISPLAY = "♜";
+    private static final double SCORE = 5;
 
     public Rook(Color color, Position position) {
         super(color, position);
@@ -60,11 +59,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public String display() {
-        if (color.isBlack()) {
-            return BLACK_DISPLAY;
-        }
-        return WHITE_DISPLAY;
+    public String name() {
+        return NAME;
     }
 
     @Override

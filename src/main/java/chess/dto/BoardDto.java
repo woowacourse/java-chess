@@ -40,7 +40,7 @@ public class BoardDto {
     private static String squareView(List<Piece> currentRowChessMen, int fileIdx) {
         return currentRowChessMen.stream()
             .filter(piece -> extractFileIdx(piece) == fileIdx)
-            .map(Piece::display)
+            .map(piece -> PieceSymbol.findSymbol(piece.getColor(), piece.name()))
             .findFirst()
             .orElse(EMPTY_SQUARE_DISPLAY);
     }

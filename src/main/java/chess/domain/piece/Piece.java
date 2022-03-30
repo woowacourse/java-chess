@@ -49,7 +49,7 @@ public abstract class Piece {
 
     abstract public double score();
 
-    abstract public String display();
+    abstract public String name();
 
     public Position getPosition() {
         return position;

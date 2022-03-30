@@ -63,20 +63,11 @@ public class BishopTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("흑색의 비숍의 display는 ♙이다.")
+    @DisplayName("비숍의 name은 Bishop")
     @Test
-    void display_black() {
-        String actual = new Bishop(Color.BLACK, Position.of("a1")).display();
-        String expected = "♙";
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("백색의 비숍의 display는 ♟이다.")
-    @Test
-    void display_white() {
-        String actual = new Bishop(Color.WHITE, Position.of("a1")).display();
-        String expected = "♟";
+    void name() {
+        String actual = new Bishop(Color.BLACK, Position.of("a1")).name();
+        String expected = "Bishop";
 
         assertThat(actual).isEqualTo(expected);
     }
