@@ -11,6 +11,8 @@ import chess.view.PieceRepresentation;
 
 public class BoardResponse extends Response {
 
+    public static final int DECIMAL = 10;
+
     private BoardResponse(Map<String, String> information, String metaInformation) {
         super(information, metaInformation);
     }
@@ -36,6 +38,6 @@ public class BoardResponse extends Response {
     }
 
     private static String toKey(int i, int j) {
-        return String.valueOf(i * 10 + j);
+        return String.valueOf(i * DECIMAL + j);
     }
 }

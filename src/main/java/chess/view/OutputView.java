@@ -5,7 +5,10 @@ import java.util.function.BiConsumer;
 
 import chess.controller.Command;
 import chess.domain.board.LineNumber;
+import chess.domain.board.Point;
+import chess.dto.BoardResponse;
 import chess.dto.Response;
+import chess.dto.ScoreResponse;
 
 public class OutputView {
 
@@ -61,7 +64,7 @@ public class OutputView {
     }
 
     private static String toKey(int i, int j) {
-        return String.valueOf(i * 10 + j);
+        return String.valueOf(i * BoardResponse.DECIMAL + j);
     }
 
     private void printScore(Response response) {
