@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.board.Column;
-import chess.domain.board.MatchResult;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.command.StatusResult;
@@ -32,31 +31,19 @@ public class OutputView {
         System.out.println("블랙 진영의 점수는 " + status.getBlackScore().get() + "입니다.");
         System.out.println("화이트 진영의 점수는 " + status.getWhiteScore().get() + "입니다.");
 
-        printWinner(findWinner(status));
+        printWinner(status);
     }
 
-    private static MatchResult findWinner(StatusResult status) {
+    private static void printWinner(StatusResult status) {
         double whiteScore = status.getWhiteScore().get();
         double blackScore = status.getBlackScore().get();
 
         if (whiteScore > blackScore) {
-            return MatchResult.WHITE_WIN;
-        }
-        if (whiteScore < blackScore) {
-            return MatchResult.BLACK_WIN;
-        }
-        return MatchResult.DRAW;
-    }
-
-    private static void printWinner(MatchResult result) {
-        if (result == MatchResult.BLACK_WIN) {
             System.out.println("블랙 진영이 이기고 있습니다.");
         }
-        if (result == MatchResult.WHITE_WIN) {
+        if (whiteScore < blackScore) {
             System.out.println("화이트 진영이 이기고 있습니다.");
         }
-        if (result == MatchResult.DRAW) {
-            System.out.println("무승부입니다.");
-        }
+        System.out.println("무승부입니다.");
     }
 }
