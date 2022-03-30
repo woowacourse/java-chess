@@ -38,7 +38,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public List<Position> getRoute(Position from, Position to) {
-        return moveStrategy.getRoute(from, to);
+        return moveStrategy.calculateRoute(from, to);
     }
 
     public String getName() {

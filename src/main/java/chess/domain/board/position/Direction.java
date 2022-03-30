@@ -54,6 +54,16 @@ public enum Direction {
                 .collect(Collectors.toList());
     }
 
+    public static boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
+        return directions.stream()
+                .noneMatch(direction -> direction.isSameDirection(from, to));
+    }
+
+    public static boolean isInvalidDistance(Position from, Position to, List<Direction> directions) {
+        return directions.stream()
+                .noneMatch(direction -> direction.isSameDistance(from, to));
+    }
+
     public boolean isSameDirection(Position from, Position to) {
         return Math.atan2(from.getYDistance(to), from.getXDistance(to)) == Math.atan2(y, x);
     }

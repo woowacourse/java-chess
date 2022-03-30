@@ -21,18 +21,13 @@ public final class PawnMoveStrategy extends MoveStrategy {
         List<Direction> directions = pawnDirection(team);
         Direction nowDirection = Direction.of(from, to);
 
-        if (isInvalidDirection(from, to, directions)) {
+        if (Direction.isInvalidDistance(from, to, directions)) {
             validateInitDirection(team, from, to, directions);
         }
         if (isDiagonal(nowDirection, directions) && !targetPiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
         return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
-    }
-
-    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .noneMatch(direction -> direction.isSameDistance(from, to));
     }
 
     private void validateInitDirection(Team team, Position from, Position to, List<Direction> directions) {

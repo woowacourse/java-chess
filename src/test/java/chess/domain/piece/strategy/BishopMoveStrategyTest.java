@@ -58,7 +58,7 @@ class BishopMoveStrategyTest {
     void getRoute() {
         BishopMoveStrategy bishopMoveStrategy = new BishopMoveStrategy();
 
-        List<Position> route = bishopMoveStrategy.getRoute(
+        List<Position> route = bishopMoveStrategy.calculateRoute(
                 new Position(Column.C, Rank.ONE), new Position(Column.G, Rank.FIVE));
 
         assertThat(route).containsAll(

@@ -20,7 +20,7 @@ public final class BishopMoveStrategy extends MoveStrategy {
     public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = bishopDirection(team);
 
-        if (isInvalidDirection(from, to, directions)) {
+        if (Direction.isInvalidDirection(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 

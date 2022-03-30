@@ -1,5 +1,6 @@
 package chess.domain.board.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +38,18 @@ public final class Position {
         return Arrays.stream(input.substring(POSITION_BEGIN_INDEX).split(SEPARATOR))
                 .map(Position::from)
                 .collect(Collectors.toList());
+    }
+
+    public static List<Position> calculateRoute(Position from, Position to) {
+        Direction direction = Direction.of(from, to);
+        List<Position> positions = new ArrayList<>();
+        Position movedPosition = from.advancePosition(direction);
+
+        while (!movedPosition.equals(to)) {
+            positions.add(movedPosition);
+            movedPosition = movedPosition.advancePosition(direction);
+        }
+        return positions;
     }
 
     public Position advancePosition(Direction direction) {

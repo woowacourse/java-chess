@@ -14,7 +14,7 @@ public final class QueenMoveStrategy extends MoveStrategy {
     public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = Direction.royalDirection(team);
 
-        if (isInvalidDirection(from, to, directions)) {
+        if (Direction.isInvalidDirection(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 

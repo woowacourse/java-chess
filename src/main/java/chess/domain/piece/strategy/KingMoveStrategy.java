@@ -14,7 +14,7 @@ public final class KingMoveStrategy extends MoveStrategy {
     public boolean canMove(Team team, Piece targetPiece, Position from, Position to) {
         List<Direction> directions = Direction.royalDirection(team);
 
-        if (isInvalidDistance(from, to, directions)) {
+        if (Direction.isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
 

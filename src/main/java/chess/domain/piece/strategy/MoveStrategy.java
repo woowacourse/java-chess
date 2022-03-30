@@ -1,34 +1,14 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Team;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MoveStrategy {
     public abstract boolean canMove(Team team, Piece targetPiece, Position from, Position to);
 
-    protected boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .noneMatch(direction -> direction.isSameDirection(from, to));
-    }
-
-    protected boolean isInvalidDistance(Position from, Position to, List<Direction> directions) {
-        return directions.stream()
-                .noneMatch(direction -> direction.isSameDistance(from, to));
-    }
-
-    public List<Position> getRoute(Position from, Position to) {
-        Direction direction = Direction.of(from, to);
-        List<Position> positions = new ArrayList<>();
-        Position movedPosition = from.advancePosition(direction);
-
-        while (!movedPosition.equals(to)) {
-            positions.add(movedPosition);
-            movedPosition = movedPosition.advancePosition(direction);
-        }
-        return positions;
+    public List<Position> calculateRoute(Position from, Position to) {
+        return Position.calculateRoute(from, to);
     }
 }
