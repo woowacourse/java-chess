@@ -30,19 +30,19 @@ public enum Rank {
     }
 
     public Rank move(int y) {
-        return findY(this.y + y);
+        return findByY(this.y + y);
     }
 
     public boolean canMove(int y) {
         try {
-            findY(this.y + y);
+            findByY(this.y + y);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-    private Rank findY(int input) {
+    private Rank findByY(int input) {
         return Arrays.stream(Rank.values())
                 .filter(row -> row.y == input)
                 .findFirst()

@@ -30,19 +30,19 @@ public enum File {
     }
 
     public File move(int x) {
-        return findX(this.x + x);
+        return findByX(this.x + x);
     }
 
     public boolean canMove(int x) {
         try {
-            findX(this.x + x);
+            findByX(this.x + x);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-    private File findX(int input) {
+    private File findByX(int input) {
         return Arrays.stream(File.values())
                 .filter(file -> file.x == input)
                 .findFirst()
