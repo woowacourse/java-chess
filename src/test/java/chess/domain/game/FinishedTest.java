@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.BoardFixtures;
 import chess.domain.Color;
+import chess.domain.board.BoardFixtures;
 import chess.dto.EmptyResponse;
 import chess.dto.Response;
 

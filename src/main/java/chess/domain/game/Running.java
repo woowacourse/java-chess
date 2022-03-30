@@ -2,8 +2,8 @@ package chess.domain.game;
 
 import java.util.List;
 
-import chess.domain.board.Board;
 import chess.domain.Color;
+import chess.domain.board.Board;
 import chess.domain.board.Route;
 import chess.dto.BoardResponse;
 import chess.dto.Response;

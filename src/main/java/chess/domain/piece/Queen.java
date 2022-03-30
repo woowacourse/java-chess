@@ -3,10 +3,8 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.board.EmptyPoints;
 import chess.domain.board.Route;
-import chess.domain.piece.move.Direction;
-import chess.domain.piece.move.MovingStrategy;
-import chess.domain.piece.move.straight.StraightDirection;
 import chess.domain.piece.move.straight.InfiniteStepDistance;
+import chess.domain.piece.move.straight.StraightDirection;
 import chess.domain.piece.move.straight.StraightMovingStrategy;
 
 public class Queen extends Piece {

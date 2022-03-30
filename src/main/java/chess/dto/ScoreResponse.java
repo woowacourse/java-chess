@@ -2,7 +2,6 @@ package chess.dto;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import chess.domain.Color;
 
@@ -24,7 +23,6 @@ public class ScoreResponse extends Response {
         String metaInformation = determineWinner(whiteScore, blackScore);
         return new ScoreResponse(information, metaInformation);
     }
-
 
     private static String determineWinner(double whiteScore, double blackScore) {
         String metaInformation = "TIE";

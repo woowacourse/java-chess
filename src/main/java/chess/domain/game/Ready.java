@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import java.util.List;
 
+import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.domain.Color;
 import chess.dto.Response;
 
 public class Ready extends GameState {

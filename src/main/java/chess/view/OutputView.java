@@ -5,10 +5,8 @@ import java.util.function.BiConsumer;
 
 import chess.controller.Command;
 import chess.domain.board.LineNumber;
-import chess.domain.board.Point;
 import chess.dto.BoardResponse;
 import chess.dto.Response;
-import chess.dto.ScoreResponse;
 
 public class OutputView {
 

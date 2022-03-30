@@ -1,7 +1,7 @@
 package chess.domain.piece.move.pawn;
 
-import chess.domain.board.EmptyPoints;
 import chess.domain.Color;
+import chess.domain.board.EmptyPoints;
 import chess.domain.board.Route;
 import chess.domain.piece.move.MovingStrategy;
 

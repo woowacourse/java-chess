@@ -3,14 +3,11 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFixtures;
 import chess.domain.board.EmptyPoints;
 import chess.domain.board.Point;
 import chess.domain.board.Route;

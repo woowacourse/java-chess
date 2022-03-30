@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import chess.domain.board.Point;
 import chess.domain.board.Route;
 import chess.domain.piece.move.Direction;
 

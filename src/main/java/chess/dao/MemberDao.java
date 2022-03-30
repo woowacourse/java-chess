@@ -111,13 +111,13 @@ public class MemberDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-         try {
-             statement.close();
-             resultSet.close();
-             connection.close();
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
+        try {
+            statement.close();
+            resultSet.close();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

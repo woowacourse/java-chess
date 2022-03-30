@@ -1,8 +1,8 @@
 package chess.domain.piece.move.pawn;
 
+import chess.domain.Color;
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
-import chess.domain.Color;
 
 public class PawnSupport {
 

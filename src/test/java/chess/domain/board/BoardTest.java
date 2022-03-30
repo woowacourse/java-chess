@@ -70,7 +70,8 @@ class BoardTest {
     @Test
     @DisplayName("왕이 살아있으면 false를 반환한다.")
     void returnFalseWithKingAlive() {
-        Board board = BoardFixtures.INITIAL;;
+        Board board = BoardFixtures.INITIAL;
+        ;
 
         boolean isKingDead = board.isKingDead();
 

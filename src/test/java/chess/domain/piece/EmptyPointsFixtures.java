@@ -26,7 +26,7 @@ public class EmptyPointsFixtures {
             .collect(Collectors.toList());
     }
 
-    public static EmptyPoints except(Point ... points) {
+    public static EmptyPoints except(Point... points) {
         List<Point> all = createAll();
         for (Point point : points) {
             all.remove(point);

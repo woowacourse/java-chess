@@ -8,9 +8,9 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
-import chess.domain.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Queen;
 import chess.dto.Response;

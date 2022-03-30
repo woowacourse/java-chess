@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.Color;
 import chess.domain.piece.move.straight.StraightDirection;
 
 class RouteTest {
