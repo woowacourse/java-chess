@@ -4,12 +4,14 @@ import static chess.console.view.InputView.MENU_INDEX;
 
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
-import chess.domain.board.generator.BasicBoardGenerator;
-import chess.domain.board.generator.BoardGenerator;
 
 public class Ready implements State {
 
-    private final BoardGenerator boardGenerator = new BasicBoardGenerator();
+    private final Board board;
+
+    public Ready(Board board) {
+        this.board = board;
+    }
 
     @Override
     public boolean isEnd() {
@@ -28,8 +30,6 @@ public class Ready implements State {
             throw new IllegalArgumentException("게임이 시작하지 않았습니다.");
         }
 
-        Board board = new Board();
-        board.initBoard(boardGenerator);
         OutputView.printBoard(board.getBoard());
         return new Running(board);
     }

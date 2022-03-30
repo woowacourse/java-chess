@@ -5,24 +5,36 @@ import chess.console.state.State;
 import chess.console.view.InputView;
 import chess.console.view.OutputView;
 import chess.domain.board.Board;
+import chess.domain.board.generator.BoardGenerator;
 
 public class ChessGame {
 
-    private final Board board = new Board();
+    private final BoardGenerator boardGenerator;
+
+    public ChessGame(BoardGenerator boardGenerator) {
+        this.boardGenerator = boardGenerator;
+    }
 
     public void init() {
         OutputView.printGuideMessage();
-        State state = new Ready();
+        Board board = createBoard();
+        State state = new Ready(board);
 
         while (!state.isEnd()) {
-            if (check()) {
+            if (check(board)) {
                 OutputView.printCheck();
             }
             state = play(state);
         }
     }
 
-    private boolean check() {
+    private Board createBoard() {
+        Board board = new Board();
+        board.initBoard(boardGenerator);
+        return board;
+    }
+
+    private boolean check(Board board) {
         try {
             return !board.isEmpty() && board.check();
         } catch (IllegalArgumentException e) {
