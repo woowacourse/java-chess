@@ -15,6 +15,8 @@ import chess.domain.game.state.position.Rank;
 import chess.domain.piece.property.Color;
 
 public class ChessBoard {
+    private static final int DUPLICATED_NUMBER = 2;
+
     private final Map<Position, Piece> board = new HashMap<>();
 
     public void move(Position source, Position target) {
@@ -140,7 +142,7 @@ public class ChessBoard {
     }
 
     private int getDuplicateCount(int count) {
-        if (count >= 2) {
+        if (count >= DUPLICATED_NUMBER) {
             return count;
         }
 
