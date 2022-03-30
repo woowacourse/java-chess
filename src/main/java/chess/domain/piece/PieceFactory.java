@@ -12,41 +12,40 @@ public class PieceFactory {
     public static Map<Position, Piece> createChessPieces() {
         Map<Position, Piece> pieces = new HashMap<>();
 
-        for (PositionY positionY : PositionY.values()) {
-            for (PositionX positionX : PositionX.values()) {
-                Position position = new Position(positionX, positionY);
-                pieces.put(position, new Blank());
-            }
-        }
-
-        for (PositionX positionX : PositionX.values()) {
-            Position position = new Position(positionX, PositionY.RANK_2);
-            pieces.replace(position, new Pawn(Color.WHITE));
-        }
-
-        for (PositionX positionX : PositionX.values()) {
-            Position position = new Position(positionX, PositionY.RANK_7);
-            pieces.replace(position, new Pawn(Color.BLACK));
-        }
-
-        pieces.replace(new Position(PositionX.A, PositionY.RANK_1), new Rook(Color.WHITE));
-        pieces.replace(new Position(PositionX.B, PositionY.RANK_1), new Knight(Color.WHITE));
-        pieces.replace(new Position(PositionX.C, PositionY.RANK_1), new Bishop(Color.WHITE));
-        pieces.replace(new Position(PositionX.D, PositionY.RANK_1), new Queen(Color.WHITE));
-        pieces.replace(new Position(PositionX.E, PositionY.RANK_1), new King(Color.WHITE));
-        pieces.replace(new Position(PositionX.F, PositionY.RANK_1), new Bishop(Color.WHITE));
-        pieces.replace(new Position(PositionX.G, PositionY.RANK_1), new Knight(Color.WHITE));
-        pieces.replace(new Position(PositionX.H, PositionY.RANK_1), new Rook(Color.WHITE));
-
-        pieces.replace(new Position(PositionX.A, PositionY.RANK_8), new Rook(Color.BLACK));
-        pieces.replace(new Position(PositionX.B, PositionY.RANK_8), new Knight(Color.BLACK));
-        pieces.replace(new Position(PositionX.C, PositionY.RANK_8), new Bishop(Color.BLACK));
-        pieces.replace(new Position(PositionX.D, PositionY.RANK_8), new Queen(Color.BLACK));
-        pieces.replace(new Position(PositionX.E, PositionY.RANK_8), new King(Color.BLACK));
-        pieces.replace(new Position(PositionX.F, PositionY.RANK_8), new Bishop(Color.BLACK));
-        pieces.replace(new Position(PositionX.G, PositionY.RANK_8), new Knight(Color.BLACK));
-        pieces.replace(new Position(PositionX.H, PositionY.RANK_8), new Rook(Color.BLACK));
+        putPiecesExceptPawnOnRank(pieces, PositionY.RANK_1, Color.WHITE);
+        putPawnOnRank(pieces, PositionY.RANK_2, Color.WHITE);
+        putBlankOnRank(pieces, PositionY.RANK_3);
+        putBlankOnRank(pieces, PositionY.RANK_4);
+        putBlankOnRank(pieces, PositionY.RANK_5);
+        putBlankOnRank(pieces, PositionY.RANK_6);
+        putPawnOnRank(pieces, PositionY.RANK_7, Color.BLACK);
+        putPiecesExceptPawnOnRank(pieces, PositionY.RANK_8, Color.BLACK);
 
         return pieces;
+    }
+
+    private static void putPiecesExceptPawnOnRank(Map<Position, Piece> pieces, PositionY positionY, Color color) {
+        pieces.put(new Position(PositionX.A, positionY), new Rook(color));
+        pieces.put(new Position(PositionX.B, positionY), new Knight(color));
+        pieces.put(new Position(PositionX.C, positionY), new Bishop(color));
+        pieces.put(new Position(PositionX.D, positionY), new Queen(color));
+        pieces.put(new Position(PositionX.E, positionY), new King(color));
+        pieces.put(new Position(PositionX.F, positionY), new Bishop(color));
+        pieces.put(new Position(PositionX.G, positionY), new Knight(color));
+        pieces.put(new Position(PositionX.H, positionY), new Rook(color));
+    }
+
+    private static void putPawnOnRank(Map<Position, Piece> pieces, PositionY positionY, Color color) {
+        for (PositionX positionX : PositionX.values()) {
+            Position position = new Position(positionX, positionY);
+            pieces.put(position, new Pawn(color));
+        }
+    }
+
+    private static void putBlankOnRank(Map<Position, Piece> pieces, PositionY positionY) {
+        for (PositionX positionX : PositionX.values()) {
+            Position position = new Position(positionX, positionY);
+            pieces.put(position, new Blank());
+        }
     }
 }
