@@ -36,22 +36,6 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
     }
 
-    public static List<Direction> getRoyalDirection() {
-        return List.of(EAST, WEST, SOUTH, NORTH, SOUTHEAST, NORTHEAST, SOUTHWEST, NORTHWEST);
-    }
-
-    public static List<Direction> getBishopDirection() {
-        return List.of(Direction.SOUTHEAST, Direction.NORTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
-    }
-
-    public static List<Direction> getRookDirection() {
-        return List.of(Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
-    }
-
-    public static List<Direction> getKnightDirection() {
-        return List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-    }
-
     public int getRow() {
         return row;
     }
