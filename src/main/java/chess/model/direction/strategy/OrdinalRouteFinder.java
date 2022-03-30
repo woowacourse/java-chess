@@ -14,7 +14,7 @@ public class OrdinalRouteFinder implements RouteStrategy {
     public Route findRoute(final Position source, final Position target) {
         final int rankDifference = source.subtractRankFrom(target);
         final int fileDifference = source.subtractFileFrom(target);
-        List<Direction> directions = createRoyaltyDirections();
+        List<Direction> directions = createOrdinalDirections();
         return directions.stream()
                 .filter(direction -> direction.findRouteFrom(rankDifference, fileDifference))
                 .map(Direction::getRoute)
@@ -22,7 +22,7 @@ public class OrdinalRouteFinder implements RouteStrategy {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다."));
     }
 
-    private List<Direction> createRoyaltyDirections() {
+    private List<Direction> createOrdinalDirections() {
         final List<Direction> directions = new ArrayList<>();
         directions.addAll(List.of(CardinalDirection.values()));
         directions.addAll(List.of(DiagonalDirection.values()));

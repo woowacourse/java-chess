@@ -17,15 +17,15 @@ public abstract class Piece {
     }
 
     public boolean isOpponent(final Team team) {
-        return !team.equals(NONE) && !team.equals(this.team);
+        return team != NONE && team != this.team;
     }
 
     public boolean isSame(final Team team) {
-        return team.equals(this.team);
+        return team == this.team;
     }
 
     public boolean isSame(final Piece otherPiece) {
-        return otherPiece.team.equals(this.team);
+        return otherPiece.team == this.team;
     }
 
     public boolean isKing() {

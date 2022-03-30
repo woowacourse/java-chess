@@ -21,7 +21,7 @@ public class PawnRouteFinder implements RouteStrategy {
     public Route findRoute(Position source, Position target) {
         final int rankDifference = source.subtractRankFrom(target);
         final int fileDifference = source.subtractFileFrom(target);
-        if (team.equals(WHITE)) {
+        if (team == WHITE) {
             return findRouteWhitePawn(rankDifference, fileDifference);
         }
         return findRouteBlackPawn(rankDifference, fileDifference);
