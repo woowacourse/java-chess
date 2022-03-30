@@ -8,9 +8,15 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessGame {
+    private Long id;
     private GameState state;
 
     public ChessGame(GameState state) {
+        this.state = state;
+    }
+
+    public ChessGame(Long id, GameState state) {
+        this.id = id;
         this.state = state;
     }
 
@@ -92,5 +98,9 @@ public class ChessGame {
 
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    public Long getId() {
+        return id;
     }
 }
