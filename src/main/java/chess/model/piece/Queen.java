@@ -40,7 +40,7 @@ public class Queen extends Piece {
         }
         for (Square square : route.get()) {
             Piece tempPiece = board.get(square);
-            if (tempPiece.equals(targetPiece) && tempPiece.isNotAlly(targetPiece)) {
+            if (tempPiece.equals(targetPiece) && isNotAlly(targetPiece)) {
                 return true;
             }
             if (tempPiece.isNotEmpty()) {

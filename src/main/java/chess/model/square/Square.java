@@ -11,11 +11,17 @@ public class Square {
     private final Rank rank;
 
     private Square(File file, Rank rank) {
-        this.rank = rank;
         this.file = file;
+        this.rank = rank;
     }
 
     public static Square of(File file, Rank rank) {
+        return new Square(file, rank);
+    }
+
+    public static Square fromString(String square) {
+        File file = File.findFile(Character.toString(square.charAt(0)));
+        Rank rank = Rank.findRank(Integer.parseInt(String.valueOf(square.charAt(1))));
         return new Square(file, rank);
     }
 

@@ -1,6 +1,7 @@
 package chess.model.square;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum File {
 
@@ -18,6 +19,13 @@ public enum File {
 
     File(int value) {
         this.value = value;
+    }
+
+    public static File findFile(String rawFile) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().toLowerCase(Locale.ROOT).equals(rawFile))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 입니다."));
     }
 
     public boolean availableLocation(int distance) {

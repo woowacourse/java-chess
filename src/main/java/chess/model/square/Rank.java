@@ -20,6 +20,13 @@ public enum Rank {
         this.value = value;
     }
 
+    public static Rank findRank(int rawRank) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.value == rawRank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 입니다."));
+    }
+
     public boolean availableLocation(int distance) {
         return Arrays.stream(Rank.values())
                 .anyMatch(rank -> rank.value == (this.value + distance));

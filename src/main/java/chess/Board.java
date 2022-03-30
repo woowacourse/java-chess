@@ -1,17 +1,17 @@
 package chess;
 
-import chess.piece.Bishop;
-import chess.piece.Color;
-import chess.piece.Empty;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
-import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
-import chess.square.File;
-import chess.square.Rank;
-import chess.square.Square;
+import chess.model.piece.Bishop;
+import chess.model.piece.Color;
+import chess.model.piece.Empty;
+import chess.model.piece.King;
+import chess.model.piece.Knight;
+import chess.model.piece.Pawn;
+import chess.model.piece.Piece;
+import chess.model.piece.Queen;
+import chess.model.piece.Rook;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +32,26 @@ public final class Board {
         initEmpty();
     }
 
+    public void move(String source, String target) {
+        Square sourceSquare = Square.fromString(source);
+        Square targetSquare = Square.fromString(target);
+        Piece piece = board.get(sourceSquare);
+        if (!piece.movable(this, sourceSquare, targetSquare)) {
+            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        }
+        if (!piece.isObstacleOnRoute(this, sourceSquare, targetSquare)) {
+            throw new IllegalArgumentException("경로 중 기물이 있습니다.");
+        }
+        board.put(targetSquare, piece);
+        board.put(sourceSquare, new Empty());
+    }
+
     private void initEmpty() {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                Square square = Square.of(rank, file);
+                Square square = Square.of(file, rank);
                 if (!board.containsKey(square)) {
-                    board.put(square, new Empty(Color.EMPTY));
+                    board.put(square, new Empty());
                 }
             }
         }
@@ -45,14 +59,14 @@ public final class Board {
 
     private void initPawns(Color color, Rank rank, List<File> files) {
         for (int i = 0; i < 8; i++) {
-            board.put(Square.of(rank, files.get(i)), new Pawn(color));
+            board.put(Square.of(files.get(i), rank), new Pawn(color));
         }
     }
 
     private void initChivalry(Color color, Rank rank, List<File> files) {
         List<Piece> chivalryLineup = chivalryLineup(color);
         for (int i = 0; i < chivalryLineup.size(); i++) {
-            board.put(Square.of(rank, files.get(i)), chivalryLineup.get(i));
+            board.put(Square.of(files.get(i), rank), chivalryLineup.get(i));
         }
     }
 
