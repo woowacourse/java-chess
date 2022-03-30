@@ -56,7 +56,7 @@ public class Position {
         return new Position(file.move(x), rank.move(y));
     }
 
-    public boolean isSameRow(Rank rank) {
+    public boolean isSameRank(Rank rank) {
         return this.rank == rank;
     }
 
@@ -65,10 +65,10 @@ public class Position {
     }
 
     public boolean canCrossMovingStraight(Direction direction, Position destination) {
-        return moveToNextPositionCheckingdestinationination(this, destination, direction.getX(), direction.getY());
+        return moveToNextPositionCheckingDestination(this, destination, direction.getX(), direction.getY());
     }
 
-    private boolean moveToNextPositionCheckingdestinationination(Position start, Position destination, int x, int y) {
+    private boolean moveToNextPositionCheckingDestination(Position start, Position destination, int x, int y) {
         if (!start.canMove(x, y)) {
             return false;
         }
@@ -76,7 +76,7 @@ public class Position {
         if (nextPosition.equals(destination)) {
             return true;
         }
-        return moveToNextPositionCheckingdestinationination(nextPosition, destination, x, y);
+        return moveToNextPositionCheckingDestination(nextPosition, destination, x, y);
     }
 
     public boolean canMoveByTime(Direction direction, Position destination, int time) {

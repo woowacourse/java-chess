@@ -14,6 +14,9 @@ public enum Rank {
     RANK_1("1", 1),
     ;
 
+    private static final int MINIMUM = 1;
+    private static final int MAXIMUM = 8;
+
     private final String value;
     private final int y;
 
@@ -34,12 +37,7 @@ public enum Rank {
     }
 
     public boolean canMove(int y) {
-        try {
-            findByY(this.y + y);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        return (MINIMUM <= this.y + y) && (this.y + y <= MAXIMUM);
     }
 
     private Rank findByY(int input) {

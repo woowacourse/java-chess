@@ -51,7 +51,7 @@ public abstract class AbstractPawnMovePattern extends AbstractMovePattern {
     }
 
     private boolean isStartRow(Position source) {
-        return source.isSameRow(getStartRow());
+        return source.isSameRank(getStartRow());
     }
 
     abstract Rank getStartRow();

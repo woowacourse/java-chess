@@ -66,7 +66,7 @@ class PositionTest {
     @Test
     void testIsStartRow() {
         Position source = Position.of("a2");
-        assertThat(source.isSameRow(Rank.RANK_2)).isTrue();
+        assertThat(source.isSameRank(Rank.RANK_2)).isTrue();
     }
 
     @DisplayName("Position은 캐싱되어 사용한다.")

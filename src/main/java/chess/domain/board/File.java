@@ -14,6 +14,9 @@ public enum File {
     FILE_H("h", 8),
     ;
 
+    private static final int MINIMUM = 1;
+    private static final int MAXIMUM = 8;
+
     private final String value;
     private final int x;
 
@@ -34,12 +37,7 @@ public enum File {
     }
 
     public boolean canMove(int x) {
-        try {
-            findByX(this.x + x);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        return (MINIMUM <= this.x + x) && (this.x + x <= MAXIMUM);
     }
 
     private File findByX(int input) {
