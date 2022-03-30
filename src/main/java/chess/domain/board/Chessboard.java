@@ -59,6 +59,7 @@ public class Chessboard {
         validateTurn(source, turn);
         validateSameTeam(source, target);
         validateMovableDot(source, target);
+        validateMovableLine(source, target);
     }
 
     private void validateSamePosition(Position source, Position target) {
@@ -111,7 +112,7 @@ public class Chessboard {
         return pawn.isMovableDiagonal(source, target);
     }
 
-    public boolean isMovableLine(Position source, Position target) {
+    public boolean validateMovableLine(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         return sourcePiece.isMovableLine(source, target, board);
     }
