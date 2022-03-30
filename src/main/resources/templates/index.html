@@ -33,7 +33,7 @@
     function addPiece(pos, type, color) {
         console.log(toIntFile(pos) + " " + toIntRank(pos) + ": " + type + " " + color);
         const board = document.getElementById("board");
-        board.rows[toIntRank(pos)].cells[toIntFile(pos)].innerHTML = "<img src='/image/" + type + "_" + color + ".png' />";
+        board.rows[toIntRank(pos)].cells[toIntFile(pos)].innerHTML = "<img src='/image/" + type + "_" + color + ".png' width='80' height='80'/>";
     }
 </script>
 {{#hasError}}
@@ -41,6 +41,11 @@
     alert("{{errorMessage}}");
 </script>
 {{/hasError}}
+{{#isFinished}}
+<script>
+    alert("{{winner}} 승리!");
+</script>
+{{/isFinished}}
 <body>
     <div style="float: left; width: 50%">
         <table id="board" style="border: 1px solid black">

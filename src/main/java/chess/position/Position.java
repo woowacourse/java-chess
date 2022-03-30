@@ -67,6 +67,14 @@ public class Position {
         return File.distanceBetween(file, other.file);
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     public List<Position> getLinearPath(Position to) {
         if (isVerticalWay(to)) {
             return getVerticalPath(to);

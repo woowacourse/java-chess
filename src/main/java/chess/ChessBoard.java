@@ -94,6 +94,10 @@ public class ChessBoard {
         return Map.copyOf(board);
     }
 
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
     public Score getScore(Color color) {
         return new Score(getBoard(), color);
     }

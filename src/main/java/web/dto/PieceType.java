@@ -1,4 +1,4 @@
-package web;
+package web.dto;
 
 import chess.piece.Bishop;
 import chess.piece.King;
@@ -9,7 +9,7 @@ import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.Map;
 
-enum PieceType {
+public enum PieceType {
     PAWN, KING, QUEEN, ROOK, BISHOP, KNIGHT;
 
     static final Map<Class<? extends Piece>, PieceType> map = Map.of(
