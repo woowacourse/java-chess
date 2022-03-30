@@ -30,7 +30,8 @@ public abstract class Piece {
         return !this.team.equals(other.team);
     }
 
-    public void checkPawn(Position source, Position target, Direction direction, Piece other) {}
+    public void checkPawn(Position source, Position target, Direction direction, Piece other) {
+    }
 
     public boolean isPawn() {
         return false;

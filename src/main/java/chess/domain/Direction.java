@@ -59,7 +59,8 @@ public enum Direction {
         return List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
     }
 
-    public static Direction beMoveDirection(final List<Direction> directions, final Position source, final Position target) {
+    public static Direction beMoveDirection(final List<Direction> directions, final Position source,
+                                            final Position target) {
         return directions.stream()
                 .filter(direction -> Direction.isRightDirection(direction, source, target))
                 .findFirst()

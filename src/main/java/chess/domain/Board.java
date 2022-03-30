@@ -73,7 +73,7 @@ public final class Board {
     }
 
     private void validateSameTeamInTarget(final Piece piece, final Position target) {
-        if(cells.containsKey(target) && !piece.isEnemy(cells.get(target))) {
+        if (cells.containsKey(target) && !piece.isEnemy(cells.get(target))) {
             throw new IllegalArgumentException("목적지에 같은 팀 기물이 있습니다.");
         }
     }
