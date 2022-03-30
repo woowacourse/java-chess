@@ -40,13 +40,6 @@ public class OutputView {
     }
 
     private String makeBoardContentString(Piece piece) {
-        if (piece.isNullPiece()) {
-            return piece.getPieceNameCharacter();
-        }
-        return decideCaseByCamp(piece);
-    }
-
-    private String decideCaseByCamp(Piece piece) {
         if (piece.isBlack()) {
             return piece.getPieceNameCharacter().toUpperCase();
         }
