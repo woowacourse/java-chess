@@ -12,7 +12,7 @@ public class Rook extends Piece {
     private static final List<Direction> directions = Direction.pullStraightDirections();
 
     public Rook(Team team) {
-        super(name, Score.Rook, team);
+        super(name, Score.ROOK, team);
     }
 
     @Override

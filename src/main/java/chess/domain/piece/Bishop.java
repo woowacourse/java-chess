@@ -12,7 +12,7 @@ public class Bishop extends Piece {
     private static final List<Direction> directions = Direction.pullDiagonalDirections();
 
     public Bishop(Team team) {
-        super(name, Score.Bishop, team);
+        super(name, Score.BISHOP, team);
     }
 
     @Override

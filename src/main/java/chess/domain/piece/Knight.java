@@ -12,7 +12,7 @@ public class Knight extends Piece {
     private static final List<Direction> directions = Direction.pullKnightDirections();
 
     public Knight(Team team) {
-        super(name, Score.Knight, team);
+        super(name, Score.KNIGHT, team);
     }
 
     @Override

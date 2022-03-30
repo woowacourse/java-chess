@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     private final List<Direction> directions;
 
     public Pawn(Team team) {
-        super(name, Score.Pawn, team);
+        super(name, Score.PAWN, team);
         directions = selectDirections(team);
     }
 

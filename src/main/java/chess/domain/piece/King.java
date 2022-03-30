@@ -12,7 +12,7 @@ public class King extends Piece {
     private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public King(Team team) {
-        super(name, Score.King, team);
+        super(name, Score.KING, team);
     }
 
     @Override
