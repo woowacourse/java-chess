@@ -38,4 +38,8 @@ public class OutputView {
         System.out.printf("WHITE팀 점수는%f\n" +
                 "BLACK팀 점수는%f\n", teamScore, score);
     }
+
+    public static void errorMessage(String message) {
+        System.out.println(message);
+    }
 }
