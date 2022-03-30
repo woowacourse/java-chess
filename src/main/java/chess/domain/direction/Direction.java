@@ -67,15 +67,15 @@ public enum Direction {
         return findDirectionByDegree(degree);
     }
 
-    public static Direction findDirectionByDegree(double degree) {
+    private static double findDegree(Position source, Position target) {
+        return source.findRelativeDegree(target);
+    }
+
+    private static Direction findDirectionByDegree(double degree) {
         return Arrays.stream(values())
             .filter(direction -> direction.degree == degree)
             .findFirst()
             .orElse(NONE);
-    }
-
-    public static double findDegree(Position source, Position target) {
-        return source.findRelativeDegree(target);
     }
 
     public boolean isLShapeDiagonalDirection() {
