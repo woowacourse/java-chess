@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Score {
     private static final int existPawnNeighbors = 1;
+    private static final int plusPawnNeighborsCount = 1;
+    private static final int pawnNeighborsDefaultCount = 0;
     private static final double minusPawnNeighbors = 0.5;
 
     private double totalScore;
@@ -47,7 +49,7 @@ public class Score {
 
     private void addCountPawnNeighbors(Team team, Map<Column, Integer> pawnNeighbors, Column col, Piece piece) {
         if (piece.isPawn() && team.matchTeam(piece.getTeam())) {
-            pawnNeighbors.put(col, pawnNeighbors.getOrDefault(col, 0) + 1);
+            pawnNeighbors.put(col, pawnNeighbors.getOrDefault(col, pawnNeighborsDefaultCount) + plusPawnNeighborsCount);
         }
     }
 
