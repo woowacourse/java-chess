@@ -54,6 +54,12 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     @Override
+    public boolean checkOneAndTwoSouthNorthDirections(Position target){
+        return Direction.oneAndTwoSouthNorthDirections().stream()
+                .anyMatch(direction -> direction == getDirection(target));
+    }
+
+    @Override
     public List<Direction> getDirections() {
         return directions;
     }

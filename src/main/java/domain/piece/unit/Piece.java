@@ -13,6 +13,8 @@ public interface Piece {
 
     boolean isPawn();
 
+    boolean checkOneAndTwoSouthNorthDirections(Position target);
+
     List<Position> calculateRoute(final Position target);
 
     String getSymbolByTeam();

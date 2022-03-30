@@ -68,17 +68,12 @@ public final class ChessBoard {
         if (!piece.availableMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
         }
-        if (checkPawnMove(piece, target)) {
+        if (piece.checkOneAndTwoSouthNorthDirections(target)) {
             validateBoardPositionIsNull(target);
             validateRouteNullForPawn(source, target);
             return;
         }
         validatePawnAttack(target);
-    }
-
-    private boolean checkPawnMove(final Piece piece, final Position target) {
-        return Direction.oneAndTwoSouthNorthDirections().stream()
-                .anyMatch(direction -> direction == piece.getDirection(target));
     }
 
     private void validateBoardPositionIsNull(final Position position) {

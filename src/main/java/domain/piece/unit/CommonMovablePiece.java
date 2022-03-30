@@ -27,4 +27,9 @@ public abstract class CommonMovablePiece extends AbstractPiece {
         }
         return positions;
     }
+
+    @Override
+    public boolean checkOneAndTwoSouthNorthDirections(Position target){
+        return false;
+    }
 }

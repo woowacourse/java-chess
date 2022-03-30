@@ -6,6 +6,7 @@ import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.piece.property.Direction;
+import domain.position.Position;
 import java.util.List;
 
 public final class King extends SpecificMovablePiece {
@@ -27,6 +28,11 @@ public final class King extends SpecificMovablePiece {
 
     @Override
     public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean checkOneAndTwoSouthNorthDirections(Position target){
         return false;
     }
 }
