@@ -3,123 +3,88 @@ package chess.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import chess.Command;
+import chess.domain.position.Square;
+
 public class InputView {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final String START = "start";
-    private static final String END = "end";
-    private static final String MOVE = "move";
-    private static final String STATUS = "status";
-    private static final String SPLIT_REGEX = " ";
-    private static final String ERROR_MESSAGE_COMMAND = "[ERROR] 그런 명령어는 없는뎅...ㅎ;;";
-    private static final String ERROR_MESSAGE_LACK_INFORMATION = "[ERROR] 부족해잉~ 더줘잉~";
-    private static final String ERROR_MESSAGE_POSITION_FORMAT = "[ERROR] 위치의 포맷을 지켜서 입력하세요.";
-    private static final String ERROR_MESSAGE_IMPOSSIBLE_COMMAND = "[ERROR] 지금은 앙댕! 혼난다??";
-    private static final String ERROR_MESSAGE_TMI = "[ERROR] 투 머치 인포메이션~ㅋ";
+	private static final Scanner scanner = new Scanner(System.in);
+	private static final String SPLIT_REGEX = " ";
+	private static final String ERROR_MESSAGE_LACK_INFORMATION = "[ERROR] 부족해잉~ 더줘잉~";
+	private static final String ERROR_MESSAGE_POSITION_FORMAT = "[ERROR] 위치의 포맷을 지켜서 입력하세요.";
+	private static final String ERROR_MESSAGE_TMI = "[ERROR] 투 머치 인포메이션~ㅋ";
 
-    private static final int COMMAND_INDEX = 0;
-    private static final int COMMAND_MOVE_SOURCE_INDEX = 1;
-    private static final int COMMAND_MOVE_TARGET_INDEX = 2;
-    private static final int COMMAND_MOVE_FORMAT_SIZE = 3;
-    private static final int POSITION_SIZE = 2;
-    private static final int COMMAND_NOT_MOVE_FORMAT_SIZE = 1;
+	private static final int COMMAND_INDEX = 0;
+	private static final int SOURCE_INDEX = 1;
+	private static final int TARGET_INDEX = 2;
+	private static final int COMMAND_MOVE_FORMAT_SIZE = 3;
+	private static final int POSITION_SIZE = 2;
+	private static final int COMMAND_NOT_MOVE_FORMAT_SIZE = 1;
 
-    public static boolean isStart() {
-        try {
-            String command = getCommands().get(COMMAND_INDEX);
-            checkImpossibleCommand(List.of(MOVE, STATUS), command);
-            return START.equals(command);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return isStart();
-        }
-    }
+	public static Map.Entry<Command, List<Square>> requireCommand2() {
+		try {
+			List<String> commands = getCommands();
+			Command command = Command.from(commands.get(COMMAND_INDEX));
 
-    public static List<String> requireCommand() {
-        try {
-            List<String> commands = getCommands();
-            String command = commands.get(COMMAND_INDEX);
-            checkImpossibleCommand(List.of(START, STATUS), command);
-            commands.remove(COMMAND_INDEX);
-            return commands;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return requireCommand();
-        }
-    }
+			validateCommandFormatSize(command, commands);
+			if (command == Command.MOVE) {
+				return Map.entry(command, getSourceAndTarget(commands));
+			}
 
-    public static boolean isGameEnd() {
-        try {
-            String command = getCommands().get(COMMAND_INDEX);
-            checkImpossibleCommand(List.of(START, MOVE), command);
-            return END.equals(command);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return isGameEnd();
-        }
-    }
+			return Map.entry(command, List.of());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return requireCommand2();
+		}
+	}
 
-    private static void checkImpossibleCommand(List<String> commands, String input) {
-        boolean isImpossible = commands.stream()
-                .anyMatch(command -> command.equals(input));
-        if (isImpossible) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_IMPOSSIBLE_COMMAND);
-        }
+	private static List<String> getCommands() {
+		List<String> commands = splitCommands();
+		return commands;
+	}
 
-    }
+	private static List<String> splitCommands() {
+		String answer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+		return Arrays.stream(answer.split(SPLIT_REGEX))
+			.filter(cmd -> !cmd.isBlank())
+			.collect(Collectors.toList());
+	}
 
-    private static List<String> getCommands() {
-        List<String> commands = splitCommands();
-        validateCommands(commands);
-        return commands;
-    }
+	private static List<Square> getSourceAndTarget(List<String> commands) {
+		List<Square> squares;
+		String source = commands.get(SOURCE_INDEX);
+		String target = commands.get(TARGET_INDEX);
+		validatePositionFormat(source, target);
+		squares = List.of(new Square(commands.get(SOURCE_INDEX)), new Square(commands.get(
+			TARGET_INDEX)));
+		return squares;
+	}
 
-    private static List<String> splitCommands() {
-        String answer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-        return Arrays.stream(answer.split(SPLIT_REGEX))
-                .filter(cmd -> !cmd.isBlank())
-                .collect(Collectors.toList());
-    }
+	private static void validateCommandFormatSize(Command command, List<String> commands) {
+		if (Command.MOVE == command) {
+			validateInformationCount(commands, COMMAND_MOVE_FORMAT_SIZE);
+			return;
+		}
 
-    private static void validateCommands(List<String> commands) {
-        String command = commands.get(COMMAND_INDEX);
+		validateInformationCount(commands, COMMAND_NOT_MOVE_FORMAT_SIZE);
+	}
 
-        if (!START.equals(command) && !END.equals(command) && !MOVE.equals(command) && !STATUS.equals(command)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_COMMAND);
-        }
+	private static void validateInformationCount(List<String> commands, int size) {
+		if (commands.size() < size) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_LACK_INFORMATION);
+		}
 
-        validateCommand(commands, command);
-    }
+		if (commands.size() > size) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_TMI);
+		}
+	}
 
-    private static void validateCommand(List<String> commands, String command) {
-        if (START.equals(command) || END.equals(command) || STATUS.equals(command)) {
-            validateInformationCount(commands, COMMAND_NOT_MOVE_FORMAT_SIZE);
-        }
-
-        if (MOVE.equals(command)) {
-            validateInformationCount(commands, COMMAND_MOVE_FORMAT_SIZE);
-            validatePositionFormat(commands);
-        }
-    }
-
-    private static void validateInformationCount(List<String> commands, int size) {
-        if (commands.size() < size) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_LACK_INFORMATION);
-        }
-
-        if (commands.size() > size) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_TMI);
-        }
-    }
-
-    private static void validatePositionFormat(List<String> commands) {
-        String source = commands.get(COMMAND_MOVE_SOURCE_INDEX);
-        String target = commands.get(COMMAND_MOVE_TARGET_INDEX);
-
-        if (source.length() != POSITION_SIZE || target.length() != POSITION_SIZE) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_FORMAT);
-        }
-    }
+	private static void validatePositionFormat(String source, String target) {
+		if (source.length() != POSITION_SIZE || target.length() != POSITION_SIZE) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_FORMAT);
+		}
+	}
 }
