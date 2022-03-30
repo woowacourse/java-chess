@@ -5,10 +5,8 @@ import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 
-import java.io.Console;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
+import java.util.function.ObjDoubleConsumer;
 
 public class ChessGame {
 
@@ -40,7 +38,7 @@ public class ChessGame {
         state = state.move(from, to);
     }
 
-    public void status(final BiConsumer<String, Double> printScore) {
+    public void status(final ObjDoubleConsumer<String> printScore) {
         state.status(printScore);
     }
 }

@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.ObjDoubleConsumer;
 
 public class Status {
 
@@ -18,13 +18,13 @@ public class Status {
         this.board = board;
     }
 
-    public void show(final BiConsumer<String, Double> printScore) {
+    public void show(final ObjDoubleConsumer<String> printScore) {
         for (Color color : Color.sorted()) {
             showColorStatus(printScore, color);
         }
     }
 
-    private void showColorStatus(final BiConsumer<String, Double> printScore, final Color color) {
+    private void showColorStatus(final ObjDoubleConsumer<String> printScore, final Color color) {
         printScore.accept(color.getName(), calculateScore(color));
     }
 

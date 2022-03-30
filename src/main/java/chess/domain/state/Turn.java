@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-import java.util.function.BiConsumer;
+import java.util.function.ObjDoubleConsumer;
 
 public abstract class Turn extends State {
 
@@ -39,7 +39,7 @@ public abstract class Turn extends State {
     }
 
     @Override
-    public void status(final BiConsumer<String, Double> printScore) {
+    public void status(final ObjDoubleConsumer<String> printScore) {
         throw new IllegalStateException("게임이 종료된 이후 점수 조회가 가능합니다.");
     }
 

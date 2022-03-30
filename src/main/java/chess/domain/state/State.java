@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.ObjDoubleConsumer;
 
 public abstract class State {
 
@@ -17,7 +17,7 @@ public abstract class State {
 
     public abstract State end();
 
-    public abstract void status(final BiConsumer<String, Double> printScore);
+    public abstract void status(final ObjDoubleConsumer<String> printScore);
 
     public abstract boolean isRunning();
 

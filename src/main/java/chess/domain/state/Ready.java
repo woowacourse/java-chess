@@ -5,7 +5,7 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.board.Status;
 import chess.domain.position.Position;
 
-import java.util.function.BiConsumer;
+import java.util.function.ObjDoubleConsumer;
 
 public class Ready extends State {
 
@@ -33,7 +33,7 @@ public class Ready extends State {
     }
 
     @Override
-    public void status(final BiConsumer<String, Double> printScore) {
+    public void status(final ObjDoubleConsumer<String> printScore) {
         if (board.isInitialized(new BoardInitializer())) {
             throw new IllegalStateException("게임을 시작해주세요.");
         }

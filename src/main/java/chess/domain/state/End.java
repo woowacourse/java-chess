@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.position.Position;
 
-import java.util.function.BiConsumer;
+import java.util.function.ObjDoubleConsumer;
 
 public class End extends State {
 
@@ -22,7 +22,7 @@ public class End extends State {
     }
 
     @Override
-    public void status(final BiConsumer<String, Double> printScore) {
+    public void status(final ObjDoubleConsumer<String> printScore) {
         throw new IllegalStateException("게임이 종료됐습니다.");
     }
 
