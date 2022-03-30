@@ -36,6 +36,16 @@ class PointTest {
     }
 
     @Test
+    @DisplayName("문자열의 길이가 잘못되었을 경우 예외를 던진다.")
+    public void throwsExceptionWithInvalidStringSize() {
+        // given & when
+        String input = "a12";
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> Point.of("a12"));
+    }
+
+    @Test
     @DisplayName("좌표의 가로 거리를 구할 수 있다.")
     void subtractPointsHorizontally() {
         Point aPoint = Point.of("a1");
