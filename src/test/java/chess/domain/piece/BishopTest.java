@@ -4,14 +4,14 @@ import static chess.domain.board.File.*;
 import static chess.domain.board.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.board.position.Positions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.File;
 import chess.constant.MoveType;
-import chess.domain.piece.constant.PieceColor;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.board.Rank;
 
 class BishopTest {
@@ -22,8 +22,8 @@ class BishopTest {
     void isMovable(File file, Rank rank) {
         //given
         Bishop bishop = new Bishop(PieceColor.WHITE);
-        Position source = new Position(C, THREE);
-        Position target = new Position(file, rank);
+        Position source = Positions.findPositionBy(C, THREE);
+        Position target = Positions.findPositionBy(file, rank);
 
         //when
         boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);
@@ -38,8 +38,8 @@ class BishopTest {
     void cantMovable(File file, Rank rank) {
         //given
         Bishop bishop = new Bishop(PieceColor.WHITE);
-        Position source = new Position(C, THREE);
-        Position target = new Position(file, rank);
+        Position source = Positions.findPositionBy(C, THREE);
+        Position target = Positions.findPositionBy(file, rank);
 
         //when
         boolean actual = bishop.isMovable(source, target, MoveType.EMPTY);

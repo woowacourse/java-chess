@@ -1,5 +1,7 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
+import chess.domain.board.File;
+import chess.domain.board.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,14 +13,9 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public Position(String rankFile) {
-        this.rank = Rank.of(rankFile.substring(1, 2));
-        this.file = File.of(rankFile.substring(0, 1));
     }
 
     public int rankDisplacement(Position other) {
@@ -72,17 +69,17 @@ public class Position {
         List<Position> positions = new ArrayList<>();
 
         if (!rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(Positions.findPosition(file, this.rank)));
+            fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, this.rank)));
             return positions;
         }
 
         if (!fileIterator.hasNext()) {
-            rankIterator.forEachRemaining(rank -> positions.add(Positions.findPosition(this.file, rank)));
+            rankIterator.forEachRemaining(rank -> positions.add(Positions.findPositionBy(this.file, rank)));
             return positions;
         }
 
         while (rankIterator.hasNext()) {
-            fileIterator.forEachRemaining(file -> positions.add(Positions.findPosition(file, rankIterator.next())));
+            fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, rankIterator.next())));
         }
 
         return positions.stream()

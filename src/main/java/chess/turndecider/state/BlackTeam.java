@@ -1,6 +1,6 @@
 package chess.turndecider.state;
 
-import chess.domain.piece.constant.PieceColor;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.Piece;
 
 public class BlackTeam extends Running {

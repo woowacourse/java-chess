@@ -1,8 +1,10 @@
 package chess.domain.board;
 
-import static chess.domain.piece.constant.PieceColor.EMPTY;
+import static chess.domain.piece.PieceColor.EMPTY;
 
 import chess.constant.MoveType;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Positions;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
@@ -100,7 +102,7 @@ public class Board {
         for (File file : File.values()) {
             long rankDuplicatedPiecesCount = Rank.reverseValues()
                     .stream()
-                    .map(rank -> Positions.findPosition(file, rank))
+                    .map(rank -> Positions.findPositionBy(file, rank))
                     .filter(position -> {
                                 Piece piece = board.get(position);
                                 return piece.isPawn() && gameFlow.isCorrectTurn(piece);

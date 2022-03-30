@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import static chess.domain.board.File.A;
 import static chess.domain.board.Rank.ONE;
@@ -12,10 +12,7 @@ class PositionsTest {
     @Test
     @DisplayName("Position 을 찾을 수 있다")
     void findPosition() {
-        Position position = new Position(A, ONE);
-        Position findPosition = Positions.findPosition(A, ONE);
-
-        assertThat(position).isEqualTo(findPosition);
+        assertThat(Positions.findPositionBy(A, ONE)).isEqualTo(new Position(A, ONE));
     }
 
 }

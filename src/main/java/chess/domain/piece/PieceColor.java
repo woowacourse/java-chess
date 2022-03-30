@@ -1,4 +1,4 @@
-package chess.domain.piece.constant;
+package chess.domain.piece;
 
 public enum PieceColor {
     BLACK, EMPTY, WHITE

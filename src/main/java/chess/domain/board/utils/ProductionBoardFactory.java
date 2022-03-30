@@ -4,13 +4,13 @@ import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
 import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
-import static chess.domain.piece.constant.PieceColor.BLACK;
-import static chess.domain.piece.constant.PieceColor.EMPTY;
-import static chess.domain.piece.constant.PieceColor.WHITE;
+import static chess.domain.piece.PieceColor.BLACK;
+import static chess.domain.piece.PieceColor.EMPTY;
+import static chess.domain.piece.PieceColor.WHITE;
 
 import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Positions;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Positions;
 import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.EmptyPiece;
@@ -20,7 +20,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.constant.PieceColor;
+import chess.domain.piece.PieceColor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -59,7 +59,7 @@ public class ProductionBoardFactory extends BoardFactory {
     private void putAllEmptyPieces(Map<Position, Piece> result) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                Position findPosition = Positions.findPosition(file, rank);
+                Position findPosition = Positions.findPositionBy(file, rank);
                 result.put(findPosition, EMPTY_PIECE);
             }
         }
@@ -77,7 +77,7 @@ public class ProductionBoardFactory extends BoardFactory {
 
     private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
         for (File file : File.values()) {
-            Position findPosition = Positions.findPosition(file, rank);
+            Position findPosition = Positions.findPositionBy(file, rank);
             result.put(findPosition, new Pawn(color));
         }
     }
@@ -86,7 +86,7 @@ public class ProductionBoardFactory extends BoardFactory {
 
         ListIterator<Piece> piecesIterator = PIECES_CREATOR_BY_COLOR.apply(color).listIterator();
         for (File file : File.values()) {
-            Position findPosition = Positions.findPosition(file, rank);
+            Position findPosition = Positions.findPositionBy(file, rank);
             result.put(findPosition, piecesIterator.next());
         }
     }

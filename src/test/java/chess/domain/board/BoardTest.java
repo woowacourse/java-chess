@@ -14,11 +14,13 @@ import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.SIX;
 import static chess.domain.board.Rank.THREE;
 import static chess.domain.board.Rank.TWO;
-import static chess.domain.piece.constant.PieceColor.WHITE;
+import static chess.domain.piece.PieceColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Positions;
 import chess.domain.board.utils.BoardFactory;
 import chess.domain.board.utils.ProductionBoardFactory;
 import chess.domain.piece.Pawn;
@@ -72,7 +74,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(Positions.findPosition(file, TWO)))
+            .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
             .collect(Collectors.toList());
 
         assertThat(actual).isEqualTo(expected);
@@ -90,7 +92,7 @@ public class BoardTest {
             .collect(Collectors.toList());
 
         List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(Positions.findPosition(file, TWO)))
+            .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
             .collect(Collectors.toList());
 
         //then
@@ -100,7 +102,7 @@ public class BoardTest {
     @Test
     @DisplayName("체스 말이 없는 곳에서 이동 시키면 예외를 던진다.")
     void move_exception() {
-        assertThatThrownBy(() -> board.move(new Position(A, THREE), new Position(B, THREE)))
+        assertThatThrownBy(() -> board.move(Positions.findPositionBy(A, THREE), Positions.findPositionBy(B, THREE)))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE);
     }
@@ -109,11 +111,11 @@ public class BoardTest {
     @DisplayName("체스 말이 입력한 target으로 정상 이동했는지 확인한다.")
     void move_test() {
         //when
-        board.move(new Position(A, TWO), new Position(A, THREE));
+        board.move(Positions.findPositionBy(A, TWO), Positions.findPositionBy(A, THREE));
         Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //then
-        assertThat(piecesByPositions.get(Positions.findPosition(A, THREE))).isEqualTo(new Pawn(WHITE));
+        assertThat(piecesByPositions.get(Positions.findPositionBy(A, THREE))).isEqualTo(new Pawn(WHITE));
     }
 
     @ParameterizedTest
@@ -121,7 +123,7 @@ public class BoardTest {
     @DisplayName("퀸은 경로에 다른 기물 있으면 이동할 수 없다")
     void isBlocked(Rank rank, File file) {
         assertThatThrownBy(() ->
-            board.move(new Position(C, ONE), new Position(file, rank))
+            board.move(Positions.findPositionBy(C, ONE), Positions.findPositionBy(file, rank))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -130,16 +132,16 @@ public class BoardTest {
     @DisplayName("나이트는 경로에 다른 기물 있으면 이동할 수 있다")
     void isNonBlocked(Rank rank, File file) {
         assertDoesNotThrow(() ->
-            board.move(new Position(B, ONE), new Position(file, rank))
+            board.move(Positions.findPositionBy(B, ONE), Positions.findPositionBy(file, rank))
         );
     }
 
     @DisplayName("기물이 다른 기물의 이동경로를 막고 있다면 이동이 불가하다")
     @Test
     void isBlockedAfterNightMoved() {
-        board.move(new Position(B, ONE), new Position(C, THREE));
+        board.move(Positions.findPositionBy(B, ONE), Positions.findPositionBy(C, THREE));
         assertThatThrownBy(() ->
-            board.move(new Position(C, TWO), new Position(C, FOUR))
+            board.move(Positions.findPositionBy(C, TWO), Positions.findPositionBy(C, FOUR))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -147,15 +149,15 @@ public class BoardTest {
     @Test
     void isMyTeam() {
         assertThatThrownBy(() ->
-            board.move(new Position(A, ONE), new Position(A, TWO))
+            board.move(Positions.findPositionBy(A, ONE), Positions.findPositionBy(A, TWO))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰을 A2 에서 A4로 이동시켰다면 A4에는 폰이 있다")
     @Test
     void move_pawn_and_now_pawn_is_at_target_pos() {
-        board.move(new Position(A, TWO), new Position(A, FOUR));
-        Piece findPiece = board.getBoard().get(new Position(A, FOUR));
+        board.move(Positions.findPositionBy(A, TWO), Positions.findPositionBy(A, FOUR));
+        Piece findPiece = board.getBoard().get(Positions.findPositionBy(A, FOUR));
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
@@ -165,19 +167,19 @@ public class BoardTest {
         AlternatingGameFlow gameFlow = new AlternatingGameFlow();
         board = new Board(boardFactory.create(), gameFlow);
 
-        board.move(new Position(H, TWO), new Position(H, FOUR)); // 흰 폰
-        board.move(new Position(E, SEVEN), new Position(E, FIVE)); // 검은 폰
+        board.move(Positions.findPositionBy(H, TWO), Positions.findPositionBy(H, FOUR)); // 흰 폰
+        board.move(Positions.findPositionBy(E, SEVEN), Positions.findPositionBy(E, FIVE)); // 검은 폰
 
-        board.move(new Position(H, ONE), new Position(H, THREE)); // 흰 룩
-        board.move(new Position(E, FIVE), new Position(E, FOUR)); // 검은 폰
+        board.move(Positions.findPositionBy(H, ONE), Positions.findPositionBy(H, THREE)); // 흰 룩
+        board.move(Positions.findPositionBy(E, FIVE), Positions.findPositionBy(E, FOUR)); // 검은 폰
 
-        board.move(new Position(H, THREE), new Position(E, THREE)); // 흰 룩
-        board.move(new Position(E, EIGHT), new Position(E, SEVEN)); // 검은 킹
+        board.move(Positions.findPositionBy(H, THREE), Positions.findPositionBy(E, THREE)); // 흰 룩
+        board.move(Positions.findPositionBy(E, EIGHT), Positions.findPositionBy(E, SEVEN)); // 검은 킹
 
-        board.move(new Position(E, THREE), new Position(E, FOUR)); // 흰 룩 : 게임 룰 상 이때 체크메이트 !
-        board.move(new Position(E, SEVEN), new Position(E, SIX)); // 검은 킹
+        board.move(Positions.findPositionBy(E, THREE), Positions.findPositionBy(E, FOUR)); // 흰 룩 : 게임 룰 상 이때 체크메이트 !
+        board.move(Positions.findPositionBy(E, SEVEN), Positions.findPositionBy(E, SIX)); // 검은 킹
 
-        board.move(new Position(E, FOUR), new Position(E, SIX)); // 흰 룩
+        board.move(Positions.findPositionBy(E, FOUR), Positions.findPositionBy(E, SIX)); // 흰 룩
 
         assertThat(gameFlow.isRunning()).isFalse();
     }
@@ -195,9 +197,9 @@ public class BoardTest {
     void when_pawns_in_same_file() {
         Board board = new Board(boardFactory.create(), new AlternatingGameFlow());
 
-        board.move(new Position(A, TWO), new Position(A, FOUR));
-        board.move(new Position(B, SEVEN), new Position(B, FIVE));
-        board.move(new Position(A, FOUR), new Position(B, FIVE));
+        board.move(Positions.findPositionBy(A, TWO), Positions.findPositionBy(A, FOUR));
+        board.move(Positions.findPositionBy(B, SEVEN), Positions.findPositionBy(B, FIVE));
+        board.move(Positions.findPositionBy(A, FOUR), Positions.findPositionBy(B, FIVE));
 
         //then
         double actual = board.calculateScore();

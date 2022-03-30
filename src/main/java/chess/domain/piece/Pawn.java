@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.constant.PieceColor.*;
+import static chess.domain.piece.PieceColor.*;
 
 import chess.constant.MoveType;
-import chess.domain.piece.constant.PieceColor;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.board.Rank;
 
 public class Pawn extends Piece {

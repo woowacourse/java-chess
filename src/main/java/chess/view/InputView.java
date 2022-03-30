@@ -2,10 +2,11 @@ package chess.view;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
+import chess.domain.board.position.Positions;
 import java.util.List;
 
 import chess.constant.Command;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.dto.MoveRequest;
 import chess.dto.NotMoveRequest;
 import chess.dto.Request;
@@ -49,8 +50,8 @@ public class InputView {
         }
         List<String> inputs = List.of(input.split(" "));
 
-        Position source = new Position(inputs.get(1));
-        Position target = new Position(inputs.get(2));
+        Position source = Positions.findPositionBy(inputs.get(1));
+        Position target = Positions.findPositionBy(inputs.get(2));
         return new MoveRequest(command, source, target);
     }
 

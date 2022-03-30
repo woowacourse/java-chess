@@ -2,10 +2,11 @@ package chess.view;
 
 import static java.lang.System.*;
 
+import chess.domain.board.position.Positions;
 import java.util.Map;
 
 import chess.domain.board.File;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import chess.domain.board.Rank;
 import chess.domain.piece.Piece;
 
@@ -26,7 +27,7 @@ public class OutputView {
     public static void printChessGameBoard(Map<Position, Piece> piecesByPositions) {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
-                Position searchPosition = new Position(file, rank);
+                Position searchPosition = Positions.findPositionBy(file, rank);
                 Piece piece = piecesByPositions.get(searchPosition);
                 out.print(piece.getEmblem());
             }

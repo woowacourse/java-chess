@@ -3,8 +3,7 @@ package chess.domain.piece;
 import java.util.Objects;
 
 import chess.constant.MoveType;
-import chess.domain.piece.constant.PieceColor;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 
 public abstract class Piece {
 
