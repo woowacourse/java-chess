@@ -16,7 +16,7 @@ class BishopTest {
     @MethodSource("bishopDiagonalMovement")
     @DisplayName("비숍은 대각선으로 움직인다.")
     void move_diagonal(Position source, Position target, boolean result) {
-        Type bishop = new Bishop();
+        Role bishop = new Bishop();
         assertThat(bishop.isMovable(source, target)).isEqualTo(result);
     }
 

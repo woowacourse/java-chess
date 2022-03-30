@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class Bishop implements Type {
+public class Bishop implements Role {
 
     @Override
     public String getSymbol() {

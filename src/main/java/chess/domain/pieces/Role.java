@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public interface Type {
+public interface Role {
 
     String getSymbol();
 

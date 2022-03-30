@@ -17,7 +17,7 @@ class PawnTest {
     @MethodSource("pawnMovement")
     @DisplayName("폰은 수직으로 한 칸 이동한다")
     void move_verticalOneStep(Position source, Position target, boolean result) {
-        Type pawn = new Pawn();
+        Role pawn = new Pawn();
         assertThat(pawn.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -38,7 +38,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 직진으로 2칸 움직일 수 있다")
     void move_first_allowVerticalTwoStep() {
-        Type pawn = new Pawn();
+        Role pawn = new Pawn();
         assertThat(pawn.isMovable(Position.of("a2"), Position.of("a4"))).isTrue();
     }
 
@@ -46,7 +46,7 @@ class PawnTest {
     @MethodSource("pawnDiagonalMovement")
     @DisplayName("폰은 대각으로 1칸 움직일 수 있다")
     void move_diagonalOneStep(Position source, Position target, boolean result) {
-        Type pawn = new Pawn();
+        Role pawn = new Pawn();
         assertThat(pawn.isMovable(source, target)).isEqualTo(result);
     }
 

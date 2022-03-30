@@ -3,7 +3,7 @@ package chess.domain.pieces;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-public final class Pawn implements Type {
+public final class Pawn implements Role {
 
     public static final int DEFAULT_MOVEMENT_LIMIT = 1;
     public static final int VERTICAL_MOVEMENT_LIMIT_ON_START = 2;

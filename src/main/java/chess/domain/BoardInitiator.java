@@ -74,11 +74,11 @@ public final class BoardInitiator implements Initiator {
         }
     }
 
-    private void initWhitePiece(Map<Position, Piece> pieces, Column column, Type type) {
-        pieces.put(Position.valueOf(column, Row.ONE), new Piece(Color.WHITE, type));
+    private void initWhitePiece(Map<Position, Piece> pieces, Column column, Role role) {
+        pieces.put(Position.valueOf(column, Row.ONE), new Piece(Color.WHITE, role));
     }
 
-    private void initBlackPiece(Map<Position, Piece> pieces, Column column, Type type) {
-        pieces.put(Position.valueOf(column, Row.EIGHT), new Piece(Color.BLACK, type));
+    private void initBlackPiece(Map<Position, Piece> pieces, Column column, Role role) {
+        pieces.put(Position.valueOf(column, Row.EIGHT), new Piece(Color.BLACK, role));
     }
 }

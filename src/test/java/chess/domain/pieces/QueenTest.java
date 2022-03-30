@@ -2,7 +2,6 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +17,7 @@ class QueenTest {
     @MethodSource("queenVerticalMovement")
     @DisplayName("퀸은 상하 이동을 할 수 있다")
     void move_vertical(Position source, Position target, boolean result) {
-        Type queen = new Queen();
+        Role queen = new Queen();
         assertThat(queen.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -37,7 +36,7 @@ class QueenTest {
     @MethodSource("queenHorizontalMovement")
     @DisplayName("퀸은 좌우 이동을 할 수 있다")
     void move_horizontal(Position source, Position target, boolean result) {
-        Type queen = new Queen();
+        Role queen = new Queen();
         assertThat(queen.isMovable(source, target)).isEqualTo(result);
     }
 
@@ -56,7 +55,7 @@ class QueenTest {
     @MethodSource("queenDiagonalMovement")
     @DisplayName("퀸은 대각선으로 이동할 수 있다")
     void move_diagonal(Position source, Position target, boolean result) {
-        Type queen = new Queen();
+        Role queen = new Queen();
         assertThat(queen.isMovable(source, target)).isEqualTo(result);
     }
 

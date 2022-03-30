@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class Knight implements Type {
+public class Knight implements Role {
 
     private static final int FIRST_MOVEMENT_LIMIT = 2;
     private static final int SECOND_MOVEMENT_LIMIT = 1;

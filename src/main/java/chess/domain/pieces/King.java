@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class King implements Type {
+public class King implements Role {
 
     public static final int MOVEMENT_LIMIT = 1;
 

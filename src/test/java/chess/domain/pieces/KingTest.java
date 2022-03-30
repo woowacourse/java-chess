@@ -16,7 +16,7 @@ class KingTest {
     @MethodSource("kingMovement")
     @DisplayName("킹은 상하좌우 한칸, 위 아래 대각선 한칸씩 움직일 수 있다.")
     void move_aroundOneStep(Position source, Position target, boolean result) {
-        Type king = new King();
+        Role king = new King();
         assertThat(king.isMovable(source, target)).isEqualTo(result);
     }
 

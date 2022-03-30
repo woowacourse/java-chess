@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.position.Position;
 
-public class Rook implements Type {
+public class Rook implements Role {
 
     @Override
     public String getSymbol() {

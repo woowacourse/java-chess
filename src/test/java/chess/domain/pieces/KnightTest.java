@@ -16,7 +16,7 @@ class KnightTest {
     @MethodSource("knightMovement")
     @DisplayName("나이트는 상하좌우 두칸 직진 후 좌우로 이동한다")
     void move_straightTwoStepsAndHorizontalOneStep(Position source, Position target, boolean result) {
-        Type knight = new Knight();
+        Role knight = new Knight();
         assertThat(knight.isMovable(source, target)).isEqualTo(result);
     }
 
