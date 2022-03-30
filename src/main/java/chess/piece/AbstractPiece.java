@@ -9,7 +9,7 @@ import chess.position.Position;
 public abstract class AbstractPiece implements Piece {
 
     private final Name name;
-    private final Color color;
+    protected final Color color;
 
     AbstractPiece(final Name name, final Color color) {
         this.name = name;

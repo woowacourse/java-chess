@@ -3,7 +3,9 @@ package chess.game;
 import chess.piece.detail.Color;
 import chess.status.State;
 import chess.view.Command;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class Game {
 

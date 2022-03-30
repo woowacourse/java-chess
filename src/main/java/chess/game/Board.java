@@ -3,10 +3,10 @@ package chess.game;
 import static chess.piece.detail.Color.BLACK;
 import static chess.piece.detail.Color.WHITE;
 
-import chess.piece.detail.Color;
-import chess.piece.detail.Direction;
 import chess.piece.Pawn;
 import chess.piece.Piece;
+import chess.piece.detail.Color;
+import chess.piece.detail.Direction;
 import chess.position.Column;
 import chess.position.Position;
 import java.util.Arrays;
@@ -84,7 +84,7 @@ public class Board {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
         }
     }
-    
+
     private void validateMove(final MoveCommand moveCommand, final Piece piece) {
         if (!piece.canMove(moveCommand)) {
             throw new IllegalArgumentException("해당 말이 갈 수 있는 위치가 아닙니다.");
