@@ -5,7 +5,7 @@ import chess.domain.game.state.Started;
 import chess.domain.game.state.State;
 import chess.domain.position.Position;
 
-public class AfterRunning extends Started {
+public abstract class AfterRunning extends Started {
 
     public AfterRunning(Board board) {
         super(board);

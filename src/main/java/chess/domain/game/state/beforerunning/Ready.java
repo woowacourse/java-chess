@@ -13,7 +13,7 @@ public class Ready extends BeforeRunning {
 
     @Override
     public State endGame() {
-        return new FinishedKing(getBoard());
+        return new FinishedKing(board);
     }
 
     @Override

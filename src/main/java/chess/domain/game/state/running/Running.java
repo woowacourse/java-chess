@@ -18,6 +18,6 @@ public abstract class Running extends Started {
 
     @Override
     public State endGame() {
-        return new FinishedEnd(getBoard());
+        return new FinishedEnd(board);
     }
 }

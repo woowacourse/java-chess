@@ -15,15 +15,14 @@ public class RunningBlack extends Running {
 
     @Override
     public State move(Position from, Position to) {
-        Board board = getBoard();
         MoveResult moveResult = board.executeCommand(from, to, PieceColor.BLACK);
 
         if (moveResult == MoveResult.KILL_KING) {
-            return new FinishedKing(getBoard());
+            return new FinishedKing(board);
         }
 
         if (moveResult.isMoveSuccess()) {
-            return new RunningWhite(getBoard());
+            return new RunningWhite(board);
         }
 
         return this;

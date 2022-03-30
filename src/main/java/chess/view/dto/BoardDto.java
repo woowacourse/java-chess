@@ -47,6 +47,7 @@ enum PieceName {
 
 public class BoardDto {
     private static final String EMPTY_PIECE_DISPLAY_NAME = ".";
+
     private final Board board;
 
     public BoardDto(Board board) {
