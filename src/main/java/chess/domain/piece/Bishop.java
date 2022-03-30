@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.Color;
@@ -29,7 +30,17 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> findRoute(Position source, Position target) {
-        return findLinearRoute(source, target);
+        List<Position> route = new ArrayList<>();
+
+        int routeLength = source.calculateMaxLinearLengthTo(target);
+        int xSlope = source.calculateXSlope(target, routeLength);
+        int ySlope = source.calculateYSlope(target, routeLength);
+
+        for (int step = 1; step < routeLength; step++) {
+            Position routeNode = source.displacedOf(xSlope * step, ySlope * step);
+            route.add(routeNode);
+        }
+        return route;
     }
 
     @Override

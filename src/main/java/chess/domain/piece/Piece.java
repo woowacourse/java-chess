@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import chess.domain.Color;
 import chess.domain.position.Position;
+import java.util.List;
 
 public abstract class Piece {
 
@@ -31,20 +29,6 @@ public abstract class Piece {
     public Piece displaced() {
         this.isDisplaced = true;
         return this;
-    }
-
-    protected List<Position> findLinearRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-
-        int routeLength = source.calculateMaxLinearLengthTo(target);
-        int xSlope = source.calculateXSlope(target, routeLength);
-        int ySlope = source.calculateYSlope(target, routeLength);
-
-        for (int step = 1; step < routeLength; step++) {
-            Position routeNode = source.displacedOf(xSlope * step, ySlope * step);
-            route.add(routeNode);
-        }
-        return route;
     }
 
     protected abstract String baseSignature();
