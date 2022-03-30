@@ -24,7 +24,7 @@ public class Ready extends State {
 
     @Override
     public State move(final Position from, final Position to) {
-        throw new IllegalStateException("게임을 시작해 주세요.");
+        throw new IllegalStateException("게임을 시작해주세요.");
     }
 
     @Override

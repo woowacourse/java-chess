@@ -40,7 +40,7 @@ class CommandTest {
 
         assertThatThrownBy(() -> Command.execute("move a1 a2", chessGame))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임을 시작해 주세요.");
+                .hasMessage("게임을 시작해주세요.");
     }
 
     @Test
