@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -7,6 +9,7 @@ public class Position {
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
     private static final int VALID_SIZE = 2;
+    private static final Map<String, Position> CACHE = new HashMap<>();
 
     private final Column column;
     private final Row row;
@@ -20,8 +23,14 @@ public class Position {
         validateBlank(input);
         validateSize(input);
 
+        if (CACHE.containsKey(input)) {
+            return CACHE.get(input);
+        }
+
         String[] values = input.split("");
-        return new Position(Column.of(values[COLUMN_INDEX]), Row.of(values[ROW_INDEX]));
+        Position position = new Position(Column.of(values[COLUMN_INDEX]), Row.of(values[ROW_INDEX]));
+        CACHE.put(input, position);
+        return position;
     }
 
     public Position moveTo(int x, int y) {
@@ -48,6 +57,10 @@ public class Position {
             nextPosition = nextPosition.moveTo(x, y);
         }
         return dest.equals(nextPosition);
+    }
+
+    public boolean isSameFile(Position position) {
+        return this.column.equals(position.column);
     }
 
     private static void validateBlank(String input) {
@@ -100,9 +113,5 @@ public class Position {
                 column +
                 ", " + row +
                 '}';
-    }
-
-    public boolean isSameFile(Position position) {
-        return this.column.equals(position.column);
     }
 }
