@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.CachedPosition;
 import chess.domain.board.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -64,5 +65,17 @@ class KingTest {
 
             assertThat(actual).isEqualTo(Direction.NE);
         }
+    }
+
+    @DisplayName("경로를 구한다.")
+    @Test
+    void calculate_Path() {
+        Position current = CachedPosition.a1;
+        Position target = CachedPosition.b2;
+        King king = new King(Color.BLACK);
+
+        List<Position> path = king.calculatePath(current, target);
+
+        assertThat(path).isEmpty();
     }
 }

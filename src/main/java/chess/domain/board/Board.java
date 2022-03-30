@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 
 import chess.domain.board.strategy.CreateBoardStrategy;
@@ -12,6 +11,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -40,12 +40,17 @@ public class Board {
         return targetPiece;
     }
 
+    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
+        if (movingPiece.isEmpty()) {
+            throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
+        }
+        if (!movingPiece.isSameColor(color)) {
+            throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
+        }
+    }
+
     private void validateMoving(final Position start, final Position target) {
         final Piece movingPiece = getPiece(start);
-        if (movingPiece.isSamePiece(KNIGHT)) {
-            validateKnight(start, target);
-            return;
-        }
         if (movingPiece.isSamePiece(PAWN)) {
             validatePawn(start, target);
             return;
@@ -55,16 +60,13 @@ public class Board {
 
     private void validateCommonPiece(final Position start, final Position target) {
         final Piece movingPiece = getPiece(start);
-        validatePath(movingPiece, start, target);
-
+        validatePath(movingPiece.calculatePath(start, target));
         final Piece targetPiece = getPiece(target);
         validateTarget(movingPiece, targetPiece);
     }
 
-    private void validateKnight(final Position start, final Position target) {
-        final Piece movingPiece = getPiece(start);
-        final Piece targetPiece = getPiece(target);
-        validateTarget(movingPiece, targetPiece);
+    private void validatePath(List<Position> path) {
+        path.forEach(this::validateEmpty);
     }
 
     private void validatePawn(final Position start, final Position target) {
@@ -75,7 +77,7 @@ public class Board {
             validatePawnDiagonalMove(movingPiece, targetPiece);
             return;
         }
-        validatePath(movingPiece, start, target);
+        validatePath(movingPiece.calculatePath(start, target));
         if (!targetPiece.isEmpty()) {
             throw new IllegalArgumentException(HAS_ANOTHER_PIECE_ERROR);
         }
@@ -84,24 +86,6 @@ public class Board {
     private void validatePawnDiagonalMove(final Piece movingPiece, final Piece targetPiece) {
         if (targetPiece.isEmpty() || targetPiece.hasSameColor(movingPiece)) {
             throw new IllegalArgumentException(PAWN_CANNOT_MOVE_DIAGONAL);
-        }
-    }
-
-    private void validatePieceExistIn(final Piece movingPiece, final Color color) {
-        if (movingPiece.isEmpty()) {
-            throw new IllegalArgumentException(PIECE_DOES_NOT_EXIST);
-        }
-        if (!movingPiece.isSameColor(color)) {
-            throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
-        }
-    }
-
-    private void validatePath(final Piece movingPiece, final Position start, final Position target) {
-        final Direction direction = movingPiece.findValidDirection(start, target);
-        Position current = start.move(direction);
-        while (!current.equals(target)) {
-            validateEmpty(current);
-            current = current.move(direction);
         }
     }
 

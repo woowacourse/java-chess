@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -17,6 +19,17 @@ public abstract class Piece {
     }
 
     public abstract Direction findValidDirection(Position current, Position target);
+
+    public List<Position> calculatePath(final Position current, final Position target) {
+        Direction direction = findValidDirection(current, target);
+        List<Position> path = new ArrayList<>();
+        Position moved = current.move(direction);
+        while (!moved.equals(target)) {
+            path.add(moved);
+            moved = moved.move(direction);
+        }
+        return path;
+    }
 
     public abstract boolean isEmpty();
 

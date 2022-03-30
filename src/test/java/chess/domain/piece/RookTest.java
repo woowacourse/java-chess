@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.CachedPosition;
 import chess.domain.board.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,18 @@ class RookTest {
             Direction actual = rook.findValidDirection(current, target);
 
             assertThat(actual).isEqualTo(Direction.N);
+        }
+
+        @DisplayName("경로를 구한다.")
+        @Test
+        void calculate_Path() {
+            Position current = CachedPosition.a1;
+            Position target = CachedPosition.a4;
+            Rook rook = new Rook(Color.BLACK);
+
+            List<Position> path = rook.calculatePath(current, target);
+
+            assertThat(path).containsOnly(CachedPosition.a2, CachedPosition.a3);
         }
     }
 }
