@@ -13,8 +13,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.movable.Pawn;
 import chess.domain.piece.movable.multiple.Queen;
@@ -25,7 +27,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(Map.of(
+        player = new Player(Color.WHITE, Map.of(
                 Position.from("a2"), Pawn.getWhitePawn(),
                 Position.from("d1"), Queen.getInstance()
         ));

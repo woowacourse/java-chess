@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 
 public class Player {
 
+    private final Color color;
     private final Map<Position, Piece> pieces;
 
-    public Player(final Map<Position, Piece> pieces) {
+    public Player(final Color color, final Map<Position, Piece> pieces) {
+        this.color = color;
         this.pieces = pieces;
     }
 
