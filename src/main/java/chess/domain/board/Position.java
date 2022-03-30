@@ -7,12 +7,12 @@ import java.util.*;
 public class Position {
 
     private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
-    public static final int MIN_ROW = 1;
-    public static final int MAX_ROW = 8;
-    public static final int MIN_COLUMN = 1;
-    public static final int MAX_COLUMN = 8;
-    public static final int BLACK_PAWN_DEFAULT_ROW = 7;
-    public static final int WHITE_PAWN_DEFAULT_ROW = 2;
+    private static final int MIN_ROW = 1;
+    private static final int MAX_ROW = 8;
+    private static final int MIN_COLUMN = 1;
+    private static final int MAX_COLUMN = 8;
+    private static final int BLACK_PAWN_DEFAULT_ROW = 7;
+    private static final int WHITE_PAWN_DEFAULT_ROW = 2;
 
     private final int row;
     private final int column;
