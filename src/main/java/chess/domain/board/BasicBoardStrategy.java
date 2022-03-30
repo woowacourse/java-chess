@@ -14,7 +14,7 @@ import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasicBoardGenerator implements BoardGenerator {
+public class BasicBoardStrategy implements BoardGenerationStrategy {
     private final Map<Position, Piece> board = new HashMap<>();
 
     @Override

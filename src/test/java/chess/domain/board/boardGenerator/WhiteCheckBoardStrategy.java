@@ -1,6 +1,6 @@
 package chess.domain.board.boardGenerator;
 
-import chess.domain.board.BoardGenerator;
+import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -12,7 +12,7 @@ import chess.domain.position.Row;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WhiteCheckBoardGenerator implements BoardGenerator {
+public class WhiteCheckBoardStrategy implements BoardGenerationStrategy {
 
     private final Map<Position, Piece> board = new HashMap<>();
 

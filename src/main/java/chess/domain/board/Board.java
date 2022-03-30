@@ -15,7 +15,7 @@ public class Board {
     private final Map<Position, Piece> board = new HashMap<>();
     private Team turn = Team.WHITE;
 
-    public void initBoard(BoardGenerator boardGenerator) {
+    public void initBoard(BoardGenerationStrategy boardGenerator) {
         board.putAll(boardGenerator.create());
     }
 

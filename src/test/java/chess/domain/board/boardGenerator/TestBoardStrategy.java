@@ -1,12 +1,12 @@
 package chess.domain.board.boardGenerator;
 
-import chess.domain.board.BoardGenerator;
+import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestBoardGenerator implements BoardGenerator {
+public class TestBoardStrategy implements BoardGenerationStrategy {
 
     private final Map<Position, Piece> board = new HashMap<>();
 
