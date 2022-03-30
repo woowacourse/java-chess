@@ -31,12 +31,6 @@ public class PieceTest {
         );
     }
 
-    @DisplayName("King을 생성한다.")
-    @Test
-    void King을_생성한다() {
-        assertDoesNotThrow(() -> new King(Color.BLACK));
-    }
-
     @DisplayName("진영에 맞는 표기 정보를 반환한다")
     @ParameterizedTest
     @MethodSource("generatePieces")
