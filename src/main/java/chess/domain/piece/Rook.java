@@ -23,10 +23,10 @@ public class Rook extends Piece {
     public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
         List<List<Integer>> possibleDot = List.of(List.of(0, 1), List.of(1, 0));
         List<Position> positions = new ArrayList<>(List.of(source, target));
-        if (PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board)) {
+        if (PossibleMoveLinePositionChecker.isPossibleMovePosition(positions, possibleDot, board)) {
             return true;
         }
         Collections.reverse(positions);
-        return PossibleMoveLinePositionChecker.isPossibleMovePosition(this, positions, possibleDot, board);
+        return PossibleMoveLinePositionChecker.isPossibleMovePosition(positions, possibleDot, board);
     }
 }

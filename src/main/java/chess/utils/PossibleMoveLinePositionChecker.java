@@ -18,17 +18,17 @@ public class PossibleMoveLinePositionChecker {
     private PossibleMoveLinePositionChecker() {
     }
 
-    public static boolean isPossibleMovePosition(Piece piece, List<Position> positions, List<List<Integer>> move,
+    public static boolean isPossibleMovePosition(List<Position> positions, List<List<Integer>> move,
                                                  Map<Position, Piece> board) {
         Position source = positions.get(SOURCE);
         Position target = positions.get(TARGET);
 
         return move.stream()
-                .anyMatch(moveUnit -> findMovableByRecursion(piece, source, target,
+                .anyMatch(moveUnit -> findMovableByRecursion(source, target,
                         List.of(moveUnit.get(ROW), moveUnit.get(COLUMN)), board));
     }
 
-    private static boolean findMovableByRecursion(Piece piece, Position source, Position target, List<Integer> moveUnit,
+    private static boolean findMovableByRecursion(Position source, Position target, List<Integer> moveUnit,
                                                   Map<Position, Piece> board) {
         int row = moveUnit.get(ROW);
         int column = moveUnit.get(COLUMN);
@@ -39,7 +39,7 @@ public class PossibleMoveLinePositionChecker {
         if (movePosition.isSameRow(target) && movePosition.isSameColumn(target)) {
             return isBlankDot(board.get(movePosition));
         }
-        findMovableByRecursion(piece, movePosition, target, moveUnit, board);
+        findMovableByRecursion(movePosition, target, moveUnit, board);
         return false;
     }
 
