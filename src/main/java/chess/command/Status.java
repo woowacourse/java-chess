@@ -3,7 +3,7 @@ package chess.command;
 import chess.domain.ChessGame;
 import chess.view.OutputView;
 
-public class Status extends Command {
+public class Status implements Command {
 
     private static final Status INSTANCE = new Status();
 

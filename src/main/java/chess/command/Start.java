@@ -3,7 +3,7 @@ package chess.command;
 import chess.domain.ChessGame;
 import chess.view.OutputView;
 
-public class Start extends Command {
+public class Start implements Command {
 
     private static final Start INSTANCE = new Start();
 

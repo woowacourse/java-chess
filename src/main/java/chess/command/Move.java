@@ -5,12 +5,12 @@ import chess.domain.Score;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 
-public class Move extends Command {
+public class Move implements Command {
 
     private final Position from;
     private final Position to;
 
-    Move(final String from, final String to) {
+    public Move(final String from, final String to) {
         this.from = Position.from(from);
         this.to = Position.from(to);
     }

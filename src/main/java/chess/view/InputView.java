@@ -22,6 +22,6 @@ public class InputView {
     private static Command getCommand() {
         final String input = SCANNER.nextLine();
         final String text = input.toLowerCase();
-        return Command.from(text);
+        return CommandMapper.from(text);
     }
 }

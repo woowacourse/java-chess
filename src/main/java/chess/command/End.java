@@ -2,7 +2,7 @@ package chess.command;
 
 import chess.domain.ChessGame;
 
-public class End extends Command {
+public class End implements Command {
 
     private static final End INSTANCE = new End();
 
