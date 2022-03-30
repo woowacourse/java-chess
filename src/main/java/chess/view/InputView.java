@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.menu.MenuType;
 import java.util.Scanner;
 
 public class InputView {

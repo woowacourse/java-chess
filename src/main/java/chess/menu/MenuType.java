@@ -1,7 +1,6 @@
 package chess.menu;
 
 import chess.domain.board.Board;
-import chess.view.MoveInfo;
 import java.util.Arrays;
 
 public enum MenuType {
