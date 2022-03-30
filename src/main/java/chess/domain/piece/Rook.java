@@ -14,4 +14,9 @@ public class Rook extends Piece {
     public boolean isMovable(Position fromPosition, Position toPosition) {
         return fromPosition.isSameFile(toPosition) || fromPosition.isSameRank(toPosition);
     }
+
+    @Override
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        return isMovable(fromPosition, toPosition);
+    }
 }

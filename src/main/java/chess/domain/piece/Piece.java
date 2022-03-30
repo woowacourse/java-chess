@@ -30,9 +30,7 @@ public abstract class Piece {
         return color == piece.color;
     }
 
-    public boolean isCatchable(Position fromPosition, Position toPosition) {
-        return isMovable(fromPosition, toPosition);
-    }
+    public abstract boolean isCatchable(Position fromPosition, Position toPosition);
 
     public double getScore() {
         return score;

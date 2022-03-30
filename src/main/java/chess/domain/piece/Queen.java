@@ -15,6 +15,11 @@ public class Queen extends Piece {
         return isSameRowOrCol(fromPosition, toPosition) || isDiagonal(fromPosition, toPosition);
     }
 
+    @Override
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        return isMovable(fromPosition, toPosition);
+    }
+
     private boolean isSameRowOrCol(Position fromPosition, Position toPosition) {
         return fromPosition.isSameFile(toPosition) || fromPosition.isSameRank(toPosition);
     }

@@ -16,4 +16,9 @@ public class Bishop extends Piece {
         int width = fromPosition.getFileDifference(toPosition);
         return Math.pow(height, 2) == Math.pow(width, 2);
     }
+
+    @Override
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        return isMovable(fromPosition, toPosition);
+    }
 }
