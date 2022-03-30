@@ -45,17 +45,12 @@ public enum StraightDirection implements Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 방향이 없습니다."));
     }
 
-    @Override
-    public int getDx() {
-        return dx;
-    }
-
-    @Override
-    public int getDy() {
-        return dy;
-    }
-
     public boolean isCross() {
         return List.of(NORTH, SOUTH, EAST, WEST).contains(this);
+    }
+
+    @Override
+    public Point nextOf(Point point) {
+        return Point.of(point.moveHorizontal(dx), point.moveVertical(dy));
     }
 }

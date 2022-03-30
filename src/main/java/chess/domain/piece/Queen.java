@@ -15,10 +15,10 @@ public class Queen extends Piece {
     public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         StraightDirection direction = findDirection(from, to);
 
-        Point next = from.next(direction);
+        Point next = direction.nextOf(from);
         while (!next.equals(to)) {
             validateEmpty(pointPieces, next);
-            next = next.next(direction);
+            next = direction.nextOf(next);
         }
     }
 

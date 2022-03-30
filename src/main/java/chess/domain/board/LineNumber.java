@@ -39,8 +39,8 @@ public class LineNumber {
         return number - other.number;
     }
 
-    public LineNumber next(int degree) {
-        return LineNumber.of(number + degree);
+    public int moveLine(int degree) {
+        return number + degree;
     }
 
     @Override

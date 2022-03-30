@@ -60,7 +60,7 @@ class PointTest {
     void goNextByDirection() {
         Point aPoint = Point.of("a1");
 
-        Point next = aPoint.next(StraightDirection.NORTHEAST);
+        Point next = StraightDirection.NORTHEAST.nextOf(aPoint);
 
         assertThat(next).isEqualTo(Point.of("b2"));
     }

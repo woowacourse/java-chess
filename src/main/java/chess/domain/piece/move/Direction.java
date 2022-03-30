@@ -1,8 +1,8 @@
 package chess.domain.piece.move;
 
+import chess.domain.board.Point;
+
 public interface Direction {
 
-    int getDx();
-
-    int getDy();
+    Point nextOf(Point point);
 }

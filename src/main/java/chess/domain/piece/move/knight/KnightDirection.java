@@ -29,17 +29,12 @@ public enum KnightDirection implements Direction {
     public static List<Point> createNextPointCandidates(Point from) {
         return Arrays.stream(values())
                 .filter(value -> from.isInRangeNext(value.dx, value.dy))
-                .map(from::next)
+                .map(value -> value.nextOf(from))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public int getDx() {
-        return dx;
-    }
-
-    @Override
-    public int getDy() {
-        return dy;
+    public Point nextOf(Point point) {
+        return Point.of(point.moveHorizontal(dx), point.moveVertical(dy));
     }
 }

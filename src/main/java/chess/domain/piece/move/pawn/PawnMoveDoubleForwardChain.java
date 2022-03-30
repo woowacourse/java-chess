@@ -19,7 +19,8 @@ public class PawnMoveDoubleForwardChain extends PawnMoveChain {
     public void move(Map<Point, Piece> pointPieces, Point from, Point to) {
         int horizontal = to.subtractHorizontal(from);
         int vertical = support.forwarding(to.subtractVertical(from));
-        Point middle = from.next(StraightDirection.find(from, to));
+        StraightDirection direction = StraightDirection.find(from, to);
+        Point middle = direction.nextOf(from);
         if (isStartLine(from) &&
                 isToPoint(horizontal, vertical) &&
                 isNoObstacle(pointPieces, to, middle)) {

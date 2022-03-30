@@ -3,11 +3,9 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
-import chess.domain.board.TestBoardGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
