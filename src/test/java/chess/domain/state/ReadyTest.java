@@ -43,7 +43,7 @@ class ReadyTest {
 
     @Test
     @DisplayName("move 시 예외 발생")
-    void move() {
+    void moveException() {
         State ready = new Ready();
 
         assertThatThrownBy(() -> ready.move(Position.from("a2"), Position.from("a3")))
@@ -62,7 +62,7 @@ class ReadyTest {
 
     @Test
     @DisplayName("첫 ready 상태일 때 status 시 예외 발생")
-    void statusToInitialReady() {
+    void statusToInitialReadyException() {
         State ready = new Ready();
 
         assertThatThrownBy(() -> ready.status(Output::printScore))
