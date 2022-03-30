@@ -5,6 +5,7 @@ import chess.domain.Direction;
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
+
     private File file;
     private Rank rank;
 
@@ -28,7 +29,7 @@ public class Position implements Comparable<Position> {
     }
 
     public Position nextPositionBy(Direction direction) {
-        File nextFile = File.from((char) (file.getName() + direction.file()));
+        File nextFile = File.from((char) (file.getNumber() + direction.file()));
         Rank nextRank = Rank.from(rank.getNumber() + direction.rank());
 
         return new Position(nextFile, nextRank);

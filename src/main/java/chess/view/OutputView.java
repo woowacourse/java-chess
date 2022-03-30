@@ -65,5 +65,6 @@ public class OutputView {
     private static void printScore(final Score score) {
         System.out.println("백팀 점수: " + score.whiteScore());
         System.out.println("흑팀 점수: " + score.blackScore());
+        System.out.println();
     }
 }

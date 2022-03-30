@@ -3,42 +3,42 @@ package chess.domain.postion;
 import java.util.Arrays;
 
 public enum File {
-    NOTHING('0'),
-    A('a'),
-    B('b'),
-    C('c'),
-    D('d'),
-    E('e'),
-    F('f'),
-    G('g'),
-    H('h');
+    NOTHING(0),
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
-    private final char name;
+    private final int number;
 
-    File(char name) {
-        this.name = name;
+    File(int number) {
+        this.number = number;
     }
 
-    public static File from(char candidate) {
+    public static File from(int candidate) {
         return Arrays.stream(File.values())
-                .filter(file -> file.getName() == candidate)
+                .filter(file -> file.getNumber() == candidate)
                 .findAny()
                 .orElse(NOTHING);
     }
 
     public int calculateDifference(final File file) {
-        return name - file.getName();
+        return number - file.getNumber();
     }
 
     public int calculateAbsoluteValue(File file) {
-        return Math.abs(name - file.getName());
+        return Math.abs(number - file.getNumber());
     }
 
     public boolean isNothing() {
         return this.equals(NOTHING);
     }
 
-    public char getName() {
-        return name;
+    public int getNumber() {
+        return number;
     }
 }
