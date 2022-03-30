@@ -1,4 +1,4 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 public enum Winner {
 

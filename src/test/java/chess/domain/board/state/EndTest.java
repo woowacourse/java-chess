@@ -3,6 +3,10 @@ package chess.domain.board.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Position;
+import chess.domain.state.BlackWin;
+import chess.domain.state.BoardInitializer;
+import chess.domain.state.BoardState;
+import chess.domain.state.WhiteWin;
 import java.util.HashMap;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.board.state.BoardState;
+import chess.domain.state.BoardState;
 import chess.domain.piece.Piece;
 import java.util.stream.Collectors;
 

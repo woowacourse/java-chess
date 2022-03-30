@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Rank;
 import chess.domain.piece.Position;
+import chess.domain.state.BlackTurn;
+import chess.domain.state.BoardInitializer;
+import chess.domain.state.BoardState;
+import chess.domain.state.WhiteTurn;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

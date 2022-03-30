@@ -3,6 +3,9 @@ package chess.domain.board.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Piece;
+import chess.domain.state.BoardInitializer;
+import chess.domain.state.BoardState;
+import chess.domain.state.WhiteTurn;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
