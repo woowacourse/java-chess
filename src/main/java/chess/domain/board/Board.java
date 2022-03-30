@@ -129,7 +129,7 @@ public class Board {
         return (int) pieces.entrySet()
                 .stream()
                 .filter(entry -> isPawnWith(entry.getValue(), color))
-                .filter(this::hasAnotherPawnInSameColumn)
+                .filter(entry -> hasAnotherPawnInSameColumn(entry.getKey(), entry.getValue()))
                 .count();
     }
 
@@ -137,16 +137,14 @@ public class Board {
         return piece.isSamePiece(PAWN) && piece.isSameColor(color);
     }
 
-    private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece) {
+    private boolean hasAnotherPawnInSameColumn(final Position pawnPosition, final Piece piece) {
         return Arrays.stream(Row.values())
-                .map(row -> new Position(piece.getKey().getColumn(), row))
-                .anyMatch(position -> isAnotherPawnInSameColumn(piece, position));
+                .map(row -> new Position(pawnPosition.getColumn(), row))
+                .anyMatch(position -> isAnotherPawnInSameColumn(pawnPosition, piece, position));
     }
 
-    private boolean isAnotherPawnInSameColumn(final Map.Entry<Position, Piece> piece,
+    private boolean isAnotherPawnInSameColumn(final Position pawnPosition, final Piece pawn,
                                               final Position currentPawnPosition) {
-        final Position pawnPosition = piece.getKey();
-        final Piece pawn = piece.getValue();
         return !pawnPosition.equals(currentPawnPosition) && get(currentPawnPosition).equals(pawn);
     }
 
