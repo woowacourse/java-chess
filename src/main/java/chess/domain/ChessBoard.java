@@ -44,7 +44,7 @@ public class ChessBoard {
 
     public boolean isTurn(String source, Color color) {
         Piece sourcePiece = board.findPiece(new Position(source));
-        return sourcePiece.isSameColor(color);
+        return !sourcePiece.isSameColor(color);
     }
 
     public boolean isFinished() {
