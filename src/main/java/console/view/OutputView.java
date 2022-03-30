@@ -9,19 +9,17 @@ import java.util.*;
 
 public class OutputView {
 
-    private static final Map<Class<? extends Piece>, String> PIECE_SYMBOL = Map.of(King.class, "K",
-        Queen.class, "Q",
-        Rook.class, "R",
-        Bishop.class, "B",
-        Pawn.class, "P",
-        Knight.class, "N");
+    public static final String BLANK = ".";
+    private static final String NEWLINE = System.lineSeparator();
 
     private OutputView() {
     }
 
     public static void printInitChessGameMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
+        System.out.println("> 체스 게임을 시작합니다." + NEWLINE +
+            "> 게임 시작 : start" + NEWLINE +
+            "> 게임 종료 : end" + NEWLINE +
+            "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
@@ -47,7 +45,7 @@ public class OutputView {
         Optional<Piece> pieceOptional = findByPosition(pieces, position);
         pieceOptional.ifPresentOrElse(
             piece -> System.out.print(pieceSymbol(piece)),
-            () -> System.out.print("."));
+            () -> System.out.print(BLANK));
     }
 
     private static Optional<Piece> findByPosition(List<Piece> pieces, Position position) {
@@ -58,9 +56,9 @@ public class OutputView {
 
     private static String pieceSymbol(Piece piece) {
         if (piece.getColor() == Color.WHITE) {
-            return PIECE_SYMBOL.get(piece.getClass()).toLowerCase(Locale.ROOT);
+            return Symbol.findBySymbol(piece.getClass()).toLowerCase();
         }
-        return PIECE_SYMBOL.get(piece.getClass());
+        return Symbol.findBySymbol(piece.getClass());
     }
 
     public static void printScores(Score score) {
