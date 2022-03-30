@@ -15,28 +15,8 @@ public class GameStatus {
     }
 
     public void start() {
-        if (progress.equals(Progress.PLAYING)) {
-            throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
-        }
+        progress.checkReady();
         progress = Progress.PLAYING;
-    }
-
-    public boolean canPlay() {
-        return !progress.equals(Progress.END) && !progress.equals(Progress.KING_DIE);
-    }
-
-    public void checkCanMove(Optional<ChessPiece> possibleChessPiece) {
-        if (progress.equals(Progress.READY)) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-        }
-        if (progress.equals(Progress.END) || progress.equals(Progress.KING_DIE)) {
-            throw new IllegalArgumentException("게임이 이미 종료되었습니다.");
-        }
-        possibleChessPiece.ifPresent(piece -> {
-            if (!piece.isSameColor(currentTurnColor)) {
-                throw new IllegalArgumentException(currentTurnColor.name() + "의 차례입니다.");
-            }
-        });
     }
 
     public void end() {
@@ -47,18 +27,31 @@ public class GameStatus {
         progress = Progress.KING_DIE;
     }
 
+    public boolean canPlay() {
+        return !progress.isEnd();
+    }
+
+    public void checkCanMove(Optional<ChessPiece> possibleChessPiece) {
+        progress.checkPlaying();
+        possibleChessPiece.ifPresent(this::checkTurn);
+    }
+
+    private void checkTurn(final ChessPiece piece) {
+        if (!piece.isSameColor(currentTurnColor)) {
+            throw new IllegalArgumentException(currentTurnColor.name() + "의 차례입니다.");
+        }
+    }
+
+    public void checkCanCalculateScore() {
+        progress.checkPlaying();
+    }
+
     public void changeTurn() {
         currentTurnColor = currentTurnColor.toOpposite();
     }
 
     public boolean isKingDie() {
         return progress.equals(Progress.KING_DIE);
-    }
-
-    public void checkCanCalculateScore() {
-        if (progress.equals(Progress.READY)) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
-        }
     }
 
     private enum Progress {
@@ -68,5 +61,24 @@ public class GameStatus {
         END,
         KING_DIE,
         ;
+
+        private void checkReady() {
+            if (this.equals(PLAYING)) {
+                throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
+            }
+        }
+
+        private void checkPlaying() {
+            if (this.equals(READY)) {
+                throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+            }
+            if (isEnd()) {
+                throw new IllegalArgumentException("게임이 이미 종료되었습니다.");
+            }
+        }
+
+        private boolean isEnd() {
+            return this.equals(END) || this.equals(KING_DIE);
+        }
     }
 }
