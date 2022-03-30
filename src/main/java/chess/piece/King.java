@@ -4,7 +4,7 @@ import chess.position.Position;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class King extends Piece{
+public class King extends Piece {
 
     public King(Color color, Position position) {
         super(color, position);
