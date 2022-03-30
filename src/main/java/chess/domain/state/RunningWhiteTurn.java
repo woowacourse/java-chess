@@ -9,35 +9,24 @@ import chess.domain.piece.Piece;
 
 public class RunningWhiteTurn extends Running {
 
+	private static final Color COLOR = Color.WHITE;
+
 	RunningWhiteTurn(Map<Position, Piece> pieces) {
 		super(pieces);
 	}
 
 	@Override
 	public GameState proceed(Command command) {
-		if (!command.isMove()) {
-			return checkFinished(command);
-		}
-		validateMoveOpponent(command);
-		board.movePiece(command.getFromPosition(), command.getToPosition());
-		return checkBlackKingExist();
+		return executeMovingPiece(command, COLOR);
 	}
 
-	private void validateMoveOpponent(Command command) {
-		if (!board.isWhite(command.getFromPosition())) {
-			throw new IllegalStateException(CANNOT_MOVE_OPPONENT_PIECE);
-		}
-	}
-
-	private GameState checkBlackKingExist() {
-		if (board.isKingNotExist(Color.BLACK)) {
-			return new Finished(this.board.getPieces());
-		}
+	@Override
+	protected Running getOpponentTurn() {
 		return new RunningBlackTurn(board.getPieces());
 	}
 
 	@Override
 	public Color getColor() {
-		return Color.WHITE;
+		return COLOR;
 	}
 }
