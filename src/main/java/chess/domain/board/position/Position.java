@@ -65,10 +65,10 @@ public class Position {
     }
 
     public boolean checkDirection(Position targetPosition, Direction direction) {
-        int fileDiff = targetPosition.fileIdx - fileIdx;
-        int rankDiff = targetPosition.rankIdx - rankIdx;
+        int x = targetPosition.fileIdx - fileIdx;
+        int y = targetPosition.rankIdx - rankIdx;
 
-        return direction.checkByPositionDifference(fileDiff, rankDiff);
+        return direction.hasAngleOf(x, y);
     }
 
     @Override

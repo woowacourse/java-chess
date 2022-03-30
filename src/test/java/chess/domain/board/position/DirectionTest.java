@@ -8,66 +8,136 @@ import org.junit.jupiter.api.Test;
 class DirectionTest {
 
     @Test
-    void UP은_위쪽이면_참() {
-        boolean actual = Direction.UP
-                .checkByPositionDifference(0, 5);
-
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    void UP_RIGHT은_위쪽_우측이면_무조건_참() {
-        boolean actual = Direction.UP_RIGHT
-                .checkByPositionDifference(1, 5);
-
-        assertThat(actual).isTrue();
-    }
-
-    @Test
     void RIGHT는_오른쪽이면_참() {
+        int fileDiff = 5;
+        int rankDiff = 0;
+
         boolean actual = Direction.RIGHT
-                .checkByPositionDifference(5, 0);
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
     }
 
     @Test
-    void DOWN_RIGHT은_아래쪽_우측이면_무조건_참() {
-        boolean actual = Direction.DOWN_RIGHT
-                .checkByPositionDifference(5, -1);
+    void UP_RIGHT은_위쪽_우측_대각선이면_참() {
+        int fileDiff = 5;
+        int rankDiff = 5;
+
+        boolean actual = Direction.UP_RIGHT
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
     }
 
     @Test
-    void DOWN은_아래쪽이면_참() {
-        boolean actual = Direction.DOWN
-                .checkByPositionDifference(0, -5);
+    void UP_RIGHT은_위쪽_우측이어도_대각선이_아니면_거짓() {
+        int fileDiff = 5;
+        int rankDiff = 1;
+
+        boolean actual = Direction.UP_RIGHT
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    void UP은_위쪽이면_참() {
+        int fileDiff = 0;
+        int rankDiff = 5;
+
+        boolean actual = Direction.UP
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
     }
 
     @Test
-    void DOWN_LEFT은_아래쪽_좌측이면_무조건_참() {
-        boolean actual = Direction.DOWN_LEFT
-                .checkByPositionDifference(-1, -5);
+    void UP_LEFT은_위쪽_좌측_대각선이면_참() {
+        int fileDiff = -5;
+        int rankDiff = 5;
+
+        boolean actual = Direction.UP_LEFT
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
+    }
+
+    @Test
+    void UP_LEFT은_위쪽_좌측이어도_대각선이_아니면_거짓() {
+        int fileDiff = -5;
+        int rankDiff = 2;
+
+        boolean actual = Direction.UP_LEFT
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isFalse();
     }
 
     @Test
     void LEFT은_왼쪽이면_참() {
+        int fileDiff = -5;
+        int rankDiff = 0;
+
         boolean actual = Direction.LEFT
-                .checkByPositionDifference(-5, 0);
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isTrue();
+    }
+
+
+    @Test
+    void DOWN_LEFT은_아래쪽_좌측_대각선이면_참() {
+        int fileDiff = -5;
+        int rankDiff = -5;
+
+        boolean actual = Direction.DOWN_LEFT
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isTrue();
+    }
+
+
+    @Test
+    void DOWN_LEFT은_아래쪽_좌측이어도_대각선이_아니면_거짓() {
+        int fileDiff = -5;
+        int rankDiff = -2;
+
+        boolean actual = Direction.DOWN_LEFT
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    void DOWN은_아래쪽이면_참() {
+        int fileDiff = 0;
+        int rankDiff = -5;
+
+        boolean actual = Direction.DOWN
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
     }
 
     @Test
-    void UP_LEFT은_위쪽_좌측이면_무조건_참() {
-        boolean actual = Direction.UP_LEFT
-                .checkByPositionDifference(-5, 5);
+    void DOWN_RIGHT은_아래쪽_우측_대각선이면_참() {
+        int fileDiff = 5;
+        int rankDiff = -5;
+
+        boolean actual = Direction.DOWN_RIGHT
+                .hasAngleOf(fileDiff, rankDiff);
 
         assertThat(actual).isTrue();
+    }
+
+    @Test
+    void DOWN_RIGHT은_아래쪽_우측이어도_대각선이_아니면_거짓() {
+        int fileDiff = 3;
+        int rankDiff = -5;
+
+        boolean actual = Direction.DOWN_RIGHT
+                .hasAngleOf(fileDiff, rankDiff);
+
+        assertThat(actual).isFalse();
     }
 }
