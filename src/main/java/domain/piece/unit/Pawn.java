@@ -27,7 +27,7 @@ public final class Pawn extends SpecificMovablePiece {
 
     @Override
     public boolean availableMove(final Position source, final Position target) {
-        calculateAvailableDirectionalPositions(source);
+        this.directionalPositions = calculateAvailableDirectionalPositions(source);
         if (availableFirstStartPosition(source, target)) {
             return true;
         }

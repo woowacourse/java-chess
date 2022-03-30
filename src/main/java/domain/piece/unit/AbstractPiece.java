@@ -31,22 +31,18 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public boolean availableMove(final Position source, final Position target) {
-        calculateAvailableDirectionalPositions(source);
+        this.directionalPositions = calculateAvailableDirectionalPositions(source);
         return containsPosition(target);
     }
 
-    protected void calculateAvailableDirectionalPositions(final Position source) {
-        initializeDirectionalPositions();
-        directionalPositions = getDirections().stream()
+    protected Map<Direction, List<Position>> calculateAvailableDirectionalPositions(final Position source) {
+        Map<Direction, List<Position>> directionalPositions = getDirections().stream()
                 .collect(
                         Collectors.toMap(Function.identity(),
                                 direction -> calculateAvailableDirectionByPosition(source, direction)
                         )
                 );
-    }
-
-    protected void initializeDirectionalPositions() {
-        directionalPositions = new HashMap<>();
+        return directionalPositions;
     }
 
     protected abstract List<Position> calculateAvailableDirectionByPosition(final Position source,
