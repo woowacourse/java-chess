@@ -32,10 +32,10 @@ public class Pawn extends Piece {
         if (displacementY == 1 && displacementX == 0) {
             return true;
         }
-        if(displacementY == 1 && Math.abs(displacementX) == 1){
+        if (displacementY == 1 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (displacementY == 2 && displacementX == 0){
+        if (displacementY == 2 && displacementX == 0) {
             return isNeverDisplaced();
         }
         return false;
@@ -45,10 +45,10 @@ public class Pawn extends Piece {
         if (displacementY == -1 && displacementX == 0) {
             return true;
         }
-        if(displacementY == -1 && Math.abs(displacementX) == 1){
+        if (displacementY == -1 && Math.abs(displacementX) == 1) {
             return true;
         }
-        if (displacementY == -2 && displacementX == 0){
+        if (displacementY == -2 && displacementX == 0) {
             return isNeverDisplaced();
         }
         return false;

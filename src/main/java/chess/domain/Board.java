@@ -80,11 +80,11 @@ public class Board {
         Piece sourcePiece = board.get(source);
         List<Position> route = sourcePiece.findRoute(source, target);
         for (Position node : route) {
-            validateRouteNode(node);
+            validatePieceOnRoute(node);
         }
     }
 
-    private void validateRouteNode(Position node) {
+    private void validatePieceOnRoute(Position node) {
         Piece nodePiece = board.get(node);
         if (!nodePiece.isBlank()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
