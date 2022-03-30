@@ -7,15 +7,19 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class BlackPawnCaptureMovingStrategy implements MovingStrategy {
+public class PawnCaptureMovingStrategy implements MovingStrategy {
 
-    private static final List<Direction> CAPTURABLE_DIRECTIONS = List.of(Direction.BOTTOM_LEFT, Direction.BOTTOM_RIGHT);
+    private final List<Direction> directions;
+
+    public PawnCaptureMovingStrategy(List<Direction> directions) {
+        this.directions = directions;
+    }
 
     @Override
     public boolean canMove(Board board, Position source, Position target) {
         Direction direction = Direction.of(source, target);
 
-        return CAPTURABLE_DIRECTIONS.contains(direction)
+        return directions.contains(direction)
                 && source.calculateDistance(target) == 2
                 && isCapture(board, source, target);
     }
