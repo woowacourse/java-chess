@@ -5,7 +5,6 @@ import domain.directions.Direction;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
-    private Map<Direction, List<Position>> availableMovePosition;
+    private final Map<Direction, List<Position>> availableMovePosition;
 
     public Piece(final Player player, final PieceSymbol pieceSymbol) {
         this.player = player;
@@ -22,38 +21,43 @@ public abstract class Piece {
         this.availableMovePosition = new HashMap<>();
     }
 
-    protected abstract List<Direction> getDirections();
-
     protected abstract List<Position> calculateAvailablePosition(final Position source,
         final Direction direction);
 
-    public boolean isAvailableMove(final Position source, final Position target) {
-        generateAvailablePosition(source);
-        return availableMovePosition.values().stream()
-            .filter(value -> value.contains(target))
-            .findFirst()
-            .orElse(null) != null;
-    }
+    protected abstract List<Direction> getDirections();
 
-    protected void generateAvailablePosition(Position source) {
+    public void generateAvailablePosition(final Position source) {
         getDirections().forEach(direction ->
             availableMovePosition.put(direction, calculateAvailablePosition(source, direction)));
     }
 
     public List<Position> getAvailablePositions(final Position source, final Position target) {
-        List<Position> positions = availableMovePosition.values().stream()
-            .filter(value -> value.contains(target))
-            .findFirst()
-            .orElse(new ArrayList<>());
+        List<Position> positions = availableMovePosition.get(findDirection(target));
         int index = positions.indexOf(target);
         return positions.subList(0, index);
     }
 
-    public Direction getDirection(Position target) {
+    public Direction findDirection(final Position target) {
         return availableMovePosition.keySet().stream()
             .filter(direction -> availableMovePosition.get(direction).contains(target))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
+    }
+
+    protected boolean checkOverRange(final Position source, final Direction direction) {
+        int rank = source.getRank() + direction.getRank();
+        int file = source.getFile() + direction.getFile();
+        return File.isFileRange(file) && Rank.isRankRange(rank);
+    }
+
+    protected Position createPositionByDirection(final Position source, final Direction direction) {
+        int rank = source.getRank() + direction.getRank();
+        int file = source.getFile() + direction.getFile();
+        return Position.of(File.of(file), Rank.of(rank));
+    }
+
+    protected Map<Direction, List<Position>> getAvailableMovePosition() {
+        return Map.copyOf(availableMovePosition);
     }
 
     public boolean isPawn() {
@@ -64,24 +68,12 @@ public abstract class Piece {
         return false;
     }
 
-    protected boolean checkOverRange(final Position source, final Direction direction) {
-        int rank = source.getRank() + direction.getRank();
-        int file = source.getFile() + direction.getFile();
-        return File.isFileRange(file) && Rank.isRankRange(rank);
-    }
-
-    protected Position createDirectionPosition(final Position source, final Direction direction) {
-        int rank = source.getRank() + direction.getRank();
-        int file = source.getFile() + direction.getFile();
-        return Position.of(File.of(file), Rank.of(rank));
-    }
-
     public boolean isSamePlayer(Player player) {
         return this.player == player;
     }
 
-    protected Map<Direction, List<Position>> getAvailableMovePosition() {
-        return availableMovePosition;
+    public Player getPlayer() {
+        return player;
     }
 
     public boolean isSamePlayer(Piece comparePiece) {
@@ -94,9 +86,5 @@ public abstract class Piece {
 
     public String symbol() {
         return pieceSymbol.symbol();
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

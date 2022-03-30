@@ -1,6 +1,6 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Player;
 import domain.position.File;
@@ -19,8 +19,9 @@ public class PawnTest {
     void moveBlackPawnMove(Position target) {
         Piece piece = new Pawn(Player.BLACK);
         Position source = Position.of(File.B, Rank.SEVEN);
+        piece.generateAvailablePosition(source);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 
     private static Stream<Position> blackPawnTarget() {
@@ -38,7 +39,8 @@ public class PawnTest {
         Piece piece = new Pawn(Player.WHITE);
         Position source = Position.of(File.B, Rank.TWO);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        piece.generateAvailablePosition(source);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 
     private static Stream<Position> whitePawnTarget() {

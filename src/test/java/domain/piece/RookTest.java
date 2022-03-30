@@ -1,11 +1,11 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Player;
-import domain.position.Rank;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,8 @@ public class RookTest {
         Position source = Position.of(File.B, Rank.TWO);
         Position target = Position.of(File.B, Rank.THREE);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        piece.generateAvailablePosition(source);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 
     @Test
@@ -28,6 +29,7 @@ public class RookTest {
         Position source = Position.of(File.B, Rank.TWO);
         Position target = Position.of(File.B, Rank.SEVEN);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        piece.generateAvailablePosition(source);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 }

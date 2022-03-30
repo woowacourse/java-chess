@@ -1,11 +1,11 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Player;
-import domain.position.Rank;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,8 @@ public class KingTest {
         Piece piece = new King(Player.WHITE);
         Position source = Position.of(File.B, Rank.TWO);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        piece.generateAvailablePosition(source);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 
     private static Stream<Position> targetPosition() {
@@ -43,7 +44,8 @@ public class KingTest {
         Piece piece = new King(Player.WHITE);
         Position source = Position.of(File.B, Rank.ONE);
 
-        assertThat(piece.isAvailableMove(source, target)).isEqualTo(true);
+        piece.generateAvailablePosition(source);
+        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
     }
 
     private static Stream<Position> targetPosition_overRage() {

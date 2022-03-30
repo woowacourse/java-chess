@@ -18,7 +18,7 @@ public abstract class MovableRangePiece extends Piece {
         List<Position> positions = new ArrayList<>();
         Position startPosition = source;
         while (checkOverRange(startPosition, direction)) {
-            Position nextPosition = createDirectionPosition(startPosition, direction);
+            Position nextPosition = createPositionByDirection(startPosition, direction);
             positions.add(nextPosition);
             startPosition = nextPosition;
         }

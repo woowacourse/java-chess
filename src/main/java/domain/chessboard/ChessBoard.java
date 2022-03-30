@@ -35,7 +35,8 @@ public class ChessBoard {
 
     public void move(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
-        validateTargetPosition(source, target);
+        sourcePiece.generateAvailablePosition(source);
+//        validateTargetPosition(source, target);
         validateTargetPiece(source, target);
         validatePawnAttack(sourcePiece, target);
         validateRoutePositions(source, target);
@@ -44,7 +45,7 @@ public class ChessBoard {
 
     private void validatePawnAttack(Piece sourcePiece, Position target) {
         Piece targetPiece = board.get(target);
-        Direction moveDirection = sourcePiece.getDirection(target);
+        Direction moveDirection = sourcePiece.findDirection(target);
         if (sourcePiece.isPawn() && isPawnAttackDirection(moveDirection) && targetPiece.isBlank()) {
             throw new IllegalArgumentException("[ERROR] Pawn은 상대편 말이 있을 경우에만 대각선으로 이동할 수 있습니다.");
         }
@@ -55,11 +56,11 @@ public class ChessBoard {
         positions.forEach(this::validateNullPosition);
     }
 
-    private void validateTargetPosition(final Position source, final Position target) {
-        if (!board.get(source).isAvailableMove(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다.");
-        }
-    }
+//    private void validateTargetPosition(final Position source, final Position target) {
+//        if (!board.get(source).isAvailableMove(source, target)) {
+//            throw new IllegalArgumentException("ChessBoard [ERROR] 선택한 기물이 이동할 수 없는 목적지입니다.");
+//        }
+//    }
 
     private void validateTargetPiece(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
