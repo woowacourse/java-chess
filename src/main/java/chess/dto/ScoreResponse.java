@@ -6,18 +6,15 @@ import java.util.stream.Collectors;
 
 import chess.domain.Color;
 
-public class ScoreResponse implements Response {
-
-    private final Map<String, String> information;
-    private final String metaInformation;
+public class ScoreResponse extends Response {
 
     private ScoreResponse(Map<String, String> information, String metaInformation) {
-        this.information = information;
-        this.metaInformation = metaInformation;
+        super(information, metaInformation);
     }
 
     public static Response of(Map<Color, Double> scores) {
         Map<String, String> information = new HashMap<>();
+
         double whiteScore = scores.get(Color.WHITE);
         double blackScore = scores.get(Color.BLACK);
 
@@ -28,6 +25,7 @@ public class ScoreResponse implements Response {
         return new ScoreResponse(information, metaInformation);
     }
 
+
     private static String determineWinner(double whiteScore, double blackScore) {
         String metaInformation = "TIE";
         if (whiteScore > blackScore) {
@@ -36,19 +34,6 @@ public class ScoreResponse implements Response {
         if (whiteScore < blackScore) {
             metaInformation = Color.BLACK.name();
         }
-        return metaInformation;
-    }
-
-    @Override
-    public String getInformation() {
-        return information.entrySet()
-            .stream()
-            .map(entry -> entry.getKey() + ": " + entry.getValue())
-            .collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    @Override
-    public String getMetaInformation() {
         return metaInformation;
     }
 }

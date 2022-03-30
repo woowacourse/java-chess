@@ -1,62 +1,41 @@
 package chess.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.Color;
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;
-import chess.domain.Color;
 import chess.domain.piece.Piece;
 import chess.view.PieceRepresentation;
 
-public class BoardResponse implements Response {
+public class BoardResponse extends Response {
 
-    private final List<List<String>> information;
-    private final String metaInformation;
-
-    public BoardResponse(List<List<String>> information, String metaInformation) {
-        this.information = information;
-        this.metaInformation = metaInformation;
+    private BoardResponse(Map<String, String> information, String metaInformation) {
+        super(information, metaInformation);
     }
 
     public static Response of(Map<Point, Piece> pointPieces, Color turnColor) {
-        List<List<String>> information = new ArrayList<>();
-
-        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
-            information.add(ofLine(pointPieces, i));
-        }
-        return new BoardResponse(information, turnColor.name());
+        return new BoardResponse(toInformation(pointPieces), turnColor.name());
     }
 
-    private static List<String> ofLine(Map<Point, Piece> pointPieces, int i) {
-        List<String> line = new ArrayList<>();
+    private static Map<String, String> toInformation(Map<Point, Piece> pointPieces) {
+        Map<String, String> information = new HashMap<>();
+        for (int i = LineNumber.MIN; i <= LineNumber.MAX; i++) {
+            information.putAll(toLine(pointPieces, i));
+        }
+        return information;
+    }
 
+    private static Map<String, String> toLine(Map<Point, Piece> pointPieces, int i) {
+        Map<String, String> lineInformation = new HashMap<>();
         for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            Piece piece = pointPieces.get(Point.of(j, i));
-            line.add(PieceRepresentation.convertType(piece));
+            lineInformation.put(toKey(i, j), PieceRepresentation.convertType(pointPieces.get(Point.of(j, i))));
         }
-        return line;
+        return lineInformation;
     }
 
-    @Override
-    public String getInformation() {
-        StringBuilder builder = new StringBuilder();
-        for (List<String> line : information) {
-            appendLine(builder, line);
-            builder.append(System.lineSeparator());
-        }
-        return builder.toString();
-    }
-
-    private void appendLine(StringBuilder builder, List<String> line) {
-        for (String s : line) {
-            builder.append(s);
-        }
-    }
-
-    @Override
-    public String getMetaInformation() {
-        return "현재 턴 : " + metaInformation;
+    private static String toKey(int i, int j) {
+        return String.valueOf(i * 10 + j);
     }
 }

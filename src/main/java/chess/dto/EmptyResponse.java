@@ -1,16 +1,12 @@
 package chess.dto;
 
-public class EmptyResponse implements Response {
+import java.util.HashMap;
+
+public class EmptyResponse extends Response {
 
     private static final String EMPTY = "";
 
-    @Override
-    public String getInformation() {
-        return EMPTY;
-    }
-
-    @Override
-    public String getMetaInformation() {
-        return EMPTY;
+    public EmptyResponse() {
+        super(new HashMap<>(), EMPTY);
     }
 }
