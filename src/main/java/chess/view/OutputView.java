@@ -49,13 +49,13 @@ public class OutputView {
     }
 
     private static void printWinner(MatchResult result) {
-        if (result.equals(MatchResult.BLACK_WIN)) {
+        if (result == MatchResult.BLACK_WIN) {
             System.out.println("블랙 진영이 이기고 있습니다.");
         }
-        if (result.equals(MatchResult.WHITE_WIN)) {
+        if (result == MatchResult.WHITE_WIN) {
             System.out.println("화이트 진영이 이기고 있습니다.");
         }
-        if (result.equals(MatchResult.DRAW)) {
+        if (result == MatchResult.DRAW) {
             System.out.println("무승부입니다.");
         }
     }

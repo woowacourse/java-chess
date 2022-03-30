@@ -31,13 +31,13 @@ public class Start extends CommandState {
         String[] commands = input.split(DELIMITER);
         Command command = Command.find(commands[COMMAND_INDEX]);
 
-        if (command.equals(Command.MOVE) && commands.length == MOVE_COMMAND_SIZE) {
+        if (command == Command.MOVE && commands.length == MOVE_COMMAND_SIZE) {
             return executeMove(commands);
         }
-        if (command.equals(Command.END)) {
+        if (command == Command.END) {
             return new End();
         }
-        if (command.equals(Command.STATUE)) {
+        if (command == Command.STATUE) {
             return new Status(state);
         }
         throw new IllegalArgumentException(ILLEGAL_ARGUMENT_ERROR_MESSAGE);

@@ -13,10 +13,10 @@ public abstract class CommandState {
     public static CommandState of(String input) {
         Command command = Command.find(input);
 
-        if (command.equals(Command.START)) {
+        if (command == Command.START) {
             return new Start(Ready.start(Board.getBasicInstance()));
         }
-        if (command.equals(Command.END)) {
+        if (command == Command.END) {
             return new End();
         }
         throw new IllegalArgumentException(ILLEGAL_ARGUMENT_ERROR_MESSAGE);
