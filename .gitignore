@@ -36,8 +36,5 @@ docker/db/mysql/data/
 docker/db/mysql/init/*
 !docker/db/mysql/init/init.sql
 
-###Jdbc file
-main/java/chess/dao/
-test/java/chess/dao/
 
 
