@@ -50,6 +50,10 @@ public class ChessGame {
             return;
         }
 
+        if (command.isStatus()) {
+            return;
+        }
+
         state = state.changeTurn(command, chessBoard);
     }
 

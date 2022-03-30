@@ -75,10 +75,10 @@ public class ChessController {
 
             Command command = Command.from(inputView.inputCommand());
 
+            chessGame.progress(command);
+
             if (command.isStatus()) {
                 showStatus(chessGame);
-            } else {
-                chessGame.progress(command);
             }
         }
     }
