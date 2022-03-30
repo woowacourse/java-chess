@@ -3,6 +3,9 @@ package chess.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.board.Square;
+import chess.model.strategy.move.Direction;
+import chess.model.strategy.move.Distance;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -65,7 +68,7 @@ public class SquareTest {
     @Test
     void tryToMove() {
         Square a1 = Square.of("a1");
-        int distanceToA2 = a1.getDistance(Square.of("a2"));
-        assertThat(distanceToA2).isEqualTo(1);
+        Distance distanceToA2 = a1.getDistance(Square.of("a2"));
+        assertThat(distanceToA2).isEqualTo(Distance.of(1));
     }
 }

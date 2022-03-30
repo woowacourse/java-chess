@@ -1,5 +1,10 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.Color;
+import chess.model.File;
+import chess.model.Rank;
+import chess.model.strategy.move.Direction;
+import chess.model.strategy.move.Distance;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +30,9 @@ public final class Square {
 
     public static Square of(File file, Rank rank) {
         String squareName = file.getName() + rank.getName();
-        squareCache.putIfAbsent(squareName, new Square(file, rank));
+        if (!squareCache.containsKey(squareName)) {
+            squareCache.put(squareName, new Square(file, rank));
+        }
         return squareCache.get(squareName);
     }
 
@@ -42,14 +49,7 @@ public final class Square {
         return bigger;
     }
 
-    public boolean isPawnFirstSquare(Color color) {
-        if (color.isBlack()) {
-            return rank.equals(Rank.SEVEN);
-        }
-        return rank.equals(Rank.TWO);
-    }
-
-    public int getDistance(Square target) {
+    public Distance getDistance(Square target) {
         Direction direction = this.findDirection(target);
         Square tempSquare = this;
         int movedCount = 0;
@@ -57,11 +57,11 @@ public final class Square {
             tempSquare = tempSquare.move(direction);
             movedCount++;
         }
-        return movedCount;
+        return Distance.of(movedCount);
     }
 
     public Square move(Direction direction) {
-        return new Square(file.add(direction.getRow()), rank.add(direction.getCol()));
+        return Square.of(file.add(direction.getRow()), rank.add(direction.getCol()));
     }
 
     public Direction findDirection(Square source) {
@@ -73,6 +73,10 @@ public final class Square {
 
     public boolean isSameFile(Square other) {
         return this.file.equals(other.file);
+    }
+
+    public boolean isSameRank(Rank startRank) {
+        return this.rank.equals(startRank);
     }
 
     public boolean isDifferent(Square other) {

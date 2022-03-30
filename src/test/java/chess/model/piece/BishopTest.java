@@ -6,42 +6,33 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.model.Color;
 import chess.model.File;
 import chess.model.Rank;
-import chess.model.Square;
+import chess.model.board.Square;
+import chess.model.strategy.move.MoveType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class BishopTest {
 
-    @Test
-    void createBishop() {
-        Bishop bishop = new Bishop(Color.BLACK, Square.of(File.D, Rank.EIGHT));
-        assertThat(bishop).isInstanceOf(Bishop.class);
+    private Bishop bishop;
+    @BeforeEach
+    void setUp() {
+        bishop = new Bishop(Color.BLACK);
     }
 
-    @Test
-    void movable() {
-        Bishop bishop = new Bishop(Color.BLACK, Square.of(File.D, Rank.FOUR));
-        Empty diagLeftUpSquare = new Empty(Square.of(File.C, Rank.FIVE));
-        Empty diagRightUpSquare = new Empty(Square.of(File.F, Rank.SIX));
-        Empty diagLeftDownSquare = new Empty(Square.of(File.B, Rank.TWO));
-        Empty diagRightDownSquare = new Empty(Square.of(File.G, Rank.ONE));
-        assertAll(
-                () -> assertThat(bishop.movable(diagLeftUpSquare)).isTrue(),
-                () -> assertThat(bishop.movable(diagRightUpSquare)).isTrue(),
-                () -> assertThat(bishop.movable(diagLeftDownSquare)).isTrue(),
-                () -> assertThat(bishop.movable(diagRightDownSquare)).isTrue());
+    @ParameterizedTest
+    @ValueSource(strings = {"c5", "f6", "b2", "g1"})
+    void checkBishopMovable(String targetSquareName) {
+        Square source = Square.of(File.D, Rank.FOUR);
+        assertThat(bishop.movable(source, Square.of(targetSquareName), MoveType.MOVE))
+                .isTrue();
     }
 
     @Test
     void cannotMovable() {
-        Bishop bishop = new Bishop(Color.BLACK, Square.of(File.B, Rank.EIGHT));
-        Knight knight = new Knight(Color.WHITE, Square.of(File.C, Rank.SIX));
-        assertThat(bishop.movable(knight)).isFalse();
-    }
-
-    @Test
-    void cannotMovableToSameColor() {
-        Bishop bishop = new Bishop(Color.BLACK, Square.of(File.B, Rank.EIGHT));
-        Piece blackPiece = new Knight(Color.BLACK, Square.of(File.D, Rank.SIX));
-        assertThat(bishop.movable(blackPiece)).isFalse();
+        Square source = Square.of(File.D, Rank.FOUR);
+        assertThat(bishop.movable(source, Square.of("c6"), MoveType.MOVE))
+                .isFalse();
     }
 }

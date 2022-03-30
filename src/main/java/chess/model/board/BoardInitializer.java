@@ -1,8 +1,8 @@
 package chess.model.board;
 
 import chess.model.piece.Piece;
-import java.util.List;
+import java.util.Map;
 
 public interface BoardInitializer {
-    List<Piece> initPieces();
+    Map<Square, Piece> initPieces();
 }

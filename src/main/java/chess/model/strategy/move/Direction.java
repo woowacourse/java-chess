@@ -1,7 +1,6 @@
-package chess.model;
+package chess.model.strategy.move;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Direction {
     NORTH(0, 1),

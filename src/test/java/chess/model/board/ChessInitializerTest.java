@@ -3,37 +3,44 @@ package chess.model.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Color;
-import chess.model.Square;
 import chess.model.piece.Bishop;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
-import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
-import java.util.List;
-import org.junit.jupiter.api.Test;
+import chess.model.piece.pawn.Pawn;
+import java.util.Map;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class ChessInitializerTest {
-    @Test
-    void initBoard() {
+    @ParameterizedTest
+    @MethodSource(value = "provideChessBoardPieces")
+    void initBoard(String squareName, Piece piece) {
         BoardInitializer boardInitializer = new ChessInitializer();
-        List<Piece> pieces = boardInitializer.initPieces();
-        assertThat(pieces).contains(new Pawn(Color.BLACK, Square.of("a7")), new Pawn(Color.BLACK, Square.of("b7")),
-                new Pawn(Color.BLACK, Square.of("c7")), new Pawn(Color.BLACK, Square.of("d7")),
-                new Pawn(Color.BLACK, Square.of("e7")), new Pawn(Color.BLACK, Square.of("f7")),
-                new Pawn(Color.BLACK, Square.of("g7")), new Pawn(Color.BLACK, Square.of("h7")),
-                new Rook(Color.BLACK, Square.of("a8")), new Knight(Color.BLACK, Square.of("b8")),
-                new Bishop(Color.BLACK, Square.of("c8")), new Queen(Color.BLACK, Square.of("d8")),
-                new King(Color.BLACK, Square.of("e8")), new Bishop(Color.BLACK, Square.of("f8")),
-                new Knight(Color.BLACK, Square.of("g8")), new Rook(Color.BLACK, Square.of("h8")),
-                new Pawn(Color.WHITE, Square.of("c2")), new Pawn(Color.WHITE, Square.of("d2")),
-                new Pawn(Color.WHITE, Square.of("e2")), new Pawn(Color.WHITE, Square.of("f2")),
-                new Pawn(Color.WHITE, Square.of("g2")), new Pawn(Color.WHITE, Square.of("h2")),
-                new Rook(Color.WHITE, Square.of("a1")), new Knight(Color.WHITE, Square.of("b1")),
-                new Bishop(Color.WHITE, Square.of("c1")), new Queen(Color.WHITE, Square.of("d1")),
-                new King(Color.WHITE, Square.of("e1")), new Bishop(Color.WHITE, Square.of("f1")),
-                new Knight(Color.WHITE, Square.of("g1")), new Rook(Color.WHITE, Square.of("h1"))
-        );
+        Map<Square, Piece> board = boardInitializer.initPieces();
+        assertThat(board.containsValue(piece)).isTrue();
+    }
+
+    private static Stream<Arguments> provideChessBoardPieces() {
+        return Stream.of(
+                Arguments.of("a7", Pawn.of(Color.BLACK)), Arguments.of("b7",  Pawn.of(Color.BLACK)),
+                Arguments.of("c7", Pawn.of(Color.BLACK)), Arguments.of("d7",  Pawn.of(Color.BLACK)),
+                Arguments.of("e7", Pawn.of(Color.BLACK)), Arguments.of("f7",  Pawn.of(Color.BLACK)),
+                Arguments.of("g7", Pawn.of(Color.BLACK)), Arguments.of("h7",  Pawn.of(Color.BLACK)),
+                Arguments.of("a8", new Rook(Color.BLACK)), Arguments.of("b8",  new Knight(Color.BLACK)),
+                Arguments.of("c8", new Bishop(Color.BLACK)), Arguments.of("d8",  new Queen(Color.BLACK)),
+                Arguments.of("e8", new King(Color.BLACK)), Arguments.of("f8",  new Bishop(Color.BLACK)),
+                Arguments.of("g8", new Knight(Color.BLACK)), Arguments.of("h8",  new Rook(Color.BLACK)),
+                Arguments.of("c2", Pawn.of(Color.WHITE)), Arguments.of("d2",  Pawn.of(Color.WHITE)),
+                Arguments.of("e2", Pawn.of(Color.WHITE)), Arguments.of("f2",  Pawn.of(Color.WHITE)),
+                Arguments.of("g2", Pawn.of(Color.WHITE)), Arguments.of("h2",  Pawn.of(Color.WHITE)),
+                Arguments.of("a1", new Rook(Color.WHITE)), Arguments.of("b1",  new Knight(Color.WHITE)),
+                Arguments.of("c1", new Bishop(Color.WHITE)), Arguments.of("d1",  new Queen(Color.WHITE)),
+                Arguments.of("e1", new King(Color.WHITE)), Arguments.of("f1",  new Bishop(Color.WHITE)),
+                Arguments.of("g1", new Knight(Color.WHITE)), Arguments.of("h1",  new Rook(Color.WHITE)));
     }
 }

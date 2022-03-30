@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum Rank {
@@ -40,5 +41,11 @@ public enum Rank {
 
     public String getName() {
         return String.valueOf(col);
+    }
+
+    public static List<Rank> getRanksInBoardOrder() {
+        List<Rank> ranks = Arrays.asList(values());
+        Collections.reverse(ranks);
+        return ranks;
     }
 }

@@ -1,51 +1,38 @@
 package chess.model.piece;
 
 import chess.model.Color;
-import chess.model.Direction;
-import chess.model.Square;
-import chess.model.piece.strategy.MovableStrategy;
+import chess.model.board.Square;
+import chess.model.piece.pawn.Pawn;
+import chess.model.strategy.MovableStrategy;
+import chess.model.strategy.move.MoveType;
 import java.util.Objects;
 
 public abstract class Piece {
 
     private final Color color;
-    private Square square;
     private MovableStrategy strategy;
 
-    public Piece(final Color color, final Square square, final MovableStrategy strategy) {
+    public Piece(final Color color, final MovableStrategy strategy) {
         this.color = color;
-        this.square = square;
         this.strategy = strategy;
     }
 
     public abstract Point getPoint();
 
-    public boolean movable(final Piece targetPiece) {
-        return this.strategy.movable(this, targetPiece);
+    public boolean movable(final Square source, Square target, MoveType moveType) {
+        return this.strategy.movable(source, target, moveType);
     }
 
     public boolean isBlack() {
         return color.isBlack();
     }
 
-    public boolean isAt(Square square) {
-        return this.square.equals(square);
-    }
-
     public boolean isAlly(Piece targetPiece) {
-        return color.isAlly(targetPiece.color);
+        return color.equals(targetPiece.color);
     }
 
     public boolean isPlayerPiece() {
         return color.isBlack() || color.isWhite();
-    }
-
-    public Direction findDirectionTo(Piece target) {
-        return this.square.findDirection(target.square);
-    }
-
-    public void changeLocation(Square targetSquare) {
-        this.square = targetSquare;
     }
 
     public boolean isSameColor(Color color) {
@@ -53,35 +40,15 @@ public abstract class Piece {
     }
 
     public boolean isPawn() {
-        return this.getPoint().equals(Point.PAWN);
+        return this instanceof Pawn;
     }
 
     public boolean isKing() {
-        return this.getPoint().equals(Point.KING);
+        return this instanceof King;
     }
 
     public boolean isEnemy(Piece targetPiece) {
         return color.isEnemy(targetPiece.color);
-    }
-
-    public boolean isSameFile(Piece other) {
-        return this.square.isSameFile(other.square);
-    }
-
-    public int getDistance(Piece target) {
-        return this.square.getDistance(target.square);
-    }
-
-    public boolean isDifferent(Piece other) {
-        return !this.equals(other);
-    }
-
-    protected Color color() {
-        return this.color;
-    }
-
-    protected Square square() {
-        return this.square;
     }
 
     @Override
@@ -93,11 +60,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color && Objects.equals(square, piece.square);
+        return color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, square);
+        return Objects.hash(color, strategy);
     }
 }

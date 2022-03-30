@@ -21,10 +21,18 @@ public final class OutputView {
         System.out.println(START_MESSAGE);
     }
 
-    public static void printBoard(final List<String> boardDto) {
-        String joinedPieces = String.join(PIECE_DELIMITER, boardDto);
-        for (int i = PIECE_COUNT_PER_RANK; i <= joinedPieces.length(); i += PIECE_COUNT_PER_RANK) {
-            System.out.println(joinedPieces.substring(i - PIECE_COUNT_PER_RANK, i));
+    public static void printBoard(final List<List<String>> pieceLetters) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (List<String> lettersInRank : pieceLetters) {
+            appendLetters(stringBuilder, lettersInRank);
+            stringBuilder.append("\n");
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static void appendLetters(StringBuilder stringBuilder, List<String> lettersInRank) {
+        for (String letter : lettersInRank) {
+            stringBuilder.append(letter);
         }
     }
 

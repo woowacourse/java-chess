@@ -1,19 +1,20 @@
 package chess.model.board;
 
 import chess.model.Color;
-import chess.model.Direction;
-import chess.model.Square;
+import chess.model.strategy.move.Direction;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
-import java.util.List;
+import chess.model.strategy.move.MoveType;
+import java.util.Map;
 
 public final class Board {
 
     private static final int VALID_KING_COUNT = 2;
     private static final int PAWN_POINT_DIVIDE_VALUE = 2;
-    private final List<Piece> board;
 
-    private Board(List<Piece> board) {
+    private final Map<Square, Piece> board;
+
+    private Board(Map<Square, Piece> board) {
         this.board = board;
     }
 
@@ -21,30 +22,36 @@ public final class Board {
         this(boardInitializer.initPieces());
     }
 
-    public List<Piece> getBoard() {
+    public Map<Square, Piece> getBoard() {
         return board;
     }
 
     public Piece findPieceBySquare(Square square) {
-        return board.stream()
-                .filter(piece -> piece.isAt(square))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치의 값을 찾을 수 없습니다."));
+        if (board.containsKey(square)) {
+            return board.get(square);
+        }
+        throw new IllegalArgumentException("해당 위치의 값을 찾을 수 없습니다.");
     }
+
 
     public void move(Square sourceSquare, Square targetSquare) {
         Piece sourcePiece = findPieceBySquare(sourceSquare);
-        Piece targetPiece = findPieceBySquare(targetSquare);
-        if (!sourcePiece.movable(targetPiece)) {
+        MoveType moveType = getMoveType(sourcePiece, targetSquare);
+        if (!sourcePiece.movable(sourceSquare, targetSquare, moveType)) {
             throw new IllegalArgumentException("해당 칸으로 이동할 수 없습니다.");
         }
-        Direction direction = sourceSquare.findDirection(targetSquare);
-        checkRoute(sourceSquare, targetSquare, direction);
-        updateBoard(sourceSquare, targetSquare, sourcePiece, targetPiece);
+        checkRoute(sourceSquare, targetSquare);
+        updateBoard(sourceSquare, targetSquare, sourcePiece);
     }
 
-    private void checkRoute(Square sourceSquare, Square targetSquare, Direction direction) {
+    private MoveType getMoveType(Piece sourcePiece, Square targetSquare) {
+        Piece targetPiece = findPieceBySquare(targetSquare);
+        return MoveType.of(sourcePiece.isEnemy(targetPiece));
+    }
+
+    private void checkRoute(Square sourceSquare, Square targetSquare) {
         Square tempSquare = sourceSquare;
+        Direction direction = sourceSquare.findDirection(targetSquare);
         while (tempSquare.isDifferent(targetSquare)) {
             tempSquare = tempSquare.move(direction);
             checkHasPieceInSquare(targetSquare, tempSquare);
@@ -57,35 +64,37 @@ public final class Board {
         }
     }
 
-    private void updateBoard(Square sourceSquare, Square targetSquare, Piece sourcePiece, Piece targetPiece) {
-        board.set(board.indexOf(sourcePiece), new Empty(sourceSquare));
-        board.set(board.indexOf(targetPiece), sourcePiece);
-        sourcePiece.changeLocation(targetSquare);
+    private void updateBoard(Square sourceSquare, Square targetSquare, Piece sourcePiece) {
+        board.replace(targetSquare, sourcePiece);
+        board.replace(sourceSquare, new Empty());
     }
 
     public boolean aliveTwoKings() {
-        return board.stream()
+        return board.keySet().stream()
+                .map(board::get)
                 .filter(Piece::isKing)
                 .count() == VALID_KING_COUNT;
     }
 
     public double calculatePoint(Color color) {
-        return board.stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(this::calculateEachPoint)
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameColor(color))
+                .mapToDouble(entry -> calculateEachPoint(entry.getKey()))
                 .sum();
     }
 
-    private double calculateEachPoint(Piece piece) {
-        if (piece.isPawn() && isPawnInSameFile(piece)) {
+    private double calculateEachPoint(Square square) {
+        Piece piece = board.get(square);
+        if (piece.isPawn() && hasAllyPawnInSameFile(square, piece)) {
             return piece.getPoint().getValue() / PAWN_POINT_DIVIDE_VALUE;
         }
         return piece.getPoint().getValue();
     }
 
-    private boolean isPawnInSameFile(Piece other) {
-        return board.stream()
-                .filter(piece -> piece.isPawn() && piece.isAlly(other))
-                .anyMatch(piece -> piece.isSameFile(other) && piece.isDifferent(other));
+    private boolean hasAllyPawnInSameFile(Square sourceSquare, Piece sourcePiece) {
+        return board.keySet().stream()
+                .filter(square -> sourceSquare.isSameFile(square) && sourceSquare.isDifferent(square))
+                .map(board::get)
+                .anyMatch(piece -> piece.isPawn() && piece.isAlly(sourcePiece));
     }
 }

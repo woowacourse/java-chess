@@ -14,22 +14,24 @@ public enum Color {
         return this.equals(BLACK);
     }
 
+    public boolean isWhite() {
+        return this.equals(WHITE);
+    }
+
     public boolean isEnemy(Color other) {
-        if (this.equals(NOTHING) || other.equals(NOTHING) || this.equals(other)) {
+        if (this.equals(other) || this.equals(NOTHING) || other.equals(NOTHING)) {
             return false;
         }
         return true;
     }
 
-    public boolean isAlly(Color other) {
-        return !this.isEmpty() && this.equals(other);
-    }
-
-    public boolean isEmpty() {
-        return this.equals(Color.NOTHING);
-    }
-
-    public boolean isWhite() {
-        return this.equals(WHITE);
+    public Color changeToOpposite() {
+        if (this.equals(WHITE)) {
+            return BLACK;
+        }
+        if (this.equals(BLACK)) {
+            return WHITE;
+        }
+        return NOTHING;
     }
 }
