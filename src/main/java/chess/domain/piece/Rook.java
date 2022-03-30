@@ -11,8 +11,15 @@ import chess.domain.Team;
 
 public class Rook extends JumpPiece {
 
+    private static final double ROOK_SCORE = 5;
+
     public Rook(Team team, Position position) {
-        super(team, position, 5);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return ROOK_SCORE;
     }
 
     @Override

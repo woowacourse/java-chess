@@ -6,8 +6,8 @@ import chess.domain.Team;
 import java.util.List;
 
 public abstract class JumpPiece extends Piece {
-    public JumpPiece(Team team, Position position, double score) {
-        super(team, position, score);
+    public JumpPiece(Team team, Position position) {
+        super(team, position);
     }
 
     @Override

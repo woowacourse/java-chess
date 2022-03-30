@@ -7,7 +7,12 @@ import java.util.List;
 public class King extends Piece {
 
     public King(Team team, Position position) {
-        super(team, position, 0);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return 0;
     }
 
     @Override

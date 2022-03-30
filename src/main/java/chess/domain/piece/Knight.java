@@ -7,8 +7,15 @@ import java.util.List;
 
 public class Knight extends Piece {
 
+    private static final double  KNIGHT_SCORE = 2.5;
+
     public Knight(Team team, Position position) {
-        super(team, position, 2.5);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return KNIGHT_SCORE;
     }
 
     public void validateIsPossible(Position destination) {

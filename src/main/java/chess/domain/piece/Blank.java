@@ -10,7 +10,12 @@ import java.util.List;
 public class Blank extends Piece {
 
     public Blank(Team team, Position position) {
-        super(team, position, 0);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return 0;
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {

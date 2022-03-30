@@ -7,13 +7,19 @@ import java.util.List;
 public abstract class Piece {
 
     private final Team team;
-    private final double score;
     protected Position position;
 
-    public Piece(Team team, Position position, double score) {
+    public Piece(Team team, Position position) {
         this.team = team;
         this.position = position;
-        this.score = score;
+    }
+
+    public abstract double getScore();
+
+    public abstract List<Position> findPath(Position destination);
+
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     public boolean isSameTeam(Team team) {
@@ -24,19 +30,9 @@ public abstract class Piece {
         return piece.isSameTeam(team);
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public String getName() {
-        return this.getClass().getSimpleName();
-    }
-
     public boolean isBlackTeam() {
         return team == Team.BLACK;
     }
-
-    public abstract List<Position> findPath(Position destination);
 
     public boolean isBlank() {
         return false;

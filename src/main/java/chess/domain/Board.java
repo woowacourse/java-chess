@@ -50,7 +50,7 @@ public class Board {
         validateMovingPiece(source, destination, srcPiece, team);
         srcPiece.move(destination);
         changePiece(source, destination, srcPiece);
-        
+
         return dstPiece;
     }
 

@@ -6,8 +6,15 @@ import chess.domain.Team;
 
 public class Bishop extends JumpPiece {
 
+    private static final double BISHOP_SCORE = 3;
+
     public Bishop(Team team, Position position) {
-        super(team, position, 3);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return BISHOP_SCORE;
     }
 
     @Override

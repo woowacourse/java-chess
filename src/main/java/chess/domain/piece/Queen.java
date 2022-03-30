@@ -8,9 +8,15 @@ import java.util.stream.IntStream;
 public class Queen extends JumpPiece {
 
     public static final int BOARD_ONE_LINE_SIZE = 8;
+    private static final double QUEEN_SCORE = 9;
 
     public Queen(Team team, Position position) {
-        super(team, position, 9);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return QUEEN_SCORE;
     }
 
     @Override

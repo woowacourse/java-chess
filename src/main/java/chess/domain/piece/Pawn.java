@@ -11,8 +11,15 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    private static final int PAWN_SCORE = 1;
+
     public Pawn(Team team, Position position) {
-        super(team, position, 1);
+        super(team, position);
+    }
+
+    @Override
+    public double getScore() {
+        return PAWN_SCORE;
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {
