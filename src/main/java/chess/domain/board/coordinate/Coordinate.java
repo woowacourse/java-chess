@@ -13,9 +13,13 @@ public class Coordinate {
 
     static {
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
-            }
+            cache(column);
+        }
+    }
+
+    private static void cache(Column column) {
+        for (Row row : Row.values()) {
+            CACHE.put(column.getName() + row.getValue(), new Coordinate(column, row));
         }
     }
 
@@ -58,5 +62,22 @@ public class Coordinate {
 
     public Column getColumn() {
         return column;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Coordinate that = (Coordinate) o;
+        return column == that.column && row == that.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }
