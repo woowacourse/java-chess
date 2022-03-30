@@ -29,7 +29,7 @@ public class ScoreCalculatorTest {
             new TurnDecider());
 
         //when
-        double actual = scoreCalculator.calculate();
+        double actual = scoreCalculator.currentPlayerScore();
 
         Assertions.assertThat(actual).isEqualTo(38.0);
     }
@@ -42,7 +42,7 @@ public class ScoreCalculatorTest {
             new TurnDecider());
 
         //then
-        double actual = scoreCalculator.calculate();
+        double actual = scoreCalculator.currentPlayerScore();
         assertThat(actual).isEqualTo(2.0);
     }
 

@@ -34,7 +34,8 @@ public class ChessController {
             playChess(board);
         }
 
-        boolean isFinished = board.move(request.getSource(), request.getTarget());
+        board.move(request.getSource(), request.getTarget());
+        boolean isFinished = board.isFinished();
         OutputView.printChessGameBoard(board.getValues());
 
         if (isFinished) {

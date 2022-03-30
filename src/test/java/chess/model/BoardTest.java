@@ -148,13 +148,13 @@ public class BoardTest {
         assertThat(findPiece).isInstanceOf(Pawn.class);
     }
 
-    @DisplayName("킹이 잡힐 경우 move는 true를 반환한다.")
+    @DisplayName("킹이 잡힐 경우 isFinished는 true를 반환한다.")
     @Test
     void move_return_true_when_king_captured() {
         Board board = new Board(new TurnDecider(), new kingCaptureTestInitializer());
 
-        boolean isFinished = board.move(Position.of(TWO, A), Position.of(THREE, A));
-        assertThat(isFinished).isTrue();
+        board.move(Position.of(TWO, A), Position.of(THREE, A));
+        assertThat(board.isFinished()).isTrue();
     }
 
     @DisplayName("킹이 잡힐 경우 룩 한 개 남은 승자의 점수 5점을 반환한다.")

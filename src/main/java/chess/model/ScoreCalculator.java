@@ -17,7 +17,7 @@ public class ScoreCalculator {
         this.turnDecider = turnDecider;
     }
 
-    public double calculate() {
+    public double currentPlayerScore() {
         return piecesByPositions.values()
             .stream()
             .filter(turnDecider::isTurnOf)

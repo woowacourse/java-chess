@@ -23,17 +23,16 @@ public class Board {
         this.turnDecider = turnDecider;
     }
 
-    public boolean move(Position source, Position target) {
+    public void move(Position source, Position target) {
         validateSourceNotEmpty(source);
         turnDecide(source);
-        boolean isFinished = pieceAt(target).isKing();
 
         changePiecePositions(source, target);
+        turnDecider.nextState();
+    }
 
-        if (!isFinished) {
-            turnDecider.nextState();
-        }
-        return isFinished;
+    public boolean isFinished() {
+        return turnDecider.isFinished();
     }
 
     private void turnDecide(Position source) {
@@ -53,9 +52,16 @@ public class Board {
         Piece targetPiece = pieceAt(target);
 
         validateChangeable(source, target, moveType(targetPiece));
+        finishIfKingCaptured(targetPiece);
 
         values.put(target, sourcePiece);
         values.put(source, EMPTY_PIECE);
+    }
+
+    private void finishIfKingCaptured(Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            turnDecider.finish();
+        }
     }
 
     private void validateChangeable(Position source, Position target, MoveType moveType) {
@@ -97,6 +103,6 @@ public class Board {
     }
 
     public double calculateScore() {
-        return new ScoreCalculator(values, turnDecider).calculate();
+        return new ScoreCalculator(values, turnDecider).currentPlayerScore();
     }
 }
