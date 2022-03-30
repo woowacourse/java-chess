@@ -8,6 +8,8 @@ public class Position {
 
     private static final int WHITE_FIRST_POSITION = 6;
     private static final int BLACK_FIRST_POSITION = 1;
+    private static final int MINIMUM_INDEX = 0;
+    private static final int MAXIMUM_INDEX = 7;
 
     private final int row;
     private final int column;
@@ -27,20 +29,16 @@ public class Position {
         return false;
     }
 
-    public boolean isSmallRow(Position position) {
-        return this.row < position.row;
-    }
-
-    public boolean isSmallColumn(Position position) {
-        return this.column < position.column;
-    }
-
     public boolean isSameRow(Position position) {
         return this.row == position.row;
     }
 
     public boolean isSameColumn(Position position) {
         return this.column == position.column;
+    }
+
+    public boolean isOverRange() {
+        return row < MINIMUM_INDEX || column < MINIMUM_INDEX || row > MAXIMUM_INDEX || column > MAXIMUM_INDEX;
     }
 
     public int gapTwoPositionRow(Position position) {

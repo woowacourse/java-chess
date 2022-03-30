@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.utils.BetweenPositionsGenerator;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import static chess.utils.BetweenPositionsGenerator.computeBetweenPositionNegativeDiagonal;
-import static chess.utils.BetweenPositionsGenerator.computeBetweenPositionPositiveDiagonal;
+import java.util.Map;
 
 public class Bishop extends Piece {
 
@@ -14,25 +15,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovableDot(Position source, Position target) {
         return source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target);
     }
 
     @Override
-    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
-        if (source.gapTwoPositionRow(target) == source.gapTwoPositionColumn(target)) {
-            return computeDiagonalPosition(source, target);
+    public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
+        List<List<Integer>> possibleDot = List.of(List.of(1, 1), List.of(1, -1));
+        List<Position> positions = new ArrayList<>(List.of(source, target));
+        if (BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board)) {
+            return true;
         }
-        return List.of();
-    }
-
-    private List<Position> computeDiagonalPosition(Position source, Position target) {
-        if (source.isSmallColumn(target)) {
-            return computeBetweenPositionNegativeDiagonal(source, target);
-        }
-        if (target.isSmallColumn(source)) {
-            return computeBetweenPositionPositiveDiagonal(source, target);
-        }
-        return List.of();
+        Collections.reverse(positions);
+        return BetweenPositionsGenerator.isPossibleMovePosition(this, positions, possibleDot, board);
     }
 }

@@ -1,78 +1,52 @@
 package chess.utils;
 
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BetweenPositionsGenerator {
+
+    private static final String ERROR_OBSTACLE_EXIST_PIECE = "이동 중간에 가로막는 기물이 있습니다.";
+    private static final int SOURCE = 0;
+    private static final int TARGET = 1;
+    private static final int ROW = 0;
+    private static final int COLUMN = 1;
 
     private BetweenPositionsGenerator() {
     }
 
-    public static List<Position> computeBetweenPositionBySameRow(Position source, Position target) {
-        if (source.isSmallColumn(target)) {
-            return generatePositionBySameRow(source, target);
-        }
-        return generatePositionBySameRow(target, source);
+    public static boolean isPossibleMovePosition(Piece piece, List<Position> positions, List<List<Integer>> move,
+                                                 Map<Position, Piece> board) {
+        Position source = positions.get(SOURCE);
+        Position target = positions.get(TARGET);
+
+        return move.stream()
+                .anyMatch(moveUnit -> findMovableByRecursion(piece, source, target,
+                        List.of(moveUnit.get(ROW), moveUnit.get(COLUMN)), board));
     }
 
-    public static List<Position> computeBetweenPositionBySameColumn(Position source, Position target) {
-        if (source.isSmallRow(target)) {
-            return generatePositionBySameColumn(source, target);
+    private static boolean findMovableByRecursion(Piece piece, Position source, Position target, List<Integer> moveUnit,
+                                                  Map<Position, Piece> board) {
+        int row = moveUnit.get(ROW);
+        int column = moveUnit.get(COLUMN);
+        if (source.isOverRange()) {
+            return false;
         }
-        return generatePositionBySameColumn(target, source);
+        Position movePosition = source.findPossiblePosition(row, column);
+        if (movePosition.isSameRow(target) && movePosition.isSameColumn(target)) {
+            return isBlankDot(board.get(movePosition));
+        }
+        findMovableByRecursion(piece, movePosition, target, moveUnit, board);
+        return false;
     }
 
-    public static List<Position> computeBetweenPositionNegativeDiagonal(Position source, Position target) {
-        if (source.isSmallRow(target)) {
-            return generateNegativeDiagonalPositions(source, target);
+    private static boolean isBlankDot(Piece piece) {
+        if (!piece.isSameType(Type.BLANK)) {
+            throw new IllegalArgumentException(ERROR_OBSTACLE_EXIST_PIECE);
         }
-        return generateNegativeDiagonalPositions(target, source);
-    }
-
-
-    public static List<Position> computeBetweenPositionPositiveDiagonal(Position source, Position target) {
-        if (source.isSmallRow(target)) {
-            return generatePositiveDiagonalPositions(source, target);
-        }
-        return generatePositiveDiagonalPositions(target, source);
-    }
-
-    private static List<Position> generatePositionBySameRow(Position source, Position target) {
-        List<Position> positions = new ArrayList<>();
-        int gap = source.gapTwoPositionColumn(target);
-        for (int index = 1; index < gap; index++) {
-            positions.add(source.findPossiblePosition(0, index));
-        }
-        return positions;
-    }
-
-    private static List<Position> generatePositionBySameColumn(Position source, Position target) {
-        List<Position> positions = new ArrayList<>();
-        int gap = source.gapTwoPositionRow(target);
-        for (int index = 1; index < gap; index++) {
-            positions.add(source.findPossiblePosition(index, 0));
-        }
-        return positions;
-    }
-
-    private static List<Position> generatePositiveDiagonalPositions(Position source, Position target) {
-        List<Position> positions = new ArrayList<>();
-        int gap = source.gapTwoPositionRow(target);
-        for (int index = 1; index < gap; index++) {
-            positions.add(source.findPossiblePosition(index, index));
-        }
-        return positions;
-    }
-
-
-    private static List<Position> generateNegativeDiagonalPositions(Position source, Position target) {
-        List<Position> positions = new ArrayList<>();
-        int gap = source.gapTwoPositionRow(target);
-        for (int index = 1; index < gap; index++) {
-            positions.add(source.findPossiblePosition(index, -index));
-        }
-        return positions;
+        return true;
     }
 }

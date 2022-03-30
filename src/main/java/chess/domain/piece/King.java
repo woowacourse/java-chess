@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.board.Chessboard;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.utils.PossiblePositionChecker;
 
-import java.util.List;
+import java.util.Map;
 
 public class King extends Piece {
 
@@ -13,12 +14,12 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovableDot(Position source, Position target) {
         return PossiblePositionChecker.isMovablePositions(Direction.king(), source, target);
     }
 
     @Override
-    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
-        return List.of();
+    public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
+        return false;
     }
 }

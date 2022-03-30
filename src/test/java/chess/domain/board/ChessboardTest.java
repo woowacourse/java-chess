@@ -1,17 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.Turn;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Type;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -73,21 +69,5 @@ public class ChessboardTest {
                 new Position(5, 0), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("가로막는 기물이 있습니다.");
-    }
-
-    private static Stream<Arguments> pieces() {
-        return Stream.of(
-                Arguments.of(0, 0, Type.ROOK, Color.BLACK),
-                Arguments.of(0, 1, Type.KNIGHT, Color.BLACK),
-                Arguments.of(0, 2, Type.BISHOP, Color.BLACK),
-                Arguments.of(0, 3, Type.QUEEN, Color.BLACK),
-                Arguments.of(1, 4, Type.PAWN, Color.BLACK),
-
-                Arguments.of(7, 4, Type.KING, Color.WHITE),
-                Arguments.of(7, 5, Type.BISHOP, Color.WHITE),
-                Arguments.of(7, 6, Type.KNIGHT, Color.WHITE),
-                Arguments.of(7, 7, Type.ROOK, Color.WHITE),
-                Arguments.of(6, 5, Type.PAWN, Color.WHITE)
-        );
     }
 }

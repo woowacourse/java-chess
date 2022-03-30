@@ -14,7 +14,7 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
-        assertThat(knight.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(knight.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -22,6 +22,6 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
-        assertThat(knight.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(knight.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 }

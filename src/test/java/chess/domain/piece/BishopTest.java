@@ -2,11 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +14,7 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(bishop.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -25,14 +22,6 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
-    }
-
-    @Test
-    @DisplayName("source와 target 사이에 비숍이 이동가능한 위치 리스트 반환")
-    void checkAllPositionOfPossible() {
-        Bishop bishop = new Bishop(Color.WHITE);
-        assertThat(bishop.computeBetweenTwoPositionByLine(new Position(7, 2),
-                new Position(5, 4))).isEqualTo(List.of(new Position(6, 3)));
+        assertThat(bishop.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 }

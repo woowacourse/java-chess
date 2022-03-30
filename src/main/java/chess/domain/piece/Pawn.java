@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 import static chess.utils.PossiblePositionChecker.isMovablePositions;
 
@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovableDot(Position source, Position target) {
         if (color == Color.WHITE) {
             return isMovableWhenWhite(source, target);
         }
@@ -46,7 +46,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> computeBetweenTwoPositionByLine(Position source, Position target) {
-        return List.of();
+    public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
+        return false;
     }
 }

@@ -1,14 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +14,7 @@ class RookTest {
     @DisplayName("rook 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(rook.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -27,14 +22,6 @@ class RookTest {
     @DisplayName("rook 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
-    }
-
-    @Test
-    @DisplayName("source와 target 사이에 룩이 이동가능한 위치 리스트 반환")
-    void checkAllPositionOfPossible() {
-        Rook rook = new Rook(Color.WHITE);
-        assertThat(rook.computeBetweenTwoPositionByLine(new Position(0, 0), new Position(0, 3)))
-                .isEqualTo(List.of(new Position(0, 1), new Position(0, 2)));
+        assertThat(rook.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 }

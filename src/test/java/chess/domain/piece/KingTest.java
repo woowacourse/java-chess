@@ -14,7 +14,7 @@ class KingTest {
     @DisplayName("king 기물 이동 위치 검증")
     void checkKingPosition(int a, int b) {
         King king = new King(Color.BLACK);
-        assertThat(king.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(king.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
     }
 
     @ParameterizedTest
@@ -22,6 +22,6 @@ class KingTest {
     @DisplayName("king 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         King king = new King(Color.BLACK);
-        assertThat(king.isMovable(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(king.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
     }
 }
