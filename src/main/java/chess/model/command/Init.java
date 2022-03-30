@@ -8,13 +8,13 @@ public class Init extends Command {
 
     @Override
     public Command turnState(String input) {
-        if (input.contains("move")) {
+        if (input.contains(Command.MOVE)) {
             throw new IllegalArgumentException("시작 명령어에는 move가 들어갈수 없습니다.");
         }
-        if ("start".equals(input)) {
+        if (Command.START.equals(input)) {
             return new Start(input);
         }
-        if ("end".equals(input)) {
+        if (Command.END.equals(input)) {
             return new End(input);
         }
         throw new IllegalArgumentException("command has only move or end ");

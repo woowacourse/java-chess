@@ -13,7 +13,7 @@ public class End extends Command {
 
     @Override
     public Command turnFinalState(String input) {
-        if ("status".equals(input)) {
+        if (Command.STATUS.equals(input)) {
             return new Status(input);
         }
         return new End(input);

@@ -8,10 +8,10 @@ public class Start extends Command {
 
     @Override
     public Command turnState(String input) {
-        if ("end".equals(input)) {
+        if (Command.END.equals(input)) {
             return new End(input);
         }
-        if (input.contains("move")) {
+        if (input.contains(Command.MOVE)) {
             return new Move(input);
         }
         throw new IllegalArgumentException("없는 명령어입니다.");

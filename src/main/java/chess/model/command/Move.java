@@ -23,10 +23,10 @@ public class Move extends Command {
 
     @Override
     public Command turnState(String input) {
-        if ("end".equals(input)) {
+        if (Command.END.equals(input)) {
             return new End(input);
         }
-        if (input.contains("move")) {
+        if (input.contains(Command.MOVE)) {
             return new Move(input);
         }
         throw new IllegalArgumentException("command has only move or end ");
@@ -34,7 +34,7 @@ public class Move extends Command {
 
     @Override
     public Command turnFinalState(String input) {
-        if ("status".equals(input)) {
+        if (Command.STATUS.equals(input)) {
             return new Status(input);
         }
         return new End(input);
