@@ -13,10 +13,10 @@ public class Rook extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("a8"), new Rook(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("h8"), new Rook(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("a1"), new Rook(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("h1"), new Rook(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(1, 8), new Rook(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(8, 8), new Rook(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(1, 1), new Rook(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(8, 1), new Rook(Team.WHITE));
     }
 
     private Rook(Team team) {

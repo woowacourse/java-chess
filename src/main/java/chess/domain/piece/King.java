@@ -13,8 +13,8 @@ public class King extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("e8"), new King(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("e1"), new King(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(5, 8), new King(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(5, 1), new King(Team.WHITE));
     }
 
     private King(Team team) {

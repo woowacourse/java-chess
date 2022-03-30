@@ -13,23 +13,23 @@ public class Pawn extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("a7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("b7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("c7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("d7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("e7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("f7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("g7"), new Pawn(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("h7"), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(1, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(2, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(3, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(4, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(5, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(6, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(7, 7), new Pawn(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(8, 7), new Pawn(Team.BLACK));
 
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("a2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("b2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("c2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("d2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("e2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("f2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("g2"), new Pawn(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("h2"), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(1, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(2, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(3, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(4, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(5, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(6, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(7, 2), new Pawn(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(8, 2), new Pawn(Team.WHITE));
     }
 
     private Pawn(Team team) {

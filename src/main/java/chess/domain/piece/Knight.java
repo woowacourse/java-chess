@@ -13,10 +13,10 @@ public class Knight extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("b8"), new Knight(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("g8"), new Knight(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("b1"), new Knight(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("g1"), new Knight(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(2, 8), new Knight(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(7, 8), new Knight(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(2, 1), new Knight(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(7, 1), new Knight(Team.WHITE));
     }
 
     private Knight(Team team) {

@@ -26,7 +26,7 @@ public class OutputView {
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
 
     private static final List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
-    private static final List<Character> columns = List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
+    private static final List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
 
     static {
@@ -59,12 +59,12 @@ public class OutputView {
     }
 
     private static void printRow(Map<ChessBoardPosition, ChessPiece> mapInformation, int row) {
-        for (char column : columns) {
+        for (int column : columns) {
             printSector(mapInformation, row, column);
         }
     }
 
-    private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, char column) {
+    private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, int column) {
         ChessBoardPosition target = ChessBoardPosition.of(column, row);
         if (mapInformation.keySet().contains(target)) {
             printChessPiece(mapInformation.get(target));

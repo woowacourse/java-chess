@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +13,10 @@ public class Bishop extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("c8"), new Bishop(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of("f8"), new Bishop(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("c1"), new Bishop(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("f1"), new Bishop(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(3, 8), new Bishop(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(6, 8), new Bishop(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(3, 1), new Bishop(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(6, 1), new Bishop(Team.WHITE));
     }
 
     private Bishop(Team team) {

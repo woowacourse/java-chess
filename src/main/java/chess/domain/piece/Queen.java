@@ -13,8 +13,8 @@ public class Queen extends ChessPiece {
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of("d8"), new Queen(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of("d1"), new Queen(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(4, 8), new Queen(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(4, 1), new Queen(Team.WHITE));
     }
 
     private Queen(Team team) {
