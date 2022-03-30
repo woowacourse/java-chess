@@ -1,11 +1,11 @@
 package chess;
 
-import chess.domain.ChessGame;
+import chess.controller.ChessGameController;
 
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        ChessGame chessGame = new ChessGame();
+        ChessGameController chessGame = new ChessGameController();
         chessGame.run();
     }
 }

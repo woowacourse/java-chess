@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.controller;
 
+import chess.domain.Command;
 import chess.domain.board.state.BoardInitializer;
 import chess.domain.board.state.BoardState;
 import chess.domain.piece.Position;
@@ -7,7 +8,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessGame {
+public class ChessGameController {
 
     private static final int COMMAND_INDEX = 0;
     private static final int START_POSITION_INDEX = 1;
