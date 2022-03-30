@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import chess.domain.board.Board;
-import chess.domain.game.GameResult;
+import chess.domain.game.Score;
+import chess.domain.game.Winner;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
@@ -23,7 +24,7 @@ public class Running implements GameState {
         validateTurn(fromPosition);
         board.movePiece(fromPosition, toPosition);
         switchColor();
-        if (!board.isAllKingExist()) {
+        if (Winner.from(board.getBoard()) != Color.NONE) {
             return new End(board);
         }
         return new Running(board, color);
@@ -54,12 +55,12 @@ public class Running implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        return GameResult.calculateTotalScore(board.getBoard());
+        return Score.from(board.getBoard());
     }
 
     @Override
     public Color getWinTeamColor() {
-        return board.getWinnerTeamColor();
+        return Winner.from(board.getBoard());
     }
 
     @Override

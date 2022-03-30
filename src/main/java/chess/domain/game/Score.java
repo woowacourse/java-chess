@@ -12,15 +12,15 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 
-public class GameResult {
+public class Score {
 
     private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
     private static final double PAWN_PENALTY_RATE = 0.5;
 
-    private GameResult() {
+    private Score() {
     }
 
-    public static Map<Color, Double> calculateTotalScore(Map<Position, Piece> boardPieces) {
+    public static Map<Color, Double> from(Map<Position, Piece> boardPieces) {
         Map<Color, Double> score = new HashMap<>();
         score.put(Color.BLACK, calculateColorScore(boardPieces, Color.BLACK));
         score.put(Color.WHITE, calculateColorScore(boardPieces, Color.WHITE));

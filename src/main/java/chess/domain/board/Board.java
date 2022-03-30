@@ -14,7 +14,6 @@ public class Board {
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
-    private static final int TOTAL_KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
@@ -27,25 +26,24 @@ public class Board {
     }
 
     public Color getPieceColor(Position position) {
-        validateExistPiecePosition(position);
-        return board.get(position).getColor();
+        return findPiece(position).getColor();
+    }
+
+    private Piece findPiece(Position position) {
+        if (!board.containsKey(position)) {
+            throw new IllegalArgumentException(NOT_EXIST_PIECE);
+        }
+        return board.get(position);
     }
 
     public void movePiece(Position fromPosition, Position toPosition) {
-        validateExistPiecePosition(fromPosition);
-        Piece pieceToMove = board.get(fromPosition);
+        Piece pieceToMove = findPiece(fromPosition);
         validateMovablePosition(pieceToMove, fromPosition, toPosition);
         if (!pieceToMove.isKnight()) {
             validateNotExistOtherPieceInRoute(fromPosition, toPosition);
         }
         board.remove(fromPosition);
         board.put(toPosition, pieceToMove);
-    }
-
-    private void validateExistPiecePosition(Position position) {
-        if (!board.containsKey(position)) {
-            throw new IllegalArgumentException(NOT_EXIST_PIECE);
-        }
     }
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
@@ -74,24 +72,6 @@ public class Board {
         if (board.containsKey(nextPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_ROUTE);
         }
-    }
-
-    public boolean isAllKingExist() {
-        return board.values().stream()
-            .filter(Piece::isKing)
-            .map(piece -> 1)
-            .reduce(0, Integer::sum) == TOTAL_KING_COUNT;
-    }
-
-    public Color getWinnerTeamColor() {
-        if (isAllKingExist()) {
-            return Color.NONE;
-        }
-        return board.values().stream()
-            .filter(Piece::isKing)
-            .map(Piece::getColor)
-            .findAny()
-            .get();
     }
 
     public Map<Position, Piece> getBoard() {

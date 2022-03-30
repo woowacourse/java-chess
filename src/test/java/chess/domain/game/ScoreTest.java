@@ -19,14 +19,14 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-class GameResultTest {
+class ScoreTest {
 
     @ParameterizedTest
     @DisplayName("보드의 상황에 따라 점수를 잘 계산하는지 확인한다")
     @EnumSource(value = Color.class, names = {"BLACK", "WHITE"})
     void calculateScore(Color color) {
         Board board = new Board(BoardFactory.getInitialPieces());
-        Map<Color, Double> score = GameResult.calculateTotalScore(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getBoard());
 
         assertThat(score.get(color)).isEqualTo(38);
     }
@@ -39,7 +39,7 @@ class GameResultTest {
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new Pawn(Color.WHITE));
 
         Board board = new Board(initialPieces);
-        Map<Color, Double> score = GameResult.calculateTotalScore(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getBoard());
 
         assertThat(score.get(Color.WHITE)).isEqualTo(1);
     }
@@ -56,7 +56,7 @@ class GameResultTest {
         initialPieces.put(Position.valueOf(File.C, Rank.TWO), new Pawn(Color.WHITE));
 
         Board board = new Board(initialPieces);
-        Map<Color, Double> score = GameResult.calculateTotalScore(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getBoard());
 
         assertThat(score.get(Color.WHITE)).isEqualTo(3.5);
     }
