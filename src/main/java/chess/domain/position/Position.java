@@ -24,8 +24,7 @@ public class Position {
 
     private static void savePosition(final File file) {
         Arrays.stream(Rank.values())
-            .forEach(rank -> CACHE.put(makeKey(file, rank),
-                new Position(file, rank)));
+            .forEach(rank -> CACHE.put(makeKey(file, rank), new Position(file, rank)));
     }
 
     private static String makeKey(final File file, final Rank rank) {
@@ -68,6 +67,14 @@ public class Position {
         int newRank = rank.getValue() + rankDifference;
 
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
+    }
+
+    public boolean isCross(Position position) {
+        return this.file == position.file || this.rank == position.rank;
+    }
+
+    public boolean isDiagonal(Position position) {
+        return Math.abs(getRankDifference(position)) == Math.abs(getFileDifference(position));
     }
 
     public File getFile() {
