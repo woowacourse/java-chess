@@ -101,6 +101,7 @@ public class Position {
     private Position checkerShift(final Position position, final Direction direction) {
         return position.moveTo(direction);
     }
+
     private Position moveTo(final Direction direction) {
         final Column column = this.column.add(direction.getColumn());
         final Row row = this.row.add(direction.getRow());

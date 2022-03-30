@@ -9,10 +9,7 @@ import chess.piece.detail.Color;
 import chess.piece.detail.Direction;
 import chess.position.Column;
 import chess.position.Position;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Board {
 
@@ -42,28 +39,19 @@ public class Board {
         movePiece(from, to, piece);
     }
 
-    public Map<Color, Double> getBoardScore() {
-        final Map<Color, Double> score = new HashMap<>();
-        score.put(BLACK, calculateScore(BLACK));
-        score.put(WHITE, calculateScore(WHITE));
-        return score;
-    }
-
-    public double calculateScore(final Color color) {
-        final double sum = value.values().stream()
-                .filter(piece -> piece.getColor() == color)
-                .mapToDouble(Piece::getScore)
-                .sum();
-
-        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_PAWN_SCORE;
-    }
-
     public boolean isKingDead() {
         int kingCount = (int) value.values().stream()
                 .filter(Piece::isKing)
                 .count();
 
         return kingCount == 1;
+    }
+
+    public Map<Color, Double> getBoardScore() {
+        final Map<Color, Double> score = new EnumMap<>(Color.class);
+        score.put(BLACK, calculateScore(BLACK));
+        score.put(WHITE, calculateScore(WHITE));
+        return score;
     }
 
     private Optional<Piece> getIfExist(Position from) {
@@ -73,15 +61,15 @@ public class Board {
         return Optional.of(value.get(from));
     }
 
-    private void validateColor(final Piece piece, Color color) {
-        if (piece.getColor() != color) {
-            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
-        }
-    }
-
     private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
+        }
+    }
+
+    private void validateColor(final Piece piece, Color color) {
+        if (piece.getColor() != color) {
+            throw new IllegalArgumentException(color + "가 둘 차례입니다.");
         }
     }
 
@@ -89,21 +77,6 @@ public class Board {
         if (!piece.canMove(moveCommand)) {
             throw new IllegalArgumentException("해당 말이 갈 수 있는 위치가 아닙니다.");
         }
-    }
-
-    private double pawnCountOnSameColumn(final Color color) {
-        return Arrays.stream(Column.values())
-                .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
-                .filter(count -> count > 1)
-                .sum();
-    }
-
-    private int countPawnsByColumn(final int column, Color color) {
-        return (int) value.keySet().stream()
-                .filter(position -> position.equalsColumn(column))
-                .map(value::get)
-                .filter(piece -> piece.isPawn() && piece.getColor().hasSameColor(color))
-                .count();
     }
 
     private void movePiece(final Position from, final Position to, final Piece piece) {
@@ -153,6 +126,30 @@ public class Board {
         if (value.containsKey(position)) {
             throw new IllegalArgumentException("말의 이동 위치가 가로막혀 있습니다.");
         }
+    }
+
+    private double calculateScore(final Color color) {
+        final double sum = value.values().stream()
+                .filter(piece -> piece.getColor() == color)
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        return sum - pawnCountOnSameColumn(color) * Pawn.REDUCED_PAWN_SCORE;
+    }
+
+    private double pawnCountOnSameColumn(final Color color) {
+        return Arrays.stream(Column.values())
+                .mapToInt(column -> countPawnsByColumn(column.getValue(), color))
+                .filter(count -> count > 1)
+                .sum();
+    }
+
+    private int countPawnsByColumn(final int column, Color color) {
+        return (int) value.keySet().stream()
+                .filter(position -> position.equalsColumn(column))
+                .map(value::get)
+                .filter(piece -> piece.isPawn() && piece.getColor().hasSameColor(color))
+                .count();
     }
 
     @Override
