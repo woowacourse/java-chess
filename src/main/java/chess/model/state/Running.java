@@ -1,5 +1,6 @@
 package chess.model.state;
 
+import chess.model.board.GameScore;
 import chess.model.command.Command;
 import chess.model.Team;
 import chess.model.board.Board;
@@ -26,7 +27,7 @@ public class Running implements State {
     }
 
     @Override
-    public Map<Team, Double> getScores() {
+    public GameScore getScores() {
         throw new IllegalArgumentException("[ERROR] 점수를 집계 할 수 없습니다.");
     }
 

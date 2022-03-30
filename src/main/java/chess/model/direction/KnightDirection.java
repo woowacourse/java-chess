@@ -5,14 +5,14 @@ import java.util.function.BiPredicate;
 
 public enum KnightDirection implements Direction {
 
-    EEN((y, x) -> y == 1 && x == -2, new Route(-1, 2)),
-    EES((y, x) -> y == -1 && x == -2, new Route(1, 2)),
-    WWN((y, x) -> y == 1 && x == 2, new Route(-1, -2)),
-    WWS((y, x) -> y == -1 && x == 2, new Route(1, -2)),
-    SSE((y, x) -> y == -2 && x == -1, new Route(2, 1)),
-    SSW((y, x) -> y == -2 && x == 1, new Route(2, -1)),
-    NNE((y, x) -> y == 2 && x == -1, new Route(-2, 1)),
-    NNW((y, x) -> y == 2 && x == 1, new Route(-2, -1)),
+    EAST_TWICE_NORTH((y, x) -> y == 1 && x == -2, new Route(-1, 2)),
+    EAST_TWICE_SOUTH((y, x) -> y == -1 && x == -2, new Route(1, 2)),
+    WEST_TWICE_NORTH((y, x) -> y == 1 && x == 2, new Route(-1, -2)),
+    WEST_TWICE_SOUTH((y, x) -> y == -1 && x == 2, new Route(1, -2)),
+    SOUTH_TWICE_EAST((y, x) -> y == -2 && x == -1, new Route(2, 1)),
+    SOUTH_TWICE_WEST((y, x) -> y == -2 && x == 1, new Route(2, -1)),
+    NORTH_TWICE_EAST((y, x) -> y == 2 && x == -1, new Route(-2, 1)),
+    NORTH_TWICE_WESR((y, x) -> y == 2 && x == 1, new Route(-2, -1)),
     ;
 
     private final BiPredicate<Integer, Integer> routeFinder;

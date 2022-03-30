@@ -1,21 +1,20 @@
 package chess.model.state;
 
-import chess.model.command.Command;
-import chess.model.Team;
 import chess.model.board.Board;
+import chess.model.board.GameScore;
+import chess.model.command.Command;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
-import java.util.Collections;
 import java.util.Map;
 
 public class Sleep implements State {
 
     private final Board board;
-    private final Map<Team, Double> scores;
+    private final GameScore scores;
 
-    public Sleep(Board board, Map<Team, Double> scores) {
+    public Sleep(Board board) {
         this.board = board;
-        this.scores = scores;
+        this.scores = new GameScore(board);
     }
 
     @Override
@@ -29,8 +28,8 @@ public class Sleep implements State {
     }
 
     @Override
-    public Map<Team, Double> getScores() {
-        return Collections.unmodifiableMap(scores);
+    public GameScore getScores() {
+        return scores;
     }
 
     @Override

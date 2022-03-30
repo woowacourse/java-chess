@@ -5,10 +5,10 @@ import java.util.function.BiPredicate;
 
 public enum DiagonalDirection implements Direction {
 
-    NORTHEAST((y, x) -> y > 0 && x < 0 && Math.abs(y) == Math.abs(x), new Route(-1, 1)),
-    NORTHWEST((y, x) -> y > 0 && x > 0 && Math.abs(y) == Math.abs(x), new Route(-1, -1)),
-    SOUTHEAST((y, x) -> y < 0 && x < 0 && Math.abs(y) == Math.abs(x), new Route(1, 1)),
-    SOUTHWEST((y, x) -> y < 0 && x > 0 && Math.abs(y) == Math.abs(x), new Route(1, -1)),
+    NORTH_EAST((y, x) -> y > 0 && x < 0 && Math.abs(y) == Math.abs(x), new Route(-1, 1)),
+    NORTH_WEST((y, x) -> y > 0 && x > 0 && Math.abs(y) == Math.abs(x), new Route(-1, -1)),
+    SOUTH_EAST((y, x) -> y < 0 && x < 0 && Math.abs(y) == Math.abs(x), new Route(1, 1)),
+    SOUTH_WEST((y, x) -> y < 0 && x > 0 && Math.abs(y) == Math.abs(x), new Route(1, -1)),
     ;
 
     private final BiPredicate<Integer, Integer> routeFinder;

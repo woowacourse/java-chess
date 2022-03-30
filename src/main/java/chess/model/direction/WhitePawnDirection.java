@@ -5,10 +5,10 @@ import java.util.function.BiPredicate;
 
 public enum WhitePawnDirection implements Direction {
 
-    NORTHEAST((y, x) -> y == 1 && x == -1, new Route(-1, 1)),
-    NORTHWEST((y, x) -> y == 1 && x == 1, new Route(-1, -1)),
+    NORTH_EAST((y, x) -> y == 1 && x == -1, new Route(-1, 1)),
+    NORTH_WEST((y, x) -> y == 1 && x == 1, new Route(-1, -1)),
     NORTH((y, x) -> y == 1 && x == 0, new Route(-1, 0)),
-    NORTHTWICE((y, x) -> y == 2 && x == 0, new Route(-2, 0)),
+    NORTH_TWICE((y, x) -> y == 2 && x == 0, new Route(-2, 0)),
     ;
 
     private final BiPredicate<Integer, Integer> routeFinder;
@@ -18,7 +18,6 @@ public enum WhitePawnDirection implements Direction {
         this.routeFinder = routeFinder;
         this.route = route;
     }
-
 
     @Override
     public boolean findRouteFrom(int rankDifference, int fileDifference) {

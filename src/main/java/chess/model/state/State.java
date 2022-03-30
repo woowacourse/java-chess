@@ -1,5 +1,6 @@
 package chess.model.state;
 
+import chess.model.board.GameScore;
 import chess.model.command.Command;
 import chess.model.Team;
 import chess.model.piece.Piece;
@@ -12,7 +13,7 @@ public interface State {
 
     boolean isSleep();
 
-    Map<Team, Double> getScores();
+    GameScore getScores();
 
     Map<Position, Piece> getBoard();
 

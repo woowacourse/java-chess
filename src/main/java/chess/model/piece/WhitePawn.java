@@ -12,9 +12,9 @@ import java.util.Map;
 public class WhitePawn extends Piece {
 
     private static final Route NORTH = new Route(-1, 0);
-    private static final Route NORTHTWICE = new Route(-2, 0);
-    private static final Route NORTHEAST = new Route(-1, 1);
-    private static final Route NORTHWEST = new Route(-1, -1);
+    private static final Route NORTH_TWICE = new Route(-2, 0);
+    private static final Route NORTH_EAST = new Route(-1, 1);
+    private static final Route NORTH_WEST = new Route(-1, -1);
     private static final double SCORE = 1;
 
     private final RouteStrategy routeStrategy;
@@ -37,13 +37,13 @@ public class WhitePawn extends Piece {
     @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         Route route = routeStrategy.findRoute(source, target);
-        if (route.equals(NORTHWEST) || route.equals(NORTHEAST)) {
+        if (route.equals(NORTH_WEST) || route.equals(NORTH_EAST)) {
             checkCanKillOpponent(target, board);
         }
         if (route.equals(NORTH)) {
             checkCanBaseMove(target, board);
         }
-        if (route.equals(NORTHTWICE)) {
+        if (route.equals(NORTH_TWICE)) {
             checkCanSpecialMove(source, target, board);
         }
         return true;

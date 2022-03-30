@@ -21,21 +21,12 @@ public class ChessController {
     }
 
     public void run() {
-        State state = initState();
+        State state = new Ready();
         outputView.printGameRule();
         while (!state.isFinished()) {
             state = proceed(state);
             printBoardIn(state);
             printScoreIn(state);
-        }
-    }
-
-    private State initState() {
-        try {
-            return new Ready();
-        } catch (IllegalArgumentException error) {
-            System.out.println(error.getMessage());
-            return initState();
         }
     }
 

@@ -5,10 +5,10 @@ import java.util.function.BiPredicate;
 
 public enum BlackPawnDirection implements Direction {
 
-    SOUTHEAST((y, x) -> y == -1 && x == -1, new Route(1, 1)),
-    SOUTHWEST((y, x) -> y == -1 && x == 1, new Route(1, -1)),
+    SOUTH_EAST((y, x) -> y == -1 && x == -1, new Route(1, 1)),
+    SOUTH_WEST((y, x) -> y == -1 && x == 1, new Route(1, -1)),
     SOUTH((y, x) -> y == -1 && x == 0, new Route(1, 0)),
-    SOUTHTWICE((y, x) -> y == -2 && x == 0, new Route(2, 0)),
+    SOUTH_TWICE((y, x) -> y == -2 && x == 0, new Route(2, 0)),
     ;
 
     private final BiPredicate<Integer, Integer> routeFinder;

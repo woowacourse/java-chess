@@ -12,9 +12,9 @@ import java.util.Map;
 public class BlackPawn extends Piece {
 
     private static final Route SOUTH = new Route(1, 0);
-    private static final Route SOUTHTWICE = new Route(2, 0);
-    private static final Route SOUTHEAST = new Route(1, 1);
-    private static final Route SOUTHWEST = new Route(1, -1);
+    private static final Route SOUTH_TWICE = new Route(2, 0);
+    private static final Route SOUTH_EAST = new Route(1, 1);
+    private static final Route SOUTH_WEST = new Route(1, -1);
     private static final double SCORE = 1;
 
     private final RouteStrategy routeStrategy;
@@ -29,7 +29,6 @@ public class BlackPawn extends Piece {
         return routeStrategy.findRoute(source, target);
     }
 
-
     @Override
     public boolean isPawn() {
         return true;
@@ -38,13 +37,13 @@ public class BlackPawn extends Piece {
     @Override
     public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         Route route = routeStrategy.findRoute(source, target);
-        if (route.equals(SOUTHWEST) || route.equals(SOUTHEAST)) {
+        if (route.equals(SOUTH_WEST) || route.equals(SOUTH_EAST)) {
             checkCanKillOpponent(target, board);
         }
         if (route.equals(SOUTH)) {
             checkCanBaseMove(target, board);
         }
-        if (route.equals(SOUTHTWICE)) {
+        if (route.equals(SOUTH_TWICE)) {
             checkCanSpecialMove(source, target, board);
         }
         return true;

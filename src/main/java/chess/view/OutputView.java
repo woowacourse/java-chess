@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.model.Team;
+import chess.model.board.GameScore;
 import chess.model.piece.Piece;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -9,7 +9,9 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static final String SCORE_MESSAGE_FORMAT = "%s: %.0f";
+    private static final String WHITE_SCORE_MESSAGE_FORMAT = "화이트 점수: %.0f%n";
+    private static final String BLACK_SCORE_MESSAGE_FORMAT = "블랙 점수: %.0f%n";
+    private static final String NOW_WINNER_MESSAGE_FORMAT = "현재 승자: %s%n";
 
     public void printGameRule() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -32,10 +34,9 @@ public class OutputView {
         }
     }
 
-    public void printScores(final Map<Team, Double> scores) {
-        for (Team team : scores.keySet()) {
-            System.out.printf(SCORE_MESSAGE_FORMAT, team.getValue(), scores.get(team));
-            System.out.println();
-        }
+    public void printScores(final GameScore scores) {
+        System.out.printf(WHITE_SCORE_MESSAGE_FORMAT, scores.getWhiteScore());
+        System.out.printf(BLACK_SCORE_MESSAGE_FORMAT, scores.getBlackScore());
+        System.out.printf(NOW_WINNER_MESSAGE_FORMAT, scores.pickWinner());
     }
 }

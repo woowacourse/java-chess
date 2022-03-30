@@ -34,11 +34,11 @@ public class Position {
     }
 
     public boolean isTwoRank() {
-        return rank.equals(Rank.TWO);
+        return rank == Rank.TWO;
     }
 
     public boolean isSevenRank() {
-        return rank.equals(Rank.SEVEN);
+        return rank == Rank.SEVEN;
     }
 
     @Override
