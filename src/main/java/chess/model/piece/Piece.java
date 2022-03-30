@@ -16,56 +16,51 @@ public abstract class Piece implements Comparable<Piece> {
         this.team = team;
     }
 
-    private boolean isFileComparison(Piece piece) {
-        return this.position.getRank() == piece.position.getRank() && this.position.isBiggerFileThan(piece.position);
-    }
-
-    public boolean isLastFile() {
+    public final boolean isLastFile() {
         return position.isLastFile();
     }
 
-    public boolean findPosition(Position position) {
+    public final boolean findPosition(Position position) {
         return this.position.equals(position);
     }
 
-
-    public void moveTo(Piece targetPiece) {
+    public final void moveTo(Piece targetPiece) {
         position = targetPiece.position;
     }
 
-    public boolean isSameTeam(Piece targetPiece) {
+    public final boolean isSameTeam(Piece targetPiece) {
         return team.equals(targetPiece.team);
     }
 
-    public boolean isOtherTeam(Piece targetPiece) {
+    public final boolean isOtherTeam(Piece targetPiece) {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
-    public int getHorizontalDistance(Piece other) {
+    public final int getHorizontalDistance(Piece other) {
         return this.position.getFile().absMinus(other.position.getFile());
     }
 
-    public int getVerticalDistance(Piece other) {
+    public final int getVerticalDistance(Piece other) {
         return this.position.getRank().absMinus(other.position.getRank());
     }
 
-    public Position getPositiveDiagonalPosition(int distance) {
+    public final Position getPositiveDiagonalPosition(int distance) {
         return this.position.getPositiveDiagonalPosition(distance);
     }
 
-    public Position getNegativeDiagonalPosition(int distance) {
+    public final Position getNegativeDiagonalPosition(int distance) {
         return this.position.getNegativeDiagonalPosition(distance);
     }
 
-    public Position getRightHorizontalPosition(int distance) {
+    public final Position getRightHorizontalPosition(int distance) {
         return this.position.getRightHorizontalPosition(distance);
     }
 
-    public Position getUpVerticalPosition(int distance) {
+    public final Position getUpVerticalPosition(int distance) {
         return this.position.getUpVerticalPosition(distance);
     }
 
-    public boolean isCurrentTurn(Turn turn) {
+    public final boolean isCurrentTurn(Turn turn) {
         return turn.isCurrentTeam(team);
     }
 
@@ -115,5 +110,9 @@ public abstract class Piece implements Comparable<Piece> {
     @Override
     public int hashCode() {
         return Objects.hash(position, team);
+    }
+
+    private boolean isFileComparison(Piece piece) {
+        return this.position.getRank() == piece.position.getRank() && this.position.isBiggerFileThan(piece.position);
     }
 }

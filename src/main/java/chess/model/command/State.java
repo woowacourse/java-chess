@@ -1,7 +1,5 @@
 package chess.model.command;
 
-import java.util.List;
-
 public interface State {
     Command turnState(String input);
 
