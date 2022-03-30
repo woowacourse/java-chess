@@ -21,33 +21,40 @@ public class OutputView {
 
     public static void printBoard(final Map<Position, Piece> board) {
         final List<Position> pieces = new ArrayList<>(board.keySet());
+        int rankIndex = 8;
+        System.out.println();
         for (int i = 0; i < board.size(); i++) {
             final Piece piece = board.get(pieces.get(i));
             System.out.print(piece.getName());
-            separateRank(i);
+            rankIndex = separateRank(i, rankIndex);
         }
-        System.out.println();
+        System.out.println("abcdefgh");
     }
 
-    private static void separateRank(final int index) {
+    private static int separateRank(final int index, int rankIndex) {
         if (index % FILE_SIZE == FILE_END_NUMBER) {
-            System.out.println();
+            System.out.println(" " + rankIndex);
+            return rankIndex - 1;
         }
+        return rankIndex;
+    }
+
+    public static void printTurnMessage(final String name) {
+        System.out.printf("%s 턴 : ", name);
+    }
+
+    public static void printScore(final String turn, final double score) {
+        System.out.printf("%s : %.1f점%n", turn, score);
+    }
+
+    public static void printResult(final String turn, final String result) {
+        System.out.printf("%s : %s%n", turn, result);
     }
 
     public static void printErrorMessage(final String message) {
         System.out.println(message);
     }
-
-    public static void printTurnMessage(final String name) {
-        System.out.printf("%s의 턴입니다.%n", name);
-    }
-
-    public static void printResult(final String turn, final String result) {
-        System.out.printf("%s은 %s하셨습니다.%n", turn, result);
-    }
-
-    public static void printScore(final String turn, final double score) {
-        System.out.printf("%s은 %.1f점 입니다.%n", turn, score);
+    public static void printNewLine() {
+        System.out.println();
     }
 }

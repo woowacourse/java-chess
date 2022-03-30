@@ -1,11 +1,10 @@
 package chess;
 
-import chess.state.Ready;
+import chess.controller.ChessController;
 
 public class ChessApplication {
 
     public static void main(String[] args) {
-        final ChessGame chessGame = new ChessGame(new Ready());
-        chessGame.run();
+        new ChessController().run();
     }
 }

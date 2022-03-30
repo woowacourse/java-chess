@@ -1,6 +1,7 @@
-package chess.state;
+package chess.domain.game.state;
 
-import java.util.List;
+import chess.domain.piece.Color;
+import chess.domain.position.Position;
 
 public class Ended implements State {
 
@@ -15,7 +16,7 @@ public class Ended implements State {
     }
 
     @Override
-    public State move(final List<String> commands) {
+    public State move(final Position from, final Position to) {
         return new Ended();
     }
 
@@ -29,4 +30,13 @@ public class Ended implements State {
         return false;
     }
 
+    @Override
+    public boolean isStarted() {
+        return false;
+    }
+
+    @Override
+    public Color getTurn() {
+        return Color.NONE;
+    }
 }
