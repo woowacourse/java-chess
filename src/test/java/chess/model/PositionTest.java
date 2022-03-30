@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class PositionTest {
+class PositionTest {
 
     @Test
     @DisplayName("위치 값의 동일성을 테스트한다.")

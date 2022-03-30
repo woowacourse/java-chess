@@ -16,7 +16,7 @@ import chess.model.Rank;
 import chess.model.piece.Knight;
 import chess.model.piece.Piece;
 
-public class KnightTest {
+class KnightTest {
 
     @ParameterizedTest
     @CsvSource(value = {"FIVE:D", "FIVE:B", "ONE:D", "ONE:B", "FOUR:A", "FOUR:E", "TWO:A", "TWO:E"}, delimiter = ':')

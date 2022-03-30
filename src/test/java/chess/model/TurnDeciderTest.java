@@ -1,4 +1,4 @@
-package chess.turndecider;
+package chess.model;
 
 import static chess.model.PieceColor.*;
 import static org.assertj.core.api.Assertions.*;
@@ -9,11 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import chess.model.PieceColor;
-import chess.model.TurnDecider;
 import chess.model.piece.Pawn;
 
-class PlayerStateTest {
+class TurnDeciderTest {
 
     private TurnDecider turnDecider;
 

@@ -7,11 +7,11 @@ public class TurnDecider {
     private PieceColor currentColor = PieceColor.WHITE;
     private boolean isFinished = false;
 
-    public boolean isTurnOf(Piece Piece) {
+    boolean isTurnOf(Piece Piece) {
         return isSameColor(Piece);
     }
 
-    public void nextState() {
+    void nextState() {
         if (currentColor.isWhite()) {
             currentColor = PieceColor.BLACK;
             return;
@@ -19,15 +19,15 @@ public class TurnDecider {
         currentColor = PieceColor.WHITE;
     }
 
-    public boolean isSameColor(Piece sourcePiece) {
+    private boolean isSameColor(Piece sourcePiece) {
         return sourcePiece.isSameColor(currentColor);
     }
 
-    public boolean isFinished() {
+    boolean isFinished() {
         return isFinished;
     }
 
-    public void finish() {
+    void finish() {
         isFinished = true;
         nextState();
     }

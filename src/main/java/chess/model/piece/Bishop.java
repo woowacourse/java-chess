@@ -31,7 +31,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
+    String getConcreteEmblem() {
         return EMBLEM;
     }
 

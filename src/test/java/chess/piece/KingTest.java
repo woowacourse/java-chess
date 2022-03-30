@@ -16,7 +16,7 @@ import chess.model.Rank;
 import chess.model.piece.King;
 import chess.model.piece.Piece;
 
-public class KingTest {
+class KingTest {
 
     @ParameterizedTest
     @CsvSource(value = {"THREE:B", "FOUR:B", "THREE:D", "THREE:B"}, delimiter = ':')

@@ -17,7 +17,7 @@ import chess.model.boardinitializer.defaultInitializer;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 
-public class ScoreCalculatorTest {
+class ScoreCalculatorTest {
 
     @Test
     @DisplayName("초기 말들의 점수는 38.0 점이다.")

@@ -22,20 +22,20 @@ public enum File {
         this.value = value;
     }
 
-    public static File of(String input) {
+    static File of(String input) {
         return Arrays.stream(values())
             .filter(file -> file.value.equals(input))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_FILE));
     }
 
-    public List<File> betweenFiles(File other) {
+    List<File> betweenFiles(File other) {
         return Arrays.stream(File.values())
             .filter(file -> file.isBetween(this, other))
             .collect(Collectors.toList());
     }
 
-    public boolean isBetween(File source, File target) {
+    private boolean isBetween(File source, File target) {
         if (source.isBiggerThan(target)) {
             return this.isBiggerThan(target) && source.isBiggerThan(this);
         }

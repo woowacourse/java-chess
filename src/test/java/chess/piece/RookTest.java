@@ -15,7 +15,7 @@ import chess.model.Rank;
 import chess.model.piece.Piece;
 import chess.model.piece.Rook;
 
-public class RookTest {
+class RookTest {
 
     @ParameterizedTest
     @CsvSource(value = {"THREE:A", "THREE:H", "ONE:C", "EIGHT:C"}, delimiter = ':')

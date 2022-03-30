@@ -23,7 +23,7 @@ public abstract class Piece {
         return getConcreteEmblem();
     }
 
-    public abstract String getConcreteEmblem();
+    abstract String getConcreteEmblem();
 
     public boolean isSameColor(PieceColor PieceColor) {
         return this.pieceColor == PieceColor;

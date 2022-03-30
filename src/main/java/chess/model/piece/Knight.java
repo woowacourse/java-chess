@@ -34,7 +34,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
+    String getConcreteEmblem() {
         return EMBLEM;
     }
 

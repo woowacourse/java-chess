@@ -31,7 +31,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
+    String getConcreteEmblem() {
         return EMBLEM;
     }
 

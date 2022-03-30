@@ -12,12 +12,12 @@ public class ScoreCalculator {
     private final Map<Position, Piece> piecesByPositions;
     private final TurnDecider turnDecider;
 
-    public ScoreCalculator(Map<Position, Piece> piecesByPositions, TurnDecider turnDecider) {
+    ScoreCalculator(Map<Position, Piece> piecesByPositions, TurnDecider turnDecider) {
         this.piecesByPositions = piecesByPositions;
         this.turnDecider = turnDecider;
     }
 
-    public double currentPlayerScore() {
+    double currentPlayerScore() {
         return piecesByPositions.values()
             .stream()
             .filter(turnDecider::isTurnOf)
@@ -25,7 +25,7 @@ public class ScoreCalculator {
             .sum() - adjustPawnScore();
     }
 
-    public double adjustPawnScore() {
+    private double adjustPawnScore() {
         return Arrays.stream(File.values())
             .map(this::getPawnCountInOneFile)
             .filter(count -> count > 1)

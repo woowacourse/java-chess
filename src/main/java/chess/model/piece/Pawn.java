@@ -92,7 +92,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public String getConcreteEmblem() {
+    String getConcreteEmblem() {
         return EMBLEM;
     }
 

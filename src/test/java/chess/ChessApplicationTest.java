@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 
-public class ChessApplicationTest extends NsTest {
+class ChessApplicationTest extends NsTest {
 
     private static final String NEXT_LINE = System.lineSeparator();
 

@@ -25,7 +25,7 @@ import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Rook;
 
-public class BoardTest {
+class BoardTest {
 
     private static Board board;
 

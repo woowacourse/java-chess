@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PathTest {
+class PathTest {
 
     @Test
     @DisplayName("두 Position 사이에 위치하는 모든 Position을 담아 List로 반환한다")
