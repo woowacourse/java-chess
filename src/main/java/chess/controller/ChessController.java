@@ -17,7 +17,7 @@ public class ChessController {
         Board board = Board.create(Pieces.create());
         Turn turn = Turn.init();
         command = command.turnState(input);
-        while (!command.isEnd() || board.isDeadKing()) {
+        while (!command.isEnd() || board.isKingDead()) {
             if (command.isMove()) {
                 board.move(command.getSourcePosition(), command.getTargetPosition(), turn);
                 turn = turn.change();

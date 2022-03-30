@@ -37,7 +37,7 @@ public class Board {
         throw new IllegalArgumentException("움직일수 없습니다.");
     }
 
-    public boolean isDeadKing() {
+    public boolean isKingDead() {
         return pieces.countOfKing() == 1;
     }
 
