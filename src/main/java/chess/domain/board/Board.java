@@ -38,9 +38,9 @@ public class Board {
     }
 
     public Optional<Piece> findPiece(Position position) {
-        return pieces.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(position))
-                .map(Map.Entry::getValue)
+        return pieces.keySet().stream()
+                .filter(pos -> pos.equals(position))
+                .map(this.pieces::get)
                 .findFirst();
     }
 
