@@ -48,13 +48,13 @@ public class OutputView {
 	private static List<List<String>> reverseAndGetName(List<List<Piece>> splitPieces) {
 		List<List<String>> result = new ArrayList<>();
 		for (List<Piece> splitPiece : splitPieces) {
-			List<String> names = getNa(splitPiece);
+			List<String> names = getNames(splitPiece);
 			result.add(0, names);
 		}
 		return result;
 	}
 
-	private static List<String> getNa(List<Piece> splitPiece) {
+	private static List<String> getNames(List<Piece> splitPiece) {
 		List<String> names = splitPiece.stream()
 			.map(Piece::getEmoji)
 			.collect(Collectors.toList());
