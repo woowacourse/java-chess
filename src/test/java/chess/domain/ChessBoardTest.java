@@ -45,9 +45,23 @@ public class ChessBoardTest {
                 .hasMessage("source 위치와 target 위치는 같을 수 없습니다.");
     }
 
-    @DisplayName("체스 보드의 진영별 점수를 계산하여 반환한다")
+    @DisplayName("첫 초기화 상태에서 체스 보드의 진영별 점수를 계산하여 반환한다")
     @Test
-    void 체스보드_점수_계산() {
+    void 첫_초기화_상태에서_체스보드의_점수를_계산한다() {
+        ChessBoard chessBoard = BoardFixtures.generateInitChessBoard();
+
+        double blackResult = chessBoard.calculateScore(Color.BLACK);
+        double whiteResult = chessBoard.calculateScore(Color.WHITE);
+
+        assertAll(
+                () -> assertThat(blackResult).isEqualTo(38.0),
+                () -> assertThat(whiteResult).isEqualTo(38.0)
+        );
+    }
+
+    @DisplayName("세로 줄에 같은 색의 폰이 있는 경우 체스 보드의 진영별 점수를 계산하여 반환한다")
+    @Test
+    void 세로줄에_같은색의_폰이_있는경우_체스보드의_점수를_계산한다() {
         ChessBoard chessBoard = BoardFixtures.generatePawnChessBoard();
 
         double blackResult = chessBoard.calculateScore(Color.BLACK);
