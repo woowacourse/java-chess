@@ -8,10 +8,8 @@ import java.util.List;
 
 public final class End implements State {
 
-    private final Board board;
-
-    public End(final Board board) {
-        this.board = board;
+    public End() {
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
@@ -31,11 +29,11 @@ public final class End implements State {
 
     @Override
     public Score status() {
-        return Score.from(board());
+        throw new IllegalArgumentException("End 상태에서는 status할 수 없습니다.");
     }
 
     @Override
     public Board board() {
-        return board;
+        throw new IllegalArgumentException("End 상태에서는 board할 수 없습니다.");
     }
 }

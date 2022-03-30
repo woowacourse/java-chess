@@ -21,7 +21,7 @@ public final class Ready implements State {
 
     @Override
     public State end() {
-        return new End(board);
+        return new End();
     }
 
     @Override
