@@ -1,9 +1,9 @@
 package console;
 
-import chess.ChessBoard;
-import chess.game.ChessGame;
-import chess.command.Command;
-import chess.state.Ready;
+import chess.domain.board.ChessBoard;
+import chess.domain.game.ChessGame;
+import chess.domain.command.Command;
+import chess.domain.state.Ready;
 import console.view.InputView;
 import console.view.OutputView;
 

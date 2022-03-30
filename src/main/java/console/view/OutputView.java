@@ -1,9 +1,9 @@
 package console.view;
 
-import chess.ChessBoard;
-import chess.game.Score;
-import chess.piece.*;
-import chess.position.*;
+import chess.domain.board.ChessBoard;
+import chess.domain.game.Score;
+import chess.domain.piece.*;
+import chess.domain.position.*;
 import java.math.BigDecimal;
 import java.util.*;
 

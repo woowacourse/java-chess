@@ -1,12 +1,13 @@
 package chess;
 
-import static chess.position.File.*;
-import static chess.position.Rank.*;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.piece.*;
-import chess.position.Position;
+import chess.domain.board.ChessBoard;
+import chess.domain.piece.*;
+import chess.domain.position.Position;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
