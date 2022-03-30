@@ -9,6 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.game.state.ChessBoard;
+import chess.domain.game.state.position.File;
+import chess.domain.game.state.position.Position;
+import chess.domain.game.state.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -16,9 +19,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.game.state.position.File;
-import chess.domain.game.state.position.Position;
-import chess.domain.game.state.position.Rank;
 import chess.domain.piece.property.Color;
 
 public class ChessBoardTest {
@@ -72,7 +72,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("White는 19.5점, Black은 20.0점이 나와야 한다.")
     void computeScoreTest() {
         ChessBoard chessBoard = initScoreTestBoard();
 
