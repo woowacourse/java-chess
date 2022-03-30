@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Result;
 import chess.domain.board.Score;
 import chess.domain.position.Position;
 import java.util.List;
@@ -25,7 +24,7 @@ public abstract class Piece {
     public abstract List<Position> findMovablePosition(Position now);
 
     public final String getName() {
-        return team.convert(name);
+        return team.changeCaseSensitive(name);
     }
 
     public final boolean isSameTeam(Piece piece) {
@@ -61,7 +60,7 @@ public abstract class Piece {
     @Override
     public String toString() {
         return "Piece{" +
-                "name='" + team.convert(name) + '\'' +
+                "name='" + team.changeCaseSensitive(name) + '\'' +
                 ", score=" + score +
                 ", team=" + team +
                 '}';

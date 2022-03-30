@@ -22,11 +22,11 @@ public enum Team {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public String convert(String value) {
+    public String changeCaseSensitive(String pieceName) {
         if (this == BLACK) {
-            return value.toUpperCase();
+            return pieceName.toUpperCase();
         }
-        return value.toLowerCase();
+        return pieceName.toLowerCase();
     }
 
     public Team change() {
