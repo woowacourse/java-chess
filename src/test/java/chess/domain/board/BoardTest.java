@@ -26,7 +26,7 @@ class BoardTest {
     @ParameterizedTest(name = "{displayName} : {arguments}")
     @MethodSource("boardInitTestSet")
     void test(Position position, Class<? extends Piece> type, Color color) {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
 
         assertThat(board.findPieceBy(position).get().isSameColor(color)).isTrue();
         assertThat(board.findPieceBy(position).get().isSameType(type)).isTrue();
@@ -489,7 +489,7 @@ class BoardTest {
     @DisplayName("흰 말의 점수를 계산한다.")
     @Test
     void testCalculateWhiteScore() {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
 
         double score = board.calculateScore(Color.WHITE);
 
@@ -515,7 +515,7 @@ class BoardTest {
     @DisplayName("검은 말의 점수를 계산한다.")
     @Test
     void testCalculateBlackScore() {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
 
         double score = board.calculateScore(Color.BLACK);
 

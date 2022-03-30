@@ -188,4 +188,5 @@
     - 기본적으로 기물이 셋팅된 상태가 아니라 테스트용도로 BoardGenerator를 만들어보면 어떨까? 하고 만들어봤다.
     - 하지만 테스트 용도로 계속 클래스를 만들면 그것도 나름대로 문제가 될 수 있을 것 같다.
     - 결국 테스트에서 사용하지 않기 때문에 제거해도 될 것 같다. 나중에 꼭 필요하면 그때 다시 만들어도 될 것 같다.
-- [ ] `BasicChessBoardGenerator`에서 바로 Board를 만들어서 반환해주는건 어떨까요? 그러면 Board를 통해 다시 생성하는 로직이 없어도 될 것 같아요!
+- [x] `BasicChessBoardGenerator`에서 바로 Board를 만들어서 반환해주는건 어떨까요? 그러면 Board를 통해 다시 생성하는 로직이 없어도 될 것 같아요!
+    - `BasicChessBoardGenerator`에서 바로 완성된 Board를 반환하면서 Board의 static 메서드인 `getBasicInstance()`를 제거했다.

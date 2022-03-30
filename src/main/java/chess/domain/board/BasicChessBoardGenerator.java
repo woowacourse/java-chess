@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class BasicChessBoardGenerator {
 
-    public static Map<Position, Piece> generator() {
+    public static Board generator() {
         Map<Position, Piece> board = new HashMap<>();
 
         board.put(Position.of("a8"), new Rook(Color.BLACK));
@@ -52,6 +52,6 @@ public class BasicChessBoardGenerator {
         board.put(Position.of("g2"), new Pawn(Color.WHITE));
         board.put(Position.of("h2"), new Pawn(Color.WHITE));
 
-        return board;
+        return new Board(board);
     }
 }

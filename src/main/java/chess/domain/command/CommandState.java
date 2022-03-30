@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.board.BasicChessBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
@@ -14,7 +15,8 @@ public abstract class CommandState {
         Command command = Command.find(input);
 
         if (command == Command.START) {
-            return new Start(Ready.start(Board.getBasicInstance()));
+            State state = Ready.start(BasicChessBoardGenerator.generator());
+            return new Start(state);
         }
         if (command == Command.END) {
             return new End();

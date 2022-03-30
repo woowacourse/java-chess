@@ -23,10 +23,6 @@ public class Board {
         this.value = value;
     }
 
-    public static Board getBasicInstance() {
-        return new Board(BasicChessBoardGenerator.generator());
-    }
-
     public Optional<Piece> findPieceBy(Position position) {
         Piece piece = value.get(position);
         if (piece == null) {

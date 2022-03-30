@@ -3,6 +3,7 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.BasicChessBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
@@ -20,7 +21,7 @@ class WhiteTurnTest {
     @DisplayName("말을 움직인다")
     @Test
     void test() {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
         Position source = Position.of("a2");
@@ -35,7 +36,7 @@ class WhiteTurnTest {
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")
     @Test
     void testMoveError() {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
         Position source = Position.of("a7");
@@ -49,7 +50,7 @@ class WhiteTurnTest {
     @DisplayName("빈 곳을 움직이면 에러가 발생한다")
     @Test
     void testBlankMoveError() {
-        Board board = Board.getBasicInstance();
+        Board board = BasicChessBoardGenerator.generator();
         State whiteTurn = Ready.start(board);
 
         Position source = Position.of("d5");
