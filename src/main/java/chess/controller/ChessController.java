@@ -1,5 +1,7 @@
 package chess.controller;
 
+import static chess.domain.Command.*;
+
 import chess.domain.Command;
 import chess.domain.Board;
 import chess.domain.Score;
@@ -14,7 +16,7 @@ public class ChessController {
     public void play() {
         OutputView.printStartMessage();
         List<String> input = InputView.requestCommand();
-        Command command = Command.of(input.get(0));
+        Command command = of(input.get(0));
         if (command.isStart()) {
             startGame();
         }
@@ -25,29 +27,29 @@ public class ChessController {
         OutputView.printChessBoard(board.getBoard());
 
         List<String> input = InputView.requestCommand();
-        Command command = Command.of(input.get(0));
+        Command command = of(input.get(0));
 
         playChessGame(input, command, board, Team.WHITE);
     }
 
     private void playChessGame(List<String> input, Command command, Board board, Team team) {
         while (!runByCommand(input, command, board, team)) {
-            if (command == Command.MOVE) {
+            if (command == MOVE) {
                 team = Team.switchTeam(team);
             }
             OutputView.printChessBoard(board.getBoard());
             input = InputView.requestCommand();
-            command = Command.of(input.get(0));
+            command = of(input.get(0));
         }
         OutputView.printFinishedGame(board.getBoard(), team);
     }
 
     private boolean runByCommand(List<String> input, Command command, Board board, Team team) {
-        if (command == Command.STATUS) {
+        if (command == STATUS) {
             displayTeamStatus(board);
             return false;
         }
-        if (command == Command.MOVE) {
+        if (command == MOVE) {
             return board.isKingDead(movePiece(input, board, team));
         }
         return false;

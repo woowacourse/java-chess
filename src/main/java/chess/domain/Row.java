@@ -29,10 +29,6 @@ public enum Row {
         return this.value - row.value;
     }
 
-    public Row plusRow(int number) {
-        return find(value + number);
-    }
-
     public int getValue() {
         return value;
     }

@@ -13,17 +13,10 @@ public class Position {
         this.row = row;
     }
 
-    public static Position from(String position) throws RuntimeException {
-        validateLength(position);
+    public static Position from(String position) throws IllegalArgumentException {
         Column col = Column.find(position.charAt(0));
         Row row = Row.find(Character.getNumericValue(position.charAt(1)));
         return new Position(col, row);
-    }
-
-    private static void validateLength(String position) {
-        if (position.length() != 2) {
-            throw new IllegalArgumentException("올바른 포지션 값이 아닙니다.");
-        }
     }
 
     public Column getCol() {
