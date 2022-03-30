@@ -10,7 +10,7 @@ public enum Command {
     ;
 
     private static final String NO_SUCH_INPUT_ERROR_MESSAGE = "없는 명령어를 입력했습니다";
-    
+
     private final String command;
 
     Command(String command) {
