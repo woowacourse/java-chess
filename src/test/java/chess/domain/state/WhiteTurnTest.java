@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-import static chess.domain.board.BoardFactory.createCatchKingBoard;
+import static chess.domain.board.BoardFixtures.createCatchKingBoard;
 import static chess.domain.board.PositionFixtures.initialBlackPawn;
 import static chess.domain.board.PositionFixtures.initialWhiteKing;
 import static chess.domain.board.PositionFixtures.initialWhitePawn;

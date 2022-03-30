@@ -1,7 +1,7 @@
 package chess.domain.board;
 
-import static chess.domain.board.BoardFactory.createBlankBoard;
-import static chess.domain.board.BoardFactory.createBoardWithBlackBlocking;
+import static chess.domain.board.BoardFixtures.createBlankBoard;
+import static chess.domain.board.BoardFixtures.createBoardWithBlackBlocking;
 import static chess.domain.board.PositionFixtures.initialBlackKing;
 import static chess.domain.board.PositionFixtures.initialBlackQueen;
 import static chess.domain.board.PositionFixtures.initialWhiteBishop;

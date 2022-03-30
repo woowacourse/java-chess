@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.BoardFixtures;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ class KingDeathTest {
 
 	@Test
 	void start() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
@@ -26,7 +26,7 @@ class KingDeathTest {
 
 	@Test
 	void play() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
@@ -39,7 +39,7 @@ class KingDeathTest {
 
 	@Test
 	void createStatus() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
@@ -52,7 +52,7 @@ class KingDeathTest {
 
 	@Test
 	void finish() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
@@ -65,7 +65,7 @@ class KingDeathTest {
 
 	@Test
 	void isFinished() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);
@@ -76,7 +76,7 @@ class KingDeathTest {
 
 	@Test
 	void judgeWinnerWithFinished() {
-		Board board = new Board(BoardFactory.createCatchKingBoard());
+		Board board = new Board(BoardFixtures.createCatchKingBoard());
 		State state = new WhiteTurn(board);
 		Position whiteKing = Position.of(4, 4);
 		Position blackKing = Position.of(5, 5);

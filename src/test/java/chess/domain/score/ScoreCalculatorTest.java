@@ -1,6 +1,6 @@
 package chess.domain.score;
 
-import static chess.domain.board.BoardFactory.createSameColumnPawnBoard;
+import static chess.domain.board.BoardFixtures.createSameColumnPawnBoard;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

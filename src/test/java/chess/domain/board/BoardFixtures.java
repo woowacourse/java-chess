@@ -8,7 +8,7 @@ import chess.domain.piece.Team;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardFactory {
+public class BoardFixtures {
 
 	public static Map<Position, Piece> createBlankBoard() {
 		final Map<Position, Piece> board = new HashMap<>();
