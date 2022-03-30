@@ -1,32 +1,28 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.game.gamestate.Ready;
-import chess.domain.game.gamestate.State;
+import chess.domain.game.state.GameState;
+import chess.domain.game.state.ReadyToStart;
 import chess.domain.position.Position;
 
 public class ChessGame {
 
-    private State state;
+    private GameState state;
 
     public ChessGame() {
-        this.state = new Ready();
+        this.state = new ReadyToStart();
     }
 
     public void startGame() {
-        this.state = state.startGame();
+        this.state = state.start();
+    }
+
+    public void showStatus() {
+        this.state = state.status();
     }
 
     public void movePiece(Position from, Position to) {
         this.state = state.move(from, to);
-    }
-
-    public void showStatus() {
-        this.state = state.showStatus();
-    }
-
-    public void endGame() {
-        this.state = state.endGame();
     }
 
     public Board getBoard() {

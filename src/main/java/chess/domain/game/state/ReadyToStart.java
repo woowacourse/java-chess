@@ -1,0 +1,27 @@
+package chess.domain.game.state;
+
+import chess.domain.board.Board;
+import chess.domain.position.Position;
+
+public class ReadyToStart implements GameState {
+
+    @Override
+    public GameState start() {
+        return new WhiteTurn();
+    }
+
+    @Override
+    public GameState status() {
+        throw new IllegalStateException("게임중이 아니므로 점수를 출력할 수 없습니다.");
+    }
+
+    @Override
+    public GameState move(Position from, Position to) {
+        throw new IllegalStateException("게임중이 아니므로 말을 이동할 수 없습니다.");
+    }
+
+    @Override
+    public Board getBoard() {
+        throw new IllegalStateException("게임중이 아니므로 체스판이 아직 생성되지 않았습니다.");
+    }
+}
