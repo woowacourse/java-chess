@@ -1,8 +1,8 @@
-package domain;
+package domain.board;
 
+import domain.piece.property.Direction;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
-import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
 import domain.position.Position;
 import domain.position.XPosition;
@@ -32,8 +32,12 @@ public final class ChessBoard {
         checkNullSource(source);
         checkCurrentTurn(source, target);
         checkAvailableTarget(target);
+        if (board.get(source).isPawn()) {
+            checkPawnMovement(source, target);
+            movePiece(source, target);
+            return;
+        }
         checkGoThroughPosition(source, target);
-
         movePiece(source, target);
     }
 
@@ -58,10 +62,6 @@ public final class ChessBoard {
     private void checkGoThroughPosition(final Position source, final Position target) {
         Piece piece = board.get(source);
         checkUnavailableMove(source, target, piece);
-        if (piece instanceof Pawn) {
-            checkPawnMovement(source, target);
-            return;
-        }
         checkRoutePositionsNull(target, piece);
     }
 
@@ -72,26 +72,21 @@ public final class ChessBoard {
     }
 
     private void checkPawnMovement(final Position source, final Position target) {
-        if (checkPawnUpDownDirection(source, target)) {
-            checkPawnMoveForward(source, target);
+        Piece piece = board.get(source);
+        if (!piece.availableMove(source, target)){
+            throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
+        }
+        if (checkMovePawn(piece, target)){
+            checkBoardPositionIsNull(target);
+            checkRouteNullForPawn(source, target);
             return;
         }
         checkPawnAttack(target);
     }
 
-    private boolean checkPawnUpDownDirection(final Position source, final Position target) {
-        Piece piece = board.get(source);
-        return ((Pawn) piece).checkUpDownDirection(source, target);
-    }
-
-    private void checkPawnMoveForward(final Position source, final Position target) {
-        Piece piece = board.get(source);
-
-        if (((Pawn) piece).checkMoveOneSpace(target)) {
-            checkBoardPositionIsNull(target);
-            return;
-        }
-        checkWayPointNullPawn(piece, target);
+    private boolean checkMovePawn(Piece piece, Position target) {
+        return Direction.oneAndTwoSouthNorthDirections().stream()
+                .anyMatch(direction -> direction == piece.getDirection(target));
     }
 
     private void checkBoardPositionIsNull(final Position position) {
@@ -100,9 +95,18 @@ public final class ChessBoard {
         }
     }
 
-    private void checkWayPointNullPawn(final Piece piece, final Position target) {
-        List<Position> positions = ((Pawn) piece).calculateForwardRouteByPawn(target);
-        boolean checkExistNotNullInPositions = positions.stream()
+    private void checkRouteNullForPawn(final Position source, final Position target) {
+        List<Position> forwardPositions = new ArrayList<>();
+        forwardPositions.add(target);
+        Direction direction = board.get(source).getDirection(target);
+        Position wayPoint = Position.of(
+                XPosition.of(source.getXPosition() + (int) (direction.getXPosition()/2)),
+                YPosition.of(source.getYPosition() + (int) (direction.getYPosition()/2))
+        );
+        if (!wayPoint.equals(source) && !wayPoint.equals(target)){
+            forwardPositions.add(wayPoint);
+        }
+        boolean checkExistNotNullInPositions = forwardPositions.stream()
                 .anyMatch(position -> board.get(position) != null);
 
         if (checkExistNotNullInPositions) {

@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.ChessBoard;
+import domain.board.ChessBoard;
 import domain.piece.property.Team;
 import domain.classification.Result;
 

@@ -15,7 +15,7 @@ class PawnTest {
 
     @ParameterizedTest
     @MethodSource("availableWhitePositions")
-    @DisplayName("WhitePawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
+    @DisplayName("WhitePawn 은 앞으로 한 칸, 앞으로 두 칸(시작시), 대각선으로 한 칸(적이있을 때) 이동할 수 있다.")
     void moveWhitePawn(Position target) {
         Piece piece = new Pawn(WHITE);
 
@@ -23,12 +23,12 @@ class PawnTest {
     }
 
     private static Stream<Position> availableWhitePositions() {
-        return Stream.of(A3, B3, C3);
+        return Stream.of(A3, B3, B4, C3);
     }
 
     @ParameterizedTest
     @MethodSource("unavailableWhitePositions")
-    @DisplayName("WhitePawn 은 앞으로 한 칸, 대각선으로 한 칸(적이있을 때) 이외에 이동할 수 없다.")
+    @DisplayName("WhitePawn 은 앞으로 한 칸, 앞으로 두 칸(시작시), 대각선으로 한 칸(적이있을 때) 이외에 이동할 수 없다.")
     void moveWhitePawnUnablePositions(Position target) {
         Piece piece = new Pawn(WHITE);
 
@@ -49,7 +49,7 @@ class PawnTest {
     }
 
     private static Stream<Position> availableBlackPositions() {
-        return Stream.of(A6, B6, C6);
+        return Stream.of(A6, B6, B5, C6);
     }
 
     @ParameterizedTest

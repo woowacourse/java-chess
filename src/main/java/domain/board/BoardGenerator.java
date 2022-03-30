@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import domain.piece.unit.Piece;
 import domain.position.Position;

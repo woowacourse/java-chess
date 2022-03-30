@@ -19,10 +19,10 @@ public final class Pawn extends SpecificMovablePiece {
     public Pawn(final Team team) {
         super(new PieceInfo(team, PieceFeature.PAWN));
         if (team == Team.BLACK) {
-            directions = Direction.oneSpaceForwardDownDirections();
+            directions = Direction.blackPawnDirections();
             return;
         }
-        directions = Direction.oneSpaceForwardUpDirections();
+        directions = Direction.whitePawnDirections();
     }
 
     @Override
@@ -31,11 +31,11 @@ public final class Pawn extends SpecificMovablePiece {
         if (availableFirstStartPosition(source, target)) {
             return true;
         }
-        return containsPosition(target);
+        return containsPosition(target) && !checkFirstStart(target) && !checkFirstDistance(source, target);
     }
 
     private boolean availableFirstStartPosition(final Position source, final Position target) {
-        return checkFirstDistance(source, target) && checkSameX(source, target) && checkTeam(source);
+        return checkFirstDistance(source, target) && checkSameX(source, target) && checkFirstStart(source);
     }
 
     private boolean checkFirstDistance(final Position source, final Position target) {
@@ -46,7 +46,7 @@ public final class Pawn extends SpecificMovablePiece {
         return source.getXPosition() == target.getXPosition();
     }
 
-    private boolean checkTeam(final Position source) {
+    private boolean checkFirstStart(final Position source) {
         boolean checkBlackTeam = checkSameTeam(Team.BLACK) && source.getYPosition() == START_BLACK_LINE;
         boolean checkWhiteTeam = checkSameTeam(Team.WHITE) && source.getYPosition() == START_WHITE_LINE;
 
@@ -79,7 +79,12 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     @Override
-    protected List<Direction> getDirections() {
+    public List<Direction> getDirections() {
         return directions;
+    }
+
+    @Override
+    public boolean isPawn(){
+        return true;
     }
 }

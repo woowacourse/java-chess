@@ -3,8 +3,8 @@ package controller;
 import static domain.classification.InputCase.*;
 import static view.InputView.*;
 
-import domain.ChessBoard;
-import domain.ChessBoardGenerator;
+import domain.board.ChessBoard;
+import domain.board.ChessBoardGenerator;
 import domain.classification.InputCase;
 import domain.dto.StatusDto;
 import domain.position.Position;

@@ -19,14 +19,16 @@ public enum Direction {
     NORTH_NORTHEAST(1, 2),
     NORTH_NORTHWEST(-1, 2),
     SOUTH_SOUTHEAST(1, -2),
-    SOUTH_SOUTHWEST(-1, -2);
+    SOUTH_SOUTHWEST(-1, -2),
+    SOUTH_SOUTH(0, -2),
+    NORTH_NORTH(0, 2);
 
-    private final int x;
-    private final int y;
+    private final int xPosition;
+    private final int yPosition;
 
-    Direction(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    Direction(final int xPosition, final int yPosition) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
     public static List<Direction> upDownLeftRightDirections() {
@@ -46,27 +48,43 @@ public enum Direction {
                 SOUTH_SOUTHEAST, SOUTH_SOUTHWEST);
     }
 
-    public static List<Direction> oneSpaceForwardUpDirections() {
+    public static List<Direction> whitePawnDirections() {
+        return List.of(NORTH, NORTHEAST, NORTHWEST, NORTH_NORTH);
+    }
+
+    public static List<Direction> whitePawnDirectionsNonStart() {
         return List.of(NORTH, NORTHEAST, NORTHWEST);
     }
 
-    public static List<Direction> oneSpaceForwardDownDirections() {
-        return List.of(SOUTH, SOUTHEAST, SOUTHWEST);
+    public static List<Direction> blackPawnDirections() {
+        return List.of(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_SOUTH);
     }
 
-    public int getX() {
-        return x;
+    public static List<Direction> southNorthDirections() {
+        return List.of(SOUTH, NORTH);
     }
 
-    public int getY() {
-        return y;
+    public static List<Direction> twoSouthNorthDirections() {
+        return List.of(SOUTH_SOUTH, NORTH_NORTH);
+    }
+
+    public static List<Direction> oneAndTwoSouthNorthDirections() {
+        return List.of(SOUTH, NORTH, SOUTH_SOUTH, NORTH_NORTH);
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public int getYPosition() {
+        return yPosition;
     }
 
     @Override
     public String toString() {
         return "Direction{" +
-                "x=" + x +
-                ", y=" + y +
+                "xPosition=" + xPosition +
+                ", yPosition=" + yPosition +
                 '}';
     }
 }

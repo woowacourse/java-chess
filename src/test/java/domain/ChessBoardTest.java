@@ -5,6 +5,8 @@ import static domain.piece.property.Team.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.board.ChessBoard;
+import domain.board.ChessBoardGenerator;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;

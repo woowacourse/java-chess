@@ -17,13 +17,13 @@ public abstract class CommonMovablePiece extends AbstractPiece {
     @Override
     protected List<Position> calculateAvailableDirectionByPosition(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
-        int x = source.getXPosition() + direction.getX();
-        int y = source.getYPosition() + direction.getY();
+        int x = source.getXPosition() + direction.getXPosition();
+        int y = source.getYPosition() + direction.getYPosition();
 
         while (checkOverRange(x, y)) {
             positions.add(Position.of(XPosition.of(x), YPosition.of(y)));
-            x += direction.getX();
-            y += direction.getY();
+            x += direction.getXPosition();
+            y += direction.getYPosition();
         }
         return positions;
     }

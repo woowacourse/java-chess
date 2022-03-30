@@ -1,6 +1,6 @@
 package view;
 
-import domain.ChessBoard;
+import domain.board.ChessBoard;
 import domain.dto.StatusDto;
 import domain.piece.property.Team;
 import domain.position.XPosition;

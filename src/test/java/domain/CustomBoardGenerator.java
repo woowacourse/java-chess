@@ -1,5 +1,6 @@
 package domain;
 
+import domain.board.BoardGenerator;
 import domain.piece.unit.Piece;
 import domain.position.Position;
 import domain.position.XPosition;

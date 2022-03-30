@@ -39,7 +39,8 @@ public abstract class AbstractPiece implements Piece {
         initializeDirectionalPositions();
         directionalPositions = getDirections().stream()
                 .collect(
-                        Collectors.toMap(Function.identity(), direction -> calculateAvailableDirectionByPosition(source, direction)
+                        Collectors.toMap(Function.identity(),
+                                direction -> calculateAvailableDirectionByPosition(source, direction)
                         )
                 );
     }
@@ -48,16 +49,13 @@ public abstract class AbstractPiece implements Piece {
         directionalPositions = new HashMap<>();
     }
 
-    protected abstract List<Position> calculateAvailableDirectionByPosition(final Position source, final Direction direction);
+    protected abstract List<Position> calculateAvailableDirectionByPosition(final Position source,
+                                                                            final Direction direction);
 
     protected boolean containsPosition(final Position position) {
         return getDirections().stream()
                 .map(direction -> directionalPositions.get(direction))
                 .anyMatch(positions -> positions.contains(position));
-    }
-
-    public void addDirectionalPosition(final Direction direction, final List<Position> positions) {
-        directionalPositions.put(direction, positions);
     }
 
     public List<Position> calculateRoute(final Position target) {
@@ -68,6 +66,16 @@ public abstract class AbstractPiece implements Piece {
                 .orElse(null);
     }
 
+    @Override
+    public Direction getDirection(Position target) {
+        return getDirections().stream()
+                .filter(direction -> directionalPositions.get(direction).contains(target))
+                .filter(direction -> directionalPositions.get(direction) != null)
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 잘못된 타켓 입력입니다."));
+
+    }
+
     public String getSymbolByTeam() {
         return pieceInfo.getSymbolByTeam();
     }
@@ -75,8 +83,6 @@ public abstract class AbstractPiece implements Piece {
     public String symbol() {
         return pieceInfo.symbol();
     }
-
-    protected abstract List<Direction> getDirections();
 
     @Override
     public String toString() {

@@ -11,11 +11,15 @@ public interface Piece {
 
     boolean availableMove(final Position source, final Position target);
 
-    void addDirectionalPosition(final Direction direction, final List<Position> positions);
+    boolean isPawn();
 
     List<Position> calculateRoute(final Position target);
 
     String getSymbolByTeam();
 
     String symbol();
+
+    List<Direction> getDirections();
+
+    Direction getDirection(Position target);
 }

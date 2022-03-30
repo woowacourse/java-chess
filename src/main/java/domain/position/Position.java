@@ -29,20 +29,20 @@ public final class Position {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Position position = (Position) o;
-        return yPosition == position.yPosition && xPosition == position.xPosition;
+        Position position = (Position) o;
+        return xPosition == position.xPosition && yPosition == position.yPosition;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(yPosition, xPosition);
+        return Objects.hash(xPosition, yPosition);
     }
 
     @Override
