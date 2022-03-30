@@ -35,13 +35,9 @@ public abstract class Piece {
         return team.isNone();
     }
 
-    public boolean isPawn() {
-        return getClass() == Pawn.class;
-    }
+    public abstract boolean isPawn();
 
-    public boolean isKing() {
-        return getClass() == King.class;
-    }
+    public abstract boolean isKing();
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

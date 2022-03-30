@@ -21,6 +21,16 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public double getScore() {
         return SCORE;
     }
