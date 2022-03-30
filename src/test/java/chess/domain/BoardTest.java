@@ -1,12 +1,6 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -15,6 +9,10 @@ import chess.domain.piece.Queen;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class BoardTest {
 

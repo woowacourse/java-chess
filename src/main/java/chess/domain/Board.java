@@ -12,10 +12,10 @@ import chess.domain.position.PositionY;
 
 public class Board {
 
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> pieces;
 
-    public Board(Map<Position, Piece> board) {
-        this.board = board;
+    public Board(Map<Position, Piece> pieces) {
+        this.pieces = pieces;
     }
 
     public void validateMovement(Color turnColor, MoveCommand command) {
@@ -26,21 +26,21 @@ public class Board {
     }
 
     private void validatePieceChoice(Color turnColor, Position source) {
-        Piece sourcePiece = board.get(source);
+        Piece sourcePiece = pieces.get(source);
         if (!sourcePiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
     }
 
     private void validateTargetChoice(Color turnColor, Position target) {
-        Piece targetPiece = board.get(target);
+        Piece targetPiece = pieces.get(target);
         if (targetPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
         }
     }
 
     private void validateMovable(Color turnColor, Position source, Position target) {
-        Piece sourcePiece = board.get(source);
+        Piece sourcePiece = pieces.get(source);
         if (!sourcePiece.isMovable(source, target)) {
             throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
         }
@@ -51,7 +51,7 @@ public class Board {
     }
 
     private void validatePawnMovable(Color turnColor, Position source, Position target) {
-        Piece targetPiece = board.get(target);
+        Piece targetPiece = pieces.get(target);
         Color enemyColor = turnColor.next();
         if (isStraightMove(source, target)) {
             validateStraightMove(targetPiece, enemyColor);
@@ -77,7 +77,7 @@ public class Board {
     }
 
     private void validateRoute(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
+        Piece sourcePiece = pieces.get(source);
         List<Position> route = sourcePiece.findRoute(source, target);
         for (Position node : route) {
             validatePieceOnRoute(node);
@@ -85,20 +85,20 @@ public class Board {
     }
 
     private void validatePieceOnRoute(Position node) {
-        Piece nodePiece = board.get(node);
+        Piece nodePiece = pieces.get(node);
         if (!nodePiece.isBlank()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
     }
 
     public void movePiece(MoveCommand command) {
-        Piece sourcePiece = board.get(command.from());
-        board.replace(command.from(), new Blank());
-        board.replace(command.to(), sourcePiece.displaced());
+        Piece sourcePiece = pieces.get(command.from());
+        pieces.replace(command.from(), new Blank());
+        pieces.replace(command.to(), sourcePiece.displaced());
     }
 
     public double calculateScoreOf(Color color) {
-        double score = board.values()
+        double score = pieces.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
                 .mapToDouble(Piece::score)
@@ -119,9 +119,9 @@ public class Board {
     }
 
     private List<Position> findPawnPositionsOf(Color color) {
-        return board.keySet().stream()
-                .filter(position -> board.get(position).isSameColor(color))
-                .filter(position -> board.get(position).isPawn())
+        return pieces.keySet().stream()
+                .filter(position -> pieces.get(position).isSameColor(color))
+                .filter(position -> pieces.get(position).isPawn())
                 .collect(Collectors.toList());
     }
 
@@ -130,13 +130,13 @@ public class Board {
     }
 
     private long countKingsOnBoard() {
-        return board.values()
+        return pieces.values()
                 .stream()
                 .filter(Piece::isKing)
                 .count();
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    public Map<Position, Piece> getPieces() {
+        return pieces;
     }
 }
