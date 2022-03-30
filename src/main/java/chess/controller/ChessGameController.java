@@ -72,6 +72,10 @@ public class ChessGameController {
 		Position targetPosition = Position.from(commandInput.get(2));
 
 		chessGame.move(sourcePosition, targetPosition);
+		if (!chessGame.isRunning()) {
+			printResult(chessGame);
+			return;
+		}
 
 		outputView.printBoard(chessGame.getBoard().getValue());
 	}
