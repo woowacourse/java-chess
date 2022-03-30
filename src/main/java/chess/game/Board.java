@@ -37,10 +37,9 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다."));
         validateSameTeam(from, to);
         validateColor(piece, color);
+        validateMove(moveCommand, piece);
 
-        if (piece.canMove(moveCommand)) {
-            movePiece(from, to, piece);
-        }
+        movePiece(from, to, piece);
     }
 
     public Map<Color, Double> getBoardScore() {
@@ -83,6 +82,12 @@ public class Board {
     private void validateSameTeam(final Position from, final Position to) {
         if (value.containsKey(to) && value.get(from).isSameTeam(value.get(to))) {
             throw new IllegalArgumentException("이동할 위치에 같은색의 말이 존재합니다.");
+        }
+    }
+    
+    private void validateMove(final MoveCommand moveCommand, final Piece piece) {
+        if (!piece.canMove(moveCommand)) {
+            throw new IllegalArgumentException("해당 말이 갈 수 있는 위치가 아닙니다.");
         }
     }
 
