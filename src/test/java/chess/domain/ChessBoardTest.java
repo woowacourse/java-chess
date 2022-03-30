@@ -37,4 +37,36 @@ public class ChessBoardTest {
         //then
         assertThat(score).isEqualTo(37);
     }
+    
+    @DisplayName("처음에 King이 2개 존재하는지 확인")
+    @Test
+    public void testExistKing() {
+        //given
+        ChessBoard chessBoard = new ChessBoard();
+
+        //when
+        boolean existKing = chessBoard.isExistKing();
+
+        //then
+        assertThat(existKing).isTrue();
+    }
+
+    @DisplayName("King이 하나 잡히면 isExistKing()이 false가 반환되어야한다.")
+    @Test
+    public void testExistKing2() {
+        //given
+        ChessBoard chessBoard = new ChessBoard();
+
+        chessBoard.move(Command.from("move e2 e4"));
+        chessBoard.move(Command.from("move f7 f5"));
+        chessBoard.move(Command.from("move d1 h5"));
+        chessBoard.move(Command.from("move a7 a5"));
+        chessBoard.move(Command.from("move h5 e8"));
+
+        //when
+        boolean existKing = chessBoard.isExistKing();
+
+        //then
+        assertThat(existKing).isFalse();
+    }
 }
