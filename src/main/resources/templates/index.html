@@ -1,10 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+<script>
+    function toIntFile(pos) {
+        const map = new Map([
+            ["A", 0], ["B", 1], ["C", 2], ["D", 3],
+            ["E", 4], ["F", 5], ["G", 6], ["H", 7]
+        ]);
+        return map.get(pos.substr(0, 1));
+    }
+
+    function toIntRank(pos) {
+        return 8 - pos.substr(1, 2);
+    }
+
+    function toFile(value) {
+        const map = new Map([
+            [0, "A"], [1, "B"], [2, "C"], [3, "D"],
+            [4, "E"], [5, "F"], [6, "G"], [7, "H"]
+        ]);
+        return map.get(value);
+    }
+
+    function toRank(value) {
+        return String(8 - value);
+    }
+
+    function addPiece(pos, type, color) {
+        console.log(toIntFile(pos) + " " + toIntRank(pos) + ": " + type + " " + color);
+        const board = document.getElementById("board");
+        board.rows[toIntRank(pos)].cells[toIntFile(pos)].innerHTML = "<img src='/image/" + type + "_" + color + ".png' />";
+    }
+</script>
+{{#hasError}}
+<script>
+    alert("{{errorMessage}}");
+</script>
+{{/hasError}}
 <body>
-Hello World!!
+    <div style="float: left; width: 50%">
+        <table id="board" style="border: 1px solid black">
+            <tr>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+        </tr>
+            <tr>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+        </tr>
+            <tr>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+        </tr>
+            <tr>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+            <td class="black-square"></td>
+            <td class="white-square"></td>
+        </tr>
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+            <tr>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+            </tr>
+            <tr>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+                <td class="black-square"></td>
+                <td class="white-square"></td>
+            </tr>
+        </table>
+        {{#pieces}}
+        <script>
+            addPiece("{{position}}", "{{type}}", "{{color}}");
+        </script>
+        {{/pieces}}
+    </div>
+    <div style="float: left; width: 50%">
+        <p>블랙 점수 : {{blackScore.value}}</p>
+        <p>화이트 점수 : {{whiteScore.value}}</p>
+    </div>
 </body>
+<script>
+    const board = document.getElementById("board");
+    let pickedPiece = null;
+
+    for (let row = 0; row < board.rows.length; row++) {
+        for (let col = 0; col < board.rows[row].cells.length; col++) {
+            board.rows[row].cells[col].addEventListener("click", clickEvent);
+        }
+    }
+
+    function clickEvent(event) {
+        console.log(event.currentTarget);
+        if (pickedPiece != null) {
+            const form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "/move");
+
+            const from = document.createElement("input");
+            from.setAttribute("type", "hidden");
+            from.setAttribute("name", "from");
+            from.setAttribute("value", pickedPiece);
+
+            const to = document.createElement("input");
+            to.setAttribute("type", "hidden");
+            to.setAttribute("name", "to");
+            to.setAttribute("value", findPosition(event.currentTarget));
+
+            form.appendChild(from);
+            form.appendChild(to);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+        if (pickedPiece == null) {
+            pickedPiece = findPosition(event.currentTarget);
+            console.log(pickedPiece);
+        }
+    }
+
+    function findPosition(square) {
+        for (let rank = 0; rank < board.rows.length; rank++) {
+            for (let file = 0; file < board.rows[rank].cells.length; file++) {
+                if (board.rows[rank].cells[file] === square) {
+                    console.log(file + " " + rank);
+                    return toFile(file) + toRank(rank);
+                }
+            }
+        }
+    }
+</script>
 </html>

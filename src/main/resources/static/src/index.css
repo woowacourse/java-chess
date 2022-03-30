@@ -1,0 +1,17 @@
+.white-square {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  color: white;
+}
+
+.black-square {
+  width: 80px;
+  height: 80px;
+  background-color: slategrey;
+  color: slategrey;
+}
+
+img {
+  width: 100%;
+}
