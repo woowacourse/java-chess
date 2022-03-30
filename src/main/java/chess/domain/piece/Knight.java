@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import java.util.Optional;
+import chess.domain.direction.DirectionDecider;
+import chess.domain.direction.KnightDirection;
+import java.util.List;
 
-import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
-import chess.domain.direction.strategy.KnightDirectionStrategy;
 
 public class Knight extends Piece {
 
@@ -15,11 +15,10 @@ public class Knight extends Piece {
     private static final Knight whiteKing = new Knight(Color.WHITE);
     private static final Knight blackKing = new Knight(Color.BLACK);
 
-    private final DirectionStrategy directionStrategy;
+    private static final List<Direction> DIRECTIONS = List.of(KnightDirection.values());
 
     private Knight(Color color) {
         super(color);
-        directionStrategy = new KnightDirectionStrategy();
     }
 
     public static Knight createWhite() {
@@ -32,11 +31,7 @@ public class Knight extends Piece {
 
     @Override
     public Direction matchDirection(Position from, Position to) {
-        Optional<? extends Direction> direction = directionStrategy.find(from, to);
-        if (direction.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_DIRECTION_KNIGHT);
-        }
-        return direction.get();
+        return DirectionDecider.generateUnitPosition(DIRECTIONS, from, to);
     }
 
     @Override

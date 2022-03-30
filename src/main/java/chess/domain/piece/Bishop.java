@@ -1,25 +1,23 @@
 package chess.domain.piece;
 
-import java.util.Optional;
+import chess.domain.direction.DiagonalDirection;
+import chess.domain.direction.DirectionDecider;
+import java.util.Arrays;
+import java.util.List;
 
-import chess.domain.direction.strategy.DirectionStrategy;
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
-import chess.domain.direction.strategy.BishopDirectionStrategy;
 
 public class Bishop extends Piece {
 
-    private static final String INVALID_DIRECTION_BISHOP = "비숍이 갈 수 없는 방향입니다.";
     private static final double BISHOP_SCORE = 3.0;
+    private static final List<Direction> DIRECTIONS = Arrays.asList(DiagonalDirection.values());
 
     private static final Bishop whiteBishop = new Bishop(Color.WHITE);
     private static final Bishop blackBishop = new Bishop(Color.BLACK);
 
-    private final DirectionStrategy directionStrategy;
-
     private Bishop(Color color) {
         super(color);
-        directionStrategy = new BishopDirectionStrategy();
     }
 
     public static Bishop createWhite() {
@@ -32,11 +30,7 @@ public class Bishop extends Piece {
 
     @Override
     public Direction matchDirection(Position from, Position to) {
-        Optional<? extends Direction> direction = directionStrategy.find(from, to);
-        if (direction.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_DIRECTION_BISHOP);
-        }
-        return direction.get();
+        return DirectionDecider.generateUnitPosition(DIRECTIONS, from, to);
     }
 
     @Override

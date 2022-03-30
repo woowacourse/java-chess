@@ -17,7 +17,7 @@ class BasicDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, 4);
 		Direction south = BasicDirection.SOUTH;
-		assertThat(south.confirm(from, to)).isTrue();
+		assertThat(south.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -27,7 +27,7 @@ class BasicDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(4, column);
 		Direction east = BasicDirection.EAST;
-		assertThat(east.confirm(from, to)).isTrue();
+		assertThat(east.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -37,7 +37,7 @@ class BasicDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(4, column);
 		Direction west = BasicDirection.WEST;
-		assertThat(west.confirm(from, to)).isTrue();
+		assertThat(west.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -47,6 +47,6 @@ class BasicDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, 4);
 		Direction north = BasicDirection.NORTH;
-		assertThat(north.confirm(from, to)).isTrue();
+		assertThat(north.isValidDirection(from, to)).isTrue();
 	}
 }

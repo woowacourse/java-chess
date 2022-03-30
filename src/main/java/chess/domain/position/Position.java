@@ -47,17 +47,31 @@ public class Position {
         return this.row - position.row;
     }
 
-    public boolean canReach(Position to, UnitPosition unit, int threshold) {
-        List<Position> positions = new ArrayList<>();
-        for (int i = 1; i <= threshold; i++) {
-            positions.add(this.convert(unit.multiply(i)));
+    private int calculateTimes(Position to) {
+        int rowAbsoluteDifference = Math.abs(this.subtractRow(to));
+        int columnAbsoluteDifference = Math.abs(this.subtractColumn(to));
+        if (rowAbsoluteDifference == 0 && columnAbsoluteDifference != 0) {
+            return columnAbsoluteDifference;
         }
-        return positions.stream()
-                .anyMatch(each -> each.equals(to));
+        if (rowAbsoluteDifference != 0 && columnAbsoluteDifference == 0) {
+            return rowAbsoluteDifference;
+        }
+        return Math.min(rowAbsoluteDifference, columnAbsoluteDifference);
     }
 
-    public Position convert(UnitPosition unitPosition) {
-        return new Position(this.row + unitPosition.getUnitRow(), this.column + unitPosition.getUnitColumn());
+    public boolean canReachUnderThreshold(Position to, int threshold) {
+        return calculateTimes(to) <= threshold;
+    }
+
+    public List<Position> backtrackPath(Position to) {
+        List<Position> path = new ArrayList<>();
+        int totalTimes = calculateTimes(to);
+        int unitRow = to.subtractRow(this) / totalTimes;
+        int unitColumn = to.subtractColumn(this) / totalTimes;
+        for (int eachTime = 1; eachTime < totalTimes; eachTime++) {
+            path.add(new Position(this.row + eachTime * unitRow, this.column + eachTime * unitColumn));
+        }
+        return path;
     }
 
     public int subtractColumn(Position position) {
@@ -74,12 +88,12 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return row == position.row && column == position.column;
     }

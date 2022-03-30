@@ -17,7 +17,7 @@ class DiagonalDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, column);
 		Direction northEast = DiagonalDirection.NORTH_EAST;
-		assertThat(northEast.confirm(from, to)).isTrue();
+		assertThat(northEast.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -27,7 +27,7 @@ class DiagonalDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, column);
 		Direction northWest = DiagonalDirection.NORTH_WEST;
-		assertThat(northWest.confirm(from, to)).isTrue();
+		assertThat(northWest.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -37,7 +37,7 @@ class DiagonalDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, column);
 		Direction southEast = DiagonalDirection.SOUTH_EAST;
-		assertThat(southEast.confirm(from, to)).isTrue();
+		assertThat(southEast.isValidDirection(from, to)).isTrue();
 	}
 
 	@ParameterizedTest
@@ -47,6 +47,6 @@ class DiagonalDirectionTest {
 		Position from = new Position(4, 4);
 		Position to = new Position(row, column);
 		Direction southWest = DiagonalDirection.SOUTH_WEST;
-		assertThat(southWest.confirm(from, to)).isTrue();
+		assertThat(southWest.isValidDirection(from, to)).isTrue();
 	}
 }

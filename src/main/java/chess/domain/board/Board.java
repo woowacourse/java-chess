@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.UnitPosition;
 
 public class Board {
 
@@ -47,7 +46,7 @@ public class Board {
     public void movePiece(Position from, Position to) {
         Piece fromPiece = checkFromPieceEmpty(from);
         Direction direction = fromPiece.matchDirection(from, to);
-        searchPiece(from, to, direction);
+        searchPiece(from, to);
         checkTargetPosition(to, fromPiece, direction);
 
         move(from, to, fromPiece);
@@ -61,16 +60,15 @@ public class Board {
         return piece.get();
     }
 
-    private void searchPiece(Position from, Position to, Direction direction) {
-        Position step = from.convert(new UnitPosition(0, 0));
-        while (!step.equals(to)) {
-            step = step.convert(direction.getUnitPosition());
-            validateExistPiece(to, step);
+    private void searchPiece(Position from, Position to) {
+        List<Position> path = from.backtrackPath(to);
+        for (Position position : path) {
+            validateExistPiece(position);
         }
     }
 
-    private void validateExistPiece(Position to, Position step) {
-        if (findPiece(step).isPresent() && !step.equals(to)) {
+    private void validateExistPiece(Position now) {
+        if (findPiece(now).isPresent()) {
             throw new IllegalArgumentException(PIECE_BLOCK);
         }
     }

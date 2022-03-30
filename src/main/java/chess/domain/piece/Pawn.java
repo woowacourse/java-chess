@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import java.util.Optional;
+import chess.domain.direction.BasicDirection;
+import chess.domain.direction.DiagonalDirection;
+import chess.domain.direction.DirectionDecider;
+import java.util.List;
 
 import chess.domain.position.Position;
 import chess.domain.direction.Direction;
-import chess.domain.direction.strategy.BlackPawnDirectionStrategy;
-import chess.domain.direction.strategy.DirectionStrategy;
-import chess.domain.direction.strategy.WhitePawnDirectionStrategy;
 
 public class Pawn extends Piece {
 
@@ -20,14 +20,15 @@ public class Pawn extends Piece {
     private static final int PAWN_INITIAL_DISTANCE = 2;
     private static final int PAWN_BASIC_DISTANCE = 1;
 
-    private static final Pawn whitePawn = new Pawn(Color.WHITE, new WhitePawnDirectionStrategy());
-    private static final Pawn blackPawn = new Pawn(Color.BLACK, new BlackPawnDirectionStrategy());
+    private static final List<Direction> BLACK_DIRECTIONS = List.of(BasicDirection.SOUTH, DiagonalDirection.SOUTH_EAST, DiagonalDirection.SOUTH_WEST);
+    private static final List<Direction> WHITE_DIRECTIONS = List.of(BasicDirection.NORTH, DiagonalDirection.NORTH_EAST, DiagonalDirection.NORTH_WEST);
 
-    private final DirectionStrategy directionStrategy;
+    private static final Pawn whitePawn = new Pawn(Color.WHITE);
+    private static final Pawn blackPawn = new Pawn(Color.BLACK);
 
-    public Pawn(Color color, DirectionStrategy directionStrategy) {
+
+    public Pawn(Color color) {
         super(color);
-        this.directionStrategy = directionStrategy;
     }
 
     public static Pawn createWhite() {
@@ -40,29 +41,31 @@ public class Pawn extends Piece {
 
     @Override
     public Direction matchDirection(Position from, Position to) {
-        Optional<? extends Direction> findDirection = directionStrategy.find(from, to);
-        if (findDirection.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_DIRECTION_PAWN);
-        }
-
-        Direction direction = findDirection.get();
-        if (checkFirstMove(from, to, direction) || checkMove(from, to, direction)) {
-            return direction;
+        Direction findDirection = matchDirectionByColor(from, to);
+        if (checkFirstMove(from, to, findDirection) || checkMove(from, to)) {
+            return findDirection;
         }
         throw new IllegalArgumentException(INVALID_DISTANCE_PAWN);
+    }
+
+    private Direction matchDirectionByColor(Position from, Position to) {
+        if (this.color == Color.WHITE) {
+            return DirectionDecider.generateUnitPosition(WHITE_DIRECTIONS, from, to);
+        }
+        return DirectionDecider.generateUnitPosition(BLACK_DIRECTIONS, from, to);
     }
 
     private boolean checkFirstMove(Position from, Position to, Direction direction) {
         if (this.color == Color.BLACK) {
             return from.isSameRow(BLACK_PAWN_INITIAL_ROW) && !direction.isDiagonal()
-                    && from.canReach(to, direction.getUnitPosition(), PAWN_INITIAL_DISTANCE);
+                    && from.canReachUnderThreshold(to, PAWN_INITIAL_DISTANCE);
         }
         return from.isSameRow(WHITE_PAWN_INITIAL_ROW) && !direction.isDiagonal()
-                && from.canReach(to, direction.getUnitPosition(), PAWN_INITIAL_DISTANCE);
+                && from.canReachUnderThreshold(to, PAWN_INITIAL_DISTANCE);
     }
 
-    private boolean checkMove(Position from, Position to, Direction direction) {
-        return from.canReach(to, direction.getUnitPosition(), PAWN_BASIC_DISTANCE);
+    private boolean checkMove(Position from, Position to) {
+        return from.canReachUnderThreshold(to, PAWN_BASIC_DISTANCE);
     }
 
     @Override

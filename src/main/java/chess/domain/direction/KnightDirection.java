@@ -1,37 +1,31 @@
 package chess.domain.direction;
 
 import chess.domain.position.Position;
-import chess.domain.position.UnitPosition;
+import java.util.function.BiPredicate;
 
 public enum KnightDirection implements Direction {
-    NORTH_NORTH_EAST(new UnitPosition(2, 1)),
-    EAST_NORTH_EAST(new UnitPosition(1, 2)),
-    EAST_SOUTH_EAST(new UnitPosition(-1, 2)),
-    SOUTH_SOUTH_EAST(new UnitPosition(-2, 1)),
-    SOUTH_SOUTH_WEST(new UnitPosition(-2, -1)),
-    WEST_SOUTH_WEST(new UnitPosition(-1, -2)),
-    WEST_NORTH_WEST(new UnitPosition(1, -2)),
-    NORTH_NORTH_WEST(new UnitPosition(2, -1));
+    NORTH_NORTH_EAST((rowDifference, columnDifference) -> rowDifference == -2 && columnDifference == -1),
+    EAST_NORTH_EAST((rowDifference, columnDifference) -> rowDifference == -1 && columnDifference == -2),
+    EAST_SOUTH_EAST((rowDifference, columnDifference) -> rowDifference == 1 && columnDifference == -2),
+    SOUTH_SOUTH_EAST((rowDifference, columnDifference) -> rowDifference == 2 && columnDifference == -1),
+    SOUTH_SOUTH_WEST((rowDifference, columnDifference) -> rowDifference == 2 && columnDifference == 1),
+    WEST_SOUTH_WEST((rowDifference, columnDifference) -> rowDifference == 1 && columnDifference == 2),
+    WEST_NORTH_WEST((rowDifference, columnDifference) -> rowDifference == -1 && columnDifference == 2),
+    NORTH_NORTH_WEST((rowDifference, columnDifference) -> rowDifference == -2 && columnDifference == 1);
 
-    private final UnitPosition unitPosition;
+    private final BiPredicate<Integer, Integer> directionPredicate;
 
-    KnightDirection(UnitPosition unitPosition) {
-        this.unitPosition = unitPosition;
+    KnightDirection(BiPredicate<Integer, Integer> directionPredicate) {
+        this.directionPredicate = directionPredicate;
     }
 
     @Override
-    public boolean confirm(Position from, Position to) {
-        return from.subtractRow(to) + unitPosition.getUnitRow() == 0
-                && from.subtractColumn(to) + unitPosition.getUnitColumn() == 0;
+    public boolean isValidDirection(Position from, Position to) {
+        return this.directionPredicate.test(from.subtractRow(to), from.subtractColumn(to));
     }
 
     @Override
     public boolean isDiagonal() {
         return false;
-    }
-
-    @Override
-    public UnitPosition getUnitPosition() {
-        return unitPosition;
     }
 }
