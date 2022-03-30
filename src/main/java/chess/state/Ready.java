@@ -20,14 +20,12 @@ public class Ready implements State {
 
     @Override
     public State move(final String[] commands) {
-        OutputView.printErrorMessage("[ERROR] start를 하지 않아 move 할 수 없습니다.");
-        return new Ready();
+        throw new IllegalStateException("[ERROR] start를 하지 않아 move 할 수 없습니다.");
     }
 
     @Override
     public State status() {
-        OutputView.printErrorMessage("[ERROR] start를 하지 않아 status 할 수 없습니다.");
-        return new Ready();
+        throw new IllegalStateException("[ERROR] start를 하지 않아 status 할 수 없습니다.");
     }
 
     @Override

@@ -26,7 +26,7 @@ public class ChessGame {
             final String[] commands = InputView.requestCommands();
             final Command command = Command.from(commands[MAIN_COMMAND_INDEX]);
             return command.run(state, commands);
-        } catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException | IllegalStateException exception) {
             OutputView.printErrorMessage(exception.getMessage());
             return runCommand();
         }

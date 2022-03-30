@@ -33,6 +33,7 @@ class KingPieceTest {
     }
 
     @Test
+    @DisplayName("King인지 확인한다.")
     void isKing() {
         Piece king = new KingPiece(Color.BLACK);
         assertTrue(king.isKing());

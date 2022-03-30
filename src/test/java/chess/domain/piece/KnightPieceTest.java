@@ -34,6 +34,7 @@ class KnightPieceTest {
     }
 
     @Test
+    @DisplayName("Knight가 jump가능한지 확인한다.")
     void isJumpable() {
         Piece knight = new KnightPiece(Color.BLACK);
         assertTrue(knight.isJumpable());

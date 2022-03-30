@@ -25,8 +25,7 @@ public class Started implements State {
 
     @Override
     public State start() {
-        OutputView.printErrorMessage("[ERROR] 이미 start를 하여 다시 start를 할 수 없습니다.");
-        return new Started(turn, board);
+        throw new IllegalStateException("[ERROR] 이미 start를 하여 다시 start를 할 수 없습니다.");
     }
 
     @Override
