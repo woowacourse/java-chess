@@ -46,4 +46,14 @@ public class BoardTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("[ERROR] 길이 막혔다...!\n");
 	}
+
+	@Test
+	@DisplayName("피스가 정상적으로 옮겨지는지 테스트한다")
+	void move() {
+		Map<Square, Piece> board = createBlankBoard();
+		board.put(new Square("c3"), WHITE_QUEEN);
+		Board chessBoard = new Board(board);
+		Board movedBoard = chessBoard.move(new Square("c3"), new Square("e5"));
+		assertThat(movedBoard.getBoard().get(new Square("e5"))).isEqualTo(WHITE_QUEEN);
+	}
 }
