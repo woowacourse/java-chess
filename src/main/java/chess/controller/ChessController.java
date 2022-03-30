@@ -23,7 +23,7 @@ public class ChessController {
         playChess(board);
     }
 
-    private void playChess(Board board) {
+    private void playChess2(Board board) {
         Request request = InputView.inputCommandInGaming();
         if (request.getCommand() == END) {
             return;
@@ -44,5 +44,23 @@ public class ChessController {
         }
 
         playChess(board);
+    }
+
+    private void playChess(Board board) {
+        while (!board.isFinished()) {
+            Request request = InputView.inputCommandInGaming();
+            if (request.getCommand() == END) {
+                break;
+            }
+
+            if (request.getCommand() == STATUS) {
+                OutputView.printScore(board.calculateScore());
+                continue;
+            }
+
+            board.move(request.getSource(), request.getTarget());
+            OutputView.printChessGameBoard(board.getValues());
+        }
+        OutputView.printScore(board.calculateScore());
     }
 }
