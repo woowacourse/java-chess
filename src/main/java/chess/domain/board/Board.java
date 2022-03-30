@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Blank;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class Board {
         return targetPiece;
     }
 
-    public Color getPieceColorByPosition(final Position position) {
+    public Team getPieceColorByPosition(final Position position) {
         return getPiece(position).getColor();
     }
 

@@ -7,8 +7,8 @@ public final class Knight extends ValidPiece {
 
     private static final double POINT = 2.5;
 
-    public Knight(final Color color) {
-        super(color, POINT);
+    public Knight(final Team team) {
+        super(team, POINT);
     }
 
     @Override

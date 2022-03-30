@@ -11,12 +11,12 @@ public class BishopTest {
     @Test
     @DisplayName("비숍 이동 전략을 가져온다.")
     void getMoveStrategy() {
-        assertThat(new Bishop(Color.BLACK).getMoveStrategy()).isInstanceOf(BishopMoveStrategy.class);
+        assertThat(new Bishop(Team.BLACK).getMoveStrategy()).isInstanceOf(BishopMoveStrategy.class);
     }
 
     @Test
     @DisplayName("King이 아니다.")
     void isKing() {
-        assertThat(new Bishop(Color.BLACK).isKing()).isFalse();
+        assertThat(new Bishop(Team.BLACK).isKing()).isFalse();
     }
 }

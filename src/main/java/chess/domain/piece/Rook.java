@@ -7,8 +7,8 @@ public final class Rook extends ValidPiece {
 
     private static final double POINT = 5;
 
-    public Rook(final Color color) {
-        super(color, POINT);
+    public Rook(final Team team) {
+        super(team, POINT);
     }
 
     @Override

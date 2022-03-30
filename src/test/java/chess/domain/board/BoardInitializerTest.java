@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
@@ -21,7 +21,7 @@ public class BoardInitializerTest {
     @DisplayName("최초의 Board 원시값을 생성한다.")
     void init() {
         Map<Position, Piece> expected = BoardInitializer.initialize();
-        List<Piece> pieces = getPieces(Color.BLACK);
+        List<Piece> pieces = getPieces(Team.BLACK);
         assertAll(
                 () -> assertThat(expected.get(Position.valueOf("a8"))).isEqualTo(pieces.get(0)),
                 () -> assertThat(expected.get(Position.valueOf("b8"))).isEqualTo(pieces.get(1)),
@@ -34,16 +34,16 @@ public class BoardInitializerTest {
         );
     }
 
-    private List<Piece> getPieces(final Color color) {
+    private List<Piece> getPieces(final Team team) {
         return List.of(
-                new Rook(color),
-                new Knight(color),
-                new Bishop(color),
-                new Queen(color),
-                new King(color),
-                new Bishop(color),
-                new Knight(color),
-                new Rook(color)
+                new Rook(team),
+                new Knight(team),
+                new Bishop(team),
+                new Queen(team),
+                new King(team),
+                new Bishop(team),
+                new Knight(team),
+                new Rook(team)
         );
     }
 

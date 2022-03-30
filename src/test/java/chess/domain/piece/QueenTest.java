@@ -11,13 +11,13 @@ class QueenTest {
     @Test
     @DisplayName("퀸이동 전략을 가져온다.")
     void getMoveStrategy() {
-        assertThat(new Queen(Color.BLACK).getMoveStrategy()).isInstanceOf(QueenMoveStrategy.class);
+        assertThat(new Queen(Team.BLACK).getMoveStrategy()).isInstanceOf(QueenMoveStrategy.class);
 
     }
 
     @Test
     @DisplayName("King이 아니다.")
     void isKing() {
-        assertThat(new Queen(Color.BLACK).isKing()).isFalse();
+        assertThat(new Queen(Team.BLACK).isKing()).isFalse();
     }
 }

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class ChessGameTest {
     void calculateScore() {
         Score score = chessGame.calculateScore();
         assertAll(
-                () -> assertThat(score.getWinColor()).isEqualTo(Color.BLACK),
+                () -> assertThat(score.getWinColor()).isEqualTo(Team.BLACK),
                 () -> assertThat(score.getWhiteScore()).isEqualTo(38.0),
                 () -> assertThat(score.getBlackScore()).isEqualTo(38.0)
         );

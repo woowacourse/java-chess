@@ -2,7 +2,7 @@ package chess.domain.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -25,18 +25,18 @@ public class BlackPawnMoveStrategy extends PawnMoveStrategy{
 
     @Override
     protected boolean isRightMovePattern(final MovePattern movePattern, final Board board, final Position source,
-                                       final Piece targetPiece, final Color color) {
+                                       final Piece targetPiece, final Team team) {
         if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
             return false;
         }
         if (movePattern == MovePattern.PAWN_START_MOVE_BLACK) {
-            return isStartMove(board, source, targetPiece, color);
+            return isStartMove(board, source, targetPiece, team);
         }
         if (movePattern == MovePattern.SOUTH) {
             return targetPiece.isBlank();
         }
         if (movePattern == MovePattern.SOUTHEAST || movePattern == MovePattern.SOUTHWEST) {
-            return isTargetPositionMovable(targetPiece, color);
+            return isTargetPositionMovable(targetPiece, team);
         }
         return false;
     }

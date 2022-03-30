@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,7 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWinColor()).isEqualTo(Color.BLACK);
+        assertThat(score.getWinColor()).isEqualTo(Team.BLACK);
     }
 
     @Test
@@ -49,6 +49,6 @@ public class ScoreTest {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
 
         Score score = new Score(board.getBoard());
-        assertThat(score.getWinColor()).isEqualTo(Color.WHITE);
+        assertThat(score.getWinColor()).isEqualTo(Team.WHITE);
     }
 }
