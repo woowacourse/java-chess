@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 
@@ -21,6 +22,7 @@ public class Board {
     private static final String CANNOT_MOVE_OPPONENT_PIECE = "상대편 말은 욺직일 수 없습니다.";
     private static final String ANOTHER_PIECE_EXIST_IN_PATH = "다른 말이 경로에 존재해 이동할 수 없습니다.";
     private static final String ANOTHER_SAME_COLOR_PIECE_EXIST = "같은 팀의 다른 말이 존재해 이동할 수 없습니다.";
+    private static final double PAWN_MINUS_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces;
 
@@ -140,6 +142,17 @@ public class Board {
                 .map(row -> new Position(piece.getKey().getColumn(), row))
                 .anyMatch(position -> !piece.getKey().equals(position)
                         && getPiece(position).equals(piece.getValue()));
+    }
+
+    public boolean isKingCaught(Color color) {
+        return countPiece(KING, color) == 0;
+    }
+
+    public double calculateScore(Color color) {
+        double score = Arrays.stream(PieceType.values())
+                .mapToDouble(piece -> piece.calculateScore(countPiece(piece, color)))
+                .sum();
+        return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
     }
 
     public Map<Position, Piece> getPieces() {
