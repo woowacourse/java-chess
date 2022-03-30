@@ -28,7 +28,7 @@ public class King extends Piece {
         int rankDifference = Math.abs(source.subtractRankFrom(target));
         int fileDifference = Math.abs(source.subtractFileFrom(target));
         if (rankDifference > MOVABLE_DISTANCE || fileDifference > MOVABLE_DISTANCE) {
-            throw new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
     }
 
