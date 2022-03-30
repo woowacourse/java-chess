@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.board.BoardInitializer;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ class BoardTest {
 	@CsvSource(value = {"1:5", "8:5"}, delimiter = ':')
 	@DisplayName("체스판 좌표로 체스말을 찾는다.")
 	void findPiece(int row, int column) {
-		Board board = new Board();
+		Board board = new Board(BoardInitializer.generate());
 		Optional<Piece> piece = board.findPiece(new Position(row, column));
 		assertThat(piece.get()).isInstanceOf(King.class);
 	}
@@ -36,7 +37,7 @@ class BoardTest {
 	@CsvSource(value = {"3:3", "4:7"}, delimiter = ':')
 	@DisplayName("체스판 좌표에 체스말이 없으면 예외가 발생한다.")
 	void findSymbolAtException(int row, int column) {
-		Board board = new Board();
+		Board board = new Board(BoardInitializer.generate());
 		Optional<Piece> piece = board.findPiece(new Position(row, column));
 		assertThat(piece.isEmpty()).isTrue();
 	}

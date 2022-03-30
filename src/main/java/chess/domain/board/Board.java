@@ -29,10 +29,6 @@ public class Board {
 
     private final Map<Position, Piece> pieces;
 
-    public Board() {
-        this.pieces = BoardInitializer.generate();
-    }
-
     public Board(Map<Position, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
     }
