@@ -1,9 +1,12 @@
 package chess.controller;
 
-import static chess.domain.Command.*;
+import static chess.domain.Command.MOVE;
+import static chess.domain.Command.STATUS;
+import static chess.domain.Command.of;
 
-import chess.domain.Command;
 import chess.domain.Board;
+import chess.domain.Command;
+import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
@@ -16,7 +19,7 @@ public class ChessController {
     public void play() {
         OutputView.printStartMessage();
         List<String> input = InputView.requestCommand();
-        Command command = of(input.get(0));
+        Command command = of(input.get(InputView.COMMAND_INDEX));
         if (command.isStart()) {
             startGame();
         }
@@ -27,7 +30,7 @@ public class ChessController {
         OutputView.printChessBoard(board.getBoard());
 
         List<String> input = InputView.requestCommand();
-        Command command = of(input.get(0));
+        Command command = of(input.get(InputView.COMMAND_INDEX));
 
         playChessGame(input, command, board, Team.WHITE);
     }
@@ -39,7 +42,7 @@ public class ChessController {
             }
             OutputView.printChessBoard(board.getBoard());
             input = InputView.requestCommand();
-            command = of(input.get(0));
+            command = of(input.get(InputView.COMMAND_INDEX));
         }
         OutputView.printFinishedGame(board.getBoard(), team);
     }
@@ -61,6 +64,9 @@ public class ChessController {
     }
 
     private Piece movePiece(List<String> input, Board board, Team team) {
-        return board.movePiece(input.get(1), input.get(2), team);
+        return board.movePiece(
+                Position.from(input.get(InputView.FIRST_POSITION_INDEX)),
+                Position.from(input.get(InputView.SECOND_POSITION_INDEX)),
+                team);
     }
 }

@@ -43,15 +43,14 @@ public class Board {
         return board.get(position.getRow()).getPiece(position.getCol());
     }
 
-    public Piece movePiece(String source, String destination, Team team) {
-        Position srcPosition = Position.from(source);
-        Position dstPosition = Position.from(destination);
-        Piece srcPiece = getPiece(srcPosition);
-        Piece dstPiece = getPiece(dstPosition);
+    public Piece movePiece(Position source, Position destination, Team team) {
+        Piece srcPiece = getPiece(source);
+        Piece dstPiece = getPiece(destination);
 
-        validateMovingPiece(srcPosition, dstPosition, srcPiece, team);
-        srcPiece.move(Position.from(destination));
-        changePiece(srcPosition, dstPosition, srcPiece);
+        validateMovingPiece(source, destination, srcPiece, team);
+        srcPiece.move(destination);
+        changePiece(source, destination, srcPiece);
+        
         return dstPiece;
     }
 
