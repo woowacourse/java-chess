@@ -38,11 +38,8 @@ public class Board {
     }
 
     private void initializeEmptyBoard() {
-        for (Rank rank : Rank.reverseValues()) {
-            for (File file : File.values()) {
-                chessBoard.put(Location.of(file, rank), new EmptyPiece());
-            }
-        }
+        Rank.reverseValues().forEach(rank -> Arrays.stream(File.values())
+                .forEach(file -> chessBoard.put(Location.of(file, rank), new EmptyPiece())));
     }
 
     private void initializePieceExceptPawn(Rank rank, Team team) {
