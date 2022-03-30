@@ -23,7 +23,7 @@ public class RookTest {
 		assertThat(rook.getSymbol()).isEqualTo("r");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"8, 4", "4, 5", "3, 4", "4, 3"})
 	void validateMovement(int targetRow, int targetCol) {
 		Position source = Position.of(4, 4);

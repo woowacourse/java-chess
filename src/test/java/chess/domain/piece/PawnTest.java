@@ -23,7 +23,7 @@ public class PawnTest {
 		assertThat(pawn.getSymbol()).isEqualTo("p");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}, team:{2}")
+	@ParameterizedTest
 	@CsvSource(value = {"3, 4, BLACK", "5, 4, WHITE"})
 	void validateMovement(int targetRow, int targetColumn, Team team) {
 		Position source = Position.of(4, 4);
@@ -35,7 +35,7 @@ public class PawnTest {
 				() -> sourcePawn.validateMovement(source, target, blank));
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"3, 3, BLACK, WHITE", "3, 5, BLACK, WHITE", "5, 3, WHITE, BLACK", "5, 5, WHITE, BLACK"})
 	void validateAttackMovement(int targetRow, int targetColumn, Team ally, Team enemy) {
 		Position source = Position.of(4, 4);
@@ -47,7 +47,7 @@ public class PawnTest {
 				() -> sourcePawn.validateMovement(source, target, targetPawn));
 	}
 
-	@ParameterizedTest(name = "[{index}] - from {0} to {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"2, 4,  WHITE", "7, 5, BLACK"})
 	void validateInitialPositionMovement(int sourceRow, int targetRow, Team team) {
 		Piece sourcePawn = new Pawn(team);
@@ -58,7 +58,7 @@ public class PawnTest {
 		assertDoesNotThrow(() -> sourcePawn.validateMovement(source, movedTwoStep, blank));
 	}
 
-	@ParameterizedTest(name = "[{index}] - from {0} to {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"3, 5,  WHITE", "6, 4, BLACK"})
 	void validateNotInitialPositionMovementException(int sourceRow, int targetRow, Team team) {
 		Piece sourcePawn = new Pawn(team);

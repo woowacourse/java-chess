@@ -23,7 +23,7 @@ public class KingTest {
 		assertThat(king.getSymbol()).isEqualTo("k");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"5, 5", "4, 5", "3, 5", "3, 4", "3, 3", "4, 3", "5, 3", "5, 4"})
 	void validateMovement(int targetRow, int targetCol) {
 		Position source = Position.of(4, 4);

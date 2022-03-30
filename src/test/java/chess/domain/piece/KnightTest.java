@@ -23,7 +23,7 @@ public class KnightTest {
 		assertThat(knight.getSymbol()).isEqualTo("n");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"2, 5", "2, 3", "6, 5", "6, 3", "5, 6", "3, 6", "5, 2", "3, 2"})
 	void validateMovement(int targetRow, int targetCol) {
 		Position source = Position.of(4, 4);

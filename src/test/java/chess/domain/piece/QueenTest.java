@@ -23,7 +23,7 @@ public class QueenTest {
 		assertThat(queen.getSymbol()).isEqualTo("q");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"8, 8", "3, 5", "3, 3", "5, 3", "8, 4", "3, 4", "4, 5", "4, 3"})
 	void validateMovement(int targetRow, int targetCol) {
 		Position source = Position.of(4, 4);

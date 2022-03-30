@@ -72,7 +72,7 @@ class BoardTest {
 		);
 	}
 
-	@ParameterizedTest(name = "{index} - source:{0}, target:{1}")
+	@ParameterizedTest
 	@MethodSource("createSourceAndTarget")
 	void moveWithAllyBlocking(Position source, Position target) {
 		Board board = new Board(InitialBoard.createBoard());
@@ -90,7 +90,7 @@ class BoardTest {
 		);
 	}
 
-	@ParameterizedTest(name = "{index} - target:{0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"2, 4", "6, 4", "4, 6", "4, 2", "6, 6", "2, 2", "6, 2", "2, 6"})
 	void moveWithEnemyBlocking(int targetRow, int targetColumn) {
 		Board board = new Board(createBoardWithBlackBlocking(new Queen(Team.WHITE)));
@@ -101,7 +101,7 @@ class BoardTest {
 				.hasMessageContaining("해당 위치로 기물을 옮길 수 없습니다.");
 	}
 
-	@ParameterizedTest(name = "{index} - target:{0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"2, 5", "2, 3", "6, 5", "6, 3", "5, 6", "3, 6", "5, 2", "3, 2"})
 	void moveKnightWithBlocking(int targetRow, int targetColumn) {
 		Board board = new Board(createBoardWithBlackBlocking(new Knight(Team.WHITE)));
@@ -110,7 +110,7 @@ class BoardTest {
 		assertDoesNotThrow(() -> board.move(whiteKnight, Position.of(targetRow, targetColumn)));
 	}
 
-	@ParameterizedTest(name = "{index} - target:{0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"5, 5", "5, 3"})
 	void movePawnToEnemy(int targetRow, int targetColumn) {
 		Board board = new Board(createBoardWithBlackBlocking(new Pawn(Team.WHITE)));

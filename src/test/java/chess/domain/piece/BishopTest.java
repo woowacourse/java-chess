@@ -23,7 +23,7 @@ class BishopTest {
 		assertThat(bishop.getSymbol()).isEqualTo("b");
 	}
 
-	@ParameterizedTest(name = "[{index}] - to {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"8, 8", "3, 5", "3, 3", "5, 3"})
 	void validateMovement(int targetRow, int targetCol) {
 		Position source = Position.of(4, 4);

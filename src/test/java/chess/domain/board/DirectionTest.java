@@ -33,7 +33,7 @@ class DirectionTest {
 				.hasMessageContaining("해당 방향이 없습니다.");
 	}
 
-	@ParameterizedTest(name = "{index} - {0}, {1} : {2}")
+	@ParameterizedTest
 	@MethodSource("createDirection")
 	void find(int row, int column, Direction direction) {
 		assertThat(Direction.find(row, column)).isEqualTo(direction);

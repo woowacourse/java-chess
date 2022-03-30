@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionTest {
 
-	@ParameterizedTest(name = "{index} - position: {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"0, 0", "9, 9", "1, 0", "9, 1"})
 	void overRangeInput(int row, int column) {
 		assertThatThrownBy(() -> Position.of(row, column))
@@ -30,7 +30,7 @@ class PositionTest {
 		assertThat(position.addDirection(Direction.N)).isEqualTo(Position.of(5, 4));
 	}
 
-	@ParameterizedTest(name = "{index} - target: {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"4, 5", "5, 4", "4, 3", "3, 4"})
 	void isLinerMove(int targetRow, int targetColumn) {
 		Position source = Position.of(4, 4);
@@ -38,7 +38,7 @@ class PositionTest {
 		assertThat(source.isLinerMove(Position.of(targetRow, targetColumn))).isTrue();
 	}
 
-	@ParameterizedTest(name = "{index} - target: {0}, {1}")
+	@ParameterizedTest
 	@CsvSource(value = {"5, 5", "3, 3", "3, 5", "5, 3"})
 	void isDiagonalMove(int targetRow, int targetColumn) {
 		Position source = Position.of(4, 4);
@@ -47,7 +47,7 @@ class PositionTest {
 	}
 
 
-	@ParameterizedTest(name = "{index} - position: {0}, size: {1}")
+	@ParameterizedTest
 	@MethodSource("createMovablePositionCount")
 	void calculateMovableByDirection(Position startPosition, int size) {
 		List<Direction> kingMoveDirection = Direction.getKingDirection();
@@ -106,7 +106,7 @@ class PositionTest {
 		);
 	}
 
-	@ParameterizedTest(name = "{index} - position: {0}, {1} Team: {2} expectedValue: {3}")
+	@ParameterizedTest
 	@CsvSource(value = {"7, 1, BLACK, true", "2, 1, WHITE, true", "4, 1, BLACK, false", "4, 1, WHITE, false"})
 	void isDefaultRow(int row, int column, Team team, boolean expectedValue) {
 		Position position = Position.of(row, column);
