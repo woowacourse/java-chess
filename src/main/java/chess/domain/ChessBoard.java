@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ChessBoard {
 
-    private static final int START_INCLUSIVE = 0;
-    private static final int END_INCLUSIVE = 7;
+    private static final int BOARD_START_INDEX = 0;
+    private static final int BOARD_END_INDEX = 7;
     private static final int DEFAULT_KING_COUNT = 2;
     private static final double ANOTHER_PAWN_SCORE = 0.5;
 
@@ -66,7 +66,7 @@ public class ChessBoard {
 
     private double getPawnScore(Color color) {
         double pawnScore = 0;
-        for (int i = START_INCLUSIVE; i <= END_INCLUSIVE; i++) {
+        for (int i = BOARD_START_INDEX; i <= BOARD_END_INDEX; i++) {
             int pawnCount = getPawnCount(color, i);
             if (getPawnCount(color, i) > 1) {
                 pawnScore += pawnCount * ANOTHER_PAWN_SCORE;
@@ -77,7 +77,7 @@ public class ChessBoard {
 
     private int getPawnCount(Color color, int fileIndex) {
         int pawnCount = 0;
-        for (int j = START_INCLUSIVE; j <= END_INCLUSIVE; j++) {
+        for (int j = BOARD_START_INDEX; j <= BOARD_END_INDEX; j++) {
             Piece piece = board.get(j).get(fileIndex);
             pawnCount += calculatePawnCount(piece, color);
         }

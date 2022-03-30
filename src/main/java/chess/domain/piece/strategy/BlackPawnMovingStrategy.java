@@ -11,10 +11,10 @@ import java.util.List;
 public class BlackPawnMovingStrategy extends PawnMovingStrategy {
 
     private static final int RANK_INDEX_STARTING_POINT = 1;
-    private static final List<Direction> DIRECTION = List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
+    private static final List<Direction> DIRECTIONS = List.of(BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT);
 
     public BlackPawnMovingStrategy() {
-        super(RANK_INDEX_STARTING_POINT, DIRECTION);
+        super(RANK_INDEX_STARTING_POINT, DIRECTIONS);
     }
 
     @Override
