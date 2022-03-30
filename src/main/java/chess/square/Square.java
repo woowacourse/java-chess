@@ -6,16 +6,16 @@ import java.util.List;
 
 public class Square {
 
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    private Square(Rank rank, File file) {
+    private Square(File file, Rank rank) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Square of(Rank rank, File file) {
-        return new Square(rank, file);
+    public static Square of(File file, Rank rank) {
+        return new Square(file, rank);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Square {
         int distance = 1;
         List<Square> roads = new ArrayList<>();
         List<Integer> coordinates = direction.getDistanceFrom(distance);
-        while (file.availableLocation(coordinates.get(0)) && rank.availableLocation(coordinates.get(1)) && distance <= maxDistance) {
+        while (isValidLocation(coordinates) && distance <= maxDistance) {
             roads.add(distanceFrom(coordinates));
             distance++;
             coordinates = direction.getDistanceFrom(distance);
@@ -54,7 +54,19 @@ public class Square {
         return roads;
     }
 
+    public boolean findLocation(Direction direction, Square target) {
+        List<Integer> coordinates = direction.getDistanceFrom(1);
+        if (isValidLocation(coordinates)) {
+            return distanceFrom(coordinates).equals(target);
+        }
+        return false;
+    }
+
     private Square distanceFrom(List<Integer> coordinates) {
-        return Square.of(rank.nextTo(coordinates.get(1)), file.nextTo(coordinates.get(0)));
+        return Square.of(file.nextTo(coordinates.get(0)), rank.nextTo(coordinates.get(1)));
+    }
+
+    private boolean isValidLocation(List<Integer> coordinates) {
+        return file.availableLocation(coordinates.get(0)) && rank.availableLocation(coordinates.get(1));
     }
 }
