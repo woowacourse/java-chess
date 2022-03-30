@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.MoveResult;

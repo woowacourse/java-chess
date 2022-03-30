@@ -1,19 +1,19 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.PositionFixture.A1;
-import static chess.domain.PositionFixture.A2;
-import static chess.domain.PositionFixture.B1;
-import static chess.domain.PositionFixture.B2;
-import static chess.domain.PositionFixture.B3;
-import static chess.domain.PositionFixture.B4;
-import static chess.domain.PositionFixture.C2;
-import static chess.domain.PositionFixture.C3;
-import static chess.domain.PositionFixture.D2;
-import static chess.domain.PositionFixture.D4;
+import static chess.domain.board.PositionFixture.A1;
+import static chess.domain.board.PositionFixture.A2;
+import static chess.domain.board.PositionFixture.B1;
+import static chess.domain.board.PositionFixture.B2;
+import static chess.domain.board.PositionFixture.B3;
+import static chess.domain.board.PositionFixture.B4;
+import static chess.domain.board.PositionFixture.C2;
+import static chess.domain.board.PositionFixture.C3;
+import static chess.domain.board.PositionFixture.D2;
+import static chess.domain.board.PositionFixture.D4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Position;
+import chess.domain.Distance;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;

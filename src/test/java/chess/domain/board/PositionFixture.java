@@ -1,6 +1,5 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.Position;
 
 public class PositionFixture {
     public static Position A1 = Position.of("a1");
