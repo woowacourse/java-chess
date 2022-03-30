@@ -6,8 +6,14 @@ import java.util.Map;
 
 public class Empty extends Piece {
 
-    public Empty() {
+    private static final Empty instance = new Empty();
+
+    private Empty() {
         super(Color.NONE, PieceType.EMPTY);
+    }
+
+    public static Empty getInstance() {
+        return instance;
     }
 
     @Override

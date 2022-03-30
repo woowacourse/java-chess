@@ -14,7 +14,7 @@ class EmptyTest {
     @Test
     @DisplayName("빈공간을 만든다.")
     void createEmpty() {
-        Piece piece = new Empty();
+        Piece piece = Empty.getInstance();
 
         assertThat(piece).isNotNull();
     }
@@ -22,7 +22,7 @@ class EmptyTest {
     @Test
     @DisplayName("빈공간은 움직일 수 없다.")
     void throwsExceptionWithTryToMove() {
-        Piece piece = new Empty();
+        Piece piece = Empty.getInstance();
         Point from = Point.of("a3");
         Point to = Point.of("a4");
         Board board = BoardFixtures.empty();

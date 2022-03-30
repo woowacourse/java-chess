@@ -64,7 +64,7 @@ public class Board {
         Map<Point, Piece> copyOfPointPieces = Map.copyOf(pointPieces);
         fromPiece.move(copyOfPointPieces, from, to);
         pointPieces.put(to, fromPiece);
-        pointPieces.put(from, new Empty());
+        pointPieces.put(from, Empty.getInstance());
     }
 
     public Map<Color, Double> calculateScore() {
