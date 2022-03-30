@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 public class ChessController {
     public void run() {
         OutputView.startGame();
-
         String input = InputView.inputCommand();
         Command command = new Init(input);
         command = command.turnState(input);
+
         Board board = Board.create(Pieces.createInit());
         command = playGame(command, board);
         OutputView.printFinishMessage();
@@ -28,12 +28,16 @@ public class ChessController {
 
     private Command playGame(Command command, Board board) {
         Turn turn = Turn.init();
-        while (!command.isEnd() || board.isDeadKing()) {
+        while (isRunning(command, board)) {
             turn = nextTurn(command, board, turn);
             OutputView.printBoard(convertToPieceDtos(board.getPieces()));
             command = command.turnState(InputView.inputCommand());
         }
         return command;
+    }
+
+    private boolean isRunning(Command command, Board board) {
+        return !command.isEnd() || board.isDeadKing();
     }
 
     private List<PieceDto> convertToPieceDtos(Pieces pieces) {

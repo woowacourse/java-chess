@@ -66,7 +66,7 @@ public final class Pieces {
         return pieces.stream()
                 .filter(piece -> piece.findPosition(position))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 말이 없습니다."));
     }
 
     public long countOfKing() {
