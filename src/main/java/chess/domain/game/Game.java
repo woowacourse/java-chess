@@ -14,8 +14,8 @@ public final class Game {
     private final Board board;
     private Color turn = FIRST_TURN;
 
-    public Game(final Initializer initiator) {
-        board = new Board(initiator);
+    public Game(final Initializer initializer) {
+        board = new Board(initializer);
     }
 
     public Optional<Piece> piece(final Position position) {
