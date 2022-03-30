@@ -17,10 +17,12 @@ public abstract class Piece {
 
     public abstract Position move(Position currentPosition, Position destinationPosition, Team team);
 
-    public abstract boolean exist(Position checkingPosition);
-
     public Position capture(Position currentPosition, Position destinationPosition, Team team) {
         return move(currentPosition, destinationPosition, team);
+    }
+
+    public boolean exist(final Position checkingPosition) {
+        return position.equals(checkingPosition);
     }
 
     public boolean isPawn() {

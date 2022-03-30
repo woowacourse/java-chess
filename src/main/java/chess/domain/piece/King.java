@@ -5,8 +5,8 @@ import chess.domain.player.Team;
 
 public class King extends Piece {
 
-    private static final int KING_LINEAR_MOVE_DISTANCE = 1;
-    private static final int KING_DIAGONAL_MOVE_DISTANCE = 2;
+    private static final int LINEAR_MOVE_DISTANCE = 1;
+    private static final int DIAGONAL_MOVE_DISTANCE = 2;
 
     public King(Position position) {
         super(State.KING, position);
@@ -26,15 +26,10 @@ public class King extends Piece {
     }
 
     private void validateMoveDistance(final int distance, final boolean isMoveLinear, final boolean isMoveDiagonal) {
-        if (isMoveLinear && distance != KING_LINEAR_MOVE_DISTANCE
-                || isMoveDiagonal && distance != KING_DIAGONAL_MOVE_DISTANCE) {
+        if (isMoveLinear && distance != LINEAR_MOVE_DISTANCE
+                || isMoveDiagonal && distance != DIAGONAL_MOVE_DISTANCE) {
             throw new IllegalArgumentException("킹은 1칸만 이동할 수 있습니다.");
         }
-    }
-
-    @Override
-    public boolean exist(final Position checkingPosition) {
-        return position.equals(checkingPosition);
     }
 
     @Override

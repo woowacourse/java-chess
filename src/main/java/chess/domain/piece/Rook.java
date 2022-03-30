@@ -21,9 +21,4 @@ public class Rook extends Piece {
         position = destinationPosition;
         return position;
     }
-
-    @Override
-    public boolean exist(final Position checkingPosition) {
-        return position.equals(checkingPosition);
-    }
 }
