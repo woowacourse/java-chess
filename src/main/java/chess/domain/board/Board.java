@@ -56,14 +56,14 @@ public class Board {
         );
         Column[] columns = Column.values();
         for (int i = 0; i < columns.length; i++) {
-            board.replace(Position.valueOf(columns[i].getName() + row.getValue()), pieces.get(i));
+            board.replace(Position.valueOf(columns[i], row), pieces.get(i));
         }
     }
 
     private static void initPawn(final Color color, Row row, final Map<Position, Piece> board) {
         Column[] columns = Column.values();
         for (int i = 0; i < columns.length; i++) {
-            board.replace(Position.valueOf(columns[i].getName() + row.getValue()), new Pawn(color));
+            board.replace(Position.valueOf(columns[i], row), new Pawn(color));
         }
     }
 

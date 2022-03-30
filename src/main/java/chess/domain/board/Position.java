@@ -43,6 +43,10 @@ public class Position implements Comparable<Position> {
         return CACHE.get(rawPosition);
     }
 
+    public static Position valueOf(final Column column, final Row row) {
+        return valueOf(column.getName() + row.getValue());
+    }
+
     public int subtractColumn(final Position position) {
         return this.column.subtract(position.column);
     }

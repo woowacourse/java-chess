@@ -12,8 +12,14 @@ public class PositionTest {
 
     @Test
     @DisplayName("포지션 좌표를 String 으로 받아 가져온다.")
-    void constructor() {
+    void valueOfString() {
         assertThat(Position.valueOf("a1")).isInstanceOf(Position.class);
+    }
+
+    @Test
+    @DisplayName("포지션 좌표를 Column, Row로 받아로가져온다.")
+    void valueOfColumnRow() {
+        assertThat(Position.valueOf(Column.A, Row.EIGHT)).isEqualTo(Position.valueOf("a8"));
     }
 
     @Test
