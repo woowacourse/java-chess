@@ -26,6 +26,11 @@ public class Board {
         this.board = new HashMap<>(board);
     }
 
+    public Color getPieceColor(Position position) {
+        validateExistPiecePosition(position);
+        return board.get(position).getColor();
+    }
+
     public void movePiece(Position fromPosition, Position toPosition) {
         validateExistPiecePosition(fromPosition);
         Piece pieceToMove = board.get(fromPosition);

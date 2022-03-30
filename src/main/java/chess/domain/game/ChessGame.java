@@ -23,7 +23,7 @@ public class ChessGame {
 
     public void start() {
         Board board = new Board(BoardFactory.getInitialPieces());
-        state = new Running(board);
+        state = new Running(board, Color.WHITE);
     }
 
     public void movePiece(String movePositionInformation) {
