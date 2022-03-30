@@ -7,26 +7,20 @@ import chess.domain.Team;
 import java.util.List;
 
 public class Knight extends Piece {
-
+    private List<Direction> directions = List.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW, Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);
     public Knight(Team team, Position position) {
         super(team, "N", position, 2.5);
     }
 
-    private void validateIsPossible(Position destination) {
-        Direction.knightDirection().stream()
-                .filter(direction -> isCorrectDirection(destination, direction))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
-    }
-
-    private boolean isCorrectDirection(Position destination, Direction direction) {
-        return (position.getRow().getDifference(destination.getRow()) == direction.getYDegree()
-                && position.getCol().getDifference(destination.getCol()) == direction.getXDegree());
+    private Direction findDirection(Position destination) {
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, directions);
     }
 
     @Override
     public List<Position> findPath(Position destination) {
-        validateIsPossible(destination);
+        findDirection(destination);
         return List.of();
     }
 

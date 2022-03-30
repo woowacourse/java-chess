@@ -3,11 +3,11 @@ package chess.domain.piece;
 import chess.domain.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
 public class Pawn extends Piece {
-
     public Pawn(Team team, Position position) {
         super(team, "P", position, 1);
     }
@@ -22,12 +22,35 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
-        if (isBlackTeam()) {
-            Direction direction = findDirection(Direction.blackPawnDirection(isFirstTurn()), destination);
-            return getPath(destination, direction, position.getCol(), position.getRow());
-        }
-        Direction direction = findDirection(Direction.whitePawnDirection(isFirstTurn()), destination);
+        List<Direction> directions = getDirection();
+        Direction direction = findDirection(destination, directions);
         return getPath(destination, direction, position.getCol(), position.getRow());
+    }
+
+    private List<Direction> getDirection() {
+        if (isFirstTurn() && isBlackTeam()) {
+            return Arrays.asList(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.SOUTH_TWO_STEP);
+        }
+        if (isBlackTeam()) {
+            return Arrays.asList(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST);
+        }
+        if (isFirstTurn()) {
+            return Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST, Direction.NORTH_TWO_STEP);
+        }
+        return Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST);
+    }
+
+    private boolean isFirstTurn() {
+        if (!isBlackTeam() && position.getRow() == Row.TWO) {
+            return true;
+        }
+        return isBlackTeam() && position.getRow() == Row.SEVEN;
+    }
+
+    private Direction findDirection(Position destination, List<Direction> directions) {
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, directions);
     }
 
     private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
@@ -38,25 +61,6 @@ public class Pawn extends Piece {
             positions.add(new Position(col, row));
         }
         return positions;
-    }
-
-    private boolean isFirstTurn() {
-        if (!isBlackTeam() && position.getRow() == Row.TWO) {
-            return true;
-        }
-        return isBlackTeam() && position.getRow() == Row.SEVEN;
-    }
-
-    private Direction findDirection(List<Direction> directions, Position destination) {
-        return directions.stream()
-                .filter(direction -> isCorrectDirection(destination, direction))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
-    }
-
-    private boolean isCorrectDirection(Position destination, Direction direction) {
-        return (destination.getRow().getDifference(position.getRow()) == direction.getYDegree()
-                && destination.getCol().getDifference(position.getCol()) == direction.getXDegree());
     }
 
     @Override

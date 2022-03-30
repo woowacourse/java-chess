@@ -32,6 +32,14 @@ public class Position {
         return row;
     }
 
+    public int getRowDifference(Row row) {
+        return this.row.getDifference(row);
+    }
+
+    public int getColDifference(Column col) {
+        return this.col.getDifference(col);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,34 +2,37 @@ package chess.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public enum Direction {
-    NORTH(0, 1),
-    NORTHEAST(1, 1),
-    NORTH_TWO_STEP(0, 2),
-    EAST(1, 0),
-    SOUTHEAST(1, -1),
-    SOUTH(0, -1),
-    SOUTHWEST(-1, -1),
-    SOUTH_TWO_STEP(0, -2),
-    WEST(-1, 0),
-    NORTHWEST(-1, 1),
+    NORTH(0, 1, (row, col) -> row > 0 && col == 0),
+    NORTHEAST(1, 1, (row, col) -> Math.abs(row) == Math.abs(col) && row > 0 && col > 0),
+    NORTH_TWO_STEP(0, 2, (row, col) -> row == 2 && col == 0),
+    EAST(1, 0, (row, col) -> row == 0 && col > 0),
+    SOUTHEAST(1, -1, (row, col) -> Math.abs(row) == Math.abs(col) && row < 0 && col > 0),
+    SOUTH(0, -1, (row, col) -> row < 0 && col == 0),
+    SOUTHWEST(-1, -1, (row, col) -> Math.abs(row) == Math.abs(col) && col < 0 && row < 0),
+    SOUTH_TWO_STEP(0, -2, (row, col) -> row == -2 && col == 0),
+    WEST(-1, 0, (row, col) -> row == 0 && col < 0),
+    NORTHWEST(-1, 1, (row, col) -> Math.abs(row) == Math.abs(col) && col < 0 && row > 0),
 
-    NNE(1, 2),
-    NNW(-1, 2),
-    SSE(1, -2),
-    SSW(-1, -2),
-    EEN(2, 1),
-    EES(2, -1),
-    WWN(-2, 1),
-    WWS(-2, -1);
+    NNE(1, 2, (row, col) -> row == 2 && col == 1),
+    NNW(-1, 2, (row, col) -> row == 2 && col == -1),
+    SSE(1, -2, (row, col) -> row == -2 && col == 1),
+    SSW(-1, -2, (row, col) -> row == -2 && col == -1),
+    EEN(2, 1, (row, col) -> row == 1 && col == 2),
+    EES(2, -1, (row, col) -> row == -1 && col == 2),
+    WWN(-2, 1, (row, col) -> row == 1 && col == -2),
+    WWS(-2, -1, (row, col) -> row == -1 && col == -2);
 
     private int xDegree;
     private int yDegree;
+    private final BiPredicate<Integer, Integer> predicate;
 
-    private Direction(int xDegree, int yDegree) {
+    private Direction(int xDegree, int yDegree, BiPredicate<Integer, Integer> predicate) {
         this.xDegree = xDegree;
         this.yDegree = yDegree;
+        this.predicate = predicate;
     }
 
     public int getXDegree() {
@@ -40,33 +43,19 @@ public enum Direction {
         return yDegree;
     }
 
-    public static List<Direction> linearDirection() {
-        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    public static Direction find(int rowDifference, int colDifference, List<Direction> directions) {
+        return directions.stream()
+                .filter(direction -> direction.predicate.test(rowDifference, colDifference))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
     }
 
-    public static List<Direction> diagonalDirection() {
-        return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-    }
-
-    public static List<Direction> everyDirection() {
-        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-    }
-
-    public static List<Direction> knightDirection() {
-        return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-    }
-
-    public static List<Direction> whitePawnDirection(boolean isFirstTurn) {
-        if (isFirstTurn) {
-            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST, NORTH_TWO_STEP);
-        }
-        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-    }
-
-    public static List<Direction> blackPawnDirection(boolean isFirstTurn) {
-        if (isFirstTurn) {
-            return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_TWO_STEP);
-        }
-        return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    @Override
+    public String toString() {
+        return "Direction{" +
+                "xDegree=" + xDegree +
+                ", yDegree=" + yDegree +
+                ", predicate=" + predicate +
+                '}';
     }
 }

@@ -6,22 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
+    private final List<Direction> directions = List.of(Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
 
     public Bishop(Team team, Position position) {
         super(team, "B", position, 3);
     }
 
     private Direction findDirection(Position destination) {
-        return Direction.diagonalDirection().stream()
-                .filter(direction -> isCorrectDirection(destination, direction))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
-    }
-
-    private boolean isCorrectDirection(Position destination, Direction direction) {
-        return (destination.getCol().getDifference(position.getCol()) * direction.getXDegree()
-                == (destination.getRow().getDifference(position.getRow()) * direction.getYDegree())
-                && (destination.getRow().getDifference(position.getRow()) * direction.getYDegree()) > 0);
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, directions);
     }
 
     @Override
@@ -34,7 +28,7 @@ public class Bishop extends Piece {
 
     private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
-        while(!(col == destination.getCol() && row == destination.getRow())) {
+        while (!(col == destination.getCol() && row == destination.getRow())) {
             positions.add(new Position(col, row));
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());

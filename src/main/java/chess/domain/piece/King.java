@@ -1,27 +1,27 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.Team;
 
 import java.util.List;
 
 public class King extends Piece {
+    private List<Direction> directions = List.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
 
     public King(Team team, Position position) {
         super(team, "K", position, 0);
     }
 
-    private void validateIsPossible(Position destination) {
-        if (Math.abs(position.getCol().getDifference(destination.getCol())) <= 1
-                && Math.abs(position.getRow().getDifference(destination.getRow())) <= 1) {
-            return;
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+    private Direction findDirection(Position destination) {
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, directions);
     }
 
     @Override
     public List<Position> findPath(Position destination) {
-        validateIsPossible(destination);
+        findDirection(destination);
         return List.of();
     }
 

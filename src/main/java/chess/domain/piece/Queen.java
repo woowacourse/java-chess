@@ -3,24 +3,22 @@ package chess.domain.piece;
 import chess.domain.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+
 public class Queen extends Piece {
+    List<Direction> directions = Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH,
+            Direction.WEST, Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
 
     public Queen(Team team, Position position) {
         super(team, "Q", position, 9);
     }
 
     private Direction findDirection(Position destination) {
-        for (Direction direction : Direction.everyDirection()) {
-            for (int i = 1; i <= 8; i++) {
-                if (destination.getRow().getDifference(position.getRow()) == direction.getYDegree() * i
-                        && destination.getCol().getDifference(position.getCol()) == direction.getXDegree() * i) {
-                    return direction;
-                }
-            }
-        }
-        throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, directions);
     }
 
     @Override
@@ -33,7 +31,7 @@ public class Queen extends Piece {
 
     private List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
-        while(!(col == destination.getCol() && row == destination.getRow())) {
+        while (!(col == destination.getCol() && row == destination.getRow())) {
             positions.add(new Position(col, row));
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());
