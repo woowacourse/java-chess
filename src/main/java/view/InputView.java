@@ -11,16 +11,9 @@ import java.util.Scanner;
 public class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
-    private static final String DELIMITER = " ";
-    private static final int MOVE_COMMAND_LENGTH = 3;
-    private static final int MOVE_COMMAND_INDEX = 0;
-    private static final int SOURCE_POSITION_INDEX = 1;
-    private static final int TARGET_POSITION_INDEX = 2;
     private static final int POSITION_SIZE = 2;
     private static final int FIRST_SINGLE_LETTER = 0;
     private static final int SECOND_SINGLE_LETTER = 1;
-
-    public static final String ERROR_MOVE_FORM = "[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.";
 
     public static InputCase responseUserStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -95,7 +88,7 @@ public class InputView {
         return generatePosition(source);
     }
 
-    private static void checkPositionSize(String source) {
+    private static void checkPositionSize(final String source) {
         if (source.length() != POSITION_SIZE) {
             throw new IllegalArgumentException("[ERROR] 위치 입력이 잘못 입력되었습니다.");
         }

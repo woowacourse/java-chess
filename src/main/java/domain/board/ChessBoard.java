@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public final class ChessBoard {
 
     private static final int DEFAULT_KING_COUNT = 2;
-    private static final int PAWN_DUPLICATE_CONDITION = 2;
+    private static final int PAWN_DUPLICATE_CONDITION_FOR_SCORE = 2;
     private static final Team START_TEAM = Team.WHITE;
 
     private Map<Position, Piece> board;
@@ -29,21 +29,26 @@ public final class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
-        checkNullSource(source);
+        checkSource(source);
+        checkTarget(target);
         checkCurrentTurn(source, target);
-        checkAvailableTarget(target);
         if (board.get(source).isPawn()) {
-            checkPawnMovement(source, target);
-            movePiece(source, target);
+            movePawn(source, target);
             return;
         }
-        checkGoThroughPosition(source, target);
+        checkRoute(source, target);
         movePiece(source, target);
     }
 
-    private void checkNullSource(final Position source) {
+    private void checkSource(final Position source) {
         if (board.get(source) == null) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private void checkTarget(final Position target) {
+        if (!(board.get(target) == null || !board.get(target).checkSameTeam(currentTurn))) {
+            throw new IllegalArgumentException("[ERROR] 자신의 기물이 위치한 곳으로 이동할 수 없습니다.");
         }
     }
 
@@ -53,30 +58,17 @@ public final class ChessBoard {
         }
     }
 
-    private void checkAvailableTarget(final Position target) {
-        if (!(board.get(target) == null || !board.get(target).checkSameTeam(currentTurn))) {
-            throw new IllegalArgumentException("[ERROR] 자신의 기물이 위치한 곳으로 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkGoThroughPosition(final Position source, final Position target) {
-        Piece piece = board.get(source);
-        checkUnavailableMove(source, target, piece);
-        checkRoutePositionsNull(target, piece);
-    }
-
-    private void checkUnavailableMove(final Position source, final Position target, final Piece piece) {
-        if (!piece.availableMove(source, target)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
-        }
+    private void movePawn(final Position source, final Position target) {
+        checkPawnMovement(source, target);
+        movePiece(source, target);
     }
 
     private void checkPawnMovement(final Position source, final Position target) {
         Piece piece = board.get(source);
-        if (!piece.availableMove(source, target)){
+        if (!piece.availableMove(source, target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
         }
-        if (checkMovePawn(piece, target)){
+        if (checkMovePawn(piece, target)) {
             checkBoardPositionIsNull(target);
             checkRouteNullForPawn(source, target);
             return;
@@ -84,7 +76,7 @@ public final class ChessBoard {
         checkPawnAttack(target);
     }
 
-    private boolean checkMovePawn(Piece piece, Position target) {
+    private boolean checkMovePawn(final Piece piece, final Position target) {
         return Direction.oneAndTwoSouthNorthDirections().stream()
                 .anyMatch(direction -> direction == piece.getDirection(target));
     }
@@ -96,22 +88,28 @@ public final class ChessBoard {
     }
 
     private void checkRouteNullForPawn(final Position source, final Position target) {
-        List<Position> forwardPositions = new ArrayList<>();
-        forwardPositions.add(target);
-        Direction direction = board.get(source).getDirection(target);
-        Position wayPoint = Position.of(
-                XPosition.of(source.getXPosition() + (int) (direction.getXPosition()/2)),
-                YPosition.of(source.getYPosition() + (int) (direction.getYPosition()/2))
-        );
-        if (!wayPoint.equals(source) && !wayPoint.equals(target)){
-            forwardPositions.add(wayPoint);
-        }
-        boolean checkExistNotNullInPositions = forwardPositions.stream()
+        final Direction direction = board.get(source).getDirection(target);
+        final List<Position> routePositions = calculateRoutePositionForPawn(source, target, direction);
+        boolean checkExistNotNullInPositions = routePositions.stream()
                 .anyMatch(position -> board.get(position) != null);
 
         if (checkExistNotNullInPositions) {
             throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 선택한 위치로 이동할 수 없습니다.");
         }
+    }
+
+    private List<Position> calculateRoutePositionForPawn(final Position source, final Position target,
+                                                         final Direction direction) {
+        List<Position> routePositions = new ArrayList<>();
+        routePositions.add(target);
+        final Position wayPoint = Position.of(
+                XPosition.of(source.getXPosition() + direction.getXPosition() / 2),
+                YPosition.of(source.getYPosition() + direction.getYPosition() / 2)
+        );
+        if (!wayPoint.equals(source) && !wayPoint.equals(target)) {
+            routePositions.add(wayPoint);
+        }
+        return routePositions;
     }
 
     private void checkPawnAttack(final Position target) {
@@ -120,8 +118,20 @@ public final class ChessBoard {
         }
     }
 
+    private void checkRoute(final Position source, final Position target) {
+        final Piece piece = board.get(source);
+        checkUnavailableMove(source, target, piece);
+        checkRoutePositionsNull(target, piece);
+    }
+
+    private void checkUnavailableMove(final Position source, final Position target, final Piece piece) {
+        if (!piece.availableMove(source, target)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
+        }
+    }
+
     private void checkRoutePositionsNull(final Position target, final Piece piece) {
-        List<Position> routePositions = calculateRoutePositions(target, piece);
+        final List<Position> routePositions = calculateRoutePositions(target, piece);
         for (Position position : routePositions) {
             checkWayPointNull(position);
         }
@@ -185,12 +195,12 @@ public final class ChessBoard {
     private boolean checkDuplicatePawn(List<Piece> pieces) {
         return pieces.stream()
                 .filter(piece -> piece.symbol().equals(PieceFeature.PAWN.symbol()))
-                .count() >= PAWN_DUPLICATE_CONDITION;
+                .count() >= PAWN_DUPLICATE_CONDITION_FOR_SCORE;
     }
 
     public Result calculateWinner() {
-        double currentTeamScore = calculateTeamScore(currentTurn);
-        double opponentTeamScore = calculateTeamScore(getOpponentTeam());
+        final double currentTeamScore = calculateTeamScore(currentTurn);
+        final double opponentTeamScore = calculateTeamScore(getOpponentTeam());
 
         return competeScore(currentTeamScore, opponentTeamScore);
     }

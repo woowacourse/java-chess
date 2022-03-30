@@ -52,20 +52,8 @@ public enum Direction {
         return List.of(NORTH, NORTHEAST, NORTHWEST, NORTH_NORTH);
     }
 
-    public static List<Direction> whitePawnDirectionsNonStart() {
-        return List.of(NORTH, NORTHEAST, NORTHWEST);
-    }
-
     public static List<Direction> blackPawnDirections() {
         return List.of(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_SOUTH);
-    }
-
-    public static List<Direction> southNorthDirections() {
-        return List.of(SOUTH, NORTH);
-    }
-
-    public static List<Direction> twoSouthNorthDirections() {
-        return List.of(SOUTH_SOUTH, NORTH_NORTH);
     }
 
     public static List<Direction> oneAndTwoSouthNorthDirections() {

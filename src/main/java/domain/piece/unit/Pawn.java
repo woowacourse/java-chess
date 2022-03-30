@@ -53,31 +53,6 @@ public final class Pawn extends SpecificMovablePiece {
         return checkBlackTeam || checkWhiteTeam;
     }
 
-    public boolean checkUpDownDirection(final Position source, final Position target) {
-        return getDirections().stream()
-                .filter(direction -> direction == Direction.SOUTH || direction == Direction.NORTH)
-                .map(direction -> directionalPositions.get(direction))
-                .anyMatch(positions -> positions.contains(target)) || checkFirstDistance(source, target);
-    }
-
-    public boolean checkMoveOneSpace(final Position position) {
-        return getDirections().stream()
-                .map(direction -> directionalPositions.get(direction))
-                .anyMatch(positions -> positions.contains(position));
-    }
-
-    public List<Position> calculateForwardRouteByPawn(final Position position) {
-        List<Position> forwardPositions = new ArrayList<>();
-        final Direction direction = getDirections().stream()
-                .filter(direct -> direct == Direction.SOUTH || direct == Direction.NORTH)
-                .findFirst()
-                .orElse(null);
-        forwardPositions.addAll(directionalPositions.get(direction));
-        forwardPositions.add(position);
-
-        return forwardPositions;
-    }
-
     @Override
     public List<Direction> getDirections() {
         return directions;

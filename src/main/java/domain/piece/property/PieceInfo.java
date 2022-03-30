@@ -2,8 +2,8 @@ package domain.piece.property;
 
 public final class PieceInfo {
 
-    private Team team;
-    private PieceFeature pieceFeature;
+    private final Team team;
+    private final PieceFeature pieceFeature;
 
     public PieceInfo(final Team team, final PieceFeature pieceFeature) {
         this.team = team;
