@@ -12,4 +12,8 @@ public enum Color {
     public static List<Color> getPlayerColors() {
         return List.of(WHITE, BLACK);
     }
+
+    public boolean isBlack() {
+        return this.equals(BLACK);
+    }
 }

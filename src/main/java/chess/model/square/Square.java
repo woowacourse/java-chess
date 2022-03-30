@@ -1,6 +1,7 @@
 package chess.model.square;
 
 import chess.Direction;
+import chess.model.piece.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,5 +69,12 @@ public class Square {
 
     private boolean isValidLocation(List<Integer> coordinates) {
         return file.availableLocation(coordinates.get(0)) && rank.availableLocation(coordinates.get(1));
+    }
+
+    public boolean isPawnOnFirstLine(Color color) {
+        if (color.isBlack()) {
+            return rank.equals(Rank.SEVEN);
+        }
+        return rank.equals(Rank.TWO);
     }
 }

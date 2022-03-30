@@ -16,10 +16,22 @@ import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.Board;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class KnightTest {
 
+    private Board board;
+
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
+    }
+    
     @Test
     void createKnight() {
         Knight knight = new Knight(Color.BLACK);
@@ -53,10 +65,11 @@ public class KnightTest {
                 () -> assertThat(knight.movable(D4, F6)).isFalse());
     }
 
-//    @Test
-//    void cannotMovableToSameColor() {
-//        Knight knight = new Knight(Color.BLACK);
-//        Piece linearBlackPiece = new Knight(Color.BLACK);
-//        assertThat(knight.movable(linearBlackPiece)).isFalse();
-//    }
+    @Test
+    void cannotMovableToSameColor() {
+        Knight knight = new Knight(Color.BLACK);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square target = Square.of(File.D, Rank.SEVEN);
+        assertThat(knight.isObstacleOnRoute(board, source, target)).isFalse();
+    }
 }

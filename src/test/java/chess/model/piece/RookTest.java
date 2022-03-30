@@ -12,10 +12,22 @@ import static chess.model.piece.Fixtures.H4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.Board;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class RookTest {
 
+    private Board board;
+
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
+    }
+    
     @Test
     void createRook() {
         Rook rook = new Rook(Color.BLACK);
@@ -41,10 +53,20 @@ public class RookTest {
                 () -> assertThat(rook.movable(D4, F6)).isFalse(),
                 () -> assertThat(rook.movable(D4, F2)).isFalse());
     }
-//    @Test
-//    void cannotMovableToSameColor() {
-//        Rook rook = new Rook(Color.BLACK);
-//        Piece allyPawn = new Pawn(Color.BLACK);
-//        assertThat(rook.movable(allyPawn)).isFalse();
-//    }
+
+    @Test
+    void cannotMovableToSameColor() {
+        Rook rook = new Rook(Color.BLACK);
+        Square source = Square.of(File.A, Rank.EIGHT);
+        Square target = Square.of(File.A, Rank.SEVEN);
+        assertThat(rook.isObstacleOnRoute(board, source, target)).isFalse();
+    }
+
+    @Test
+    void cannotMovableAboveObstacle() {
+        Rook rook = new Rook(Color.BLACK);
+        Square source = Square.of(File.A, Rank.EIGHT);
+        Square target = Square.of(File.A, Rank.SIX);
+        assertThat(rook.isObstacleOnRoute(board, source, target)).isFalse();
+    }
 }

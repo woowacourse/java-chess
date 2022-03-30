@@ -42,4 +42,5 @@ public class Fixtures {
     public static final Square D3 = Square.of(File.D, Rank.THREE);
 
     public static final Square A7 = Square.of(File.A, Rank.SEVEN);
+    public static final Square E1 = Square.of(File.E, Rank.ONE);
 }

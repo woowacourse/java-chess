@@ -20,11 +20,22 @@ import static chess.model.piece.Fixtures.H4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.Board;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class QueenTest {
 
+    private Board board;
 
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
+    }
+    
     @Test
     void movable() {
         Queen queen = new Queen(Color.BLACK);
@@ -52,11 +63,21 @@ public class QueenTest {
                 () -> assertThat(queen.movable(D4, B5)).isFalse(),
                 () -> assertThat(queen.movable(D4, C6)).isFalse());
     }
+
+
+    @Test
+    void cannotMovableToSameColor() {
+        Queen queen = new Queen(Color.BLACK);
+        Square source = Square.of(File.D, Rank.EIGHT);
+        Square target = Square.of(File.D, Rank.SEVEN);
+        assertThat(queen.isObstacleOnRoute(board, source, target)).isFalse();
+    }
+
+    @Test
+    void cannotMovableAboveObstacle() {
+        Queen queen = new Queen(Color.BLACK);
+        Square source = Square.of(File.D, Rank.EIGHT);
+        Square target = Square.of(File.D, Rank.SIX);
+        assertThat(queen.isObstacleOnRoute(board, source, target)).isFalse();
+    }
 }
-//    @Test
-//    void cannotMovableToSameColor() {
-//        Queen queen = new Queen(Color.BLACK);
-//        Piece linearBlackPiece = new Knight(Color.BLACK);
-//        assertThat(queen.movable(linearBlackPiece)).isFalse();
-//    }
-//}

@@ -9,9 +9,21 @@ import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.Board;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BishopTest {
+
+    private Board board;
+
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
+    }
 
     @Test
     void createBishop() {
@@ -34,11 +46,20 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         assertThat(bishop.movable(D4, D5)).isFalse();
     }
-//
-//    @Test
-//    void cannotMovableToSameColor() {
-//        Bishop bishop = new Bishop(Color.BLACK);
-//        Piece blackPiece = new Knight(Color.BLACK);
-//        assertThat(bishop.movable(blackPiece)).isFalse();
-//    }
+
+    @Test
+    void cannotMovableToSameColor() {
+        Bishop bishop = new Bishop(Color.BLACK);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square target = Square.of(File.A, Rank.SEVEN);
+        assertThat(bishop.isObstacleOnRoute(board, source, target)).isFalse();
+    }
+
+    @Test
+    void cannotMovableAboveObstacle() {
+        Bishop bishop = new Bishop(Color.BLACK);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square target = Square.of(File.D, Rank.SIX);
+        assertThat(bishop.isObstacleOnRoute(board, source, target)).isFalse();
+    }
 }

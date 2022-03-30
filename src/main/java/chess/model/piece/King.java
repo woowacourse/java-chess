@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.Board;
 import chess.Direction;
 import chess.model.square.Square;
 import java.util.List;
@@ -22,6 +23,12 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
+        Piece targetPiece = board.get(target);
+        return isNotAlly(targetPiece);
+    }
+
+    @Override
     List<Direction> getDirection() {
         return List.of(
                 Direction.EAST,
@@ -33,5 +40,10 @@ public class King extends Piece {
                 Direction.SOUTH_EAST,
                 Direction.SOUTH_WEST
         );
+    }
+
+    @Override
+    boolean isNotEmpty() {
+        return true;
     }
 }
