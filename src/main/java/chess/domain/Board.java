@@ -8,12 +8,12 @@ import java.util.*;
 public final class Board {
 
     private static final double PAWN_PENALTY_SCORE = 0.5;
-    public static final String ERROR_PIECE_NOT_EXIST = "해당 위치에 말이 존재하지 않습니다.";
-    public static final String ERROR_CANNOT_CATCH_SAME_COLOR = "목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.";
-    public static final String ERROR_CANNOT_GO_THROUGH = "이동경로에 다른 기물이 있으면 움직일 수 없습니다.";
-    public static final String ERROR_PAWN_GO_DIAGONAL_WHEN_CATCH_OTHER = "폰은 상대 기물을 잡을 때만 대각선으로 이동 가능합니다.";
-    public static final String ERROR_PAWN_CANNOT_GO_THROUGH_OTHER = "폰은 직진할 때 상대 기물을 지나치거나 집을 수 없습니다.";
-    public static final String ERROR_SOURCE_AND_TARGET_SAME = "출발지와 목적지가 동일합니다.";
+    private static final String ERROR_PIECE_NOT_EXIST = "해당 위치에 말이 존재하지 않습니다.";
+    private static final String ERROR_CANNOT_CATCH_SAME_COLOR = "목적지에 같은 색의 기물이 있으면 움직일 수 없습니다.";
+    private static final String ERROR_CANNOT_GO_THROUGH = "이동경로에 다른 기물이 있으면 움직일 수 없습니다.";
+    private static final String ERROR_PAWN_GO_DIAGONAL_WHEN_CATCH_OTHER = "폰은 상대 기물을 잡을 때만 대각선으로 이동 가능합니다.";
+    private static final String ERROR_PAWN_CANNOT_GO_THROUGH_OTHER = "폰은 직진할 때 상대 기물을 지나치거나 집을 수 없습니다.";
+    private static final String ERROR_SOURCE_AND_TARGET_SAME = "출발지와 목적지가 동일합니다.";
 
     private final Pieces pieces;
     private Color turn = Color.WHITE;
