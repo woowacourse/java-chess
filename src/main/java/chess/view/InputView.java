@@ -1,9 +1,8 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
-
-import chess.domain.command.Command;
-import chess.view.converter.CommandConverter;
 
 public class InputView {
 
@@ -11,10 +10,10 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Command askCommand() {
+    public List<String> askCommand() {
         String input = scanner.nextLine();
         validateInput(input);
-        return CommandConverter.from(input);
+        return Arrays.asList(input.split(" "));
     }
 
     private void validateInput(String input) {

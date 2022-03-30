@@ -10,6 +10,9 @@ public class Position {
     public static final int MAX = 8;
 
     private static final String INVALID_RANGE_ERROR = "행과 열은 각각 1이상 8이하의 수여야 합니다.";
+    private static final String INVALID_STRING_ERROR = "행은 a-h, 열은 1-8이어야 합니다.";
+    private static final String ROW_CACHE = "abcdefgh";
+    private static final String COLUMN_CACHE = "12345678";
 
     private final int row;
     private final int column;
@@ -20,9 +23,23 @@ public class Position {
         this.column = column;
     }
 
+    public Position(String fileAndRank) {
+        String row = String.valueOf(fileAndRank.charAt(0));
+        String column = String.valueOf(fileAndRank.charAt(1));
+        validatePosition(row, column);
+        this.row = ROW_CACHE.indexOf(row) + 1;
+        this.column = COLUMN_CACHE.indexOf(column) + 1;
+    }
+
     private void validatePosition(int row, int column) {
         if (row < MIN || row > MAX || column < MIN || column > MAX) {
             throw new IllegalArgumentException(INVALID_RANGE_ERROR);
+        }
+    }
+
+    private void validatePosition(String row, String column) {
+        if (!ROW_CACHE.contains(row) || !COLUMN_CACHE.contains(column)) {
+            throw new IllegalArgumentException(INVALID_STRING_ERROR);
         }
     }
 

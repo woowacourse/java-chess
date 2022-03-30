@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.command.CommandConverter;
 import java.util.NoSuchElementException;
 
 import chess.domain.ChessScore;
@@ -24,7 +25,7 @@ public class ChessController {
     private State processOneTurn(State state) {
         try {
             checkTurn(state);
-            Command command = inputView.askCommand();
+            Command command = CommandConverter.convertCommand(inputView.askCommand());
             state = state.proceed(command);
             outputView.displayChessBoard(state.getBoard());
             checkScore(state, command);
