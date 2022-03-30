@@ -65,10 +65,10 @@ public class Board {
         }
     }
 
-    public Piece movePiece(final Position source, final Position target) {
+    public void movePiece(final Position source, final Position target, final CatchPieces catchPieces) {
         Piece targetPiece = board.replace(target, getPiece(source));
         board.replace(source, new Blank());
-        return targetPiece;
+        catchPieces.addPiece(targetPiece);
     }
 
     public Color getColorOfPiece(final Position position) {

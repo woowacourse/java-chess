@@ -3,6 +3,7 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ public class KnightMoveStrategyTest {
 
     Board board;
     KnightMoveStrategy knightMoveStrategy;
+    CatchPieces catchPieces = new CatchPieces();
 
     @BeforeEach
     void setUp() {
@@ -40,7 +42,7 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("Target 에 우리편 기물이 있을 때 false")
     void isMovableWhenTargetColorSame() {
-        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"));
+        board.movePiece(Position.valueOf("b7"), Position.valueOf("c6"), catchPieces);
 
         Position source = Position.valueOf("b8");
         Position target = Position.valueOf("c6");

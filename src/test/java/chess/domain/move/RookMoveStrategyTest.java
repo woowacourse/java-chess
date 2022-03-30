@@ -3,6 +3,7 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ public class RookMoveStrategyTest {
 
     Board board;
     RookMoveStrategy rookMoveStrategy;
+    CatchPieces catchPieces = new CatchPieces();
 
     @BeforeEach
     void setUp() {
@@ -22,7 +24,7 @@ public class RookMoveStrategyTest {
     @Test
     @DisplayName("룩이 수직 이동할 수 있다.")
     void isMovableVertical() {
-        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"));
+        board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
 
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("a4");
@@ -33,7 +35,7 @@ public class RookMoveStrategyTest {
     @Test
     @DisplayName("룩이 수평 이동할 수 있다.")
     void isMovableHorizon() {
-        board.movePiece(Position.valueOf("b8"), Position.valueOf("b6"));
+        board.movePiece(Position.valueOf("b8"), Position.valueOf("b6"), catchPieces);
 
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("b8");

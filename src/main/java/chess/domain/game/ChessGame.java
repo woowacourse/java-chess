@@ -1,35 +1,41 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class ChessGame {
 
     private final Board board;
+    private final CatchPieces catchPieces;
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
     public ChessGame(final Board board) {
         this.board = board;
+        this.catchPieces = new CatchPieces();
         this.gameSwitch = new GameSwitch();
         this.turn = new Turn();
     }
 
     public void move(final String rawSource, final String rawTarget) {
-        final Piece targetPiece = movePiece(Position.valueOf(rawSource), Position.valueOf(rawTarget));
-        turnOffWhenKingDie(targetPiece);
+        Position source = Position.valueOf(rawSource);
+        Position target = Position.valueOf(rawTarget);
+        movePiece(source, target);
         turn.nextTurn();
     }
 
-    private Piece movePiece(final Position source, final Position target) {
+    private void movePiece(final Position source, final Position target) {
         Piece sourcePiece = board.getPiece(source);
         validateTurn(turn, sourcePiece);
         MoveStrategy moveStrategy = sourcePiece.getMoveStrategy();
         validateMove(source, target, moveStrategy);
-        return board.movePiece(source, target);
+        board.movePiece(source, target, catchPieces);
+        turnOffWhenKingDie(sourcePiece.getColor());
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {
@@ -44,8 +50,8 @@ public class ChessGame {
         }
     }
 
-    private void turnOffWhenKingDie(final Piece targetPiece) {
-        if (targetPiece.isKing()) {
+    private void turnOffWhenKingDie(final Color color) {
+        if (catchPieces.isKingCatch(color)) {
             gameSwitch.turnOff();
         }
     }
