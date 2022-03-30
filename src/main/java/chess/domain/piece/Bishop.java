@@ -14,7 +14,7 @@ public class Bishop extends Piece {
         super(color);
     }
 
-    public static boolean isBishopMoving(final Position from, final Position to) {
+    private static boolean isBishopMoving(final Position from, final Position to) {
         return Direction.isDiagonal(from, to);
     }
 
