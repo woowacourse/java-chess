@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -36,6 +35,22 @@ public class QueenTest {
         assertThatThrownBy(() -> queen.checkMovingRange(emptyBoard, Position.from("e5"), Position.from("f7")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("퀸은 상하좌우 대각선 방향으로만 이동할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("폰인지 확인")
+    void isPawn() {
+        Piece queen = new Queen(Color.WHITE);
+
+        assertThat(queen.isPawn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("나이트인지 확인")
+    void isKnight() {
+        Piece queen = new Queen(Color.WHITE);
+
+        assertThat(queen.isKnight()).isFalse();
     }
 
     @Test

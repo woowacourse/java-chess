@@ -14,7 +14,7 @@ public class Queen extends Piece {
         super(color);
     }
 
-    public static boolean isQueenMoving(final Position from, final Position to) {
+    private static boolean isQueenMoving(final Position from, final Position to) {
         return Direction.isVertical(from, to) || Direction.isHorizontal(from, to) || Direction.isDiagonal(from, to);
     }
 
