@@ -9,6 +9,9 @@ import java.util.List;
 
 public class Move implements Command {
 
+    private static final int MOVE_COMMAND_FORM_COUNT = 3;
+    private static final int MOVE_COMMAND_OPTION_COUNT = 2;
+
     private final Position source;
     private final Position target;
 
@@ -20,12 +23,15 @@ public class Move implements Command {
     }
 
     private void checkOptionsForm(final List<String> options) {
-        if (options.size() != 3) {
+        if (options.size() != MOVE_COMMAND_FORM_COUNT) {
             throw new IllegalArgumentException("[ERROR] `move b2 b3` 양식에 맞게 입력 해주세요.");
         }
     }
 
     private Position createPosition(final String option) {
+        if (option.length() != MOVE_COMMAND_OPTION_COUNT) {
+            throw new IllegalArgumentException("[ERROR] `move b2 b3` 양식에 맞게 입력 해주세요.");
+        }
         return Position.from(option);
     }
 

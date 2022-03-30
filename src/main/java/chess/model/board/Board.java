@@ -40,6 +40,7 @@ public class Board {
     public Board move(final Position source, final Position target) {
         checkMovablePiece(source, target);
         checkSameWithCurrentTeam(source);
+        checkPawnCanMove(source, target);
         checkPieceCanMove(source, target);
         movePiece(source, target);
         return new Board(board, currentTeam);
@@ -67,6 +68,12 @@ public class Board {
             nowPosition = nowPosition.createPositionTo(route);
         }
         if (!target.equals(nowPosition)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
+        }
+    }
+
+    private void checkPawnCanMove(final Position source, final Position target) {
+        if (board.get(source).isPawn() && !board.get(source).canMove(source, target, board)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
         }
     }

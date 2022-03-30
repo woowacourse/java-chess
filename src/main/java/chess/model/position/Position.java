@@ -33,8 +33,12 @@ public class Position {
         return route.createPositionFrom(rank, file);
     }
 
-    public boolean isNotInitialPawnPosition() {
-        return !rank.equals(Rank.TWO) && !rank.equals(Rank.SEVEN);
+    public boolean isTwoRank() {
+        return rank.equals(Rank.TWO);
+    }
+
+    public boolean isSevenRank() {
+        return rank.equals(Rank.SEVEN);
     }
 
     @Override

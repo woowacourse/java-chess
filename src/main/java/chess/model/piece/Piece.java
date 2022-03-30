@@ -5,6 +5,7 @@ import static chess.model.Team.NONE;
 import chess.model.Team;
 import chess.model.direction.route.Route;
 import chess.model.position.Position;
+import java.util.Map;
 
 public abstract class Piece {
 
@@ -36,7 +37,15 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public abstract double addTo(double score);
 
     public abstract Route findRoute(final Position source, final Position target);
+
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+        return false;
+    }
 }

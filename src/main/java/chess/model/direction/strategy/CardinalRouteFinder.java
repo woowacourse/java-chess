@@ -15,6 +15,6 @@ public class CardinalRouteFinder implements RouteStrategy {
                 .filter(direction -> direction.findRouteFrom(rankDifference, fileDifference))
                 .map(CardinalDirection::getRoute)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 현재 기물을 이동 할 수 없는 위치가 입력됬습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다."));
     }
 }

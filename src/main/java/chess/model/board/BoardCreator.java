@@ -17,13 +17,14 @@ import static chess.model.position.Rank.SEVEN;
 import static chess.model.position.Rank.TWO;
 
 import chess.model.piece.Bishop;
+import chess.model.piece.BlackPawn;
 import chess.model.piece.Blank;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
-import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
+import chess.model.piece.WhitePawn;
 import chess.model.position.File;
 import chess.model.position.Position;
 import chess.model.position.Rank;
@@ -62,7 +63,7 @@ public class BoardCreator {
         board.put(Position.of(EIGHT, G), new Knight(BLACK, "N"));
         board.put(Position.of(EIGHT, H), new Rook(BLACK, "R"));
         for (File file : File.values()) {
-            board.put(Position.of(SEVEN, file), new Pawn(BLACK, "P"));
+            board.put(Position.of(SEVEN, file), new BlackPawn(BLACK, "P"));
         }
     }
 
@@ -76,7 +77,7 @@ public class BoardCreator {
         board.put(Position.of(ONE, G), new Knight(WHITE, "n"));
         board.put(Position.of(ONE, H), new Rook(WHITE, "r"));
         for (File file : File.values()) {
-            board.put(Position.of(TWO, file), new Pawn(WHITE, "p"));
+            board.put(Position.of(TWO, file), new WhitePawn(WHITE, "p"));
         }
     }
 }
