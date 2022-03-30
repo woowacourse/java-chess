@@ -44,10 +44,6 @@ public abstract class ChessPiece {
         return routes;
     }
 
-    public final boolean isSameColor(final ChessPiece chessPiece) {
-        return color.equals(chessPiece.color);
-    }
-
     public final boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
