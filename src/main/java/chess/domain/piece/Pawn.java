@@ -17,7 +17,7 @@ public class Pawn extends Piece {
     @Override
     public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
         if (!currentPosition.isMoveForward(destinationPosition, team)) {
-            throw new IllegalArgumentException("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("이동 방향이 앞이 아닙니다.");
         }
         if (position.isFirstTurnOfPawn()) {
             return moveFirstTurn(currentPosition, destinationPosition);
@@ -54,9 +54,11 @@ public class Pawn extends Piece {
     public Position capture(final Position currentPosition, final Position destinationPosition, final Team team) {
         final boolean isMoveForwardDiagonal = currentPosition.isMoveDiagonalForward(destinationPosition, team);
         final int moveDistance = currentPosition.calculateDistance(destinationPosition);
-
-        if (!isMoveForwardDiagonal || moveDistance != DIAGONAL_MOVE_DISTANCE) {
-            throw new IllegalArgumentException("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
+        if (!isMoveForwardDiagonal) {
+            throw new IllegalArgumentException("이동 방향이 대각선이 아닙니다.");
+        }
+        if (moveDistance != DIAGONAL_MOVE_DISTANCE) {
+            throw new IllegalArgumentException("대각선으로 이동하는 거리가 1칸이 아닙니다.");
         }
         return position = destinationPosition;
     }

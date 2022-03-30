@@ -26,7 +26,7 @@ class PawnTest {
 
         assertThatThrownBy(() -> pawn.move(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 캡쳐할 수 있는 상대말이 없는 경우, 앞으로만 이동할 수 있습니다.");
+                .hasMessage("이동 방향이 앞이 아닙니다.");
     }
 
     @Test
@@ -68,14 +68,24 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("대각선 이동으로 1칸이 주어지지 않은 경우, 예외를 발생시킨다.")
+    @DisplayName("상대말을 잡을 때 대각선 이동이 아닐 경우, 예외를 발생시킨다.")
     void moveDiagonalException() {
+        final Position nextPosition = new Position(2, 'e');
+
+        assertThatThrownBy(() -> pawn.capture(currentPosition, nextPosition, Team.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 방향이 대각선이 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("상대말을 잡을 때 대각선 이동 거리가 1칸이 아닌 경우, 예외를 발생시킨다.")
+    void moveDiagonalDistanceException() {
         final int currentRank = 2;
         final Position nextPosition = new Position(currentRank + 2, 'e');
 
         assertThatThrownBy(() -> pawn.capture(currentPosition, nextPosition, Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 상대 말이 존재할 경우만 대각선으로 1칸만 이동할 수 있습니다.");
+                .hasMessage("대각선으로 이동하는 거리가 1칸이 아닙니다.");
     }
 
     @Test
