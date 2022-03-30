@@ -159,6 +159,22 @@ public class PawnTest {
     }
 
     @Test
+    @DisplayName("폰인지 확인")
+    void isPawn() {
+        Piece pawn = new Pawn(Color.WHITE);
+
+        assertThat(pawn.isPawn()).isTrue();
+    }
+
+    @Test
+    @DisplayName("나이트인지 확인")
+    void isKnight() {
+        Piece pawn = new Pawn(Color.WHITE);
+
+        assertThat(pawn.isKnight()).isFalse();
+    }
+
+    @Test
     @DisplayName("킹인지 확인")
     void isKing() {
         Piece pawn = new Pawn(Color.WHITE);
