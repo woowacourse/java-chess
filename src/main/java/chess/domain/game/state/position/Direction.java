@@ -80,11 +80,11 @@ public enum Direction {
         return directions;
     }
 
-    public int file() {
+    public int getFile() {
         return file;
     }
 
-    public int rank() {
+    public int getRank() {
         return rank;
     }
 }
