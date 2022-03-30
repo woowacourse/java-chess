@@ -8,6 +8,7 @@ import java.util.List;
 
 public final class Rook extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE = "룩이 이동할 수 없는 위치입니다.";
+    private static final double SCORE = 5;
 
     public Rook(Team team) {
         super(new Name("R"), team);
@@ -27,5 +28,10 @@ public final class Rook extends AbstractPiece {
         }
 
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

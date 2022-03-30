@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.attribute.Score;
 import chess.domain.piece.attribute.Team;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -84,7 +83,7 @@ public final class Board {
     }
 
     private static double scoreOfPiece(Entry<Position, Piece> entry) {
-        return Score.valueOf(entry.getValue()).getValue();
+        return entry.getValue().getScore();
     }
 
     private double getPawnMinusScore(Team team) {

@@ -11,6 +11,7 @@ public final class Pawn extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE = "폰이 이동할 수 없는 위치입니다.";
     private static final String NO_MOVE_MESSAGE_DIAGONAL = "대각선 방향에 상대 기물이 없으면 이동할 수 없습니다.";
     private static final int INIT_MAX_DISTANCE = 2;
+    private static final double SCORE = 1;
 
     public Pawn(Team team) {
         super(new Name("P"), team);
@@ -58,5 +59,10 @@ public final class Pawn extends AbstractPiece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

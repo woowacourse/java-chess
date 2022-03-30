@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.game.Status;
 import chess.domain.piece.attribute.Team;
 import chess.dto.BoardDto;
 import java.util.Map;

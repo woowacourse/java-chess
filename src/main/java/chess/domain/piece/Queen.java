@@ -8,6 +8,7 @@ import java.util.List;
 
 public final class Queen extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE = "퀸이 이동할 수 없는 위치입니다.";
+    private static final double SCORE = 9;
 
     public Queen(Team team) {
         super(new Name("Q"), team);
@@ -22,5 +23,10 @@ public final class Queen extends AbstractPiece {
         }
 
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

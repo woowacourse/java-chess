@@ -9,6 +9,7 @@ import java.util.List;
 
 public final class Knight extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE = "나이트가 이동할 수 없는 위치입니다.";
+    private static final double SCORE = 2.5;
 
     public Knight(Team team) {
         super(new Name("N"), team);
@@ -36,4 +37,8 @@ public final class Knight extends AbstractPiece {
         return new ArrayList<>();
     }
 
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
 }

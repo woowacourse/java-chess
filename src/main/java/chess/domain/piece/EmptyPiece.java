@@ -7,6 +7,7 @@ import chess.domain.piece.attribute.Team;
 public final class EmptyPiece extends AbstractPiece {
 
     private static final String NO_MOVE_MESSAGE = "해당 칸에는 움직일 기물이 없습니다.";
+    private static final double SCORE = 0;
 
     public EmptyPiece() {
         super(new Name("."), Team.NONE);
@@ -20,5 +21,10 @@ public final class EmptyPiece extends AbstractPiece {
     @Override
     public boolean isPiece() {
         return false;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
