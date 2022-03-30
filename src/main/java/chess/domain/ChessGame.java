@@ -47,11 +47,7 @@ public final class ChessGame {
         return turn == Color.NONE;
     }
 
-    public Status saveStatus() {
-        return new Status(board);
-    }
-
     public Board getBoard() {
-        return board;
+        return new Board(board.getBoard());
     }
 }

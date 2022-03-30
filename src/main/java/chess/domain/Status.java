@@ -22,12 +22,10 @@ public final class Status {
     }
 
     private double getSum(List<Map.Entry<Square, Piece>> survives) {
-        double sum = 0;
-        for (Map.Entry<Square, Piece> survive : survives) {
-            Piece piece = survive.getValue();
-            sum = piece.addScore(sum);
-        }
-        return sum;
+        return survives.stream()
+                .map(Map.Entry::getValue)
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 
     private double adjustmentSum(double sum, List<Map.Entry<Square, Piece>> survives) {
