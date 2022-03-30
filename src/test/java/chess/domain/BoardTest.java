@@ -4,6 +4,7 @@ import chess.domain.game.Board;
 import chess.domain.game.BoardInitializer;
 import chess.domain.pieces.*;
 import chess.domain.position.Position;
+import chess.machine.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -334,5 +335,4 @@ class BoardTest {
 
         assertThat(board.calculateScore(WHITE)).isEqualTo(2);
     }
-
 }

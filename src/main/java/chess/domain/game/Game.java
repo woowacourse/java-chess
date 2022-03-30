@@ -58,6 +58,6 @@ public final class Game {
     }
 
     public Map<Result, Color> whoIsWin() {
-        return board.whoIsWin();
+        return board.calculateWinner();
     }
 }

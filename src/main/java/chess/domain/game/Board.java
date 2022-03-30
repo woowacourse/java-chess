@@ -17,8 +17,8 @@ public final class Board {
 
     private final Map<Position, Piece> pieces;
 
-    public Board(final Initializer initiator) {
-        pieces = initiator.initialize();
+    public Board(final Initializer initializer) {
+        pieces = initializer.initialize();
     }
 
     public Optional<Piece> piece(final Position position) {
@@ -134,13 +134,13 @@ public final class Board {
                 .count();
     }
 
-    public Map<Result, Color> whoIsWin() {
+    public Map<Result, Color> calculateWinner() {
         Map<Result, Color> gameResult = new HashMap<>();
         if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
             gameResult.put(Result.WIN, Color.WHITE);
         }
         if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.WHITE);
+            gameResult.put(Result.WIN, Color.BLACK);
         }
         return gameResult;
     }
