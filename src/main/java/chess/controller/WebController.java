@@ -26,13 +26,14 @@ public class WebController {
 
     public void run() {
         gameRepository.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard()))));
-        ChessGame chessGame = gameRepository.findById(1L).get();
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        get("/play", (req, res) -> {
+        get("/play/:gameId", (req, res) -> {
+            Long gameId = Long.valueOf(req.params("gameId"));
+            ChessGame chessGame = gameRepository.findById(gameId).get();
             Map<String, Object> model = new HashMap<>();
             Board board = chessGame.getBoard();
             List<RankDTO> ranks = new ArrayList<>();
@@ -44,23 +45,34 @@ public class WebController {
             return render(model, "play.html");
         });
 
-        post("/command", (req, res) -> {
+        post("/command/:gameId", (req, res) -> {
+            Long gameId = Long.valueOf(req.params("gameId"));
+            ChessGame chessGame = gameRepository.findById(gameId).get();
             Map<String, Object> model = new HashMap<>();
             String command = req.queryParams("command");
             executeCommand(chessGame, command);
             if (chessGame.isEnd()) {
-                res.redirect("/result");
+                res.redirect(String.format("/result/%d", gameId));
             }
-            res.redirect("/play");
+            res.redirect(String.format("/play/%d", gameId));
             return "";
         });
 
-        get("/result", (req, res) -> {
+        get("/result/:gameId", (req, res) -> {
+            Long gameId = Long.valueOf(req.params("gameId"));
+            ChessGame chessGame = gameRepository.findById(gameId).get();
             Map<String, Object> model = new HashMap<>();
             model.put("winner", chessGame.getWinnerName());
             model.put("whiteScore", chessGame.getWhiteScore());
             model.put("blackScore", chessGame.getBlackScore());
             return render(model, "result.html");
+        });
+
+        get("/lobby", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<ChessGame> games = gameRepository.findAll();
+            model.put("games", games);
+            return render(model, "lobby.html");
         });
     }
 

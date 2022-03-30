@@ -7,6 +7,7 @@ import chess.domain.piece.Position;
 public class ChessGame {
     private Long id;
     private GameState state;
+    private Participant participant;
 
     public ChessGame(GameState state) {
         this.state = state;
@@ -15,6 +16,12 @@ public class ChessGame {
     public ChessGame(Long id, GameState state) {
         this.id = id;
         this.state = state;
+    }
+
+    public ChessGame(Long id, GameState state, Participant participant) {
+        this.id = id;
+        this.state = state;
+        this.participant = participant;
     }
 
     public GameState getState() {
@@ -62,5 +69,9 @@ public class ChessGame {
 
     public boolean isBlackTurn() {
         return state.isBlackTurn();
+    }
+
+    public Participant getParticipant() {
+        return participant;
     }
 }
