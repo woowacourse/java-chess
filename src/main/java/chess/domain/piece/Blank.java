@@ -17,7 +17,7 @@ public class Blank extends Piece {
     public static EnumMap<Column, Piece> from(int row, Team team) {
         EnumMap<Column, Piece> pawns = new EnumMap<>(Column.class);
         for (Column column : Column.values()) {
-            pawns.put(column, new Blank(team, new Position(column, Row.find(row))));
+            pawns.put(column, new Blank(team, Position.of(column, Row.find(row))));
         }
         return pawns;
     }

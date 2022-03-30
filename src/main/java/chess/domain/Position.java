@@ -9,6 +9,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class Position {
     private final static Map<String, Position> positions;
+    private final static int positionToStringLength = 2;
 
     private final Column col;
     private final Row row;
@@ -36,9 +37,9 @@ public class Position {
         return position.getCol().getSymbol() + position.getRow().getSymbol();
     }
 
-    public Position(Column col, Row row) {
-        this.col = col;
-        this.row = row;
+    public static Position of(Column col, Row row) throws RuntimeException{
+        String position = col.getSymbol() + row.getSymbol();
+        return positions.get(position);
     }
 
     public static Position from(String position) throws RuntimeException{
@@ -47,9 +48,14 @@ public class Position {
     }
 
     private static void validateLength(String position) {
-        if (position.length() != 2) {
+        if (position.length() != positionToStringLength) {
             throw new IllegalArgumentException("올바른 포지션 값이 아닙니다.");
         }
+    }
+
+    private Position(Column col, Row row) {
+        this.col = col;
+        this.row = row;
     }
 
     public Column getCol() {

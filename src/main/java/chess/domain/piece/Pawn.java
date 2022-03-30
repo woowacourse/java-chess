@@ -15,7 +15,7 @@ public class Pawn extends Piece {
     public static EnumMap<Column, Piece> from(int row, Team team) {
         EnumMap<Column, Piece> pawns = new EnumMap<>(Column.class);
         for (Column column : Column.values()) {
-            pawns.put(column, new Pawn(team, new Position(column, Row.find(row))));
+            pawns.put(column, new Pawn(team, Position.of(column, Row.find(row))));
         }
         return pawns;
     }
@@ -59,7 +59,7 @@ public class Pawn extends Piece {
         while (!(col == destination.getCol() && row == destination.getRow())) {
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());
-            positions.add(new Position(col, row));
+            positions.add(Position.of(col, row));
         }
         return positions;
     }

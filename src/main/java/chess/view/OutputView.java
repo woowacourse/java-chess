@@ -17,7 +17,7 @@ public class OutputView {
 
     private static void printRank(Map<Position, Piece> board, Row row) {
         for (Column col : Column.values()) {
-            System.out.print(board.get(new Position(col, row)).getSymbol());
+            System.out.print(board.get(Position.of(col, row)).getSymbol());
         }
         System.out.println();
     }

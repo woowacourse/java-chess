@@ -32,8 +32,6 @@ public abstract class Piece {
         return false;
     }
 
-    ;
-
     public boolean isPawn() {
         return false;
     }
@@ -49,7 +47,7 @@ public abstract class Piece {
     protected List<Position> getPath(Position destination, Direction direction, Column col, Row row) {
         List<Position> positions = new ArrayList<>();
         while (!(col == destination.getCol() && row == destination.getRow())) {
-            positions.add(new Position(col, row));
+            positions.add(Position.of(col, row));
             col = col.plusColumn(direction.getXDegree());
             row = row.plusRow(direction.getYDegree());
         }

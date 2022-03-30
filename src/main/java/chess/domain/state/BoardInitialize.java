@@ -21,33 +21,33 @@ public class BoardInitialize {
 
     private static void initBordBlackPiece() {
         Row row = Row.EIGHT;
-        board.put(new Position(Column.A, row), new Rook(Team.BLACK, new Position(Column.A, row)));
-        board.put(new Position(Column.B, row), new Knight(Team.BLACK, new Position(Column.B, row)));
-        board.put(new Position(Column.C, row), new Bishop(Team.BLACK, new Position(Column.C, row)));
-        board.put(new Position(Column.D, row), new Queen(Team.BLACK, new Position(Column.D, row)));
-        board.put(new Position(Column.E, row), new King(Team.BLACK, new Position(Column.E, row)));
-        board.put(new Position(Column.F, row), new Bishop(Team.BLACK, new Position(Column.F, row)));
-        board.put(new Position(Column.G, row), new Knight(Team.BLACK, new Position(Column.G, row)));
-        board.put(new Position(Column.H, row), new Rook(Team.BLACK, new Position(Column.H, row)));
+        board.put(Position.of(Column.A, row), new Rook(Team.BLACK, Position.of(Column.A, row)));
+        board.put(Position.of(Column.B, row), new Knight(Team.BLACK, Position.of(Column.B, row)));
+        board.put(Position.of(Column.C, row), new Bishop(Team.BLACK, Position.of(Column.C, row)));
+        board.put(Position.of(Column.D, row), new Queen(Team.BLACK, Position.of(Column.D, row)));
+        board.put(Position.of(Column.E, row), new King(Team.BLACK, Position.of(Column.E, row)));
+        board.put(Position.of(Column.F, row), new Bishop(Team.BLACK, Position.of(Column.F, row)));
+        board.put(Position.of(Column.G, row), new Knight(Team.BLACK, Position.of(Column.G, row)));
+        board.put(Position.of(Column.H, row), new Rook(Team.BLACK, Position.of(Column.H, row)));
         initPawn(Team.BLACK, Row.SEVEN);
     }
 
     private static void initBoardWhitePiece() {
         Row row = Row.ONE;
-        board.put(new Position(Column.A, row), new Rook(Team.WHITE, new Position(Column.A, row)));
-        board.put(new Position(Column.B, row), new Knight(Team.WHITE, new Position(Column.B, row)));
-        board.put(new Position(Column.C, row), new Bishop(Team.WHITE, new Position(Column.C, row)));
-        board.put(new Position(Column.D, row), new Queen(Team.WHITE, new Position(Column.D, row)));
-        board.put(new Position(Column.E, row), new King(Team.WHITE, new Position(Column.E, row)));
-        board.put(new Position(Column.F, row), new Bishop(Team.WHITE, new Position(Column.F, row)));
-        board.put(new Position(Column.G, row), new Knight(Team.WHITE, new Position(Column.G, row)));
-        board.put(new Position(Column.H, row), new Rook(Team.WHITE, new Position(Column.H, row)));
+        board.put(Position.of(Column.A, row), new Rook(Team.WHITE, Position.of(Column.A, row)));
+        board.put(Position.of(Column.B, row), new Knight(Team.WHITE, Position.of(Column.B, row)));
+        board.put(Position.of(Column.C, row), new Bishop(Team.WHITE, Position.of(Column.C, row)));
+        board.put(Position.of(Column.D, row), new Queen(Team.WHITE, Position.of(Column.D, row)));
+        board.put(Position.of(Column.E, row), new King(Team.WHITE, Position.of(Column.E, row)));
+        board.put(Position.of(Column.F, row), new Bishop(Team.WHITE, Position.of(Column.F, row)));
+        board.put(Position.of(Column.G, row), new Knight(Team.WHITE, Position.of(Column.G, row)));
+        board.put(Position.of(Column.H, row), new Rook(Team.WHITE, Position.of(Column.H, row)));
         initPawn(Team.WHITE, Row.TWO);
     }
 
     private static void initPawn(Team team, Row row) {
         for (Column col : Column.values()) {
-            Position position = new Position(col, row);
+            Position position = Position.of(col, row);
             board.put(position, new Pawn(team, position));
         }
     }
@@ -61,7 +61,7 @@ public class BoardInitialize {
 
     private static void initBlankLine(Row row) {
         for (Column col : Column.values()) {
-            board.put(new Position(col, row), new Blank(Team.NONE, new Position(col, row)));
+            board.put(Position.of(col, row), new Blank(Team.NONE, Position.of(col, row)));
         }
     }
 }
