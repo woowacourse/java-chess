@@ -25,7 +25,7 @@ public class ChessBoard {
         return hasKingByColor(board, Color.WHITE) && hasKingByColor(board, Color.BLACK);
     }
 
-    public boolean hasKingByColor(Map<Position, Piece> board, Color color) {
+    private boolean hasKingByColor(Map<Position, Piece> board, Color color) {
         return board.values().stream()
                 .filter(piece -> piece.equals(new King(color)))
                 .anyMatch(piece -> piece.isSameColor(color));
