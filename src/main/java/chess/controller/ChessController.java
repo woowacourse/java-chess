@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.Command;
 import chess.view.Enter;
 import chess.view.Enterable;
 import chess.view.Input;
@@ -23,15 +22,8 @@ public class ChessController {
     private void command(final ChessGame chessGame) {
         try {
             Command.execute(Input.inputCommand(enterable), chessGame);
-            printBoard(chessGame);
         } catch (IllegalStateException | IllegalArgumentException exception) {
             Output.printExceptionMessage(exception.getMessage());
-        }
-    }
-
-    private void printBoard(final ChessGame chessGame) {
-        if (!chessGame.isEnded()) {
-            Output.printBoard(chessGame.getBoard());
         }
     }
 }

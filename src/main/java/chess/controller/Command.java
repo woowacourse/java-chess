@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.controller;
 
+import chess.domain.ChessGame;
 import chess.view.Output;
 
 import java.util.Arrays;
@@ -7,13 +8,13 @@ import java.util.function.BiConsumer;
 
 public enum Command {
 
-    START("start", (input, chessGame) -> chessGame.start()),
-    END("end", (input, chessGame) -> chessGame.end()),
-    MOVE("move", (input, chessGame) -> {
-        checkMoveCommandLength(input);
-        chessGame.move(input);
+    START("start", (commands, chessGame) -> chessGame.start()),
+    END("end", (commands, chessGame) -> chessGame.end()),
+    MOVE("move", (commands, chessGame) -> {
+        checkMoveCommandLength(commands);
+        chessGame.move(commands);
     }),
-    STATUS("status", (input, chessGame) -> chessGame.status(Output::printScore)),
+    STATUS("status", (commands, chessGame) -> chessGame.status(Output::printScore)),
     ;
 
     private static final int COMMAND_LOCATION = 0;
@@ -30,12 +31,23 @@ public enum Command {
 
     public static void execute(final String input, final ChessGame chessGame) {
         String[] commands = input.split(DELIMITER);
+        operate(chessGame, commands);
+        printBoard(chessGame);
+    }
+
+    private static void operate(final ChessGame chessGame, final String[] commands) {
         Arrays.stream(Command.values())
                 .filter(command -> commands[COMMAND_LOCATION].equals(command.command))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령어 입니다."))
                 .operate
                 .accept(commands, chessGame);
+    }
+
+    private static void printBoard(final ChessGame chessGame) {
+        if (!chessGame.isEnded()) {
+            Output.printBoard(chessGame.getBoard());
+        }
     }
 
     private static void checkMoveCommandLength(final String[] commands) {
