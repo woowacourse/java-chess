@@ -1,28 +1,20 @@
 package chess.domain.piece;
 
+import static chess.domain.board.Direction.EAST;
+import static chess.domain.board.Direction.NORTH;
+import static chess.domain.board.Direction.SOUTH;
+import static chess.domain.board.Direction.WEST;
+
 import chess.domain.board.Direction;
-import chess.domain.board.Position;
-import chess.domain.piece.movepattern.MovePattern;
-import chess.domain.piece.movepattern.RookMovePattern;
+import java.util.List;
 
-public final class Rook extends Piece {
+public final class Rook extends AbstractStraightPiece {
 
+    private static final List<Direction> directions = List.of(NORTH, WEST, SOUTH, EAST);
     private static final double POINT = 5.0;
 
-    private final MovePattern pattern = new RookMovePattern();
-
     public Rook(Color color) {
-        super(color);
-    }
-
-    @Override
-    public boolean canMove(Position source, Position destination) {
-        return pattern.canMove(source, destination);
-    }
-
-    @Override
-    public Direction findDirection(Position source, Position destination) {
-        return pattern.findDirection(source, destination);
+        super(color, directions);
     }
 
     @Override

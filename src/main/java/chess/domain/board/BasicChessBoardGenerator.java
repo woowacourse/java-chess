@@ -25,14 +25,14 @@ public class BasicChessBoardGenerator {
         board.put(Position.of("g8"), new Knight(Color.BLACK));
         board.put(Position.of("h8"), new Rook(Color.BLACK));
 
-        board.put(Position.of("a7"), new Pawn(Color.BLACK));
-        board.put(Position.of("b7"), new Pawn(Color.BLACK));
-        board.put(Position.of("c7"), new Pawn(Color.BLACK));
-        board.put(Position.of("d7"), new Pawn(Color.BLACK));
-        board.put(Position.of("e7"), new Pawn(Color.BLACK));
-        board.put(Position.of("f7"), new Pawn(Color.BLACK));
-        board.put(Position.of("g7"), new Pawn(Color.BLACK));
-        board.put(Position.of("h7"), new Pawn(Color.BLACK));
+        board.put(Position.of("a7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("b7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("c7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("d7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("e7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("f7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("g7"), Pawn.of(Color.BLACK));
+        board.put(Position.of("h7"), Pawn.of(Color.BLACK));
 
         board.put(Position.of("a1"), new Rook(Color.WHITE));
         board.put(Position.of("b1"), new Knight(Color.WHITE));
@@ -43,14 +43,14 @@ public class BasicChessBoardGenerator {
         board.put(Position.of("g1"), new Knight(Color.WHITE));
         board.put(Position.of("h1"), new Rook(Color.WHITE));
 
-        board.put(Position.of("a2"), new Pawn(Color.WHITE));
-        board.put(Position.of("b2"), new Pawn(Color.WHITE));
-        board.put(Position.of("c2"), new Pawn(Color.WHITE));
-        board.put(Position.of("d2"), new Pawn(Color.WHITE));
-        board.put(Position.of("e2"), new Pawn(Color.WHITE));
-        board.put(Position.of("f2"), new Pawn(Color.WHITE));
-        board.put(Position.of("g2"), new Pawn(Color.WHITE));
-        board.put(Position.of("h2"), new Pawn(Color.WHITE));
+        board.put(Position.of("a2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("b2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("c2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("d2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("e2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("f2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("g2"), Pawn.of(Color.WHITE));
+        board.put(Position.of("h2"), Pawn.of(Color.WHITE));
 
         return new Board(board);
     }

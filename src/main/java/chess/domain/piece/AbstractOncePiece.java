@@ -1,10 +1,16 @@
-package chess.domain.piece.movepattern;
+package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
 
-public abstract class AbstractStraightMovePattern extends AbstractMovePattern {
+public abstract class AbstractOncePiece extends Piece {
+
+    private static final int ONCE_TIME = 1;
+
+    AbstractOncePiece(Color color, List<Direction> directions) {
+        super(color, directions);
+    }
 
     @Override
     public boolean canMove(Position source, Position destination) {
@@ -13,9 +19,8 @@ public abstract class AbstractStraightMovePattern extends AbstractMovePattern {
 
     @Override
     public Direction findDirection(Position source, Position destination) {
-        List<Direction> directions = getDirections();
         return directions.stream()
-                .filter(direction -> source.canCrossMovingStraight(direction, destination))
+                .filter(direction -> source.canMoveByTime(direction, destination, ONCE_TIME))
                 .findFirst()
                 .orElse(null);
     }

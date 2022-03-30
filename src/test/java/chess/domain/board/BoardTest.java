@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -11,6 +12,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -43,14 +45,14 @@ class BoardTest {
                 Arguments.of(Position.of("g8"), Knight.class, Color.BLACK),
                 Arguments.of(Position.of("h8"), Rook.class, Color.BLACK),
 
-                Arguments.of(Position.of("a7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("b7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("c7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("d7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("e7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("f7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("g7"), Pawn.class, Color.BLACK),
-                Arguments.of(Position.of("h7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("a7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("b7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("c7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("d7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("e7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("f7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("g7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("h7"), BlackPawn.class, Color.BLACK),
 
                 Arguments.of(Position.of("a1"), Rook.class, Color.WHITE),
                 Arguments.of(Position.of("b1"), Knight.class, Color.WHITE),
@@ -61,14 +63,14 @@ class BoardTest {
                 Arguments.of(Position.of("g1"), Knight.class, Color.WHITE),
                 Arguments.of(Position.of("h1"), Rook.class, Color.WHITE),
 
-                Arguments.of(Position.of("a2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("b2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("c2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("d2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("e2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("f2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("g2"), Pawn.class, Color.WHITE),
-                Arguments.of(Position.of("h2"), Pawn.class, Color.WHITE)
+                Arguments.of(Position.of("a2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("b2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("c2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("d2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("e2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("f2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("g2"), WhitePawn.class, Color.WHITE),
+                Arguments.of(Position.of("h2"), WhitePawn.class, Color.WHITE)
         );
     }
 
@@ -76,21 +78,21 @@ class BoardTest {
     @Test
     void pawnMoveCheckObstacleInPathOne() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a2"), new Pawn(Color.WHITE));
-        value.put(Position.of("a3"), new Pawn(Color.WHITE));
+        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.of("a3"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 직진으로 기물을 잡을 수 없습니다");
+                .hasMessageContaining("도착 위치에 아군이 있어 이동할 수 없습니다.");
     }
 
     @DisplayName("폰은 한 칸 앞에 적은 잡을 수 없다")
     @Test
     void pawnCannotCatchFront() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a2"), new Pawn(Color.WHITE));
-        value.put(Position.of("a3"), new Pawn(Color.BLACK));
+        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
+        value.put(Position.of("a3"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a3"), Color.WHITE))
@@ -102,8 +104,8 @@ class BoardTest {
     @Test
     void whitePawnMoveCheckObstacleInPathTwo() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a2"), new Pawn(Color.WHITE));
-        value.put(Position.of("a3"), new Pawn(Color.WHITE));
+        value.put(Position.of("a3"), Pawn.of(Color.WHITE));
+        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("a2"), Position.of("a4"), Color.WHITE))
@@ -115,8 +117,8 @@ class BoardTest {
     @Test
     void blackPawnMoveCheckObstacleInPathTwo() {
         Map<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a7"), new Pawn(Color.BLACK));
-        value.put(Position.of("a6"), new Pawn(Color.BLACK));
+        value.put(Position.of("a7"), Pawn.of(Color.BLACK));
+        value.put(Position.of("a6"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("a7"), Position.of("a5"), Color.BLACK))
@@ -130,7 +132,7 @@ class BoardTest {
     void whitePawnOneMove(Position source, Position destination, Color color) {
         Map<Position, Piece> value = new HashMap<>();
 
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         value.put(source, piece);
 
         Board board = new Board(value);
@@ -225,7 +227,7 @@ class BoardTest {
     void kingCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
         value.put(Position.of("d5"), new King(Color.WHITE));
-        value.put(Position.of("d6"), new Pawn(Color.WHITE));
+        value.put(Position.of("d6"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d6"), Color.WHITE))
@@ -291,7 +293,7 @@ class BoardTest {
     void rookCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
         value.put(Position.of("d5"), new Rook(Color.WHITE));
-        value.put(Position.of("d8"), new Pawn(Color.WHITE));
+        value.put(Position.of("d8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("d8"), Color.WHITE))
@@ -304,7 +306,7 @@ class BoardTest {
     void rookCheckObstacleInPath() {
 
         Piece rook = new Rook(Color.WHITE);
-        Piece obstacle = new Pawn(Color.BLACK);
+        Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
         Position source = Position.of("d3");
         value.put(source, rook);
@@ -348,7 +350,7 @@ class BoardTest {
     void bishopCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
         value.put(Position.of("d5"), new Bishop(Color.WHITE));
-        value.put(Position.of("g8"), new Pawn(Color.WHITE));
+        value.put(Position.of("g8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8"), Color.WHITE))
@@ -361,7 +363,7 @@ class BoardTest {
     void bishopCheckObstacleInPath() {
 
         Piece bishop = new Bishop(Color.WHITE);
-        Piece obstacle = new Pawn(Color.BLACK);
+        Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
         Position source = Position.of("d3");
         value.put(source, bishop);
@@ -417,7 +419,7 @@ class BoardTest {
     void queenCannotMove() {
         Map<Position, Piece> value = new HashMap<>();
         value.put(Position.of("d5"), new Queen(Color.WHITE));
-        value.put(Position.of("g8"), new Pawn(Color.WHITE));
+        value.put(Position.of("g8"), Pawn.of(Color.WHITE));
         Board board = new Board(value);
 
         assertThatThrownBy(() -> board.move(Position.of("d5"), Position.of("g8"), Color.WHITE))
@@ -430,7 +432,7 @@ class BoardTest {
     void queenCheckObstacleInPath() {
 
         Piece queen = new Queen(Color.WHITE);
-        Piece obstacle = new Pawn(Color.BLACK);
+        Piece obstacle = Pawn.of(Color.BLACK);
         Map<Position, Piece> value = new HashMap<>();
         Position source = Position.of("d3");
         value.put(source, queen);
@@ -448,8 +450,8 @@ class BoardTest {
     @Test
     void testWhitePawnCatch() {
 
-        Piece pawn = new Pawn(Color.WHITE);
-        Piece target = new Pawn(Color.BLACK);
+        Piece pawn = Pawn.of(Color.WHITE);
+        Piece target = Pawn.of(Color.BLACK);
         Position source = Position.of("a2");
         Position destination = Position.of("b3");
 
@@ -469,8 +471,8 @@ class BoardTest {
     @Test
     void testBlackPawnCatch() {
 
-        Piece pawn = new Pawn(Color.BLACK);
-        Piece target = new Pawn(Color.WHITE);
+        Piece pawn = Pawn.of(Color.BLACK);
+        Piece target = Pawn.of(Color.WHITE);
         Position source = Position.of("a7");
         Position destination = Position.of("b6");
 
@@ -500,10 +502,10 @@ class BoardTest {
     @Test
     void testCalculateScoreSameLinePawn() {
         HashMap<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("b2"), new Pawn(Color.WHITE));
-        value.put(Position.of("b3"), new Pawn(Color.WHITE));
-        value.put(Position.of("b4"), new Pawn(Color.WHITE));
-        value.put(Position.of("a2"), new Pawn(Color.WHITE));
+        value.put(Position.of("b2"), Pawn.of(Color.WHITE));
+        value.put(Position.of("b3"), Pawn.of(Color.WHITE));
+        value.put(Position.of("b4"), Pawn.of(Color.WHITE));
+        value.put(Position.of("a2"), Pawn.of(Color.WHITE));
 
         Board board = new Board(value);
 
@@ -536,7 +538,7 @@ class BoardTest {
     @Test
     void testHasNotKing() {
         HashMap<Position, Piece> value = new HashMap<>();
-        value.put(Position.of("a7"), new Pawn(Color.BLACK));
+        value.put(Position.of("a7"), Pawn.of(Color.BLACK));
         Board board = new Board(value);
 
         assertThat(board.hasKing(Color.BLACK)).isFalse();

@@ -1,29 +1,24 @@
 package chess.domain.piece;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Position;
-import chess.domain.piece.movepattern.AbstractPawnMovePattern;
-import chess.domain.piece.movepattern.MovePattern;
+import java.util.List;
 
-public final class Pawn extends Piece {
+public abstract class Pawn extends AbstractPawnPiece {
 
     private static final double POINT = 1.0;
 
-    private final MovePattern pattern;
-
-    public Pawn(Color color) {
-        super(color);
-        this.pattern = AbstractPawnMovePattern.of(color);
+    Pawn(Color color, List<Direction> directions) {
+        super(color, directions);
     }
 
-    @Override
-    public boolean canMove(Position source, Position destination) {
-        return pattern.canMove(source, destination);
-    }
-
-    @Override
-    public Direction findDirection(Position source, Position destination) {
-        return pattern.findDirection(source, destination);
+    public static Pawn of(Color color) {
+        if (color == Color.BLACK) {
+            return new BlackPawn(color);
+        }
+        if (color == Color.WHITE) {
+            return new WhitePawn(color);
+        }
+        throw new IllegalArgumentException("error");
     }
 
     @Override

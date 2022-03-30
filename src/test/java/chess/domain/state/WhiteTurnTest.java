@@ -8,9 +8,9 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ class WhiteTurnTest {
         whiteTurn.movePiece(source, destination);
 
         assertThat(board.findPieceBy(destination).get().isSameColor(Color.WHITE)).isTrue();
-        assertThat(board.findPieceBy(destination).get().isSameType(Pawn.class)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isSameType(WhitePawn.class)).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")

@@ -1,9 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.WhitePawn;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +48,7 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
 
         checkCanMove(piece, source, destination);
-        checkSameColorIndestinationination(piece, destination);
+        checkSameColorInDestination(piece, destination);
         checkObstacleInPath(source, destination);
 
         value.put(destination, piece);
@@ -55,28 +56,12 @@ public class Board {
     }
 
     private void checkCanMove(Piece piece, Position source, Position destination) {
-        validatePawnCatchFront(piece, source, destination);
-        validatePawnCannotCatchDiagonal(piece, source, destination);
         if (!piece.canMove(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다");
         }
     }
 
-    private void validatePawnCatchFront(Piece piece, Position source, Position destination) {
-        boolean destinationHasPiece = findPieceBy(destination).isPresent();
-        if (piece.isSameType(Pawn.class) && destinationHasPiece && source.isSameFile(destination)) {
-            throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
-        }
-    }
-
-    private void validatePawnCannotCatchDiagonal(Piece piece, Position source, Position destination) {
-        boolean destinationHasPiece = findPieceBy(destination).isPresent();
-        if (piece.isSameType(Pawn.class) && !destinationHasPiece && !source.isSameFile(destination)) {
-            throw new IllegalArgumentException("폰은 기물을 잡을 수 있을때만 대각선으로 이동할 수 있습니다");
-        }
-    }
-
-    private void checkSameColorIndestinationination(Piece piece, Position destination) {
+    private void checkSameColorInDestination(Piece piece, Position destination) {
         Optional<Piece> optionalPiece = findPieceBy(destination);
         if (optionalPiece.isPresent() && piece.isSameColor(optionalPiece.get())) {
             throw new IllegalArgumentException("도착 위치에 아군이 있어 이동할 수 없습니다.");
@@ -87,8 +72,29 @@ public class Board {
         Piece piece = findPieceBy(source)
                 .orElseThrow(() -> new IllegalArgumentException("기물이 존재하지 않습니다"));
 
+        validatePawnCatchFront(piece, source, destination);
+        validatePawnCannotCatchDiagonal(piece, source, destination);
+
         Direction direction = piece.findDirection(source, destination);
         checkObstacle(source, destination, direction);
+    }
+
+    private void validatePawnCatchFront(Piece piece, Position source, Position destination) {
+        boolean destinationHasPiece = findPieceBy(destination).isPresent();
+        if (isPawn(piece) && destinationHasPiece && source.isSameFile(destination)) {
+            throw new IllegalArgumentException("폰은 직진으로 기물을 잡을 수 없습니다");
+        }
+    }
+
+    private void validatePawnCannotCatchDiagonal(Piece piece, Position source, Position destination) {
+        boolean destinationHasPiece = findPieceBy(destination).isPresent();
+        if (isPawn(piece) && !destinationHasPiece && !source.isSameFile(destination)) {
+            throw new IllegalArgumentException("폰은 기물을 잡을 수 있을때만 대각선으로 이동할 수 있습니다");
+        }
+    }
+
+    private boolean isPawn(Piece piece) {
+        return piece.isSameType(BlackPawn.class) || piece.isSameType(WhitePawn.class);
     }
 
     private void checkObstacle(Position source, Position destination, Direction direction) {
@@ -137,7 +143,7 @@ public class Board {
                 .map(value::get)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> piece.isSameType(Pawn.class))
+                .filter(piece -> isPawn(piece))
                 .count();
     }
 

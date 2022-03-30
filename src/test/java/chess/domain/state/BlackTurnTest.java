@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.BasicChessBoardGenerator;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ class BlackTurnTest {
         blackTurn.movePiece(source, destination);
 
         assertThat(board.findPieceBy(destination).get().isSameColor(Color.BLACK)).isTrue();
-        assertThat(board.findPieceBy(destination).get().isSameType(Pawn.class)).isTrue();
+        assertThat(board.findPieceBy(destination).get().isSameType(BlackPawn.class)).isTrue();
     }
 
     @DisplayName("상대의 말을 움직이면 에러가 발생한다")

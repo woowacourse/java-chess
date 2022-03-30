@@ -1,24 +1,17 @@
-package chess.domain.piece.movepattern;
+package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.piece.Color;
 import java.util.List;
 
-public abstract class AbstractPawnMovePattern extends AbstractMovePattern {
+public abstract class AbstractPawnPiece extends Piece {
 
     public static final int ONCE_TIME = 1;
     public static final int TWICE_TIME = 2;
 
-    public static AbstractPawnMovePattern of(Color color) {
-        if (color == Color.BLACK) {
-            return new BlackPawnMovePattern();
-        }
-        if (color == Color.WHITE) {
-            return new WhitePawnMovePattern();
-        }
-        throw new IllegalArgumentException("error");
+    AbstractPawnPiece(Color color, List<Direction> directions) {
+        super(color, directions);
     }
 
     @Override
@@ -28,7 +21,6 @@ public abstract class AbstractPawnMovePattern extends AbstractMovePattern {
 
     @Override
     public final Direction findDirection(Position source, Position destination) {
-        List<Direction> directions = getDirections();
         return directions.stream()
                 .filter(direction -> canArrive(direction, source, destination))
                 .findFirst()

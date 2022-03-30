@@ -11,7 +11,7 @@ class PawnTest {
     @DisplayName("화이트 폰은 rank가 높아지는 방향으로 한 칸 이동할 수 있다.")
     @Test
     void testWhitePawnMoveTrue() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = Pawn.of(Color.WHITE);
         Position source = Position.of("a2");
         Position destination = Position.of("a3");
 
@@ -21,7 +21,7 @@ class PawnTest {
     @DisplayName("화이트 폰은 rank가 낮아지는 방향으로 이동할 수 없다.")
     @Test
     void testWhitePawnMoveFalse() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = Pawn.of(Color.WHITE);
         Position source = Position.of("a3");
         Position destination = Position.of("a2");
 
@@ -31,7 +31,7 @@ class PawnTest {
     @DisplayName("화이트폰은 첫 번째 이동일 때 rank가 높아지는 방향으로 두 칸 이동할 수 있다")
     @Test
     void testWhitePawnMoveTwiceFirst() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = Pawn.of(Color.WHITE);
         Position source = Position.of("a2");
         Position destination = Position.of("a4");
 
@@ -41,7 +41,7 @@ class PawnTest {
     @DisplayName("첫 번째 이동이 아닌데 두 칸 움직이는 경우 false를 반환한다")
     @Test
     void testThree() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = Pawn.of(Color.WHITE);
         Position source = Position.of("a3");
         Position destination = Position.of("a5");
 
@@ -51,7 +51,7 @@ class PawnTest {
     @DisplayName("블랙 폰은 rank가 낮아지는 방향으로 한 칸 이동할 수 있다.")
     @Test
     void testBlackPawnMoveTrue() {
-        Piece piece = new Pawn(Color.BLACK);
+        Piece piece = Pawn.of(Color.BLACK);
         Position source = Position.of("a7");
         Position destination = Position.of("a6");
 
@@ -61,7 +61,7 @@ class PawnTest {
     @DisplayName("블랙 폰은 첫 번째 이동일 때 rank가 낮아지는 방향으로 두 칸 이동할 수 있다")
     @Test
     void testBlackPawnMoveDoubleTrue() {
-        Piece piece = new Pawn(Color.BLACK);
+        Piece piece = Pawn.of(Color.BLACK);
         Position source = Position.of("a7");
         Position destination = Position.of("a5");
 
@@ -71,7 +71,7 @@ class PawnTest {
     @DisplayName("첫 번째 이동이 아닌데 두 칸 움직이는 경우 false를 반환한다")
     @Test
     void testBlackPawnMoveDoubleFalse() {
-        Piece piece = new Pawn(Color.BLACK);
+        Piece piece = Pawn.of(Color.BLACK);
         Position source = Position.of("a6");
         Position destination = Position.of("a4");
 
@@ -81,7 +81,7 @@ class PawnTest {
     @DisplayName("블랙 폰은 rank가 높아지는 방향으로 이동할 수 없다.")
     @Test
     void testBlackPawnMoveFalse() {
-        Piece piece = new Pawn(Color.BLACK);
+        Piece piece = Pawn.of(Color.BLACK);
         Position source = Position.of("a6");
         Position destination = Position.of("a7");
 

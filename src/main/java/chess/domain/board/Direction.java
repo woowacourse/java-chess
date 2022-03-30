@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import java.util.List;
-
 public enum Direction {
 
     NORTH(0, 1),
@@ -38,43 +36,6 @@ public enum Direction {
 
     public int getY() {
         return y;
-    }
-
-    public static List<Direction> getBlackPawnDirections() {
-        return List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static List<Direction> getWhitePawnDirections() {
-        return List.of(NORTH, NORTH_EAST, NORTH_WEST);
-    }
-
-    public static List<Direction> getKnightDirections() {
-        return List.of(
-                NORTH_NORTH_EAST,
-                NORTH_NORTH_WEST,
-                EAST_NORTH_EAST,
-                EAST_SOUTH_EAST,
-                SOUTH_SOUTH_EAST,
-                SOUTH_SOUTH_WEST,
-                WEST_SOUTH_WEST,
-                WEST_NORTH_WEST
-        );
-    }
-
-    public static List<Direction> getRookDirections() {
-        return List.of(NORTH, WEST, SOUTH, EAST);
-    }
-
-    public static List<Direction> getBishopDirections() {
-        return List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static List<Direction> getKingDirections() {
-        return List.of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static List<Direction> getQueenDirections() {
-        return List.of(NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     }
 
     @Override
