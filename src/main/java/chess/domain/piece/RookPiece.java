@@ -18,7 +18,9 @@ public class RookPiece extends Piece {
     }
 
     @Override
-    public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
+    public boolean isRightMovement(final Position from,
+                                   final Position to,
+                                   final boolean isEmptyTarget) {
         final int columnDistance = to.calculateColumnDistance(from);
         final int rowDistance = to.calculateRowDistance(from);
 

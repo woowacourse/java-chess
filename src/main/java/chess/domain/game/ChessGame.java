@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.Board;
 import chess.domain.BoardInitializer;
-import chess.domain.Score;
+import chess.domain.result.Score;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.game.state.Ready;

@@ -40,6 +40,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public String getName() {
         return name;
     }

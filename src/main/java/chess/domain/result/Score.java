@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.result;
 
+import chess.domain.Board;
 import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.KnightPiece;

@@ -1,7 +1,7 @@
 package chess;
 
-import chess.domain.Result;
-import chess.domain.Score;
+import chess.domain.result.Result;
+import chess.domain.result.Score;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.view.OutputView;
