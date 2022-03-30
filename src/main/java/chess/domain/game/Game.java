@@ -9,8 +9,10 @@ import java.util.*;
 
 public final class Game {
 
+    private static final Color FIRST_TURN = Color.WHITE;
+
     private final Board board;
-    private Color turn = Color.WHITE;
+    private Color turn = FIRST_TURN;
 
     public Game(final Initializer initiator) {
         board = new Board(initiator);

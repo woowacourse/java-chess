@@ -19,7 +19,7 @@ public final class GameMachine {
         InputView.announceStart();
         Game game = initializeGame();
         String command = InputView.requestCommand();
-        while (!Command.isEnd(command) && !game.isEnd()) {
+        while (!game.isEnd() && !Command.isEnd(command)) {
             play(game, command);
             command = InputView.requestCommand();
         }
