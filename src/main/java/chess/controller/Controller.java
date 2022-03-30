@@ -45,12 +45,12 @@ public class Controller {
 		}
 
 		if (command == Command.END) {
-			System.exit(1);
+			System.exit(0);
 		}
 
 		if (command == Command.STATUS) {
 			status();
-			System.exit(1);
+			System.exit(0);
 		}
 	}
 
