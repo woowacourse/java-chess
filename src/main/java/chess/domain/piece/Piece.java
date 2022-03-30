@@ -51,7 +51,7 @@ public abstract class Piece {
         return score.getValue();
     }
 
-    public void validArrive(Piece to, Direction direction) {
+    public void validateArrive(Piece to, Direction direction) {
         if (Objects.nonNull(to) && isSameTeam(to)) {
             throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
         }

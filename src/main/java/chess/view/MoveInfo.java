@@ -12,12 +12,12 @@ public class MoveInfo {
     private Position afterPosition;
 
     public MoveInfo(String[] value) {
-        validTypeMove(value);
+        validateMoveInfo(value);
         beforePosition = new Position(value[BEFORE_POSITION]);
         afterPosition = new Position(value[AFTER_POSITION]);
     }
 
-    private void validTypeMove(String[] stringArray) {
+    private void validateMoveInfo(String[] stringArray) {
         if (stringArray.length != SIZE) {
             throw new IllegalArgumentException("이동하고자 하는 위치와 도착 위치를 함께 입력해주세요.");
         }

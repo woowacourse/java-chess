@@ -4,7 +4,6 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class Board {
     private boolean validCheck(Position from, Position to, Piece fromPiece) {
         try {
             fromPiece.movable(from, to);
-            validPath(from, to, fromPiece.findDirection(from, to));
+            validatePath(from, to, fromPiece.findDirection(from, to));
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -83,29 +82,29 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        validCanMove(from, to);
-        canContinuePlay(from, to);
+        validateMove(from, to);
+        MoveOrRollBack(from, to);
         turn = turn.change();
     }
 
-    private void validCanMove(Position from, Position to) {
+    private void validateMove(Position from, Position to) {
         Piece fromPiece = board.get(from);
         Piece toPiece = board.get(to);
         Direction direction = fromPiece.findDirection(from, to);
 
-        validNowTurn(fromPiece);
+        validateNowTurn(fromPiece);
         fromPiece.movable(from, to);
-        fromPiece.validArrive(toPiece, direction);
-        validPath(from, to, direction);
+        fromPiece.validateArrive(toPiece, direction);
+        validatePath(from, to, direction);
     }
 
-    private void validNowTurn(Piece piece) {
+    private void validateNowTurn(Piece piece) {
         if (!piece.isSameTeam(turn)) {
             throw new IllegalArgumentException("현재 차례는 " + turn + "입니다.");
         }
     }
 
-    private void validPath(Position from, Position to, Direction direction) {
+    private void validatePath(Position from, Position to, Direction direction) {
         Position current = from.move(direction);
 
         while (!current.equals(to)) {
@@ -116,7 +115,7 @@ public class Board {
         }
     }
 
-    private void canContinuePlay(Position from, Position to) {
+    private void MoveOrRollBack(Position from, Position to) {
         Piece fromPiece = board.get(from);
         Piece toPiece = board.get(to);
         board.put(to, fromPiece);

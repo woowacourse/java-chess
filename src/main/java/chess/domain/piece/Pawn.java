@@ -85,7 +85,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void validArrive(Piece to, Direction direction) {
+    public void validateArrive(Piece to, Direction direction) {
         if ((direction == NORTH || direction == SOUTH) && Objects.nonNull(to)) {
             throw new IllegalArgumentException("도착 지점에 말이 있어 이동이 불가능합니다.");
         }
