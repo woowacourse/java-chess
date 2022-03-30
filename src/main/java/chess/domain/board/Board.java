@@ -107,7 +107,7 @@ public class Board {
     }
 
     public double calculateScore(Color color) {
-        return Arrays.stream(Column.values())
+        return Arrays.stream(File.values())
                 .map(this::getPositionsByColumn)
                 .mapToDouble(positions -> calculateScoreByColumn(positions, color))
                 .sum();
@@ -141,9 +141,9 @@ public class Board {
                 .count();
     }
 
-    private List<Position> getPositionsByColumn(Column column) {
-        return Arrays.stream(Row.values())
-                .map(row -> new Position(column, row))
+    private List<Position> getPositionsByColumn(File file) {
+        return Arrays.stream(Rank.values())
+                .map(row -> new Position(file, row))
                 .collect(Collectors.toList());
     }
 

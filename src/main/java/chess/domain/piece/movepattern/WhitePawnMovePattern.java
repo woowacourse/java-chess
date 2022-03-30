@@ -1,16 +1,16 @@
 package chess.domain.piece.movepattern;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Row;
+import chess.domain.board.Rank;
 import java.util.List;
 
 public final class WhitePawnMovePattern extends AbstractPawnMovePattern {
 
-    private static final Row WHITE_PAWN_START_ROW = Row.RANK_2;
+    private static final Rank WHITE_PAWN_START_RANK = Rank.RANK_2;
 
     @Override
-    Row getStartRow() {
-        return WHITE_PAWN_START_ROW;
+    Rank getStartRow() {
+        return WHITE_PAWN_START_RANK;
     }
 
     @Override

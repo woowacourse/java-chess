@@ -2,7 +2,7 @@ package chess.domain.piece.movepattern;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.board.Rank;
 import chess.domain.piece.Color;
 import java.util.List;
 
@@ -54,5 +54,5 @@ public abstract class AbstractPawnMovePattern extends AbstractMovePattern {
         return source.isSameRow(getStartRow());
     }
 
-    abstract Row getStartRow();
+    abstract Rank getStartRow();
 }

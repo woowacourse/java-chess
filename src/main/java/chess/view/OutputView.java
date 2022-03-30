@@ -1,9 +1,9 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.board.Column;
+import chess.domain.board.File;
 import chess.domain.board.Position;
-import chess.domain.board.Row;
+import chess.domain.board.Rank;
 import chess.domain.command.StatusResult;
 import chess.domain.piece.Piece;
 
@@ -17,9 +17,9 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                Piece piece = board.findPieceBy(new Position(column, row)).orElse(null);
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                Piece piece = board.findPieceBy(new Position(file, rank)).orElse(null);
                 System.out.print(PieceOutputText.of(piece));
             }
             System.out.println();

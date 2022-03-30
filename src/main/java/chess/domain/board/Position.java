@@ -8,12 +8,12 @@ public class Position {
     private static final int ROW_INDEX = 1;
     private static final int VALID_SIZE = 2;
 
-    private final Column column;
-    private final Row row;
+    private final File file;
+    private final Rank rank;
 
-    public Position(Column column, Row row) {
-        this.column = column;
-        this.row = row;
+    public Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     public static Position of(String input) {
@@ -21,7 +21,7 @@ public class Position {
         validateSize(input);
 
         String[] values = input.split("");
-        return new Position(Column.of(values[COLUMN_INDEX]), Row.of(values[ROW_INDEX]));
+        return new Position(File.of(values[COLUMN_INDEX]), Rank.of(values[ROW_INDEX]));
     }
 
     private static void validateBlank(String input) {
@@ -37,15 +37,15 @@ public class Position {
     }
 
     public Position move(int x, int y) {
-        return new Position(column.move(x), row.move(y));
+        return new Position(file.move(x), rank.move(y));
     }
 
-    public boolean isSameRow(Row rank) {
-        return row == rank;
+    public boolean isSameRow(Rank rank) {
+        return this.rank == rank;
     }
 
     public boolean isSameFile(Position position) {
-        return this.column.equals(position.column);
+        return this.file.equals(position.file);
     }
 
     public boolean canCrossMovingStraight(Direction direction, Position destination) {
@@ -78,7 +78,7 @@ public class Position {
     }
 
     private boolean canMove(int x, int y) {
-        return column.canMove(x) && row.canMove(y);
+        return file.canMove(x) && rank.canMove(y);
     }
 
     @Override
@@ -90,19 +90,19 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return column == position.column && row == position.row;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(file, rank);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                column +
-                ", " + row +
+                file +
+                ", " + rank +
                 '}';
     }
 }

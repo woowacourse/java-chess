@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import java.util.Arrays;
 
-public enum Row {
+public enum Rank {
 
     RANK_8("8", 8),
     RANK_7("7", 7),
@@ -17,19 +17,19 @@ public enum Row {
     private final String value;
     private final int y;
 
-    Row(String value, int y) {
+    Rank(String value, int y) {
         this.value = value;
         this.y = y;
     }
 
-    public static Row of(String input) {
-        return Arrays.stream(Row.values())
+    public static Rank of(String input) {
+        return Arrays.stream(Rank.values())
                 .filter(row -> row.value.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }
 
-    public Row move(int y) {
+    public Rank move(int y) {
         return findY(this.y + y);
     }
 
@@ -42,8 +42,8 @@ public enum Row {
         }
     }
 
-    private Row findY(int input) {
-        return Arrays.stream(Row.values())
+    private Rank findY(int input) {
+        return Arrays.stream(Rank.values())
                 .filter(row -> row.y == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));

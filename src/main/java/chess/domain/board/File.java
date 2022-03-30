@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import java.util.Arrays;
 
-public enum Column {
+public enum File {
 
     FILE_A("a", 1),
     FILE_B("b", 2),
@@ -17,19 +17,19 @@ public enum Column {
     private final String value;
     private final int x;
 
-    Column(String value, int x) {
+    File(String value, int x) {
         this.value = value;
         this.x = x;
     }
 
-    public static Column of(String input) {
-        return Arrays.stream(Column.values())
-                .filter(column -> column.value.equals(input))
+    public static File of(String input) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.value.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }
 
-    public Column move(int x) {
+    public File move(int x) {
         return findX(this.x + x);
     }
 
@@ -42,9 +42,9 @@ public enum Column {
         }
     }
 
-    private Column findX(int input) {
-        return Arrays.stream(Column.values())
-                .filter(column -> column.x == input)
+    private File findX(int input) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.x == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }

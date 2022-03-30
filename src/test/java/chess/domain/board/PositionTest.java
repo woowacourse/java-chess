@@ -66,6 +66,6 @@ class PositionTest {
     @Test
     void testIsStartRow() {
         Position source = Position.of("a2");
-        assertThat(source.isSameRow(Row.RANK_2)).isTrue();
+        assertThat(source.isSameRow(Rank.RANK_2)).isTrue();
     }
 }
