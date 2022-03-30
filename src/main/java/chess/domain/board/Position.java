@@ -1,9 +1,10 @@
 package chess.domain.board;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public class Position {
 
@@ -11,19 +12,20 @@ public class Position {
     private static final int RANK_INDEX = 1;
     private static final String RANK_FILE_DELIMITER = "";
 
-    private static final List<Position> allPositions;
+    private static final Map<Integer, Position> allPosition = initialAllPosition();
 
-    static {
-        allPositions = Arrays.stream(File.values())
-                .map(Position::generatePositionOf)
-                .flatMap(List::stream)
-                .collect(Collectors.toUnmodifiableList());
+    private static Map<Integer ,Position> initialAllPosition() {
+        Map<Integer, Position> allPositions = new HashMap<>();
+        for (File file : File.values()) {
+            putAllRankOfFile(allPositions, file);
+        }
+        return allPositions;
     }
 
-    private static List<Position> generatePositionOf(final File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> new Position(file, rank))
-                .collect(Collectors.toList());
+    private static void putAllRankOfFile(Map<Integer, Position> allPositions, File file) {
+        for(Rank rank : Rank.values()) {
+            allPositions.put(Objects.hash(file, rank), new Position(file, rank));
+        }
     }
 
     private final File file;
@@ -35,11 +37,11 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        return allPositions.stream()
-                .filter(position -> position.file == file)
-                .filter(position -> position.rank == rank)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("위치 정보가 유효하지 않습니다."));
+        int key = Objects.hash(file, rank);
+        if (allPosition.containsKey(key)) {
+            return allPosition.get(key);
+        }
+        return new Position(file, rank);
     }
 
     public static Position from(final String positionValue) {
