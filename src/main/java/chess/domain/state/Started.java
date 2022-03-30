@@ -5,6 +5,9 @@ import chess.domain.Score;
 
 public abstract class Started implements State {
 
+    protected static final int SOURCE_INDEX = 0;
+    protected static final int TARGET_INDEX = 1;
+
     private final Board board;
 
     public Started(Board board) {

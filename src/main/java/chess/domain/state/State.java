@@ -4,6 +4,8 @@ import chess.domain.Board;
 import chess.domain.Score;
 import chess.domain.postion.Position;
 
+import java.util.List;
+
 
 public interface State {
 
@@ -11,7 +13,7 @@ public interface State {
 
     State end();
 
-    State changeTurn(Position source, Position target);
+    State changeTurn(List<Position> positions);
 
     Score status();
 

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static chess.domain.postion.File.A;
 import static chess.domain.postion.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,8 +28,9 @@ public class WhiteTest {
     @Test
     void changeTurn() {
         White white = new White(board);
+        List<Position> positions = List.of(new Position(A, TWO), new Position(A, THREE));
 
-        assertThat(white.changeTurn(new Position(A, TWO), new Position(A, THREE))).isInstanceOf(Black.class);
+        assertThat(white.changeTurn(positions)).isInstanceOf(Black.class);
     }
 
     @DisplayName("White 상태에서 게임이 종료되면 end 상태로 되는지 테스트")
@@ -42,8 +45,9 @@ public class WhiteTest {
     @Test
     void isNotWhitePiece() {
         White white = new White(board);
+        List<Position> positions = List.of(new Position(A, SEVEN), new Position(A, SIX));
 
-        assertThatThrownBy( () -> white.changeTurn(new Position(A, SEVEN), new Position(A, SIX)));
+        assertThatThrownBy( () -> white.changeTurn(positions));
     }
 
     @DisplayName("status시 Board로 부터 Map으로된 점수를 받아오는지 테스트")

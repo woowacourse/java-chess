@@ -4,6 +4,8 @@ import chess.domain.Board;
 import chess.domain.Score;
 import chess.domain.postion.Position;
 
+import java.util.List;
+
 public final class Ready implements State {
 
     private final Board board;
@@ -23,7 +25,7 @@ public final class Ready implements State {
     }
 
     @Override
-    public State changeTurn(final Position source, final Position target) {
+    public State changeTurn(final List<Position> positions) {
         throw new IllegalArgumentException("Ready 상태에서는 chageTurn할 수 없습니다.");
     }
 
