@@ -45,9 +45,4 @@ public final class Rook extends Piece {
 	public String getSymbol() {
 		return "r";
 	}
-
-	@Override
-	public boolean isRook() {
-		return true;
-	}
 }

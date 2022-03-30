@@ -36,10 +36,6 @@ public abstract class Piece {
 
 	public abstract String getSymbol();
 
-	public boolean isBishop() {
-		return false;
-	}
-
 	public boolean isKing() {
 		return false;
 	}
@@ -49,14 +45,6 @@ public abstract class Piece {
 	}
 
 	public boolean isPawn() {
-		return false;
-	}
-
-	public boolean isQueen() {
-		return false;
-	}
-
-	public boolean isRook() {
 		return false;
 	}
 }

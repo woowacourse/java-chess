@@ -43,9 +43,4 @@ public final class Bishop extends Piece {
 	public String getSymbol() {
 		return "b";
 	}
-
-	@Override
-	public boolean isBishop() {
-		return true;
-	}
 }

@@ -48,9 +48,4 @@ public final class Queen extends Piece {
 	public String getSymbol() {
 		return "q";
 	}
-
-	@Override
-	public boolean isQueen() {
-		return true;
-	}
 }
