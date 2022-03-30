@@ -16,7 +16,8 @@ public abstract class Playing implements GameState {
     }
 
     public Piece getPiece(Position position) {
-        return board.get(position.getRow()).getPiece(position.getCol());
+        Rank rank = board.get(position.getRow());
+        return rank.getPiece(position.getCol());
     }
 
     abstract Playing turn();
