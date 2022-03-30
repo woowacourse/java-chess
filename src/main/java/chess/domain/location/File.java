@@ -10,8 +10,7 @@ public enum File {
     E("e"),
     F("f"),
     G("g"),
-    H("h"),
-    ;
+    H("h");
 
     private final String file;
 

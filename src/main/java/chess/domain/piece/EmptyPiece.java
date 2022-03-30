@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
 
-public class EmptyPiece extends Piece{
+public class EmptyPiece extends Piece {
     private static final double SCORE = 0;
 
     public EmptyPiece() {
