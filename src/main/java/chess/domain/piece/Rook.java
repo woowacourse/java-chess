@@ -21,7 +21,7 @@ public class Rook extends Piece {
     @Override
     public void checkMovingRange(final Board board, final Position from, final Position to) {
         if (!isRookMoving(from, to)) {
-            throw new IllegalArgumentException("룩은 대각선으로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("룩은 상하좌우 방향으로만 이동할 수 있습니다.");
         }
     }
 
