@@ -48,15 +48,15 @@ class PositionTest {
 
 
 	@ParameterizedTest
-	@MethodSource("createMovablePositionCount")
-	void calculateMovableByDirection(Position startPosition, int size) {
+	@MethodSource("createArrivalPositionCount")
+	void getArrivalPositionsByDirection(Position startPosition, int size) {
 		List<Direction> kingMoveDirection = Direction.getKingDirection();
-		List<Position> movablePositions = startPosition.calculateMovableByDirection(kingMoveDirection);
+		List<Position> movablePositions = startPosition.getArrivalPositionsByDirections(kingMoveDirection);
 
 		assertThat(movablePositions.size()).isEqualTo(size);
 	}
 
-	private static Stream<Arguments> createMovablePositionCount() {
+	private static Stream<Arguments> createArrivalPositionCount() {
 		return Stream.of(
 				Arguments.of(Position.of(4, 4), 8),
 				Arguments.of(Position.of(1, 1), 3)

@@ -25,7 +25,7 @@ public final class King extends Piece {
 	@Override
 	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		List<Direction> directions = Direction.getKingDirection();
-		List<Position> movablePositions = source.calculateMovableByDirection(directions);
+		List<Position> movablePositions = source.getArrivalPositionsByDirections(directions);
 		if (!movablePositions.contains(target)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}

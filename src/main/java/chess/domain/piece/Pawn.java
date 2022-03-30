@@ -31,7 +31,7 @@ public final class Pawn extends Piece {
 			directions.add(Direction.getDefaultPawnByTeam(team));
 		}
 
-		List<Position> movablePositions = source.calculateMovableByDirection(directions);
+		List<Position> movablePositions = source.getArrivalPositionsByDirections(directions);
 		if (!movablePositions.contains(target)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}

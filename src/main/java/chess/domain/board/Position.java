@@ -12,7 +12,7 @@ public class Position {
 
 	public static final int MIN_POSITION = 1;
 	public static final int MAX_POSITION = 8;
-	
+
 	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
 
 	private final int row;
@@ -56,7 +56,7 @@ public class Position {
 		return Math.abs(this.row - position.row) == Math.abs(this.column - position.column);
 	}
 
-	public List<Position> calculateMovableByDirection(List<Direction> directions) {
+	public List<Position> getArrivalPositionsByDirections(List<Direction> directions) {
 		return directions.stream()
 				.filter(this::canMoveToDirection)
 				.map(this::addDirection)
