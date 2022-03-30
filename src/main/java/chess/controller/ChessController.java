@@ -21,12 +21,12 @@ public class ChessController {
 
     static void start(ChessGame chessGame, String optionInput) {
         chessGame.start();
-        OutputView.printInitialChessBoard(chessGame.getBoard());
+        OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 
     static void move(ChessGame chessGame, String optionInput) {
         chessGame.movePiece(optionInput);
-        OutputView.printInitialChessBoard(chessGame.getBoard());
+        OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 
     static void end(ChessGame chessGame, String optionInput) {

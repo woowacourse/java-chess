@@ -26,7 +26,7 @@ class ScoreTest {
     @EnumSource(value = Color.class, names = {"BLACK", "WHITE"})
     void calculateScore(Color color) {
         Board board = new Board(BoardFactory.getInitialPieces());
-        Map<Color, Double> score = Score.from(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getValue());
 
         assertThat(score.get(color)).isEqualTo(38);
     }
@@ -39,7 +39,7 @@ class ScoreTest {
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new Pawn(Color.WHITE));
 
         Board board = new Board(initialPieces);
-        Map<Color, Double> score = Score.from(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getValue());
 
         assertThat(score.get(Color.WHITE)).isEqualTo(1);
     }
@@ -56,7 +56,7 @@ class ScoreTest {
         initialPieces.put(Position.valueOf(File.C, Rank.TWO), new Pawn(Color.WHITE));
 
         Board board = new Board(initialPieces);
-        Map<Color, Double> score = Score.from(board.getBoard());
+        Map<Color, Double> score = Score.from(board.getValue());
 
         assertThat(score.get(Color.WHITE)).isEqualTo(3.5);
     }

@@ -2,9 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -29,27 +27,31 @@ public class OutputView {
         System.out.println(EXAMPLE_MOVE_MESSAGE);
     }
 
-    public static void printInitialChessBoard(Board board) {
+    public static void printInitialChessBoard(Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
             .forEach(rank -> printBoardRowLine(rank, board));
         System.out.print(System.lineSeparator());
     }
 
-    public static void printBoardRowLine(Rank rank, Board board) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        for (File value : File.values()) {
-            Optional<Piece> pieceOptional = Optional.ofNullable(
-                chessBoard.get(Position.valueOf(value, rank)));
-            String printFormat = pieceOptional.map(PieceMapper::from).orElse(NONE_PIECE);
-            System.out.print(printFormat);
-        }
+    public static void printBoardRowLine(Rank rank, Map<Position, Piece> board) {
+        Arrays.stream(File.values())
+            .map(file -> getPiecePrintFormat(board, rank, file))
+            .forEach(System.out::print);
         System.out.print(System.lineSeparator());
     }
 
-    public static void printScore(Map<Color, Double> scores) {
-        for (Color color : scores.keySet()) {
-            System.out.printf(SCORE_FORMAT + System.lineSeparator(), color, scores.get(color));
+    private static String getPiecePrintFormat(Map<Position, Piece> board, Rank rank, File file) {
+        String printFormat = NONE_PIECE;
+        if (board.containsKey(Position.valueOf(file, rank))) {
+            Piece piece = board.get(Position.valueOf(file, rank));
+            printFormat = PieceMapper.from(piece);
         }
+        return printFormat;
+    }
+
+    public static void printScore(Map<Color, Double> scores) {
+        scores.keySet()
+            .forEach(color -> System.out.printf(SCORE_FORMAT + System.lineSeparator(), color, scores.get(color)));
         System.out.print(System.lineSeparator());
     }
 

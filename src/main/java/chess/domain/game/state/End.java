@@ -33,12 +33,12 @@ public class End implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        return Score.from(board.getBoard());
+        return Score.from(board.getValue());
     }
 
     @Override
     public Color getWinTeamColor() {
-        return Winner.from(board.getBoard());
+        return Winner.from(board.getValue());
     }
 
     @Override

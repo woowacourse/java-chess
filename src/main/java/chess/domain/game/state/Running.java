@@ -24,7 +24,7 @@ public class Running implements GameState {
         validateTurn(fromPosition);
         board.movePiece(fromPosition, toPosition);
         switchColor();
-        if (Winner.from(board.getBoard()) != Color.NONE) {
+        if (Winner.from(board.getValue()) != Color.NONE) {
             return new End(board);
         }
         return new Running(board, color);
@@ -55,12 +55,12 @@ public class Running implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        return Score.from(board.getBoard());
+        return Score.from(board.getValue());
     }
 
     @Override
     public Color getWinTeamColor() {
-        return Winner.from(board.getBoard());
+        return Winner.from(board.getValue());
     }
 
     @Override

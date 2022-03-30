@@ -37,7 +37,7 @@ public class BoardTest {
 
         board.movePiece(fromPosition, toPosition);
 
-        assertThat(board.getBoard().containsKey(toPosition)).isTrue();
+        assertThat(board.getValue().containsKey(toPosition)).isTrue();
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BoardTest {
 
         board.movePiece(fromPosition, toPosition);
 
-        assertThat(board.getBoard().containsKey(fromPosition)).isFalse();
+        assertThat(board.getValue().containsKey(fromPosition)).isFalse();
     }
 
     @Test
