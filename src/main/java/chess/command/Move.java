@@ -18,7 +18,7 @@ public class Move implements Command {
         chessGame.move(this.sourcePosition, this.targetPosition);
         outputView.printBoard(chessGame.getBoard().getSquares());
         if (chessGame.isFinished()) {
-            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
             outputView.printWinner(chessGame.getWinner());
         }
     }

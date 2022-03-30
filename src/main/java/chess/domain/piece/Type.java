@@ -29,11 +29,11 @@ public enum Type {
     private static final int DISTANCE_KNIGHT_SECOND_STEP = 1;
 
     private final BiPredicate<Position, Position> distanceChecker;
-    private final double Score;
+    private final double score;
 
     Type(BiPredicate<Position, Position> distanceChecker, double score) {
         this.distanceChecker = distanceChecker;
-        Score = score;
+        this.score = score;
     }
 
     private static boolean canKnightApproach(Position sourcePosition, Position targetPosition) {
@@ -49,7 +49,11 @@ public enum Type {
         return !this.distanceChecker.test(sourcePosition, targetPosition);
     }
 
+    public double scoreOf(int count) {
+        return this.score * count;
+    }
+
     public double getScore() {
-        return Score;
+        return score;
     }
 }

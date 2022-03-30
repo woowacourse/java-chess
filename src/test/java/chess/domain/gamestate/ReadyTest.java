@@ -38,7 +38,7 @@ public class ReadyTest {
     @DisplayName("Ready 상태에서 status 명령 호출 시 예외 발생")
     @Test
     void ready_status_exception() {
-        assertThatThrownBy(state::statusOfBlack)
+        assertThatThrownBy(state::scoreOfBlack)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 시작되지 않아 상태를 확인할 수 없습니다.");
     }

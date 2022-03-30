@@ -9,7 +9,7 @@ public class Status implements Command {
 
     @Override
     public void execute(ChessGame chessGame, OutputView outputView) {
-        outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+        outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
     }
 
     @Override

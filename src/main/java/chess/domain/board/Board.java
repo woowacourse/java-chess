@@ -1,19 +1,14 @@
 package chess.domain.board;
 
-import static chess.domain.Camp.BLACK;
-import static chess.domain.Camp.WHITE;
-
 import chess.domain.Camp;
 import chess.domain.piece.None;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Type;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public final class Board {
     private static final String ERROR_NO_SOURCE = "이동할 수 있는 기물이 없습니다.";
@@ -31,8 +26,6 @@ public final class Board {
 
     public void move(Position sourcePosition, Position targetPosition) {
         Piece source = this.squares.get(sourcePosition);
-        System.out.println("백색 진영 : " + source.isCamp(WHITE));
-        System.out.println("백색 진영 isNotTurn : " + WHITE.isNotTurn());
 
         checkBlank(sourcePosition);
         checkTurn(source);
@@ -92,86 +85,23 @@ public final class Board {
     }
 
     public boolean hasKingCaptured() {
-        return COUNT_INITIAL_KING != collectKing().size();
+        int kingCount = countPiecesOf(Camp.WHITE, Type.KING) + countPiecesOf(Camp.BLACK, Type.KING);
+        return COUNT_INITIAL_KING > kingCount;
     }
 
-    public Camp winnerByKing() {
-        if (this.hasKingOfCampCaptured(BLACK)) {
-            return WHITE;
-        }
-        if (this.hasKingOfCampCaptured(WHITE)) {
-            return BLACK;
-        }
-        return Camp.NONE;
-    }
-
-    private boolean hasKingOfCampCaptured(Camp camp) {
-        return collectKing().stream()
-                .noneMatch(piece -> piece.isCamp(camp));
-    }
-
-    private List<Piece> collectKing() {
-        return this.squares.values()
-                .stream()
-                .filter(piece -> piece.isType(Type.KING))
-                .collect(Collectors.toList());
-    }
-
-    public Camp winnerByScore() {
-        double blackScore = calculateScoreOf(BLACK);
-        double whiteScore = calculateScoreOf(WHITE);
-        if (blackScore > whiteScore) {
-            return BLACK;
-        }
-        if (whiteScore > blackScore) {
-            return WHITE;
-        }
-        return Camp.NONE;
-    }
-
-    public double calculateScoreOf(Camp camp) {
-        return Arrays.stream(Column.values())
-                .map(column -> collectPiecesOfCampIn(column, camp))
-                .mapToDouble(pieces -> calculatePawnScoreIn(pieces) + calculateScoreWithoutPawnIn(pieces))
-                .sum();
-    }
-
-    private List<Piece> collectPiecesOfCampIn(Column column, Camp camp) {
-        return Arrays.stream(Row.values())
-                .map(row -> this.squares.get(Position.of(column, row)))
+    public int countPiecesOf(Camp camp, Type type) {
+        return (int) this.squares.values().stream()
+                .filter(piece -> piece.isType(type))
                 .filter(piece -> piece.isCamp(camp))
-                .collect(Collectors.toList());
+                .count();
     }
 
-    private double calculateScoreWithoutPawnIn(List<Piece> pieces) {
-        List<Piece> piecesWithoutPawn = collectPiecesWithoutPawnIn(pieces);
-        return piecesWithoutPawn.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
-    }
-
-    private List<Piece> collectPiecesWithoutPawnIn(List<Piece> pieces) {
-        return pieces.stream()
-                .filter(piece -> !piece.isType(Type.PAWN))
-                .collect(Collectors.toList());
-    }
-
-    private double calculatePawnScoreIn(List<Piece> pieces) {
-        List<Piece> pawns = collectPawnsIn(pieces);
-        if (pawns.size() == 0) {
-            return 0;
-        }
-        double pawnScore = pawns.get(0).getScore();
-        if (pawns.size() > 1) {
-            return pawnScore / 2.0 * pawns.size();
-        }
-        return pawnScore * pawns.size();
-    }
-
-    private List<Piece> collectPawnsIn(List<Piece> pieces) {
-        return pieces.stream()
-                .filter(piece -> piece.isType(Type.PAWN))
-                .collect(Collectors.toList());
+    public int countPiecesOfCampIn(Column column, Camp camp, Type type) {
+        return (int) Arrays.stream(Row.values())
+                .map(row -> this.squares.get(Position.of(column, row)))
+                .filter(piece -> piece.isType(type))
+                .filter(piece -> piece.isCamp(camp))
+                .count();
     }
 
     public Map<Position, Piece> getSquares() {

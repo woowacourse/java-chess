@@ -4,6 +4,7 @@ import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.Position;
+import chess.domain.Score;
 
 public class Finished implements State {
     private static final String ERROR_CANT_MOVE = "게임이 종료되어 기물을 이동할 수 없습니다.";
@@ -30,13 +31,13 @@ public class Finished implements State {
     }
 
     @Override
-    public double statusOfBlack() {
-        return board.calculateScoreOf(Camp.BLACK);
+    public Score scoreOfWhite() {
+        return Score.of(board, Camp.WHITE);
     }
 
     @Override
-    public double statusOfWhite() {
-        return board.calculateScoreOf(Camp.WHITE);
+    public Score scoreOfBlack() {
+        return Score.of(board, Camp.BLACK);
     }
 
     @Override
@@ -51,10 +52,6 @@ public class Finished implements State {
 
     @Override
     public Camp getWinner() {
-        Camp winnerByKing = this.board.winnerByKing();
-        if (winnerByKing != Camp.NONE) {
-            return winnerByKing;
-        }
-        return this.board.winnerByScore();
+        return Score.winnerOf(this.board);
     }
 }

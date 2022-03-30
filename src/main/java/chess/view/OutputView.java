@@ -6,6 +6,7 @@ import static chess.view.Expressions.PIECE_EXPRESSIONS;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.Score;
 import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -76,9 +77,9 @@ public class OutputView {
         System.out.println(MESSAGE_GAME_END);
     }
 
-    public void printStatus(double statusOfWhite, double statusOfBlack) {
-        System.out.printf(FORMAT_SCORE, CAMP_WHITE, statusOfWhite);
-        System.out.printf(FORMAT_SCORE, CAMP_BLACK, statusOfBlack);
+    public void printScore(Score scoreOfWhite, Score scoreOfBlack) {
+        System.out.printf(FORMAT_SCORE, CAMP_WHITE, scoreOfWhite.getValue());
+        System.out.printf(FORMAT_SCORE, CAMP_BLACK, scoreOfBlack.getValue());
     }
 
     public void printWinner(Camp winner) {

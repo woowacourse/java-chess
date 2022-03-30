@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.Score;
 
 public interface State {
 
@@ -12,9 +13,9 @@ public interface State {
 
     State end();
 
-    double statusOfBlack();
+    Score scoreOfWhite();
 
-    double statusOfWhite();
+    Score scoreOfBlack();
 
     boolean isFinished();
 

@@ -24,12 +24,12 @@ public class ChessGame {
         this.state = this.state.end();
     }
 
-    public double statusOfBlack() {
-        return this.state.statusOfBlack();
+    public Score scoreOfWhite() {
+        return this.state.scoreOfWhite();
     }
 
-    public double statusOfWhite() {
-        return this.state.statusOfWhite();
+    public Score scoreOfBlack() {
+        return this.state.scoreOfBlack();
     }
 
     public boolean isFinished() {

@@ -12,7 +12,7 @@ public class End implements Command {
         outputView.printFinishMessage();
         chessGame.end();
         if (chessGame.isFinished()) {
-            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            outputView.printScore(chessGame.scoreOfWhite(), chessGame.scoreOfBlack());
             outputView.printWinner(chessGame.getWinner());
         }
     }

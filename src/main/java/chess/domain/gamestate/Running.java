@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.Camp;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.Score;
 
 public class Running implements State {
     private static final String ERROR_ALREADY_STARTED = "이미 시작되었습니다.";
@@ -35,13 +36,13 @@ public class Running implements State {
     }
 
     @Override
-    public double statusOfBlack() {
-        return board.calculateScoreOf(Camp.BLACK);
+    public Score scoreOfWhite() {
+        return Score.of(board, Camp.WHITE);
     }
 
     @Override
-    public double statusOfWhite() {
-        return board.calculateScoreOf(Camp.WHITE);
+    public Score scoreOfBlack() {
+        return Score.of(board, Camp.BLACK);
     }
 
     @Override
