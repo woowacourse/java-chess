@@ -13,8 +13,8 @@ public class Application {
 
 	private static final ChessController chessController = new ChessController();
 	private static final int COMMAND_INDEX = 0;
-	public static final int SOURCE_INDEX = 1;
-	public static final int TARGET_INDEX = 2;
+	private static final int SOURCE_INDEX = 1;
+	private static final int TARGET_INDEX = 2;
 
 	private static Map<Command, Runnable> functionByCommand = createFunctionByCommand();
 
