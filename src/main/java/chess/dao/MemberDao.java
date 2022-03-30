@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.Member;
-import chess.Role;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
