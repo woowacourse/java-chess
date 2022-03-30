@@ -13,11 +13,11 @@ public final class BoardInitiator implements Initiator {
 
     public Map<Position, Piece> initiate() {
         final Map<Position, Piece> pieces = new HashMap<>();
-        initGame(pieces);
+        initBoard(pieces);
         return pieces;
     }
 
-    private void initGame(final Map<Position, Piece> pieces) {
+    private void initBoard(final Map<Position, Piece> pieces) {
         initRooks(pieces);
         initKnights(pieces);
         initBishops(pieces);
