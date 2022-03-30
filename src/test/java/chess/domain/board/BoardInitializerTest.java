@@ -83,7 +83,7 @@ class BoardInitializerTest {
 	void check_camp_white(Row row) {
 		//then
 		for (Column column : Column.values()) {
-			Piece piece = board.get(new Position(column, row));
+			Piece piece = board.get(Position.of(column, row));
 			assertThat(piece.isBlack()).isFalse();
 		}
 	}
@@ -93,70 +93,70 @@ class BoardInitializerTest {
 	void check_camp_black(Row row) {
 		//then
 		for (Column column : Column.values()) {
-			Piece piece = board.get(new Position(column, row));
+			Piece piece = board.get(Position.of(column, row));
 			assertThat(piece.isBlack()).isTrue();
 		}
 	}
 
 	private static Stream<Arguments> provideRookPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.A, Row.ONE)),
-			Arguments.of(new Position(Column.H, Row.ONE)),
-			Arguments.of(new Position(Column.A, Row.EIGHT)),
-			Arguments.of(new Position(Column.H, Row.EIGHT))
+			Arguments.of(Position.of(Column.A, Row.ONE)),
+			Arguments.of(Position.of(Column.H, Row.ONE)),
+			Arguments.of(Position.of(Column.A, Row.EIGHT)),
+			Arguments.of(Position.of(Column.H, Row.EIGHT))
 		);
 	}
 
 	private static Stream<Arguments> provideBishopPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.C, Row.ONE)),
-			Arguments.of(new Position(Column.F, Row.ONE)),
-			Arguments.of(new Position(Column.C, Row.EIGHT)),
-			Arguments.of(new Position(Column.F, Row.EIGHT))
+			Arguments.of(Position.of(Column.C, Row.ONE)),
+			Arguments.of(Position.of(Column.F, Row.ONE)),
+			Arguments.of(Position.of(Column.C, Row.EIGHT)),
+			Arguments.of(Position.of(Column.F, Row.EIGHT))
 		);
 	}
 
 	private static Stream<Arguments> provideKnightPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.B, Row.ONE)),
-			Arguments.of(new Position(Column.G, Row.ONE)),
-			Arguments.of(new Position(Column.B, Row.EIGHT)),
-			Arguments.of(new Position(Column.G, Row.EIGHT))
+			Arguments.of(Position.of(Column.B, Row.ONE)),
+			Arguments.of(Position.of(Column.G, Row.ONE)),
+			Arguments.of(Position.of(Column.B, Row.EIGHT)),
+			Arguments.of(Position.of(Column.G, Row.EIGHT))
 		);
 	}
 
 	private static Stream<Arguments> provideQueenPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.D, Row.ONE)),
-			Arguments.of(new Position(Column.D, Row.EIGHT))
+			Arguments.of(Position.of(Column.D, Row.ONE)),
+			Arguments.of(Position.of(Column.D, Row.EIGHT))
 		);
 	}
 
 	private static Stream<Arguments> provideKingPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.E, Row.ONE)),
-			Arguments.of(new Position(Column.E, Row.EIGHT))
+			Arguments.of(Position.of(Column.E, Row.ONE)),
+			Arguments.of(Position.of(Column.E, Row.EIGHT))
 		);
 	}
 
 	private static Stream<Arguments> providePawnPosition() {
 		return Stream.of(
-			Arguments.of(new Position(Column.A, Row.TWO)),
-			Arguments.of(new Position(Column.B, Row.TWO)),
-			Arguments.of(new Position(Column.C, Row.TWO)),
-			Arguments.of(new Position(Column.D, Row.TWO)),
-			Arguments.of(new Position(Column.E, Row.TWO)),
-			Arguments.of(new Position(Column.F, Row.TWO)),
-			Arguments.of(new Position(Column.G, Row.TWO)),
-			Arguments.of(new Position(Column.H, Row.TWO)),
-			Arguments.of(new Position(Column.A, Row.SEVEN)),
-			Arguments.of(new Position(Column.B, Row.SEVEN)),
-			Arguments.of(new Position(Column.C, Row.SEVEN)),
-			Arguments.of(new Position(Column.D, Row.SEVEN)),
-			Arguments.of(new Position(Column.E, Row.SEVEN)),
-			Arguments.of(new Position(Column.F, Row.SEVEN)),
-			Arguments.of(new Position(Column.G, Row.SEVEN)),
-			Arguments.of(new Position(Column.H, Row.SEVEN))
+			Arguments.of(Position.of(Column.A, Row.TWO)),
+			Arguments.of(Position.of(Column.B, Row.TWO)),
+			Arguments.of(Position.of(Column.C, Row.TWO)),
+			Arguments.of(Position.of(Column.D, Row.TWO)),
+			Arguments.of(Position.of(Column.E, Row.TWO)),
+			Arguments.of(Position.of(Column.F, Row.TWO)),
+			Arguments.of(Position.of(Column.G, Row.TWO)),
+			Arguments.of(Position.of(Column.H, Row.TWO)),
+			Arguments.of(Position.of(Column.A, Row.SEVEN)),
+			Arguments.of(Position.of(Column.B, Row.SEVEN)),
+			Arguments.of(Position.of(Column.C, Row.SEVEN)),
+			Arguments.of(Position.of(Column.D, Row.SEVEN)),
+			Arguments.of(Position.of(Column.E, Row.SEVEN)),
+			Arguments.of(Position.of(Column.F, Row.SEVEN)),
+			Arguments.of(Position.of(Column.G, Row.SEVEN)),
+			Arguments.of(Position.of(Column.H, Row.SEVEN))
 		);
 	}
 

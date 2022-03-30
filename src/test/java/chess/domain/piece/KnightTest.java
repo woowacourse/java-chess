@@ -18,8 +18,8 @@ public class KnightTest {
 	@Test
 	void move_c4_b6() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position b6 = new Position(Column.B, Row.SIX);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position b6 = Position.of(Column.B, Row.SIX);
 		//then
 		assertThat(knight.canMove(c4, b6)).isTrue();
 	}
@@ -28,8 +28,8 @@ public class KnightTest {
 	@Test
 	void move_c4_d6() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position b6 = new Position(Column.B, Row.SIX);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position b6 = Position.of(Column.B, Row.SIX);
 		//then
 		assertThat(knight.canMove(c4, b6)).isTrue();
 	}
@@ -38,8 +38,8 @@ public class KnightTest {
 	@Test
 	void move_c4_b2() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position b2 = new Position(Column.B, Row.TWO);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position b2 = Position.of(Column.B, Row.TWO);
 		//then
 		assertThat(knight.canMove(c4, b2)).isTrue();
 	}
@@ -48,8 +48,8 @@ public class KnightTest {
 	@Test
 	void move_c4_d2() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position d2 = new Position(Column.D, Row.TWO);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position d2 = Position.of(Column.D, Row.TWO);
 		//then
 		assertThat(knight.canMove(c4, d2)).isTrue();
 	}
@@ -58,8 +58,8 @@ public class KnightTest {
 	@Test
 	void move_c4_a5() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position a5 = new Position(Column.A, Row.FIVE);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position a5 = Position.of(Column.A, Row.FIVE);
 		//then
 		assertThat(knight.canMove(c4, a5)).isTrue();
 	}
@@ -68,8 +68,8 @@ public class KnightTest {
 	@Test
 	void move_c4_a3() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position a3 = new Position(Column.A, Row.THREE);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position a3 = Position.of(Column.A, Row.THREE);
 		//then
 		assertThat(knight.canMove(c4, a3)).isTrue();
 	}
@@ -78,8 +78,8 @@ public class KnightTest {
 	@Test
 	void move_c4_e5() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position e5 = new Position(Column.E, Row.FIVE);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position e5 = Position.of(Column.E, Row.FIVE);
 		//then
 		assertThat(knight.canMove(c4, e5)).isTrue();
 	}
@@ -88,8 +88,8 @@ public class KnightTest {
 	@Test
 	void move_c4_e3() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position e3 = new Position(Column.E, Row.THREE);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position e3 = Position.of(Column.E, Row.THREE);
 		//then
 		assertThat(knight.canMove(c4, e3)).isTrue();
 	}
@@ -98,8 +98,8 @@ public class KnightTest {
 	@Test
 	void move_c4_a4() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThat(knight.canMove(c4, a4)).isFalse();
 	}
@@ -108,8 +108,8 @@ public class KnightTest {
 	@Test
 	void move_c4_e4() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position e4 = new Position(Column.E, Row.FOUR);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position e4 = Position.of(Column.E, Row.FOUR);
 		//then
 		assertThat(knight.canMove(c4, e4)).isFalse();
 	}
@@ -118,8 +118,8 @@ public class KnightTest {
 	@Test
 	void move_c4_b7() {
 		//given
-		Position c4 = new Position(Column.C, Row.FOUR);
-		Position b7 = new Position(Column.B, Row.SEVEN);
+		Position c4 = Position.of(Column.C, Row.FOUR);
+		Position b7 = Position.of(Column.B, Row.SEVEN);
 		//then
 		assertThat(knight.canMove(c4, b7)).isFalse();
 	}

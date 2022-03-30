@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -8,18 +9,28 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Position implements Comparable<Position> {
+
+	private static final String INVALID_POSITION_EXCEPTION = "유효하지 않은 위치입니다.";
+
 	private final Column column;
 	private final Row row;
 
-	public Position(Column column, Row row) {
+	private Position(Column column, Row row) {
 		this.column = column;
 		this.row = row;
+	}
+
+	public static Position of(Column column, Row row) {
+		return Key.keys.stream()
+			.filter(position -> position.column == column && position.row == row)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_POSITION_EXCEPTION));
 	}
 
 	public static Position from(String rawPosition) {
 		String rawColumn = rawPosition.substring(0, 1);
 		String rawRow = rawPosition.substring(1);
-		return new Position(Column.from(rawColumn), Row.from(rawRow));
+		return of(Column.from(rawColumn), Row.from(rawRow));
 	}
 
 	public int columnDistance(Position otherPosition) {
@@ -117,6 +128,17 @@ public class Position implements Comparable<Position> {
 		return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
 			.thenComparing(Position::getColumn)
 			.compare(this, o);
+	}
+
+	static class Key {
+		private static final List<Position> keys;
+
+		static {
+			keys = Arrays.stream(Column.values())
+				.flatMap(column -> Arrays.stream(Row.values())
+					.map(row -> new Position(column, row))
+				).collect(Collectors.toList());
+		}
 	}
 }
 

@@ -18,8 +18,8 @@ class KingTest {
 	@Test
 	void move_f1_f2() {
 		//given
-		Position f1 = new Position(Column.F, Row.ONE);
-		Position f2 = new Position(Column.F, Row.TWO);
+		Position f1 = Position.of(Column.F, Row.ONE);
+		Position f2 = Position.of(Column.F, Row.TWO);
 		//then
 		assertThat(king.canMove(f1, f2)).isTrue();
 	}
@@ -28,8 +28,8 @@ class KingTest {
 	@Test
 	void move_f1_g2() {
 		//given
-		Position f1 = new Position(Column.F, Row.ONE);
-		Position g2 = new Position(Column.G, Row.TWO);
+		Position f1 = Position.of(Column.F, Row.ONE);
+		Position g2 = Position.of(Column.G, Row.TWO);
 		//then
 		assertThat(king.canMove(f1, g2)).isTrue();
 	}
@@ -38,8 +38,8 @@ class KingTest {
 	@Test
 	void move_f1_f3() {
 		//given
-		Position f1 = new Position(Column.F, Row.ONE);
-		Position f3 = new Position(Column.F, Row.THREE);
+		Position f1 = Position.of(Column.F, Row.ONE);
+		Position f3 = Position.of(Column.F, Row.THREE);
 		//then
 		assertThat(king.canMove(f1, f3)).isFalse();
 	}

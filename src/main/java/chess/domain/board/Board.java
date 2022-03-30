@@ -103,7 +103,7 @@ public final class Board {
 
 	private List<Piece> collectBlackPiecesIn(Column column) {
 		return Arrays.stream(Row.values())
-			.map(row -> this.value.get(new Position(column, row)))
+			.map(row -> this.value.get(Position.of(column, row)))
 			.filter(Objects::nonNull)
 			.filter(Piece::isBlack)
 			.collect(Collectors.toList());
@@ -118,7 +118,7 @@ public final class Board {
 
 	private List<Piece> collectWhitePiecesIn(Column column) {
 		return Arrays.stream(Row.values())
-			.map(row -> this.value.get(new Position(column, row)))
+			.map(row -> this.value.get(Position.of(column, row)))
 			.filter(Objects::nonNull)
 			.filter(piece -> !piece.isBlack())
 			.collect(Collectors.toList());

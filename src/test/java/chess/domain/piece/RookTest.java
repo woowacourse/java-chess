@@ -18,8 +18,8 @@ public class RookTest {
 	@Test
 	void move_d1_d6() {
 		//given
-		Position d1 = new Position(Column.D, Row.ONE);
-		Position d6 = new Position(Column.D, Row.SIX);
+		Position d1 = Position.of(Column.D, Row.ONE);
+		Position d6 = Position.of(Column.D, Row.SIX);
 		//then
 		assertThat(rook.canMove(d1, d6)).isTrue();
 	}
@@ -28,8 +28,8 @@ public class RookTest {
 	@Test
 	void move_d6_d1() {
 		//given
-		Position d6 = new Position(Column.D, Row.SIX);
-		Position d1 = new Position(Column.D, Row.ONE);
+		Position d6 = Position.of(Column.D, Row.SIX);
+		Position d1 = Position.of(Column.D, Row.ONE);
 		//then
 		assertThat(rook.canMove(d6, d1)).isTrue();
 	}
@@ -38,8 +38,8 @@ public class RookTest {
 	@Test
 	void move_d1_e1() {
 		//given
-		Position d1 = new Position(Column.D, Row.ONE);
-		Position e1 = new Position(Column.E, Row.ONE);
+		Position d1 = Position.of(Column.D, Row.ONE);
+		Position e1 = Position.of(Column.E, Row.ONE);
 		//then
 		assertThat(rook.canMove(d1, e1)).isTrue();
 	}
@@ -48,8 +48,8 @@ public class RookTest {
 	@Test
 	void move_e1_d1() {
 		//given
-		Position e1 = new Position(Column.E, Row.ONE);
-		Position d1 = new Position(Column.D, Row.ONE);
+		Position e1 = Position.of(Column.E, Row.ONE);
+		Position d1 = Position.of(Column.D, Row.ONE);
 		//then
 		assertThat(rook.canMove(e1, d1)).isTrue();
 	}
@@ -58,8 +58,8 @@ public class RookTest {
 	@Test
 	void move_d1_g4() {
 		//given
-		Position d1 = new Position(Column.D, Row.ONE);
-		Position g4 = new Position(Column.G, Row.FOUR);
+		Position d1 = Position.of(Column.D, Row.ONE);
+		Position g4 = Position.of(Column.G, Row.FOUR);
 		//then
 		assertThat(rook.canMove(d1, g4)).isFalse();
 	}
@@ -68,8 +68,8 @@ public class RookTest {
 	@Test
 	void move_d1_f2() {
 		//given
-		Position d1 = new Position(Column.D, Row.ONE);
-		Position f2 = new Position(Column.F, Row.TWO);
+		Position d1 = Position.of(Column.D, Row.ONE);
+		Position f2 = Position.of(Column.F, Row.TWO);
 		//then
 		assertThat(rook.canMove(d1, f2)).isFalse();
 	}

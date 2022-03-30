@@ -19,8 +19,8 @@ class PawnTest {
 	@Test
 	void white_pawn_move_a2_a4() {
 		//given
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThat(whitePawn.canMove(a2, a4)).isTrue();
 	}
@@ -29,8 +29,8 @@ class PawnTest {
 	@Test
 	void black_pawn_move_a7_a5() {
 		//given
-		Position a7 = new Position(Column.A, Row.SEVEN);
-		Position a5 = new Position(Column.A, Row.FIVE);
+		Position a7 = Position.of(Column.A, Row.SEVEN);
+		Position a5 = Position.of(Column.A, Row.FIVE);
 		//then
 		assertThat(blackPawn.canMove(a7, a5)).isTrue();
 	}
@@ -39,9 +39,9 @@ class PawnTest {
 	@Test
 	void white_pawn_cant_move_a4_a6_at_second() {
 		//given
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a4 = new Position(Column.A, Row.FOUR);
-		Position a6 = new Position(Column.A, Row.SIX);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a4 = Position.of(Column.A, Row.FOUR);
+		Position a6 = Position.of(Column.A, Row.SIX);
 		whitePawn.move(a2, a4, (piece -> {
 		}));
 		//then
@@ -52,8 +52,8 @@ class PawnTest {
 	@Test
 	void white_pawn_cant_move_a5_a4() {
 		//given
-		Position a5 = new Position(Column.A, Row.FIVE);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a5 = Position.of(Column.A, Row.FIVE);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThat(whitePawn.canMove(a5, a4)).isFalse();
 	}
@@ -62,8 +62,8 @@ class PawnTest {
 	@Test
 	void black_pawn_cant_move_a5_a6() {
 		//given
-		Position a5 = new Position(Column.A, Row.FIVE);
-		Position a6 = new Position(Column.A, Row.SIX);
+		Position a5 = Position.of(Column.A, Row.FIVE);
+		Position a6 = Position.of(Column.A, Row.SIX);
 		//then
 		assertThat(blackPawn.canMove(a5, a6)).isFalse();
 	}
@@ -72,9 +72,9 @@ class PawnTest {
 	@Test
 	void white_pawn_can_move_a4_a5_at_second() {
 		//given
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a4 = new Position(Column.A, Row.FOUR);
-		Position a5 = new Position(Column.A, Row.FIVE);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a4 = Position.of(Column.A, Row.FOUR);
+		Position a5 = Position.of(Column.A, Row.FIVE);
 		whitePawn.move(a2, a4, (piece -> {
 		}));
 		//then
@@ -85,9 +85,9 @@ class PawnTest {
 	@Test
 	void black_pawn_can_move_a5_a4_at_second() {
 		//given
-		Position a7 = new Position(Column.A, Row.SEVEN);
-		Position a5 = new Position(Column.A, Row.FIVE);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a7 = Position.of(Column.A, Row.SEVEN);
+		Position a5 = Position.of(Column.A, Row.FIVE);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		blackPawn.move(a7, a5, (piece -> {
 		}));
 		//then
@@ -98,8 +98,8 @@ class PawnTest {
 	@Test
 	void pawn_cant_move_d3_e3() {
 		//given
-		Position d3 = new Position(Column.D, Row.THREE);
-		Position e3 = new Position(Column.E, Row.THREE);
+		Position d3 = Position.of(Column.D, Row.THREE);
+		Position e3 = Position.of(Column.E, Row.THREE);
 		//then
 		assertThat(blackPawn.canMove(d3, e3)).isFalse();
 	}
@@ -108,8 +108,8 @@ class PawnTest {
 	@Test
 	void pawn_cant_move_d2_e3() {
 		//given
-		Position d2 = new Position(Column.D, Row.TWO);
-		Position e3 = new Position(Column.E, Row.THREE);
+		Position d2 = Position.of(Column.D, Row.TWO);
+		Position e3 = Position.of(Column.E, Row.THREE);
 		//then
 		assertThat(blackPawn.canMove(d2, e3)).isFalse();
 	}
@@ -118,8 +118,8 @@ class PawnTest {
 	@Test
 	void pawn_can_capture_f6_g7() {
 		//given
-		Position f6 = new Position(Column.F, Row.SIX);
-		Position g7 = new Position(Column.G, Row.SEVEN);
+		Position f6 = Position.of(Column.F, Row.SIX);
+		Position g7 = Position.of(Column.G, Row.SEVEN);
 		//then
 		assertThatNoException().isThrownBy(() -> whitePawn.capture(f6, g7, (piece -> {
 		})));
@@ -129,8 +129,8 @@ class PawnTest {
 	@Test
 	void pawn_can_capture_f6_f7() {
 		//given
-		Position f6 = new Position(Column.F, Row.SIX);
-		Position f7 = new Position(Column.F, Row.SEVEN);
+		Position f6 = Position.of(Column.F, Row.SIX);
+		Position f7 = Position.of(Column.F, Row.SEVEN);
 		//then
 		assertThatThrownBy(() -> whitePawn.capture(f6, f7, (piece -> {
 		})))

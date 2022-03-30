@@ -12,8 +12,8 @@ public class BoardTest {
 	void move_h1_h2() {
 		//given
 		Board board = new Board();
-		Position h1 = new Position(Column.H, Row.ONE);
-		Position h2 = new Position(Column.H, Row.TWO);
+		Position h1 = Position.of(Column.H, Row.ONE);
+		Position h2 = Position.of(Column.H, Row.TWO);
 		//then
 		assertThatThrownBy(() -> board.move(h1, h2))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -25,8 +25,8 @@ public class BoardTest {
 	void move_a2_a4() {
 		//given
 		Board board = new Board();
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThatNoException().isThrownBy(() -> board.move(a2, a4));
 	}
@@ -36,8 +36,8 @@ public class BoardTest {
 	void move_blank_exception() {
 		//given
 		Board board = new Board();
-		Position a3 = new Position(Column.A, Row.THREE);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a3 = Position.of(Column.A, Row.THREE);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThatThrownBy(() -> board.move(a3, a4))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -49,8 +49,8 @@ public class BoardTest {
 	void move_obstacle_exception() {
 		//given
 		Board board = new Board();
-		Position a1 = new Position(Column.A, Row.ONE);
-		Position a4 = new Position(Column.A, Row.FOUR);
+		Position a1 = Position.of(Column.A, Row.ONE);
+		Position a4 = Position.of(Column.A, Row.FOUR);
 		//then
 		assertThatThrownBy(() -> board.move(a1, a4))
 			.isInstanceOf(IllegalArgumentException.class)
@@ -71,12 +71,12 @@ public class BoardTest {
 	void calculateScoreOfBlack_37() {
 		//given
 		Board board = new Board();
-		Position b2 = new Position(Column.B, Row.TWO);
-		Position b4 = new Position(Column.B, Row.FOUR);
-		Position c7 = new Position(Column.C, Row.SEVEN);
-		Position c5 = new Position(Column.C, Row.FIVE);
-		Position d2 = new Position(Column.D, Row.TWO);
-		Position d4 = new Position(Column.D, Row.FOUR);
+		Position b2 = Position.of(Column.B, Row.TWO);
+		Position b4 = Position.of(Column.B, Row.FOUR);
+		Position c7 = Position.of(Column.C, Row.SEVEN);
+		Position c5 = Position.of(Column.C, Row.FIVE);
+		Position d2 = Position.of(Column.D, Row.TWO);
+		Position d4 = Position.of(Column.D, Row.FOUR);
 
 		board.move(b2, b4);
 		board.move(c7, c5);
@@ -100,10 +100,10 @@ public class BoardTest {
 	void calculateScoreOfWhite_37() {
 		//given
 		Board board = new Board();
-		Position b2 = new Position(Column.B, Row.TWO);
-		Position b4 = new Position(Column.B, Row.FOUR);
-		Position c7 = new Position(Column.C, Row.SEVEN);
-		Position c5 = new Position(Column.C, Row.FIVE);
+		Position b2 = Position.of(Column.B, Row.TWO);
+		Position b4 = Position.of(Column.B, Row.FOUR);
+		Position c7 = Position.of(Column.C, Row.SEVEN);
+		Position c5 = Position.of(Column.C, Row.FIVE);
 		board.move(b2, b4);
 		board.move(c7, c5);
 		board.move(b4, c5);

@@ -25,8 +25,8 @@ public class ReadyTest {
 	void ready_move_exception() {
 		//given
 		State state = new Ready();
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a3 = new Position(Column.A, Row.THREE);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a3 = Position.of(Column.A, Row.THREE);
 		//then
 		assertThatThrownBy(() -> state.move(a2, a3))
 			.isInstanceOf(IllegalStateException.class)

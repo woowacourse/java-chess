@@ -37,8 +37,8 @@ public class RunningTest {
 	void running_move_no_exception() {
 		//given
 		State state = new Running(new Board());
-		Position a2 = new Position(Column.A, Row.TWO);
-		Position a3 = new Position(Column.A, Row.THREE);
+		Position a2 = Position.of(Column.A, Row.TWO);
+		Position a3 = Position.of(Column.A, Row.THREE);
 		//then
 		assertThatNoException().isThrownBy(() -> state.move(a2, a3));
 	}

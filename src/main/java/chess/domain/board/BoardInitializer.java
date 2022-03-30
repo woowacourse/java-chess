@@ -17,11 +17,11 @@ import chess.domain.piece.Rook;
 
 public class BoardInitializer {
 
-	private static final Position ROOK_INITIAL_POSITION = new Position(Column.A, Row.ONE);
-	private static final Position KNIGHT_INITIAL_POSITION = new Position(Column.B, Row.ONE);
-	private static final Position BISHOP_INITIAL_POSITION = new Position(Column.C, Row.ONE);
-	private static final Position QUEEN_INITIAL_POSITION = new Position(Column.D, Row.ONE);
-	private static final Position KING_INITIAL_POSITION = new Position(Column.E, Row.ONE);
+	private static final Position ROOK_INITIAL_POSITION = Position.of(Column.A, Row.ONE);
+	private static final Position KNIGHT_INITIAL_POSITION = Position.of(Column.B, Row.ONE);
+	private static final Position BISHOP_INITIAL_POSITION = Position.of(Column.C, Row.ONE);
+	private static final Position QUEEN_INITIAL_POSITION = Position.of(Column.D, Row.ONE);
+	private static final Position KING_INITIAL_POSITION = Position.of(Column.E, Row.ONE);
 	private static final Row PAWN_INITIAL_ROW = Row.TWO;
 	private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
 	private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
@@ -56,7 +56,7 @@ public class BoardInitializer {
 
 	private static void initializePawn(Map<Position, Piece> board) {
 		for (Column column : Column.values()) {
-			initializeTwoPiecesOf(board, new Position(column, PAWN_INITIAL_ROW), Pawn::new);
+			initializeTwoPiecesOf(board, Position.of(column, PAWN_INITIAL_ROW), Pawn::new);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class BoardInitializer {
 
 	private static void initializeBlankColumn(Map<Position, Piece> board, Column column) {
 		for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
-			board.put(new Position(column, Row.values()[i]), null);
+			board.put(Position.of(column, Row.values()[i]), null);
 		}
 	}
 }
