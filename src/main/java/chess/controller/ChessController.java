@@ -63,19 +63,8 @@ public final class ChessController {
     }
 
     private void status(GameCommandRequest request) {
-        Map<String, Double> scores = service.getScores();
-        OutputView.printStatus(new ScoresDto(findWinnerName(scores), scores));
+        OutputView.printStatus(service.getScores());
         this.end(request);
-    }
-
-    private String findWinnerName(Map<String, Double> scores) {
-        if (scores.get("BLACK").equals(scores.get("WHITE"))) {
-            return "무승부";
-        }
-        if (scores.get("BLACK") > scores.get("WHITE")) {
-            return "BLACK 승";
-        }
-        return "WHITE 승";
     }
 
     private void end(GameCommandRequest request) {
