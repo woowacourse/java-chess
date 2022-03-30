@@ -5,7 +5,7 @@ import java.util.List;
 
 import chess.domain.position.Direction;
 
-public final class Bishop extends Piece {
+public final class Bishop extends MovingMultipleUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 비숍은 색상을 가져야합니다.";
     private static final String BLACK_BISHOP = "♗";
     private static final String WHITE_BISHOP = "♝";
@@ -19,7 +19,7 @@ public final class Bishop extends Piece {
     }
 
     Bishop(Color color) {
-        super(color, 3);
+        super(color, 3, MOVABLE_DIRECTIONS);
     }
 
     @Override
@@ -33,11 +33,5 @@ public final class Bishop extends Piece {
         }
 
         return WHITE_BISHOP;
-    }
-
-    @Override
-    public boolean canMove(Direction direction, Piece target) {
-        checkSameTeam(target);
-        return direction.hasMultiple(MOVABLE_DIRECTIONS);
     }
 }

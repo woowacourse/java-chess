@@ -5,7 +5,7 @@ import java.util.List;
 
 import chess.domain.position.Direction;
 
-public final class King extends Piece {
+public final class King extends MovingUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 킹은 색상을 가져야합니다.";
     private static final String WHITE_KING = "♚";
     private static final String BLACK_KING = "♔";
@@ -23,7 +23,7 @@ public final class King extends Piece {
     }
 
     King(Color color) {
-        super(color, 0);
+        super(color, 0, MOVABLE_DIRECTIONS);
     }
 
     @Override
@@ -37,12 +37,6 @@ public final class King extends Piece {
         }
 
         return WHITE_KING;
-    }
-
-    @Override
-    public boolean canMove(Direction direction, Piece target) {
-        checkSameTeam(target);
-        return direction.hasSame(MOVABLE_DIRECTIONS);
     }
 
     @Override
