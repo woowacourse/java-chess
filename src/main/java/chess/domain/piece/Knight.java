@@ -21,11 +21,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
     protected List<Direction> getDirections() {
         return Arrays.asList(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
                 Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);

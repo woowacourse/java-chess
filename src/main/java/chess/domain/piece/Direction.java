@@ -24,8 +24,8 @@ public enum Direction {
     WWN(-2, 1, (row, col) -> row == 1 && col == -2),
     WWS(-2, -1, (row, col) -> row == -1 && col == -2);
 
-    private int xDegree;
-    private int yDegree;
+    private final int xDegree;
+    private final int yDegree;
     private final BiPredicate<Integer, Integer> predicate;
 
     private Direction(int xDegree, int yDegree, BiPredicate<Integer, Integer> predicate) {
