@@ -5,8 +5,8 @@ public class Distance {
     private final int rankDistance;
 
     public Distance(int fileDistance, int rankDistance) {
-        this.fileDistance = fileDistance;
-        this.rankDistance = rankDistance;
+        this.fileDistance = Math.abs(fileDistance);
+        this.rankDistance = Math.abs(rankDistance);
     }
 
     public boolean isDiagonal() {

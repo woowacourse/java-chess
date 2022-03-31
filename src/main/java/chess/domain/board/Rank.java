@@ -74,6 +74,6 @@ public enum Rank {
     }
 
     public int calculateDistance(Rank targetRank) {
-        return Math.abs(order - targetRank.order);
+        return order - targetRank.order;
     }
 }
