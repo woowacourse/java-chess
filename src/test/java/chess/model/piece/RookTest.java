@@ -26,14 +26,23 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("source와 target사이의 position들을 얻는다.")
+    @DisplayName("source와 target사이의 position들을 얻는다.(가로)")
     void getIntervalPositionTest(){
         Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
-        Piece king = new King(Position.of('e','8'),Team.BLACK);
-        List<Position> intervalPosition = rook.getIntervalPosition(king);
+        List<Position> intervalPosition = rook.getIntervalPosition(Position.from("h8"), Position.from("e8"));
 
         assertThat(intervalPosition.contains(Position.of('f','8'))).isTrue();
         assertThat(intervalPosition.contains(Position.of('g','8'))).isTrue();
+    }
+
+    @Test
+    @DisplayName("source와 target사이의 position들을 얻는다.(세로)")
+    void getIntervalPositionVerticalTest(){
+        Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
+        List<Position> intervalPosition = rook.getIntervalPosition(Position.from("h8"), Position.from("h5"));
+
+        assertThat(intervalPosition.contains(Position.from("h7"))).isTrue();
+        assertThat(intervalPosition.contains(Position.from("h6"))).isTrue();
     }
 
     @Test

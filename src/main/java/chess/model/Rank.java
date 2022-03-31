@@ -57,4 +57,8 @@ public enum Rank {
         }
         return gap / absMinus(rank);
     }
+
+    public String getValue() {
+        return value;
+    }
 }

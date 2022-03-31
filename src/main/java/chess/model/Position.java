@@ -1,15 +1,23 @@
 package chess.model;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position {
     private static final int ASCII_TO_INT = 96;
     private final Rank rank;
     private final File file;
 
-    private static final Map<String, Position> CACHE_POSITION = new HashMap<>(64);
+    private static final Map<String, Position> CACHE_POSITION;
+
+    static {
+        CACHE_POSITION = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> new Position(file, rank)))
+                .collect(Collectors.toMap(Position::getKey, p -> p));
+    }
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -18,17 +26,15 @@ public class Position {
 
     public static Position of(char... position) {
         String key = position[0] + String.valueOf(position[1]);
-        return CACHE_POSITION.computeIfAbsent(key, (k) -> new Position(
-                File.valueOf(position[0] - ASCII_TO_INT),
-                Rank.indexOf(Character.getNumericValue(position[1]))
-        ));
+        return CACHE_POSITION.get(key);
     }
 
     public static Position from(String position) {
-        return CACHE_POSITION.computeIfAbsent(position, (p) -> new Position(
-                File.of(position.substring(0, 1)),
-                Rank.of(position.substring(1))
-        ));
+        return CACHE_POSITION.get(position);
+    }
+
+    public static Position of(File file, Rank rank) {
+        return CACHE_POSITION.get(getKey(file, rank));
     }
 
     public boolean isHorizontal(Position position) {
@@ -142,5 +148,20 @@ public class Position {
 
     public File getFile() {
         return file;
+    }
+
+    public Position getNext(Direction direction) {
+        File nextFile = file.getNext(direction.getFileGap());
+        Rank nextRank = rank.getNext(direction.getRankGap());
+
+        return Position.of(nextFile, nextRank);
+    }
+
+    private static String getKey(File file, Rank rank) {
+        return file.getValue() + rank.getValue();
+    }
+
+    private String getKey() {
+        return file.getValue() + rank.getValue();
     }
 }

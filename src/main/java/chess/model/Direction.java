@@ -1,12 +1,11 @@
 package chess.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
-    N(0,1),
-    E(1,0),
+    N(0, 1),
+    E(1, 0),
     S(0, -1),
     W(-1, 0),
     NW(-1, 1),
@@ -43,5 +42,13 @@ public enum Direction {
 
     public static List<Direction> all() {
         return List.of(N, S, W, E, NW, NE, SW, SE);
+    }
+
+    public int getFileGap() {
+        return fileGap;
+    }
+
+    public int getRankGap() {
+        return rankGap;
     }
 }

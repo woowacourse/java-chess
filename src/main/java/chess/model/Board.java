@@ -63,11 +63,11 @@ public class Board {
     }
 
     private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        return (sourcePiece.isMovable(sourcePosition, targetPosition) && !hasBlock(sourcePiece, targetPiece))
+        return (sourcePiece.isMovable(sourcePosition, targetPosition) && !hasBlock(sourcePosition, targetPosition, sourcePiece, targetPiece))
                 || sourcePiece.isKill(targetPiece);
     }
 
-    private boolean hasBlock(Piece sourcePiece, Piece targetPiece) {
+    private boolean hasBlock(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
         if (sourcePiece.isSameTeam(targetPiece)) {
             return true;
         }

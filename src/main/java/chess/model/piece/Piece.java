@@ -4,6 +4,7 @@ import chess.model.Position;
 import chess.model.Team;
 import chess.model.Turn;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,6 +80,10 @@ public abstract class Piece implements Comparable<Piece> {
     public abstract double getScore();
 
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
+
+    public List<Position> getIntervalPosition(Position source, Position target) {
+        return Collections.emptyList(); // abstract로 변경 필요
+    }
 
     public boolean isMovable(Position source, Position target) {return false;} // abstract로 변경 필요
 

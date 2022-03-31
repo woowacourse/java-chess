@@ -57,4 +57,8 @@ public enum File {
         }
         return gap / absMinus(file);
     }
+
+    public String getValue() {
+        return value;
+    }
 }
