@@ -24,20 +24,25 @@ public class ChessController {
     }
 
     private void playChess(Board board) {
-        while (!board.isFinished()) {
+        do {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand().isEnd()) {
                 break;
             }
 
-            if (request.getCommand().isStatus()) {
-                OutputView.printScore(board.calculateScore());
-                continue;
-            }
-
-            board.move(request.getSource(), request.getTarget());
-            OutputView.printChessGameBoard(board.getValues());
-        }
+            doMoveOrStatus(board, request);
+        } while (!board.isFinished()
+        );
         OutputView.printScore(board.calculateScore());
+    }
+
+    private void doMoveOrStatus(Board board, Request request) {
+        if (request.getCommand().isStatus()) {
+            OutputView.printScore(board.calculateScore());
+            return;
+        }
+
+        board.move(request.getSource(), request.getTarget());
+        OutputView.printChessGameBoard(board.getValues());
     }
 }
