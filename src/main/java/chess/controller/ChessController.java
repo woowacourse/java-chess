@@ -15,37 +15,54 @@ public class ChessController {
 
         OutputView.printCommandGuide();
 
-        // TODO: depth 줄이기
-        // TODO: while 대신 재귀 고려하기
-        // TODO: 메소드 길이를 줄이기 위해 메소드 추출하기
-        while (true) {
-            try {
-                ConsoleCommandDto commandDto = InputView.inputCommand();
+        requestCommand(chessGame);
+    }
 
-                if (commandDto.isStart()) {
-                    chessGame.startGame();
-                    OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
-                }
+    private void requestCommand(ChessGame chessGame) {
+        try {
+            ConsoleCommandDto commandDto = InputView.inputCommand();
 
-                if (commandDto.isMove()) {
-                    Position fromPosition = Position.from(commandDto.getArgumentByIndex(0));
-                    Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
-
-                    chessGame.movePiece(fromPosition, toPosition);
-                    OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
-                }
-
-                if (commandDto.isStatus()) {
-                    ScoreResult scoreResult = chessGame.showStatus();
-                    OutputView.printScore(scoreResult);
-                }
-
-                if (commandDto.isEnd()) {
-                    break;
-                }
-            } catch (IllegalArgumentException e) {
-                OutputView.printException(e);
+            if (commandDto.isEnd()) {
+                return;
             }
+
+            executeCommandIfNotEnd(chessGame, commandDto);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            requestCommand(chessGame);
         }
+    }
+
+    private void executeCommandIfNotEnd(ChessGame chessGame, ConsoleCommandDto commandDto) {
+        if (commandDto.isStart()) {
+            executeStart(chessGame);
+        }
+        if (commandDto.isMove()) {
+            executeMove(chessGame, commandDto);
+        }
+        if (commandDto.isStatus()) {
+            executeStatus(chessGame);
+        }
+        requestCommand(chessGame);
+    }
+
+    private void executeStart(ChessGame chessGame) {
+        chessGame.startGame();
+
+        OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
+    }
+
+    private void executeMove(ChessGame chessGame, ConsoleCommandDto commandDto) {
+        Position fromPosition = Position.from(commandDto.getArgumentByIndex(0));
+        Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
+        chessGame.movePiece(fromPosition, toPosition);
+
+        OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
+    }
+
+    private void executeStatus(ChessGame chessGame) {
+        ScoreResult scoreResult = chessGame.showStatus();
+
+        OutputView.printScore(scoreResult);
     }
 }
