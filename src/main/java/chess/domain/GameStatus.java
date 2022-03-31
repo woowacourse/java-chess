@@ -9,7 +9,7 @@ public enum GameStatus {
     ;
 
     public boolean isReady() {
-        return this.equals(PLAYING);
+        return this.equals(READY);
     }
 
     public boolean isEnd() {
