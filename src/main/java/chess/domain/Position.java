@@ -40,7 +40,7 @@ public class Position {
                 , k -> new Position(column, row));
     }
 
-    public static Position of(final int column, final int row) {
+    private static Position of(final int column, final int row) {
         return Position.of((char) column, (char) row);
     }
 
