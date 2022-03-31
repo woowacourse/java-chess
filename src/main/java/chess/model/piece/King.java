@@ -26,6 +26,14 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return (source.isVertical(target) ||
+                source.isHorizontal(target) ||
+                source.isDiagonal(target)) &&
+                source.isOneStepAway(target);
+    }
+
+    @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
             return BLACK_NAME;

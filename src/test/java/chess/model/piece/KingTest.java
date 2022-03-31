@@ -20,11 +20,15 @@ class KingTest {
     @DisplayName("킹의 진행 방향과 거리가 맞는다면 true 반환")
     void correctDirectionMove() {
         King king = new King(Position.of('a', '1'), Team.WHITE);
+        Position source = Position.from("a1");
+        Position targetDiagonal = Position.from("b2");
+        Position targetVertical = Position.from("a2");
+        Position targetHorizontal = Position.from("b1");
 
         assertAll(
-                () -> assertThat(king.isMovable(Position.of('a', '2'))).isTrue(),
-                () -> assertThat(king.isMovable(Position.of('a', '2'))).isTrue(),
-                () -> assertThat(king.isMovable(Position.of('b', '1'))).isTrue()
+                () -> assertThat(king.isMovable(source, targetDiagonal)).isTrue(),
+                () -> assertThat(king.isMovable(source, targetVertical)).isTrue(),
+                () -> assertThat(king.isMovable(source, targetHorizontal)).isTrue()
         );
     }
 
@@ -32,8 +36,11 @@ class KingTest {
     @DisplayName("킹이 이동할수 없는 거리이면 false 반환")
     void noCorrectDistanceMove() {
         King king = new King(Position.of('a', '1'), Team.WHITE);
+        Position source = Position.from("a1");
+        Position target = Position.from("c3");
 
-        assertThat(king.isMovable(Position.of('c', '3'))).isFalse();
+
+        assertThat(king.isMovable(source, target)).isFalse();
     }
 
 
