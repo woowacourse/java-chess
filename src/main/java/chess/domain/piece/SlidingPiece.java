@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public abstract class SlidingPiece extends Piece {
 
@@ -15,23 +13,30 @@ public abstract class SlidingPiece extends Piece {
 
     @Override
     public boolean isMovable(Piece piece) {
-        return isInRange(piece.getPosition()) && isValidPosition(piece);
+        return isInRange(piece.getPosition(), findPossibleDirections()) && isValidPosition(piece);
     }
 
-    private boolean isInRange(Position targetPosition) {
+    private boolean isInRange(Position targetPosition, List<Direction> directions) {
         List<Position> inRangePosition = new ArrayList<>();
-        addPossibleTargetPositions(targetPosition, inRangePosition);
+        for (Direction direction : directions) {
+            inRangePosition.addAll(
+                    findPossiblePositionInDirection(position.calculateStraightDistance(targetPosition), direction));
+        }
         return inRangePosition.contains(targetPosition);
     }
 
-    private void addPossibleTargetPositions(Position targetPosition, List<Position> inRangePosition) {
-        for (Direction direction : findPossibleDirections()) {
-            List<Position> directionPositions = IntStream.rangeClosed(1,
-                            position.calculateStraightDistance(targetPosition))
-                    .mapToObj(product -> position.createNextPosition(direction, product))
-                    .filter(Position::isValidPosition)
-                    .collect(Collectors.toList());
-            inRangePosition.addAll(directionPositions);
+    private List<Position> findPossiblePositionInDirection(int distance, Direction direction) {
+        List<Position> possiblePositionInDirection = new ArrayList<>();
+        for (int product = 1; product <= distance; product++) {
+            addPossiblePosition(direction, possiblePositionInDirection, product);
+        }
+        return possiblePositionInDirection;
+    }
+
+    private void addPossiblePosition(Direction direction, List<Position> possiblePositionInDirection, int product) {
+        try {
+            possiblePositionInDirection.add(position.createNextPosition(direction, product));
+        } catch (IllegalArgumentException ignored) {
         }
     }
 

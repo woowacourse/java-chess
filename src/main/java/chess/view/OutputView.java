@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.state.BoardState;
 import chess.domain.piece.Piece;
+import chess.domain.state.BoardState;
 import java.util.stream.Collectors;
 
 public class OutputView {

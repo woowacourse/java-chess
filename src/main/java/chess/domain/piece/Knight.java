@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Knight extends Piece {
 
@@ -28,13 +27,19 @@ public class Knight extends Piece {
     }
 
     private boolean isInRange(Position targetPosition) {
-        List<Position> inRangePosition = Stream.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
-                        Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS)
-                .filter(direction -> Position.isValidPosition(position.createNextPosition(direction)))
-                .map(direction -> position.createNextPosition(direction))
-                .collect(Collectors.toList());
+        List<Position> possiblePositionInDirection = new ArrayList<>();
+        for (Direction direction : List.of(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
+                Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS)) {
+            addPossiblePosition(direction, possiblePositionInDirection);
+        }
+        return possiblePositionInDirection.contains(targetPosition);
+    }
 
-        return inRangePosition.contains(targetPosition);
+    private void addPossiblePosition(Direction direction, List<Position> possiblePositionInDirection) {
+        try {
+            possiblePositionInDirection.add(position.createNextPosition(direction));
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     private boolean isValidPosition(Piece piece) {

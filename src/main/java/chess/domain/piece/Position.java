@@ -14,6 +14,7 @@ public class Position {
     private static final String CHAR_POSITION_LENGTH_EXCEPTION_MESSAGE = "좌표는 알파벳 소문자 하나와 숫자 하나여야 합니다.";
     private static final String CHAR_POSITION_ALPHABET_EXCEPTION_MESSAGE = "알파벳은 a 부터 h 까지만 가능합니다.";
     private static final String CHAR_POSITION_NUMBER_EXCEPTION_MESSAGE = "숫자는 1 부터 8 까지만 가능합니다.";
+    private static final String INVALID_POSITION_EXCEPTION_MESSAGE = "존재하지 않는 위치입니다.";
 
     private final int x;
     private final int y;
@@ -25,18 +26,21 @@ public class Position {
     }
 
     private Position(int x, int y) {
+        validate(x, y);
         this.x = x;
         this.y = y;
-    }
-
-    public static boolean isValidPosition(Position position) {
-        return position.getX() >= MIN && position.getX() < MAX && position.getY() >= MIN && position.getY() < MAX;
     }
 
     private void validate(String charPosition) {
         validateLength(charPosition);
         validateAlphabetRange(charPosition);
         validateNumberRange(charPosition);
+    }
+
+    private void validate(int x, int y) {
+        if (x < MIN || x >= MAX || y < MIN || y >= MAX) {
+            throw new IllegalArgumentException(INVALID_POSITION_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validateLength(String charPosition) {

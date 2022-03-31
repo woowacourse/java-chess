@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public enum Direction {
 
@@ -13,6 +13,9 @@ public enum Direction {
     SOUTHWEST(-1, -1),
     WEST(-1, 0),
     NORTHWEST(-1, 1),
+
+    NN(0, 2),
+    SS(0, -2),
 
     NNE(1, 2),
     NNW(-1, 2),
@@ -33,15 +36,25 @@ public enum Direction {
 
     public static Direction findDirection(Position start, Position target) {
         return getEightStraightDirections().stream()
-                .filter(direction -> findPositionInDirection(start, target, direction))
+                .filter(direction -> findPossiblePositionInDirection(start, target, direction))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치로 가는 방향을 찾을 수 없습니다."));
     }
 
-    private static boolean findPositionInDirection(Position start, Position target, Direction direction) {
-        return IntStream.rangeClosed(1, start.calculateStraightDistance(target))
-                .mapToObj(number -> start.createNextPosition(direction, number))
-                .anyMatch(position -> position.equals(target));
+    private static boolean findPossiblePositionInDirection(Position start, Position target, Direction direction) {
+        List<Position> possiblePositionInDirection = new ArrayList<>();
+        for (int product = 1; product <= start.calculateStraightDistance(target); product++) {
+            addPossiblePosition(possiblePositionInDirection, start, direction, product);
+        }
+        return possiblePositionInDirection.contains(target);
+    }
+
+    private static void addPossiblePosition(List<Position> possiblePositionInDirection, Position start,
+                                            Direction direction, int product) {
+        try {
+            possiblePositionInDirection.add(start.createNextPosition(direction, product));
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     public static List<Direction> getEightStraightDirections() {

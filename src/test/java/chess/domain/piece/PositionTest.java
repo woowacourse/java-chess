@@ -3,6 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,13 +64,6 @@ public class PositionTest {
                 .isEqualTo(new Position("a4"));
     }
 
-    @DisplayName("해당 위치가 체스판 범위 내에 있는지 확인한다.")
-    @Test
-    void isValidPosition() {
-        assertThat(Position.isValidPosition(
-                new Position("a1").createNextPosition(Direction.SOUTHWEST))).isFalse();
-    }
-
     @DisplayName("두 위치의 직선 거리를 계산한다.")
     @Test
     void calculateStraightDistance() {
@@ -77,5 +72,38 @@ public class PositionTest {
 
         assertThat(position1.calculateStraightDistance(position2))
                 .isEqualTo(7);
+    }
+
+    @DisplayName("잘못된 위치 생성 시 예외가 발생한다.")
+    @Test
+    void createNextPositionFails() {
+
+        assertThatThrownBy(() -> new Position("a1").createNextPosition(Direction.SOUTHWEST))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("이동 가능한 모든 위치를 찾아 반환한다.")
+    @Test
+    void inRangePosition() {
+        List<Position> inRangePosition = new ArrayList<>();
+        for (Direction direction : Direction.getEightStraightDirections()) {
+            inRangePosition.addAll(findPossiblePositionInDirection(direction));
+        }
+        assertThat(inRangePosition.size()).isEqualTo(9);
+    }
+
+    private List<Position> findPossiblePositionInDirection(Direction direction) {
+        List<Position> possiblePositionInDirection = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            addPossiblePosition(direction, possiblePositionInDirection, i);
+        }
+        return possiblePositionInDirection;
+    }
+
+    private void addPossiblePosition(Direction direction, List<Position> possiblePositionInDirection, int i) {
+        try {
+            possiblePositionInDirection.add(new Position("a1").createNextPosition(direction, i));
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 }

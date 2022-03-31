@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
     private static final String WHITE_SIGNATURE = "p";
     private static final String BLACK_SIGNATURE = "P";
-    private static final int FIRST_MOVE_DISTANCE = 2;
     private static final double SCORE = 1.0;
 
     private Pawn(Position position, String signature) {
@@ -35,18 +34,16 @@ public class Pawn extends Piece {
 
     private boolean isBlankTarget(Piece piece) {
         if (isBlack()) {
-            return isInStraightRange(piece.getPosition(), Direction.SOUTH);
+            return isInStraightRange(piece.getPosition(), Direction.SOUTH, Direction.SS);
         }
-        return isInStraightRange(piece.getPosition(), Direction.NORTH);
+        return isInStraightRange(piece.getPosition(), Direction.NORTH, Direction.NN);
     }
 
-    private boolean isInStraightRange(Position targetPosition, Direction direction) {
+    private boolean isInStraightRange(Position targetPosition, Direction direction, Direction firstMoveDirection) {
         if (isFirstTurn) {
-            return List.of(position.createNextPosition(direction),
-                            position.createNextPosition(direction, FIRST_MOVE_DISTANCE))
-                    .contains(targetPosition);
+            return isInRange(targetPosition, List.of(direction, firstMoveDirection));
         }
-        return position.createNextPosition(direction).equals(targetPosition);
+        return isInRange(targetPosition, List.of(direction));
     }
 
     private boolean isEnemyTarget(Piece piece) {
@@ -57,13 +54,18 @@ public class Pawn extends Piece {
     }
 
     private boolean isInRange(Position targetPosition, List<Direction> directions) {
-        List<Position> inRangePosition = directions
-                .stream()
-                .filter(direction -> Position.isValidPosition(position.createNextPosition(direction)))
-                .map(direction -> position.createNextPosition(direction))
-                .collect(Collectors.toList());
+        List<Position> possiblePositionInDirection = new ArrayList<>();
+        for (Direction direction : directions) {
+            addPossiblePosition(direction, possiblePositionInDirection);
+        }
+        return possiblePositionInDirection.contains(targetPosition);
+    }
 
-        return inRangePosition.contains(targetPosition);
+    private void addPossiblePosition(Direction direction, List<Position> possiblePositionInDirection) {
+        try {
+            possiblePositionInDirection.add(position.createNextPosition(direction));
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     @Override
