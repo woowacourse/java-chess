@@ -23,7 +23,7 @@ public final class MoveState extends RunningState {
 
     private GameState considerGameState() {
         if (players.isOnlyOneKingLeft()) {
-            return new FinishedState();
+            return new FinishedState(players);
         }
         if (players.isPlayerAbleToPromotePawn(color)) {
             return new PromotionState(players, color);
