@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import web.dto.PieceDTO;
+import web.dto.PieceDto;
 import web.dto.PieceType;
 
 public class PieceDao {
@@ -43,15 +43,15 @@ public class PieceDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<PieceDTO> findPieces() {
+    public List<PieceDto> findPieces() {
         return jdbcTemplate.query("SELECT position, type, color FROM Piece", this::mapToPieceDTO);
     }
 
-    private PieceDTO mapToPieceDTO(ResultSet rs) throws SQLException {
+    private PieceDto mapToPieceDTO(ResultSet rs) throws SQLException {
         Position position = createPosition(rs.getString("position"));
         PieceType type = PieceType.valueOf(rs.getString("type"));
         Color color = Color.valueOf(rs.getString("color"));
-        return new PieceDTO(position, type, color);
+        return new PieceDto(position, type, color);
     }
 
     private Position createPosition(String position) {
@@ -64,13 +64,13 @@ public class PieceDao {
         jdbcTemplate.update("DELETE FROM Piece WHERE position = ?", position.toString());
     }
 
-    public void savePiece(PieceDTO pieceDTO) {
+    public void savePiece(PieceDto pieceDTO) {
         jdbcTemplate.update("INSERT INTO Piece(position, type, color) VALUES(?, ?, ?)",
                 pieceDTO.getPosition(), pieceDTO.getType().name(), pieceDTO.getColor().name());
     }
 
-    public void savePieces(List<PieceDTO> pieceDTOS) {
-        for (PieceDTO pieceDTO : pieceDTOS) {
+    public void savePieces(List<PieceDto> pieceDtos) {
+        for (PieceDto pieceDTO : pieceDtos) {
             savePiece(pieceDTO);
         }
     }

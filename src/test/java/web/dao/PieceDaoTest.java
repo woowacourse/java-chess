@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import web.dto.PieceDTO;
+import web.dto.PieceDto;
 import web.dto.PieceType;
 
 class PieceDaoTest {
@@ -22,13 +22,13 @@ class PieceDaoTest {
         dao = new PieceDao(new JdbcTemplate());
         dao.deleteAll();
         dao.savePieces(List.of(
-                new PieceDTO(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
-                new PieceDTO(new Position(A, SEVEN), PieceType.QUEEN, Color.WHITE),
-                new PieceDTO(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
-                new PieceDTO(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
-                new PieceDTO(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
-                new PieceDTO(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK),
-                new PieceDTO(new Position(D, SIX), PieceType.PAWN, Color.BLACK)
+                new PieceDto(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
+                new PieceDto(new Position(A, SEVEN), PieceType.QUEEN, Color.WHITE),
+                new PieceDto(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
+                new PieceDto(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
+                new PieceDto(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
+                new PieceDto(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK),
+                new PieceDto(new Position(D, SIX), PieceType.PAWN, Color.BLACK)
         ));
     }
 
@@ -40,13 +40,13 @@ class PieceDaoTest {
     @Test
     void findPieces() {
         assertThat(dao.findPieces()).containsExactlyInAnyOrder(
-                new PieceDTO(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
-                new PieceDTO(new Position(A, SEVEN), PieceType.QUEEN, Color.WHITE),
-                new PieceDTO(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
-                new PieceDTO(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
-                new PieceDTO(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
-                new PieceDTO(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK),
-                new PieceDTO(new Position(D, SIX), PieceType.PAWN, Color.BLACK)
+                new PieceDto(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
+                new PieceDto(new Position(A, SEVEN), PieceType.QUEEN, Color.WHITE),
+                new PieceDto(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
+                new PieceDto(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
+                new PieceDto(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
+                new PieceDto(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK),
+                new PieceDto(new Position(D, SIX), PieceType.PAWN, Color.BLACK)
         );
     }
 
@@ -55,11 +55,11 @@ class PieceDaoTest {
         dao.deletePieceByPosition(new Position(A, SEVEN));
         dao.deletePieceByPosition(new Position(D, SIX));
         assertThat(dao.findPieces()).containsExactlyInAnyOrder(
-                new PieceDTO(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
-                new PieceDTO(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
-                new PieceDTO(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
-                new PieceDTO(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
-                new PieceDTO(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK)
+                new PieceDto(new Position(A, EIGHT), PieceType.KING, Color.WHITE),
+                new PieceDto(new Position(B, EIGHT), PieceType.PAWN, Color.WHITE),
+                new PieceDto(new Position(C, EIGHT), PieceType.BISHOP, Color.WHITE),
+                new PieceDto(new Position(D, EIGHT), PieceType.KING, Color.BLACK),
+                new PieceDto(new Position(D, SEVEN), PieceType.KNIGHT, Color.BLACK)
         );
     }
 }

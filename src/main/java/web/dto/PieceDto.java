@@ -5,19 +5,19 @@ import chess.piece.Piece;
 import chess.position.Position;
 import java.util.Objects;
 
-public class PieceDTO {
+public class PieceDto {
 
     private final Position position;
     private final Color color;
     private final PieceType type;
 
-    public PieceDTO(Position position, PieceType type, Color color) {
+    public PieceDto(Position position, PieceType type, Color color) {
         this.position = position;
         this.type = type;
         this.color = color;
     }
 
-    public PieceDTO(Position position, Piece piece) {
+    public PieceDto(Position position, Piece piece) {
         this.position = position;
         this.color = piece.getColor();
         this.type = PieceType.valueOf(piece);
@@ -43,7 +43,7 @@ public class PieceDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PieceDTO pieceDTO = (PieceDTO) o;
+        PieceDto pieceDTO = (PieceDto) o;
         return Objects.equals(position, pieceDTO.position) && color == pieceDTO.color && type == pieceDTO.type;
     }
 

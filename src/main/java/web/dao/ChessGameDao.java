@@ -27,8 +27,7 @@ public class ChessGameDao {
     }
 
     public void updateGameStatus(GameStatus status) {
-        jdbcTemplate.update("UPDATE ChessGame SET status = ? WHERE id = ?",
-                status.name(), CHESS_GAME_ID);
+        jdbcTemplate.update("UPDATE ChessGame SET status = ? WHERE id = ?", status.name(), CHESS_GAME_ID);
     }
 
     public Color findWinner() {
@@ -37,8 +36,7 @@ public class ChessGameDao {
     }
 
     public void updateWinner(Color color) {
-        jdbcTemplate.update("UPDATE ChessGame SET winner = ? WHERE id = ?",
-                color.name(), CHESS_GAME_ID);
+        jdbcTemplate.update("UPDATE ChessGame SET winner = ? WHERE id = ?", color.name(), CHESS_GAME_ID);
     }
 
     public Color findCurrentColor() {

@@ -35,7 +35,7 @@ import web.dao.ChessGameDao;
 import web.dao.PieceDao;
 import web.dao.ScoreDao;
 import web.dto.GameStatus;
-import web.dto.PieceDTO;
+import web.dto.PieceDto;
 import web.dto.PieceType;
 
 public class ChessGameService {
@@ -57,17 +57,17 @@ public class ChessGameService {
     }
 
     private ChessBoard createChessBoard() {
-        List<PieceDTO> pieces = pieceDao.findPieces();
+        List<PieceDto> pieces = pieceDao.findPieces();
         Color currentColor = chessGameDao.findCurrentColor();
         return new ChessBoard(createBoard(pieces), currentColor);
     }
 
-    private Map<Position, Piece> createBoard(List<PieceDTO> pieces) {
+    private Map<Position, Piece> createBoard(List<PieceDto> pieces) {
         return pieces.stream()
-                .collect(toMap(PieceDTO::getPosition, this::createPiece));
+                .collect(toMap(PieceDto::getPosition, this::createPiece));
     }
 
-    private Piece createPiece(PieceDTO pieceDTO) {
+    private Piece createPiece(PieceDto pieceDTO) {
         if (pieceDTO.getType() == PieceType.PAWN) {
             return new Pawn(pieceDTO.getColor());
         }
@@ -103,7 +103,7 @@ public class ChessGameService {
         Map<Position, Piece> board = chessBoard.getBoard();
         pieceDao.deletePieceByPosition(movement.getFrom());
         pieceDao.deletePieceByPosition(movement.getTo());
-        pieceDao.savePiece(new PieceDTO(movement.getTo(), board.get(movement.getTo())));
+        pieceDao.savePiece(new PieceDto(movement.getTo(), board.get(movement.getTo())));
     }
 
     private void updateCurrentColor(ChessBoard chessBoard) {
@@ -120,7 +120,7 @@ public class ChessGameService {
         chessGameDao.updateWinner(chessBoard.getWinner());
     }
 
-    public List<PieceDTO> queryPieces() {
+    public List<PieceDto> queryPieces() {
         return pieceDao.findPieces();
     }
 
@@ -146,49 +146,49 @@ public class ChessGameService {
         chessGameDao.saveGameStatus(GameStatus.RUNNING, Color.WHITE);
     }
 
-    private List<PieceDTO> createPieces() {
+    private List<PieceDto> createPieces() {
         return Stream.concat(createWhitePieces().stream(), createBlackPieces().stream())
                 .collect(Collectors.toList());
     }
 
-    private static List<PieceDTO> createWhitePieces() {
+    private static List<PieceDto> createWhitePieces() {
         return List.of(
-                new PieceDTO(new Position(A, ONE), new Rook(Color.WHITE)),
-                new PieceDTO(new Position(B, ONE), new Knight(Color.WHITE)),
-                new PieceDTO(new Position(C, ONE), new Bishop(Color.WHITE)),
-                new PieceDTO(new Position(D, ONE), new Queen(Color.WHITE)),
-                new PieceDTO(new Position(E, ONE), new King(Color.WHITE)),
-                new PieceDTO(new Position(F, ONE), new Bishop(Color.WHITE)),
-                new PieceDTO(new Position(G, ONE), new Knight(Color.WHITE)),
-                new PieceDTO(new Position(H, ONE), new Rook(Color.WHITE)),
-                new PieceDTO(new Position(A, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(B, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(C, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(D, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(E, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(F, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(G, TWO), new Pawn(Color.WHITE)),
-                new PieceDTO(new Position(H, TWO), new Pawn(Color.WHITE)));
+                new PieceDto(new Position(A, ONE), new Rook(Color.WHITE)),
+                new PieceDto(new Position(B, ONE), new Knight(Color.WHITE)),
+                new PieceDto(new Position(C, ONE), new Bishop(Color.WHITE)),
+                new PieceDto(new Position(D, ONE), new Queen(Color.WHITE)),
+                new PieceDto(new Position(E, ONE), new King(Color.WHITE)),
+                new PieceDto(new Position(F, ONE), new Bishop(Color.WHITE)),
+                new PieceDto(new Position(G, ONE), new Knight(Color.WHITE)),
+                new PieceDto(new Position(H, ONE), new Rook(Color.WHITE)),
+                new PieceDto(new Position(A, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(B, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(C, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(D, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(E, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(F, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(G, TWO), new Pawn(Color.WHITE)),
+                new PieceDto(new Position(H, TWO), new Pawn(Color.WHITE)));
     }
 
-    private static List<PieceDTO> createBlackPieces() {
+    private static List<PieceDto> createBlackPieces() {
         return List.of(
-                new PieceDTO(new Position(A, EIGHT), new Rook(Color.BLACK)),
-                new PieceDTO(new Position(B, EIGHT), new Knight(Color.BLACK)),
-                new PieceDTO(new Position(C, EIGHT), new Bishop(Color.BLACK)),
-                new PieceDTO(new Position(D, EIGHT), new Queen(Color.BLACK)),
-                new PieceDTO(new Position(E, EIGHT), new King(Color.BLACK)),
-                new PieceDTO(new Position(F, EIGHT), new Bishop(Color.BLACK)),
-                new PieceDTO(new Position(G, EIGHT), new Knight(Color.BLACK)),
-                new PieceDTO(new Position(H, EIGHT), new Rook(Color.BLACK)),
-                new PieceDTO(new Position(A, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(B, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(C, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(D, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(E, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(F, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(G, SEVEN), new Pawn(Color.BLACK)),
-                new PieceDTO(new Position(H, SEVEN), new Pawn(Color.BLACK)));
+                new PieceDto(new Position(A, EIGHT), new Rook(Color.BLACK)),
+                new PieceDto(new Position(B, EIGHT), new Knight(Color.BLACK)),
+                new PieceDto(new Position(C, EIGHT), new Bishop(Color.BLACK)),
+                new PieceDto(new Position(D, EIGHT), new Queen(Color.BLACK)),
+                new PieceDto(new Position(E, EIGHT), new King(Color.BLACK)),
+                new PieceDto(new Position(F, EIGHT), new Bishop(Color.BLACK)),
+                new PieceDto(new Position(G, EIGHT), new Knight(Color.BLACK)),
+                new PieceDto(new Position(H, EIGHT), new Rook(Color.BLACK)),
+                new PieceDto(new Position(A, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(B, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(C, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(D, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(E, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(F, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(G, SEVEN), new Pawn(Color.BLACK)),
+                new PieceDto(new Position(H, SEVEN), new Pawn(Color.BLACK)));
     }
 
     public boolean existChessGame() {
