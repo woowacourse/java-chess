@@ -108,8 +108,8 @@ public class ChessController {
     }
 
     private void validateGameStatus(ChessGame chessGame) {
-        if (chessGame.isEnd() || chessGame.isReady()) {
-            throw new IllegalArgumentException("게임이 아직 종료되지 않았습니다.");
+        if (chessGame.isReady()) {
+            throw new IllegalArgumentException("게임이 아직 시작되지 않았습니다.");
         }
     }
 
