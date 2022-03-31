@@ -90,8 +90,6 @@ public class ChessGameController {
 	}
 
 	private void printResult(final ChessGame chessGame) {
-		outputView.printFinishMessage();
-		outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-		outputView.printWinner(chessGame.findWinner());
+		outputView.printResult(chessGame.statusOfBlack(), chessGame.statusOfWhite(), chessGame.findWinner());
 	}
 }

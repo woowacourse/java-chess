@@ -54,15 +54,21 @@ public class OutputView {
 		return pieceString;
 	}
 
-	public void printFinishMessage() {
+	public void printResult(final double statusOfBlack, final double statusOfWhite, final Winner winner) {
+		printFinishMessage();
+		printStatus(statusOfBlack, statusOfWhite);
+		printWinner(winner);
+	}
+
+	private void printFinishMessage() {
 		System.out.println("해당 게임이 종료되었습니다.");
 	}
 
-	public void printStatus(double statusOfWhite, double statusOfBlack) {
+	public void printStatus(final double statusOfWhite, final double statusOfBlack) {
 		System.out.printf("백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n", statusOfWhite, statusOfBlack);
 	}
 
-	public void printWinner(final Winner winner) {
+	private void printWinner(final Winner winner) {
 		if (winner == Winner.BLACK) {
 			System.out.println("흑색 진영의 승리입니다.");
 			return;
