@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "P";
-    private static final double SCORE = 1;
+    private static final float SCORE = 1.0f;
 
     public Pawn(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

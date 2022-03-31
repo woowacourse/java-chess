@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Rook extends Piece {
     private static final String SYMBOL = "P";
-    private static final double SCORE = 5;
+    private static final float SCORE = 5.0f;
 
     public Rook(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

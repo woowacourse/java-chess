@@ -12,9 +12,9 @@ public abstract class Piece {
     private final Team team;
     private final String symbol;
     protected Position position;
-    private final double score;
+    private final float score;
 
-    public Piece(Team team, String symbol, Position position, double score) {
+    public Piece(Team team, String symbol, Position position, float score) {
         this.team = team;
         this.symbol = team.getSymbol(symbol);
         this.position = position;

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private static final String SYMBOL = "B";
-    private static final double SCORE = 3;
+    private static final float SCORE = 3.0f;
 
     public Bishop(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

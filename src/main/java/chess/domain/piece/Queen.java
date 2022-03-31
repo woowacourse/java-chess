@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Queen extends Piece {
     private static final String SYMBOL = "Q";
-    private static final double SCORE = 9;
+    private static final float SCORE = 9.0f;
 
     public Queen(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

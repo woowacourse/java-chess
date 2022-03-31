@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private static final String SYMBOL = "N";
-    private static final double SCORE = 2.5;
+    private static final float SCORE = 2.5f;
 
     public Knight(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

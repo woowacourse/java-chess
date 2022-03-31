@@ -37,8 +37,8 @@ public class OutputView {
     }
 
     public static void printStatus(Score score) {
-        System.out.printf("WHITE팀 점수는%f\n" +
-                "BLACK팀 점수는%f\n", score.getTotalScoreWhiteTeam(), score.getTotalScoreBlackTeam());
+        System.out.println("WHITE팀 점수는" + score.getTotalScoreWhiteTeam() + "\n"
+                + "BLACK팀 점수는" + score.getTotalScoreBlackTeam());
         printWinningTeam(score.getWinningTeam());
     }
 

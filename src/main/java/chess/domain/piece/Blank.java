@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Blank extends Piece {
     private static final String SYMBOL = ".";
-    private static final double SCORE = 0;
+    private static final float SCORE = 0;
 
     public Blank(Team team, Position position) {
         super(team, SYMBOL, position, SCORE);

@@ -13,17 +13,17 @@ public class Score {
     private static final int existPawnNeighbors = 1;
     private static final int plusPawnNeighborsCount = 1;
     private static final int pawnNeighborsDefaultCount = 0;
-    private static final double minusPawnNeighborsScore = 0.5;
+    private static final float minusPawnNeighborsScore = 0.5f;
 
-    private Map<Team, Double> scoreBoard = new HashMap<>();
+    private final Map<Team, Float> scoreBoard = new HashMap<>();
 
     public Score(Map<Position, Piece> board) {
         scoreBoard.put(Team.WHITE, createTotalScore(board, Team.WHITE));
         scoreBoard.put(Team.BLACK, createTotalScore(board, Team.BLACK));
     }
 
-    private double createTotalScore(Map<Position, Piece> board, Team team) {
-        double totalScore = 0;
+    private float createTotalScore(Map<Position, Piece> board, Team team) {
+        float totalScore = 0;
         Map<Column, Integer> pawnNeighbors = new EnumMap<>(Column.class);
         for (Column col: Column.values()) {
             totalScore += calculateTotalScore(board, col, team);
@@ -33,17 +33,17 @@ public class Score {
         return totalScore;
     }
 
-    private double getMinusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors) {
-        double minusScore = 0;
+    private float getMinusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors) {
+        float minusScore = 0;
         for (Column col : pawnNeighbors.keySet()) {
             minusScore += minusPawnNeighborsScore(pawnNeighbors, col);
         }
         return minusScore;
     }
 
-    private double minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
+    private float minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
         int pawnCount = pawnNeighbors.get(col);
-        double minusScore = 0;
+        float minusScore = 0;
         if (pawnCount > existPawnNeighbors) {
             minusScore -= pawnCount * minusPawnNeighborsScore;
         }
@@ -64,8 +64,8 @@ public class Score {
         }
     }
 
-    private double calculateTotalScore(Map<Position, Piece> board, Column col, Team team) {
-        double totalScore = 0;
+    private float calculateTotalScore(Map<Position, Piece> board, Column col, Team team) {
+        float totalScore = 0;
         for (Row row : Row.values()) {
             String position = col.getSymbol() + row.getSymbol();
             Piece piece = board.get(Position.from(position));
@@ -74,18 +74,18 @@ public class Score {
         return totalScore;
     }
 
-    private double plusPieceScore(Team team, double totalScore, Piece piece) {
+    private float plusPieceScore(Team team, float totalScore, Piece piece) {
         if (piece.getTeam().matchTeam(team)) {
             totalScore += piece.getScore();
         }
         return totalScore;
     }
 
-    public double getTotalScoreWhiteTeam() {
+    public float getTotalScoreWhiteTeam() {
         return scoreBoard.get(Team.WHITE);
     }
 
-    public double getTotalScoreBlackTeam() {
+    public float getTotalScoreBlackTeam() {
         return scoreBoard.get(Team.WHITE);
     }
 
