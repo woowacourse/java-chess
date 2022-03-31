@@ -15,6 +15,16 @@ public class PawnMovingStrategy extends MovingStrategy {
         return isAbleToMoveNotOnInitialPosition(from, to, pieceColor);
     }
 
+    @Override
+    boolean isPossibleStep(Position from, Position to) {
+        return false; // TODO: 리팩토링
+    }
+
+    @Override
+    boolean isPossibleDirection(Position from, Position to) {
+        return false; // TODO: 리팩토링
+    }
+
     private boolean isInitialPosition(Position from, PieceColor pieceColor) {
         if (pieceColor == PieceColor.WHITE) {
             return from.isSameYAxis(YAxis.TWO);

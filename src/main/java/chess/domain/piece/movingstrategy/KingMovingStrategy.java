@@ -1,23 +1,31 @@
 package chess.domain.piece.movingstrategy;
 
-import chess.domain.piece.PieceColor;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.directionstrategy.DiagonalDirection;
-import chess.domain.position.directionstrategy.HorizontalDirection;
-import chess.domain.position.directionstrategy.VerticalDirection;
 import java.util.Set;
 
 public class KingMovingStrategy extends MovingStrategy {
-    public KingMovingStrategy() {
-        super(Set.of(new VerticalDirection(), new HorizontalDirection(), new DiagonalDirection()));
+
+
+    private final Set<Direction> POSSIBLE_DIRECTIONS = Set.of(
+            Direction.DIAGONAL_RIGHT_UP,
+            Direction.DIAGONAL_RIGHT_DOWN,
+            Direction.DIAGONAL_LEFT_UP,
+            Direction.DIAGONAL_LEFT_DOWN,
+            Direction.HORIZONTAL_LEFT,
+            Direction.HORIZONTAL_RIGHT,
+            Direction.VERTICAL_UP,
+            Direction.VERTICAL_DOWN
+    );
+
+    @Override
+    boolean isPossibleStep(Position from, Position to) {
+        return !from.isFartherThanOneStep(to);
     }
 
     @Override
-    public boolean isAbleToMove(Position from, Position to, PieceColor pieceColor) {
-        if (from.isFartherThanOneStep(to)) {
-            return false;
-        }
-
-        return super.isAbleToMove(from, to, pieceColor);
+    boolean isPossibleDirection(Position from, Position to) {
+        Direction direction = Direction.of(from, to);
+        return POSSIBLE_DIRECTIONS.contains(direction);
     }
 }

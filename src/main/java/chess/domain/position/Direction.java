@@ -11,7 +11,9 @@ public enum Direction {
     DIAGONAL_RIGHT_DOWN(135.0),
     DIAGONAL_LEFT_UP(-45.0),
     DIAGONAL_LEFT_DOWN(-135.0),
-    SEVEN_SHAPE(0); // TODO: degree가 VERTICAL_UP 과 겹치는 이슈
+    SEVEN_SHAPE(0),
+    UNDEFINED_DIRECTION(0);
+    // TODO: degree가 VERTICAL_UP 과 겹치는 이슈
 
     private final double degree;
 
@@ -29,7 +31,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.degree == degree)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 각도의 방향은 정의되지 않습니다."));
+                .orElse(UNDEFINED_DIRECTION);
     }
 
     private static boolean isSevenShape(Position from, Position to) {

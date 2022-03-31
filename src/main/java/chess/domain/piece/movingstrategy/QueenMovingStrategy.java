@@ -1,13 +1,30 @@
 package chess.domain.piece.movingstrategy;
 
-import chess.domain.position.directionstrategy.DiagonalDirection;
-import chess.domain.position.directionstrategy.HorizontalDirection;
-import chess.domain.position.directionstrategy.VerticalDirection;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import java.util.Set;
 
 public class QueenMovingStrategy extends MovingStrategy {
 
-    public QueenMovingStrategy() {
-        super(Set.of(new VerticalDirection(), new HorizontalDirection(), new DiagonalDirection()));
+    private final Set<Direction> POSSIBLE_DIRECTIONS = Set.of(
+            Direction.DIAGONAL_RIGHT_UP,
+            Direction.DIAGONAL_RIGHT_DOWN,
+            Direction.DIAGONAL_LEFT_UP,
+            Direction.DIAGONAL_LEFT_DOWN,
+            Direction.HORIZONTAL_LEFT,
+            Direction.HORIZONTAL_RIGHT,
+            Direction.VERTICAL_UP,
+            Direction.VERTICAL_DOWN
+    );
+
+    @Override
+    boolean isPossibleStep(Position from, Position to) {
+        return true;
+    }
+
+    @Override
+    boolean isPossibleDirection(Position from, Position to) {
+        Direction direction = Direction.of(from, to);
+        return POSSIBLE_DIRECTIONS.contains(direction);
     }
 }

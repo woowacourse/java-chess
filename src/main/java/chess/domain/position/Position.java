@@ -94,17 +94,6 @@ public class Position {
         return xAxisDelta > 1 || yAxisDelta > 1;
     }
 
-    public boolean isOnSevenShape(Position other) {
-        // TODO: 리팩토링
-        boolean condition1 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 2
-                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 1;
-
-        boolean condition2 = Math.abs(this.xAxis.getValue() - other.xAxis.getValue()) == 1
-                && Math.abs(this.yAxis.getValue() - other.yAxis.getValue()) == 2;
-
-        return condition1 || condition2;
-    }
-
     public List<Position> getPositionsSameYAxisBetween(Position other) {
         return YAxis.getBetween(this.yAxis, other.yAxis).stream()
                 .map(yAxis -> Position.from(this.xAxis, yAxis))

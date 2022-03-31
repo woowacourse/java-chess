@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +40,7 @@ class DirectionTest {
         assertThat(expected).isEqualTo(Direction.valueOf(expectedDirection));
     }
 
-    @DisplayName("of에 정의되지 않은 방향의 두 Position을 전달하면 예외가 발생한다.")
+    @DisplayName("of에 정의되지 않은 방향의 두 Position을 전달하면 UNDEFINED_DIRECTION을 반환한다.")
     @ParameterizedTest(name = "({0}, {1}), ({2}, {3})")
     @CsvSource(value = {"A,ONE,D,TWO", "D,ONE,A,TWO"})
     void of_returnsDirectionWithTwoPositions(String fromXAxis, String fromYAxis, String toXAxis, String toYAxis) {
@@ -49,9 +48,10 @@ class DirectionTest {
         Position from = Position.from(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
         Position to = Position.from(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
 
-        // when & then
-        assertThatThrownBy(() -> Direction.of(from, to))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 각도의 방향은 정의되지 않습니다.");
+        // when
+        Direction direction = Direction.of(from, to);
+
+        // then
+        assertThat(direction).isEqualTo(Direction.UNDEFINED_DIRECTION);
     }
 }
