@@ -23,7 +23,7 @@ public class ChessGameTest {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
         assertThatThrownBy(chessGame::start)
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test

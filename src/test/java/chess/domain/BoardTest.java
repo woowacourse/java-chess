@@ -88,6 +88,4 @@ public class BoardTest {
         OutputView.printChessBoard(board);
         assertThat(board.computeTotalScore(WHITE)).isEqualTo(36.5);
     }
-
-
 }
