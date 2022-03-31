@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardFactory {
+public final class BoardFactory {
 
     private static final Map<Position, Piece> EMPTY_MAP = Collections.emptyMap();
 

@@ -5,7 +5,7 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public class Ready implements ChessGame {
+public final class Ready implements ChessGame {
 
     private static final String NOT_STARTED_GAME = "[ERROR] 게임이 시작되지 않았습니다.";
 

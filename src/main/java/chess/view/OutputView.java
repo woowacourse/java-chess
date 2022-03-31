@@ -9,7 +9,7 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.Optional;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String CHESS_GAME_INIT_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String EXAMPLE_START_MESSAGE = "> 게임 시작 : start";

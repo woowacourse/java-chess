@@ -11,7 +11,7 @@ import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PieceMapper {
+public final class PieceMapper {
 
     private static final Map<String, String> MAPPER = new HashMap<>();
     private static final String PAWN_LETTER = "p";
