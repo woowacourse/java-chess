@@ -27,15 +27,7 @@ public enum Rank {
     }
 
     public static Rank from(final String value) {
-        return Rank.from(toRankValue(value));
-    }
-
-    private static int toRankValue(final String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 Rank 값 입니다.");
-        }
+        return Rank.from(Integer.parseInt(value));
     }
 
     public int calculateDistance(final Rank rank) {
