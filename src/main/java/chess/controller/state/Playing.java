@@ -1,6 +1,9 @@
 package chess.controller.state;
 
+import chess.domain.Color;
 import chess.domain.board.Board;
+import chess.domain.board.MoveResult;
+import chess.dto.BoardDto;
 import chess.dto.ScoreDto;
 import chess.view.OutputView;
 
@@ -18,6 +21,24 @@ public abstract class Playing implements ChessGameState {
     public ChessGameState status() {
         outputView.printScore(ScoreDto.from(board.getScore()));
         return this;
+    }
+
+    MoveResult movePiece(String from, String to, Color color) {
+        MoveResult move = board.move(from, to, color);
+        outputView.printBoard(BoardDto.from(board));
+        return move;
+    }
+
+    ChessGameState getMoveResult(MoveResult result, MoveResult blackResult) {
+        if (result == MoveResult.ENDED) {
+            outputView.printGameEnded(ScoreDto.from(board.getScore()));
+            return new Finished();
+        }
+
+        if (result == blackResult) {
+            return new BlackPlaying(board);
+        }
+        return new WhitePlaying(board);
     }
 
     @Override
