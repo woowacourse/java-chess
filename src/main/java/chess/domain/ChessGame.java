@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +11,8 @@ public final class ChessGame {
     private final Board board;
     private Color turnColor = Color.WHITE;
 
-    public ChessGame() {
-        board = new Board(PieceFactory.createChessPieces());
+    public ChessGame(Map<Position, Piece> pieces) {
+        this.board = new Board(pieces);
     }
 
     public void proceedWith(MoveCommand moveCommand) {

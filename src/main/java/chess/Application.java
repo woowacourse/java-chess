@@ -3,6 +3,7 @@ package chess;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
+import chess.domain.piece.PieceFactory;
 import chess.dto.StatusDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,7 +28,7 @@ public class Application {
     }
 
     private static void startGame() {
-        ChessGame game = new ChessGame();
+        ChessGame game = new ChessGame(PieceFactory.createChessPieces());
         OutputView.printBoard(game.getPieces());
         while (game.isRunning()) {
             OutputView.printPlayingCommandMessage();
