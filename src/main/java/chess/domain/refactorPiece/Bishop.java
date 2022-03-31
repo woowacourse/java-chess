@@ -13,4 +13,9 @@ public class Bishop extends MultipleMovablePiece {
     public Bishop(Color color) {
         super(color, "B", Arrays.asList(TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

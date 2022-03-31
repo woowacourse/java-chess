@@ -14,8 +14,13 @@ import java.util.Arrays;
 
 public class King extends FixedMovablePiece {
 
-    King(Color color) {
+    public King(Color color) {
         super(color, "K", Arrays.asList(
                 TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

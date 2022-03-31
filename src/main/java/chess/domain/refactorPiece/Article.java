@@ -11,4 +11,6 @@ public interface Article {
     boolean isMovable(Position from, Position to, ChessBoard chessBoard);
 
     Color getColor();
+
+    boolean isKing();
 }

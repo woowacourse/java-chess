@@ -17,4 +17,9 @@ public class Queen extends MultipleMovablePiece {
     public Queen(Color color) {
         super(color, "Q", Arrays.asList(TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

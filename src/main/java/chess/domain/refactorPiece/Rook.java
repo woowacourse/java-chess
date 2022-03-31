@@ -14,4 +14,9 @@ public class Rook extends MultipleMovablePiece {
     public Rook(Color color) {
         super(color, "R", Arrays.asList(TOP, DOWN, LEFT, RIGHT));
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

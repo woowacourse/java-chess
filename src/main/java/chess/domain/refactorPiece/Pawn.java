@@ -50,6 +50,11 @@ public class Pawn extends Piece {
         return isMovableToPosition(from, to, chessBoard);
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     private boolean isExistPositionToOtherTeamPiece(Position from, Position to, ChessBoard chessBoard) {
         return !chessBoard.isEmptyPosition(to);
     }
