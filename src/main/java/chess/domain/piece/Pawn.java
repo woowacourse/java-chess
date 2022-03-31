@@ -28,12 +28,12 @@ public class Pawn extends Piece {
 
     @Override
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
-        List<Direction> directions = getDirection();
-        Direction direction = findDirection(destination, directions);
+        Direction direction = findDirection(destination);
         return getPath(destination, direction, position.getCol(), position.getRow());
     }
 
-    private List<Direction> getDirection() {
+    @Override
+    protected List<Direction> getDirections() {
         if (isFirstTurn() && isBlackTeam()) {
             return Arrays.asList(Direction.SOUTH, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.SOUTH_TWO_STEP);
         }
@@ -51,12 +51,6 @@ public class Pawn extends Piece {
             return true;
         }
         return isBlackTeam() && position.getRow() == Row.SEVEN;
-    }
-
-    private Direction findDirection(Position destination, List<Direction> directions) {
-        int colDifference = destination.getColDifference(position.getCol());
-        int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, directions);
     }
 
     @Override

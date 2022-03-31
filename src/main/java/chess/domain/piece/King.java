@@ -14,12 +14,6 @@ public class King extends Piece {
         super(team, SYMBOL, position, SCORE);
     }
 
-    private Direction findDirection(Position destination) {
-        int colDifference = destination.getColDifference(position.getCol());
-        int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, getDirections());
-    }
-
     @Override
     public List<Position> findPath(Position destination) {
         findDirection(destination);
@@ -31,7 +25,8 @@ public class King extends Piece {
         return true;
     }
 
-    private List<Direction> getDirections() {
+    @Override
+    protected List<Direction> getDirections() {
         return Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST,
                 Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
     }

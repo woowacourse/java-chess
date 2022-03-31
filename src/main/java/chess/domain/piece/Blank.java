@@ -38,4 +38,9 @@ public class Blank extends Piece {
     public void move(Piece destination) {
         throw new IllegalArgumentException("Blank는 움직일 수 없습니다.");
     }
+
+    @Override
+    protected List<Direction> getDirections() {
+        throw new IllegalArgumentException("Blank는 방향을 가질 수 없습니다.");
+    }
 }

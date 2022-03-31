@@ -14,12 +14,6 @@ public class Knight extends Piece {
         super(team, SYMBOL, position, SCORE);
     }
 
-    private Direction findDirection(Position destination) {
-        int colDifference = destination.getColDifference(position.getCol());
-        int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, getDirections());
-    }
-
     @Override
     public List<Position> findPath(Position destination) {
         findDirection(destination);
@@ -31,7 +25,8 @@ public class Knight extends Piece {
         return false;
     }
 
-    private List<Direction> getDirections() {
+    @Override
+    protected List<Direction> getDirections() {
         return Arrays.asList(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
                 Direction.EEN, Direction.EES, Direction.WWN, Direction.WWS);
     }

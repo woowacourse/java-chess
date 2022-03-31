@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
-    private Team team;
+    private final Team team;
     private final String symbol;
     protected Position position;
-    private double score;
+    private final double score;
 
     public Piece(Team team, String symbol, Position position, double score) {
         this.team = team;
@@ -56,6 +56,14 @@ public abstract class Piece {
         }
         return positions;
     }
+
+    protected Direction findDirection(Position destination) {
+        int colDifference = destination.getColDifference(position.getCol());
+        int rowDifference = destination.getRowDifference(position.getRow());
+        return Direction.find(rowDifference, colDifference, getDirections());
+    }
+
+    protected abstract List<Direction> getDirections();
 
     public Team getTeam() {
         return team;

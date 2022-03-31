@@ -12,7 +12,7 @@ public class Score {
     private static final int existPawnNeighbors = 1;
     private static final int plusPawnNeighborsCount = 1;
     private static final int pawnNeighborsDefaultCount = 0;
-    private static final double minusPawnNeighbors = 0.5;
+    private static final double minusPawnNeighborsScore = 0.5;
 
     private double totalScore;
 
@@ -38,7 +38,7 @@ public class Score {
     private void minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
         int pawnCount = pawnNeighbors.get(col);
         if (pawnCount > existPawnNeighbors) {
-            totalScore -= pawnCount * minusPawnNeighbors;
+            totalScore -= pawnCount * minusPawnNeighborsScore;
         }
     }
 

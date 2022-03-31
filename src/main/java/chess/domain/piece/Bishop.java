@@ -14,12 +14,6 @@ public class Bishop extends Piece {
         super(team, SYMBOL, position, SCORE);
     }
 
-    private Direction findDirection(Position destination) {
-        int colDifference = destination.getColDifference(position.getCol());
-        int rowDifference = destination.getRowDifference(position.getRow());
-        return Direction.find(rowDifference, colDifference, getDirections());
-    }
-
     @Override
     public List<Position> findPath(Position destination) {
         Direction direction = findDirection(destination);
@@ -28,7 +22,8 @@ public class Bishop extends Piece {
                 position.getRow().plusRow(direction.getYDegree()));
     }
 
-    private List<Direction> getDirections() {
+    @Override
+    protected List<Direction> getDirections() {
         return Arrays.asList(Direction.NORTHEAST, Direction.SOUTHEAST, Direction.SOUTHWEST, Direction.NORTHWEST);
     }
 }

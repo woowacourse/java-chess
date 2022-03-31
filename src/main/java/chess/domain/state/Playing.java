@@ -32,11 +32,6 @@ public abstract class Playing implements GameState {
         return turn();
     }
 
-    private void movePiece(Piece sourcePiece, Piece destinationPiece) {
-        changePiece(sourcePiece, destinationPiece);
-        sourcePiece.move(destinationPiece);
-    }
-
     private void validateMovePiece(Piece source, Piece destination) {
         validateTeam(source);
         List<Position> positions = source.findPath(destination.getPosition());
@@ -77,7 +72,10 @@ public abstract class Playing implements GameState {
         }
     }
 
-    abstract void validateTeam(Piece piece);
+    private void movePiece(Piece sourcePiece, Piece destinationPiece) {
+        changePiece(sourcePiece, destinationPiece);
+        sourcePiece.move(destinationPiece);
+    }
 
     private void changePiece(Piece sourcePiece, Piece destinationPiece) {
         board.put(destinationPiece.getPosition(), sourcePiece);
@@ -88,10 +86,12 @@ public abstract class Playing implements GameState {
         return board;
     }
 
-    abstract GameState finished();
-
     @Override
     public boolean isFinished() {
         return false;
     }
+
+    abstract void validateTeam(Piece piece);
+
+    abstract GameState finished();
 }
