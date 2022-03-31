@@ -1,7 +1,9 @@
 package chess.controller.command;
 
+import chess.controller.result.Result;
+import chess.controller.result.StatusResult;
 import chess.domain.ChessGame;
-import chess.view.OutputView;
+import chess.domain.Score;
 
 public class Status implements Command {
 
@@ -15,11 +17,8 @@ public class Status implements Command {
     }
 
     @Override
-    public void execute(final ChessGame chessGame) {
-        try {
-            OutputView.printStatus(chessGame.calculateScore());
-        } catch (final IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-        }
+    public Result execute(final ChessGame chessGame) {
+        final Score score = chessGame.calculateScore();
+        return new StatusResult(score);
     }
 }

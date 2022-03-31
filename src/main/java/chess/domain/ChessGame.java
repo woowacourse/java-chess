@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.controller.command.MoveResult;
+import chess.controller.result.Result;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
@@ -16,10 +16,10 @@ public class ChessGame {
         this.gameStatus = GameStatus.READY;
     }
 
-    public MoveResult move(final Position from, final Position to) {
+    public Result move(final Position from, final Position to) {
         gameStatus.checkPlaying();
 
-        final MoveResult moveResult = chessBoard.move(from, to);
+        final Result moveResult = chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
         }
@@ -37,8 +37,9 @@ public class ChessGame {
         return chessBoard.findAllPiece();
     }
 
-    public void end() {
+    public Score end() {
         gameStatus = GameStatus.END;
+        return chessBoard.calculateScore();
     }
 
     public boolean canPlay() {

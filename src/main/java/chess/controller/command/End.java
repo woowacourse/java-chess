@@ -1,6 +1,9 @@
 package chess.controller.command;
 
+import chess.controller.result.EndResult;
+import chess.controller.result.Result;
 import chess.domain.ChessGame;
+import chess.domain.Score;
 
 public class End implements Command {
 
@@ -14,7 +17,8 @@ public class End implements Command {
     }
 
     @Override
-    public void execute(final ChessGame chessGame) {
-        chessGame.end();
+    public Result execute(final ChessGame chessGame) {
+        final Score score = chessGame.end();
+        return new EndResult(score);
     }
 }

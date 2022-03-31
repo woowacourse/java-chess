@@ -1,5 +1,7 @@
 package chess.controller.command;
 
+import chess.controller.result.Result;
+import chess.controller.result.StartResult;
 import chess.domain.ChessGame;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
@@ -18,12 +20,8 @@ public class Start implements Command {
     }
 
     @Override
-    public void execute(final ChessGame chessGame) {
-        try {
-            final Map<Position, ChessPiece> pieceByPosition = chessGame.start();
-            OutputView.printChessBoard(pieceByPosition);
-        } catch (final IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-        }
+    public Result execute(final ChessGame chessGame) {
+        final Map<Position, ChessPiece> pieceByPosition = chessGame.start();
+        return new StartResult(pieceByPosition);
     }
 }

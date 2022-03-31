@@ -1,8 +1,8 @@
 package chess.controller.command;
 
+import chess.controller.result.Result;
 import chess.domain.ChessGame;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 
 public class Move implements Command {
 
@@ -15,12 +15,8 @@ public class Move implements Command {
     }
 
     @Override
-    public void execute(final ChessGame chessGame) {
-        try {
-            final MoveResult result = chessGame.move(from, to);
-            OutputView.resolveResult(result);
-        } catch (final IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-        }
+    public Result execute(final ChessGame chessGame) {
+        final Result result = chessGame.move(from, to);
+        return result;
     }
 }

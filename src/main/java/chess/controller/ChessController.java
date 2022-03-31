@@ -14,13 +14,17 @@ public class ChessController {
 
         final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
         final ChessGame chessGame = new ChessGame(chessBoard);
-        playTurn(chessGame);
+        while (chessGame.canPlay()) {
+            playTurn(chessGame);
+        }
     }
 
     private void playTurn(final ChessGame chessGame) {
-        while (chessGame.canPlay()) {
+        try {
             final Command command = InputView.requestCommand();
             command.execute(chessGame);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
         }
     }
 }
