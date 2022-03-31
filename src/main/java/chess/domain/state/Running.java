@@ -19,15 +19,13 @@ public abstract class Running extends GameState {
 	}
 
 	@Override
-	public abstract GameState proceed(Command command);
-
-	protected GameState executeMovingPiece(Command command, Color color) {
+	public GameState proceed(Command command) {
 		if (!command.isMove()) {
 			return checkFinished(command);
 		}
-		validateMoveOpponent(command, color.getOpponent());
+		validateMoveOpponent(command, getColor().getOpponent());
 		board.movePiece(command.getFromPosition(), command.getToPosition());
-		return checkKingExist(color.getOpponent());
+		return checkKingExist(getColor().getOpponent());
 	}
 
 	protected GameState checkFinished(Command command) {

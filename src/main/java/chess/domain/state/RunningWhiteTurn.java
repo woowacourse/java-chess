@@ -16,11 +16,6 @@ public class RunningWhiteTurn extends Running {
 	}
 
 	@Override
-	public GameState proceed(Command command) {
-		return executeMovingPiece(command, COLOR);
-	}
-
-	@Override
 	protected Running getOpponentTurn() {
 		return new RunningBlackTurn(board.getPieces());
 	}
