@@ -23,33 +23,42 @@ public class Score {
     private static final int LESS = -1;
     private static final int EQUAL = 0;
 
+    private static final Map<Piece, Double> scoreRuleByBlack = Map.of(
+            new QueenPiece(Color.BLACK), QUEEN_SCORE,
+            new RookPiece(Color.BLACK), ROOK_SCORE,
+            new BishopPiece(Color.BLACK), BISHOP_SCORE,
+            new KnightPiece(Color.BLACK), KNIGHT_SCORE
+    );
+    private static final Map<Piece, Double> scoreRuleByWhite = Map.of(
+            new QueenPiece(Color.WHITE), QUEEN_SCORE,
+            new RookPiece(Color.WHITE), ROOK_SCORE,
+            new BishopPiece(Color.WHITE), BISHOP_SCORE,
+            new KnightPiece(Color.WHITE), KNIGHT_SCORE
+    );
+
     private final double value;
+    private final Map<Piece, Double> scoreRuleWithoutPawn;
 
     public Score(final Board board, final Color color) {
         this.value = calculate(board, color);
+        this.scoreRuleWithoutPawn = findScoreRuleWithoutPawnByColor(color);
+    }
+
+    private Map<Piece, Double> findScoreRuleWithoutPawnByColor(final Color color) {
+        if (color.equals(Color.BLACK)) {
+            return scoreRuleByBlack;
+        }
+        return scoreRuleByWhite;
     }
 
     private double calculate(final Board board, final Color color) {
-        final Map<Piece, Double> scoreRule = initializeScoreRuleWithoutPawn(color);
-
-        double score = calculateScoreWithoutPawn(board, scoreRule);
+        double score = calculateScoreWithoutPawn(board);
         score += calculateScorePawn(board, color);
-
         return score;
     }
 
-    private Map<Piece, Double> initializeScoreRuleWithoutPawn(final Color color) {
-        return Map.of(
-                new QueenPiece(color), QUEEN_SCORE,
-                new RookPiece(color), ROOK_SCORE,
-                new BishopPiece(color), BISHOP_SCORE,
-                new KnightPiece(color), KNIGHT_SCORE
-        );
-    }
-
-    private double calculateScoreWithoutPawn(final Board board,
-                                             final Map<Piece, Double> pieceScores) {
-        return pieceScores.entrySet()
+    private double calculateScoreWithoutPawn(final Board board) {
+        return scoreRuleWithoutPawn.entrySet()
                 .stream()
                 .mapToDouble(entry -> board.countPiece(entry.getKey()) * entry.getValue())
                 .sum();
