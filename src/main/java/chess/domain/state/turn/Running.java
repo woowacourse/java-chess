@@ -5,9 +5,6 @@ import chess.domain.Team;
 
 public abstract class Running implements State {
 
-    private static final String WRONG_SOURCE_ERROR = "상대 팀의 기물을 옮길 수 없습니다.";
-    private static final String WRONG_TARGET_ERROR = "같은 팀의 기물로 이동할 수 없습니다.";
-
     private final Team team;
 
     protected Running(Team team) {

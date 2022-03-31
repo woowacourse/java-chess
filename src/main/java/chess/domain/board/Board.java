@@ -20,10 +20,9 @@ public class Board {
     private final Map<Position, Piece> board;
     private State state;
 
-    public Board() {
-        this.board = new HashMap<>();
+    public Board(Builder builder) {
+        this.board = new HashMap<>(builder.build());
         this.state = new WhiteTurn();
-        initialPlacePiece();
     }
 
     public void move(Position source, Position target) {
@@ -98,35 +97,6 @@ public class Board {
             return calculator.calculateBlackScore();
         }
         return calculator.calculateWhiteScore();
-    }
-
-    private void initialPlacePiece() {
-        for (Position position : Position.getPositions()) {
-            board.put(position, new Blank());
-        }
-
-        List<Piece> blackSpecials = initSpecialBuilder(Team.BLACK);
-        List<Piece> whiteSpecials = initSpecialBuilder(Team.WHITE);
-        for (int i = 0; i < 8; i++) {
-            board.put(Position.of(8, i + 1), blackSpecials.get(i));
-            board.put(Position.of(7, i + 1), new Pawn(Team.BLACK));
-
-            board.put(Position.of(1, i + 1), whiteSpecials.get(i));
-            board.put(Position.of(2, i + 1), new Pawn(Team.WHITE));
-        }
-    }
-
-    private List<Piece> initSpecialBuilder(Team team) {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.add(new Rook(team));
-        pieces.add(new Knight(team));
-        pieces.add(new Bishop(team));
-        pieces.add(new Queen(team));
-        pieces.add(new King(team));
-        pieces.add(new Bishop(team));
-        pieces.add(new Knight(team));
-        pieces.add(new Rook(team));
-        return pieces;
     }
 
     public boolean isBlank(Position position) {

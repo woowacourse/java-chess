@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Command;
+import chess.domain.board.PieceBuilder;
 import chess.domain.board.PositionConvertor;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -23,7 +24,7 @@ public class ChessController {
 
     public Map<Position, Piece> start() {
         state = state.execute(Command.START);
-        board = new Board();
+        board = new Board(new PieceBuilder());
         return board.getBoard();
     }
 

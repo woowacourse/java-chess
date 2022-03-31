@@ -9,13 +9,13 @@ public class CalculatorTest {
 
     @Test
     void calculateScore() {
-        Board board = new Board();
+        Board board = new Board(new PieceBuilder());
         assertThat(board.calculateScore(Team.BLACK)).isEqualTo(38);
     }
 
     @Test
     void calculateScoreWithSameColumnPawn() {
-        Board board = new Board();
+        Board board = new Board(new PieceBuilder());
 
         Position whitePawn = Position.of(2, 4);
         Position whitePawnTarget = Position.of(4, 4);

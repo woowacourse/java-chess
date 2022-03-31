@@ -14,7 +14,7 @@ class BoardTest {
 
 	@Test
 	void checkStartBoard() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 
 		assertAll(
 				() -> assertThat(board.isBlank(Position.of(4, 4))).isTrue(),
@@ -25,7 +25,7 @@ class BoardTest {
 
 	@Test
 	void moveWithWrongSource() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 		Position source = Position.of(4, 4);
 		Position target = Position.of(5, 5);
 		assertThatThrownBy(() -> board.move(source, target))
@@ -35,7 +35,7 @@ class BoardTest {
 
 	@Test
 	void moveToSameTeam() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 		Position source = Position.of(1, 5);
 		Position target = Position.of(1, 4);
 		assertThatThrownBy(() -> board.move(source, target))
@@ -45,7 +45,7 @@ class BoardTest {
 
 	@Test
 	void moveBishopBlock() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 		Position source = Position.of(1, 3);
 		Position target = Position.of(3, 5);
 		assertThatThrownBy(() -> board.move(source, target))
@@ -55,7 +55,7 @@ class BoardTest {
 
 	@Test
 	void moveKnight() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 		Position source = Position.of(1, 2);
 		Position target = Position.of(3, 3);
 		assertDoesNotThrow(() -> board.move(source, target));
@@ -63,7 +63,7 @@ class BoardTest {
 
 	@Test
 	void moveToEnemy() {
-		Board board = new Board();
+		Board board = new Board(new PieceBuilder());
 
 		Position whitePawn = Position.of(2, 4);
 		Position whitePawnTarget = Position.of(4, 4);
