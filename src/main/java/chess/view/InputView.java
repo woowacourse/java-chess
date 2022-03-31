@@ -9,12 +9,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static String getInput() {
-        final String input = SCANNER.nextLine();
-        return input.toLowerCase();
-    }
-
-    public static Command requestCommand() {
+    public static CommandDto requestCommand() {
         try {
             return getCommand();
         } catch (final IllegalArgumentException e) {
@@ -23,9 +18,9 @@ public class InputView {
         }
     }
 
-    private static Command getCommand() {
+    private static CommandDto getCommand() {
         final String input = SCANNER.nextLine();
         final String text = input.toLowerCase();
-        return Command.from(text);
+        return CommandDto.from(text);
     }
 }

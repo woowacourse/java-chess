@@ -1,10 +1,10 @@
 package chess.domain.chessboard;
 
-import chess.controller.result.MoveResult;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
+import chess.result.MoveResult;
 import java.util.Map;
 import java.util.Objects;
 

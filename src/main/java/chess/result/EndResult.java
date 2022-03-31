@@ -1,4 +1,4 @@
-package chess.controller.result;
+package chess.result;
 
 import chess.domain.Score;
 

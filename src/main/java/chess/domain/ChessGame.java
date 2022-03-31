@@ -1,10 +1,10 @@
 package chess.domain;
 
-import chess.controller.result.EndResult;
-import chess.controller.result.MoveResult;
-import chess.controller.result.StartResult;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
+import chess.result.EndResult;
+import chess.result.MoveResult;
+import chess.result.StartResult;
 
 public class ChessGame {
 

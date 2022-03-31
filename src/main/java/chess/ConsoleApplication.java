@@ -3,8 +3,8 @@ package chess;
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
 import chess.domain.chessboard.ChessBoardFactory;
-import chess.domain.position.Position;
-import chess.view.Command;
+import chess.resolver.CommandResolverMapper;
+import chess.view.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -24,40 +24,10 @@ public class ConsoleApplication {
 
     private static void playTurn() {
         try {
-            final String input = InputView.getInput();
-            final Command command = Command.from(input);
-            runStartCommand(command);
-            runMoveCommand(input, command);
-            runStatusCommand(command);
-            runEndCommand(command);
+            final CommandDto commandDto = InputView.requestCommand();
+            CommandResolverMapper.resolve(commandDto, chessController);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-        }
-    }
-
-    private static void runStartCommand(final Command command) {
-        if (command.equals(Command.START)) {
-            chessController.start();
-        }
-    }
-
-    private static void runMoveCommand(final String input, final Command command) {
-        if (command.equals(Command.MOVE)) {
-            final Position from = Command.findFromPosition(input);
-            final Position to = Command.findToPosition(input);
-            chessController.move(from, to);
-        }
-    }
-
-    private static void runStatusCommand(final Command command) {
-        if (command.equals(Command.STATUS)) {
-            chessController.status();
-        }
-    }
-
-    private static void runEndCommand(final Command command) {
-        if (command.equals(Command.END)) {
-            chessController.end();
         }
     }
 }
