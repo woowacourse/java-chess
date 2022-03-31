@@ -17,6 +17,8 @@ public interface Piece {
 
     List<Position> calculateRoute(final Position target);
 
+    List<Position> calculateRoute(final Position source, final Position target);
+
     String getSymbolByTeam();
 
     String symbol();

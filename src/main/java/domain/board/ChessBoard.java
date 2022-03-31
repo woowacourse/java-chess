@@ -1,18 +1,11 @@
 package domain.board;
 
-import domain.piece.property.Direction;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.piece.unit.Piece;
 import domain.position.Position;
-import domain.position.XPosition;
-import domain.position.YPosition;
-import domain.classification.Result;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class ChessBoard {
 
@@ -82,28 +75,10 @@ public final class ChessBoard {
     }
 
     private void validateRouteNullForPawn(final Position source, final Position target) {
-        final Direction direction = board.get(source).getDirection(target);
-        final List<Position> routePositions = calculateRoutePositionForPawn(source, target, direction);
-        boolean checkExistNotNullInPositions = routePositions.stream()
-                .anyMatch(position -> board.get(position) != null);
-
-        if (checkExistNotNullInPositions) {
-            throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 선택한 위치로 이동할 수 없습니다.");
+        final List<Position> routePositions = board.get(source).calculateRoute(source, target);
+        for (Position position : routePositions) {
+            validateWayPointNull(position);
         }
-    }
-
-    private List<Position> calculateRoutePositionForPawn(final Position source, final Position target,
-                                                         final Direction direction) {
-        List<Position> routePositions = new ArrayList<>();
-        routePositions.add(target);
-        final Position wayPoint = Position.of(
-                XPosition.of(source.getXPosition() + direction.getXPosition() / 2),
-                YPosition.of(source.getYPosition() + direction.getYPosition() / 2)
-        );
-        if (!wayPoint.equals(source) && !wayPoint.equals(target)) {
-            routePositions.add(wayPoint);
-        }
-        return routePositions;
     }
 
     private void validatePawnAttack(final Position target) {

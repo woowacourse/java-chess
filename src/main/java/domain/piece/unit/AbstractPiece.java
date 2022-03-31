@@ -6,6 +6,7 @@ import domain.position.Position;
 import domain.position.XPosition;
 import domain.position.YPosition;
 import domain.piece.property.Direction;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,21 @@ public abstract class AbstractPiece implements Piece {
                 .filter(positions -> positions.contains(target))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public List<Position> calculateRoute(final Position source, final Position target){
+        List<Position> routePositions = new ArrayList<>();
+        Direction direction = getDirection(target);
+        routePositions.add(target);
+        final Position wayPoint = Position.of(
+                XPosition.of(source.getXPosition() + direction.getXPosition() / 2),
+                YPosition.of(source.getYPosition() + direction.getYPosition() / 2)
+        );
+        if (!wayPoint.equals(source) && !wayPoint.equals(target)) {
+            routePositions.add(wayPoint);
+        }
+        return routePositions;
     }
 
     @Override
