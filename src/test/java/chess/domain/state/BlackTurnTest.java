@@ -21,7 +21,7 @@ class BlackTurnTest {
 
         BlackTurn blackTurn = new BlackTurn(new Board(ranks));
 
-        assertThat(blackTurn.isBlackTurn()).isTrue();
+        assertThat(blackTurn.findTurn()).isEqualTo("흑");
     }
 
     @DisplayName("흑팀 차례 이후에 백팀 차례가 된다.")

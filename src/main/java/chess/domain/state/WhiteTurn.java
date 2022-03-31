@@ -11,11 +11,6 @@ public final class WhiteTurn extends Playing {
     }
 
     @Override
-    public boolean isBlackTurn() {
-        return false;
-    }
-
-    @Override
     public GameState move(Position start, Position target) {
         Piece selected = board.getPiece(start);
 

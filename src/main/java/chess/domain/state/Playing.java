@@ -16,12 +16,12 @@ public abstract class Playing extends GameStarted {
     }
 
     @Override
-    public Winner findWinner() {
-        throw new IllegalStateException("게임이 아직 진행 중 입니다.");
+    public GameState terminate() {
+        return new Terminate(board);
     }
 
     @Override
-    public GameState terminate() {
-        return new Terminate(board);
+    public Winner findWinner() {
+        throw new IllegalStateException("게임이 아직 진행 중 입니다.");
     }
 }

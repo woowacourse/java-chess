@@ -89,7 +89,7 @@ public class Board {
         return calculateScore(piece -> !piece.isBlack() && !piece.isBlank());
     }
 
-    public double calculateScore(PieceIdentifier pieceIdentifier) {
+    private double calculateScore(PieceIdentifier pieceIdentifier) {
         double totalScore = 0;
 
         for (int i = 0; i < 8; i++) {

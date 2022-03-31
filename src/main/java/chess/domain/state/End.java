@@ -15,18 +15,13 @@ public abstract class End extends GameStarted {
     }
 
     @Override
-    public boolean isBlackTurn() {
-        throw new IllegalStateException("게임이 끝나서 턴이 없습니다.");
+    public GameState terminate() {
+        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override
     public GameState move(Position start, Position target) {
         throw new IllegalStateException("게임이 끝나서 말을 움직일 수 없습니다.");
-    }
-
-    @Override
-    public GameState terminate() {
-        throw new IllegalStateException("이미 게임이 종료되었습니다.");
     }
 
     @Override

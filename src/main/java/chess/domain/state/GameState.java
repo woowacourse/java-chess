@@ -7,15 +7,13 @@ public interface GameState {
 
     boolean isEnd();
 
-    boolean isBlackTurn();
-
-    Winner findWinner();
+    GameState terminate();
 
     GameState move(Position start, Position target);
 
-    GameState terminate();
-
     String findTurn();
+
+    Winner findWinner();
 
     Board getBoard();
 }

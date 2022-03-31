@@ -20,7 +20,7 @@ class WhiteTurnTest {
         Map<Integer, Rank> ranks = new HashMap<>();
         WhiteTurn whiteTurn = new WhiteTurn(new Board(BoardInitializer.initBoard()));
 
-        assertThat(whiteTurn.isBlackTurn()).isFalse();
+        assertThat(whiteTurn.findTurn()).isEqualTo("백");
     }
 
     @DisplayName("백팀 차례 이후에 흑팀 차례가 된다.")
