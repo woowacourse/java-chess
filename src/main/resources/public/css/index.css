@@ -1,0 +1,32 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.chess-board-margin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 694px;
+    height: 694px;
+    background-size: 694px;
+}
+
+.chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    width: 640px;
+    height: 640px;
+    text-align: center;
+}
+
+.board-black-square {
+    background-color: saddlebrown;
+}
+
+.board-white-square {
+    background-color: sandybrown;
+}
