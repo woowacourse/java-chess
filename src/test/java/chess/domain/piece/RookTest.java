@@ -6,7 +6,7 @@ import chess.domain.move.RookMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RookTest {
+public class RookTest {
 
     private Rook rook = new Rook(Team.WHITE);
 

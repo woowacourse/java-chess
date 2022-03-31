@@ -17,14 +17,13 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
             final Piece targetPiece
     );
 
-    protected boolean isStartMove(final Board board,
-                                  final Position source,
-                                  final Piece targetPiece,
-                                  final Team team) {
-        if (!source.isPawnStartPosition(team)) {
+    protected boolean isStartMovable(final Board board,
+                                     final Position source,
+                                     final Piece targetPiece) {
+        if (!source.isPawnStartPosition(board.getTeamOfPiece(source))) {
             return false;
         }
-        Position forwardPosition = source.move(Movement.NOT_MOVE, findForwardDirection(team));
+        Position forwardPosition = source.move(Movement.NOT_MOVE, findForwardDirection(board.getTeamOfPiece(source)));
         return board.getPiece(forwardPosition).isBlank() && targetPiece.isBlank();
     }
 
@@ -35,7 +34,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
         return FORWARD_UNIT_WHITE;
     }
 
-    protected boolean isCatchable(final Piece targetPiece, final Team team) {
-        return !targetPiece.isBlank() && targetPiece.getColor() == team.oppositeTeam();
+    protected boolean isTargetPieceOppositeTeam(final Piece targetPiece, final Piece sourcePiece) {
+        return !targetPiece.isBlank() && targetPiece.getTeam() == sourcePiece.getTeam().oppositeTeam();
     }
 }

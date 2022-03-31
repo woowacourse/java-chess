@@ -33,7 +33,7 @@ public class Score {
 
     private double calculateFirstLinePieces(final Map<Position, Piece> board, final Team team) {
         return board.values().stream()
-                .filter(piece -> piece.getColor() == team)
+                .filter(piece -> piece.getTeam() == team)
                 .filter(piece -> !piece.isPawn())
                 .mapToDouble(Piece::getPoint)
                 .sum();
@@ -53,7 +53,7 @@ public class Score {
                               final Map<Column, Integer> pawnCount,
                               final Entry<Position, Piece> boardEntry) {
         Piece piece = boardEntry.getValue();
-        if (piece.isPawn() && piece.getColor() == team) {
+        if (piece.isPawn() && piece.getTeam() == team) {
             Column column = boardEntry.getKey().getColumn();
             pawnCount.put(column, pawnCount.getOrDefault(column, 0) + PAWN_COUNT);
         }

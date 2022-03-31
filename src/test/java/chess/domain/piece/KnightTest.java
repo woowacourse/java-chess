@@ -6,7 +6,7 @@ import chess.domain.move.KnightMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class KnightTest {
+public class KnightTest {
 
     private Knight knight = new Knight(Team.WHITE);
 

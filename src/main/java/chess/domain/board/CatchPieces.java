@@ -20,7 +20,7 @@ public class CatchPieces {
         if (piece.isBlank()) {
             return;
         }
-        if (piece.getColor() == Team.BLACK) {
+        if (piece.getTeam() == Team.BLACK) {
             blackPieces.add(piece);
             return;
         }

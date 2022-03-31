@@ -23,7 +23,7 @@ public class Board {
     }
 
     public Team getTeamOfPiece(final Position position) {
-        return board.get(position).getColor();
+        return board.get(position).getTeam();
     }
 
     public Piece getPiece(final Position position) {

@@ -21,7 +21,7 @@ public abstract class Piece {
 
     public abstract MoveStrategy getMoveStrategy();
 
-    public final Team getColor() {
+    public final Team getTeam() {
         return team;
     }
 

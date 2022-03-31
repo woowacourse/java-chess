@@ -30,13 +30,13 @@ public final class PawnBlackMoveStrategy extends PawnMoveStrategy {
             return false;
         }
         if (movementPattern == MovementPattern.START_MOVEMENT_OF_BLACK_PAWN) {
-            return isStartMove(board, source, targetPiece, board.getTeamOfPiece(source));
+            return isStartMovable(board, source, targetPiece);
         }
         if (movementPattern == MovementPattern.SOUTH) {
             return targetPiece.isBlank();
         }
         if (movementPattern == MovementPattern.SE || movementPattern == MovementPattern.SW) {
-            return isCatchable(targetPiece, board.getTeamOfPiece(source));
+            return isTargetPieceOppositeTeam(targetPiece, board.getPiece(source));
         }
         return false;
     }

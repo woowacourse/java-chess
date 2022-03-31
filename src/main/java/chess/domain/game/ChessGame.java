@@ -36,7 +36,7 @@ public class ChessGame {
     }
 
     private void validateTurn(final Turn turn, final Piece sourcePiece) {
-        if (!turn.isRightTurn(sourcePiece.getColor())) {
+        if (!turn.isRightTurn(sourcePiece.getTeam())) {
             throw new IllegalStateException("[ERROR] 당신의 차례가 아닙니다.");
         }
     }

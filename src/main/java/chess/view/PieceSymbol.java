@@ -36,7 +36,7 @@ public enum PieceSymbol {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Piece 입니다."))
                 .symbol;
-        if (piece.getColor() == Team.BLACK) {
+        if (piece.getTeam() == Team.BLACK) {
             return symbol.toUpperCase();
         }
         return symbol;

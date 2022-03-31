@@ -7,7 +7,7 @@ public abstract class FirstRowMoveStrategy implements MoveStrategy {
 
     protected boolean isMovableToTarget(Piece targetPiece, Team sourceTeam) {
         if (!targetPiece.isBlank()) {
-            return targetPiece.getColor() == sourceTeam.oppositeTeam();
+            return targetPiece.getTeam() == sourceTeam.oppositeTeam();
         }
         return true;
     }

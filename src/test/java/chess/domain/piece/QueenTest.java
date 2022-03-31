@@ -6,7 +6,7 @@ import chess.domain.move.QueenMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class QueenTest {
+public class QueenTest {
 
     private Queen queen = new Queen(Team.WHITE);
 
