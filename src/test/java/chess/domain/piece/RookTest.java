@@ -36,7 +36,7 @@ class RookTest {
         Rook rook = new Rook(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> rook.movable(to, from)).hasMessageContaining("Rook");
+        assertThatThrownBy(() -> rook.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

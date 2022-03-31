@@ -36,7 +36,7 @@ public class KnightTest {
         Knight knight = new Knight(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> knight.movable(to, from)).hasMessageContaining("Knight");
+        assertThatThrownBy(() -> knight.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

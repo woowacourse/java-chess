@@ -62,11 +62,11 @@ public enum Direction {
         return list;
     }
 
-    public static List<Direction> pullBlackPawnDirections() {
+    public static List<Direction> pullSouthDirections() {
         return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST, SOUTH_SOUTH);
     }
 
-    public static List<Direction> pullWhitePawnDirections() {
+    public static List<Direction> pullNorthDirections() {
         return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST, NORTH_NORTH);
     }
 

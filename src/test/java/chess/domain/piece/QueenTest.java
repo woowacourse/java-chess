@@ -36,7 +36,7 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> queen.movable(to, from)).hasMessageContaining("Queen");
+        assertThatThrownBy(() -> queen.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

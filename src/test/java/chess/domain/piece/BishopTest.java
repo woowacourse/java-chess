@@ -37,7 +37,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> bishop.movable(to, from)).hasMessageContaining("Bishop");
+        assertThatThrownBy(() -> bishop.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

@@ -28,7 +28,7 @@ public class PawnTest {
 
     @DisplayName("흰색 팀일 때 이동 불가 확인")
     @ParameterizedTest
-    @CsvSource(value = {"a2,a1", "a7,a5", "a3,a5"})
+    @CsvSource(value = {"a2,a1"})
     void movable_while_x(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);
@@ -37,7 +37,21 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.WHITE);
 
         // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
+        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+    }
+
+    @DisplayName("첫수 외 두칸 이동 불가 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"a7,a5", "a3,a5"})
+    void movable_first_move(String toValue, String fromValue) {
+        // given
+        Position to = new Position(toValue);
+        Position from = new Position(fromValue);
+
+        Pawn pawn = new Pawn(Team.WHITE);
+
+        // then
+        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("첫수일 경우만 가능합니다.");
     }
 
     @DisplayName("검은 팀일 때 이동 가능 확인")
@@ -64,7 +78,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("Pawn");
+        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

@@ -35,7 +35,7 @@ class KingTest {
         King king = new King(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> king.movable(to, from)).hasMessageContaining("King");
+        assertThatThrownBy(() -> king.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")
