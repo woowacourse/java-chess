@@ -10,11 +10,9 @@ public class Board {
     private static final int DEAD_KING_COUNT = 1;
 
     private final Map<Position, Piece> value;
-    private final Score score;
 
     public Board(final Map<Position, Piece> value) {
         this.value = new HashMap<>(value);
-        score = new Score();
     }
 
     public void movePiece(final Position from, final Position to, final Color color) {
@@ -27,8 +25,7 @@ public class Board {
     }
 
     public Score calculateBoardScore() {
-        score.calculate(new HashMap<>(value));
-        return score;
+        return new Score(value);
     }
 
     public boolean isKingDead() {
@@ -100,7 +97,7 @@ public class Board {
     }
 
     public Map<Position, Piece> getValue() {
-        return value;
+        return new HashMap<>(value);
     }
 
     @Override
