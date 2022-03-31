@@ -23,6 +23,11 @@ public class King extends SpecificLocationPiece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     protected List<Direction> getDirections() {
         return directions;
     }

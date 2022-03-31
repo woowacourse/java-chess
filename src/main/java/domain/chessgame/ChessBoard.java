@@ -113,7 +113,7 @@ public class ChessBoard {
 
     public boolean isKingOnlyOne() {
         long kingCount = board.values().stream()
-            .filter(piece -> piece.symbol().equals(PieceSymbol.KING.symbol()))
+            .filter(Piece::isKing)
             .count();
         return kingCount != DEFAULT_KING_COUNT;
     }

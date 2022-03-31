@@ -60,6 +60,10 @@ public abstract class Piece {
         return Map.copyOf(availableMovePosition);
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public boolean isPawn() {
         return false;
     }
