@@ -27,6 +27,11 @@ public class Rook extends Piece implements RookMovable {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return source.isVertical(target) || source.isHorizontal(target);
+    }
+
+    @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
             return BLACK_NAME;

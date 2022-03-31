@@ -19,8 +19,10 @@ class RookTest {
     @DisplayName("룩의 진행 방향이 맞는다면 true 반환")
     void correctMove() {
         Rook rook = new Rook(Position.of('a', '1'), Team.WHITE);
+        Position source = Position.from("a1");
+        Position target = Position.from("f1");
 
-        assertThat(rook.isMovable(Position.of('f', '1'))).isTrue();
+        assertThat(rook.isMovable(source, target)).isTrue();
     }
 
     @Test
