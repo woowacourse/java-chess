@@ -15,9 +15,15 @@ public class Rook extends Piece {
     protected List<Movement> chooseMovements() {
         return List.of(
                 Movement.EAST_UNLIMITED,
+                Movement.EAST_1STEP,
                 Movement.WEST_UNLIMITED,
+                Movement.WEST_1STEP,
                 Movement.SOUTH_UNLIMITED,
-                Movement.NORTH_UNLIMITED
+                Movement.SOUTH_1STEP,
+                Movement.SOUTH_2STEP,
+                Movement.NORTH_UNLIMITED,
+                Movement.NORTH_1STEP,
+                Movement.NORTH_2STEP
         );
     }
 
