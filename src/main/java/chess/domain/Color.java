@@ -2,5 +2,14 @@ package chess.domain;
 
 public enum Color {
 
-    WHITE, BLACK,
+    WHITE,
+    BLACK,
+    ;
+
+    public Color reverse() {
+        if (this.equals(WHITE)) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
