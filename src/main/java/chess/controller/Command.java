@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.score.ScoreResult;
 import chess.domain.state.State;
@@ -14,7 +14,7 @@ import java.util.function.BiFunction;
 public enum Command {
 
 	START("start", (state, input) -> {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		return state.start(board);
 	}),
 	END("end", (state, input) -> state.finish()),

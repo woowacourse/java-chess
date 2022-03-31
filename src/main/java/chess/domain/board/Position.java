@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import static chess.domain.board.BoardFactory.INITIAL_BLACK_PAWN_ROW;
+import static chess.domain.board.BoardFactory.INITIAL_WHITE_PAWN_ROW;
+
 import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,9 +94,9 @@ public class Position {
 
 	public boolean isInitialPawnRow(final Team team) {
 		if (team.isBlack()) {
-			return this.row == InitialBoard.INITIAL_BLACK_PAWN_ROW;
+			return this.row == INITIAL_BLACK_PAWN_ROW;
 		}
-		return this.row == InitialBoard.INITIAL_WHITE_PAWN_ROW;
+		return this.row == INITIAL_WHITE_PAWN_ROW;
 	}
 
 	public static List<Position> getPositions() {

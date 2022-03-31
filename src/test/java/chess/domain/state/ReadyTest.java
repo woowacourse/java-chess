@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class ReadyTest {
 	@Test
 	void start() {
 		State state = new Ready();
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertThat(state.start(board)).isInstanceOf(WhiteTurn.class);
 	}

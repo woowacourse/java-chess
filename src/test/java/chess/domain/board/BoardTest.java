@@ -31,7 +31,7 @@ class BoardTest {
 
 	@Test
 	void isAlly() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertAll(
 				() -> assertThat(board.isAlly(initialWhiteKing, Team.WHITE)).isTrue(),
@@ -41,7 +41,7 @@ class BoardTest {
 
 	@Test
 	void isCheck() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertAll(
 				() -> assertThat(board.isCheck(initialWhiteKing)).isTrue(),
@@ -60,7 +60,7 @@ class BoardTest {
 
 	@Test
 	void moveToSameTeam() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertAll(
 				() -> assertThatThrownBy(() -> board.move(initialWhiteKing, initialWhiteQueen))
@@ -75,7 +75,7 @@ class BoardTest {
 	@ParameterizedTest
 	@MethodSource("createSourceAndTarget")
 	void moveWithAllyBlocking(Position source, Position target) {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertThatThrownBy(() -> board.move(source, target))
 				.isInstanceOf(IllegalArgumentException.class)
@@ -131,14 +131,14 @@ class BoardTest {
 
 	@Test
 	void startWithWhiteTeam() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 
 		assertDoesNotThrow(() -> board.move(initialWhiteKnight, Position.of(3, 3)));
 	}
 
 	@Test
 	void getAllyPiecesByColumn() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		List<Piece> blackPieces = board.getAllyPiecesByColumn(Team.BLACK, 1);
 
 		assertThat(blackPieces.size()).isEqualTo(2);

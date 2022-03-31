@@ -17,18 +17,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InitialBoard {
+public class BoardFactory {
 
 	public static final int INITIAL_BLACK_PAWN_ROW = 7;
 	public static final int INITIAL_WHITE_PAWN_ROW = 2;
 	private static final int INITIAL_BLACK_ROW = 8;
 	private static final int INITIAL_WHITE_ROW = 1;
 
-	private InitialBoard() {
+	private BoardFactory() {
 		throw new AssertionError();
 	}
 
-	public static Map<Position, Piece> createBoard() {
+	public static Map<Position, Piece> initiate() {
 		final Map<Position, Piece> board = createBlankBoard();
 		return addPieces(board);
 	}

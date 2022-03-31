@@ -10,7 +10,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class BlackTurnTest {
 
 	@Test
 	void start() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 
 		assertThatThrownBy(() -> state.start(board))
@@ -28,7 +28,7 @@ class BlackTurnTest {
 
 	@Test
 	void playBlackToWhite() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position blackPawn = initialBlackPawn;
 		Position target = Position.of(6, 1);
@@ -48,7 +48,7 @@ class BlackTurnTest {
 
 	@Test
 	void playWithEnemyPiece() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position whitePawn = initialWhitePawn;
 		Position target = Position.of(3, 1);
@@ -60,7 +60,7 @@ class BlackTurnTest {
 
 	@Test
 	void playCatchSameTeamPiece() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 		Position blackKing = initialBlackKing;
 		Position blackQueen = initialBlackQueen;
@@ -72,7 +72,7 @@ class BlackTurnTest {
 
 	@Test
 	void createStatus() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 
 		assertDoesNotThrow(state::createStatus);
@@ -80,7 +80,7 @@ class BlackTurnTest {
 
 	@Test
 	void finish() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 
 		assertThat(state.finish()).isInstanceOf(EndGame.class);
@@ -88,7 +88,7 @@ class BlackTurnTest {
 
 	@Test
 	void isFinished() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 
 		assertThat(state.isFinished()).isFalse();
@@ -96,7 +96,7 @@ class BlackTurnTest {
 
 	@Test
 	void judgeWinnerWithRunning() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new BlackTurn(board);
 
 		assertThatThrownBy(state::judgeWinner)

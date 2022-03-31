@@ -16,9 +16,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class InitialBoardTest {
+class BoardFactoryTest {
 
-	private final Map<Position, Piece> board = InitialBoard.createBoard();
+	private final Map<Position, Piece> board = BoardFactory.initiate();
 
 	@ParameterizedTest
 	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})

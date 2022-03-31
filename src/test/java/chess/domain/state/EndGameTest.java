@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class EndGameTest {
 
 	@Test
 	void start() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
@@ -25,7 +25,7 @@ class EndGameTest {
 
 	@Test
 	void play() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
@@ -36,7 +36,7 @@ class EndGameTest {
 
 	@Test
 	void createStatus() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
@@ -47,7 +47,7 @@ class EndGameTest {
 
 	@Test
 	void finish() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
@@ -58,7 +58,7 @@ class EndGameTest {
 
 	@Test
 	void isFinished() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
@@ -67,7 +67,7 @@ class EndGameTest {
 
 	@Test
 	void judgeWinnerWithFinished() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 

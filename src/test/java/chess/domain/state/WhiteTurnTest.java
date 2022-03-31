@@ -10,7 +10,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.board.Board;
-import chess.domain.board.InitialBoard;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class WhiteTurnTest {
 
 	@Test
 	void start() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 
 		assertThatThrownBy(() -> state.start(board))
@@ -28,7 +28,7 @@ class WhiteTurnTest {
 
 	@Test
 	void playWhiteToBlack() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		Position whitePawn = initialWhitePawn;
 		Position target = Position.of(3, 1);
@@ -48,7 +48,7 @@ class WhiteTurnTest {
 
 	@Test
 	void playWithEnemyPiece() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		Position blackPawn = initialBlackPawn;
 		Position target = Position.of(6, 1);
@@ -60,7 +60,7 @@ class WhiteTurnTest {
 
 	@Test
 	void playCatchSameTeamPiece() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		Position whiteKing = initialWhiteKing;
 		Position whiteQueen = initialWhiteQueen;
@@ -72,7 +72,7 @@ class WhiteTurnTest {
 
 	@Test
 	void createStatus() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 
 		assertDoesNotThrow(state::createStatus);
@@ -80,7 +80,7 @@ class WhiteTurnTest {
 
 	@Test
 	void finish() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 
 		assertThat(state.finish()).isInstanceOf(EndGame.class);
@@ -88,7 +88,7 @@ class WhiteTurnTest {
 
 	@Test
 	void isFinished() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 
 		assertThat(state.isFinished()).isFalse();
@@ -96,7 +96,7 @@ class WhiteTurnTest {
 
 	@Test
 	void judgeWinnerWithRunning() {
-		Board board = new Board(InitialBoard.createBoard());
+		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 
 		assertThatThrownBy(state::judgeWinner)
