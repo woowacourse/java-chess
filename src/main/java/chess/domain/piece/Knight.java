@@ -4,6 +4,7 @@ import chess.domain.strategy.KnightMoveStrategy;
 
 public final class Knight extends Piece {
 
+    public static final double KNIGHT_SOCRE = 2.5;
     private final Team team;
     private final String symbol;
 
@@ -20,7 +21,7 @@ public final class Knight extends Piece {
 
     @Override
     public double getScore() {
-        return 2.5;
+        return KNIGHT_SOCRE;
     }
 
     @Override

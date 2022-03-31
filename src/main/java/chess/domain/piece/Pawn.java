@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
+    public static final int PAWN_SCORE = 1;
     private final String symbol;
 
     public Pawn(Team team, String symbol) {
@@ -17,7 +18,7 @@ public class Pawn extends Piece {
 
     @Override
     public double getScore() {
-        return 1;
+        return PAWN_SCORE;
     }
 
     @Override

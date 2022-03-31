@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.strategy.KingMoveStrategy;
 
 public final class King extends Piece {
+    public static final int KING_SCORE = 0;
     private final Team team;
     private final String symbol;
 
@@ -19,7 +20,7 @@ public final class King extends Piece {
 
     @Override
     public double getScore() {
-        return 0;
+        return KING_SCORE;
     }
 
     @Override

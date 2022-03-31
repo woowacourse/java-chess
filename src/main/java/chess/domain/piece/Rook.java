@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.strategy.RookMoveStrategy;
 
 public final class Rook extends Piece {
+    public static final int ROOK_SCORE = 5;
     private final Team team;
     private final String symbol;
 
@@ -19,7 +20,7 @@ public final class Rook extends Piece {
 
     @Override
     public double getScore() {
-        return 5;
+        return ROOK_SCORE;
     }
 
     @Override
