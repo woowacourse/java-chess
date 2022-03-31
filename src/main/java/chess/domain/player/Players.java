@@ -1,9 +1,11 @@
 package chess.domain.player;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import chess.domain.Color;
 import chess.domain.Position;
@@ -18,7 +20,22 @@ public class Players {
     }
 
     public Players(final List<Player> players) {
+        validatePlayerColorNotDuplicated(players);
         this.players = players;
+    }
+
+    private void validatePlayerColorNotDuplicated(final List<Player> players) {
+        if (isPlayerColorDuplicated(players)) {
+            throw new IllegalArgumentException("플레이어의 색상이 중복됩니다.");
+        }
+    }
+
+    private boolean isPlayerColorDuplicated(final List<Player> players) {
+        final List<Color> colors = players.stream()
+                .map(Player::getColor)
+                .collect(Collectors.toUnmodifiableList());
+        return colors.stream()
+                .anyMatch(color -> Collections.frequency(colors, color) > 1);
     }
 
     public static Players initialize(final PlayerFactory playerFactory) {

@@ -101,6 +101,10 @@ public class Player {
         return color.equals(this.color);
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public Map<Position, Piece> getPieces() {
         return Map.copyOf(pieces);
     }

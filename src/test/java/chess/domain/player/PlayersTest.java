@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -40,6 +41,17 @@ class PlayersTest {
                         Position.from("d2"), Pawn.getBlackPawn())
                 ))
         );
+    }
+
+    @DisplayName("플레이어의 색상은 중복될 수 없어야 한다.")
+    @Test
+    void playerColorDuplicatedException() {
+        final Player player1 = new Player(Color.WHITE, Collections.emptyMap());
+        final Player player2 = new Player(Color.WHITE, Collections.emptyMap());
+
+        assertThatThrownBy(() -> new Players(player1, player2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어의 색상이 중복됩니다.");
     }
 
     @DisplayName("플레이어는 다른 플레이어의 기물을 움직일 수 없어야 한다.")
