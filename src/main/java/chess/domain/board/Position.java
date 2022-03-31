@@ -25,6 +25,13 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
+    public static Position valueOf(final String rawPosition) {
+        if (!CACHE.containsKey(rawPosition)) {
+            throw new IllegalArgumentException("[ERROR] 좌표가 체스판의 범위를 초과하였습니다.");
+        }
+        return CACHE.get(rawPosition);
+    }
+
     private static List<Position> createAll() {
         List<Position> positions = new ArrayList<>();
         for (Row row : Row.values()) {
@@ -33,13 +40,6 @@ public class Position implements Comparable<Position> {
             }
         }
         return positions;
-    }
-
-    public static Position valueOf(final String rawPosition) {
-        if (!CACHE.containsKey(rawPosition)) {
-            throw new IllegalArgumentException("[ERROR] 좌표가 체스판의 범위를 초과하였습니다.");
-        }
-        return CACHE.get(rawPosition);
     }
 
     public int subtractColumn(final Position position) {

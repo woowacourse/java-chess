@@ -16,8 +16,9 @@ public class Board {
     }
 
     public void movePiece(final Position source, final Position target, final CatchPieces catchPieces) {
-        Piece targetPiece = board.replace(target, getPiece(source));
-        board.replace(source, new Blank());
+        Piece targetPiece = board.getOrDefault(target, new Blank());
+        board.put(target, getPiece(source));
+        board.put(source, new Blank());
         catchPieces.addPiece(targetPiece);
     }
 

@@ -20,7 +20,7 @@ public class BishopMoveStrategy extends LinearMoveStrategy {
         if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
             return false;
         }
-        return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
+        return isMovableToTarget(board.getPiece(target), board.getColorOfPiece(source));
     }
 
     private boolean isBishopMovePattern(final Distance distance) {

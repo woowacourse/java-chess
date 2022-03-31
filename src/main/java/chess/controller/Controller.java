@@ -7,7 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessGameController {
+public class Controller {
 
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
