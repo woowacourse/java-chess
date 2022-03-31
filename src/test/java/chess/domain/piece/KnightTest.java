@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -10,19 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class KnightTest {
-
-	@Test
-	void checkBlackTeamSymbol() {
-		Piece knight = new Knight(Team.BLACK);
-		assertThat(knight.getSymbol()).isEqualTo("N");
-	}
-
-	@Test
-	void checkWhiteTeamSymbol() {
-		Piece knight = new Knight(Team.WHITE);
-		assertThat(knight.getSymbol()).isEqualTo("n");
-	}
-
+	
 	@ParameterizedTest
 	@CsvSource(value = {"2, 5", "2, 3", "6, 5", "6, 3", "5, 6", "3, 6", "5, 2", "3, 2"})
 	void validateMovement(int targetRow, int targetCol) {

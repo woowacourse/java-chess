@@ -4,20 +4,10 @@ import chess.domain.board.Position;
 
 public final class Rook extends Piece {
 
-	private static final String BLACK_SYMBOL = "R";
-	private static final String WHITE_SYMBOL = "r";
 	private static final int ROOK_SCORE = 5;
 
 	public Rook(final Team team) {
 		super(team);
-	}
-
-	@Override
-	protected String createSymbol(final Team team) {
-		if (team.isBlack()) {
-			return BLACK_SYMBOL;
-		}
-		return WHITE_SYMBOL;
 	}
 
 	@Override

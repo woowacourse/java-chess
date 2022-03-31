@@ -6,20 +6,10 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
-	private static final String BLACK_SYMBOL = "N";
-	private static final String WHITE_SYMBOL = "n";
 	private static final double KNIGHT_SCORE = 2.5;
 
 	public Knight(final Team team) {
 		super(team);
-	}
-
-	@Override
-	protected String createSymbol(final Team team) {
-		if (team.isBlack()) {
-			return BLACK_SYMBOL;
-		}
-		return WHITE_SYMBOL;
 	}
 
 	@Override

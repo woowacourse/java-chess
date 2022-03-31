@@ -6,21 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
-
-	private static final String BLACK_SYMBOL = "P";
-	private static final String WHITE_SYMBOL = "p";
+	
 	private static final int PAWN_SCORE = 1;
 
 	public Pawn(final Team team) {
 		super(team);
-	}
-
-	@Override
-	protected String createSymbol(final Team team) {
-		if (team.isBlack()) {
-			return BLACK_SYMBOL;
-		}
-		return WHITE_SYMBOL;
 	}
 
 	@Override

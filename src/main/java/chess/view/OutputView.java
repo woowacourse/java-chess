@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.score.ScoreResult;
+import chess.dto.BoardDto;
 import java.util.Map;
 
 public class OutputView {
@@ -19,10 +18,10 @@ public class OutputView {
 	private static final String DELIMITER = ": ";
 	private static final String DRAW_MESSAGE = "무승부 입니다.";
 
-	public static void printBoard(final Board board) {
-		final Map<Position, Piece> boardInformation = board.getBoard();
+	public static void printBoard(final BoardDto board) {
+		final Map<Position, String> boardInformation = board.getBoard();
 		for (Position position : Position.getReversePositions()) {
-			System.out.print(boardInformation.get(position).getSymbol());
+			System.out.print(boardInformation.get(position));
 			printBlank(position);
 		}
 		System.out.println();

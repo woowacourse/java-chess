@@ -10,11 +10,9 @@ public abstract class Piece {
 
 	private static final String CAN_NOT_CATCH_AllY_ERROR = "같은 팀의 기물을 잡을 수 없습니다.";
 
-	private final String symbol;
 	protected final Team team;
 
 	protected Piece(final Team team) {
-		this.symbol = createSymbol(team);
 		this.team = team;
 	}
 
@@ -39,12 +37,6 @@ public abstract class Piece {
 		return Direction.find(differenceRow, differenceColumn);
 	}
 
-	public final String getSymbol() {
-		return symbol;
-	}
-
-	protected abstract String createSymbol(final Team team);
-
 	protected abstract void validateDirection(final Position source, final Position target, final Piece targetPiece);
 
 	public abstract boolean isBlank();
@@ -64,11 +56,11 @@ public abstract class Piece {
 			return false;
 		}
 		final Piece piece = (Piece) o;
-		return Objects.equals(symbol, piece.symbol) && team == piece.team;
+		return team == piece.team;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(symbol, team);
+		return Objects.hash(team);
 	}
 }

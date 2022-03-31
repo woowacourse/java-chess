@@ -4,22 +4,12 @@ import chess.domain.board.Position;
 
 public final class Queen extends Piece {
 
-	private static final String BLACK_SYMBOL = "Q";
-	private static final String WHITE_SYMBOL = "q";
 	private static final int QUEEN_SCORE = 9;
 
 	public Queen(final Team team) {
 		super(team);
 	}
-
-	@Override
-	protected String createSymbol(final Team team) {
-		if (team.isBlack()) {
-			return BLACK_SYMBOL;
-		}
-		return WHITE_SYMBOL;
-	}
-
+	
 	@Override
 	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		if (!target.isDiagonalMove(source) && !target.isLinerMove(source)) {

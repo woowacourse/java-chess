@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -13,7 +14,8 @@ public class ChessController {
 		InputView.printCommandGuide();
 		while (!state.isFinished()) {
 			state = playCommand(state, requestCommand());
-			OutputView.printBoard(state.getBoard());
+			BoardDto board = BoardDto.of(state.getBoard());
+			OutputView.printBoard(board);
 		}
 		OutputView.printWinner(state.judgeWinner());
 	}
