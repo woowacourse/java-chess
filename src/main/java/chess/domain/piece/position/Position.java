@@ -1,7 +1,11 @@
 package chess.domain.piece.position;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Position {
     private final File file;
@@ -23,15 +27,24 @@ public class Position {
         return next.getFile() == File.OUT || next.getRank() == Rank.OUT;
     }
 
+    public static List<Position> getAllPositions() {
+        return Arrays.stream(File.values())
+                .map(file -> Arrays.stream(Rank.values())
+                        .map(rank -> Position.of(file, rank))
+                        .collect(Collectors.toList()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    public Position getNext(Direction direction) {
+        return Position.of(file.getNext(direction.getFile()), rank.getNext(direction.getRank()));
+    }
+
     public File getFile() {
         return file;
     }
 
     public Rank getRank() {
         return rank;
-    }
-
-    public Position getNext(Direction direction) {
-        return Position.of(file.getNext(direction.file()), rank.getNext(direction.rank()));
     }
 }

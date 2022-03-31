@@ -10,4 +10,9 @@ public final class Knight extends Piece {
     public Knight(Color color) {
         super(color, NAME, SCORE, new StartedKnight());
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

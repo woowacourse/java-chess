@@ -1,11 +1,5 @@
 package chess.domain.game.state;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Direction;
@@ -13,8 +7,18 @@ import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.position.Rank;
 import chess.domain.piece.property.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
+
+    public static final int DUPLICATION_COUNT_STANDARD = 2;
+    public static final double DUPLICATED_PAWN_SCORE = 0.5;
+
     private final Map<Position, Piece> board = new HashMap<>();
 
     public void move(Position source, Position target) {
@@ -83,7 +87,7 @@ public class ChessBoard {
 
     private void kill(Piece piece) {
         if (isExist(piece)) {
-            piece.killed();
+            piece.die();
         }
     }
 
@@ -100,23 +104,15 @@ public class ChessBoard {
         return board.containsKey(target);
     }
 
-    public Piece getPiece(Position target) {
-        return board.get(target);
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public Map<Color, Double> computeScore() {
         Map<Color, Double> scores = new HashMap<>();
-        scores.put(Color.WHITE, score(Color.WHITE));
-        scores.put(Color.BLACK, score(Color.BLACK));
+        scores.put(Color.WHITE, calculateScore(Color.WHITE));
+        scores.put(Color.BLACK, calculateScore(Color.BLACK));
 
         return scores;
     }
 
-    private double score(Color color) {
+    private double calculateScore(Color color) {
         List<Piece> pieces = board.values().stream()
             .filter(piece -> piece.isSameColor(color))
             .collect(Collectors.toList());
@@ -126,24 +122,30 @@ public class ChessBoard {
     }
 
     private double calculateDuplicatePawn(Color color) {
-        int sum = 0;
+        List<Integer> pawnCounts = new ArrayList<>();
         for (File file : File.values()) {
             int pawnCount = (int) Arrays.stream(Rank.values())
                 .map(rank -> Position.of(file, rank))
                 .map(board::get)
                 .filter(piece -> new Pawn(color).isSame(piece))
                 .count();
-
-            sum += getDuplicateCount(pawnCount);
+            pawnCounts.add(pawnCount);
         }
-        return sum * 0.5;
+        return DUPLICATED_PAWN_SCORE * countDuplicatePawn(pawnCounts);
     }
 
-    private int getDuplicateCount(int count) {
-        if (count >= 2) {
-            return count;
-        }
+    private double countDuplicatePawn(List<Integer> counts) {
+        return counts.stream()
+                .filter(count -> count >= DUPLICATION_COUNT_STANDARD)
+                .mapToDouble(i -> i)
+                .sum();
+    }
 
-        return 0;
+    public Piece getPiece(Position target) {
+        return board.get(target);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
     }
 }

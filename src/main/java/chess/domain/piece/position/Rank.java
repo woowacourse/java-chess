@@ -28,15 +28,15 @@ public enum Rank {
             .orElseThrow(NoSuchElementException::new);
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public Rank getNext(int next) {
         if (value + next < ONE.value || value + next > EIGHT.value) {
             return OUT;
         }
 
         return Rank.of(value + next);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class Command {
         commands.put(Pattern.compile("^(start)$"), (chessGame, ignored) -> GameResult.ofBoard(chessGame.start()));
         commands.put(Pattern.compile("^(end)$"), (chessGame, ignored) -> GameResult.ofBoard(chessGame.end()));
         commands.put(Pattern.compile("^((move) ([a-h][1-8]) ([a-h][1-8]))$"),
-            (chessGame, inputs) -> GameResult.ofBoard(chessGame.move(getPosition(inputs.get(1)), getPosition(inputs.get(2)))));
+            (chessGame, inputs) -> GameResult.ofBoard(chessGame.move(toPosition(inputs.get(1)), toPosition(inputs.get(2)))));
     }
 
     public static GameResult act(String input, ChessGame chessGame) {
@@ -35,15 +35,15 @@ public class Command {
         return commands.get(command).apply(chessGame, Arrays.asList(input.split(" ")));
     }
 
-    private static Position getPosition(String input) {
-        return Position.of(getFile(input.substring(0, 1)), getRank(input.substring(1, 2)));
+    private static Position toPosition(String input) {
+        return Position.of(toFile(input.substring(0, 1)), toRank(input.substring(1, 2)));
     }
 
-    private static File getFile(String file) {
+    private static File toFile(String file) {
         return File.of(file);
     }
 
-    private static Rank getRank(String rank) {
+    private static Rank toRank(String rank) {
         return Rank.of(Integer.parseInt(rank));
     }
 }

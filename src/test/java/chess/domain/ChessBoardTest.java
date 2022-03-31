@@ -72,7 +72,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("computeScore 메서드는 색깔별로 점수를 계산한다.")
     void computeScoreTest() {
         ChessBoard chessBoard = initScoreTestBoard();
 

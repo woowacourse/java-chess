@@ -10,4 +10,9 @@ public final class Queen extends Piece {
     public Queen(Color color) {
         super(color, NAME, SCORE, new StartedQueen());
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

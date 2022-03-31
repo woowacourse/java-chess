@@ -16,7 +16,7 @@ public interface GameState {
 
     GameState end();
 
-    Map<Position, Piece> getBoard();
-
     boolean isFinished();
+
+    Map<Position, Piece> getBoard();
 }

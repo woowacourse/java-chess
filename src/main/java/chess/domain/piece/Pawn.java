@@ -8,10 +8,15 @@ public final class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(Color color) {
-        super(color, NAME, SCORE, new StartedPawn(color.forward()));
+        super(color, NAME, SCORE, new StartedPawn(color.getForwardDirection()));
     }
 
     public boolean isSame(Piece piece) {
         return this.equals(piece);
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 }

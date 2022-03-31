@@ -10,8 +10,7 @@ import chess.domain.piece.position.Position;
 public class NonContinuous {
 
     public List<Position> getMovablePositions(Position source, ChessBoard board, List<Direction> directions) {
-        return directions
-            .stream()
+        return directions.stream()
             .filter(direction -> board.canMoveOrKillByOneStep(source, direction))
             .map(source::getNext)
             .collect(Collectors.toList());

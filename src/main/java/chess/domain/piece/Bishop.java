@@ -10,4 +10,9 @@ public final class Bishop extends Piece {
     public Bishop(Color color) {
         super(color, NAME, SCORE, new StartedBishop());
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

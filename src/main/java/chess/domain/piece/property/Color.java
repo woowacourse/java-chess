@@ -13,15 +13,7 @@ public enum Color {
         this.forward = forward;
     }
 
-    public String convertName(String name) {
-        if (this == BLACK) {
-            name = name.toUpperCase();
-        }
-
-        return name;
-    }
-
-    public Direction forward() {
+    public Direction getForwardDirection() {
         return forward;
     }
 

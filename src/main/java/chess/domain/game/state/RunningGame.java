@@ -17,15 +17,11 @@ public class RunningGame extends StartedGame {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
-        return board.getBoard();
-    }
-
-    @Override
     public GameState move(Position source, Position target) {
         validatePosition(source);
 
         if (isKingKilled(target)) {
+            board.move(source, target);
             return new EndGame();
         }
 
@@ -35,13 +31,13 @@ public class RunningGame extends StartedGame {
         return new RunningGame(board, player);
     }
 
-    private boolean isKingKilled(Position target) {
-        return board.isFilled(target) && board.getPiece(target).isKing();
-    }
-
     private void validatePosition(Position source) {
         board.validateExist(source);
         checkMyPiece(board.getPiece(source));
+    }
+
+    private boolean isKingKilled(Position target) {
+        return board.isFilled(target) && board.getPiece(target).isKing();
     }
 
     private void checkMyPiece(Piece sourcePiece) {
@@ -53,5 +49,10 @@ public class RunningGame extends StartedGame {
     @Override
     public Map<Color, Double> status() {
         return board.computeScore();
+    }
+
+    @Override
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }

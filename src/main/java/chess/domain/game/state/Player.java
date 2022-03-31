@@ -1,9 +1,9 @@
 package chess.domain.game.state;
 
-import java.util.Arrays;
-
 import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum Player {
     WHITE(Color.WHITE),
@@ -24,6 +24,6 @@ public enum Player {
         return Arrays.stream(Player.values())
             .filter(player -> player.color != this.color)
             .findFirst()
-            .get();
+            .orElseThrow(() -> new NoSuchElementException("턴을 바꿀 수 없습니다."));
     }
 }

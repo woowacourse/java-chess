@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
-import java.util.List;
-
 import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Name;
 import chess.domain.piece.state.PieceState;
+import java.util.List;
 
 public abstract class Piece {
     private final Color color;
@@ -17,7 +16,10 @@ public abstract class Piece {
 
     public Piece(Color color, String name, double score, PieceState pieceState) {
         this.color = color;
-        this.name = new Name(color.convertName(name));
+        if (color == Color.BLACK) {
+            name = name.toUpperCase();
+        }
+        this.name = new Name(name);
         this.score = score;
         this.pieceState = pieceState;
     }
@@ -28,12 +30,22 @@ public abstract class Piece {
             .sum();
     }
 
-    public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        return pieceState.getMovablePositions(source, board);
-    }
-
     public boolean isSameColor(Color other) {
         return color.isSameColor(other);
+    }
+
+    public void updateState() {
+        pieceState = pieceState.updateState();
+    }
+
+    public void die() {
+        pieceState = pieceState.die();
+    }
+
+    public abstract boolean isKing();
+
+    public List<Position> getMovablePaths(Position source, ChessBoard board) {
+        return pieceState.getMovablePositions(source, board);
     }
 
     public String getName() {
@@ -42,14 +54,6 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
-    }
-
-    public void updateState() {
-        pieceState = pieceState.updateState();
-    }
-
-    public void killed() {
-        pieceState = pieceState.killed();
     }
 
     @Override
@@ -67,10 +71,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
-    }
-
-    public boolean isKing() {
-        return new King(Color.WHITE).isSame(this)
-            || new King(Color.BLACK).isSame(this);
     }
 }

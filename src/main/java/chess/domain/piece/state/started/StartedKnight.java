@@ -13,7 +13,7 @@ public class StartedKnight extends Started{
 
     @Override
     public List<Position> getMovablePositions(Position source, ChessBoard board) {
-        return nonContinuous.getMovablePositions(source, board, Direction.knight());
+        return nonContinuous.getMovablePositions(source, board, Direction.getKnightDirections());
     }
 
     @Override

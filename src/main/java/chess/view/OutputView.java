@@ -1,11 +1,10 @@
 package chess.view;
 
-import java.util.Map;
-import java.util.stream.IntStream;
-
 import chess.domain.piece.property.Color;
 import chess.dto.ChessBoardDto;
 import chess.dto.PositionDto;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 public class OutputView {
 

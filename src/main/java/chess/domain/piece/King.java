@@ -11,7 +11,8 @@ public final class King extends Piece {
         super(color, NAME, SCORE, new StartedKing());
     }
 
-    public boolean isSame(Piece piece) {
-        return this.equals(piece);
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

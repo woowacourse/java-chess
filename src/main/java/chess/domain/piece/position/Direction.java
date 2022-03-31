@@ -35,7 +35,7 @@ public enum Direction {
         this.rank = rank;
     }
 
-    public static List<Direction> knight() {
+    public static List<Direction> getKnightDirections() {
         List<Direction> directions = new ArrayList<>();
         directions.add(Direction.UP_UP_RIGHT);
         directions.add(Direction.UP_RIGHT_RIGHT);
@@ -80,11 +80,11 @@ public enum Direction {
         return directions;
     }
 
-    public int file() {
+    public int getFile() {
         return file;
     }
 
-    public int rank() {
+    public int getRank() {
         return rank;
     }
 }

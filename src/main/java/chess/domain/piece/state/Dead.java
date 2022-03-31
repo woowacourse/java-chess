@@ -12,7 +12,7 @@ public class Dead implements PieceState {
     }
 
     @Override
-    public PieceState killed() {
+    public PieceState die() {
         throw new UnsupportedOperationException("죽은 체스말 입니다.");
     }
 

@@ -11,7 +11,11 @@ public class PieceTest {
     @Test
     @DisplayName("체스말은 생성될때 색, 이름, 상태을 가진다.")
     void pieceTest() {
-        assertThatCode(() -> new Piece(Color.BLACK, "k", 0, new StartedBishop()) {})
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Piece(Color.BLACK, "k", 0, new StartedBishop()) {
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        }).doesNotThrowAnyException();
     }
 }

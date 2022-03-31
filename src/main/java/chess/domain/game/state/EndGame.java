@@ -30,12 +30,12 @@ public class EndGame implements GameState {
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
-        return new HashMap<>();
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>();
     }
 }

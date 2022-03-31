@@ -11,4 +11,8 @@ public final class Rook extends Piece {
         super(color, NAME, SCORE, new StartedRook());
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }
