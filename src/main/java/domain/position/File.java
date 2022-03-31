@@ -38,7 +38,7 @@ public enum File {
         return index;
     }
 
-    public static boolean isFileRange(int index) {
+    public static boolean isFileRange(final int index) {
         return A.index <= index && index <= H.index;
     }
 }

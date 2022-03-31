@@ -2,9 +2,9 @@ package domain.piece;
 
 public enum PieceScore {
     QUEEN(9),
+    ROOK(5),
     BISHOP(3),
     KNIGHT(2.5),
-    ROOK(5),
     PAWN(1),
     KING(0);
 
@@ -16,7 +16,7 @@ public enum PieceScore {
         this.score = score;
     }
 
-    public double score(boolean isSeveralPawn) {
+    public double score(final boolean isSeveralPawn) {
         if (this == PAWN && isSeveralPawn) {
             return SEVERAL_PAWN_POINT;
         }

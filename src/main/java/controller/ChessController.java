@@ -10,8 +10,8 @@ import view.OutputView;
 
 public class ChessController {
 
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     public void start() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();

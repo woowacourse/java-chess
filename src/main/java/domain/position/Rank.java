@@ -18,18 +18,18 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank of(int index) {
+    public static Rank of(final int index) {
         return Arrays.stream(values())
             .filter(value -> value.index == index)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바르지 않은 Rank입니다.(1 ~ 8)"));
     }
 
-    public static Rank of(String index) {
+    public static Rank of(final String index) {
         return Rank.of(Integer.parseInt(index));
     }
 
-    public static boolean isRankRange(int index) {
+    public static boolean isRankRange(final int index) {
         return ONE.index <= index && index <= EIGHT.index;
     }
 

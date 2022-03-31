@@ -11,10 +11,6 @@ public class Blank extends Piece {
         super(Player.NULL, PieceSymbol.NULL);
     }
 
-    public Blank(final Player player) {
-        super(player, PieceSymbol.NULL);
-    }
-
     @Override
     public boolean isBlank() {
         return true;
@@ -26,13 +22,13 @@ public class Blank extends Piece {
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(Position source,
-        Direction direction) {
+    protected List<Position> calculateAvailablePosition(final Position source,
+        final Direction direction) {
         throw new IllegalArgumentException("[ERROR] 해당 위치는 비어있는 칸입니다.");
     }
 
     @Override
-    public double score(boolean isSeveralPawn) {
+    public double score(final boolean isSeveralPawn) {
         return 0;
     }
 }

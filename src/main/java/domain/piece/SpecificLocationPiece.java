@@ -8,12 +8,12 @@ import java.util.List;
 
 public abstract class SpecificLocationPiece extends Piece {
 
-    public SpecificLocationPiece(Player player, PieceSymbol pieceSymbol) {
+    public SpecificLocationPiece(final Player player, final PieceSymbol pieceSymbol) {
         super(player, pieceSymbol);
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(Position source, Direction direction) {
+    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
         if (checkOverRange(source, direction)) {
             positions.add(createPositionByDirection(source, direction));

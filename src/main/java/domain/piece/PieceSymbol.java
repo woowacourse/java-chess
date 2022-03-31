@@ -17,10 +17,6 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
-    public String symbol() {
-        return symbol;
-    }
-
     public String symbol(final Player player) {
         if (player==Player.NULL) {
             return NULL.symbol;

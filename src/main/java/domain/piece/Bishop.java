@@ -23,7 +23,7 @@ public class Bishop extends MovableRangePiece {
     }
 
     @Override
-    public double score(boolean isSeveralPawn) {
+    public double score(final boolean isSeveralPawn) {
         return PieceScore.BISHOP.score(isSeveralPawn);
     }
 }

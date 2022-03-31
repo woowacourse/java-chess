@@ -23,7 +23,7 @@ public class Rook extends MovableRangePiece {
     }
 
     @Override
-    public double score(boolean isSeveralPawn) {
+    public double score(final boolean isSeveralPawn) {
         return PieceScore.ROOK.score(isSeveralPawn);
     }
 }

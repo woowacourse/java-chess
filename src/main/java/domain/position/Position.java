@@ -12,11 +12,11 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position of(File file, Rank rank) {
+    public static Position of(final File file, final Rank rank) {
         return new Position(file, rank);
     }
 
-    public static Position of(String file, String rank) {
+    public static Position of(final String file, final String rank) {
         return new Position(File.of(file), Rank.of(rank));
     }
 

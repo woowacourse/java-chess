@@ -31,8 +31,6 @@ public abstract class Piece {
 
     protected abstract List<Direction> getDirections();
 
-    public abstract double score(boolean isSeveralPawn);
-
     protected boolean checkOverRange(final Position source, final Direction direction) {
         int rank = source.getRank() + direction.getRank();
         int file = source.getFile() + direction.getFile();
@@ -44,6 +42,8 @@ public abstract class Piece {
         int file = source.getFile() + direction.getFile();
         return Position.of(File.of(file), Rank.of(rank));
     }
+
+    public abstract double score(boolean isSeveralPawn);
 
     public boolean isKing() {
         return false;
@@ -71,9 +71,5 @@ public abstract class Piece {
 
     public String symbolByPlayer() {
         return pieceSymbol.symbol(player);
-    }
-
-    public String symbol() {
-        return pieceSymbol.symbol();
     }
 }

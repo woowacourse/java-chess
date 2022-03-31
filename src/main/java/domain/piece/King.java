@@ -32,7 +32,7 @@ public class King extends SpecificLocationPiece {
     }
 
     @Override
-    public double score(boolean isSeveralPawn) {
+    public double score(final boolean isSeveralPawn) {
         return PieceScore.KING.score(isSeveralPawn);
     }
 }

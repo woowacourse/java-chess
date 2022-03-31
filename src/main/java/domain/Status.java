@@ -5,7 +5,7 @@ public class Status {
     private final double whiteScore;
     private final double blackScore;
 
-    public Status(double whiteScore, double blackScore) {
+    public Status(final double whiteScore, final double blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
