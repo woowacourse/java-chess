@@ -26,6 +26,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return source.isKnightDirection(target);
+    }
+
+    @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
             return BLACK_NAME;
