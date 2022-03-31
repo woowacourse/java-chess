@@ -1,9 +1,11 @@
 package chess.view;
 
+import chess.domain.Score;
+import chess.domain.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.domain.piece.Piece;
 import chess.domain.state.GameState;
 
 import java.util.Map;
@@ -34,9 +36,20 @@ public class OutputView {
         System.out.println("이긴 팀은 " + gameState.getTeam());
     }
 
-    public static void printStatus(double whiteScore, double blackScore) {
-        System.out.printf("WHITE팀 점수는%d\n" +
-                "BLACK팀 점수는%d\n", (int) whiteScore, (int) blackScore);
+    public static void printStatus(Score score) {
+        System.out.printf("WHITE팀 점수는%f\n" +
+                "BLACK팀 점수는%f\n", score.getTotalScoreWhiteTeam(), score.getTotalScoreBlackTeam());
+        printWinningTeam(score.getWinningTeam());
+    }
+
+    private static void printWinningTeam(Team team) {
+        if (team.matchTeam(Team.BLACK)) {
+            System.out.println("Black팀이 이기고 있습니다.");
+        }
+        if (team.matchTeam(Team.WHITE)) {
+            System.out.println("White팀이 이기고 있습니다.");
+        }
+        System.out.println("비기고 있습니다.");
     }
 
     public static void errorMessage(String message) {

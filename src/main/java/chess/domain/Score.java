@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Score {
@@ -14,36 +15,43 @@ public class Score {
     private static final int pawnNeighborsDefaultCount = 0;
     private static final double minusPawnNeighborsScore = 0.5;
 
-    private double totalScore;
+    private Map<Team, Double> scoreBoard = new HashMap<>();
 
-    public Score(Map<Position, Piece> board, Team team) {
-        createTotalScore(board, team);
+    public Score(Map<Position, Piece> board) {
+        scoreBoard.put(Team.WHITE, createTotalScore(board, Team.WHITE));
+        scoreBoard.put(Team.BLACK, createTotalScore(board, Team.BLACK));
     }
 
-    private void createTotalScore(Map<Position, Piece> board, Team team) {
+    private double createTotalScore(Map<Position, Piece> board, Team team) {
+        double totalScore = 0;
         Map<Column, Integer> pawnNeighbors = new EnumMap<>(Column.class);
-        for (Row row : Row.values()) {
-            totalScore += calculateTotalScore(board, row, team);
-            addPawnNeighbors(board, team, pawnNeighbors, row);
+        for (Column col: Column.values()) {
+            totalScore += calculateTotalScore(board, col, team);
+            addPawnNeighbors(board, team, pawnNeighbors, col);
         }
-        calculatePawnNeighbors(pawnNeighbors);
+        totalScore += getMinusPawnNeighborsScore(pawnNeighbors);
+        return totalScore;
     }
 
-    private void calculatePawnNeighbors(Map<Column, Integer> pawnNeighbors) {
+    private double getMinusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors) {
+        double minusScore = 0;
         for (Column col : pawnNeighbors.keySet()) {
-            minusPawnNeighborsScore(pawnNeighbors, col);
+            minusScore += minusPawnNeighborsScore(pawnNeighbors, col);
         }
+        return minusScore;
     }
 
-    private void minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
+    private double minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
         int pawnCount = pawnNeighbors.get(col);
+        double minusScore = 0;
         if (pawnCount > existPawnNeighbors) {
-            totalScore -= pawnCount * minusPawnNeighborsScore;
+            minusScore -= pawnCount * minusPawnNeighborsScore;
         }
+        return minusScore;
     }
 
-    private void addPawnNeighbors(Map<Position, Piece> board, Team team, Map<Column, Integer> pawnNeighbors, Row row) {
-        for (Column col : Column.values()) {
+    private void addPawnNeighbors(Map<Position, Piece> board, Team team, Map<Column, Integer> pawnNeighbors, Column col) {
+        for (Row row : Row.values()) {
             String position =  col.getSymbol() + row.getSymbol();
             Piece piece = board.get(Position.from(position));
             addCountPawnNeighbors(team, pawnNeighbors, col, piece);
@@ -56,9 +64,9 @@ public class Score {
         }
     }
 
-    private double calculateTotalScore(Map<Position, Piece> board, Row row, Team team) {
+    private double calculateTotalScore(Map<Position, Piece> board, Column col, Team team) {
         double totalScore = 0;
-        for (Column col : Column.values()) {
+        for (Row row : Row.values()) {
             String position = col.getSymbol() + row.getSymbol();
             Piece piece = board.get(Position.from(position));
             totalScore = plusPieceScore(team, totalScore, piece);
@@ -73,7 +81,21 @@ public class Score {
         return totalScore;
     }
 
-    public double getTotalScore() {
-        return totalScore;
+    public double getTotalScoreWhiteTeam() {
+        return scoreBoard.get(Team.WHITE);
+    }
+
+    public double getTotalScoreBlackTeam() {
+        return scoreBoard.get(Team.WHITE);
+    }
+
+    public Team getWinningTeam() {
+        if (scoreBoard.get(Team.BLACK) > scoreBoard.get(Team.WHITE)) {
+            return Team.BLACK;
+        }
+        if (scoreBoard.get(Team.BLACK) < scoreBoard.get(Team.WHITE)) {
+            return Team.WHITE;
+        }
+        return Team.NONE;
     }
 }

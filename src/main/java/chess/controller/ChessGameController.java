@@ -35,12 +35,12 @@ public class ChessGameController {
     }
 
     private GameState playCommand(GameState gameState) {
-        try{
+        try {
             List<String> input = InputView.requestCommand();
             Command command = Command.of(input.get(commandIndex));
             gameState = executeCommand(gameState, input, command);
             return gameState;
-        }catch (RuntimeException exception) {
+        } catch (RuntimeException exception) {
             OutputView.errorMessage(exception.getMessage());
             return playCommand(gameState);
         }
@@ -66,8 +66,6 @@ public class ChessGameController {
     }
 
     private void printStatus(GameState gameState) {
-        double whiteTeamScore = new Score(gameState.getBoard(), Team.WHITE).getTotalScore();
-        double blackTeamScore = new Score(gameState.getBoard(), Team.BLACK).getTotalScore();
-        OutputView.printStatus(whiteTeamScore, blackTeamScore);
+        OutputView.printStatus(new Score(gameState.getBoard()));
     }
 }
