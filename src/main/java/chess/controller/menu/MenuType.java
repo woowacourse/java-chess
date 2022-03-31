@@ -14,6 +14,7 @@ public enum MenuType {
     private static final int MENU_INDEX = 0;
     private static final int BEFORE_POSITION = 1;
     private static final int AFTER_POSITION = 2;
+    private static final int SIZE = 3;
 
     private final String value;
     private final Function<String[], Menu> menu;
@@ -32,6 +33,13 @@ public enum MenuType {
     }
 
     private static Move toMove(String[] value) {
+        checkValidMoveRequest(value);
         return new Move(value[BEFORE_POSITION], value[AFTER_POSITION]);
+    }
+
+    private static void checkValidMoveRequest(String[] value) {
+        if (value.length != SIZE) {
+            throw new IllegalArgumentException("현재 위치와 이동 위치를 함께 입력해야합니다.");
+        }
     }
 }
