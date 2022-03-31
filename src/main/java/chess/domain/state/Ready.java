@@ -22,13 +22,13 @@ public class Ready extends GameState {
 	@Override
 	public GameState proceed(Command command) {
 		if (command.isMove()) {
-			throw new IllegalStateException(CANNOT_MOVE);
+			throw new IllegalArgumentException(CANNOT_MOVE);
 		}
 		if (command.isStart()) {
 			return new RunningWhiteTurn(board.getPieces());
 		}
 		if (command.isStatus()) {
-			throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+			throw new IllegalArgumentException(CANNOT_GENERATE_SCORE);
 		}
 		return new Finished(board.getPieces());
 	}

@@ -30,7 +30,7 @@ public abstract class Running extends GameState {
 
 	protected GameState checkFinished(Command command) {
 		if (command.isStart()) {
-			throw new IllegalStateException(CANNOT_START_AGAIN);
+			throw new IllegalArgumentException(CANNOT_START_AGAIN);
 		}
 		if (command.isStatus()) {
 			return this;
@@ -40,7 +40,7 @@ public abstract class Running extends GameState {
 
 	protected void validateMoveOpponent(Command command, Color color) {
 		if (board.isSameColor(command.getFromPosition(), color)) {
-			throw new IllegalStateException(CANNOT_MOVE_OPPONENT_PIECE);
+			throw new IllegalArgumentException(CANNOT_MOVE_OPPONENT_PIECE);
 		}
 	}
 
