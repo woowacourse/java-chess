@@ -21,8 +21,6 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
-    public abstract double getScore();
-
     public boolean isSameColor(final Color other) {
         return color == other;
     }

@@ -10,8 +10,6 @@ import java.util.Objects;
 
 public class Pawn extends Piece {
 
-    private static final double SCORE = 1;
-
     public Pawn(final Color color) {
         super(color);
     }
@@ -50,11 +48,6 @@ public class Pawn extends Piece {
     @Override
     public boolean isKing() {
         return false;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override

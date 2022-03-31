@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public class Queen extends Piece {
 
-    private static final double SCORE = 9;
-
     public Queen(final Color color) {
         super(color);
     }
@@ -38,11 +36,6 @@ public class Queen extends Piece {
     @Override
     public boolean isKing() {
         return false;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override

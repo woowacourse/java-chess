@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public class King extends Piece {
 
-    private static final double SCORE = 0;
-
     public King(final Color color) {
         super(color);
     }
@@ -41,11 +39,6 @@ public class King extends Piece {
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override
