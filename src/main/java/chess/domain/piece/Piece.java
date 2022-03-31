@@ -2,25 +2,25 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
 import chess.domain.board.position.Position;
 
 public abstract class Piece {
 
-    final PieceColor pieceColor;
+    final PieceTeam pieceTeam;
 
-    public Piece(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
+    public Piece(PieceTeam pieceTeam) {
+        this.pieceTeam = pieceTeam;
     }
 
-    public abstract boolean isMovable(Position source, Position target, MoveType moveType);
+    public abstract boolean isMovable(Position source, Position target, SquareType squareType);
 
     public boolean isMyTeam(Piece other) {
-        return this.pieceColor == other.pieceColor;
+        return this.pieceTeam == other.pieceTeam;
     }
 
-    public boolean isSameColor(PieceColor otherPieceColor) {
-        return this.pieceColor == otherPieceColor;
+    public boolean isSameColor(PieceTeam otherPieceTeam) {
+        return this.pieceTeam == otherPieceTeam;
     }
 
     public boolean isKing() {
@@ -40,7 +40,7 @@ public abstract class Piece {
     public abstract String getConcreteEmblem();
 
     public String getEmblem() {
-        if (pieceColor == PieceColor.WHITE) {
+        if (pieceTeam == PieceTeam.WHITE) {
             return getConcreteEmblem().toLowerCase();
         }
         return getConcreteEmblem();
@@ -53,11 +53,11 @@ public abstract class Piece {
         if (o == null || getClass() != o.getClass())
             return false;
         Piece piece = (Piece)o;
-        return pieceColor == piece.pieceColor;
+        return pieceTeam == piece.pieceTeam;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceColor);
+        return Objects.hash(pieceTeam);
     }
 }

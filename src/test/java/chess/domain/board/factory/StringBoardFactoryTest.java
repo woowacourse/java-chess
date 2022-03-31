@@ -1,19 +1,19 @@
 package chess.domain.board.factory;
 
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.board.position.File.C;
+import static chess.domain.board.position.File.D;
+import static chess.domain.board.position.File.E;
+import static chess.domain.board.position.Rank.ONE;
+import static chess.domain.board.position.Rank.TWO;
 import static chess.domain.board.factory.StringBoardFactory.INVALID_FILE_SIZE_MESSAGE;
 import static chess.domain.board.factory.StringBoardFactory.INVALID_RANK_SIZE_MESSAGE;
 import static chess.domain.board.factory.StringBoardFactory.NOW_ALLOWED_SYMBOL_MESSAGE;
-import static chess.domain.piece.PieceColor.BLACK;
+import static chess.domain.piece.PieceTeam.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.board.position.File;
+import chess.domain.board.position.Rank;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
 import chess.domain.piece.King;

@@ -1,11 +1,7 @@
 package chess.domain.board.position;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Positions {

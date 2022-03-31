@@ -5,9 +5,9 @@ import static java.lang.System.*;
 import chess.domain.board.position.Positions;
 import java.util.Map;
 
-import chess.domain.board.File;
+import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
 
 public class OutputView {

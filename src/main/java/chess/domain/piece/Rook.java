@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
 import chess.domain.board.position.Position;
 
 public class Rook extends Piece {
@@ -8,8 +8,8 @@ public class Rook extends Piece {
     private static final String EMBLEM = "R";
     private static final double SCORE = 5;
 
-    public Rook(PieceColor pieceColor) {
-        super(pieceColor);
+    public Rook(PieceTeam pieceTeam) {
+        super(pieceTeam);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
+    public boolean isMovable(Position source, Position target, SquareType squareType) {
         return source.isCross(target);
     }
 

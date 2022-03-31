@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
 import chess.domain.board.position.Position;
 
 public class Bishop extends Piece {
@@ -8,8 +8,8 @@ public class Bishop extends Piece {
     private static final String EMBLEM = "B";
     private static final double SCORE = 3f;
 
-    public Bishop(PieceColor pieceColor) {
-        super(pieceColor);
+    public Bishop(PieceTeam pieceTeam) {
+        super(pieceTeam);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
+    public boolean isMovable(Position source, Position target, SquareType squareType) {
         return source.isDiagonal(target);
     }
 

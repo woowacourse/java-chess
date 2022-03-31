@@ -1,11 +1,12 @@
 package chess.domain.board;
 
-import static chess.domain.piece.PieceColor.EMPTY;
-import static java.lang.System.err;
+import static chess.domain.piece.PieceTeam.EMPTY;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
+import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
@@ -47,8 +48,8 @@ public class Board {
         Piece sourcePiece = board.get(sourcePosition);
         Piece targetPiece = board.get(targetPosition);
 
-        MoveType moveType = decideMoveType(targetPiece);
-        if (!sourcePiece.isMovable(sourcePosition, targetPosition, moveType) ||
+        SquareType squareType = decideMoveType(targetPiece);
+        if (!sourcePiece.isMovable(sourcePosition, targetPosition, squareType) ||
                 isBlocked(sourcePosition, targetPosition) ||
                 targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
@@ -58,14 +59,14 @@ public class Board {
         board.put(sourcePosition, EMPTY_PIECE);
     }
 
-    private MoveType decideMoveType(Piece piece) {
+    private SquareType decideMoveType(Piece piece) {
         if (piece.equals(EMPTY_PIECE)) {
-            return MoveType.EMPTY;
+            return SquareType.EMPTY;
         }
         if (gameFlow.isCorrectTurn(piece)) {
-            return MoveType.FRIENDLY;
+            return SquareType.FRIENDLY;
         }
-        return MoveType.ENEMY;
+        return SquareType.ENEMY;
     }
 
     private boolean isBlocked(Position sourcePosition, Position targetPosition) {

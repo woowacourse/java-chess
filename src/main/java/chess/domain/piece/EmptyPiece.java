@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
 import chess.domain.board.position.Position;
 
 public class EmptyPiece extends Piece {
@@ -8,8 +8,8 @@ public class EmptyPiece extends Piece {
     private static final String EMBLEM = ".";
     private static final double SCORE = 0;
 
-    public EmptyPiece(PieceColor pieceColor) {
-        super(pieceColor);
+    public EmptyPiece(PieceTeam pieceTeam) {
+        super(pieceTeam);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
+    public boolean isMovable(Position source, Position target, SquareType squareType) {
         return false;
     }
 

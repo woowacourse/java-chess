@@ -1,9 +1,9 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
-import static chess.domain.board.Rank.*;
+import static chess.domain.board.position.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.board.Rank;
+import chess.domain.board.position.Rank;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;

@@ -1,15 +1,15 @@
 package chess.turndecider.state;
 
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceTeam;
 import chess.domain.piece.Piece;
 
 public class WhiteTeam extends Running {
 
-    private final PieceColor pieceColor = PieceColor.WHITE;
+    private final PieceTeam pieceTeam = PieceTeam.WHITE;
 
     @Override
     public boolean isSameColor(Piece sourcePiece) {
-        return sourcePiece.isSameColor(pieceColor);
+        return sourcePiece.isSameColor(pieceTeam);
     }
 
     @Override

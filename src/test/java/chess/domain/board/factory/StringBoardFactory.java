@@ -8,7 +8,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceTeam;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class StringBoardFactory extends BoardFactory {
     private static final int BOARD_RANK_SIZE = 8;
     private static final int BOARD_FILE_SIZE = 8;
     private static final List<String> PIECE_SYMBOLS = List.of("R", "N", "B", "Q", "K", "P",".");
-    private static final Map<String, Function<PieceColor, ? extends Piece>> pieceCreator = new HashMap<>();
+    private static final Map<String, Function<PieceTeam, ? extends Piece>> pieceCreator = new HashMap<>();
 
     static final String INVALID_RANK_SIZE_MESSAGE = "RANK 크기가 올바르지 않습니다.";
     static final String INVALID_FILE_SIZE_MESSAGE = "FILE 크기가 올바르지 않습니다.";
@@ -107,7 +107,7 @@ public class StringBoardFactory extends BoardFactory {
 
             String square = String.valueOf(stringRank.charAt(fileCount - 1));
 
-            Piece createdPiece = pieceCreator.get(square).apply(PieceColor.BLACK);
+            Piece createdPiece = pieceCreator.get(square).apply(PieceTeam.BLACK);
             Position createdPosition = Positions.findPositionBy(fileCount, rankCount);
 
             board.put(createdPosition, createdPiece);

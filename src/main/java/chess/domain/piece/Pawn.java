@@ -1,35 +1,29 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceColor.*;
+import static chess.domain.piece.PieceTeam.WHITE;
 
-import chess.constant.MoveType;
+import chess.constant.SquareType;
 import chess.domain.board.position.Position;
-import chess.domain.board.Rank;
+import chess.domain.board.position.Rank;
 
 public class Pawn extends Piece {
 
     private static final String EMBLEM = "P";
     private static final double SCORE = 1;
 
-    public Pawn(PieceColor pieceColor) {
-        super(pieceColor);
+    public Pawn(PieceTeam pieceTeam) {
+        super(pieceTeam);
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, MoveType moveType) {
-        // MoveType == ENEMY
-        if (moveType == MoveType.ENEMY) {
-            if (pieceColor == WHITE) {
-                return source.isDiagonal(target) && source.rankDisplacement(target) == 1
-                    && source.fileDistance(target) == 1;
-            }
-
-            return source.isDiagonal(target) && target.rankDisplacement(source) == 1
-                && source.fileDistance(target) == 1;
+    public boolean isMovable(Position source, Position target, SquareType squareType) {
+        if (squareType == SquareType.ENEMY) {
+            return source.isDiagonal(target) &&
+                    source.rankDisplacement(target) == 1 * pieceTeam.direction() &&
+                    source.fileDistance(target) == 1;
         }
 
-        // MoveType == EMPTY
-        if (pieceColor == WHITE) {
+        if (pieceTeam == WHITE) {
             if (source.isRankOf(Rank.TWO)) {
                 return isForward(source, target, 2);
             }
@@ -46,7 +40,7 @@ public class Pawn extends Piece {
 
     private boolean isForward(Position source, Position target, int amount) {
         return source.rankDisplacement(target) > 0 && source.rankDisplacement(target) <= amount && source.isSameFile(
-            target);
+                target);
     }
 
     @Override

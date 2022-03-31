@@ -1,7 +1,5 @@
 package chess.domain.board.position;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;

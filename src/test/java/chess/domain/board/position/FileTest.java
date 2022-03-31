@@ -1,8 +1,8 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
 import static org.assertj.core.api.Assertions.*;
 
-import chess.domain.board.File;
+import chess.domain.board.position.File;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
