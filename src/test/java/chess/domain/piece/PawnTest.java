@@ -25,7 +25,7 @@ public class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:B:RANK_6", "C:RANK_5:D:RANK_6", "C:RANK_5:B:RANK_4", "C:RANK_5:D:RANK_4"},
             delimiter = ':')
-    @DisplayName("Pawn 이 대각선으로 1칸 움직일 경우 - 불가능")
+    @DisplayName("Pawn 이 기물이 없는 대각선으로 1칸 움직일 경우 - 불가능")
     void canNotMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
@@ -36,13 +36,35 @@ public class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
-    @DisplayName("Pawn 이 대각선으로 2칸 이상 움직일 경우 - 불가능")
+    @DisplayName("Pawn 이 기물이 없는 대각선으로 2칸 이상 움직일 경우 - 불가능")
     void canNotMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
         assertThat(pawn.isCorrectMovement(source, target, false)).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:D:RANK_4", "C:RANK_5:B:RANK_4", }, delimiter = ':')
+    @DisplayName("검정 Pawn 이 기물이 있는 앞쪽 대각선으로 1칸 움직일 경우 - 가능")
+    void canMoveBlackPawnWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+        Pawn pawn = new Pawn(Color.BLACK);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
+        assertThat(pawn.isCorrectMovement(source, target, true)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:D:RANK_6", "C:RANK_5:B:RANK_6", }, delimiter = ':')
+    @DisplayName("흰 Pawn 이 기물이 있는 앞쪽 대각선으로 1칸 움직일 경우 - 가능")
+    void canMoveWhitePawnWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+        Pawn pawn = new Pawn(Color.WHITE);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
+        assertThat(pawn.isCorrectMovement(source, target, true)).isTrue();
     }
 
     @ParameterizedTest
