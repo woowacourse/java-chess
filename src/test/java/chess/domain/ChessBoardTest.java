@@ -88,7 +88,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -107,7 +107,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -131,7 +131,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -151,7 +151,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -171,7 +171,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -189,7 +189,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(Position.of("d4"), piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -207,7 +207,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(pawnPosition);
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(pawnPosition, piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
 
             assertThat(positions).contains(
@@ -226,7 +226,7 @@ public class ChessBoardTest {
 
             ChessBoard chessBoard = new ChessBoard(() -> testBoard);
             Piece piece = chessBoard.selectPiece(pawnPosition);
-            List<Position> positions = chessBoard.generateMovablePositionsBlockedByObstacles(pawnPosition, piece,
+            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
 
             assertThat(positions).containsExactly(Position.of("e3"));

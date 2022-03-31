@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class ChessBoard {
 
     private static final int KING_COUNTS = 2;
+    private static final int FIRST_MOVE_POSITION_INDEX_FOR_PAWN = 1;
 
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn = new ArrayList<>();
@@ -52,13 +53,19 @@ public class ChessBoard {
         Position to = gameCommand.getToPosition();
 
         Piece piece = selectPiece(from);
-        Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        refinePawnMovablePositions(from, piece, movablePositions);
-
-        List<Position> finalMovablePositions = generateMovablePositionsBlockedByObstacles(from, piece, movablePositions);
+        List<Position> finalMovablePositions = getMovablePositions(from, piece);
 
         checkMovable(to, finalMovablePositions);
         movePiece(from, to, piece);
+    }
+
+    private List<Position> getMovablePositions(Position from, Piece piece) {
+        Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
+        refinePawnMovablePositions(from, piece, movablePositions);
+
+        List<Position> finalMovablePositions = generateMovablePositionsExceptObstacles(from, piece,
+                movablePositions);
+        return finalMovablePositions;
     }
 
     private void refinePawnMovablePositions(Position from, Piece piece,
@@ -77,8 +84,9 @@ public class ChessBoard {
         if (piece.isBlack()) {
             positions = movablePositions.get(Direction.SOUTH);
         }
+
         if (positions.size() == 2) {
-            positions.remove(1);
+            positions.remove(FIRST_MOVE_POSITION_INDEX_FOR_PAWN);
         }
     }
 
@@ -96,8 +104,8 @@ public class ChessBoard {
         }
     }
 
-    public List<Position> generateMovablePositionsBlockedByObstacles(Position nowPosition, Piece piece,
-                                                                     Map<Direction, List<Position>> movablePositions) {
+    public List<Position> generateMovablePositionsExceptObstacles(Position nowPosition, Piece piece,
+                                                                  Map<Direction, List<Position>> movablePositions) {
         List<Position> result = new ArrayList<>();
         for (Direction direction : movablePositions.keySet()) {
             List<Position> positions = movablePositions.get(direction);
@@ -109,21 +117,23 @@ public class ChessBoard {
 
     private void addMovablePositionsWithBlock(Piece piece, List<Position> result, List<Position> positions) {
         if (positions.size() != 0) {
-            int cutIndex = getCutIndex(piece, positions);
-            result.addAll(positions.subList(0, cutIndex));
+            int removeIndex = getRemoveIndex(piece, positions);
+            result.addAll(positions.subList(0, removeIndex));
         }
     }
 
-    private int getCutIndex(Piece nowPiece, List<Position> positions) {
-        int cutIndex = 0;
-        while (cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty()) {
-            cutIndex++;
+    private int getRemoveIndex(Piece nowPiece, List<Position> positions) {
+        int removeIndex = 0;
+        while (removeIndex < positions.size() - 1
+                && selectPiece(positions.get(removeIndex)).isEmpty()) {
+            removeIndex++;
         }
-        Piece target = selectPiece(positions.get(cutIndex));
+
+        Piece target = selectPiece(positions.get(removeIndex));
         if (target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceName.PAWN) && !target.isEmpty())) {
-            return cutIndex;
+            return removeIndex;
         }
-        return cutIndex + 1;
+        return removeIndex + FIRST_MOVE_POSITION_INDEX_FOR_PAWN;
     }
 
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
@@ -182,7 +192,7 @@ public class ChessBoard {
         for (Row row : Row.values()) {
             result.add(pieces.get(Position.of(column, row)));
         }
-        List<Piece> value =  result.stream()
+        List<Piece> value = result.stream()
                 .filter(piece -> piece.isSameColor(color))
                 .collect(Collectors.toList());
         return new Pieces(value);

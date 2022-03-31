@@ -33,6 +33,6 @@ public final class Ready implements State {
 
     @Override
     public Color getWinner() {
-        throw new IllegalStateException("사용할수 없습니다.");
+        throw new IllegalStateException("사용할 수 없습니다.");
     }
 }

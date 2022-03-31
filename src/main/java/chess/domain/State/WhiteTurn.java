@@ -10,13 +10,26 @@ public final class WhiteTurn extends Start {
 
     @Override
     public State move(ChessBoard chessBoard, GameCommand gameCommand) {
-        Position fromPosition = gameCommand.getFromPosition();
-        Piece piece = chessBoard.selectPiece(fromPosition);
-        Color color = piece.getColor();
-        if (color == Color.WHITE) {
+        if (isWhiteTurn(chessBoard, gameCommand)) {
+            chessBoard.move(gameCommand);
             return new BlackTurn();
         }
+        if (isEmpty(chessBoard, gameCommand)) {
+            throw new IllegalStateException("비어있습니다.");
+        }
         throw new IllegalStateException("검은색 차례가 아닙니다.");
+    }
+
+    private boolean isWhiteTurn(ChessBoard chessBoard, GameCommand gameCommand) {
+        Position fromPosition = gameCommand.getFromPosition();
+        Piece piece = chessBoard.selectPiece(fromPosition);
+        return piece.isWhite();
+    }
+
+    private boolean isEmpty(ChessBoard chessBoard, GameCommand gameCommand) {
+        Position fromPosition = gameCommand.getFromPosition();
+        Piece piece = chessBoard.selectPiece(fromPosition);
+        return piece.isEmpty();
     }
 
     @Override

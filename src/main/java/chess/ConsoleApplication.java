@@ -1,9 +1,11 @@
 package chess;
 
+import chess.controller.GameController;
+
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        ChessGame chessGame = new ChessGame();
-        chessGame.play();
+        GameController gameController = new GameController();
+        gameController.run();
     }
 }
