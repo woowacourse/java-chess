@@ -19,21 +19,21 @@ public enum Form {
     WHITE_KING(new King(Color.WHITE), "♔"),
     ;
 
-    private static final String NONE_PIECE_FORM = ".";
+    private static final String NONE_PIECE_SYMBOL = ".";
 
     private final Piece piece;
-    private final String form;
+    private final String symbol;
 
-    Form(final Piece piece, final String form) {
+    Form(final Piece piece, final String symbol) {
         this.piece = piece;
-        this.form = form;
+        this.symbol = symbol;
     }
 
-    public static String getForm(final Piece other) {
+    public static String getSymbol(final Piece other) {
         return Arrays.stream(Form.values())
                 .filter(form -> form.piece.equals(other))
-                .map(form -> form.form)
+                .map(form -> form.symbol)
                 .findFirst()
-                .orElse(NONE_PIECE_FORM);
+                .orElse(NONE_PIECE_SYMBOL);
     }
 }
