@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BoardFactory implements BoardFactoryStrategy {
+public class BoardFactory {
     private static final int COLOR_CRITERIA = 15;
     private static final String PIECE_ORDER = "RNBQKBNRPPPPPPPPpppppppprnbqkbnr";
     private static final Map<Position, Piece> startBoard = new LinkedHashMap<>();
@@ -28,7 +28,6 @@ public class BoardFactory implements BoardFactoryStrategy {
         }
     }
 
-    @Override
     public Board createBoard() {
         return new Board(startBoard);
     }
