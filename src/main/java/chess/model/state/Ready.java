@@ -1,13 +1,14 @@
 package chess.model.state;
 
 import chess.model.board.Board;
+import chess.model.board.GameResult;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import chess.model.state.running.WhiteTurn;
 import java.util.List;
 import java.util.Map;
 
-public class Ready implements State {
+public final class Ready implements State {
 
     public static final int COMMAND_INDEX = 0;
     private final Board board;
@@ -18,6 +19,11 @@ public class Ready implements State {
 
     @Override
     public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean isStatus() {
         return false;
     }
 
@@ -33,5 +39,10 @@ public class Ready implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 데이터를 가져 올 수 없습니다.");
+    }
+
+    @Override
+    public GameResult getScore() {
+        throw new IllegalArgumentException("[ERROR] 아직 게임이 시작되지 않아 점수를 계산 할 수 없습니다.");
     }
 }

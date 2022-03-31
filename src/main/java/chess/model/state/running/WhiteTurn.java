@@ -7,13 +7,10 @@ import chess.model.position.Position;
 import chess.model.state.Command;
 import chess.model.state.State;
 import chess.model.state.finished.End;
+import chess.model.state.finished.Status;
 import java.util.List;
 
-public class WhiteTurn extends Running {
-
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_OPTION_INDEX = 1;
-    private static final int TARGET_OPTION_INDEX = 2;
+public final class WhiteTurn extends Running {
 
     public WhiteTurn(Board board) {
         super(board);
@@ -22,6 +19,9 @@ public class WhiteTurn extends Running {
     @Override
     public State proceed(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
+        if (command.isStatus()) {
+            return new Status(board);
+        }
         if (command.isEnd()) {
             return new End();
         }

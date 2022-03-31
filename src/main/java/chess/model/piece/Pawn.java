@@ -24,12 +24,17 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public double addTo(double score) {
-        return score + SCORE;
+    public boolean isKing() {
+        return false;
     }
 
     @Override
-    public boolean isKing() {
-        return false;
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

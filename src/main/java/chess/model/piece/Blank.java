@@ -16,12 +16,17 @@ public class Blank extends Piece {
     }
 
     @Override
-    public double addTo(final double score) {
-        throw new IllegalArgumentException("[ERROR] 더 할 수 없습니다.");
+    public boolean isKing() {
+        return false;
     }
 
     @Override
-    public boolean isKing() {
+    public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public double score() {
+        throw new IllegalArgumentException("[ERROR] 기물의 점수를 계산 할 수 없습니다.");
     }
 }

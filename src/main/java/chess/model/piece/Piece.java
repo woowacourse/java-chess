@@ -25,9 +25,11 @@ public abstract class Piece {
 
     public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
 
-    public abstract double addTo(double score);
-
     public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public abstract double score();
 
     @Override
     public boolean equals(Object obj) {

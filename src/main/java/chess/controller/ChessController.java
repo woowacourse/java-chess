@@ -22,6 +22,7 @@ public class ChessController {
             state = proceed(state);
             printBoardIn(state);
         }
+        printScoreIn(state);
     }
 
     private State proceed(final State state) {
@@ -36,6 +37,12 @@ public class ChessController {
     private void printBoardIn(final State state) {
         if (!state.isFinished()) {
             outputView.printBoard(state.getBoard());
+        }
+    }
+
+    private void printScoreIn(final State state) {
+        if (state.isStatus()) {
+            outputView.printScores(state.getScore());
         }
     }
 }

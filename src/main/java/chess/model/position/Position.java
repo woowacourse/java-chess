@@ -45,7 +45,7 @@ public class Position {
     private static String createKey(Rank rank, File file) {
         return file.nameOfFile() + rank.nameOfRank();
     }
-    
+
     public boolean movableTo(Direction direction) {
         return direction.MovableFrom(rank, file);
     }
@@ -56,6 +56,10 @@ public class Position {
 
     public boolean isNotStartLocation() {
         return rank != Rank.TWO && rank != Rank.SEVEN;
+    }
+
+    public boolean isSameFile(Position otherPosition) {
+        return this.file == otherPosition.file;
     }
 
     @Override

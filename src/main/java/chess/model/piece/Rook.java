@@ -26,12 +26,17 @@ public class Rook extends Piece {
     }
 
     @Override
-    public double addTo(final double score) {
-        return score + SCORE;
+    public boolean isKing() {
+        return false;
     }
 
     @Override
-    public boolean isKing() {
+    public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

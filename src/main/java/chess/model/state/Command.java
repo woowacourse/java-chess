@@ -34,4 +34,8 @@ public enum Command {
     public boolean isMove() {
         return this.name.equals("move");
     }
+
+    public boolean isStatus() {
+        return this.name.equals("status");
+    }
 }

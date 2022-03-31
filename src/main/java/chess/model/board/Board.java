@@ -51,6 +51,12 @@ public class Board {
                 .count() < KING_COUNT_IN_BOARD;
     }
 
+    public GameResult calculateScore() {
+        GameResult gameResult = new GameResult();
+        gameResult.createScoreResult(board);
+        return gameResult;
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
