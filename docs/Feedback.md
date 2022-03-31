@@ -45,7 +45,7 @@
 
 - `Piece`에서 `isBlank()`는 핵심 비즈니스 로직의 일부로 사용되기에 사용의 문제 없음.
     - [x] King을 확인하는 메서드 또한 Piece에서 `isKing`과 같이 구현하는 것을 추천
-    - [ ] 구현체 기물 클래스에서 `List<Direction>`은 필드가 아닌 상수로 선언해도 된다.
+    - [x] 구현체 기물 클래스에서 `List<Direction>`은 필드가 아닌 상수로 선언해도 된다.
 - [x] `gradlew.bat` : "@rem you may not use this file except in compliance with the License." 메세지
     - 체스보드 행,열(File, Rank 클래스)의 이름을 수정하는 과정에서 발생.
 - [x] enum 간의 비교는 `==`로 적용

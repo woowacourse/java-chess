@@ -6,20 +6,19 @@ import java.util.List;
 
 public class King extends SpecificLocationPiece {
 
-    private final List<Direction> directions;
+    private static final List<Direction> DIRECTIONS = List.of(
+        Direction.NORTHEAST,
+        Direction.NORTHWEST,
+        Direction.SOUTHEAST,
+        Direction.SOUTHWEST,
+        Direction.EAST,
+        Direction.WEST,
+        Direction.SOUTH,
+        Direction.NORTH
+    );
 
     public King(final Player player) {
         super(player, PieceSymbol.KING);
-        this.directions = List.of(
-            Direction.NORTHEAST,
-            Direction.NORTHWEST,
-            Direction.SOUTHEAST,
-            Direction.SOUTHWEST,
-            Direction.EAST,
-            Direction.WEST,
-            Direction.SOUTH,
-            Direction.NORTH
-        );
     }
 
     @Override
@@ -29,6 +28,6 @@ public class King extends SpecificLocationPiece {
 
     @Override
     protected List<Direction> getDirections() {
-        return directions;
+        return DIRECTIONS;
     }
 }

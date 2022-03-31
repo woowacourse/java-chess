@@ -6,20 +6,19 @@ import java.util.List;
 
 public class Bishop extends MovableRangePiece {
 
-    private final List<Direction> directions;
+    private static final List<Direction> DIRECTIONS = List.of(
+        Direction.NORTHEAST,
+        Direction.NORTHWEST,
+        Direction.SOUTHEAST,
+        Direction.SOUTHWEST
+    );
 
     public Bishop(final Player player) {
         super(player, PieceSymbol.BISHOP);
-        this.directions = List.of(
-            Direction.NORTHEAST,
-            Direction.NORTHWEST,
-            Direction.SOUTHEAST,
-            Direction.SOUTHWEST
-        );
     }
 
     @Override
     protected List<Direction> getDirections() {
-        return directions;
+        return DIRECTIONS;
     }
 }

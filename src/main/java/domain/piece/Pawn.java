@@ -11,36 +11,22 @@ public class Pawn extends SpecificLocationPiece {
     private static final int WHITE_START_LINE = 2;
     private static final int BLACK_START_LINE = 7;
 
-    private final List<Direction> directions;
-    private final int startLine;
+    private static final List<Direction> BLACK_DIRECTIONS = List.of(
+        Direction.SOUTHWEST,
+        Direction.SOUTHEAST,
+        Direction.SOUTH,
+        Direction.SOUTH_SOUTH
+    );
+    private static final List<Direction> WHITE_DIRECTIONS = List.of(
+        Direction.SOUTHWEST,
+        Direction.NORTHEAST,
+        Direction.NORTHWEST,
+        Direction.NORTH,
+        Direction.NORTH_NORTH
+    );
 
     public Pawn(final Player player) {
         super(player, PieceSymbol.PAWN);
-        this.startLine = initStartLine(player);
-        this.directions = initDirections(player);
-    }
-
-    private int initStartLine(final Player player) {
-        if (player == Player.BLACK) {
-            return BLACK_START_LINE;
-        }
-        return WHITE_START_LINE;
-    }
-
-    private List<Direction> initDirections(final Player player) {
-        List<Direction> directions = new ArrayList<>();
-        if (player == Player.BLACK) {
-            directions.add(Direction.SOUTHWEST);
-            directions.add(Direction.SOUTHEAST);
-            directions.add(Direction.SOUTH);
-            directions.add(Direction.SOUTH_SOUTH);
-            return directions;
-        }
-        directions.add(Direction.NORTHEAST);
-        directions.add(Direction.NORTHWEST);
-        directions.add(Direction.NORTH);
-        directions.add(Direction.NORTH_NORTH);
-        return directions;
     }
 
     @Override
@@ -82,7 +68,10 @@ public class Pawn extends SpecificLocationPiece {
 
     @Override
     protected List<Direction> getDirections() {
-        return directions;
+        if (getPlayer() == Player.BLACK) {
+            return BLACK_DIRECTIONS;
+        }
+        return WHITE_DIRECTIONS;
     }
 
     @Override
@@ -104,7 +93,14 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     private boolean isFirstMove(final Position source) {
-        return source.getRank() == startLine;
+        return source.getRank() == getStartLine(getPlayer());
+    }
+
+    private int getStartLine(final Player player) {
+        if (player == Player.BLACK) {
+            return BLACK_START_LINE;
+        }
+        return WHITE_START_LINE;
     }
 
     private boolean isTwoSpaceMoveDirection(final Direction direction) {

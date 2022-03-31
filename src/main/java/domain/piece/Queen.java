@@ -6,24 +6,23 @@ import java.util.List;
 
 public class Queen extends MovableRangePiece {
 
-    private final List<Direction> directions;
+    private static final List<Direction> DIRECTIONS = List.of(
+        Direction.NORTHEAST,
+        Direction.NORTHWEST,
+        Direction.SOUTHEAST,
+        Direction.SOUTHWEST,
+        Direction.EAST,
+        Direction.WEST,
+        Direction.SOUTH,
+        Direction.NORTH
+    );
 
     public Queen(final Player player) {
         super(player, PieceSymbol.QUEEN);
-        this.directions = List.of(
-            Direction.NORTHEAST,
-            Direction.NORTHWEST,
-            Direction.SOUTHEAST,
-            Direction.SOUTHWEST,
-            Direction.EAST,
-            Direction.WEST,
-            Direction.SOUTH,
-            Direction.NORTH
-        );
     }
 
     @Override
     protected List<Direction> getDirections() {
-        return directions;
+        return DIRECTIONS;
     }
 }
