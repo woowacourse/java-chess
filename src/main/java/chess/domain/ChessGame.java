@@ -31,7 +31,6 @@ public final class ChessGame {
     }
 
     public Map<Color, Double> calculateScore() {
-
         return Stream.of(Color.BLACK, Color.WHITE)
                 .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
     }

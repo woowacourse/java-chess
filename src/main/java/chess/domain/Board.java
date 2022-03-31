@@ -87,31 +87,49 @@ public class Board {
     }
 
     public double calculateScoreOf(Color color) {
-        double score = pieces.values()
-                .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::score)
-                .sum();
+        double pawnsScore = calculatePawnScore(color);
+        double scoreExceptPawn = calculateScoreExceptPawn(color);
 
-        return score - 0.5 * countSameRankPawnsOf(color);
+        return pawnsScore + scoreExceptPawn;
     }
 
-    private long countSameRankPawnsOf(Color color) {
+    private double calculatePawnScore(Color color) {
         List<Position> pawnPositions = findPawnPositionsOf(color);
-        Map<Row, List<Position>> pawnGroup = Position.groupByRow(pawnPositions);
+        Map<Row, List<Position>> pawnPositionsByRow = Position.groupByRow(pawnPositions);
 
-        return pawnGroup.values()
+        return pawnPositionsByRow.values()
                 .stream()
-                .filter(list -> list.size() > 1)
-                .mapToInt(List::size)
+                .mapToDouble(this::calculateScoreOnSameRow)
                 .sum();
     }
 
     private List<Position> findPawnPositionsOf(Color color) {
         return pieces.keySet().stream()
-                .filter(position -> pieces.get(position).isSameColor(color))
-                .filter(position -> pieces.get(position).isPawn())
+                .filter(position -> isPawnWith(color, pieces.get(position)))
                 .collect(Collectors.toList());
+    }
+
+    private boolean isPawnWith(Color color, Piece piece) {
+        return piece.isSameColor(color) && piece.isPawn();
+    }
+
+    private double calculateScoreOnSameRow(List<Position> positions) {
+        if (positions.size() > 1) {
+            return positions.stream()
+                    .mapToDouble(position -> pieces.get(position).score() / 2)
+                    .sum();
+        }
+        return positions.stream()
+                .mapToDouble(position -> pieces.get(position).score())
+                .sum();
+    }
+
+    private double calculateScoreExceptPawn(Color color) {
+        return pieces.values()
+                .stream()
+                .filter(piece -> piece.isSameColor(color) && !piece.isPawn())
+                .mapToDouble(Piece::score)
+                .sum();
     }
 
     public boolean hasBothKings() {
