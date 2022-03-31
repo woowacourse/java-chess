@@ -7,21 +7,27 @@ public enum Movement {
 
     EAST_1STEP((columnDiff, rowDiff) -> columnDiff == 1 && rowDiff == 0),
     EAST_UNLIMITED((columnDiff, rowDiff) -> columnDiff >= 1 && rowDiff == 0),
+
     WEST_1STEP((columnDiff, rowDiff) -> columnDiff == -1 && rowDiff == 0),
     WEST_UNLIMITED((columnDiff, rowDiff) -> columnDiff <= -1 && rowDiff == 0),
+
     SOUTH_1STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == 1),
     SOUTH_2STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == 2),
     SOUTH_UNLIMITED((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff >= 1),
+
     NORTH_1STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == -1),
     NORTH_2STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == -2),
-
     NORTH_UNLIMITED((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff <= -1),
+
     SOUTH_EAST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == 1 && rowDiff == 1),
     SOUTH_EAST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff >= 1 && rowDiff >= 1),
+
     SOUTH_WEST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == -1 && rowDiff == 1),
     SOUTH_WEST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff <= -1 && rowDiff >= 1),
+
     NORTH_EAST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == 1 && rowDiff == -1),
     NORTH_EAST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff >= 1 && rowDiff <= -1),
+
     NORTH_WEST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == -1 && rowDiff == -1),
     NORTH_WEST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff <= -1 && rowDiff <= -1),
 
