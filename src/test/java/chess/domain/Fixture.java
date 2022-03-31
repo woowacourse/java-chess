@@ -15,4 +15,14 @@ public class Fixture {
                 Position.of("h", "4"), new Rook(Color.WHITE)
         );
     }
+
+    public static Map<Position, Piece> bishopMovableHurdleTestSetUp() {
+        return Map.of(
+                // Hurdle 설정
+                Position.of("d", "2"), new Rook(Color.WHITE),
+                Position.of("g", "2"), new Rook(Color.WHITE),
+                Position.of("d", "7"), new Rook(Color.WHITE),
+                Position.of("g", "7"), new Rook(Color.WHITE)
+        );
+    }
 }
