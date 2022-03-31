@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public class BoardFactory {
     private static final int COLOR_CRITERIA = 15;
     private static final String PIECE_ORDER = "RNBQKBNRPPPPPPPPpppppppprnbqkbnr";
+    private static final List<Rank> INITIAL_ROWS = List.of(Rank.EIGHT, Rank.SEVEN, Rank.TWO, Rank.ONE);
     private static final Map<Position, Piece> startBoard = new LinkedHashMap<>();
 
     public BoardFactory() {
@@ -33,8 +34,7 @@ public class BoardFactory {
     }
 
     private static List<Position> getInitialPositions() {
-        return Rank.initialRows()
-                .stream()
+        return INITIAL_ROWS.stream()
                 .flatMap(BoardFactory::getPositionStream)
                 .collect(Collectors.toList());
     }

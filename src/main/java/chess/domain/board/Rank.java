@@ -34,10 +34,6 @@ public enum Rank {
                 .orElseThrow(() -> new NoSuchElementException(INVALID_RANGE));
     }
 
-    public static List<Rank> initialRows() {
-        return List.of(EIGHT, SEVEN, TWO, ONE);
-    }
-
     public static List<Rank> getBetween(Rank from, Rank to) {
         Rank maxOrder = getHigherOrder(from, to);
         Rank minOrder = getLowerOrder(from, to);
