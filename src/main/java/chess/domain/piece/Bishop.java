@@ -24,11 +24,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Direction findDirection(Position from, Position to) {
-        return from.findDirection(to, this);
-    }
-
-    @Override
     public boolean isStep() {
         return false;
     }

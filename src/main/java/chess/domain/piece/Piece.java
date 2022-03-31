@@ -19,8 +19,6 @@ public abstract class Piece {
 
     public abstract void movable(Position from, Position to);
 
-    public abstract Direction findDirection(Position from, Position to);
-
     public abstract List<Position> findMovablePosition(Position now);
 
     public final String getName() {
@@ -33,6 +31,10 @@ public abstract class Piece {
 
     public final boolean isSameTeam(Team team) {
         return team == this.team;
+    }
+
+    public Direction findDirection(Position from, Position to) {
+        return from.findDirection(to, this);
     }
 
     public boolean isPawn() {

@@ -29,11 +29,6 @@ public class King extends Piece {
     }
 
     @Override
-    public Direction findDirection(Position from, Position to) {
-        return from.findDirection(to, this);
-    }
-
-    @Override
     public List<Position> findMovablePosition(Position now) {
         return directions.stream()
                 .filter(now::isMovable)
