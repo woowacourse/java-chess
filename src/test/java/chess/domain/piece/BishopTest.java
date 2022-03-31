@@ -92,7 +92,6 @@ public class BishopTest {
         assertThat(bishop.isKing()).isFalse();
     }
 
-
     @Test
     @DisplayName("Bishop 의 점수는 3 이다.")
     void isScore3() {
