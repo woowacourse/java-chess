@@ -26,19 +26,19 @@ public enum GameCommand {
         return gameCommand.commandPattern.matcher(input).matches();
     }
 
-    boolean isStart() {
+    public boolean isStart() {
         return this == START;
     }
 
-    boolean isEnd() {
+    public boolean isEnd() {
         return this == END;
     }
 
-    boolean isMove() {
+    public boolean isMove() {
         return this == MOVE;
     }
 
-    boolean isStatus() {
+    public boolean isStatus() {
         return this == STATUS;
     }
 }

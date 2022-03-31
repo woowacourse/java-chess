@@ -17,25 +17,7 @@ public class ChessGame {
         return state.isRunning();
     }
 
-    public void execute(Command command) {
-        if (command.isStart()) {
-            start();
-        }
-
-        if (command.isMove()) {
-            move(command.getSource(), command.getTarget());
-        }
-
-        if (command.isStatus()) {
-            status();
-        }
-
-        if (command.isEnd()) {
-            end();
-        }
-    }
-
-    private void start() {
+    public void start() {
         if (isRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 실행 중 입니다.");
         }
@@ -44,19 +26,19 @@ public class ChessGame {
         OutputView.printChessBoard(board);
     }
 
-    private void move(Location source, Location target) {
+    public void move(Location source, Location target) {
         this.state = state.move(source, target);
         OutputView.printChessBoard(state.getBoard());
     }
 
-    private void status() {
+    public void status() {
         if (!isRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
         OutputView.printScore(state.getScore());
     }
 
-    private void end() {
+    public void end() {
         if (!isRunning()) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
         }

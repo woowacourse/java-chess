@@ -1,7 +1,8 @@
 package chess;
 
 import chess.domain.ChessGame;
-import chess.domain.Command;
+import chess.domain.GameCommand;
+import chess.domain.MoveLocation;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -10,17 +11,34 @@ public class ConsoleApplication {
         OutputView.printChessCommandInfo();
         ChessGame chessGame = new ChessGame();
         do {
-            playEachTurn(chessGame);
+            playEachGame(chessGame);
         } while (chessGame.isRunning());
     }
 
-    private static void playEachTurn(ChessGame chessGame) {
+    private static void playEachGame(ChessGame chessGame) {
         try {
-            String inputValue = InputView.askCommand();
-            chessGame.execute(Command.of(inputValue));
-        } catch (IllegalArgumentException exception) {
-            OutputView.printErrorMessage(exception);
-            playEachTurn(chessGame);
+            playGameByCommand(chessGame);
+        } catch (RuntimeException e) {
+            OutputView.printErrorMessage(e);
+            playEachGame(chessGame);
+        }
+    }
+
+    private static void playGameByCommand(ChessGame chessGame) {
+        String command = InputView.askCommand();
+        GameCommand gameCommand = GameCommand.of(command);
+        if (gameCommand.isStart()) {
+            chessGame.start();
+        }
+        if (gameCommand.isMove()) {
+            MoveLocation moveLocation = MoveLocation.of(command);
+            chessGame.move(moveLocation.getSource(), moveLocation.getTarget());
+        }
+        if (gameCommand.isStatus()) {
+            chessGame.status();
+        }
+        if (gameCommand.isEnd()) {
+            chessGame.end();
         }
     }
 }
