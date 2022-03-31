@@ -30,9 +30,4 @@ public final class King extends SpecificMovablePiece {
     public boolean isPawn() {
         return false;
     }
-
-    @Override
-    public boolean checkOneAndTwoSouthNorthDirections(Position target){
-        return false;
-    }
 }

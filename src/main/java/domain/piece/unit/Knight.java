@@ -30,9 +30,4 @@ public final class Knight extends SpecificMovablePiece {
     public boolean isPawn() {
         return false;
     }
-
-    @Override
-    public boolean checkOneAndTwoSouthNorthDirections(Position target){
-        return false;
-    }
 }

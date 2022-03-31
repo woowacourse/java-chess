@@ -63,6 +63,11 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public boolean checkOneAndTwoSouthNorthDirections(Position target) {
+        return false;
+    }
+
+    @Override
     public Direction getDirection(Position target) {
         return getDirections().stream()
                 .filter(direction -> directionalPositions.get(direction).contains(target))
