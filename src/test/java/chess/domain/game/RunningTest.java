@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class RunningTest {
 
@@ -59,6 +58,16 @@ class RunningTest {
         GameState movedState = gameState.move(arguments);
 
         assertThat(movedState).isInstanceOf(Finished.class);
+    }
+
+    @Test
+    @DisplayName("move 명령시 king이 죽으면 종료 상태로 변한다.")
+    void throwsExceptionWithArgumentsSize() {
+        List<Point> arguments = List.of(Point.of("e1"), Point.of("e8"), Point.of("e5"));
+        GameState gameState = new Running(BoardFixtures.empty(), Color.WHITE);
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> gameState.move(arguments));
     }
 
     @Test

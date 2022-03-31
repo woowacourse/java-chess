@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.controller;
 
 import chess.domain.board.Point;
 
@@ -21,7 +21,6 @@ public class Request {
     public static Request of(String input) {
         String[] split = input.split(ARGUMENT_SEPARATOR);
         List<Point> arguments = toArguments(split);
-        validateArgumentSize(arguments);
         return new Request(split[0], arguments);
     }
 
@@ -32,7 +31,7 @@ public class Request {
                 .collect(Collectors.toList());
     }
 
-    private static void validateArgumentSize(List<Point> arguments) {
+    public static void validateArgumentSize(List<Point> arguments) {
         if (arguments.size() != ARGUMENT_SIZE) {
             throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
         }

@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.controller.Request;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
@@ -26,6 +27,7 @@ public class Status extends Started {
 
     @Override
     public GameState move(List<Point> arguments) {
+        Request.validateArgumentSize(arguments);
         board.move(arguments.get(0), arguments.get(1), turnColor);
         if (!board.isKingDead(turnColor.toggle())) {
             return new Running(board, turnColor.toggle());

@@ -4,7 +4,6 @@ import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.dto.BoardAndTurnInfo;
-import chess.dto.Request;
 import chess.dto.ScoreResponse;
 import chess.view.InputView;
 import chess.view.OutputView;

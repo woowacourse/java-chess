@@ -6,7 +6,6 @@ import chess.domain.piece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -31,17 +30,6 @@ class BoardTest {
         assertThatCode(() -> board.move(from, to, turnColor))
                 .doesNotThrowAnyException();
     }
-
-//    @Test
-//    @DisplayName("매개변수는 2개여야 한다.")
-//    void throwsExceptionWithInvalidArgumentSize() {
-//        List<String> arguments = List.of("a2", "a3", "a4");
-//        Color turnColor = Color.WHITE;
-//        Board board = BoardFixtures.initial();
-//
-//        assertThatExceptionOfType(IllegalArgumentException.class)
-//                .isThrownBy(() -> board.move(arguments, turnColor));
-//    }
 
     @Test
     @DisplayName("적군을 움직일 수 없다.")
