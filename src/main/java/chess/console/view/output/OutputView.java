@@ -41,11 +41,11 @@ public class OutputView {
 
     public void printPlayerScores(final Map<String, Double> playerScores) {
         for (final String colorName : playerScores.keySet()) {
-            printScoreStatus(colorName, playerScores.get(colorName));
+            printPlayerScore(colorName, playerScores.get(colorName));
         }
     }
 
-    private void printScoreStatus(final String colorName, final double score) {
+    private void printPlayerScore(final String colorName, final double score) {
         System.out.println(colorName + "의 점수는 " + score + "입니다.");
     }
 
