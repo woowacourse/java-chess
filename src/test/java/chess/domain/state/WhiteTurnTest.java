@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -47,5 +48,15 @@ class WhiteTurnTest {
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편 말을 옮길 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("말을 움직일 시, BlackTurn으로 변경된다.")
+    void changeTeam() {
+        GameState board = new WhiteTurn(BoardInitialize.create());
+        String source = "e2";
+        String destination = "e4";
+        GameState blackTurn = board.move(source, destination);
+        assertThat(blackTurn.getTeam()).isEqualTo(Team.BLACK);
     }
 }
