@@ -9,6 +9,7 @@ import domain.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -62,27 +63,30 @@ public class ChessBoard {
         board.put(source, new Blank());
     }
 
-    public double calculateScoreByPlayer(final Player player) {
+    public double calculateScoreByPlayer(Player player) {
         return Arrays.stream(File.values())
-            .map(file -> calculateScoreOfFile(player, file))
+            .map(file -> calculateTotalScoreInFile(player, file))
             .mapToDouble(Double::doubleValue)
             .sum();
     }
 
-    public double calculateScoreOfFile(final Player player, File file) {
-        boolean isSeveralPawn = isSeveralPawnInFile(player, file);
-        return Arrays.stream(Rank.values())
-            .map(rank -> board.get(Position.of(file, rank)))
-            .filter(piece -> piece.isSamePlayer(player))
-            .map(piece -> piece.score(isSeveralPawn))
+    private double calculateTotalScoreInFile(Player player, File file) {
+        List<Piece> pieces = createPiecesInFile(player, file);
+        boolean isSeveralPawn = isSeveralPawnInList(pieces);
+        return pieces.stream().map(piece -> piece.score(isSeveralPawn))
             .mapToDouble(Double::doubleValue)
             .sum();
     }
 
-    private boolean isSeveralPawnInFile(Player player, File file) {
+    private List<Piece> createPiecesInFile(Player player, File file) {
         return Arrays.stream(Rank.values())
             .map(rank -> board.get(Position.of(file, rank)))
             .filter(piece -> piece.isSamePlayer(player))
+            .collect(Collectors.toList());
+    }
+
+    private boolean isSeveralPawnInList(List<Piece> pieces) {
+        return pieces.stream()
             .filter(Piece::isPawn)
             .count() >= PAWN_COUNT_SAME_FILE;
     }
