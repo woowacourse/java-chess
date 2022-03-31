@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
-import java.util.ArrayList;
-import java.util.List;
-
 import chess.domain.Color;
+import chess.domain.Movement;
 import chess.domain.position.Position;
+import java.util.List;
 
 public class Knight extends Piece {
 
@@ -41,8 +39,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> findRoute(Position source, Position target) {
-        return new ArrayList<>();
+    public boolean canJumpOverPieces() {
+        return true;
     }
 
     @Override

@@ -22,6 +22,7 @@ public abstract class Piece {
     public boolean isEnemyColorPiece(Piece piece) {
         return this.color.enemyColor() == piece.color;
     }
+
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
@@ -31,11 +32,12 @@ public abstract class Piece {
     }
 
     protected abstract List<Movement> chooseMovements();
+
     protected abstract String baseSignature();
 
     public abstract boolean isCorrectMovement(Position source, Position target, Piece targetPiece);
 
-    public abstract List<Position> findRoute(Position source, Position target);
+    public abstract boolean canJumpOverPieces();
 
     public abstract double score();
 

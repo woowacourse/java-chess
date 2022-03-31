@@ -28,8 +28,8 @@ public class Blank extends Piece {
     }
 
     @Override
-    public List<Position> findRoute(Position source, Position target) {
-        throw new IllegalArgumentException("기물이 없는 위치입니다.");
+    public boolean canJumpOverPieces() {
+        return true;
     }
 
     @Override

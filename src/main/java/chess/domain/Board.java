@@ -5,6 +5,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,16 +50,33 @@ public class Board {
         Piece sourcePiece = pieces.get(source);
         Piece targetPiece = pieces.get(target);
         if (!sourcePiece.isCorrectMovement(source, target, targetPiece)) {
-            throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("해당 기물이 움직일 수 있는 행마법이 아닙니다.");
         }
     }
 
     private void validateRoute(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
-        List<Position> route = sourcePiece.findRoute(source, target);
+        if (sourcePiece.canJumpOverPieces()) {
+            return;
+        }
+        List<Position> route = findRoute(source, target);
         for (Position node : route) {
             validatePieceOnRoute(node);
         }
+    }
+
+    private List<Position> findRoute(Position source, Position target) {
+        List<Position> route = new ArrayList<>();
+
+        int routeLength = source.calculateMaxLinearLengthTo(target);
+        int xSlope = source.calculateXSlope(target, routeLength);
+        int ySlope = source.calculateYSlope(target, routeLength);
+
+        for (int step = 1; step < routeLength; step++) {
+            Position routeNode = source.displacedOf(xSlope * step, ySlope * step);
+            route.add(routeNode);
+        }
+        return route;
     }
 
     private void validatePieceOnRoute(Position node) {

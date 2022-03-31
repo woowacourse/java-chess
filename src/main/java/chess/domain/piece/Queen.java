@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -40,18 +39,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Position> findRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-
-        int routeLength = source.calculateMaxLinearLengthTo(target);
-        int xSlope = source.calculateXSlope(target, routeLength);
-        int ySlope = source.calculateYSlope(target, routeLength);
-
-        for (int step = 1; step < routeLength; step++) {
-            Position routeNode = source.displacedOf(xSlope * step, ySlope * step);
-            route.add(routeNode);
-        }
-        return route;
+    public boolean canJumpOverPieces() {
+        return false;
     }
 
     @Override
