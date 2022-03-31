@@ -10,7 +10,7 @@ import java.util.List;
 public class Ready extends Started {
 
     public Ready() {
-        super(Board.of(new InitialBoardGenerator()), Color.WHITE);
+        super(new Board(InitialBoardGenerator.generate()), Color.WHITE);
     }
 
     @Override

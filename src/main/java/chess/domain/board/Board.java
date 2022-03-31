@@ -16,12 +16,8 @@ public class Board {
 
     private final Map<Point, Piece> pointPieces;
 
-    private Board(Map<Point, Piece> pointPieces) {
+    public Board(Map<Point, Piece> pointPieces) {
         this.pointPieces = new HashMap<>(pointPieces);
-    }
-
-    public static Board of(BoardGenerator generator) {
-        return new Board(generator.generate());
     }
 
     public void move(List<String> arguments, Color turnColor) {

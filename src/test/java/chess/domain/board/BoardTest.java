@@ -16,7 +16,7 @@ class BoardTest {
     @Test
     @DisplayName("보드 생성기로 보드를 생성한다.")
     void createBoardByGenerator() {
-        Board board = Board.of(new InitialBoardGenerator());
+        Board board = new Board(InitialBoardGenerator.generate());
         assertThat(board).isNotNull();
     }
 
@@ -92,7 +92,7 @@ class BoardTest {
     void calculateScoreTest() {
         double initialTotalScore = 38;
 
-        Board board = Board.of(new InitialBoardGenerator());
+        Board board = new Board(InitialBoardGenerator.generate());
 
         assertThat(board.calculateScore().values())
                 .containsExactly(initialTotalScore, initialTotalScore);

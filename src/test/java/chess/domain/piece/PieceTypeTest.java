@@ -17,8 +17,7 @@ class PieceTypeTest {
     void calculateScoreTest() {
         double initialTotalScore = 38;
 
-        InitialBoardGenerator generator = new InitialBoardGenerator();
-        Map<Point, Piece> pointPieces = generator.generate();
+        Map<Point, Piece> pointPieces = InitialBoardGenerator.generate();
 
         assertThat(PieceType.calculateScore(pointPieces, Color.WHITE))
                 .isEqualTo(initialTotalScore);
@@ -28,12 +27,11 @@ class PieceTypeTest {
     @DisplayName("폰이 세로줄에 두개 이상 존재할 경우 0.5점으로 계산된다.")
     void calculateScoreWithVerticalPawn() {
         double blackScore = 6;
-        TestBoardGenerator generator = new TestBoardGenerator(Map.of(
+        Map<Point, Piece> pointPieces = TestBoardGenerator.generate(Map.of(
                 Point.of("a7"), new Pawn(Color.BLACK),
                 Point.of("a6"), new Pawn(Color.BLACK),
                 Point.of("a8"), new Rook(Color.BLACK)
         ));
-        Map<Point, Piece> pointPieces = generator.generate();
 
         assertThat(PieceType.calculateScore(pointPieces, Color.BLACK))
                 .isEqualTo(blackScore);

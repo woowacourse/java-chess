@@ -6,23 +6,17 @@ import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestBoardGenerator implements BoardGenerator {
+public class TestBoardGenerator {
 
-    private final Map<Point, Piece> custom;
-
-    public TestBoardGenerator(Map<Point, Piece> custom) {
-        this.custom = new HashMap<>(custom);
-    }
-
-    @Override
-    public Map<Point, Piece> generate() {
+    public static Map<Point, Piece> generate(Map<Point, Piece> pointPieces) {
+        Map<Point, Piece> custom = new HashMap<>(pointPieces);
         for (int i = 1; i <= 8; i++) {
-            generateLine(i);
+            generateLine(custom, i);
         }
         return Map.copyOf(custom);
     }
 
-    private void generateLine(int i) {
+    private static void generateLine(final Map<Point, Piece> custom, int i) {
         for (int j = 1; j <= 8; j++) {
             Point point = Point.of(i, j);
             custom.computeIfAbsent(point, ignored -> Empty.getInstance());

@@ -8,14 +8,14 @@ import java.util.Map;
 public class BoardFixtures {
 
     public static Board empty() {
-        return Board.of(new TestBoardGenerator(new HashMap<>()));
+        return new Board(TestBoardGenerator.generate(new HashMap<>()));
     }
 
     public static Board initial() {
-        return Board.of(new InitialBoardGenerator());
+        return new Board(InitialBoardGenerator.generate());
     }
 
     public static Board create(Map<Point, Piece> pointPieces) {
-        return Board.of(new TestBoardGenerator(pointPieces));
+        return new Board(TestBoardGenerator.generate(pointPieces));
     }
 }

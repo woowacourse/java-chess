@@ -9,10 +9,9 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toMap;
 
-public class InitialBoardGenerator implements BoardGenerator {
+public class InitialBoardGenerator {
 
-    @Override
-    public Map<Point, Piece> generate() {
+    public static Map<Point, Piece> generate() {
         Map<Point, Piece> pointPieces = new HashMap<>();
         pointPieces.putAll(generateSpecialLine(1, Color.WHITE));
         pointPieces.putAll(generatePawnLine(2, Color.WHITE));
@@ -25,7 +24,7 @@ public class InitialBoardGenerator implements BoardGenerator {
         return pointPieces;
     }
 
-    private Map<Point, Piece> generateSpecialLine(int lineNumber, Color color) {
+    private static Map<Point, Piece> generateSpecialLine(int lineNumber, Color color) {
         Map<Point, Piece> pointPieces = new HashMap<>();
         pointPieces.put(Point.of(1, lineNumber), new Rook(color));
         pointPieces.put(Point.of(2, lineNumber), new Knight(color));
@@ -38,13 +37,13 @@ public class InitialBoardGenerator implements BoardGenerator {
         return pointPieces;
     }
 
-    private Map<Point, Piece> generatePawnLine(int lineNumber, Color color) {
+    private static Map<Point, Piece> generatePawnLine(int lineNumber, Color color) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
                 .mapToObj(i -> Point.of(i, lineNumber))
                 .collect(toMap(Function.identity(), it -> new Pawn(color)));
     }
 
-    private Map<Point, Piece> generateEmptyLine(int lineNumber) {
+    private static Map<Point, Piece> generateEmptyLine(int lineNumber) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
                 .mapToObj(i -> Point.of(i, lineNumber))
                 .collect(toMap(Function.identity(), it -> Empty.getInstance()));
