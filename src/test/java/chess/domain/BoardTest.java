@@ -52,7 +52,7 @@ public class BoardTest {
 
         Board board = new Board(pieces);
 
-        assertThat(board.isBothKingsAlive()).isTrue();
+        assertThat(board.hasBothKings()).isTrue();
     }
 
     @Test
@@ -70,6 +70,6 @@ public class BoardTest {
 
         Board board = new Board(pieces);
 
-        assertThat(board.isBothKingsAlive()).isFalse();
+        assertThat(board.hasBothKings()).isFalse();
     }
 }

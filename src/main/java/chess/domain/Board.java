@@ -98,7 +98,7 @@ public class Board {
 
     private long countSameRankPawnsOf(Color color) {
         List<Position> pawnPositions = findPawnPositionsOf(color);
-        Map<Row, List<Position>> pawnGroup = Position.groupByRank(pawnPositions);
+        Map<Row, List<Position>> pawnGroup = Position.groupByRow(pawnPositions);
 
         return pawnGroup.values()
                 .stream()
@@ -114,7 +114,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public boolean isBothKingsAlive() {
+    public boolean hasBothKings() {
         return countKingsOnBoard() == 2;
     }
 

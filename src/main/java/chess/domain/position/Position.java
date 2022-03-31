@@ -22,8 +22,8 @@ public final class Position {
         return new Position(column, row);
     }
 
-    public static Map<Row, List<Position>> groupByRank(List<Position> pawnPositions) {
-        return pawnPositions.stream()
+    public static Map<Row, List<Position>> groupByRow(List<Position> positions) {
+        return positions.stream()
                 .collect(groupingBy(position -> position.row));
     }
 

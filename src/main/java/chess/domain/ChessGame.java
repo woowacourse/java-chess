@@ -27,10 +27,11 @@ public final class ChessGame {
     }
 
     public boolean isRunning() {
-        return board.isBothKingsAlive();
+        return board.hasBothKings();
     }
 
     public Map<Color, Double> calculateScore() {
+
         return Stream.of(Color.BLACK, Color.WHITE)
                 .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
     }
