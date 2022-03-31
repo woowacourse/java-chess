@@ -161,7 +161,9 @@
     - MovePattern에 `getDirections()`는 외부에서는 사용하지 않는 메서드이다. 따라서 인터페이스에서는 삭제하고 하위 추상클래스에서 정의하는 것으로 수정했다.
     - MovePattern -> AbstractMovePattern -> AbstractXXXMovePattern -> 기물MovePattern 구현체와 같은 구조를 가지도록 수정했다.
     - 테스트 코드에서도 MovePattern 인터페이스를 쓰도록 수정했다.
-- [ ] MovePattern에서 `findDirection()`은 null을 반환하고 있어요. NPE가 발생할 가능성이 있는 것 같은데 개선해볼까요?
+- [x] Piece에서 `findDirection()`은 null을 반환하고 있어요. NPE가 발생할 가능성이 있는 것 같은데 개선해볼까요?
+    - 프로그램이 돌면서는 null이 반환되지 않을 때만 사용하도록 되어있어서 몰랐는데 단독으로 사용하면 NPE가 발생할 수도 있다고 느꼈다.
+    - 방향이 없는 NOTHING을 추가해서 null을 대신하도록 했다.
 - [x] `StatusResult`와 `ScoreResult`는 같은 역할과 책임을 가지는 것 같아요. 해당 클래스를 둔 이유가 있을까요?
     - 정확하게 같은 일을 하는데 단순하게 한번 더 감싼 느낌이었다. 두 클래스의 기능을 합친 `StatusResult`를 남기고 `ScoreResult`를 제거했다.
 - [ ] (CommandState) -> 외부에서 Command를 찾고 그 값을 이용해서 CommandState를 찾아보면 어떨까요?

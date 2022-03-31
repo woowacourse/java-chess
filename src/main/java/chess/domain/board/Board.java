@@ -100,6 +100,10 @@ public class Board {
     private void checkObstacle(Position source, Position destination, Direction direction) {
         Position nextPosition = source.move(direction.getX(), direction.getY());
 
+        if (source.equals(nextPosition)) {
+            throw new IllegalArgumentException("이동할 수 없습니다");
+        }
+
         while (!nextPosition.equals(destination)) {
             checkObstacleIn(nextPosition);
             nextPosition = nextPosition.move(direction.getX(), direction.getY());

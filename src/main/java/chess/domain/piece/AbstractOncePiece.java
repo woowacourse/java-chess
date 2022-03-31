@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.Direction.NOTHING;
+
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
@@ -14,7 +16,7 @@ public abstract class AbstractOncePiece extends Piece {
 
     @Override
     public boolean canMove(Position source, Position destination) {
-        return findDirection(source, destination) != null;
+        return findDirection(source, destination) != NOTHING;
     }
 
     @Override
@@ -22,6 +24,6 @@ public abstract class AbstractOncePiece extends Piece {
         return directions.stream()
                 .filter(direction -> source.canMoveByTime(direction, destination, ONCE_TIME))
                 .findFirst()
-                .orElse(null);
+                .orElse(NOTHING);
     }
 }

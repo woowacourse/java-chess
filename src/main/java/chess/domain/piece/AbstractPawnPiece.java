@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.Direction.NOTHING;
+
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
@@ -16,7 +18,7 @@ public abstract class AbstractPawnPiece extends Piece {
 
     @Override
     public final boolean canMove(Position source, Position destination) {
-        return findDirection(source, destination) != null;
+        return findDirection(source, destination) != NOTHING;
     }
 
     @Override
@@ -24,7 +26,7 @@ public abstract class AbstractPawnPiece extends Piece {
         return directions.stream()
                 .filter(direction -> canArrive(direction, source, destination))
                 .findFirst()
-                .orElse(null);
+                .orElse(NOTHING);
     }
 
     private boolean canArrive(Direction direction, Position source, Position destination) {
