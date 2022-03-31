@@ -145,4 +145,27 @@ public final class Board {
         return gameResult;
     }
 
+    public Map<Result, Color> calculateFinalWinner() {
+        if (isKingAlive(Color.WHITE) && isKingAlive(Color.BLACK)) {
+            return calculateScoreWinner();
+        }
+        return calculateWinnerWithKing();
+    }
+
+    private Map<Result, Color> calculateWinnerWithKing() {
+        Map<Result, Color> gameResult = new HashMap<>();
+        if (isKingAlive(Color.WHITE)) {
+            gameResult.put(Result.WIN, Color.WHITE);
+        }
+        if (isKingAlive(Color.BLACK)) {
+            gameResult.put(Result.WIN, Color.BLACK);
+        }
+        return gameResult;
+    }
+
+    private boolean isKingAlive(Color color) {
+        return pieces.values()
+                .stream()
+                .anyMatch(piece -> piece.isKing() && piece.isSameColor(color));
+    }
 }

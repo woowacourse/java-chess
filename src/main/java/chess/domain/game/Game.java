@@ -60,4 +60,8 @@ public final class Game {
     public Map<Result, Color> calculateScoreWinner() {
         return board.calculateScoreWinner();
     }
+
+    public Map<Result, Color> calculateFinalWinner() {
+        return board.calculateFinalWinner();
+    }
 }

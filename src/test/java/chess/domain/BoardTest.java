@@ -335,4 +335,39 @@ class BoardTest {
 
         assertThat(board.calculateScore(WHITE)).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("킹이 1개만 남으면 게임이 종료되고 최종 승자를 반환한다.")
+    void calculate_finalWinner_byKing() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(BLACK, new King()));
+            pieces.put(Position.of("a1"), new Piece(BLACK, new Pawn()));
+            pieces.put(Position.of("a5"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("b4"), new Piece(WHITE, new Pawn()));
+            return pieces;
+        });
+
+        Map<Result, Color> result = board.calculateFinalWinner();
+        assertThat(result.get(Result.WIN)).isEqualTo(BLACK);
+    }
+
+    @Test
+    @DisplayName("게임이 종료되고 킹이 2개이면 점수로 승패를 결정한다.")
+    void calculate_finalWinner_byScore() {
+        Board board = new Board(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(BLACK, new King()));
+            pieces.put(Position.of("a7"), new Piece(WHITE, new King()));
+            pieces.put(Position.of("a1"), new Piece(BLACK, new Pawn()));
+            pieces.put(Position.of("a5"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("b4"), new Piece(WHITE, new Pawn()));
+            return pieces;
+        });
+
+        Map<Result, Color> result = board.calculateFinalWinner();
+        assertThat(result.get(Result.WIN)).isEqualTo(WHITE);
+    }
 }
