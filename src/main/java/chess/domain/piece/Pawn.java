@@ -28,7 +28,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        this.firstMove = false;
+        firstMove = false;
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        this.firstMove = false;
+        firstMove = false;
     }
 
     private boolean canCapture(Position beforePosition, Position afterPosition) {
@@ -60,7 +60,7 @@ public final class Pawn extends NotNullPiece {
     }
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {
-        if (this.isBlack()) {
+        if (isBlack()) {
             return -movableDistance <= distance && distance < DIRECTION_CRITERIA;
         }
         return DIRECTION_CRITERIA < distance && distance <= movableDistance;

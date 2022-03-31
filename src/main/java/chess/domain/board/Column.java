@@ -39,25 +39,25 @@ public enum Column {
 
     public Column flip() {
         return Arrays.stream(Column.values())
-            .filter(it -> it.value == (7 - this.value))
+            .filter(it -> it.value == (7 - value))
             .findFirst()
             .orElseThrow();
     }
 
     public int distance(Column otherColumn) {
-        return Math.abs(this.value - otherColumn.value);
+        return Math.abs(value - otherColumn.value);
     }
 
     public List<Column> pathTo(Column otherColumn) {
-        if (this.value < otherColumn.value) {
-            return this.upPathTo(otherColumn);
+        if (value < otherColumn.value) {
+            return upPathTo(otherColumn);
         }
-        return this.downPathTo(otherColumn);
+        return downPathTo(otherColumn);
     }
 
     private List<Column> upPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value + 1; i < otherColumn.value; i++) {
+        for (int i = value + 1; i < otherColumn.value; i++) {
             path.add(Column.from(i));
         }
         return path;
@@ -65,7 +65,7 @@ public enum Column {
 
     private List<Column> downPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = this.value - 1; i > otherColumn.value; i--) {
+        for (int i = value - 1; i > otherColumn.value; i--) {
             path.add(Column.from(i));
         }
         return path;

@@ -14,83 +14,100 @@ public class ChessGame {
     public boolean isEnd = false;
 
     public ChessGame() {
-        this.state = new Ready();
+        state = new Ready();
     }
 
     public void run() {
         while (!isEnd()) {
             final String command = InputView.inputCommand();
-            final GameCommand gameCommand = GameCommand.findByInput(command);
-
-            //gameCommand.execute(command);
-            if (gameCommand == GameCommand.START) {
-                start();
-                OutputView.printBoard(board().getValue());
-            }
-            if (gameCommand == GameCommand.MOVE) {
-                final Positions movePositions = Positions.from(command);
-                move(movePositions.get(0), movePositions.get(1));
-
-                OutputView.printBoard(board().getValue());
-                if (isNotRunning()) {
-                    OutputView.printFinishMessage();
-                    OutputView.printStatus(statusOfWhite(), statusOfBlack());
-                    OutputView.printResultMessage(getResultMessage());
-                }
-            }
-            if (gameCommand == GameCommand.END) {
-                OutputView.printFinishMessage();
-                if (isNotRunning()) {
-                    turnOff();
-                    return;
-                }
-                end();
-                OutputView.printStatus(statusOfWhite(), statusOfBlack());
-                OutputView.printResultMessage(getResultMessage());
-            }
-            if (gameCommand == GameCommand.STATUS) {
-                OutputView.printStatus(statusOfWhite(), statusOfBlack());
-            }
+            executeCommand(command);
         }
     }
 
-    public void start() {
-        this.state = this.state.start();
+    private void executeCommand(final String command) {
+        final GameCommand gameCommand = GameCommand.findByInputCommand(command);
+        if (gameCommand == GameCommand.START) {
+            executeStartCommand();
+        }
+        if (gameCommand == GameCommand.MOVE) {
+            executeMoveCommand(command);
+        }
+        if (gameCommand == GameCommand.END) {
+            executeEndCommand();
+        }
+        if (gameCommand == GameCommand.STATUS) {
+            executeStatusCommand();
+        }
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        this.state = this.state.move(beforePosition, afterPosition);
+    private void executeStartCommand() {
+        start();
+        OutputView.printBoard(board().getBoard());
     }
 
-    public void end() {
-        this.state = this.state.end();
+    private void start() {
+        state = state.start();
     }
 
-    public double statusOfBlack() {
-        return this.state.statusOfBlack();
-    }
-
-    public double statusOfWhite() {
-        return this.state.statusOfWhite();
-    }
-
-    public boolean isNotRunning() {
-        return !this.state.isRunning();
+    private void executeMoveCommand(final String command) {
+        final Positions movePositions = Positions.from(command);
+        move(movePositions.get(0), movePositions.get(1));
+        OutputView.printBoard(board().getBoard());
+        if (isNotRunning()) {
+            OutputView.printFinishMessage();
+            OutputView.printStatus(statusOfWhite(), statusOfBlack());
+            OutputView.printResultMessage(getResultMessage());
+        }
     }
 
     public Board board() {
-        return this.state.getBoard();
+        return state.getBoard();
+    }
+
+    public void move(Position beforePosition, Position afterPosition) {
+        state = state.move(beforePosition, afterPosition);
+    }
+
+    public boolean isNotRunning() {
+        return !state.isRunning();
+    }
+
+    private void executeEndCommand() {
+        OutputView.printFinishMessage();
+        if (isNotRunning()) {
+            turnOff();
+            return;
+        }
+        end();
+        OutputView.printStatus(statusOfWhite(), statusOfBlack());
+        OutputView.printResultMessage(getResultMessage());
     }
 
     public void turnOff() {
-        this.isEnd = true;
+        isEnd = true;
+    }
+
+    public void end() {
+        state = state.end();
+    }
+
+    private void executeStatusCommand() {
+        OutputView.printStatus(statusOfWhite(), statusOfBlack());
+    }
+
+    public double statusOfWhite() {
+        return state.statusOfWhite();
+    }
+
+    public double statusOfBlack() {
+        return state.statusOfBlack();
     }
 
     public boolean isEnd() {
-        return this.isEnd;
+        return isEnd;
     }
 
     public String getResultMessage() {
-        return GameResult.from(this.state.getResult()).getMessage();
+        return GameResult.from(state.getResult()).getMessage();
     }
 }

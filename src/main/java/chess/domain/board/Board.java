@@ -15,23 +15,23 @@ public final class Board {
     private static final int TOTAL_KING_COUNT = 2;
     private static final String CANT_MOVE_TO_SAME_CAMP = "같은 팀 기물이 있는 위치로는 이동할 수 없습니다.";
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> board;
 
     public Board() {
-        this.value = BoardFactory.generate();
+        this.board = BoardFactory.generate();
     }
 
     public boolean checkNotKnight(final Position position) {
-        final Piece piece = this.value.get(position);
+        final Piece piece = board.get(position);
         return piece.pieceName() != PieceName.KNIGHT;
     }
 
     public boolean isNotValidCamp(final Position position, final Camp camp) {
-        return !this.value.get(position).isSameCampWith(camp);
+        return !board.get(position).isSameCampWith(camp);
     }
 
     public boolean isBlankPosition(final Position position) {
-        return this.value.get(position).isNullPiece();
+        return board.get(position).isNullPiece();
     }
 
     public void move(Position beforePosition, Position afterPosition) {
@@ -39,7 +39,7 @@ public final class Board {
     }
 
     private void movePiece(final Position beforePosition, final Position afterPosition) {
-        Piece beforePiece = this.value.get(beforePosition);
+        Piece beforePiece = board.get(beforePosition);
         if (isMoveToBlank(afterPosition)) {
             beforePiece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
             return;
@@ -52,19 +52,19 @@ public final class Board {
     }
 
     private boolean isMoveToBlank(Position position) {
-        return value.get(position).isNullPiece();
+        return board.get(position).isNullPiece();
     }
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
-            this.value.put(afterPosition, piece);
-            this.value.put(beforePosition, new NullPiece(null));
+            board.put(afterPosition, piece);
+            board.put(beforePosition, new NullPiece(null));
         };
     }
 
     private boolean isMoveToOtherCampPiece(Position beforePosition, Position afterPosition) {
-        Piece beforePiece = this.value.get(beforePosition);
-        Piece afterPiece = this.value.get(afterPosition);
+        Piece beforePiece = board.get(beforePosition);
+        Piece afterPiece = board.get(afterPosition);
         return !beforePiece.isSameCampWith(afterPiece);
     }
 
@@ -73,7 +73,7 @@ public final class Board {
     }
 
     private List<Piece> collectKing() {
-        return this.value.values()
+        return board.values()
             .stream()
             .filter(piece -> piece.pieceName() == PieceName.KING)
             .collect(Collectors.toList());
@@ -89,7 +89,7 @@ public final class Board {
             .allMatch(Piece::isBlack);
     }
 
-    public Map<Position, Piece> getValue() {
-        return Collections.unmodifiableMap(value);
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

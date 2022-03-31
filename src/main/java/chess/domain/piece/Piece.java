@@ -15,7 +15,7 @@ public abstract class Piece {
     }
 
     public final boolean isBlack() {
-        return this.camp == Camp.BLACK;
+        return camp == Camp.BLACK;
     }
 
     public abstract void move(Position beforePosition,
@@ -27,17 +27,17 @@ public abstract class Piece {
                                  Consumer<Piece> moveFunction);
 
     public boolean isSameCampWith(Piece targetPiece) {
-        return this.camp == targetPiece.camp;
+        return camp == targetPiece.camp;
     }
 
     protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
     public PieceName pieceName() {
-        return this.pieceName;
+        return pieceName;
     }
 
     public final String getPieceNameCharacter() {
-        return this.pieceName.getValue();
+        return pieceName.getValue();
     }
 
     public abstract double getScore();

@@ -19,7 +19,7 @@ public enum GameCommand {
         this.command = command;
     }
 
-    public static GameCommand findByInput(final String command) {
+    public static GameCommand findByInputCommand(final String command) {
         return Arrays.stream(GameCommand.values())
             .filter(it -> Pattern.matches(it.command, command))
             .findFirst()

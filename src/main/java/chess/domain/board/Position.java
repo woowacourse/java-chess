@@ -32,32 +32,32 @@ public class Position implements Comparable<Position> {
     }
 
     public int columnDistance(Position otherPosition) {
-        return this.column.distance(otherPosition.column);
+        return column.distance(otherPosition.column);
     }
 
     public int rowDistance(Position otherPosition) {
-        return this.row.distance(otherPosition.row);
+        return row.distance(otherPosition.row);
     }
 
     public int rowDirectedDistance(Position otherPosition) {
-        return this.row.directedDistance(otherPosition.row);
+        return row.directedDistance(otherPosition.row);
     }
 
     public Position flipHorizontally() {
-        return new Position(this.column.flip(), this.row);
+        return new Position(column.flip(), row);
     }
 
     public Position flipVertically() {
-        return new Position(this.column, this.row.flip());
+        return new Position(column, row.flip());
     }
 
     public Position flipDiagonally() {
-        return new Position(this.column.flip(), this.row.flip());
+        return new Position(column.flip(), row.flip());
     }
 
     public List<Position> pathTo(Position otherPosition) {
-        List<Row> rowPath = this.row.pathTo(otherPosition.row);
-        List<Column> columnPath = this.column.pathTo(otherPosition.column);
+        List<Row> rowPath = row.pathTo(otherPosition.row);
+        List<Column> columnPath = column.pathTo(otherPosition.column);
         if (rowPath.size() == NO_SIZE) {
             return getVerticalPositions(columnPath);
         }
@@ -69,13 +69,13 @@ public class Position implements Comparable<Position> {
 
     private List<Position> getVerticalPositions(final List<Column> columnPath) {
         return columnPath.stream()
-            .map(column -> new Position(column, this.row))
+            .map(column -> new Position(column, row))
             .collect(Collectors.toList());
     }
 
     private List<Position> getHorizontalPositions(final List<Row> rowPath) {
         return rowPath.stream()
-            .map(row -> new Position(this.column, row))
+            .map(row -> new Position(column, row))
             .collect(Collectors.toList());
     }
 

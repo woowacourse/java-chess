@@ -34,13 +34,13 @@ public enum Row {
 
     public Row flip() {
         return Arrays.stream(Row.values())
-            .filter(it -> it.value == (7 - this.value))
+            .filter(it -> it.value == (7 - value))
             .findFirst()
             .orElseThrow();
     }
 
     public int directedDistance(Row otherRow) {
-        return this.value - otherRow.value;
+        return value - otherRow.value;
     }
 
     public int distance(Row otherRow) {
@@ -48,15 +48,15 @@ public enum Row {
     }
 
     public List<Row> pathTo(Row otherRow) {
-        if (this.value < otherRow.value) {
-            return this.rightPathTo(otherRow);
+        if (value < otherRow.value) {
+            return rightPathTo(otherRow);
         }
-        return this.leftPathTo(otherRow);
+        return leftPathTo(otherRow);
     }
 
     private List<Row> rightPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value + 1; i < otherRow.value; i++) {
+        for (int i = value + 1; i < otherRow.value; i++) {
             path.add(Row.from(i));
         }
         return path;
@@ -64,7 +64,7 @@ public enum Row {
 
     private List<Row> leftPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = this.value - 1; i > otherRow.value; i--) {
+        for (int i = value - 1; i > otherRow.value; i--) {
             path.add(Row.from(i));
         }
         return path;

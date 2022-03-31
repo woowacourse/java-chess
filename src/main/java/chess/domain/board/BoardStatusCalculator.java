@@ -18,7 +18,7 @@ public class BoardStatusCalculator {
     private final Map<Position, Piece> value;
 
     public BoardStatusCalculator(Board board) {
-        this.value = board.getValue();
+        value = board.getBoard();
     }
 
     public double calculate(final Predicate<Piece> isBlackPredicate) {
@@ -30,7 +30,7 @@ public class BoardStatusCalculator {
 
     private List<Piece> collectPiecesIn(Column column, final Predicate<Piece> isBlackPredicate) {
         return Arrays.stream(Row.values())
-            .map(row -> this.value.get(Position.of(column, row)))
+            .map(row -> value.get(Position.of(column, row)))
             .filter(piece -> !piece.isNullPiece())
             .filter(isBlackPredicate)
             .collect(Collectors.toList());

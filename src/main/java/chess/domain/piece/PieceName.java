@@ -17,6 +17,6 @@ public enum PieceName {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 }

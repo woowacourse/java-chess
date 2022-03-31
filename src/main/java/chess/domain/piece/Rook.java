@@ -26,7 +26,7 @@ public final class Rook extends NotNullPiece {
 
     @Override
     public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        this.move(beforePosition, afterPosition, moveFunction);
+        move(beforePosition, afterPosition, moveFunction);
     }
 
     @Override

@@ -37,13 +37,13 @@ public class Running implements State {
     public State move(Position beforePosition, Position afterPosition) {
         checkValidPosition(beforePosition, afterPosition);
 
-        this.board.move(beforePosition, afterPosition);
+        board.move(beforePosition, afterPosition);
 
-        if (this.board.hasKingCaptured()) {
-            return new Finished(this.board);
+        if (board.hasKingCaptured()) {
+            return new Finished(board);
         }
 
-        return new Running(this.board, this.switchCamp());
+        return new Running(board, switchCamp());
     }
 
     private void checkValidPosition(final Position beforePosition, final Position afterPosition) {
@@ -53,7 +53,7 @@ public class Running implements State {
     }
 
     private void checkValidPiece(final Position position) {
-        if (this.board.isBlankPosition(position)) {
+        if (board.isBlankPosition(position)) {
             throw new IllegalArgumentException(NO_PIECE_TO_MOVE);
         }
     }
@@ -65,7 +65,7 @@ public class Running implements State {
     }
 
     private boolean isNotValidCamp(final Position position) {
-        return this.board.isNotValidCamp(position, this.camp);
+        return board.isNotValidCamp(position, camp);
     }
 
     private void checkObstacles(final Position beforePosition, final Position afterPosition) {
@@ -81,21 +81,21 @@ public class Running implements State {
     }
 
     private boolean isBlankPosition(final Position position) {
-        return this.board.isBlankPosition(position);
+        return board.isBlankPosition(position);
     }
 
     private boolean isNotKnight(final Position beforePosition) {
-        return this.board.checkNotKnight(beforePosition);
+        return board.checkNotKnight(beforePosition);
     }
 
     @Override
     public Camp switchCamp() {
-        return this.camp.switchCamp();
+        return camp.switchCamp();
     }
 
     @Override
     public State end() {
-        return new Finished(this.board);
+        return new Finished(board);
     }
 
     @Override
@@ -120,6 +120,6 @@ public class Running implements State {
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
     }
 }

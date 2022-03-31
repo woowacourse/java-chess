@@ -28,7 +28,7 @@ public class BoardTest {
         Board board = new Board();
 
         //then
-        assertThat(board.getValue()).hasSize(64);
+        assertThat(board.getBoard()).hasSize(64);
     }
 
     @MethodSource("provideRookPosition")
@@ -37,7 +37,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(Rook.class);
@@ -49,7 +49,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(Bishop.class);
@@ -61,7 +61,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(Knight.class);
@@ -73,7 +73,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(Queen.class);
@@ -85,7 +85,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(King.class);
@@ -97,7 +97,7 @@ public class BoardTest {
         //given
         Board board = new Board();
         //when
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         //then
         assertThat(boardValue.get(expectedPosition))
             .isInstanceOf(Pawn.class);
@@ -108,7 +108,7 @@ public class BoardTest {
     void check_camp_white(Row row) {
         Board board = new Board();
 
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         for (Column column : Column.values()) {
             Piece piece = boardValue.get(Position.of(column, row));
             assertThat(piece.isBlack()).isFalse();
@@ -120,7 +120,7 @@ public class BoardTest {
     void check_camp_black(Row row) {
         Board board = new Board();
 
-        Map<Position, Piece> boardValue = board.getValue();
+        Map<Position, Piece> boardValue = board.getBoard();
         for (Column column : Column.values()) {
             Piece piece = boardValue.get(Position.of(column, row));
             assertThat(piece.isBlack()).isTrue();

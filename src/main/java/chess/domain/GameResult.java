@@ -21,6 +21,6 @@ public enum GameResult {
     }
 
     public String getMessage() {
-        return this.message;
+        return message;
     }
 }

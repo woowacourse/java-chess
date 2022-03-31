@@ -35,7 +35,7 @@ public class Finished implements State {
 
     @Override
     public State end() {
-        return new Finished(this.board);
+        return new Finished(board);
     }
 
     @Override
@@ -50,10 +50,10 @@ public class Finished implements State {
 
     @Override
     public GameResult getResult() {
-        if (this.board.hasBlackKingCaptured()) {
+        if (board.hasBlackKingCaptured()) {
             return GameResult.BLACK_LOSE;
         }
-        if (this.board.hasWhiteKingCaptured()) {
+        if (board.hasWhiteKingCaptured()) {
             return GameResult.BLACK_WIN;
         }
         return getResultWhenNoKingCaptured();
@@ -77,6 +77,6 @@ public class Finished implements State {
 
     @Override
     public Board getBoard() {
-        return this.board;
+        return board;
     }
 }

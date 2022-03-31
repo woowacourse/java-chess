@@ -22,7 +22,7 @@ public class Ready implements State {
 
     @Override
     public State start() {
-        return new Running(this.board, this.camp);
+        return new Running(board, camp);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Ready implements State {
 
     @Override
     public State end() {
-        return new Finished(this.board);
+        return new Finished(board);
     }
 
     @Override
