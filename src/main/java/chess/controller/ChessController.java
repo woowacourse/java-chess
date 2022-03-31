@@ -20,6 +20,13 @@ public final class ChessController {
         this.gameState = new Ready();
     }
 
+    public void run() {
+        gameState = new Ready();
+        while (gameState.isRunning(service)) {
+            runUntilValid(this::executeByInput);
+        }
+    }
+
     private void runUntilValid(Runnable runner) {
         boolean runSuccess;
         do {
@@ -34,13 +41,6 @@ public final class ChessController {
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printException(e);
             return false;
-        }
-    }
-
-    public void run() {
-        gameState = new Ready();
-        while (gameState.isRunning(service)) {
-            runUntilValid(this::executeByInput);
         }
     }
 
