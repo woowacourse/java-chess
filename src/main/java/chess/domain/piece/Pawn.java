@@ -1,54 +1,61 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Rank;
 import chess.domain.Position;
+import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final int ABSCISSA_DIFFERENCE = 1;
+    private static final int RANK_DIFFERENCE = 1;
     private static final double PAWN_SCORE = 1;
+    public static final int INITIAL_MOVABLE_SCOPE = 2;
 
     public Pawn(Color color) {
         super(color, PAWN_SCORE);
     }
 
-    private boolean isInitialPosition(Position fromPosition) {
-        return fromPosition.isSameRank(Rank.TWO)
-            || fromPosition.isSameRank(Rank.SEVEN);
-    }
-
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
-        int difference = ABSCISSA_DIFFERENCE;
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        if (isWhiteInitialMovable(fromPosition, toPosition, direction)) {
+            return direction == Direction.UP
+                && toPosition.getRankDifference(fromPosition) <= INITIAL_MOVABLE_SCOPE;
+        }
         if (color == Color.WHITE) {
-            difference = -ABSCISSA_DIFFERENCE;
+            return direction == Direction.UP
+                && toPosition.getRankDifference(fromPosition) == RANK_DIFFERENCE;
         }
-        if (isInitialPosition(fromPosition)) {
-            return canMovePosition(fromPosition, toPosition, difference)
-                || canMovePosition(fromPosition, toPosition, difference * 2);
+        if (isBlackInitialMovable(fromPosition, toPosition, direction)) {
+            return direction == Direction.DOWN && toPosition.getRankDifference(fromPosition) >= -2;
         }
-        return canMovePosition(fromPosition, toPosition, difference);
+
+        if (color == Color.BLACK) {
+            return direction == Direction.DOWN
+                && toPosition.getRankDifference(fromPosition) == -RANK_DIFFERENCE;
+        }
+        return false;
     }
 
-    private boolean canMovePosition(Position fromPosition, Position toPosition, int difference) {
-        return fromPosition.isSameFile(toPosition)
-            && fromPosition.getRankDifference(toPosition) == difference;
+    private boolean isWhiteInitialMovable(Position fromPosition, Position toPosition,
+        Direction direction) {
+        return color == Color.WHITE && fromPosition.isSameRank(Rank.TWO);
+    }
+
+    private boolean isBlackInitialMovable(Position fromPosition, Position toPosition,
+        Direction direction) {
+        return color == Color.BLACK && fromPosition.isSameRank(Rank.SEVEN);
     }
 
     @Override
     public boolean isCatchable(Position fromPosition, Position toPosition) {
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
         if (color == Color.WHITE) {
-            return isOneDifferenceDiagonal(fromPosition, toPosition)
-                && toPosition.getRankDifference(fromPosition) > 0;
+            return List.of(Direction.RIGHTUP, Direction.LEFTUP).contains(direction)
+                && toPosition.getRankDifference(fromPosition) == RANK_DIFFERENCE;
         }
-        return isOneDifferenceDiagonal(fromPosition, toPosition)
-            && toPosition.getRankDifference(fromPosition) < 0;
-    }
-
-    private boolean isOneDifferenceDiagonal(Position fromPosition, Position toPosition) {
-        int height = fromPosition.getRankDifference(toPosition);
-        int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height,2) + Math.pow(width,2) == 2;
+        return List.of(Direction.RIGHTDOWN, Direction.LEFTDOWN).contains(direction)
+            && toPosition.getRankDifference(fromPosition) == -RANK_DIFFERENCE;
     }
 
     @Override
