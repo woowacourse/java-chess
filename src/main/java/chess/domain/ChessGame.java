@@ -42,8 +42,8 @@ public class ChessGame {
     }
 
     public Map<Team, Double> calculateResult() {
-        Double whiteScore = calculateScore(chessBoard, WHITE);
-        Double blackScore = calculateScore(chessBoard, BLACK);
+        Double whiteScore = calculateScore(WHITE);
+        Double blackScore = calculateScore(BLACK);
 
         Map<Team, Double> result = new HashMap<>();
         result.put(WHITE, whiteScore);
@@ -52,7 +52,7 @@ public class ChessGame {
         return result;
     }
 
-    private double calculateScore(ChessBoard chessBoard, Team team) {
+    private double calculateScore(Team team) {
         return chessBoard.calculateByTeam(team);
     }
 
