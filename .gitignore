@@ -35,3 +35,8 @@ out/
 docker/db/mysql/data/
 docker/db/mysql/init/*
 !docker/db/mysql/init/init.sql
+
+### DS_Store ###
+src/main/.DS_Store
+src/main/resources/.DS_Store
+src/main/resources/static/.DS_Store
