@@ -49,13 +49,8 @@ public class ChessBoard {
 
         Piece piece = cells.get(source);
 
-        piece.move(source, target, this);
-
-        cells.remove(source);
-
-        cells.put(target, piece);
+        movePiece(source, target, piece);
     }
-
 
     public boolean isContainPiece(List<Position> paths) {
         Set<Position> cellsKeySet = cells.keySet();
@@ -68,43 +63,11 @@ public class ChessBoard {
     }
 
     public double calculateByTeam(Team team) {
-        Map<Position, Piece> pawns = getPawnByTeam(team);
+        int sameRankPawn = countSameRankPawn(team);
 
-        File[] values = File.values();
+        double sameRankPawnScore = sameRankPawn * 0.5;
 
-        int twoPawnCount = Arrays.stream(values)
-                .mapToInt(file -> countPawn(pawns, file))
-                .sum();
-
-        double decrease = twoPawnCount * 0.5;
-
-        double sum = cells.values()
-                .stream()
-                .filter(piece -> piece.getTeam() == team)
-                .mapToDouble(Piece::getScore)
-                .sum();
-
-        return sum - decrease;
-    }
-
-    private Map<Position, Piece> getPawnByTeam(Team team) {
-        return cells.keySet()
-                .stream()
-                .filter(position -> cells.get(position).isPawn() && cells.get(position).getTeam() == team)
-                .collect(toMap(position -> position, cells::get));
-    }
-
-    private int countPawn(Map<Position, Piece> pawns, File file) {
-        List<Position> collect = pawns.keySet()
-                .stream()
-                .filter(position -> position.getFile() == file)
-                .collect(toList());
-
-        if (collect.size() >= 2) {
-            return collect.size();
-        }
-
-        return 0;
+        return calculateEntireScore(team) - sameRankPawnScore;
     }
 
     public Piece getPieceByPosition(Position position) {
@@ -132,12 +95,60 @@ public class ChessBoard {
             return "무승부";
         }
 
-        Piece winKing = cells.values()
+        Piece winKing = getWinKing();
+
+        return winKing.getTeam().toString();
+    }
+
+    private void movePiece(Position source, Position target, Piece piece) {
+        piece.move(source, target, this);
+        cells.remove(source);
+        cells.put(target, piece);
+    }
+
+    private int countSameRankPawn(Team team) {
+        Map<Position, Piece> pawns = getPawnByTeam(team);
+
+        File[] values = File.values();
+
+        return Arrays.stream(values)
+                .mapToInt(file -> countPawn(pawns, file))
+                .sum();
+    }
+
+    private double calculateEntireScore(Team team) {
+        return cells.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private Map<Position, Piece> getPawnByTeam(Team team) {
+        return cells.keySet()
+                .stream()
+                .filter(position -> cells.get(position).isPawn() && cells.get(position).getTeam() == team)
+                .collect(toMap(position -> position, cells::get));
+    }
+
+    private int countPawn(Map<Position, Piece> pawns, File file) {
+        List<Position> collect = pawns.keySet()
+                .stream()
+                .filter(position -> position.getFile() == file)
+                .collect(toList());
+
+        if (collect.size() >= 2) {
+            return collect.size();
+        }
+
+        return 0;
+    }
+
+    private Piece getWinKing() {
+        return cells.values()
                 .stream()
                 .filter(Piece::isKing)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-
-        return winKing.getTeam().toString();
     }
 }

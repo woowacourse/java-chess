@@ -77,9 +77,13 @@ public class ChessController {
 
             chessGame.progress(command);
 
-            if (command.isStatus()) {
-                showStatus(chessGame);
-            }
+            checkStatus(chessGame, command);
+        }
+    }
+
+    private void checkStatus(ChessGame chessGame, Command command) {
+        if (command.isStatus()) {
+            showStatus(chessGame);
         }
     }
 
