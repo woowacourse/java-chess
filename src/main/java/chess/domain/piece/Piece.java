@@ -22,6 +22,10 @@ public abstract class Piece {
         return this.color == targetPiece.color;
     }
 
+    public final boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
     public boolean isKing() {
         return false;
     }
