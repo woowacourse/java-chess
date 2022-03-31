@@ -28,7 +28,7 @@ public class Application {
 
     private static void startGame() {
         ChessGame game = new ChessGame();
-        OutputView.printBoard(game.getBoard());
+        OutputView.printBoard(game.getPieces());
         while (game.isRunning()) {
             OutputView.printPlayingCommandMessage();
             String commandValue = InputView.getCommand();
@@ -48,7 +48,7 @@ public class Application {
     private static void playTurn(String command, ChessGame game) {
         try {
             game.proceedWith(MoveCommand.of(command));
-            OutputView.printBoard(game.getBoard());
+            OutputView.printBoard(game.getPieces());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

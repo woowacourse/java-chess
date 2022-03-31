@@ -35,7 +35,7 @@ public final class ChessGame {
                 .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
     }
 
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
 }
