@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Position {
 
+    private static final int DEGREE_CORRECTION_VALUE = 180;
+
     private final int fileIdx;
     private final int rankIdx;
 
@@ -52,7 +54,7 @@ public class Position {
 
     public double findRelativeDegree(Position target) {
         return Math.round(Math.atan2(fileRawDifference(target), rankRawDifference(target))
-            * (180 / Math.PI));
+            * (DEGREE_CORRECTION_VALUE / Math.PI));
     }
 
     public int getFileIdx() {
