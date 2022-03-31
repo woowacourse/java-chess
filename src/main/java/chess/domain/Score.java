@@ -19,9 +19,6 @@ public class Score {
     private static final double KNIGHT_SCORE = 2.5;
     private static final int PAWN_INITIAL_SCORE = 1;
     private static final double PAWN_DUPLICATE_SCORE = 0.5;
-    private static final int GRATER = 1;
-    private static final int LESS = -1;
-    private static final int EQUAL = 0;
 
     private static final Map<Piece, Double> scoreRuleByBlack = Map.of(
             new QueenPiece(Color.BLACK), QUEEN_SCORE,
@@ -36,12 +33,12 @@ public class Score {
             new KnightPiece(Color.WHITE), KNIGHT_SCORE
     );
 
-    private final double value;
     private final Map<Piece, Double> scoreRuleWithoutPawn;
+    private final double value;
 
     public Score(final Board board, final Color color) {
-        this.value = calculate(board, color);
         this.scoreRuleWithoutPawn = findScoreRuleWithoutPawnByColor(color);
+        this.value = calculate(board, color);
     }
 
     private Map<Piece, Double> findScoreRuleWithoutPawnByColor(final Color color) {
@@ -76,15 +73,6 @@ public class Score {
             return count;
         }
         return count * PAWN_DUPLICATE_SCORE;
-    }
-
-    public int decideResultValue(Score score) {
-        if (value > score.value) {
-            return GRATER;
-        } else if (value < score.value) {
-            return LESS;
-        }
-        return EQUAL;
     }
 
     public double getValue() {
