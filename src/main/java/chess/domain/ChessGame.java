@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.Position;
 import chess.dto.BoardDto;
 import chess.dto.ScoreDto;
 import chess.view.InputView;
@@ -30,7 +31,7 @@ public class ChessGame {
     private void play(Board board, String[] command, ChessExecution execution) {
         while (execution != ChessExecution.END) {
             if (execution == ChessExecution.MOVE) {
-                MoveResult move = board.move(command[1], command[2]);
+                MoveResult move = board.move(Position.from(command[1]), Position.from(command[2]));
                 outputView.printBoard(BoardDto.from(board));
 
                 if (move == MoveResult.ENDED) {

@@ -25,6 +25,39 @@ public class Board {
         this.board = new LinkedHashMap<>(board);
     }
 
+    public MoveResult move(Position from, Position to) {
+        if (isNotMovable(from, to)) {
+            return MoveResult.FAIL;
+        }
+
+        Piece pieceAtTo = movePiece(from, to);
+
+        if (pieceAtTo instanceof King) {
+            return MoveResult.ENDED;
+        }
+
+        return MoveResult.SUCCESS;
+    }
+
+    private boolean isNotMovable(Position from, Position to) {
+        Piece pieceAtFrom = board.getOrDefault(from, InvalidPiece.getInstance());
+        Piece pieceAtTo = board.getOrDefault(to, InvalidPiece.getInstance());
+
+        return pieceAtFrom.isInValid()
+                || !pieceAtFrom.movable(from.calculateDistance(to), pieceAtTo)
+                || !pieceAtFrom.isKnight() && isPieceOnTheWay(from, to);
+    }
+
+    private Piece movePiece(Position from, Position to) {
+        Piece pieceAtFrom = board.getOrDefault(from, InvalidPiece.getInstance());
+        Piece pieceAtTo = board.getOrDefault(to, InvalidPiece.getInstance());
+
+        board.put(to, pieceAtFrom);
+        board.remove(from);
+
+        return pieceAtTo;
+    }
+
     public MoveResult move(String from, String to) {
         if (isNotMovable(from, to)) {
             return MoveResult.FAIL;
@@ -40,8 +73,8 @@ public class Board {
     }
 
     private boolean isNotMovable(String from, String to) {
-        Position fromPosition = Position.of(from);
-        Position toPosition = Position.of(to);
+        Position fromPosition = Position.from(from);
+        Position toPosition = Position.from(to);
 
         Piece pieceAtFrom = board.getOrDefault(fromPosition, InvalidPiece.getInstance());
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
@@ -52,8 +85,8 @@ public class Board {
     }
 
     private Piece movePiece(String from, String to) {
-        Position fromPosition = Position.of(from);
-        Position toPosition = Position.of(to);
+        Position fromPosition = Position.from(from);
+        Position toPosition = Position.from(to);
 
         Piece pieceAtFrom = board.getOrDefault(fromPosition, InvalidPiece.getInstance());
         Piece pieceAtTo = board.getOrDefault(toPosition, InvalidPiece.getInstance());
