@@ -290,5 +290,21 @@ class BoardTest {
                 () -> assertThat(actualWhiteScore).isEqualTo(38.0)
         );
     }
+
+    @DisplayName("현재 보드에 폰 두 개가 한 줄에 있을 때 말들의 올바른 총 점수를 계산해야 한다")
+    @Test
+    void calculate_Score_With_Pawn() {
+        final Map<Position, Piece> initialPieces = (new CreateCompleteBoardStrategy()).createPieces();
+        initialPieces.put(CachedPosition.b3, new Pawn(Color.WHITE));
+        initialPieces.remove(CachedPosition.a2);
+        Board board = new Board(initialPieces);
+        final double actualBlackScore = board.calculateScore(Color.BLACK);
+        final double actualWhiteScore = board.calculateScore(Color.WHITE);
+
+        assertAll(
+                () -> assertThat(actualBlackScore).isEqualTo(38.0),
+                () -> assertThat(actualWhiteScore).isEqualTo(37.0)
+        );
+    }
 }
 
