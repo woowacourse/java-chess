@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.chessgame.ChessBoard;
-import utils.ChessBoardGenerator;
 import domain.piece.Blank;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -18,6 +17,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utils.ChessBoardGenerator;
 
 public class ChessBoardTest {
 
@@ -35,7 +35,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("각 기물들은 이동할 수 있는 위치에 같은 색 말이 있다면 이동할 수 없다.")
     void runExceptionSameTargetSameColor() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generate());
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         Position source = Position.of(File.A, Rank.ONE);
         Position target = Position.of(File.A, Rank.TWO);
@@ -63,7 +63,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("각 기물들은 Target 위치까지 가는 경로에 말이 있다면 그 이상 이동할 수 없다.")
     void canNotMoveMore() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generate());
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         Position source = Position.of(File.A, Rank.ONE);
         Position target = Position.of(File.A, Rank.SEVEN);
@@ -75,7 +75,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("Knight는 다른 기물을 뛰어 넘어 이동할 수 있다.")
     void jumpPiece_Knight() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generate());
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.THREE);
@@ -178,7 +178,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("플레이어 별 점수 계산이 가능하며 초기 점수는 38점이다.")
     void calculateScoreByPlayer() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generate());
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         assertThat(chessBoard.calculateScoreByPlayer(Player.WHITE)).isEqualTo(38);
     }
@@ -196,7 +196,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("King을 공격했을 때 게임이 종료된다.")
     void attackKingTest() {
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generate());
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.move(Position.of(File.B, Rank.ONE), Position.of(File.C, Rank.THREE));
         chessBoard.move(Position.of(File.E, Rank.SEVEN), Position.of(File.E, Rank.SIX));
         chessBoard.move(Position.of(File.C, Rank.THREE), Position.of(File.D, Rank.FIVE));

@@ -1,6 +1,7 @@
 package utils;
 
 import domain.Player;
+import domain.chessgame.ChessBoard;
 import domain.piece.Bishop;
 import domain.piece.Blank;
 import domain.piece.King;
@@ -18,12 +19,12 @@ import java.util.Map;
 
 public class ChessBoardGenerator {
 
-    public static Map<Position, Piece> generate() {
+    public static ChessBoard generate() {
         Map<Position, Piece> board = new HashMap<>();
         createInitialize(board);
         createTeamBoard(board, Player.BLACK);
         createTeamBoard(board, Player.WHITE);
-        return board;
+        return new ChessBoard(board);
     }
 
     private static void createInitialize(Map<Position, Piece> board) {
