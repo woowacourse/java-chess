@@ -51,24 +51,22 @@ public class ChessGame {
         validateInitBoard();
         validateEndChessBoard();
         if (gameCommand.isSameCommandType(CommandType.STATUS)) {
-            printStatusByColor(Color.WHITE);
-            printStatusByColor(Color.BLACK);
+            printStatus();
             return;
         }
         doMovementByTurn(gameCommand);
+    }
+
+    private void validateInitBoard() {
+        if (chessBoard == null) {
+            throw new IllegalStateException("체스판이 초기화되지 않았습니다.");
+        }
     }
 
     private void validateEndChessBoard() {
         if (turn == Color.EMPTY) {
             throw new IllegalArgumentException("현재 판이 종료되서 더 이상 진행할 수 없습니다.");
         }
-    }
-
-    private void printStatusByColor(Color color) {
-        List<List<Piece>> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
-        ScoreCalculator calculator = ScoreCalculator.getInstance();
-        double score = calculator.calculateColumns(piecesOnColumns);
-        ResultView.printStatus(color, score);
     }
 
     private void initChessBoard() {
@@ -78,10 +76,16 @@ public class ChessGame {
         ResultView.printChessBoard(chessBoard.getPieces());
     }
 
-    private void validateInitBoard() {
-        if (chessBoard == null) {
-            throw new IllegalStateException("체스판이 초기화되지 않았습니다.");
-        }
+    private void printStatus() {
+        printStatusByColor(Color.WHITE);
+        printStatusByColor(Color.BLACK);
+    }
+
+    private void printStatusByColor(Color color) {
+        List<List<Piece>> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
+        ScoreCalculator calculator = ScoreCalculator.getInstance();
+        double score = calculator.calculateColumns(piecesOnColumns);
+        ResultView.printStatus(color, score);
     }
 
     private void doMovementByTurn(GameCommand gameCommand) {
