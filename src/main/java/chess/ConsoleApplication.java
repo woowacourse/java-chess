@@ -35,7 +35,8 @@ public class ConsoleApplication {
         }
         if (command.isType(Type.END)) {
             controller.end();
-            printResultIfGameIsFinished(controller, outputView);        }
+            printResultIfGameIsFinished(controller, outputView);
+        }
     }
 
     private static void printResultIfGameIsFinished(Controller controller, OutputView outputView) {
