@@ -7,7 +7,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 
 import chess.domain.Board;
-import chess.domain.Status;
+import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Rank;
@@ -53,8 +53,8 @@ public class OutputView {
         return result;
     }
 
-    public static void showScore(Status status, Color color) {
-        System.out.printf(RESULT_FORMAT, color.getName(), status.calculateScore(color));
+    public static void showScore(GameResult gameResult, Color color) {
+        System.out.printf(RESULT_FORMAT, color.getName(), gameResult.calculateScore(color));
     }
 
     public static void printMessage(String message) {
