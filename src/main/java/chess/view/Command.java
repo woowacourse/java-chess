@@ -21,4 +21,12 @@ public enum Command {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다."));
     }
+
+    public boolean isNotStartType() {
+        return this == MOVE;
+    }
+
+    public boolean isNotProgressType() {
+        return this == START;
+    }
 }
