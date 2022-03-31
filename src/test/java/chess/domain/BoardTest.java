@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.File;
+import chess.domain.board.Location;
 import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -15,6 +16,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.view.OutputView;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,4 +78,16 @@ public class BoardTest {
         Board board = new Board();
         assertThat(board.computeTotalScore(WHITE)).isEqualTo(38);
     }
+
+    @Test
+    @DisplayName("폰이 겹쳐있을 때 점수 계산하는 로직 확인")
+    void getScoreWithDuplicatePawn() {
+        Board board = new Board();
+        board.move(Location.of("a2"), Location.of("b3"));
+        board.move(Location.of("c2"), Location.of("b4"));
+        OutputView.printChessBoard(board);
+        assertThat(board.computeTotalScore(WHITE)).isEqualTo(36.5);
+    }
+
+
 }
