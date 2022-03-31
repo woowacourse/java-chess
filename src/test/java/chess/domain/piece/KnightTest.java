@@ -17,20 +17,20 @@ class KnightTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
 
-    @DisplayName("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동 가능")
+    @DisplayName("나이트가 이동할 수 있는 범위로 이동")
     @ParameterizedTest
     @ValueSource(strings = {"c6", "d7", "f7", "g6", "g4", "f3", "d3", "c4"})
-    void isKnightMoving(String to) {
+    void checkMovingRange(String to) {
         Piece knight = new Knight(Color.WHITE);
 
         assertThatCode(() -> knight.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("나이트 이동 범위를 벗어날 경우 예외 발생")
+    @DisplayName("나이트가 이동할 수 없는 범위로 이동 시 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"e6", "h5"})
-    void invalidMove(String to) {
+    void checkMovingRangeException(String to) {
         Piece knight = new Knight(Color.WHITE);
 
         assertThatThrownBy(() -> knight.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))

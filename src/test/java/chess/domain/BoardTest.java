@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -57,7 +58,7 @@ public class BoardTest {
                 .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
     }
 
-    @DisplayName("비숍 이동 경로에 기물이 있을 경우 예외발생")
+    @DisplayName("비숍의 이동 경로에 기물이 있을 경우 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"b8", "h8", "a1", "h2"})
     void bishopMoveException(String to) {
@@ -110,7 +111,7 @@ public class BoardTest {
         return new Board(() -> pieceExistBoard);
     }
 
-    @DisplayName("룩 이동거리 사이에 기물이 있는 경우 예외")
+    @DisplayName("룩의 이동 경로에 다른 기물이 있는 경우 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"e5", "c5", "c3", "e3"})
     void rookMoveException() {
@@ -129,6 +130,16 @@ public class BoardTest {
         pieceExistBoard.put(Position.from("a2"), rook);
 
         return new Board(() -> pieceExistBoard);
+    }
+
+    @DisplayName("나이트는 이동 경로에 다른 기물이 있어도 이동 가능")
+    @ParameterizedTest
+    @ValueSource(strings = {"a3", "c3"})
+    void knightMove(String to) {
+        Board board = new Board(new BoardInitializer());
+
+        assertThatCode(() -> board.move(Position.from("b1"), Position.from(to)))
+                .doesNotThrowAnyException();
     }
 
     @Test

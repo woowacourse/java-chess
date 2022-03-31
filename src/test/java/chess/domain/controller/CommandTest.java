@@ -43,42 +43,21 @@ class CommandTest {
                 .hasMessage("게임을 시작해주세요.");
     }
 
-    @Test
-    @DisplayName("move 명령어 입력 시 위치 입력을 안할 경우 예외 처리")
-    void onlyMoveCommandException() {
+    @DisplayName("move 명령어 입력 시 입력 형식에 맞지 않을 경우 예외 처리")
+    @ParameterizedTest
+    @ValueSource(strings = {"move", "move a1", "move a1 a2 a3"})
+    void onlyMoveCommandException(String invalidCommand) {
         ChessGame chessGame = new ChessGame();
         Command.execute("start", chessGame);
 
-        assertThatThrownBy(() -> Command.execute("move", chessGame))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("'move source위치 target위치' 의 형식으로 입력해주세요.");
-    }
-
-    @Test
-    @DisplayName("move 명령어 입력 시 출발 위치만 입력할 경우 예외 처리")
-    void onlyStartPositionException() {
-        ChessGame chessGame = new ChessGame();
-        Command.execute("start", chessGame);
-
-        assertThatThrownBy(() -> Command.execute("move a1", chessGame))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("'move source위치 target위치' 의 형식으로 입력해주세요.");
-    }
-
-    @Test
-    @DisplayName("move 명령어 입력 시 두 개 이상의 위치값을 입력할 경우 예외 처리")
-    void hasThreePositionException() {
-        ChessGame chessGame = new ChessGame();
-        Command.execute("start", chessGame);
-
-        assertThatThrownBy(() -> Command.execute("move a1 a2 a3", chessGame))
+        assertThatThrownBy(() -> Command.execute(invalidCommand, chessGame))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("'move source위치 target위치' 의 형식으로 입력해주세요.");
     }
 
     @Test
     @DisplayName("게임 시작 전 status 명령어 입력 시 예외 처리")
-    void beforeEndStatus() {
+    void beforeEndStatusException() {
         ChessGame chessGame = new ChessGame();
 
         assertThatThrownBy(() -> Command.execute("status", chessGame))

@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
 import chess.domain.position.Position;
 import chess.view.Output;
 import org.junit.jupiter.api.DisplayName;

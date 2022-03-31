@@ -17,10 +17,10 @@ public class QueenTest {
 
     private static final Board emptyBoard = new Board(HashMap::new);
 
-    @DisplayName("퀸은 상하좌우 대각선 방향으로 이동 가능")
+    @DisplayName("퀸이 이동할 수 있는 범위로 이동")
     @ParameterizedTest
     @ValueSource(strings = {"e7", "g5", "e3", "c5", "c7", "g7", "g3", "c3"})
-    void move(String to) {
+    void checkMovingRange(String to) {
         Piece queen = new Queen(Color.WHITE);
 
         assertThatCode(() -> queen.checkMovingRange(emptyBoard, Position.from("e5"), Position.from(to)))
@@ -28,8 +28,8 @@ public class QueenTest {
     }
 
     @Test
-    @DisplayName("퀸의 도착지가 상하좌우 대각선 방향이 아닌 경우 예외 발생")
-    void invalidMove() {
+    @DisplayName("퀸이 이동할 수 없는 범위로 이동 시 예외 발생")
+    void checkMovingRangeException() {
         Piece queen = new Queen(Color.WHITE);
 
         assertThatThrownBy(() -> queen.checkMovingRange(emptyBoard, Position.from("e5"), Position.from("f7")))
