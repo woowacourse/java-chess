@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 
 public final class Blank extends Piece {
 
-	private static final String CAN_NOT_MOVE_ERROR = "해당 클래스는 이동이 불가능 합니다.";
+	private static final String CAN_NOT_MOVE_ERROR = "해당 위치에 기물이 없어 움직일 수 없습니다.";
 	private static final int BLANK_SCORE = 0;
 
 	public Blank() {

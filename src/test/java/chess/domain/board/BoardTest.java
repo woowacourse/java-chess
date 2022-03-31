@@ -55,7 +55,7 @@ class BoardTest {
 
 		assertThatThrownBy(() -> board.move(Position.of(4, 4), Position.of(5, 5)))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("해당 위치에 기물이 없습니다.");
+				.hasMessageContaining("해당 위치에 기물이 없어 움직일 수 없습니다.");
 	}
 
 	@Test

@@ -16,7 +16,7 @@ class BlankTest {
 
 		assertThatThrownBy(() -> blank.validateMovement(source, target, new Blank()))
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("해당 클래스는 이동이 불가능 합니다.");
+				.hasMessageContaining("해당 위치에 기물이 없어 움직일 수 없습니다.");
 	}
 
 	@Test

@@ -18,11 +18,11 @@ public class Position {
 
 	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
 
-	private final int row;
-	private final int column;
-
 	private static final Map<Integer, Map<Integer, Position>> cachedPositions = new HashMap<>();
 
+	private final int row;
+	private final int column;
+	
 	private Position(final int row, final int column) {
 		validateRange(row, column);
 		this.row = row;

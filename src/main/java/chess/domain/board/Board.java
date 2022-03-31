@@ -16,7 +16,6 @@ import java.util.stream.IntStream;
 public class Board {
 
 	private static final String BLOCK_ERROR = "다른 기물에 막혀 해당 위치로 기물을 옮길 수 없습니다.";
-	private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
 
 	private final Map<Position, Piece> board;
 
@@ -40,7 +39,6 @@ public class Board {
 	}
 
 	private void validateMove(final Position source, final Position target, final Piece piece) {
-		validateBlank(piece);
 		piece.validateMovement(source, target, board.get(target));
 		validateBlocking(source, target, piece);
 	}
@@ -58,12 +56,6 @@ public class Board {
 	private void checkBlocking(final Position target, final Position checkPosition, final Piece currentPiece) {
 		if (checkPosition != target && !currentPiece.isBlank()) {
 			throw new IllegalArgumentException(BLOCK_ERROR);
-		}
-	}
-
-	private void validateBlank(final Piece piece) {
-		if (piece.isBlank()) {
-			throw new IllegalArgumentException(BLANK_ERROR);
 		}
 	}
 
