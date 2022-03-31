@@ -28,37 +28,35 @@ public class RunningTest {
     @DisplayName("게임이 시작되고 체스보드를 다시 초기화하려고 하면, 예외가 발생한다")
     void initBoardException() {
         assertThatThrownBy(() -> state.initBoard())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 게임 도중에 보드를 초기화할 수 없습니다");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 게임 도중에 보드를 초기화할 수 없습니다");
     }
 
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히지 않았다면 Running 상태에 머무른다")
     void movePiece() {
         state.movePiece(Position.valueOf(File.A, Rank.TWO),
-            Position.valueOf(File.A, Rank.THREE));
+                Position.valueOf(File.A, Rank.THREE));
         assertThat(state).isInstanceOf(Running.class);
     }
 
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히면 End 상태로 변환된다")
     void movePieceAndKingKill() {
-        ChessGame newState = state.movePiece(Position.valueOf(File.E, Rank.SEVEN),
-                Position.valueOf(File.E, Rank.FIVE))
-            .movePiece(Position.valueOf(File.D, Rank.TWO),
-                Position.valueOf(File.D, Rank.FOUR))
-            .movePiece(Position.valueOf(File.E, Rank.FIVE),
-                Position.valueOf(File.D, Rank.FOUR))
-            .movePiece(Position.valueOf(File.D, Rank.ONE),
-                Position.valueOf(File.D, Rank.THREE))
-            .movePiece(Position.valueOf(File.A, Rank.SEVEN),
-                Position.valueOf(File.A, Rank.SIX))
-            .movePiece(Position.valueOf(File.D, Rank.THREE),
-                Position.valueOf(File.E, Rank.THREE))
-            .movePiece(Position.valueOf(File.A, Rank.SIX),
-                Position.valueOf(File.A, Rank.FIVE))
-            .movePiece(Position.valueOf(File.E, Rank.THREE),
-                Position.valueOf(File.E, Rank.EIGHT));
+        ChessGame newState = state.movePiece(Position.valueOf(File.D, Rank.TWO),
+                        Position.valueOf(File.D, Rank.FOUR))
+                .movePiece(Position.valueOf(File.E, Rank.SEVEN),
+                        Position.valueOf(File.E, Rank.FIVE))
+                .movePiece(Position.valueOf(File.D, Rank.ONE),
+                        Position.valueOf(File.D, Rank.THREE))
+                .movePiece(Position.valueOf(File.E, Rank.FIVE),
+                        Position.valueOf(File.D, Rank.FOUR))
+                .movePiece(Position.valueOf(File.D, Rank.THREE),
+                        Position.valueOf(File.E, Rank.THREE))
+                .movePiece(Position.valueOf(File.A, Rank.SEVEN),
+                        Position.valueOf(File.A, Rank.SIX))
+                .movePiece(Position.valueOf(File.E, Rank.THREE),
+                        Position.valueOf(File.E, Rank.EIGHT));
         assertThat(newState).isInstanceOf(End.class);
     }
 
@@ -86,7 +84,7 @@ public class RunningTest {
     @DisplayName("King이 잡히지 않은 상황에서, 승자를 판정하려고 하면 예외가 발생한다")
     void judgeWinner() {
         assertThatThrownBy(() -> state.judgeWinner())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 킹이 잡혀야 게임의 승패가 결정됩니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 킹이 잡혀야 게임의 승패가 결정됩니다.");
     }
 }
