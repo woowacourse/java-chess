@@ -32,18 +32,20 @@ public enum Command {
     }
 
     public static Position findFromPosition(final String input) {
-        final String[] splitText = input.split(SPLIT_DELIMITER);
-        if (splitText.length != SPLIT_TEXT_LENGTH) {
-            throw new IllegalArgumentException(MOVE_COMMAND_FORMAT_ERROR);
-        }
+        final String[] splitText = splitText(input);
         return Position.from(splitText[FROM_POSITION_INDEX]);
     }
 
     public static Position findToPosition(final String input) {
+        final String[] splitText = splitText(input);
+        return Position.from(splitText[TO_POSITION_INDEX]);
+    }
+
+    private static String[] splitText(final String input) {
         final String[] splitText = input.split(SPLIT_DELIMITER);
         if (splitText.length != SPLIT_TEXT_LENGTH) {
             throw new IllegalArgumentException(MOVE_COMMAND_FORMAT_ERROR);
         }
-        return Position.from(splitText[TO_POSITION_INDEX]);
+        return splitText;
     }
 }
