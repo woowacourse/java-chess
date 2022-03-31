@@ -24,8 +24,8 @@ class PositionTest {
     @DisplayName("Position 객체 정상 생성 테스트")
     void createPosition() {
         // given
-        Position position1 = Position.of("b1");
-        Position position2 = Position.of("B1");
+        Position position1 = Position.from("b1");
+        Position position2 = Position.from("B1");
 
         // when & then
         assertThat(position1).isEqualTo(position2);
@@ -34,7 +34,7 @@ class PositionTest {
     @Test
     @DisplayName("범위 밖 Position 생성 시도 시, UOE 발생")
     void creatingPositionWithOutOfRangeShouldFail() {
-        assertThatThrownBy(() -> Position.of("A10"))
+        assertThatThrownBy(() -> Position.from("A10"))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("유효하지 않은 범위입니다.");
     }
@@ -43,8 +43,8 @@ class PositionTest {
     @DisplayName("Position 거리 계산 테스트")
     void calculatePositionDistance() {
         // given
-        Position position1 = Position.of("b1");
-        Position position2 = Position.of("c3");
+        Position position1 = Position.from("b1");
+        Position position2 = Position.from("c3");
 
         // when
         List<Integer> distance = position1.calculateDistance(position2);

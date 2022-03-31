@@ -19,7 +19,7 @@ public class Position {
         this.file = file;
     }
 
-    public static Position of(String input) {
+    public static Position from(String input) {
         return new Position(
                 Rank.of(input.substring(START_INDEX_FOR_COLUMN)),
                 File.from(input.substring(FROM_FOR_ROW, TO_FOR_ROW)));

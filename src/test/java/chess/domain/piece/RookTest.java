@@ -21,7 +21,7 @@ class RookTest {
     void rookMove(String to) {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("f5"), new Rook(Color.WHITE));
+        testBoard.put(Position.from("f5"), new Rook(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -38,9 +38,9 @@ class RookTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         Stream.of("F1", "F8", "A5", "H5")
-                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.WHITE)));
+                .forEach(position -> testBoard.put(Position.from(position), new Pawn(Color.WHITE)));
 
-        testBoard.put(Position.of("F5"), new Rook(Color.WHITE));
+        testBoard.put(Position.from("F5"), new Rook(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -57,9 +57,9 @@ class RookTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         Stream.of("E6", "E2", "B4", "G4")
-                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
+                .forEach(position -> testBoard.put(Position.from(position), new Pawn(Color.BLACK)));
 
-        testBoard.put(Position.of("E4"), new Rook(Color.WHITE));
+        testBoard.put(Position.from("E4"), new Rook(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when

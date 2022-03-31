@@ -21,7 +21,7 @@ class KingTest {
     void rookMove(String to) {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("D5"), new King(Color.WHITE));
+        testBoard.put(Position.from("D5"), new King(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -38,9 +38,9 @@ class KingTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         Stream.of("D6", "E6", "E5", "E4", "D4", "C4", "C5", "C6")
-                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.WHITE)));
+                .forEach(position -> testBoard.put(Position.from(position), new Pawn(Color.WHITE)));
 
-        testBoard.put(Position.of("D5"), new King(Color.WHITE));
+        testBoard.put(Position.from("D5"), new King(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when

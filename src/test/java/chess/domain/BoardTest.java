@@ -36,8 +36,8 @@ class BoardTest {
     void calculateScore() {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("D5"), new Rook(Color.WHITE));
-        testBoard.put(Position.of("F5"), new Rook(Color.BLACK));
+        testBoard.put(Position.from("D5"), new Rook(Color.WHITE));
+        testBoard.put(Position.from("F5"), new Rook(Color.BLACK));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -55,11 +55,11 @@ class BoardTest {
     void calculatePawnsOnTheSameFile() {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("D5"), new Pawn(Color.WHITE));
-        testBoard.put(Position.of("D3"), new Pawn(Color.WHITE));
-        testBoard.put(Position.of("D4"), new Pawn(Color.WHITE));
-        testBoard.put(Position.of("F5"), new Pawn(Color.WHITE));
-        testBoard.put(Position.of("F6"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("D5"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("D3"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("D4"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("F5"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("F6"), new Pawn(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when

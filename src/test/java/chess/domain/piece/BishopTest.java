@@ -21,7 +21,7 @@ class BishopTest {
     void rookMove(String to) {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
+        testBoard.put(Position.from("E4"), new Bishop(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -38,9 +38,9 @@ class BishopTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         Stream.of("A8", "B1", "H1", "H7")
-                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.WHITE)));
+                .forEach(position -> testBoard.put(Position.from(position), new Pawn(Color.WHITE)));
 
-        testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
+        testBoard.put(Position.from("E4"), new Bishop(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
@@ -57,9 +57,9 @@ class BishopTest {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
         Stream.of("C6", "D3", "F3", "F5")
-                .forEach(position -> testBoard.put(Position.of(position), new Pawn(Color.BLACK)));
+                .forEach(position -> testBoard.put(Position.from(position), new Pawn(Color.BLACK)));
 
-        testBoard.put(Position.of("E4"), new Bishop(Color.WHITE));
+        testBoard.put(Position.from("E4"), new Bishop(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when

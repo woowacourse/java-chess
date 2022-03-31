@@ -34,8 +34,8 @@ class PawnTest {
     void pawnMoveShouldFailCausedBySameColoredPiece() {
         // given
         Map<Position, Piece> testBoard = new LinkedHashMap<>();
-        testBoard.put(Position.of("F6"), new Rook(Color.WHITE));
-        testBoard.put(Position.of("F5"), new Pawn(Color.WHITE));
+        testBoard.put(Position.from("F6"), new Rook(Color.WHITE));
+        testBoard.put(Position.from("F5"), new Pawn(Color.WHITE));
         Board board = BoardFactory.newInstance(testBoard);
 
         // when
