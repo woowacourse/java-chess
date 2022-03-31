@@ -15,7 +15,7 @@ public final class Ready implements ChessGame {
 
     @Override
     public ChessGame initBoard() {
-        return new Running(BoardFactory.getInitialPieces());
+        return new WhiteTurn(BoardFactory.getInitialPieces());
     }
 
     @Override
