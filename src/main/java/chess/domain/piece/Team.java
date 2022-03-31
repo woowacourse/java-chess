@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum Color {
+public enum Team {
 
     BLACK("흑"),
     WHITE("백"),
@@ -8,11 +8,11 @@ public enum Color {
 
     private final String value;
 
-    Color(String value) {
+    Team(String value) {
         this.value = value;
     }
 
-    public Color oppositeColor() {
+    public Team oppositeTeam() {
         if (this == NONE) {
             throw new IllegalStateException("[ERROR] 상대팀이 없습니다.");
         }

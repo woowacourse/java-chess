@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class BishopTest {
 
-    Bishop bishop = new Bishop(Color.BLACK);
+    Bishop bishop = new Bishop(Team.BLACK);
 
     @Test
     @DisplayName("Blank 인지 확인")

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class QueenTest {
 
-    Queen queen = new Queen(Color.WHITE);
+    Queen queen = new Queen(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

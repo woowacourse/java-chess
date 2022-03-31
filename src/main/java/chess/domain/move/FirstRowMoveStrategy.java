@@ -1,13 +1,13 @@
 package chess.domain.move;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 
 public abstract class FirstRowMoveStrategy implements MoveStrategy {
 
-    protected boolean isMovableToTarget(Piece targetPiece, Color sourceColor) {
+    protected boolean isMovableToTarget(Piece targetPiece, Team sourceTeam) {
         if (!targetPiece.isBlank()) {
-            return targetPiece.getColor() == sourceColor.oppositeColor();
+            return targetPiece.getColor() == sourceTeam.oppositeTeam();
         }
         return true;
     }

@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -36,7 +36,7 @@ public enum PieceSymbol {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 Piece 입니다."))
                 .symbol;
-        if (piece.getColor() == Color.BLACK) {
+        if (piece.getColor() == Team.BLACK) {
             return symbol.toUpperCase();
         }
         return symbol;

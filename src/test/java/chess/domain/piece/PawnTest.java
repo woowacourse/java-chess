@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class PawnTest {
 
-    Pawn pawn = new Pawn(Color.WHITE);
+    Pawn pawn = new Pawn(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

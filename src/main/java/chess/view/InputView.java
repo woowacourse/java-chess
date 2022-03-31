@@ -13,29 +13,22 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static boolean inputInitialCommand() {
-        String input = scanner.nextLine().toLowerCase(Locale.ROOT);
+    public static String inputCommandForStart() {
+        String input = scanner.nextLine().toLowerCase();
         Command initialCommand = Command.of(input);
-        validateInitialCommand(initialCommand);
-        return initialCommand == Command.START;
+        return initialCommand.getValue();
     }
 
-    private static void validateInitialCommand(final Command command) {
-        if (command == Command.MOVE) {
-            throw new IllegalArgumentException("[ERROR] 게임이 아직 시작되지 않았습니다.");
-        }
-    }
-
-    public static List<String> inputProgressCommand() {
+    public static List<String> inputCommandForProgressGame() {
         final List<String> input = Arrays.stream(scanner.nextLine().split(DELIMITER))
                 .map(value -> value.toLowerCase(Locale.ROOT))
                 .collect(toList());
         Command progressCommand = Command.of(input.get(0));
-        validateInvalidInput(progressCommand);
+        validateCommandForProgressGame(progressCommand);
         return input;
     }
 
-    private static void validateInvalidInput(final Command command) {
+    private static void validateCommandForProgressGame(final Command command) {
         if (command == Command.START) {
             throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
         }

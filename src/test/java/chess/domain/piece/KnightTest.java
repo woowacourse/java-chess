@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class KnightTest {
 
-    Knight knight = new Knight(Color.WHITE);
+    Knight knight = new Knight(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

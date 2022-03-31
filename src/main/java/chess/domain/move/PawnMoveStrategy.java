@@ -2,7 +2,7 @@ package chess.domain.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 
 public abstract class PawnMoveStrategy implements MoveStrategy {
@@ -20,22 +20,22 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
     protected boolean isStartMove(final Board board,
                                   final Position source,
                                   final Piece targetPiece,
-                                  final Color color) {
-        if (!source.isPawnStartPosition(color)) {
+                                  final Team team) {
+        if (!source.isPawnStartPosition(team)) {
             return false;
         }
-        Position forwardPosition = source.move(Distance.NOT_MOVE, findForwardDirection(color));
+        Position forwardPosition = source.move(Distance.NOT_MOVE, findForwardDirection(team));
         return board.getPiece(forwardPosition).isBlank() && targetPiece.isBlank();
     }
 
-    private int findForwardDirection(final Color color) {
-        if (color == Color.BLACK) {
+    private int findForwardDirection(final Team team) {
+        if (team == Team.BLACK) {
             return FORWARD_UNIT_BLACK;
         }
         return FORWARD_UNIT_WHITE;
     }
 
-    protected boolean isCatchable(final Piece targetPiece, final Color color) {
-        return !targetPiece.isBlank() && targetPiece.getColor() == color.oppositeColor();
+    protected boolean isCatchable(final Piece targetPiece, final Team team) {
+        return !targetPiece.isBlank() && targetPiece.getColor() == team.oppositeTeam();
     }
 }

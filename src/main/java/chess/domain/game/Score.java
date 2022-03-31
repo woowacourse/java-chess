@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.EnumMap;
@@ -15,44 +15,44 @@ public class Score {
 
     private final double whiteScore;
     private final double blackScore;
-    private final Color winColor;
+    private final Team winTeam;
 
     public Score(final Map<Position, Piece> board) {
-        this.whiteScore = calculateScore(board, Color.WHITE);
-        this.blackScore = calculateScore(board, Color.BLACK);
+        this.whiteScore = calculateScore(board, Team.WHITE);
+        this.blackScore = calculateScore(board, Team.BLACK);
         if (whiteScore > blackScore) {
-            this.winColor = Color.WHITE;
+            this.winTeam = Team.WHITE;
             return;
         }
-        this.winColor = Color.BLACK;
+        this.winTeam = Team.BLACK;
     }
 
-    public double calculateScore(final Map<Position, Piece> board, final Color color) {
-        return calculateFirstLinePieces(board, color) + calculatePawn(board, color);
+    public double calculateScore(final Map<Position, Piece> board, final Team team) {
+        return calculateFirstLinePieces(board, team) + calculatePawn(board, team);
     }
 
-    private double calculateFirstLinePieces(final Map<Position, Piece> board, final Color color) {
+    private double calculateFirstLinePieces(final Map<Position, Piece> board, final Team team) {
         return board.values().stream()
-                .filter(piece -> piece.getColor() == color)
+                .filter(piece -> piece.getColor() == team)
                 .filter(piece -> !piece.isPawn())
                 .mapToDouble(Piece::getPoint)
                 .sum();
     }
 
-    private double calculatePawn(final Map<Position, Piece> board, final Color color) {
+    private double calculatePawn(final Map<Position, Piece> board, final Team team) {
         Map<Column, Integer> pawnCount = new EnumMap<>(Column.class);
         for (final Entry<Position, Piece> boardEntry : board.entrySet()) {
-            putPawnCount(color, pawnCount, boardEntry);
+            putPawnCount(team, pawnCount, boardEntry);
         }
         return pawnCount.values().stream()
                 .mapToDouble(this::adjustPawnPoint)
                 .sum();
     }
 
-    private void putPawnCount(final Color color, final Map<Column, Integer> pawnCount,
+    private void putPawnCount(final Team team, final Map<Column, Integer> pawnCount,
                               final Entry<Position, Piece> boardEntry) {
         Piece piece = boardEntry.getValue();
-        if (piece.isPawn() && piece.getColor() == color) {
+        if (piece.isPawn() && piece.getColor() == team) {
             Column column = boardEntry.getKey().getColumn();
             pawnCount.put(column, pawnCount.getOrDefault(column, 0) + PAWN_COUNT);
         }
@@ -73,7 +73,7 @@ public class Score {
         return blackScore;
     }
 
-    public Color getWinColor() {
-        return winColor;
+    public Team getWinColor() {
+        return winTeam;
     }
 }

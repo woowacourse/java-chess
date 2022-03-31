@@ -1,20 +1,20 @@
 package chess.domain.game;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 
 public class Turn {
 
-    private Color color;
+    private Team team;
 
     public Turn() {
-        this.color = Color.WHITE;
+        this.team = Team.WHITE;
     }
 
     public void nextTurn() {
-        color = color.oppositeColor();
+        team = team.oppositeTeam();
     }
 
-    public boolean isRightTurn(final Color color) {
-        return this.color == color;
+    public boolean isRightTurn(final Team team) {
+        return this.team == team;
     }
 }

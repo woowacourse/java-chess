@@ -6,7 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class ScoreTest {
     void getWinColor_WhenBlackWin() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), catchPieces);
 
-        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Color.BLACK);
+        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Team.BLACK);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class ScoreTest {
     void getWinColor_WhenWhiteWin() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
 
-        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Color.WHITE);
+        assertThat(new Score(board.getBoard()).getWinColor()).isEqualTo(Team.WHITE);
     }
 }

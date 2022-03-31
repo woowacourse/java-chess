@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class RookTest {
 
-    Rook rook = new Rook(Color.WHITE);
+    Rook rook = new Rook(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

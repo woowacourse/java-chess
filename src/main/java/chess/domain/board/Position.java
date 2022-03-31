@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static java.util.stream.Collectors.toMap;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +50,11 @@ public class Position implements Comparable<Position> {
         return this.row.subtract(position.row);
     }
 
-    public boolean isPawnStartPosition(final Color color) {
-        if (color == Color.BLACK && row == Row.SEVEN) {
+    public boolean isPawnStartPosition(final Team team) {
+        if (team == Team.BLACK && row == Row.SEVEN) {
             return true;
         }
-        return color == Color.WHITE && row == Row.TWO;
+        return team == Team.WHITE && row == Row.TWO;
     }
 
     public Position move(int horizon, int vertical) {

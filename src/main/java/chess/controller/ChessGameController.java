@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
@@ -13,13 +12,14 @@ public class ChessGameController {
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
+    private static final String START_COMMAND_MESSAGE = "start";
     private static final String END_COMMAND_MESSAGE = "end";
     private static final String MOVE_COMMAND_MESSAGE = "move";
     private static final String STATUS_COMMAND_MESSAGE = "status";
 
     public void run() {
         OutputView.printStartGame();
-        if (InputView.inputInitialCommand()) {
+        if (InputView.inputCommandForStart() == START_COMMAND_MESSAGE) {
             ChessGame chessGame = new ChessGame(BoardFactory.createChessBoard());
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
@@ -35,7 +35,7 @@ public class ChessGameController {
 
     private void progressChessGame(final ChessGame chessGame) {
         while (chessGame.isOn()) {
-            List<String> inputs = InputView.inputProgressCommand();
+            List<String> inputs = InputView.inputCommandForProgressGame();
             String commandMessage = inputs.get(COMMAND_INDEX);
             move(chessGame, inputs, commandMessage);
             showStatus(chessGame, commandMessage);

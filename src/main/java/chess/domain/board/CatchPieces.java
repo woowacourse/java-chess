@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class CatchPieces {
         if (piece.isBlank()) {
             return;
         }
-        if (piece.getColor() == Color.BLACK) {
+        if (piece.getColor() == Team.BLACK) {
             blackPieces.add(piece);
         }
         whitePieces.add(piece);

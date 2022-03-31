@@ -7,8 +7,8 @@ public final class Queen extends ValidPiece {
 
     private static final double POINT = 9;
 
-    public Queen(final Color color) {
-        super(color, POINT);
+    public Queen(final Team team) {
+        super(team, POINT);
     }
 
     @Override
