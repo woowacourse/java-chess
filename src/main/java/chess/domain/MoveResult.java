@@ -21,4 +21,8 @@ public class MoveResult {
     public Map<Position, ChessPiece> getPieceByPosition() {
         return pieceByPosition;
     }
+
+    public Score calculateScore() {
+        return new Score(pieceByPosition);
+    }
 }
