@@ -10,33 +10,27 @@ import chess.view.OutputView;
 
 public class Chess {
 
-    private final Board board;
-    private final CommandChain commandChain;
-
-    public Chess(final Board board) {
-        this.board = board;
-        commandChain = new Start();
-    }
-
-    public void run() {
+    public void run(final Board board) {
         OutputView.printStartMessage();
         while (!board.isEnd()) {
-            repeatTurn();
+            repeatTurn(board);
         }
         OutputView.printStatus(new Status(board));
     }
 
-    private void repeatTurn() {
+    private void repeatTurn(final Board board) {
         try {
-            operateOnce();
+            operateOnce(board);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            repeatTurn();
+            repeatTurn(board);
         }
     }
 
-    private void operateOnce() {
+    private void operateOnce(final Board board) {
+        final CommandChain commandChain = new Start();
         commandChain.doCommandAction(new ParsedCommand(InputView.input()), board);
     }
+
 
 }

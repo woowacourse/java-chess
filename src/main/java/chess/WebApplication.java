@@ -15,8 +15,8 @@ public class WebApplication {
         // });
 
         final Map<Position, Piece> pieces = (new CreateCompleteBoardStrategy()).createPieces();
-        Chess chess = new Chess(new Board(pieces));
-        chess.run();
+        Chess chess = new Chess();
+        chess.run(new Board(pieces));
     }
 
     // private static String render(Map<String, Object> model, String templatePath) {
