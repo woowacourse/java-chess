@@ -71,7 +71,7 @@ public class Board {
         if (sourcePiece.isSameTeam(targetPiece)) {
             return true;
         }
-        List<Position> positions = sourcePiece.getIntervalPosition(targetPiece);
+        List<Position> positions = sourcePiece.getIntervalPosition(source, target);
         return positions.stream()
                 .anyMatch(position -> !pieces.findByPosition(position).equals(new Empty(position)));
     }

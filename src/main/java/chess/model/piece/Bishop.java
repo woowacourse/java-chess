@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Bishop extends Piece implements BishopMovable {
+public class Bishop extends Piece {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;
@@ -48,18 +48,5 @@ public class Bishop extends Piece implements BishopMovable {
         }
         positions.remove(target);
         return positions;
-    }
-
-    @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list);
-        if (position.isPositiveDiagonal(targetPiece.position)) {
-            return getPositiveDiagonal(list);
-        }
-        if (position.isNegativeDiagonal(targetPiece.position)) {
-            return getNegativeDiagonal(list);
-        }
-        throw new IllegalArgumentException("갈수없는 공간입니다.");
     }
 }

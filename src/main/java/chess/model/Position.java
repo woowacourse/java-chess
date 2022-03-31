@@ -26,35 +26,21 @@ public class Position {
 
     public static Position of(char... position) {
         String key = position[0] + String.valueOf(position[1]);
-        return CACHE_POSITION.get(key);
+        if (CACHE_POSITION.containsKey(key)) {
+            return CACHE_POSITION.get(key);
+        }
+        throw new IllegalArgumentException("유효하지 않은 위치입니다.");
     }
 
     public static Position from(String position) {
-        return CACHE_POSITION.get(position);
+        if (CACHE_POSITION.containsKey(position)) {
+            return CACHE_POSITION.get(position);
+        }
+        throw new IllegalArgumentException("유효하지 않은 위치입니다.");
     }
 
     public static Position of(File file, Rank rank) {
         return CACHE_POSITION.get(getKey(file, rank));
-    }
-
-    public boolean isHorizontal(Position position) {
-        return this.rank == position.rank;
-    }
-
-    public boolean isVertical(Position position) {
-        return this.file == position.file;
-    }
-
-    public boolean isDiagonal(Position position) {
-        return rank.absMinus(position.rank) == file.absMinus(position.file);
-    }
-
-    public boolean isPositiveDiagonal(Position position) {
-        return this.rank.minus(position.rank) == this.file.minus(position.file);
-    }
-
-    public boolean isNegativeDiagonal(Position position) {
-        return this.rank.minus(position.rank) == position.file.minus(this.file);
     }
 
     public boolean isOneStepAway(Position position) {

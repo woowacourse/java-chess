@@ -30,7 +30,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
+    public List<Position> getIntervalPosition(Position source, Position target) {
         throw new IllegalArgumentException("Empty 말은 움직일 수 없습니다.");
     }
 }

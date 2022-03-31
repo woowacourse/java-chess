@@ -34,7 +34,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
+    public List<Position> getIntervalPosition(Position source, Position target) {
         return Collections.emptyList();
     }
 }

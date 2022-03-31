@@ -36,23 +36,12 @@ public class King extends Piece {
         return WHITE_NAME;
     }
 
-    @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
+    public List<Position> getIntervalPosition(Position source, Position target) {
         return Collections.emptyList();
     }
 
     @Override
     public boolean isKing() {
         return true;
-    }
-
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isVertical(position) ||
-                this.position.isHorizontal(position) ||
-                this.position.isDiagonal(position);
-    }
-
-    private boolean isCorrectDistance(Position position) {
-        return this.position.isOneStepAway(position);
     }
 }

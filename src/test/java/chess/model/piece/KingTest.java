@@ -97,7 +97,7 @@ class KingTest {
     void getIntervalPositionTest() {
         Piece rook = new Rook(Position.of('h', '8'), Team.BLACK);
         Piece king = new King(Position.of('e', '8'), Team.BLACK);
-        List<Position> intervalPosition = king.getIntervalPosition(rook);
+        List<Position> intervalPosition = king.getIntervalPosition(Position.from("e8"), Position.from("h8"));
 
         assertThat(intervalPosition.isEmpty()).isTrue();
     }

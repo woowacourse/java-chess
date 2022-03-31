@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Rook extends Piece implements RookMovable {
+public class Rook extends Piece {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
     private static final double SCORE = 5D;
@@ -48,18 +48,5 @@ public class Rook extends Piece implements RookMovable {
         }
         positions.remove(target);
         return positions;
-    }
-
-    @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list);
-        if (position.isHorizontal(targetPiece.position)) {
-            return getHorizontalPositions(list);
-        }
-        if (position.isVertical(targetPiece.position)) {
-            return getVerticalPositions(list);
-        }
-        throw new IllegalArgumentException("갈수없는 공간입니다.");
     }
 }

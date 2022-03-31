@@ -123,7 +123,7 @@ class PawnTest {
     void getIntervalPositionTest() {
         Piece pawn = new Pawn(Position.of('a', '8'), Team.BLACK);
         Piece king = new King(Position.of('a', '6'), Team.BLACK);
-        List<Position> intervalPosition = pawn.getIntervalPosition(king);
+        List<Position> intervalPosition = pawn.getIntervalPosition(Position.from("a8"), Position.from("a6"));
 
         assertThat(intervalPosition.size()).isEqualTo(2);
     }

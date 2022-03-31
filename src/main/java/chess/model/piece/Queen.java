@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Queen extends Piece implements RookMovable, BishopMovable {
+public class Queen extends Piece {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;
@@ -25,7 +25,7 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-       return directions.contains(Direction.of(source, target));
+        return directions.contains(Direction.of(source, target));
     }
 
     @Override
@@ -48,24 +48,5 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
         }
         positions.remove(target);
         return positions;
-    }
-
-    @Override
-    public List<Position> getIntervalPosition(Piece targetPiece) {
-        List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
-        Collections.sort(list);
-        if (position.isHorizontal(targetPiece.position)) {
-            return getHorizontalPositions(list);
-        }
-        if (position.isVertical(targetPiece.position)) {
-            return getVerticalPositions(list);
-        }
-        if (position.isPositiveDiagonal(targetPiece.position)) {
-            return getPositiveDiagonal(list);
-        }
-        if (position.isNegativeDiagonal(targetPiece.position)) {
-            return getNegativeDiagonal(list);
-        }
-        throw new IllegalArgumentException("갈수없는 공간입니다.");
     }
 }
