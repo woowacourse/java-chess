@@ -1,6 +1,7 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,8 @@ public class BoardTest {
 	}
 
 	@Test
-	void move1() {
+    @DisplayName("정상적으로 move시 해당 칸에 체스 말이 있는지 확인")
+	void normal_move() {
 		Board board = Board.create();
 
 		Board newBoard = board.move("b1", "c3");

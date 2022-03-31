@@ -48,19 +48,23 @@ public enum InitialBoard {
 	public static Map<Coordinate, Piece> init() {
 		Map<Coordinate, Piece> map = new HashMap<>();
 		for (Row row : Row.values()) {
-			for (Column column : Column.values()) {
-				map.put(Coordinate.of(column, row), findPiece(column, row));
-			}
-		}
+            initPiece(map, row);
+        }
 		return map;
 	}
 
-	private static Piece findPiece(Column column, Row row) {
+    private static void initPiece(Map<Coordinate, Piece> map, Row row) {
+        for (Column column : Column.values()) {
+            map.put(Coordinate.of(column, row), findPiece(column, row));
+        }
+    }
+
+    private static Piece findPiece(Column column, Row row) {
 		return Arrays.stream(InitialBoard.values())
 			.filter(board -> board.columns.contains(column))
 			.filter(board -> board.rows.contains(row))
 			.findFirst()
 			.map(board -> board.piece)
-			.orElseThrow(() -> new IllegalArgumentException("찾을 수 없습니다."));
+			.orElseThrow(() -> new IllegalArgumentException("해당 위치의 말을 찾을 수 없습니다."));
 	}
 }
