@@ -8,6 +8,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Score {
@@ -19,7 +20,7 @@ public class Score {
 
     public Score(final Map<Position, Piece> board) {
         this.score = new EnumMap<>(Color.class);
-        this.board = board;
+        this.board = new HashMap<>(board);
         calculate();
     }
 
