@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
 
@@ -11,6 +12,8 @@ public class Bishop extends Piece implements BishopMovable {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;
+    private static final List<Direction> directions = Direction.diagonal();
+
 
     public Bishop(Position position, Team team) {
         super(position, team);
@@ -23,7 +26,7 @@ public class Bishop extends Piece implements BishopMovable {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.isDiagonal(target);
+        return directions.contains(Direction.of(source, target));
     }
 
     @Override

@@ -36,4 +36,8 @@ public enum Direction {
     public static List<Direction> linear() {
         return List.of(N, S, W, E);
     }
+
+    public static List<Direction> diagonal() {
+        return List.of(NW, NE, SW, SE);
+    }
 }
