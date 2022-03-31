@@ -4,7 +4,6 @@ import domain.Player;
 import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Piece;
-import domain.piece.PieceSymbol;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -35,25 +34,10 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
-        Piece sourcePiece = board.get(source);
-        sourcePiece.generateAvailablePosition(source);
         validateTargetPiece(source, target);
-        validatePawnAttack(sourcePiece, target);
+        validatePawnAttack(source, target);
         validateRoutePositions(source, target);
         movePiece(source, target);
-    }
-
-    private void validatePawnAttack(final Piece sourcePiece, final Position target) {
-        Piece targetPiece = board.get(target);
-        Direction moveDirection = sourcePiece.findDirection(target);
-        if (sourcePiece.isPawn() && isPawnAttackDirection(moveDirection) && targetPiece.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] Pawn은 상대편 말이 있을 경우에만 대각선으로 이동할 수 있습니다.");
-        }
-    }
-
-    private void validateRoutePositions(final Position source, final Position target) {
-        List<Position> positions = board.get(source).getAvailablePositions(source, target);
-        positions.forEach(this::validateNullPosition);
     }
 
     private void validateTargetPiece(final Position source, final Position target) {
@@ -62,6 +46,20 @@ public class ChessBoard {
         if (!targetPiece.isBlank() && sourcePiece.isSamePlayer(targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 같은 색 기물이 위치하여 이동할 수 없습니다.");
         }
+    }
+
+    private void validatePawnAttack(final Position source, final Position target) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+        if (sourcePiece.isPawn() && sourcePiece.move(source, target).size() == 0
+            && targetPiece.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] Pawn은 상대편 말이 있을 경우에만 대각선으로 이동할 수 있습니다.");
+        }
+    }
+
+    private void validateRoutePositions(final Position source, final Position target) {
+        List<Position> positions = board.get(source).move(source, target);
+        positions.forEach(this::validateNullPosition);
     }
 
     private void validateNullPosition(final Position position) {

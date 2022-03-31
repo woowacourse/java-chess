@@ -30,6 +30,33 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     @Override
+    public List<Position> move(final Position source, final Position target) {
+        Direction moveDirection = getDirections().stream()
+            .filter(direction -> calculateAvailablePosition(source, direction).contains(target))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
+        List<Position> positions = calculateAvailablePosition(source, moveDirection);
+        if (isMoveDirection(moveDirection)) {
+            validateMoveTwoSpace2(moveDirection, source);
+            return positions;
+        }
+        return positions.subList(0, positions.indexOf(target));
+    }
+
+    private boolean isMoveDirection(Direction direction) {
+        return direction == Direction.NORTH
+            || direction == Direction.SOUTH
+            || direction == Direction.NORTH_NORTH
+            || direction == Direction.SOUTH_SOUTH;
+    }
+
+    private void validateMoveTwoSpace2(Direction direction, final Position source) {
+        if (isTwoSpaceMoveDirection(direction) && !isFirstMove(source)) {
+            throw new IllegalArgumentException("[ERROR] Pawn은 처음 이동할 경우에만 2칸 이동이 가능합니다.");
+        }
+    }
+
+    @Override
     protected List<Position> calculateAvailablePosition(final Position source,
         final Direction direction) {
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
@@ -74,24 +101,6 @@ public class Pawn extends SpecificLocationPiece {
         return WHITE_DIRECTIONS;
     }
 
-    @Override
-    public List<Position> getAvailablePositions(final Position source, final Position target) {
-        Direction direction = findDirection(target);
-        List<Position> positions = getAvailableMovePosition().get(direction);
-        if (isTwoSpaceMoveDirection(direction)) {
-            validateMoveTwoSpace(source);
-            return positions;
-        }
-        int index = positions.indexOf(target);
-        return positions.subList(0, index);
-    }
-
-    private void validateMoveTwoSpace(final Position source) {
-        if (!isFirstMove(source)) {
-            throw new IllegalArgumentException("[ERROR] Pawn은 처음 이동할 경우에만 2칸 이동이 가능합니다.");
-        }
-    }
-
     private boolean isFirstMove(final Position source) {
         return source.getRank() == getStartLine(getPlayer());
     }
@@ -104,7 +113,8 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     private boolean isTwoSpaceMoveDirection(final Direction direction) {
-        return direction == Direction.SOUTH_SOUTH || direction == Direction.NORTH_NORTH;
+        return direction == Direction.SOUTH_SOUTH
+            || direction == Direction.NORTH_NORTH;
     }
 
     @Override

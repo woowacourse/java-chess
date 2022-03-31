@@ -5,44 +5,30 @@ import domain.direction.Direction;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Piece {
 
     private final Player player;
     private final PieceSymbol pieceSymbol;
-    private final Map<Direction, List<Position>> availableMovePosition;
 
     public Piece(final Player player, final PieceSymbol pieceSymbol) {
         this.player = player;
         this.pieceSymbol = pieceSymbol;
-        this.availableMovePosition = new HashMap<>();
     }
 
-    protected abstract List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction);
-
-    protected abstract List<Direction> getDirections();
-
-    public void generateAvailablePosition(final Position source) {
-        getDirections().forEach(direction ->
-            availableMovePosition.put(direction, calculateAvailablePosition(source, direction)));
-    }
-
-    public List<Position> getAvailablePositions(final Position source, final Position target) {
-        List<Position> positions = availableMovePosition.get(findDirection(target));
-        int index = positions.indexOf(target);
-        return positions.subList(0, index);
-    }
-
-    public Direction findDirection(final Position target) {
-        return availableMovePosition.keySet().stream()
-            .filter(direction -> availableMovePosition.get(direction).contains(target))
+    public List<Position> move(Position source, Position target) {
+        List<Position> positions = getDirections().stream()
+            .map(direction -> calculateAvailablePosition(source, direction))
+            .filter(list -> list.contains(target))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
+        return positions.subList(0, positions.indexOf(target));
     }
+
+    protected abstract List<Position> calculateAvailablePosition(final Position source, final Direction direction);
+
+    protected abstract List<Direction> getDirections();
 
     protected boolean checkOverRange(final Position source, final Direction direction) {
         int rank = source.getRank() + direction.getRank();
@@ -54,10 +40,6 @@ public abstract class Piece {
         int rank = source.getRank() + direction.getRank();
         int file = source.getFile() + direction.getFile();
         return Position.of(File.of(file), Rank.of(rank));
-    }
-
-    protected Map<Direction, List<Position>> getAvailableMovePosition() {
-        return Map.copyOf(availableMovePosition);
     }
 
     public boolean isKing() {
