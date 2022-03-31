@@ -58,9 +58,8 @@ public class BoardInitializer {
     }
 
     private static void initPawn(final Team team, Row row, final Map<Position, Piece> board) {
-        Column[] columns = Column.values();
-        for (int i = 0; i < columns.length; i++) {
-            board.replace(Position.valueOf(columns[i], row), new Pawn(team));
+        for (Column column : Column.values()) {
+            board.replace(Position.valueOf(column, row), new Pawn(team));
         }
     }
 
