@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public class Status extends CommandChain {
 
-    Status() {
-        super(Optional.of(new End()));
+    public Status(final CommandChain commandChain) {
+        super(Optional.ofNullable(commandChain));
     }
 
     @Override

@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public class End extends CommandChain {
 
-    End() {
-        super(Optional.empty());
+    public End(final CommandChain commandChain) {
+        super(Optional.ofNullable(commandChain));
     }
 
     @Override

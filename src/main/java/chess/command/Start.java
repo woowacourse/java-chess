@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public class Start extends CommandChain {
 
-    public Start() {
-        super(Optional.of(new Move()));
+    public Start(final CommandChain commandChain) {
+        super(Optional.ofNullable(commandChain));
     }
 
     @Override

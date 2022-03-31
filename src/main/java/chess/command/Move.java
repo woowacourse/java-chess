@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public class Move extends CommandChain {
 
-    Move() {
-        super(Optional.of(new Status()));
+    public Move(final CommandChain commandChain) {
+        super(Optional.ofNullable(commandChain));
     }
 
     @Override

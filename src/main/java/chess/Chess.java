@@ -1,6 +1,8 @@
 package chess;
 
 import chess.command.CommandChain;
+import chess.command.End;
+import chess.command.Move;
 import chess.command.ParsedCommand;
 import chess.command.Start;
 import chess.domain.Status;
@@ -28,8 +30,15 @@ public class Chess {
     }
 
     private void operateOnce(final Board board) {
-        final CommandChain commandChain = new Start();
+        final CommandChain commandChain = makeCommandChain();
         commandChain.doCommandAction(new ParsedCommand(InputView.input()), board);
+    }
+
+    private CommandChain makeCommandChain() {
+        final CommandChain end = new End(null);
+        final CommandChain status = new chess.command.Status(end);
+        final CommandChain move = new Move(status);
+        return new Start(move);
     }
 
 
