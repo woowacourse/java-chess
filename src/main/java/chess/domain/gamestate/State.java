@@ -1,7 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.Result;
+import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -21,7 +21,7 @@ public interface State {
 
     Board getBoard();
 
-    Result getResult();
+    GameResult getResult();
 
     boolean isRunning();
 }

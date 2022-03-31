@@ -1,7 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.Result;
+import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
@@ -49,25 +49,25 @@ public class Finished implements State {
     }
 
     @Override
-    public Result getResult() {
+    public GameResult getResult() {
         if (this.board.hasBlackKingCaptured()) {
-            return Result.BLACK_LOSE;
+            return GameResult.BLACK_LOSE;
         }
         if (this.board.hasWhiteKingCaptured()) {
-            return Result.BLACK_WIN;
+            return GameResult.BLACK_WIN;
         }
         return getResultWhenNoKingCaptured();
     }
 
-    private Result getResultWhenNoKingCaptured() {
+    private GameResult getResultWhenNoKingCaptured() {
         final int resultNumber = Double.compare(statusOfBlack(), statusOfWhite());
         if (resultNumber > RESULT_CRITERIA) {
-            return Result.BLACK_WIN;
+            return GameResult.BLACK_WIN;
         }
         if (resultNumber < RESULT_CRITERIA) {
-            return Result.BLACK_LOSE;
+            return GameResult.BLACK_LOSE;
         }
-        return Result.DRAW;
+        return GameResult.DRAW;
     }
 
     @Override

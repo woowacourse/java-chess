@@ -1,7 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.Result;
+import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
@@ -51,7 +51,7 @@ public class Ready implements State {
     }
 
     @Override
-    public Result getResult() {
+    public GameResult getResult() {
         throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
     }
 
