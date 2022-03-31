@@ -4,5 +4,5 @@ import chess.controller.ChessController;
 
 public interface Menu {
 
-    void play(ChessController controller);
+    void play(ChessController chessController);
 }

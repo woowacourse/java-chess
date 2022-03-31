@@ -15,13 +15,10 @@ public class Move implements Menu {
     }
 
     @Override
-    public void play(ChessController controller) {
-        if (controller.isReady()) {
-            OutputView.printMessage("체스 게임을 시작해야 합니다.");
-            return;
-        }
+    public void play(ChessController chessController) {
+        chessController.checkReady();
         try {
-            controller.move(before, after);
+            chessController.move(before, after);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

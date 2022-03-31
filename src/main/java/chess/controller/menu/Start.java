@@ -10,6 +10,6 @@ public class Start implements Menu {
 
     @Override
     public void play(ChessController chessController) {
-        chessController.start(boardGenerator);
+            chessController.start(boardGenerator);
     }
 }

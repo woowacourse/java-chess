@@ -22,9 +22,11 @@ public class ChessController {
         return !gameStatus.isEnd();
     }
 
-    public boolean isReady() {
+    public void checkReady() {
         GameStatus gameStatus = chessGame.checkGameStatus();
-        return gameStatus.isReady();
+        if (gameStatus.isReady()) {
+            throw new IllegalArgumentException("체스 게임을 시작해야 합니다.");
+        }
     }
 
     public void start(BoardGenerationStrategy strategy) {
@@ -32,8 +34,8 @@ public class ChessController {
         printBoard();
     }
 
-    public void move(Position from, Position to){
-        chessGame.move(from,to);
+    public void move(Position from, Position to) {
+        chessGame.move(from, to);
         printBoard();
     }
 
@@ -42,6 +44,7 @@ public class ChessController {
     }
 
     public void createStatus() {
+
         OutputView.printStatus(chessGame.createResult());
     }
 
