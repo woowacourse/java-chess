@@ -4,6 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+chess.drawio
 
 ### STS ###
 .apt_generated
@@ -30,3 +31,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### mac ###
+.DS_Store
+
+### Docker ###
+docker/db/mysql/data/
+docker/db/mysql/init/*
+!docker/db/mysql/init/init.sql
