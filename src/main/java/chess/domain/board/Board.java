@@ -1,15 +1,13 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingDouble;
-
 import chess.domain.Color;
 import chess.domain.MoveResult;
-import chess.domain.Score;
 import chess.domain.piece.InvalidPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,14 +148,13 @@ public class Board {
     }
 
     private Map<Color, Double> calculateScore(double scoreForWhitePawns, double scoreForBlackPawns) {
-        Map<Color, Double> chessScore = board.values()
-                .stream()
-                .filter(piece -> !(piece instanceof Pawn))
-                .collect(groupingBy(Color::from, summingDouble(Score::from)));
+        Map<Color, Double> score = new HashMap<>();
 
-        chessScore.put(Color.WHITE, chessScore.getOrDefault(Color.WHITE, 0D) + scoreForWhitePawns);
-        chessScore.put(Color.BLACK, chessScore.getOrDefault(Color.BLACK, 0D) + scoreForBlackPawns);
-        return chessScore;
+        final List<Piece> piecesOnBoard = new ArrayList<>(board.values());
+        score.put(Color.WHITE, Score.calculateScore(piecesOnBoard, Color.WHITE));
+        score.put(Color.BLACK, Score.calculateScore(piecesOnBoard, Color.BLACK));
+
+        return score;
     }
 
     public Map<Position, Piece> getBoard() {
