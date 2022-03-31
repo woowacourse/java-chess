@@ -6,7 +6,7 @@ import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DistanceTest {
+class DistanceTest {
 
     @Test
     @DisplayName("거리가 수직거리이다.")

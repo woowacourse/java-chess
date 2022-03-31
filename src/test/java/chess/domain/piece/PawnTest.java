@@ -7,7 +7,7 @@ import chess.domain.move.WhitePawnMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PawnTest {
+class PawnTest {
 
     @Test
     @DisplayName("Blank 가 아닌지 확인")

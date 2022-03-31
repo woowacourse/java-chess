@@ -6,7 +6,7 @@ import chess.domain.move.KingMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class KingTest {
+class KingTest {
 
     @Test
     @DisplayName("킹이다.")

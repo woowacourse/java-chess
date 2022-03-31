@@ -6,7 +6,7 @@ import chess.domain.move.KnightMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class KnightTest {
+class KnightTest {
 
     @Test
     @DisplayName("나이트 이동 전략을 가져온다.")

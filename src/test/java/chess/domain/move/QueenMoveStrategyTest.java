@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class QueenMoveStrategyTest {
+class QueenMoveStrategyTest {
 
-    Board board;
-    QueenMoveStrategy queenMoveStrategy;
+    private Board board;
+    private QueenMoveStrategy queenMoveStrategy;
 
     @BeforeEach
     void setUp() {

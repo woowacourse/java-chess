@@ -9,7 +9,7 @@ import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ScoreTest {
+class ScoreTest {
 
     @Test
     @DisplayName("폰이 수직으로 존재할 경우 총점을 계산한다.")

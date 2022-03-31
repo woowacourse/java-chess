@@ -8,7 +8,7 @@ import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PositionTest {
+class PositionTest {
 
     @Test
     @DisplayName("포지션 좌표를 String 으로 받아 가져온다.")

@@ -7,7 +7,7 @@ import chess.domain.move.BishopMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BishopTest {
+class BishopTest {
 
     @Test
     @DisplayName("컬러를 none으로 생성하면 에러가 발생한다.")

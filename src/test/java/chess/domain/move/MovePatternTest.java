@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MovePatternTest {
+class MovePatternTest {
 
     @Test
     @DisplayName("horizon, vertical을 입력받아 MovePattern을 찾는다")

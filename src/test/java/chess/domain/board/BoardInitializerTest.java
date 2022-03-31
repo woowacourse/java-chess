@@ -15,7 +15,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BoardInitializerTest {
+class BoardInitializerTest {
 
     @Test
     @DisplayName("최초의 Board 원시값을 생성한다.")
