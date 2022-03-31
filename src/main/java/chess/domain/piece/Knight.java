@@ -13,8 +13,8 @@ public class Knight extends FixedMovablePiece {
             Position.of("b1"), Position.of("g1"));
 
     private static final List<Direction> DIRECTIONS = List.of(
-            Direction.SSE, Direction.SSW, Direction.NNE, Direction.NNW,
-            Direction.EES, Direction.EEN, Direction.WWS, Direction.WWN);
+            Direction.SOUTH_SOUTH_EAST, Direction.SOUTH_SOUTH_WEST, Direction.NORTH_NORTH_EAST, Direction.NORTH_NORTH_WEST,
+            Direction.EAST_EAST_SOUTH, Direction.EAST_EAST_NORTH, Direction.WEST_WEST_SOUTH, Direction.WEST_WEST_NORTH);
     private static final double KNIGHT_POINT = 2.5;
 
     public Knight(Color color) {

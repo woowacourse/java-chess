@@ -19,14 +19,14 @@ class KnightTest {
         Map<Direction, List<Position>> positions = knight.getMovablePositions(Position.of("d4"));
         Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
-                        Map.entry(Direction.SSE, List.of(Position.of("e2"))),
-                        Map.entry(Direction.SSW, List.of(Position.of("c2"))),
-                        Map.entry(Direction.NNE, List.of(Position.of("e6"))),
-                        Map.entry(Direction.NNW, List.of(Position.of("c6"))),
-                        Map.entry(Direction.EES, List.of(Position.of("f3"))),
-                        Map.entry(Direction.EEN, List.of(Position.of("f5"))),
-                        Map.entry(Direction.WWS, List.of(Position.of("b3"))),
-                        Map.entry(Direction.WWN, List.of(Position.of("b5")))
+                        Map.entry(Direction.SOUTH_SOUTH_EAST, List.of(Position.of("e2"))),
+                        Map.entry(Direction.SOUTH_SOUTH_WEST, List.of(Position.of("c2"))),
+                        Map.entry(Direction.NORTH_NORTH_EAST, List.of(Position.of("e6"))),
+                        Map.entry(Direction.NORTH_NORTH_WEST, List.of(Position.of("c6"))),
+                        Map.entry(Direction.EAST_EAST_SOUTH, List.of(Position.of("f3"))),
+                        Map.entry(Direction.EAST_EAST_NORTH, List.of(Position.of("f5"))),
+                        Map.entry(Direction.WEST_WEST_SOUTH, List.of(Position.of("b3"))),
+                        Map.entry(Direction.WEST_WEST_NORTH, List.of(Position.of("b5")))
                 )
         );
         assertThat(positions).isEqualTo(expected);
