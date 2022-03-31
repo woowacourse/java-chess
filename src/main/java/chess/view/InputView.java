@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.controller.command.Command;
 import java.util.Scanner;
 
 public class InputView {
@@ -8,6 +7,11 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private InputView() {
+    }
+
+    public static String getInput() {
+        final String input = SCANNER.nextLine();
+        return input.toLowerCase();
     }
 
     public static Command requestCommand() {
@@ -22,6 +26,6 @@ public class InputView {
     private static Command getCommand() {
         final String input = SCANNER.nextLine();
         final String text = input.toLowerCase();
-        return CommandMapper.from(text);
+        return Command.from(text);
     }
 }

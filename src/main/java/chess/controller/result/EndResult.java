@@ -2,7 +2,7 @@ package chess.controller.result;
 
 import chess.domain.Score;
 
-public class EndResult implements Result {
+public class EndResult {
 
     private final Score score;
 

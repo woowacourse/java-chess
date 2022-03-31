@@ -5,7 +5,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class MoveResult implements Result {
+public class MoveResult {
 
     private final boolean isKingDie;
     private final Map<Position, ChessPiece> pieceByPosition;

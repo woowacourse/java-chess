@@ -1,10 +1,10 @@
 package chess.domain;
 
-import chess.controller.result.Result;
+import chess.controller.result.EndResult;
+import chess.controller.result.MoveResult;
+import chess.controller.result.StartResult;
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
-import java.util.Map;
 
 public class ChessGame {
 
@@ -16,14 +16,14 @@ public class ChessGame {
         this.gameStatus = GameStatus.READY;
     }
 
-    public Result move(final Position from, final Position to) {
+    public MoveResult move(final Position from, final Position to) {
         gameStatus.checkPlaying();
 
-        final Result moveResult = chessBoard.move(from, to);
+        final MoveResult result = chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
         }
-        return moveResult;
+        return result;
     }
 
     public Score calculateScore() {
@@ -31,15 +31,16 @@ public class ChessGame {
         return chessBoard.calculateScore();
     }
 
-    public Map<Position, ChessPiece> start() {
+    public StartResult start() {
         gameStatus.checkReady();
         gameStatus = GameStatus.PLAYING;
-        return chessBoard.findAllPiece();
+        return new StartResult(chessBoard.findAllPiece());
     }
 
-    public Score end() {
+    public EndResult end() {
         gameStatus = GameStatus.END;
-        return chessBoard.calculateScore();
+        final Score score = new Score(chessBoard.findAllPiece());
+        return new EndResult(score);
     }
 
     public boolean canPlay() {

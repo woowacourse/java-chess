@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.result.MoveResult;
-import chess.controller.result.Result;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
@@ -58,8 +57,8 @@ class ChessGameTest {
         chessGame.start();
 
         // when
-        final Result moveResult = chessGame.move(from, to);
-        final boolean actual = ((MoveResult) moveResult).isKingDie();
+        final MoveResult moveResult = chessGame.move(from, to);
+        final boolean actual = moveResult.isKingDie();
 
         // then
         assertThat(actual).isEqualTo(true);

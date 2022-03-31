@@ -1,30 +1,45 @@
 package chess.controller;
 
-import chess.controller.command.Command;
+import chess.controller.result.EndResult;
+import chess.controller.result.MoveResult;
+import chess.controller.result.StartResult;
 import chess.domain.ChessGame;
-import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.ChessBoardFactory;
-import chess.view.InputView;
+import chess.domain.Score;
+import chess.domain.position.Position;
 import chess.view.OutputView;
 
 public class ChessController {
 
-    public void run() {
-        OutputView.printStartMessage();
+    private final ChessGame chessGame;
 
-        final ChessBoard chessBoard = ChessBoardFactory.createChessBoard();
-        final ChessGame chessGame = new ChessGame(chessBoard);
-        while (chessGame.canPlay()) {
-            playTurn(chessGame);
+    public ChessController(final ChessGame chessGame) {
+        this.chessGame = chessGame;
+    }
+
+    public boolean canPlay() {
+        return chessGame.canPlay();
+    }
+
+    public void start() {
+        final StartResult result = chessGame.start();
+        OutputView.printChessBoard(result.getPieceByPosition());
+    }
+
+    public void move(final Position from, final Position to) {
+        final MoveResult result = chessGame.move(from, to);
+        OutputView.printChessBoard(result.getPieceByPosition());
+        if (result.isKingDie()) {
+            OutputView.printResult(result.score());
         }
     }
 
-    private void playTurn(final ChessGame chessGame) {
-        try {
-            final Command command = InputView.requestCommand();
-            command.execute(chessGame);
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-        }
+    public void status() {
+        final Score score = chessGame.calculateScore();
+        OutputView.printStatus(score);
+    }
+
+    public void end() {
+        final EndResult result = chessGame.end();
+        OutputView.printResult(result.getScore());
     }
 }

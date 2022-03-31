@@ -4,7 +4,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class StartResult implements Result {
+public class StartResult {
 
     private final Map<Position, ChessPiece> pieceByPosition;
 
