@@ -5,36 +5,28 @@ import chess.piece.Color;
 
 public class ScoreDao {
 
-    private Score whiteScore;
-    private Score blackScore;
+    private final JdbcTemplate jdbcTemplate;
+
+    public ScoreDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public Score findScoreByColor(Color color) {
-        if (color == Color.WHITE) {
-            return whiteScore;
-        }
-        return blackScore;
+        return jdbcTemplate.queryForObject("SELECT score FROM Score WHERE color = ?",
+                rs -> new Score(rs.getBigDecimal("score")), color.name());
     }
 
     public void saveScoreByColor(Score score, Color color) {
-        if (color == Color.WHITE) {
-            this.whiteScore = score;
-        }
-        if (color == Color.BLACK) {
-            this.blackScore = score;
-        }
+        jdbcTemplate.update("INSERT INTO Score(color, score) VALUES(?, ?)",
+                color.name(), score.getValue().toPlainString());
     }
 
     public void updateScoreByColor(Score score, Color color) {
-        if (color == Color.WHITE) {
-            this.whiteScore = score;
-        }
-        if (color == Color.BLACK) {
-            this.blackScore = score;
-        }
+        jdbcTemplate.update("UPDATE Score SET score = ? WHERE color = ?",
+                score.getValue().toPlainString(), color.name());
     }
 
     public void deleteAll() {
-        this.whiteScore = null;
-        this.blackScore = null;
+        jdbcTemplate.update("DELETE FROM Score");
     }
 }

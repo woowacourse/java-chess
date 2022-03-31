@@ -11,7 +11,8 @@ import web.service.ChessGameService;
 
 public class ChessGameController {
 
-    private static final String FLASH_MESSAGE = "FLASH_MESSAGE";
+    private static final String WINNER_FLASH = "WINNER_MESSAGE";
+    private static final String ERROR_FLASH = "ERROR_MESSAGE";
 
     private final ChessGameService service;
 
@@ -19,31 +20,44 @@ public class ChessGameController {
         this.service = service;
     }
 
-    public Object index(Request req, Response res) throws Exception {
-        if (service.isGameFinished()) {
-            service.resetGame();
+    public Object handleIndex(Request req, Response res) throws Exception {
+        if (!service.existChessGame() || service.isGameFinished()) {
+            service.prepareNewChessGame();
         }
         return render(createModel(req), "index.html");
     }
 
     private Map<String, Object> createModel(Request req) {
         Map<String, Object> model = new HashMap<>();
+        model.put("currentColor", service.queryCurrentColor());
         model.put("pieces", service.queryPieces());
         model.put("whiteScore", service.queryScoreByColor(Color.WHITE));
         model.put("blackScore", service.queryScoreByColor(Color.BLACK));
 
-        if (req.session().attribute(FLASH_MESSAGE) != null) {
-            model.putAll(req.session().attribute(FLASH_MESSAGE));
-            req.session().removeAttribute(FLASH_MESSAGE);
-        }
+        addFlashAttribute(req, model, ERROR_FLASH);
+        addFlashAttribute(req, model, WINNER_FLASH);
         return model;
     }
 
-    public Object move(Request req, Response res) {
+    private void addFlashAttribute(Request req, Map<String, Object> model, String attribute) {
+        if (req.session().attribute(attribute) != null) {
+            model.putAll(req.session().attribute(attribute));
+            req.session().removeAttribute(attribute);
+        }
+    }
+
+    private String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
+
+    public Object handleMove(Request req, Response res) {
         try {
             move(req, new Movement(req.body()));
         } catch (IllegalArgumentException | IllegalStateException e) {
-            putErrorMessage(req, e);
+            Map<String, Object> error = new HashMap<>();
+            error.put("hasError", true);
+            error.put("errorMessage", e.getMessage());
+            req.session().attribute(ERROR_FLASH, error);
         }
         res.redirect("/");
         return null;
@@ -51,27 +65,12 @@ public class ChessGameController {
 
     private void move(Request req, Movement movement) {
         service.move(movement);
+
         if (service.isGameFinished()) {
-            putWinner(req);
-            service.resetGame();
+            Map<String, Object> result = new HashMap<>();
+            result.put("isFinished", true);
+            result.put("winner", service.findWinner());
+            req.session().attribute(WINNER_FLASH, result);
         }
-    }
-
-    private void putWinner(Request req) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("isFinished", true);
-        result.put("winner", service.findWinner());
-        req.session().attribute(FLASH_MESSAGE, result);
-    }
-
-    private void putErrorMessage(Request req, RuntimeException e) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("hasError", true);
-        error.put("errorMessage", e.getMessage());
-        req.session().attribute(FLASH_MESSAGE, error);
-    }
-
-    private String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

@@ -1,9 +1,9 @@
 package chess.piece;
 
 import static chess.piece.movementcondition.BaseMovementCondition.IMPOSSIBLE;
-import static chess.piece.movementcondition.BaseMovementCondition.MUST_OBSTACLE_FREE;
 import static chess.piece.movementcondition.BaseMovementCondition.MUST_CAPTURE_PIECE;
 import static chess.piece.movementcondition.BaseMovementCondition.MUST_EMPTY_DESTINATION;
+import static chess.piece.movementcondition.BaseMovementCondition.MUST_OBSTACLE_FREE;
 
 import chess.piece.movementcondition.MovementCondition;
 import chess.piece.movementcondition.MovementConditions;

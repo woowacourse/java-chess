@@ -8,6 +8,7 @@ import chess.position.Position;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 public class Score {
 
@@ -52,5 +53,22 @@ public class Score {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score = (Score) o;
+        return Objects.equals(value, score.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

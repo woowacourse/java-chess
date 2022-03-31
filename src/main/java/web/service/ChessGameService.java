@@ -12,6 +12,7 @@ import static chess.position.Rank.EIGHT;
 import static chess.position.Rank.ONE;
 import static chess.position.Rank.SEVEN;
 import static chess.position.Rank.TWO;
+import static java.util.stream.Collectors.toMap;
 
 import chess.ChessBoard;
 import chess.Score;
@@ -30,43 +31,83 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import web.controller.Movement;
-import web.dao.ChessBoardDao;
-import web.dao.GameStatusDao;
+import web.dao.ChessGameDao;
+import web.dao.PieceDao;
 import web.dao.ScoreDao;
 import web.dto.GameStatus;
 import web.dto.PieceDTO;
+import web.dto.PieceType;
 
 public class ChessGameService {
 
-    private final ChessBoardDao chessBoardDao;
+    private final PieceDao pieceDao;
     private final ScoreDao scoreDao;
-    private final GameStatusDao gameStatusDao;
+    private final ChessGameDao chessGameDao;
 
-    public ChessGameService(ChessBoardDao chessBoardDao, ScoreDao scoreDao, GameStatusDao gameStatusDao) {
-        this.chessBoardDao = chessBoardDao;
+    public ChessGameService(PieceDao pieceDao, ScoreDao scoreDao, ChessGameDao chessGameDao) {
+        this.pieceDao = pieceDao;
         this.scoreDao = scoreDao;
-        this.gameStatusDao = gameStatusDao;
+        this.chessGameDao = chessGameDao;
     }
 
     public void move(Movement movement) {
-        ChessBoard chessBoard = chessBoardDao.findChessBoard();
+        ChessBoard chessBoard = createChessBoard();
         chessBoard.move(movement.getFrom(), movement.getTo());
         updateChessGame(chessBoard, movement);
     }
 
+    private ChessBoard createChessBoard() {
+        List<PieceDTO> pieces = pieceDao.findPieces();
+        Color currentColor = chessGameDao.findCurrentColor();
+        return new ChessBoard(createBoard(pieces), currentColor);
+    }
+
+    private Map<Position, Piece> createBoard(List<PieceDTO> pieces) {
+        return pieces.stream()
+                .collect(toMap(PieceDTO::getPosition, this::createPiece));
+    }
+
+    private Piece createPiece(PieceDTO pieceDTO) {
+        if (pieceDTO.getType() == PieceType.PAWN) {
+            return new Pawn(pieceDTO.getColor());
+        }
+        if (pieceDTO.getType() == PieceType.KING) {
+            return new King(pieceDTO.getColor());
+        }
+        if (pieceDTO.getType() == PieceType.QUEEN) {
+            return new Queen(pieceDTO.getColor());
+        }
+        if (pieceDTO.getType() == PieceType.ROOK) {
+            return new Rook(pieceDTO.getColor());
+        }
+        if (pieceDTO.getType() == PieceType.KNIGHT) {
+            return new Knight(pieceDTO.getColor());
+        }
+        if (pieceDTO.getType() == PieceType.BISHOP) {
+            return new Bishop(pieceDTO.getColor());
+        }
+        throw new IllegalArgumentException("잘못된 piece type 입니다.");
+    }
+
     private void updateChessGame(ChessBoard chessBoard, Movement movement) {
-        updateChessBoard(chessBoard, movement);
+        updatePieces(chessBoard, movement);
+        updateCurrentColor(chessBoard);
         updateScores(chessBoard);
+
         if (chessBoard.isFinished()) {
             updateGameStatus(chessBoard);
         }
     }
 
-    private void updateChessBoard(ChessBoard chessBoard, Movement movement) {
+    private void updatePieces(ChessBoard chessBoard, Movement movement) {
         Map<Position, Piece> board = chessBoard.getBoard();
-        chessBoardDao.deletePieceByPosition(movement.getFrom());
-        chessBoardDao.updatePiece(new PieceDTO(movement.getTo(), board.get(movement.getTo())));
-        chessBoardDao.updateCurrentColor(chessBoard.getCurrentColor());
+        pieceDao.deletePieceByPosition(movement.getFrom());
+        pieceDao.deletePieceByPosition(movement.getTo());
+        pieceDao.savePiece(new PieceDTO(movement.getTo(), board.get(movement.getTo())));
+    }
+
+    private void updateCurrentColor(ChessBoard chessBoard) {
+        chessGameDao.updateCurrentColor(chessBoard.getCurrentColor());
     }
 
     private void updateScores(ChessBoard chessBoard) {
@@ -75,38 +116,34 @@ public class ChessGameService {
     }
 
     private void updateGameStatus(ChessBoard chessBoard) {
-        gameStatusDao.updateGameStatus(GameStatus.FINISHED);
-        gameStatusDao.saveWinner(chessBoard.getWinner());
+        chessGameDao.updateGameStatus(GameStatus.FINISHED);
+        chessGameDao.updateWinner(chessBoard.getWinner());
     }
 
     public List<PieceDTO> queryPieces() {
-        return chessBoardDao.findPieces();
+        return pieceDao.findPieces();
     }
 
     public Score queryScoreByColor(Color color) {
         return scoreDao.findScoreByColor(color);
     }
 
-    public void resetGame() {
-        deleteChessGame();
-        resetChessGame();
+    public void prepareNewChessGame() {
+        deletePreviousChessGame();
+        saveNewChessGame();
     }
 
-    private void deleteChessGame() {
-        chessBoardDao.deleteAll();
+    private void deletePreviousChessGame() {
+        chessGameDao.deleteAll();
+        pieceDao.deleteAll();
         scoreDao.deleteAll();
-        gameStatusDao.deleteAll();
     }
 
-    private void resetChessGame() {
-        resetChessBoard();
-        resetScores();
-        resetGameStatus();
-    }
-
-    private void resetChessBoard() {
-        chessBoardDao.savePieces(createPieces());
-        chessBoardDao.saveCurrentColor(Color.WHITE);
+    private void saveNewChessGame() {
+        pieceDao.savePieces(createPieces());
+        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.BLACK);
+        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.WHITE);
+        chessGameDao.saveGameStatus(GameStatus.RUNNING, Color.WHITE);
     }
 
     private List<PieceDTO> createPieces() {
@@ -154,20 +191,19 @@ public class ChessGameService {
                 new PieceDTO(new Position(H, SEVEN), new Pawn(Color.BLACK)));
     }
 
-    private void resetScores() {
-        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.BLACK);
-        scoreDao.saveScoreByColor(new Score(new BigDecimal("38.0")), Color.WHITE);
-    }
-
-    private void resetGameStatus() {
-        gameStatusDao.saveGameStatus(GameStatus.RUNNING);
+    public boolean existChessGame() {
+        return chessGameDao.existChessGame();
     }
 
     public boolean isGameFinished() {
-        return gameStatusDao.findGameStatus() == GameStatus.FINISHED;
+        return chessGameDao.findGameStatus() == GameStatus.FINISHED;
     }
 
     public Color findWinner() {
-        return gameStatusDao.findWinner();
+        return chessGameDao.findWinner();
+    }
+
+    public Color queryCurrentColor() {
+        return chessGameDao.findCurrentColor();
     }
 }

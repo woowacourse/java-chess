@@ -2,8 +2,8 @@ package chess;
 
 import chess.piece.Color;
 import chess.piece.King;
-import chess.piece.movementcondition.MovementCondition;
 import chess.piece.Piece;
+import chess.piece.movementcondition.MovementCondition;
 import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;

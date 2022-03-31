@@ -43,8 +43,8 @@ public class Movement {
     }
 
     private String[] splitBody(String body) {
-        body = body.replace("from=","");
-        body = body.replace("to=","");
+        body = body.replace("from=", "");
+        body = body.replace("to=", "");
         return body.split("&");
     }
 
