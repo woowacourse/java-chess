@@ -25,15 +25,15 @@ class ScoreTest {
     @CsvSource(value = {"BLACK:1.5", "WHITE:1"}, delimiter = ':')
     void calculateScore_pawn(final Color color, final double expected) {
         // given
-        final ChessBoard chessBoard = PieceByPosition.create()
+        final Map<Position, ChessPiece> pieceByPosition = PieceByPosition.create()
                 .add(Position.from("a1"), Pawn.from(Color.BLACK))
                 .add(Position.from("a3"), Pawn.from(Color.BLACK))
                 .add(Position.from("a5"), Pawn.from(Color.BLACK))
                 .add(Position.from("a2"), Pawn.from(Color.WHITE))
-                .toChessBoard();
+                .toMap();
 
         // when
-        final Score score = new Score(chessBoard.findAllPiece());
+        final Score score = new Score(pieceByPosition);
         final Double actual = score.findScore(color);
 
         // then
@@ -45,7 +45,7 @@ class ScoreTest {
     @CsvSource(value = {"BLACK:20.5", "WHITE:0"}, delimiter = ':')
     void calculateScore_combination(final Color color, final double expected) {
         // given
-        final ChessBoard chessBoard = PieceByPosition.create()
+        final Map<Position, ChessPiece> pieceByPosition = PieceByPosition.create()
                 .add(Position.from("a1"), King.from(Color.BLACK)) // 0
                 .add(Position.from("a2"), Queen.from(Color.BLACK)) // 9
                 .add(Position.from("a3"), Knight.from(Color.BLACK)) // 2.5
@@ -53,10 +53,10 @@ class ScoreTest {
                 .add(Position.from("a5"), Bishop.from(Color.BLACK)) // 3
                 .add(Position.from("a6"), Pawn.from(Color.BLACK)) // 1
                 .add(Position.from("h2"), King.from(Color.WHITE)) // 0
-                .toChessBoard();
+                .toMap();
 
         // when
-        final Score score = new Score(chessBoard.findAllPiece());
+        final Score score = new Score(pieceByPosition);
         final Double actual = score.findScore(color);
 
         // then
@@ -80,9 +80,8 @@ class ScoreTest {
             return this;
         }
 
-
-        ChessBoard toChessBoard() {
-            return new ChessBoard(value);
+        public Map<Position, ChessPiece> toMap() {
+            return value;
         }
     }
 }

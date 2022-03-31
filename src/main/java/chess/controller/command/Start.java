@@ -1,7 +1,10 @@
 package chess.controller.command;
 
 import chess.domain.ChessGame;
+import chess.domain.chesspiece.ChessPiece;
+import chess.domain.position.Position;
 import chess.view.OutputView;
+import java.util.Map;
 
 public class Start implements Command {
 
@@ -17,8 +20,8 @@ public class Start implements Command {
     @Override
     public void execute(final ChessGame chessGame) {
         try {
-            chessGame.start();
-            OutputView.printChessBoard(chessGame.findAllPiece());
+            final Map<Position, ChessPiece> pieceByPosition = chessGame.start();
+            OutputView.printChessBoard(pieceByPosition);
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }

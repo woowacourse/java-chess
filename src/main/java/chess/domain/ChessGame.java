@@ -15,13 +15,14 @@ public class ChessGame {
         this.gameStatus = GameStatus.READY;
     }
 
-    public void move(final Position from, final Position to) {
+    public MoveResult move(final Position from, final Position to) {
         gameStatus.checkPlaying();
 
-        chessBoard.move(from, to);
+        final MoveResult moveResult = chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
             gameStatus = GameStatus.KING_DIE;
         }
+        return moveResult;
     }
 
     public Score calculateScore() {
@@ -29,22 +30,14 @@ public class ChessGame {
         return chessBoard.calculateScore();
     }
 
-    public Map<Position, ChessPiece> findAllPiece() {
-        gameStatus.checkPlaying();
-        return chessBoard.findAllPiece();
-    }
-
-    public void start() {
+    public Map<Position, ChessPiece> start() {
         gameStatus.checkReady();
         gameStatus = GameStatus.PLAYING;
+        return chessBoard.findAllPiece();
     }
 
     public void end() {
         gameStatus = GameStatus.END;
-    }
-
-    public boolean isFinish() {
-        return gameStatus.equals(GameStatus.KING_DIE);
     }
 
     public boolean canPlay() {

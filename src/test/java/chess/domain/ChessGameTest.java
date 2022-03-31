@@ -56,8 +56,8 @@ class ChessGameTest {
         chessGame.start();
 
         // when
-        chessGame.move(from, to);
-        final boolean actual = chessGame.isFinish();
+        final MoveResult moveResult = chessGame.move(from, to);
+        final boolean actual = moveResult.isKingDie();
 
         // then
         assertThat(actual).isEqualTo(true);

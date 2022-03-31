@@ -1,5 +1,6 @@
 package chess.domain.chessboard;
 
+import chess.domain.MoveResult;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
@@ -21,7 +22,7 @@ public class ChessBoard {
         return pieceByPosition.get(position);
     }
 
-    public void move(final Position from, final Position to) {
+    public MoveResult move(final Position from, final Position to) {
         final ChessPiece movablePiece = findPiece(from);
         if (Objects.isNull(movablePiece)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
@@ -32,6 +33,7 @@ public class ChessBoard {
 
         checkCanMove(from, to, movablePiece);
         movePiece(from, to);
+        return new MoveResult(isKingDie(), pieceByPosition);
     }
 
     private void checkCanMove(final Position from, final Position to, final ChessPiece movablePiece) {
