@@ -52,10 +52,10 @@ class BlackPlayingTest {
     @DisplayName("move가 성공하였을 시 WhitePlaying을 return 한다.")
     void blackPlayingMoveSuccess() {
         //given & when
-        ChessGameState stateAfterMove = blackPlaying.move("b2", "b4");
+        ChessGameState stateAfterMove = blackPlaying.move("b7", "b6");
 
         //then
-        assertThat(stateAfterMove).isExactlyInstanceOf(BlackPlaying.class);
+        assertThat(stateAfterMove).isExactlyInstanceOf(WhitePlaying.class);
     }
 
     @Test
