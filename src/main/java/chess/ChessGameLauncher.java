@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.ChessGame;
-import chess.domain.Status;
+import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
@@ -89,9 +89,9 @@ public final class ChessGameLauncher {
     }
 
     private void showScore(ChessGame chessGame) {
-        Status status = new Status(chessGame.getBoard());
-        OutputView.showScore(status, Color.WHITE);
-        OutputView.showScore(status, Color.BLACK);
+        GameResult gameResult = new GameResult(chessGame.getBoard());
+        OutputView.showScore(gameResult, Color.WHITE);
+        OutputView.showScore(gameResult, Color.BLACK);
     }
 
     private void checkKingNotDie(ChessGame chessGame) {
