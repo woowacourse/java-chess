@@ -5,10 +5,12 @@ import chess.model.piece.Piece;
 import chess.model.piece.Pieces;
 
 import java.util.List;
+import java.util.Map;
 
 public class Board {
 
     private final Pieces pieces;
+    private Map<Position, Piece> board; //나중에 꼭 final로 바꿔야함
 
     private Board(Pieces pieces) {
         this.pieces = pieces;
@@ -18,13 +20,19 @@ public class Board {
         return new Board(pieces);
     }
 
+    public void move(Position source, Position target, Turn thisTurn) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+
+    }
+
     public void move(String source, String target, Turn thisTurn) {
         Position sourcePosition = Position.from(source);
         Position targetPosition = Position.from(target);
         Piece sourcePiece = pieces.findByPosition(sourcePosition);
         validateCurrentTurn(thisTurn, sourcePiece);
         Piece targetPiece = pieces.findByPosition(targetPosition);
-        if (canMove(targetPosition, sourcePiece, targetPiece)) {
+        if (canMove(sourcePosition, targetPosition, sourcePiece, targetPiece)) {
             sourcePiece.moveTo(targetPiece);
             pieces.arrange(targetPiece, sourcePosition);
             return;
@@ -54,8 +62,8 @@ public class Board {
         return Team.NONE;
     }
 
-    private boolean canMove(Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        return (sourcePiece.isMovable(targetPosition) && !hasBlock(sourcePiece, targetPiece))
+    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        return (sourcePiece.isMovable(sourcePosition, targetPosition) && !hasBlock(sourcePiece, targetPiece))
                 || sourcePiece.isKill(targetPiece);
     }
 
