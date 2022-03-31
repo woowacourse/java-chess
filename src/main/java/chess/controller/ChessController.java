@@ -1,7 +1,6 @@
 package chess.controller;
 
 import static chess.domain.Command.MOVE;
-import static chess.domain.Command.START;
 import static chess.domain.Command.STATUS;
 import static chess.domain.Command.of;
 

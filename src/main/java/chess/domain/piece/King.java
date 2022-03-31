@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.Team;
 import java.util.List;
 
-public class King extends Piece {
+public class King extends OneStepPiece {
 
     public King(Team team, Position position) {
         super(team, position);
@@ -16,14 +17,9 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Position> findPath(Position destination) {
-        validateIsPossible(destination);
-        return List.of();
-    }
-
-    public void validateIsPossible(Position destination) {
-        if (Math.abs(position.getCol().getDifference(destination.getCol())) <= 1
-                && Math.abs(position.getRow().getDifference(destination.getRow())) <= 1) {
+    protected void validateIsPossibleDst(Position destination) {
+        if (Math.abs(destination.getColDifference(position)) <= 1
+                && Math.abs(destination.getRowDifference(position)) <= 1) {
             return;
         }
         throw new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다.");

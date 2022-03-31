@@ -5,11 +5,10 @@ import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.Row;
 import chess.domain.Team;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn extends MultiStepPiece {
 
     private static final int PAWN_SCORE = 1;
 
@@ -33,10 +32,10 @@ public class Pawn extends Piece {
     @Override
     public List<Position> findPath(Position destination) throws IllegalArgumentException {
         if (isBlackTeam()) {
-            Direction direction = findDirection(Direction.blackPawnDirection(isFirstTurn()), destination);
+            Direction direction = super.findDirection(destination, Direction.blackPawnDirection(isFirstTurn()));
             return getPath(destination, direction);
         }
-        Direction direction = findDirection(Direction.whitePawnDirection(isFirstTurn()), destination);
+        Direction direction = super.findDirection(destination, Direction.whitePawnDirection(isFirstTurn()));
         return getPath(destination, direction);
     }
 
@@ -51,20 +50,6 @@ public class Pawn extends Piece {
             return true;
         }
         return isBlackTeam() && position.getRow() == Row.SEVEN;
-    }
-
-    private Direction findDirection(List<Direction> directions, Position destination) {
-        int colDiff = destination.getCol().getDifference(position.getCol());
-        int rowDiff = destination.getRow().getDifference(position.getRow());
-
-        return directions.stream()
-                .filter(direction -> isMatch(colDiff, rowDiff, direction))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
-    }
-
-    private boolean isMatch(int colDiff, int rowDiff, Direction direction) {
-        return rowDiff == direction.getYDegree() && colDiff == direction.getXDegree();
     }
 
     @Override

@@ -5,7 +5,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends OneStepPiece {
 
     private static final double  KNIGHT_SCORE = 2.5;
 
@@ -18,9 +18,10 @@ public class Knight extends Piece {
         return KNIGHT_SCORE;
     }
 
-    public void validateIsPossible(Position destination) {
-        int colDiff = destination.getCol().getDifference(position.getCol());
-        int rowDiff = destination.getRow().getDifference(position.getRow());
+    @Override
+    protected void validateIsPossibleDst(Position destination) {
+        int colDiff = destination.getColDifference(position);
+        int rowDiff = destination.getRowDifference(position);
 
         Direction.knightDirection().stream()
                 .filter(direction -> isMatch(colDiff, rowDiff, direction))
@@ -30,12 +31,6 @@ public class Knight extends Piece {
 
     private boolean isMatch(int colDiff, int rowDiff, Direction direction) {
         return rowDiff == direction.getYDegree() && colDiff == direction.getXDegree();
-    }
-
-    @Override
-    public List<Position> findPath(Position destination) {
-        validateIsPossible(destination);
-        return List.of();
     }
 
     @Override

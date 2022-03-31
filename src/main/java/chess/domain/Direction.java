@@ -32,6 +32,18 @@ public enum Direction {
         this.yDegree = yDegree;
     }
 
+    public int getYDegree() {
+        return yDegree;
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public static List<Direction> linearDirection() {
+        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    }
+
     public static List<Direction> diagonalDirection() {
         return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
@@ -59,11 +71,22 @@ public enum Direction {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
-    public int getXDegree() {
-        return xDegree;
+    public static Direction findMatchDirection(int colDiff, int rowDiff, List<Direction> directions) {
+        int gcd = Math.abs(gcdOrNotZero(colDiff, rowDiff));
+        return directions.stream()
+                .filter(direction -> isMatch(colDiff, rowDiff, gcd, direction))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 말이 움직일 수 없습니다."));
     }
 
-    public int getYDegree() {
-        return yDegree;
+    private static int gcdOrNotZero(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcdOrNotZero(b, a % b);
+    }
+
+    private static boolean isMatch(int colDiff, int rowDiff, int gcd, Direction direction) {
+        return direction.xDegree == colDiff / gcd && direction.yDegree == rowDiff / gcd;
     }
 }

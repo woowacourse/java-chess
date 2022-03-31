@@ -38,6 +38,14 @@ public class Position {
         return row;
     }
 
+    public int getColDifference(Position destination) {
+        return col.getDifference(destination.col);
+    }
+
+    public int getRowDifference(Position destination) {
+        return row.getDifference(destination.row);
+    }
+
     public List<Position> getPathToDst(Position destination, Direction direction) {
         List<Position> positions = new ArrayList<>();
         addPositions(destination, direction, positions);
