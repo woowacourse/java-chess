@@ -15,11 +15,10 @@ public abstract class MovableRangePiece extends Piece {
     @Override
     protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
-        Position startPosition = source;
-        while (checkOverRange(startPosition, direction)) {
-            Position nextPosition = createPositionByDirection(startPosition, direction);
+        Position nextPosition = createPositionByDirection(source, direction);
+        while (nextPosition != null) {
             positions.add(nextPosition);
-            startPosition = nextPosition;
+            nextPosition = createPositionByDirection(nextPosition, direction);
         }
         return positions;
     }

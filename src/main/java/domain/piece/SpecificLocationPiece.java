@@ -15,7 +15,8 @@ public abstract class SpecificLocationPiece extends Piece {
     @Override
     protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
-        if (checkOverRange(source, direction)) {
+        Position nextPosition = createPositionByDirection(source, direction);
+        if (nextPosition != null) {
             positions.add(createPositionByDirection(source, direction));
         }
         return positions;

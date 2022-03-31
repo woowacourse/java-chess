@@ -10,7 +10,6 @@ public class Pawn extends SpecificLocationPiece {
 
     private static final int WHITE_START_LINE = 2;
     private static final int BLACK_START_LINE = 7;
-    private static final int SUBLIST_START_INDEX = 0;
     private static final List<Direction> BLACK_DIRECTIONS = List.of(
         Direction.SOUTHWEST,
         Direction.SOUTHEAST,
@@ -68,17 +67,16 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     @Override
-    protected List<Position> calculateAvailablePosition(final Position source,
-        final Direction direction) {
+    protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
-        if (checkOverRange(source, direction)) {
-            positions.add(createPositionByDirection(source, direction));
+        Position nextPosition = createPositionByDirection(source, direction);
+        if (nextPosition != null) {
+            positions.add(nextPosition);
         }
         return positions;
     }
 
-    private List<Position> generateTwoSpaceMoveRoute(final Position source,
-        final Direction direction) {
+    private List<Position> generateTwoSpaceMoveRoute(final Position source, final Direction direction) {
         List<Position> positions = new ArrayList<>();
         if (isTwoSpaceMoveDirection(direction)) {
             positions.add(calculatePawnWayPoint(source, direction));
@@ -93,20 +91,14 @@ public class Pawn extends SpecificLocationPiece {
 
     private Position calculatePawnWayPoint(final Position source, final Direction direction) {
         Direction addDirection = generateAddDirection(direction);
-        if (addDirection != null && checkOverRange(source, addDirection)) {
-            return createPositionByDirection(source, addDirection);
-        }
-        return null;
+        return createPositionByDirection(source, addDirection);
     }
 
     private Direction generateAddDirection(final Direction direction) {
         if (direction == Direction.NORTH_NORTH) {
             return Direction.NORTH;
         }
-        if (direction == Direction.SOUTH_SOUTH) {
-            return Direction.SOUTH;
-        }
-        return null;
+        return Direction.SOUTH;
     }
 
     @Override

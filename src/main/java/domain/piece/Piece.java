@@ -9,6 +9,8 @@ import java.util.List;
 
 public abstract class Piece {
 
+    protected static final int SUBLIST_START_INDEX = 0;
+
     private final Player player;
     private final PieceSymbol pieceSymbol;
 
@@ -23,7 +25,7 @@ public abstract class Piece {
             .filter(list -> list.contains(target))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 목적지입니다."));
-        return positions.subList(0, positions.indexOf(target));
+        return positions.subList(SUBLIST_START_INDEX, positions.indexOf(target));
     }
 
     protected abstract List<Position> calculateAvailablePosition(final Position source,
@@ -31,16 +33,13 @@ public abstract class Piece {
 
     protected abstract List<Direction> getDirections();
 
-    protected boolean checkOverRange(final Position source, final Direction direction) {
-        int rank = source.getRank() + direction.getRank();
-        int file = source.getFile() + direction.getFile();
-        return File.isFileRange(file) && Rank.isRankRange(rank);
-    }
-
     protected Position createPositionByDirection(final Position source, final Direction direction) {
         int rank = source.getRank() + direction.getRank();
         int file = source.getFile() + direction.getFile();
-        return Position.of(File.of(file), Rank.of(rank));
+        if (File.isFileRange(file) && Rank.isRankRange(rank)) {
+            return Position.of(File.of(file), Rank.of(rank));
+        }
+        return null;
     }
 
     public abstract double score(boolean isSeveralPawn);
