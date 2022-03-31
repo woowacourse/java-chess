@@ -25,9 +25,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Direction findValidDirection(final Position current, final Position target) {
-        final Direction direction = calculateDirection(current, target);
-        validateDirection(direction, getProperDirection());
+    protected Direction findValidDirection(final Position current, final Position target, final Direction direction) {
         if (isFirstMove(current.getRow())) {
             validateRange(current, target, POSSIBLE_INITIAL_DISTANCE);
             return direction;
@@ -36,7 +34,8 @@ public class Pawn extends Piece {
         return direction;
     }
 
-    private List<Direction> getProperDirection() {
+    @Override
+    protected List<Direction> getPossibleDirection() {
         if (getColor() == Color.BLACK) {
             return BLACK_POSSIBLE_DIRECTIONS;
         }

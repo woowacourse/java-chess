@@ -22,11 +22,13 @@ public class King extends Piece {
     }
 
     @Override
-    public Direction findValidDirection(final Position current, final Position target) {
-        Direction direction = calculateDirection(current, target);
-        validateDirection(direction, POSSIBLE_DIRECTIONS);
+    protected Direction findValidDirection(final Position current, final Position target, final Direction direction) {
         validateRange(current, target, POSSIBLE_DISTANCE);
         return direction;
     }
 
+    @Override
+    protected List<Direction> getPossibleDirection() {
+        return POSSIBLE_DIRECTIONS;
+    }
 }

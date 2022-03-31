@@ -17,7 +17,16 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Direction findValidDirection(Position current, Position target);
+    public Direction findValidDirection(final Position current, final Position target) {
+        final Direction direction = calculateDirection(current, target);
+        validateDirection(direction, getPossibleDirection());
+        return findValidDirection(current, target, direction);
+    }
+
+    protected abstract Direction findValidDirection(final Position current, final Position target,
+                                                    final Direction direction);
+
+    protected abstract List<Direction> getPossibleDirection();
 
     public boolean isSamePiece(final PieceType expected) {
         return pieceType == expected;

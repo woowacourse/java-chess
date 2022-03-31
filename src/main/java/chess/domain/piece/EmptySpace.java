@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.List;
 
 public class EmptySpace {
 
@@ -25,7 +26,13 @@ public class EmptySpace {
         }
 
         @Override
-        public Direction findValidDirection(Position current, Position target) {
+        protected Direction findValidDirection(final Position current, final Position target,
+                                               final Direction direction) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        protected List<Direction> getPossibleDirection() {
             throw new UnsupportedOperationException();
         }
     }
