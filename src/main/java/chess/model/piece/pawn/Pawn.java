@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.PAWN;
+    public double getPointValue() {
+        return Point.PAWN.getValue();
     }
 }

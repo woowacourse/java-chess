@@ -25,7 +25,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.KING;
+    public double getPointValue() {
+        return Point.KING.getValue();
     }
 }

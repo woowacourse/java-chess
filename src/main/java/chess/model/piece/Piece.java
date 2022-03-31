@@ -17,7 +17,7 @@ public abstract class Piece {
         this.strategy = strategy;
     }
 
-    public abstract Point getPoint();
+    public abstract double getPointValue();
 
     public boolean movable(final Square source, Square target, MoveType moveType) {
         return this.strategy.movable(source, target, moveType);

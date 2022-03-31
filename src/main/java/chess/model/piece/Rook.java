@@ -15,7 +15,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.ROOK;
+    public double getPointValue() {
+        return Point.ROOK.getValue();
     }
 }

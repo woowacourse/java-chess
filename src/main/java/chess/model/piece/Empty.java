@@ -10,7 +10,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.EMPTY;
+    public double getPointValue() {
+        return Point.EMPTY.getValue();
     }
 }

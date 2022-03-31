@@ -19,7 +19,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.BISHOP;
+    public double getPointValue() {
+        return Point.BISHOP.getValue();
     }
 }

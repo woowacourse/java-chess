@@ -86,9 +86,9 @@ public final class Board {
     private double calculateEachPoint(Square square) {
         Piece piece = board.get(square);
         if (piece.isPawn() && hasAllyPawnInSameFile(square, piece)) {
-            return piece.getPoint().getValue() / PAWN_POINT_DIVIDE_VALUE;
+            return piece.getPointValue() / PAWN_POINT_DIVIDE_VALUE;
         }
-        return piece.getPoint().getValue();
+        return piece.getPointValue();
     }
 
     private boolean hasAllyPawnInSameFile(Square sourceSquare, Piece sourcePiece) {

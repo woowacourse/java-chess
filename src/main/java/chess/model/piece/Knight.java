@@ -24,7 +24,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.KNIGHT;
+    public double getPointValue() {
+        return Point.KNIGHT.getValue();
     }
 }

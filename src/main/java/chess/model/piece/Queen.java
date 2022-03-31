@@ -24,7 +24,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public Point getPoint() {
-        return Point.QUEEN;
+    public double getPointValue() {
+        return Point.QUEEN.getValue();
     }
 }
