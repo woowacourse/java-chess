@@ -1,5 +1,6 @@
 package chess.view;
 
+import static java.lang.System.err;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
 import chess.domain.board.position.Positions;
@@ -26,9 +27,14 @@ public class InputView {
     }
 
     public static Command inputStartCommand() {
-        String input = SCANNER.nextLine();
-        validateStartCommand(input);
-        return Command.from(input);
+        try {
+            String input = SCANNER.nextLine();
+            validateStartCommand(input);
+            return Command.from(input);
+        } catch (RuntimeException e) {
+            err.println(e.getMessage());
+        }
+        return inputStartCommand();
     }
 
     static void validateStartCommand(String input) {
@@ -38,18 +44,22 @@ public class InputView {
     }
 
     public static Request inputCommandInGaming() {
+        try {
+            return getInputCommandInGaming();
+        } catch (RuntimeException e) {
+            err.println(e.getMessage());
+        }
+        return inputCommandInGaming();
+    }
+
+    private static Request getInputCommandInGaming() {
         String input = SCANNER.nextLine();
         validateCommandInGaming(input);
         Command command = Command.from(input);
-        if (command.isEnd()) {
-            return new NotMoveRequest(command);
-        }
-
-        if (command.isStatus()) {
+        if (command.isEnd() || command.isStatus()) {
             return new NotMoveRequest(command);
         }
         List<String> inputs = List.of(input.split(" "));
-
         Position source = Positions.findPositionBy(inputs.get(1));
         Position target = Positions.findPositionBy(inputs.get(2));
         return new MoveRequest(command, source, target);

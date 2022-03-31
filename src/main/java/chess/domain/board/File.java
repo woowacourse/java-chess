@@ -3,6 +3,7 @@ package chess.domain.board;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum File {
     A("a", 1),
@@ -34,6 +35,10 @@ public enum File {
                 .filter(file -> file.index == input)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
+    }
+
+    public static Stream<File> stream() {
+        return Arrays.stream(values());
     }
 
     public static List<File> traceGroup(File source, File target) {

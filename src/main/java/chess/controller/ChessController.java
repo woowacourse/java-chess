@@ -1,5 +1,7 @@
 package chess.controller;
 
+import static java.lang.System.err;
+
 import chess.constant.Command;
 import chess.domain.board.Board;
 import chess.domain.board.factory.BoardFactory;
@@ -27,6 +29,10 @@ public class ChessController {
 
         OutputView.printChessBoard(board.getBoard());
 
+        startGame(gameFlow, board);
+    }
+
+    private void startGame(GameFlow gameFlow, Board board) {
         while (gameFlow.isRunning()) {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand().isEnd()) {
@@ -34,12 +40,21 @@ public class ChessController {
             }
 
             if (request.getCommand().isStatus()) {
-                OutputView.printCurrentTeamGameScore(board.calculateScore());
+                OutputView.printCurrentTeamScore(board.calculateScore());
                 continue;
             }
 
-            board.movePiece(request.getSourcePosition(), request.getTargetPosition());
+            movePiece(board, request);
             OutputView.printChessBoard(board.getBoard());
+        }
+    }
+
+    private void movePiece(Board board, Request request) {
+        try {
+            board.movePiece(request.getSourcePosition(), request.getTargetPosition());
+        } catch (RuntimeException e) {
+            err.println(e.getMessage());
+            movePiece(board, InputView.inputCommandInGaming());
         }
     }
 }

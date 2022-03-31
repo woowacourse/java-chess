@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static chess.domain.piece.PieceColor.EMPTY;
+import static java.lang.System.err;
 
 import chess.constant.MoveType;
 import chess.domain.board.position.Position;
@@ -74,7 +75,7 @@ public class Board {
 
         return sourcePosition.findPositionsToMove(targetPosition)
                 .stream()
-                .anyMatch(position->!isEmpty(position));
+                .anyMatch(position -> !isEmpty(position));
     }
 
     private boolean isEmpty(Position position) {
@@ -96,18 +97,14 @@ public class Board {
     }
 
     public double adjustPawnScore() {
-        int adjustingScore = 0;
-        for (File file : File.values()) {
-            long rankDuplicatedPiecesCount = calculateRankDuplicatedPiecesCount(file);
-
-            if (rankDuplicatedPiecesCount> 1) {
-                adjustingScore += rankDuplicatedPiecesCount * 0.5;
-            }
-        }
-        return adjustingScore;
+        return File.stream()
+                .map(file -> duplicatePieceCountByRank(file))
+                .filter(count -> count >= 2)
+                .mapToDouble(point -> point * 0.5)
+                .sum();
     }
 
-    private long calculateRankDuplicatedPiecesCount(File file) {
+    private long duplicatePieceCountByRank(File file) {
         return Arrays.stream(Rank.values())
                 .map(rank -> Positions.findPositionBy(file, rank))
                 .filter(position -> {
