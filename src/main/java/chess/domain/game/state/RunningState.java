@@ -29,6 +29,7 @@ public abstract class RunningState implements GameState {
         return players.calculatePlayerScores(scoreCalculator);
     }
 
+    @Override
     public final Players getPlayers() {
         return players;
     }

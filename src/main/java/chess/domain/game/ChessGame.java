@@ -17,7 +17,7 @@ public class ChessGame {
     private GameState gameState;
 
     public ChessGame() {
-        gameState = new FinishedState();
+        gameState = new FinishedState(new Players());
     }
 
     public void start() {
@@ -49,7 +49,7 @@ public class ChessGame {
     }
 
     public void end() {
-        gameState = new FinishedState();
+        gameState = new FinishedState(gameState.getPlayers());
     }
 
     public boolean isRunning() {
@@ -62,8 +62,7 @@ public class ChessGame {
     }
 
     public Players getPlayers() {
-        RunningState runningState = convertToRunningState(gameState);
-        return runningState.getPlayers();
+        return gameState.getPlayers();
     }
 
     private RunningState convertToRunningState(GameState gameState) {

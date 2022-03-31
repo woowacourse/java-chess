@@ -74,6 +74,14 @@ public class Position {
         return column == position.column;
     }
 
+    public char getColumn() {
+        return column;
+    }
+
+    public char getRow() {
+        return row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

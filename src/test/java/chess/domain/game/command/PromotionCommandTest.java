@@ -8,9 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
-import chess.domain.Position;
 import chess.domain.game.state.MoveState;
-import chess.domain.game.state.PromotionState;
 import chess.domain.player.Players;
 
 class PromotionCommandTest {
