@@ -3,7 +3,6 @@ package chess.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,7 @@ class ScoreTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board(BoardInitializer.create());
+        board = new Board();
     }
 
     @Test

@@ -1,12 +1,11 @@
-package chess.controller;
+package chess;
 
-import chess.Command;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
 
-public class ChessController {
+public class ChessGameLauncher {
 
     public void run() {
         OutputView.printStartMessage();

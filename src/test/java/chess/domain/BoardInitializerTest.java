@@ -35,7 +35,7 @@ class BoardInitializerTest {
             }
         }
 
-        Map<Position, Piece> board = BoardInitializer.create();
+        Map<Position, Piece> board = new Board().getBoard();
 
         assertThat(board.keySet().containsAll(positions)).isTrue();
     }
@@ -44,7 +44,7 @@ class BoardInitializerTest {
     @MethodSource("initialPieces")
     @DisplayName("Piece들이 규칙에 맞게 잘 들어갔는지 확인한다.")
     void initialPieces(Position position, Piece piece) {
-        Map<Position, Piece> board = BoardInitializer.create();
+        Map<Position, Piece> board = new Board().getBoard();
 
         assertThat(board.get(position)).isEqualTo(piece);
     }

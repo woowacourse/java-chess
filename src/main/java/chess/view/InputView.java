@@ -10,7 +10,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> requestCommands() {
-        return split(scanner.next(), BLANK);
+        return split(scanner.nextLine(), BLANK);
     }
 
     public static List<String> split(final String input, final String regex) {

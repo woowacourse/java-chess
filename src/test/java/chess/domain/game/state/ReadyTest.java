@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
-import chess.domain.BoardInitializer;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUp() {
-        ready = new Ready(new Board(BoardInitializer.create()));
+        ready = new Ready(new Board());
     }
 
     @Test

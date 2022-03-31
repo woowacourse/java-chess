@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.Board;
-import chess.domain.BoardInitializer;
 import chess.domain.result.Score;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -15,7 +14,7 @@ public class ChessGame {
     private final Board board;
 
     public ChessGame() {
-        this.board = new Board(BoardInitializer.create());
+        this.board = new Board();
         this.state = new Ready(board);
     }
 

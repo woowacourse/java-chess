@@ -1,10 +1,17 @@
 package chess.domain;
 
+import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.KingPiece;
+import chess.domain.piece.KnightPiece;
+import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.QueenPiece;
+import chess.domain.piece.RookPiece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,10 +21,44 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int INITIAL_CAPACITY = 64;
+    private static final int START_EMPTY_ROW = 6;
+    private static final int END_EMPTY_ROW = 3;
+
     private final Map<Position, Piece> board;
 
-    public Board(final Map<Position, Piece> board) {
-        this.board = board;
+    public Board() {
+        this.board = new LinkedHashMap<>(INITIAL_CAPACITY);
+        initialPieces(board);
+    }
+
+    private void initialPieces(final Map<Position, Piece> board) {
+        putPiecesWithoutPawn(board, Row.EIGHT, Color.BLACK);
+        putPiecesOnRow(board, Row.SEVEN, new PawnPiece(Color.BLACK));
+
+        for (int i = START_EMPTY_ROW; i >= END_EMPTY_ROW; i--) {
+            putPiecesOnRow(board, Row.of(i), new EmptyPiece());
+        }
+
+        putPiecesOnRow(board, Row.TWO, new PawnPiece(Color.WHITE));
+        putPiecesWithoutPawn(board, Row.ONE, Color.WHITE);
+    }
+
+    private void putPiecesWithoutPawn(final Map<Position, Piece> board, final Row row, final Color color) {
+        board.put(new Position(Column.A, row), new RookPiece(color));
+        board.put(new Position(Column.B, row), new KnightPiece(color));
+        board.put(new Position(Column.C, row), new BishopPiece(color));
+        board.put(new Position(Column.D, row), new QueenPiece(color));
+        board.put(new Position(Column.E, row), new KingPiece(color));
+        board.put(new Position(Column.F, row), new BishopPiece(color));
+        board.put(new Position(Column.G, row), new KnightPiece(color));
+        board.put(new Position(Column.H, row), new RookPiece(color));
+    }
+
+    private void putPiecesOnRow(final Map<Position, Piece> board, final Row row, final Piece piece) {
+        for (Column column : Column.values()) {
+            board.put(new Position(column, row), piece);
+        }
     }
 
     public void isMovable(final Position from, final Position to, final Color turn) {

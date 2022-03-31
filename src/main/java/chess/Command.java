@@ -1,9 +1,8 @@
 package chess;
 
-import chess.domain.result.Result;
-import chess.domain.result.Score;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
+import chess.domain.result.Score;
 import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
