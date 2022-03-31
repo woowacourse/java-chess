@@ -150,7 +150,7 @@ public class ChessBoard {
         return 0;
     }
 
-    public boolean isKing(Position position) {
-        return isFilled(position) && King.canCreate(board.get(position));
+    public boolean isKing(Piece piece) {
+        return piece != null && King.canCreate(piece);
     }
 }

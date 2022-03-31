@@ -24,10 +24,11 @@ public class RunningGame extends StartedGame {
     @Override
     public GameState move(Position source, Position target) {
         validatePosition(source);
+        Piece targetPiece = board.getPiece(target);
         board.move(source, target);
         player = player.change();
 
-        if (board.isKing(target)) {
+        if (board.isKing(targetPiece)) {
             return new EndGame();
         }
 
