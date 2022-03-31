@@ -65,7 +65,7 @@ public abstract class AbstractPiece implements Piece {
                 .map(direction -> directionalPositions.get(direction))
                 .filter(positions -> positions.contains(target))
                 .findFirst()
-                .orElse(null);
+                .orElse(new ArrayList<>());
     }
 
     @Override

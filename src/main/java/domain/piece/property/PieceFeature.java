@@ -33,7 +33,7 @@ public enum PieceFeature {
                 .filter(pieceFeature -> pieceFeature.symbol.equals(symbol))
                 .map(pieceFeature -> pieceFeature.score)
                 .findFirst()
-                .orElse(null);
+                .orElse(0d);
         if (duplicatedPawn && score == PAWN.score) {
             return DUPLICATE_PAWN;
         }

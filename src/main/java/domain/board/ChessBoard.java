@@ -4,6 +4,7 @@ import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.piece.unit.Piece;
 import domain.position.Position;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,7 @@ public final class ChessBoard {
     private List<Position> calculateRoutePositions(final Position target, final Piece sourcePiece) {
         List<Position> baseRoutePositions = sourcePiece.calculateRoute(target);
         if (baseRoutePositions.size() == 0) {
-            return null;
+            return new ArrayList<>();
         }
         return baseRoutePositions.subList(0, baseRoutePositions.indexOf(target));
     }
