@@ -26,8 +26,8 @@ public class KingTest {
     @DisplayName("King 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         King king = new King(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.D, Row.RANK_6);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.D, Row.RANK_6);
         assertThat(king.isCorrectMovement(source, target, false)).isTrue();
     }
 
@@ -35,8 +35,8 @@ public class KingTest {
     @DisplayName("King 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         King king = new King(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.D, Row.RANK_7);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.D, Row.RANK_7);
         assertThat(king.isCorrectMovement(source, target, false)).isFalse();
     }
 }

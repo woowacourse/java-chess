@@ -26,8 +26,8 @@ public class PawnTest {
     @DisplayName("검은색 Pawn 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isBlackMovable() {
         Pawn pawn = new Pawn(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_4);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.C, Row.RANK_4);
         assertThat(pawn.isCorrectMovement(source, target, false)).isTrue();
     }
 
@@ -35,8 +35,8 @@ public class PawnTest {
     @DisplayName("검은색 Pawn 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isBlackNotMovable() {
         Pawn pawn = new Pawn(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_6);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.C, Row.RANK_6);
         assertThat(pawn.isCorrectMovement(source, target, false)).isFalse();
     }
 
@@ -44,8 +44,8 @@ public class PawnTest {
     @DisplayName("흰색 Pawn 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isWhiteMovable() {
         Pawn pawn = new Pawn(Color.WHITE);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_6);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.C, Row.RANK_6);
         assertThat(pawn.isCorrectMovement(source, target, false)).isTrue();
     }
 
@@ -53,8 +53,8 @@ public class PawnTest {
     @DisplayName("흰색 Pawn이 움직일 수 없는 위치이면 false를 반환하는지")
     void isWhiteNotMovable() {
         Pawn pawn = new Pawn(Color.WHITE);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_4);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.C, Row.RANK_4);
         assertThat(pawn.isCorrectMovement(source, target, false)).isFalse();
     }
 }

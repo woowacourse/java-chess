@@ -21,19 +21,19 @@ public class PieceFactory {
     }
 
     private static void putPiecesExceptPawnOnRow(Map<Position, Piece> pieces, Row row, Color color) {
-        pieces.put(new Position(Column.A, row), new Rook(color));
-        pieces.put(new Position(Column.B, row), new Knight(color));
-        pieces.put(new Position(Column.C, row), new Bishop(color));
-        pieces.put(new Position(Column.D, row), new Queen(color));
-        pieces.put(new Position(Column.E, row), new King(color));
-        pieces.put(new Position(Column.F, row), new Bishop(color));
-        pieces.put(new Position(Column.G, row), new Knight(color));
-        pieces.put(new Position(Column.H, row), new Rook(color));
+        pieces.put(Position.of(Column.A, row), new Rook(color));
+        pieces.put(Position.of(Column.B, row), new Knight(color));
+        pieces.put(Position.of(Column.C, row), new Bishop(color));
+        pieces.put(Position.of(Column.D, row), new Queen(color));
+        pieces.put(Position.of(Column.E, row), new King(color));
+        pieces.put(Position.of(Column.F, row), new Bishop(color));
+        pieces.put(Position.of(Column.G, row), new Knight(color));
+        pieces.put(Position.of(Column.H, row), new Rook(color));
     }
 
     private static void putPawnOnRank(Map<Position, Piece> pieces, Row row, Color color) {
         for (Column column : Column.values()) {
-            Position position = new Position(column, row);
+            Position position = Position.of(column, row);
             pieces.put(position, new Pawn(color));
         }
     }

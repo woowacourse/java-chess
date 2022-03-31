@@ -2,24 +2,37 @@ package chess.domain.position;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public final class Position {
 
+    private static final Map<String, Position> POSITIONS = new HashMap<>();
+
     private final Column column;
     private final Row row;
 
-    public Position(Column column, Row row) {
+    private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
 
+    public static Position of(Column column, Row row) {
+        return of(column.getName() + row.getName());
+    }
+
     public static Position of(String value) {
+        if (POSITIONS.containsKey(value)) {
+            return POSITIONS.get(value);
+        }
+
         Column column = Column.of(value.substring(0, 1));
         Row row = Row.of(value.substring(1));
-        return new Position(column, row);
+        Position position = new Position(column, row);
+        POSITIONS.put(value, position);
+        return position;
     }
 
     public static Map<Row, List<Position>> groupByRow(List<Position> positions) {
@@ -30,6 +43,7 @@ public final class Position {
     public boolean isSameRow(Row row) {
         return this.row == row;
     }
+
     public int calculateColumnDifferenceTo(Position position) {
         return column.displacementTo(position.column);
     }

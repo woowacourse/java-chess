@@ -26,8 +26,8 @@ public class KnightTest {
     @DisplayName("Knight 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         Knight knight = new Knight(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.A, Row.RANK_6);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.A, Row.RANK_6);
         assertThat(knight.isCorrectMovement(source, target, false)).isTrue();
     }
 
@@ -35,8 +35,8 @@ public class KnightTest {
     @DisplayName("Knight 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         Knight knight = new Knight(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.F, Row.RANK_2);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.F, Row.RANK_2);
         assertThat(knight.isCorrectMovement(source, target, false)).isFalse();
     }
 }

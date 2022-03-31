@@ -26,8 +26,8 @@ public class RookTest {
     @DisplayName("Rook 이 움직일 수 있는 위치이면 true를 반환하는지")
     void isMovable() {
         Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.H, Row.RANK_5);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.H, Row.RANK_5);
         assertThat(rook.isCorrectMovement(source, target, false)).isTrue();
     }
 
@@ -35,8 +35,8 @@ public class RookTest {
     @DisplayName("Rook 이 움직일 수 없는 위치이면 false를 반환하는지")
     void isNotMovable() {
         Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.E, Row.RANK_6);
+        Position source = Position.of(Column.C, Row.RANK_5);
+        Position target = Position.of(Column.E, Row.RANK_6);
         assertThat(rook.isCorrectMovement(source, target, true)).isFalse();
     }
 }

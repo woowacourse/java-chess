@@ -18,8 +18,8 @@ public class MoveCommandTest {
         MoveCommand moveCommand = MoveCommand.of("move a1 a2");
 
         assertAll(
-            () -> assertThat(moveCommand.from()).isEqualTo(new Position(Column.A, Row.RANK_1)),
-            () -> assertThat(moveCommand.to()).isEqualTo(new Position(Column.A, Row.RANK_2))
+            () -> assertThat(moveCommand.from()).isEqualTo(Position.of(Column.A, Row.RANK_1)),
+            () -> assertThat(moveCommand.to()).isEqualTo(Position.of(Column.A, Row.RANK_2))
         );
     }
 }

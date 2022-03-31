@@ -39,7 +39,7 @@ public class OutputView {
 
     private static void printBoardOnRow(Map<Position, Piece> pieces, int rank) {
         for (int column = 0; column < 8; column++) {
-            Position position = new Position(Column.of(column), Row.of(rank));
+            Position position = Position.of(Column.of(column), Row.of(rank));
             System.out.print(makeSignature(pieces, position));
         }
     }
