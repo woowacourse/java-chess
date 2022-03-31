@@ -47,11 +47,11 @@ public class OutputView {
 
     private static void printWinner(Status status) {
         System.out.println(GAME_RESULT_MESSAGE);
-        if (status.getWinner() == null) {
+        if (status.winner() == null) {
             System.out.println(RESULT_DRAW);
             return;
         }
-        System.out.println(RESULT_WIN + status.getWinner());
+        System.out.println(RESULT_WIN + status.winner());
     }
 
     public static void printErrorMessage(final String errorMessage) {
