@@ -3,7 +3,7 @@ package chess.domain.move;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 
-public class BishopMoveStrategy extends LinearMoveStrategy {
+public final class BishopMoveStrategy extends LinearMoveStrategy {
 
     private static final String UNSUPPORTED_MOVE_PATTERN_MESSAGE = "[ERROR] 비숍에서 지원하지 않는 이동전략입니다.";
 
