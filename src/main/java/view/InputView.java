@@ -6,7 +6,7 @@ import domain.classification.Order;
 import domain.classification.OrderCase;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
 

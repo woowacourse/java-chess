@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class OutputView {
+public final class OutputView {
 
     public static void printBoard(final ChessBoard chessBoard) {
         List<YPosition> yPositions = Arrays.asList(YPosition.values());

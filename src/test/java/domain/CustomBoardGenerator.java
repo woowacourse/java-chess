@@ -8,7 +8,7 @@ import domain.position.YPosition;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomBoardGenerator implements BoardGenerator {
+public final class CustomBoardGenerator implements BoardGenerator {
 
     private Map<Position, Piece> board;
 

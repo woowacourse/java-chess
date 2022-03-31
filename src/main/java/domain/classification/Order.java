@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Order {
+public final class Order {
 
     private static final String DELIMITER = " ";
     private static final int MOVE_COMMAND_INDEX = 0;
