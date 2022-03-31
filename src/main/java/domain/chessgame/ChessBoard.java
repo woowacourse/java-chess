@@ -1,7 +1,6 @@
 package domain.chessgame;
 
 import domain.Player;
-import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Piece;
 import domain.position.File;
@@ -15,7 +14,6 @@ import utils.PieceScore;
 
 public class ChessBoard {
 
-    private static final String NULL_PIECE_SYMBOL = ".";
     private static final int DEFAULT_KING_COUNT = 2;
     private static final int PAWN_COUNT_SAME_FILE = 2;
     private static final int NOT_FOUND_DUPLICATE_PAWN = 0;
@@ -24,13 +22,6 @@ public class ChessBoard {
 
     public ChessBoard(final Map<Position, Piece> board) {
         this.board = board;
-    }
-
-    private boolean isPawnAttackDirection(final Direction moveDirection) {
-        return moveDirection == Direction.NORTHWEST
-            || moveDirection == Direction.NORTHEAST
-            || moveDirection == Direction.SOUTHEAST
-            || moveDirection == Direction.SOUTHWEST;
     }
 
     public void move(final Position source, final Position target) {
@@ -75,12 +66,11 @@ public class ChessBoard {
     }
 
     public double calculateScoreByPlayer(final Player player) {
-        double sum = 0;
-        for (File file : File.values()) {
-            List<PieceScore> pieceScores = generatePieceScoreList(player, file);
-            sum += calculateFileScore(pieceScores);
-        }
-        return sum;
+        return Arrays.stream(File.values())
+            .map(file -> generatePieceScoreList(player, file))
+            .map(this::calculateFileScore)
+            .mapToDouble(Double::doubleValue)
+            .sum();
     }
 
     private List<PieceScore> generatePieceScoreList(final Player player, final File file) {
@@ -92,21 +82,17 @@ public class ChessBoard {
     }
 
     private double calculateFileScore(final List<PieceScore> pieceScores) {
-        double sum = pieceScores.stream()
-            .map(PieceScore::score)
+        boolean isSeveralPawn = isSeveralPawnInFile(pieceScores);
+        return pieceScores.stream()
+            .map(pieceScore -> pieceScore.score(isSeveralPawn))
             .mapToDouble(Double::doubleValue)
             .sum();
-        return sum - calculatePawnsInFile(pieceScores);
     }
 
-    private double calculatePawnsInFile(final List<PieceScore> pieceScores) {
-        long count = pieceScores.stream()
-            .filter(pieceScore -> pieceScore.score() == PieceScore.PAWN.score())
-            .count();
-        if (count >= PAWN_COUNT_SAME_FILE) {
-            return count * PieceScore.DUPLICATE_PAWN;
-        }
-        return NOT_FOUND_DUPLICATE_PAWN;
+    private boolean isSeveralPawnInFile(final List<PieceScore> pieceScores) {
+        return pieceScores.stream()
+            .filter(pieceScore -> pieceScore == PieceScore.PAWN)
+            .count() > 1;
     }
 
     public boolean isKingOnlyOne() {

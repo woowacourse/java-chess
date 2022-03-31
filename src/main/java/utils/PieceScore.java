@@ -10,7 +10,7 @@ public enum PieceScore {
     PAWN(1, "P"),
     KING(0, "K");
 
-    public static final double DUPLICATE_PAWN = 0.5;
+    public static final double SEVERAL_PAWN_POINT = 0.5;
 
     private final double score;
     private final String symbol;
@@ -27,7 +27,10 @@ public enum PieceScore {
             .orElse(null);
     }
 
-    public double score() {
+    public double score(boolean isSeveralPawn) {
+        if (this == PAWN && isSeveralPawn) {
+            return SEVERAL_PAWN_POINT;
+        }
         return this.score;
     }
 }
