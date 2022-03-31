@@ -1,6 +1,9 @@
 package chess.status;
 
+import chess.game.Board;
+import chess.game.BoardInitializer;
 import chess.game.Command;
+import chess.piece.Color;
 
 public final class Ready {
 
@@ -9,9 +12,9 @@ public final class Ready {
 
     public static State start(final Command command) {
         if (command.isStart()) {
-            return new Running();
+            final Board board = new Board(BoardInitializer.getBoard());
+            return new Move(board, Color.WHITE);
         }
-
         if (command.isEnd()) {
             return new Finished();
         }

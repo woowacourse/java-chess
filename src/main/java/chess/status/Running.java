@@ -1,66 +1,64 @@
 package chess.status;
 
-import static chess.piece.Color.WHITE;
-
-import chess.game.*;
+import chess.game.Board;
+import chess.game.Command;
+import chess.game.MoveCommand;
+import chess.game.Score;
 import chess.piece.Color;
 
-public class Running implements State {
-
+public abstract class Running implements State {
     private final Board board;
-    private Color color = WHITE;
+    private Color color;
 
-    Running() {
-        this.board = new Board(BoardInitializer.getBoard());
+    Running(final Board board, final Color color) {
+        this.board = board;
+        this.color = color;
     }
 
     @Override
-    public void move(final MoveCommand moveCommand) {
-        final Position from = moveCommand.getFrom();
-        final Position to = moveCommand.getTo();
-        board.movePiece(from, to, color);
-        this.color = color.reverse();
-    }
+    public abstract void move(final MoveCommand moveCommand);
 
     @Override
-    public State turn(final Command command) {
+    public final State turn(final Command command) {
         if (command.isStart()) {
             throw new IllegalStateException("이미 게임이 시작된 상태입니다.");
         }
-
         if (command.isEnd()) {
             return new Finished();
         }
-        return this;
+        if (command.isStatus()) {
+            return new Status(board, color);
+        }
+        return new Move(board, color);
     }
 
     @Override
-    public Score score() {
+    public final Score score() {
         return board.calculateBoardScore();
     }
 
     @Override
-    public boolean isRunning() {
+    public final boolean isRunning() {
         return true;
     }
 
     @Override
-    public boolean canMove() {
-        return true;
-    }
-
-    @Override
-    public boolean isGameEnd() {
+    public final boolean isGameEnd() {
         return board.isKingDead();
     }
 
+    public final void reversColor() {
+        this.color = color.reverse();
+    }
+
     @Override
-    public Board getBoard() {
+    public final Board getBoard() {
         return board;
     }
 
     @Override
-    public Color getColor() {
+    public final Color getColor() {
         return color;
     }
+
 }
