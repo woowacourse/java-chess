@@ -6,45 +6,41 @@ import chess.domain.Color;
 import chess.domain.board.Position;
 
 public abstract class Piece {
-	protected static final String INVALID_TARGET_POSITION_EXCEPTION = "이동할 수 없는 위치입니다.";
+    protected static final String INVALID_TARGET_POSITION_EXCEPTION = "이동할 수 없는 위치입니다.";
 
-	private final Color color;
+    private final Color color;
 
-	protected Piece(Color color) {
-		this.color = color;
-	}
+    protected Piece(Color color) {
+        this.color = color;
+    }
 
-	public final boolean isBlack() {
-		return this.color == Color.BLACK;
-	}
+    public final boolean isBlack() {
+        return this.color == Color.BLACK;
+    }
 
-	public abstract void move(Position beforePosition,
-		Position afterPosition,
-		Consumer<Piece> moveFunction);
+    public final boolean isSameColorWith(Piece targetPiece) {
+        return this.color == targetPiece.color;
+    }
 
-	public abstract void capture(Position beforePosition,
-		Position afterPosition,
-		Consumer<Piece> moveFunction);
+    public boolean isKing() {
+        return false;
+    }
 
-	public boolean isSameColorWith(Piece targetPiece) {
-		return this.color == targetPiece.color;
-	}
+    public boolean isKnight() {
+        return false;
+    }
 
-	protected abstract boolean canMove(Position beforePosition, Position afterPosition);
+    public boolean isPawn() {
+        return false;
+    }
 
-	public abstract double getScore();
+    public abstract void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
 
-	public abstract String getSymbol();
+    public abstract void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
 
-	public boolean isKing() {
-		return false;
-	}
+    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
-	public boolean isKnight() {
-		return false;
-	}
+    public abstract double getScore();
 
-	public boolean isPawn() {
-		return false;
-	}
+    public abstract String getSymbol();
 }
