@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.controller.Command;
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
