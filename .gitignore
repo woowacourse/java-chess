@@ -37,3 +37,4 @@ docker/db/mysql/init/*
 docker
 !docker/db/mysql/init/init.sql
 src/test/java/dbstudy
+src/main/java/dbstudy

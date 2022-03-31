@@ -11,6 +11,9 @@ import java.util.Objects;
 public final class Square {
     private static final Map<String, Square> squareCache = new HashMap<>();
     private static final int SQUARE_NAME_LENGTH = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -23,8 +26,8 @@ public final class Square {
         if (squareName.length() != SQUARE_NAME_LENGTH) {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
         }
-        File file = File.valueOf(String.valueOf(Character.toUpperCase(squareName.charAt(0))));
-        Rank rank = Rank.of(Character.getNumericValue(squareName.charAt(1)));
+        File file = File.valueOf(String.valueOf(Character.toUpperCase(squareName.charAt(FILE_INDEX))));
+        Rank rank = Rank.of(Character.getNumericValue(squareName.charAt(RANK_INDEX)));
         return Square.of(file, rank);
     }
 
@@ -41,7 +44,7 @@ public final class Square {
         rankDistance = Math.abs(rankDistance);
         int bigger = Math.max(fileDistance, rankDistance);
         int smaller = Math.min(fileDistance, rankDistance);
-        while (smaller > 0) {
+        while (smaller > FILE_INDEX) {
             int tmp = bigger;
             bigger = smaller;
             smaller = tmp % smaller;
@@ -52,7 +55,7 @@ public final class Square {
     public Distance getDistance(Square target) {
         Direction direction = this.findDirection(target);
         Square tempSquare = this;
-        int movedCount = 0;
+        int movedCount = FILE_INDEX;
         while (!tempSquare.equals(target)) {
             tempSquare = tempSquare.move(direction);
             movedCount++;

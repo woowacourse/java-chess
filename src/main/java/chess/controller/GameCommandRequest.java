@@ -3,6 +3,8 @@ package chess.controller;
 import java.util.List;
 
 public class GameCommandRequest {
+    private static final int COMMAND_INDEX = 0;
+    private static final int MOVE_REQUEST_BODY_SIZE = 2;
     private final GameCommand gameCommand;
     private final List<String> body;
 
@@ -13,14 +15,14 @@ public class GameCommandRequest {
 
     public static GameCommandRequest of(List<String> commandInputs) {
         checkRequestInputs(commandInputs);
-        GameCommand command = GameCommand.findCommand(commandInputs.get(0));
-        commandInputs.remove(0);
+        GameCommand command = GameCommand.findCommand(commandInputs.get(COMMAND_INDEX));
+        commandInputs.remove(COMMAND_INDEX);
         checkRequestBody(commandInputs, command);
         return new GameCommandRequest(command, commandInputs);
     }
 
     private static void checkRequestBody(List<String> commandInputs, GameCommand command) {
-        if (command.isMove() && commandInputs.size() != 2) {
+        if (command.isMove() && commandInputs.size() != MOVE_REQUEST_BODY_SIZE) {
             throw new IllegalArgumentException("move 요청에 내용이 없습니다.");
         }
     }

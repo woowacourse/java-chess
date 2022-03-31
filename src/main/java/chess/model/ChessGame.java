@@ -30,11 +30,11 @@ public class ChessGame {
                 .collect(Collectors.toMap(Function.identity(), color -> board.calculatePoint(color)));
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     public boolean isRunning() {
         return board.aliveTwoKings();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
