@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Piece {
@@ -63,12 +62,6 @@ public abstract class Piece {
 
     public boolean isStep() {
         return true;
-    }
-
-    public void validateArrive(Piece to, Direction direction) {
-        if (Objects.nonNull(to) && isSameTeam(to)) {
-            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
-        }
     }
 
     @Override

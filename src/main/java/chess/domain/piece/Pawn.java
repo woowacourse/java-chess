@@ -11,8 +11,6 @@ import static chess.domain.piece.Team.WHITE;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
-import java.util.Objects;
-
 
 public class Pawn extends Piece {
 
@@ -45,18 +43,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void validateArrive(Piece to, Direction direction) {
-        if ((direction == NORTH || direction == SOUTH) && Objects.nonNull(to)) {
-            throw new IllegalArgumentException("도착 지점에 말이 있어 이동이 불가능합니다.");
-        }
-
-        if (pullDiagonalDirections().contains(direction)
-                && (Objects.isNull(to) || this.isSameTeam(to))) {
-            throw new IllegalArgumentException("Pawn 의 대각선 이동은 상대편의 말을 잡을 때만 가능합니다.");
-        }
-    }
-
-    @Override
     public boolean isPawn() {
         return true;
     }
@@ -64,13 +50,11 @@ public class Pawn extends Piece {
     @Override
     public void movable(Position from, Position to) {
         Direction direction = from.findDirection(to, this);
-
-        validFirstMove(from, direction);
-
+        checkValidFirstMove(from, direction);
         super.movable(from, to);
     }
 
-    private void validFirstMove(Position from, Direction direction) {
+    private void checkValidFirstMove(Position from, Direction direction) {
         if (direction == NORTH_NORTH && !isWhiteStart(from)) {
             throw new IllegalArgumentException("위로 두칸은 white Pawn 이 첫수일 경우만 가능합니다.");
         }
