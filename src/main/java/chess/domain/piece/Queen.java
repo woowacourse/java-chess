@@ -29,4 +29,9 @@ public final class Queen extends Piece {
                 .filter(integer -> integer == 0)
                 .count() == 1;
     }
+
+    @Override
+    public boolean isQueen() {
+        return true;
+    }
 }

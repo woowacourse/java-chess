@@ -21,6 +21,22 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isQueen() {
+        return false;
+    }
+
+    public boolean isRook() {
+        return false;
+    }
+
+    public boolean isBishop() {
+        return false;
+    }
+
     public boolean isInValid() {
         return false;
     }

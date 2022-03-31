@@ -17,4 +17,9 @@ public final class Rook extends Piece {
 
         return isMovableDistance && isOpponent;
     }
+
+    @Override
+    public boolean isRook() {
+        return true;
+    }
 }

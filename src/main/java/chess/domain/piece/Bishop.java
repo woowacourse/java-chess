@@ -18,4 +18,9 @@ public final class Bishop extends Piece {
 
         return isMovableDistance && isOpponent;
     }
+
+    @Override
+    public boolean isBishop() {
+        return true;
+    }
 }

@@ -32,4 +32,9 @@ public final class King extends Piece {
 
         return ((Math.abs(file) == 1) && rank == 0) || (file == 0 && (Math.abs(rank) == 1));
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
