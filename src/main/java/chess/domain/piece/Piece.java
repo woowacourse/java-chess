@@ -12,7 +12,6 @@ import static chess.domain.board.File.H;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

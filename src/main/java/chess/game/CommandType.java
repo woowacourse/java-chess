@@ -5,7 +5,7 @@ import static chess.view.output.OutputView.printScore;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.vo.TeamColor;
+import chess.domain.piece.TeamColor;
 import java.util.Arrays;
 import java.util.List;
 

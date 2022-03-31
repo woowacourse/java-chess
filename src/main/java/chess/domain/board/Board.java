@@ -4,12 +4,12 @@ import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
 import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
-import static chess.domain.piece.vo.TeamColor.WHITE;
+import static chess.domain.piece.TeamColor.WHITE;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.vo.TeamColor;
+import chess.domain.piece.TeamColor;
 import chess.game.TotalScore;
 import java.util.Arrays;
 import java.util.List;

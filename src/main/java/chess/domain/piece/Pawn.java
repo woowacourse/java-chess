@@ -2,12 +2,11 @@ package chess.domain.piece;
 
 import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
-import static chess.domain.piece.vo.TeamColor.BLACK;
-import static chess.domain.piece.vo.TeamColor.WHITE;
+import static chess.domain.piece.TeamColor.BLACK;
+import static chess.domain.piece.TeamColor.WHITE;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
-import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;

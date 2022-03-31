@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Position;
-import chess.domain.piece.vo.TeamColor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

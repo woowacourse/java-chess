@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
-import chess.domain.piece.vo.TeamColor;
+import chess.domain.piece.TeamColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

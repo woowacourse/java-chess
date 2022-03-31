@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
-import chess.domain.piece.vo.TeamColor;
 import java.util.List;
 import java.util.function.BiPredicate;
 
