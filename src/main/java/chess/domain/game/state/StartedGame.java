@@ -32,12 +32,12 @@ public class StartedGame implements GameState {
 
     @Override
     public GameState move(Position source, Position target) {
-        throw new IllegalArgumentException("start를 해야만 move를 할 수 있습니다.");
+        throw new UnsupportedOperationException("start를 해야만 move를 할 수 있습니다.");
     }
 
     @Override
     public Map<Color, Double> status() {
-        throw new IllegalArgumentException("start를 해야만 status를 할 수 있습니다.");
+        throw new UnsupportedOperationException("start를 해야만 status를 할 수 있습니다.");
     }
 
     @Override

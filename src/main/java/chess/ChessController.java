@@ -28,12 +28,14 @@ public class ChessController {
             GameResult gameResult = Command.act(input, chessGame);
 
             if (gameResult.isBoard()) {
-               OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
+                OutputView.printChessBoard(ChessBoardDto.of(gameResult.getBoard()));
             }
             if (gameResult.isScore()) {
                 OutputView.printScore(gameResult.getScore());
             }
-        } catch (NoSuchElementException | IllegalArgumentException exception) {
+        } catch (NoSuchElementException
+            | IllegalArgumentException
+            | UnsupportedOperationException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }
     }
