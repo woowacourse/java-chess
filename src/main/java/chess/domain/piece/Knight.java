@@ -55,12 +55,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public double score() {
+    public double getScore() {
         return SCORE;
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return NAME;
     }
 

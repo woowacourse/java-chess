@@ -65,8 +65,8 @@ public class KingTest {
 
     @DisplayName("킹의 name은 King")
     @Test
-    void name() {
-        String actual = new King(Color.BLACK, Position.of("a1")).name();
+    void getName() {
+        String actual = new King(Color.BLACK, Position.of("a1")).getName();
         String expected = "King";
 
         assertThat(actual).isEqualTo(expected);

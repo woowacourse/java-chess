@@ -151,8 +151,8 @@ public class PawnTest {
 
     @DisplayName("폰의 name은 Pawn이다.")
     @Test
-    void name() {
-        String actual = new Pawn(Color.BLACK, Position.of("a1")).name();
+    void getName() {
+        String actual = new Pawn(Color.BLACK, Position.of("a1")).getName();
         String expected = "Pawn";
 
         assertThat(actual).isEqualTo(expected);

@@ -53,8 +53,8 @@ public class RookTest {
 
     @DisplayName("룩의 name은 Rook이다.")
     @Test
-    void name() {
-        String actual = new Rook(Color.BLACK, Position.of("a1")).name();
+    void getName() {
+        String actual = new Rook(Color.BLACK, Position.of("a1")).getName();
         String expected = "Rook";
 
         assertThat(actual).isEqualTo(expected);

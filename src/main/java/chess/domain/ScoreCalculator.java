@@ -30,7 +30,7 @@ public class ScoreCalculator {
         double penaltyPawnCount = calculateSameFilePawnCount(pawnPositions);
         double pawnScore = sameColorPieces.stream()
             .filter(Piece::isPawn)
-            .map(Piece::score)
+            .map(Piece::getScore)
             .findAny()
             .orElse(NO_PAWN_PENALTY_SCORE);
 
@@ -39,7 +39,7 @@ public class ScoreCalculator {
 
     private double calculateDefaultScore(List<Piece> sameColorPieces) {
         return sameColorPieces.stream()
-            .map(Piece::score)
+            .map(Piece::getScore)
             .reduce(SUM_BASE_DOUBLE, Double::sum);
     }
 

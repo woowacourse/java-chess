@@ -41,7 +41,7 @@ public class BoardView {
     private static String squareView(List<Piece> currentRowChessMen, int fileIdx) {
         return currentRowChessMen.stream()
             .filter(piece -> extractFileIdx(piece) == fileIdx)
-            .map(piece -> PieceSymbol.findSymbol(piece.getColor(), piece.name()))
+            .map(piece -> PieceSymbol.findSymbol(piece.getColor(), piece.getName()))
             .findFirst()
             .orElse(EMPTY_SQUARE_DISPLAY);
     }

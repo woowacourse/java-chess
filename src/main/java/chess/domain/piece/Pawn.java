@@ -128,12 +128,12 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public double score() {
+    public double getScore() {
         return DEFAULT_SCORE;
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return NAME;
     }
 

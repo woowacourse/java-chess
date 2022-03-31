@@ -47,9 +47,9 @@ public abstract class Piece {
 
     abstract public boolean isKing();
 
-    abstract public double score();
+    abstract public double getScore();
 
-    abstract public String name();
+    abstract public String getName();
 
     public Position getPosition() {
         return position;

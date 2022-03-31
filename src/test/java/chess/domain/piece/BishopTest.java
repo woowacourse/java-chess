@@ -65,8 +65,8 @@ public class BishopTest {
 
     @DisplayName("비숍의 name은 Bishop")
     @Test
-    void name() {
-        String actual = new Bishop(Color.BLACK, Position.of("a1")).name();
+    void getName() {
+        String actual = new Bishop(Color.BLACK, Position.of("a1")).getName();
         String expected = "Bishop";
 
         assertThat(actual).isEqualTo(expected);
