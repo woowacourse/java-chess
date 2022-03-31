@@ -6,8 +6,6 @@ import static chess.domain.board.Rank.SEVEN;
 import static chess.domain.board.Rank.TWO;
 import static chess.domain.piece.TeamColor.WHITE;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamColor;
 import chess.game.TotalScore;
@@ -91,7 +89,7 @@ public class Board {
 
     public boolean hasOneKing() {
         return pieces.stream()
-                .filter(piece -> piece.isTypeOf(King.class))
+                .filter(Piece::isKing)
                 .count() == 1;
     }
 
@@ -104,15 +102,15 @@ public class Board {
 
     public boolean hasPromotionPawn(final Position position) {
         final Piece piece = findPieceInPosition(position);
-        if (!piece.isTypeOf(Pawn.class)) {
+        if (!piece.isPawn()) {
             return false;
         }
-        return ((Pawn) piece).canPromote();
+        return piece.canPromote();
     }
 
     public Board promotePawn(final Position position, final String promotionType) {
-        final Pawn pawn = (Pawn) findPieceInPosition(position);
-        pieces.set(pieces.indexOf(pawn), pawn.promote(promotionType));
+        final Piece piece = findPieceInPosition(position);
+        pieces.set(pieces.indexOf(piece), piece.promote(promotionType));
         return new Board(pieces, currentTurnTeamColor);
     }
 }

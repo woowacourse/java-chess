@@ -94,6 +94,17 @@ public class Pawn extends Piece {
         return position.isInFile(file);
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public boolean canPromote() {
         return teamColor == WHITE && position.isInRank(EIGHT) ||
                 teamColor == BLACK && position.isInRank(ONE);

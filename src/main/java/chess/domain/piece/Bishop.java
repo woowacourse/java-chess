@@ -23,6 +23,26 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean canPromote() {
+        return false;
+    }
+
+    @Override
+    public Piece promote(final String promotionType) {
+        throw new IllegalStateException("Bishop은 Promotion 할 수 없습니다.");
+    }
+
+    @Override
     public double getScore() {
         return SCORE;
     }

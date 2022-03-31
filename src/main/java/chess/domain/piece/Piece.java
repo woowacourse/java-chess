@@ -61,15 +61,19 @@ public abstract class Piece {
         return this.teamColor == anotherPiece.teamColor;
     }
 
-    public final boolean isTypeOf(final Class<? extends Piece> pieceType) {
-        return this.getClass().equals(pieceType);
-    }
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     public final boolean isTeamOf(final TeamColor teamColor) {
         return this.teamColor == teamColor;
     }
 
     public abstract double getScore();
+
+    public abstract boolean canPromote();
+
+    public abstract Piece promote(final String promotionType);
 
     @Override
     public boolean equals(final Object o) {

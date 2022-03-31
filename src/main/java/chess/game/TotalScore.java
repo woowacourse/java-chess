@@ -26,7 +26,7 @@ public class TotalScore {
 
     private static List<Pawn> findPawns(final List<Piece> pieces) {
         return pieces.stream()
-                .filter(piece -> piece.isTypeOf(Pawn.class))
+                .filter(Piece::isPawn)
                 .map(Pawn.class::cast)
                 .collect(Collectors.toList());
     }
