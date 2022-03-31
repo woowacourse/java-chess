@@ -9,6 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.player.Player;
 import chess.domain.player.Team;
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

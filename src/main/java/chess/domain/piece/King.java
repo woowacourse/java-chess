@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.player.Team;
 
 public class King extends Piece {

@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.ChessMap;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.generator.BlackGenerator;
 import chess.domain.generator.WhiteGenerator;
 import chess.domain.player.Player;

@@ -6,6 +6,7 @@ import chess.domain.player.Player;
 import chess.domain.player.Result;
 import chess.domain.player.Score;
 import chess.domain.player.Team;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
