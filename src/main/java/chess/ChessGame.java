@@ -19,44 +19,51 @@ public class ChessGame {
     }
 
     public void run() {
-        printCurrentTurnPlayer();
-        state = runCommand();
-        if (state.isStarted()) {
-            printCurrentTurnResult();
-        }
-        if (!state.isEnded()) {
-            run();
+        while (!state.isEnded()) {
+            printCurrentTurnPlayer();
+            final String[] commands = InputView.requestCommands();
+            final Command command = findCommand(commands);
+            runCommand(command, commands);
+            printStatus(command);
         }
     }
 
     private void printCurrentTurnPlayer() {
-        if (state.isStarted()){
+        if (state.isStarted()) {
             OutputView.printBoard(state.getBoard().getBoard());
             OutputView.printTurnMessage(state.getColor().getName());
         }
     }
 
-    private State runCommand() {
+    private Command findCommand(final String[] commands) {
         try {
-            final String[] commands = InputView.requestCommands();
-            final Command command = Command.from(commands[MAIN_COMMAND_INDEX]);
-            return command.run(state, commands);
-        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException exception) {
+            return Command.from(commands[MAIN_COMMAND_INDEX]);
+        } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception.getMessage());
-            return runCommand();
+            return findCommand(InputView.requestCommands());
         }
     }
 
-    private void printCurrentTurnResult() {
-        Board board = state.getBoard();
-        Color thisTurn = state.getColor();
-        final Score myScore = new Score(board, thisTurn);
-        final Score opponentScore = new Score(board,thisTurn.getOpposite());
+    private void runCommand(final Command command, final String[] commands) {
+        try {
+            state = command.run(state, commands);
+        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            run();
+        }
+    }
 
-        OutputView.printScore(thisTurn.getName(), myScore.getValue());
-        OutputView.printScore(thisTurn.getOpposite().getName(), opponentScore.getValue());
-        OutputView.printResult(thisTurn.getName(), Result.decide(myScore, opponentScore).getName());
-        OutputView.printBoard(board.getBoard());
+    private void printStatus(final Command command) {
+        if (command.isStatus()) {
+            Board board = state.getBoard();
+            Color thisTurn = state.getColor();
+            final Score myScore = new Score(board, thisTurn);
+            final Score opponentScore = new Score(board, thisTurn.getOpposite());
+
+            OutputView.printScore(thisTurn.getName(), myScore.getValue());
+            OutputView.printScore(thisTurn.getOpposite().getName(), opponentScore.getValue());
+            OutputView.printResult(thisTurn.getName(), Result.decide(myScore, opponentScore).getName());
+        }
     }
 
 }
