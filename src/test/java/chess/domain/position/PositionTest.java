@@ -52,7 +52,7 @@ class PositionTest {
         Position position2 = Position.from(XAxis.A, YAxis.TWO);
 
         // when
-        boolean actual = position1.isSameXAxis(position2);
+        boolean actual = position1.hasSameXAxisAs(position2);
 
         // then
         assertThat(actual).isTrue();
@@ -66,80 +66,10 @@ class PositionTest {
         Position position2 = Position.from(XAxis.B, YAxis.ONE);
 
         // when
-        boolean actual = position1.isSameYAxis(position2);
+        boolean actual = position1.hasSameYAxisAs(position2);
 
         // then
         assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isSameYAxis 는 현재 위치가 다른 위치와 동일 대각선상에 존재하면 true를 반환한다.")
-    @Test
-    void isOnDiagonal_returnsTrueIfOnDiagonal() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.H, YAxis.EIGHT);
-
-        // when
-        boolean actual = position1.isOnDiagonal(position2);
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isUpperThan 은 현재 위치가 다른 위치보다 위쪽에 있다면 true 를 반환한다.")
-    @Test
-    void isUpperThan_returnsTrue() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.THREE);
-        Position position2 = Position.from(XAxis.A, YAxis.ONE);
-
-        // when
-        boolean actual = position1.isUpperThan(position2);
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isUpperThan 은 현재 위치가 다른 위치보다 아래쪽에 있다면 false 를 반환한다.")
-    @Test
-    void isUpperThan_returnsFalse() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.A, YAxis.TWO);
-
-        // when
-        boolean actual = position1.isUpperThan(position2);
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @DisplayName("isLowerThan 은 현재 위치가 다른 위치보다 아래쪽에 있다면 true 를 반환한다.")
-    @Test
-    void isLowerThan_returnsTrue() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.ONE);
-        Position position2 = Position.from(XAxis.A, YAxis.THREE);
-
-        // when
-        boolean actual = position1.isLowerThan(position2);
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isLowerThan 은 현재 위치가 다른 위치보다 위쪽에 있다면 false 를 반환한다.")
-    @Test
-    void isLowerThan_returnsFalse() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.A, YAxis.ONE);
-
-        // when
-        boolean actual = position1.isLowerThan(position2);
-
-        // then
-        assertThat(actual).isFalse();
     }
 
     @DisplayName("isInVerticalRange는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있는지 체크한다.")
@@ -150,38 +80,10 @@ class PositionTest {
         Position position2 = Position.from(XAxis.C, YAxis.ONE);
 
         // when
-        boolean actual = position1.isInVerticalRange(position2, 2);
+        boolean actual = position1.isVerticalDistanceShorterThan(position2, 2);
 
         // then
         assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isInVerticalRangeAndSameXAxis는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있고, 같은 X좌표를 갖는다면 true 를 반환한다.")
-    @Test
-    void isInVerticalRangeAndSameXAxis_returnsTrue() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.A, YAxis.ONE);
-
-        // when
-        boolean actual = position1.isInVerticalRangeAndSameXAxis(position2, 2);
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("isInVerticalRangeAndSameXAxis는 현재 위치와 다른 위치가 주어진 세로 거리 안에 있지만, 다른 X좌표를 갖는다면 false 를 반환한다.")
-    @Test
-    void isInVerticalRangeAndSameXAxis_returnsFalse() {
-        // given
-        Position position1 = Position.from(XAxis.A, YAxis.TWO);
-        Position position2 = Position.from(XAxis.C, YAxis.ONE);
-
-        // when
-        boolean actual = position1.isInVerticalRangeAndSameXAxis(position2, 2);
-
-        // then
-        assertThat(actual).isFalse();
     }
 
     @DisplayName("getPositionsSameDirectionDiagonalBetween 은 대각방향의 두 위치 사이의 위치 리스트를 반환한다.")

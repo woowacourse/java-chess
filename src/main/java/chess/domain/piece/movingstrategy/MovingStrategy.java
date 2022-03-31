@@ -10,16 +10,16 @@ public abstract class MovingStrategy {
             return false;
         }
 
-        if (!isPossibleStep(from, to)) {
+        if (!isPossibleStep(from, to, pieceColor)) {
             return false;
         }
 
-        return isPossibleDirection(from, to);
+        return isPossibleDirection(from, to, pieceColor);
     }
 
-    abstract boolean isPossibleStep(Position from, Position to);
+    abstract boolean isPossibleStep(Position from, Position to, PieceColor pieceColor);
 
-    abstract boolean isPossibleDirection(Position from, Position to);
+    abstract boolean isPossibleDirection(Position from, Position to, PieceColor pieceColor);
 
     public boolean isAbleToAttack(Position from, Position to, PieceColor pieceColor) {
         return isAbleToMove(from, to, pieceColor);

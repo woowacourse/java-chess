@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceFactory;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -83,15 +84,17 @@ public class Board {
     }
 
     private boolean hasObstacle(Position from, Position to) {
-        if (from.isSameXAxis(to)) {
+        Direction direction = Direction.of(from, to);
+
+        if (direction.isVertical()) {
             return hasAnyPiece(from.getPositionsSameYAxisBetween(to));
         }
 
-        if (from.isSameYAxis(to)) {
+        if (direction.isHorizontal()) {
             return hasAnyPiece(from.getPositionsSameXAxisBetween(to));
         }
 
-        if (from.isOnDiagonal(to)) {
+        if (direction.isDiagonal()) {
             return hasAnyPiece(from.getPositionsSameDirectionDiagonalBetween(to));
         }
 

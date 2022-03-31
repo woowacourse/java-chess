@@ -1,5 +1,6 @@
 package chess.domain.piece.movingstrategy;
 
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.Set;
@@ -11,14 +12,13 @@ public class KnightMovingStrategy extends MovingStrategy {
     );
 
     @Override
-    boolean isPossibleStep(Position from, Position to) {
+    boolean isPossibleStep(Position from, Position to, PieceColor pieceColor) {
         return true;
     }
 
     @Override
-    boolean isPossibleDirection(Position from, Position to) {
+    boolean isPossibleDirection(Position from, Position to, PieceColor pieceColor) {
         Direction direction = Direction.of(from, to);
-        System.out.println("direction : " + direction);
         return POSSIBLE_DIRECTIONS.contains(direction);
     }
 }

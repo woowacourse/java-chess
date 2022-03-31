@@ -43,4 +43,17 @@ public enum Direction {
 
         return isXTwoAndYOne || osXOneAndYTwo;
     }
+
+    public boolean isVertical() {
+        return equals(VERTICAL_UP) || equals(VERTICAL_DOWN);
+    }
+
+    public boolean isHorizontal() {
+        return equals(HORIZONTAL_RIGHT) || equals(HORIZONTAL_LEFT);
+    }
+
+    public boolean isDiagonal() {
+        return equals(DIAGONAL_RIGHT_UP) || equals(DIAGONAL_RIGHT_DOWN)
+                || equals(DIAGONAL_LEFT_UP) || equals(DIAGONAL_LEFT_DOWN);
+    }
 }

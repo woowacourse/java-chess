@@ -24,6 +24,7 @@ public class Position {
                 .orElseThrow(() -> new NoSuchElementException("좌표가 존재하지 않습니다."));
     }
 
+    // TODO: 리팩토링
     public static Position from(String coordinate) {
         XAxis xAxis = XAxis.valueOf(coordinate.substring(0, 1).toUpperCase(Locale.ROOT));
         YAxis yAxis = YAxis.getByValue(Integer.parseInt(coordinate.substring(1, 2)));
@@ -44,11 +45,11 @@ public class Position {
         return Math.toDegrees(Math.atan2(deltaX, deltaY));
     }
 
-    public boolean isSameXAxis(Position other) {
+    public boolean hasSameXAxisAs(Position other) {
         return this.xAxis.equals(other.xAxis);
     }
 
-    public boolean isSameYAxis(Position other) {
+    public boolean hasSameYAxisAs(Position other) {
         return this.yAxis.equals(other.yAxis);
     }
 
@@ -64,27 +65,8 @@ public class Position {
         return this.yAxis.subtract(other.yAxis);
     }
 
-    public boolean isOnDiagonal(Position other) {
-        int xAxisDelta = Math.abs(other.xAxis.getValue() - this.xAxis.getValue());
-        int yAxisDelta = Math.abs(other.yAxis.getValue() - this.yAxis.getValue());
-
-        return xAxisDelta == yAxisDelta;
-    }
-
-    public boolean isUpperThan(Position other) {
-        return this.subtractYAxis(other) > 0;
-    }
-
-    public boolean isLowerThan(Position other) {
-        return this.subtractYAxis(other) < 0;
-    }
-
-    public boolean isInVerticalRange(Position other, int range) {
+    public boolean isVerticalDistanceShorterThan(Position other, int range) {
         return Math.abs(this.yAxis.subtract(other.yAxis)) <= range;
-    }
-
-    public boolean isInVerticalRangeAndSameXAxis(Position other, int range) {
-        return isInVerticalRange(other, range) && isSameXAxis(other);
     }
 
     public boolean isFartherThanOneStep(Position other) {
@@ -106,6 +88,7 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
+    // TODO: 리팩토링
     public List<Position> getPositionsSameDirectionDiagonalBetween(Position to) {
         int xAxisDelta = xAxis.getValue() - to.xAxis.getValue();
         int yAxisDelta = yAxis.getValue() - to.yAxis.getValue();
@@ -119,9 +102,9 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
-    private Position getPositionWith(int xDir, int yDir, int idx) {
-        XAxis xAxis1 = XAxis.getByValue(this.xAxis.getValue() + xDir * idx);
-        YAxis yAxis1 = YAxis.getByValue(this.yAxis.getValue() + yDir * idx);
+    private Position getPositionWith(int xDirection, int yDirection, int idx) {
+        XAxis xAxis1 = XAxis.getByValue(this.xAxis.getValue() + xDirection * idx);
+        YAxis yAxis1 = YAxis.getByValue(this.yAxis.getValue() + yDirection * idx);
 
         return Position.from(xAxis1, yAxis1);
     }

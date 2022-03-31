@@ -69,6 +69,22 @@ class PawnTest {
         assertThat(actual).isFalse();
     }
 
+    @DisplayName("흰색 진영의 폰은 아래방향으로 이동할 수 없다.")
+    @Test
+    void executeCommand_returnsFalseIfWhitePawnTryToMoveDown() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.TWO), Position.from(XAxis.A, YAxis.THREE), PieceColor.WHITE);
+        boolean actual = board.executeCommand(
+                        Position.from(XAxis.A, YAxis.THREE), Position.from(XAxis.A, YAxis.TWO), PieceColor.WHITE)
+                .isMoveSuccess();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
     @DisplayName("검정색 진영의 폰이 처음 이동하는 경우 두칸을 전진할 수 있다.")
     @Test
     void movePiece_ifPieceIsPawnMoveForwardTwiceOnFirstMoveInBlackTeam() {
@@ -107,6 +123,21 @@ class PawnTest {
         // when
         board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);
         boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.FOUR),
+                PieceColor.WHITE).isMoveSuccess();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("검정색 진영의 폰은 위방향으로 이동할 수 없다.")
+    @Test
+    void executeCommand_returnsFalseIfBlackPawnTryToMoveUp() {
+        // given
+        Board board = Board.createInitializedBoard();
+
+        // when
+        board.executeCommand(Position.from(XAxis.A, YAxis.SEVEN), Position.from(XAxis.A, YAxis.SIX), PieceColor.WHITE);
+        boolean actual = board.executeCommand(Position.from(XAxis.A, YAxis.SIX), Position.from(XAxis.A, YAxis.SEVEN),
                 PieceColor.WHITE).isMoveSuccess();
 
         // then
