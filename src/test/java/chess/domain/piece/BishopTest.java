@@ -26,7 +26,7 @@ public class BishopTest {
     @CsvSource(value = {"C:RANK_5:B:RANK_6", "C:RANK_5:D:RANK_6", "C:RANK_5:B:RANK_4", "C:RANK_5:D:RANK_4"},
             delimiter = ':')
     @DisplayName("Bishop 이 대각선으로 1칸 움직일 경우 - 가능")
-    void isMovableWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+    void canMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
@@ -37,7 +37,7 @@ public class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Bishop 이 대각선으로 2칸 이상 움직일 경우 - 가능")
-    void isMovableWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+    void canMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
@@ -49,7 +49,7 @@ public class BishopTest {
     @CsvSource(value = {"C:RANK_5:D:RANK_5", "C:RANK_5:C:RANK_4", "C:RANK_5:C:RANK_6", "C:RANK_5:C:RANK_4"},
             delimiter = ':')
     @DisplayName("Bishop 이 상하좌우로 1칸 움직일 경우 - 불가능")
-    void isNotMovableWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+    void canNotMoveWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
@@ -60,7 +60,7 @@ public class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"C:RANK_5:C:RANK_2", "C:RANK_5:A:RANK_5", "A:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Bishop 이 상하좌우로 2칸 이상 움직일 경우 - 불가능")
-    void isNotMovableWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+    void canNotMoveWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
