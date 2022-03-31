@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.ScoreCalculator;
 import chess.domain.piece.Piece;
 
 public class Players {
@@ -122,6 +123,13 @@ public class Players {
                 .count();
     }
 
+    public Map<Color, Double> calculatePlayerScores(final ScoreCalculator scoreCalculator) {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getColor,
+                        player -> player.calculateScore(scoreCalculator)
+                ));
+    }
     public Map<Position, Piece> getPiecesByPlayer(final Color color) {
         return findPlayerByColor(color).getPieces();
     }

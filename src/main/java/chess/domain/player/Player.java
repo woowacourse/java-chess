@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 import chess.domain.Color;
 import chess.domain.Position;
+import chess.domain.ScoreCalculator;
 import chess.domain.piece.Piece;
 
 public class Player {
@@ -95,6 +96,10 @@ public class Player {
         return pieces.values()
                 .stream()
                 .anyMatch(Piece::isKing);
+    }
+
+    public double calculateScore(final ScoreCalculator scoreCalculator) {
+        return scoreCalculator.calculateScore(pieces);
     }
 
     public boolean isColorSame(final Color color) {

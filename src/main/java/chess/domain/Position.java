@@ -5,6 +5,7 @@ import static chess.domain.PositionRange.ROW_RANGE;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
 
@@ -67,6 +68,27 @@ public class Position {
 
     public boolean isEndOfRowRange() {
         return ROW_RANGE.isEndOfRange(row);
+    }
+
+    public boolean equalsColumn(final Position position) {
+        return column == position.column;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Position position = (Position) o;
+        return column == position.column && row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 
     @Override
