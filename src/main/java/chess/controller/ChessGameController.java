@@ -12,14 +12,14 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessGameController {
-    private static final int commandIndex = 0;
-    private static final int sourcePositionIndex = 1;
-    private static final int destinationPositionIndex = 2;
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int DESTINATION_POSITION_INDEX = 2;
 
     public void run() {
         OutputView.printStartMessage();
         List<String> input = InputView.requestCommand();
-        Command command = Command.of(input.get(commandIndex));
+        Command command = Command.of(input.get(COMMAND_INDEX));
         if (command.isStart()) {
             GameState gameState = new WhiteTurn(BoardInitialize.create());
             startGame(gameState);
@@ -37,7 +37,7 @@ public class ChessGameController {
     private GameState playCommand(GameState gameState) {
         try {
             List<String> input = InputView.requestCommand();
-            Command command = Command.of(input.get(commandIndex));
+            Command command = Command.of(input.get(COMMAND_INDEX));
             gameState = executeCommand(gameState, input, command);
             return gameState;
         } catch (RuntimeException exception) {
@@ -60,7 +60,7 @@ public class ChessGameController {
     }
 
     private GameState pieceMove(GameState gameState, List<String> input) {
-        gameState = gameState.move(input.get(sourcePositionIndex), input.get(destinationPositionIndex));
+        gameState = gameState.move(input.get(SOURCE_POSITION_INDEX), input.get(DESTINATION_POSITION_INDEX));
         OutputView.printChessBoard(gameState.getBoard());
         return gameState;
     }

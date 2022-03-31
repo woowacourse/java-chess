@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Score {
-    private static final int existPawnNeighbors = 1;
-    private static final int plusPawnNeighborsCount = 1;
-    private static final int pawnNeighborsDefaultCount = 0;
-    private static final float minusPawnNeighborsScore = 0.5f;
+    private static final int EXIST_PAWN_NEIGHBORS = 1;
+    private static final int PLUS_PAWN_NEIGHBORS_COUNT = 1;
+    private static final int PAWN_NEIGHBORS_DEFAULT_COUNT = 0;
+    private static final float MINUS_PAWN_NEIGHBORS_SCORE = 0.5f;
 
     private final Map<Team, Float> scoreBoard = new HashMap<>();
 
@@ -44,8 +44,8 @@ public class Score {
     private float minusPawnNeighborsScore(Map<Column, Integer> pawnNeighbors, Column col) {
         int pawnCount = pawnNeighbors.get(col);
         float minusScore = 0;
-        if (pawnCount > existPawnNeighbors) {
-            minusScore -= pawnCount * minusPawnNeighborsScore;
+        if (pawnCount > EXIST_PAWN_NEIGHBORS) {
+            minusScore -= pawnCount * MINUS_PAWN_NEIGHBORS_SCORE;
         }
         return minusScore;
     }
@@ -60,7 +60,7 @@ public class Score {
 
     private void addCountPawnNeighbors(Team team, Map<Column, Integer> pawnNeighbors, Column col, Piece piece) {
         if (piece.isPawn() && team.matchTeam(piece.getTeam())) {
-            pawnNeighbors.put(col, pawnNeighbors.getOrDefault(col, pawnNeighborsDefaultCount) + plusPawnNeighborsCount);
+            pawnNeighbors.put(col, pawnNeighbors.getOrDefault(col, PAWN_NEIGHBORS_DEFAULT_COUNT) + PLUS_PAWN_NEIGHBORS_COUNT);
         }
     }
 

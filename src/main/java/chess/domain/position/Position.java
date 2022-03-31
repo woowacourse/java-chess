@@ -8,14 +8,14 @@ import java.util.Objects;
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
-    private final static Map<String, Position> positions;
-    private final static int positionToStringLength = 2;
+    private final static Map<String, Position> POSITIONS;
+    private final static int POSITION_TO_STRING_LENGTH = 2;
 
     private final Column col;
     private final Row row;
 
     static {
-        positions = createPositions().stream()
+        POSITIONS = createPositions().stream()
                 .collect(toMap(Position::getPositionToString, position -> position));
     }
 
@@ -39,16 +39,16 @@ public class Position {
 
     public static Position of(Column col, Row row) throws RuntimeException {
         String position = col.getSymbol() + row.getSymbol();
-        return positions.get(position);
+        return POSITIONS.get(position);
     }
 
     public static Position from(String position) throws RuntimeException {
         validateLength(position);
-        return positions.get(position);
+        return POSITIONS.get(position);
     }
 
     private static void validateLength(String position) {
-        if (position.length() != positionToStringLength) {
+        if (position.length() != POSITION_TO_STRING_LENGTH) {
             throw new IllegalArgumentException("올바른 포지션 값이 아닙니다.");
         }
     }
