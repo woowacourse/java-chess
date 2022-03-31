@@ -29,12 +29,12 @@ public class OutputView {
 
     public static void printBoardAndTurn(BoardAndTurnInfo response) {
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
-            printBoardAndTurn(response.getBoard(), i);
+            printEachLine(response.getBoard(), i);
         }
         System.out.println("현재 턴 :" + response.getTurnColor());
     }
 
-    private static void printBoardAndTurn(Map<Point, Piece> board, int i) {
+    private static void printEachLine(Map<Point, Piece> board, int i) {
         for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
             Point point = Point.of(j, i);
             Piece piece = board.get(point);
@@ -45,7 +45,7 @@ public class OutputView {
 
     public static void printStatus(ScoreResponse response) {
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
-            printBoardAndTurn(response.getBoard(), i);
+            printEachLine(response.getBoard(), i);
         }
         System.out.println(Color.WHITE + " : " + String.format("%.1f", response.getWhiteScore()));
         System.out.println(Color.BLACK + " : " + String.format("%.1f", response.getBlackScore()));
