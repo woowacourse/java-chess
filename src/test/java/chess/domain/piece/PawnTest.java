@@ -26,7 +26,7 @@ class PawnTest {
         final Piece pawn = new Pawn(teamColor, Position.from(initialPosition));
         final Piece moved = pawn.move(new ArrayList<>(), Position.from(targetPosition));
         //when
-        boolean actual = moved.hasPosition(Position.from(targetPosition));
+        boolean actual = moved.matchesPosition(Position.from(targetPosition));
         //then
         assertThat(actual).isTrue();
     }
@@ -41,7 +41,7 @@ class PawnTest {
         final Piece firstMoved = pawn.move(new ArrayList<>(), Position.from(firstTargetPosition));
         final Piece secondMoved = firstMoved.move(new ArrayList<>(), Position.from(secondTargetPosition));
         //when
-        boolean actual = secondMoved.hasPosition(Position.from(secondTargetPosition));
+        boolean actual = secondMoved.matchesPosition(Position.from(secondTargetPosition));
         //then
         assertThat(actual).isTrue();
     }
@@ -70,7 +70,7 @@ class PawnTest {
         final Piece enemy = new Rook(enemyTeamColor, Position.from(targetPosition));
         final Piece moved = pawn.move(Collections.singletonList(enemy), Position.from(targetPosition));
         //when
-        boolean actual = moved.hasPosition(Position.from(targetPosition));
+        boolean actual = moved.matchesPosition(Position.from(targetPosition));
         //then
         assertThat(actual).isTrue();
     }

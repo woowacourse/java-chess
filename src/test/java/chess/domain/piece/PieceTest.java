@@ -51,11 +51,11 @@ class PieceTest {
     @ParameterizedTest
     @DisplayName("Rank, File을 받아 자신의 위치와 동일한지 반환한다.")
     @CsvSource({"A, ONE, true", "A, TWO, false"})
-    void hasPosition(final File file, final Rank rank, final boolean expected) {
+    void matchesPosition(final File file, final Rank rank, final boolean expected) {
         // given
         final Piece piece = Piece.createInitial(A, ONE);
         // when
-        final boolean actual = piece.hasPosition(Position.of(file, rank));
+        final boolean actual = piece.matchesPosition(Position.of(file, rank));
         // then
         assertThat(actual).isEqualTo(expected);
     }

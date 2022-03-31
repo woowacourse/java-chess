@@ -20,7 +20,7 @@ class BishopTest {
         final Position targetPosition = Position.from("c3");
         final Piece moved = Bishop.move(new ArrayList<>(), targetPosition);
         //when
-        final boolean actual = moved.hasPosition(targetPosition);
+        final boolean actual = moved.matchesPosition(targetPosition);
         //then
         assertThat(actual).isTrue();
     }

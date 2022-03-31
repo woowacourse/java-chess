@@ -43,7 +43,7 @@ public abstract class Piece {
 
     public abstract Piece move(final List<Piece> otherPieces, final Position targetPosition);
 
-    public final boolean hasPosition(final Position position) {
+    public final boolean matchesPosition(final Position position) {
         return this.position == position;
     }
 

@@ -41,12 +41,12 @@ public class Board {
 
     public boolean hasPieceInPosition(final Position position) {
         return pieces.stream()
-                .anyMatch(piece -> piece.hasPosition(position));
+                .anyMatch(piece -> piece.matchesPosition(position));
     }
 
     public Piece findPieceInPosition(final Position position) {
         return pieces.stream()
-                .filter(piece -> piece.hasPosition(position))
+                .filter(piece -> piece.matchesPosition(position))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
     }

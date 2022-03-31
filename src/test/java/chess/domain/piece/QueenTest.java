@@ -23,7 +23,7 @@ class QueenTest {
         final Position targetPosition = Position.from(targetPositionValue);
         final Piece moved = queen.move(new ArrayList<>(), targetPosition);
         //when
-        final boolean actual = moved.hasPosition(targetPosition);
+        final boolean actual = moved.matchesPosition(targetPosition);
         //then
         assertThat(actual).isTrue();
     }

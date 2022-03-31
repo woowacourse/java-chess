@@ -21,7 +21,7 @@ class RookTest {
         final Position targetPosition = Position.from("a8");
         final Piece moved = rook.move(Collections.singletonList(anotherRook), targetPosition);
         //when
-        final boolean actual = moved.hasPosition(targetPosition);
+        final boolean actual = moved.matchesPosition(targetPosition);
         //then
         assertThat(actual).isTrue();
     }
