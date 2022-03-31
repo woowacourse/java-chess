@@ -1,6 +1,6 @@
 package chess.repository;
 
-import chess.Member;
+import chess.domain.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

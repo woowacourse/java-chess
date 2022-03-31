@@ -1,14 +1,5 @@
 package chess.dao;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import chess.Member;
-import java.sql.Connection;
-import java.util.List;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 class MemberDaoTest {
 
     /*@Test

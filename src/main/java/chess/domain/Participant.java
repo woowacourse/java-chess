@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.Member;
 import java.util.Objects;
 
 public class Participant {

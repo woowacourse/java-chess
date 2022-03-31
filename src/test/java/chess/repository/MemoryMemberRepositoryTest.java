@@ -2,11 +2,10 @@ package chess.repository;
 
 import static org.assertj.core.api.Assertions.*;
 
-import chess.Member;
+import chess.domain.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

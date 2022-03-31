@@ -6,11 +6,13 @@ import static spark.Spark.staticFiles;
 
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.Member;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
 import chess.dto.RankDTO;
 import chess.repository.GameRepository;
+import chess.repository.MemberRepository;
 import chess.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +23,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
     private final GameRepository gameRepository;
+    private final MemberRepository memberRepository;
 
-    public WebController(GameRepository gameRepository) {
+    public WebController(GameRepository gameRepository, MemberRepository memberRepository) {
         this.gameRepository = gameRepository;
+        this.memberRepository = memberRepository;
     }
 
     public void run() {
@@ -79,6 +83,9 @@ public class WebController {
             return render(model, "lobby.html");
         });
 
+        /**
+         * 비동기 요청
+         */
         get("/score/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
@@ -88,6 +95,18 @@ public class WebController {
             res.header("Content-Type", "application/json");
             res.body(JsonUtil.serialize(jsonData));
             return JsonUtil.serialize(jsonData);
+        });
+
+        get("/add-member", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "add-member.html");
+        });
+
+        post("/member", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = req.queryParams("name");
+            memberRepository.save(new Member(name));
+            return render(model, "index.html");
         });
     }
 
