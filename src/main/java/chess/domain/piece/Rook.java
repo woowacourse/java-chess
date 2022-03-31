@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
+    private static final String SYMBOL = "P";
+    private static final double SCORE = 5;
+
     public Rook(Team team, Position position) {
-        super(team, "R", position, 5);
+        super(team, SYMBOL, position, SCORE);
     }
 
     private Direction findDirection(Position destination) {

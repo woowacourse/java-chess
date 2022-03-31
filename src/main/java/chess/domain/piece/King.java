@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class King extends Piece {
+    private static final String SYMBOL = "K";
+    private static final double SCORE = 0;
+
     public King(Team team, Position position) {
-        super(team, "K", position, 0);
+        super(team, SYMBOL, position, SCORE);
     }
 
     private Direction findDirection(Position destination) {

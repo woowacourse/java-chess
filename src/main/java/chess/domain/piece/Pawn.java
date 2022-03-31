@@ -11,8 +11,11 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private static final String SYMBOL = "P";
+    private static final double SCORE = 1;
+
     public Pawn(Team team, Position position) {
-        super(team, "P", position, 1);
+        super(team, SYMBOL, position, SCORE);
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {

@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends Piece {
+    private static final String SYMBOL = "N";
+    private static final double SCORE = 2.5;
+
     public Knight(Team team, Position position) {
-        super(team, "N", position, 2.5);
+        super(team, SYMBOL, position, SCORE);
     }
 
     private Direction findDirection(Position destination) {

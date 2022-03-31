@@ -8,8 +8,11 @@ import java.util.List;
 
 
 public class Queen extends Piece {
+    private static final String SYMBOL = "Q";
+    private static final double SCORE = 9;
+
     public Queen(Team team, Position position) {
-        super(team, "Q", position, 9);
+        super(team, SYMBOL, position, SCORE);
     }
 
     private Direction findDirection(Position destination) {

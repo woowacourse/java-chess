@@ -9,8 +9,11 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class Blank extends Piece {
+    private static final String SYMBOL = ".";
+    private static final double SCORE = 0;
+
     public Blank(Team team, Position position) {
-        super(team, ".", position, 0);
+        super(team, SYMBOL, position, SCORE);
     }
 
     public static EnumMap<Column, Piece> from(int row, Team team) {
