@@ -40,13 +40,17 @@ public class OutputView {
     private static void printPiecesInOneRank(Map<Position, Piece> piecesByPositions, Rank rank) {
         StringBuilder builder = new StringBuilder();
         for (File file : File.values()) {
-            if (Objects.isNull(piecesByPositions.get(Position.of(rank, file)))) {
-                builder.append(".");
-                continue;
-            }
-            builder.append(piecesByPositions.get(Position.of(rank, file)).getEmblem());
+            builder.append(eachPieceEmblem(piecesByPositions, Position.of(rank, file)));
         }
         out.println(builder);
+    }
+
+    private static String eachPieceEmblem(Map<Position, Piece> piecesByPositions, Position position) {
+        if (Objects.isNull(piecesByPositions.get(position))) {
+            return ".";
+        }
+
+        return piecesByPositions.get(position).getEmblem();
     }
 
     public static void printScore(double score) {
