@@ -58,7 +58,9 @@ public enum Result {
 
     private static double calculateXPositionScore(final List<Piece> pieces) {
         List<Double> scores = new ArrayList<>();
-        pieces.forEach(piece -> scores.add(PieceFeature.createScore(piece.symbol(), checkDuplicatePawn(pieces))));
+        for (Piece piece : pieces) {
+            scores.add(PieceFeature.createScore(piece.symbol(), checkDuplicatePawn(pieces)));
+        }
 
         return scores.stream()
                 .filter(score -> score != null)
