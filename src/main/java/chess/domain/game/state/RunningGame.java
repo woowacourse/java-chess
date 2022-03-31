@@ -1,5 +1,6 @@
 package chess.domain.game.state;
 
+import chess.domain.piece.King;
 import java.util.Map;
 
 import chess.domain.piece.Piece;
@@ -37,7 +38,7 @@ public class RunningGame extends StartedGame {
     }
 
     private boolean isKingKilled(Position target) {
-        return board.isFilled(target) && board.getPiece(target).isKing();
+        return board.isFilled(target) && board.getPiece(target).getClass().equals(King.class);
     }
 
     private void checkMyPiece(Piece sourcePiece) {

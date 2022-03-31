@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.piece.StartedPawn;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -15,7 +16,6 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -96,14 +96,14 @@ public class ChessGameTest {
             Arguments.of(Position.of(File.G, Rank.EIGHT), Knight.class, "black Night"),
             Arguments.of(Position.of(File.H, Rank.EIGHT), Rook.class, "black Rook"),
 
-            Arguments.of(Position.of(File.A, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.B, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.C, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.D, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.E, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.F, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.G, Rank.SEVEN), Pawn.class, "black Pawn"),
-            Arguments.of(Position.of(File.H, Rank.SEVEN), Pawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.A, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.B, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.C, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.D, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.E, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.F, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.G, Rank.SEVEN), StartedPawn.class, "black Pawn"),
+            Arguments.of(Position.of(File.H, Rank.SEVEN), StartedPawn.class, "black Pawn"),
 
             Arguments.of(Position.of(File.A, Rank.ONE), Rook.class, "white Rook"),
             Arguments.of(Position.of(File.B, Rank.ONE), Knight.class, "white Night"),
@@ -114,14 +114,14 @@ public class ChessGameTest {
             Arguments.of(Position.of(File.G, Rank.ONE), Knight.class, "white Night"),
             Arguments.of(Position.of(File.H, Rank.ONE), Rook.class, "white Rook"),
 
-            Arguments.of(Position.of(File.A, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.B, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.C, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.D, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.E, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.F, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.G, Rank.TWO), Pawn.class, "white Pawn"),
-            Arguments.of(Position.of(File.H, Rank.TWO), Pawn.class, "white Pawn")
+            Arguments.of(Position.of(File.A, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.B, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.C, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.D, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.E, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.F, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.G, Rank.TWO), StartedPawn.class, "white Pawn"),
+            Arguments.of(Position.of(File.H, Rank.TWO), StartedPawn.class, "white Pawn")
         );
     }
 }

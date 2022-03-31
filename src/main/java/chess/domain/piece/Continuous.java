@@ -1,4 +1,4 @@
-package chess.domain.piece.state.started;
+package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.Collection;

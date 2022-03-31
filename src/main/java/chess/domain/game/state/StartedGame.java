@@ -1,11 +1,11 @@
 package chess.domain.game.state;
 
+import chess.domain.piece.StartedPawn;
 import java.util.Map;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -68,14 +68,14 @@ public class StartedGame implements GameState {
     }
 
     private void initBlackRankSeven() {
-        board.putPiece(Position.of(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.B, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.E, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.F, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.G, Rank.SEVEN), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.H, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.A, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.B, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.C, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.D, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.E, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.F, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.G, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.H, Rank.SEVEN), new StartedPawn(Color.BLACK));
     }
 
     private void initWhite() {
@@ -84,14 +84,14 @@ public class StartedGame implements GameState {
     }
 
     private void initWhiteRankTwo() {
-        board.putPiece(Position.of(File.A, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.B, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.C, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.D, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.E, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.F, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.G, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.H, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.A, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.B, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.C, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.D, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.E, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.F, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.G, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.H, Rank.TWO), new StartedPawn(Color.WHITE));
     }
 
     private void initWhiteRankOne() {

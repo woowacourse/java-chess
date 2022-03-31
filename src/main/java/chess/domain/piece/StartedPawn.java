@@ -1,24 +1,27 @@
-package chess.domain.piece.state.started;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+package chess.domain.piece;
 
 import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.PieceState;
+import chess.domain.piece.property.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class StartedPawn extends Started {
+public class StartedPawn extends Piece{
+
+    private static final String NAME = "p";
+    private static final double SCORE = 1.0;
 
     private final Direction forward;
 
-    public StartedPawn(Direction forward) {
-        this.forward = forward;
+    public StartedPawn(Color color) {
+        super(color, NAME, SCORE);
+        forward = color.getForwardDirection();
     }
 
     @Override
-    public List<Position> getMovablePositions(Position source, ChessBoard board) {
+    public List<Position> getMovablePaths(Position source, ChessBoard board) {
         List<Position> positions = new ArrayList<>();
         Position next = source.getNext(forward);
 
@@ -33,11 +36,6 @@ public class StartedPawn extends Started {
         List<Position> killablePositions = getKillablePositions(source, board);
         positions.addAll(killablePositions);
         return positions;
-    }
-
-    @Override
-    public PieceState updateState() {
-        return new MovedPawn(forward);
     }
 
     private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {

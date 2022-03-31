@@ -4,7 +4,6 @@ import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.Name;
-import chess.domain.piece.state.PieceState;
 import java.util.List;
 
 public abstract class Piece {
@@ -12,16 +11,13 @@ public abstract class Piece {
     private final Name name;
     private final double score;
 
-    private PieceState pieceState;
-
-    public Piece(Color color, String name, double score, PieceState pieceState) {
+    public Piece(Color color, String name, double score) {
         this.color = color;
         if (color == Color.BLACK) {
             name = name.toUpperCase();
         }
         this.name = new Name(name);
         this.score = score;
-        this.pieceState = pieceState;
     }
 
     public static double computeScore(List<Piece> pieces) {
@@ -34,19 +30,7 @@ public abstract class Piece {
         return color.isSameColor(other);
     }
 
-    public void updateState() {
-        pieceState = pieceState.updateState();
-    }
-
-    public void die() {
-        pieceState = pieceState.die();
-    }
-
-    public abstract boolean isKing();
-
-    public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        return pieceState.getMovablePositions(source, board);
-    }
+    public abstract List<Position> getMovablePaths(Position source, ChessBoard board);
 
     public String getName() {
         return name.getName();

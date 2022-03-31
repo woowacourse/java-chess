@@ -1,7 +1,8 @@
 package chess.domain.game.state;
 
-import chess.domain.piece.Pawn;
+import chess.domain.piece.MovedPawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.StartedPawn;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.File;
 import chess.domain.piece.position.Position;
@@ -22,24 +23,17 @@ public class ChessBoard {
     private final Map<Position, Piece> board = new HashMap<>();
 
     public void move(Position source, Position target) {
-        Piece sourcePiece = getPiece(source);
-        Piece targetPiece = getPiece(target);
-
         validateExist(source);
         validateMove(source, target);
 
-        changeState(sourcePiece, targetPiece);
         changePosition(source, target);
     }
 
     public void validateExist(Position position) {
-        if (!isExist(getPiece(position))) {
+        Piece piece = getPiece(position);
+        if (piece == null) {
             throw new IllegalArgumentException("해당 위치에 체스말이 존재하지 않습니다.");
         }
-    }
-
-    private boolean isExist(Piece piece) {
-        return piece != null;
     }
 
     private void validateMove(Position source, Position target) {
@@ -80,19 +74,13 @@ public class ChessBoard {
         return isFilled(target) && !sourcePiece.isSameColor(targetPiece.getColor());
     }
 
-    private void changeState(Piece sourcePiece, Piece targetPiece) {
-        kill(targetPiece);
-        sourcePiece.updateState();
-    }
-
-    private void kill(Piece piece) {
-        if (isExist(piece)) {
-            piece.die();
-        }
-    }
-
     private void changePosition(Position source, Position target) {
-        board.put(target, getPiece(source));
+        Piece sourcePiece = getPiece(source);
+        if (sourcePiece.getClass().equals(StartedPawn.class)) {
+            sourcePiece = new MovedPawn(sourcePiece.getColor());
+        }
+
+        board.put(target, sourcePiece);
         board.remove(source);
     }
 
@@ -127,7 +115,7 @@ public class ChessBoard {
             int pawnCount = (int) Arrays.stream(Rank.values())
                 .map(rank -> Position.of(file, rank))
                 .map(board::get)
-                .filter(piece -> new Pawn(color).isSame(piece))
+                .filter(piece -> piece instanceof StartedPawn && piece.isSameColor(color))
                 .count();
             pawnCounts.add(pawnCount);
         }

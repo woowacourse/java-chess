@@ -2,6 +2,7 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.piece.StartedPawn;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,6 @@ import chess.domain.game.state.ChessBoard;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -85,17 +85,17 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.putPiece(Position.of(File.B, Rank.EIGHT), new King(Color.BLACK));
         chessBoard.putPiece(Position.of(File.C, Rank.EIGHT), new Rook(Color.BLACK));
-        chessBoard.putPiece(Position.of(File.A, Rank.SEVEN), new Pawn(Color.BLACK));
-        chessBoard.putPiece(Position.of(File.C, Rank.SEVEN), new Pawn(Color.BLACK));
+        chessBoard.putPiece(Position.of(File.A, Rank.SEVEN), new StartedPawn(Color.BLACK));
+        chessBoard.putPiece(Position.of(File.C, Rank.SEVEN), new StartedPawn(Color.BLACK));
         chessBoard.putPiece(Position.of(File.D, Rank.SEVEN), new Bishop(Color.BLACK));
-        chessBoard.putPiece(Position.of(File.B, Rank.SIX), new Pawn(Color.BLACK));
+        chessBoard.putPiece(Position.of(File.B, Rank.SIX), new StartedPawn(Color.BLACK));
         chessBoard.putPiece(Position.of(File.E, Rank.SIX), new Queen(Color.BLACK));
         chessBoard.putPiece(Position.of(File.F, Rank.FOUR), new Knight(Color.WHITE));
         chessBoard.putPiece(Position.of(File.G, Rank.FOUR), new Queen(Color.WHITE));
-        chessBoard.putPiece(Position.of(File.F, Rank.THREE), new Pawn(Color.WHITE));
-        chessBoard.putPiece(Position.of(File.H, Rank.THREE), new Pawn(Color.WHITE));
-        chessBoard.putPiece(Position.of(File.F, Rank.TWO), new Pawn(Color.WHITE));
-        chessBoard.putPiece(Position.of(File.G, Rank.TWO), new Pawn(Color.WHITE));
+        chessBoard.putPiece(Position.of(File.F, Rank.THREE), new StartedPawn(Color.WHITE));
+        chessBoard.putPiece(Position.of(File.H, Rank.THREE), new StartedPawn(Color.WHITE));
+        chessBoard.putPiece(Position.of(File.F, Rank.TWO), new StartedPawn(Color.WHITE));
+        chessBoard.putPiece(Position.of(File.G, Rank.TWO), new StartedPawn(Color.WHITE));
         chessBoard.putPiece(Position.of(File.E, Rank.ONE), new Rook(Color.WHITE));
         chessBoard.putPiece(Position.of(File.F, Rank.ONE), new King(Color.WHITE));
         return chessBoard;

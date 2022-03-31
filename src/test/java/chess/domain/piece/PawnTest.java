@@ -26,19 +26,19 @@ public class PawnTest {
         Position white = Position.of(File.D, Rank.TWO);
         Position black = Position.of(File.D, Rank.SEVEN);
 
-        board.putPiece(white, new Pawn(Color.WHITE));
-        board.putPiece(black, new Pawn(Color.BLACK));
+        board.putPiece(white, new StartedPawn(Color.WHITE));
+        board.putPiece(black, new StartedPawn(Color.BLACK));
 
-        board.putPiece(Position.of(File.C, Rank.THREE), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.E, Rank.THREE), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.C, Rank.SIX), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.E, Rank.SIX), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.C, Rank.THREE), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.E, Rank.THREE), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.C, Rank.SIX), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.E, Rank.SIX), new StartedPawn(Color.WHITE));
 
-        board.putPiece(Position.of(File.A, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.A, Rank.THREE), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.A, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.A, Rank.THREE), new StartedPawn(Color.BLACK));
 
-        board.putPiece(Position.of(File.H, Rank.FOUR), new Pawn(Color.BLACK));
-        board.putPiece(Position.of(File.H, Rank.TWO), new Pawn(Color.WHITE));
+        board.putPiece(Position.of(File.H, Rank.FOUR), new StartedPawn(Color.BLACK));
+        board.putPiece(Position.of(File.H, Rank.TWO), new StartedPawn(Color.WHITE));
     }
 
     @ParameterizedTest(name = "{index}: {2}")
@@ -48,8 +48,8 @@ public class PawnTest {
         board.move(Position.of(File.D, Rank.TWO), Position.of(File.D, Rank.THREE));
         board.move(Position.of(File.D, Rank.SEVEN), Position.of(File.D, Rank.SIX));
 
-        board.putPiece(Position.of(File.D, Rank.TWO), new Pawn(Color.WHITE));
-        board.putPiece(Position.of(File.D, Rank.SEVEN), new Pawn(Color.BLACK));
+        board.putPiece(Position.of(File.D, Rank.TWO), new StartedPawn(Color.WHITE));
+        board.putPiece(Position.of(File.D, Rank.SEVEN), new StartedPawn(Color.BLACK));
         assertThatThrownBy(() -> board.move(source, target))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -83,7 +83,7 @@ public class PawnTest {
         Piece piece = board.getPiece(source);
         board.move(source, target);
 
-        assertThat(board.getPiece(target)).isSameAs(piece);
+        assertThat(board.getPiece(target).getClass()).isSameAs(MovedPawn.class);
     }
 
     private static Stream<Arguments> validParameters() {
