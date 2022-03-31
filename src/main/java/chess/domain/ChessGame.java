@@ -4,9 +4,8 @@ import chess.domain.command.MoveCommand;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class ChessGame {
 
@@ -30,9 +29,13 @@ public final class ChessGame {
         return board.hasBothKings();
     }
 
-    public Map<Color, Double> calculateScore() {
-        return Stream.of(Color.BLACK, Color.WHITE)
-                .collect(Collectors.toMap(color -> color, board::calculateScoreOf));
+    public Map<Color, Score> calculateScore() {
+        Map<Color, Score> scores = new HashMap<>();
+        for (Color color : Color.values()) {
+            Map<Position, Piece> pieces = board.getPiecesOf(color);
+            scores.put(color, Score.of(pieces));
+        }
+        return scores;
     }
 
     public Map<Position, Piece> getPieces() {

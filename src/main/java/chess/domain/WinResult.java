@@ -6,11 +6,11 @@ public enum WinResult {
     WHITE,
     DRAW;
 
-    public static WinResult of(double blackScore, double whiteScore) {
-        if (blackScore > whiteScore) {
+    public static WinResult of(Score blackScore, Score whiteScore) {
+        if (blackScore.isOverThan(whiteScore)) {
             return BLACK;
         }
-        if (blackScore < whiteScore) {
+        if (whiteScore.isOverThan(blackScore)) {
             return WHITE;
         }
         return DRAW;

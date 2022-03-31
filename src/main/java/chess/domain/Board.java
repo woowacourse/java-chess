@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -85,52 +84,6 @@ public class Board {
         }
     }
 
-    public double calculateScoreOf(Color color) {
-        double pawnsScore = calculatePawnScore(color);
-        double scoreExceptPawn = calculateScoreExceptPawn(color);
-
-        return pawnsScore + scoreExceptPawn;
-    }
-
-    private double calculatePawnScore(Color color) {
-        List<Position> pawnPositions = findPawnPositionsOf(color);
-        Map<Row, List<Position>> pawnPositionsByRow = Position.groupByRow(pawnPositions);
-
-        return pawnPositionsByRow.values()
-                .stream()
-                .mapToDouble(this::calculateScoreOnSameRow)
-                .sum();
-    }
-
-    private List<Position> findPawnPositionsOf(Color color) {
-        return pieces.keySet().stream()
-                .filter(position -> isPawnWith(color, pieces.get(position)))
-                .collect(Collectors.toList());
-    }
-
-    private boolean isPawnWith(Color color, Piece piece) {
-        return piece.isSameColor(color) && piece.isPawn();
-    }
-
-    private double calculateScoreOnSameRow(List<Position> positions) {
-        if (positions.size() > 1) {
-            return positions.stream()
-                    .mapToDouble(position -> pieces.get(position).score() / 2)
-                    .sum();
-        }
-        return positions.stream()
-                .mapToDouble(position -> pieces.get(position).score())
-                .sum();
-    }
-
-    private double calculateScoreExceptPawn(Color color) {
-        return pieces.values()
-                .stream()
-                .filter(piece -> piece.isSameColor(color) && !piece.isPawn())
-                .mapToDouble(Piece::score)
-                .sum();
-    }
-
     public boolean hasBothKings() {
         return countKingsOnBoard() == 2;
     }
@@ -140,6 +93,13 @@ public class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .count();
+    }
+
+    public Map<Position, Piece> getPiecesOf(Color color) {
+        return pieces.keySet()
+                .stream()
+                .filter(position -> pieces.get(position).isSameColor(color))
+                .collect(Collectors.toMap(position -> position, pieces::get));
     }
 
     public Map<Position, Piece> getPieces() {
