@@ -4,7 +4,8 @@ import chess.domain.position.Position;
 
 public class King implements Role {
 
-    public static final int MOVEMENT_LIMIT = 1;
+    private static final int MOVEMENT_LIMIT = 1;
+    private static final double SCORE = 0;
 
     @Override
     public String getSymbol() {
@@ -28,6 +29,6 @@ public class King implements Role {
 
     @Override
     public double score() {
-        return 0;
+        return SCORE;
     }
 }

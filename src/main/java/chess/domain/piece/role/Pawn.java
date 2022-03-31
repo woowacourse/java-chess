@@ -5,9 +5,10 @@ import chess.domain.position.Row;
 
 public final class Pawn implements Role {
 
-    public static final int DEFAULT_MOVEMENT_LIMIT = 1;
-    public static final int VERTICAL_MOVEMENT_LIMIT_ON_START = 2;
-    public static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
+    private static final int DEFAULT_MOVEMENT_LIMIT = 1;
+    private static final int VERTICAL_MOVEMENT_LIMIT_ON_START = 2;
+    private static final int HORIZONTAL_MOVEMENT_LIMIT = 0;
+    private static final int SCORE = 1;
 
     @Override
     public String getSymbol() {
@@ -57,6 +58,6 @@ public final class Pawn implements Role {
 
     @Override
     public double score() {
-        return 1;
+        return SCORE;
     }
 }

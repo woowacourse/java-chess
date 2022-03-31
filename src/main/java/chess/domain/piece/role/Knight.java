@@ -6,6 +6,7 @@ public class Knight implements Role {
 
     private static final int FIRST_MOVEMENT_LIMIT = 2;
     private static final int SECOND_MOVEMENT_LIMIT = 1;
+    private static final double SCORE = 2.5;
 
     @Override
     public String getSymbol() {
@@ -39,6 +40,6 @@ public class Knight implements Role {
 
     @Override
     public double score() {
-        return 2.5;
+        return SCORE;
     }
 }

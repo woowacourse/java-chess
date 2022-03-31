@@ -4,6 +4,8 @@ import chess.domain.position.Position;
 
 public class Queen implements Role {
 
+    private static final int SCORE = 9;
+
     @Override
     public String getSymbol() {
         return "Q";
@@ -26,6 +28,6 @@ public class Queen implements Role {
 
     @Override
     public double score() {
-        return 9;
+        return SCORE;
     }
 }

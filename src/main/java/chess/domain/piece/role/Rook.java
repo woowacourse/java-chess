@@ -4,6 +4,8 @@ import chess.domain.position.Position;
 
 public class Rook implements Role {
 
+    private static final int SCORE = 5;
+
     @Override
     public String getSymbol() {
         return "R";
@@ -26,6 +28,6 @@ public class Rook implements Role {
 
     @Override
     public double score() {
-        return 5;
+        return SCORE;
     }
 }

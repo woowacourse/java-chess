@@ -4,6 +4,8 @@ import chess.domain.position.Position;
 
 public class Bishop implements Role {
 
+    private static final double SCORE = 3;
+
     @Override
     public String getSymbol() {
         return "B";
@@ -26,6 +28,6 @@ public class Bishop implements Role {
 
     @Override
     public double score() {
-        return 3;
+        return SCORE;
     }
 }
