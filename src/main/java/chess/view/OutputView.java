@@ -32,8 +32,8 @@ public class OutputView {
         }
     }
 
-    private static void printSymbol(final Game board, final Position position) {
-        final Optional<Piece> wrappedPiece = board.piece(position);
+    private static void printSymbol(final Game game, final Position position) {
+        final Optional<Piece> wrappedPiece = game.piece(position);
         if (wrappedPiece.isPresent()) {
             System.out.print(wrappedPiece.get().symbol());
             return;
@@ -70,5 +70,15 @@ public class OutputView {
             return;
         }
         System.out.println("현재 무승부입니다.");
+    }
+
+    public static void printFinalResult(final Game game) {
+        printScore(game);
+        final Map<Result, Color> result = game.calculateFinalWinner();
+        if (result.containsKey(Result.WIN)) {
+            System.out.println(result.get(Result.WIN).value() + "이 이겼습니다.");
+            return;
+        }
+        System.out.println("무승부입니다.");
     }
 }

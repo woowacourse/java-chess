@@ -23,6 +23,7 @@ public final class GameMachine {
             command = InputView.requestCommand();
             game = play(game, command);
         } while (!Command.isEnd(command) && !game.isEnd());
+        printFinalResult(game);
     }
 
     private Game play(Game game, final String command) {
@@ -62,6 +63,12 @@ public final class GameMachine {
             game.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
         } catch (IllegalArgumentException e) {
             OutputView.announceBadMovement(e.getMessage());
+        }
+    }
+
+    private void printFinalResult(Game game) {
+        if(game != null) {
+            OutputView.printFinalResult(game);
         }
     }
 }
