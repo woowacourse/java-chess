@@ -8,6 +8,7 @@ import java.util.List;
 public class KnightPiece extends Piece {
 
     private static final String NAME = "N";
+    private static final double SCORE = 2.5;
 
     private final List<Direction> movableDirections;
 
@@ -31,6 +32,11 @@ public class KnightPiece extends Piece {
         final Direction direction = Direction.of(columnDistance, rowDistance);
 
         return movableDirections.contains(direction);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

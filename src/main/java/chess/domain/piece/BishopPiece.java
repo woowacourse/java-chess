@@ -8,6 +8,7 @@ import java.util.List;
 public final class BishopPiece extends Piece {
 
     private static final String NAME = "B";
+    private static final double SCORE = 3.0;
 
     private final List<Direction> movableDirections;
 
@@ -28,5 +29,10 @@ public final class BishopPiece extends Piece {
         final Direction direction = Direction.of(columnDistance, rowDistance);
 
         return movableDirections.contains(direction);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

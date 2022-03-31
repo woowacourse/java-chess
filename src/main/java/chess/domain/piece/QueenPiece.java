@@ -8,6 +8,7 @@ import java.util.List;
 public class QueenPiece extends Piece {
 
     private static final String NAME = "Q";
+    private static final double SCORE = 9.0;
 
     private final List<Direction> movableDirections;
 
@@ -29,5 +30,10 @@ public class QueenPiece extends Piece {
         final Direction direction = Direction.of(columnDistance, rowDistance);
 
         return movableDirections.contains(direction);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

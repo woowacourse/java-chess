@@ -7,6 +7,7 @@ import chess.domain.position.Row;
 public class PawnPiece extends Piece {
 
     private static final String NAME = "P";
+    private static final double SCORE = 1.0;
     private static final int LIMIT_DISTANCE = 2;
 
     public PawnPiece(final Color color) {
@@ -66,5 +67,10 @@ public class PawnPiece extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

@@ -1,25 +1,16 @@
 package chess.domain.result;
 
 import chess.domain.Board;
-import chess.domain.piece.BishopPiece;
 import chess.domain.piece.Color;
-import chess.domain.piece.KnightPiece;
-import chess.domain.piece.PawnPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.QueenPiece;
-import chess.domain.piece.RookPiece;
 import chess.domain.position.Column;
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 public class Score {
 
-    private static final double QUEEN_SCORE = 9.0;
-    private static final double ROOK_SCORE = 5.0;
-    private static final double BISHOP_SCORE = 3.0;
-    private static final double KNIGHT_SCORE = 2.5;
-    private static final int PAWN_INITIAL_SCORE = 1;
-    private static final double PAWN_DUPLICATE_SCORE = 0.5;
+    private static final int PAWN_DEFAULT_COUNT = 1;
+    private static final double PAWN_SCORE_DIVISOR = 2.0;
 
     private final double value;
 
@@ -28,43 +19,39 @@ public class Score {
     }
 
     private double calculate(final Board board, final Color color) {
-        final Map<Piece, Double> scoreRule = initializeScoreRuleWithoutPawn(color);
-
-        double score = calculateScoreWithoutPawn(board, scoreRule);
+        double score = calculateScoreWithoutPawn(board, color);
         score += calculateScorePawn(board, color);
 
         return score;
     }
 
-    private Map<Piece, Double> initializeScoreRuleWithoutPawn(final Color color) {
-        return Map.of(
-                new QueenPiece(color), QUEEN_SCORE,
-                new RookPiece(color), ROOK_SCORE,
-                new BishopPiece(color), BISHOP_SCORE,
-                new KnightPiece(color), KNIGHT_SCORE
-        );
-    }
-
-    private double calculateScoreWithoutPawn(final Board board,
-                                             final Map<Piece, Double> pieceScores) {
-        return pieceScores.entrySet()
+    private double calculateScoreWithoutPawn(final Board board, final Color color) {
+        return board.toPieceListWithoutPawn(color)
                 .stream()
-                .mapToDouble(entry -> board.countPiece(entry.getKey()) * entry.getValue())
+                .mapToDouble(Piece::getScore)
                 .sum();
     }
 
     private double calculateScorePawn(final Board board, final Color color) {
         return Arrays.stream(Column.values())
-                .mapToInt(file -> board.countPieceOnSameColumn(new PawnPiece(color), file))
+                .map(column -> board.toPawnListOnSameColumn(color, column))
+                .map(this::calculateScorePawnOnSameColumn)
                 .mapToDouble(this::decidePawnScoreRule)
                 .sum();
     }
 
-    private double decidePawnScoreRule(final int count) {
-        if (count == PAWN_INITIAL_SCORE) {
-            return count;
+    private double calculateScorePawnOnSameColumn(final List<Piece> pieces) {
+        return pieces
+                .stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private double decidePawnScoreRule(final double score) {
+        if (score > PAWN_DEFAULT_COUNT) {
+            return score / PAWN_SCORE_DIVISOR;
         }
-        return count * PAWN_DUPLICATE_SCORE;
+        return score;
     }
 
     public Result decideResult(final Score score) {

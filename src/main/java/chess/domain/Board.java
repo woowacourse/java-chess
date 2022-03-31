@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -102,32 +103,26 @@ public class Board {
         board.put(from, new EmptyPiece());
     }
 
-    public int countPiece(final Piece piece) {
-        return (int) board.values()
-                .stream()
-                .filter(value -> value.equals(piece))
-                .count();
-    }
-
-    public int countPieceOnSameColumn(final Piece piece, final Column column) {
-        return (int) board.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().isSameColumn(column))
-                .filter(entry -> entry.getValue().equals(piece))
-                .count();
-    }
-
-    public List<Piece> toPieceListWithoutPawn() {
+    public List<Piece> toPieceListWithoutPawn(final Color color) {
         return board.values()
                 .stream()
+                .filter(piece -> piece.isSameColor(color))
                 .filter(piece -> !piece.isPawn())
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Piece> toPawnList() {
-        return board.values()
-                .stream()
+    public List<Piece> toPawnListOnSameColumn(final Color color, final Column column) {
+        return toPieceListOnSameColumn(column).stream()
+                .filter(piece -> piece.isSameColor(color))
                 .filter(Piece::isPawn)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private List<Piece> toPieceListOnSameColumn(final Column column) {
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isSameColumn(column))
+                .map(Entry::getValue)
                 .collect(Collectors.toUnmodifiableList());
     }
 

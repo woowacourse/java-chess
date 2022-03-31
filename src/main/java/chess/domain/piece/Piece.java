@@ -24,6 +24,8 @@ public abstract class Piece {
                                             final Position to,
                                             final boolean isEmptyTarget);
 
+    public abstract double getScore();
+
     public boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
