@@ -25,9 +25,9 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
     }
 
-    public static void printBoard(Map<Position, Piece> board) {
+    public static void printBoard(Map<Position, Piece> pieces) {
         for (int rank = 0; rank < 8; rank++) {
-            printBoardInRank(board, rank);
+            printBoardOnRow(pieces, rank);
             printRank(rank);
         }
         System.out.println();
@@ -35,11 +35,18 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printBoardInRank(Map<Position, Piece> board, int rank) {
+    private static void printBoardOnRow(Map<Position, Piece> pieces, int rank) {
         for (int column = 0; column < 8; column++) {
             Position position = new Position(Column.of(column), Row.of(rank));
-            System.out.print(board.get(position).signature());
+            System.out.print(makeSignature(pieces, position));
         }
+    }
+
+    private static String makeSignature(Map<Position, Piece> pieces, Position position) {
+        if (!pieces.containsKey(position)) {
+            return ".";
+        }
+        return pieces.get(position).signature();
     }
 
     private static void printRank(int rank) {
