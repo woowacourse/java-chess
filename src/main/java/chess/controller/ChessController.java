@@ -5,7 +5,7 @@ import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
+import chess.view.dto.command.ConsoleCommandDto;
 
 public class ChessController {
 
@@ -19,28 +19,27 @@ public class ChessController {
         // TODO: 메소드 길이를 줄이기 위해 메소드 추출하기
         while (true) {
             try {
-                List<String> commands = InputView.inputCommand();
-                String command = commands.get(0);
+                ConsoleCommandDto commandDto = InputView.inputCommand();
 
-                if (command.equals("start")) {
+                if (commandDto.isStart()) {
                     chessGame.startGame();
                     OutputView.printBoard(chessGame.getBoard());
                 }
 
-                if (command.equals("move")) {
-                    Position fromPosition = Position.from(commands.get(1));
-                    Position toPosition = Position.from(commands.get(2));
+                if (commandDto.isMove()) {
+                    Position fromPosition = Position.from(commandDto.getArgumentByIndex(0));
+                    Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
 
                     chessGame.movePiece(fromPosition, toPosition);
                     OutputView.printBoard(chessGame.getBoard());
                 }
 
-                if (command.equals("status")) {
+                if (commandDto.isStatus()) {
                     ScoreResult scoreResult = chessGame.showStatus();
                     OutputView.printScore(scoreResult);
                 }
 
-                if (command.equals("end")) {
+                if (commandDto.isEnd()) {
                     break;
                 }
             } catch (Exception e) {

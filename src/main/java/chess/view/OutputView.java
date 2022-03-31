@@ -3,7 +3,7 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.game.score.ScoreResult;
 import chess.domain.piece.PieceColor;
-import chess.view.dto.BoardDto;
+import chess.view.dto.board.BoardDto;
 
 public class OutputView {
 

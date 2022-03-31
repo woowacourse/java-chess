@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.view.dto.command.ConsoleCommandDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -9,18 +10,15 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private static final String COMMAND_DELIMITER = " ";
-    private static final List<String> COMMANDS = List.of("move", "start", "end", "status");
+    private static final int COMMAND_INDEX = 0;
+    private static final int ARGUMENT_START_INDEX = 1;
 
-    public static List<String> inputCommand() {
-        List<String> commands = Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));
-        validateCommand(commands.get(0));
+    public static ConsoleCommandDto inputCommand() {
+        List<String> splitCommand = Arrays.asList(SCANNER.nextLine().split(COMMAND_DELIMITER));
 
-        return commands;
-    }
-
-    private static void validateCommand(String command) {
-        if (!COMMANDS.contains(command)) {
-            throw new IllegalArgumentException("존재하지 않는 명령어입니다.");
-        }
+        return ConsoleCommandDto.from(
+                splitCommand.get(COMMAND_INDEX),
+                splitCommand.subList(ARGUMENT_START_INDEX, splitCommand.size())
+        );
     }
 }
