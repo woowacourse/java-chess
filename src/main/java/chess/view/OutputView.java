@@ -18,7 +18,7 @@ public class OutputView {
     private static final String NONE_PIECE = ".";
     private static final String SCORE_FORMAT = "%s팀 점수 : %.1f";
     private static final String WINNER_FORMAT = "%s팀이 승리했습니다!";
-    public static final String WINNER_NOT_EXIST = "승리한 팀이 없습니다.";
+    private static final String WINNER_NOT_EXIST = "승리한 팀이 없습니다.";
 
     public static void printGameInitMessage() {
         System.out.println(CHESS_GAME_INIT_MESSAGE);

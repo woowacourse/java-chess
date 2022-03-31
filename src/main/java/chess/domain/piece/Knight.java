@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 public class Knight extends Piece {
 
     private static final double KNIGHT_SCORE = 2.5;
+    private static final int KNIGHT_RANGE_DISTANCE = 5;
 
     public Knight(Color color) {
         super(color, KNIGHT_SCORE);
@@ -14,7 +15,7 @@ public class Knight extends Piece {
     public boolean isMovable(Position fromPosition, Position toPosition) {
         int height = fromPosition.getRankDifference(toPosition);
         int width = fromPosition.getFileDifference(toPosition);
-        return Math.pow(height, 2) + Math.pow(width, 2) == 5;
+        return Math.pow(height, 2) + Math.pow(width, 2) == KNIGHT_RANGE_DISTANCE;
     }
 
     @Override

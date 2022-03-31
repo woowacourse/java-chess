@@ -10,7 +10,7 @@ import chess.domain.position.Position;
 
 public class Running implements GameState {
 
-    private static final String NOT_CORRECT_TURN_MOVE_PIECE = "해당 색상의 말을 옮길 차례가 아닙니다.";
+    private static final String NOT_CORRECT_TURN_MOVE_PIECE = "[ERROR] 해당 색상의 말을 옮길 차례가 아닙니다.";
 
     private final Board board;
     private Color color;

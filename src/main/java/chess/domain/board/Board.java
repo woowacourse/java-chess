@@ -19,7 +19,7 @@ public class Board {
     private final Map<Position, Piece> value;
 
     public Board() {
-        this.value = new HashMap<>();
+        this(new HashMap<>());
     }
 
     public Board(final Map<Position, Piece> value) {
