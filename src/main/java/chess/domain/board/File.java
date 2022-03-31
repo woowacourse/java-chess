@@ -3,20 +3,23 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h"),
+
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8),
     ;
 
     private final String value;
+    private final int order;
 
-    File(final String value) {
+    File(final String value, final int order) {
         this.value = value;
+        this.order = order;
     }
 
     public static File from(final String value) {
@@ -26,8 +29,15 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file 값입니다."));
     }
 
+    private static File from(final int order) {
+        return Arrays.stream(values())
+                .filter(file -> file.order == order)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file 값입니다."));
+    }
+
     public int calculateDifference(final File anotherFile, final boolean absoluteFlag) {
-        final int difference = this.ordinal() - anotherFile.ordinal();
+        final int difference = this.order - anotherFile.order;
         if (absoluteFlag) {
             return Math.abs(difference);
         }
@@ -35,11 +45,11 @@ public enum File {
     }
 
     public File next(final File targetFile) {
-        if (this.ordinal() < targetFile.ordinal()) {
-            return values()[this.ordinal() + 1];
+        if (this.order < targetFile.order) {
+            return File.from(this.order + 1);
         }
-        if (this.ordinal() > targetFile.ordinal()) {
-            return values()[this.ordinal() - 1];
+        if (this.order > targetFile.order) {
+            return File.from(this.order - 1);
         }
         return this;
     }
