@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.ScoreCalculator;
+import chess.domain.game.ScoreCalculator;
 import chess.domain.piece.Piece;
 
 public class Players {
@@ -101,9 +101,9 @@ public class Players {
         return player.isPromotablePawnExist();
     }
 
-    public void promotePawn(final Color color, final Piece piece) {
+    public void promotePawn(final Color color, final String pieceName) {
         final Player player = findPlayerByColor(color);
-        player.promotePawn(piece);
+        player.promotePawn(pieceName);
     }
 
     private Player findPlayerByColor(final Color color) {

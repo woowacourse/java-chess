@@ -133,7 +133,7 @@ class PlayerTest {
     @DisplayName("프로모션 가능한 폰이 존재하지 않으면 프로모션을 할 수 없어야 한다.")
     @Test
     void notExistPromotablePawnException() {
-        assertThatThrownBy(() -> player.promotePawn(Queen.getInstance()))
+        assertThatThrownBy(() -> player.promotePawn("Queen"))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("프로모션 가능한 폰이 존재하지 않습니다.");
     }
@@ -143,7 +143,7 @@ class PlayerTest {
     void promotePawn() {
         final Position position = Position.from("a8");
         final Player player = new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn())));
-        player.promotePawn(Queen.getInstance());
+        player.promotePawn("Queen");
 
         final Map<Position, Piece> playerPieces = player.getPieces();
         assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);

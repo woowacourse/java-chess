@@ -6,8 +6,9 @@ import java.util.NoSuchElementException;
 
 import chess.domain.Color;
 import chess.domain.Position;
-import chess.domain.ScoreCalculator;
+import chess.domain.game.ScoreCalculator;
 import chess.domain.piece.Piece;
+import chess.domain.piece.constant.PromotablePiece;
 
 public class Player {
 
@@ -79,8 +80,9 @@ public class Player {
         return piece.isPawn() && position.isEndOfRowRange();
     }
 
-    public void promotePawn(final Piece piece) {
+    public void promotePawn(final String pieceName) {
         final Position position = findPositionOfPromotablePawn();
+        final Piece piece = PromotablePiece.convertToPromotablePiece(pieceName);
         pieces.put(position, piece);
     }
 

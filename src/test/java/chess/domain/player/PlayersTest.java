@@ -120,7 +120,7 @@ class PlayersTest {
         final Position position = Position.from("a8");
         final Players players = new Players(
                 new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn()))));
-        players.promotePawn(Color.WHITE, Queen.getInstance());
+        players.promotePawn(Color.WHITE, "Queen");
 
         final Map<Position, Piece> playerPieces = players.getPiecesByPlayer(Color.WHITE);
         assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);
