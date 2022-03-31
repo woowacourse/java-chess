@@ -8,7 +8,6 @@ import static chess.domain.board.File.E;
 import static chess.domain.board.File.F;
 import static chess.domain.board.File.G;
 import static chess.domain.board.File.H;
-import static chess.domain.board.Rank.isPawnRank;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
@@ -36,7 +35,7 @@ public abstract class Piece {
 
     public static Piece create(final File file, final Rank rank) {
         TeamColor teamColor = TeamColor.findByRank(rank);
-        if (isPawnRank(rank)) {
+        if (rank.isPawnRank()) {
             return new Pawn(teamColor, Position.of(file, rank));
         }
         return initialPieceCreationStrategy.get(file)

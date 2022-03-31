@@ -26,7 +26,7 @@ class RankTest {
     @CsvSource({"TWO, true", "SEVEN, true", "ONE, false"})
     void isPawnRank(final Rank rank, final boolean expected) {
         // when
-        final boolean actual = Rank.isPawnRank(rank);
+        final boolean actual = rank.isPawnRank();
         // then
         assertThat(actual).isEqualTo(expected);
     }

@@ -36,8 +36,8 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 rank 값입니다."));
     }
 
-    public static boolean isPawnRank(final Rank rank) {
-        return rank == TWO || rank == SEVEN;
+    public boolean isPawnRank() {
+        return this == TWO || this == SEVEN;
     }
 
     public int calculateDifference(final Rank anotherRank, final boolean absoluteFlag) {
