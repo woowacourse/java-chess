@@ -1,14 +1,12 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.Rank;
 import chess.domain.piece.Position;
-import chess.domain.state.BlackTurn;
-import chess.domain.state.BoardInitializer;
-import chess.domain.state.GameState;
-import chess.domain.state.WhiteTurn;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +18,7 @@ class WhiteTurnTest {
     @Test
     void isNotBlackTurn() {
         Map<Integer, Rank> ranks = new HashMap<>();
-        WhiteTurn whiteTurn = new WhiteTurn(ranks);
+        WhiteTurn whiteTurn = new WhiteTurn(new Board(BoardInitializer.initBoard()));
 
         assertThat(whiteTurn.isBlackTurn()).isFalse();
     }
@@ -28,7 +26,7 @@ class WhiteTurnTest {
     @DisplayName("백팀 차례 이후에 흑팀 차례가 된다.")
     @Test
     void isBlackTurnAfterWhiteTurn() {
-        GameState whiteTurn = BoardInitializer.initBoard();
+        GameState whiteTurn = new WhiteTurn(new Board(BoardInitializer.initBoard()));
         GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
 
         assertThat(blackTurn).isInstanceOf(BlackTurn.class);
@@ -37,7 +35,7 @@ class WhiteTurnTest {
     @DisplayName("백팀 차례에 흑팀 말을 움직이면 예외가 발생한다.")
     @Test
     void moveBlackPieceInWhiteTurn() {
-        GameState whiteTurn = BoardInitializer.initBoard();
+        GameState whiteTurn = new WhiteTurn(new Board(BoardInitializer.initBoard()));
 
         assertThatThrownBy(() -> whiteTurn.move(new Position("b7"), new Position("b5")))
                 .isInstanceOf(IllegalArgumentException.class)

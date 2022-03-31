@@ -17,14 +17,14 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printBoard(GameState boardState) {
+    public static void printBoard(GameState gameState) {
         System.out.println();
-        System.out.printf("   [ %s팀의 차례입니다 ]%n", boardState.findTurn());
+        System.out.printf("   [ %s팀의 차례입니다 ]%n", gameState.findTurn());
         System.out.println("      Black Side");
         System.out.println("    a b c d e f g h");
         System.out.println("  ┌-----------------┐");
         for (int i = 8; i > 0; i--) {
-            String rankLine = boardState.getRank(i - 1).getPieces().stream()
+            String rankLine = gameState.getBoard().getRank(i - 1).getPieces().stream()
                     .map(Piece::getSignature)
                     .collect(Collectors.joining(" "));
 
@@ -36,9 +36,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResult(GameState boardState) {
-        System.out.printf("승자 : %s%n", boardState.findWinner().getName());
-        System.out.printf("흑팀 점수 : %.1f%n", boardState.calculateBlackScore());
-        System.out.printf("백팀 점수 : %.1f%n", boardState.calculateWhiteScore());
+    public static void printResult(GameState gameState) {
+        System.out.printf("승자 : %s%n", gameState.findWinner().getName());
+        System.out.printf("흑팀 점수 : %.1f%n", gameState.getBoard().calculateBlackScore());
+        System.out.printf("백팀 점수 : %.1f%n", gameState.getBoard().calculateWhiteScore());
     }
 }

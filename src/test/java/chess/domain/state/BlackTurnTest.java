@@ -1,14 +1,12 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.Rank;
 import chess.domain.piece.Position;
-import chess.domain.state.BlackTurn;
-import chess.domain.state.BoardInitializer;
-import chess.domain.state.GameState;
-import chess.domain.state.WhiteTurn;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +18,8 @@ class BlackTurnTest {
     @Test
     void isBlackTurn() {
         Map<Integer, Rank> ranks = new HashMap<>();
-        BlackTurn blackTurn = new BlackTurn(ranks);
+
+        BlackTurn blackTurn = new BlackTurn(new Board(ranks));
 
         assertThat(blackTurn.isBlackTurn()).isTrue();
     }
@@ -28,18 +27,16 @@ class BlackTurnTest {
     @DisplayName("흑팀 차례 이후에 백팀 차례가 된다.")
     @Test
     void isBlackTurnAfterWhiteTurn() {
-        GameState whiteTurn = BoardInitializer.initBoard();
-        GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
-        GameState whiteTurn2 = blackTurn.move(new Position("b7"), new Position("b6"));
+        GameState blackTurn = new BlackTurn(new Board(BoardInitializer.initBoard()));
+        GameState whiteTurn = blackTurn.move(new Position("b7"), new Position("b6"));
 
-        assertThat(whiteTurn2).isInstanceOf(WhiteTurn.class);
+        assertThat(whiteTurn).isInstanceOf(WhiteTurn.class);
     }
 
     @DisplayName("흑팀 차례에 백팀 말을 움직이면 예외가 발생한다.")
     @Test
     void moveBlackPieceInWhiteTurn() {
-        GameState whiteTurn = BoardInitializer.initBoard();
-        GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+        GameState blackTurn = new BlackTurn(new Board(BoardInitializer.initBoard()));
 
         assertThatThrownBy(() -> blackTurn.move(new Position("c2"), new Position("c4")))
                 .isInstanceOf(IllegalArgumentException.class)

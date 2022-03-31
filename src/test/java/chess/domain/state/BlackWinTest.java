@@ -1,15 +1,12 @@
-package chess.domain.board.state;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
 import chess.domain.board.Rank;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Position;
-import chess.domain.state.BlackTurn;
-import chess.domain.state.BlackWin;
-import chess.domain.state.GameState;
-import chess.domain.state.Winner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +19,8 @@ class BlackWinTest {
     @Test
     void isBlackWin() {
         Map<Integer, Rank> ranks = new HashMap<>();
-        BlackWin blackWin = new BlackWin(ranks);
+
+        BlackWin blackWin = new BlackWin(new Board(ranks));
 
         assertThat(blackWin.findWinner()).isEqualTo(Winner.BLACK);
     }
@@ -43,7 +41,7 @@ class BlackWinTest {
                 new Blank(new Position("h1"))
         )));
 
-        GameState state = new BlackTurn(ranks);
+        GameState state = new BlackTurn(new Board(ranks));
 
         state = state.move(new Position("b1"), new Position("a1"));
 

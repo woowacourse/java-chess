@@ -1,6 +1,5 @@
-package chess.domain.state;
+package chess.domain.board;
 
-import chess.domain.board.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;
@@ -15,14 +14,14 @@ import java.util.Map;
 
 public class BoardInitializer {
 
-    public static GameState initBoard() {
+    public static Map<Integer, Rank> initBoard() {
         Map<Integer, Rank> ranks = new HashMap<>();
         initWhitePieces(ranks);
         initWhitePawns(ranks);
         initBlanks(ranks);
         initBlackPawns(ranks);
         initBlackPieces(ranks);
-        return new WhiteTurn(ranks);
+        return ranks;
     }
 
     private static void initWhitePieces(Map<Integer, Rank> ranks) {

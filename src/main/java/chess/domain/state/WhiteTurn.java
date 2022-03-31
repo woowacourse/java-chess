@@ -1,14 +1,13 @@
 package chess.domain.state;
 
-import chess.domain.board.Rank;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import java.util.Map;
 
 public final class WhiteTurn extends Playing {
 
-    public WhiteTurn(Map<Integer, Rank> ranks) {
-        super(ranks);
+    public WhiteTurn(Board board) {
+        super(board);
     }
 
     @Override
@@ -18,23 +17,20 @@ public final class WhiteTurn extends Playing {
 
     @Override
     public GameState move(Position start, Position target) {
-        Piece selected = getPiece(start);
+        Piece selected = board.getPiece(start);
 
         if (selected.isBlack()) {
             throw new IllegalArgumentException(IS_NOT_YOUR_TURN_EXCEPTION_MESSAGE);
         }
 
-        return movePiece(start, target);
+        return judgeStatus(board.movePiece(start, target));
     }
 
-    @Override
-    public End judgeWinner() {
-        return new WhiteWin(ranks);
-    }
-
-    @Override
-    public Playing judgeTurn() {
-        return new BlackTurn(ranks);
+    private GameState judgeStatus(Piece targetPiece) {
+        if (targetPiece.isKing()) {
+            return new WhiteWin(board);
+        }
+        return new BlackTurn(board);
     }
 
     @Override

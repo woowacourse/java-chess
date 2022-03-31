@@ -1,17 +1,17 @@
 package chess.domain.state;
 
-import chess.domain.board.Rank;
-import java.util.Map;
+import chess.domain.board.Board;
 
 public abstract class GameStarted implements GameState {
 
-    protected final Map<Integer, Rank> ranks;
+    protected final Board board;
 
-    public GameStarted(Map<Integer, Rank> ranks) {
-        this.ranks = ranks;
+    public GameStarted(Board board) {
+        this.board = board;
     }
 
-    public Rank getRank(int rankLine) {
-        return ranks.get(rankLine);
+    @Override
+    public Board getBoard() {
+        return board;
     }
 }

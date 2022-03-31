@@ -13,10 +13,10 @@ public class ChessGameController {
     private static final int START_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
-    private GameState boardState;
+    private GameState gameState;
 
-    public ChessGameController(GameState boardState) {
-        this.boardState = boardState;
+    public ChessGameController(GameState gameState) {
+        this.gameState = gameState;
     }
 
     public void run() {
@@ -28,7 +28,7 @@ public class ChessGameController {
 
         playRound();
 
-        OutputView.printResult(boardState);
+        OutputView.printResult(gameState);
     }
 
     private Command requestFirstCommand() {
@@ -41,8 +41,8 @@ public class ChessGameController {
     }
 
     private void playRound() {
-        while (!boardState.isEnd()) {
-            OutputView.printBoard(boardState);
+        while (!gameState.isEnd()) {
+            OutputView.printBoard(gameState);
             executeTurn();
         }
     }
@@ -52,7 +52,7 @@ public class ChessGameController {
             executeCommand();
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
-            OutputView.printBoard(boardState);
+            OutputView.printBoard(gameState);
             executeTurn();
         }
     }
@@ -61,14 +61,14 @@ public class ChessGameController {
         List<String> input = InputView.requestCommandLine();
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.END) {
-            boardState = boardState.terminate();
+            gameState = gameState.terminate();
             return;
         }
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.MOVE) {
-            boardState = boardState.move(new Position(input.get(START_POSITION_INDEX)),
+            gameState = gameState.move(
+                    new Position(input.get(START_POSITION_INDEX)),
                     new Position(input.get(TARGET_POSITION_INDEX)));
-            System.out.println(boardState.isBlackTurn());
         }
     }
 }
