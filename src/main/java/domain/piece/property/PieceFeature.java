@@ -21,8 +21,8 @@ public enum PieceFeature {
         this.score = score;
     }
 
-    public String symbol(final Team Team) {
-        if (Team == Team.BLACK) {
+    public String symbol(final Team team) {
+        if (team == Team.BLACK) {
             return symbol;
         }
         return symbol.toLowerCase();

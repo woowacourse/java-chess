@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Piece {
 
-    boolean checkSameTeam(final Team Team);
+    boolean checkSameTeam(final Team team);
 
     boolean availableMove(final Position source, final Position target);
 

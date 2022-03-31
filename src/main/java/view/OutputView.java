@@ -34,8 +34,8 @@ public class OutputView {
                 statusDto.getResult());
     }
 
-    public static void printWinner(final Team Team) {
-        System.out.println(Team + "가 우승하였습니다.");
+    public static void printWinner(final Team team) {
+        System.out.println(team + "가 우승하였습니다.");
     }
 
     public static void printErrorMessage(final String message) {

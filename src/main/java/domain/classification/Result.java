@@ -47,12 +47,12 @@ public enum Result {
         return Result.DRAW;
     }
 
-    private static List<Piece> calculateTeamPiecesByXPosition(final Map<Position, Piece> board, final Team Team,
+    private static List<Piece> calculateTeamPiecesByXPosition(final Map<Position, Piece> board, final Team team,
                                                               final XPosition x) {
         return Arrays.stream(YPosition.values())
                 .map(yPosition -> board.get(Position.of(x, yPosition)))
                 .filter(piece -> piece != null)
-                .filter(piece -> piece.checkSameTeam(Team))
+                .filter(piece -> piece.checkSameTeam(team))
                 .collect(Collectors.toList());
     }
 
@@ -70,4 +70,4 @@ public enum Result {
                 .filter(piece -> piece.symbol().equals(PieceFeature.PAWN.symbol()))
                 .count() >= PAWN_DUPLICATE_CONDITION_FOR_SCORE;
     }
-    }
+}
