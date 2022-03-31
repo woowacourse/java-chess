@@ -2,54 +2,39 @@ package chess.model.piece;
 
 import static chess.model.Team.BLACK;
 import static chess.model.position.File.D;
-import static chess.model.position.File.E;
-import static chess.model.position.File.F;
-import static chess.model.position.Rank.FIVE;
 import static chess.model.position.Rank.FOUR;
-import static chess.model.position.Rank.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.Team;
+import chess.model.board.Board;
+import chess.model.position.File;
 import chess.model.position.Position;
-import chess.model.direction.route.Route;
+import chess.model.position.Rank;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class QueenTest {
 
-    @DisplayName("서쪽으로 움직일 수 있으면 서쪽 방향의 Route를 반환한다.")
-    @Test()
-    void findRoute_west() {
+    @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"SEVEN,D", "ONE,D", "SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
+    void canMove_false(Rank rank, File file) {
+        Map<Position, Piece> board = new Board().getBoard();
         Piece queen = new Queen(BLACK);
-        Route route = queen.findRoute(Position.of(FIVE, E), Position.of(FIVE, D));
+        boolean actual = queen.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 
-        assertThat(route).isEqualTo(new Route(0, -1));
+        assertThat(actual).isFalse();
     }
 
-    @DisplayName("동쪽으로 움직일 수 있으면 동쪽 방향의 Route를 반환한다.")
-    @Test()
-    void findRoute_east() {
+    @DisplayName("target 위치로 움직일 수 있으면 true를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B", "FOUR,H", "FOUR,A", "TWO,D", "SIX,D"})
+    void canMove_true(Rank rank, File file) {
+        Map<Position, Piece> board = new Board().getBoard();
         Piece queen = new Queen(BLACK);
-        Route route = queen.findRoute(Position.of(FIVE, E), Position.of(FIVE, F));
+        boolean actual = queen.canMove(Position.of(FOUR, D), Position.of(rank, file), board);
 
-        assertThat(route).isEqualTo(new Route(0, 1));
-    }
-
-    @DisplayName("북동쪽으로 움직일 수 있으면 북동쪽 방향의 Route를 반환한다.")
-    @Test()
-    void findRoute_northeast() {
-        Piece queen = new Queen(BLACK);
-        Route route = queen.findRoute(Position.of(FIVE, E), Position.of(SIX, F));
-
-        assertThat(route).isEqualTo(new Route(-1, 1));
-    }
-
-    @DisplayName("남서쪽으로 움직일 수 있으면 남서쪽 방향의 Route를 반환한다.")
-    @Test()
-    void findRoute_southwest() {
-        Piece queen = new Queen(BLACK);
-        Route route = queen.findRoute(Position.of(FIVE, E), Position.of(FOUR, D));
-
-        assertThat(route).isEqualTo(new Route(1, -1));
+        assertThat(actual).isTrue();
     }
 }

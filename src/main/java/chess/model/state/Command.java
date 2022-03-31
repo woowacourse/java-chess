@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.state;
 
 import java.util.Arrays;
 

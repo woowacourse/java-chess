@@ -1,6 +1,5 @@
 package chess.model.state;
 
-import chess.model.Command;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
 import chess.model.position.Position;

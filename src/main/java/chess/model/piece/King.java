@@ -1,40 +1,28 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.direction.route.Route;
-import chess.model.direction.strategy.OrdinalRouteFinder;
-import chess.model.direction.strategy.RouteStrategy;
+import chess.model.direction.Direction;
+import chess.model.direction.strategy.MoveStrategy;
+import chess.model.direction.strategy.SingleMove;
 import chess.model.position.Position;
+import java.util.List;
+import java.util.Map;
 
 public class King extends Piece {
 
-    private static final int MOVABLE_DISTANCE = 1;
     private static final double SCORE = 0;
 
-    private final RouteStrategy routeStrategy;
+    private final MoveStrategy moveStrategy;
 
     public King(final Team team) {
         super(team);
-        this.routeStrategy = new OrdinalRouteFinder();
+        this.moveStrategy = new SingleMove(team, Direction.ordinalDirection());
     }
 
     @Override
-    public Route findRoute(final Position source, final Position target) {
-        checkMovableDistance(source, target);
-        return routeStrategy.findRoute(source, target);
-    }
-
-    private void checkMovableDistance(final Position source, final Position target) {
-        int rankDifference = Math.abs(source.subtractRankFrom(target));
-        int fileDifference = Math.abs(source.subtractFileFrom(target));
-        if (rankDifference > MOVABLE_DISTANCE || fileDifference > MOVABLE_DISTANCE) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
-        }
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+        List<Position> positions = moveStrategy.searchMovablePositions(source, board);
+        return positions.contains(target);
     }
 
     @Override

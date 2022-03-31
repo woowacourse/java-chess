@@ -2,19 +2,13 @@ package chess.model.board;
 
 import static chess.model.Team.NONE;
 
-import chess.model.Team;
-import chess.model.direction.route.Route;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Board {
-
-    private static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
@@ -22,74 +16,27 @@ public class Board {
         this.board = BoardCreator.create();
     }
 
+
     public void move(final Position source, final Position target) {
-        checkMovablePiece(source, target);
-        checkPawnCanMove(source, target);
+        checkPieceIn(source);
         checkPieceCanMove(source, target);
-        movePiece(source, target);
-    }
-
-    private void checkMovablePiece(final Position source, final Position target) {
-        if (board.get(source).isSame(NONE)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
-        }
-        if (board.get(target).isSame(board.get(source))) {
-            throw new IllegalArgumentException("[ERROR] 타겟 위치에 같은 편 기물이 있어 이동 할 수 없습니다");
-        }
-    }
-
-    private void checkPieceCanMove(final Position source, final Position target) {
-        Route route = board.get(source).findRoute(source, target);
-        Position nowPosition = source.createPositionTo(route);
-        while (!target.equals(nowPosition) && board.get(nowPosition).isSame(NONE)) {
-            nowPosition = nowPosition.createPositionTo(route);
-        }
-        if (!target.equals(nowPosition)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
-        }
-    }
-
-    private void checkPawnCanMove(final Position source, final Position target) {
-        if (board.get(source).isPawn() && !board.get(source).canMove(source, target, board)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 할 수 없는 위치가 입력됬습니다.");
-        }
-    }
-
-    private void movePiece(final Position source, final Position target) {
         board.put(target, board.get(source));
         board.put(source, new Blank(NONE));
     }
 
-    public double calculateScore(final Team team) {
-        List<Piece> teamPieces = findPiecesOf(team);
-        double score = 0;
-        for (Piece piece : teamPieces) {
-            score = piece.addTo(score);
+    private void checkPieceIn(final Position source) {
+        if (board.get(source).isSameTeam(NONE)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
         }
-        return score;
     }
 
-    private List<Piece> findPiecesOf(final Team team) {
-        return board.keySet().stream()
-                .filter(position -> board.get(position).isSame(team))
-                .map(board::get)
-                .collect(Collectors.toList());
-    }
-
-    public boolean isKingDead() {
-        return board.values()
-                .stream()
-                .filter(Piece::isKing)
-                .count() < KING_COUNT;
+    private void checkPieceCanMove(final Position source, final Position target) {
+        if (!board.get(source).canMove(source, target, board)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 시킬수 없는 위치가 입력 됬습니다.");
+        }
     }
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
-    }
-
-    public void checkSameTeam(Team team, Position source) {
-        if (!board.get(source).isSame(team)) {
-            throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직 일 수 없습니다.");
-        }
     }
 }

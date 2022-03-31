@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.model.board.GameScore;
 import chess.model.piece.Piece;
 import chess.model.position.File;
 import chess.model.position.Position;
@@ -32,11 +31,5 @@ public class OutputView {
             Piece piece = board.get(Position.of(rank, file));
             PieceView.printSymbolOf(piece);
         }
-    }
-
-    public void printScores(final GameScore scores) {
-        System.out.printf(WHITE_SCORE_MESSAGE_FORMAT, scores.getWhiteScore());
-        System.out.printf(BLACK_SCORE_MESSAGE_FORMAT, scores.getBlackScore());
-        System.out.printf(NOW_WINNER_MESSAGE_FORMAT, scores.pickWinner());
     }
 }

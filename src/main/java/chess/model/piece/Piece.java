@@ -3,7 +3,6 @@ package chess.model.piece;
 import static chess.model.Team.NONE;
 
 import chess.model.Team;
-import chess.model.direction.route.Route;
 import chess.model.position.Position;
 import java.util.Map;
 import java.util.Objects;
@@ -16,31 +15,15 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public boolean isOpponent(final Team team) {
-        return team != NONE && team != this.team;
+    public boolean isSameTeam(final Team team) {
+        return this.team == team;
     }
 
-    public boolean isSame(final Team team) {
-        return team == this.team;
+    public boolean isOpponentTeam(Team team) {
+        return team != this.team && this.team != NONE;
     }
 
-    public boolean isSame(final Piece otherPiece) {
-        return otherPiece.team == this.team;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        return false;
-    }
-
-    public abstract Route findRoute(final Position source, final Position target);
+    public abstract boolean canMove(Position source, Position target, Map<Position, Piece> board);
 
     public abstract double addTo(double score);
 

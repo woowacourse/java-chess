@@ -21,22 +21,22 @@ public enum File {
         this.name = name;
     }
 
-    public File add(final int file) {
-        return File.of(value + file);
-    }
-
-    public int subtractFrom(final File otherFile) {
-        return this.value - otherFile.value;
-    }
-
-    public String nameOfFile() {
-        return name;
-    }
-
     public static File of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(file -> file.value == otherValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
+    }
+
+    public boolean canAdd(int row) {
+        return value + row >= A.value && value + row <= H.value;
+    }
+
+    public File add(final int row) {
+        return File.of(value + row);
+    }
+
+    public String nameOfFile() {
+        return name;
     }
 }

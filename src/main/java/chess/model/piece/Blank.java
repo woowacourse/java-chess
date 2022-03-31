@@ -1,8 +1,8 @@
 package chess.model.piece;
 
 import chess.model.Team;
-import chess.model.direction.route.Route;
 import chess.model.position.Position;
+import java.util.Map;
 
 public class Blank extends Piece {
 
@@ -11,8 +11,8 @@ public class Blank extends Piece {
     }
 
     @Override
-    public Route findRoute(Position source, Position target) {
-        throw new IllegalArgumentException("[ERROR] 빈 공간입니다.");
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+        throw new IllegalArgumentException("[ERROR] 선택한 위치에 기물이 없습니다.");
     }
 
     @Override

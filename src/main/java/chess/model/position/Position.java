@@ -1,6 +1,6 @@
 package chess.model.position;
 
-import chess.model.direction.route.Route;
+import chess.model.direction.Direction;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,25 +45,17 @@ public class Position {
     private static String createKey(Rank rank, File file) {
         return file.nameOfFile() + rank.nameOfRank();
     }
-
-    public int subtractRankFrom(final Position otherPosition) {
-        return rank.subtractFrom(otherPosition.rank);
+    
+    public boolean movableTo(Direction direction) {
+        return direction.MovableFrom(rank, file);
     }
 
-    public int subtractFileFrom(final Position otherPosition) {
-        return file.subtractFrom(otherPosition.file);
+    public Position createPositionTo(final Direction direction) {
+        return direction.createPositionFrom(rank, file);
     }
 
-    public Position createPositionTo(final Route route) {
-        return route.createPositionFrom(rank, file);
-    }
-
-    public boolean isTwoRank() {
-        return rank == Rank.TWO;
-    }
-
-    public boolean isSevenRank() {
-        return rank == Rank.SEVEN;
+    public boolean isNotStartLocation() {
+        return rank != Rank.TWO && rank != Rank.SEVEN;
     }
 
     @Override

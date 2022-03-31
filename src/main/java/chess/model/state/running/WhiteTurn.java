@@ -1,6 +1,6 @@
 package chess.model.state.running;
 
-import chess.model.Command;
+import chess.model.state.Command;
 import chess.model.Team;
 import chess.model.board.Board;
 import chess.model.position.Position;
@@ -30,11 +30,6 @@ public class WhiteTurn extends Running {
     }
 
     private void movePieceFrom(List<String> command) {
-        checkWhitePieceAt(Position.from(command.get(1)));
         board.move(Position.from(command.get(1)), Position.from(command.get(2)));
-    }
-
-    private void checkWhitePieceAt(Position source) {
-        board.checkSameTeam(WHITE, source);
     }
 }

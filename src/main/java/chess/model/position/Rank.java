@@ -22,22 +22,22 @@ public enum Rank {
         this.name = name;
     }
 
-    public Rank add(final int row) {
-        return Rank.of(value + row);
-    }
-
-    public int subtractFrom(final Rank otherRank) {
-        return this.value - otherRank.value;
-    }
-
-    public String nameOfRank() {
-        return name;
-    }
-
     public static Rank of(final int otherValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == otherValue)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 값이 입력 되었습니다."));
+    }
+
+    public boolean canAdd(final int column) {
+        return value + column <= ONE.value && value + column >= EIGHT.value;
+    }
+
+    public Rank add(final int column) {
+        return Rank.of(value + column);
+    }
+
+    public String nameOfRank() {
+        return name;
     }
 }
