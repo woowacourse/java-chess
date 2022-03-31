@@ -23,10 +23,6 @@ public enum Command {
             .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND_EXCEPTION_MESSAGE));
     }
 
-    public boolean isStart() {
-        return this == START;
-    }
-
     public boolean isEnd() {
         return this == END;
     }
