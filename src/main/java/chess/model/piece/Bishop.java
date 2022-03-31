@@ -37,6 +37,20 @@ public class Bishop extends Piece implements BishopMovable {
     }
 
     @Override
+    public List<Position> getIntervalPosition(Position source, Position target) {
+        Direction direction = Direction.of(source, target);
+        List<Position> positions = new ArrayList<>();
+        Position next = source;
+
+        while (!next.equals(target)) {
+            next = next.getNext(direction);
+            positions.add(next);
+        }
+        positions.remove(target);
+        return positions;
+    }
+
+    @Override
     public List<Position> getIntervalPosition(Piece targetPiece) {
         List<Piece> list = new ArrayList<>(List.of(this, targetPiece));
         Collections.sort(list);

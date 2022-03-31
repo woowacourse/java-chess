@@ -79,10 +79,10 @@ class BishopTest {
     @DisplayName("source와 target사이의 position들을 얻는다.")
     void getIntervalPositionTest(){
         Piece bishop = new Bishop(Position.of('h','8'),Team.BLACK);
-        Piece king = new King(Position.of('e','5'),Team.BLACK);
-        List<Position> intervalPosition = bishop.getIntervalPosition(king);
+        List<Position> intervalPosition = bishop.getIntervalPosition(Position.from("h8"), Position.from("e5"));
 
-        assertThat(intervalPosition.contains(Position.of('f','6'))).isTrue();
-        assertThat(intervalPosition.contains(Position.of('g','7'))).isTrue();
+        assertThat(intervalPosition.contains(Position.from("f6"))).isTrue();
+        assertThat(intervalPosition.contains(Position.from("g7"))).isTrue();
+        assertThat(intervalPosition.size()).isEqualTo(2);
     }
 }
