@@ -5,17 +5,15 @@ import java.util.stream.Collectors;
 
 public class PieceProperty {
     private final Color color;
-    private final Name name;
     private final Score score;
 
-    private PieceProperty(Color color, Name name, Score score) {
+    private PieceProperty(Color color, Score score) {
         this.color = color;
-        this.name = name;
         this.score = score;
     }
 
-    public static PieceProperty of(Color color, String name, double score) {
-        return new PieceProperty(color, new Name(color.convertName(name)), new Score(score));
+    public static PieceProperty of(Color color, double score) {
+        return new PieceProperty(color, new Score(score));
     }
 
     public static double computeScore(List<PieceProperty> properties) {
@@ -31,9 +29,5 @@ public class PieceProperty {
 
     public boolean isSameColor(PieceProperty property) {
         return isSameColor(property.color);
-    }
-
-    public String getName() {
-        return name.getName();
     }
 }
