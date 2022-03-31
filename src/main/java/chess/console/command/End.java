@@ -1,6 +1,6 @@
 package chess.console.command;
 
-import chess.console.GameManager;
+import chess.GameManager;
 
 public final class End implements Command {
 

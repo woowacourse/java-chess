@@ -1,4 +1,4 @@
-package chess.console;
+package chess;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
@@ -13,9 +13,8 @@ public final class GameManager {
 
     private State currentState;
 
-    public Map<Position, Piece> start() {
+    public void start() {
         currentState = State.start(Board.getInitializedInstance());
-        return currentState.getBoard();
     }
 
     public void move(String source, String destination) {

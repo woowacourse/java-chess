@@ -1,6 +1,6 @@
 package chess.console.view;
 
-import chess.console.GameManager;
+import chess.GameManager;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Result;

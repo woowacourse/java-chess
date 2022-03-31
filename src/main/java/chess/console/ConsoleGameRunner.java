@@ -1,5 +1,6 @@
 package chess.console;
 
+import chess.GameManager;
 import chess.console.command.Command;
 import chess.console.command.CommandFactory;
 import chess.console.view.InputView;
