@@ -24,7 +24,7 @@ public final class ChessBoard {
         validateSource(source);
         validateTarget(target);
         validateCurrentTurn(source, target);
-        if (board.get(source).isPawn()) {
+        if (isPawn(source)) {
             movePawn(source, target);
             return;
         }
@@ -48,6 +48,10 @@ public final class ChessBoard {
         if (!board.get(source).checkSameTeam(this.currentTurn) || source.equals(target)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치는 자신의 기물의 위치가 아닙니다.");
         }
+    }
+
+    private boolean isPawn(Position source) {
+        return board.get(source).isPawn();
     }
 
     private void movePawn(final Position source, final Position target) {
@@ -74,9 +78,9 @@ public final class ChessBoard {
     }
 
     private void validateRoute(final Position source, final Position target) {
-        final Piece piece = board.get(source);
-        validateUnavailableMove(source, target, piece);
-        validateRoutePositionsNull(target, piece);
+        final Piece sourcePiece = board.get(source);
+        validateUnavailableMove(source, target, sourcePiece);
+        validateRoutePositionsNull(target, sourcePiece);
     }
 
     private void validateUnavailableMove(final Position source, final Position target, final Piece piece) {
@@ -85,15 +89,15 @@ public final class ChessBoard {
         }
     }
 
-    private void validateRoutePositionsNull(final Position target, final Piece piece) {
-        final List<Position> routePositions = calculateRoutePositions(target, piece);
+    private void validateRoutePositionsNull(final Position target, final Piece sourcePiece) {
+        final List<Position> routePositions = calculateRoutePositions(target, sourcePiece);
         for (Position position : routePositions) {
             validateWayPointNull(position);
         }
     }
 
-    private List<Position> calculateRoutePositions(final Position target, final Piece piece) {
-        List<Position> baseRoutePositions = piece.calculateRoute(target);
+    private List<Position> calculateRoutePositions(final Position target, final Piece sourcePiece) {
+        List<Position> baseRoutePositions = sourcePiece.calculateRoute(target);
         if (baseRoutePositions.size() == 0) {
             return null;
         }
