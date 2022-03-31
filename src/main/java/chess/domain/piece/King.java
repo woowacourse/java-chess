@@ -41,7 +41,7 @@ public class King extends Piece {
     }
 
     @Override
-    public void checkPawnMovable(Direction computeDirection, Piece targetPiece) {
+    public void checkPawnMovable(Direction direction, Piece targetPiece) {
         throw new IllegalArgumentException("[ERROR] 폰만 체크할 수 있습니다.");
     }
 }

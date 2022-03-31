@@ -19,7 +19,7 @@ public class ChessGame {
 
     public void start() {
         if (isRunning()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 이미 실행 중 입니다.");
+            throw new IllegalStateException("[ERROR] 게임이 이미 실행 중 입니다.");
         }
         this.state = state.start();
         Board board = state.getBoard();
@@ -33,14 +33,14 @@ public class ChessGame {
 
     public void status() {
         if (!isRunning()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
+            throw new IllegalStateException("[ERROR] 게임이 실행 중일 때만 점수를 출력할 수 있습니다.");
         }
         OutputView.printScore(state.getScore());
     }
 
     public void end() {
         if (!isRunning()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+            throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
         }
         this.state = state.end();
     }

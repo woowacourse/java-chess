@@ -1,9 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.Direction;
 import chess.domain.board.Location;
-import chess.domain.board.LocationDiff;
 import chess.domain.board.TeamScore;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -16,33 +14,18 @@ public class White extends Running {
 
     @Override
     public State move(Location source, Location target) {
-        checkMovable(source, target);
-
         Piece sourcePiece = getBoard().getPiece(source);
         Piece targetPiece = getBoard().getPiece(target);
-        LocationDiff locationDiff = source.computeDiff(target);
 
-        if (sourcePiece.isPawn()) {
-            sourcePiece.checkPawnMovable(locationDiff.computeDirection(), targetPiece);
-        }
+        super.checkMovable(source, target);
+        checkSourceColor(sourcePiece);
+        checkTarget(targetPiece);
 
         getBoard().move(source, target);
         if (targetPiece.isKing()) {
             return end();
         }
         return new Black(getBoard());
-    }
-
-    private void checkMovable(Location source, Location target) {
-        Piece sourcePiece = getBoard().getPiece(source);
-        Piece targetPiece = getBoard().getPiece(target);
-        LocationDiff locationDiff = source.computeDiff(target);
-
-        checkSourceColor(sourcePiece);
-        checkDirection(sourcePiece, locationDiff.computeDirection());
-        checkDistance(sourcePiece, locationDiff);
-        checkRoute(source, locationDiff);
-        checkTarget(targetPiece);
     }
 
     @Override
@@ -54,28 +37,6 @@ public class White extends Running {
     private void checkSourceColor(Piece piece) {
         if (!piece.isWhite()) {
             throw new IllegalArgumentException("[ERROR] 해당 말은 움직일 수 없습니다.");
-        }
-    }
-
-    private void checkDirection(Piece piece, Direction direction) {
-        if (!piece.isMovableDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkDistance(Piece piece, LocationDiff locationDiff) {
-        if (!piece.isMovableDistance(locationDiff)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치까지 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkRoute(Location source, LocationDiff locationDiff) {
-        Location routeLocation = source.copyOf();
-        for (int i = 0; i < locationDiff.computeDistance() - 1; i++) {
-            routeLocation = routeLocation.add(locationDiff.computeDirection());
-            if (!getBoard().isEmpty(routeLocation)) {
-                throw new IllegalArgumentException("[ERROR] 해당 경로를 지나갈 수 없습니다. ");
-            }
         }
     }
 
