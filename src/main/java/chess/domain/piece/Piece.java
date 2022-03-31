@@ -46,7 +46,7 @@ public abstract class Piece {
     }
 
     public void killed() {
-        state = state.killed();
+        state = state.die();
     }
 
     public boolean isKing() {

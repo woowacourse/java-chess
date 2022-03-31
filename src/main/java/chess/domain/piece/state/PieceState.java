@@ -8,7 +8,7 @@ import chess.domain.game.state.position.Position;
 public interface PieceState {
     List<Position> findMovablePositions(Position source, ChessBoard board);
 
-    PieceState killed();
+    PieceState die();
 
     PieceState updateState();
 }

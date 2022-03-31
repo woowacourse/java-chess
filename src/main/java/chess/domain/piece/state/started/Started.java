@@ -5,7 +5,7 @@ import chess.domain.piece.state.PieceState;
 
 public abstract class Started implements PieceState {
     @Override
-    public PieceState killed() {
+    public PieceState die() {
         return new Dead();
     }
 }
