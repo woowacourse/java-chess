@@ -20,6 +20,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }
