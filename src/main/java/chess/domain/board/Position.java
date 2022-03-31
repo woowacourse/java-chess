@@ -47,6 +47,10 @@ public class Position {
         return rank == Rank.TWO || rank == Rank.SEVEN;
     }
 
+    public boolean isEqualsColumn(Position otherPosition) {
+        return this.file == otherPosition.file || this.rank == otherPosition.rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

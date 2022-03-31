@@ -72,4 +72,14 @@ class PositionTest {
 
         assertThat(fromPosition.move(column, row)).isEqualTo(toPosition);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"a,2,b,2,true", "a,3,b,2,false"})
+    @DisplayName("같은 열에 속하는지 확인할 수 있다.")
+    void isEqualsColumn(String fromColumn, String fromRow, String toColumn, String toRow, boolean flag) {
+        final Position fromPosition = Position.of(fromColumn, fromRow);
+        final Position toPosition = Position.of(toColumn, toRow);
+
+        assertThat(fromPosition.isEqualsColumn(toPosition)).isEqualTo(flag);
+    }
 }
