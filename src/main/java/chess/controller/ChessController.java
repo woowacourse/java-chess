@@ -15,11 +15,9 @@ import java.util.stream.Collectors;
 
 public class ChessController {
     public void run() {
-
         Command command = startGame();
         Board board = Board.create(Pieces.createInit());
-        Turn turn = Turn.init();
-        command = playGame(turn, command, board);
+        command = playGame(command, board);
         OutputView.printFinishMessage();
         finishGame(command, board);
     }
@@ -38,7 +36,8 @@ public class ChessController {
 
     }
 
-    private Command playGame(Turn turn, Command command, Board board) {
+    private Command playGame(Command command, Board board) {
+        Turn turn = Turn.init();
         while (isRunning(command, board)) {
             turn = nextTurn(command, board, turn);
             OutputView.printBoard(convertToPieceDtos(board.getPieces()));

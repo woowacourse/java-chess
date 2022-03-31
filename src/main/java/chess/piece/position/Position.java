@@ -1,9 +1,14 @@
 package chess.piece.position;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Position {
     private static final int ASCII_TO_INT = 96;
+    private static final int CHESS_POSITION_SIZE = 64;
+    private static final Map<String, Position> CACHE = new HashMap<>(CHESS_POSITION_SIZE);
+
     private final Rank rank;
     private final File file;
 
@@ -15,8 +20,11 @@ public final class Position {
     public static Position of(char... position) {
         File file = File.valueOf(position[0] - ASCII_TO_INT);
         Rank rank = Rank.valueOf(Character.getNumericValue(position[1]));
+        return CACHE.computeIfAbsent(createKey(file, rank), absent -> new Position(file, rank));
+    }
 
-        return new Position(file, rank);
+    private static String createKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 
     public boolean isHorizontal(Position position) {
