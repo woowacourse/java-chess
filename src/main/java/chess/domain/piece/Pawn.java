@@ -1,10 +1,7 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceTeam.WHITE;
-
 import chess.constant.SquareType;
 import chess.domain.board.position.Position;
-import chess.domain.board.position.Rank;
 
 public class Pawn extends Piece {
 
@@ -16,31 +13,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, SquareType squareType) {
+    public boolean isMovable(Position from, Position to, SquareType squareType) {
         if (squareType == SquareType.ENEMY) {
-            return source.isDiagonal(target) &&
-                    source.rankDisplacement(target) == 1 * pieceTeam.direction() &&
-                    source.fileDistance(target) == 1;
+            return from.isDiagonal(to) &&
+                    from.rankDisplacement(to) == pieceTeam.direction() &&
+                    from.fileDistance(to) == 1;
         }
 
-        if (pieceTeam == WHITE) {
-            if (source.isRankOf(Rank.TWO)) {
-                return isForward(source, target, 2);
-            }
-
-            return isForward(source, target, 1);
+        if (from.isRankOf(pieceTeam.firstRank())) {
+            return isForward(from, to) && from.rankDistance(to) <= 2;
         }
 
-        if (source.isRankOf(Rank.SEVEN)) {
-            return isForward(target, source, 2);
-        }
-
-        return isForward(target, source, 1);
+        return isForward(from, to) && from.rankDistance(to) <= 1;
     }
 
-    private boolean isForward(Position source, Position target, int amount) {
-        return source.rankDisplacement(target) > 0 && source.rankDisplacement(target) <= amount && source.isSameFile(
-                target);
+    private boolean isForward(Position source, Position target) {
+        return pieceTeam.direction() * source.rankDisplacement(target)  > 0 &&
+                source.isSameFile(target);
     }
 
     @Override

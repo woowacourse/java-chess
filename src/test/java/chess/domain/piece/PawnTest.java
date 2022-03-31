@@ -19,7 +19,7 @@ class PawnTest {
 
     @ParameterizedTest
     @CsvSource(value = {"THREE:true", "FOUR:true", "FIVE:false"}, delimiter = ':')
-    @DisplayName("pawn은 처음에 한 번 혹은 두 번 하는 것이 가능하다, 그리고 세번 이동하는 것은 불가능 하다")
+    @DisplayName("폰은 처음에 한 칸 혹은 두 칸 이동 가능하다, 그리고 세번 이동하는 것은 불가능 하다")
     void pawn_when_first_moving_can_go_one_or_two_point_moving(Rank rank, boolean expected) {
         Pawn pawn = new Pawn(PieceTeam.WHITE);
         Position source = Positions.findPositionBy(A, TWO);
@@ -29,7 +29,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("폰은 처음 초기 위치가 아니라면 길이 2만큼 이동하는 것이 불가하다")
+    @DisplayName("폰은 처음 초기 위치가 두 칸 이동하는 것이 불가하다")
     void pawn_first_move_then_cant_move_as_two_point_moving() {
         Pawn pawn = new Pawn(PieceTeam.WHITE);
         Position source = Positions.findPositionBy(A, FOUR);
