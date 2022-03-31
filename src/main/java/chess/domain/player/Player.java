@@ -39,7 +39,39 @@ public class Player {
         }
     }
 
-    private boolean contains(final Position position) {
+    public void move(final Position source, final Position target) {
+        validatePositionEmpty(target);
+        Piece piece = findPieceByPosition(source).move();
+        pieces.remove(source);
+        pieces.put(target, piece);
+    }
+
+    public void attack(final Position source, final Position target, final Player enemyPlayer) {
+        validatePositionEmpty(target);
+        enemyPlayer.removePiece(target);
+        move(source, target);
+    }
+
+    private void removePiece(final Position target) {
+        validatePieceExist(target);
+        pieces.remove(target);
+    }
+
+    private void validatePositionEmpty(final Position position) {
+        if (contains(position)) {
+            throw new IllegalStateException("해당 위치에 이미 기물이 존재합니다.");
+        }
+    }
+
+    public boolean contains(final Position position) {
         return pieces.containsKey(position);
+    }
+
+    public boolean isColorSame(final Color color) {
+        return color.equals(this.color);
+    }
+
+    public Map<Position, Piece> getPieces() {
+        return Map.copyOf(pieces);
     }
 }
