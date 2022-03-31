@@ -1,5 +1,7 @@
 package chess.controller;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.game.ChessGame;
@@ -8,6 +10,10 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+
+    private static final int MOVE_INPUT_FROM_INDEX = 1;
+    private static final int MOVE_INPUT_TO_INDEX = 2;
+    private static final String DELIMITER = " ";
 
     public void run() {
         ChessGame chessGame = new ChessGame();
@@ -25,7 +31,8 @@ public class ChessController {
     }
 
     static void move(ChessGame chessGame, String optionInput) {
-        chessGame.movePiece(optionInput);
+        List<String> inputs = Arrays.asList(optionInput.split(DELIMITER));
+        chessGame.movePiece(inputs.get(MOVE_INPUT_FROM_INDEX), inputs.get(MOVE_INPUT_TO_INDEX));
         OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 

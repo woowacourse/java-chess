@@ -1,7 +1,5 @@
 package chess.domain.game;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import chess.domain.board.Board;
@@ -26,9 +24,8 @@ public class ChessGame {
         state = new Running(board, Color.WHITE);
     }
 
-    public void movePiece(String movePositionInformation) {
-        List<String> information = Arrays.asList(movePositionInformation.split(" "));
-        state = state.movePiece(Position.valueOf(information.get(1)), Position.valueOf(information.get(2)));
+    public void movePiece(String from, String to) {
+        state = state.movePiece(Position.valueOf(from), Position.valueOf(to));
     }
 
     public void end() {
