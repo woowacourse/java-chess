@@ -10,23 +10,16 @@ public enum Team {
     WHITE((score, otherScore) -> score >= otherScore),
     BLACK((score, otherScore) -> score <= otherScore);
 
-    private final BiPredicate<Double, Double> condition;
+    private final BiPredicate<Double, Double> winnerCondition;
 
     Team(BiPredicate<Double, Double> condition) {
-        this.condition = condition;
+        this.winnerCondition = condition;
     }
 
     public static List<Team> findWinner(double white, double black) {
         return Arrays.stream(values())
-                .filter(team -> team.condition.test(white, black))
+                .filter(team -> team.winnerCondition.test(white, black))
                 .collect(Collectors.toUnmodifiableList());
-    }
-
-    public String changeCaseSensitive(String pieceName) {
-        if (this == BLACK) {
-            return pieceName.toUpperCase();
-        }
-        return pieceName.toLowerCase();
     }
 
     public Team change() {

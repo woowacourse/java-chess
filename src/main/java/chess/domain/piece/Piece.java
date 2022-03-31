@@ -37,7 +37,7 @@ public abstract class Piece {
     public abstract float getScore();
 
     public final String getName() {
-        return team.changeCaseSensitive(name);
+        return name;
     }
 
     public final boolean isSameTeam(Piece piece) {
@@ -60,14 +60,14 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isStep() {
+    public boolean isOneStep() {
         return true;
     }
 
     @Override
     public String toString() {
         return "Piece{" +
-                "name='" + team.changeCaseSensitive(name) + '\'' +
+                "name='" + name + '\'' +
                 ", score=" + getScore() +
                 ", team=" + team +
                 '}';

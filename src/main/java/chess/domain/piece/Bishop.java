@@ -12,7 +12,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isStep() {
+    public boolean isOneStep() {
         return false;
     }
 

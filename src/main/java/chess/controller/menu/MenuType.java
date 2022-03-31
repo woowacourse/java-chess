@@ -10,7 +10,6 @@ public enum MenuType {
     STATUS("status", text -> new Status()),
     END("end", text -> new End());
 
-
     private static final int MENU_INDEX = 0;
     private static final int BEFORE_POSITION = 1;
     private static final int AFTER_POSITION = 2;

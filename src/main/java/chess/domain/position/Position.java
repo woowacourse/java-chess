@@ -28,7 +28,7 @@ public class Position {
         int x = column.calculateGap(destination.column);
         int y = row.calculateGap(destination.row);
 
-        if (piece.isStep()) {
+        if (piece.isOneStep()) {
             return Direction.of(x, y);
         }
 

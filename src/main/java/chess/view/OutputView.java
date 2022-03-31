@@ -1,5 +1,7 @@
 package chess.view;
 
+import static chess.domain.piece.Team.BLACK;
+
 import chess.domain.board.Result;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -41,10 +43,17 @@ public class OutputView {
 
     private static void printStringOrDefault(Piece piece) {
         if (piece != null) {
-            System.out.print(piece.getName());
+            System.out.print(changeCaseSensitive(piece));
             return;
         }
         System.out.print(".");
+    }
+
+    private static String changeCaseSensitive(Piece piece) {
+        if (piece.isSameTeam(BLACK)) {
+            return piece.getName();
+        }
+        return piece.getName().toLowerCase();
     }
 
     public static void printStatus(Result result) {
