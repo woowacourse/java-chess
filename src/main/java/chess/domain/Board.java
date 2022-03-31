@@ -4,6 +4,7 @@ import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,12 +17,13 @@ public class Board {
     private final List<List<Piece>> value;
 
     public Board(List<List<Piece>> value) {
-        this.value = value;
+        this.value = new ArrayList<>(value);
     }
 
     public void shift(Position source, Position target) {
+        Piece sourcePiece = findPiece(source);
         value.get(source.getRankIndex()).set(source.getFileIndex(), new EmptyPiece());
-        value.get(target.getRankIndex()).set(target.getFileIndex(), findPiece(source));
+        value.get(target.getRankIndex()).set(target.getFileIndex(), sourcePiece);
     }
 
     public Piece findPiece(Position source) {
