@@ -18,14 +18,18 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Board {
-
     private final Map<Position, Piece> board;
+    private Color colorForTurn = Color.WHITE;
 
     Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
     }
 
     public MoveResult move(Position from, Position to) {
+        if (isInvalidTurn(from)) {
+            return MoveResult.FAIL;
+        }
+
         if (isNotMovable(from, to)) {
             return MoveResult.FAIL;
         }
@@ -36,7 +40,13 @@ public class Board {
             return MoveResult.ENDED;
         }
 
+        colorForTurn = Color.opposite(colorForTurn);
         return MoveResult.SUCCESS;
+    }
+
+    private boolean isInvalidTurn(Position from) {
+        final Piece piece = board.getOrDefault(from, InvalidPiece.getInstance());
+        return piece.isDifferentColor(colorForTurn);
     }
 
     private boolean isNotMovable(Position from, Position to) {

@@ -23,4 +23,16 @@ public enum Color {
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
+
+    public static Color opposite(Color baseColor) {
+        if (baseColor == WHITE) {
+            return BLACK;
+        }
+
+        if (baseColor == BLACK) {
+            return WHITE;
+        }
+
+        return EMPTY;
+    }
 }

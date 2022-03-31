@@ -59,6 +59,10 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public boolean isDifferentColor(Color anotherColor) {
+        return this.color != anotherColor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
