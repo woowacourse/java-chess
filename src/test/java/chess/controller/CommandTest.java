@@ -1,7 +1,10 @@
-package chess.domain.game;
+package chess.controller;
 
 import chess.controller.Command;
 import chess.domain.board.Point;
+import chess.domain.game.GameState;
+import chess.domain.game.Ready;
+import chess.domain.game.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
