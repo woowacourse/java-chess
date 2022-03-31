@@ -14,6 +14,7 @@ public enum Movement {
     SOUTH_UNLIMITED((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff >= 1),
     NORTH_1STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == -1),
     NORTH_2STEP((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff == -2),
+
     NORTH_UNLIMITED((columnDiff, rowDiff) -> columnDiff == 0 && rowDiff <= -1),
     SOUTH_EAST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == 1 && rowDiff == 1),
     SOUTH_EAST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff >= 1 && rowDiff >= 1),
@@ -23,6 +24,7 @@ public enum Movement {
     NORTH_EAST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff >= 1 && rowDiff <= -1),
     NORTH_WEST_1STEP((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff == -1 && rowDiff == -1),
     NORTH_WEST_UNLIMITED((columnDiff, rowDiff) -> isDiagonal(columnDiff, rowDiff) && columnDiff <= -1 && rowDiff <= -1),
+
     KNIGHT_EAST_SOUTH((columnDiff, rowDiff) -> columnDiff == 2 && rowDiff == 1),
     KNIGHT_EAST_NORTH((columnDiff, rowDiff) -> columnDiff == 2 && rowDiff == -1),
     KNIGHT_WEST_SOUTH((columnDiff, rowDiff) -> columnDiff == -2 && rowDiff == 1),
@@ -42,7 +44,7 @@ public enum Movement {
         return Arrays.stream(values())
                 .filter(movement -> movement.findPredicate.test(columnDifference, rowDifference))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 움직임을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("게임에서 허용되지 않은 이동입니다."));
     }
 
     private static boolean isDiagonal(int columnDiff, int rowDiff) {
