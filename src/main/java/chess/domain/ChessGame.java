@@ -17,9 +17,8 @@ public final class ChessGame {
         board = new Board(PieceFactory.createChessPieces());
     }
 
-    public void movePiece(MoveCommand moveCommand) {
-        board.validateMovement(turnColor, moveCommand);
-        board.movePiece(moveCommand);
+    public void proceedWith(MoveCommand moveCommand) {
+        board.movePiece(turnColor, moveCommand);
         changeTurn();
     }
 

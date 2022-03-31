@@ -1,14 +1,13 @@
 package chess.domain;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -18,7 +17,14 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void validateMovement(Color turnColor, MoveCommand command) {
+    public void movePiece(Color turnColor, MoveCommand command) {
+        validateMovement(turnColor, command);
+        Piece sourcePiece = pieces.get(command.from());
+        pieces.replace(command.from(), new Blank());
+        pieces.replace(command.to(), sourcePiece.displaced());
+    }
+
+    private void validateMovement(Color turnColor, MoveCommand command) {
         validatePieceChoice(turnColor, command.from());
         validateTargetChoice(turnColor, command.to());
         validateMovable(command.from(), command.to());
@@ -60,12 +66,6 @@ public class Board {
         if (!nodePiece.isBlank()) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
-    }
-
-    public void movePiece(MoveCommand command) {
-        Piece sourcePiece = pieces.get(command.from());
-        pieces.replace(command.from(), new Blank());
-        pieces.replace(command.to(), sourcePiece.displaced());
     }
 
     public double calculateScoreOf(Color color) {

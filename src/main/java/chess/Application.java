@@ -46,7 +46,7 @@ public class Application {
 
     private static void playTurn(String command, ChessGame game) {
         try {
-            game.movePiece(MoveCommand.of(command));
+            game.proceedWith(MoveCommand.of(command));
             OutputView.printBoard(game.getBoard());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
