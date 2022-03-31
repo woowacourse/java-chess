@@ -22,10 +22,6 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isKnight() {
-        return false;
-    }
-
     public boolean isPawn() {
         return false;
     }
