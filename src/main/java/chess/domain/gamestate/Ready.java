@@ -59,7 +59,7 @@ public class Ready implements State {
     }
 
     @Override
-    public GameResult getResult() {
+    public GameResult calculateResult() {
         throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
     }
 

@@ -30,12 +30,12 @@ public class ChessGame {
         }
     }
 
-    public void start() {
-        state = state.start();
+    public boolean isEnd() {
+        return isEnd;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return state.getBoard();
+    public void start() {
+        state = state.start();
     }
 
     public void move(final Positions movePositions) {
@@ -54,19 +54,17 @@ public class ChessGame {
         state = state.end();
     }
 
-    public double statusOfWhite() {
-        return state.statusOfWhite();
-    }
-
-    public double statusOfBlack() {
-        return state.statusOfBlack();
-    }
-
-    public boolean isEnd() {
-        return isEnd;
+    public StatusScore calculateStatus() {
+        final double statusOfWhite = state.statusOfWhite();
+        final double statusOfBlack = state.statusOfBlack();
+        return new StatusScore(statusOfWhite, statusOfBlack);
     }
 
     public String getResultMessage() {
-        return GameResult.from(state.getResult()).getMessage();
+        return GameResult.from(state.calculateResult()).getMessage();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return state.getBoard();
     }
 }

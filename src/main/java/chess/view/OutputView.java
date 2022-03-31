@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -51,8 +52,8 @@ public class OutputView {
         System.out.println(END_GAME_MESSAGE);
     }
 
-    public static void printStatus(double statusOfWhite, double statusOfBlack) {
-        System.out.printf(RESULT_SCORE_FORMAT, statusOfWhite, statusOfBlack);
+    public static void printStatus(final StatusScore statusScore) {
+        System.out.printf(RESULT_SCORE_FORMAT, statusScore.getWhite(), statusScore.getBlack());
     }
 
     public static void printResultMessage(final String resultMessage) {

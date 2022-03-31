@@ -46,8 +46,31 @@ public class Finished implements State {
     }
 
     @Override
-    public double statusOfBlack() {
-        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
+    public GameResult calculateResult() {
+        final double statusOfWhite = statusOfWhite();
+        final double statusOfBlack = statusOfBlack();
+        return calculateResult(statusOfWhite, statusOfBlack);
+    }
+
+    private GameResult calculateResult(final double statusOfWhite, final double statusOfBlack) {
+        if (board.hasBlackKingCaptured()) {
+            return GameResult.BLACK_LOSE;
+        }
+        if (board.hasWhiteKingCaptured()) {
+            return GameResult.BLACK_WIN;
+        }
+        return getResultWhenNoKingCaptured(statusOfWhite, statusOfBlack);
+    }
+
+    private GameResult getResultWhenNoKingCaptured(final double statusOfWhite, final double statusOfBlack) {
+        final int resultNumber = Double.compare(statusOfWhite, statusOfBlack);
+        if (resultNumber < RESULT_CRITERIA) {
+            return GameResult.BLACK_WIN;
+        }
+        if (resultNumber > RESULT_CRITERIA) {
+            return GameResult.BLACK_LOSE;
+        }
+        return GameResult.DRAW;
     }
 
     @Override
@@ -56,25 +79,8 @@ public class Finished implements State {
     }
 
     @Override
-    public GameResult getResult() {
-        if (board.hasBlackKingCaptured()) {
-            return GameResult.BLACK_LOSE;
-        }
-        if (board.hasWhiteKingCaptured()) {
-            return GameResult.BLACK_WIN;
-        }
-        return getResultWhenNoKingCaptured();
-    }
-
-    private GameResult getResultWhenNoKingCaptured() {
-        final int resultNumber = Double.compare(statusOfBlack(), statusOfWhite());
-        if (resultNumber > RESULT_CRITERIA) {
-            return GameResult.BLACK_WIN;
-        }
-        if (resultNumber < RESULT_CRITERIA) {
-            return GameResult.BLACK_LOSE;
-        }
-        return GameResult.DRAW;
+    public double statusOfBlack() {
+        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
 
     @Override

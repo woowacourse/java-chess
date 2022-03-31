@@ -25,7 +25,7 @@ public interface State {
 
     Map<Position, Piece> getBoard();
 
-    GameResult getResult();
+    GameResult calculateResult();
 
     boolean isRunning();
 }
