@@ -23,7 +23,7 @@ import utils.ChessBoardGenerator;
 public class ChessBoardGeneratorTest {
 
     @ParameterizedTest
-    @MethodSource("columns")
+    @MethodSource("Files")
     @DisplayName("검은색 플레이어의 초기 Pawn의 행은 7행이다")
     void checkPositionBlackPawn(File file) {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
@@ -34,7 +34,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("columns")
+    @MethodSource("Files")
     @DisplayName("흰색 플레이어의 초기 Pawn의 행은 2행이다")
     void checkPositionWhitePawn(File file) {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
@@ -45,7 +45,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Row 8, Column a, h이다.")
+    @DisplayName("검은색 플레이어의 초기 Rook 위치는 Rank 8, File a, h이다.")
     void checkPositionBlackRook() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftRook = chessBoard.findPiece(Position.of(File.A, Rank.EIGHT));
@@ -58,7 +58,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Rook 위치는 Row 1, Column a, h이다.")
+    @DisplayName("흰색 플레이어의 초기 Rook 위치는 Rank 1, File a, h이다.")
     void checkPositionWhiteRook() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftRook = chessBoard.findPiece(Position.of(File.A, Rank.ONE));
@@ -71,7 +71,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Knight 위치는 Row 8, Column b, g이다.")
+    @DisplayName("검은색 플레이어의 초기 Knight 위치는 Rank 8, File b, g이다.")
     void checkPositionBlackKnight() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftKnight = chessBoard.findPiece(Position.of(File.B, Rank.EIGHT));
@@ -84,7 +84,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Knight 위치는 Row 1, Column b, g이다.")
+    @DisplayName("흰색 플레이어의 초기 Knight 위치는 Rank 1, File b, g이다.")
     void checkPositionWhiteKnight() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftKnight = chessBoard.findPiece(Position.of(File.B, Rank.ONE));
@@ -97,7 +97,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Row 8, Column c, f이다.")
+    @DisplayName("검은색 플레이어의 초기 Bishop 위치는 Rank 8, File c, f이다.")
     void checkPositionBlackBishop() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftBishop = chessBoard.findPiece(Position.of(File.C, Rank.EIGHT));
@@ -110,7 +110,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Row 1, Column c, f이다.")
+    @DisplayName("흰색 플레이어의 초기 Bishop 위치는 Rank 1, File c, f이다.")
     void checkPositionWhiteBishop() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece leftBishop = chessBoard.findPiece(Position.of(File.C, Rank.ONE));
@@ -123,7 +123,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 Queen 위치는 Row 8, Column d이다.")
+    @DisplayName("검은색 플레이어의 초기 Queen 위치는 Rank 8, File d이다.")
     void checkPositionBlackQueen() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece piece = chessBoard.findPiece(Position.of(File.D, Rank.EIGHT));
@@ -133,7 +133,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 Queen 위치는 Row 1, Column d이다.")
+    @DisplayName("흰색 플레이어의 초기 Queen 위치는 Rank 1, File d이다.")
     void checkPositionWhiteQueen() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece piece = chessBoard.findPiece(Position.of(File.D, Rank.ONE));
@@ -143,7 +143,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("검은색 플레이어의 초기 King 위치는 Row 8, Column e이다.")
+    @DisplayName("검은색 플레이어의 초기 King 위치는 Rank 8, File e이다.")
     void checkPositionBlackKing() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece piece = chessBoard.findPiece(Position.of(File.E, Rank.EIGHT));
@@ -153,7 +153,7 @@ public class ChessBoardGeneratorTest {
     }
 
     @Test
-    @DisplayName("흰색 플레이어의 초기 King 위치는 Row 1, Column e이다.")
+    @DisplayName("흰색 플레이어의 초기 King 위치는 Rank 1, File e이다.")
     void checkPositionWhiteKing() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         Piece piece = chessBoard.findPiece(Position.of(File.E, Rank.ONE));
@@ -162,7 +162,7 @@ public class ChessBoardGeneratorTest {
         assertThat(piece).isInstanceOf(King.class);
     }
 
-    private static Stream<File> columns() {
+    private static Stream<File> Files() {
         return Stream.of(
             File.A,
             File.B,

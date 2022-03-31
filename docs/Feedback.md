@@ -73,8 +73,8 @@
         - 기물들 중 폰을 필터링하는 메서드
         - 기물들의 점수를 구하는 메서드
 - [ ] 미사용 코드 제거
-- [ ] `KnightTest` - DisplayName 수정
-- [ ] `PawnTEst` - 첫 이동 시 두 칸이동에 대한 테스트 없음.
+- [x] `KnightTest` - DisplayName 수정
+- [x] `PawnTest` - 첫 이동 시 두 칸이동에 대한 테스트 없음.
 
 ## 참고 자료
 

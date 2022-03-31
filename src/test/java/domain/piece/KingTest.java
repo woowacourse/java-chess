@@ -1,6 +1,7 @@
 package domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import domain.Player;
 import domain.position.File;
@@ -49,10 +50,31 @@ public class KingTest {
     private static Stream<Position> targetPosition_overRage() {
         return Stream.of(
             Position.of(File.A, Rank.TWO),
+            Position.of(File.A, Rank.ONE),
             Position.of(File.B, Rank.TWO),
             Position.of(File.C, Rank.TWO),
-            Position.of(File.A, Rank.ONE),
             Position.of(File.C, Rank.ONE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("unavailableTarget")
+    @DisplayName("King 은 현재 위치에서 모든 방향으로 한 칸 이외의 위치는 이동할 수 없다.")
+    void moveKingNonRulePosition(Position target) {
+        Piece piece = new King(Player.WHITE);
+        Position source = Position.of(File.C, Rank.FOUR);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> piece.move(source, target));
+    }
+
+    private static Stream<Position> unavailableTarget() {
+        return Stream.of(
+            Position.of(File.A, Rank.FOUR),
+            Position.of(File.C, Rank.SIX),
+            Position.of(File.D, Rank.TWO),
+            Position.of(File.H, Rank.ONE),
+            Position.of(File.E, Rank.SIX)
         );
     }
 }
