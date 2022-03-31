@@ -26,7 +26,7 @@ public class ChessGameController {
         }
     }
 
-    private static void startGame(GameState gameState) {
+    private void startGame(GameState gameState) {
         OutputView.printChessBoard(gameState.getBoard());
         while (!gameState.isFinished()) {
             gameState = playCommand(gameState);
@@ -34,10 +34,10 @@ public class ChessGameController {
         OutputView.printFinishedGame(gameState);
     }
 
-    private static GameState playCommand(GameState gameState) {
-        List<String> input = InputView.requestCommand();
-        Command command = Command.of(input.get(commandIndex));
+    private GameState playCommand(GameState gameState) {
         try{
+            List<String> input = InputView.requestCommand();
+            Command command = Command.of(input.get(commandIndex));
             gameState = executeCommand(gameState, input, command);
             return gameState;
         }catch (RuntimeException exception) {
@@ -46,7 +46,7 @@ public class ChessGameController {
         }
     }
 
-    private static GameState executeCommand(GameState gameState, List<String> input, Command command) {
+    private GameState executeCommand(GameState gameState, List<String> input, Command command) {
         if (command.isMove()) {
             gameState = pieceMove(gameState, input);
         }
@@ -59,13 +59,13 @@ public class ChessGameController {
         return gameState;
     }
 
-    private static GameState pieceMove(GameState gameState, List<String> input) {
+    private GameState pieceMove(GameState gameState, List<String> input) {
         gameState = gameState.move(input.get(sourcePositionIndex), input.get(destinationPositionIndex));
         OutputView.printChessBoard(gameState.getBoard());
         return gameState;
     }
 
-    private static void printStatus(GameState gameState) {
+    private void printStatus(GameState gameState) {
         double whiteTeamScore = new Score(gameState.getBoard(), Team.WHITE).getTotalScore();
         double blackTeamScore = new Score(gameState.getBoard(), Team.BLACK).getTotalScore();
         OutputView.printStatus(whiteTeamScore, blackTeamScore);
