@@ -54,14 +54,10 @@ public final class Pawn extends Piece {
         if (!isValidWhiteDirection(toPosition)) {
             return false;
         }
-        if (isWhiteJump(position.getRankIdx()) && position.rankDifference(toPosition) == JUMPABLE_RANK_DIFFERENCE) {
+        if (isWhiteInJumpablePosition(position.getRankIdx()) && isValidRankDifferenceForJumping(toPosition)) {
             return true;
         }
-        return position.rankDifference(toPosition) == MOVABLE_RANK_DIFFERENCE;
-    }
-
-    private boolean isWhiteJump(int curRankIdx) {
-        return PositionConverter.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+        return isValidRankDifferenceForMoveOneStep(toPosition);
     }
 
     private boolean isValidWhiteDirection(Position toPosition) {
@@ -69,14 +65,26 @@ public final class Pawn extends Piece {
         return direction.isAttachedUpDirection();
     }
 
+    private boolean isValidRankDifferenceForMoveOneStep(Position toPosition) {
+        return position.rankDifference(toPosition) == MOVABLE_RANK_DIFFERENCE;
+    }
+
+    private boolean isValidRankDifferenceForJumping(Position toPosition) {
+        return position.rankDifference(toPosition) == JUMPABLE_RANK_DIFFERENCE;
+    }
+
+    private boolean isWhiteInJumpablePosition(int curRankIdx) {
+        return PositionConverter.isMappedRankIdx(WHITE_INIT_RANK, curRankIdx);
+    }
+
     private boolean validateBlackMovable(Position toPosition) {
         if (!isValidBlackDirection(toPosition)) {
             return false;
         }
-        if (isBlackJump(position.getRankIdx()) && position.rankDifference(toPosition) == JUMPABLE_RANK_DIFFERENCE) {
+        if (isBlackInJumpablePosition(position.getRankIdx()) && isValidRankDifferenceForJumping(toPosition)) {
             return true;
         }
-        return position.rankDifference(toPosition) == MOVABLE_RANK_DIFFERENCE;
+        return isValidRankDifferenceForMoveOneStep(toPosition);
     }
 
     private boolean isValidBlackDirection(Position toPosition) {
@@ -85,7 +93,7 @@ public final class Pawn extends Piece {
     }
 
 
-    private boolean isBlackJump(int curRankIdx) {
+    private boolean isBlackInJumpablePosition(int curRankIdx) {
         return PositionConverter.isMappedRankIdx(BLACK_INIT_RANK, curRankIdx);
     }
 
