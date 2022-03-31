@@ -63,4 +63,8 @@ public class OutputView {
         }
         System.out.println("두 진영의 점수가 같습니다.");
     }
+
+    public static void printEnterCommand() {
+        System.out.print(System.lineSeparator() + "명령을 입력해주세요: ");
+    }
 }

@@ -27,6 +27,7 @@ public class ChessController {
 
     private GameState tryExecute(GameState gameState) {
         try {
+            OutputView.printEnterCommand();
             Request request = Request.of(InputView.inputCommand());
             Command command = Command.find(request.getCommand());
             return command.execute(gameState, request.getArguments());
