@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum Rank {
     ONE(1),
@@ -23,10 +25,22 @@ public enum Rank {
     }
 
     public static Rank of(String input) {
-        return Arrays.stream(values())
-            .filter(rank -> rank.index == Integer.parseInt(input))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
+        return findWithCondition(rank -> rank.index == Integer.parseInt(input));
+    }
+
+    public static Rank of(int input) {
+        return findWithCondition(rank -> rank.index == input);
+    }
+
+    private static Rank findWithCondition(Predicate<Rank> condition) {
+        return stream()
+                .filter(condition)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 랭크입니다."));
+    }
+
+    private static Stream<Rank> stream() {
+        return Arrays.stream(values());
     }
 
     public static List<Rank> reverseValues() {
@@ -40,9 +54,9 @@ public enum Rank {
     }
 
     public static List<Rank> traceGroup(Rank source, Rank target) {
-        return Arrays.stream(values())
-            .filter(rank -> rank.isBetween(source, target))
-            .collect(Collectors.toList());
+        return stream()
+                .filter(rank -> rank.isBetween(source, target))
+                .collect(Collectors.toList());
     }
 
     private boolean isBetween(Rank source, Rank target) {

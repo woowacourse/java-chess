@@ -5,8 +5,8 @@ import static chess.constant.Command.isStatus;
 
 import chess.constant.Command;
 import chess.domain.board.Board;
-import chess.domain.board.utils.BoardFactory;
-import chess.domain.board.utils.ProductionBoardFactory;
+import chess.domain.board.factory.BoardFactory;
+import chess.domain.board.factory.RegularBoardFactory;
 import chess.dto.Request;
 import chess.turndecider.GameFlow;
 import chess.view.InputView;
@@ -18,7 +18,7 @@ public class ChessController {
     public void run() {
         OutputView.printInitMessage();
 
-        BoardFactory boardFactory = ProductionBoardFactory.getInstance();
+        BoardFactory boardFactory = RegularBoardFactory.getInstance();
 
         GameFlow gameFlow = new AlternatingGameFlow();
         Board board = new Board(boardFactory.create(), gameFlow);

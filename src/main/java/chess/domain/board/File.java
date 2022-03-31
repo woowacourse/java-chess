@@ -5,32 +5,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
-    private final String value;
+    private final String text;
+    private final int index;
 
-    File(String value) {
-        this.value = value;
+    File(String text, int index) {
+        this.text = text;
+        this.index = index;
     }
 
     public static File of(String input) {
         return Arrays.stream(values())
-            .filter(file -> file.value.equals(input))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
+                .filter(file -> file.text.equals(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
+    }
+
+    public static File of(int input) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == input)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 파일입니다."));
     }
 
     public static List<File> traceGroup(File source, File target) {
         return Arrays.stream(values())
-            .filter(file -> file.isBetween(source, target))
-            .collect(Collectors.toList());
+                .filter(file -> file.isBetween(source, target))
+                .collect(Collectors.toList());
     }
 
     private boolean isBetween(File source, File target) {
@@ -45,6 +54,6 @@ public enum File {
     }
 
     public int displacement(File other) {
-        return other.value.compareTo(this.value);
+        return other.text.compareTo(this.text);
     }
 }

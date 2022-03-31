@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.factory.RegularBoardFactory;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
-import chess.domain.board.utils.BoardFactory;
-import chess.domain.board.utils.ProductionBoardFactory;
+import chess.domain.board.factory.BoardFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.turndecider.AlternatingGameFlow;
@@ -41,7 +41,7 @@ public class BoardTest {
 
     private Board board;
     FixedGameFlow gameFlow;
-    private final BoardFactory boardFactory = ProductionBoardFactory.getInstance();
+    private final BoardFactory boardFactory = RegularBoardFactory.getInstance();
 
     @BeforeEach
     void setUp() {

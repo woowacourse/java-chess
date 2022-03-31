@@ -1,4 +1,4 @@
-package chess.domain.board.utils;
+package chess.domain.board.factory;
 
 import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.ONE;
@@ -27,7 +27,9 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Function;
 
-public class ProductionBoardFactory extends BoardFactory {
+public class RegularBoardFactory extends BoardFactory {
+
+    private final static BoardFactory CACHE = new RegularBoardFactory();
 
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
 
@@ -37,57 +39,64 @@ public class ProductionBoardFactory extends BoardFactory {
                     new King(color), new Bishop(color), new Knight(color), new Rook(color)
             );
 
-    private final static BoardFactory CACHE = new ProductionBoardFactory();
+    private static final Map<Position, Piece> BOARD = new HashMap<>();
 
-    private ProductionBoardFactory() {
+    private RegularBoardFactory() {
+    }
+
+    static {
+        placeAllEmptyPieces();
+        placeBlackPieces();
+        placeWhitePieces();
     }
 
     public static BoardFactory getInstance() {
         return CACHE;
     }
 
-    public Map<Position, Piece> create() {
-        final Map<Position, Piece> result = new HashMap<>();
-
-        putAllEmptyPieces(result);
-        putBlackPieces(result);
-        putWhitePieces(result);
-
-        return result;
-    }
-
-    private void putAllEmptyPieces(Map<Position, Piece> result) {
+    private static void placeAllEmptyPieces() {
         for (Rank rank : Rank.reverseValues()) {
             for (File file : File.values()) {
                 Position findPosition = Positions.findPositionBy(file, rank);
-                result.put(findPosition, EMPTY_PIECE);
+                BOARD.put(findPosition, EMPTY_PIECE);
             }
         }
     }
 
-    private void putWhitePieces(Map<Position, Piece> result) {
-        putPawns(result, WHITE, TWO);
-        putRemainPiecesExceptPawn(result, WHITE, ONE);
+    private static void placeWhitePieces() {
+        placePawns(WHITE, TWO);
+        placeRemainPiecesExceptPawn(WHITE, ONE);
     }
 
-    private void putBlackPieces(Map<Position, Piece> result) {
-        putPawns(result, BLACK, SEVEN);
-        putRemainPiecesExceptPawn(result, BLACK, EIGHT);
+    private static void placeBlackPieces() {
+        placePawns(BLACK, SEVEN);
+        placeRemainPiecesExceptPawn(BLACK, EIGHT);
     }
 
-    private void putPawns(Map<Position, Piece> result, PieceColor color, Rank rank) {
+    private static void placePawns(PieceColor color, Rank rank) {
         for (File file : File.values()) {
             Position findPosition = Positions.findPositionBy(file, rank);
-            result.put(findPosition, new Pawn(color));
+            BOARD.put(findPosition, new Pawn(color));
         }
     }
 
-    private void putRemainPiecesExceptPawn(Map<Position, Piece> result, PieceColor color, Rank rank) {
+    private static void placeRemainPiecesExceptPawn(PieceColor color, Rank rank) {
 
         ListIterator<Piece> piecesIterator = PIECES_CREATOR_BY_COLOR.apply(color).listIterator();
+
         for (File file : File.values()) {
             Position findPosition = Positions.findPositionBy(file, rank);
-            result.put(findPosition, piecesIterator.next());
+            BOARD.put(findPosition, piecesIterator.next());
         }
+    }
+
+    @Override
+    public Map<Position, Piece> create() {
+
+        placeAllEmptyPieces();
+        placeBlackPieces();
+        placeWhitePieces();
+
+        return new HashMap<>(BOARD);
     }
 }

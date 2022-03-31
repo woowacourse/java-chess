@@ -3,7 +3,9 @@ package chess.domain.board.position;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Positions {
@@ -32,10 +34,10 @@ public class Positions {
         File file = File.of(rankFile.substring(0, 1));
         Rank rank = Rank.of(rankFile.substring(1, 2));
 
-        return positions
-                .stream()
-                .filter(position -> position.isSameFileAndRank(file, rank))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재 하지 않는 Position 입니다."));
+        return findPositionBy(file, rank);
+    }
+
+    public static Position findPositionBy(int file, int rank) {
+        return findPositionBy(File.of(file), Rank.of(rank));
     }
 }

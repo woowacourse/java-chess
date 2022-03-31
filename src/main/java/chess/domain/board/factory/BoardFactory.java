@@ -1,4 +1,4 @@
-package chess.domain.board.utils;
+package chess.domain.board.factory;
 
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
