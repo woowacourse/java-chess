@@ -25,11 +25,11 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COMMAND_EXCEPTION));
     }
 
-    public static boolean isEnd(Command command) {
-        return END == command;
+    public boolean isEnd() {
+        return END == this;
     }
 
-    public static boolean isStatus(Command command) {
-        return STATUS == command;
+    public boolean isStatus() {
+        return STATUS == this;
     }
 }

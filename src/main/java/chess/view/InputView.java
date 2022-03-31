@@ -41,11 +41,11 @@ public class InputView {
         String input = SCANNER.nextLine();
         validateCommandInGaming(input);
         Command command = Command.from(input);
-        if (command == Command.END) {
+        if (command.isEnd()) {
             return new NotMoveRequest(command);
         }
 
-        if (command == Command.STATUS) {
+        if (command.isStatus()) {
             return new NotMoveRequest(command);
         }
         List<String> inputs = List.of(input.split(" "));

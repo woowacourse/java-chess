@@ -87,12 +87,12 @@ public class BoardTest {
         Map<Position, Piece> piecesByPositions = board.getBoard();
 
         //when
+        List<Piece> actual = Arrays.stream(File.values())
+                .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
+                .collect(Collectors.toList());
+
         List<Piece> expected = Arrays.stream(File.values())
             .map(value -> new Pawn(WHITE))
-            .collect(Collectors.toList());
-
-        List<Piece> actual = Arrays.stream(File.values())
-            .map(file -> piecesByPositions.get(Positions.findPositionBy(file, TWO)))
             .collect(Collectors.toList());
 
         //then

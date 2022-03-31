@@ -23,8 +23,6 @@ public abstract class Piece {
         return this.pieceColor == otherPieceColor;
     }
 
-    public abstract double getScore();
-
     public boolean isKing() {
         return this instanceof King;
     }
@@ -32,6 +30,12 @@ public abstract class Piece {
     public boolean isPawn() {
         return this instanceof Pawn;
     }
+
+    public boolean isKnight() {
+        return this instanceof Knight;
+    }
+
+    public abstract double getScore();
 
     public abstract String getConcreteEmblem();
 

@@ -24,14 +24,19 @@ public class OutputView {
         );
     }
 
-    public static void printChessGameBoard(Map<Position, Piece> piecesByPositions) {
+    public static void printChessBoard(Map<Position, Piece> piecesByPositions) {
         for (Rank rank : Rank.reverseValues()) {
-            for (File file : File.values()) {
-                Position searchPosition = Positions.findPositionBy(file, rank);
-                Piece piece = piecesByPositions.get(searchPosition);
-                out.print(piece.getEmblem());
-            }
+            printFilePieces(piecesByPositions, rank);
             out.println();
+        }
+
+    }
+
+    private static void printFilePieces(Map<Position, Piece> piecesByPositions, Rank rank) {
+        for (File file : File.values()) {
+            Position searchPosition = Positions.findPositionBy(file, rank);
+            Piece piece = piecesByPositions.get(searchPosition);
+            out.print(piece.getEmblem());
         }
     }
 

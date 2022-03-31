@@ -21,11 +21,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.PieceColor;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class RegularBoardFactory extends BoardFactory {
 
@@ -55,12 +57,20 @@ public class RegularBoardFactory extends BoardFactory {
     }
 
     private static void placeAllEmptyPieces() {
-        for (Rank rank : Rank.reverseValues()) {
+/*
+        for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
                 Position findPosition = Positions.findPositionBy(file, rank);
                 BOARD.put(findPosition, EMPTY_PIECE);
             }
         }
+*/
+
+        Map<Position, Piece> emptyPiecesByPositions = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> Positions.findPositionBy(file, rank)))
+                .collect(Collectors.toMap((position) -> position, (piece) -> EMPTY_PIECE));
+
+        BOARD.putAll(emptyPiecesByPositions);
     }
 
     private static void placeWhitePieces() {

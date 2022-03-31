@@ -6,9 +6,9 @@ import chess.constant.MoveType;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Board {
@@ -67,17 +67,14 @@ public class Board {
         return MoveType.ENEMY;
     }
 
-    private boolean isBlocked(Position source, Position target) {
-        if (board.get(source) instanceof Knight) {
+    private boolean isBlocked(Position sourcePosition, Position targetPosition) {
+        if (board.get(sourcePosition).isKnight()) {
             return false;
         }
 
-        for (Position position : source.findPositionsToMove(target)) {
-            if (!isEmpty(position)) {
-                return true;
-            }
-        }
-        return false;
+        return sourcePosition.findPositionsToMove(targetPosition)
+                .stream()
+                .anyMatch(position->!isEmpty(position));
     }
 
     private boolean isEmpty(Position position) {
@@ -101,20 +98,23 @@ public class Board {
     public double adjustPawnScore() {
         int adjustingScore = 0;
         for (File file : File.values()) {
-            long rankDuplicatedPiecesCount = Rank.reverseValues()
-                    .stream()
-                    .map(rank -> Positions.findPositionBy(file, rank))
-                    .filter(position -> {
-                                Piece piece = board.get(position);
-                                return piece.isPawn() && gameFlow.isCorrectTurn(piece);
-                            }
-                    ).count();
+            long rankDuplicatedPiecesCount = calculateRankDuplicatedPiecesCount(file);
 
             if (rankDuplicatedPiecesCount> 1) {
                 adjustingScore += rankDuplicatedPiecesCount * 0.5;
             }
         }
         return adjustingScore;
+    }
+
+    private long calculateRankDuplicatedPiecesCount(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> Positions.findPositionBy(file, rank))
+                .filter(position -> {
+                            Piece piece = board.get(position);
+                            return piece.isPawn() && gameFlow.isCorrectTurn(piece);
+                        }
+                ).count();
     }
 
     public Map<Position, Piece> getBoard() {
