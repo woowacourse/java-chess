@@ -4,7 +4,7 @@ import chess.controller.GameCommand;
 
 public class Ready implements GameState {
     @Override
-    public GameState execute(GameCommand gameCommand) {
+    public GameState changeStateBy(GameCommand gameCommand) {
         if (gameCommand.isMove() || gameCommand.isStatus()) {
             throw new IllegalStateException("잘못된 명령어 실행입니다.");
         }

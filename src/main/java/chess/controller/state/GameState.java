@@ -4,7 +4,7 @@ import chess.controller.GameCommand;
 import chess.service.ChessService;
 
 public interface GameState {
-    GameState execute(GameCommand gameCommand);
+    GameState changeStateBy(GameCommand gameCommand);
 
     default boolean isRunning(ChessService service) {
         return isNotEnd() && service.isWaitingOrRunning();

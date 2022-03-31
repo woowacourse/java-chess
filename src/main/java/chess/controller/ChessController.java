@@ -6,8 +6,6 @@ import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public final class ChessController {
 
@@ -15,9 +13,11 @@ public final class ChessController {
     private static final int TO_INDEX = 1;
 
     private final ChessService service;
+    private GameState gameState;
 
     public ChessController(ChessService service) {
         this.service = service;
+        this.gameState = new Ready();
     }
 
     private void runUntilValid(Runnable runner) {
@@ -38,16 +38,17 @@ public final class ChessController {
     }
 
     public void run() {
-        runUntilValid(this::playGame);
+        gameState = new Ready();
+        while (gameState.isRunning(service)) {
+            runUntilValid(this::executeByInput);
+        }
     }
 
-    private void playGame() {
-        GameState gameState = new Ready();
-        while (gameState.isRunning(service)) {
-            GameCommandRequest request = GameCommandRequest.of(InputView.inputStartOrEndGame());
-            gameState = gameState.execute(request.getGameCommand());
-            request.getGameCommand().executeRequest(this, request);
-        }
+    private void executeByInput() {
+        GameCommandRequest request = GameCommandRequest.of(InputView.inputCommandRequest());
+        GameCommand gameCommand = request.getGameCommand();
+        gameState = gameState.changeStateBy(gameCommand);
+        gameCommand.executeRequest(this, request);
     }
 
     public void start(GameCommandRequest request) {
