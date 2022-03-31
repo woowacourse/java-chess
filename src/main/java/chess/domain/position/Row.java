@@ -32,7 +32,7 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(row -> row.rank == rank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("rank" + rank + " 은 존재하지 않는 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("rank" + rank + " 은 유효하지 않은 좌표입니다."));
     }
 
     public int displacementTo(Row row) {

@@ -32,7 +32,7 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(column -> column.file == file)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("file" + file + " 은 존재하지 않는 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("file" + file + " 은 유효하지 않은 좌표입니다."));
     }
 
     public int displacementTo(Column column) {
