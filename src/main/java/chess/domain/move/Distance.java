@@ -14,8 +14,8 @@ public final class Distance {
         this.vertical = vertical;
     }
 
-    public static Distance of(final Position source, final Position target) {
-        return new Distance(source.subtractColumn(target), source.subtractRow(target));
+    public Distance(final Position source, final Position target) {
+        this(source.subtractColumn(target), source.subtractRow(target));
     }
 
     public boolean isVerticalMovement() {

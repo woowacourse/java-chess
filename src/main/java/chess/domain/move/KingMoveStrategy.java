@@ -19,7 +19,7 @@ public final class KingMoveStrategy extends FirstRowMoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = Distance.of(source, target);
+        final Distance distance = new Distance(source, target);
         final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
         if (!MOVE_PATTERNS.contains(movePattern)) {
             return false;

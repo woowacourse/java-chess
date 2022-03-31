@@ -13,13 +13,13 @@ public class Score {
 
     private static final int PAWN_COUNT = 1;
 
-    private final double whiteScore;
     private final double blackScore;
+    private final double whiteScore;
     private final Team winTeam;
 
     public Score(final Map<Position, Piece> board) {
-        this.whiteScore = calculateScore(board, Team.WHITE);
         this.blackScore = calculateScore(board, Team.BLACK);
+        this.whiteScore = calculateScore(board, Team.WHITE);
         if (whiteScore > blackScore) {
             this.winTeam = Team.WHITE;
             return;
