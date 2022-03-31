@@ -22,21 +22,81 @@ public class QueenTest {
         assertThat(queen.signature()).isEqualTo(pieceName);
     }
 
-    @Test
-    @DisplayName("Queen 이 움직일 수 있는 위치이면 true를 반환하는지")
-    void isMovable() {
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:B:RANK_6", "C:RANK_5:D:RANK_6", "C:RANK_5:B:RANK_4", "C:RANK_5:D:RANK_4"},
+            delimiter = ':')
+    @DisplayName("Queen 이 대각선으로 1칸 움직일 경우 - 가능")
+    void canMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
         Queen queen = new Queen(Color.BLACK);
-        Position source = Position.of(Column.C, Row.RANK_5);
-        Position target = Position.of(Column.H, Row.RANK_5);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
+        assertThat(queen.isCorrectMovement(source, target, false)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
+    @DisplayName("Queen 이 대각선으로 2칸 이상 움직일 경우 - 가능")
+    void canMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+        Queen queen = new Queen(Color.BLACK);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
+        assertThat(queen.isCorrectMovement(source, target, false)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:D:RANK_5", "C:RANK_5:C:RANK_4", "C:RANK_5:C:RANK_6", "C:RANK_5:C:RANK_4"},
+            delimiter = ':')
+    @DisplayName("Queen 이 상하좌우로 1칸 움직일 경우 - 가능")
+    void canMoveWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+        Queen queen = new Queen(Color.BLACK);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
+        assertThat(queen.isCorrectMovement(source, target, false)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"C:RANK_5:C:RANK_2", "C:RANK_5:A:RANK_5", "A:RANK_5:A:RANK_3"}, delimiter = ':')
+    @DisplayName("Queen 이 상하좌우로 2칸 이상 움직일 경우 - 가능")
+    void canMoveWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
+        Queen queen = new Queen(Color.BLACK);
+        Position source = Position.of(sourceColumn, sourceRow);
+        Position target = Position.of(targetColumn, targetRow);
+
         assertThat(queen.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
-    @DisplayName("Queen 이 움직일 수 없는 위치이면 false를 반환하는지")
-    void isNotMovable() {
+    @DisplayName("Queen 은 기물을 넘을 수 없다.")
+    void canNotJumpOverPieces() {
         Queen queen = new Queen(Color.BLACK);
-        Position source = Position.of(Column.C, Row.RANK_5);
-        Position target = Position.of(Column.D, Row.RANK_7);
-        assertThat(queen.isCorrectMovement(source, target, false)).isFalse();
+
+        assertThat(queen.canJumpOverPieces()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Queen 은 Pawn 이 아니다.")
+    void isNotPawn() {
+        Queen queen = new Queen(Color.BLACK);
+
+        assertThat(queen.isPawn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Queen 은 King 이 아니다.")
+    void isNotKing() {
+        Queen queen = new Queen(Color.BLACK);
+
+        assertThat(queen.isKing()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Queen 의 점수는 9 이다.")
+    void isScore9() {
+        Queen queen = new Queen(Color.BLACK);
+
+        assertThat(queen.score()).isEqualTo(9);
     }
 }
