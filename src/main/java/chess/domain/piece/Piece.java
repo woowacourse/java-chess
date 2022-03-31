@@ -19,6 +19,8 @@ public abstract class Piece {
         return Directions.isMovableDirection(this, dx, dy) && isOpponent(target);
     }
 
+    public abstract double getScore();
+
     private boolean isOpponent(Piece another) {
         return this.color != another.color;
     }
@@ -59,6 +61,10 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
+    public boolean isSameColor(Color anotherColor) {
+        return this.color == anotherColor;
+    }
+    
     public boolean isDifferentColor(Color anotherColor) {
         return this.color != anotherColor;
     }

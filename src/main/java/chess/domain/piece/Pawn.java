@@ -8,6 +8,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public double getScore() {
+        return 1;
+    }
+
+    @Override
     public boolean isPawn() {
         return true;
     }
