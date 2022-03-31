@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.controller.Command;
+import chess.domain.board.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +65,7 @@ class CommandTest {
     @Test
     @DisplayName("execute 명령 실행시 변경된 상태를 반환한다.")
     void returnChangedState() {
-        List<String> ignored = new ArrayList<>();
+        List<Point> ignored = new ArrayList<>();
         GameState state = new Ready();
         Command command = Command.START;
 

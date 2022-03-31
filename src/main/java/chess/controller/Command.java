@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.board.Point;
 import chess.domain.game.GameState;
 
 import java.util.Arrays;
@@ -14,9 +15,9 @@ public enum Command {
     STATUS("status", ChessController::status);
 
     private final String input;
-    private final BiFunction<GameState, List<String>, GameState> executor;
+    private final BiFunction<GameState, List<Point>, GameState> executor;
 
-    Command(String input, BiFunction<GameState, List<String>, GameState> executor) {
+    Command(String input, BiFunction<GameState, List<Point>, GameState> executor) {
         this.input = input;
         this.executor = executor;
     }
@@ -28,7 +29,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 명령어가 없습니다."));
     }
 
-    public GameState execute(GameState state, List<String> arguments) {
+    public GameState execute(GameState state, List<Point> arguments) {
         return this.executor.apply(state, arguments);
     }
 }

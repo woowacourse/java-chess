@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.dto.BoardAndTurnInfo;
 import chess.dto.Response;
@@ -24,8 +25,8 @@ public class Running extends Started {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
-        board.move(arguments, turnColor);
+    public GameState move(List<Point> arguments) {
+        board.move(arguments.get(0), arguments.get(1), turnColor);
         if (!board.isKingDead(turnColor.toggle())) {
             return new Running(board, turnColor.toggle());
         }

@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.dto.BoardAndTurnInfo;
@@ -37,23 +38,23 @@ public class ChessController {
         }
     }
 
-    static GameState start(GameState gameState, List<String> ignored) {
+    static GameState start(GameState gameState, List<Point> ignored) {
         GameState state = gameState.start();
         OutputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
         return state;
     }
 
-    static GameState finish(GameState gameState, List<String> ignored) {
+    static GameState finish(GameState gameState, List<Point> ignored) {
         return gameState.finish();
     }
 
-    static GameState move(GameState gameState, List<String> arguments) {
+    static GameState move(GameState gameState, List<Point> arguments) {
         GameState state = gameState.move(arguments);
         OutputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
         return state;
     }
 
-    static GameState status(GameState gameState, List<String> ignored) {
+    static GameState status(GameState gameState, List<Point> ignored) {
         GameState state = gameState.status();
         OutputView.printStatus((ScoreResponse) state.getResponse());
         return state;

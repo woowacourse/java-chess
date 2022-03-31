@@ -7,12 +7,9 @@ import chess.domain.piece.PieceType;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
-
-    private static final int ARGUMENT_SIZE = 2;
 
     private final Map<Point, Piece> pointPieces;
 
@@ -20,21 +17,11 @@ public class Board {
         this.pointPieces = new HashMap<>(pointPieces);
     }
 
-    public void move(List<String> arguments, Color turnColor) {
-        validateArgumentSize(arguments);
-        Point from = Point.of(arguments.get(0));
-        Point to = Point.of(arguments.get(1));
-
+    public void move(Point from, Point to, Color turnColor) {
         Piece fromPiece = pointPieces.get(from);
         Piece toPiece = pointPieces.get(to);
         validateFromAndToPlace(turnColor, fromPiece, toPiece);
         movePiece(from, to, fromPiece);
-    }
-
-    private void validateArgumentSize(List<String> arguments) {
-        if (arguments.size() != ARGUMENT_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
-        }
     }
 
     private void validateFromAndToPlace(Color turnColor, Piece fromPiece, Piece toPiece) {

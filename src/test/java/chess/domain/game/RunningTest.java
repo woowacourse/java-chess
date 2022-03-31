@@ -39,7 +39,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 running 상태로 변한다.")
     void moveToRunningTest() {
-        List<String> arguments = List.of("a2", "a3");
+        List<Point> arguments = List.of(Point.of("a2"), Point.of("a3"));
         GameState gameState = new Running(BoardFixtures.initial(), Color.WHITE);
 
         GameState movedState = gameState.move(arguments);
@@ -50,7 +50,7 @@ class RunningTest {
     @Test
     @DisplayName("move 명령시 king이 죽으면 종료 상태로 변한다.")
     void moveToFinishTest() {
-        List<String> arguments = List.of("e1", "e8");
+        List<Point> arguments = List.of(Point.of("e1"), Point.of("e8"));
         GameState gameState = new Running(BoardFixtures.create(Map.of(
                 Point.of("e8"), new King(Color.BLACK),
                 Point.of("e1"), new Queen(Color.WHITE)

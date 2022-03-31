@@ -1,37 +1,48 @@
 package chess.dto;
 
+import chess.domain.board.Point;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Request {
 
+    private static final int ARGUMENT_SIZE = 2;
     public static final String ARGUMENT_SEPARATOR = " ";
     private final String command;
-    private final List<String> arguments;
+    private final List<Point> arguments;
 
-    public Request(String command, List<String> arguments) {
+    private Request(String command, List<Point> arguments) {
         this.command = command;
         this.arguments = arguments;
     }
 
     public static Request of(String input) {
         String[] split = input.split(ARGUMENT_SEPARATOR);
-        List<String> arguments = toArguments(split);
+        List<Point> arguments = toArguments(split);
+        validateArgumentSize(arguments);
         return new Request(split[0], arguments);
     }
 
-    private static List<String> toArguments(String[] split) {
+    private static List<Point> toArguments(String[] split) {
         return Arrays.stream(split)
                 .skip(1)
+                .map(Point::of)
                 .collect(Collectors.toList());
+    }
+
+    private static void validateArgumentSize(List<Point> arguments) {
+        if (arguments.size() != ARGUMENT_SIZE) {
+            throw new IllegalArgumentException("[ERROR] 출발지와 도착자를 입력해주세요.(move a1 a2)");
+        }
     }
 
     public String getCommand() {
         return command;
     }
 
-    public List<String> getArguments() {
+    public List<Point> getArguments() {
         return List.copyOf(arguments);
     }
 }

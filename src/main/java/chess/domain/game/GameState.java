@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.board.Point;
 import chess.dto.Response;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface GameState {
 
     boolean isRunnable();
 
-    GameState move(List<String> arguments);
+    GameState move(List<Point> arguments);
 
     GameState status();
 

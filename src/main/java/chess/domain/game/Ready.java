@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
+import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.dto.Response;
 
@@ -24,7 +25,7 @@ public class Ready extends Started {
     }
 
     @Override
-    public GameState move(List<String> arguments) {
+    public GameState move(List<Point> arguments) {
         throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 

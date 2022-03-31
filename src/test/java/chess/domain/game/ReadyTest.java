@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.board.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,11 +38,11 @@ class ReadyTest {
     @Test
     @DisplayName("준비상태에서는 이동할 수 없다.")
     void throwsExceptionWithTryingToMove() {
-        List<String> ignored = List.of("a1", "a2");
+        List<Point> arguments = List.of(Point.of("a1"), Point.of("a2"));
         GameState state = new Ready();
 
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> state.move(ignored));
+                .isThrownBy(() -> state.move(arguments));
     }
 
     @Test
