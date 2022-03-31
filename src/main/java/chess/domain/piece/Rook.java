@@ -12,8 +12,6 @@ public class Rook extends StraightMovablePiece {
     public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
             Position.of("a1"), Position.of("h1"));
 
-    private static final List<Direction> DIRECTIONS = List.of(
-            Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
     private static final int ROOK_POINT = 5;
 
     public Rook(Color color) {
@@ -22,7 +20,7 @@ public class Rook extends StraightMovablePiece {
 
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
-        return super.getMovablePositionsByDirections(position, DIRECTIONS);
+        return super.getMovablePositionsByDirections(position, Direction.rookDirections());
     }
 
     @Override

@@ -16,8 +16,6 @@ public class Pawn extends Piece {
             Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
             Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
 
-    private static final Direction BLACK_DIRECTION = Direction.SOUTH;
-    private static final Direction WHITE_DIRECTION = Direction.NORTH;
     private static final int PAWN_POINT = 1;
 
     public Pawn(Color color) {
@@ -27,14 +25,9 @@ public class Pawn extends Piece {
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         Map<Direction, List<Position>> movable = new EnumMap<>(Direction.class);
-        if (color == Color.BLACK) {
-            movable.put(BLACK_DIRECTION, new ArrayList<>());
-            putFirstMovablePositionByDirection(movable, position, BLACK_DIRECTION);
-        }
-        if (color == Color.WHITE) {
-            movable.put(WHITE_DIRECTION, new ArrayList<>());
-            putFirstMovablePositionByDirection(movable, position, WHITE_DIRECTION);
-        }
+        Direction pawnDirectionByColor = Direction.pawnDirection(color);
+        movable.put(pawnDirectionByColor, new ArrayList<>());
+        putFirstMovablePositionByDirection(movable, position, pawnDirectionByColor);
         return movable;
     }
 

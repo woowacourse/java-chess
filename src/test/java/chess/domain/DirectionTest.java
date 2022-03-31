@@ -35,7 +35,7 @@ public class DirectionTest {
     @Test
     @DisplayName("현재 방향이 대각선을 구할 수 없는 경우 예외가 발생한다.")
     void getDiagonalThrowException() {
-        assertThatThrownBy(() -> Direction.NORTH_EAST.getDiagonal())
+        assertThatThrownBy(Direction.NORTH_EAST::getDiagonal)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 디렉션의 대각선을 구할 수 없습니다");
     }
