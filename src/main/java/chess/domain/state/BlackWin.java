@@ -1,4 +1,4 @@
 package chess.domain.state;
 
-public class BlackWin extends Finished {
+final class BlackWin extends Finished {
 }
