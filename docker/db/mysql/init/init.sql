@@ -19,6 +19,6 @@ CREATE TABLE ChessGame
 (
     id           INT         NOT NULL PRIMARY KEY,
     status       VARCHAR(10) NOT NULL,
-    currentColor CHAR(5) NOT NULL,
+    currentColor CHAR(5)     NOT NULL,
     winner       VARCHAR(10)
 );
