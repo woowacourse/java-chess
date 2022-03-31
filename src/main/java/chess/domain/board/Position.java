@@ -14,7 +14,7 @@ public class Position implements Comparable<Position> {
 
     static {
         CACHE = createAll().stream()
-                .collect(toMap(Position::createKey, position -> position));
+                .collect(toMap(Position::combineColumnAndRow, position -> position));
     }
 
     private final Column column;
@@ -63,7 +63,7 @@ public class Position implements Comparable<Position> {
         return Position.valueOf(column + row);
     }
 
-    private String createKey() {
+    private String combineColumnAndRow() {
         return column.getName() + row.getValue();
     }
 

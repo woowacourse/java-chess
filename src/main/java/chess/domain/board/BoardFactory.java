@@ -16,12 +16,12 @@ import java.util.TreeMap;
 public class BoardFactory {
 
     public static Board createChessBoard() {
-        Map<Position, Piece> emptyBoard = initEmptyBoard();
-        initFirstLine(Team.BLACK, Row.EIGHT, emptyBoard);
-        initPawn(Team.BLACK, Row.SEVEN, emptyBoard);
-        initFirstLine(Team.WHITE, Row.ONE, emptyBoard);
-        initPawn(Team.WHITE, Row.TWO, emptyBoard);
-        return new Board(emptyBoard);
+        Map<Position, Piece> chessBoard = initEmptyBoard();
+        initFirstRow(Team.BLACK, Row.EIGHT, chessBoard);
+        initPawn(Team.BLACK, Row.SEVEN, chessBoard);
+        initFirstRow(Team.WHITE, Row.ONE, chessBoard);
+        initPawn(Team.WHITE, Row.TWO, chessBoard);
+        return new Board(chessBoard);
     }
 
     private static Map<Position, Piece> initEmptyBoard() {
@@ -34,7 +34,7 @@ public class BoardFactory {
         return emptyBoard;
     }
 
-    private static void initFirstLine(final Team team, Row row, final Map<Position, Piece> board) {
+    private static void initFirstRow(final Team team, final Row row, final Map<Position, Piece> board) {
         List<Piece> pieces = List.of(
                 new Rook(team),
                 new Knight(team),
@@ -50,7 +50,7 @@ public class BoardFactory {
         }
     }
 
-    private static void initPawn(final Team team, Row row, final Map<Position, Piece> board) {
+    private static void initPawn(final Team team, final Row row, final Map<Position, Piece> board) {
         for (Column column : Column.values()) {
             board.replace(Position.valueOf(column.getName() + row.getValue()), new Pawn(team));
         }
