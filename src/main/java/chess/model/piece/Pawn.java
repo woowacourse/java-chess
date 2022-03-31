@@ -36,15 +36,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position target) {
-        if (isInitPosition()) {
-            return this.position.isStepForward(target, team.getForwardDirection(), ONE_STEP) ||
-                    this.position.isStepForward(target, team.getForwardDirection(), INIT_DISTANCE);
-        }
-        return this.position.isStepForward(target, team.getForwardDirection(), ONE_STEP);
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         if (isInitPosition()) {
             return source.isStepForward(target, team.getForwardDirection(), ONE_STEP) ||

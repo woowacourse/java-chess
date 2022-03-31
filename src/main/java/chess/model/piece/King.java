@@ -21,11 +21,6 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return isCorrectDirection(position) && isCorrectDistance(position);
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return (source.isVertical(target) ||
                 source.isHorizontal(target) ||

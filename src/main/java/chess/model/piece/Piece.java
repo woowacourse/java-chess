@@ -80,8 +80,6 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract List<Position> getIntervalPosition(Piece targetPiece);
 
-    public boolean isMovable(Position target) {return false;} //삭제 필요
-
     public boolean isMovable(Position source, Position target) {return false;} // abstract로 변경 필요
 
     public abstract String getName();

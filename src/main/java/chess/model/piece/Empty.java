@@ -15,11 +15,6 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return false;
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return false;
     }

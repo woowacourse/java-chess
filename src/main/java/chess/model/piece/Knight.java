@@ -21,11 +21,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return this.position.isKnightDirection(position);
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return source.isKnightDirection(target);
     }

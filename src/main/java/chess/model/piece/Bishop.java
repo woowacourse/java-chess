@@ -22,11 +22,6 @@ public class Bishop extends Piece implements BishopMovable {
     }
 
     @Override
-    public boolean isMovable(Position position) {
-        return isCorrectDirection(position);
-    }
-
-    @Override
     public boolean isMovable(Position source, Position target) {
         return source.isDiagonal(target);
     }
@@ -50,9 +45,5 @@ public class Bishop extends Piece implements BishopMovable {
             return getNegativeDiagonal(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
-    }
-
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isDiagonal(position);
     }
 }
