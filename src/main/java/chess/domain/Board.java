@@ -13,7 +13,6 @@ public class Board {
     private static final String NON_MOVABLE_POSITION = "[ERROR] 해당 위치는 말이 움직일 수 없습니다.";
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
-    private static final String ALL_KING_EXIST = "[ERROR] 킹이 모두 살아 있어, 승자를 구할 수 없습니다.";
     private static final String ALL_KING_NOT_EXIST = "[ERROR] 킹이 보드에 존재하지 않습니다.";
 
     private final Map<Position, Piece> board;
@@ -30,21 +29,10 @@ public class Board {
         validateExistPiecePosition(fromPosition);
         Piece piece = board.get(fromPosition);
         validateMovablePosition(piece, fromPosition, toPosition);
-        if (!piece.isKnight()) {
-            checkRoute(fromPosition, toPosition);
-        }
+        checkRoute(fromPosition, toPosition);
         validateMyTeam(piece, toPosition);
         board.remove(fromPosition);
         board.put(toPosition, piece);
-    }
-
-    private void checkRoute(Position fromPosition, Position toPosition) {
-        Position initialPosition = fromPosition;
-        Direction direction = Direction.giveDirection(fromPosition, toPosition);
-        while (initialPosition != toPosition) {
-            initialPosition = Direction.step(initialPosition, direction);
-            validateRoute(initialPosition, toPosition);
-        }
     }
 
     private void validateExistPiecePosition(Position position) {
@@ -62,6 +50,15 @@ public class Board {
 
     private boolean isCatchable(Piece piece, Position fromPosition, Position toPosition) {
         return board.containsKey(toPosition) && piece.isCatchable(fromPosition, toPosition);
+    }
+
+    private void checkRoute(Position fromPosition, Position toPosition) {
+        Position initialPosition = fromPosition;
+        Direction direction = Direction.giveDirection(fromPosition, toPosition);
+        while (initialPosition != toPosition) {
+            initialPosition = Direction.step(initialPosition, direction);
+            validateRoute(initialPosition, toPosition);
+        }
     }
 
     private void validateRoute(Position position, Position toPosition) {
@@ -96,12 +93,6 @@ public class Board {
             .sum() - calculateSameLinePawnScore(color);
     }
 
-    private boolean isSameLine(List<Position> pawnPositions, Position position) {
-        return pawnPositions.stream()
-            .filter(p -> p != position)
-            .anyMatch(p -> p.isSameFile(position));
-    }
-
     private double calculateSameLinePawnScore(Color color) {
         List<Position> pawnPositions = board.keySet().stream()
             .filter(
@@ -112,6 +103,12 @@ public class Board {
             .filter(position -> isSameLine(pawnPositions, position))
             .mapToDouble(position -> 0.5)
             .sum();
+    }
+
+    private boolean isSameLine(List<Position> pawnPositions, Position position) {
+        return pawnPositions.stream()
+            .filter(p -> p != position)
+            .anyMatch(p -> p.isSameFile(position));
     }
 
     public Color getWinnerTeamColor() {
