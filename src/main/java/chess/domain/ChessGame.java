@@ -25,7 +25,7 @@ public class ChessGame {
     }
 
     private void executeCommand(final String command) {
-        final GameCommand gameCommand = GameCommand.findByInputCommand(command);
+        final GameCommand gameCommand = GameCommand.from(command);
         if (gameCommand == GameCommand.START) {
             executeStartCommand();
         }
