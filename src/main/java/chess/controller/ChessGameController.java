@@ -1,9 +1,8 @@
 package chess.controller;
 
 import chess.domain.Command;
-import chess.domain.state.BoardInitializer;
-import chess.domain.state.BoardState;
 import chess.domain.piece.Position;
+import chess.domain.state.BoardState;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -14,6 +13,12 @@ public class ChessGameController {
     private static final int START_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
+    private BoardState boardState;
+
+    public ChessGameController(BoardState boardState) {
+        this.boardState = boardState;
+    }
+
     public void run() {
         OutputView.printStartView();
 
@@ -21,8 +26,7 @@ public class ChessGameController {
             return;
         }
 
-        BoardState boardState = BoardInitializer.initBoard();
-        playRound(boardState);
+        playRound();
 
         OutputView.printResult(boardState);
     }
@@ -36,34 +40,35 @@ public class ChessGameController {
         }
     }
 
-    private void playRound(BoardState boardState) {
+    private void playRound() {
         while (!boardState.isEnd()) {
             OutputView.printBoard(boardState);
-            executeTurn(boardState);
+            executeTurn();
         }
     }
 
-    private void executeTurn(BoardState boardState) {
+    private void executeTurn() {
         try {
-            executeCommand(boardState);
+            executeCommand();
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printError(e.getMessage());
             OutputView.printBoard(boardState);
-            executeTurn(boardState);
+            executeTurn();
         }
     }
 
-    private void executeCommand(BoardState boardState) {
+    private void executeCommand() {
         List<String> input = InputView.requestCommandLine();
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.END) {
-            boardState.terminate();
+            boardState = boardState.terminate();
             return;
         }
 
         if (Command.inGameCommand(input.get(COMMAND_INDEX)) == Command.MOVE) {
-            boardState.move(new Position(input.get(START_POSITION_INDEX)),
+            boardState = boardState.move(new Position(input.get(START_POSITION_INDEX)),
                     new Position(input.get(TARGET_POSITION_INDEX)));
+            System.out.println(boardState.isBlackTurn());
         }
     }
 }
