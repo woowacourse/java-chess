@@ -1,7 +1,6 @@
 package chess;
 
 import chess.domain.Board;
-import chess.domain.Command;
 import chess.domain.Result;
 import chess.domain.Score;
 import chess.domain.piece.Color;
@@ -32,6 +31,7 @@ public class ChessGame {
 
     private void printCurrentTurnPlayer() {
         if (state.isStarted()){
+            OutputView.printBoard(state.getBoard().getBoard());
             OutputView.printTurnMessage(state.getColor().getName());
         }
     }
