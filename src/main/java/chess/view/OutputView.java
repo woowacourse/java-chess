@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
+import chess.domain.game.score.ScoreResult;
 import chess.domain.piece.PieceColor;
 import chess.view.dto.BoardDto;
 
@@ -22,8 +23,10 @@ public class OutputView {
     }
 
     public static void printScore(Board board) {
-        System.out.println("흰색팀 점수 : " + board.calculateScore(PieceColor.WHITE));
-        System.out.println("검정색팀 점수 : " + board.calculateScore(PieceColor.BLACK));
+        ScoreResult scoreResult = new ScoreResult(board);
+
+        System.out.println("흰색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.WHITE));
+        System.out.println("검정색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.BLACK));
     }
 
     public static void printException(Exception exception) {

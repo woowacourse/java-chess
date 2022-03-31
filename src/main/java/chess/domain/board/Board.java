@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> value;
@@ -145,25 +147,8 @@ public class Board {
         return !Objects.isNull(otherPiece) && otherPiece.isSameColorAs(piece);
     }
 
-    public double calculateScore(PieceColor pieceColor) {
-        return value.values()
-                .stream()
-                .filter(piece -> piece.isSameColorAs(pieceColor))
-                .mapToDouble(Piece::getScore)
-                .sum() - adjustPawnScore(pieceColor);
-    }
 
-    private double adjustPawnScore(PieceColor pieceColor) {
-        int totalDuplicatedPawnCount = 0;
-
-        for (XAxis xAxis : XAxis.values()) {
-            totalDuplicatedPawnCount += getDuplicatedPawnCountInColumn(pieceColor, xAxis);
-        }
-
-        return totalDuplicatedPawnCount * 0.5;
-    }
-
-    private int getDuplicatedPawnCountInColumn(PieceColor pieceColor, XAxis xAxis) {
+    public int getDuplicatedPawnCountByXAxis(PieceColor pieceColor, XAxis xAxis) {
         List<Position> positions = Position.getPositionsByXAxis(xAxis);
         int count = countPawnByPositions(pieceColor, positions);
 
@@ -180,5 +165,12 @@ public class Board {
                 .filter(piece -> piece.isSameColorAs(pieceColor))
                 .filter(Piece::isPawn)
                 .count();
+    }
+
+    public Set<Piece> findPiecesByPieceColor(PieceColor pieceColor) {
+        return value.values()
+                .stream()
+                .filter(piece -> piece.isSameColorAs(pieceColor))
+                .collect(Collectors.toSet());
     }
 }
