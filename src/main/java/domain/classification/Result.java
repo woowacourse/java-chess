@@ -37,16 +37,6 @@ public enum Result {
         return sum;
     }
 
-    private static Result competeScore(final double currentTeamScore, final double opponentTeamScore) {
-        if (currentTeamScore > opponentTeamScore) {
-            return Result.WIN;
-        }
-        if (currentTeamScore < opponentTeamScore) {
-            return Result.LOSE;
-        }
-        return Result.DRAW;
-    }
-
     private static List<Piece> calculateTeamPiecesByXPosition(final Map<Position, Piece> board, final Team team,
                                                               final XPosition x) {
         return Arrays.stream(YPosition.values())
@@ -65,6 +55,16 @@ public enum Result {
         return scores.stream()
                 .filter(score -> score != null)
                 .mapToDouble(Double::doubleValue).sum();
+    }
+
+    private static Result competeScore(final double currentTeamScore, final double opponentTeamScore) {
+        if (currentTeamScore > opponentTeamScore) {
+            return Result.WIN;
+        }
+        if (currentTeamScore < opponentTeamScore) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     private static boolean checkDuplicatePawn(List<Piece> pieces) {

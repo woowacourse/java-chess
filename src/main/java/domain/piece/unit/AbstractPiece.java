@@ -7,7 +7,6 @@ import domain.position.XPosition;
 import domain.position.YPosition;
 import domain.piece.property.Direction;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -64,7 +63,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public List<Position> calculateRoute(final Position source, final Position target){
+    public List<Position> calculateRoute(final Position source, final Position target) {
         List<Position> routePositions = new ArrayList<>();
         Direction direction = getDirection(target);
         routePositions.add(target);

@@ -1,4 +1,3 @@
-import static domain.classification.OrderCase.*;
 
 import domain.board.BoardGenerator;
 import domain.board.ChessBoard;
@@ -14,33 +13,44 @@ public class Application {
         final BoardGenerator boardGenerator = new ChessBoardGenerator();
         final ChessBoard chessBoard = new ChessBoard(boardGenerator);
 
-        Order order = Order.of(ELSE);
-        while (!order.isStart()) {
-            try {
-                order = InputView.responseUserStartCommand();
-                OutputView.printBoard(chessBoard);
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
-        }
+        Order order = null;
+        startGame(chessBoard, order);
+        playGame(chessBoard, order);
+    }
 
-        while (!order.isEnd()) {
-            try {
-                order = InputView.responseUserCommand();
-                if (order.isStatus()) {
-                    OutputView.printStatus(new StatusDto(chessBoard));
-                }
-                if (order.isMove()) {
-                    chessBoard.move(order.getSource(), order.getTarget());
-                    OutputView.printBoard(chessBoard);
-                }
-                if (!chessBoard.checkKingExist()){
-                    OutputView.printWinner(chessBoard.calculateWhoWinner());
-                    break;
-                }
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
+    private static void startGame(ChessBoard chessBoard, Order order) {
+        try {
+            order = InputView.responseUserStartCommand();
+            OutputView.printBoard(chessBoard);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            startGame(chessBoard, order);
+        }
+    }
+
+    private static void playGame(ChessBoard chessBoard, Order order) {
+        try {
+            order = InputView.responseUserCommand();
+            if (order.isEnd()){
+                return;
             }
+            if (order.isStatus()) {
+                OutputView.printStatus(new StatusDto(chessBoard));
+                playGame(chessBoard, order);
+            }
+            if (order.isMove()) {
+                chessBoard.move(order.getSource(), order.getTarget());
+                OutputView.printBoard(chessBoard);
+                playGame(chessBoard, order);
+            }
+            if (!chessBoard.checkKingExist()){
+                OutputView.printWinner(chessBoard.calculateWhoWinner());
+                return;
+            }
+
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            playGame(chessBoard, order);
         }
     }
 }

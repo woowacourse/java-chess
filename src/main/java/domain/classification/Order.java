@@ -32,31 +32,38 @@ public class Order {
     }
 
     public static Order of(OrderCase orderCase) {
+        validateElseCase(orderCase);
         return new Order(orderCase, null);
+    }
+
+    private static void validateElseCase(OrderCase orderCase) {
+        if (orderCase.equals(ELSE)){
+            throw new IllegalArgumentException("[ERROR] 요구하는 입력값이 아닙니다.");
+        }
     }
 
     public static Order of(OrderCase orderCase, String input) {
         List<String> moveOrder = Arrays.asList(input.split(DELIMITER));
-        validateMoveCommand(moveOrder);
+        validateMoveOrder(moveOrder);
         List<Position> moves = new ArrayList<>();
         moves.add(generatePosition(moveOrder.get(INPUT_SOURCE_POSITION_INDEX)));
         moves.add(generatePosition(moveOrder.get(INPUT_TARGET_POSITION_INDEX)));
         return new Order(orderCase, moves);
     }
 
-    private static void validateMoveCommand(final List<String> moveOrder) {
-        validateMoveCommandFirstIsMove(moveOrder);
-        validateMoveCommandSize(moveOrder);
+    private static void validateMoveOrder(final List<String> moveOrder) {
+        validateMoveOrderFirstIsMove(moveOrder);
+        validateMoveOrderSize(moveOrder);
         validateEachPosition(moveOrder);
     }
 
-    private static void validateMoveCommandFirstIsMove(final List<String> moveOrder) {
+    private static void validateMoveOrderFirstIsMove(final List<String> moveOrder) {
         if (!moveOrder.get(MOVE_COMMAND_INDEX).equals(MOVE.getValue())) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }
     }
 
-    private static void validateMoveCommandSize(final List<String> moveOrder) {
+    private static void validateMoveOrderSize(final List<String> moveOrder) {
         if (moveOrder.size() != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }

@@ -21,4 +21,12 @@ public final class PieceInfo {
     public String symbol() {
         return pieceFeature.symbol();
     }
+
+    @Override
+    public String toString() {
+        return "PieceInfo{" +
+                "team=" + team +
+                ", pieceFeature=" + pieceFeature +
+                '}';
+    }
 }
