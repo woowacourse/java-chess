@@ -1,7 +1,9 @@
-package chess.domain;
+package chess.domain.game;
 
-import chess.domain.piece.Piece;
 import java.util.Map;
+
+import chess.domain.Position;
+import chess.domain.piece.Piece;
 
 public class ScoreCalculator {
 

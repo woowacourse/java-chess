@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,6 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.Position;
+import chess.domain.game.ScoreCalculator;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movable.Pawn;
 import chess.domain.piece.movable.multiple.Bishop;
