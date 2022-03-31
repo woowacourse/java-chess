@@ -40,7 +40,7 @@ public abstract class Piece {
 
     public boolean isRook() {
         return false;
-    };
+    }
 
     public boolean isKnight() {
         return false;
@@ -49,6 +49,4 @@ public abstract class Piece {
     public boolean isWhite() {
         return this.color == Color.WHITE;
     }
-
-    public abstract double getScore();
 }

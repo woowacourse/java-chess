@@ -10,7 +10,6 @@ import chess.domain.direction.Direction;
 
 public class Bishop extends Piece {
 
-    private static final double BISHOP_SCORE = 3.0;
     private static final List<Direction> DIRECTIONS = Arrays.asList(DiagonalDirection.values());
 
     private static final Bishop whiteBishop = new Bishop(Color.WHITE);
@@ -36,10 +35,5 @@ public class Bishop extends Piece {
     @Override
     public boolean isBishop() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return BISHOP_SCORE;
     }
 }

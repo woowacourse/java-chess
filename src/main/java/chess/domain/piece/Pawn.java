@@ -11,7 +11,6 @@ import chess.domain.direction.Direction;
 public class Pawn extends Piece {
 
     private static final String INVALID_DISTANCE_PAWN = "Pawn이 갈 수 없는 거리입니다.";
-    private static final double PAWN_SCORE = 1.0;
 
     private static final int BLACK_PAWN_INITIAL_ROW = 7;
     private static final int WHITE_PAWN_INITIAL_ROW = 2;
@@ -70,10 +69,5 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return PAWN_SCORE;
     }
 }

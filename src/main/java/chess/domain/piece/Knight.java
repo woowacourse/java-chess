@@ -9,8 +9,6 @@ import chess.domain.direction.Direction;
 
 public class Knight extends Piece {
 
-    private static final double KNIGHT_SCORE = 2.5;
-
     private static final Knight whiteKing = new Knight(Color.WHITE);
     private static final Knight blackKing = new Knight(Color.BLACK);
 
@@ -36,10 +34,5 @@ public class Knight extends Piece {
     @Override
     public boolean isKnight() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return KNIGHT_SCORE;
     }
 }

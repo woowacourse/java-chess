@@ -9,8 +9,6 @@ import chess.domain.direction.Direction;
 
 public class Rook extends Piece {
 
-    private static final double ROOK_SCORE = 5.0;
-
     private static final Rook whiteRook = new Rook(Color.WHITE);
     private static final Rook blackRook = new Rook(Color.BLACK);
 
@@ -36,10 +34,5 @@ public class Rook extends Piece {
     @Override
     public boolean isRook() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return ROOK_SCORE;
     }
 }

@@ -13,8 +13,6 @@ import java.util.stream.Stream;
 
 public class Queen extends Piece {
 
-    private static final double QUEEN_SCORE = 9.0;
-
     private static final Queen whiteQueen = new Queen(Color.WHITE);
     private static final Queen blackQueen = new Queen(Color.BLACK);
 
@@ -41,10 +39,5 @@ public class Queen extends Piece {
     @Override
     public boolean isQueen() {
         return true;
-    }
-
-    @Override
-    public double getScore() {
-        return QUEEN_SCORE;
     }
 }

@@ -1,18 +1,13 @@
 package chess.domain.board;
 
-import static java.util.stream.Collectors.*;
-
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Predicate;
 
-import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 
@@ -111,50 +106,6 @@ public class Board {
     private void move(Position from, Position to, Piece piece) {
         this.pieces.remove(from);
         this.pieces.put(to, piece);
-    }
-
-    public ChessScore calculateScore() {
-        double whiteScore = 0;
-        double blackScore = 0;
-        for (int column = Position.MIN; column <= Position.MAX; column++) {
-            whiteScore += calculateColumnScore(column, (Piece::isWhite));
-            blackScore += calculateColumnScore(column, (piece -> !piece.isWhite()));
-        }
-        return new ChessScore(whiteScore, blackScore);
-    }
-
-    private double calculateColumnScore(int column, Predicate<Piece> colorCondition) {
-        Map<Boolean, List<Piece>> pawnOrNot = groupByPawn(column, colorCondition);
-
-        List<Piece> pawns = pawnOrNot.computeIfAbsent(true, key -> new ArrayList<>());
-        List<Piece> notPawn = pawnOrNot.computeIfAbsent(false, key -> new ArrayList<>());
-
-        double pawnSum = sumScoreOfPawn(pawns);
-        double notPawnSum = sumScores(notPawn);
-
-        return notPawnSum + pawnSum;
-    }
-
-    private Map<Boolean, List<Piece>> groupByPawn(int column, Predicate<Piece> colorCondition) {
-        return this.pieces.entrySet().stream()
-                .filter(entry -> entry.getKey().isSameColumn(column))
-                .map(Map.Entry::getValue)
-                .filter(colorCondition)
-                .collect(groupingBy(Piece::isPawn));
-    }
-
-    private double sumScoreOfPawn(List<Piece> pawns) {
-        int pawnSize = pawns.size();
-        if (pawnSize == CRITERIA_COUNT_OF_PAWN_SCORE) {
-            return sumScores(pawns);
-        }
-        return pawnSize * Piece.PAWN_LOW_SCORE;
-    }
-
-    private double sumScores(List<Piece> pieces) {
-        return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
     }
 
     public boolean isKingNotExist(Color color) {
