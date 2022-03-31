@@ -1,6 +1,7 @@
 package chess.controller;
 
 import static chess.domain.Command.MOVE;
+import static chess.domain.Command.START;
 import static chess.domain.Command.STATUS;
 import static chess.domain.Command.of;
 
@@ -28,14 +29,14 @@ public class ChessController {
     private void startGame() {
         Board board = new Board();
         OutputView.printChessBoard(board.getBoard());
-
         List<String> input = InputView.requestCommand();
         Command command = of(input.get(InputView.COMMAND_INDEX));
 
-        playChessGame(input, command, board, Team.WHITE);
+        playChessGame(input, command, board);
     }
 
-    private void playChessGame(List<String> input, Command command, Board board, Team team) {
+    private void playChessGame(List<String> input, Command command, Board board) {
+        Team team = Team.WHITE;
         while (!runByCommand(input, command, board, team)) {
             if (command == MOVE) {
                 team = Team.switchTeam(team);

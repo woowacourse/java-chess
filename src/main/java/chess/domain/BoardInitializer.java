@@ -33,22 +33,22 @@ public class BoardInitializer {
 
     private static Rank createPiecesExceptPawn(Team team, int row) {
         EnumMap<Column, Piece> pieces = new EnumMap<>(Column.class);
-        pieces.put(Column.A, new Rook(team, new Position(Column.A, Row.find(row))));
-        pieces.put(Column.B, new Knight(team, new Position(Column.B, Row.find(row))));
-        pieces.put(Column.C, new Bishop(team, new Position(Column.C, Row.find(row))));
-        pieces.put(Column.D, new Queen(team, new Position(Column.D, Row.find(row))));
-        pieces.put(Column.E, new King(team, new Position(Column.E, Row.find(row))));
-        pieces.put(Column.F, new Bishop(team, new Position(Column.F, Row.find(row))));
-        pieces.put(Column.G, new Knight(team, new Position(Column.G, Row.find(row))));
-        pieces.put(Column.H, new Rook(team, new Position(Column.H, Row.find(row))));
+        pieces.put(Column.A, new Rook(team, Position.from("a" + row)));
+        pieces.put(Column.B, new Knight(team, Position.from("b" + row)));
+        pieces.put(Column.C, new Bishop(team, Position.from("c" + row)));
+        pieces.put(Column.D, new Queen(team, Position.from("d" + row)));
+        pieces.put(Column.E, new King(team, Position.from("e" + row)));
+        pieces.put(Column.F, new Bishop(team, Position.from("f" + row)));
+        pieces.put(Column.G, new Knight(team, Position.from("g" + row)));
+        pieces.put(Column.H, new Rook(team, Position.from("h" + row)));
         return new Rank(pieces);
     }
 
     private static Rank createBlank(int row) {
-        return new Rank(Blank.from(row, Team.NONE));
+        return new Rank(Blank.of(row, Team.NONE));
     }
 
     private static Rank createPawn(Team team, int row) {
-        return new Rank(Pawn.from(row, team));
+        return new Rank(Pawn.of(row, team));
     }
 }

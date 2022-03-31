@@ -1,22 +1,33 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
+
+    public static final int COLUMN_INDEX = 0;
+    public static final int ROW_INDEX = 1;
+
+    public static final Map<String, Position> POSITION_CACHE = new HashMap<>();
+
     private final Column col;
     private final Row row;
 
-    public Position(Column col, Row row) {
+    private Position(Column col, Row row) {
         this.col = col;
         this.row = row;
     }
 
     public static Position from(String position) throws IllegalArgumentException {
-        Column col = Column.find(position.charAt(0));
-        Row row = Row.find(Character.getNumericValue(position.charAt(1)));
-        return new Position(col, row);
+        if (!POSITION_CACHE.containsKey(position)) {
+            Column col = Column.find(position.charAt(COLUMN_INDEX));
+            Row row = Row.find(Character.getNumericValue(position.charAt(ROW_INDEX)));
+            POSITION_CACHE.put(position, new Position(col, row));
+        }
+        return POSITION_CACHE.get(position);
     }
 
     public Column getCol() {
@@ -37,7 +48,7 @@ public class Position {
         char colValue = (char) (col.getValue() + direction.getXDegree());
         int rowValue = row.getValue() + direction.getYDegree();
         while (!(colValue == destination.getCol().getValue() && rowValue == destination.getRow().getValue())) {
-            positions.add(new Position(Column.find(colValue), Row.find(rowValue)));
+            positions.add(Position.from(colValue + String.valueOf(rowValue)));
             colValue += direction.getXDegree();
             rowValue += direction.getYDegree();
         }

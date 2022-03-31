@@ -22,10 +22,10 @@ public class Pawn extends Piece {
         return PAWN_SCORE;
     }
 
-    public static EnumMap<Column, Piece> from(int row, Team team) {
+    public static EnumMap<Column, Piece> of(int row, Team team) {
         EnumMap<Column, Piece> pawns = new EnumMap<>(Column.class);
         for (Column column : Column.values()) {
-            pawns.put(column, new Pawn(team, new Position(column, Row.find(row))));
+            pawns.put(column, new Pawn(team, Position.from(column.getValue() + String.valueOf(row))));
         }
         return pawns;
     }

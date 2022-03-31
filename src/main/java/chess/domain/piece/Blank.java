@@ -18,10 +18,10 @@ public class Blank extends Piece {
         return 0;
     }
 
-    public static EnumMap<Column, Piece> from(int row, Team team) {
+    public static EnumMap<Column, Piece> of(int row, Team team) {
         EnumMap<Column, Piece> blanks = new EnumMap<>(Column.class);
         for (Column column : Column.values()) {
-            blanks.put(column, new Blank(team, new Position(column, Row.find(row))));
+            blanks.put(column, new Blank(team, Position.from(column.getValue() + String.valueOf(row))));
         }
         return blanks;
     }
