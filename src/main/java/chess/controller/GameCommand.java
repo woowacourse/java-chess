@@ -1,17 +1,21 @@
 package chess.controller;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public enum GameCommand {
-    START("start"),
-    END("end"),
-    MOVE("move"),
-    STATUS("status");
+    START("start", ChessController::start),
+    END("end", ChessController::end),
+    MOVE("move", ChessController::move),
+    STATUS("status", ChessController::status);
 
     private final String commandLine;
+    private final BiConsumer<ChessController, GameCommandRequest> requestBiConsumer;
 
-    GameCommand(final String commandLine) {
+    GameCommand(final String commandLine, final BiConsumer<ChessController, GameCommandRequest> requestBiConsumer) {
         this.commandLine = commandLine;
+        this.requestBiConsumer = requestBiConsumer;
     }
 
     public static GameCommand findCommand(final String commandLine) {
@@ -35,5 +39,9 @@ public enum GameCommand {
 
     public boolean isEnd() {
         return this.equals(END);
+    }
+
+    public void executeRequest(ChessController controller, GameCommandRequest request) {
+        this.requestBiConsumer.accept(controller, request);
     }
 }

@@ -14,9 +14,6 @@ public final class ChessController {
     private static final int FROM_INDEX = 0;
     private static final int TO_INDEX = 1;
     private final ChessService service;
-    private final Map<GameCommand, Consumer<GameCommandRequest>> requestMapper
-            = Map.of(GameCommand.START, this::start, GameCommand.MOVE, this::move,
-            GameCommand.END, this::end, GameCommand.STATUS, this::status);
 
     public ChessController(ChessService service) {
         this.service = service;
@@ -48,26 +45,26 @@ public final class ChessController {
         while (gameState.isRunning(service)) {
             GameCommandRequest request = GameCommandRequest.of(InputView.inputStartOrEndGame());
             gameState = gameState.execute(request.getGameCommand());
-            requestMapper.get(request.getGameCommand()).accept(request);
+            request.getGameCommand().executeRequest(this, request);
         }
     }
 
-    private void start(GameCommandRequest request) {
+    public void start(GameCommandRequest request) {
         OutputView.startGame();
         OutputView.printBoard(service.initGame());
     }
 
-    private void move(GameCommandRequest request) {
+    public void move(GameCommandRequest request) {
         List<String> body = request.getBody();
         OutputView.printBoard(service.move(body.get(FROM_INDEX), body.get(TO_INDEX)));
     }
 
-    private void status(GameCommandRequest request) {
+    public void status(GameCommandRequest request) {
         OutputView.printStatus(service.getScores());
         this.end(request);
     }
 
-    private void end(GameCommandRequest request) {
+    public void end(GameCommandRequest request) {
         OutputView.printEndMessage();
     }
 }
