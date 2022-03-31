@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Team;
+import chess.domain.Winner;
 import chess.domain.piece.*;
 import chess.domain.state.turn.State;
 import chess.domain.state.turn.WhiteTurn;
@@ -93,7 +94,10 @@ public class Board {
 
     public double calculateScore(Team team) {
         ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
-        return calculator.calculateScore(team);
+        if (team.isBlack()) {
+            return calculator.calculateBlackScore();
+        }
+        return calculator.calculateWhiteScore();
     }
 
     private void initialPlacePiece() {
@@ -133,10 +137,15 @@ public class Board {
         return new HashMap<>(board);
     }
 
-    public Team getWinner() {
+    public Team getFinalWinner() {
         if (state.isFinished()) {
             return state.getTeam();
         }
         throw new IllegalArgumentException(NOT_FINISHED_ERROR);
+    }
+
+    public Winner getCurrentWinner() {
+        ScoreCalculator calculator = new ScoreCalculator(new HashMap<>(board));
+        return calculator.calculateWinner();
     }
 }

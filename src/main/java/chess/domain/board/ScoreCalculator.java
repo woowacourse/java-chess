@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Team;
+import chess.domain.Winner;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
@@ -15,7 +16,21 @@ public class ScoreCalculator {
         this.board = board;
     }
 
-    public double calculateScore(Team team) {
+    public double calculateBlackScore() {
+        return calculateScore(Team.BLACK);
+    }
+
+    public double calculateWhiteScore() {
+        return calculateScore(Team.WHITE);
+    }
+
+    public Winner calculateWinner() {
+        double blackScore = calculateBlackScore();
+        double whiteScore = calculateWhiteScore();
+        return Winner.find(blackScore, whiteScore);
+    }
+
+    private double calculateScore(Team team) {
         double score = 0;
         for (int column = 1; column <= 8; column++) {
             List<Piece> columnPieces = findColumnPieces(team, column);

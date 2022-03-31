@@ -1,18 +1,18 @@
 package chess.domain.result;
 
 import chess.domain.Team;
-import chess.domain.board.Board;
-import chess.domain.board.ScoreCalculator;
+import chess.domain.Winner;
 
 public class StatusResult {
 
     private final double blackScore;
     private final double whiteScore;
+    private final Team winner;
 
-    public StatusResult(Board board) {
-        ScoreCalculator calculator = new ScoreCalculator(board.getBoard());
-        this.blackScore = calculator.calculateScore(Team.BLACK);
-        this.whiteScore = calculator.calculateScore(Team.WHITE);
+    public StatusResult(double blackScore, double whiteScore, Winner winner) {
+        this.blackScore = blackScore;
+        this.whiteScore = whiteScore;
+        this.winner = winner.getTeam();
     }
 
     public double getBlackScore() {
@@ -24,12 +24,6 @@ public class StatusResult {
     }
 
     public Team getWinner() {
-        if (blackScore > whiteScore) {
-            return Team.BLACK;
-        }
-        if (blackScore == whiteScore) {
-            return Team.NEUTRALITY;
-        }
-        return Team.WHITE;
+        return winner;
     }
 }

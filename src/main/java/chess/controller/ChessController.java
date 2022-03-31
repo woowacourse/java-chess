@@ -29,7 +29,7 @@ public class ChessController {
 
     public Team end() {
         state = state.execute(Command.END);
-        Team winner = board.getWinner();
+        Team winner = board.getFinalWinner();
         return winner;
     }
 
@@ -42,7 +42,11 @@ public class ChessController {
     }
 
     public StatusResult processStatus() {
-        StatusResult result = new StatusResult(board);
+        StatusResult result = new StatusResult(
+                board.calculateScore(Team.BLACK),
+                board.calculateScore(Team.WHITE),
+                board.getCurrentWinner()
+        );
         state = state.execute(Command.STATUS);
         return result;
     }
