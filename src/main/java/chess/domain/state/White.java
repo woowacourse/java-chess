@@ -23,7 +23,7 @@ public class White extends Running {
         LocationDiff locationDiff = source.computeDiff(target);
 
         if (sourcePiece.isPawn()) {
-            checkPawnMovable(targetPiece, locationDiff);
+            sourcePiece.checkPawnMovable(locationDiff.computeDirection(), targetPiece);
         }
 
         getBoard().move(source, target);
@@ -43,15 +43,6 @@ public class White extends Running {
         checkDistance(sourcePiece, locationDiff);
         checkRoute(source, locationDiff);
         checkTarget(targetPiece);
-    }
-
-    private void checkPawnMovable(Piece targetPiece, LocationDiff locationDiff) {
-        if (!Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isBlack()) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
-        }
-        if (Direction.isForward(locationDiff.computeDirection()) && !targetPiece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
-        }
     }
 
     @Override

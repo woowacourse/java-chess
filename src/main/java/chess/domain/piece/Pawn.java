@@ -42,4 +42,14 @@ public class Pawn extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public void checkPawnMovable(Direction direction, Piece targetPiece) {
+        if (direction.isForward() && !targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 앞에 체스말이 있으면 직진할 수 없습니다.");
+        }
+        if (!direction.isForward() && (targetPiece.isSameTeam(team) || targetPiece.isEmpty())) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대 체스말이 있을때만 움직일 수 있습니다.");
+        }
+    }
 }

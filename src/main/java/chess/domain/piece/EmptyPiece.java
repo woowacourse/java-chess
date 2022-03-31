@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
 
-public class EmptyPiece extends Piece{
+public class EmptyPiece extends Piece {
     private static final double SCORE = 0;
 
     public EmptyPiece() {
@@ -33,5 +33,10 @@ public class EmptyPiece extends Piece{
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public void checkPawnMovable(Direction computeDirection, Piece targetPiece) {
+        throw new IllegalArgumentException("[ERROR] 폰만 체크할 수 있습니다.");
     }
 }

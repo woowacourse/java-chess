@@ -52,4 +52,5 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract void checkPawnMovable(Direction computeDirection, Piece targetPiece);
 }

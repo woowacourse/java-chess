@@ -39,8 +39,8 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 체스 기물이 움직일 수 없는 방향입니다."));
     }
 
-    public static boolean isForward(Direction direction) {
-        return List.of(D, U).contains(direction);
+    public boolean isForward() {
+        return List.of(D, U).contains(this);
     }
 
     private boolean equals(int x, int y) {
