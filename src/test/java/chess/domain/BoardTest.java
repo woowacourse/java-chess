@@ -28,7 +28,7 @@ class BoardTest {
 	@DisplayName("체스판 좌표로 체스말을 찾는다.")
 	void findPiece(int row, int column) {
 		Board board = new Board();
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		assertThat(piece.get()).isInstanceOf(King.class);
 	}
 
@@ -37,7 +37,7 @@ class BoardTest {
 	@DisplayName("체스판 좌표에 체스말이 없으면 예외가 발생한다.")
 	void findSymbolAtException(int row, int column) {
 		Board board = new Board();
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		assertThat(piece.isEmpty()).isTrue();
 	}
 
@@ -50,7 +50,7 @@ class BoardTest {
 
 		board.movePiece(new Position(2, 2), new Position(row, column));
 
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		assertThat(piece.isPresent()).isTrue();
 	}
 
@@ -98,7 +98,7 @@ class BoardTest {
 
 		board.movePiece(new Position(7, 2), new Position(row, column));
 
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		assertThat(piece.isPresent()).isTrue();
 	}
 
@@ -131,7 +131,7 @@ class BoardTest {
 			new Position(2, 2),
 			new Position(row, column));
 
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		Piece findPiece = piece.get();
 
 		assertThat(findPiece.isSameColor(Pawn.createWhite())).isTrue();
@@ -150,7 +150,7 @@ class BoardTest {
 			new Position(7, 2),
 			new Position(row, column));
 
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		Piece findPiece = piece.get();
 
 		assertThat(findPiece.isSameColor(Pawn.createBlack())).isTrue();
@@ -220,7 +220,7 @@ class BoardTest {
 			new Position(4, 4),
 			new Position(row, column));
 
-		Optional<Piece> piece = board.findPiece(new Position(row, column));
+		Optional<Piece> piece = board.findPieceByPosition(new Position(row, column));
 		Piece findPiece = piece.get();
 
 		assertThat(findPiece).isInstanceOf(Bishop.class);
@@ -255,7 +255,7 @@ class BoardTest {
 			new Position(4, 4),
 			new Position(row, column));
 
-		Piece piece = board.findPiece(new Position(row, column)).get();
+		Piece piece = board.findPieceByPosition(new Position(row, column)).get();
 		assertThat(piece).isInstanceOf(Knight.class);
 	}
 
@@ -289,7 +289,7 @@ class BoardTest {
 		board.movePiece(new Position(4, 4),
 			new Position(row, column));
 
-		Piece piece = board.findPiece(new Position(row, column)).get();
+		Piece piece = board.findPieceByPosition(new Position(row, column)).get();
 		assertThat(piece).isInstanceOf(Rook.class);
 	}
 
@@ -346,7 +346,7 @@ class BoardTest {
 			new Position(4, 4),
 			new Position(row, column));
 
-		Piece piece = board.findPiece(new Position(row, column)).get();
+		Piece piece = board.findPieceByPosition(new Position(row, column)).get();
 		assertThat(piece).isInstanceOf(Queen.class);
 	}
 
@@ -398,7 +398,7 @@ class BoardTest {
 		board.movePiece(
 			new Position(4, 4),
 			new Position(row, column));
-		Piece piece = board.findPiece(new Position(row, column)).get();
+		Piece piece = board.findPieceByPosition(new Position(row, column)).get();
 		assertThat(piece).isInstanceOf(King.class);
 	}
 
