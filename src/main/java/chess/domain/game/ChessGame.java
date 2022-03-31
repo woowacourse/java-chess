@@ -4,7 +4,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.piece.attribute.Color;
 import chess.domain.piece.Article;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -12,6 +11,7 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.attribute.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +27,7 @@ public class ChessGame {
     }
 
     public void play(Position from, Position to) {
-        if (!isThatTurn(from)) {
-            throw new IllegalArgumentException("현재 진영에 속해있지 않는 위치입니다.");
-        }
+        validateTurn(chessBoard.findByPiece(from), turn);
 
         chessBoard.movePiece(from, to);
         if (chessBoard.isKingAlive()) {
@@ -38,8 +36,10 @@ public class ChessGame {
         turn = turn.oppositeColor();
     }
 
-    private boolean isThatTurn(Position position) {
-        return chessBoard.isSameColor(position, turn);
+    private void validateTurn(Article article, Color turn) {
+        if (article.getColor() != turn) {
+            throw new IllegalArgumentException("해당 기물의 차례가 아닙니다.");
+        }
     }
 
     public Map<Color, Double> getStatus() {
