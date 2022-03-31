@@ -42,11 +42,15 @@ public abstract class Playing implements GameState {
         if (source.isSameTeam(destination)) {
             throw new IllegalArgumentException("목적지에 같은 팀 말이 있습니다.");
         }
-        if (source.isPawn() && isDiagonal(source.getPosition(), destination.getPosition())){
+        if (isPawnAttemptKill(source, destination)){
             validatePawnAttemptKill(destination);
             return;
         }
         validateExistOtherPiece(positions);
+    }
+
+    private boolean isPawnAttemptKill(Piece source, Piece destination) {
+        return source.isPawn() && isDiagonal(source.getPosition(), destination.getPosition());
     }
 
     private boolean isDiagonal(Position source, Position destination) {
