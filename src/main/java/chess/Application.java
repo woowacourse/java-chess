@@ -41,6 +41,9 @@ public class Application {
             if (command == Command.STATUS) {
                 showStatus(game);
             }
+            if (command == Command.END) {
+                return;
+            }
         }
     }
 
