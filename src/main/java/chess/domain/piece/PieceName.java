@@ -10,13 +10,13 @@ public enum PieceName {
     NULL_PIECE("."),
     ;
 
-    private final String value;
+    private final String character;
 
     PieceName(final String value) {
-        this.value = value;
+        this.character = value;
     }
 
-    public String getValue() {
-        return value;
+    public String getCharacter() {
+        return character;
     }
 }

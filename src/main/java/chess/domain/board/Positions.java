@@ -12,10 +12,10 @@ public class Positions {
     private static final Pattern POSITION_PATTERN = Pattern.compile("[a-h][1-8]");
     private static final int VALID_SPLIT_COMMAND_SIZE = 3;
 
-    private final List<Position> value;
+    private final List<Position> position;
 
-    private Positions(final List<Position> value) {
-        this.value = value;
+    private Positions(final List<Position> position) {
+        this.position = position;
     }
 
     public static Positions from(final String moveCommand) {
@@ -36,6 +36,6 @@ public class Positions {
     }
 
     public Position get(final int index) {
-        return value.get(index);
+        return position.get(index);
     }
 }

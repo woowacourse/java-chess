@@ -15,10 +15,10 @@ public enum Row {
     EIGHT(7),
     ;
 
-    private final int value;
+    private final int number;
 
-    Row(int value) {
-        this.value = value;
+    Row(int number) {
+        this.number = number;
     }
 
     public static Row from(String rawRow) {
@@ -27,20 +27,20 @@ public enum Row {
 
     private static Row from(int value) {
         return Arrays.stream(values())
-            .filter(row -> row.value == value)
+            .filter(row -> row.number == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
     public Row flip() {
         return Arrays.stream(Row.values())
-            .filter(it -> it.value == (7 - value))
+            .filter(it -> it.number == (7 - number))
             .findFirst()
             .orElseThrow();
     }
 
     public int directedDistance(Row otherRow) {
-        return value - otherRow.value;
+        return number - otherRow.number;
     }
 
     public int distance(Row otherRow) {
@@ -48,7 +48,7 @@ public enum Row {
     }
 
     public List<Row> pathTo(Row otherRow) {
-        if (value < otherRow.value) {
+        if (number < otherRow.number) {
             return rightPathTo(otherRow);
         }
         return leftPathTo(otherRow);
@@ -56,7 +56,7 @@ public enum Row {
 
     private List<Row> rightPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = value + 1; i < otherRow.value; i++) {
+        for (int i = number + 1; i < otherRow.number; i++) {
             path.add(Row.from(i));
         }
         return path;
@@ -64,7 +64,7 @@ public enum Row {
 
     private List<Row> leftPathTo(Row otherRow) {
         List<Row> path = new ArrayList<>();
-        for (int i = value - 1; i > otherRow.value; i--) {
+        for (int i = number - 1; i > otherRow.number; i--) {
             path.add(Row.from(i));
         }
         return path;

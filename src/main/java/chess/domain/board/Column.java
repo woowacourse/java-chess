@@ -15,11 +15,11 @@ public enum Column {
     H(7, "h"),
     ;
 
-    private final int value;
+    private final int number;
     private final String name;
 
-    Column(final int value, String name) {
-        this.value = value;
+    Column(final int number, String name) {
+        this.number = number;
         this.name = name;
     }
 
@@ -32,24 +32,24 @@ public enum Column {
 
     private static Column from(int value) {
         return Arrays.stream(values())
-            .filter(column -> column.value == value)
+            .filter(column -> column.number == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
     public Column flip() {
         return Arrays.stream(Column.values())
-            .filter(it -> it.value == (7 - value))
+            .filter(it -> it.number == (7 - number))
             .findFirst()
             .orElseThrow();
     }
 
     public int distance(Column otherColumn) {
-        return Math.abs(value - otherColumn.value);
+        return Math.abs(number - otherColumn.number);
     }
 
     public List<Column> pathTo(Column otherColumn) {
-        if (value < otherColumn.value) {
+        if (number < otherColumn.number) {
             return upPathTo(otherColumn);
         }
         return downPathTo(otherColumn);
@@ -57,7 +57,7 @@ public enum Column {
 
     private List<Column> upPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = value + 1; i < otherColumn.value; i++) {
+        for (int i = number + 1; i < otherColumn.number; i++) {
             path.add(Column.from(i));
         }
         return path;
@@ -65,7 +65,7 @@ public enum Column {
 
     private List<Column> downPathTo(Column otherColumn) {
         List<Column> path = new ArrayList<>();
-        for (int i = value - 1; i > otherColumn.value; i--) {
+        for (int i = number - 1; i > otherColumn.number; i--) {
             path.add(Column.from(i));
         }
         return path;

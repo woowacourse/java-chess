@@ -15,10 +15,10 @@ public class BoardStatusCalculator {
     private static final double SCORE_WHEN_PAWN_MORE_THAN_TWO_IN_COLUMN = 0.5;
     private static final int CHANGE_PAWN_SCORE_CRITERIA = 2;
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> board;
 
     public BoardStatusCalculator(Board board) {
-        value = board.getBoard();
+        this.board = board.getBoard();
     }
 
     public double calculate(final Predicate<Piece> isBlackPredicate) {
@@ -30,7 +30,7 @@ public class BoardStatusCalculator {
 
     private List<Piece> collectPiecesIn(Column column, final Predicate<Piece> isBlackPredicate) {
         return Arrays.stream(Row.values())
-            .map(row -> value.get(Position.of(column, row)))
+            .map(row -> board.get(Position.of(column, row)))
             .filter(piece -> !piece.isNullPiece())
             .filter(isBlackPredicate)
             .collect(Collectors.toList());

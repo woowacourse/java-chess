@@ -37,7 +37,7 @@ public abstract class Piece {
     }
 
     public final String getPieceNameCharacter() {
-        return pieceName.getValue();
+        return pieceName.getCharacter();
     }
 
     public abstract double getScore();
