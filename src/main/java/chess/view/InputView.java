@@ -33,6 +33,11 @@ public class InputView {
         }
     }
 
+    private static List<String> getCommands() {
+        String answer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+        return List.of(answer.split(SPLIT_REGEX));
+    }
+
     private static Map.Entry<Command, List<Square>> convertInputToCommand(List<String> commands) {
         Command command = Command.find(commands.get(COMMAND_INDEX));
         if (commands.size() == COMMAND_NOT_MOVE_FORMAT_SIZE && command != Command.MOVE) {
@@ -40,11 +45,6 @@ public class InputView {
         }
         validateMoveCommandSize(commands);
         return getMoveCommand(commands, command);
-    }
-
-    private static List<String> getCommands() {
-        String answer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-        return List.of(answer.split(SPLIT_REGEX));
     }
 
     private static void validateMoveCommandSize(List<String> commands) {
