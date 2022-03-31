@@ -8,24 +8,30 @@ import chess.domain.piece.Piece;
 
 public class Start implements State {
 
+    private final Board board;
+
+    public Start(final Board board) {
+        this.board = board;
+    }
+
 	@Override
 	public State start() {
-		return new WhiteTurn(Board.create());
+		return new WhiteTurn(board);
 	}
 
 	@Override
 	public State end() {
-		throw new IllegalStateException("");
+		return new End(board);
 	}
 
 	@Override
 	public State move(Coordinate from, Coordinate to) {
-		throw new IllegalStateException("Start 상태에선 이동할 수 없습니다.");
+		throw new IllegalStateException("초기 상태에선 이동할 수 없습니다. 게임을 시작하거나 종료해 주세요.");
 	}
 
 	@Override
 	public Map<Coordinate, Piece> getValue() {
-		return null;
+		return board.getValue();
 	}
 
 	@Override

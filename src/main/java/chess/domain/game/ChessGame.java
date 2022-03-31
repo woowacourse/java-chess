@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import java.util.Map;
 
+import chess.domain.board.Board;
 import chess.domain.board.coordinate.Coordinate;
 import chess.domain.piece.Piece;
 
@@ -10,7 +11,7 @@ public class ChessGame {
 	private State state;
 
 	public ChessGame() {
-		state = new Start();
+		state = new Start(Board.create());
 	}
 
 	public void start() {

@@ -26,7 +26,7 @@ public class ChessController {
 			Function function = Function.from(commands.get(0));
 
 			doFunction(chessGame, function, commands);
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException | IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 	}
