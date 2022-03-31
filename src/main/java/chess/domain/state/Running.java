@@ -35,6 +35,7 @@ public abstract class Running implements State {
     public void checkMovable(Location source, Location target) {
         LocationDiff locationDiff = source.computeDiff(target);
         Piece sourcePiece = board.getPiece(source);
+
         checkDirection(sourcePiece, locationDiff.computeDirection());
         checkDistance(sourcePiece, locationDiff);
         checkRoute(source, locationDiff);

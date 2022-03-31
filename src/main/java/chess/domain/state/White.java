@@ -17,8 +17,8 @@ public class White extends Running {
         Piece sourcePiece = getBoard().getPiece(source);
         Piece targetPiece = getBoard().getPiece(target);
 
-        super.checkMovable(source, target);
         checkSourceColor(sourcePiece);
+        super.checkMovable(source, target);
         checkTarget(targetPiece);
 
         getBoard().move(source, target);
