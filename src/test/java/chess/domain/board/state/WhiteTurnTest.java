@@ -7,7 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Position;
 import chess.domain.state.BlackTurn;
 import chess.domain.state.BoardInitializer;
-import chess.domain.state.BoardState;
+import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +28,8 @@ class WhiteTurnTest {
     @DisplayName("백팀 차례 이후에 흑팀 차례가 된다.")
     @Test
     void isBlackTurnAfterWhiteTurn() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
-        BoardState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+        GameState whiteTurn = BoardInitializer.initBoard();
+        GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
 
         assertThat(blackTurn).isInstanceOf(BlackTurn.class);
     }
@@ -37,7 +37,7 @@ class WhiteTurnTest {
     @DisplayName("백팀 차례에 흑팀 말을 움직이면 예외가 발생한다.")
     @Test
     void moveBlackPieceInWhiteTurn() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
+        GameState whiteTurn = BoardInitializer.initBoard();
 
         assertThatThrownBy(() -> whiteTurn.move(new Position("b7"), new Position("b5")))
                 .isInstanceOf(IllegalArgumentException.class)

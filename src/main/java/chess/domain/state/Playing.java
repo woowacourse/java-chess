@@ -17,7 +17,7 @@ public abstract class Playing extends GameStarted {
         super(ranks);
     }
 
-    BoardState movePiece(Position start, Position target) {
+    GameState movePiece(Position start, Position target) {
         Piece selected = getPiece(start);
 
         if (selected.isKnight()) {
@@ -26,11 +26,11 @@ public abstract class Playing extends GameStarted {
         return moveStraight(start, target);
     }
 
-    private BoardState jump(Position start, Position target) {
+    private GameState jump(Position start, Position target) {
         return executeMove(start, target);
     }
 
-    private BoardState executeMove(Position start, Position target) {
+    private GameState executeMove(Position start, Position target) {
         Piece selected = getPiece(start);
         Piece targetPiece = getPiece(target);
 
@@ -41,7 +41,7 @@ public abstract class Playing extends GameStarted {
         throw new IllegalArgumentException(INVALID_MOVEMENT_EXCEPTION_MESSAGE);
     }
 
-    private BoardState moveStraight(Position start, Position target) {
+    private GameState moveStraight(Position start, Position target) {
         checkPath(start, target, Direction.findDirection(start, target));
         return executeMove(start, target);
     }
@@ -65,7 +65,7 @@ public abstract class Playing extends GameStarted {
         }
     }
 
-    private BoardState updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
+    private GameState updateBoard(Position target, Piece selected, Position start, Piece targetPiece) {
         updatePiece(target, selected);
         updatePiece(start, new Blank(start));
         selected.updatePosition(targetPiece.getPosition());
@@ -102,7 +102,7 @@ public abstract class Playing extends GameStarted {
     }
 
     @Override
-    public BoardState terminate() {
+    public GameState terminate() {
         return new Terminate(ranks);
     }
 

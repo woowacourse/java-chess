@@ -7,7 +7,7 @@ import chess.domain.board.Rank;
 import chess.domain.piece.Position;
 import chess.domain.state.BlackTurn;
 import chess.domain.state.BoardInitializer;
-import chess.domain.state.BoardState;
+import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +28,9 @@ class BlackTurnTest {
     @DisplayName("흑팀 차례 이후에 백팀 차례가 된다.")
     @Test
     void isBlackTurnAfterWhiteTurn() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
-        BoardState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
-        BoardState whiteTurn2 = blackTurn.move(new Position("b7"), new Position("b6"));
+        GameState whiteTurn = BoardInitializer.initBoard();
+        GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+        GameState whiteTurn2 = blackTurn.move(new Position("b7"), new Position("b6"));
 
         assertThat(whiteTurn2).isInstanceOf(WhiteTurn.class);
     }
@@ -38,8 +38,8 @@ class BlackTurnTest {
     @DisplayName("흑팀 차례에 백팀 말을 움직이면 예외가 발생한다.")
     @Test
     void moveBlackPieceInWhiteTurn() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
-        BoardState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
+        GameState whiteTurn = BoardInitializer.initBoard();
+        GameState blackTurn = whiteTurn.move(new Position("b2"), new Position("b4"));
 
         assertThatThrownBy(() -> blackTurn.move(new Position("c2"), new Position("c4")))
                 .isInstanceOf(IllegalArgumentException.class)

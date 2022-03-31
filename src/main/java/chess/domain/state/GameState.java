@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.board.Rank;
 import chess.domain.piece.Position;
 
-public interface BoardState {
+public interface GameState {
 
     boolean isEnd();
 
@@ -11,11 +11,11 @@ public interface BoardState {
 
     Winner findWinner();
 
-    BoardState move(Position start, Position target);
+    GameState move(Position start, Position target);
 
     Rank getRank(int rankLine);
 
-    BoardState terminate();
+    GameState terminate();
 
     double calculateBlackScore();
 

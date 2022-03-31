@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.state.BoardState;
+import chess.domain.state.GameState;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -17,7 +17,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printBoard(BoardState boardState) {
+    public static void printBoard(GameState boardState) {
         System.out.println();
         System.out.printf("   [ %s팀의 차례입니다 ]%n", boardState.findTurn());
         System.out.println("      Black Side");
@@ -36,7 +36,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResult(BoardState boardState) {
+    public static void printResult(GameState boardState) {
         System.out.printf("승자 : %s%n", boardState.findWinner().getName());
         System.out.printf("흑팀 점수 : %.1f%n", boardState.calculateBlackScore());
         System.out.printf("백팀 점수 : %.1f%n", boardState.calculateWhiteScore());

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class BoardInitializer {
 
-    public static BoardState initBoard() {
+    public static GameState initBoard() {
         Map<Integer, Rank> ranks = new HashMap<>();
         initWhitePieces(ranks);
         initWhitePawns(ranks);

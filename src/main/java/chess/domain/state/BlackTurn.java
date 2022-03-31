@@ -17,7 +17,7 @@ public final class BlackTurn extends Playing {
     }
 
     @Override
-    public BoardState move(Position start, Position target) {
+    public GameState move(Position start, Position target) {
         Piece selected = getPiece(start);
 
         if (!selected.isBlack()) {

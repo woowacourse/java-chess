@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Piece;
 import chess.domain.state.BoardInitializer;
-import chess.domain.state.BoardState;
+import chess.domain.state.GameState;
 import chess.domain.state.WhiteTurn;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ class BoardInitializerTest {
     @DisplayName("체스판 초기화 시 모든 기물이 제자리에 생성되었는지 확인")
     @Test
     void initializeBoard() {
-        BoardState boardState = BoardInitializer.initBoard();
+        GameState boardState = BoardInitializer.initBoard();
 
         List<List<String>> signatures = List.of(
                 List.of("R", "N", "B", "Q", "K", "B", "N", "R"),
@@ -40,7 +40,7 @@ class BoardInitializerTest {
     @DisplayName("체스 게임은 백팀 차례로 시작한다.")
     @Test
     void isWhiteTurnAfterInitialize() {
-        BoardState whiteTurn = BoardInitializer.initBoard();
+        GameState whiteTurn = BoardInitializer.initBoard();
 
         assertThat(whiteTurn).isInstanceOf(WhiteTurn.class);
     }

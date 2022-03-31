@@ -3,7 +3,7 @@ package chess.domain.state;
 import chess.domain.board.Rank;
 import java.util.Map;
 
-public abstract class GameStarted implements BoardState {
+public abstract class GameStarted implements GameState {
 
     protected final Map<Integer, Rank> ranks;
 
