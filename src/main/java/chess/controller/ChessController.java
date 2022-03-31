@@ -11,18 +11,10 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public ChessController(InputView inputView, OutputView outputVIew) {
-        this.inputView = inputView;
-        this.outputView = outputVIew;
-    }
-
     public void run() {
-        outputView.printIntroduction();
+        OutputView.printIntroduction();
         playGame();
-        outputView.printEnd();
+        OutputView.printEnd();
     }
 
     private void playGame() {
@@ -34,11 +26,11 @@ public class ChessController {
 
     private GameState tryExecute(GameState gameState) {
         try {
-            Request request = Request.of(inputView.inputCommand());
+            Request request = Request.of(InputView.inputCommand());
             Command command = Command.find(request.getCommand());
             return runGameByCommand(gameState, request, command);
         } catch (RuntimeException e) {
-            outputView.printException(e);
+            OutputView.printException(e);
             return tryExecute(gameState);
         }
     }
@@ -46,7 +38,7 @@ public class ChessController {
     private GameState runGameByCommand(GameState gameState, Request request, Command command) {
         if (command.isType(Command.START)) {
             GameState state = gameState.start();
-            outputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
+            OutputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
             return state;
         }
         if (command.isType(Command.FINISH)) {
@@ -54,12 +46,12 @@ public class ChessController {
         }
         if (command.isType(Command.MOVE)) {
             GameState state = gameState.move(request.getArguments());
-            outputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
+            OutputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
             return state;
         }
         if (command.isType(Command.STATUS)) {
             GameState state = gameState.status();
-            outputView.printStatus((ScoreResponse) state.getResponse());
+            OutputView.printStatus((ScoreResponse) state.getResponse());
             return state;
         }
         return null;

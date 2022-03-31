@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void printIntroduction() {
+    public static void printIntroduction() {
         System.out.println("> 체스 게임을 시작합니다." + System.lineSeparator() +
                 "> 게임 시작 : start" + System.lineSeparator() +
                 "> 게임 종료 : end" + System.lineSeparator() +
@@ -19,22 +19,22 @@ public class OutputView {
                 "> 중간 점수 : status");
     }
 
-    public void printException(RuntimeException e) {
+    public static void printException(RuntimeException e) {
         System.out.println(e.getMessage());
     }
 
-    public void printEnd() {
+    public static void printEnd() {
         System.out.println("게임이 종료되었습니다.");
     }
 
-    public void printBoardAndTurn(BoardAndTurnInfo response) {
+    public static void printBoardAndTurn(BoardAndTurnInfo response) {
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
             printBoardAndTurn(response.getBoard(), i);
         }
         System.out.println("현재 턴 :" + response.getTurnColor());
     }
 
-    private void printBoardAndTurn(Map<Point, Piece> board, int i) {
+    private static void printBoardAndTurn(Map<Point, Piece> board, int i) {
         for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
             Point point = Point.of(j, i);
             Piece piece = board.get(point);
@@ -43,7 +43,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printStatus(ScoreResponse response) {
+    public static void printStatus(ScoreResponse response) {
         for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
             printBoardAndTurn(response.getBoard(), i);
         }
@@ -52,7 +52,7 @@ public class OutputView {
         printPresentWinner(response.getWhiteScore(), response.getBlackScore());
     }
 
-    private void printPresentWinner(double whiteScore, double blackScore) {
+    private static void printPresentWinner(double whiteScore, double blackScore) {
         if (whiteScore > blackScore) {
             System.out.println("흰 진영이 이기고 있습니다.");
             return;
