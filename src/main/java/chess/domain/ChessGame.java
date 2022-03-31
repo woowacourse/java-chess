@@ -2,10 +2,11 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.gamecommand.GameCommand;
+import chess.domain.board.Positions;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessGame {
 
@@ -14,6 +15,43 @@ public class ChessGame {
 
     public ChessGame() {
         this.state = new Ready();
+    }
+
+    public void run() {
+        while (!isEnd()) {
+            final String command = InputView.inputCommand();
+            final GameCommand gameCommand = GameCommand.findByInput(command);
+
+            //gameCommand.execute(command);
+            if (gameCommand == GameCommand.START) {
+                start();
+                OutputView.printBoard(board().getValue());
+            }
+            if (gameCommand == GameCommand.MOVE) {
+                final Positions movePositions = Positions.from(command);
+                move(movePositions.get(0), movePositions.get(1));
+
+                OutputView.printBoard(board().getValue());
+                if (isNotRunning()) {
+                    OutputView.printFinishMessage();
+                    OutputView.printStatus(statusOfWhite(), statusOfBlack());
+                    OutputView.printResultMessage(getResultMessage());
+                }
+            }
+            if (gameCommand == GameCommand.END) {
+                OutputView.printFinishMessage();
+                if (isNotRunning()) {
+                    turnOff();
+                    return;
+                }
+                end();
+                OutputView.printStatus(statusOfWhite(), statusOfBlack());
+                OutputView.printResultMessage(getResultMessage());
+            }
+            if (gameCommand == GameCommand.STATUS) {
+                OutputView.printStatus(statusOfWhite(), statusOfBlack());
+            }
+        }
     }
 
     public void start() {
@@ -44,7 +82,7 @@ public class ChessGame {
         return this.state.getBoard();
     }
 
-    public void off() {
+    public void turnOff() {
         this.isEnd = true;
     }
 
@@ -53,14 +91,6 @@ public class ChessGame {
     }
 
     public String getResultMessage() {
-        return Result.from(this.state.getResult()).getMessage();
-    }
-
-    public void run() {
-        while (!isEnd()) {
-            final String command = InputView.inputCommand();
-            final GameCommand gameCommand = Command.findByInput(command, this);
-            gameCommand.execute(command);
-        }
+        return GameResult.from(this.state.getResult()).getMessage();
     }
 }
