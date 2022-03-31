@@ -20,17 +20,17 @@ public class Position {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static Stream<Position> generatePositionOf(final File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> new Position(file, rank));
-    }
-
     private final File file;
     private final Rank rank;
 
     private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    private static Stream<Position> generatePositionOf(final File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> new Position(file, rank));
     }
 
     public static Position of(final File file, final Rank rank) {
