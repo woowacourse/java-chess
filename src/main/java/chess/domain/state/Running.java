@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.score.ScoreCalculator;
 import java.util.Map;
 
 import chess.domain.ChessScore;
@@ -55,22 +56,17 @@ public class Running extends State {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
     public boolean isRunning() {
         return true;
     }
 
     @Override
     public ChessScore generateScore() {
-        return this.board.calculateScore();
+        return ScoreCalculator.calculateChessScore(this.board.getPieces());
     }
 
     @Override
-    public Color getColor() {
-        return this.color;
+    public boolean isWhite() {
+        return this.color == Color.WHITE;
     }
 }

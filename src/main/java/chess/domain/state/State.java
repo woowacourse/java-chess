@@ -12,6 +12,9 @@ import chess.domain.position.Position;
 
 public abstract class State {
 
+    private static final String CANNOT_GENERATE_SCORE = "현재 상태에서는 점수를 불러올 수 없습니다.";
+    private static final String CANNOT_GET_COLOR = "현재 상태에서는 색을 확인할 수 없습니다.";
+
     protected Board board;
 
     public static State create() {
@@ -24,13 +27,22 @@ public abstract class State {
 
     public abstract State proceed(Command command);
 
-    public abstract boolean isFinished();
+    public boolean isFinished() {
+        return false;
+    }
 
-    public abstract ChessScore generateScore();
+    public ChessScore generateScore() {
+        throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+    }
 
-    public abstract boolean isRunning();
+    public boolean isRunning() {
+        return false;
+    }
 
-    public abstract Color getColor();
+    public boolean isWhite() {
+        throw new IllegalStateException(CANNOT_GET_COLOR);
+    }
+
 
     public Board getBoard() {
         return board;

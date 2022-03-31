@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
+import chess.domain.state.State;
 import java.util.Optional;
 
 import chess.domain.ChessScore;
@@ -26,8 +27,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void displayTurn(Color color) {
-        if (color == Color.WHITE) {
+    public void displayTurn(State status) {
+        if (status.isWhite()) {
             System.out.print("하얀색 차례 - ");
             return;
         }

@@ -37,7 +37,7 @@ public class ChessController {
 
     private void checkTurn(State state) {
         if (state.isRunning()) {
-            outputView.displayTurn(state.getColor());
+            outputView.displayTurn(state);
         }
     }
 

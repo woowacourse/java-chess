@@ -42,7 +42,7 @@ public class RunningTest {
 		state = state.proceed(
 				new MoveCommand(new Position(2, 2), new Position(3, 2)));
 
-		assertThat(state.getColor()).isEqualTo(Color.BLACK);
+		assertThat(state.isWhite()).isFalse();
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class RunningTest {
 		state = state.proceed(SingleCommand.START);
 		state = state.proceed(SingleCommand.STATUS);
 
-		assertThat(state.getColor()).isEqualTo(Color.WHITE);
+		assertThat(state.isWhite()).isTrue();
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class RunningTest {
 		state = state.proceed(
 				new MoveCommand(new Position(7, 2), new Position(6, 2)));
 
-		assertThat(state.getColor()).isEqualTo(Color.WHITE);
+		assertThat(state.isWhite()).isTrue();
 	}
 
 	@Test
@@ -168,6 +168,6 @@ public class RunningTest {
 				new MoveCommand(new Position(2, 2), new Position(3, 2)));
 		state = state.proceed(SingleCommand.STATUS);
 
-		assertThat(state.getColor()).isEqualTo(Color.BLACK);
+		assertThat(state.isWhite()).isFalse();
 	}
 }

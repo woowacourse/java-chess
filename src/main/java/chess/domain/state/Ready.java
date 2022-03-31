@@ -12,8 +12,6 @@ import chess.domain.position.Position;
 public class Ready extends State {
 
     private static final String CANNOT_MOVE = "게임 시작 전에는 움직일 수 없습니다.";
-    private static final String CANNOT_GENERATE_SCORE = "게임 시작 전에는 점수를 불러올 수 없습니다.";
-    private static final String CANNOT_GET_COLOR = "끝난 상태에서는 색을 불러올 수 없습니다.";
 
     protected Ready(Map<Position, Piece> board) {
         this.board = new Board(board);
@@ -28,28 +26,8 @@ public class Ready extends State {
             return new Running(board.getPieces(), Color.WHITE);
         }
         if (command.isStatus()) {
-            throw new IllegalStateException(CANNOT_GENERATE_SCORE);
+            return this;
         }
         return new Finished(board.getPieces());
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public ChessScore generateScore() {
-        throw new IllegalStateException(CANNOT_GENERATE_SCORE);
-    }
-
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
-    public Color getColor() {
-        throw new IllegalStateException(CANNOT_GET_COLOR);
     }
 }
