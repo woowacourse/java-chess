@@ -1,4 +1,6 @@
-package chess.domain.game;
+package chess.controller;
+
+import chess.domain.game.GameState;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,10 +8,10 @@ import java.util.function.BiFunction;
 
 public enum Command {
 
-    START("start", (GameState state, List<String> ignored) -> state.start()),
-    FINISH("end", (GameState state, List<String> ignored) -> state.finish()),
-    MOVE("move", GameState::move),
-    STATUS("status", (GameState state, List<String> arguments) -> state.status());
+    START("start", ChessController::start),
+    FINISH("end", ChessController::finish),
+    MOVE("move", ChessController::move),
+    STATUS("status", ChessController::status);
 
     private final String input;
     private final BiFunction<GameState, List<String>, GameState> executor;
@@ -28,9 +30,5 @@ public enum Command {
 
     public GameState execute(GameState state, List<String> arguments) {
         return this.executor.apply(state, arguments);
-    }
-
-    public boolean isType(Command command) {
-        return this.equals(command);
     }
 }

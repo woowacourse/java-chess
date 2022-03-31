@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.controller.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -70,21 +71,5 @@ class CommandTest {
         GameState executed = command.execute(state, ignored);
 
         assertThat(executed).isInstanceOf(Running.class);
-    }
-
-    @Test
-    @DisplayName("같은 타입의 명령어일경우 true를 반환한다.")
-    void isTypeTrue() {
-        Command command = Command.START;
-
-        assertThat(command.isType(Command.START)).isTrue();
-    }
-
-    @Test
-    @DisplayName("다른 타입의 명령어일경우 false를 반환한다.")
-    void isTypeFalse() {
-        Command command = Command.START;
-
-        assertThat(command.isType(Command.FINISH)).isFalse();
     }
 }
