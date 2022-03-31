@@ -45,8 +45,8 @@ public enum Direction {
         return angle(value.column, value.row) == angle(columnDistance, rowDistance);
     }
 
-    private static double angle(final int column, final int row) {
-        return Math.atan2(column, row) * ONE_RADIAN;
+    private static int angle(final int column, final int row) {
+        return (int) (Math.atan2(column, row) * ONE_RADIAN);
     }
 
     public boolean isN() {
