@@ -20,13 +20,13 @@ public class Move implements Command {
     public void execute(final ChessGame chessGame) {
         try {
             final MoveResult result = chessGame.move(from, to);
-            processResult(result);
+            resolveResult(result);
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }
     }
 
-    private void processResult(final MoveResult result) {
+    private void resolveResult(final MoveResult result) {
         OutputView.printChessBoard(result.getPieceByPosition());
         if (result.isKingDie()) {
             OutputView.printResult(new Score(result.getPieceByPosition()));
