@@ -48,10 +48,6 @@ public class Position {
         return file == position.file;
     }
 
-    public boolean isSameRank(Position position) {
-        return rank == position.rank;
-    }
-
     public boolean isSameRank(final Rank ordinate) {
         return this.rank == ordinate;
     }
