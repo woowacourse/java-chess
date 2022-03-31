@@ -37,6 +37,13 @@ public class Position {
                 .collect(Collectors.toList());
     }
 
+    public static double calculateDegree(Position position1, Position position2) {
+        int deltaX = position2.xAxis.getValue() - position1.xAxis.getValue();
+        int deltaY = position2.yAxis.getValue() - position1.yAxis.getValue();
+
+        return Math.toDegrees(Math.atan2(deltaX, deltaY));
+    }
+
     public boolean isSameXAxis(Position other) {
         return this.xAxis.equals(other.xAxis);
     }
@@ -47,6 +54,10 @@ public class Position {
 
     public boolean isSameYAxis(YAxis yAxis) {
         return this.yAxis == yAxis;
+    }
+
+    public int subtractXAxis(Position other) {
+        return this.xAxis.subtract(other.xAxis);
     }
 
     public int subtractYAxis(Position other) {

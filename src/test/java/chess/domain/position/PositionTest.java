@@ -200,4 +200,30 @@ class PositionTest {
                 Position.from(XAxis.C, YAxis.THREE)
         ));
     }
+
+    @DisplayName("정적메서드 getDegree는 두 Position을 전달받아 각도를 반환한다.")
+    @ParameterizedTest(name = "({0}, {1}), ({2}, {3}) => {4}도")
+    @CsvSource(value = {
+            "A,ONE,A,TWO,0.0",
+            "A,ONE,B,TWO,45.0",
+            "A,ONE,B,ONE,90.0",
+            "A,TWO,B,ONE,135.0",
+            "A,TWO,A,ONE,180.0",
+            "B,TWO,A,ONE,-135.0",
+            "B,ONE,A,ONE,-90",
+            "B,ONE,A,TWO,-45.0"
+    })
+    void getDegree_returnsDegreeWithTwoPositions(String fromXAxis, String fromYAxis, String toXAxis, String toYAxis,
+                                                 double expected) {
+        // given
+        Position position1 = Position.from(XAxis.valueOf(fromXAxis), YAxis.valueOf(fromYAxis));
+        Position position2 = Position.from(XAxis.valueOf(toXAxis), YAxis.valueOf(toYAxis));
+
+        // when
+        double actual = Position.calculateDegree(position1, position2);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+
+    }
 }
