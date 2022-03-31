@@ -28,7 +28,7 @@ public class Fixture {
 
     public static Map<Position, Piece> queenMovableHurdleTestSetUp() {
         return Map.of(
-                Position.of("b", "1"), new Queen(Color.WHITE),
+                Position.of("e", "3"), new Queen(Color.WHITE),
                 Position.of("e", "1"), new Queen(Color.WHITE),
                 Position.of("c", "2"), new Queen(Color.WHITE),
                 Position.of("e", "2"), new Queen(Color.WHITE),
@@ -36,6 +36,20 @@ public class Fixture {
                 Position.of("e", "8"), new Queen(Color.BLACK),
                 Position.of("c", "7"), new Queen(Color.BLACK),
                 Position.of("e", "7"), new Queen(Color.BLACK)
+        );
+    }
+
+    public static Map<Position, Piece> whitePawnDiagonalTestSetUp() {
+        return Map.of(
+                Position.of("b", "3"), new Queen(Color.WHITE),
+                Position.of("d", "3"), new Queen(Color.WHITE)
+        );
+    }
+
+    public static Map<Position, Piece> blackPawnDiagonalTestSetUp() {
+        return Map.of(
+                Position.of("b", "6"), new Queen(Color.WHITE),
+                Position.of("d", "6"), new Queen(Color.WHITE)
         );
     }
 }

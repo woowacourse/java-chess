@@ -34,6 +34,10 @@ public class Position {
         return rank.isMoveInRange(rank.getNumber() + value);
     }
 
+    public boolean isInitLine() {
+        return rank == Rank.TWO || rank == Rank.SEVEN;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
