@@ -16,7 +16,7 @@ import java.util.List;
 public class Bishop extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT);
-    private final MovingStrategy MOVING_STRATEGY = new LinearMovingStrategy(DIRECTIONS);
+    private static final MovingStrategy MOVING_STRATEGY = new LinearMovingStrategy(DIRECTIONS);
 
     public Bishop(Color color) {
         super(PieceType.BISHOP, color);
