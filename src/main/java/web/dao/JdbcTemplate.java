@@ -10,10 +10,12 @@ import java.util.List;
 
 public class JdbcTemplate {
 
+    @FunctionalInterface
     interface RowMapper<T> {
         T map(ResultSet rs) throws SQLException;
     }
 
+    @FunctionalInterface
     interface ResultSetExtractor<T> {
         T extractData(ResultSet rs) throws SQLException;
     }
