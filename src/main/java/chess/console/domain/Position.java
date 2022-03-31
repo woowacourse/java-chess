@@ -1,7 +1,7 @@
 package chess.console.domain;
 
-import static chess.domain.PositionRange.COLUMN_RANGE;
-import static chess.domain.PositionRange.ROW_RANGE;
+import static chess.console.domain.PositionRange.COLUMN_RANGE;
+import static chess.console.domain.PositionRange.ROW_RANGE;
 
 import java.util.Objects;
 

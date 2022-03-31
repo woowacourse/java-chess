@@ -18,6 +18,10 @@ public enum PositionRange {
         this.allowedMaximum = allowedMaximum;
     }
 
+    public boolean isOutOfRange(final char target) {
+        return (target < allowedMinimum || allowedMaximum < target);
+    }
+
     public List<Character> getSortedAllValues() {
         return IntStream.rangeClosed(0, allowedMaximum - allowedMinimum)
                 .mapToObj(value -> (char) (value + allowedMinimum))
@@ -28,5 +32,13 @@ public enum PositionRange {
         return IntStream.rangeClosed(0, allowedMaximum - allowedMinimum)
                 .mapToObj(value -> (char) (allowedMaximum - value))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public char getAllowedMinimum() {
+        return allowedMinimum;
+    }
+
+    public char getAllowedMaximum() {
+        return allowedMaximum;
     }
 }
