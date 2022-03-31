@@ -19,8 +19,10 @@ class BishopTest {
     @DisplayName("비숍의 진행 방향이 맞는다면 true 반환")
     void correctMove() {
         Bishop bishop = new Bishop(Position.of('a', '1'), Team.WHITE);
+        Position source = Position.from("a1");
+        Position target = Position.from("f6");
 
-        assertThat(bishop.isMovable(Position.of('f', '6'))).isTrue();
+        assertThat(bishop.isMovable(source, target)).isTrue();
     }
 
     @Test

@@ -27,6 +27,11 @@ public class Bishop extends Piece implements BishopMovable {
     }
 
     @Override
+    public boolean isMovable(Position source, Position target) {
+        return source.isDiagonal(target);
+    }
+
+    @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
             return BLACK_NAME;
