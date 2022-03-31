@@ -3,8 +3,8 @@ package chess;
 import chess.domain.position.Position;
 import chess.domain.command.Command;
 import chess.domain.board.Piece;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import java.util.Map;
 
 public class ConsoleController {

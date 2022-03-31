@@ -1,7 +1,7 @@
 package chess.console.command;
 
 import chess.console.GameManager;
-import chess.view.OutputView;
+import chess.console.view.OutputView;
 
 public final class Start implements Command{
 

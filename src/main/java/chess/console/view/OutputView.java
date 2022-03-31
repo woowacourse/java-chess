@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.view;
 
 import chess.console.GameManager;
 import chess.domain.position.Column;
