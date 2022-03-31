@@ -28,7 +28,7 @@ public class Position {
     }
 
     private static String makeKey(final File file, final Rank rank) {
-        return file.toString().toLowerCase() + rank.getValue();
+        return file.name().toLowerCase() + rank.getValue();
     }
 
     public static Position valueOf(final String key) {
@@ -40,6 +40,14 @@ public class Position {
 
     public static Position valueOf(final File file, final Rank rank) {
         return valueOf(makeKey(file, rank));
+    }
+
+    public boolean isCross(Position position) {
+        return isSameFile(position) || isSameRank(position);
+    }
+
+    public boolean isDiagonal(Position position) {
+        return Math.abs(getRankDifference(position)) == Math.abs(getFileDifference(position));
     }
 
     public boolean isSameFile(Position position) {
@@ -62,19 +70,11 @@ public class Position {
         return file.getValue() - position.file.getValue();
     }
 
-    public Position getNextPosition(int fileDifference, int rankDifference) {
+    public Position getIncreasedPositionByDifference(int fileDifference, int rankDifference) {
         int newFile = file.getValue() + fileDifference;
         int newRank = rank.getValue() + rankDifference;
 
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
-    }
-
-    public boolean isCross(Position position) {
-        return this.file == position.file || this.rank == position.rank;
-    }
-
-    public boolean isDiagonal(Position position) {
-        return Math.abs(getRankDifference(position)) == Math.abs(getFileDifference(position));
     }
 
     public File getFile() {

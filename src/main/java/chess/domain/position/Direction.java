@@ -22,6 +22,8 @@ public enum Direction {
     RIGHTDOWN(1, -1,
         (p1, p2) -> p1.getFileDifference(p2) < 0 && p1.getRankDifference(p2) > 0);
 
+    private static final String CAN_NOT_JUDGE_DIRECTION = "[ERROR] 방향을 판단할 수 없습니다.";
+
     private final int fileIncrement;
     private final int rankIncrement;
     private final BiPredicate<Position, Position> condition;
@@ -36,10 +38,10 @@ public enum Direction {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.condition.test(p1, p2))
             .findAny()
-            .get();
+            .orElseThrow(() -> new IllegalArgumentException(CAN_NOT_JUDGE_DIRECTION));
     }
 
     public static Position getNextPosition(Position from, Direction direction) {
-        return from.getNextPosition(direction.fileIncrement, direction.rankIncrement);
+        return from.getIncreasedPositionByDifference(direction.fileIncrement, direction.rankIncrement);
     }
 }
