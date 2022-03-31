@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.view.dto.command.ConsoleCommandDto;
+import chess.view.dto.ConsoleCommandDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

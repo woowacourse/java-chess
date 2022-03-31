@@ -5,7 +5,8 @@ import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.dto.command.ConsoleCommandDto;
+import chess.view.dto.BoardDto;
+import chess.view.dto.ConsoleCommandDto;
 
 public class ChessController {
 
@@ -23,7 +24,7 @@ public class ChessController {
 
                 if (commandDto.isStart()) {
                     chessGame.startGame();
-                    OutputView.printBoard(chessGame.getBoard());
+                    OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
                 }
 
                 if (commandDto.isMove()) {
@@ -31,7 +32,7 @@ public class ChessController {
                     Position toPosition = Position.from(commandDto.getArgumentByIndex(1));
 
                     chessGame.movePiece(fromPosition, toPosition);
-                    OutputView.printBoard(chessGame.getBoard());
+                    OutputView.printBoard(BoardDto.from(chessGame.getBoard()));
                 }
 
                 if (commandDto.isStatus()) {
@@ -42,7 +43,7 @@ public class ChessController {
                 if (commandDto.isEnd()) {
                     break;
                 }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 OutputView.printException(e);
             }
         }

@@ -1,4 +1,4 @@
-package chess.view.dto.command;
+package chess.view.dto;
 
 import java.util.Arrays;
 import java.util.List;
