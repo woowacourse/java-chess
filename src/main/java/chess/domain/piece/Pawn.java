@@ -1,14 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.*;
+import static chess.domain.board.Direction.D;
 
-import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
-import java.util.List;
+import chess.domain.board.LocationDiff;
 
 public class Pawn extends Piece {
-    private static final List<Direction> BLACK_PAWN_DIRECTIONS = List.of(D, DR, DL);
-    private static final List<Direction> WHITE_PAWN_DIRECTIONS = List.of(U, UR, UL);
     private static final double SCORE = 1;
 
     public Pawn(Team team) {
@@ -27,10 +24,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovableDirection(Direction direction) {
-        if (isBlack()) {
-            return BLACK_PAWN_DIRECTIONS.contains(direction);
-        }
-        return WHITE_PAWN_DIRECTIONS.contains(direction);
+        return PawnDirectionFactory.getDirections(team).contains(direction);
     }
 
     @Override

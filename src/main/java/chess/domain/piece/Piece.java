@@ -4,7 +4,7 @@ import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
 
 public abstract class Piece {
-    private final Team team;
+    protected final Team team;
     private final Name name;
     private boolean isFirst;
 
@@ -12,10 +12,6 @@ public abstract class Piece {
         this.team = team;
         this.name = name;
         isFirst = true;
-    }
-
-    public String getName() {
-        return name.getName(team);
     }
 
     public boolean isBlack() {
@@ -40,6 +36,10 @@ public abstract class Piece {
 
     public void changeNotFirst() {
         isFirst = false;
+    }
+
+    public String getName() {
+        return name.getName(team);
     }
 
     public abstract boolean isPawn();
