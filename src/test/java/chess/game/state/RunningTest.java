@@ -7,7 +7,7 @@ import chess.domain.File;
 import chess.domain.Rank;
 import chess.domain.Position;
 import chess.domain.game.state.End;
-import chess.domain.game.state.GameState;
+import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
 import chess.domain.piece.Color;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class RunningTest {
 
-    private GameState state;
+    private ChessGame state;
 
     @BeforeEach
     void setUp() {
@@ -43,7 +43,7 @@ public class RunningTest {
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히면 End 상태로 변환된다")
     void movePieceAndKingKill() {
-        GameState newState = state.movePiece(Position.valueOf(File.e, Rank.SEVEN),
+        ChessGame newState = state.movePiece(Position.valueOf(File.e, Rank.SEVEN),
                 Position.valueOf(File.e, Rank.FIVE))
             .movePiece(Position.valueOf(File.d, Rank.TWO),
                 Position.valueOf(File.d, Rank.FOUR))
@@ -65,7 +65,7 @@ public class RunningTest {
     @Test
     @DisplayName("게임을 종료하면 상태가 End로 변환된다")
     void end() {
-        GameState newState = state.end();
+        ChessGame newState = state.end();
         assertThat(newState).isInstanceOf(End.class);
     }
 

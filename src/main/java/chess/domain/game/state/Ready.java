@@ -5,7 +5,7 @@ import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public class Ready implements GameState{
+public class Ready implements ChessGame {
 
     private static final String NOT_STARTED_GAME = "[ERROR] 게임이 시작되지 않았습니다.";
 
@@ -16,17 +16,17 @@ public class Ready implements GameState{
     }
 
     @Override
-    public GameState initBoard() {
+    public ChessGame initBoard() {
         return new Running(BoardFactory.getInitialPieces());
     }
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
+    public ChessGame movePiece(Position fromPosition, Position toPosition) {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 
     @Override
-    public GameState end() {
+    public ChessGame end() {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 

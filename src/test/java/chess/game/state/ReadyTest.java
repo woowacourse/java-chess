@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.File;
 import chess.domain.Rank;
 import chess.domain.Position;
-import chess.domain.game.state.GameState;
+import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.Running;
 import chess.domain.piece.Color;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ReadyTest {
-    private GameState state;
+    private ChessGame state;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +25,7 @@ public class ReadyTest {
     @Test
     @DisplayName("Ready 상태에서 보드를 초기화하면 Running 상태가 된다")
     void initBoard() {
-        GameState newState = state.initBoard();
+        ChessGame newState = state.initBoard();
         assertThat(newState).isInstanceOf(Running.class);
     }
 

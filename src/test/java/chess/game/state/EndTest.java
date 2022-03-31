@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.File;
 import chess.domain.Rank;
 import chess.domain.Position;
-import chess.domain.game.state.GameState;
+import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class EndTest {
 
-    private GameState state;
+    private ChessGame state;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +66,7 @@ public class EndTest {
     @Test
     @DisplayName("게임이 King이 잡혀 종료되었을 때, 승패 판정을 한다. White가 이긴 경우")
     void judgeWinnerWhite() {
-        GameState state = new Ready().initBoard()
+        ChessGame state = new Ready().initBoard()
             .movePiece(Position.valueOf(File.e, Rank.SEVEN),
                 Position.valueOf(File.e, Rank.FIVE))
             .movePiece(Position.valueOf(File.d, Rank.TWO),

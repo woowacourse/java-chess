@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public abstract class End implements GameState{
+public abstract class End implements ChessGame {
 
     protected final Board board;
 
@@ -15,17 +15,17 @@ public abstract class End implements GameState{
     private static final String ALREADY_END_GAME = "[ERROR] 게임이 종료되어 지원하지 않는 기능입니다";
 
     @Override
-    public GameState initBoard() {
+    public ChessGame initBoard() {
         throw new IllegalStateException(ALREADY_END_GAME);
     }
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
+    public ChessGame movePiece(Position fromPosition, Position toPosition) {
         throw new IllegalStateException(ALREADY_END_GAME);
     }
 
     @Override
-    public GameState end() {
+    public ChessGame end() {
         throw new IllegalStateException(ALREADY_END_GAME);
     }
 

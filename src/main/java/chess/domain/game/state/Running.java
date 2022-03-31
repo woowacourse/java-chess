@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public class Running implements GameState{
+public class Running implements ChessGame {
 
     private static final String NOT_SUPPORTED_FUNCTION = "[ERROR] 게임 도중에 보드를 초기화할 수 없습니다";
     private static final String NOT_ENDED_GAME = "[ERROR] 킹이 잡혀야 게임의 승패가 결정됩니다.";
@@ -16,12 +16,12 @@ public class Running implements GameState{
     }
 
     @Override
-    public GameState initBoard() {
+    public ChessGame initBoard() {
         throw new IllegalStateException(NOT_SUPPORTED_FUNCTION);
     }
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
+    public ChessGame movePiece(Position fromPosition, Position toPosition) {
         board.movePiece(fromPosition,toPosition);
         if (!board.isAllKingExist()) {
             return new Complete(board);
@@ -30,7 +30,7 @@ public class Running implements GameState{
     }
 
     @Override
-    public GameState end() {
+    public ChessGame end() {
         return new Terminate(board);
     }
 

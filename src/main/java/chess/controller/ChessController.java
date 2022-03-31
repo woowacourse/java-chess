@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.domain.game.ChessGame;
+import chess.domain.Position;
+import chess.domain.game.state.ChessGame;
+import chess.domain.game.state.Ready;
 import chess.domain.piece.Color;
 import chess.dto.RequestDto;
 import chess.view.InputOption;
@@ -10,10 +12,10 @@ import chess.view.OutputView;
 public class ChessController {
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = new Ready();
         OutputView.printGameInitMessage();
         while (!chessGame.isFinish()) {
-            selectMenu(chessGame, InputView.inputOption());
+            chessGame = selectMenu(chessGame, InputView.inputOption());
         }
         try {
             OutputView.printWinner(chessGame.judgeWinner());
@@ -22,50 +24,52 @@ public class ChessController {
         }
     }
 
-    public void selectMenu(ChessGame chessGame, RequestDto dto) {
+    public ChessGame selectMenu(ChessGame chessGame, RequestDto dto) {
         InputOption option = dto.getInputOption();
         if (option == InputOption.START) {
-            initBoard(chessGame);
-            return;
+            return initBoard(chessGame);
+
         }
         if (option == InputOption.MOVE) {
-            move(chessGame, dto.getFromPosition(), dto.getToPosition());
-            return;
+            return move(chessGame, dto.getFromPosition(), dto.getToPosition());
         }
         if (option == InputOption.STATUS) {
-            showStatus(chessGame);
-            return;
+            return showStatus(chessGame);
         }
-        if (option == InputOption.END) {
-            end(chessGame);
-        }
+        return end(chessGame);
     }
 
-    public static void initBoard(ChessGame chessGame) {
-        chessGame.initBoard();
-        OutputView.printInitialChessBoard(chessGame.getBoard());
+    public static ChessGame initBoard(ChessGame chessGame) {
+        ChessGame startedGame = chessGame.initBoard();
+        OutputView.printInitialChessBoard(startedGame.getBoard());
+        return startedGame;
     }
 
-    public static void move(ChessGame chessGame, String fromPosition, String toPosition) {
+    public static ChessGame move(ChessGame chessGame, String fromPosition, String toPosition) {
         try {
-            chessGame.movePiece(fromPosition, toPosition);
-            OutputView.printInitialChessBoard(chessGame.getBoard());
+            ChessGame movedGame = chessGame.movePiece(Position.valueOf(fromPosition),
+                Position.valueOf(toPosition));
+            OutputView.printInitialChessBoard(movedGame.getBoard());
+            return movedGame;
         } catch (IllegalStateException | IllegalArgumentException exception) {
             OutputView.printError(exception.getMessage());
         }
+        return chessGame;
     }
 
-    public static void showStatus(ChessGame chessGame) {
+    public static ChessGame showStatus(ChessGame chessGame) {
         OutputView.printScore(chessGame.calculateScore(Color.WHITE),
             chessGame.calculateScore(Color.BLACK));
+        return chessGame;
     }
 
-    public static void end(ChessGame chessGame) {
+    public static ChessGame end(ChessGame chessGame) {
         try {
-            chessGame.endGame();
+           return chessGame.end();
         } catch (IllegalStateException exception) {
             OutputView.printError(exception.getMessage());
         }
+        return chessGame;
     }
 }
 
