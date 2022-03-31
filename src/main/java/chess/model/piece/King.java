@@ -10,8 +10,8 @@ import static chess.model.strategy.move.Direction.SOUTHWEST;
 import static chess.model.strategy.move.Direction.WEST;
 
 import chess.model.Color;
-import chess.model.strategy.move.Direction;
 import chess.model.strategy.LimitedMovableStrategy;
+import chess.model.strategy.move.Direction;
 import java.util.List;
 
 public final class King extends Piece {

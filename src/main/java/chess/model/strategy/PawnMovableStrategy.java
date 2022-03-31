@@ -1,8 +1,8 @@
 package chess.model.strategy;
 
-import chess.model.strategy.move.Direction;
 import chess.model.Rank;
 import chess.model.board.Square;
+import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.MoveType;
 import java.util.List;
 
@@ -31,8 +31,10 @@ public class PawnMovableStrategy implements MovableStrategy {
 
     private boolean nonAttackMovable(Square source, Square target) {
         if (source.isSameRank(startRank)) {
-            return new LimitedMovableStrategy(nonAttackDirection, FIRST_MOVE_LIMIT).movable(source, target, MoveType.MOVE);
+            return new LimitedMovableStrategy(nonAttackDirection, FIRST_MOVE_LIMIT).movable(source, target,
+                    MoveType.MOVE);
         }
-        return new LimitedMovableStrategy(nonAttackDirection, NOT_FIRST_MOVE_LIMIT).movable(source, target, MoveType.MOVE);
+        return new LimitedMovableStrategy(nonAttackDirection, NOT_FIRST_MOVE_LIMIT).movable(source, target,
+                MoveType.MOVE);
     }
 }

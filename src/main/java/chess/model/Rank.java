@@ -31,6 +31,12 @@ public enum Rank {
         return List.of(SIX, FIVE, FOUR, THREE);
     }
 
+    public static List<Rank> getRanksInBoardOrder() {
+        List<Rank> ranks = Arrays.asList(values());
+        Collections.reverse(ranks);
+        return ranks;
+    }
+
     public Rank add(int col) {
         return Rank.of(this.col + col);
     }
@@ -41,11 +47,5 @@ public enum Rank {
 
     public String getName() {
         return String.valueOf(col);
-    }
-
-    public static List<Rank> getRanksInBoardOrder() {
-        List<Rank> ranks = Arrays.asList(values());
-        Collections.reverse(ranks);
-        return ranks;
     }
 }

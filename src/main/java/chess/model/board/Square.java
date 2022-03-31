@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.model.Color;
 import chess.model.File;
 import chess.model.Rank;
 import chess.model.strategy.move.Direction;

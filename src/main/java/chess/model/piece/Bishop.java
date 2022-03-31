@@ -6,8 +6,8 @@ import static chess.model.strategy.move.Direction.SOUTHEAST;
 import static chess.model.strategy.move.Direction.SOUTHWEST;
 
 import chess.model.Color;
-import chess.model.strategy.move.Direction;
 import chess.model.strategy.UnlimitedMovableStrategy;
+import chess.model.strategy.move.Direction;
 import java.util.List;
 
 public final class Bishop extends Piece {

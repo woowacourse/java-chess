@@ -6,10 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.model.Color;
 import chess.model.File;
 import chess.model.Rank;
-import chess.model.piece.pawn.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Rook;
-import java.util.Map;
+import chess.model.piece.pawn.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

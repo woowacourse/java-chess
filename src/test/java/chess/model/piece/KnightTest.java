@@ -1,7 +1,6 @@
 package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Color;
 import chess.model.board.Square;

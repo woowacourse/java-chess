@@ -1,7 +1,6 @@
 package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.Color;
 import chess.model.File;
@@ -16,6 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class BishopTest {
 
     private Bishop bishop;
+
     @BeforeEach
     void setUp() {
         bishop = new Bishop(Color.BLACK);

@@ -1,7 +1,7 @@
 package chess.model.strategy;
 
-import chess.model.strategy.move.Direction;
 import chess.model.board.Square;
+import chess.model.strategy.move.Direction;
 import chess.model.strategy.move.Distance;
 import chess.model.strategy.move.MoveType;
 import java.util.List;

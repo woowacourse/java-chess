@@ -2,7 +2,6 @@ package chess.controller;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public enum GameCommand {
     START("start", ChessController::start),

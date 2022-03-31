@@ -1,8 +1,8 @@
 package chess.model.piece;
 
 import chess.model.Color;
-import chess.model.strategy.move.Direction;
 import chess.model.strategy.UnlimitedMovableStrategy;
+import chess.model.strategy.move.Direction;
 import java.util.List;
 
 public final class Rook extends Piece {

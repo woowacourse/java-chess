@@ -22,7 +22,7 @@ public class ChessGame {
             turn = turn.changeToOpposite();
             return;
         }
-        throw new IllegalArgumentException("해당 기물을 움직일 권한이 없습니다. 현재 " +turn.name() +"의 차례입니다.");
+        throw new IllegalArgumentException("해당 기물을 움직일 권한이 없습니다. 현재 " + turn.name() + "의 차례입니다.");
     }
 
     public Map<Color, Double> status() {

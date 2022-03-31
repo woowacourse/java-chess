@@ -10,8 +10,8 @@ import static chess.model.strategy.move.Direction.WWN;
 import static chess.model.strategy.move.Direction.WWS;
 
 import chess.model.Color;
-import chess.model.strategy.move.Direction;
 import chess.model.strategy.LimitedMovableStrategy;
+import chess.model.strategy.move.Direction;
 import java.util.List;
 
 public final class Knight extends Piece {
