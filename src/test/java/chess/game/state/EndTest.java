@@ -60,7 +60,7 @@ public class EndTest {
     void judgeWinnerException() {
         assertThatThrownBy(() -> state.judgeWinner())
             .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 킹이 모두 살아 있어, 승자를 구할 수 없습니다.");
+            .hasMessage("게임이 종료되어 승자가 존재하지 않습니다.");
     }
 
     @Test

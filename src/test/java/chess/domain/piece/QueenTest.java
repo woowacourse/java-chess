@@ -79,6 +79,6 @@ public class QueenTest {
         Position from = Position.valueOf(File.d, Rank.FOUR);
         Position to = Position.valueOf(File.b, Rank.THREE);
 
-        assertThat(whiteQueen.isMovable(from, to)).isTrue();
+        assertThat(whiteQueen.isMovable(from, to)).isFalse();
     }
 }
