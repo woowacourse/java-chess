@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 
-public class StatusTest {
+public class GameResultTest {
 
     @Test
     @DisplayName("룩1, 비숍1, 퀸1, 폰1 가 있으면 18점을 반환한다")
@@ -22,9 +22,9 @@ public class StatusTest {
                 new Square("c5"), WHITE_BISHOP,
                 new Square("c6"), WHITE_PAWN
         ));
-        Status status = new Status(chessBoard);
+        GameResult gameResult = new GameResult(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18);
+        assertThat(gameResult.calculateScore(Color.WHITE)).isEqualTo(18);
     }
 
     @Test
@@ -34,9 +34,9 @@ public class StatusTest {
                 new Square("c5"), WHITE_PAWN,
                 new Square("c6"), WHITE_PAWN
         ));
-        Status status = new Status(chessBoard);
+        GameResult gameResult = new GameResult(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(1);
+        assertThat(gameResult.calculateScore(Color.WHITE)).isEqualTo(1);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class StatusTest {
                 new Square("c5"), WHITE_PAWN,
                 new Square("c4"), WHITE_PAWN
         ));
-        Status status = new Status(chessBoard);
+        GameResult gameResult = new GameResult(chessBoard);
 
-        assertThat(status.calculateScore(Color.WHITE)).isEqualTo(18.5);
+        assertThat(gameResult.calculateScore(Color.WHITE)).isEqualTo(18.5);
     }
 }

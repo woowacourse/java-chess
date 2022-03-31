@@ -32,27 +32,27 @@ public final class Direction {
 
     public Direction getUnitDirection() {
         if (dFile == 0 || dRank == 0) {
-            return getUnitDirectionWithZero(dFile, dRank);
+            return getUnitDirectionWithZero();
         }
 
-        return getUnitDirectionWithOutZero(dFile, dRank);
+        return getUnitDirectionWithOutZero();
     }
 
-    private Direction getUnitDirectionWithZero(int x, int y) {
-        if (x == 0 && y == 0) {
+    private Direction getUnitDirectionWithZero() {
+        if (dFile == 0 && dRank == 0) {
             return new Direction(0, 0);
         }
 
-        if (x == 0) {
-            return new Direction(0, y / Math.abs(y));
+        if (dFile == 0) {
+            return new Direction(0, dRank / Math.abs(dRank));
         }
 
-        return new Direction(x / Math.abs(x), 0);
+        return new Direction(dFile / Math.abs(dFile), 0);
     }
 
-    private Direction getUnitDirectionWithOutZero(int x, int y) {
-        int gcd = gcd(Math.abs(x), Math.abs(y));
-        return new Direction(x / gcd, y / gcd);
+    private Direction getUnitDirectionWithOutZero() {
+        int gcd = gcd(Math.abs(dFile), Math.abs(dRank));
+        return new Direction(dFile / gcd, dRank / gcd);
     }
 
     private int gcd(int a, int b) {
