@@ -31,8 +31,8 @@ public final class Board {
         checkTurn(source);
         checkPath(sourcePosition, targetPosition, source);
 
-        Camp.switchTurn();
         move(sourcePosition, targetPosition, source);
+        Camp.switchTurn();
     }
 
     private void checkBlank(Position sourcePosition) {
