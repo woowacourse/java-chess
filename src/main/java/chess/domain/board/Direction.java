@@ -1,104 +1,71 @@
 package chess.domain.board;
 
-import chess.domain.piece.attribute.Color;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Direction {
+
     TOP(0, 1),
     DOWN(0, -1),
-    LEFT(-1, 0),
     RIGHT(1, 0),
-    TOPLEFT(-1, 1),
-    TOPRIGHT(1, 1),
-    DOWNLEFT(-1, -1),
-    DOWNRIGHT(1, -1),
-    TTR(1, 2),
-    RRT(2, 1),
-    RRD(2, -1),
-    DDR(1, -2),
-    DDL(-1, -2),
-    LLD(-2, -1),
-    LLT(-2, 1),
-    TTL(-1, 2);
+    LEFT(-1, 0),
 
-    private final int x;
-    private final int y;
+    TOP_RIGHT(1, 1),
+    TOP_LEFT(-1, 1),
+    DOWN_RIGHT(1, -1),
+    DOWN_LEFT(-1, -1),
 
-    Direction(int x, int y) {
-        this.x = x;
-        this.y = y;
+    TOP_TOP_RIGHT(1, 2),
+    TOP_TOP_LEFT(-1, 2),
 
+    TOP_RIGHT_RIGHT(2, 1),
+    TOP_LEFT_LEFT(-2, 1),
+
+    DOWN_DOWN_RIGHT(1, -2),
+    DOWN_DOWN_LEFT(-1, -2),
+
+    DOWN_RIGHT_RIGHT(2, -1),
+    DOWN_LEFT_LEFT(-2, -1),
+    ;
+
+    private final int column;
+    private final int row;
+
+    Direction(int column, int row) {
+        this.column = column;
+        this.row = row;
     }
 
-    public static Direction of(Position from, Position to) {
-        return Arrays.stream(Direction.values())
-                .filter(direction -> direction.isSameDirection(from, to))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 방향이 없습니다."));
-    }
-
-    public static List<Direction> pawnDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, TOPLEFT, TOPRIGHT));
-    }
-
-    public static List<Direction> rookDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, DOWN, LEFT, RIGHT));
-    }
-
-    public static List<Direction> bishopDirection(Color color) {
-        return getColorDirections(color, List.of(TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
-    }
-
-    public static List<Direction> everyDirection(Color color) {
-        return getColorDirections(color, List.of(TOP, LEFT, DOWN, RIGHT,
-                TOPLEFT, TOPRIGHT, DOWNLEFT, DOWNRIGHT));
-    }
-
-    public static List<Direction> knightDirection(Color color) {
-        return getColorDirections(color, List.of(TTR, RRT, RRD, DDR,
-                DDL, LLD, LLT, TTL));
-    }
-
-    private static List<Direction> getColorDirections(Color color, List<Direction> directions) {
-        if (color == Color.WHITE) {
-            return directions;
+    public List<Position> route(Position from, Position to) {
+        if (isNotMovable(from, to)) {
+            return new ArrayList<>();
         }
-        return directions.stream()
-                .map(direction -> direction.toReversed())
-                .collect(Collectors.toList());
+
+        return calculateRoute(from, to, new ArrayList<>());
     }
 
-    public boolean isSameDirection(Position from, Position to) {
-        if (y == 0) {
-            return from.getYDistance(to) == 0 && from.getXDistance(to) * x > 0;
+    private boolean isNotMovable(Position from, Position to) {
+        return from.equals(to) || !isMovableByMultiple(from, to);
+    }
+
+    private boolean isMovableByMultiple(Position from, Position to) {
+        if (from.equals(to)) {
+            return true;
         }
-        if (x == 0) {
-            return from.getXDistance(to) == 0 && from.getYDistance(to) * y > 0;
+        if (from.isMovable(column, row)) {
+            return isMovableByMultiple(from.move(column, row), to);
         }
-        return (double) from.getXDistance(to) / from.getYDistance(to) == (double) x / y
-                && from.getXDistance(to) * x > 0;
+
+        return false;
     }
 
-    public boolean isSameDistance(Position from, Position to) {
-        return from.getXDistance(to) == x && from.getYDistance(to) == y;
-    }
+    private List<Position> calculateRoute(Position from, Position to, List<Position> route) {
+        if (from.equals(to)) {
+            return route;
+        }
+        final Position movePosition = from.move(column, row);
+        route.add(movePosition);
 
-    private Direction toReversed() {
-        return Arrays.stream(Direction.values())
-                .filter(direction ->
-                        direction.getX() == (-1) * this.getX() &&
-                                direction.getY() == (-1) * this.getY()
-                ).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 방향의 반대 방향이 없습니다."));
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+        return calculateRoute(movePosition, to, route);
     }
 }

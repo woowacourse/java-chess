@@ -1,14 +1,15 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class KnightTest {
     @Test
     @DisplayName("나이트를 생성할 수 있다.")
     void createKnight() {
-        assertThat(new Knight(Color.WHITE)).isInstanceOf(Knight.class);
+        Assertions.assertThat(new Knight(Color.WHITE)).isInstanceOf(Knight.class);
     }
 
     @ParameterizedTest(name = "{displayName} : {arguments}")

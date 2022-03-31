@@ -18,28 +18,33 @@ public class Position {
             throw new IllegalArgumentException("잘못된 위치 값 입니다.");
         }
         File file = File.letterOf(attribute[0]);
-        Rank rank = Rank.conditionOf(attribute[1]);
+        Rank rank = Rank.letterOf(attribute[1]);
 
         return new Position(file, rank);
     }
 
-    public Position advancePosition(Direction direction) {
-        return new Position(
-                File.numberOf(file.getNumber() + direction.getX()),
-                Rank.numberOf(rank.getNumber() + direction.getY())
-        );
+    public static Position of(String column, String row) {
+        return new Position(File.letterOf(column), Rank.letterOf(row));
     }
 
-    public int getXDistance(Position to) {
-        return to.file.getNumber() - this.file.getNumber();
+    public Position move(int column, int row) {
+        return new Position(file.plus(column), rank.plus(row));
     }
 
-    public int getYDistance(Position to) {
-        return to.rank.getNumber() - this.rank.getNumber();
+    public boolean isMovable(int column, int row) {
+        return isFileInRange(column) && isRankInRange(row);
     }
 
-    public boolean isEqualRank(Rank rank) {
-        return this.rank == rank;
+    private boolean isFileInRange(int value) {
+        return file.isMoveInRange(file.getNumber() + value);
+    }
+
+    private boolean isRankInRange(int value) {
+        return rank.isMoveInRange(rank.getNumber() + value);
+    }
+
+    public boolean isInitLine() {
+        return rank == Rank.TWO || rank == Rank.SEVEN;
     }
 
     @Override
@@ -51,7 +56,7 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return Objects.equals(file, position.file) && Objects.equals(rank, position.rank);
+        return file == position.file && rank == position.rank;
     }
 
     @Override

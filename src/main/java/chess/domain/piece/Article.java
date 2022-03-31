@@ -1,8 +1,8 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
+import chess.domain.board.ChessBoard;
 
 public interface Article {
 

@@ -1,15 +1,15 @@
 package chess.domain;
 
+import chess.domain.board.Position;
+import chess.domain.piece.Article;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorPiece.Piece;
-import chess.domain.refactorPiece.Queen;
-import chess.domain.refactorPiece.Rook;
-import chess.domain.refactorPosition.Position;
 import java.util.Map;
 
 public class Fixture {
 
-    public static Map<Position, Piece> rookMovableHurdleTestSetUp() {
+    public static Map<Position, Article> rookMovableHurdleTestSetUp() {
         return Map.of(
                 Position.of("e", "1"), new Rook(Color.WHITE),
                 Position.of("a", "4"), new Rook(Color.WHITE),
@@ -17,7 +17,7 @@ public class Fixture {
         );
     }
 
-    public static Map<Position, Piece> bishopMovableHurdleTestSetUp() {
+    public static Map<Position, Article> bishopMovableHurdleTestSetUp() {
         return Map.of(
                 Position.of("d", "2"), new Rook(Color.WHITE),
                 Position.of("g", "2"), new Rook(Color.WHITE),
@@ -26,8 +26,9 @@ public class Fixture {
         );
     }
 
-    public static Map<Position, Piece> queenMovableHurdleTestSetUp() {
+    public static Map<Position, Article> queenMovableHurdleTestSetUp() {
         return Map.of(
+                Position.of("c", "1"), new Queen(Color.WHITE),
                 Position.of("e", "3"), new Queen(Color.WHITE),
                 Position.of("e", "1"), new Queen(Color.WHITE),
                 Position.of("c", "2"), new Queen(Color.WHITE),
@@ -39,14 +40,14 @@ public class Fixture {
         );
     }
 
-    public static Map<Position, Piece> whitePawnDiagonalTestSetUp() {
+    public static Map<Position, Article> whitePawnDiagonalTestSetUp() {
         return Map.of(
                 Position.of("b", "3"), new Queen(Color.WHITE),
                 Position.of("d", "3"), new Queen(Color.WHITE)
         );
     }
 
-    public static Map<Position, Piece> blackPawnDiagonalTestSetUp() {
+    public static Map<Position, Article> blackPawnDiagonalTestSetUp() {
         return Map.of(
                 Position.of("b", "6"), new Queen(Color.WHITE),
                 Position.of("d", "6"), new Queen(Color.WHITE)

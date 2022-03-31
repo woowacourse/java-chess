@@ -2,54 +2,46 @@ package chess.domain.piece;
 
 import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Name;
-import chess.domain.piece.strategy.MoveStrategy;
-import java.util.List;
+import chess.domain.board.ChessBoard;
 import java.util.Locale;
 
-public abstract class Piece {
+public abstract class Piece implements Article {
 
-    protected final Name name;
-    protected final Color color;
-    protected final MoveStrategy moveStrategy;
+    private final Color color;
+    private final String name;
 
-    public Piece(Name name, Color color, MoveStrategy moveStrategy) {
-        this.name = name;
+    public Piece(Color color, String name) {
         this.color = color;
-        this.moveStrategy = moveStrategy;
+        this.name = name;
     }
 
-    public abstract boolean canMove(Piece targetPiece, Position from, Position to);
+    @Override
+    public Piece move(Position from, Position to, ChessBoard chessBoard) {
+        if (!isMovable(from, to, chessBoard)) {
+            throw new IllegalArgumentException("움직일 수 없는 이동입니다.");
+        }
 
+        return this;
+    }
+
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public String getName() {
         if (color.equals(Color.WHITE)) {
-            return name.getValue().toLowerCase(Locale.ROOT);
+            return name.toLowerCase(Locale.ROOT);
         }
-        return name.getValue();
+        return name;
     }
 
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isSameColor(Piece targetPiece) {
-        return this.color == targetPiece.color;
-    }
-
-    public boolean isOppositeColor(Color color) {
-        return (color == Color.WHITE && this.color == Color.BLACK) ||
-                (color == Color.BLACK && this.color == Color.WHITE);
-    }
-
-    public List<Position> getRoute(Position from, Position to) {
-        return moveStrategy.getRoute(from, to);
-    }
-
-    public boolean isEmpty() {
-        return false;
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

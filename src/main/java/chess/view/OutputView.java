@@ -1,11 +1,12 @@
 package chess.view;
 
-import chess.domain.board.Board;
+
 import chess.domain.board.File;
+
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
-import chess.domain.game.Status;
 import chess.domain.piece.attribute.Color;
+import chess.domain.piece.Article;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -30,14 +31,20 @@ public class OutputView {
         System.out.println(INIT_MESSAGE);
     }
 
-    public static void printChessBoard(Board board) {
+    public static void printChessBoard(Map<Position, Article> board) {
         List<Rank> ranks = Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
         for (Rank rank : ranks) {
             for (File file : File.values()) {
-                System.out.print(board.findByPiece(new Position(file, rank)).getName());
+                Position position = new Position(file, rank);
+                if (board.containsKey(position)) {
+                    System.out.print(board.get(position).getName());
+                }
+                else {
+                    System.out.print(".");
+                }
             }
             System.out.println();
         }

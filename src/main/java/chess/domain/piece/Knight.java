@@ -1,18 +1,28 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Name;
-import chess.domain.piece.strategy.KnightMoveStrategy;
+import static chess.domain.board.Direction.DOWN_DOWN_LEFT;
+import static chess.domain.board.Direction.DOWN_DOWN_RIGHT;
+import static chess.domain.board.Direction.DOWN_LEFT_LEFT;
+import static chess.domain.board.Direction.DOWN_RIGHT_RIGHT;
+import static chess.domain.board.Direction.TOP_LEFT_LEFT;
+import static chess.domain.board.Direction.TOP_RIGHT_RIGHT;
+import static chess.domain.board.Direction.TOP_TOP_LEFT;
+import static chess.domain.board.Direction.TOP_TOP_RIGHT;
 
-public class Knight extends Piece {
+import chess.domain.piece.attribute.Color;
+import java.util.Arrays;
+
+public class Knight extends FixedMovablePiece {
+
     public Knight(Color color) {
-        super(new Name("N"), color, new KnightMoveStrategy());
+        super(color, "N", Arrays.asList(
+                TOP_TOP_RIGHT, TOP_TOP_LEFT, TOP_RIGHT_RIGHT, TOP_LEFT_LEFT,
+                DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, DOWN_RIGHT_RIGHT, DOWN_LEFT_LEFT
+        ));
     }
 
-
     @Override
-    public boolean canMove(Piece targetPiece, Position from, Position to) {
-        return moveStrategy.isValidateCanMove(color, from, to);
+    public boolean isKing() {
+        return false;
     }
 }

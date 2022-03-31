@@ -1,14 +1,15 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Fixture;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +22,7 @@ class PawnTest {
     @DisplayName("폰을 생성하는 기능")
     void createPawn() {
         assertAll(
-                () -> assertThat(new Pawn(Color.WHITE)).isInstanceOf(Pawn.class),
+                () -> Assertions.assertThat(new Pawn(Color.WHITE)).isInstanceOf(Pawn.class),
                 () -> assertThat(new Pawn(Color.BLACK)).isInstanceOf(Pawn.class)
         );
     }

@@ -1,15 +1,17 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import chess.domain.Fixture;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
+
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +23,7 @@ public class RookTest {
     @Test
     @DisplayName("룩을 생성할 수 있다.")
     void createRook() {
-        assertThat(new Rook(Color.WHITE)).isInstanceOf(Rook.class);
+        Assertions.assertThat(new Rook(Color.WHITE)).isInstanceOf(Rook.class);
     }
 
     @ParameterizedTest(name = "{displayName} : {arguments}")
@@ -37,7 +39,7 @@ public class RookTest {
     @MethodSource("rookMoveValidTestSet")
     @DisplayName("룩의 이동경로에 기물이 있을 경우 예외가 발생한다.")
     void movableInvalidHurdleRook(Position from, Position to, Color color) {
-        final Map<Position, Piece> board = Fixture.rookMovableHurdleTestSetUp();
+        final Map<Position, Article> board = Fixture.rookMovableHurdleTestSetUp();
         final ChessBoard chessBoard = new ChessBoard(board);
 
         assertThatThrownBy(() -> new Rook(color).move(from, to, chessBoard))

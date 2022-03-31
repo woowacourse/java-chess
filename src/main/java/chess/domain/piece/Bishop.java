@@ -1,18 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Name;
-import chess.domain.piece.strategy.BishopMoveStrategy;
+import static chess.domain.board.Direction.DOWN_LEFT;
+import static chess.domain.board.Direction.DOWN_RIGHT;
+import static chess.domain.board.Direction.TOP_LEFT;
+import static chess.domain.board.Direction.TOP_RIGHT;
 
-public class Bishop extends Piece {
+import chess.domain.piece.attribute.Color;
+import java.util.Arrays;
+
+public class Bishop extends MultipleMovablePiece {
 
     public Bishop(Color color) {
-        super(new Name("B"), color, new BishopMoveStrategy());
+        super(color, "B", Arrays.asList(TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position from, Position to) {
-        return moveStrategy.isValidateCanMove(color, from, to);
+    public boolean isKing() {
+        return false;
     }
 }

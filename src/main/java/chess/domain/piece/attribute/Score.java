@@ -1,6 +1,6 @@
 package chess.domain.piece.attribute;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.Article;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -14,15 +14,15 @@ public enum Score {
     PAWN_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("p"), 1),
     KING_SCORE((piece) -> piece.getName().toLowerCase(Locale.ROOT).equals("k"), 0);
 
-    private final Predicate<Piece> piecePredicate;
+    private final Predicate<Article> piecePredicate;
     private final double value;
 
-    Score(Predicate<Piece> piecePredicate, double value) {
+    Score(Predicate<Article> piecePredicate, double value) {
         this.piecePredicate = piecePredicate;
         this.value = value;
     }
 
-    public static Score valueOf(Piece piece) {
+    public static Score valueOf(Article piece) {
         return Arrays.stream(Score.values())
                 .filter(score -> score.piecePredicate.test(piece))
                 .findFirst()

@@ -1,15 +1,16 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Fixture;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +22,7 @@ class BishopTest {
     @Test
     @DisplayName("비숍을 생성할 수 있다.")
     void createBishop() {
-        assertThat(new Bishop(Color.WHITE)).isInstanceOf(Bishop.class);
+        Assertions.assertThat(new Bishop(Color.WHITE)).isInstanceOf(Bishop.class);
     }
 
     @ParameterizedTest(name = "{displayName} : {arguments}")
@@ -37,7 +38,7 @@ class BishopTest {
     @MethodSource("bishopMoveValidTestSet")
     @DisplayName("비숍의 이동경로에 기물이 있을 경우 예외가 발생한다.")
     void movableInvalidHurdleBishop(Position from, Position to, Color color) {
-        final Map<Position, Piece> board = Fixture.bishopMovableHurdleTestSetUp();
+        final Map<Position, Article> board = Fixture.bishopMovableHurdleTestSetUp();
         final ChessBoard chessBoard = new ChessBoard(board);
 
         assertThatThrownBy(() -> new Bishop(color).move(from, to, chessBoard))

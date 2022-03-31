@@ -1,15 +1,15 @@
-package chess.domain.refactorPiece;
+package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Fixture;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
 import chess.domain.piece.attribute.Color;
-import chess.domain.refactorBoard.ChessBoard;
-import chess.domain.refactorPosition.Position;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ class QueenTest {
     @Test
     @DisplayName("퀸을 생성하는 기능")
     void createQueen() {
-        assertThat(new Queen(Color.WHITE)).isInstanceOf(Queen.class);
+        Assertions.assertThat(new Queen(Color.WHITE)).isInstanceOf(Queen.class);
     }
 
     @ParameterizedTest(name = "{displayName} : {arguments}")
@@ -37,7 +37,7 @@ class QueenTest {
     @MethodSource("queenMoveValidTestSet")
     @DisplayName("퀸의 이동경로에 기물이 있을 경우 예외가 발생한다.")
     void movableInvalidHurdleQueen(Position from, Position to, Color color) {
-        final Map<Position, Piece> board = Fixture.queenMovableHurdleTestSetUp();
+        final Map<Position, Article> board = Fixture.queenMovableHurdleTestSetUp();
         final ChessBoard chessBoard = new ChessBoard(board);
 
         assertThatThrownBy(() -> new Queen(color).move(from, to, chessBoard))
@@ -62,7 +62,7 @@ class QueenTest {
     @MethodSource("queenMoveInvalidTestSet")
     @DisplayName("퀸은 상, 하, 좌, 우, 모든 대각선 방향으로 이동하지 않을 경우 예외가 발생한다.")
     void movableInvalidDirectionQueen(Position from, Position to, Color color) {
-        final Map<Position, Piece> board = Map.of();
+        final Map<Position, Article> board = Map.of();
         final ChessBoard chessBoard = new ChessBoard(board);
 
         assertThatThrownBy(() -> new Queen(color).move(from, to, chessBoard))

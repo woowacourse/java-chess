@@ -1,29 +1,28 @@
 package chess.domain.game;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.File;
 import chess.domain.board.Position;
 import chess.domain.board.Rank;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.Article;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.attribute.Color;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
 
-    private final Board board;
+    private final ChessBoard chessBoard;
     private GameStatus gameStatus;
     private Color turn = Color.WHITE;
 
     public ChessGame() {
-        this.board = new Board(createBoard());
+        this.chessBoard = new ChessBoard(createBoard());
         this.gameStatus = GameStatus.READY;
     }
 
@@ -32,34 +31,28 @@ public class ChessGame {
             throw new IllegalArgumentException("현재 진영에 속해있지 않는 위치입니다.");
         }
 
-        boolean isToNotKing = isKingAlive(to);
-        board.move(from, to);
-        if (!isToNotKing) {
+        chessBoard.movePiece(from, to);
+        if (chessBoard.isKingAlive()) {
             gameStatus = GameStatus.END;
         }
         turn = turn.oppositeColor();
     }
 
     private boolean isThatTurn(Position position) {
-        return board.isSameColor(position, turn);
-    }
-
-    public boolean isKingAlive(Position to) {
-        return board.isKingAlive(to);
+        return chessBoard.isSameColor(position, turn);
     }
 
     public Map<Color, Double> getStatus() {
-        return board.getColorsTotalScore();
+        return chessBoard.getColorsTotalScore();
     }
 
     public Color getWinner() {
-        return board.getWinner();
+        return chessBoard.getWinner();
     }
 
-    private Map<Position, Piece> createBoard() {
-        Map<Position, Piece> squares = new HashMap<>();
+    private Map<Position, Article> createBoard() {
+        Map<Position, Article> squares = new HashMap<>();
 
-        initEmptyPieces(squares);
         initNotPawnSquares(squares, Rank.ONE, Color.WHITE);
         initPawnPieces(squares, Rank.TWO, Color.WHITE);
         initPawnPieces(squares, Rank.SEVEN, Color.BLACK);
@@ -68,29 +61,21 @@ public class ChessGame {
         return squares;
     }
 
-    private void initEmptyPieces(Map<Position, Piece> squares) {
+    private void initPawnPieces(Map<Position, Article> squares, Rank rank, Color color) {
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                squares.put(new Position(file, rank), new EmptyPiece());
-            }
+            squares.put(new Position(file, rank), new Pawn(color));
         }
     }
 
-    private void initPawnPieces(Map<Position, Piece> squares, Rank rank, Color color) {
-        for (File file : File.values()) {
-            squares.replace(new Position(file, rank), new Pawn(color));
-        }
-    }
-
-    private void initNotPawnSquares(Map<Position, Piece> squares, Rank rank, Color color) {
-        squares.replace(new Position(File.A, rank), new Rook(color));
-        squares.replace(new Position(File.B, rank), new Knight(color));
-        squares.replace(new Position(File.C, rank), new Bishop(color));
-        squares.replace(new Position(File.D, rank), new Queen(color));
-        squares.replace(new Position(File.E, rank), new King(color));
-        squares.replace(new Position(File.F, rank), new Bishop(color));
-        squares.replace(new Position(File.G, rank), new Knight(color));
-        squares.replace(new Position(File.H, rank), new Rook(color));
+    private void initNotPawnSquares(Map<Position, Article> squares, Rank rank, Color color) {
+        squares.put(new Position(File.A, rank), new Rook(color));
+        squares.put(new Position(File.B, rank), new Knight(color));
+        squares.put(new Position(File.C, rank), new Bishop(color));
+        squares.put(new Position(File.D, rank), new Queen(color));
+        squares.put(new Position(File.E, rank), new King(color));
+        squares.put(new Position(File.F, rank), new Bishop(color));
+        squares.put(new Position(File.G, rank), new Knight(color));
+        squares.put(new Position(File.H, rank), new Rook(color));
     }
 
     public void start() {
@@ -109,7 +94,7 @@ public class ChessGame {
         return gameStatus == GameStatus.END;
     }
 
-    public Board getBoard() {
-        return board;
+    public Map<Position, Article> getBoard() {
+        return chessBoard.getPieces();
     }
 }

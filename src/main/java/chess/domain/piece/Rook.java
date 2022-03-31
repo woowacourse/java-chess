@@ -1,17 +1,22 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Name;
-import chess.domain.piece.strategy.RookMoveStrategy;
 
-public class Rook extends Piece {
+import static chess.domain.board.Direction.DOWN;
+import static chess.domain.board.Direction.LEFT;
+import static chess.domain.board.Direction.RIGHT;
+import static chess.domain.board.Direction.TOP;
+
+import chess.domain.piece.attribute.Color;
+import java.util.Arrays;
+
+public class Rook extends MultipleMovablePiece {
+
     public Rook(Color color) {
-        super(new Name("R"), color, new RookMoveStrategy());
+        super(color, "R", Arrays.asList(TOP, DOWN, LEFT, RIGHT));
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position from, Position to) {
-        return moveStrategy.isValidateCanMove(color, from, to);
+    public boolean isKing() {
+        return false;
     }
 }

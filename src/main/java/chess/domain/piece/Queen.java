@@ -1,18 +1,25 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.piece.attribute.Color;
-import chess.domain.piece.attribute.Name;
-import chess.domain.piece.strategy.QueenMoveStrategy;
+import static chess.domain.board.Direction.DOWN;
+import static chess.domain.board.Direction.DOWN_LEFT;
+import static chess.domain.board.Direction.DOWN_RIGHT;
+import static chess.domain.board.Direction.LEFT;
+import static chess.domain.board.Direction.RIGHT;
+import static chess.domain.board.Direction.TOP;
+import static chess.domain.board.Direction.TOP_LEFT;
+import static chess.domain.board.Direction.TOP_RIGHT;
 
-public class Queen extends Piece {
+import chess.domain.piece.attribute.Color;
+import java.util.Arrays;
+
+public class Queen extends MultipleMovablePiece {
 
     public Queen(Color color) {
-        super(new Name("Q"), color, new QueenMoveStrategy());
+        super(color, "Q", Arrays.asList(TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
     }
 
     @Override
-    public boolean canMove(Piece targetPiece, Position from, Position to) {
-        return moveStrategy.isValidateCanMove(color, from, to);
+    public boolean isKing() {
+        return false;
     }
 }
