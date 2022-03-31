@@ -36,7 +36,7 @@ public class Board {
 
         Piece pieceAtTo = movePiece(from, to);
 
-        if (pieceAtTo instanceof King) {
+        if (pieceAtTo.isKing()) {
             return MoveResult.ENDED;
         }
 
