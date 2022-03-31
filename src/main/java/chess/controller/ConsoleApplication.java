@@ -1,15 +1,13 @@
 package chess.controller;
 
+import chess.controller.menu.Menu;
 import chess.controller.menu.MenuType;
-import chess.controller.menu.Move;
 import chess.domain.board.Board;
 import chess.view.InputView;
-import chess.view.MoveInfo;
 import chess.view.OutputView;
 
 public class ConsoleApplication {
 
-    private static final int MENU_INDEX = 0;
     private static final Board board = new Board();
 
     public static void main(String[] args) {
@@ -33,20 +31,13 @@ public class ConsoleApplication {
 
     private static boolean hasNext() {
         String[] inputValue = InputView.inputMenu();
-        MenuType menuType;
+        Menu menu;
         try {
-            menuType = MenuType.of(inputValue[MENU_INDEX]);
-            return play(menuType, inputValue);
+            menu = MenuType.of(inputValue);
+            return menu.play(board);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return hasNext();
         }
-    }
-
-    private static boolean play(MenuType menuType, String[] inputValue) {
-        if (menuType.isMove()) {
-            return new Move().play(board, new MoveInfo(inputValue));
-        }
-        return menuType.play(board);
     }
 }

@@ -1,35 +1,37 @@
 package chess.controller.menu;
 
-import chess.domain.board.Board;
 import java.util.Arrays;
+import java.util.function.Function;
 
 public enum MenuType {
 
-    START("start", new Start()),
-    MOVE("move", new Move()),
-    STATUS("status", new Status()),
-    END("end", new End());
+    START("start", text -> new Start()),
+    MOVE("move", MenuType::toMove),
+    STATUS("status", text -> new Status()),
+    END("end", text -> new End());
+
+
+    private static final int MENU_INDEX = 0;
+    private static final int BEFORE_POSITION = 1;
+    private static final int AFTER_POSITION = 2;
 
     private final String value;
-    private final Menu menu;
+    private final Function<String[], Menu> menu;
 
-    MenuType(String value, Menu menu) {
+    MenuType(String value, Function<String[], Menu> menu) {
         this.value = value;
         this.menu = menu;
     }
 
-    public static MenuType of(String value) {
+    public static Menu of(String[] values) {
         return Arrays.stream(MenuType.values())
-                .filter(it -> it.value.equalsIgnoreCase(value))
+                .filter(it -> it.value.equalsIgnoreCase(values[MENU_INDEX]))
+                .map(it -> it.menu.apply(values))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 명령어 입니다."));
     }
 
-    public boolean play(Board board) {
-        return this.menu.play(board);
-    }
-
-    public boolean isMove() {
-        return this == MOVE;
+    private static Move toMove(String[] value) {
+        return new Move(value[BEFORE_POSITION], value[AFTER_POSITION]);
     }
 }
