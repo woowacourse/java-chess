@@ -70,6 +70,6 @@ public enum File {
     }
 
     public int calculate(File other) {
-        return Math.abs(order - other.order);
+        return other.order - this.order;
     }
 }

@@ -21,7 +21,7 @@ public final class Queen extends Piece {
     }
 
     private boolean isDiagonalMove(List<Integer> distances) {
-        return distances.get(FILE_INDEX).equals(distances.get(RANK_INDEX));
+        return Math.abs(distances.get(FILE_INDEX)) == Math.abs(distances.get(RANK_INDEX));
     }
 
     private boolean isHorizonOrVerticalMove(List<Integer> distances) {

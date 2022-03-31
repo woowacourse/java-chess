@@ -21,7 +21,9 @@ public final class King extends Piece {
     }
 
     private boolean isDiagonalMove(List<Integer> distances) {
-        return distances.get(FILE_INDEX).equals(distances.get(RANK_INDEX)) && distances.get(FILE_INDEX) == 1;
+        final int dx = Math.abs(distances.get(FILE_INDEX));
+        final int dy = Math.abs(distances.get(RANK_INDEX));
+        return dx == dy && dx == 1;
     }
 
     private boolean isHorizonOrVerticalMove(List<Integer> distances) {

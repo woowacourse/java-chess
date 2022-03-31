@@ -13,7 +13,7 @@ public final class Bishop extends Piece {
 
     @Override
     public boolean movable(List<Integer> distances, Piece target) {
-        boolean isMovableDistance = distances.get(FILE_INDEX).equals(distances.get(RANK_INDEX));
+        boolean isMovableDistance = Math.abs(distances.get(FILE_INDEX)) == (Math.abs(distances.get(RANK_INDEX)));
         boolean isOpponent = isOpponent(target);
 
         return isMovableDistance && isOpponent;

@@ -34,4 +34,8 @@ public final class Pawn extends Piece {
         return movable;
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

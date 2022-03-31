@@ -74,6 +74,6 @@ public enum Rank {
     }
 
     public int calculate(Rank other) {
-        return Math.abs(order - other.order);
+        return other.order - this.order;
     }
 }
