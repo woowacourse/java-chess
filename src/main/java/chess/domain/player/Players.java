@@ -95,6 +95,16 @@ public class Players {
                 .orElseThrow(() -> new NoSuchElementException("해당 색상의 플레이어를 찾을 수 없습니다."));
     }
 
+    public boolean isOnlyOneKingLeft() {
+        return countPlayersWithKingAlive() == 1;
+    }
+
+    private int countPlayersWithKingAlive() {
+        return (int) players.stream()
+                .filter(Player::isKingAlive)
+                .count();
+    }
+
     public Map<Position, Piece> getPiecesByPlayer(final Color color) {
         return findPlayerByColor(color).getPieces();
     }

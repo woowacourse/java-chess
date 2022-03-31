@@ -4,22 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.Color;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.movable.Pawn;
 import chess.domain.piece.movable.multiple.Queen;
+import chess.domain.piece.movable.single.King;
 
 class PlayersTest {
 
@@ -110,5 +112,23 @@ class PlayersTest {
 
         final Map<Position, Piece> playerPieces = players.getPiecesByPlayer(Color.WHITE);
         assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);
+    }
+
+    @DisplayName("킹이 살아있는 플레이어가 한명만 남았는지 확인할 수 있어야 한다.")
+    @ParameterizedTest
+    @MethodSource("provideForIsOnlyOneKingLeft")
+    void isOnlyOneKingLeft(final Piece piece, final boolean expected) {
+        final Players players = new Players(
+                new Player(Color.WHITE, Map.of(Position.from("a1"), King.getInstance())),
+                new Player(Color.BLACK, Map.of(Position.from("a8"), piece)));
+        final boolean actual = players.isOnlyOneKingLeft();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideForIsOnlyOneKingLeft() {
+        return Stream.of(
+                Arguments.of(Queen.getInstance(), true),
+                Arguments.of(King.getInstance(), false)
+        );
     }
 }

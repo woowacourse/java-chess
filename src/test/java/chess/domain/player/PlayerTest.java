@@ -23,6 +23,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.movable.Pawn;
 import chess.domain.piece.movable.multiple.Queen;
 import chess.domain.piece.movable.multiple.Rook;
+import chess.domain.piece.movable.single.King;
 
 class PlayerTest {
 
@@ -146,6 +147,22 @@ class PlayerTest {
 
         final Map<Position, Piece> playerPieces = player.getPieces();
         assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);
+    }
+
+    @DisplayName("킹이 살아있는지 확인할 수 있어야 한다.")
+    @ParameterizedTest
+    @MethodSource("provideForIsKingAlive")
+    void isKingAlive(final Piece piece, final boolean expected) {
+        final Player player = new Player(Color.WHITE, new HashMap<>(Map.of(Position.from("a1"), piece)));
+        final boolean actual = player.isKingAlive();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideForIsKingAlive() {
+        return Stream.of(
+                Arguments.of(King.getInstance(), true),
+                Arguments.of(Queen.getInstance(), false)
+        );
     }
 
     @DisplayName("본인의 색상과 비교할 수 있어야 한다.")

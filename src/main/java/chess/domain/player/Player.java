@@ -91,6 +91,12 @@ public class Player {
                 .orElseThrow(() -> new IllegalStateException("프로모션 가능한 폰이 존재하지 않습니다."));
     }
 
+    public boolean isKingAlive() {
+        return pieces.values()
+                .stream()
+                .anyMatch(Piece::isKing);
+    }
+
     public boolean isColorSame(final Color color) {
         return color.equals(this.color);
     }
