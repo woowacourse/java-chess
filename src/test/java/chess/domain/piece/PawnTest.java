@@ -117,4 +117,28 @@ class PawnTest {
 
         assertThat(pawn.exist(checkingPosition)).isTrue();
     }
+
+    @Test
+    @DisplayName("폰이 맞다면, true 를 반환한다.")
+    void isPawn() {
+        assertThat(
+                pawn.isPawn()).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNotPawnPiece")
+    @DisplayName("폰이 아니면, false 를 반환한다.")
+    void isNotPawn(final Piece piece) {
+        assertThat(piece.isPawn()).isFalse();
+    }
+
+    static Stream<Arguments> provideNotPawnPiece() {
+        final Position currentPosition = new Position(2, 'g');
+        return Stream.of(Arguments.of(
+                new Bishop(currentPosition),
+                new King(currentPosition),
+                new Queen(currentPosition),
+                new Rook(currentPosition)
+        ));
+    }
 }

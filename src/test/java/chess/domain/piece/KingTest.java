@@ -67,4 +67,27 @@ class KingTest {
 
         assertThat(king.exist(checkingPosition)).isTrue();
     }
+
+    @Test
+    @DisplayName("킹이 맞다면, true 를 반환한다.")
+    void isKing() {
+        assertThat(king.isKing()).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNotKingPiece")
+    @DisplayName("킹이 아니면, false 를 반환한다.")
+    void isNotKing(final Piece piece) {
+        assertThat(piece.isKing()).isFalse();
+    }
+
+    static Stream<Arguments> provideNotKingPiece() {
+        final Position currentPosition = new Position(2, 'g');
+        return Stream.of(Arguments.of(
+                new Bishop(currentPosition),
+                new Pawn(currentPosition),
+                new Queen(currentPosition),
+                new Rook(currentPosition)
+        ));
+    }
 }
