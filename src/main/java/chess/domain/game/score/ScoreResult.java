@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.XAxis;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -19,27 +20,27 @@ public class ScoreResult {
         Map<PieceColor, Score> value = new EnumMap<>(PieceColor.class);
 
         for (PieceColor pieceColor : PieceColor.values()) {
-            value.put(pieceColor, Score.from(calculateScore(board, pieceColor)));
+            value.put(pieceColor, calculateScore(board, pieceColor));
         }
 
         return value;
     }
 
-    private double calculateScore(Board board, PieceColor pieceColor) {
+    private Score calculateScore(Board board, PieceColor pieceColor) {
         return board.findPiecesByPieceColor(pieceColor)
                 .stream()
-                .mapToDouble(Piece::getScore)
-                .sum() - adjustPawnScore(board, pieceColor);
+                .map(Piece::getScore)
+                .reduce(Score::add)
+                .map(score -> score.subtract(adjustPawnScore(board, pieceColor)))
+                .orElse(Score.from(0)); // TODO: 계산실패시 적절한 처리 (Optional 관련)
     }
 
-    private double adjustPawnScore(Board board, PieceColor pieceColor) {
-        int totalDuplicatedPawnCount = 0;
+    private Score adjustPawnScore(Board board, PieceColor pieceColor) {
+        int duplicatedPawnCount = Arrays.stream(XAxis.values())
+                .mapToInt(xAxis -> board.getDuplicatedPawnCountByXAxis(pieceColor, xAxis))
+                .sum();
 
-        for (XAxis xAxis : XAxis.values()) {
-            totalDuplicatedPawnCount += board.getDuplicatedPawnCountByXAxis(pieceColor, xAxis);
-        }
-
-        return totalDuplicatedPawnCount * 0.5;
+        return Score.from(duplicatedPawnCount * 0.5);
     }
 
     public Score getScoreByPieceColor(PieceColor pieceColor) {

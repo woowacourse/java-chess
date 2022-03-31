@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.score.Score;
 import chess.domain.position.Position;
 
 public class Piece {
@@ -41,7 +42,7 @@ public class Piece {
 
     // TODO: 게터 제거해야함
     // TODO: getScore 가 Piece 의 역할일까?
-    public double getScore() {
+    public Score getScore() {
         return pieceType.getScore();
     }
 

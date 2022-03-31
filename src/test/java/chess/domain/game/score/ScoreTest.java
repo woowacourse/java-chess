@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
@@ -42,5 +43,35 @@ class ScoreTest {
 
         // then
         assertThat(expected).isTrue();
+    }
+
+    @DisplayName("add 메소드는 현재 Score값과 다른 Score값을 더한 새 Score를 생성하여 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"2,3,5", "2.5,3.5,6", "0,0,0"})
+    void add_returnsAddedNewScore(double first, double second, double result) {
+        // given
+        Score firstScore = Score.from(first);
+        Score secondScore = Score.from(second);
+
+        // when
+        Score actual = firstScore.add(secondScore);
+
+        // then
+        assertThat(actual).isEqualTo(Score.from(result));
+    }
+
+    @DisplayName("subtract 메소드는 현재 Score값과 다른 Score값을 뺀 새 Score를 생성하여 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"3,2,1", "3.5,2.0,1.5", "0,0,0"})
+    void subtract_returnsSubtractedNewScore(double first, double second, double result) {
+        // given
+        Score firstScore = Score.from(first);
+        Score secondScore = Score.from(second);
+
+        // when
+        Score actual = firstScore.subtract(secondScore);
+
+        // then
+        assertThat(actual).isEqualTo(Score.from(result));
     }
 }

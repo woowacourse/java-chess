@@ -19,6 +19,14 @@ public class Score {
         }
     }
 
+    public Score add(Score other) {
+        return new Score(this.value + other.value);
+    }
+
+    public Score subtract(Score other) {
+        return new Score(this.value - other.value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

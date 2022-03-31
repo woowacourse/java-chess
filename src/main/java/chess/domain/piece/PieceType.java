@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.game.score.Score;
 import chess.domain.piece.movingstrategy.BishopMovingStrategy;
 import chess.domain.piece.movingstrategy.KingMovingStrategy;
 import chess.domain.piece.movingstrategy.KnightMovingStrategy;
@@ -10,17 +11,17 @@ import chess.domain.piece.movingstrategy.RookMovingStrategy;
 import chess.domain.position.Position;
 
 public enum PieceType {
-    PAWN(1, new PawnMovingStrategy()),
-    ROOK(5, new RookMovingStrategy()),
-    KNIGHT(2.5, new KnightMovingStrategy()),
-    BISHOP(3, new BishopMovingStrategy()),
-    QUEEN(9, new QueenMovingStrategy()),
-    KING(0, new KingMovingStrategy());
+    PAWN(Score.from(1), new PawnMovingStrategy()),
+    ROOK(Score.from(5), new RookMovingStrategy()),
+    KNIGHT(Score.from(2.5), new KnightMovingStrategy()),
+    BISHOP(Score.from(3), new BishopMovingStrategy()),
+    QUEEN(Score.from(9), new QueenMovingStrategy()),
+    KING(Score.from(0), new KingMovingStrategy());
 
-    private final double score;
+    private final Score score;
     private final MovingStrategy movingStrategy;
 
-    PieceType(double score, MovingStrategy movingStrategy) {
+    PieceType(Score score, MovingStrategy movingStrategy) {
         this.score = score;
         this.movingStrategy = movingStrategy;
     }
@@ -33,7 +34,7 @@ public enum PieceType {
         return movingStrategy.isAbleToAttack(from, to, pieceColor);
     }
 
-    public double getScore() {
+    public Score getScore() {
         return score;
     }
 }
