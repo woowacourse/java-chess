@@ -18,25 +18,39 @@ public class PositionTest {
     @Test
     @DisplayName("범위가 정상인 경우, Position을 생성한다.")
     void createPosition() {
-        assertThatCode(() -> new Position(2, 'B'))
+        assertThatCode(() -> new Position(2, 'b'))
                 .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
-    @DisplayName("범위를 벗어난 경우, 예외를 발생시킨다.")
-    @MethodSource("provideInvalidPosition")
-    void createPositionException(final int rank, final char file) {
+    @DisplayName("rank 범위를 벗어난 경우, 예외를 발생시킨다.")
+    @MethodSource("provideInvalidPositionRank")
+    void createPositionRankException(final int rank, final char file) {
         assertThatThrownBy(() -> new Position(rank, file))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 범위입니다.");
+                .hasMessage("올바르지 않은 rank 범위 입니다.");
     }
 
-    private static Stream<Arguments> provideInvalidPosition() {
+    private static Stream<Arguments> provideInvalidPositionRank() {
         return Stream.of(
                 Arguments.of(0, 'a'),
-                Arguments.of(4, 'i'),
-                Arguments.of(9, 'a'),
-                Arguments.of(8, 'I')
+                Arguments.of(9, 'a')
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("file 범위를 벗어난 경우, 예외를 발생시킨다.")
+    @MethodSource("provideInvalidPositionFile")
+    void createPositionFileException(final int rank, final char file) {
+        assertThatThrownBy(() -> new Position(rank, file))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("올바르지 않은 file 범위 입니다.");
+    }
+
+    private static Stream<Arguments> provideInvalidPositionFile() {
+        return Stream.of(
+                Arguments.of(2, 'i'),
+                Arguments.of(2, 'A')
         );
     }
 
@@ -110,7 +124,8 @@ public class PositionTest {
     @ParameterizedTest(name = "{2}")
     @MethodSource("provideDestinationPosition")
     @DisplayName("목적지까지 존재하는 중간 위치를 모두 구한다.")
-    void findAllBetweenCurrentAndDestination(final Position position, final List<Position> expected, final String name) {
+    void findAllBetweenCurrentAndDestination(final Position position, final List<Position> expected,
+            final String name) {
         final Position currentPosition = new Position(4, 'd');
 
         final List<Position> actual = currentPosition.findAllBetweenPosition(position);

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.player.Team;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isSameFile(char file) {
+    public boolean isSameFile(File file) {
         return position.isSameFile(file);
     }
 

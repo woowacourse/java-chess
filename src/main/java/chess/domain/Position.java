@@ -8,39 +8,22 @@ import java.util.Objects;
 
 public class Position {
 
-    private static final int MIN_RANK_RANGE = 1;
-    private static final int MAX_RANK_RANGE = 8;
-    private static final char MIN_FILE_RANGE = 'a';
-    private static final char MAX_FILE_RANGE = 'h';
-    private static final int WHITE_PAWN_FIRST_RANK = 2;
-    private static final int BLACK_PAWN_FIRST_RANK = 7;
     private static final int KNIGHT_MOVE_DISTANCE = 3;
 
-    private final int rank;
-    private final char file;
+    private final Rank rank;
+    private final File file;
 
     public Position(final int rank, final char file) {
-        char lowerCaseFile = Character.toLowerCase(file);
-        validatePositionRange(rank, lowerCaseFile);
-        this.rank = rank;
-        this.file = lowerCaseFile;
+        this.rank = Rank.from(rank);
+        this.file = File.from(file);
     }
 
     public Position(String position) {
         this(Character.getNumericValue(position.charAt(1)), position.charAt(0));
     }
 
-    private void validatePositionRange(final int rank, final char file) {
-        if (rank < MIN_RANK_RANGE || rank > MAX_RANK_RANGE) {
-            throw new IllegalArgumentException("잘못된 범위입니다.");
-        }
-        if (file < MIN_FILE_RANGE || file > MAX_FILE_RANGE) {
-            throw new IllegalArgumentException("잘못된 범위입니다.");
-        }
-    }
-
     public boolean isFirstTurnOfPawn() {
-        return rank == WHITE_PAWN_FIRST_RANK || rank == BLACK_PAWN_FIRST_RANK;
+        return rank.isFirstTurnOfPawn();
     }
 
     public List<Position> findAllBetweenPosition(final Position destination) {
@@ -57,20 +40,20 @@ public class Position {
     }
 
     public boolean isMoveLinear(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
+        final int fileDistance = file.calculateFileInAbsolute(destination.file);
+        final int rankDistance = rank.calculateRankInAbsolute(destination.rank);
         return fileDistance == 0 && rankDistance > 0 || fileDistance > 0 && rankDistance == 0;
     }
 
     public boolean isMoveDiagonal(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
+        final int fileDistance = file.calculateFileInAbsolute(destination.file);
+        final int rankDistance =rank.calculateRankInAbsolute(destination.rank);
         return fileDistance + rankDistance != 0 && fileDistance == rankDistance;
     }
 
     public boolean isMoveOfKnight(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
+        final int fileDistance = file.calculateFileInAbsolute(destination.file);
+        final int rankDistance = rank.calculateRankInAbsolute(destination.rank);
         if (fileDistance + rankDistance != KNIGHT_MOVE_DISTANCE) {
             return false;
         }
@@ -82,14 +65,14 @@ public class Position {
             return false;
         }
         if (team == Team.BLACK) {
-            return rank - destination.rank > 0;
+            return rank.calculateRank(destination.rank) > 0;
         }
-        return destination.rank - rank > 0;
+        return destination.rank.calculateRank(rank) > 0;
     }
 
     public boolean isMoveDiagonalForward(final Position destination, final Team team) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = destination.rank - rank;
+        final int fileDistance = file.calculateFileInAbsolute(destination.file);
+        final int rankDistance = destination.rank.calculateRank(rank);
         if (team == Team.BLACK) {
             return fileDistance > 0 && fileDistance == Math.abs(rankDistance);
         }
@@ -97,22 +80,22 @@ public class Position {
     }
 
     public int calculateDistance(final Position destination) {
-        final int fileDistance = Math.abs(file - destination.file);
-        final int rankDistance = Math.abs(rank - destination.rank);
+        final int fileDistance = file.calculateFileInAbsolute(destination.file);
+        final int rankDistance = rank.calculateRankInAbsolute(destination.rank);
         return fileDistance + rankDistance;
     }
 
-    public boolean isSameFile(final char file) {
+    public boolean isSameFile(final File file) {
         return this.file == file;
     }
 
     private List<Position> findBetweenLinearPosition(final Position destination) {
         final List<Position> positions = new ArrayList<>();
 
-        final int startRank = Math.min(rank, destination.rank);
-        final int startFile = Math.min(file, destination.file);
-        final int endRank = Math.max(rank, destination.rank);
-        final int endFile = Math.max(file, destination.file);
+        final int startRank = Math.min(rank.getValue(), destination.rank.getValue());
+        final int startFile = Math.min(file.getValue(), destination.file.getValue());
+        final int endRank = Math.max(rank.getValue(), destination.rank.getValue());
+        final int endFile = Math.max(file.getValue(), destination.file.getValue());
 
         addBetweenVerticalPosition(positions, startRank, endRank);
         addBetweenHorizonPosition(positions, startFile, endFile);
@@ -120,23 +103,25 @@ public class Position {
     }
 
     private void addBetweenVerticalPosition(final List<Position> positions, final int startRank, final int endRank) {
-        for (int i = startRank + 1; i < endRank; i++) {
-            positions.add(new Position(i, file));
+        final char file = this.file.getValue();
+        for (int rank = startRank + 1; rank < endRank; rank++) {
+            positions.add(new Position(rank, file));
         }
     }
 
     private void addBetweenHorizonPosition(final List<Position> positions, final int startFile, final int endFile) {
-        for (int i = startFile + 1; i < endFile; i++) {
-            positions.add(new Position(rank, (char) i));
+        final int rank = this.rank.getValue();
+        for (int file = startFile + 1; file < endFile; file++) {
+            positions.add(new Position(rank, (char) file));
         }
     }
 
     private List<Position> findBetweenDiagonalPosition(final Position destination) {
         final List<Position> positions = new ArrayList<>();
 
-        final int startRank = Math.min(rank, destination.rank);
-        final int startFile = Math.min(file, destination.file);
-        final int end = Math.max(rank, destination.rank);
+        final int startRank = Math.min(rank.getValue(), destination.rank.getValue());
+        final int startFile = Math.min(file.getValue(), destination.file.getValue());
+        final int end = Math.max(rank.getValue(), destination.rank.getValue());
 
         addBetweenDiagonalPosition(positions, startRank, startFile, end);
         return positions;
@@ -144,8 +129,8 @@ public class Position {
 
     private void addBetweenDiagonalPosition(final List<Position> positions,
             final int startRank, final int startFile, final int end) {
-        for (int i = startRank + 1, j = startFile + 1; i < end; i++, j++) {
-            positions.add(new Position(i, (char) j));
+        for (int rank = startRank + 1, file = startFile + 1; rank < end; rank++, file++) {
+            positions.add(new Position(rank, (char) file));
         }
     }
 
@@ -167,10 +152,10 @@ public class Position {
     }
 
     public int getRank() {
-        return rank;
+        return rank.getValue();
     }
 
     public int getFile() {
-        return file - 'a';
+        return file.getValue() - 'a';
     }
 }

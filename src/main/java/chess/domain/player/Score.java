@@ -1,5 +1,6 @@
 package chess.domain.player;
 
+import chess.domain.File;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class Score {
 
     private double calculateDuplicatePawnScore(final List<Piece> pieces) {
         int pawnCountByFile = 0;
-        for (char file = 'a'; file <= 'h'; file++) {
+        for (File file : File.values()) {
             pawnCountByFile += countPluralPawnByFile(pieces, file);
         }
         return DUPLICATE_PAWN_SCORE * pawnCountByFile;
     }
 
-    private int countPluralPawnByFile(final List<Piece> pieces, final char file) {
+    private int countPluralPawnByFile(final List<Piece> pieces, final File file) {
         final int count = (int) pieces.stream()
                 .filter(piece -> piece.isPawn() && piece.isSameFile(file))
                 .count();
