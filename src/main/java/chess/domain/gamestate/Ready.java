@@ -5,6 +5,8 @@ import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
+import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Ready implements State {
 
@@ -67,7 +69,7 @@ public class Ready implements State {
     }
 
     @Override
-    public Board getBoard() {
+    public Map<Position, Piece> getBoard() {
         throw new IllegalStateException(NOT_INIT_CHESS_BOARD);
     }
 }

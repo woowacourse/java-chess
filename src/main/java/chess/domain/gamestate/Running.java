@@ -8,6 +8,8 @@ import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Running implements State {
 
@@ -125,7 +127,7 @@ public class Running implements State {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public Map<Position, Piece> getBoard() {
+        return new TreeMap<>(board.getBoard());
     }
 }

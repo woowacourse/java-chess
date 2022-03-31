@@ -7,6 +7,7 @@ import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
+import java.util.Map;
 
 public class Finished implements State {
 
@@ -82,7 +83,7 @@ public class Finished implements State {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
     }
 }
