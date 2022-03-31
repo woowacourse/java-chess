@@ -49,4 +49,12 @@ public enum Rank {
     public Rank getNext(int distance) {
         return Rank.indexOf(index + distance);
     }
+
+    public int getGap(Rank rank) {
+        int gap = minus(rank);
+        if (gap == 0) {
+            return gap;
+        }
+        return gap / absMinus(rank);
+    }
 }

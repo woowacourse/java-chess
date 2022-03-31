@@ -49,4 +49,12 @@ public enum File {
     public int minus(File file) {
         return index - file.index;
     }
+
+    public int getGap(File file) {
+        int gap = minus(file);
+        if (gap == 0) {
+            return gap;
+        }
+        return gap / absMinus(file);
+    }
 }

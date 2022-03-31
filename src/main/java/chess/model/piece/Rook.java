@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
 
@@ -11,6 +12,7 @@ public class Rook extends Piece implements RookMovable {
     private static final String BLACK_NAME = "R";
     private static final String WHITE_NAME = "r";
     private static final double SCORE = 5D;
+    private static final List<Direction> directions = Direction.linear();
 
     public Rook(Position position, Team team) {
         super(position, team);
@@ -23,7 +25,7 @@ public class Rook extends Piece implements RookMovable {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return source.isVertical(target) || source.isHorizontal(target);
+        return directions.contains(Direction.of(source, target));
     }
 
     @Override
@@ -45,9 +47,5 @@ public class Rook extends Piece implements RookMovable {
             return getVerticalPositions(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
-    }
-
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isVertical(position) || this.position.isHorizontal(position);
     }
 }
