@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.board.Position;
+import chess.domain.board.StatusResult;
 import chess.domain.piece.Piece;
 import java.util.Map;
 

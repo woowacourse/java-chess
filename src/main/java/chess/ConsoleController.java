@@ -25,7 +25,7 @@ public class ConsoleController {
 
     private Command inputCommand() {
         try {
-            return Command.of(InputView.requestStartOrEnd());
+            return Command.of(InputView.requestToInputCommand());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return inputCommand();
@@ -34,7 +34,7 @@ public class ConsoleController {
 
     private Command inputCommandAndExecute(Command command) {
         try {
-            command = command.execute(InputView.requestCommand());
+            command = command.execute(InputView.requestToInputCommand());
             return command;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

@@ -1,10 +1,11 @@
 package chess.view;
 
+import chess.console.GameManager;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Result;
 import chess.domain.board.Row;
-import chess.domain.command.StatusResult;
+import chess.domain.board.StatusResult;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -45,5 +46,13 @@ public class OutputView {
         if (result.equals(Result.DRAW)) {
             System.out.println("무승부입니다.");
         }
+    }
+
+    public static void printBoard(GameManager gameManager) {
+        printBoard(gameManager.getBoard());
+    }
+
+    public static void printStatus(GameManager gameManager) {
+        printStatus(gameManager.getStatus());
     }
 }
