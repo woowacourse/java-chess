@@ -1,23 +1,24 @@
-package chess.command;
+package chess.controller.command;
 
 import chess.domain.ChessGame;
 import chess.view.OutputView;
 
-public class Status implements Command {
+public class Start implements Command {
 
-    private static final Status INSTANCE = new Status();
+    private static final Start INSTANCE = new Start();
 
-    private Status() {
+    private Start() {
     }
 
-    public static Status getInstance() {
+    public static Start getInstance() {
         return INSTANCE;
     }
 
     @Override
     public void execute(final ChessGame chessGame) {
         try {
-            OutputView.printStatus(chessGame.calculateScore());
+            chessGame.start();
+            OutputView.printChessBoard(chessGame.findAllPiece());
         } catch (final IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
         }

@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.command.Command;
-import chess.command.End;
-import chess.command.Move;
-import chess.command.Start;
-import chess.command.Status;
+import chess.controller.command.Command;
+import chess.controller.command.End;
+import chess.controller.command.Move;
+import chess.controller.command.Start;
+import chess.controller.command.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;

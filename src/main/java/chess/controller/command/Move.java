@@ -1,4 +1,4 @@
-package chess.command;
+package chess.controller.command;
 
 import chess.domain.ChessGame;
 import chess.domain.Score;
