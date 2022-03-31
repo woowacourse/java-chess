@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.state.Ready;
+import chess.domain.state.State;
 import java.util.Map;
 
 public abstract class Command {
@@ -13,7 +13,7 @@ public abstract class Command {
 
     public static Command of(String input) {
         if (input.equals(START)) {
-            return new Start(Ready.start(Board.getInitializedInstance()));
+            return new Start(State.start(Board.getInitializedInstance()));
         }
         if (input.equals(END)) {
             return new End();

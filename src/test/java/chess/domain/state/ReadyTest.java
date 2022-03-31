@@ -1,11 +1,11 @@
 package chess.domain.state;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ReadyTest {
 
@@ -13,7 +13,7 @@ class ReadyTest {
     @Test
     void whiteTurn() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
         assertThat(whiteTurn).isInstanceOf(WhiteTurn.class);
     }
 
@@ -21,7 +21,7 @@ class ReadyTest {
     @Test
     void blackTurn() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
         State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
 
         assertThat(blackTurn).isInstanceOf(BlackTurn.class);
@@ -31,7 +31,7 @@ class ReadyTest {
     @Test
     void whiteBlackWhiteTurn() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
         State blackTurn = whiteTurn.movePiece(Position.of("a2"), Position.of("a3"));
         State whiteTurn2 = blackTurn.movePiece(Position.of("a7"), Position.of("a6"));
 

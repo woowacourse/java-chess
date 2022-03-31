@@ -1,5 +1,6 @@
 package chess.domain.state;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Result;
 import chess.domain.piece.Color;
@@ -17,4 +18,8 @@ public interface State {
     Result getResult();
 
     boolean isFinished();
+
+    static State start(Board board) {
+        return new WhiteTurn(board);
+    }
 }

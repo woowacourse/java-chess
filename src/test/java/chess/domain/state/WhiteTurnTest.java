@@ -1,16 +1,19 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.*;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class WhiteTurnTest {
 
@@ -18,7 +21,7 @@ class WhiteTurnTest {
     @Test
     void test() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
 
         Position src = Position.of("a2");
         Position dest = Position.of("a3");
@@ -32,7 +35,7 @@ class WhiteTurnTest {
     @Test
     void testMoveError() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
 
         Position src = Position.of("a7");
         Position dest = Position.of("a6");
@@ -46,7 +49,7 @@ class WhiteTurnTest {
     @Test
     void testBlankMoveError() {
         Board board = Board.getInitializedInstance();
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
 
         Position src = Position.of("d5");
         Position dest = Position.of("a6");
@@ -65,7 +68,7 @@ class WhiteTurnTest {
         value.put(Position.of("a4"), new King(Color.WHITE));
         Board board = new Board(value);
 
-        State whiteTurn = Ready.start(board);
+        State whiteTurn = State.start(board);
         State state = whiteTurn.movePiece(Position.of("d4"), Position.of("d5"));
 
         assertThat(state).isInstanceOf(WhiteWin.class);
