@@ -44,7 +44,7 @@ public abstract class Piece {
 
     public abstract boolean isNullPiece();
 
-    public boolean isSameCampWith(final Camp camp) {
-        return this.camp == camp;
+    public boolean isSameCampWith(final Camp otherCamp) {
+        return this.camp == otherCamp;
     }
 }
