@@ -22,7 +22,7 @@ public enum PieceSymbol {
     }
 
     public String symbol(final Player player) {
-        if (player.equals(Player.NULL)) {
+        if (player==Player.NULL) {
             return NULL.symbol;
         }
         if (player == Player.BLACK) {

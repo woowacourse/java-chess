@@ -28,10 +28,10 @@ public class ChessBoard {
     }
 
     private boolean isPawnAttackDirection(final Direction moveDirection) {
-        return moveDirection.equals(Direction.NORTHWEST)
-            || moveDirection.equals(Direction.NORTHEAST)
-            || moveDirection.equals(Direction.SOUTHEAST)
-            || moveDirection.equals(Direction.SOUTHWEST);
+        return moveDirection == Direction.NORTHWEST
+            || moveDirection == Direction.NORTHEAST
+            || moveDirection == Direction.SOUTHEAST
+            || moveDirection == Direction.SOUTHWEST;
     }
 
     public void move(final Position source, final Position target) {

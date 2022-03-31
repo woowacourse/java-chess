@@ -47,8 +47,8 @@
     - [ ] King을 확인하는 메서드 또한 Piece에서 `isKing`과 같이 구현하는 것을 추천
     - [ ] 구현체 기물 클래스에서 `List<Direction>`은 필드가 아닌 상수로 선언해도 된다.
 - [x] `gradlew.bat` : "@rem you may not use this file except in compliance with the License." 메세지
-  - 체스보드 행,열(File, Rank 클래스)의 이름을 수정하는 과정에서 발생.
-- [ ] enum 간의 비교는 `==`로 적용
+    - 체스보드 행,열(File, Rank 클래스)의 이름을 수정하는 과정에서 발생.
+- [x] enum 간의 비교는 `==`로 적용
 - [ ] `Status`, 이미 계산된 값을 통해 객체를 생성하면 이 객체의 책임은 무엇인가.
     - [ ] 생성자는 유효성 검사 및 초기화하는 작업만 하도록 수정
         - 객체 생성 비용의 증가
@@ -75,3 +75,4 @@
 ## 참고 자료
 
 - [Null Object Pattern](https://johngrib.github.io/wiki/pattern/null-object/)
+- [enum `==` vs. `equals()`](https://stackoverflow.com/questions/1750435/comparing-java-enum-members-or-equals)

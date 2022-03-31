@@ -35,7 +35,7 @@ public class ChessGame {
     }
 
     public void changeTurn() {
-        if (currentPlayer.equals(Player.WHITE)) {
+        if (currentPlayer == Player.WHITE) {
             this.currentPlayer = Player.BLACK;
             return;
         }

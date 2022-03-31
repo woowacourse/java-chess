@@ -21,7 +21,7 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     private int initStartLine(final Player player) {
-        if (player.equals(Player.BLACK)) {
+        if (player == Player.BLACK) {
             return BLACK_START_LINE;
         }
         return WHITE_START_LINE;
@@ -29,7 +29,7 @@ public class Pawn extends SpecificLocationPiece {
 
     private List<Direction> initDirections(final Player player) {
         List<Direction> directions = new ArrayList<>();
-        if (player.equals(Player.BLACK)) {
+        if (player == Player.BLACK) {
             directions.add(Direction.SOUTHWEST);
             directions.add(Direction.SOUTHEAST);
             directions.add(Direction.SOUTH);
@@ -71,10 +71,10 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     private Direction generateAddDirection(final Direction direction) {
-        if (direction.equals(Direction.NORTH_NORTH)) {
+        if (direction == Direction.NORTH_NORTH) {
             return Direction.NORTH;
         }
-        if (direction.equals(Direction.SOUTH_SOUTH)) {
+        if (direction == Direction.SOUTH_SOUTH) {
             return Direction.SOUTH;
         }
         return null;
@@ -108,7 +108,7 @@ public class Pawn extends SpecificLocationPiece {
     }
 
     private boolean isTwoSpaceMoveDirection(final Direction direction) {
-        return direction.equals(Direction.SOUTH_SOUTH) || direction.equals(Direction.NORTH_NORTH);
+        return direction == Direction.SOUTH_SOUTH || direction == Direction.NORTH_NORTH;
     }
 
     @Override
