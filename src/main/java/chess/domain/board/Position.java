@@ -12,10 +12,10 @@ public class Position {
     private static final int RANK_INDEX = 1;
     private static final String RANK_FILE_DELIMITER = "";
 
-    private static final List<Position> allPositions;
+    private static final List<Position> ALL_POSITIONS;
 
     static {
-        allPositions = Arrays.stream(File.values())
+        ALL_POSITIONS = Arrays.stream(File.values())
                 .flatMap(Position::generatePositionOf)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -34,7 +34,7 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        return allPositions.stream()
+        return ALL_POSITIONS.stream()
                 .filter(position -> position.file == file)
                 .filter(position -> position.rank == rank)
                 .findAny()
