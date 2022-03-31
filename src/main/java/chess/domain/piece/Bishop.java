@@ -15,9 +15,13 @@ public class Bishop extends Piece {
     protected List<Movement> chooseMovements() {
         return List.of(
                 Movement.SOUTH_EAST_UNLIMITED,
+                Movement.SOUTH_EAST_1STEP,
                 Movement.SOUTH_WEST_UNLIMITED,
+                Movement.SOUTH_WEST_1STEP,
                 Movement.NORTH_EAST_UNLIMITED,
-                Movement.NORTH_WEST_UNLIMITED
+                Movement.NORTH_EAST_1STEP,
+                Movement.NORTH_WEST_UNLIMITED,
+                Movement.NORTH_WEST_1STEP
         );
     }
 

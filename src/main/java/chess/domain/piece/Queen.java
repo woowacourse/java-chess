@@ -15,13 +15,23 @@ public class Queen extends Piece {
     protected List<Movement> chooseMovements() {
         return List.of(
                 Movement.EAST_UNLIMITED,
+                Movement.EAST_1STEP,
                 Movement.WEST_UNLIMITED,
+                Movement.WEST_1STEP,
                 Movement.SOUTH_UNLIMITED,
+                Movement.SOUTH_1STEP,
+                Movement.SOUTH_2STEP,
                 Movement.NORTH_UNLIMITED,
+                Movement.NORTH_1STEP,
+                Movement.NORTH_2STEP,
                 Movement.SOUTH_EAST_UNLIMITED,
+                Movement.SOUTH_EAST_1STEP,
                 Movement.SOUTH_WEST_UNLIMITED,
+                Movement.SOUTH_WEST_1STEP,
                 Movement.NORTH_EAST_UNLIMITED,
-                Movement.NORTH_WEST_UNLIMITED
+                Movement.NORTH_EAST_1STEP,
+                Movement.NORTH_WEST_UNLIMITED,
+                Movement.NORTH_WEST_1STEP
         );
     }
 
