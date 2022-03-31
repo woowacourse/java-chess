@@ -1,0 +1,40 @@
+package chess.model.state.running;
+
+import chess.model.Command;
+import chess.model.Team;
+import chess.model.board.Board;
+import chess.model.position.Position;
+import chess.model.state.finished.End;
+import chess.model.state.State;
+import java.util.List;
+
+public class WhiteTurn extends Running {
+
+    private final static Team WHITE = Team.WHITE;
+
+    public WhiteTurn(Board board) {
+        super(board);
+    }
+
+    @Override
+    public State proceed(List<String> inputs) {
+        Command command = Command.of(inputs.get(0));
+        if (command.isEnd()) {
+            return new End();
+        }
+        if (command.isMove()) {
+            movePieceFrom(inputs);
+            return new BlackTurn(board);
+        }
+        throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위한 명령어가 아닙니다.");
+    }
+
+    private void movePieceFrom(List<String> command) {
+        checkWhitePieceAt(Position.from(command.get(1)));
+        board.move(Position.from(command.get(1)), Position.from(command.get(2)));
+    }
+
+    private void checkWhitePieceAt(Position source) {
+        board.checkSameTeam(WHITE, source);
+    }
+}

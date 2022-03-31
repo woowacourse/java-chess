@@ -1,7 +1,6 @@
 package chess.model.board;
 
 import static chess.model.Team.NONE;
-import static chess.model.Team.WHITE;
 
 import chess.model.Team;
 import chess.model.direction.route.Route;
@@ -18,34 +17,16 @@ public class Board {
     private static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
-    private final Team currentTeam;
 
-    private Board(Map<Position, Piece> board, Team team) {
-        this.board = board;
-        this.currentTeam = team;
+    public Board() {
+        this.board = BoardCreator.create();
     }
 
-    public static Board init() {
-        return new Board(BoardCreator.create(), WHITE);
-    }
-
-    public static Board of(final Board otherBoard) {
-        return new Board(otherBoard.board, otherBoard.currentTeam.opponent());
-    }
-
-    public Board move(final Position source, final Position target) {
+    public void move(final Position source, final Position target) {
         checkMovablePiece(source, target);
-        checkSameWithCurrentTeam(source);
         checkPawnCanMove(source, target);
         checkPieceCanMove(source, target);
         movePiece(source, target);
-        return new Board(board, currentTeam);
-    }
-
-    private void checkSameWithCurrentTeam(final Position source) {
-        if (board.get(source).isOpponent(currentTeam)) {
-            throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직일 수 없습니다.");
-        }
     }
 
     private void checkMovablePiece(final Position source, final Position target) {
@@ -104,5 +85,11 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public void checkSameTeam(Team team, Position source) {
+        if (!board.get(source).isSame(team)) {
+            throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직 일 수 없습니다.");
+        }
     }
 }
