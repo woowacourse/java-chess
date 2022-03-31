@@ -30,12 +30,12 @@ public class Finished implements State {
 
 	@Override
 	public double statusOfBlack() {
-		return board.calculateScoreOfBlack();
+		return board.scoreOfBlack();
 	}
 
 	@Override
 	public double statusOfWhite() {
-		return board.calculateScoreOfWhite();
+		return board.scoreOfWhite();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class Finished implements State {
 		if (this.board.hasWhiteKingCaptured()) {
 			return Winner.BLACK;
 		}
-		return Winner.of(this.board.calculateScoreOfBlack(), this.board.calculateScoreOfWhite());
+		return Winner.of(this.board.scoreOfBlack(), this.board.scoreOfWhite());
 	}
 
 	@Override
