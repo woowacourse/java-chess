@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -30,14 +31,14 @@ class BlackTurnTest {
                 .hasMessage("이미 게임 중 이므로 게임을 시작할 수 없습니다.");
     }
 
-    @DisplayName("status 메소드는 ReadyToStart 를 생성하여 반환한다.")
+    @DisplayName("status 메소드는 ScoreResult 를 생성하여 반환한다.")
     @Test
     void status_returnNewReadyToStart() {
         // when
-        GameState actual = blackTurn.status();
+        ScoreResult actual = blackTurn.status();
 
         // then
-        assertThat(actual).isInstanceOf(ReadyToStart.class);
+        assertThat(actual).isInstanceOf(ScoreResult.class);
     }
 
     @DisplayName("getBoard 메소드는 현재 게임의 Board 를 반환한다.")

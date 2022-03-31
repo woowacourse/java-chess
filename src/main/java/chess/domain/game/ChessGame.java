@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.score.ScoreResult;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.ReadyToStart;
 import chess.domain.position.Position;
@@ -17,8 +18,8 @@ public class ChessGame {
         this.state = state.start();
     }
 
-    public void showStatus() {
-        this.state = state.status();
+    public ScoreResult showStatus() {
+        return state.status();
     }
 
     public void movePiece(Position from, Position to) {

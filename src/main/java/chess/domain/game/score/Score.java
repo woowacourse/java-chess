@@ -27,6 +27,10 @@ public class Score {
         return new Score(this.value - other.value);
     }
 
+    public double getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

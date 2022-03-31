@@ -1,6 +1,7 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
+import chess.domain.game.score.ScoreResult;
 
 public abstract class InGame implements GameState {
 
@@ -16,8 +17,8 @@ public abstract class InGame implements GameState {
     }
 
     @Override
-    public GameState status() {
-        return new ReadyToStart();
+    public ScoreResult status() {
+        return new ScoreResult(board);
     }
 
     @Override

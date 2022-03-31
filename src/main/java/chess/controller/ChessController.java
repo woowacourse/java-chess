@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
+import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -35,8 +36,8 @@ public class ChessController {
                 }
 
                 if (command.equals("status")) {
-                    chessGame.showStatus();
-                    OutputView.printScore(chessGame.getBoard());
+                    ScoreResult scoreResult = chessGame.showStatus();
+                    OutputView.printScore(scoreResult);
                 }
 
                 if (command.equals("end")) {

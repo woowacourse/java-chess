@@ -22,11 +22,9 @@ public class OutputView {
         System.out.println(boardDto.getBoardText());
     }
 
-    public static void printScore(Board board) {
-        ScoreResult scoreResult = new ScoreResult(board);
-
-        System.out.println("흰색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.WHITE));
-        System.out.println("검정색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.BLACK));
+    public static void printScore(ScoreResult scoreResult) {
+        System.out.println("흰색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.WHITE).getValue());
+        System.out.println("검정색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.BLACK).getValue());
     }
 
     public static void printException(Exception exception) {
