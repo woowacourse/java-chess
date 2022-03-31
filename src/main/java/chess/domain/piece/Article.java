@@ -10,6 +10,8 @@ public interface Article {
 
     boolean isMovable(Position from, Position to, ChessBoard chessBoard);
 
+    boolean isSameTeamPiece(Article article);
+
     Color getColor();
 
     String getName();

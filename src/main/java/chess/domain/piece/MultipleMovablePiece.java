@@ -18,7 +18,7 @@ public abstract class MultipleMovablePiece extends Piece {
     @Override
     public boolean isMovable(Position from, Position to, ChessBoard chessBoard) {
         final List<Position> route = calculateRoute(from, to);
-        return isEmptyRouteWithToPosition(to, route, chessBoard);
+        return isEmptyRouteWithToPosition(to, route, chessBoard) && !isToSameColor(from, to, chessBoard);
     }
 
     private List<Position> calculateRoute(Position from, Position to) {
@@ -33,5 +33,12 @@ public abstract class MultipleMovablePiece extends Piece {
         return route.stream()
                 .filter(position -> !position.equals(to))
                 .allMatch(position -> chessBoard.isEmptyPosition(position));
+    }
+
+    private boolean isToSameColor(Position from, Position to, ChessBoard chessBoard) {
+        if (chessBoard.isEmptyPosition(to)) {
+            return false;
+        }
+        return chessBoard.findByPiece(to).isSameTeamPiece(chessBoard.findByPiece(from));
     }
 }

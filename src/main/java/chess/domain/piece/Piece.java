@@ -25,6 +25,11 @@ public abstract class Piece implements Article {
     }
 
     @Override
+    public boolean isSameTeamPiece(Article article) {
+        return this.color == article.getColor();
+    }
+
+    @Override
     public Color getColor() {
         return color;
     }
