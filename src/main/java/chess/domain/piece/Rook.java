@@ -15,8 +15,8 @@ public final class Rook extends AbstractPiece {
     }
 
     public List<Direction> rookDirection() {
-        return Direction.getAbsoluteDirections(team, List.of(
-                Direction.TOP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
+        return List.of(
+                Direction.TOP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
     }
 
     @Override

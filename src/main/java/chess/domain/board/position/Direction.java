@@ -3,7 +3,6 @@ package chess.domain.board.position;
 import chess.domain.piece.attribute.Team;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum Direction {
     TOP(0, 1),
@@ -41,17 +40,7 @@ public enum Direction {
     }
 
     public static List<Direction> royalDirection(Team team) {
-        return getAbsoluteDirections(team, List.of(TOP, LEFT, DOWN, RIGHT,
-                TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
-    }
-
-    public static List<Direction> getAbsoluteDirections(Team team, List<Direction> directions) {
-        if (team == Team.WHITE) {
-            return directions;
-        }
-        return directions.stream()
-                .map(Direction::toReversed)
-                .collect(Collectors.toList());
+        return List.of(TOP, LEFT, DOWN, RIGHT, TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
     }
 
     public static boolean isInvalidDirection(Position from, Position to, List<Direction> directions) {
@@ -70,14 +59,6 @@ public enum Direction {
 
     public boolean isSameDistance(Position from, Position to) {
         return from.getXDistance(to) == x && from.getYDistance(to) == y;
-    }
-
-    private Direction toReversed() {
-        return Arrays.stream(Direction.values())
-                .filter(value -> value.getX() == (-1) * x)
-                .filter(value -> value.getY() == (-1) * y)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
     }
 
     public int getX() {

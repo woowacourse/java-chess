@@ -7,7 +7,6 @@ import chess.domain.piece.attribute.Team;
 import java.util.List;
 
 public final class Bishop extends AbstractPiece {
-
     private static final String NO_MOVE_MESSAGE = "비숍이 이동할 수 없는 위치입니다.";
     private static final int SCORE = 3;
 
@@ -16,8 +15,7 @@ public final class Bishop extends AbstractPiece {
     }
 
     public List<Direction> bishopDirection() {
-        return Direction.getAbsoluteDirections(
-                team, List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT));
+        return List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
     }
 
     @Override

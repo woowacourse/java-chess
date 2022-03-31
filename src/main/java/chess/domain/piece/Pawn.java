@@ -32,7 +32,10 @@ public final class Pawn extends AbstractPiece {
     }
 
     public List<Direction> pawnDirection() {
-        return Direction.getAbsoluteDirections(team, List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT));
+        if (team == Team.WHITE) {
+            return List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
+        }
+        return List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
     }
 
     private void validateInitDirection(Team team, Position from, Position to, List<Direction> directions) {

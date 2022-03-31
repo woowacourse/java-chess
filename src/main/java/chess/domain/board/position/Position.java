@@ -50,7 +50,7 @@ public final class Position {
             positions.add(new Position(movedPosition.column, movedPosition.rank));
         }
 
-        return positions.subList(0, positions.size()-1);
+        return positions.subList(0, positions.size() - 1);
     }
 
     private void advancePosition(Direction direction) {

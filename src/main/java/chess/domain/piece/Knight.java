@@ -25,11 +25,10 @@ public final class Knight extends AbstractPiece {
     }
 
     public List<Direction> knightDirection() {
-        return Direction.getAbsoluteDirections(team,
-                List.of(Direction.TOP_TOP_RIGHT, Direction.RIGHT_RIGHT_TOP, Direction.RIGHT_RIGHT_DOWN,
-                        Direction.DOWN_DOWN_RIGHT,
-                        Direction.DOWN_DOWN_LEFT, Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_TOP,
-                        Direction.TOP_TOP_LEFT));
+        return List.of(Direction.TOP_TOP_RIGHT, Direction.RIGHT_RIGHT_TOP, Direction.RIGHT_RIGHT_DOWN,
+                Direction.DOWN_DOWN_RIGHT,
+                Direction.DOWN_DOWN_LEFT, Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_TOP,
+                Direction.TOP_TOP_LEFT);
     }
 
     @Override
