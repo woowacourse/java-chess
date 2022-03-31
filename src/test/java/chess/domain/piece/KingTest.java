@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.piece.Knight;
 import chess.domain.position.Position;
 import org.assertj.core.api.Assertions;
