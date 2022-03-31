@@ -32,4 +32,8 @@ public enum GameCommand {
     public static boolean isStatus(String command) {
         return GameCommand.of(command) == STATUS;
     }
+
+    public static boolean isEnd(String command) {
+        return GameCommand.of(command) == END;
+    }
 }

@@ -5,8 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
-import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
+import chess.domain.location.Location;
+import chess.domain.location.LocationDiff;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -61,10 +62,10 @@ class PawnTest {
     void whitePawnCantMovableForward() {
         ChessGame chessGame = new ChessGame();
 
-        chessGame.execute(new Command(List.of("start")));
-        chessGame.execute(new Command(List.of("move", "a2", "a4")));
-        chessGame.execute(new Command(List.of("move", "a7", "a5")));
-        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a4", "a5"))))
+        chessGame.start();
+        chessGame.move(Location.of("a2"), Location.of("a4"));
+        chessGame.move(Location.of("a7"), Location.of( "a5"));
+        assertThatThrownBy(() -> chessGame.move(Location.of("a4"), Location.of( "a5")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 폰은 앞에 기물이 존재하면 직진할 수 없습니다.");
     }
@@ -74,8 +75,8 @@ class PawnTest {
     void whitePawnCantMovableForwardWhenEmptyPiece() {
         ChessGame chessGame = new ChessGame();
 
-        chessGame.execute(new Command(List.of("start")));
-        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a2", "b3"))))
+        chessGame.start();
+        assertThatThrownBy(() -> chessGame.move(Location.of("a2"), Location.of( "b3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
     }
@@ -85,8 +86,8 @@ class PawnTest {
     void whitePawnMovableForwardWhenEmptyPiece() {
         ChessGame chessGame = new ChessGame();
 
-        chessGame.execute(new Command(List.of("start")));
-        assertThatThrownBy(() -> chessGame.execute(new Command(List.of("move", "a2", "b3"))))
+        chessGame.start();
+        assertThatThrownBy(() -> chessGame.move(Location.of("a2"), Location.of( "b3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 폰은 대각선에 상대 기물이 있을때만 움직일 수 있습니다.");
     }
