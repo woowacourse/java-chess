@@ -49,9 +49,9 @@ public class ChessBoard {
 
     private boolean canMove(Position source, Position target) {
         Piece piece = getPiece(source);
-        List<Position> movablePaths = piece.findMovablePaths(source, this);
+        List<Position> movablePositions = piece.findMovablePositions(source, this);
 
-        return movablePaths.contains(target);
+        return movablePositions.contains(target);
     }
 
     private void changeState(Piece sourcePiece, Piece targetPiece) {

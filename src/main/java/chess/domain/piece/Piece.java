@@ -26,7 +26,7 @@ public abstract class Piece extends Named{
                 .collect(Collectors.toList()));
     }
 
-    public List<Position> findMovablePaths(Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(Position source, ChessBoard board) {
         return state.findMovablePositions(source, board);
     }
 
