@@ -13,6 +13,8 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
+    private static final String CAN_NOT_FIND_RANK = "[ERROR] 일치하는 Rank 값을 찾을 수 없습니다.";
+
     private final int value;
 
     Rank(final int value) {
@@ -27,6 +29,6 @@ public enum Rank {
         return Arrays.stream(Rank.values())
             .filter(rank -> rank.value == value)
             .findAny()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException(CAN_NOT_FIND_RANK));
     }
 }
