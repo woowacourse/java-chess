@@ -27,6 +27,14 @@ public abstract class Piece {
         return color == other;
     }
 
+    public boolean isSameColorWithPawn(final Color color) {
+        return isSameColor(color) && isPawn();
+    }
+
+    public boolean isSameColorWithoutPawn(final Color color) {
+        return isSameColor(color) && !isPawn();
+    }
+
     public Color getColor() {
         return color;
     }

@@ -38,8 +38,7 @@ public class Status {
     private double calculateScorePawn(final Color color) {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.entrySet().stream()
-                .filter(entry -> entry.getValue().isSameColor(color))
-                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getValue().isSameColorWithPawn(color))
                 .map(entry -> getPawnScore(entry.getKey(), entry.getValue(), color))
                 .reduce(0.0, Double::sum);
     }
@@ -55,8 +54,7 @@ public class Status {
     private long getPawnCountInXAxis(final Position position, final Color color) {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.entrySet().stream()
-                .filter(entry -> entry.getValue().isSameColor(color))
-                .filter(entry -> entry.getValue().isPawn())
+                .filter(entry -> entry.getValue().isSameColorWithPawn(color))
                 .filter(entry -> entry.getKey().getCoordinateX().equals(position.getCoordinateX()))
                 .count();
     }
@@ -64,8 +62,7 @@ public class Status {
     private double calculateScoreOtherPiece(final Color color) {
         Map<Position, Piece> pieces = board.toMap();
         return pieces.values().stream()
-                .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> !piece.isPawn())
+                .filter(piece -> piece.isSameColorWithoutPawn(color))
                 .map(Piece::getScore)
                 .reduce(0.0, Double::sum);
     }
