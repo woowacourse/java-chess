@@ -24,12 +24,12 @@ public class Application {
             }
         }
 
-        while (!input.equals(END) || !chessBoard.checkKingExist()) {
+        while (!input.equals(END)) {
             try {
                 OutputView.printBoard(chessBoard);
                 input = InputView.responseUserCommand();
 
-                if (input.equals(STATUS)){
+                if (input.equals(STATUS)) {
                     OutputView.printStatus(new StatusDto(chessBoard));
                 }
                 if (input.equals(MOVE)) {
@@ -37,11 +37,13 @@ public class Application {
                     Position target = InputView.responseTarget();
                     chessBoard.move(source, target);
                 }
+                if (!chessBoard.checkKingExist()){
+                    OutputView.printWinner(chessBoard.calculateWhoWinner());
+                    break;
+                }
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
-
-        OutputView.printWinner(chessBoard.calculateWhoWinner());
     }
 }
