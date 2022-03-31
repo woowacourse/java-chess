@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class PieceFactoryTest {
 
-    @DisplayName("검정색 진영의 Pawn 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 Pawn 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createPawn_withBlackColor() {
         // given
@@ -17,7 +17,7 @@ class PieceFactoryTest {
         assertThat(blackPawn.getPieceType()).isEqualTo(PieceType.PAWN);
     }
 
-    @DisplayName("검정색 진영의 Rook 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 Rook 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createRook_withBlackColor() {
         // given
@@ -27,7 +27,7 @@ class PieceFactoryTest {
         assertThat(blackRook.getPieceType()).isEqualTo(PieceType.ROOK);
     }
 
-    @DisplayName("검정색 진영의 Night 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 Night 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createNight_withBlackColor() {
         // given
@@ -37,7 +37,7 @@ class PieceFactoryTest {
         assertThat(blackKnight.getPieceType()).isEqualTo(PieceType.KNIGHT);
     }
 
-    @DisplayName("검정색 진영의 Bishop 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 Bishop 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createBishop_withBlackColor() {
         // given
@@ -47,7 +47,7 @@ class PieceFactoryTest {
         assertThat(blackBishop.getPieceType()).isEqualTo(PieceType.BISHOP);
     }
 
-    @DisplayName("검정색 진영의 Queen 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 Queen 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createQueen_withBlackColor() {
         // given
@@ -57,7 +57,7 @@ class PieceFactoryTest {
         assertThat(blackQueen.getPieceType()).isEqualTo(PieceType.QUEEN);
     }
 
-    @DisplayName("검정색 진영의 King 인스턴스를 생성한다.")
+    @DisplayName("검정색 진영의 King 타입의 Piece 인스턴스를 생성한다.")
     @Test
     void createKing_withBlackColor() {
         // given

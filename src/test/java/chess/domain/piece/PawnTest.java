@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
-    @DisplayName("폰은 같은 위치로 이동할 수 없다.")
+    @DisplayName("같은 위치로 이동할 수 없다.")
     @Test
     void movePiece_returnsFalseWithSameFromAndTo() {
         // given

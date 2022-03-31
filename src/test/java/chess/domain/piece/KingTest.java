@@ -28,7 +28,7 @@ class KingTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("킹은 X축과 Y축이 모두 다른 위치로 이동할 수 있다.")
+    @DisplayName("X축과 Y축이 모두 다른 위치로 이동할 수 있다.")
     @Test
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
@@ -42,7 +42,7 @@ class KingTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹은 Y축이 같은 위치로 이동할 수 있다.")
+    @DisplayName("Y축이 같은 위치로 이동할 수 있다.")
     @Test
     void isMovable_withSameYAxis() {
         // given
@@ -56,7 +56,7 @@ class KingTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹은 X축이 같은 위치로 이동할 수 있다.")
+    @DisplayName("X축이 같은 위치로 이동할 수 있다.")
     @Test
     void isMovable_withSameXAxis() {
         // given
@@ -70,7 +70,7 @@ class KingTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹은 대각선 혹은 수직, 수평이 아닌 방향으로 이동할 수 없다.")
+    @DisplayName("대각선 혹은 수직, 수평이 아닌 방향으로 이동할 수 없다.")
     @Test
     void isNotMovable_notOnDiagonal() {
         // given
@@ -85,7 +85,7 @@ class KingTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("킹은 한번에 두칸 이상 이동할 수 없다.")
+    @DisplayName("한번에 두칸 이상 이동할 수 없다.")
     @ParameterizedTest
     @CsvSource(value = {"G,THREE", "G,ONE", "C,ONE", "C,THREE", "H,FOUR"})
     void isNotMovable_MoreThanOne(String xAxisName, String yAxisName) {

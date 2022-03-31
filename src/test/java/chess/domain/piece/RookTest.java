@@ -27,7 +27,7 @@ class RookTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("룩은 Y축이 같은 위치로 이동할 수 있다.")
+    @DisplayName("Y축이 같은 위치로 이동할 수 있다.")
     @Test
     void isMovable_withSameYAxis() {
         // given
@@ -41,7 +41,7 @@ class RookTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("룩은 X축이 같은 위치로 이동할 수 있다.")
+    @DisplayName("X축이 같은 위치로 이동할 수 있다.")
     @Test
     void isMovable_withSameXAxis() {
         // given
@@ -55,7 +55,7 @@ class RookTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("룩은 X축과 Y축이 모두 다른 위치로 이동할 수 없다.")
+    @DisplayName("X축과 Y축이 모두 다른 위치로 이동할 수 없다.")
     @Test
     void isNotMovable_withDifferentXAxisDifferentYAxis() {
         // given

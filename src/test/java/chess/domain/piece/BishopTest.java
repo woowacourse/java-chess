@@ -26,7 +26,7 @@ class BishopTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("비숍은 X축과 Y축이 모두 다른 위치로 이동할 수 있다.")
+    @DisplayName("X축과 Y축이 모두 다른 위치로 이동할 수 있다.")
     @Test
     void isMovable_withDifferentXAxisDifferentYAxis() {
         // given
@@ -41,7 +41,7 @@ class BishopTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("비숍은 X축이 같은 위치로 이동할 수 없다.")
+    @DisplayName("X축이 같은 위치로 이동할 수 없다.")
     @Test
     void isNotMovable_withSameXAxis() {
         // given
@@ -56,7 +56,7 @@ class BishopTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("비숍은 Y축이 같은 위치로 이동할 수 없다.")
+    @DisplayName("Y축이 같은 위치로 이동할 수 없다.")
     @Test
     void isNotMovable_withSameYAxis() {
         // given
@@ -71,7 +71,7 @@ class BishopTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("비숍은 대각선이 아닌 위치로 이동할 수 없다.")
+    @DisplayName("대각선이 아닌 위치로 이동할 수 없다.")
     @Test
     void isNotMovable_notOnDiagonal() {
         // given
