@@ -19,9 +19,8 @@ public class PawnTest {
     void moveBlackPawnMove(Position target) {
         Piece piece = new Pawn(Player.BLACK);
         Position source = Position.of(File.B, Rank.SEVEN);
-        piece.generateAvailablePosition(source);
 
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     private static Stream<Position> blackPawnTarget() {
@@ -39,8 +38,7 @@ public class PawnTest {
         Piece piece = new Pawn(Player.WHITE);
         Position source = Position.of(File.B, Rank.TWO);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     private static Stream<Position> whitePawnTarget() {

@@ -20,8 +20,7 @@ public class KingTest {
         Piece piece = new King(Player.WHITE);
         Position source = Position.of(File.B, Rank.TWO);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     private static Stream<Position> targetPosition() {
@@ -44,8 +43,7 @@ public class KingTest {
         Piece piece = new King(Player.WHITE);
         Position source = Position.of(File.B, Rank.ONE);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     private static Stream<Position> targetPosition_overRage() {

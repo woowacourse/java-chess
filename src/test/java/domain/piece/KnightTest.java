@@ -20,8 +20,7 @@ public class KnightTest {
         Piece piece = new Knight(Player.WHITE);
         Position source = Position.of(File.C, Rank.FOUR);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     private static Stream<Position> targetPosition() {

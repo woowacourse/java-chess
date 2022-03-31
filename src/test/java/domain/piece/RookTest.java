@@ -18,8 +18,7 @@ public class RookTest {
         Position source = Position.of(File.B, Rank.TWO);
         Position target = Position.of(File.B, Rank.THREE);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 
     @Test
@@ -29,7 +28,6 @@ public class RookTest {
         Position source = Position.of(File.B, Rank.TWO);
         Position target = Position.of(File.B, Rank.SEVEN);
 
-        piece.generateAvailablePosition(source);
-        assertDoesNotThrow(() -> piece.getAvailablePositions(source, target));
+        assertDoesNotThrow(() -> piece.move(source, target));
     }
 }
