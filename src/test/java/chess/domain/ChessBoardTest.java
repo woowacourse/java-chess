@@ -29,12 +29,25 @@ public class ChessBoardTest {
     void initBoard() {
         board = new ChessBoard();
         board.putPiece(Position.of(File.A, Rank.SEVEN), new Rook(Color.BLACK));
-        board.putPiece(Position.of(File.B, Rank.SEVEN), new Rook(Color.WHITE));
+        board.putPiece(Position.of(File.B, Rank.SEVEN), new Bishop(Color.WHITE));
+    }
+
+    @Test
+    @DisplayName("체스말을 움직이면 말이 이동한다.")
+    void chessBoardTest1() {
+        Position source = Position.of(File.A, Rank.EIGHT);
+        Position target = Position.of(File.B, Rank.EIGHT);
+
+        Piece rook = new Rook(Color.BLACK);
+        board.putPiece(source, rook);
+        board.move(source, target);
+
+        assertThat(board.getPiece(target)).isInstanceOf(Rook.class);
     }
 
     @Test
     @DisplayName("체스말을 움직이면 원래자리는 빈 자리가 된다.")
-    void chessBoardTest1() {
+    void chessBoardTest2() {
         Position source = Position.of(File.A, Rank.EIGHT);
         Position target = Position.of(File.B, Rank.EIGHT);
 
@@ -47,7 +60,7 @@ public class ChessBoardTest {
 
     @Test
     @DisplayName("source에 기물이 없을 경우 에러를 출력한다.")
-    void chessBoardTest2() {
+    void chessBoardTest3() {
         Position source = Position.of(File.H, Rank.EIGHT);
         Position target = Position.of(File.A, Rank.SIX);
 
@@ -60,7 +73,7 @@ public class ChessBoardTest {
 
     @Test
     @DisplayName("source와 target이 같을 경우 에러를 출력한다.")
-    void chessBoardTest3() {
+    void chessBoardTest4() {
         Position source = Position.of(File.A, Rank.EIGHT);
         Position target = Position.of(File.A, Rank.EIGHT);
 
