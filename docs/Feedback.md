@@ -53,11 +53,12 @@
     - [ ] 생성자는 유효성 검사 및 초기화하는 작업만 하도록 수정
         - 객체 생성 비용의 증가
         - 객체를 생성하고 사용하지 않는다면 불필요한 연산이다.
-- [ ] `PieceScore`
-    - [ ] Utils 패키지로 분류되는 것이 맞는지
-    - [ ] Enum 내부에서는 `DUPLICATE_PAWN`을 사용하지 않음.
+- [x] `PieceScore`
+    - [x] Utils 패키지로 분류되는 것이 맞는지
+      - `domain` 패키지로 이동 
+    - [x] Enum 내부에서는 `DUPLICATE_PAWN`을 사용하지 않음.
         - 점수를 계산하는 책임을 가진 객체가 가지고 있는 것이 좋음.
-    - [ ] `Piece`에 `score` 추상 메서드를 구현하여 각 기물들이 점수를 구현하는 방법
+    - [x] `Piece`에 `score` 추상 메서드를 구현하여 각 기물들이 점수를 구현하는 방법
 - [ ] `Piece`
     - [ ] 이동규칙의 로직이 복잡하다. 단 하나의 추상 메서드만 제공하여 구현
         - `public abastract List<Position> move(Position source, Position target);`

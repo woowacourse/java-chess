@@ -25,4 +25,9 @@ public class Knight extends SpecificLocationPiece {
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
+
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return PieceScore.KNIGHT.score(isSeveralPawn);
+    }
 }

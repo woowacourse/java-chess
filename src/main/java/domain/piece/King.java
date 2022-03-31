@@ -30,4 +30,9 @@ public class King extends SpecificLocationPiece {
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
+
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return PieceScore.KING.score(isSeveralPawn);
+    }
 }

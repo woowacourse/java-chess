@@ -9,14 +9,11 @@ import domain.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import utils.PieceScore;
 
 public class ChessBoard {
 
     private static final int DEFAULT_KING_COUNT = 2;
     private static final int PAWN_COUNT_SAME_FILE = 2;
-    private static final int NOT_FOUND_DUPLICATE_PAWN = 0;
 
     private final Map<Position, Piece> board;
 
@@ -67,32 +64,27 @@ public class ChessBoard {
 
     public double calculateScoreByPlayer(final Player player) {
         return Arrays.stream(File.values())
-            .map(file -> generatePieceScoreList(player, file))
-            .map(this::calculateFileScore)
+            .map(file -> calculateScoreOfFile(player, file))
             .mapToDouble(Double::doubleValue)
             .sum();
     }
 
-    private List<PieceScore> generatePieceScoreList(final Player player, final File file) {
+    public double calculateScoreOfFile(final Player player, File file) {
+        boolean isSeveralPawn = isSeveralPawnInFile(player, file);
         return Arrays.stream(Rank.values())
             .map(rank -> board.get(Position.of(file, rank)))
             .filter(piece -> piece.isSamePlayer(player))
-            .map(piece -> PieceScore.of(piece.symbol()))
-            .collect(Collectors.toList());
-    }
-
-    private double calculateFileScore(final List<PieceScore> pieceScores) {
-        boolean isSeveralPawn = isSeveralPawnInFile(pieceScores);
-        return pieceScores.stream()
-            .map(pieceScore -> pieceScore.score(isSeveralPawn))
+            .map(piece -> piece.score(isSeveralPawn))
             .mapToDouble(Double::doubleValue)
             .sum();
     }
 
-    private boolean isSeveralPawnInFile(final List<PieceScore> pieceScores) {
-        return pieceScores.stream()
-            .filter(pieceScore -> pieceScore == PieceScore.PAWN)
-            .count() > 1;
+    private boolean isSeveralPawnInFile(Player player, File file) {
+        return Arrays.stream(Rank.values())
+            .map(rank -> board.get(Position.of(file, rank)))
+            .filter(piece -> piece.isSamePlayer(player))
+            .filter(Piece::isPawn)
+            .count() >= PAWN_COUNT_SAME_FILE;
     }
 
     public boolean isKingOnlyOne() {

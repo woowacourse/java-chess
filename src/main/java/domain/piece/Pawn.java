@@ -101,6 +101,11 @@ public class Pawn extends SpecificLocationPiece {
         return WHITE_DIRECTIONS;
     }
 
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return PieceScore.PAWN.score(isSeveralPawn);
+    }
+
     private boolean isFirstMove(final Position source) {
         return source.getRank() == getStartLine(getPlayer());
     }

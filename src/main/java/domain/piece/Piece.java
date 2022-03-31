@@ -26,9 +26,12 @@ public abstract class Piece {
         return positions.subList(0, positions.indexOf(target));
     }
 
-    protected abstract List<Position> calculateAvailablePosition(final Position source, final Direction direction);
+    protected abstract List<Position> calculateAvailablePosition(final Position source,
+        final Direction direction);
 
     protected abstract List<Direction> getDirections();
+
+    public abstract double score(boolean isSeveralPawn);
 
     protected boolean checkOverRange(final Position source, final Direction direction) {
         int rank = source.getRank() + direction.getRank();

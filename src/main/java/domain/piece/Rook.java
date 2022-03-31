@@ -21,4 +21,9 @@ public class Rook extends MovableRangePiece {
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
+
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return PieceScore.ROOK.score(isSeveralPawn);
+    }
 }

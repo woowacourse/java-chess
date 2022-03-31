@@ -30,4 +30,9 @@ public class Blank extends Piece {
         Direction direction) {
         throw new IllegalArgumentException("[ERROR] 해당 위치는 비어있는 칸입니다.");
     }
+
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return 0;
+    }
 }

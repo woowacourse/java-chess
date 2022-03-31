@@ -25,4 +25,9 @@ public class Queen extends MovableRangePiece {
     protected List<Direction> getDirections() {
         return DIRECTIONS;
     }
+
+    @Override
+    public double score(boolean isSeveralPawn) {
+        return PieceScore.QUEEN.score(isSeveralPawn);
+    }
 }
