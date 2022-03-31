@@ -6,22 +6,22 @@ import java.util.List;
 
 public final class KnightMoveStrategy extends FirstRowMoveStrategy {
 
-    private static final List<MovePattern> MOVE_PATTERNS = List.of(
-            MovePattern.NNW,
-            MovePattern.NNE,
-            MovePattern.EEN,
-            MovePattern.EES,
-            MovePattern.SSE,
-            MovePattern.SSW,
-            MovePattern.WWS,
-            MovePattern.WWN
+    private static final List<MovementPattern> MOVE_PATTERNS = List.of(
+            MovementPattern.NNW,
+            MovementPattern.NNE,
+            MovementPattern.EEN,
+            MovementPattern.EES,
+            MovementPattern.SSE,
+            MovementPattern.SSW,
+            MovementPattern.WWS,
+            MovementPattern.WWN
     );
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source, target);
-        final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-        if (!MOVE_PATTERNS.contains(movePattern)) {
+        final Movement movement = new Movement(source, target);
+        final MovementPattern movementPattern = MovementPattern.of(movement.getHorizon(), movement.getVertical());
+        if (!MOVE_PATTERNS.contains(movementPattern)) {
             return false;
         }
         return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());

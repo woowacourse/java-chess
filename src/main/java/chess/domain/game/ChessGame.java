@@ -5,6 +5,7 @@ import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.Map;
 
 public class ChessGame {
@@ -17,16 +18,14 @@ public class ChessGame {
     public ChessGame(final Board board) {
         this.board = board;
         this.catchPieces = new CatchPieces();
-        this.gameSwitch = new GameSwitch();
-        this.turn = new Turn();
+        this.gameSwitch = new GameSwitch(true);
+        this.turn = new Turn(Team.WHITE);
     }
 
     public void move(final String rawSource, final String rawTarget) {
-        Position source = Position.valueOf(rawSource);
-        Position target = Position.valueOf(rawTarget);
-        movePiece(source, target);
+        movePiece(Position.valueOf(rawSource), Position.valueOf(rawTarget));
         turnOffWhenKingDie();
-        turn.nextTurn();
+        turn.passTurn();
     }
 
     private void movePiece(final Position source, final Position target) {

@@ -6,9 +6,9 @@ import chess.domain.move.BishopMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BishopTest {
+public class BishopTest {
 
-    Bishop bishop = new Bishop(Team.BLACK);
+    private Bishop bishop = new Bishop(Team.BLACK);
 
     @Test
     @DisplayName("Blank 인지 확인")

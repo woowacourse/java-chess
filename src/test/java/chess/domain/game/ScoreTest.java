@@ -13,16 +13,17 @@ import org.junit.jupiter.api.Test;
 
 public class ScoreTest {
 
-    CatchPieces catchPieces = new CatchPieces();
-    Board board;
+    private Board board;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
         board = BoardFactory.createChessBoard();
+        catchPieces = new CatchPieces();
     }
 
     @Test
-    @DisplayName("폰이 수직으로 존재할 경우 총점을 계산한다.")
+    @DisplayName("폰이 수직으로 존재할 경우의 총점을 계산한다.")
     void getWhiteScore_WhenPawnVertical() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("b3"), catchPieces);
         board.movePiece(Position.valueOf("c2"), Position.valueOf("b4"), catchPieces);
@@ -31,7 +32,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("Queen 이 없고 폰이 수직으로 존재하는 경우 총점을 계산한다.")
+    @DisplayName("Queen 이 없고 폰이 수직으로 존재하는 경우의 총점을 계산한다.")
     void getWhiteScore_WhenNoQueenAndPawnExistVertically() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), catchPieces);
 
@@ -39,7 +40,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("Black 팀이 이겼을 때 게임에서 이긴 플레이어의 Color 를 반환")
+    @DisplayName("Black 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenBlackWin() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("d1"), catchPieces);
 
@@ -47,7 +48,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("White 팀이 이겼을 때 게임에서 이긴 플레이어의 Color 를 반환")
+    @DisplayName("White 팀이 이겼을 때 게임에서 이긴 플레이어의 Team 를 반환")
     void getWinColor_WhenWhiteWin() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
 

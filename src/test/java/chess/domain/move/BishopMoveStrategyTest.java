@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 public class BishopMoveStrategyTest {
 
-    Board board;
-    BishopMoveStrategy bishopMoveStrategy;
-    CatchPieces catchPieces;
+    private Board board;
+    private BishopMoveStrategy bishopMoveStrategy;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
@@ -24,8 +24,8 @@ public class BishopMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("비숍이 이동할 수 있다.")
-    void isMovable() {
+    @DisplayName("비숍이 양의 대각선으로 이동 할 수 있다.")
+    void isMovable_PositiveDiagonal() {
         board.movePiece(Position.valueOf("d7"), Position.valueOf("d6"), catchPieces);
 
         Position source = Position.valueOf("c8");
@@ -35,8 +35,19 @@ public class BishopMoveStrategyTest {
     }
 
     @Test
+    @DisplayName("비숍이 음의 대각선으로 이동 할 수 있다.")
+    void isMovable_NegativeDiagonal() {
+        board.movePiece(Position.valueOf("b7"), Position.valueOf("d6"), catchPieces);
+
+        Position source = Position.valueOf("c8");
+        Position target = Position.valueOf("a6");
+
+        assertThat(bishopMoveStrategy.isMovable(board, source, target)).isTrue();
+    }
+
+    @Test
     @DisplayName("양의 대각선으로 이동시 중간에 다른 기물이 존재하면 false")
-    void isMovablePositiveDiagonalIfExistOtherPiece() {
+    void isMovable_PositiveDiagonal_WhenExistOtherPiece() {
         Position source = Position.valueOf("c8");
         Position target = Position.valueOf("a6");
 
@@ -45,7 +56,7 @@ public class BishopMoveStrategyTest {
 
     @Test
     @DisplayName("음의 대각선으로 이동시 중간에 다른 기물이 존재하면 false")
-    void isMovableNegativeDiagonalIfExistOtherPiece() {
+    void isMovable_NegativeDiagonal_WhenExistOtherPiece() {
         Position source = Position.valueOf("c8");
         Position target = Position.valueOf("e6");
 

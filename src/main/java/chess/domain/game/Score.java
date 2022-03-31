@@ -49,7 +49,8 @@ public class Score {
                 .sum();
     }
 
-    private void putPawnCount(final Team team, final Map<Column, Integer> pawnCount,
+    private void putPawnCount(final Team team,
+                              final Map<Column, Integer> pawnCount,
                               final Entry<Position, Piece> boardEntry) {
         Piece piece = boardEntry.getValue();
         if (piece.isPawn() && piece.getColor() == team) {

@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Team;
 import chess.domain.piece.Piece;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CatchPieces {
@@ -21,11 +22,20 @@ public class CatchPieces {
         }
         if (piece.getColor() == Team.BLACK) {
             blackPieces.add(piece);
+            return;
         }
         whitePieces.add(piece);
     }
 
     public boolean isKingCatch() {
         return blackPieces.stream().anyMatch(Piece::isKing) || whitePieces.stream().anyMatch(Piece::isKing);
+    }
+
+    public List<Piece> getBlackPieces() {
+        return Collections.unmodifiableList(blackPieces);
+    }
+
+    public List<Piece> getWhitePieces() {
+        return Collections.unmodifiableList(whitePieces);
     }
 }

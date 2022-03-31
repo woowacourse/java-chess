@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 public class KingMoveStrategyTest {
 
-    Board board;
-    KingMoveStrategy kingMoveStrategy;
-    CatchPieces catchPieces;
+    private Board board;
+    private KingMoveStrategy kingMoveStrategy;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
@@ -24,7 +24,7 @@ public class KingMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("킹이 움직일 수 있다.")
+    @DisplayName("킹이 이동 할 수 있다.")
     void isMovable() {
         board.movePiece(Position.valueOf("e7"), Position.valueOf("e6"), catchPieces);
 
@@ -53,5 +53,4 @@ public class KingMoveStrategyTest {
 
         assertThat(kingMoveStrategy.isMovable(board, source, target)).isFalse();
     }
-
 }

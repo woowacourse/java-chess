@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class KingTest {
 
-    King king = new King(Team.WHITE);
+    private King king = new King(Team.WHITE);
 
     @Test
     @DisplayName("Blank 인지 확인")

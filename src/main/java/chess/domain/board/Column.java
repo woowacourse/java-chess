@@ -32,7 +32,7 @@ public enum Column {
         return of(this.value + horizon);
     }
 
-    public int subtract(final Column column) {
+    public int subtractValue(final Column column) {
         return column.value - this.value;
     }
 

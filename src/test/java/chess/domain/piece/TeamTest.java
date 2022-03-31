@@ -6,16 +6,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class TeamTest {
+public class TeamTest {
 
     @Test
-    @DisplayName("반대 Color 를 반환한다.")
+    @DisplayName("반대 Team 을 반환한다.")
     void oppositeColor() {
         assertThat(Team.WHITE.oppositeTeam()).isEqualTo(Team.BLACK);
     }
 
     @Test
-    @DisplayName("NONE 일 경우 반대 Color 를 반환할 수 없다.")
+    @DisplayName("NONE 일 경우 반대 Team 을 반환할 수 없다.")
     void oppositeColor_WhenNONE() {
         assertThatThrownBy(() -> Team.NONE.oppositeTeam())
                 .isInstanceOf(IllegalStateException.class)

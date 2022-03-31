@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 public class RookMoveStrategyTest {
 
-    Board board;
-    RookMoveStrategy rookMoveStrategy;
-    CatchPieces catchPieces;
+    private Board board;
+    private RookMoveStrategy rookMoveStrategy;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +25,7 @@ public class RookMoveStrategyTest {
 
     @Test
     @DisplayName("룩이 수직 이동할 수 있다.")
-    void isMovableVertical() {
+    void isMovable_Vertical() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("b6"), catchPieces);
 
         Position source = Position.valueOf("a8");
@@ -47,7 +47,7 @@ public class RookMoveStrategyTest {
 
     @Test
     @DisplayName("수직이동시 중간에 다른 기물이 존재하면 false")
-    void isMovableVerticalIfExistOtherPiece() {
+    void isMovable_Vertical_WhenExistOtherPiece() {
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("a4");
 
@@ -56,7 +56,7 @@ public class RookMoveStrategyTest {
 
     @Test
     @DisplayName("수평이동시 중간에 다른 기물이 존재하면 false")
-    void isMovableHorizontalIfExistOtherPiece() {
+    void isMovable_Horizontal_WhenExistOtherPiece() {
         Position source = Position.valueOf("a8");
         Position target = Position.valueOf("h8");
 

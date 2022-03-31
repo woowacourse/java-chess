@@ -22,7 +22,7 @@ public class Board {
         catchPieces.addPiece(targetPiece);
     }
 
-    public Team getColorOfPiece(final Position position) {
+    public Team getTeamOfPiece(final Position position) {
         return board.get(position).getColor();
     }
 

@@ -2,17 +2,17 @@ package chess.domain.game;
 
 public class GameSwitch {
 
-    private boolean isOn;
+    private boolean value;
 
-    public GameSwitch() {
-        this.isOn = true;
-    }
-
-    public boolean isOn() {
-        return isOn;
+    public GameSwitch(final boolean value) {
+        this.value = value;
     }
 
     public void turnOff() {
-        this.isOn = false;
+        this.value = false;
+    }
+
+    public boolean isOn() {
+        return value;
     }
 }

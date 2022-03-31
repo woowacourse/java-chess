@@ -7,30 +7,30 @@ public final class QueenMoveStrategy extends LinearMoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source, target);
-        if (!isQueenMovePattern(distance)) {
+        final Movement movement = new Movement(source, target);
+        if (!isQueenMovePattern(movement)) {
             return false;
         }
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
+        if (movement.isHorizontal() && isPieceExistAmongHorizon(board, smallerPosition, movement)) {
             return false;
         }
-        if (distance.isVerticalMovement() && isPieceExistWhenVertical(board, smallerPosition, distance)) {
+        if (movement.isVertical() && isPieceExistAmongVertical(board, smallerPosition, movement)) {
             return false;
         }
-        if (distance.isPositiveDiagonal() && isPieceExistWhenPositiveDiagonal(board, smallerPosition, distance)) {
+        if (movement.isPositiveDiagonal() && isPieceExistAmongPositiveDiagonal(board, smallerPosition, movement)) {
             return false;
         }
-        if (distance.isNegativeDiagonal() && isPieceExistWhenNegativeDiagonal(board, smallerPosition, distance)) {
+        if (movement.isNegativeDiagonal() && isPieceExistAmongNegativeDiagonal(board, smallerPosition, movement)) {
             return false;
         }
-        return isMovableToTarget(board.getPiece(target), board.getColorOfPiece(source));
+        return isMovableToTarget(board.getPiece(target), board.getTeamOfPiece(source));
     }
 
-    private boolean isQueenMovePattern(final Distance distance) {
-        return distance.isHorizontalMovement() ||
-                distance.isVerticalMovement() ||
-                distance.isPositiveDiagonal() ||
-                distance.isNegativeDiagonal();
+    private boolean isQueenMovePattern(final Movement movement) {
+        return movement.isHorizontal() ||
+                movement.isVertical() ||
+                movement.isPositiveDiagonal() ||
+                movement.isNegativeDiagonal();
     }
 }

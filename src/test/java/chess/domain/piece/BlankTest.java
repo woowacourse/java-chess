@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class BlankTest {
 
-    Blank blank = new Blank();
+    private Blank blank = new Blank();
 
     @Test
     @DisplayName("Blank 인지 확인")

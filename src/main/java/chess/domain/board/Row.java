@@ -30,7 +30,7 @@ public enum Row {
         return of(this.value + vertical);
     }
 
-    public int subtract(final Row row) {
+    public int subtractValue(final Row row) {
         return row.value - this.value;
     }
 

@@ -11,7 +11,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
     private static final int FORWARD_UNIT_WHITE = 1;
 
     protected abstract boolean isMovePattern(
-            final MovePattern movePattern,
+            final MovementPattern movementPattern,
             final Board board,
             final Position source,
             final Piece targetPiece
@@ -24,7 +24,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
         if (!source.isPawnStartPosition(team)) {
             return false;
         }
-        Position forwardPosition = source.move(Distance.NOT_MOVE, findForwardDirection(team));
+        Position forwardPosition = source.move(Movement.NOT_MOVE, findForwardDirection(team));
         return board.getPiece(forwardPosition).isBlank() && targetPiece.isBlank();
     }
 

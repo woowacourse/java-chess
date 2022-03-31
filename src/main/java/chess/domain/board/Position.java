@@ -12,13 +12,13 @@ public class Position implements Comparable<Position> {
 
     private final static Map<String, Position> CACHE;
 
+    private final Column column;
+    private final Row row;
+
     static {
         CACHE = createAll().stream()
                 .collect(toMap(Position::generateRawPosition, position -> position));
     }
-
-    private final Column column;
-    private final Row row;
 
     private Position(final Column column, final Row row) {
         this.column = column;
@@ -32,6 +32,10 @@ public class Position implements Comparable<Position> {
         return CACHE.get(rawPosition);
     }
 
+    private String generateRawPosition() {
+        return column.getName() + row.getValue();
+    }
+
     private static List<Position> createAll() {
         List<Position> positions = new ArrayList<>();
         for (Row row : Row.values()) {
@@ -43,18 +47,11 @@ public class Position implements Comparable<Position> {
     }
 
     public int subtractColumn(final Position position) {
-        return this.column.subtract(position.column);
+        return this.column.subtractValue(position.column);
     }
 
     public int subtractRow(final Position position) {
-        return this.row.subtract(position.row);
-    }
-
-    public boolean isPawnStartPosition(final Team team) {
-        if (team == Team.BLACK && row == Row.SEVEN) {
-            return true;
-        }
-        return team == Team.WHITE && row == Row.TWO;
+        return this.row.subtractValue(position.row);
     }
 
     public Position move(int horizon, int vertical) {
@@ -63,8 +60,11 @@ public class Position implements Comparable<Position> {
         return Position.valueOf(column + row);
     }
 
-    private String generateRawPosition() {
-        return column.getName() + row.getValue();
+    public boolean isPawnStartPosition(final Team team) {
+        if (team == Team.BLACK && row == Row.SEVEN) {
+            return true;
+        }
+        return team == Team.WHITE && row == Row.TWO;
     }
 
     public Position compareSmaller(Position position) {

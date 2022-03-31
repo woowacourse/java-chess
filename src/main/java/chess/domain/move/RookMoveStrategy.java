@@ -9,35 +9,35 @@ public final class RookMoveStrategy extends LinearMoveStrategy {
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source, target);
-        if (!isRookMovePattern(distance)) {
+        final Movement movement = new Movement(source, target);
+        if (!isRookMovePattern(movement)) {
             return false;
         }
         final Position smallerPosition = source.compareSmaller(target);
-        if (distance.isHorizontalMovement() && isPieceExistWhenHorizon(board, smallerPosition, distance)) {
+        if (movement.isHorizontal() && isPieceExistAmongHorizon(board, smallerPosition, movement)) {
             return false;
         }
-        if (distance.isVerticalMovement() && isPieceExistWhenVertical(board, smallerPosition, distance)) {
+        if (movement.isVertical() && isPieceExistAmongVertical(board, smallerPosition, movement)) {
             return false;
         }
-        return isMovableToTarget(board.getPiece(target), board.getColorOfPiece(source));
+        return isMovableToTarget(board.getPiece(target), board.getTeamOfPiece(source));
     }
 
-    private boolean isRookMovePattern(final Distance distance) {
-        return distance.isHorizontalMovement() || distance.isVerticalMovement();
+    private boolean isRookMovePattern(final Movement movement) {
+        return movement.isHorizontal() || movement.isVertical();
     }
 
     @Override
-    protected boolean isPieceExistWhenPositiveDiagonal(final Board board,
-                                                       final Position smallerPosition,
-                                                       final Distance distance) {
+    protected boolean isPieceExistAmongPositiveDiagonal(final Board board,
+                                                        final Position smallerPosition,
+                                                        final Movement movement) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 
     @Override
-    protected boolean isPieceExistWhenNegativeDiagonal(final Board board,
-                                                       final Position smallerPosition,
-                                                       final Distance distance) {
+    protected boolean isPieceExistAmongNegativeDiagonal(final Board board,
+                                                        final Position smallerPosition,
+                                                        final Movement movement) {
         throw new UnsupportedOperationException(UNSUPPORTED_MOVE_PATTERN_MESSAGE);
     }
 }

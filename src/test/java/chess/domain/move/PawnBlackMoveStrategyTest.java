@@ -10,11 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PawnMoveStrategyTest {
+public class PawnBlackMoveStrategyTest {
 
-    Board board;
-    PawnMoveStrategy pawnBlackMoveStrategy;
-    CatchPieces catchPieces;
+    private Board board;
+    private PawnMoveStrategy pawnBlackMoveStrategy;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {
@@ -24,7 +24,7 @@ public class PawnMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("현재 위치에서 폰을 타 폰 위치로 움직일 수 있다.")
+    @DisplayName("폰을 이동 할 수 있다.")
     void isMovable() {
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a6");
@@ -34,7 +34,7 @@ public class PawnMoveStrategyTest {
 
     @Test
     @DisplayName("폰 움직임 전략에 맞지 않는 경우 false")
-    void isMovableNotPawnMovePattern() {
+    void isMovable_NotPawnMovePattern() {
         Position source = Position.valueOf("a7");
         Position target = Position.valueOf("a8");
 
@@ -43,7 +43,7 @@ public class PawnMoveStrategyTest {
 
     @Test
     @DisplayName("2칸 전진시 Pawn 이 사작위치가 아닌경우 false")
-    void isMovableStartMoveNotStartPosition() {
+    void isMovable_StartMove_NotStartPosition() {
         board.movePiece(Position.valueOf("a7"), Position.valueOf("a6"), catchPieces);
 
         Position source = Position.valueOf("a6");
@@ -54,7 +54,7 @@ public class PawnMoveStrategyTest {
 
     @Test
     @DisplayName("2칸 전진시 기물이 있을 경우 false")
-    void isMovableStartMoveHasPieceOnTarget() {
+    void isMovable_StartMove_HasPieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("a5"), catchPieces);
 
         Position source = Position.valueOf("a7");
@@ -64,8 +64,8 @@ public class PawnMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("전진시 기물이 있을 경우 false")
-    void isMovableSouthHasPieceOnTarget() {
+    @DisplayName("전진시 상대 팀 기물이 있을 경우 false")
+    void isMovable_South_HasPieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("a6"), catchPieces);
 
         Position source = Position.valueOf("a7");
@@ -75,8 +75,17 @@ public class PawnMoveStrategyTest {
     }
 
     @Test
+    @DisplayName("대각선 이동시 상대편 기물이 없을 경우 false")
+    void isMovable_Diagonal_HasNoOppositePieceOnTarget() {
+        Position source = Position.valueOf("a7");
+        Position target = Position.valueOf("b6");
+
+        assertThat(pawnBlackMoveStrategy.isMovable(board, source, target)).isFalse();
+    }
+
+    @Test
     @DisplayName("대각선 이동시 상대편 기물이 있을 경우 true")
-    void isMovableSouthEastHasPieceOnTarget() {
+    void isMovable_Diagonal_HasOppositePieceOnTarget() {
         board.movePiece(Position.valueOf("a2"), Position.valueOf("b6"), catchPieces);
 
         Position source = Position.valueOf("a7");

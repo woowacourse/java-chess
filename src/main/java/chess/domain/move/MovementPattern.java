@@ -2,7 +2,7 @@ package chess.domain.move;
 
 import java.util.Arrays;
 
-public enum MovePattern {
+public enum MovementPattern {
 
     NORTH(0, 1),
     SOUTH(0, -1),
@@ -20,18 +20,18 @@ public enum MovePattern {
     SSW(-1, -2),
     WWS(-2, -1),
     WWN(-2, 1),
-    PAWN_START_MOVE_OF_BLACK(0, -2),
-    PAWN_START_MOVE_OF_WHITE(0, 2);
+    START_MOVEMENT_OF_BLACK_PAWN(0, -2),
+    START_MOVEMENT_OF_WHITE_PAWN(0, 2);
 
     private final int horizon;
     private final int vertical;
 
-    MovePattern(int horizon, int vertical) {
+    MovementPattern(int horizon, int vertical) {
         this.horizon = horizon;
         this.vertical = vertical;
     }
 
-    public static MovePattern of(final int horizon, final int vertical) {
+    public static MovementPattern of(final int horizon, final int vertical) {
         return Arrays.stream(values())
                 .filter(value -> value.horizon == horizon && value.vertical == vertical)
                 .findFirst()

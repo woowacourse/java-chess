@@ -7,36 +7,36 @@ import java.util.List;
 
 public final class PawnBlackMoveStrategy extends PawnMoveStrategy {
 
-    private final static List<MovePattern> BLACK_MOVE_PATTERNS = List.of(
-            MovePattern.SOUTH,
-            MovePattern.SE,
-            MovePattern.SW,
-            MovePattern.PAWN_START_MOVE_OF_BLACK
+    private final static List<MovementPattern> BLACK_MOVE_PATTERNS = List.of(
+            MovementPattern.SOUTH,
+            MovementPattern.SE,
+            MovementPattern.SW,
+            MovementPattern.START_MOVEMENT_OF_BLACK_PAWN
     );
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source, target);
-        final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-        return isMovePattern(movePattern, board, source, board.getPiece(target));
+        final Movement movement = new Movement(source, target);
+        final MovementPattern movementPattern = MovementPattern.of(movement.getHorizon(), movement.getVertical());
+        return isMovePattern(movementPattern, board, source, board.getPiece(target));
     }
 
     @Override
-    protected boolean isMovePattern(final MovePattern movePattern,
+    protected boolean isMovePattern(final MovementPattern movementPattern,
                                     final Board board,
                                     final Position source,
                                     final Piece targetPiece) {
-        if (!BLACK_MOVE_PATTERNS.contains(movePattern)) {
+        if (!BLACK_MOVE_PATTERNS.contains(movementPattern)) {
             return false;
         }
-        if (movePattern == MovePattern.PAWN_START_MOVE_OF_BLACK) {
-            return isStartMove(board, source, targetPiece, board.getColorOfPiece(source));
+        if (movementPattern == MovementPattern.START_MOVEMENT_OF_BLACK_PAWN) {
+            return isStartMove(board, source, targetPiece, board.getTeamOfPiece(source));
         }
-        if (movePattern == MovePattern.SOUTH) {
+        if (movementPattern == MovementPattern.SOUTH) {
             return targetPiece.isBlank();
         }
-        if (movePattern == MovePattern.SE || movePattern == MovePattern.SW) {
-            return isCatchable(targetPiece, board.getColorOfPiece(source));
+        if (movementPattern == MovementPattern.SE || movementPattern == MovementPattern.SW) {
+            return isCatchable(targetPiece, board.getTeamOfPiece(source));
         }
         return false;
     }

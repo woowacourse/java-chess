@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 public class KnightMoveStrategyTest {
 
-    Board board;
-    KnightMoveStrategy knightMoveStrategy;
-    CatchPieces catchPieces;
+    private Board board;
+    private KnightMoveStrategy knightMoveStrategy;
+    private CatchPieces catchPieces;
 
     @BeforeEach
     void setUp() {

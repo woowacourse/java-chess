@@ -6,22 +6,22 @@ import java.util.List;
 
 public final class KingMoveStrategy extends FirstRowMoveStrategy {
 
-    private static final List<MovePattern> MOVE_PATTERNS = List.of(
-            MovePattern.NORTH,
-            MovePattern.NE,
-            MovePattern.EAST,
-            MovePattern.SE,
-            MovePattern.SOUTH,
-            MovePattern.SW,
-            MovePattern.WEST,
-            MovePattern.NW
+    private static final List<MovementPattern> MOVE_PATTERNS = List.of(
+            MovementPattern.NORTH,
+            MovementPattern.NE,
+            MovementPattern.EAST,
+            MovementPattern.SE,
+            MovementPattern.SOUTH,
+            MovementPattern.SW,
+            MovementPattern.WEST,
+            MovementPattern.NW
     );
 
     @Override
     public boolean isMovable(final Board board, final Position source, final Position target) {
-        final Distance distance = new Distance(source, target);
-        final MovePattern movePattern = MovePattern.of(distance.getHorizon(), distance.getVertical());
-        if (!MOVE_PATTERNS.contains(movePattern)) {
+        final Movement movement = new Movement(source, target);
+        final MovementPattern movementPattern = MovementPattern.of(movement.getHorizon(), movement.getVertical());
+        if (!MOVE_PATTERNS.contains(movementPattern)) {
             return false;
         }
         return isMovableToTarget(board.getPiece(target), board.getPiece(source).getColor());
