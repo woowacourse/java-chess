@@ -3,17 +3,14 @@ package chess.domain.piece.movable.single;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.constant.PieceDirections;
-import chess.domain.piece.constant.PieceName;
-import chess.domain.piece.constant.PieceScore;
+import chess.domain.piece.constant.PieceType;
 
 public abstract class SingleMovablePiece extends AbstractPiece {
 
     private static final int MAXIMUM_SIZE_OF_MOVABLE_ROUTE = 1;
 
-    protected SingleMovablePiece(final PieceName pieceName,
-                                 final PieceScore pieceScore,
-                                 final PieceDirections pieceDirections) {
-        super(pieceName, pieceScore, pieceDirections);
+    protected SingleMovablePiece(final PieceType pieceType, final PieceDirections pieceDirections) {
+        super(pieceType, pieceDirections);
     }
 
     @Override

@@ -6,20 +6,15 @@ import java.util.function.Predicate;
 import chess.domain.Position;
 import chess.domain.piece.constant.Direction;
 import chess.domain.piece.constant.PieceDirections;
-import chess.domain.piece.constant.PieceName;
-import chess.domain.piece.constant.PieceScore;
+import chess.domain.piece.constant.PieceType;
 
 public abstract class AbstractPiece implements Piece {
 
-    private final PieceName pieceName;
-    private final PieceScore pieceScore;
+    private final PieceType pieceType;
     private final PieceDirections pieceDirections;
 
-    protected AbstractPiece(final PieceName pieceName,
-                            final PieceScore pieceScore,
-                            final PieceDirections pieceDirections) {
-        this.pieceName = pieceName;
-        this.pieceScore = pieceScore;
+    protected AbstractPiece(final PieceType pieceType, final PieceDirections pieceDirections) {
+        this.pieceType = pieceType;
         this.pieceDirections = pieceDirections;
     }
 
@@ -51,11 +46,16 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public final String getPieceName() {
-        return pieceName.getName();
+        return pieceType.getPieceName();
     }
 
     @Override
     public final double getPieceScore() {
-        return pieceScore.getScore();
+        return pieceType.getPieceScore();
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" + pieceType.getPieceName() + '}';
     }
 }

@@ -3,13 +3,11 @@ package chess.domain.piece.movable;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.constant.PieceDirections;
-import chess.domain.piece.constant.PieceName;
-import chess.domain.piece.constant.PieceScore;
+import chess.domain.piece.constant.PieceType;
 
 public class Pawn extends AbstractPiece {
 
-    private static final PieceName PIECE_NAME = PieceName.PAWN;
-    private static final PieceScore PIECE_SCORE = PieceScore.PAWN;
+    private static final PieceType PIECE_TYPE = PieceType.PAWN;
     private static final int FIRST_MOVABLE_COUNT = 2;
     private static final int NORMAL_MOVABLE_COUNT = 1;
     private static final int MOVABLE_COUNT_TO_ATTACK = 1;
@@ -24,7 +22,7 @@ public class Pawn extends AbstractPiece {
     }
 
     private Pawn(final int movableCount, final PieceDirections pieceDirections) {
-        super(PIECE_NAME, PIECE_SCORE, pieceDirections);
+        super(PIECE_TYPE, pieceDirections);
         this.maximumCountToMove = movableCount;
         this.pieceDirections = pieceDirections;
     }
