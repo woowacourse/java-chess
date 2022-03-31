@@ -12,6 +12,23 @@ public class Position {
     private static final int CACHE_SIZE = 64;
     private static final Map<String, Position> CACHE = new HashMap<>(CACHE_SIZE);
 
+    static {
+        for (Column column : Column.values()) {
+            addCacheInColumn(column);
+        }
+    }
+
+    private static void addCacheInColumn(Column column) {
+        for (Row row : Row.values()) {
+            String key = getKeyNameByColumnAndRow(column, row);
+            CACHE.put(key, new Position(column, row));
+        }
+    }
+
+    private static String getKeyNameByColumnAndRow(Column column, Row row) {
+        return column.name().toLowerCase(Locale.ROOT) + row.getValue();
+    }
+
     private final Column column;
     private final Row row;
 
@@ -21,8 +38,8 @@ public class Position {
     }
 
     public static Position of(Column column, Row row) {
-        String value = column.name().toLowerCase(Locale.ROOT) + row.getValue();
-        return CACHE.computeIfAbsent(value, ignored -> new Position(column, row));
+        String key = getKeyNameByColumnAndRow(column, row);
+        return CACHE.get(key);
     }
 
     public static Position of(String value) {
