@@ -32,7 +32,7 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public static Piece create(final File file, final Rank rank) {
+    public static Piece createInitial(final File file, final Rank rank) {
         TeamColor teamColor = TeamColor.findByRank(rank);
         if (rank.isPawnRank()) {
             return new Pawn(teamColor, Position.of(file, rank));

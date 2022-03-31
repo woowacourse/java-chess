@@ -37,7 +37,7 @@ public class Board {
 
     private List<Piece> generateOf(final Rank rank) {
         return Arrays.stream(File.values())
-                .map(file -> Piece.create(file, rank))
+                .map(file -> Piece.createInitial(file, rank))
                 .collect(Collectors.toList());
     }
 

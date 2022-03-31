@@ -29,7 +29,7 @@ class PieceTest {
     @MethodSource("provideFileAndRankAndExpected")
     void create(final File file, final Rank rank, final Class<? extends Piece> expected) {
         //when
-        final Piece actual = Piece.create(file, rank);
+        final Piece actual = Piece.createInitial(file, rank);
         //then
         assertThat(actual).isInstanceOf(expected);
     }
@@ -53,7 +53,7 @@ class PieceTest {
     @CsvSource({"A, ONE, true", "A, TWO, false"})
     void hasPosition(final File file, final Rank rank, final boolean expected) {
         // given
-        final Piece piece = Piece.create(A, ONE);
+        final Piece piece = Piece.createInitial(A, ONE);
         // when
         final boolean actual = piece.hasPosition(Position.of(file, rank));
         // then
@@ -65,8 +65,8 @@ class PieceTest {
     @CsvSource({"H, ONE, true", "H, EIGHT, false"})
     void isSameTeam(final File anotherFile, final Rank anotherRank, final boolean expected) {
         // given
-        final Piece piece = Piece.create(A, ONE);
-        final Piece anotherPiece = Piece.create(anotherFile, anotherRank);
+        final Piece piece = Piece.createInitial(A, ONE);
+        final Piece anotherPiece = Piece.createInitial(anotherFile, anotherRank);
         // when
         final boolean actual = piece.isSameTeam(anotherPiece);
         // then
