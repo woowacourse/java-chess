@@ -6,9 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.board.Position;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
@@ -50,6 +57,23 @@ public class ChessGameTest {
     void turnOff() {
         chessGame.turnOff();
         assertThat(chessGame.isOn()).isFalse();
+    }
+
+    @Nested
+    @DisplayName("custom 체스보드로 테스트한다.")
+    class CustomBoardTest {
+
+        @Test
+        @DisplayName("왕이 죽으면 게임이 종료된다.")
+        void turnOffWhenKingDie() {
+            Map<Position, Piece> customBoard = new HashMap<>();
+            customBoard.put(Position.valueOf("a8"), new King(Team.BLACK));
+            customBoard.put(Position.valueOf("b7"), new Pawn(Team.WHITE));
+            ChessGame chessGame = new ChessGame(new Board(customBoard));
+
+            chessGame.move("b7", "a8");
+            assertThat(chessGame.isOn()).isFalse();
+        }
     }
 
 }
