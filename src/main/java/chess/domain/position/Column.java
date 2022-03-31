@@ -25,14 +25,14 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(file -> file.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("file" + name + " 은 유효하지 않은 좌표입니다."));
     }
 
-    public static Column of(int coordination) {
+    public static Column of(int file) {
         return Arrays.stream(values())
-                .filter(file -> file.file == coordination)
+                .filter(column -> column.file == file)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("file" + file + " 은 존재하지 않는 좌표입니다."));
     }
 
     public int displacementTo(Column column) {

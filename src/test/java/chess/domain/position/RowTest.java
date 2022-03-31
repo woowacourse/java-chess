@@ -11,8 +11,8 @@ public class RowTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 8})
     @DisplayName("범위를 벗어난 좌표에 대해 예외를 처리하는지")
-    void outOfRangeException(int coordination) {
-        assertThatThrownBy(() -> Row.of(coordination))
+    void outOfRangeException(int rank) {
+        assertThatThrownBy(() -> Row.of(rank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -25,14 +25,14 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(rank -> rank.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("rank" + name + " 은 유효하지 않은 좌표입니다."));
     }
 
-    public static Row of(int coordination) {
+    public static Row of(int rank) {
         return Arrays.stream(values())
-                .filter(rank -> rank.rank == coordination)
+                .filter(row -> row.rank == rank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("rank" + rank + " 은 존재하지 않는 좌표입니다."));
     }
 
     public int displacementTo(Row row) {
