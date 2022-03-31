@@ -1,4 +1,4 @@
-package chess.controller.command;
+package chess.domain.gamecommand;
 
 import chess.domain.ChessGame;
 import chess.view.OutputView;

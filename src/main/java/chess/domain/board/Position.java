@@ -95,7 +95,8 @@ public class Position implements Comparable<Position> {
 
     @Override
     public int compareTo(Position o) {
-        return Comparator.comparing(Position::getRow, Comparator.reverseOrder()).thenComparing(Position::getColumn)
+        return Comparator.comparing(Position::getRow, Comparator.reverseOrder())
+            .thenComparing(Position::getColumn)
             .compare(this, o);
     }
 

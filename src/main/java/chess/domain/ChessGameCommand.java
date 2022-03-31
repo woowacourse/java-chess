@@ -1,11 +1,10 @@
-package chess.controller;
+package chess.domain;
 
-import chess.controller.command.Command;
-import chess.controller.command.End;
-import chess.controller.command.Move;
-import chess.controller.command.Start;
-import chess.controller.command.Status;
-import chess.domain.ChessGame;
+import chess.domain.gamecommand.Command;
+import chess.domain.gamecommand.End;
+import chess.domain.gamecommand.Move;
+import chess.domain.gamecommand.Start;
+import chess.domain.gamecommand.Status;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;

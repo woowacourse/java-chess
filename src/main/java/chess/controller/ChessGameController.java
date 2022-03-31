@@ -1,7 +1,8 @@
 package chess.controller;
 
-import chess.controller.command.Command;
 import chess.domain.ChessGame;
+import chess.domain.ChessGameCommand;
+import chess.domain.gamecommand.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
