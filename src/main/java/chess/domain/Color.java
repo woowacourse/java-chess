@@ -15,12 +15,6 @@ public enum Color {
         public Color enemyColor() {
             return BLACK;
         }
-    },
-    NONE(signature -> signature) {
-        @Override
-        public Color enemyColor() {
-            return NONE;
-        }
     };
 
     private final Function<String, String> signatureFunction;

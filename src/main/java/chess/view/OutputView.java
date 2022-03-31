@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.domain.WinResult;
+import chess.dto.StatusDto;
 import java.util.Map;
 
 import chess.domain.Color;
@@ -65,15 +67,18 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printStatus(Map<Color, Double> scores, Color winningColor) {
+    public static void printStatus(StatusDto status) {
+        Map<Color, Double> scores = status.getScores();
+        WinResult winResult = status.getResult();
+
         for (Color color : scores.keySet()) {
             System.out.println(color.name() + ": " + scores.get(color) + "점");
         }
-        if (winningColor == Color.NONE) {
+        if (winResult == WinResult.DRAW) {
             System.out.println("동점입니다.");
             return;
         }
-        System.out.println(winningColor.name() + " 진영이 이기고 있습니다.");
+        System.out.println(status.getResult() + " 진영이 이기고 있습니다.");
         System.out.println();
     }
 }

@@ -1,11 +1,9 @@
 package chess;
 
-import java.util.Map;
-
 import chess.domain.ChessGame;
-import chess.domain.Color;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
+import chess.dto.StatusDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -57,16 +55,6 @@ public class Application {
     }
 
     private static void showStatus(ChessGame game) {
-        Map<Color, Double> scores = game.calculateScore();
-        Color winningColor = Color.NONE;
-        double blackScore = scores.get(Color.BLACK);
-        double whiteScore = scores.get(Color.WHITE);
-        if (blackScore > whiteScore) {
-            winningColor = Color.BLACK;
-        }
-        if (blackScore < whiteScore) {
-            winningColor = Color.WHITE;
-        }
-        OutputView.printStatus(scores, winningColor);
+        OutputView.printStatus(new StatusDto(game.calculateScore()));
     }
 }
