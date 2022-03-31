@@ -6,6 +6,8 @@ import chess.domain.position.PositionY;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BlankTest {
@@ -15,7 +17,7 @@ public class BlankTest {
         Blank blank = new Blank();
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.D, PositionY.RANK_7);
-        assertThatThrownBy(() -> blank.isMovable(source, target))
+        assertThatThrownBy(() -> blank.isMovable(new HashMap<>(), source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

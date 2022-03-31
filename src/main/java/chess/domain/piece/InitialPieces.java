@@ -6,8 +6,6 @@ import chess.domain.position.Position;
 import chess.domain.position.PositionX;
 import chess.domain.position.PositionY;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public enum InitialPieces {

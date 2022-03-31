@@ -35,7 +35,6 @@ public class BoardTest {
         assertThat(score).isEqualTo(12.0);
     }
 
-
     @Test
     @DisplayName("King 이 모두 살아있는 경우 true를 반환하는지")
     void checkAliveAllKings() {

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.D, PositionY.RANK_6);
-        assertThat(king.isMovable(source, target)).isTrue();
+        assertThat(king.isMovable(new HashMap<>(), source, target)).isTrue();
     }
 
     @Test
@@ -38,7 +39,7 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.D, PositionY.RANK_7);
-        assertThat(king.isMovable(source, target)).isFalse();
+        assertThat(king.isMovable(new HashMap<>(), source, target)).isFalse();
     }
 
     @Test

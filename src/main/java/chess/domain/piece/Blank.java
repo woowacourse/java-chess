@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public class Blank extends Piece {
     public Blank() {
@@ -16,7 +17,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Map<Position, Piece> board, Position source, Position target) {
         throw new IllegalArgumentException("기물이 없는 위치입니다.");
     }
 

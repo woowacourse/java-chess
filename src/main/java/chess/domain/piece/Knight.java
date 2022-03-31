@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Knight extends Piece {
     public Knight(Color color) {
@@ -17,7 +18,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(Map<Position, Piece> board, Position source, Position target) {
         int distanceX = Math.abs(source.calculateDisplacementXTo(target));
         int distanceY = Math.abs(source.calculateDisplacementYTo(target));
 

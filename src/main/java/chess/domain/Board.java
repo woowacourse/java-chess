@@ -125,61 +125,32 @@ public class Board {
         board.replace(enPassantPosition, new Blank());
     }
 
-    public void validateMovement(Color turn, Position source, Position target) {
-        validatePieceChoice(turn, source);
-        validateTargetChoice(turn, target);
-        validateMovable(turn, source, target);
+    public void movePieceIfValid(Color turn, Position source, Position target) {
+        validateSourceColor(turn, source);
+        validateTargetColor(turn, target);
+        validateMovable(source, target);
         validateRoute(source, target);
+
+        movePiece(source, target);
     }
 
-    private void validatePieceChoice(Color turn, Position source) {
+    private void validateSourceColor(Color color, Position source) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isSameColor(turn)) {
+        if (!sourcePiece.isSameColor(color)) {
             throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
         }
     }
 
-    private void validateMovable(Color turn, Position source, Position target) {
+    private void validateMovable(Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isMovable(source, target)) {
+        if (!sourcePiece.isMovable(board, source, target)) {
             throw new IllegalArgumentException("기물은 해당 위치로 이동할 수 없습니다.");
         }
-
-        if (sourcePiece.isPawn()) {
-            validatePawnMovable(turn, source, target);
-        }
     }
 
-    private void validatePawnMovable(Color turn, Position source, Position target) {
-        Color enemy = turn.nextTurn();
-        if (isStraightMove(source, target)) {
-            validateStraightMove(target, enemy);
-            return;
-        }
-        validateDiagonalMove(target, enemy);
-    }
-
-    private boolean isStraightMove(Position source, Position target) {
-        return Math.abs(source.calculateDisplacementXTo(target)) == 0;
-    }
-
-    private void validateStraightMove(Position target, Color enemy) {
+    private void validateTargetColor(Color color, Position target) {
         Piece targetPiece = board.get(target);
-        if (targetPiece.isSameColor(enemy)) {
-            throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void validateDiagonalMove(Position target, Color enemy) {
-        Piece targetPiece = board.get(target);
-        if (!targetPiece.isSameColor(enemy)) {
-            throw new IllegalArgumentException("Pawn은 해당 위치로 이동할 수 없습니다.");
-        }
-    }
-
-    private void validateTargetChoice(Color turn, Position target) {
-        Piece targetPiece = board.get(target);
-        if (targetPiece.isSameColor(turn)) {
+        if (targetPiece.isSameColor(color)) {
             throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
         }
     }

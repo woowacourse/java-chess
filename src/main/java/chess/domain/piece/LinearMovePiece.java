@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class LinearMovePiece extends Piece {
     public LinearMovePiece(Color color) {
@@ -29,7 +30,7 @@ public abstract class LinearMovePiece extends Piece {
     protected abstract String baseSignature();
 
     @Override
-    public abstract boolean isMovable(Position source, Position target);
+    public abstract boolean isMovable(Map<Position, Piece> board, Position source, Position target);
 
     @Override
     public abstract List<Position> findRoute(Position source, Position target);

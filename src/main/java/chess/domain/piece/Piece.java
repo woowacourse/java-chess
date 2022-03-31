@@ -4,6 +4,7 @@ import chess.domain.Color;
 import chess.domain.position.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
     protected final Color color;
@@ -53,7 +54,7 @@ public abstract class Piece {
 
     protected abstract String baseSignature();
 
-    public abstract boolean isMovable(Position source, Position target);
+    public abstract boolean isMovable(Map<Position, Piece> board, Position source, Position target);
 
     public abstract List<Position> findRoute(Position source, Position target);
 

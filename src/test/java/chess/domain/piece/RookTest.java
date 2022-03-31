@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.H, PositionY.RANK_5);
-        assertThat(rook.isMovable(source, target)).isTrue();
+        assertThat(rook.isMovable(new HashMap<>(), source, target)).isTrue();
     }
 
     @Test
@@ -38,7 +39,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.H, PositionY.RANK_8);
-        assertThat(rook.isMovable(source, target)).isFalse();
+        assertThat(rook.isMovable(new HashMap<>(), source, target)).isFalse();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.position.Position;
 import chess.domain.position.PositionX;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +31,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.C, PositionY.RANK_4);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(Board.initialBoard().getBoard(), source, target)).isTrue();
     }
 
     @Test
@@ -38,7 +40,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.C, PositionY.RANK_6);
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(new HashMap<>(), source, target)).isFalse();
     }
 
     @Test
@@ -47,7 +49,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.C, PositionY.RANK_6);
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(Board.initialBoard().getBoard(), source, target)).isTrue();
     }
 
     @Test
@@ -56,7 +58,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Position source = new Position(PositionX.C, PositionY.RANK_5);
         Position target = new Position(PositionX.C, PositionY.RANK_4);
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(new HashMap<>(), source, target)).isFalse();
     }
 
     @Test

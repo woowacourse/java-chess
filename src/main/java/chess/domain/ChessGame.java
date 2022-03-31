@@ -39,8 +39,7 @@ public final class ChessGame {
             return;
         }
 
-        board.validateMovement(turn, source, target);
-        board.movePiece(source, target);
+        board.movePieceIfValid(turn, source, target);
         checkPromotion(target);
         changeTurn();
     }
