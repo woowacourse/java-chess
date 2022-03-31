@@ -21,8 +21,18 @@ public class RankDTO {
     private static List<String> toPieceSignature(Rank rank) {
         return rank.getPieces()
                 .stream()
-                .map(Piece::getSignature)
+                .map(RankDTO::createTeamSignature)
                 .collect(Collectors.toList());
+    }
+
+    private static String createTeamSignature(Piece piece) {
+        if (piece.isBlank()) {
+            return "blank";
+        }
+        if (piece.isBlack()) {
+            return "black_" + piece.getSignature();
+        }
+        return "white_" + piece.getSignature();
     }
 
     public List<String> getPieces() {

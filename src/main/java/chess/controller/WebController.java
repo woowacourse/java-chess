@@ -2,6 +2,7 @@ package chess.controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 
 import chess.domain.ChessGame;
 import chess.domain.Command;
@@ -25,6 +26,7 @@ public class WebController {
     }
 
     public void run() {
+        staticFiles.location("/static");
         gameRepository.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard()))));
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -42,6 +44,7 @@ public class WebController {
             }
             model.put("turn", chessGame.getTurn());
             model.put("ranks", ranks);
+            model.put("id", gameId);
             return render(model, "play.html");
         });
 
