@@ -56,7 +56,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitPawn(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             Arrays.stream(XPosition.values())
                     .forEach(x -> board.put(Position.of(x, YPosition.SEVEN), new Pawn(team.BLACK)));
             return;
@@ -66,7 +66,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitRook(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             board.put(Position.of(XPosition.A, YPosition.EIGHT), new Rook(team.BLACK));
             board.put(Position.of(XPosition.H, YPosition.EIGHT), new Rook(team.BLACK));
             return;
@@ -76,7 +76,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitKnight(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             board.put(Position.of(XPosition.B, YPosition.EIGHT), new Knight(team.BLACK));
             board.put(Position.of(XPosition.G, YPosition.EIGHT), new Knight(team.BLACK));
             return;
@@ -86,7 +86,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitBishop(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             board.put(Position.of(XPosition.C, YPosition.EIGHT), new Bishop(team.BLACK));
             board.put(Position.of(XPosition.F, YPosition.EIGHT), new Bishop(team.BLACK));
             return;
@@ -96,7 +96,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitQueen(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             board.put(Position.of(XPosition.D, YPosition.EIGHT), new Queen(team.BLACK));
             return;
         }
@@ -104,7 +104,7 @@ public final class ChessBoardGenerator implements BoardGenerator {
     }
 
     private void createInitKing(final Map<Position, Piece> board, final Team team) {
-        if (team == team.BLACK) {
+        if (team == Team.BLACK) {
             board.put(Position.of(XPosition.E, YPosition.EIGHT), new King(team.BLACK));
             return;
         }
