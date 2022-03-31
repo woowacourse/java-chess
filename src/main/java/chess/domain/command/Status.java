@@ -1,11 +1,8 @@
 package chess.domain.command;
 
-import chess.domain.state.State;
-
 public class Status extends Start {
 
-    Status(State state) {
-        super(state);
+    Status() {
     }
 
     @Override
@@ -14,7 +11,12 @@ public class Status extends Start {
     }
 
     @Override
-    public StatusResult getStatus() {
-        return new StatusResult(state.getScore());
+    public boolean isMove() {
+        return false;
+    }
+
+    @Override
+    public CommandState execute(String input) {
+        return new Start();
     }
 }

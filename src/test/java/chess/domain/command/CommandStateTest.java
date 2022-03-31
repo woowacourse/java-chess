@@ -3,6 +3,7 @@ package chess.domain.command;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
@@ -14,7 +15,7 @@ class CommandStateTest {
     @Test
     void test() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
 
         assertThat(start).isInstanceOf(Start.class);
     }
@@ -22,7 +23,7 @@ class CommandStateTest {
     @Test
     void testIsStart() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
 
         assertThat(start.isStart()).isTrue();
     }
@@ -30,7 +31,7 @@ class CommandStateTest {
     @Test
     void testEnd() {
         String input = "end";
-        CommandState end = CommandState.of(input);
+        CommandState end = ChessReady.startCommand(input);
 
         assertThat(end).isInstanceOf(End.class);
     }
@@ -38,7 +39,7 @@ class CommandStateTest {
     @Test
     void testEndIsStart() {
         String input = "end";
-        CommandState end = CommandState.of(input);
+        CommandState end = ChessReady.startCommand(input);
 
         assertThat(end.isStart()).isFalse();
     }
@@ -46,19 +47,20 @@ class CommandStateTest {
     @Test
     void testInvalidInput() {
         String input = "unknown";
-        Assertions.assertThatThrownBy(() -> CommandState.of(input))
+        Assertions.assertThatThrownBy(() -> ChessReady.startCommand(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void moveOnlyStartFromStart() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
+        ChessGame chessGame = new ChessGame(start);
 
         String moveInput = "move a2 a3";
-        start = start.execute(moveInput);
+        chessGame.execute(moveInput);
 
-        Board board = start.getBoard();
+        Board board = chessGame.getBoard();
 
         assertThat(board.findPieceBy(Position.of("a2"))).isEmpty();
         assertThat(board.findPieceBy(Position.of("a3")).get()).isInstanceOf(Pawn.class);
@@ -67,39 +69,42 @@ class CommandStateTest {
     @Test
     void moveOnlyStartFromStartFail() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
+        ChessGame chessGame = new ChessGame(start);
 
         String moveInput = "move a7 a6";
 
-        assertThatThrownBy(() -> start.execute(moveInput))
+        assertThatThrownBy(() -> chessGame.execute(moveInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void startToEnd() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
+        ChessGame chessGame = new ChessGame(start);
 
         String endInput = "end";
-        start = start.execute(endInput);
+        chessGame.execute(endInput);
 
-        assertThat(start).isInstanceOf(End.class);
+        assertThat(chessGame.isFinished()).isTrue();
     }
 
     @Test
     void startToInvalidInput() {
         String input = "start";
-        CommandState start = CommandState.of(input);
+        CommandState start = ChessReady.startCommand(input);
+        ChessGame chessGame = new ChessGame(start);
 
         String unknown = "unknown";
-        assertThatThrownBy(() -> start.execute(unknown))
+        assertThatThrownBy(() -> chessGame.execute(unknown))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void endToCommand() {
         String input = "end";
-        CommandState end = CommandState.of(input);
+        CommandState end = ChessReady.startCommand(input);
 
         String start = "start";
         assertThatThrownBy(() -> end.execute(start))
