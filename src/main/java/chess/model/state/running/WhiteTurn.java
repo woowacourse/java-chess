@@ -27,7 +27,7 @@ public class WhiteTurn extends Running {
         }
         if (command.isMove()) {
             movePieceFrom(inputs);
-            return new BlackTurn(board);
+            return createStateByBoard();
         }
         throw new IllegalArgumentException("[ERROR] 게임을 진행하기 위한 명령어가 아닙니다.");
     }
@@ -35,5 +35,12 @@ public class WhiteTurn extends Running {
     private void movePieceFrom(List<String> command) {
         board.checkSameTeam(WHITE, Position.from(command.get(SOURCE_OPTION_INDEX)));
         board.move(Position.from(command.get(SOURCE_OPTION_INDEX)), Position.from(command.get(TARGET_OPTION_INDEX)));
+    }
+
+    private State createStateByBoard() {
+        if (board.isKingDead()) {
+            return new End();
+        }
+        return new BlackTurn(board);
     }
 }

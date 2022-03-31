@@ -19,4 +19,9 @@ public class Blank extends Piece {
     public double addTo(final double score) {
         throw new IllegalArgumentException("[ERROR] 더 할 수 없습니다.");
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

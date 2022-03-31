@@ -27,4 +27,9 @@ public class Pawn extends Piece {
     public double addTo(double score) {
         return score + SCORE;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

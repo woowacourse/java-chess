@@ -1,5 +1,6 @@
 package chess;
 
+import static chess.model.Team.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -35,7 +36,7 @@ public class BoardTest {
     void move_opposite_exception() {
         Board board = new Board();
 
-        assertThatThrownBy(() -> board.move(Position.of(Rank.SEVEN, File.D), Position.of(Rank.FIVE, File.D)))
+        assertThatThrownBy(() -> board.checkSameTeam(BLACK, Position.of(Rank.TWO, File.D)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 상대편 기물은 움직일 수 없습니다.");
     }

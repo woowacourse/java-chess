@@ -20,6 +20,6 @@ public abstract class Finished implements State {
 
     @Override
     public Map<Position, Piece> getBoard() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되어 데이터를 가져올 수 없습니다.");
+        return null;
     }
 }

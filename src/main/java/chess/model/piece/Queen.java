@@ -29,4 +29,9 @@ public class Queen extends Piece {
     public double addTo(final double score) {
         return score + SCORE;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

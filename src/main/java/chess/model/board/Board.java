@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class Board {
 
+    private static final int KING_COUNT_IN_BOARD = 2;
+
     private final Map<Position, Piece> board;
 
     public Board() {
@@ -40,6 +42,13 @@ public class Board {
         if (!board.get(source).canMove(source, target, board)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물을 이동 시킬수 없는 위치가 입력 됬습니다.");
         }
+    }
+
+    public boolean isKingDead() {
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() < KING_COUNT_IN_BOARD;
     }
 
     public Map<Position, Piece> getBoard() {

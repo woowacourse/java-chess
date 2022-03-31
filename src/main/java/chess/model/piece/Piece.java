@@ -27,6 +27,8 @@ public abstract class Piece {
 
     public abstract double addTo(double score);
 
+    public abstract boolean isKing();
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

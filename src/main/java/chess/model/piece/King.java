@@ -29,4 +29,9 @@ public class King extends Piece {
     public double addTo(double score) {
         return score + SCORE;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
