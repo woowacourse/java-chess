@@ -8,8 +8,12 @@ import chess.dto.ScoreDto;
 import chess.view.OutputView;
 
 public abstract class Playing implements ChessGameState {
-    OutputView outputView = OutputView.getInstance();
-    Board board;
+    private final OutputView outputView = OutputView.getInstance();
+    private final Board board;
+
+    Playing(Board board) {
+        this.board = board;
+    }
 
     @Override
     public ChessGameState start() {

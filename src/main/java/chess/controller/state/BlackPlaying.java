@@ -5,9 +5,8 @@ import chess.domain.board.Board;
 import chess.domain.board.MoveResult;
 
 public class BlackPlaying extends Playing {
-
-    public BlackPlaying(Board board) {
-        this.board = board;
+    BlackPlaying(Board board) {
+        super(board);
     }
 
     @Override

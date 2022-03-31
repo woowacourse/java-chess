@@ -4,9 +4,9 @@ import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.MoveResult;
 
-public class WhitePlaying extends Playing  {
-    public WhitePlaying(Board board) {
-        this.board = board;
+public class WhitePlaying extends Playing {
+    WhitePlaying(Board board) {
+        super(board);
     }
 
     @Override
