@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import java.util.Map;
 import java.util.Objects;
@@ -9,9 +10,11 @@ import java.util.Objects;
 public class ChessBoard {
 
     private final Map<Position, ChessPiece> pieceByPosition;
+    private Color currentTurnColor;
 
     public ChessBoard(final Map<Position, ChessPiece> pieceByPosition) {
         this.pieceByPosition = pieceByPosition;
+        currentTurnColor = Color.WHITE;
     }
 
     public ChessPiece findPiece(final Position position) {
@@ -22,6 +25,9 @@ public class ChessBoard {
         final ChessPiece movablePiece = findPiece(from);
         if (Objects.isNull(movablePiece)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+        }
+        if (!movablePiece.isSameColor(currentTurnColor)) {
+            throw new IllegalArgumentException(currentTurnColor.name() + "의 차례입니다.");
         }
 
         checkCanMove(from, to, movablePiece);
@@ -46,6 +52,7 @@ public class ChessBoard {
     private void movePiece(final Position from, final Position to) {
         final ChessPiece movablePiece = pieceByPosition.remove(from);
         pieceByPosition.put(to, movablePiece);
+        currentTurnColor = currentTurnColor.toOpposite();
     }
 
     public boolean isKingDie() {

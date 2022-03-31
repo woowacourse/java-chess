@@ -62,4 +62,67 @@ class ChessGameTest {
         // then
         assertThat(actual).isEqualTo(true);
     }
+
+    @Test
+    @DisplayName("게임이 이미 시작한 후 start 하면 예외가 터진다.")
+    void start_after_start() {
+        // given
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
+        chessGame.start();
+
+        // then
+        assertThatThrownBy(() -> chessGame.start())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 이미 시작되었습니다.");
+    }
+
+    @Test
+    @DisplayName("게임을 시작하지 않고 move 하면 예외가 터진다.")
+    void move_before_start() {
+        // given
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
+
+        // then
+        assertThatThrownBy(() -> chessGame.move(Position.from("a1"), Position.from("a2")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 시작되지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("게임을 종료된 후 move 하면 예외가 터진다.")
+    void move_after_end() {
+        // given
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
+        chessGame.end();
+
+        // then
+        assertThatThrownBy(() -> chessGame.move(Position.from("a1"), Position.from("a2")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 이미 종료되었습니다.");
+    }
+
+    @Test
+    @DisplayName("게임을 시작하지 않고 status 하면 예외가 터진다.")
+    void calculateScore_before_start() {
+        // given
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
+
+        // then
+        assertThatThrownBy(() -> chessGame.calculateScore())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 시작되지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("게임을 종료된 후 status 하면 예외가 터진다.")
+    void calculateScore_after_end() {
+        // given
+        final ChessGame chessGame = new ChessGame(ChessBoardFactory.createChessBoard());
+        chessGame.end();
+
+        // then
+        assertThatThrownBy(() -> chessGame.calculateScore())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임이 이미 종료되었습니다.");
+    }
 }

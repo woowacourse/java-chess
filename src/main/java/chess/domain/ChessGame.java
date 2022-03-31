@@ -8,45 +8,46 @@ import java.util.Map;
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private final GameStatus gameStatus;
+    private GameStatus gameStatus;
 
     public ChessGame(final ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
-        this.gameStatus = new GameStatus();
+        this.gameStatus = GameStatus.READY;
     }
 
     public void move(final Position from, final Position to) {
-        gameStatus.checkCanMove(chessBoard.findPiece(from));
+        gameStatus.checkPlaying();
 
         chessBoard.move(from, to);
         if (chessBoard.isKingDie()) {
-            gameStatus.kingDie();
+            gameStatus = GameStatus.KING_DIE;
         }
-        gameStatus.changeTurn();
     }
 
     public Score calculateScore() {
-        gameStatus.checkCanCalculateScore();
+        gameStatus.checkPlaying();
         return chessBoard.calculateScore();
     }
 
     public Map<Position, ChessPiece> findAllPiece() {
+        gameStatus.checkPlaying();
         return chessBoard.findAllPiece();
     }
 
     public void start() {
-        gameStatus.start();
+        gameStatus.checkReady();
+        gameStatus = GameStatus.PLAYING;
     }
 
     public void end() {
-        gameStatus.end();
+        gameStatus = GameStatus.END;
     }
 
     public boolean isFinish() {
-        return gameStatus.isKingDie();
+        return gameStatus.equals(GameStatus.KING_DIE);
     }
 
     public boolean canPlay() {
-        return gameStatus.canPlay();
+        return !gameStatus.isEnd();
     }
 }
