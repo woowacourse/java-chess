@@ -11,4 +11,6 @@ public interface State {
     State move(Position from, Position to);
 
     Board getBoard();
+
+    boolean isEnd();
 }

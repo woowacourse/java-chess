@@ -13,4 +13,6 @@ public abstract class Started implements State {
     public Board getBoard() {
         return board;
     }
+
+
 }

@@ -20,4 +20,9 @@ public abstract class Running extends Started {
     public State endGame() {
         return new FinishedEnd(board);
     }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }

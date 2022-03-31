@@ -16,4 +16,9 @@ public abstract class BeforeRunning extends Started {
     public State startGame() {
         return new RunningWhite(BoardFactory.createInitializedBoard());
     }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }

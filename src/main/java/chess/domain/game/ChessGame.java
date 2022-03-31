@@ -28,4 +28,8 @@ public class ChessGame {
     public Board getBoard() {
         return state.getBoard();
     }
+
+    public boolean isEnd() {
+        return state.isEnd();
+    }
 }

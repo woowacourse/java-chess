@@ -25,4 +25,9 @@ public abstract class AfterRunning extends Started {
     public State move(Position from, Position to) {
         throw new IllegalStateException("게임 중이 아니어서 말을 움직일 수 없습니다.");
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
 }
