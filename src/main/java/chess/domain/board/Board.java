@@ -49,7 +49,7 @@ public class Board {
 
     private void validateAllyMove(Color turnColor, Piece fromPiece) {
         if (!fromPiece.isSameColor(turnColor)) {
-            throw new IllegalArgumentException("[ERROR] 자신의 말을 움직여야 합니다.");
+            throw new IllegalStateException("[ERROR] 자신의 말을 움직여야 합니다.");
         }
     }
 
