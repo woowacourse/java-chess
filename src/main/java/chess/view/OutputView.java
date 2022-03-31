@@ -26,13 +26,13 @@ public class OutputView {
     }
 
     public static void printBoard(Map<Position, Piece> pieces) {
+        System.out.println("------------------------");
         for (int rank = 0; rank < 8; rank++) {
             printBoardOnRow(pieces, rank);
             printRank(rank);
         }
-        System.out.println();
         printFile();
-        System.out.println();
+        System.out.println("------------------------");
     }
 
     private static void printBoardOnRow(Map<Position, Piece> pieces, int rank) {
@@ -54,9 +54,11 @@ public class OutputView {
     }
 
     private static void printFile() {
+        System.out.println();
         for (Column column : Column.values()) {
             System.out.print(column.getName());
         }
+        System.out.println();
     }
 
     public static void printErrorMessage(String message) {
