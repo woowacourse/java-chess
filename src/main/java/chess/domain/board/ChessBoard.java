@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 
 public class ChessBoard {
 
+    private static final int BASE_KING_COUNT = 2;
+
     private final Map<Position, Article> pieces;
 
     public ChessBoard(Map<Position, Article> pieces) {
@@ -67,7 +69,14 @@ public class ChessBoard {
     }
 
     public boolean isKingAlive() {
-        return false;
+        return getAliveKingCount() != BASE_KING_COUNT;
+    }
+
+    private long getAliveKingCount() {
+        return pieces.values()
+                .stream()
+                .filter(Article::isKing)
+                .count();
     }
 
     public Map<Position, Article> getPieces() {
