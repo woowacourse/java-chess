@@ -12,36 +12,36 @@ public class ConsoleApplication {
         outputView.printStartMessage();
 
         InputView inputView = new InputView();
-        Controller controller = new Controller();
+        GameController gameController = new GameController();
 
         Command command;
         do {
             command = inputView.readCommand();
-            executeCommand(controller, command, outputView);
-        } while (!command.isType(Type.END) && !controller.isGameFinished());
+            executeCommand(gameController, command, outputView);
+        } while (!command.isType(Type.END) && !gameController.isGameFinished());
     }
 
-    private static void executeCommand(Controller controller, Command command, OutputView outputView) {
+    private static void executeCommand(GameController gameController, Command command, OutputView outputView) {
         if (command.isType(Type.START)) {
-            outputView.printBoard(controller.start());
+            outputView.printBoard(gameController.start());
         }
         if (command.isType(Type.MOVE)) {
             Move move = (Move) command;
-            outputView.printBoard(controller.move(move.getSourcePosition(), move.getTargetPosition()));
-            printResultIfGameIsFinished(controller, outputView);
+            outputView.printBoard(gameController.move(move.getSourcePosition(), move.getTargetPosition()));
+            printResultIfGameIsFinished(gameController, outputView);
         }
         if (command.isType(Type.STATUS)) {
-            outputView.printScore(controller.status());
+            outputView.printScore(gameController.status());
         }
         if (command.isType(Type.END)) {
-            controller.end();
-            printResultIfGameIsFinished(controller, outputView);
+            gameController.end();
+            printResultIfGameIsFinished(gameController, outputView);
         }
     }
 
-    private static void printResultIfGameIsFinished(Controller controller, OutputView outputView) {
-        if (controller.isGameFinished()) {
-            outputView.printResult(controller.status(), controller.getWinner());
+    private static void printResultIfGameIsFinished(GameController gameController, OutputView outputView) {
+        if (gameController.isGameFinished()) {
+            outputView.printResult(gameController.status(), gameController.getWinner());
         }
     }
 }

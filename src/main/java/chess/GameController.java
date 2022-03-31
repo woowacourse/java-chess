@@ -7,10 +7,10 @@ import chess.domain.board.Position;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
-public class Controller {
+public class GameController {
     private final ChessGame chessGame;
 
-    public Controller() {
+    public GameController() {
         this.chessGame = new ChessGame();
     }
 
