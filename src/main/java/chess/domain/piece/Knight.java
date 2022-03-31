@@ -1,25 +1,19 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
+import static chess.domain.position.UnitDirection.*;
+
 import java.util.List;
 
-import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class Knight extends MovingUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 나이트는 색상을 가져야합니다.";
     private static final String BLACK_KNIGHT = "♘";
     private static final String WHITE_KNIGHT = "♞";
-    private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
+    private static final List<UnitDirection> MOVABLE_DIRECTIONS;
 
     static {
-        MOVABLE_DIRECTIONS.add(new Direction(1, 2));
-        MOVABLE_DIRECTIONS.add(new Direction(1, -2));
-        MOVABLE_DIRECTIONS.add(new Direction(-1, 2));
-        MOVABLE_DIRECTIONS.add(new Direction(-1, -2));
-        MOVABLE_DIRECTIONS.add(new Direction(2, 1));
-        MOVABLE_DIRECTIONS.add(new Direction(2, -1));
-        MOVABLE_DIRECTIONS.add(new Direction(-2, -1));
-        MOVABLE_DIRECTIONS.add(new Direction(-2, 1));
+        MOVABLE_DIRECTIONS = List.of(ENN, ESS, WNN, WSS, EEN, EES, WWN, WWS);
     }
 
     Knight(Color color) {

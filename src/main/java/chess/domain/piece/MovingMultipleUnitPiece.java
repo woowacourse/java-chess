@@ -3,11 +3,12 @@ package chess.domain.piece;
 import java.util.List;
 
 import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public abstract class MovingMultipleUnitPiece extends Piece {
-    List<Direction> movableDirections;
+    List<UnitDirection> movableDirections;
 
-    MovingMultipleUnitPiece(Color color, double score, List<Direction> directions) {
+    MovingMultipleUnitPiece(Color color, double score, List<UnitDirection> directions) {
         super(color, score);
         this.movableDirections = directions;
     }

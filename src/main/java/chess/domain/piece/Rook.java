@@ -1,21 +1,19 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
+import static chess.domain.position.UnitDirection.*;
+
 import java.util.List;
 
-import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class Rook extends MovingMultipleUnitPiece {
     private static final String BUG_MESSAGE_COLOR = "[BUG] 룩은 색상을 가져야합니다.";
     private static final String WHITE_ROOK = "♜";
     private static final String BLACK_ROOK = "♖";
-    private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
+    private static final List<UnitDirection> MOVABLE_DIRECTIONS;
 
     static {
-        MOVABLE_DIRECTIONS.add(new Direction(1, 0));
-        MOVABLE_DIRECTIONS.add(new Direction(0, 1));
-        MOVABLE_DIRECTIONS.add(new Direction(-1, 0));
-        MOVABLE_DIRECTIONS.add(new Direction(0, -1));
+        MOVABLE_DIRECTIONS = List.of(N, S, W, E);
     }
 
     Rook(Color color) {

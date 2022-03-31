@@ -37,7 +37,7 @@ public final class GameResult {
     }
 
     private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
-        return (int) survives.stream()
+        return (int)survives.stream()
                 .filter(entry -> entry.getValue().isPawn())
                 .filter(entry -> entry.getKey().checkFile(file))
                 .count();

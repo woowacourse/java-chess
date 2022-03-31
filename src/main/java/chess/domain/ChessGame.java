@@ -1,11 +1,6 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.position.Square;
 
 public final class ChessGame {

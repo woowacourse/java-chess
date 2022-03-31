@@ -1,21 +1,23 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
+import static chess.domain.position.UnitDirection.*;
+
 import java.util.List;
 
 import chess.domain.position.Direction;
+import chess.domain.position.UnitDirection;
 
 public final class Pawn extends Piece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";
     private static final String WHITE_PAWN = "♟";
     private static final String BLACK_PAWN = "♙";
-    private static final List<Direction> MOVABLE_DIRECTIONS = new ArrayList<>();
-    private static final List<Direction> ATTACK_DIRECTIONS = List.of(new Direction(1, 1), new Direction(-1, 1));
-    private static final List<Direction> START_DIRECTIONS = List.of(new Direction(0, 2));
+    private static final List<UnitDirection> MOVABLE_DIRECTIONS;
+    private static final List<UnitDirection> ATTACK_DIRECTIONS = List.of(EN, WN);
+    private static final List<UnitDirection> START_DIRECTIONS = List.of(NN);
     private static final String ERROR_MESSAGE_ATTACK_DIRECTION = "[ERROR] 5252! 폰은 대각선으로만 공격할 수 있다능~";
 
     static {
-        MOVABLE_DIRECTIONS.add(new Direction(0, 1));
+        MOVABLE_DIRECTIONS = List.of(N);
     }
 
     private boolean start;
