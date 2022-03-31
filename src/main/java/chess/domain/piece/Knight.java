@@ -24,9 +24,14 @@ public class Knight extends Piece {
 		return WHITE_SYMBOL;
 	}
 
+	private List<Direction> getKnightDirection() {
+		return List.of(Direction.SSE, Direction.SSW, Direction.NNE, Direction.NNW, Direction.EEN,
+				Direction.EES, Direction.WWN, Direction.WWS);
+	}
+
 	@Override
 	public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
-		List<Direction> directions = Direction.getKnightDirection();
+		List<Direction> directions = getKnightDirection();
 		if (!canMove(source, target, directions)) {
 			throw new IllegalArgumentException(MOVEMENT_ERROR);
 		}
@@ -57,7 +62,7 @@ public class Knight extends Piece {
 
 	@Override
 	public Direction getDirection(final Position source, final Position target) {
-		List<Direction> directions = Direction.getKnightDirection();
+		List<Direction> directions = getKnightDirection();
 		if (canMove(source, target, directions)) {
 			return Direction.find(target.subtractRow(source), target.subtractColumn(source));
 		}

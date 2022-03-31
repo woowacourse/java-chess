@@ -27,11 +27,25 @@ public class Pawn extends Piece {
         return WHITE_SYMBOL;
     }
 
+    private List<Direction> getDirections() {
+        if (team.isBlack()) {
+            return List.of(Direction.S, Direction.SE, Direction.SW);
+        }
+        return List.of(Direction.N, Direction.NE, Direction.NW);
+    }
+
+    private Direction getDefaultPawnByTeam() {
+        if (team.isBlack()) {
+            return Direction.SS;
+        }
+        return Direction.NN;
+    }
+
     @Override
     public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
-        List<Direction> directions = new ArrayList<>(Direction.getPawnByTeam(team));
+        List<Direction> directions = new ArrayList<>(getDirections());
         if (source.isDefaultRow(team)) {
-            directions.add(Direction.getDefaultPawnByTeam(team));
+            directions.add(getDefaultPawnByTeam());
         }
 
         if (!canMove(source, target, directions)) {

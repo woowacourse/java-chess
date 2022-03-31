@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.Position;
-
 public class PositionConvertor {
 
     private static final String CONVERT_ERROR = "올바르지 않은 좌표 입력입니다.";

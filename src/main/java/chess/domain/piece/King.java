@@ -27,7 +27,8 @@ public class King extends Piece {
 
     @Override
     public void checkReachable(final Piece targetPiece, final Position source, final Position target) {
-        List<Direction> directions = Direction.getKingDirection();
+        List<Direction> directions = List.of(Direction.E, Direction.W, Direction.S, Direction.N,
+                Direction.NE, Direction.NW, Direction.SE, Direction.SW);;
         if (!canMove(source, target, directions)) {
             throw new IllegalArgumentException(MOVEMENT_ERROR);
         }

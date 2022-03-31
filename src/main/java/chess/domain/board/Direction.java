@@ -37,28 +37,6 @@ public enum Direction {
         this.columnMovement = columnMovement;
     }
 
-    public static List<Direction> getKnightDirection() {
-        return List.of(SSE, SSW, NNE, NNW, EEN, EES, WWN, WWS);
-    }
-
-    public static List<Direction> getKingDirection() {
-        return List.of(E, W, S, N, NE, NW, SE, SW);
-    }
-
-    public static List<Direction> getPawnByTeam(Team team) {
-        if (team.isBlack()) {
-            return List.of(S, SE, SW);
-        }
-        return List.of(N, NE, NW);
-    }
-
-    public static Direction getDefaultPawnByTeam(final Team team) {
-        if (team.isBlack()) {
-            return SS;
-        }
-        return NN;
-    }
-
     public static Direction find(final int rowMovement, final int columnMovement) {
         return Arrays.stream(values())
                 .filter(value -> value.rowMovement == rowMovement && value.columnMovement == columnMovement)
