@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Position {
 
@@ -15,15 +16,13 @@ public class Position {
 
     static {
         allPositions = Arrays.stream(File.values())
-                .map(Position::generatePositionOf)
-                .flatMap(List::stream)
+                .flatMap(Position::generatePositionOf)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static List<Position> generatePositionOf(final File file) {
+    private static Stream<Position> generatePositionOf(final File file) {
         return Arrays.stream(Rank.values())
-                .map(rank -> new Position(file, rank))
-                .collect(Collectors.toList());
+                .map(rank -> new Position(file, rank));
     }
 
     private final File file;
