@@ -19,6 +19,8 @@ public class ConsoleApplication {
             command = inputView.readCommand();
             executeCommand(gameController, command, outputView);
         } while (!command.isType(Type.END) && !gameController.isGameFinished());
+        printResultIfGameIsFinished(gameController, outputView);
+
     }
 
     private static void executeCommand(GameController gameController, Command command, OutputView outputView) {
@@ -28,14 +30,12 @@ public class ConsoleApplication {
         if (command.isType(Type.MOVE)) {
             Move move = (Move) command;
             outputView.printBoard(gameController.move(move.getSourcePosition(), move.getTargetPosition()));
-            printResultIfGameIsFinished(gameController, outputView);
         }
         if (command.isType(Type.STATUS)) {
             outputView.printScore(gameController.status());
         }
         if (command.isType(Type.END)) {
             gameController.end();
-            printResultIfGameIsFinished(gameController, outputView);
         }
     }
 
