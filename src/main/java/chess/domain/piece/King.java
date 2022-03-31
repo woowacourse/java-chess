@@ -8,7 +8,7 @@ public class King extends Piece {
 
     private static final double SCORE = 0;
     private static final BiPredicate<Integer, Integer> movingCondition =
-            (rankMove, fileMove) -> rankMove <= 1 && fileMove <= 1;
+            (rankMove, fileMove) -> Math.abs(rankMove) <= 1 && Math.abs(fileMove) <= 1;
 
     public King(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -16,7 +16,7 @@ public class King extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition, true);
+        position.validateTargetPosition(targetPosition, movingCondition);
         return new King(teamColor, targetPosition);
     }
 

@@ -36,12 +36,8 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 file 값입니다."));
     }
 
-    public int calculateDifference(final File anotherFile, final boolean absoluteFlag) {
-        final int difference = this.order - anotherFile.order;
-        if (absoluteFlag) {
-            return Math.abs(difference);
-        }
-        return difference;
+    public int calculateDifference(final File anotherFile) {
+        return this.order - anotherFile.order;
     }
 
     public File next(final File targetFile) {

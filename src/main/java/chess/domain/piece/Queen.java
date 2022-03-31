@@ -16,7 +16,7 @@ public class Queen extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition, true);
+        position.validateTargetPosition(targetPosition, movingCondition);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Queen(teamColor, targetPosition);

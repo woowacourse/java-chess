@@ -56,7 +56,7 @@ public class Pawn extends Piece {
         }
         final BiPredicate<Integer, Integer> moveCondition = (fileMove, rankMove) ->
                 fileMove == 0 && rankMove == 1 * directionValue;
-        position.validateTargetPosition(targetPosition, moveCondition, false);
+        position.validateTargetPosition(targetPosition, moveCondition);
         position.checkOtherPiecesInTarget(targetPosition, convertToPositions(otherPieces));
     }
 
@@ -64,7 +64,7 @@ public class Pawn extends Piece {
                                    final int directionValue) {
         final BiPredicate<Integer, Integer> firstMoveCondition = (fileMove, rankMove) ->
                 fileMove == 0 && (rankMove == 1 * directionValue || rankMove == 2 * directionValue);
-        position.validateTargetPosition(targetPosition, firstMoveCondition, false);
+        position.validateTargetPosition(targetPosition, firstMoveCondition);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
         position.checkOtherPiecesInTarget(targetPosition, convertToPositions(otherPieces));
     }
@@ -75,7 +75,7 @@ public class Pawn extends Piece {
         final int directionValue = DIRECTION_VALUE_BY_TEAM.get(teamColor);
         final BiPredicate<Integer, Integer> catchInvalidCondition = (fileMove, rankMove) ->
                 (fileMove == 1 || fileMove == -1) && rankMove == 1 * directionValue;
-        position.validateTargetPosition(targetPosition, catchInvalidCondition, false);
+        position.validateTargetPosition(targetPosition, catchInvalidCondition);
     }
 
     private void validateEnemyInTargetPosition(final Position targetPosition, final List<Piece> otherPieces) {

@@ -8,7 +8,7 @@ public class Bishop extends Piece {
 
     private static final double SCORE = 3;
     static final BiPredicate<Integer, Integer> movingCondition =
-            (rankMove, fileMove) -> rankMove == fileMove;
+            (rankMove, fileMove) -> Math.abs(rankMove) == Math.abs(fileMove);
 
     public Bishop(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -16,7 +16,7 @@ public class Bishop extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition, true);
+        position.validateTargetPosition(targetPosition, movingCondition);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Bishop(teamColor, targetPosition);

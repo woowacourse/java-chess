@@ -16,7 +16,7 @@ public class Rook extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition, false);
+        position.validateTargetPosition(targetPosition, movingCondition);
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Rook(teamColor, targetPosition);

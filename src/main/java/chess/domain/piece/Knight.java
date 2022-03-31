@@ -7,9 +7,9 @@ import java.util.function.BiPredicate;
 public class Knight extends Piece {
 
     private static final double SCORE = 2.5;
-    private static final BiPredicate<Integer, Integer> movingCondition =
-            (rankMove, fileMove) ->
-                    (fileMove == 2 && rankMove == 1) || (fileMove == 1 && rankMove == 2);
+    private static final BiPredicate<Integer, Integer> movingCondition = (rankMove, fileMove) ->
+            (Math.abs(fileMove) == 2 && Math.abs(rankMove) == 1) ||
+                    (Math.abs(fileMove) == 1 && Math.abs(rankMove) == 2);
 
     public Knight(final TeamColor teamColor, final Position position) {
         super(teamColor, position);
@@ -17,7 +17,7 @@ public class Knight extends Piece {
 
     @Override
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
-        position.validateTargetPosition(targetPosition, movingCondition, true);
+        position.validateTargetPosition(targetPosition, movingCondition);
         return new Knight(teamColor, targetPosition);
     }
 

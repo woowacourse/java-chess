@@ -40,12 +40,8 @@ public enum Rank {
         return this == TWO || this == SEVEN;
     }
 
-    public int calculateDifference(final Rank anotherRank, final boolean absoluteFlag) {
-        final int difference = this.ordinal() - anotherRank.ordinal();
-        if (absoluteFlag) {
-            return Math.abs(difference);
-        }
-        return difference;
+    public int calculateDifference(final Rank anotherRank) {
+        return this.order - anotherRank.order;
     }
 
     public Rank next(final Rank targetRank) {
