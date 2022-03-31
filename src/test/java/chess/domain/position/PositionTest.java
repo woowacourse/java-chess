@@ -39,7 +39,7 @@ class PositionTest {
         Position src = Position.of("d3");
         Position dest = Position.of("d5");
 
-        assertThat(src.isCrossByMovingTo(Direction.NORTH, dest)).isTrue();
+        assertThat(src.canMoveAcrossDestination(Direction.NORTH, dest)).isTrue();
     }
 
     @DisplayName("출발 위치와 도착 위치가 직선상에 존재하면 true를 반환한다 (북동)")
@@ -48,7 +48,7 @@ class PositionTest {
         Position src = Position.of("d5");
         Position dest = Position.of("g8");
 
-        assertThat(src.isCrossByMovingTo(Direction.NORTH_EAST, dest)).isTrue();
+        assertThat(src.canMoveAcrossDestination(Direction.NORTH_EAST, dest)).isTrue();
     }
 
     @DisplayName("출발 위치와 도착 위치가 직선상에 존재하지 않으면 false를 반환한다")
@@ -57,7 +57,7 @@ class PositionTest {
         Position src = Position.of("d3");
         Position dest = Position.of("d1");
 
-        assertThat(src.isCrossByMovingTo(Direction.NORTH, dest)).isFalse();
+        assertThat(src.canMoveAcrossDestination(Direction.NORTH, dest)).isFalse();
     }
 
     @DisplayName("파라미터로 넘어온 Row와 같은지 확인한다")

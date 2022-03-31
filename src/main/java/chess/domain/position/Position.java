@@ -41,11 +41,11 @@ public class Position {
         return this.row == row;
     }
 
-    public boolean isCrossByMovingTo(Direction direction, Position dest) {
-        return moveToNextPositionCheckingCrossed(this, dest, direction.getX(), direction.getY());
+    public boolean canMoveAcrossDestination(Direction direction, Position destination) {
+        return moveToNextPositionCheckingCrossed(this, destination, direction.getX(), direction.getY());
     }
 
-    public boolean canReachByMovingTo(Direction direction, Position dest, int times) {
+    public boolean canReachByMovingTo(Direction direction, Position destination, int times) {
         int x = direction.getX();
         int y = direction.getY();
 
@@ -56,7 +56,7 @@ public class Position {
             }
             nextPosition = nextPosition.moveTo(x, y);
         }
-        return dest.equals(nextPosition);
+        return destination.equals(nextPosition);
     }
 
     public boolean isSameFile(Position position) {
@@ -75,15 +75,15 @@ public class Position {
         }
     }
 
-    private boolean moveToNextPositionCheckingCrossed(Position start, Position dest, int x, int y) {
+    private boolean moveToNextPositionCheckingCrossed(Position start, Position destination, int x, int y) {
         if (!start.canMove(x, y)) {
             return false;
         }
         Position nextPosition = start.moveTo(x, y);
-        if (nextPosition.equals(dest)) {
+        if (nextPosition.equals(destination)) {
             return true;
         }
-        return moveToNextPositionCheckingCrossed(nextPosition, dest, x, y);
+        return moveToNextPositionCheckingCrossed(nextPosition, destination, x, y);
     }
 
     private boolean canMove(int x, int y) {

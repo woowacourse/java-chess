@@ -13,7 +13,7 @@ public abstract class AbstractStraightMovePattern implements MovePattern {
     public Direction findDirection(Position src, Position dest) {
         List<Direction> directions = getDirections();
         return directions.stream()
-                .filter(direction -> src.isCrossByMovingTo(direction, dest))
+                .filter(direction -> src.canMoveAcrossDestination(direction, dest))
                 .findFirst()
                 .orElse(null);
     }
