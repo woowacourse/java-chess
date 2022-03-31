@@ -1,16 +1,19 @@
 package chess.model.state.running;
 
-import chess.model.state.Command;
-import chess.model.Team;
+import static chess.model.Team.WHITE;
+
 import chess.model.board.Board;
 import chess.model.position.Position;
-import chess.model.state.finished.End;
+import chess.model.state.Command;
 import chess.model.state.State;
+import chess.model.state.finished.End;
 import java.util.List;
 
 public class WhiteTurn extends Running {
 
-    private final static Team WHITE = Team.WHITE;
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_OPTION_INDEX = 1;
+    private static final int TARGET_OPTION_INDEX = 2;
 
     public WhiteTurn(Board board) {
         super(board);
@@ -18,7 +21,7 @@ public class WhiteTurn extends Running {
 
     @Override
     public State proceed(List<String> inputs) {
-        Command command = Command.of(inputs.get(0));
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isEnd()) {
             return new End();
         }
@@ -30,6 +33,7 @@ public class WhiteTurn extends Running {
     }
 
     private void movePieceFrom(List<String> command) {
-        board.move(Position.from(command.get(1)), Position.from(command.get(2)));
+        board.checkSameTeam(WHITE, Position.from(command.get(SOURCE_OPTION_INDEX)));
+        board.move(Position.from(command.get(SOURCE_OPTION_INDEX)), Position.from(command.get(TARGET_OPTION_INDEX)));
     }
 }

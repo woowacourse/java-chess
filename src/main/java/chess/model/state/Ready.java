@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Ready implements State {
 
+    public static final int COMMAND_INDEX = 0;
     private final Board board;
 
     public Ready() {
@@ -22,7 +23,7 @@ public class Ready implements State {
 
     @Override
     public State proceed(List<String> inputs) {
-        Command command = Command.of(inputs.get(0));
+        Command command = Command.of(inputs.get(COMMAND_INDEX));
         if (command.isStart()) {
             return new WhiteTurn(board);
         }

@@ -2,6 +2,7 @@ package chess.model.board;
 
 import static chess.model.Team.NONE;
 
+import chess.model.Team;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -16,6 +17,11 @@ public class Board {
         this.board = BoardCreator.create();
     }
 
+    public void checkSameTeam(Team team, Position source) {
+        if (!board.get(source).isSameTeam(team)) {
+            throw new IllegalArgumentException("[ERROR] 상대편 기물은 움직일 수 없습니다.");
+        }
+    }
 
     public void move(final Position source, final Position target) {
         checkPieceIn(source);

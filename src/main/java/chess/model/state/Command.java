@@ -19,7 +19,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(value -> value.name.equals(command))
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요."));
     }
 
     public boolean isStart() {

@@ -15,7 +15,7 @@ public abstract class Finished implements State {
 
     @Override
     public State proceed(List<String> command) {
-        return null;
+        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되어 더 이상 진행 할 수 없습니다.");
     }
 
     @Override
