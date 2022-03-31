@@ -3,7 +3,7 @@ package chess.domain.gamecommand;
 import chess.domain.ChessGame;
 import chess.view.OutputView;
 
-public class Status implements Command {
+public class Status implements GameCommand {
 
     private final ChessGame chessGame;
 
@@ -12,7 +12,7 @@ public class Status implements Command {
     }
 
     @Override
-    public void execute(final String rawInputCommand, final OutputView outputView) {
-        outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+    public void execute(final String rawInputCommand) {
+        OutputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
     }
 }

@@ -20,14 +20,14 @@ public class OutputView {
     private static final String END_GAME_MESSAGE = "해당 게임이 종료되었습니다.";
     private static final String RESULT_SCORE_FORMAT = "백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n";
 
-    public void printStartMessage() {
+    public static void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_START_COMMAND_NAME, START_COMMAND);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_END_COMMAND_NAME, END_COMMAND);
         System.out.printf(GAME_COMMAND_FORMAT, GAME_MOVE_COMMAND_NAME, GAME_MOVE_COMMAND);
     }
 
-    public void printBoard(Map<Position, Piece> board) {
+    public static void printBoard(Map<Position, Piece> board) {
         int count = 0;
         for (Position position : board.keySet()) {
             final Piece piece = board.get(position);
@@ -40,22 +40,22 @@ public class OutputView {
         }
     }
 
-    private String makeBoardContentString(Piece piece) {
+    private static String makeBoardContentString(Piece piece) {
         if (piece.isBlack()) {
             return piece.getPieceNameCharacter().toUpperCase();
         }
         return piece.getPieceNameCharacter();
     }
 
-    public void printFinishMessage() {
+    public static void printFinishMessage() {
         System.out.println(END_GAME_MESSAGE);
     }
 
-    public void printStatus(double statusOfWhite, double statusOfBlack) {
+    public static void printStatus(double statusOfWhite, double statusOfBlack) {
         System.out.printf(RESULT_SCORE_FORMAT, statusOfWhite, statusOfBlack);
     }
 
-    public void printResultMessage(final String resultMessage) {
+    public static void printResultMessage(final String resultMessage) {
         System.out.println(resultMessage + RESULT_MESSAGE_SUFFIX);
     }
 }

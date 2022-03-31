@@ -4,7 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.board.Positions;
 import chess.view.OutputView;
 
-public class Move implements Command {
+public class Move implements GameCommand {
 
     private final ChessGame chessGame;
 
@@ -13,16 +13,16 @@ public class Move implements Command {
     }
 
     @Override
-    public void execute(String rawInputCommand, final OutputView outputView) {
+    public void execute(String rawInputCommand) {
         final Positions movePositions = Positions.from(rawInputCommand);
 
         chessGame.move(movePositions.get(0), movePositions.get(1));
 
-        outputView.printBoard(chessGame.board().getValue());
+        OutputView.printBoard(chessGame.board().getValue());
         if (chessGame.isNotRunning()) {
-            outputView.printFinishMessage();
-            outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-            outputView.printResultMessage(chessGame.getResultMessage());
+            OutputView.printFinishMessage();
+            OutputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+            OutputView.printResultMessage(chessGame.getResultMessage());
         }
     }
 }

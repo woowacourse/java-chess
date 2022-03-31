@@ -2,8 +2,10 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.gamecommand.GameCommand;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
+import chess.view.InputView;
 
 public class ChessGame {
 
@@ -52,5 +54,13 @@ public class ChessGame {
 
     public String getResultMessage() {
         return Result.from(this.state.getResult()).getMessage();
+    }
+
+    public void run() {
+        while (!isEnd()) {
+            final String command = InputView.inputCommand();
+            final GameCommand gameCommand = Command.findByInput(command, this);
+            gameCommand.execute(command);
+        }
     }
 }

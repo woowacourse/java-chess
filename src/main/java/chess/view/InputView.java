@@ -6,7 +6,7 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String ERROR_PREFIX = "[ERROR] : ";
 
-    public String inputCommand() {
+    public static String inputCommand() {
         try {
             return SCANNER.nextLine();
         } catch (Exception e) {
