@@ -24,6 +24,11 @@ public abstract class Piece implements Article {
     }
 
     @Override
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
     public String toString() {
         return "Piece{" +
                 "color=" + color +
