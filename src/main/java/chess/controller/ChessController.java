@@ -24,15 +24,15 @@ public class ChessController {
     }
 
     private void playChess(Board board) {
-        do {
+        while (!board.isFinished()) {
             Request request = InputView.inputCommandInGaming();
+
             if (request.getCommand().isEnd()) {
                 break;
             }
 
             doMoveOrStatus(board, request);
-        } while (!board.isFinished()
-        );
+        }
         OutputView.printScore(board.calculateScore());
     }
 
