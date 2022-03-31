@@ -20,11 +20,16 @@ class QueenTest {
     @DisplayName("퀸의 진행 방향이 맞는다면 true 반환")
     void correctMove() {
         Queen queen = new Queen(Position.of('a', '1'), Team.WHITE);
+        Position source = Position.from("a1");
+        Position targetDiagonal = Position.from("f6");
+        Position targetVertical = Position.from("a5");
+        Position targetHorizontal = Position.from("f1");
+
 
         assertAll(
-                () -> assertThat(queen.isMovable(Position.of('f', '6'))).isTrue(),
-                () -> assertThat(queen.isMovable(Position.of('a', '5'))).isTrue(),
-                () -> assertThat(queen.isMovable(Position.of('f', '1'))).isTrue()
+                () -> assertThat(queen.isMovable(source, targetDiagonal)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetVertical)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetHorizontal)).isTrue()
         );
     }
 
