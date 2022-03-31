@@ -8,7 +8,7 @@
 
     <style>
         table.chess-board {
-            font-size: 50px;
+            font-size: 37px;
             font-weight: bold;
             text-align: center;
             color: #fff;
@@ -36,6 +36,7 @@
         img.chess-piece-img {
             width: 99%;
             height: 99%;
+            margin: 0;
         }
     </style>
 </head>
@@ -64,6 +65,9 @@
             {{/ranks}}
             </tbody>
         </table>
+
+        <button class="btn btn-info">점수 보기</button>
+        <button class="btn btn-danger">강제 종료</button>
 
         <form action="/command/{{id}}" method="post" class="form-control">
             <input class="form-control" type="text" name="command" id="command" placeholder="명령어를 입력하세요."/>

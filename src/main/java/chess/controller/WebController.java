@@ -77,6 +77,14 @@ public class WebController {
             model.put("games", games);
             return render(model, "lobby.html");
         });
+
+        get("/score/:gameId", (req, res) -> {
+            Long gameId = Long.valueOf(req.params("gameId"));
+            ChessGame chessGame = gameRepository.findById(gameId).get();
+            Map<String, Object> model = new HashMap<>();
+            return "";
+
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
