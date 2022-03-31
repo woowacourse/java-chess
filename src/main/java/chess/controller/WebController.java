@@ -11,6 +11,7 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
 import chess.dto.RankDTO;
 import chess.repository.GameRepository;
+import chess.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,9 +82,12 @@ public class WebController {
         get("/score/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
-            Map<String, Object> model = new HashMap<>();
-            return "";
-
+            Map<String, String> jsonData = new HashMap<>();
+            jsonData.put("whiteScore", String.valueOf(chessGame.getWhiteScore()));
+            jsonData.put("blackScore", String.valueOf(chessGame.getBlackScore()));
+            res.header("Content-Type", "application/json");
+            res.body(JsonUtil.serialize(jsonData));
+            return JsonUtil.serialize(jsonData);
         });
     }
 

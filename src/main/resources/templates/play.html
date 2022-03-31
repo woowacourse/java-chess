@@ -66,12 +66,20 @@
             </tbody>
         </table>
 
-        <button class="btn btn-info">점수 보기</button>
-        <button class="btn btn-danger">강제 종료</button>
+        <button class="btn btn-info" id="scoreBtn" onclick="getScoreData()">점수 보기</button>
+        <button class="btn btn-danger" id="terminateBtn">강제 종료</button>
 
         <form action="/command/{{id}}" method="post" class="form-control">
             <input class="form-control" type="text" name="command" id="command" placeholder="명령어를 입력하세요."/>
             <input class="btn btn-dark" type="submit" value="명령어 입력">
         </form>
 </body>
+
+<script>
+    const getScoreData = async () => {
+        let response = await fetch("/score/{{id}}");
+        let data = await response.json();
+        alert("백팀 : " + data.whiteScore + "\n흑팀 : " + data.blackScore);
+    }
+</script>
 </html>
