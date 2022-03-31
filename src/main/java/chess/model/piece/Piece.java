@@ -4,13 +4,12 @@ import chess.model.Position;
 import chess.model.Team;
 import chess.model.Turn;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece implements Comparable<Piece> {
-    protected Position position;
     protected final Team team;
+    protected Position position;
 
     protected Piece(Position position, Team team) {
         this.position = position;
@@ -37,30 +36,6 @@ public abstract class Piece implements Comparable<Piece> {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
-    public final int getHorizontalDistance(Piece other) {
-        return this.position.getFile().absMinus(other.position.getFile());
-    }
-
-    public final int getVerticalDistance(Piece other) {
-        return this.position.getRank().absMinus(other.position.getRank());
-    }
-
-    public final Position getPositiveDiagonalPosition(int distance) {
-        return this.position.getPositiveDiagonalPosition(distance);
-    }
-
-    public final Position getNegativeDiagonalPosition(int distance) {
-        return this.position.getNegativeDiagonalPosition(distance);
-    }
-
-    public final Position getRightHorizontalPosition(int distance) {
-        return this.position.getRightHorizontalPosition(distance);
-    }
-
-    public final Position getUpVerticalPosition(int distance) {
-        return this.position.getUpVerticalPosition(distance);
-    }
-
     public final boolean isCurrentTurn(Turn turn) {
         return turn.isCurrentTeam(team);
     }
@@ -81,7 +56,9 @@ public abstract class Piece implements Comparable<Piece> {
 
     public abstract List<Position> getIntervalPosition(Position source, Position target);
 
-    public boolean isMovable(Position source, Position target) {return false;} // abstract로 변경 필요
+    public boolean isMovable(Position source, Position target) {
+        return false;
+    } // abstract로 변경 필요
 
     public abstract String getName();
 

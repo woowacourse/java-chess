@@ -5,7 +5,6 @@ import chess.model.Position;
 import chess.model.Team;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {

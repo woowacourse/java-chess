@@ -6,10 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position {
-    private static final int ASCII_TO_INT = 96;
-    private final Rank rank;
-    private final File file;
-
     private static final Map<String, Position> CACHE_POSITION;
 
     static {
@@ -18,6 +14,9 @@ public class Position {
                         .map(rank -> new Position(file, rank)))
                 .collect(Collectors.toMap(Position::getKey, p -> p));
     }
+
+    private final Rank rank;
+    private final File file;
 
     private Position(File file, Rank rank) {
         this.file = file;
@@ -41,6 +40,10 @@ public class Position {
 
     public static Position of(File file, Rank rank) {
         return CACHE_POSITION.get(getKey(file, rank));
+    }
+
+    private static String getKey(File file, Rank rank) {
+        return file.getValue() + rank.getValue();
     }
 
     public boolean isOneStepAway(Position position) {
@@ -75,20 +78,8 @@ public class Position {
         return rank.absMinus(position.rank) == 2;
     }
 
-    public Position getRightHorizontalPosition(int distance) {
-        return new Position(file.getNext(distance), rank);
-    }
-
     public Position getUpVerticalPosition(int distance) {
         return new Position(file, rank.getNext(distance));
-    }
-
-    public Position getPositiveDiagonalPosition(int distance) {
-        return new Position(file.getNext(distance), rank.getNext(distance));
-    }
-
-    public Position getNegativeDiagonalPosition(int distance) {
-        return new Position(file.getNext(distance), rank.getNext(-distance));
     }
 
     public boolean isOneStepDiagonal(Position position, int forwardDirection) {
@@ -141,10 +132,6 @@ public class Position {
         Rank nextRank = rank.getNext(direction.getRankGap());
 
         return Position.of(nextFile, nextRank);
-    }
-
-    private static String getKey(File file, Rank rank) {
-        return file.getValue() + rank.getValue();
     }
 
     private String getKey() {

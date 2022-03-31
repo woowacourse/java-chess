@@ -1,10 +1,9 @@
 package chess.model;
 
 public class Turn {
-    private final Team team;
-
     private static final Turn TURN_BLACK = new Turn(Team.BLACK);
     private static final Turn TURN_WHITE = new Turn(Team.WHITE);
+    private final Team team;
 
     public Turn(Team team) {
         this.team = team;
