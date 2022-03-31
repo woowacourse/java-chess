@@ -83,7 +83,7 @@ public class Board {
 
     public void move(Position from, Position to) {
         validateMove(from, to);
-        MoveOrRollBack(from, to);
+        moveOrRollBack(from, to);
         turn = turn.change();
     }
 
@@ -115,7 +115,7 @@ public class Board {
         }
     }
 
-    private void MoveOrRollBack(Position from, Position to) {
+    private void moveOrRollBack(Position from, Position to) {
         Piece fromPiece = board.get(from);
         Piece toPiece = board.get(to);
         board.put(to, fromPiece);
