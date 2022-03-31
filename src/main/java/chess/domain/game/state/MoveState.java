@@ -7,7 +7,7 @@ import chess.domain.player.Players;
 
 public final class MoveState extends RunningState {
 
-    MoveState(final Players players, final Color color) {
+    public MoveState(final Players players, final Color color) {
         super(players, color);
     }
 

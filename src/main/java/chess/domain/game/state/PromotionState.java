@@ -5,7 +5,7 @@ import chess.domain.player.Players;
 
 public final class PromotionState extends RunningState {
 
-    PromotionState(final Players players, final Color color) {
+    public PromotionState(final Players players, final Color color) {
         super(players, color);
     }
 
