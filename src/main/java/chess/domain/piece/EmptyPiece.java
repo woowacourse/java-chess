@@ -8,6 +8,8 @@ import java.util.Map;
 public class EmptyPiece extends Piece {
 
     private static EmptyPiece instance;
+    
+    private static final int EMPTY_POINT = 0;
 
     private EmptyPiece() {
         super(Color.EMPTY, PieceName.EMPTY);
@@ -27,6 +29,6 @@ public class EmptyPiece extends Piece {
 
     @Override
     public double getPoint() {
-        return 0;
+        return EMPTY_POINT;
     }
 }

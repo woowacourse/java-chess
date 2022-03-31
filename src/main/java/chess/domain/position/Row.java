@@ -39,7 +39,7 @@ public enum Row {
 
     public Row move(int value) {
         int indexAfterMove = this.value + value;
-        if (indexAfterMove > 8 || indexAfterMove < 1) {
+        if (indexAfterMove > EIGHT.value || indexAfterMove < ONE.value) {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }
         return of(indexAfterMove);

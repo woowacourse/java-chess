@@ -15,8 +15,6 @@ import java.util.Map;
 
 public class NormalPiecesGenerator implements PiecesGenerator {
 
-    private static PiecesGenerator instance;
-
     private static final Map<Position, Piece> pieces = new HashMap<>(32);
 
     static {
@@ -26,16 +24,6 @@ public class NormalPiecesGenerator implements PiecesGenerator {
         createBishop();
         createKnight();
         createPawn();
-    }
-
-    public NormalPiecesGenerator() {
-    }
-
-    public static PiecesGenerator getInstance() {
-        if (instance == null) {
-            instance = new NormalPiecesGenerator();
-        }
-        return instance;
     }
 
     private static void createKing() {

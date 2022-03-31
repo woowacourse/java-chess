@@ -57,7 +57,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("위치가 들어왔을 때 해당 위치의 말이 어떤 말인지 확인한다.")
     void selectPiece() {
-        PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
+        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         ChessBoard chessBoard = new ChessBoard(piecesGenerator);
         Piece piece = chessBoard.selectPiece(Position.of("a1"));
 
@@ -68,7 +68,7 @@ public class ChessBoardTest {
     @CsvSource(value = {"a2, true", "a3, false", "h7, true", "h8, false"})
     @DisplayName("해당 위치에 움직이지 않은 폰이 있는지 확인한다.")
     void isFirstMovePawn(String position, boolean expected) {
-        PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
+        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
         ChessBoard chessBoard = new ChessBoard(piecesGenerator);
 
         assertThat(chessBoard.isFirstMovePawn(Position.of(position))).isEqualTo(expected);
@@ -320,7 +320,7 @@ public class ChessBoardTest {
         @CsvSource(value = {"b1,c3", "b8,c6"})
         @DisplayName("나이트를 이동시킬 수 있다.")
         void knight(String from, String to) {
-            PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
+            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             ChessBoard chessBoard = new ChessBoard(piecesGenerator);
 
             GameCommand gameCommand = new GameCommand("move", from, to);
@@ -337,7 +337,7 @@ public class ChessBoardTest {
         @Test
         @DisplayName("폰을 이동시킬 수 있다.")
         void pawn() {
-            PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
+            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             ChessBoard chessBoard = new ChessBoard(piecesGenerator);
 
             GameCommand gameCommand = new GameCommand("move", "b2", "b4");
@@ -354,7 +354,7 @@ public class ChessBoardTest {
         @Test
         @DisplayName("이동할 수 없는 곳으로 이동명령을 내렸을 때 예외가 발생한다.")
         void pawnCannotMoveThrowException() {
-            PiecesGenerator piecesGenerator = NormalPiecesGenerator.getInstance();
+            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
             ChessBoard chessBoard = new ChessBoard(piecesGenerator);
             GameCommand gameCommand = new GameCommand("move", "b2", "c3");
 
@@ -367,7 +367,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("한 컬럼의 흑팀 말들을 반환한다.")
     void getPiecesOnColumnByColor() {
-        ChessBoard chessBoard = new ChessBoard(NormalPiecesGenerator.getInstance());
+        ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
         Piece rook = chessBoard.selectPiece(Position.of("a8"));
         Piece pawn = chessBoard.selectPiece(Position.of("a7"));
         Pieces pieces = chessBoard.getPiecesOnColumn(Column.A, Color.BLACK);

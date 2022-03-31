@@ -46,7 +46,6 @@ public enum Direction {
             directions.add(getDirectionByValues(columnValue, 1));
             return directions;
         }
-
         throw new IllegalStateException("해당 디렉션의 대각선을 구할 수 없습니다");
     }
 
