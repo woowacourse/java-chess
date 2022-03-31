@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     private final List<Direction> directions;
 
     public Pawn(Team team) {
-        super(name, Score.PAWN, team);
+        super(name, team);
         directions = selectDirections(team);
     }
 
@@ -102,5 +102,10 @@ public class Pawn extends Piece {
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.PAWN.getValue();
     }
 }

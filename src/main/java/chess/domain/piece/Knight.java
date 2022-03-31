@@ -12,7 +12,7 @@ public class Knight extends Piece {
     private static final List<Direction> directions = Direction.pullTwoStraightAndDiagonalDirections();
 
     public Knight(Team team) {
-        super(name, Score.KNIGHT, team);
+        super(name, team);
     }
 
     @Override
@@ -29,5 +29,10 @@ public class Knight extends Piece {
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.KNIGHT.getValue();
     }
 }

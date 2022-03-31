@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Score;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Objects;
@@ -8,18 +7,18 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final String name;
-    private final Score score;
     protected final Team team;
 
-    public Piece(String name, Score score, Team team) {
+    public Piece(String name, Team team) {
         this.name = name;
-        this.score = score;
         this.team = team;
     }
 
     public abstract void movable(Position from, Position to);
 
     public abstract List<Position> findMovablePosition(Position now);
+
+    public abstract float getScore();
 
     public final String getName() {
         return team.changeCaseSensitive(name);
@@ -49,10 +48,6 @@ public abstract class Piece {
         return true;
     }
 
-    public float getScore() {
-        return score.getValue();
-    }
-
     public void validateArrive(Piece to, Direction direction) {
         if (Objects.nonNull(to) && isSameTeam(to)) {
             throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
@@ -63,7 +58,7 @@ public abstract class Piece {
     public String toString() {
         return "Piece{" +
                 "name='" + team.changeCaseSensitive(name) + '\'' +
-                ", score=" + score +
+                ", score=" + getScore() +
                 ", team=" + team +
                 '}';
     }

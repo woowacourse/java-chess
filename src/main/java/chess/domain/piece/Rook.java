@@ -12,7 +12,7 @@ public class Rook extends Piece {
     private static final List<Direction> directions = Direction.pullStraightDirections();
 
     public Rook(Team team) {
-        super(name, Score.ROOK, team);
+        super(name, team);
     }
 
     @Override
@@ -30,9 +30,14 @@ public class Rook extends Piece {
 
     @Override
     public List<Position> findMovablePosition(Position now) {
-        return directions.stream()
+        return this.directions.stream()
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.ROOK.getValue();
     }
 }

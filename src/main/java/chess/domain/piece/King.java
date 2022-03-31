@@ -12,7 +12,7 @@ public class King extends Piece {
     private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public King(Team team) {
-        super(name, Score.KING, team);
+        super(name, team);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class King extends Piece {
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.KING.getValue();
     }
 }

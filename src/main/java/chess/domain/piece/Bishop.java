@@ -12,7 +12,7 @@ public class Bishop extends Piece {
     private static final List<Direction> directions = Direction.pullDiagonalDirections();
 
     public Bishop(Team team) {
-        super(name, Score.BISHOP, team);
+        super(name, team);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class Bishop extends Piece {
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.BISHOP.getValue();
     }
 }

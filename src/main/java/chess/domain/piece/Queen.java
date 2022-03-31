@@ -12,7 +12,7 @@ public class Queen extends Piece {
     private static final List<Direction> directions = Direction.pullAllBasicDirections();
 
     public Queen(Team team) {
-        super(name, Score.QUEEN, team);
+        super(name, team);
     }
 
     @Override
@@ -34,5 +34,10 @@ public class Queen extends Piece {
                 .filter(now::isMovable)
                 .map(now::move)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public float getScore() {
+        return Score.QUEEN.getValue();
     }
 }
