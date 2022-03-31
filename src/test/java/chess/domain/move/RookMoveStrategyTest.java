@@ -3,6 +3,7 @@ package chess.domain.move;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class RookMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.createChessBoard();
+        board = BoardFactory.createChessBoard();
         rookMoveStrategy = new RookMoveStrategy();
         catchPieces = new CatchPieces();
     }

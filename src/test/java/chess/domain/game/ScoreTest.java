@@ -3,6 +3,7 @@ package chess.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.CatchPieces;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
@@ -17,7 +18,7 @@ public class ScoreTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.createChessBoard();
+        board = BoardFactory.createChessBoard();
     }
 
     @Test

@@ -3,6 +3,7 @@ package chess.domain.game;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(Board.createChessBoard());
+        chessGame = new ChessGame(BoardFactory.createChessBoard());
     }
 
     @Test

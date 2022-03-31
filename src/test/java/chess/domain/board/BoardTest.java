@@ -10,15 +10,15 @@ import org.junit.jupiter.api.Test;
 public class BoardTest {
 
     @Test
-    @DisplayName("Board를 초기화한다.")
+    @DisplayName("Board 를 초기화한다.")
     void create() {
-        assertThat(Board.createChessBoard()).isInstanceOf(Board.class);
+        assertThat(BoardFactory.createChessBoard()).isInstanceOf(Board.class);
     }
 
     @Test
-    @DisplayName("Position을 입력하면 piece를 반환한다.")
+    @DisplayName("Position 을 입력하면 piece 를 반환한다.")
     void getPiece() {
-        Board board = Board.createChessBoard();
+        Board board = BoardFactory.createChessBoard();
         assertThat(board.getPiece(Position.valueOf("a8"))).isEqualTo(new Rook(Color.BLACK));
     }
 }
