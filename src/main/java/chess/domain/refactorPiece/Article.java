@@ -12,5 +12,7 @@ public interface Article {
 
     Color getColor();
 
+    String getName();
+
     boolean isKing();
 }

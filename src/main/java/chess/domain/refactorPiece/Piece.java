@@ -3,6 +3,7 @@ package chess.domain.refactorPiece;
 import chess.domain.piece.attribute.Color;
 import chess.domain.refactorBoard.ChessBoard;
 import chess.domain.refactorPosition.Position;
+import java.util.Locale;
 
 public abstract class Piece implements Article {
 
@@ -26,6 +27,14 @@ public abstract class Piece implements Article {
     @Override
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public String getName() {
+        if (color.equals(Color.WHITE)) {
+            return name.toLowerCase(Locale.ROOT);
+        }
+        return name;
     }
 
     @Override
