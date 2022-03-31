@@ -5,7 +5,6 @@ import chess.model.File;
 import chess.model.Rank;
 import chess.model.board.Square;
 import chess.model.board.Board;
-import chess.util.PieceToLetterConvertor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class ChessService {
     private List<String> getPieceLetterInRank(Board board, Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> board.findPieceBySquare(Square.of(file, rank)))
-                .map(PieceToLetterConvertor::convertToLetter)
+                .map(PieceLetter::getLetter)
                 .collect(Collectors.toList());
     }
 

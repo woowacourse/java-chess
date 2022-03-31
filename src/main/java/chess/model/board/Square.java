@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public final class Square {
     private static final Map<String, Square> squareCache = new HashMap<>();
+    private static final int SQUARE_NAME_LENGTH = 2;
     private final File file;
     private final Rank rank;
 
@@ -20,7 +21,7 @@ public final class Square {
     }
 
     public static Square of(String squareName) {
-        if (squareName.length() != 2) {
+        if (squareName.length() != SQUARE_NAME_LENGTH) {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
         }
         File file = File.valueOf(String.valueOf(Character.toUpperCase(squareName.charAt(0))));

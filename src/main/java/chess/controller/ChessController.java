@@ -13,6 +13,7 @@ public final class ChessController {
 
     private static final int FROM_INDEX = 0;
     private static final int TO_INDEX = 1;
+
     private final ChessService service;
 
     public ChessController(ChessService service) {
