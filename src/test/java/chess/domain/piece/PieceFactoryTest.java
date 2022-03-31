@@ -66,5 +66,4 @@ class PieceFactoryTest {
         // when & then
         assertThat(blackKing.getPieceType()).isEqualTo(PieceType.KING);
     }
-
 }

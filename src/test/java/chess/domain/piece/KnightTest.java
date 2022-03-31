@@ -44,5 +44,4 @@ class KnightTest {
         // then
         assertThat(actual).isFalse();
     }
-
 }
