@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.board.Directions;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,9 +12,14 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean movable(List<Integer> distances, Piece target);
+    public boolean movable(List<Integer> distances, Piece target) {
+        final int dx = distances.get(0);
+        final int dy = distances.get(1);
 
-    protected boolean isOpponent(Piece another) {
+        return Directions.isMovableDirection(this, dx, dy) && isOpponent(target);
+    }
+
+    private boolean isOpponent(Piece another) {
         return this.color != another.color;
     }
 

@@ -12,6 +12,36 @@ public class Directions {
     private Directions() {
     }
 
+    public static boolean isMovableDirection(Piece piece, int dx, int dy) {
+        final int angle = calculateAngleOfTwoPositions(dx, dy);
+
+        if (piece.isPawn()) {
+            return PAWN_ANGLES.contains(angle);
+        }
+
+        if (piece.isQueen() || piece.isKing()) {
+            return VERTICAL_OR_HORIZONTAL_ANGLES.contains(angle) || DIAGONAL_ANGLES.contains(angle);
+        }
+
+        if (piece.isRook()) {
+            return VERTICAL_OR_HORIZONTAL_ANGLES.contains(angle);
+        }
+
+        if (piece.isBishop()) {
+            return DIAGONAL_ANGLES.contains(angle);
+        }
+
+        if (piece.isKnight()) {
+            return KNIGHT_ANGLES.contains(angle);
+        }
+
+        return false;
+    }
+
+    public static int calculateAngleOfTwoPositions(int dx, int dy) {
+        return (int) (Math.atan2(dy, dx) * (180.0 / Math.PI));
+    }
+
     public static boolean isMovableDirection(Piece piece, Position from, Position to) {
         final int angle = calculateAngleOfTwoPositions(from, to);
 
