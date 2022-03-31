@@ -35,9 +35,9 @@ public abstract class Piece {
 
 	public String getSymbol() {
 		if (team.equals(Team.BLACK)) {
-			return symbol.getBlack();
+			return symbol.getName().toUpperCase();
 		}
-		return symbol.getWhite();
+		return symbol.getName();
 	}
 
 	public Team getTeam() {

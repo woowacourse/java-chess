@@ -5,9 +5,6 @@ public enum Team {
 	WHITE,
 	NONE;
 
-	Team() {
-	}
-
 	public boolean isSame(Team team) {
 		return this == team;
 	}

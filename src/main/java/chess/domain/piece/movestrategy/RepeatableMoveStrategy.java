@@ -15,11 +15,13 @@ public class RepeatableMoveStrategy implements MoveStrategy {
 		return isNotObstacleExist(value, direction, from, to);
 	}
 
-	private boolean isNotObstacleExist(Map<Coordinate, Piece> value,
-		Direction direction,
+	private boolean isNotObstacleExist(
+        Map<Coordinate, Piece> value,
+        Direction direction,
 		Coordinate from,
-		Coordinate to) {
-		Coordinate nextCoordinate = from.next(direction);
+		Coordinate to
+    ) {
+        Coordinate nextCoordinate = from.next(direction);
 		if (nextCoordinate == to) {
 			return true;
 		}
