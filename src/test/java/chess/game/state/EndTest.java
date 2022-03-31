@@ -33,8 +33,8 @@ public class EndTest {
     @Test
     @DisplayName("게임이 종료되고 말을 움직이려고 하면 예외가 발생한다")
     void movePieceException() {
-        assertThatThrownBy(() -> state.movePiece(Position.valueOf(File.a, Rank.ONE),
-            Position.valueOf(File.a, Rank.TWO)))
+        assertThatThrownBy(() -> state.movePiece(Position.valueOf(File.A, Rank.ONE),
+            Position.valueOf(File.A, Rank.TWO)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 게임이 종료되어 지원하지 않는 기능입니다");
     }
@@ -67,22 +67,22 @@ public class EndTest {
     @DisplayName("게임이 King이 잡혀 종료되었을 때, 승패 판정을 한다. White가 이긴 경우")
     void judgeWinnerWhite() {
         ChessGame state = new Ready().initBoard()
-            .movePiece(Position.valueOf(File.e, Rank.SEVEN),
-                Position.valueOf(File.e, Rank.FIVE))
-            .movePiece(Position.valueOf(File.d, Rank.TWO),
-                Position.valueOf(File.d, Rank.FOUR))
-            .movePiece(Position.valueOf(File.e, Rank.FIVE),
-                Position.valueOf(File.d, Rank.FOUR))
-            .movePiece(Position.valueOf(File.d, Rank.ONE),
-                Position.valueOf(File.d, Rank.THREE))
-            .movePiece(Position.valueOf(File.a, Rank.SEVEN),
-                Position.valueOf(File.a, Rank.SIX))
-            .movePiece(Position.valueOf(File.d, Rank.THREE),
-                Position.valueOf(File.e, Rank.THREE))
-            .movePiece(Position.valueOf(File.a, Rank.SIX),
-                Position.valueOf(File.a, Rank.FIVE))
-            .movePiece(Position.valueOf(File.e, Rank.THREE),
-                Position.valueOf(File.e, Rank.EIGHT));
+            .movePiece(Position.valueOf(File.E, Rank.SEVEN),
+                Position.valueOf(File.E, Rank.FIVE))
+            .movePiece(Position.valueOf(File.D, Rank.TWO),
+                Position.valueOf(File.D, Rank.FOUR))
+            .movePiece(Position.valueOf(File.E, Rank.FIVE),
+                Position.valueOf(File.D, Rank.FOUR))
+            .movePiece(Position.valueOf(File.D, Rank.ONE),
+                Position.valueOf(File.D, Rank.THREE))
+            .movePiece(Position.valueOf(File.A, Rank.SEVEN),
+                Position.valueOf(File.A, Rank.SIX))
+            .movePiece(Position.valueOf(File.D, Rank.THREE),
+                Position.valueOf(File.E, Rank.THREE))
+            .movePiece(Position.valueOf(File.A, Rank.SIX),
+                Position.valueOf(File.A, Rank.FIVE))
+            .movePiece(Position.valueOf(File.E, Rank.THREE),
+                Position.valueOf(File.E, Rank.EIGHT));
 
         assertThat(state.judgeWinner()).isEqualTo(Color.WHITE);
     }

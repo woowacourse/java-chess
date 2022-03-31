@@ -35,30 +35,30 @@ public class RunningTest {
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히지 않았다면 Running 상태에 머무른다")
     void movePiece() {
-        state.movePiece(Position.valueOf(File.a, Rank.TWO),
-            Position.valueOf(File.a, Rank.THREE));
+        state.movePiece(Position.valueOf(File.A, Rank.TWO),
+            Position.valueOf(File.A, Rank.THREE));
         assertThat(state).isInstanceOf(Running.class);
     }
 
     @Test
     @DisplayName("말을 움직였을 때, King이 잡히면 End 상태로 변환된다")
     void movePieceAndKingKill() {
-        ChessGame newState = state.movePiece(Position.valueOf(File.e, Rank.SEVEN),
-                Position.valueOf(File.e, Rank.FIVE))
-            .movePiece(Position.valueOf(File.d, Rank.TWO),
-                Position.valueOf(File.d, Rank.FOUR))
-            .movePiece(Position.valueOf(File.e, Rank.FIVE),
-                Position.valueOf(File.d, Rank.FOUR))
-            .movePiece(Position.valueOf(File.d, Rank.ONE),
-                Position.valueOf(File.d, Rank.THREE))
-            .movePiece(Position.valueOf(File.a, Rank.SEVEN),
-                Position.valueOf(File.a, Rank.SIX))
-            .movePiece(Position.valueOf(File.d, Rank.THREE),
-                Position.valueOf(File.e, Rank.THREE))
-            .movePiece(Position.valueOf(File.a, Rank.SIX),
-                Position.valueOf(File.a, Rank.FIVE))
-            .movePiece(Position.valueOf(File.e, Rank.THREE),
-                Position.valueOf(File.e, Rank.EIGHT));
+        ChessGame newState = state.movePiece(Position.valueOf(File.E, Rank.SEVEN),
+                Position.valueOf(File.E, Rank.FIVE))
+            .movePiece(Position.valueOf(File.D, Rank.TWO),
+                Position.valueOf(File.D, Rank.FOUR))
+            .movePiece(Position.valueOf(File.E, Rank.FIVE),
+                Position.valueOf(File.D, Rank.FOUR))
+            .movePiece(Position.valueOf(File.D, Rank.ONE),
+                Position.valueOf(File.D, Rank.THREE))
+            .movePiece(Position.valueOf(File.A, Rank.SEVEN),
+                Position.valueOf(File.A, Rank.SIX))
+            .movePiece(Position.valueOf(File.D, Rank.THREE),
+                Position.valueOf(File.E, Rank.THREE))
+            .movePiece(Position.valueOf(File.A, Rank.SIX),
+                Position.valueOf(File.A, Rank.FIVE))
+            .movePiece(Position.valueOf(File.E, Rank.THREE),
+                Position.valueOf(File.E, Rank.EIGHT));
         assertThat(newState).isInstanceOf(End.class);
     }
 
