@@ -17,13 +17,13 @@ public class ChessController {
         chessGameState = chessGameState.start();
 
         while (!chessGameState.isEnded()) {
-            String[] command = getCommand(REGEX);
+            String[] command = getCommand();
             chessGameState = ChessExecution.from(command[0]).run(chessGameState, command);
         }
     }
 
-    private String[] getCommand(String regex) {
+    private String[] getCommand() {
         InputView inputView = InputView.getInstance();
-        return inputView.scanCommand().split(regex);
+        return inputView.scanCommand().split(REGEX);
     }
 }
