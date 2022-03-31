@@ -4,7 +4,7 @@ import chess.domain.Board;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 
-public final class WhiteTurn extends Running{
+public final class WhiteTurn extends Running {
 
     private static final String NOT_WHITE_TURN = "[ERROR] WHITE 차례이므로, BLACK 말을 움직일 수 없습니다.";
 
