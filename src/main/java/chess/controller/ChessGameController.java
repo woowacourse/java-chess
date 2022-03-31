@@ -29,12 +29,12 @@ public class ChessGameController {
     private static void startGame(GameState gameState) {
         OutputView.printChessBoard(gameState.getBoard());
         while (!gameState.isFinished()) {
-            gameState = inputCommand(gameState);
+            gameState = playCommand(gameState);
         }
         OutputView.printFinishedGame(gameState);
     }
 
-    private static GameState inputCommand(GameState gameState) {
+    private static GameState playCommand(GameState gameState) {
         List<String> input = InputView.requestCommand();
         Command command = Command.of(input.get(commandIndex));
         try{
@@ -42,7 +42,7 @@ public class ChessGameController {
             return gameState;
         }catch (RuntimeException exception) {
             OutputView.errorMessage(exception.getMessage());
-            return inputCommand(gameState);
+            return playCommand(gameState);
         }
     }
 
