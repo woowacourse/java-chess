@@ -6,6 +6,7 @@ import chess.view.InputView;
 
 public class ChessController {
 
+    private static final String REGEX = " ";
     private ChessGameState chessGameState;
 
     public ChessController() {
@@ -16,9 +17,13 @@ public class ChessController {
         chessGameState = chessGameState.start();
 
         while (!chessGameState.isEnded()) {
-            InputView inputView = InputView.getInstance();
-            String[] command = inputView.scanCommand().split(" ");
+            String[] command = getCommand(REGEX);
             chessGameState = ChessExecution.from(command[0]).run(chessGameState, command);
         }
+    }
+
+    private String[] getCommand(String regex) {
+        InputView inputView = InputView.getInstance();
+        return inputView.scanCommand().split(regex);
     }
 }
