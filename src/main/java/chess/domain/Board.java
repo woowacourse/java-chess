@@ -1,14 +1,5 @@
 package chess.domain;
 
-import static chess.domain.Rank.createBlank;
-import static chess.domain.Rank.createPawn;
-import static chess.domain.Rank.createPiecesExceptPawn;
-import static chess.domain.Row.EIGHT;
-import static chess.domain.Row.ONE;
-import static chess.domain.Row.SEVEN;
-import static chess.domain.Row.TWO;
-import static chess.domain.Row.find;
-
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import java.util.EnumMap;
@@ -19,28 +10,16 @@ public class Board {
 
     private final Map<Row, Rank> board;
 
-    private Board(Map<Row, Rank> board) {
-        this.board = board;
-    }
-
-    public static Board initBoard() {
-        Map<Row, Rank> board = new EnumMap<>(Row.class);
-        initPieces(board);
-        return new Board(board);
-    }
-
-    private static void initPieces(Map<Row, Rank> board) {
-        board.put(EIGHT, createPiecesExceptPawn(Team.BLACK, 8));
-        board.put(SEVEN, createPawn(Team.BLACK, 7));
-        for (int i = 3; i <= 6; i++) {
-            board.put(find(i), createBlank(i));
-        }
-        board.put(TWO, createPawn(Team.WHITE, 2));
-        board.put(ONE, createPiecesExceptPawn(Team.WHITE, 1));
+    public Board() {
+        this.board = BoardInitializer.initPieces();
     }
 
     public Piece getPiece(Position position) {
         return board.get(position.getRow()).getPiece(position.getCol());
+    }
+
+    public Map<Row, Rank> getBoard() {
+        return new EnumMap<>(board);
     }
 
     public Piece movePiece(Position source, Position destination, Team team) {
@@ -106,9 +85,5 @@ public class Board {
 
     public boolean isKingDead(Piece piece) {
         return piece.isKing();
-    }
-
-    public Map<Row, Rank> getBoard() {
-        return new EnumMap<>(board);
     }
 }

@@ -26,7 +26,7 @@ public class ChessController {
     }
 
     private void startGame() {
-        Board board = Board.initBoard();
+        Board board = new Board();
         OutputView.printChessBoard(board.getBoard());
 
         List<String> input = InputView.requestCommand();
