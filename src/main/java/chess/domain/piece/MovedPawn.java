@@ -18,14 +18,14 @@ public class MovedPawn extends StartedPawn {
 
     @Override
     public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        List<Position> positions = new ArrayList<>();
+        List<Position> movablePositions = new ArrayList<>();
         Position next = source.getNext(forward);
 
         if (board.canMoveOrKillByOneStep(source, forward)) {
-            positions.add(next);
+            movablePositions.add(next);
         }
 
-        positions.addAll(getKillablePositions(source, board));
-        return positions;
+        movablePositions.addAll(getKillablePositions(source, board));
+        return movablePositions;
     }
 }

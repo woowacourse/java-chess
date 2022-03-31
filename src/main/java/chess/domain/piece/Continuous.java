@@ -19,21 +19,21 @@ public class Continuous {
     }
 
     private List<Position> getPositions(Position source, ChessBoard board, Direction direction) {
-        List<Position> positions = new ArrayList<>();
+        List<Position> movablePositions = new ArrayList<>();
 
         Position current = source;
         Position next = current.getNext(direction);
 
         while (!current.isBlocked(direction) && !board.isFilled(next)) {
-            positions.add(next);
+            movablePositions.add(next);
             current = next;
             next = current.getNext(direction);
         }
 
         if (board.canKill(source, next)) {
-            positions.add(next);
+            movablePositions.add(next);
         }
 
-        return positions;
+        return movablePositions;
     }
 }

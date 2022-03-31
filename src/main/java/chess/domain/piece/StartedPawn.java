@@ -22,20 +22,20 @@ public class StartedPawn extends Piece{
 
     @Override
     public List<Position> getMovablePaths(Position source, ChessBoard board) {
-        List<Position> positions = new ArrayList<>();
+        List<Position> movablePositions = new ArrayList<>();
         Position next = source.getNext(forward);
 
         if (board.canOnlyMoveByOneStep(source, forward)) {
-            positions.add(next);
+            movablePositions.add(next);
         }
 
         if (canOnlyMoveByTwoStep(source, board, forward)) {
-            positions.add(next.getNext(forward));
+            movablePositions.add(next.getNext(forward));
         }
 
         List<Position> killablePositions = getKillablePositions(source, board);
-        positions.addAll(killablePositions);
-        return positions;
+        movablePositions.addAll(killablePositions);
+        return movablePositions;
     }
 
     private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {
