@@ -20,7 +20,7 @@ public interface State {
 
     boolean isGameEnd();
 
-    Color getColor();
+    Color getTurn();
 
     Map<Color, Double> getStatus();
 }

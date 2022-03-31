@@ -11,8 +11,10 @@ import java.util.Map;
 
 public final class Running implements State {
 
+    private static final Color FIRST_TURN_COLOR = WHITE;
+
     private final Board board;
-    private Color color = WHITE;
+    private Color turn = FIRST_TURN_COLOR;
 
     Running() {
         this.board = Board.create();
@@ -37,8 +39,8 @@ public final class Running implements State {
 
     @Override
     public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand, color);
-        reverseColor(this.color);
+        board.move(moveCommand, turn);
+        reverseColor(this.turn);
     }
 
     @Override
@@ -57,17 +59,17 @@ public final class Running implements State {
     }
 
     @Override
-    public Color getColor() {
-        reverseColor(color);
-        return color;
+    public Color getTurn() {
+        reverseColor(turn);
+        return turn;
     }
 
     private void reverseColor(final Color color) {
         if (WHITE == color) {
-            this.color = BLACK;
+            this.turn = BLACK;
         }
         if (BLACK == color) {
-            this.color = WHITE;
+            this.turn = WHITE;
         }
     }
 

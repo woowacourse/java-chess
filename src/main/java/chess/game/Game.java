@@ -44,7 +44,7 @@ public class Game {
         }
 
         if (state.isGameEnd()) {
-            winColor = state.getColor();
+            winColor = state.getTurn();
             state = state.turn(Command.END);
         }
         return Collections.emptyMap();

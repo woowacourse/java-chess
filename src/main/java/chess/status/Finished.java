@@ -42,7 +42,7 @@ public final class Finished implements State {
     }
 
     @Override
-    public Color getColor() {
+    public Color getTurn() {
         throw new IllegalCallerException("게임이 종료되어 색을 불러올 수 없습니다.");
     }
 

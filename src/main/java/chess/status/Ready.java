@@ -54,7 +54,7 @@ public final class Ready implements State {
     }
 
     @Override
-    public Color getColor() {
+    public Color getTurn() {
         throw new IllegalCallerException("게임이 시작되지 않아 색을 불러올 수 없습니다.");
     }
 
