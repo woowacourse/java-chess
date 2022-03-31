@@ -2,21 +2,24 @@ package chess.domain.game;
 
 import java.util.Map;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Winner {
 
-    private static final int TOTAL_KING_COUNT = 2;
+    private final Color color;
 
-    private Winner() {
+    public Winner(Board board) {
+        if (board.isAllKingAlive()) {
+            color = Color.NONE;
+            return;
+        }
+        color = judge(board.getValue());
     }
 
-    public static Color from(Map<Position, Piece> boardPieces) {
-        if (isAllKingExist(boardPieces)) {
-            return Color.NONE;
-        }
+    private Color judge(Map<Position, Piece> boardPieces) {
         return boardPieces.values().stream()
             .filter(Piece::isKing)
             .map(Piece::getColor)
@@ -24,9 +27,7 @@ public class Winner {
             .get();
     }
 
-    private static boolean isAllKingExist(Map<Position, Piece> boardPieces) {
-        return boardPieces.values().stream()
-            .filter(Piece::isKing)
-            .count() == TOTAL_KING_COUNT;
+    public Color getColor() {
+        return color;
     }
 }

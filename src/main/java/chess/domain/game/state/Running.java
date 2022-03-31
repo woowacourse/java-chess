@@ -1,6 +1,5 @@
 package chess.domain.game.state;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import chess.domain.board.Board;
@@ -26,7 +25,7 @@ public class Running implements GameState {
         validateTurn(fromPosition);
         board.movePiece(fromPosition, toPosition);
         switchColor();
-        if (Winner.from(board.getValue()) != Color.NONE) {
+        if (!board.isAllKingAlive()) {
             return new End(board);
         }
         return new Running(board, color);
@@ -39,10 +38,11 @@ public class Running implements GameState {
     }
 
     private void switchColor() {
-        color = Arrays.stream(Color.values())
-            .filter(value -> value != Color.NONE && value != color)
-            .findAny()
-            .get();
+        if (color == Color.WHITE) {
+            color = Color.BLACK;
+            return;
+        }
+        color = Color.WHITE;
     }
 
     @Override
@@ -62,7 +62,8 @@ public class Running implements GameState {
 
     @Override
     public Color getWinTeamColor() {
-        return Winner.from(board.getValue());
+        Winner winner = new Winner(board);
+        return winner.getColor();
     }
 
     @Override

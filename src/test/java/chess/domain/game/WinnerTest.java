@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -23,7 +24,10 @@ class WinnerTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.WHITE));
 
-        assertThat(Winner.from(initialPieces)).isEqualTo(Color.WHITE);
+        Board board = new Board(initialPieces);
+        Winner winner = new Winner(board);
+
+        assertThat(winner.getColor()).isEqualTo(Color.WHITE);
     }
 
     @Test
@@ -32,7 +36,10 @@ class WinnerTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
 
-        assertThat(Winner.from(initialPieces)).isEqualTo(Color.BLACK);
+        Board board = new Board(initialPieces);
+        Winner winner = new Winner(board);
+
+        assertThat(winner.getColor()).isEqualTo(Color.BLACK);
     }
 
     @Test
@@ -42,6 +49,9 @@ class WinnerTest {
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new King(Color.WHITE));
 
-        assertThat(Winner.from(initialPieces)).isEqualTo(Color.NONE);
+        Board board = new Board(initialPieces);
+        Winner winner = new Winner(board);
+
+        assertThat(winner.getColor()).isEqualTo(Color.NONE);
     }
 }

@@ -40,7 +40,8 @@ public class End implements GameState {
 
     @Override
     public Color getWinTeamColor() {
-        return Winner.from(board.getValue());
+        Winner winner = new Winner(board);
+        return winner.getColor();
     }
 
     @Override
