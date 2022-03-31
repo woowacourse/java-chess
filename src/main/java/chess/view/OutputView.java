@@ -1,6 +1,13 @@
 package chess.view;
 
-import chess.dto.Response;
+import chess.domain.board.LineNumber;
+import chess.domain.board.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.dto.BoardAndTurnInfo;
+import chess.dto.ScoreResponse;
+
+import java.util.Map;
 
 public class OutputView {
 
@@ -20,8 +27,40 @@ public class OutputView {
         System.out.println("게임이 종료되었습니다.");
     }
 
-    public void printResponse(Response response) {
-        System.out.println(response.getInformation());
-        System.out.println(response.getMetaInformation());
+    public void printBoardAndTurn(BoardAndTurnInfo response) {
+        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
+            printBoardAndTurn(response.getBoard(), i);
+        }
+        System.out.println("현재 턴 :" + response.getTurnColor());
+    }
+
+    private void printBoardAndTurn(Map<Point, Piece> board, int i) {
+        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
+            Point point = Point.of(j, i);
+            Piece piece = board.get(point);
+            System.out.print(PieceRepresentation.convertType(piece));
+        }
+        System.out.println();
+    }
+
+    public void printStatus(ScoreResponse response) {
+        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
+            printBoardAndTurn(response.getBoard(), i);
+        }
+        System.out.println(Color.WHITE + " : " + String.format("%.1f", response.getWhiteScore()));
+        System.out.println(Color.BLACK + " : " + String.format("%.1f", response.getBlackScore()));
+        printPresentWinner(response.getWhiteScore(), response.getBlackScore());
+    }
+
+    private void printPresentWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            System.out.println("흰 진영이 이기고 있습니다.");
+            return;
+        }
+        if (whiteScore < blackScore) {
+            System.out.println("검정 진영이 이기고 있습니다.");
+            return;
+        }
+        System.out.println("두 진영의 점수가 같습니다.");
     }
 }

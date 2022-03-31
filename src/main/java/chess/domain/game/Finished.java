@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
-import chess.dto.EmptyResponse;
 import chess.dto.Response;
 
 import java.util.List;
@@ -40,6 +39,6 @@ public class Finished extends Started {
 
     @Override
     public Response getResponse() {
-        return new EmptyResponse();
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 }

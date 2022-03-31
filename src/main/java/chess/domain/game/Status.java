@@ -44,6 +44,6 @@ public class Status extends Started {
 
     @Override
     public Response getResponse() {
-        return ScoreResponse.of(board.calculateScore());
+        return new ScoreResponse(board.getPointPieces(), board.calculateScore());
     }
 }

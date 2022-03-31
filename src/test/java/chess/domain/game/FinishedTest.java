@@ -2,8 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.BoardFixtures;
 import chess.domain.piece.Color;
-import chess.dto.EmptyResponse;
-import chess.dto.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -64,12 +62,11 @@ class FinishedTest {
 
 
     @Test
-    @DisplayName("종료 상태에서 비어있는 응답을 반환한다.")
-    void getEmptyResponse() {
+    @DisplayName("종료 상태에서는 응답을 얻을 수 없다.")
+    void throwsExceptionWithGettingResponse() {
         GameState state = new Finished(BoardFixtures.initial(), Color.WHITE);
 
-        Response response = state.getResponse();
-
-        assertThat(response).isInstanceOf(EmptyResponse.class);
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+                .isThrownBy(state::getResponse);
     }
 }

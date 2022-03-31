@@ -29,4 +29,8 @@ public enum Command {
     public GameState execute(GameState state, List<String> arguments) {
         return this.executor.apply(state, arguments);
     }
+
+    public boolean isType(Command command) {
+        return this.equals(command);
+    }
 }

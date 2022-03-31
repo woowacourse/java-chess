@@ -3,7 +3,9 @@ package chess.controller;
 import chess.domain.game.Command;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
+import chess.dto.BoardAndTurnInfo;
 import chess.dto.Request;
+import chess.dto.ScoreResponse;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -27,7 +29,6 @@ public class ChessController {
         GameState gameState = new Ready();
         while (gameState.isRunnable()) {
             gameState = tryExecute(gameState);
-            outputView.printResponse(gameState.getResponse());
         }
     }
 
@@ -35,10 +36,32 @@ public class ChessController {
         try {
             Request request = Request.of(inputView.inputCommand());
             Command command = Command.find(request.getCommand());
-            return command.execute(gameState, request.getArguments());
+            return runGameByCommand(gameState, request, command);
         } catch (RuntimeException e) {
             outputView.printException(e);
             return tryExecute(gameState);
         }
+    }
+
+    private GameState runGameByCommand(GameState gameState, Request request, Command command) {
+        if (command.isType(Command.START)) {
+            GameState state = gameState.start();
+            outputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
+            return state;
+        }
+        if (command.isType(Command.FINISH)) {
+            return gameState.finish();
+        }
+        if (command.isType(Command.MOVE)) {
+            GameState state = gameState.move(request.getArguments());
+            outputView.printBoardAndTurn((BoardAndTurnInfo) state.getResponse());
+            return state;
+        }
+        if (command.isType(Command.STATUS)) {
+            GameState state = gameState.status();
+            outputView.printStatus((ScoreResponse) state.getResponse());
+            return state;
+        }
+        return null;
     }
 }

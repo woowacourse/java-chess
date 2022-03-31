@@ -2,7 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
-import chess.dto.BoardResponse;
+import chess.dto.BoardAndTurnInfo;
 import chess.dto.Response;
 
 import java.util.List;
@@ -44,6 +44,6 @@ public class Running extends Started {
 
     @Override
     public Response getResponse() {
-        return BoardResponse.of(board.getPointPieces(), turnColor);
+        return new BoardAndTurnInfo(board.getPointPieces(), turnColor);
     }
 }

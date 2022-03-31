@@ -40,6 +40,6 @@ public class Ready extends Started {
 
     @Override
     public Response getResponse() {
-        throw new UnsupportedOperationException("[ERROR] 준비상태에서는 점수를 얻을 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] 지원하지 않는 명령입니다.");
     }
 }

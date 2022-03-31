@@ -5,7 +5,7 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Queen;
-import chess.dto.BoardResponse;
+import chess.dto.BoardAndTurnInfo;
 import chess.dto.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class RunningTest {
 
@@ -88,6 +87,6 @@ class RunningTest {
 
         Response response = state.getResponse();
 
-        assertThat(response).isInstanceOf(BoardResponse.class);
+        assertThat(response).isInstanceOf(BoardAndTurnInfo.class);
     }
 }
