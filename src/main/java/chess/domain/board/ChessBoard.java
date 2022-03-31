@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 public class ChessBoard {
 
     private static final int BASE_KING_COUNT = 2;
+    private static final double DECREASE_PAWN_SCORE = 0.5;
 
     private final Map<Position, Article> pieces;
 
@@ -40,23 +41,46 @@ public class ChessBoard {
         return !pieces.containsKey(position);
     }
 
-    public boolean isSameColor(Position position, Color color) {
-        return findByPiece(position).getColor() == color;
-    }
-
     public Map<Color, Double> getColorsTotalScore() {
         Map<Color, Double> totalScore = new EnumMap<>(Color.class);
-        totalScore.put(Color.WHITE, getTotalScore(Color.WHITE));
-        totalScore.put(Color.BLACK, getTotalScore(Color.BLACK));
+        totalScore.put(Color.WHITE, getDefaultScore(Color.WHITE) - getSameLinePawnScore(Color.WHITE));
+        totalScore.put(Color.BLACK, getDefaultScore(Color.BLACK) - getSameLinePawnScore(Color.WHITE));
 
         return totalScore;
     }
 
-    private double getTotalScore(Color color) {
+    private double getDefaultScore(Color color) {
         return pieces.entrySet().stream()
                 .filter(positionPiece -> isSameColor(positionPiece.getKey(), color))
                 .mapToDouble(ChessBoard::scoreOfPiece)
                 .sum();
+    }
+
+    private boolean isSameColor(Position position, Color color) {
+        return findByPiece(position).getColor() == color;
+    }
+
+    private double getSameLinePawnScore(Color color) {
+        final long sameLinePawnCount = pieces.entrySet().stream()
+                .filter(positionArticle -> isSamePawnAndColor(positionArticle.getValue(), color))
+                .filter(positionArticle -> isSameColorPawnInColumn(positionArticle.getKey(), color))
+                .count();
+
+        return sameLinePawnCount * DECREASE_PAWN_SCORE;
+    }
+
+    private boolean isSameColorPawnInColumn(Position position, Color color) {
+        return pieces.entrySet().stream()
+                .filter(positionArticle -> isSamePawnAndColor(positionArticle.getValue(), color))
+                .anyMatch(positionArticle -> isExistOtherPawnInColumn(position, positionArticle.getKey()));
+    }
+
+    public boolean isSamePawnAndColor(Article article, Color color) {
+        return article.isPawn() && article.getColor() == color;
+    }
+
+    private boolean isExistOtherPawnInColumn(Position position, Position otherPosition) {
+        return !position.equals(otherPosition) && position.isEqualsColumn(otherPosition);
     }
 
     public Color getWinner() {

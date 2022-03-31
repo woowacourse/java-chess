@@ -23,4 +23,9 @@ public class King extends FixedMovablePiece {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

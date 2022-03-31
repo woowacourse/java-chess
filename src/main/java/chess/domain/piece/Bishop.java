@@ -18,4 +18,9 @@ public class Bishop extends MultipleMovablePiece {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

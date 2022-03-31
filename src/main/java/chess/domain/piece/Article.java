@@ -15,4 +15,6 @@ public interface Article {
     String getName();
 
     boolean isKing();
+
+    boolean isPawn();
 }
