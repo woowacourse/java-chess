@@ -18,12 +18,20 @@ public class ChessGameController {
 
     public void run() {
         OutputView.printStartGame();
-        if (InputView.inputInitialCommand()) {
+        Command command = InputView.inputInitialCommand();
+        validateInitialCommand(command);
+        if (command == Command.START) {
             ChessGame chessGame = new ChessGame(new Board(BoardInitializer.initialize()));
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }
         OutputView.printEndMessage();
+    }
+
+    private void validateInitialCommand(final Command command) {
+        if (command == Command.MOVE) {
+            throw new IllegalArgumentException("[ERROR] 게임이 아직 시작되지 않았습니다.");
+        }
     }
 
     private void printCurrentBoard(final ChessGame chessGame) {
@@ -35,28 +43,35 @@ public class ChessGameController {
     private void progressChessGame(final ChessGame chessGame) {
         while (chessGame.isOn()) {
             List<String> inputs = InputView.inputProgressCommand();
-            String commandMessage = inputs.get(COMMAND_INDEX);
-            move(chessGame, inputs, commandMessage);
-            showStatus(chessGame, commandMessage);
-            endGame(chessGame, commandMessage);
+            Command command = Command.of(inputs.get(COMMAND_INDEX));
+            validateInvalidProgressCommand(command);
+            move(chessGame, inputs, command);
+            showStatus(chessGame, command);
+            endGame(chessGame, command);
         }
     }
 
-    private void move(final ChessGame chessGame, final List<String> inputs,final String commandMessage) {
-        if (Command.of(commandMessage) == Command.MOVE) {
+    private void validateInvalidProgressCommand(final Command command) {
+        if (command == Command.START) {
+            throw new IllegalArgumentException("[ERROR] 게임이 이미 시작되었습니다.");
+        }
+    }
+
+    private void move(final ChessGame chessGame, final List<String> inputs, final Command command) {
+        if (command == Command.MOVE) {
             chessGame.move(inputs.get(SOURCE_INDEX), inputs.get(TARGET_INDEX));
             printCurrentBoard(chessGame);
         }
     }
 
-    private void showStatus(final ChessGame chessGame, final String commandMessage) {
-        if (Command.of(commandMessage) == Command.STATUS) {
+    private void showStatus(final ChessGame chessGame, final Command command) {
+        if (command == Command.STATUS) {
             printStatus(chessGame);
         }
     }
 
-    private void endGame(final ChessGame chessGame, final String commandMessage) {
-        if (Command.of(commandMessage) == Command.END) {
+    private void endGame(final ChessGame chessGame, final Command command) {
+        if (command == Command.END) {
             chessGame.turnOff();
             printStatus(chessGame);
         }
