@@ -80,8 +80,7 @@ class PawnTest {
     @DisplayName("폰 앞으로 전진 테스트")
     void pawnMoveForward(String from, String to) {
         // given
-        BoardFactory boardFactory = new BoardFactory();
-        Board board = boardFactory.createBoard();
+        Board board = BoardFactory.createBoard();
 
         // when
         MoveResult result = board.move(from, to, Color.WHITE);

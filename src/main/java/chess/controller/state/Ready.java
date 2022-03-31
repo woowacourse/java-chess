@@ -10,8 +10,7 @@ public class Ready implements ChessGameState {
 
     @Override
     public ChessGameState start() {
-        BoardFactory boardFactory = new BoardFactory();
-        Board board = boardFactory.createBoard();
+        Board board = BoardFactory.createBoard();
         outputView.printBoard(BoardDto.from(board));
 
         return new WhitePlaying(board);

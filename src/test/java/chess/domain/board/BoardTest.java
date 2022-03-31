@@ -21,20 +21,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardTest {
-    private BoardFactory boardFactory;
-
-    @BeforeEach
-    void init(){
-        boardFactory = new BoardFactory();
-    }
-
-
     @ParameterizedTest(name = "from : {0} | to : {1}")
     @CsvSource(value = {"b2,b3"})
     @DisplayName("말 이동 테스트")
     void movePiece(String from, String to) {
         // given
-        Board board = boardFactory.createBoard();
+        Board board = BoardFactory.createBoard();
 
         // when
         MoveResult result = board.move(from, to, Color.WHITE);

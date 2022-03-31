@@ -29,7 +29,7 @@ public class BoardFactory {
         }
     }
 
-    public Board createBoard() {
+    public static Board createBoard() {
         return new Board(startBoard);
     }
 
