@@ -14,7 +14,6 @@ public class Bishop extends Piece implements BishopMovable {
     private static final double SCORE = 3D;
     private static final List<Direction> directions = Direction.diagonal();
 
-
     public Bishop(Position position, Team team) {
         super(position, team);
     }

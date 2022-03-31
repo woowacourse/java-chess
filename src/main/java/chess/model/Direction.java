@@ -40,4 +40,8 @@ public enum Direction {
     public static List<Direction> diagonal() {
         return List.of(NW, NE, SW, SE);
     }
+
+    public static List<Direction> all() {
+        return List.of(N, S, W, E, NW, NE, SW, SE);
+    }
 }

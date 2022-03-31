@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
 
@@ -11,6 +12,7 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;
+    private static final List<Direction> directions = Direction.all();
 
     public Queen(Position position, Team team) {
         super(position, team);
@@ -23,9 +25,7 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-       return source.isVertical(target) ||
-               source.isHorizontal(target) ||
-               source.isDiagonal(target);
+       return directions.contains(Direction.of(source, target));
     }
 
     @Override
@@ -53,11 +53,5 @@ public class Queen extends Piece implements RookMovable, BishopMovable {
             return getNegativeDiagonal(list);
         }
         throw new IllegalArgumentException("갈수없는 공간입니다.");
-    }
-
-    private boolean isCorrectDirection(Position position) {
-        return this.position.isVertical(position) ||
-                this.position.isHorizontal(position) ||
-                this.position.isDiagonal(position);
     }
 }
