@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
 
@@ -10,6 +11,7 @@ public class King extends Piece {
     private static final String BLACK_NAME = "K";
     private static final String WHITE_NAME = "k";
     private static final double SCORE = 0D;
+    private static final List<Direction> directions = Direction.all();
 
     public King(Position position, Team team) {
         super(position, team);
@@ -22,10 +24,8 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        return (source.isVertical(target) ||
-                source.isHorizontal(target) ||
-                source.isDiagonal(target)) &&
-                source.isOneStepAway(target);
+        return directions.contains(Direction.of(source, target))
+                && source.isOneStepAway(target);
     }
 
     @Override
