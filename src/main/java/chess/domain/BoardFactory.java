@@ -42,44 +42,44 @@ public class BoardFactory {
 
     private static Map<Position, Rook> getInitialRooks() {
         Map<Position, Rook> rooks = new HashMap<>();
-        rooks.put(Position.valueOf(File.a, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Position.valueOf(File.a, Rank.EIGHT), new Rook(Color.BLACK));
-        rooks.put(Position.valueOf(File.h, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Position.valueOf(File.h, Rank.EIGHT), new Rook(Color.BLACK));
+        rooks.put(Position.valueOf(File.A, Rank.ONE), new Rook(Color.WHITE));
+        rooks.put(Position.valueOf(File.A, Rank.EIGHT), new Rook(Color.BLACK));
+        rooks.put(Position.valueOf(File.H, Rank.ONE), new Rook(Color.WHITE));
+        rooks.put(Position.valueOf(File.H, Rank.EIGHT), new Rook(Color.BLACK));
         return rooks;
     }
 
     private static Map<Position, Knight> getInitialKnights() {
         Map<Position, Knight> knight = new HashMap<>();
-        knight.put(Position.valueOf(File.b, Rank.ONE), new Knight(Color.WHITE));
-        knight.put(Position.valueOf(File.b, Rank.EIGHT), new Knight(Color.BLACK));
-        knight.put(Position.valueOf(File.g, Rank.ONE), new Knight(Color.WHITE));
-        knight.put(Position.valueOf(File.g, Rank.EIGHT), new Knight(Color.BLACK));
+        knight.put(Position.valueOf(File.B, Rank.ONE), new Knight(Color.WHITE));
+        knight.put(Position.valueOf(File.B, Rank.EIGHT), new Knight(Color.BLACK));
+        knight.put(Position.valueOf(File.G, Rank.ONE), new Knight(Color.WHITE));
+        knight.put(Position.valueOf(File.G, Rank.EIGHT), new Knight(Color.BLACK));
         return knight;
     }
 
     private static Map<Position, Bishop> getInitialBishops() {
         Map<Position, Bishop> bishops = new HashMap<>();
-        bishops.put(Position.valueOf(File.c, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Position.valueOf(File.c, Rank.EIGHT), new Bishop(Color.BLACK));
-        bishops.put(Position.valueOf(File.f, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Position.valueOf(File.f, Rank.EIGHT), new Bishop(Color.BLACK));
+        bishops.put(Position.valueOf(File.C, Rank.ONE), new Bishop(Color.WHITE));
+        bishops.put(Position.valueOf(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
+        bishops.put(Position.valueOf(File.F, Rank.ONE), new Bishop(Color.WHITE));
+        bishops.put(Position.valueOf(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
 
         return bishops;
     }
 
     private static Map<Position, Queen> getInitialQueens() {
         Map<Position, Queen> queen = new HashMap<>();
-        queen.put(Position.valueOf(File.d, Rank.ONE), new Queen(Color.WHITE));
-        queen.put(Position.valueOf(File.d, Rank.EIGHT), new Queen(Color.BLACK));
+        queen.put(Position.valueOf(File.D, Rank.ONE), new Queen(Color.WHITE));
+        queen.put(Position.valueOf(File.D, Rank.EIGHT), new Queen(Color.BLACK));
 
         return queen;
     }
 
     private static Map<Position, King> getInitialKings() {
         Map<Position, King> king = new HashMap<>();
-        king.put(Position.valueOf(File.e, Rank.ONE), new King(Color.WHITE));
-        king.put(Position.valueOf(File.e, Rank.EIGHT), new King(Color.BLACK));
+        king.put(Position.valueOf(File.E, Rank.ONE), new King(Color.WHITE));
+        king.put(Position.valueOf(File.E, Rank.EIGHT), new King(Color.BLACK));
 
         return king;
     }

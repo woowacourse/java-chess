@@ -21,18 +21,18 @@ public enum Rank {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
+    public static Rank findRank(int value) {
+        return Arrays.stream(Rank.values())
+                .filter(ordinate -> Integer.parseInt(ordinate.value) == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_VALUE_IN_RANK));
     }
 
     public int getRank() {
         return Integer.parseInt(value);
     }
 
-    public static Rank findRank(int value) {
-        return Arrays.stream(Rank.values())
-                .filter(ordinate -> Integer.parseInt(ordinate.value) == value)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_VALUE_IN_RANK));
+    public String getValue() {
+        return value;
     }
 }

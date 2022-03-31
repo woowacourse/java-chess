@@ -20,14 +20,14 @@ public enum File {
         this.coordinate = coordinate;
     }
 
-    public int getFile() {
-        return coordinate;
-    }
-
     public static File findFile(int value) {
         return Arrays.stream(File.values())
                 .filter(file -> file.coordinate == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXSIT_VALUE_IN_FILE));
+    }
+
+    public int getFile() {
+        return coordinate;
     }
 }
