@@ -13,6 +13,10 @@ public class Players {
 
     private final List<Player> players;
 
+    public Players(final Player... players) {
+        this(List.of(players));
+    }
+
     public Players(final List<Player> players) {
         this.players = players;
     }
@@ -72,6 +76,16 @@ public class Players {
     private boolean isPiecePlacedAtPosition(final Position position) {
         return players.stream()
                 .anyMatch(player -> player.contains(position));
+    }
+
+    public boolean isPlayerAbleToPromotePawn(final Color color) {
+        final Player player = findPlayerByColor(color);
+        return player.isPromotablePawnExist();
+    }
+
+    public void promotePawn(final Color color, final Piece piece) {
+        final Player player = findPlayerByColor(color);
+        player.promotePawn(piece);
     }
 
     private Player findPlayerByColor(final Color color) {

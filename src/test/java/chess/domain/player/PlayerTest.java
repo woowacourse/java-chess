@@ -120,6 +120,34 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("프로모션 가능한 폰이 존재하는지 확인할 수 있어야 한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a7,false", "a8,true"})
+    void isPromotablePawnExist(final String position, final boolean expected) {
+        final Player player = new Player(Color.WHITE, Map.of(Position.from(position), Pawn.getWhitePawn()));
+        final boolean actual = player.isPromotablePawnExist();
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("프로모션 가능한 폰이 존재하지 않으면 프로모션을 할 수 없어야 한다.")
+    @Test
+    void notExistPromotablePawnException() {
+        assertThatThrownBy(() -> player.promotePawn(Queen.getInstance()))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("프로모션 가능한 폰이 존재하지 않습니다.");
+    }
+
+    @DisplayName("프로모션 가능한 폰이 존재하면 원하는 기물로 프로모션할 수 있어야 한다.")
+    @Test
+    void promotePawn() {
+        final Position position = Position.from("a8");
+        final Player player = new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn())));
+        player.promotePawn(Queen.getInstance());
+
+        final Map<Position, Piece> playerPieces = player.getPieces();
+        assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);
+    }
+
     @DisplayName("본인의 색상과 비교할 수 있어야 한다.")
     @ParameterizedTest
     @CsvSource(value = {"WHITE,true", "BLACK,false"})

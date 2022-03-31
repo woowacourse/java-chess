@@ -67,6 +67,30 @@ public class Player {
         return pieces.containsKey(position);
     }
 
+    public boolean isPromotablePawnExist() {
+        return pieces.keySet()
+                .stream()
+                .anyMatch(this::isPromotablePawnPlacedAt);
+    }
+
+    private boolean isPromotablePawnPlacedAt(final Position position) {
+        final Piece piece = findPieceByPosition(position);
+        return piece.isPawn() && position.isEndOfRowRange();
+    }
+
+    public void promotePawn(final Piece piece) {
+        final Position position = findPositionOfPromotablePawn();
+        pieces.put(position, piece);
+    }
+
+    private Position findPositionOfPromotablePawn() {
+        return pieces.keySet()
+                .stream()
+                .filter(this::isPromotablePawnPlacedAt)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("프로모션 가능한 폰이 존재하지 않습니다."));
+    }
+
     public boolean isColorSame(final Color color) {
         return color.equals(this.color);
     }

@@ -65,6 +65,10 @@ public class Position {
                 || ROW_RANGE.isOutOfRange(row + rowAmount);
     }
 
+    public boolean isEndOfRowRange() {
+        return ROW_RANGE.isEndOfRange(row);
+    }
+
     @Override
     public String toString() {
         return "Position{" + column + row + '}';

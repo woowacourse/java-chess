@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.Color;
 import chess.domain.Position;
@@ -24,7 +27,7 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        players = new Players(List.of(
+        players = new Players(
                 new Player(Color.WHITE, new HashMap<>(Map.of(
                         Position.from("a2"), Pawn.getWhitePawn(),
                         Position.from("d1"), Queen.getInstance()
@@ -33,7 +36,7 @@ class PlayersTest {
                         Position.from("a7"), Pawn.getBlackPawn(),
                         Position.from("b3"), Pawn.getBlackPawn(),
                         Position.from("d2"), Pawn.getBlackPawn())
-                )))
+                ))
         );
     }
 
@@ -85,5 +88,27 @@ class PlayersTest {
             assertThat(playerPieces).containsKey(target);
             assertThat(enemyPieces).doesNotContainKey(target);
         });
+    }
+
+    @DisplayName("특정 플레이어가 프로모션 가능한 폰을 지니고 있는지 확인할 수 있어야 한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"a7,false", "a8,true"})
+    void isPlayerAbleToPromotePawn(final String position, final boolean expected) {
+        final Players players = new Players(
+                new Player(Color.WHITE, new HashMap<>(Map.of(Position.from(position), Pawn.getWhitePawn()))));
+        final boolean actual = players.isPlayerAbleToPromotePawn(Color.WHITE);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("특정 플레이어의 프로모션을 수행할 수 있어야 한다.")
+    @Test
+    void promotePawn() {
+        final Position position = Position.from("a8");
+        final Players players = new Players(
+                new Player(Color.WHITE, new HashMap<>(Map.of(position, Pawn.getWhitePawn()))));
+        players.promotePawn(Color.WHITE, Queen.getInstance());
+
+        final Map<Position, Piece> playerPieces = players.getPiecesByPlayer(Color.WHITE);
+        assertThat(playerPieces.get(position)).isInstanceOf(Queen.class);
     }
 }

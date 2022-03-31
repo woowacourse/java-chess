@@ -22,6 +22,10 @@ public enum PositionRange {
         return isOutOfRange((char) target);
     }
 
+    public boolean isEndOfRange(final char row) {
+        return row == ROW_RANGE.allowedMinimum || row == ROW_RANGE.allowedMaximum;
+    }
+
     public char getAllowedMinimum() {
         return allowedMinimum;
     }
