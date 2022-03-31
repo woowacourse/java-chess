@@ -19,10 +19,6 @@ public abstract class Piece {
         return color.correctSignature(baseSignature());
     }
 
-    public boolean isEnemyColorPiece(Piece piece) {
-        return this.color.enemyColor() == piece.color;
-    }
-
     public boolean isSameColor(Color color) {
         return this.color == color;
     }
