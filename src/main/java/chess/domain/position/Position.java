@@ -1,14 +1,11 @@
 package chess.domain.position;
 
-import chess.domain.player.Team;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Position {
-
-    private static final int KNIGHT_MOVE_DISTANCE = 3;
 
     private final Rank rank;
     private final File file;
@@ -26,57 +23,8 @@ public class Position {
         return rank.isFirstTurnOfPawn();
     }
 
-    public List<Position> findAllBetweenPosition(final Position destination) {
-        if (isMoveOfKnight(destination)) {
-            return Collections.emptyList();
-        }
-        if (isMoveLinear(destination)) {
-            return findBetweenLinearPosition(destination);
-        }
-        if (isMoveDiagonal(destination)) {
-            return findBetweenDiagonalPosition(destination);
-        }
-        throw new IllegalArgumentException("올바른 이동이 아닙니다.");
-    }
-
-    public boolean isMoveLinear(final Position destination) {
-        final int fileDistance = file.calculateFileInAbsolute(destination.file);
-        final int rankDistance = rank.calculateRankInAbsolute(destination.rank);
-        return fileDistance == 0 && rankDistance > 0 || fileDistance > 0 && rankDistance == 0;
-    }
-
-    public boolean isMoveDiagonal(final Position destination) {
-        final int fileDistance = file.calculateFileInAbsolute(destination.file);
-        final int rankDistance =rank.calculateRankInAbsolute(destination.rank);
-        return fileDistance + rankDistance != 0 && fileDistance == rankDistance;
-    }
-
-    public boolean isMoveOfKnight(final Position destination) {
-        final int fileDistance = file.calculateFileInAbsolute(destination.file);
-        final int rankDistance = rank.calculateRankInAbsolute(destination.rank);
-        if (fileDistance + rankDistance != KNIGHT_MOVE_DISTANCE) {
-            return false;
-        }
-        return fileDistance != 0 && rankDistance != 0;
-    }
-
-    public boolean isMoveForward(final Position destination, final Team team) {
-        if (file != destination.file) {
-            return false;
-        }
-        if (team == Team.BLACK) {
-            return rank.calculateRank(destination.rank) > 0;
-        }
-        return destination.rank.calculateRank(rank) > 0;
-    }
-
-    public boolean isMoveDiagonalForward(final Position destination, final Team team) {
-        final int fileDistance = file.calculateFileInAbsolute(destination.file);
-        final int rankDistance = destination.rank.calculateRank(rank);
-        if (team == Team.BLACK) {
-            return fileDistance > 0 && fileDistance == Math.abs(rankDistance);
-        }
-        return fileDistance > 0 && fileDistance == rankDistance;
+    public boolean isSameFile(final File file) {
+        return this.file == file;
     }
 
     public int calculateDistance(final Position destination) {
@@ -85,8 +33,17 @@ public class Position {
         return fileDistance + rankDistance;
     }
 
-    public boolean isSameFile(final File file) {
-        return this.file == file;
+    public List<Position> findAllBetweenPosition(final Position destination) {
+        if (MoveChecker.isForKnight(this, destination)) {
+            return Collections.emptyList();
+        }
+        if (MoveChecker.isLinear(this, destination)) {
+            return findBetweenLinearPosition(destination);
+        }
+        if (MoveChecker.isDiagonal(this, destination)) {
+            return findBetweenDiagonalPosition(destination);
+        }
+        throw new IllegalArgumentException("올바른 이동이 아닙니다.");
     }
 
     private List<Position> findBetweenLinearPosition(final Position destination) {
@@ -151,11 +108,11 @@ public class Position {
         return Objects.hash(rank, file);
     }
 
-    public int getRank() {
-        return rank.getValue();
+    public Rank getRank() {
+        return rank;
     }
 
-    public int getFile() {
-        return file.getValue() - 'a';
+    public File getFile() {
+        return file;
     }
 }

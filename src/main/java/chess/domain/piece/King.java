@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.player.Team;
+import chess.domain.position.MoveChecker;
+import chess.domain.position.Position;
 
 public class King extends Piece {
 
@@ -14,8 +15,8 @@ public class King extends Piece {
 
     @Override
     public Position move(final Position currentPosition, final Position destinationPosition, final Team team) {
-        boolean isMoveLinear = currentPosition.isMoveLinear(destinationPosition);
-        boolean isMoveDiagonal = currentPosition.isMoveDiagonal(destinationPosition);
+        boolean isMoveLinear = MoveChecker.isLinear(currentPosition, destinationPosition);
+        boolean isMoveDiagonal = MoveChecker.isDiagonal(currentPosition, destinationPosition);
         if (!isMoveLinear && !isMoveDiagonal) {
             throw new IllegalArgumentException("킹은 상하좌우, 대각선 중 한 방향으로 이동해야 합니다.");
         }

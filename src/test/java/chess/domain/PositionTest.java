@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.player.Team;
+import chess.domain.position.MoveChecker;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
@@ -61,7 +62,7 @@ public class PositionTest {
         final Position currentPosition = new Position(2, 'b');
         final Position destinationPosition = new Position(3, 'b');
 
-        final boolean actual = currentPosition.isMoveForward(destinationPosition, Team.WHITE);
+        final boolean actual = MoveChecker.isForward(currentPosition, destinationPosition, Team.WHITE);
 
         assertThat(actual).isTrue();
     }
@@ -72,7 +73,7 @@ public class PositionTest {
         final Position currentPosition = new Position(7, 'b');
         final Position destinationPosition = new Position(5, 'b');
 
-        final boolean actual = currentPosition.isMoveForward(destinationPosition, Team.BLACK);
+        final boolean actual = MoveChecker.isForward(currentPosition, destinationPosition, Team.BLACK);
 
         assertThat(actual).isTrue();
     }
@@ -83,7 +84,7 @@ public class PositionTest {
         final Position currentPosition = new Position(2, 'a');
         final Position destinationPosition = new Position(4, 'c');
 
-        final boolean actual = currentPosition.isMoveDiagonal(destinationPosition);
+        final boolean actual = MoveChecker.isDiagonal(currentPosition, destinationPosition);
 
         assertThat(actual).isTrue();
     }
@@ -94,7 +95,7 @@ public class PositionTest {
         final Position currentPosition = new Position(2, 'b');
         final Position destinationPosition = new Position(3, 'a');
 
-        final boolean actual = currentPosition.isMoveDiagonalForward(destinationPosition, Team.WHITE);
+        final boolean actual = MoveChecker.isDiagonalForward(currentPosition, destinationPosition, Team.WHITE);
 
         assertThat(actual).isTrue();
     }
@@ -105,7 +106,7 @@ public class PositionTest {
         final Position currentPosition = new Position(8, 'a');
         final Position destinationPosition = new Position(7, 'b');
 
-        final boolean actual = currentPosition.isMoveDiagonalForward(destinationPosition, Team.BLACK);
+        final boolean actual = MoveChecker.isDiagonalForward(currentPosition, destinationPosition, Team.BLACK);
 
         assertThat(actual).isTrue();
     }

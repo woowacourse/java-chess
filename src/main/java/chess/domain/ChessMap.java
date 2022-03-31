@@ -39,8 +39,8 @@ public class ChessMap {
     private static void markWhitePieces(final char[][] chessMap, final List<Piece> whitePieces) {
         for (Piece piece : whitePieces) {
             final Position position = piece.getPosition();
-            final int rank = 8 - position.getRank();
-            final int file = position.getFile();
+            final int rank = 8 - position.getRank().getValue();
+            final int file = position.getFile().getValue();
             chessMap[rank][file] = Character.toLowerCase(piece.getName());
         }
     }
@@ -48,8 +48,8 @@ public class ChessMap {
     private static void markBlackPieces(final char[][] chessMap, final List<Piece> blackPieces) {
         for (Piece piece : blackPieces) {
             final Position position = piece.getPosition();
-            final int rank = 8 - position.getRank();
-            final int file = position.getFile();
+            final int rank = 8 - position.getRank().getValue();
+            final int file = position.getFile().getValue();
             chessMap[rank][file] = piece.getName();
         }
     }
