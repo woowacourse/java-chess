@@ -5,6 +5,7 @@ import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
 import java.util.List;
 
@@ -34,10 +35,10 @@ public class Running implements State {
     }
 
     @Override
-    public State move(Position beforePosition, Position afterPosition) {
-        checkValidPosition(beforePosition, afterPosition);
+    public State move(final Positions positions) {
+        checkValidPosition(positions);
 
-        board.move(beforePosition, afterPosition);
+        board.move(positions);
 
         if (board.hasKingCaptured()) {
             return new Finished(board);
@@ -46,10 +47,15 @@ public class Running implements State {
         return new Running(board, switchCamp());
     }
 
-    private void checkValidPosition(final Position beforePosition, final Position afterPosition) {
-        checkValidPiece(beforePosition);
-        checkValidTurn(beforePosition);
-        checkObstacles(beforePosition, afterPosition);
+    @Override
+    public State move(final Position before, final Position after) {
+        return move(new Positions(List.of(before, after)));
+    }
+
+    private void checkValidPosition(final Positions positions) {
+        checkValidPiece(positions.before());
+        checkValidTurn(positions.before());
+        checkObstacles(positions);
     }
 
     private void checkValidPiece(final Position position) {
@@ -68,14 +74,14 @@ public class Running implements State {
         return board.isNotValidCamp(position, camp);
     }
 
-    private void checkObstacles(final Position beforePosition, final Position afterPosition) {
-        if (isNotKnight(beforePosition) && containObstacleInPath(beforePosition, afterPosition)) {
+    private void checkObstacles(final Positions positions) {
+        if (isNotKnight(positions.before()) && containObstacleInPath(positions)) {
             throw new IllegalArgumentException(CANT_MOVE_WHEN_OBSTACLE_IN_PATH);
         }
     }
 
-    private boolean containObstacleInPath(final Position beforePosition, final Position afterPosition) {
-        List<Position> path = beforePosition.pathTo(afterPosition);
+    private boolean containObstacleInPath(final Positions positions) {
+        List<Position> path = positions.calculatePath();
         return !path.stream()
             .allMatch(this::isBlankPosition);
     }

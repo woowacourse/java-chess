@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import java.util.function.Consumer;
 
 public abstract class Piece {
@@ -20,17 +21,27 @@ public abstract class Piece {
 
     public abstract void move(Position beforePosition,
                               Position afterPosition,
-                              Consumer<Piece> moveFunction);
+                              Consumer<Piece> movePiece);
+
+    public abstract void move(final Positions positions,
+                              final Consumer<Piece> movePiece);
+
+    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 
     public abstract void capture(Position beforePosition,
                                  Position afterPosition,
                                  Consumer<Piece> moveFunction);
 
-    public boolean isSameCampWith(Piece targetPiece) {
-        return camp == targetPiece.camp;
+    public abstract void capture(final Positions positions,
+                                 final Consumer<Piece> moveFunction);
+
+    public boolean isNotSameCampWith(final Piece targetPiece) {
+        return camp != targetPiece.camp;
     }
 
-    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
+    public boolean isNotSameCampWith(final Camp otherCamp) {
+        return this.camp != otherCamp;
+    }
 
     public PieceName pieceName() {
         return pieceName;
@@ -43,8 +54,4 @@ public abstract class Piece {
     public abstract double getScore();
 
     public abstract boolean isNullPiece();
-
-    public boolean isSameCampWith(final Camp otherCamp) {
-        return this.camp == otherCamp;
-    }
 }

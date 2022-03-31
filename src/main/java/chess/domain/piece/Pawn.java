@@ -4,6 +4,7 @@ import static chess.domain.piece.PieceName.PAWN;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import java.util.function.Consumer;
 
 public final class Pawn extends NotNullPiece {
@@ -23,27 +24,21 @@ public final class Pawn extends NotNullPiece {
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> movePiece) {
         if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
-        moveFunction.accept(this);
+        movePiece.accept(this);
         firstMove = false;
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        if (!canCapture(beforePosition, afterPosition)) {
+    public void move(final Positions positions, final Consumer<Piece> movePiece) {
+        if (!canMove(positions)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
-        moveFunction.accept(this);
+        movePiece.accept(this);
         firstMove = false;
-    }
-
-    private boolean canCapture(Position beforePosition, Position afterPosition) {
-        int columnDistance = afterPosition.columnDistance(beforePosition);
-        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
-        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
     }
 
     @Override
@@ -57,6 +52,48 @@ public final class Pawn extends NotNullPiece {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+    }
+
+    private boolean canMove(final Positions positions) {
+        int rowDirectedDistance = positions.calculateDirectedRowDistance();
+        int columnDistance = positions.calculateColumnDistance();
+        if (columnDistance != NO_DISTANCE) {
+            return false;
+        }
+        if (firstMove) {
+            return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
+        }
+        return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+    }
+
+    @Override
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        if (!canCapture(beforePosition, afterPosition)) {
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+        }
+        moveFunction.accept(this);
+        firstMove = false;
+    }
+
+    @Override
+    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
+        if (!canCapture(positions)) {
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+        }
+        moveFunction.accept(this);
+        firstMove = false;
+    }
+
+    private boolean canCapture(Position beforePosition, Position afterPosition) {
+        int columnDistance = afterPosition.columnDistance(beforePosition);
+        int rowDistance = afterPosition.rowDirectedDistance(beforePosition);
+        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
+    }
+
+    private boolean canCapture(final Positions positions) {
+        int columnDistance = positions.calculateColumnDistance();
+        int rowDistance = positions.calculateDirectedRowDistance();
+        return columnDistance == MOVABLE_DISTANCE && checkMovableLimitByCamp(rowDistance, MOVABLE_DISTANCE);
     }
 
     private boolean checkMovableLimitByCamp(int distance, int movableDistance) {

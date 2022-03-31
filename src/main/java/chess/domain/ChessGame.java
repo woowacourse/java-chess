@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
@@ -51,7 +50,7 @@ public class ChessGame {
 
     private void executeMoveCommand(final String command) {
         final Positions movePositions = Positions.from(command);
-        move(movePositions.get(0), movePositions.get(1));
+        move(movePositions);
         OutputView.printBoard(board().getBoard());
         if (isNotRunning()) {
             OutputView.printFinishMessage();
@@ -64,8 +63,8 @@ public class ChessGame {
         return state.getBoard();
     }
 
-    public void move(Position beforePosition, Position afterPosition) {
-        state = state.move(beforePosition, afterPosition);
+    private void move(final Positions movePositions) {
+        state = state.move(movePositions);
     }
 
     public boolean isNotRunning() {

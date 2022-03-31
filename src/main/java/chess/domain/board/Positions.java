@@ -12,10 +12,10 @@ public class Positions {
     private static final Pattern POSITION_PATTERN = Pattern.compile("[a-h][1-8]");
     private static final int VALID_SPLIT_COMMAND_SIZE = 3;
 
-    private final List<Position> position;
+    private final List<Position> positions;
 
-    private Positions(final List<Position> position) {
-        this.position = position;
+    public Positions(final List<Position> positions) {
+        this.positions = positions;
     }
 
     public static Positions from(final String moveCommand) {
@@ -35,7 +35,27 @@ public class Positions {
         }
     }
 
-    public Position get(final int index) {
-        return position.get(index);
+    public Position before() {
+        return positions.get(0);
+    }
+
+    public Position after() {
+        return positions.get(1);
+    }
+
+    public int calculateColumnDistance() {
+        return before().columnDistance(after());
+    }
+
+    public int calculateRowDistance() {
+        return before().rowDistance(after());
+    }
+
+    public List<Position> calculatePath() {
+        return before().pathTo(after());
+    }
+
+    public int calculateDirectedRowDistance() {
+        return after().rowDirectedDistance(before());
     }
 }

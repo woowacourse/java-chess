@@ -27,7 +27,7 @@ public final class Board {
     }
 
     public boolean isNotValidCamp(final Position position, final Camp camp) {
-        return !board.get(position).isSameCampWith(camp);
+        return board.get(position).isNotSameCampWith(camp);
     }
 
     public boolean isBlankPosition(final Position position) {
@@ -38,6 +38,10 @@ public final class Board {
         movePiece(beforePosition, afterPosition);
     }
 
+    public void move(final Positions positions) {
+        movePiece(positions);
+    }
+
     private void movePiece(final Position beforePosition, final Position afterPosition) {
         Piece beforePiece = board.get(beforePosition);
         if (isMoveToBlank(afterPosition)) {
@@ -46,6 +50,19 @@ public final class Board {
         }
         if (isMoveToOtherCampPiece(beforePosition, afterPosition)) {
             beforePiece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+            return;
+        }
+        throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
+    }
+
+    private void movePiece(final Positions positions) {
+        Piece beforePiece = board.get(positions.before());
+        if (isMoveToBlank(positions.after())) {
+            beforePiece.move(positions, moveFunction(positions));
+            return;
+        }
+        if (isMoveToOtherCampPiece(positions)) {
+            beforePiece.capture(positions, moveFunction(positions));
             return;
         }
         throw new IllegalArgumentException(CANT_MOVE_TO_SAME_CAMP);
@@ -62,10 +79,23 @@ public final class Board {
         };
     }
 
+    private Consumer<Piece> moveFunction(final Positions positions) {
+        return (piece) -> {
+            board.put(positions.after(), piece);
+            board.put(positions.before(), new NullPiece(null));
+        };
+    }
+
     private boolean isMoveToOtherCampPiece(Position beforePosition, Position afterPosition) {
         Piece beforePiece = board.get(beforePosition);
         Piece afterPiece = board.get(afterPosition);
-        return !beforePiece.isSameCampWith(afterPiece);
+        return beforePiece.isNotSameCampWith(afterPiece);
+    }
+
+    private boolean isMoveToOtherCampPiece(final Positions positions) {
+        Piece beforePiece = board.get(positions.before());
+        Piece afterPiece = board.get(positions.after());
+        return beforePiece.isNotSameCampWith(afterPiece);
     }
 
     public boolean hasKingCaptured() {

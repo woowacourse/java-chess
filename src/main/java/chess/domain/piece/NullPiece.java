@@ -4,6 +4,7 @@ import static chess.domain.piece.PieceName.NULL_PIECE;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import java.util.function.Consumer;
 
 public final class NullPiece extends Piece {
@@ -16,8 +17,18 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    public void move(final Position beforePosition, final Position afterPosition, final Consumer<Piece> moveFunction) {
+    public void move(final Position beforePosition, final Position afterPosition, final Consumer<Piece> movePiece) {
         throw new IllegalArgumentException(CANT_MOVE_EMPTY_PIECE);
+    }
+
+    @Override
+    public void move(final Positions positions, final Consumer<Piece> movePiece) {
+        throw new IllegalArgumentException(CANT_MOVE_EMPTY_PIECE);
+    }
+
+    @Override
+    protected boolean canMove(final Position beforePosition, final Position afterPosition) {
+        throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 
     @Override
@@ -28,7 +39,7 @@ public final class NullPiece extends Piece {
     }
 
     @Override
-    protected boolean canMove(final Position beforePosition, final Position afterPosition) {
+    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
     }
 

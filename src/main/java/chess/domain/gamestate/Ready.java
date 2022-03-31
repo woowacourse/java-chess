@@ -4,6 +4,7 @@ import chess.domain.Camp;
 import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 
 public class Ready implements State {
 
@@ -26,7 +27,12 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(Position beforePosition, Position afterPosition) {
+    public State move(final Positions positions) {
+        throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public State move(final Position before, final Position after) {
         throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
     }
 

@@ -4,12 +4,15 @@ import chess.domain.Camp;
 import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 
 public interface State {
 
     State start();
 
-    State move(Position beforePosition, Position afterPosition);
+    State move(Positions positions);
+
+    State move(Position before, Position after);
 
     Camp switchCamp();
 

@@ -5,6 +5,7 @@ import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
 
 public class Finished implements State {
@@ -24,7 +25,12 @@ public class Finished implements State {
     }
 
     @Override
-    public State move(Position beforePosition, Position afterPosition) {
+    public State move(final Positions positions) {
+        throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public State move(final Position before, final Position after) {
         throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
     }
 

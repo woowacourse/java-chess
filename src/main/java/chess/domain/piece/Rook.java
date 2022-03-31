@@ -4,6 +4,7 @@ import static chess.domain.piece.PieceName.ROOK;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import java.util.function.Consumer;
 
 public final class Rook extends NotNullPiece {
@@ -17,16 +18,19 @@ public final class Rook extends NotNullPiece {
     }
 
     @Override
-    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+    public void move(Position beforePosition, Position afterPosition, Consumer<Piece> movePiece) {
         if (!canMove(beforePosition, afterPosition)) {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
-        moveFunction.accept(this);
+        movePiece.accept(this);
     }
 
     @Override
-    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
-        move(beforePosition, afterPosition, moveFunction);
+    public void move(final Positions positions, final Consumer<Piece> movePiece) {
+        if (!canMove(positions)) {
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+        }
+        movePiece.accept(this);
     }
 
     @Override
@@ -37,6 +41,25 @@ public final class Rook extends NotNullPiece {
             return true;
         }
         return rowDistance == NOT_MOVED_DISTANCE;
+    }
+
+    private boolean canMove(final Positions positions) {
+        int columnDistance = positions.calculateColumnDistance();
+        int rowDistance = positions.calculateRowDistance();
+        if (columnDistance == NOT_MOVED_DISTANCE) {
+            return true;
+        }
+        return rowDistance == NOT_MOVED_DISTANCE;
+    }
+
+    @Override
+    public void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction) {
+        move(beforePosition, afterPosition, moveFunction);
+    }
+
+    @Override
+    public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
+        move(positions, moveFunction);
     }
 
     @Override
