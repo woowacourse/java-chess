@@ -33,7 +33,7 @@ public class ChessController {
             if (gameResult.isScore()) {
                 OutputView.printScore(gameResult.getScore());
             }
-        } catch (NoSuchElementException | IllegalArgumentException exception) {
+        } catch (NoSuchElementException | IllegalArgumentException | UnsupportedOperationException exception) {
             OutputView.printErrorMessage(exception.getMessage());
         }
     }
