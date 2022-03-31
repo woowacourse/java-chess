@@ -79,31 +79,28 @@ public class JdbcTemplate {
     public boolean exist(String sql, Object... args) {
         try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
             prepareStatement(pstmt, args);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            return hasNext(pstmt);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    private Connection getConnection() {
-        Connection con = null;
+    private boolean hasNext(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet rs = pstmt.executeQuery()) {
+            return rs.next();
+        }
+    }
 
+    private Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
 
-        try {
-            con = DriverManager
-                    .getConnection("jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC", "user",
-                            "password");
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return con;
+        return DriverManager.getConnection(
+                "jdbc:mysql://localhost:13306/chess?useSSL=false&serverTimezone=UTC",
+                "user", "password");
     }
 }
