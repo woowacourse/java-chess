@@ -63,7 +63,7 @@
     - [ ] 이동규칙의 로직이 복잡하다. 단 하나의 추상 메서드만 제공하여 구현
         - `public abastract List<Position> move(Position source, Position target);`
 - [ ] `ChessBoard`
-    - [ ] `calculatePawnsInFile` : 다른 기물이 폰과 동일한 점수를 갖게된다면 계산이 잘못 될 수 있다.
+    - [x] `calculatePawnsInFile` : 다른 기물이 폰과 동일한 점수를 갖게된다면 계산이 잘못 될 수 있다.
         - `pieceScore -> pieceScore.score() == PieceScore.PAWN.score()` 수정 필요
     - [ ] 메서드의 분리 구현
         - File에 위치한 Player의 기물을 필터링 하는 메서드
