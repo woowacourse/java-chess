@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 import chess.domain.piece.property.Color;
 import chess.domain.piece.state.started.StartedKing;
 
@@ -11,7 +13,12 @@ public final class King extends Piece {
         super(color, NAME, SCORE, new StartedKing());
     }
 
-    public boolean isSame(Piece piece) {
+    public static boolean canCreate(Piece piece) {
+        return Arrays.stream(Color.values())
+            .anyMatch(color -> new King(color).isSame(piece));
+    }
+
+    private boolean isSame(Piece piece) {
         return this.equals(piece);
     }
 }

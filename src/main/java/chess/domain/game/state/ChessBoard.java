@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.game.state.position.Direction;
 import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
 import chess.domain.game.state.position.Rank;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.property.Color;
 
 public class ChessBoard {
@@ -150,6 +151,6 @@ public class ChessBoard {
     }
 
     public boolean isKing(Position position) {
-        return isFilled(position) && board.get(position).isKing();
+        return isFilled(position) && King.canCreate(board.get(position));
     }
 }

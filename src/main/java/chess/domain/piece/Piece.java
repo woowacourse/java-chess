@@ -45,9 +45,4 @@ public abstract class Piece extends Named{
     public void killed() {
         state = state.die();
     }
-
-    public boolean isKing() {
-        return new King(Color.White).isSame(this)
-            || new King(Color.Black).isSame(this);
-    }
 }
