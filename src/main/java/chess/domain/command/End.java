@@ -1,8 +1,8 @@
 package chess.domain.command;
 
-import chess.domain.board.Position;
-import chess.domain.board.StatusResult;
-import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.StatusResult;
+import chess.domain.board.Piece;
 import java.util.Map;
 
 public final class End extends Command {

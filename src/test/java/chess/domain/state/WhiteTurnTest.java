@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
+import chess.domain.position.Position;
+import chess.domain.board.Color;
+import chess.domain.board.King;
+import chess.domain.board.Pawn;
+import chess.domain.board.Piece;
+import chess.domain.board.Queen;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

@@ -1,8 +1,8 @@
 package chess.domain.command;
 
-import chess.domain.board.Position;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.board.Pawn;
+import chess.domain.board.Piece;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

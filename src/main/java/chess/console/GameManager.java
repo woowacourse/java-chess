@@ -1,11 +1,11 @@
 package chess.console;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.board.Result;
-import chess.domain.board.StatusResult;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.position.Result;
+import chess.domain.position.StatusResult;
+import chess.domain.board.Color;
+import chess.domain.board.Piece;
 import chess.domain.state.State;
 import java.util.Map;
 
@@ -18,9 +18,9 @@ public final class GameManager {
         return currentState.getBoard();
     }
 
-    public void move(Position source, Position destination) {
+    public void move(String source, String destination) {
         checkInitiated();
-        currentState = currentState.movePiece(source, destination);
+        currentState = currentState.movePiece(Position.of(source), Position.of(destination));
     }
 
     public StatusResult getStatus() {

@@ -1,8 +1,8 @@
 package chess;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import chess.domain.command.Command;
-import chess.domain.piece.Piece;
+import chess.domain.board.Piece;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;

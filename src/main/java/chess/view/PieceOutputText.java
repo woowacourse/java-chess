@@ -1,18 +1,18 @@
 package chess.view;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.board.Color;
+import chess.domain.board.Piece;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum PieceOutputText {
 
-    Pawn("P", piece -> piece.isSameType(chess.domain.piece.Pawn.class)),
-    Bishop("B", piece -> piece.isSameType(chess.domain.piece.Bishop.class)),
-    Knight("N", piece -> piece.isSameType(chess.domain.piece.Knight.class)),
-    ROOK("R", piece -> piece.isSameType(chess.domain.piece.Rook.class)),
-    Queen("Q", piece -> piece.isSameType(chess.domain.piece.Queen.class)),
-    KING("K", piece -> piece.isSameType(chess.domain.piece.King.class)),
+    Pawn("P", piece -> piece.isSameType(chess.domain.board.Pawn.class)),
+    Bishop("B", piece -> piece.isSameType(chess.domain.board.Bishop.class)),
+    Knight("N", piece -> piece.isSameType(chess.domain.board.Knight.class)),
+    ROOK("R", piece -> piece.isSameType(chess.domain.board.Rook.class)),
+    Queen("Q", piece -> piece.isSameType(chess.domain.board.Queen.class)),
+    KING("K", piece -> piece.isSameType(chess.domain.board.King.class)),
     ;
 
     private static final String EMPTY_TEXT = ".";
