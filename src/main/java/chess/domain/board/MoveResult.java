@@ -19,8 +19,4 @@ public enum MoveResult {
     public boolean isMoveSuccess() {
         return moveSuccess;
     }
-
-    public boolean isMoveResult(MoveResult moveResult) {
-        return this == moveResult;
-    }
 }

@@ -24,7 +24,7 @@ public class WhiteTurn extends InGame {
             throw new IllegalStateException("말을 이동하는 것에 실패했습니다.");
         }
 
-        if (moveResult.isMoveResult(MoveResult.KILL_KING)) {
+        if (moveResult.equals(MoveResult.KILL_KING)) {
             return new ReadyToStart();
         }
 
