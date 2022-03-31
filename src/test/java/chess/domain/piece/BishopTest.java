@@ -1,18 +1,15 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Color;
 import chess.domain.position.Column;
-import java.util.List;
-
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import chess.domain.Color;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 public class BishopTest {
 
@@ -31,7 +28,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.F, Row.RANK_2);
-        assertThat(bishop.isCorrectMovement(source, target)).isTrue();
+        assertThat(bishop.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
@@ -39,17 +36,7 @@ public class BishopTest {
     void isNotMovable() {
         Bishop bishop = new Bishop(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.G, Row.RANK_6);
-        assertThat(bishop.isCorrectMovement(source, target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("Bishop 이 움직이는 경로를 얻어오는지")
-    void findRoute() {
-        Bishop bishop = new Bishop(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.F, Row.RANK_2);
-        List<Position> route = bishop.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(Column.D, Row.RANK_4), new Position(Column.E, Row.RANK_3));
+        Position target = new Position(Column.C, Row.RANK_6);
+        assertThat(bishop.isCorrectMovement(source, target, false)).isFalse();
     }
 }

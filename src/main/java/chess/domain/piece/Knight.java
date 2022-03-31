@@ -31,7 +31,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isCorrectMovement(Position source, Position target, Piece targetPiece) {
+    public boolean isCorrectMovement(Position source, Position target, boolean hasTargetPiece) {
         int columnDifference = source.calculateColumnDifferenceTo(target);
         int rowDifference = source.calculateRowDifferenceTo(target);
 
@@ -46,11 +46,6 @@ public class Knight extends Piece {
     @Override
     public double score() {
         return 2.5;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override

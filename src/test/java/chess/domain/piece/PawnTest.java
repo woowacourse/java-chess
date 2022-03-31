@@ -1,18 +1,15 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.Color;
 import chess.domain.position.Column;
-import java.util.List;
-
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import chess.domain.Color;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 public class PawnTest {
 
@@ -31,7 +28,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.C, Row.RANK_4);
-        assertThat(pawn.isCorrectMovement(source, target)).isTrue();
+        assertThat(pawn.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
@@ -40,7 +37,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.C, Row.RANK_6);
-        assertThat(pawn.isCorrectMovement(source, target)).isFalse();
+        assertThat(pawn.isCorrectMovement(source, target, false)).isFalse();
     }
 
     @Test
@@ -49,7 +46,7 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.C, Row.RANK_6);
-        assertThat(pawn.isCorrectMovement(source, target)).isTrue();
+        assertThat(pawn.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
@@ -58,16 +55,6 @@ public class PawnTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.C, Row.RANK_4);
-        assertThat(pawn.isCorrectMovement(source, target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("Pawn 이 움직이는 경로를 얻어오는지")
-    void findRoute() {
-        Pawn pawn = new Pawn(Color.WHITE);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_4);
-        List<Position> route = pawn.findRoute(source, target);
-        assertThat(route).isEmpty();
+        assertThat(pawn.isCorrectMovement(source, target, false)).isFalse();
     }
 }

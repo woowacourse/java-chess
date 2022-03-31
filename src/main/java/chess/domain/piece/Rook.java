@@ -27,7 +27,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isCorrectMovement(Position source, Position target, Piece targetPiece) {
+    public boolean isCorrectMovement(Position source, Position target, boolean hasTargetPiece) {
         int columnDifference = source.calculateColumnDifferenceTo(target);
         int rowDifference = Math.abs(source.calculateRowDifferenceTo(target));
 
@@ -42,11 +42,6 @@ public class Rook extends Piece {
     @Override
     public double score() {
         return 5;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override

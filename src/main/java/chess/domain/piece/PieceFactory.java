@@ -14,10 +14,6 @@ public class PieceFactory {
 
         putPiecesExceptPawnOnRow(pieces, Row.RANK_1, Color.WHITE);
         putPawnOnRank(pieces, Row.RANK_2, Color.WHITE);
-        putBlankOnRank(pieces, Row.RANK_3);
-        putBlankOnRank(pieces, Row.RANK_4);
-        putBlankOnRank(pieces, Row.RANK_5);
-        putBlankOnRank(pieces, Row.RANK_6);
         putPawnOnRank(pieces, Row.RANK_7, Color.BLACK);
         putPiecesExceptPawnOnRow(pieces, Row.RANK_8, Color.BLACK);
 
@@ -39,13 +35,6 @@ public class PieceFactory {
         for (Column column : Column.values()) {
             Position position = new Position(column, row);
             pieces.put(position, new Pawn(color));
-        }
-    }
-
-    private static void putBlankOnRank(Map<Position, Piece> pieces, Row row) {
-        for (Column column : Column.values()) {
-            Position position = new Position(column, row);
-            pieces.put(position, new Blank());
         }
     }
 }

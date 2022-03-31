@@ -23,7 +23,6 @@ public class InputView {
 
     public static String getCommand() {
         String input = scanner.nextLine();
-
         if (input.startsWith("move")) {
             String[] commands = input.split(" ");
             validateMoveCommandFormat(commands);

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.command.MoveCommand;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -21,35 +20,36 @@ public class Board {
     public void movePiece(Color turnColor, MoveCommand command) {
         validateMovement(turnColor, command);
         Piece sourcePiece = pieces.get(command.from());
-        pieces.replace(command.from(), new Blank());
-        pieces.replace(command.to(), sourcePiece.displaced());
+        pieces.remove(command.from());
+        pieces.put(command.to(), sourcePiece);
     }
 
     private void validateMovement(Color turnColor, MoveCommand command) {
-        validatePieceChoice(turnColor, command.from());
+        validateSourceChoice(turnColor, command.from());
         validateTargetChoice(turnColor, command.to());
         validateMovable(command.from(), command.to());
         validateRoute(command.from(), command.to());
     }
 
-    private void validatePieceChoice(Color turnColor, Position source) {
+    private void validateSourceChoice(Color turnColor, Position source) {
+        if (!pieces.containsKey(source)) {
+            throw new IllegalArgumentException("source 위치에 기물이 존재하지 않습니다.");
+        }
         Piece sourcePiece = pieces.get(source);
         if (!sourcePiece.isSameColor(turnColor)) {
-            throw new IllegalArgumentException("올바른 기물 선택이 아닙니다.");
+            throw new IllegalArgumentException("현재 순서 진영의 기물이 아닙니다.");
         }
     }
 
     private void validateTargetChoice(Color turnColor, Position target) {
-        Piece targetPiece = pieces.get(target);
-        if (targetPiece.isSameColor(turnColor)) {
-            throw new IllegalArgumentException("목적지에 이미 자신의 기물이 있습니다.");
+        if (pieces.containsKey(target) && pieces.get(target).isSameColor(turnColor)) {
+            throw new IllegalArgumentException("target 위치에 자신의 기물이 있습니다.");
         }
     }
 
     private void validateMovable(Position source, Position target) {
         Piece sourcePiece = pieces.get(source);
-        Piece targetPiece = pieces.get(target);
-        if (!sourcePiece.isCorrectMovement(source, target, targetPiece)) {
+        if (!sourcePiece.isCorrectMovement(source, target, pieces.containsKey(target))) {
             throw new IllegalArgumentException("해당 기물이 움직일 수 있는 행마법이 아닙니다.");
         }
     }
@@ -80,8 +80,7 @@ public class Board {
     }
 
     private void validatePieceOnRoute(Position node) {
-        Piece nodePiece = pieces.get(node);
-        if (!nodePiece.isBlank()) {
+        if (pieces.containsKey(node)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
     }

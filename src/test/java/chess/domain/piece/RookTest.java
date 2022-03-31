@@ -1,18 +1,15 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-
+import chess.domain.Color;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import chess.domain.Color;
-import chess.domain.position.Position;
-import chess.domain.position.Column;
-import chess.domain.position.Row;
 
 public class RookTest {
 
@@ -31,7 +28,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.H, Row.RANK_5);
-        assertThat(rook.isCorrectMovement(source, target)).isTrue();
+        assertThat(rook.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
@@ -39,17 +36,7 @@ public class RookTest {
     void isNotMovable() {
         Rook rook = new Rook(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.H, Row.RANK_8);
-        assertThat(rook.isCorrectMovement(source, target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("Rook 이 움직이는 경로를 얻어오는지")
-    void findRoute() {
-        Rook rook = new Rook(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_8);
-        List<Position> route = rook.findRoute(source, target);
-        assertThat(route).containsExactly(new Position(Column.C, Row.RANK_6), new Position(Column.C, Row.RANK_7));
+        Position target = new Position(Column.E, Row.RANK_6);
+        assertThat(rook.isCorrectMovement(source, target, true)).isFalse();
     }
 }

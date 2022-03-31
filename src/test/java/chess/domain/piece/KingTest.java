@@ -1,18 +1,15 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-
+import chess.domain.Color;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import chess.domain.Color;
-import chess.domain.position.Position;
-import chess.domain.position.Column;
-import chess.domain.position.Row;
 
 public class KingTest {
 
@@ -31,7 +28,7 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.D, Row.RANK_6);
-        assertThat(king.isCorrectMovement(source, target)).isTrue();
+        assertThat(king.isCorrectMovement(source, target, false)).isTrue();
     }
 
     @Test
@@ -40,16 +37,6 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Position source = new Position(Column.C, Row.RANK_5);
         Position target = new Position(Column.D, Row.RANK_7);
-        assertThat(king.isCorrectMovement(source, target)).isFalse();
-    }
-
-    @Test
-    @DisplayName("King 이 움직이는 경로를 얻어오는지")
-    void findRoute() {
-        King king = new King(Color.BLACK);
-        Position source = new Position(Column.C, Row.RANK_5);
-        Position target = new Position(Column.C, Row.RANK_4);
-        List<Position> route = king.findRoute(source, target);
-        assertThat(route).isEmpty();
+        assertThat(king.isCorrectMovement(source, target, false)).isFalse();
     }
 }

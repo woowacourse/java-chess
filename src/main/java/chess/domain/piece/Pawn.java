@@ -42,7 +42,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isCorrectMovement(Position source, Position target, Piece targetPiece) {
+    public boolean isCorrectMovement(Position source, Position target, boolean hasTargetPiece) {
         int columnDifference = source.calculateColumnDifferenceTo(target);
         int rowDifference = source.calculateRowDifferenceTo(target);
         Movement movement = Movement.find(columnDifference, rowDifference);
@@ -51,12 +51,12 @@ public class Pawn extends Piece {
             return false;
         }
         if (movement.isDiagonal()) {
-            return isEnemyColorPiece(targetPiece);
+            return hasTargetPiece;
         }
         if (movement.is2Step()) {
-            return targetPiece.isBlank() && isCorrect2StepMovement(source);
+            return !hasTargetPiece && isCorrect2StepMovement(source);
         }
-        return targetPiece.isBlank();
+        return !hasTargetPiece;
     }
 
     private boolean isCorrect2StepMovement(Position source) {
@@ -77,11 +77,6 @@ public class Pawn extends Piece {
     @Override
     public double score() {
         return 1;
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override
