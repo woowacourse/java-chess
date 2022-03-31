@@ -4,9 +4,11 @@ import static java.util.stream.Collectors.toMap;
 
 import chess.domain.piece.Team;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
 
@@ -26,14 +28,12 @@ public class Position implements Comparable<Position> {
     }
 
     private static List<Position> createAll() {
-        List<Position> positions = new ArrayList<>();
-
-        for (Row row : Row.values()) {
-            for (Column column : Column.values()) {
-                positions.add(new Position(column, row));
-            }
-        }
-        return positions;
+        return Arrays.stream(Row.values())
+                .flatMap(row ->
+                        Arrays.stream(Column.values())
+                                .map(column -> new Position(column, row))
+                )
+                .collect(Collectors.toList());
     }
 
     public static Position valueOf(final String rawPosition) {
