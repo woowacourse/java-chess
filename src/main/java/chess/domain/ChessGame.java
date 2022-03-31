@@ -5,7 +5,6 @@ import static chess.domain.piece.Direction.NORTH;
 import static chess.domain.piece.Direction.SOUTH;
 import static chess.domain.piece.Direction.pullDiagonalDirections;
 
-import chess.domain.GameStatus;
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.board.Result;
