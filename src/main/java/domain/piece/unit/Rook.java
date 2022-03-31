@@ -13,7 +13,7 @@ public final class Rook extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = upDownLeftRightDirections();
+        directions = List.of(EAST, WEST, SOUTH, NORTH);
     }
 
     public Rook(final Team team) {

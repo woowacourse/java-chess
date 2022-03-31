@@ -1,6 +1,6 @@
 package domain.piece.unit;
 
-import static domain.piece.property.Direction.allDirections;
+import static domain.piece.property.Direction.*;
 
 import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceFeature;
@@ -13,7 +13,7 @@ public final class Queen extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = allDirections();
+        directions = List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
 
     public Queen(final Team team) {

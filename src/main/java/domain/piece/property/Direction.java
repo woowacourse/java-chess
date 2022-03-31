@@ -1,7 +1,5 @@
 package domain.piece.property;
 
-import java.util.List;
-
 public enum Direction {
 
     EAST(1, 0),
@@ -29,35 +27,6 @@ public enum Direction {
     Direction(final int xPosition, final int yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-    }
-
-    public static List<Direction> upDownLeftRightDirections() {
-        return List.of(EAST, WEST, SOUTH, NORTH);
-    }
-
-    public static List<Direction> crossDirections() {
-        return List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
-    }
-
-    public static List<Direction> allDirections() {
-        return List.of(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
-    }
-
-    public static List<Direction> knightDirections() {
-        return List.of(EAST_NORTHEAST, EAST_SOUTHEAST, WEST_NORTHWEST, WEST_SOUTHWEST, NORTH_NORTHEAST, NORTH_NORTHWEST,
-                SOUTH_SOUTHEAST, SOUTH_SOUTHWEST);
-    }
-
-    public static List<Direction> whitePawnDirections() {
-        return List.of(NORTH, NORTHEAST, NORTHWEST, NORTH_NORTH);
-    }
-
-    public static List<Direction> blackPawnDirections() {
-        return List.of(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_SOUTH);
-    }
-
-    public static List<Direction> oneAndTwoSouthNorthDirections() {
-        return List.of(SOUTH, NORTH, SOUTH_SOUTH, NORTH_NORTH);
     }
 
     public int getXPosition() {

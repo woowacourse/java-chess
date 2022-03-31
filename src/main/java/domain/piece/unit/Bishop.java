@@ -13,7 +13,7 @@ public final class Bishop extends CommonMovablePiece {
     private static final List<Direction> directions;
 
     static {
-        directions = crossDirections();
+        directions = List.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
 
     public Bishop(final Team team) {

@@ -1,11 +1,12 @@
 package domain.piece.unit;
 
+import static domain.piece.property.Direction.*;
+
 import domain.piece.property.PieceInfo;
 import domain.piece.property.PieceFeature;
 import domain.piece.property.Team;
 import domain.position.Position;
 import domain.piece.property.Direction;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends SpecificMovablePiece {
@@ -19,10 +20,10 @@ public final class Pawn extends SpecificMovablePiece {
     public Pawn(final Team team) {
         super(new PieceInfo(team, PieceFeature.PAWN));
         if (team == Team.BLACK) {
-            directions = Direction.blackPawnDirections();
+            directions = List.of(SOUTH, SOUTHEAST, SOUTHWEST, SOUTH_SOUTH);
             return;
         }
-        directions = Direction.whitePawnDirections();
+        directions = List.of(NORTH, NORTHEAST, NORTHWEST, NORTH_NORTH);
     }
 
     @Override
@@ -55,7 +56,8 @@ public final class Pawn extends SpecificMovablePiece {
 
     @Override
     public boolean checkOneAndTwoSouthNorthDirections(Position target) {
-        return Direction.oneAndTwoSouthNorthDirections().stream()
+        List<Direction> directions = List.of(SOUTH, NORTH, SOUTH_SOUTH, NORTH_NORTH);
+        return directions.stream()
                 .anyMatch(direction -> direction == getDirection(target));
     }
 
