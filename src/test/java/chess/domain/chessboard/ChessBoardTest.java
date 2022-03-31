@@ -1,6 +1,5 @@
 package chess.domain.chessboard;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -12,7 +11,6 @@ import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -105,8 +103,8 @@ class ChessBoardTest {
 
         // then
         assertThatThrownBy(() -> chessBoard.move(Position.from("d5"), Position.from("d6")))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
     }
 
     @Test

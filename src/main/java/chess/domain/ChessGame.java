@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.controller.command.MoveResult;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;

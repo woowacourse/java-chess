@@ -4,6 +4,7 @@ import static chess.domain.position.Position.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.controller.command.MoveResult;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;

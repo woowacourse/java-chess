@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.Bishop;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;

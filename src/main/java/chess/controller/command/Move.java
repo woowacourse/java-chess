@@ -1,7 +1,6 @@
 package chess.controller.command;
 
 import chess.domain.ChessGame;
-import chess.domain.MoveResult;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 

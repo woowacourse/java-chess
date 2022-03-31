@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.MoveResult;
+import chess.controller.command.MoveResult;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
@@ -35,8 +35,7 @@ public class OutputView {
     public static void resolveResult(MoveResult result) {
         printChessBoard(result.getPieceByPosition());
         if (result.isKingDie()) {
-            final Score score = result.calculateScore();
-            printResult(score);
+            printResult(result.score());
         }
     }
 
@@ -63,13 +62,13 @@ public class OutputView {
         System.out.print(chessPiece.name());
     }
 
-    public static void printStatus(final Score score) {
-        System.out.println(STATUS_PREFIX);
+    public static void printResult(final Score score) {
+        System.out.println(RESULT_PREFIX);
         printTotalScore(score);
     }
 
-    public static void printResult(final Score score) {
-        System.out.println(RESULT_PREFIX);
+    public static void printStatus(final Score score) {
+        System.out.println(STATUS_PREFIX);
         printTotalScore(score);
     }
 

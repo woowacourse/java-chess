@@ -1,6 +1,6 @@
 package chess.domain.chessboard;
 
-import chess.domain.MoveResult;
+import chess.controller.command.MoveResult;
 import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;

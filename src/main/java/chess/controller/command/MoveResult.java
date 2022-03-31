@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.controller.command;
 
+import chess.domain.Score;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class MoveResult {
         return pieceByPosition;
     }
 
-    public Score calculateScore() {
+    public Score score() {
         return new Score(pieceByPosition);
     }
 }
