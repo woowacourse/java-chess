@@ -31,13 +31,14 @@ public final class Board {
 		final Piece piece = this.value.get(beforePosition);
 		validateMovable(beforePosition, afterPosition, piece);
 
-		flipTurnToOpponent();
 		if (isBlank(afterPosition)) {
 			piece.move(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+			flipTurnToOpponent();
 			return;
 		}
 		if (isCapturing(piece, afterPosition)) {
 			piece.capture(beforePosition, afterPosition, moveFunction(beforePosition, afterPosition));
+			flipTurnToOpponent();
 			return;
 		}
 		throw new IllegalArgumentException(SAME_COLOR_MOVE_EXCEPTION);
