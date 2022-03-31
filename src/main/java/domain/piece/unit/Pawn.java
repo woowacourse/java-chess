@@ -27,8 +27,22 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     @Override
+    public boolean availableMove(Position source, Position target, boolean isNullRoute, boolean isNullTarget) {
+        if (!availableMove(source, target)) {
+            return false;
+        }
+        if (checkOneAndTwoSouthNorthDirections(target)) {
+            validateBoardPositionIsNull(isNullTarget);
+            validateRouteIsNull(isNullRoute);
+            return true;
+        }
+        validatePawnAttack(isNullTarget);
+        return true;
+    }
+
+    @Override
     public boolean availableMove(final Position source, final Position target) {
-        this.directionalPositions = calculateAvailableDirectionalPositions(source);
+        calculateDirections(source);
         if (availableFirstStartPosition(source, target)) {
             return true;
         }
@@ -52,6 +66,24 @@ public final class Pawn extends SpecificMovablePiece {
         boolean checkWhiteTeam = checkSameTeam(Team.WHITE) && source.getYPosition() == START_WHITE_LINE;
 
         return checkBlackTeam || checkWhiteTeam;
+    }
+
+    private void validateBoardPositionIsNull(final boolean isNullTarget) {
+        if (isNullTarget != true) {
+            throw new IllegalArgumentException("[ERROR] Target에 다른 기물이 존재합니다.");
+        }
+    }
+
+    private void validateRouteIsNull(boolean isNullRoute) {
+        if (isNullRoute != true) {
+            throw new IllegalArgumentException("[ERROR] 경로에 다른 기물이 존재합니다.");
+        }
+    }
+
+    private void validatePawnAttack(final boolean isNullTarget) {
+        if (isNullTarget != false) {
+            throw new IllegalArgumentException("[ERROR] 선택한 위치에 상대 기물이 없습니다.");
+        }
     }
 
     @Override

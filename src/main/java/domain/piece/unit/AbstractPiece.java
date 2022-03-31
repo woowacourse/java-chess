@@ -30,9 +30,15 @@ public abstract class AbstractPiece implements Piece {
         return pieceInfo.checkSameTeam(team);
     }
 
+    @Override
     public boolean availableMove(final Position source, final Position target) {
         this.directionalPositions = calculateAvailableDirectionalPositions(source);
         return containsPosition(target);
+    }
+
+    @Override
+    public boolean availableMove(Position source, Position target, boolean isNullRoute, boolean isTarget) {
+        return false;
     }
 
     protected Map<Direction, List<Position>> calculateAvailableDirectionalPositions(final Position source) {
@@ -66,7 +72,6 @@ public abstract class AbstractPiece implements Piece {
     public List<Position> calculateRoute(final Position source, final Position target) {
         List<Position> routePositions = new ArrayList<>();
         Direction direction = getDirection(target);
-        routePositions.add(target);
         final Position wayPoint = Position.of(
                 XPosition.of(source.getXPosition() + direction.getXPosition() / 2),
                 YPosition.of(source.getYPosition() + direction.getYPosition() / 2)
@@ -75,6 +80,11 @@ public abstract class AbstractPiece implements Piece {
             routePositions.add(wayPoint);
         }
         return routePositions;
+    }
+
+    @Override
+    public void calculateDirections(Position source) {
+        this.directionalPositions = calculateAvailableDirectionalPositions(source);
     }
 
     @Override

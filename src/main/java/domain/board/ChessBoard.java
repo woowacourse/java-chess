@@ -51,40 +51,26 @@ public final class ChessBoard {
     }
 
     private void movePawn(final Position source, final Position target) {
+        board.get(source).calculateDirections(source);
         validateMovePawn(source, target);
         movePiece(source, target);
     }
 
     private void validateMovePawn(final Position source, final Position target) {
         Piece piece = board.get(source);
-        if (!piece.availableMove(source, target)) {
+        boolean isNullTarget = board.get(target) == null;
+        boolean isNullRoute = checkRouteNull(source, target);
+        if (!piece.availableMove(source, target, isNullRoute, isNullTarget)) {
             throw new IllegalArgumentException("[ERROR] 선택한 위치로 이동할 수 없습니다.");
         }
-        if (piece.checkOneAndTwoSouthNorthDirections(target)) {
-            validateBoardPositionIsNull(target);
-            validateRouteNullForPawn(source, target);
-            return;
-        }
-        validatePawnAttack(target);
     }
 
-    private void validateBoardPositionIsNull(final Position position) {
-        if (board.get(position) != null) {
-            throw new IllegalArgumentException("[ERROR] 다른 기물이 존재합니다.");
-        }
-    }
-
-    private void validateRouteNullForPawn(final Position source, final Position target) {
+    private boolean checkRouteNull(final Position source, final Position target) {
         final List<Position> routePositions = board.get(source).calculateRoute(source, target);
-        for (Position position : routePositions) {
-            validateWayPointNull(position);
+        if (routePositions.size() == 0) {
+            return true;
         }
-    }
-
-    private void validatePawnAttack(final Position target) {
-        if (board.get(target) == null) {
-            throw new IllegalArgumentException("[ERROR] 선택한 위치에 상대 기물이 없습니다.");
-        }
+        return !routePositions.stream().anyMatch(position -> board.get(position) != null);
     }
 
     private void validateRoute(final Position source, final Position target) {
