@@ -39,7 +39,7 @@ public class BoardTest {
     @Test
     @DisplayName("Pawn을 제외한 특정 색의 기물을 모두 반환한다.")
     void countPawn() {
-        assertThat(board.toPieceListWithoutPawn(Color.WHITE).size()).isEqualTo(8);
+        assertThat(board.findPieceNotPawn(Color.WHITE).size()).isEqualTo(8);
     }
 
     @Test
@@ -50,6 +50,6 @@ public class BoardTest {
         board.move(Position.create("a5"), Position.create("a6"));
         board.move(Position.create("a6"), Position.create("b7"));
 
-        assertThat(board.toPawnListOnSameColumn(Color.WHITE, Column.B).size()).isEqualTo(2);
+        assertThat(board.findPawnOnSameColumn(Color.WHITE, Column.B).size()).isEqualTo(2);
     }
 }

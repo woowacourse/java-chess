@@ -137,7 +137,7 @@ public class Board {
         board.put(from, new EmptyPiece());
     }
 
-    public List<Piece> toPieceListWithoutPawn(final Color color) {
+    public List<Piece> findPieceNotPawn(final Color color) {
         return board.values()
                 .stream()
                 .filter(piece -> piece.isSameColor(color))
@@ -145,14 +145,14 @@ public class Board {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Piece> toPawnListOnSameColumn(final Color color, final Column column) {
-        return toPieceListOnSameColumn(column).stream()
+    public List<Piece> findPawnOnSameColumn(final Color color, final Column column) {
+        return findPieceOnSameColumn(column).stream()
                 .filter(piece -> piece.isSameColor(color))
                 .filter(Piece::isPawn)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Piece> toPieceListOnSameColumn(final Column column) {
+    private List<Piece> findPieceOnSameColumn(final Column column) {
         return board.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isSameColumn(column))

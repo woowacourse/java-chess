@@ -26,7 +26,7 @@ public class Score {
     }
 
     private double calculateScoreWithoutPawn(final Board board, final Color color) {
-        return board.toPieceListWithoutPawn(color)
+        return board.findPieceNotPawn(color)
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
@@ -34,7 +34,7 @@ public class Score {
 
     private double calculateScorePawn(final Board board, final Color color) {
         return Arrays.stream(Column.values())
-                .map(column -> board.toPawnListOnSameColumn(color, column))
+                .map(column -> board.findPawnOnSameColumn(color, column))
                 .map(this::calculateScorePawnOnSameColumn)
                 .mapToDouble(this::decidePawnScoreRule)
                 .sum();
