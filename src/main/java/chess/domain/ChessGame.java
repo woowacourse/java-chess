@@ -17,6 +17,8 @@ public class ChessGame {
     }
 
     public void run() {
+        OutputView.printStartMessage();
+
         while (!isEnd()) {
             final String command = InputView.inputCommand();
             executeCommand(command);
