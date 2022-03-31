@@ -49,7 +49,8 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     }
 
     public Map<Position, Piece> createPiecesWithPawn() {
-        final Map<Position, Piece> pieces = new HashMap<>(fillRowWith(Row.SECOND, Color.WHITE));
+        final Map<Position, Piece> pieces = new HashMap<>();
+        pieces.putAll(fillRowWith(Row.SECOND, Color.WHITE));
         pieces.putAll(fillRowWith(Row.SEVENTH, Color.BLACK));
         return pieces;
     }
