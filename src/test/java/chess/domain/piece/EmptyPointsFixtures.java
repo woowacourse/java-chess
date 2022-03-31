@@ -33,6 +33,4 @@ public class EmptyPointsFixtures {
         }
         return new EmptyPoints(all);
     }
-
-    // public static List<Point> except(List<String> )
 }
