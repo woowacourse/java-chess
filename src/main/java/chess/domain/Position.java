@@ -28,7 +28,7 @@ public final class Position {
     }
 
     private static String makeKey(final File fileValue, final Rank rankValue) {
-        return fileValue.toString() + rankValue.getValue();
+        return fileValue.toString().toLowerCase() + rankValue.getValue();
     }
 
     public static Position valueOf(final String key) {

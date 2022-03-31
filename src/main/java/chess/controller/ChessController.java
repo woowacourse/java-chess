@@ -28,7 +28,6 @@ public class ChessController {
         InputOption option = dto.getInputOption();
         if (option == InputOption.START) {
             return initBoard(chessGame);
-
         }
         if (option == InputOption.MOVE) {
             return move(chessGame, dto.getFromPosition(), dto.getToPosition());
