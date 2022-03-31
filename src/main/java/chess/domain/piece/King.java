@@ -7,8 +7,6 @@ import chess.domain.position.Position;
 
 public class King extends Piece {
 
-	private static final String INVALID_DISTANCE_KING = "King이 갈 수 없는 거리입니다.";
-
 	private static final double KING_SCORE = 0;
 	private static final int KING_MAX_DISTANCE = 1;
 
@@ -31,12 +29,19 @@ public class King extends Piece {
 	}
 
 	@Override
-	public Direction checkMovableRange(Position from, Position to) {
-		Direction direction = directionStrategy.find(from, to);
-		if (from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE)) {
-			return direction;
+	public Direction getMovableDirection(Position from, Position to) {
+		return directionStrategy.find(from, to);
+	}
+
+	@Override
+	public boolean isMovable(Position from, Position to) {
+		Direction direction;
+		try {
+			direction = getMovableDirection(from, to);
+		} catch (IllegalArgumentException exception) {
+			return false;
 		}
-		throw new IllegalArgumentException(INVALID_DISTANCE_KING);
+		return from.canReach(to, direction.getUnitPosition(), KING_MAX_DISTANCE);
 	}
 
 	@Override

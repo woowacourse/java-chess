@@ -28,7 +28,7 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public Direction checkMovableRange(Position from, Position to) {
+	public Direction getMovableDirection(Position from, Position to) {
 		return directionStrategy.find(from, to);
 	}
 

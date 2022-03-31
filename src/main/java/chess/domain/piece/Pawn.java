@@ -8,7 +8,6 @@ import chess.domain.position.Position;
 
 public class Pawn extends Piece {
 
-	private static final String INVALID_DISTANCE_PAWN = "Pawn이 갈 수 없는 거리입니다.";
 	private static final double PAWN_SCORE = 1.0;
 
 	private static final int BLACK_PAWN_INITIAL_ROW = 7;
@@ -36,12 +35,22 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public Direction checkMovableRange(Position from, Position to) {
-		Direction direction = directionStrategy.find(from, to);
-		if (checkFirstMove(from, to, direction) || checkMove(from, to, direction)) {
-			return direction;
+	public Direction getMovableDirection(Position from, Position to) {
+		return directionStrategy.find(from, to);
+	}
+
+	@Override
+	public boolean isMovable(Position from, Position to) {
+		Direction direction;
+		try {
+			direction = getMovableDirection(from, to);
+		} catch (IllegalArgumentException exception) {
+			return false;
 		}
-		throw new IllegalArgumentException(INVALID_DISTANCE_PAWN);
+		if (!checkFirstMove(from, to, direction) && !checkMove(from, to, direction)) {
+			return false;
+		}
+		return !getMovableDirection(from, to).isDiagonal();
 	}
 
 	private boolean checkFirstMove(Position from, Position to, Direction direction) {
@@ -58,13 +67,9 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean isMovable(Position from, Position to) {
-		return !checkMovableRange(from, to).isDiagonal();
-	}
-
-	@Override
 	public boolean isMovable(Position from, Position to, Piece target) {
-		return !this.isSameColor(target) && checkMovableRange(from, to).isDiagonal();
+		isMovable(from, to);
+		return !this.isSameColor(target) && getMovableDirection(from, to).isDiagonal();
 	}
 
 	@Override

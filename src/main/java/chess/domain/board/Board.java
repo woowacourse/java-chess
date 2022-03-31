@@ -45,9 +45,9 @@ public class Board {
 
 	public void movePiece(Position from, Position to) {
 		Piece fromPiece = getPieceByPosition(from);
-		Direction direction = fromPiece.checkMovableRange(from, to);
-		validatePassable(from, to, direction);
+		Direction direction = fromPiece.getMovableDirection(from, to);
 		validateMovableToTarget(from, to, fromPiece);
+		validatePassable(from, to, direction);
 
 		move(from, to, fromPiece);
 	}

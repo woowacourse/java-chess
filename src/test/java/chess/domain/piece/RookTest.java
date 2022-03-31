@@ -18,7 +18,7 @@ public class RookTest {
 	@CsvSource(value = {"1:4", "8:4", "6:4"}, delimiter = ':')
 	@DisplayName("Rook을 이동시킨다.")
 	void moveRook(int row, int column) {
-		Direction direction = rook.checkMovableRange(
+		Direction direction = rook.getMovableDirection(
 			new Position(4, 4),
 			new Position(row, column));
 		assertThat(direction).isInstanceOf(BasicDirection.class);
@@ -28,7 +28,7 @@ public class RookTest {
 	@CsvSource(value = {"2:3", "3:5"}, delimiter = ':')
 	@DisplayName("Rook은 대각선으로 이동할 수 없다.")
 	void moveRookInvalid(int row, int column) {
-		assertThatThrownBy(() -> rook.checkMovableRange(
+		assertThatThrownBy(() -> rook.getMovableDirection(
 			new Position(4, 4),
 			new Position(row, column))
 		).isInstanceOf(IllegalArgumentException.class);

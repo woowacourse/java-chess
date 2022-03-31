@@ -13,7 +13,7 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	public abstract Direction checkMovableRange(Position from, Position to);
+	public abstract Direction getMovableDirection(Position from, Position to);
 
 	public boolean isSameColor(Piece piece) {
 		return this.color == piece.color;
@@ -35,7 +35,7 @@ public abstract class Piece {
 
 	public boolean isMovable(Position from, Position to) {
 		try {
-			checkMovableRange(from, to);
+			getMovableDirection(from, to);
 			return true;
 		} catch (IllegalArgumentException exception) {
 			return false;
