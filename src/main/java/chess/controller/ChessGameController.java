@@ -11,8 +11,6 @@ public class ChessGameController {
 
 	private final InputView inputView;
 	private final OutputView outputView;
-	
-	private boolean endSystem = false;
 
 	public ChessGameController(InputView inputView, OutputView outputView) {
 		this.inputView = inputView;
@@ -27,13 +25,11 @@ public class ChessGameController {
 	}
 
 	private void play(final ChessGame chessGame) {
-		List<String> commandInput;
-		Command command;
 		try {
-			commandInput = inputView.inputCommand();
-			command = Command.from(commandInput.get(0));
-			executeCommand(chessGame, command, commandInput);
-			if (isEndSystem()) {
+			final List<String> commandInput = inputView.inputCommand();
+			final Command command = Command.from(commandInput.get(0));
+			executeCommandWithoutEnd(chessGame, command, commandInput);
+			if (isEndSystem(chessGame, command)) {
 				return;
 			}
 			play(chessGame);
@@ -43,19 +39,12 @@ public class ChessGameController {
 		}
 	}
 
-	private boolean isEndSystem() {
-		return endSystem;
-	}
-
-	private void executeCommand(final ChessGame chessGame, final Command command, final List<String> commandInput) {
+	private void executeCommandWithoutEnd(final ChessGame chessGame, final Command command, final List<String> commandInput) {
 		if (command == Command.START) {
 			executeStartCommand(chessGame);
 		}
 		if (command == Command.MOVE) {
 			executeMoveCommand(chessGame, commandInput);
-		}
-		if (command == Command.END) {
-			executeEndCommand(chessGame);
 		}
 		if (command == Command.STATUS) {
 			executeStatusCommand(chessGame);
@@ -80,16 +69,20 @@ public class ChessGameController {
 		outputView.printBoard(chessGame.getBoard().getValue());
 	}
 
-	private void executeEndCommand(final ChessGame chessGame) {
-		changeEndSystemAtNotRunning(chessGame);
-		chessGame.end();
-		printResult(chessGame);
+	private boolean isEndSystem(final ChessGame chessGame, final Command command) {
+		if (command == Command.END) {
+			return executeEndCommand(chessGame);
+		}
+		return false;
 	}
 
-	private void changeEndSystemAtNotRunning(final ChessGame chessGame) {
+	private boolean executeEndCommand(final ChessGame chessGame) {
 		if (!chessGame.isRunning()) {
-			endSystem = true;
+			return true;
 		}
+		chessGame.end();
+		printResult(chessGame);
+		return false;
 	}
 
 	private void executeStatusCommand(final ChessGame chessGame) {
