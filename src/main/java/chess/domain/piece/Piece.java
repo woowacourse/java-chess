@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.game.state.ChessBoard;
 import chess.domain.game.state.position.Position;
 import chess.domain.piece.property.Color;
 import chess.domain.piece.property.PieceProperty;
@@ -26,7 +26,7 @@ public abstract class Piece extends Named{
                 .collect(Collectors.toList()));
     }
 
-    public List<Position> findMovablePositions(Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(Position source, Map<Position, Piece> board) {
         return state.findMovablePositions(source, board);
     }
 

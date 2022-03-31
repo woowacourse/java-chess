@@ -2,11 +2,12 @@ package chess.domain.piece.state.started;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.game.state.ChessBoard;
 import chess.domain.game.state.position.Direction;
 import chess.domain.game.state.position.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.state.PieceState;
 
 public class StartedPawn extends Started {
@@ -18,11 +19,11 @@ public class StartedPawn extends Started {
     }
 
     @Override
-    public List<Position> findMovablePositions(Position source, ChessBoard board) {
+    public List<Position> findMovablePositions(Position source, Map<Position, Piece> board) {
         List<Position> positions = new ArrayList<>();
         Position next = source.findNext(forward);
 
-        if (board.canOnlyMoveByOneStep(source, forward)) {
+        if (canOnlyMoveByOneStep(board, source, forward)) {
             positions.add(next);
         }
 
@@ -35,12 +36,12 @@ public class StartedPawn extends Started {
         return positions;
     }
 
-    public List<Position> getKillablePositions(Position source, ChessBoard board) {
+    public List<Position> getKillablePositions(Position source, Map<Position, Piece> board) {
         return Direction.leftRight()
             .stream()
             .map(source::findNext)
             .map(position -> position.findNext(forward))
-            .filter(direction -> board.canKill(source, direction))
+            .filter(direction -> canKill(board, source, direction))
             .collect(Collectors.toList());
     }
 
@@ -49,8 +50,8 @@ public class StartedPawn extends Started {
         return new MovedPawn(forward);
     }
 
-    private boolean canOnlyMoveByTwoStep(Position source, ChessBoard board, Direction direction) {
+    private boolean canOnlyMoveByTwoStep(Position source, Map<Position, Piece> board, Direction direction) {
         Position next = source.findNext(direction);
-        return board.canOnlyMoveByOneStep(source, forward) && board.canOnlyMoveByOneStep(next, forward);
+        return canOnlyMoveByOneStep(board, source, forward) && canOnlyMoveByOneStep(board, next, forward);
     }
 }

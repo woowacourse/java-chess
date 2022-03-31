@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.game.state.position.Direction;
 import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
 import chess.domain.game.state.position.Rank;
@@ -49,7 +48,7 @@ public class ChessBoard {
 
     private boolean canMove(Position source, Position target) {
         Piece piece = getPiece(source);
-        List<Position> movablePositions = piece.findMovablePositions(source, this);
+        List<Position> movablePositions = piece.findMovablePositions(source, board);
 
         return movablePositions.contains(target);
     }
@@ -68,35 +67,6 @@ public class ChessBoard {
     private void changePosition(Position source, Position target) {
         board.put(target, getPiece(source));
         board.remove(source);
-    }
-
-    public boolean canMoveOrKillByOneStep(Position source, Direction direction) {
-        Position target = source.findNext(direction);
-        if (source.isBlocked(direction)) {
-            return false;
-        }
-
-        return !isFilled(target) || canKill(source, target);
-    }
-
-    public boolean canOnlyMoveByOneStep(Position source, Direction direction) {
-        Position target = source.findNext(direction);
-        if (source.isBlocked(direction)) {
-            return false;
-        }
-
-        return !isFilled(target);
-    }
-
-    public boolean isFilled(Position target) {
-        return board.containsKey(target);
-    }
-
-    public boolean canKill(Position source, Position target) {
-        Piece sourcePiece = getPiece(source);
-        Piece targetPiece = getPiece(target);
-
-        return isFilled(target) && !sourcePiece.isSameColor(targetPiece);
     }
 
     public void putPiece(Position position, Piece piece) {

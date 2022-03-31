@@ -2,12 +2,13 @@ package chess.domain.piece.state.started;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.game.state.ChessBoard;
 import chess.domain.game.state.position.Direction;
 import chess.domain.game.state.position.File;
 import chess.domain.game.state.position.Position;
@@ -20,7 +21,7 @@ import chess.domain.piece.state.PieceState;
 
 class StartedPawnTest {
 
-    private ChessBoard board;
+    private Map<Position, Piece> board;
     private Position source;
     private Piece sourcePiece;
 
@@ -42,7 +43,7 @@ class StartedPawnTest {
     @DisplayName("현재 상태에서 가능한 Positions 을 가져와야 한다.")
     void findMovablePositions() {
         initBoard();
-        List<Position> positions = sourcePiece.findMovablePositions(source, board);;
+        List<Position> positions = sourcePiece.findMovablePositions(source, board);
         assertThat(positions)
             .hasSize(4)
             .contains(
@@ -54,13 +55,12 @@ class StartedPawnTest {
     }
 
     void initBoard() {
-        board = new ChessBoard();
+        board = new HashMap<>();
         source = Position.of(File.d, Rank.Four);
         sourcePiece = new Pawn(Color.White);
 
-        board.putPiece(source, sourcePiece);
-
-        board.putPiece(Position.of(File.c, Rank.Five), new Pawn(Color.Black));
-        board.putPiece(Position.of(File.e, Rank.Five), new Pawn(Color.Black));
+        board.put(source, sourcePiece);
+        board.put(Position.of(File.c, Rank.Five), new Pawn(Color.Black));
+        board.put(Position.of(File.e, Rank.Five), new Pawn(Color.Black));
     }
 }
