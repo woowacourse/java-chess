@@ -1,11 +1,10 @@
 package chess.controller.menu;
 
-import chess.domain.board.Board;
+import chess.controller.ChessController;
 
 public class End implements Menu {
-
     @Override
-    public boolean play(Board board) {
-        return false;
+    public void play(ChessController chessController) {
+        chessController.makeEnd();
     }
 }

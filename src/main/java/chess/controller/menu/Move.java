@@ -1,6 +1,6 @@
 package chess.controller.menu;
 
-import chess.domain.board.Board;
+import chess.controller.ChessController;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 
@@ -15,17 +15,15 @@ public class Move implements Menu {
     }
 
     @Override
-    public boolean play(Board board) {
-        if (board.isEmpty()) {
+    public void play(ChessController controller) {
+        if (controller.isReady()) {
             OutputView.printMessage("체스 게임을 시작해야 합니다.");
-            return true;
+            return;
         }
         try {
-            board.move(before, after);
-            OutputView.printBoard(board.getBoard());
+            controller.move(before, after);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-        return true;
     }
 }

@@ -14,11 +14,14 @@ public class Result {
     private static final int DUPLICATION_REMOVE_VALUE = 2;
 
     private final Map<Team, Double> value = new HashMap<>();
+    private final List<Team> winnerResult;
 
     public Result(Map<Position, Piece> board) {
         for (Team team : Team.values()) {
             value.put(team, calculateResult(board, team) + calculatePawnScore(board, team));
         }
+
+        winnerResult = findWinTeam();
     }
 
     private double calculateResult(Map<Position, Piece> board, Team team) {
@@ -54,5 +57,9 @@ public class Result {
 
     public Map<Team, Double> getValue() {
         return value;
+    }
+
+    public List<Team> getWinnerResult() {
+        return winnerResult;
     }
 }

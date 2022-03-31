@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.board.Result;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Column;
@@ -46,7 +47,10 @@ public class OutputView {
         System.out.print(".");
     }
 
-    public static void printStatus(Map<Team, Double> status, List<Team> winnerResult) {
+    public static void printStatus(Result result) {
+        Map<Team, Double> status = result.getValue();
+        List<Team> winnerResult = result.getWinnerResult();
+
         for (Entry<Team, Double> value : status.entrySet()) {
             System.out.printf(value.getKey() + " : " + value.getValue() + "점%n");
         }
