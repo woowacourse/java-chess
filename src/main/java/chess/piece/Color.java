@@ -11,7 +11,7 @@ public enum Color {
         return this == color;
     }
 
-    public Color revers() {
+    public Color reverse() {
         if (this == BLACK) {
             return WHITE;
         }
