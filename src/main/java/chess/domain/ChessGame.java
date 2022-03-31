@@ -5,7 +5,6 @@ import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.utils.PositionParser;
 
 import java.util.List;
 
@@ -13,8 +12,8 @@ public class ChessGame {
 
     private static final String COMMAND_DELIMITER = " ";
     private static final String LOCATION_DELIMITER = "";
-    private static final int ROW = 0;
-    private static final int COLUMN = 1;
+    private static final int ROW = 1;
+    private static final int COLUMN = 0;
     private static final int SOURCE = 1;
     private static final int TARGET = 2;
 
@@ -33,9 +32,7 @@ public class ChessGame {
         String[] source = moveInfo.get(SOURCE).split(LOCATION_DELIMITER);
         String[] target = moveInfo.get(TARGET).split(LOCATION_DELIMITER);
 
-        Position parsedSource = PositionParser.parse(source[ROW], source[COLUMN]);
-        Position parsedTarget = PositionParser.parse(target[ROW], target[COLUMN]);
-        state = state.move(parsedSource, parsedTarget);
+        state = state.move(Position.of(source[ROW], source[COLUMN]), Position.of(target[ROW], target[COLUMN]));
     }
 
     public void end() {

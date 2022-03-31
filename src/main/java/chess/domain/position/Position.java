@@ -19,6 +19,10 @@ public class Position {
         this.column = column;
     }
 
+    public static Position of(String rank, String file) {
+        return new Position(Rank.findRow(rank), File.findColumn(file));
+    }
+
     public boolean isFirstPosition(Color color) {
         if (color == Color.WHITE) {
             return row == WHITE_FIRST_POSITION;
@@ -27,6 +31,14 @@ public class Position {
             return row == BLACK_FIRST_POSITION;
         }
         return false;
+    }
+
+    public boolean isRow(int row) {
+        return this.row == row;
+    }
+
+    public boolean isColumn(int column) {
+        return this.column == column;
     }
 
     public boolean isSameRow(Position position) {
@@ -56,6 +68,7 @@ public class Position {
     public Position findPossiblePosition(Direction direction) {
         return new Position(direction.moveRow(row), direction.moveColumn(column));
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

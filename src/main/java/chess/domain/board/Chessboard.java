@@ -31,12 +31,7 @@ public class Chessboard {
     }
 
     private Chessboard() {
-        board = new LinkedHashMap<>();
-        Map<String, Piece> pieces = PieceCache.create();
-        Map<String, Position> positions = PositionCache.create();
-        for (String position : positions.keySet()) {
-            board.put(positions.get(position), pieces.get(position));
-        }
+        this.board = BoardCache.create();
     }
 
     public static Chessboard emptyChessboard() {
@@ -143,8 +138,9 @@ public class Chessboard {
 
     private long countSameColumnPawn(int column, Color color) {
         long count = SIZE.stream()
-                .filter(num -> board.get(new Position(num, column)).isColor(color)
-                        && board.get(new Position(num, column)).isSameType(Type.PAWN)).count();
+                .filter(row -> board.get(BoardCache.findPosition(row, column)).isColor(color)
+                        && board.get(BoardCache.findPosition(row, column)).isSameType(Type.PAWN))
+                .count();
         if (count < DUPLICATE) {
             return 0;
         }

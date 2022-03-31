@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Chessboard;
-import chess.domain.board.PositionCache;
+import chess.domain.board.BoardCache;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -33,7 +33,7 @@ public class OutputView {
 
     private static void printPiece(Map<Position, Piece> board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
-            System.out.print(board.get(PositionCache.of(row, column)).getSymbolByColor());
+            System.out.print(board.get(BoardCache.findPosition(row, column)).getSymbolByColor());
         }
     }
 
