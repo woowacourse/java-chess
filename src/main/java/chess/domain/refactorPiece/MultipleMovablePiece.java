@@ -6,28 +6,17 @@ import chess.domain.refactorBoard.Direction;
 import chess.domain.refactorPosition.Position;
 import java.util.List;
 
-public abstract class MultipleMovablePiece implements Piece {
+public abstract class MultipleMovablePiece extends Piece {
 
-    private final Color color;
-    private final String name;
-    private final List<Direction> directions;
+    private List<Direction> directions;
 
     MultipleMovablePiece(Color color, String name, List<Direction> directions) {
-        this.color = color;
-        this.name = name;
+        super(color, name);
         this.directions = directions;
     }
 
     @Override
-    public Piece move(Position from, Position to, ChessBoard chessBoard) {
-        if (!isMovable(from, to, chessBoard)) {
-            throw new IllegalArgumentException("움직일 수 없는 이동입니다.");
-        }
-
-        return this;
-    }
-
-    private boolean isMovable(Position from, Position to, ChessBoard chessBoard) {
+    public boolean isMovable(Position from, Position to, ChessBoard chessBoard) {
         final List<Position> route = calculateRoute(from, to);
         return isEmptyRouteWithToPosition(to, route, chessBoard);
     }
