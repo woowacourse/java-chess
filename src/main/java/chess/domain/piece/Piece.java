@@ -20,9 +20,7 @@ public abstract class Piece {
         return name;
     }
 
-    public abstract boolean isRightMovement(final Position from,
-                                            final Position to,
-                                            final boolean isEmptyTarget);
+    public abstract boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget);
 
     public abstract double getScore();
 

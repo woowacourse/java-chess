@@ -12,9 +12,7 @@ public final class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isRightMovement(final Position from,
-                                   final Position to,
-                                   final boolean isEmptyTarget) {
+    public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         return false;
     }
 

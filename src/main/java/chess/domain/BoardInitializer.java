@@ -41,9 +41,7 @@ public class BoardInitializer {
         putPiecesWithoutPawn(board, Row.ONE, Color.WHITE);
     }
 
-    private static void putPiecesWithoutPawn(final Map<Position, Piece> board,
-                                             final Row row,
-                                             final Color color) {
+    private static void putPiecesWithoutPawn(final Map<Position, Piece> board, final Row row, final Color color) {
         board.put(new Position(Column.A, row), new RookPiece(color));
         board.put(new Position(Column.B, row), new KnightPiece(color));
         board.put(new Position(Column.C, row), new BishopPiece(color));
@@ -54,9 +52,7 @@ public class BoardInitializer {
         board.put(new Position(Column.H, row), new RookPiece(color));
     }
 
-    private static void putPiecesOnRow(final Map<Position, Piece> board,
-                                        final Row row,
-                                        final Piece piece) {
+    private static void putPiecesOnRow(final Map<Position, Piece> board, final Row row, final Piece piece) {
         for (Column column : Column.values()) {
             board.put(new Position(column, row), piece);
         }

@@ -20,9 +20,7 @@ public class Board {
         this.board = board;
     }
 
-    public void isMovable(final Position from,
-                          final Position to,
-                          final Color turn) {
+    public void isMovable(final Position from, final Position to, final Color turn) {
         final Piece source = board.get(from);
         final Piece target = board.get(to);
 
@@ -52,10 +50,7 @@ public class Board {
         }
     }
 
-    private void checkMovement(final Position from,
-                               final Position to,
-                               final Piece source,
-                               final Piece target) {
+    private void checkMovement(final Position from, final Position to, final Piece source, final Piece target) {
         if (!source.isRightMovement(from, to, target.equals(new EmptyPiece()))) {
             throw new IllegalStateException("[ERROR] 행마법에 맞지 않는 이동입니다.");
         }
@@ -67,9 +62,7 @@ public class Board {
         }
     }
 
-    private void checkBlocked(final Position from,
-                              final Position to,
-                              final Piece source) {
+    private void checkBlocked(final Position from, final Position to, final Piece source) {
         if (!source.isJumpable() && isBlocked(from, to)) {
             throw new IllegalStateException("[ERROR] 이동 경로에 기물이 있어 이동할 수 없습니다.");
         }

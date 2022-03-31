@@ -15,9 +15,7 @@ public class PawnPiece extends Piece {
     }
 
     @Override
-    public boolean isRightMovement(final Position from,
-                                   final Position to,
-                                   final boolean isEmptyTarget) {
+    public boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget) {
         final int columnDistance = to.calculateColumnDistance(from);
         final int rowDistance = to.calculateRowDistance(from);
 
@@ -28,9 +26,7 @@ public class PawnPiece extends Piece {
                 isDiagonalMove(direction, isEmptyTarget, rowDistance, columnDistance);
     }
 
-    private boolean isInitialForwardMove(final Direction direction,
-                                         final boolean isEmptyTarget,
-                                         final Position from,
+    private boolean isInitialForwardMove(final Direction direction, final boolean isEmptyTarget, final Position from,
                                          final int rowDistance) {
         return isEmptyTarget && ((super.isSameColor(Color.BLACK) && from.isSameRow(Row.SEVEN) &&
                 direction == Direction.SOUTH && Math.abs(rowDistance) <= LIMIT_DISTANCE) ||
@@ -38,9 +34,7 @@ public class PawnPiece extends Piece {
                         direction == Direction.NORTH && Math.abs(rowDistance) <= LIMIT_DISTANCE));
     }
 
-    private boolean isForwardMove(final Direction direction,
-                                  final Boolean isEmptyTarget,
-                                  final int rowDistance) {
+    private boolean isForwardMove(final Direction direction, final Boolean isEmptyTarget, final int rowDistance) {
         return isForward(direction) && isEmptyTarget && Math.abs(rowDistance) < LIMIT_DISTANCE;
     }
 
@@ -49,9 +43,7 @@ public class PawnPiece extends Piece {
                 (super.isSameColor(Color.BLACK) && direction == Direction.SOUTH);
     }
 
-    private boolean isDiagonalMove(final Direction direction,
-                                   final boolean isEmptyTarget,
-                                   final int rowDistance,
+    private boolean isDiagonalMove(final Direction direction, final boolean isEmptyTarget, final int rowDistance,
                                    final int fileDistance) {
         return isDiagonal(direction) && !isEmptyTarget && Math.abs(fileDistance) < LIMIT_DISTANCE
                 && Math.abs(rowDistance) < LIMIT_DISTANCE;

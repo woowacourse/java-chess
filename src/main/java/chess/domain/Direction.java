@@ -39,9 +39,7 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 이동할 수 없는 방향입니다."));
     }
 
-    private static boolean isSameDirection(final Direction direction,
-                                           final int columDistance,
-                                           final int rowDistance) {
+    private static boolean isSameDirection(final Direction direction, final int columDistance, final int rowDistance) {
         return Math.atan2(direction.rowDistance, direction.columnDistance) == Math.atan2(rowDistance, columDistance);
     }
 

@@ -23,8 +23,7 @@ public enum Command {
     private final String command;
     private final BiConsumer<ChessGame, List<String>> execute;
 
-    Command(final String command,
-            final BiConsumer<ChessGame, List<String>> execute) {
+    Command(final String command, final BiConsumer<ChessGame, List<String>> execute) {
         this.command = command;
         this.execute = execute;
     }

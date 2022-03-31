@@ -10,6 +10,10 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> requestCommands() {
-        return new ArrayList<>(List.of(scanner.nextLine().split(BLANK)));
+        return split(scanner.next(), BLANK);
+    }
+
+    public static List<String> split(final String input, final String regex) {
+        return new ArrayList<>(List.of(input.split(regex)));
     }
 }
