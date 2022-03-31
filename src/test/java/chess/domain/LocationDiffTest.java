@@ -35,9 +35,30 @@ class LocationDiffTest {
                 Arguments.arguments(0, 3, Direction.U),
                 Arguments.arguments(0, -2, Direction.D),
                 Arguments.arguments(0, -1, Direction.D),
-                Arguments.arguments(1, 1, Direction.UR),
+                Arguments.arguments(1, 0, Direction.R),
                 Arguments.arguments(3, 3, Direction.UR),
                 Arguments.arguments(-2, -2, Direction.DL)
         );
     }
+
+    @ParameterizedTest
+    @DisplayName("방향에 해당하는 단위 벡터를 반환")
+    @MethodSource("distanceParameter")
+    void computeDistance(int x, int y, int distance) {
+        LocationDiff locationDiff = new LocationDiff(x, y);
+        assertThat(locationDiff.computeDistance()).isEqualTo(distance);
+    }
+
+    public static Stream<Arguments> distanceParameter() {
+        return Stream.of(
+                Arguments.arguments(0, 1, 1),
+                Arguments.arguments(0, 3, 3),
+                Arguments.arguments(0, -2, 2),
+                Arguments.arguments(0, -1, 1),
+                Arguments.arguments(1, 0, 1),
+                Arguments.arguments(3, 3, 3),
+                Arguments.arguments(-2, -2, 2)
+        );
+    }
+
 }

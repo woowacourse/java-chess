@@ -51,4 +51,22 @@ class PawnTest {
                 Arguments.arguments(2, 2, false)
         );
     }
+
+    @Test
+    @DisplayName("클래스 타입을 비교하는 메서드와 다형성을 이용한 메서드의 시간차이 계산")
+    void instanceOfTest() {
+        Pawn pawn = new Pawn(Team.BLACK);
+        long start = 0;
+        long end = 0;
+
+        start = System.nanoTime();
+        assertThat(pawn instanceof Pawn);
+        end = System.nanoTime();
+        System.out.println("instanceOf = " + (end - start));
+
+        start = System.nanoTime();
+        assertThat(pawn.isPawn());
+        end = System.nanoTime();
+        System.out.println("isPawn = " + (end - start));
+    }
 }

@@ -11,6 +11,16 @@ public class Rook extends Piece{
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isMovableDirection(Direction direction) {
         return Direction.isRookDirection(direction);
     }

@@ -11,6 +11,16 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isMovableDirection(Direction direction) {
         if (isBlack()) {
             return Direction.isBlackPawnDirection(direction);

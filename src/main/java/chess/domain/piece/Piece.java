@@ -30,29 +30,26 @@ public abstract class Piece {
         return team.isNone();
     }
 
-    public boolean isPawn() {
-        return getClass() == Pawn.class;
-    }
-
-    public boolean isKing() {
-        return getClass() == King.class;
+    public boolean isFirst() {
+        return isFirst;
     }
 
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
 
-    public boolean isFirst() {
-        return isFirst;
-    }
-
     public void changeNotFirst() {
         isFirst = false;
     }
+
+    public abstract boolean isPawn();
+
+    public abstract boolean isKing();
 
     public abstract boolean isMovableDirection(Direction direction);
 
     public abstract boolean isMovableDistance(LocationDiff locationDiff);
 
     public abstract double getScore();
+
 }

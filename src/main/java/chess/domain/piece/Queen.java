@@ -11,6 +11,16 @@ public class Queen extends Piece{
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public boolean isMovableDirection(Direction direction) {
         return Direction.isQueenDirection(direction);
     }
