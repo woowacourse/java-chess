@@ -24,7 +24,7 @@ public class King extends Piece {
 
     private boolean isOneStep(Position fromPosition, Position toPosition) {
         return toPosition.getRankDifference(fromPosition) <= SCOPE_DIFFERENCE
-            && toPosition.getFileDifference(fromPosition) <= SCOPE_DIFFERENCE;
+                && toPosition.getFileDifference(fromPosition) <= SCOPE_DIFFERENCE;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class Position {
 
     static {
         Arrays.stream(File.values())
-            .forEach(Position::savePosition);
+                .forEach(Position::savePosition);
     }
 
     private Position(final File file, final Rank rank) {
@@ -24,8 +24,7 @@ public class Position {
 
     private static void savePosition(final File file) {
         Arrays.stream(Rank.values())
-            .forEach(rank -> CACHE.put(makeKey(file, rank),
-                new Position(file, rank)));
+                .forEach(rank -> CACHE.put(makeKey(file, rank), new Position(file, rank)));
     }
 
     private static String makeKey(final File fileValue, final Rank rankValue) {

@@ -6,13 +6,13 @@ import chess.domain.piece.Color;
 
 public abstract class End implements ChessGame {
 
+    private static final String ALREADY_END_GAME = "[ERROR] 게임이 종료되어 지원하지 않는 기능입니다";
+
     protected final Board board;
 
     public End(Board board) {
         this.board = board;
     }
-
-    private static final String ALREADY_END_GAME = "[ERROR] 게임이 종료되어 지원하지 않는 기능입니다";
 
     @Override
     public ChessGame initBoard() {
@@ -35,12 +35,12 @@ public abstract class End implements ChessGame {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
+    public double calculateScore(Color color) {
+        throw new IllegalStateException(ALREADY_END_GAME);
     }
 
     @Override
-    public double calculateScore(Color color) {
-        throw new IllegalStateException(ALREADY_END_GAME);
+    public Board getBoard() {
+        return board;
     }
 }

@@ -48,7 +48,7 @@ public class ChessController {
     public static ChessGame move(ChessGame chessGame, String fromPosition, String toPosition) {
         try {
             ChessGame movedGame = chessGame.movePiece(Position.valueOf(fromPosition),
-                Position.valueOf(toPosition));
+                    Position.valueOf(toPosition));
             OutputView.printInitialChessBoard(movedGame.getBoard());
             return movedGame;
         } catch (IllegalStateException | IllegalArgumentException exception) {
@@ -59,13 +59,13 @@ public class ChessController {
 
     public static ChessGame showStatus(ChessGame chessGame) {
         OutputView.printScore(chessGame.calculateScore(Color.WHITE),
-            chessGame.calculateScore(Color.BLACK));
+                chessGame.calculateScore(Color.BLACK));
         return chessGame;
     }
 
     public static ChessGame end(ChessGame chessGame) {
         try {
-           return chessGame.end();
+            return chessGame.end();
         } catch (IllegalStateException exception) {
             OutputView.printError(exception.getMessage());
         }

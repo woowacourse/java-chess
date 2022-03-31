@@ -3,13 +3,14 @@ package chess.dto;
 import chess.view.InputOption;
 
 public class RequestDto {
-    private InputOption inputOption;
+    private final InputOption inputOption;
     private String fromPosition;
     private String toPosition;
 
     private RequestDto(InputOption inputOption) {
         this.inputOption = inputOption;
     }
+
     private RequestDto(InputOption inputOption, String fromPosition, String toPosition) {
         this(inputOption);
         this.fromPosition = fromPosition;

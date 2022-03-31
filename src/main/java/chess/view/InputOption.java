@@ -17,8 +17,8 @@ public enum InputOption {
 
     public static InputOption from(String input) {
         return Arrays.stream(InputOption.values())
-            .filter(inputOption -> input.matches(inputOption.regex))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION));
+                .filter(inputOption -> input.matches(inputOption.regex))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_OPTION));
     }
 }

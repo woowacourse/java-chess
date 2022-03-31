@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.File;
 import chess.domain.Board;
-import chess.domain.Rank;
+import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.Rank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class OutputView {
         Map<Position, Piece> chessBoard = board.getBoard();
         for (File value : File.values()) {
             Optional<Piece> pieceOptional = Optional.ofNullable(
-                chessBoard.get(Position.valueOf(value, ordinate)));
+                    chessBoard.get(Position.valueOf(value, ordinate)));
             String printFormat = pieceOptional.map(PieceMapper::from).orElse(NONE_PIECE);
             System.out.print(printFormat);
         }

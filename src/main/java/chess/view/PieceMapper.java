@@ -32,7 +32,7 @@ public class PieceMapper {
 
     public static String from(Piece piece) {
         String letter = MAPPER.get(piece.getClass().getName());
-        if(piece.isSameColor(Color.WHITE)) {
+        if (piece.isSameColor(Color.WHITE)) {
             return letter;
         }
         return letter.toUpperCase();

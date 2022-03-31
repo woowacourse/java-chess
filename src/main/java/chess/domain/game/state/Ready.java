@@ -9,10 +9,8 @@ public class Ready implements ChessGame {
 
     private static final String NOT_STARTED_GAME = "[ERROR] 게임이 시작되지 않았습니다.";
 
-    private final Board board;
-
     public Ready() {
-        board = BoardFactory.getEmptyBoard();
+        Board board = BoardFactory.getEmptyBoard();
     }
 
     @Override
@@ -36,17 +34,17 @@ public class Ready implements ChessGame {
     }
 
     @Override
-    public Board getBoard() {
-        throw new IllegalStateException(NOT_STARTED_GAME);
-    }
-
-    @Override
     public double calculateScore(Color color) {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 
     @Override
     public Color judgeWinner() {
+        throw new IllegalStateException(NOT_STARTED_GAME);
+    }
+
+    @Override
+    public Board getBoard() {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }
 }

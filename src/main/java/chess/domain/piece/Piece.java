@@ -7,7 +7,7 @@ public abstract class Piece {
     protected final Color color;
     protected final double score;
 
-    public Piece(final Color color,final double score) {
+    public Piece(final Color color, final double score) {
         this.color = color;
         this.score = score;
     }
@@ -22,9 +22,13 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isKnight() {return false;}
+    public boolean isKnight() {
+        return false;
+    }
 
-    public boolean isPawn() {return false;}
+    public boolean isPawn() {
+        return false;
+    }
 
     public boolean isMyTeam(Piece piece) {
         return color == piece.color;

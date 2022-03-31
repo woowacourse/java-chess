@@ -14,15 +14,13 @@ public class Board {
     private static final String NON_MOVABLE_ROUTE = "[ERROR] 해당 위치로 말이 도달할 수 없습니다.";
     private static final String NON_CATCHABLE_PIECE = "[ERROR] 잡을 수 없는 말 입니다.";
     private static final String ALL_KING_NOT_EXIST = "[ERROR] 킹이 보드에 존재하지 않습니다.";
+    private static final double PAWN_SCORE_IN_SAME_FILE = 0.5;
+    private static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;
 
     public Board(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return Map.copyOf(board);
     }
 
     public void movePiece(Position fromPosition, Position toPosition) {
@@ -43,7 +41,7 @@ public class Board {
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
         if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition,
-            toPosition)) {
+                toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
         }
     }
@@ -81,41 +79,45 @@ public class Board {
 
     public boolean isAllKingExist() {
         return board.values()
-            .stream()
-            .filter(Piece::isKing)
-            .count() == 2;
+                .stream()
+                .filter(Piece::isKing)
+                .count() == KING_COUNT;
     }
 
     public double calculateScore(Color color) {
         return board.values().stream()
-            .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(Piece::getScore)
-            .sum() - calculateSameLinePawnScore(color);
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum() - calculateSameLinePawnScore(color);
     }
 
     private double calculateSameLinePawnScore(Color color) {
         List<Position> pawnPositions = board.keySet().stream()
-            .filter(
-                position -> board.get(position).isSameColor(color) && board.get(position).isPawn())
-            .collect(Collectors.toList());
+                .filter(
+                        position -> board.get(position).isSameColor(color) && board.get(position).isPawn())
+                .collect(Collectors.toList());
 
         return pawnPositions.stream()
-            .filter(position -> isSameLine(pawnPositions, position))
-            .mapToDouble(position -> 0.5)
-            .sum();
+                .filter(position -> isSameLine(pawnPositions, position))
+                .mapToDouble(position -> PAWN_SCORE_IN_SAME_FILE)
+                .sum();
     }
 
     private boolean isSameLine(List<Position> pawnPositions, Position position) {
         return pawnPositions.stream()
-            .filter(p -> p != position)
-            .anyMatch(p -> p.isSameFile(position));
+                .filter(p -> p != position)
+                .anyMatch(p -> p.isSameFile(position));
     }
 
     public Color getWinnerTeamColor() {
         return board.values().stream()
-            .filter(Piece::isKing)
-            .findAny()
-            .orElseThrow(() -> new IllegalStateException(ALL_KING_NOT_EXIST))
-            .getColor();
+                .filter(Piece::isKing)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(ALL_KING_NOT_EXIST))
+                .getColor();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Map.copyOf(board);
     }
 }

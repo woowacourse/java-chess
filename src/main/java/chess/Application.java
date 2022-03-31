@@ -9,5 +9,4 @@ public class Application {
 
         chessController.run();
     }
-
 }

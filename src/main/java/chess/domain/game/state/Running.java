@@ -22,7 +22,7 @@ public class Running implements ChessGame {
 
     @Override
     public ChessGame movePiece(Position fromPosition, Position toPosition) {
-        board.movePiece(fromPosition,toPosition);
+        board.movePiece(fromPosition, toPosition);
         if (!board.isAllKingExist()) {
             return new Complete(board);
         }
@@ -40,11 +40,6 @@ public class Running implements ChessGame {
     }
 
     @Override
-    public Board getBoard() {
-        return board;
-    }
-
-    @Override
     public double calculateScore(Color color) {
         return board.calculateScore(color);
     }
@@ -52,5 +47,10 @@ public class Running implements ChessGame {
     @Override
     public Color judgeWinner() {
         throw new IllegalStateException(NOT_ENDED_GAME);
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
     }
 }
