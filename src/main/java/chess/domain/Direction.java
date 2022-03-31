@@ -32,14 +32,6 @@ public enum Direction {
         this.yDegree = yDegree;
     }
 
-    public int getYDegree() {
-        return yDegree;
-    }
-
-    public int getXDegree() {
-        return xDegree;
-    }
-
     public static List<Direction> linearDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
@@ -88,5 +80,13 @@ public enum Direction {
 
     private static boolean isMatch(int colDiff, int rowDiff, int gcd, Direction direction) {
         return direction.xDegree == colDiff / gcd && direction.yDegree == rowDiff / gcd;
+    }
+
+    public int getYDegree() {
+        return yDegree;
+    }
+
+    public int getXDegree() {
+        return xDegree;
     }
 }

@@ -6,10 +6,10 @@ import static chess.domain.Command.of;
 
 import chess.domain.Board;
 import chess.domain.Command;
-import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

@@ -1,9 +1,9 @@
 package chess.view;
 
 import chess.domain.Rank;
-import chess.domain.Row;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
+import chess.domain.position.Row;
 import java.util.Map;
 
 public class OutputView {

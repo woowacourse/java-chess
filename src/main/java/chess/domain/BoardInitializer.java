@@ -1,10 +1,10 @@
 package chess.domain;
 
-import static chess.domain.Row.EIGHT;
-import static chess.domain.Row.ONE;
-import static chess.domain.Row.SEVEN;
-import static chess.domain.Row.TWO;
-import static chess.domain.Row.find;
+import static chess.domain.position.Row.EIGHT;
+import static chess.domain.position.Row.ONE;
+import static chess.domain.position.Row.SEVEN;
+import static chess.domain.position.Row.TWO;
+import static chess.domain.position.Row.find;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -14,6 +14,9 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.EnumMap;
 import java.util.Map;
 

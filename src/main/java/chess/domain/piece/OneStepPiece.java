@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Position;
 import chess.domain.Team;
+import chess.domain.position.Position;
 import java.util.List;
 
 public abstract class OneStepPiece extends Piece {

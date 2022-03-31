@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.Position;
 import chess.domain.Team;
-import java.util.List;
+import chess.domain.position.Position;
 
 public class Knight extends OneStepPiece {
 
-    private static final double  KNIGHT_SCORE = 2.5;
+    private static final double KNIGHT_SCORE = 2.5;
 
     public Knight(Team team, Position position) {
         super(team, position);

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

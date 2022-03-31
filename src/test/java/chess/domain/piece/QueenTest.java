@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import chess.domain.Team;
-import chess.domain.piece.Queen;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

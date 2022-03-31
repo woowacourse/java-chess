@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Position;
 import chess.domain.Team;
-import java.util.List;
+import chess.domain.position.Position;
 
 public class King extends OneStepPiece {
 

@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.position.Column;
+import chess.domain.position.Row;
 import java.util.EnumMap;
 import java.util.Map;
 
