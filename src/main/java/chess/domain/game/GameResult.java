@@ -11,7 +11,6 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 import chess.dto.GameScoreDto;
-import chess.util.PieceScoreUtil;
 import java.util.Map;
 
 public class GameResult {
@@ -54,7 +53,7 @@ public class GameResult {
         return board.values()
                 .stream()
                 .filter(piece -> piece.hasColorOf(color))
-                .mapToDouble(PieceScoreUtil::toScore)
+                .mapToDouble(Piece::toScore)
                 .sum();
     }
 

@@ -33,14 +33,12 @@ public class PieceDisplayUtil {
         static final Map<Piece, String> displayMap = new HashMap<>();
 
         static {
-            String[] blackDisplayFormats = BLACK_DISPLAY_FORMATS.split("");
-            String[] whiteDisplayFormats = WHITE_DISPLAY_FORMATS.split("");
-
-            initDisplayMap(blackDisplayFormats, Color.BLACK);
-            initDisplayMap(whiteDisplayFormats, Color.WHITE);
+            initDisplayMap(BLACK_DISPLAY_FORMATS, Color.BLACK);
+            initDisplayMap(WHITE_DISPLAY_FORMATS, Color.WHITE);
         }
 
-        static void initDisplayMap(String[] displayFormats, Color color) {
+        static void initDisplayMap(String displayFormat, Color color) {
+            String[] displayFormats = displayFormat.split("");
             displayMap.put(new Pawn(color), displayFormats[PAWN_IDX]);
             displayMap.put(new NonPawn(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
             displayMap.put(new NonPawn(color, PieceType.BISHOP), displayFormats[BISHOP_IDX]);

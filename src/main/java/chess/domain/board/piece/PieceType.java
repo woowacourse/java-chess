@@ -6,12 +6,12 @@ import chess.util.PositionUtil;
 
 public enum PieceType {
 
-    PAWN(PieceType::isPawnMovable),
-    KNIGHT(PieceType::isKnightMovable),
-    BISHOP(PositionUtil::isDiagonal),
-    ROOK(PositionUtil::isHorizontalOrVertical),
-    QUEEN(PositionUtil::isStraightPath),
-    KING(PieceType::isKingMovable);
+    PAWN(PieceType::isPawnMovable, 1),
+    KNIGHT(PieceType::isKnightMovable, 2.5),
+    BISHOP(PositionUtil::isDiagonal, 3),
+    ROOK(PositionUtil::isHorizontalOrVertical, 5),
+    QUEEN(PositionUtil::isStraightPath, 9),
+    KING(PieceType::isKingMovable, 0);
 
     private static final int KNIGHT_TOTAL_MOVE_DIFF = 3;
     private static final int KNIGHT_MAIN_MOVE_DIFF = 2;
@@ -21,9 +21,11 @@ public enum PieceType {
     private static final String NON_PAWN_ONLY_EXCEPTION_MESSAGE = "폰의 이동 로직은 별도로 구현해야 합니다.";
 
     private final RouteChecker routeChecker;
+    private final double score;
 
-    PieceType(RouteChecker routeChecker) {
+    PieceType(RouteChecker routeChecker, double score ) {
         this.routeChecker = routeChecker;
+        this.score = score;
     }
 
     public boolean isMovable(Position from, Position to) {
@@ -52,5 +54,9 @@ public enum PieceType {
             return false;
         }
         return x <= KING_MAX_MOVE_DIFF && y <= KING_MAX_MOVE_DIFF;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

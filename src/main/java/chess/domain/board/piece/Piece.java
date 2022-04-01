@@ -33,8 +33,8 @@ public abstract class Piece {
         return this.type == type;
     }
 
-    public final PieceType type() {
-        return type;
+    public final double toScore() {
+        return type.getScore();
     }
 
     @Override
