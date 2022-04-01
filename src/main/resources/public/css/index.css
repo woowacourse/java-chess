@@ -23,6 +23,11 @@ html, body {
     text-align: center;
 }
 
+.chess-piece {
+    height: 70px;
+    margin-top: 5px;
+}
+
 .board-black-square {
     background-color: saddlebrown;
 }

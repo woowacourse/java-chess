@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>체스</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
-<body>
+<body onload="initChessBoard()">
 <div id="main">
     <div class="chess-board-margin">
-        <div class="chess-board">
+        <div class="chess-board" id="chess-board">
             <div class="board-black-square" id="a8"></div>
             <div class="board-white-square" id="b8"></div>
             <div class="board-black-square" id="c8"></div>
@@ -85,7 +85,11 @@
             <div class="board-white-square" id="g1"></div>
             <div class="board-black-square" id="h1"></div>
         </div>
+        {{init}}
+    </div>
+    <div id="chess-menu">
     </div>
 </div>
+<script src="js/index.js"></script>
 </body>
 </html>
