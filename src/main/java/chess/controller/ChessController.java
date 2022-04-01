@@ -2,7 +2,7 @@ package chess.controller;
 
 import java.util.NoSuchElementException;
 
-import chess.controller.converter.StringToCommandConverter;
+import chess.converter.console.StringToCommandConverter;
 import chess.controller.dto.BoardDto;
 import chess.domain.ChessScore;
 import chess.domain.board.BoardInitializer;

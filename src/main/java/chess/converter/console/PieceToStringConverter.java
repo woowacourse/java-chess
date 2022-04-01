@@ -1,4 +1,4 @@
-package chess.controller.converter;
+package chess.converter.console;
 
 import java.util.Arrays;
 

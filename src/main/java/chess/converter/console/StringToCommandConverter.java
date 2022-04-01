@@ -1,8 +1,9 @@
-package chess.controller.converter;
+package chess.converter.console;
 
 import java.util.Arrays;
 import java.util.List;
 
+import chess.converter.StringToPositionConverter;
 import chess.domain.command.Command;
 import chess.domain.command.End;
 import chess.domain.command.Move;
@@ -19,12 +20,6 @@ public enum StringToCommandConverter {
 
 	private static final String INVALID_COMMAND = "유효한 커맨드가 아닙니다.";
 	private static final String DELIMITER = " ";
-	private static final String INVALID_LENGTH = "좌표는 2글자여야 합니다.";
-
-	private static final int FILE_INDEX = 0;
-	private static final int RANK_INDEX = 1;
-
-	private static final int POSITION_INPUT_LENGTH = 2;
 
 	private static final int FROM_POSITION_INDEX = 1;
 	private static final int TO_POSITION_INDEX = 2;
@@ -54,26 +49,10 @@ public enum StringToCommandConverter {
 		List<String> commands = Arrays.asList(input.split(DELIMITER));
 		if (input.startsWith(MOVE.input) && commands.size() == MOVE_COMMAND_SIZE) {
 			return new Move(
-				convertToPosition(commands.get(FROM_POSITION_INDEX)),
-				convertToPosition(commands.get(TO_POSITION_INDEX))
+				StringToPositionConverter.from(commands.get(FROM_POSITION_INDEX)),
+				StringToPositionConverter.from(commands.get(TO_POSITION_INDEX))
 			);
 		}
 		throw new IllegalArgumentException(INVALID_COMMAND);
-	}
-
-	private static Position convertToPosition(String input) {
-		List<String> fileAndRank = Arrays.asList(input.split(""));
-		validatePositionInputLength(fileAndRank);
-
-		Rank rank = Rank.from(fileAndRank.get(RANK_INDEX));
-		File file = File.from(fileAndRank.get(FILE_INDEX));
-
-		return new Position(rank.getRow(), file.getColumn());
-	}
-
-	private static void validatePositionInputLength(List<String> fileAndRank) {
-		if (fileAndRank.size() != POSITION_INPUT_LENGTH) {
-			throw new IllegalArgumentException(INVALID_LENGTH);
-		}
 	}
 }

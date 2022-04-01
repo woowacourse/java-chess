@@ -5,17 +5,19 @@
     <title>체스 게임</title>
     <style>
         .chess-ui {
-            width: 1050px;
+            width: 850px;
             border: 4px solid slategrey;
             display: grid;
         }
         img {
-            width: 125px;
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
 <body>
 <h1>♟️ 초간단 체스</h1>
+<p><a href="/start">시작하기</a></p>
 <table class="chess-ui">
     <tr>
         <td><img src="image/{{a8}}.png" class="piece-img"/></td>
@@ -98,6 +100,11 @@
         <td><img src="image/{{h1}}.png" class="piece-img"/></td>
     </tr>
 </table>
-
+<form action="/move", method="post">
+    이동하기<br>
+    Source <input type="text" name="source"/> Target <input type="text" name="target"/>
+    <input type="submit" value="이동"> <br>
+    예시 : a1 b2
+</form>
 </body>
 </html>

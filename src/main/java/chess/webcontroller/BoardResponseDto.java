@@ -1,21 +1,21 @@
-package chess.web;
+package chess.webcontroller;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import chess.controller.converter.File;
-import chess.controller.converter.Rank;
+import chess.converter.File;
+import chess.converter.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public class WebBoardDto {
+public class BoardResponseDto {
 
 	private static final String EMPTY = "EMPTY";
 
 	private final Map<String, Object> value;
 
-	public WebBoardDto(Map<Position, Piece> board) {
+	public BoardResponseDto(Map<Position, Piece> board) {
 		value = new HashMap<>();
 		for (File file : File.values()) {
 			initialize(board, file);

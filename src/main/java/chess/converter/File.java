@@ -1,4 +1,4 @@
-package chess.controller.converter;
+package chess.converter;
 
 import java.util.Arrays;
 
@@ -23,7 +23,7 @@ public enum File {
 		this.column = column;
 	}
 
-	static File from(String name) {
+	public static File from(String name) {
 		return Arrays.stream(values())
 			.filter(file -> file.name.equals(name))
 			.findAny()
