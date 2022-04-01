@@ -23,7 +23,7 @@ public class PawnTest {
     @Test
     @DisplayName("폰은 2칸 움직일 수 있다.")
     void firstMove() {
-        final Pawn pawn = new WhitePawn();
+        final Piece pawn = new WhitePawn();
         final Position position = Position.of("d4");
         final Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
 
@@ -36,7 +36,26 @@ public class PawnTest {
     @DisplayName("폰은 1점이다.")
     void getPoint() {
         final Piece pawn = new BlackPawn();
+        final double point = pawn.getPoint();
 
-        assertThat(pawn.getPoint()).isEqualTo(1);
+        assertThat(point).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("검은색 폰의 방향은 SOUTH이다.")
+    void getBlackPawnDirection() {
+        final Piece pawn = new BlackPawn();
+        final Direction actual = pawn.getPawnDirection();
+
+        assertThat(actual).isEqualTo(Direction.SOUTH);
+    }
+
+    @Test
+    @DisplayName("흰색 폰의 방향은 SOUTH이다.")
+    void getWhitePawnDirection() {
+        final Piece pawn = new WhitePawn();
+        final Direction actual = pawn.getPawnDirection();
+
+        assertThat(actual).isEqualTo(Direction.NORTH);
     }
 }

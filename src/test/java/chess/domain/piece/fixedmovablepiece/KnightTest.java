@@ -25,7 +25,7 @@ class KnightTest {
     @Test
     @DisplayName("나이트가 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByKnight() {
-        final Knight knight = new Knight(Color.BLACK);
+        final Piece knight = new Knight(Color.BLACK);
         final Map<Direction, List<Position>> positions = knight.getMovablePositions(Position.of("d4"));
         final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
@@ -47,7 +47,8 @@ class KnightTest {
     @DisplayName("나이트는 2.5점이다.")
     void getPoint() {
         final Piece knight = new Knight(Color.BLACK);
+        final double point = knight.getPoint();
 
-        assertThat(knight.getPoint()).isEqualTo(2.5);
+        assertThat(point).isEqualTo(2.5);
     }
 }

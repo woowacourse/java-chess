@@ -25,7 +25,7 @@ public class BishopTest {
     @Test
     @DisplayName("비숍이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByBishop() {
-        final Bishop bishop = new Bishop(Color.BLACK);
+        final Piece bishop = new Bishop(Color.BLACK);
         final Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
         final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
@@ -51,7 +51,8 @@ public class BishopTest {
     @DisplayName("비숍은 3점이다.")
     void getPoint() {
         final Piece bishop = new Bishop(Color.BLACK);
+        final double point = bishop.getPoint();
 
-        assertThat(bishop.getPoint()).isEqualTo(3);
+        assertThat(point).isEqualTo(3);
     }
 }

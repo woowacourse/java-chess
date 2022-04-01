@@ -1,6 +1,7 @@
 package chess.domain.piece.fixedmovablepiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -25,7 +26,7 @@ public class KingTest {
     @Test
     @DisplayName("킹이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByKing() {
-        final King king = new King(Color.BLACK);
+        final Piece king = new King(Color.BLACK);
         final Map<Direction, List<Position>> positions = king.getMovablePositions(Position.of("d4"));
         final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
@@ -47,7 +48,18 @@ public class KingTest {
     @DisplayName("킹은 0점이다.")
     void getPoint() {
         final Piece king = new King(Color.BLACK);
+        final double point = king.getPoint();
 
-        assertThat(king.getPoint()).isEqualTo(0);
+        assertThat(point).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("폰의 방향을 얻을 시 예외가 발생한다.")
+    void getPawnDirection() {
+        final Piece king = new King(Color.BLACK);
+        assertThatThrownBy(() ->
+                king.getPawnDirection())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("폰만 방향을 얻을 수 있습니다.");
     }
 }

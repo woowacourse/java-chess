@@ -25,7 +25,7 @@ public class QueenTest {
     @Test
     @DisplayName("퀸이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByQueen() {
-        final Queen queen = new Queen(Color.BLACK);
+        final Piece queen = new Queen(Color.BLACK);
         final Map<Direction, List<Position>> positions = queen.getMovablePositions(Position.of("d4"));
         final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
@@ -63,7 +63,8 @@ public class QueenTest {
     @DisplayName("퀸은 9점이다.")
     void getPoint() {
         final Piece queen = new Queen(Color.BLACK);
+        final double point = queen.getPoint();
 
-        assertThat(queen.getPoint()).isEqualTo(9);
+        assertThat(point).isEqualTo(9);
     }
 }

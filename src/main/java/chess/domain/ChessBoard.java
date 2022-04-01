@@ -119,13 +119,13 @@ public class ChessBoard {
     private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result,
                                                     final List<Position> positions) {
         if (positions.size() != 0) {
-            final int removeIndex = getRemoveIndex(piece, positions);
+            final int removeIndex = calculateRemoveIndex(piece, positions);
             final List<Position> movablePositions = positions.subList(0, removeIndex);
             result.addAll(movablePositions);
         }
     }
 
-    private int getRemoveIndex(final Piece piece, final List<Position> positions) {
+    private int calculateRemoveIndex(final Piece piece, final List<Position> positions) {
         int removeIndex = positions.size() - 1;
 
         for (Position position : positions) {
