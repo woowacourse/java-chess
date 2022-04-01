@@ -1,4 +1,4 @@
-package chess.domain.command;
+package chess;
 
 import java.util.Arrays;
 

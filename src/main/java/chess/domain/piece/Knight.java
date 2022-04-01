@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.KNIGHT;
 
-import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package chess;
 
 import chess.domain.ChessGame;
-import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.PieceFactory;
 import chess.dto.BoardDto;

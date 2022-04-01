@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.Movement;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;

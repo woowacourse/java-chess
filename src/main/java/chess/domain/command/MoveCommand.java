@@ -3,6 +3,7 @@ package chess.domain.command;
 import chess.domain.position.Position;
 
 public class MoveCommand {
+
     private static final int SOURCE_POSITION_COMMAND_INDEX = 1;
     private static final int TARGET_POSITION_COMMAND_INDEX = 2;
 
