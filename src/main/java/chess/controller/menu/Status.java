@@ -7,9 +7,10 @@ public class Status implements Menu {
 
     @Override
     public void play(ChessController chessController) {
+
         chessController.checkReady();
         try {
-            chessController.createStatus();
+            chessController.status();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

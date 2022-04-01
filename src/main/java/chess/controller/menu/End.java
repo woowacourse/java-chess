@@ -9,7 +9,7 @@ public class End implements Menu {
     public void play(ChessController chessController) {
         chessController.checkReady();
         try {
-            chessController.makeEnd();
+            chessController.end();
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

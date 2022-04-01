@@ -29,8 +29,8 @@ public class ChessGame {
     }
 
     public void move(Position from, Position to) {
-        Piece fromPiece = board.takePositionPiece(from);
-        Piece toPiece = board.takePositionPiece(to);
+        Piece fromPiece = board.takePieceByPosition(from);
+        Piece toPiece = board.takePieceByPosition(to);
         Direction direction = fromPiece.findDirection(from, to);
 
         fromPiece.movable(from, to);
@@ -47,7 +47,7 @@ public class ChessGame {
         Position current = from.move(direction);
 
         while (!current.equals(to)) {
-            if (board.takePositionPiece(current) != null) {
+            if (board.takePieceByPosition(current) != null) {
                 throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
             }
             current = current.move(direction);
@@ -100,10 +100,10 @@ public class ChessGame {
         try {
             fromPiece.movable(from, to);
             board.validatePath(from, to, fromPiece.findDirection(from, to));
+            return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
-        return true;
     }
 
     private void checkStraightCondition(Piece to, Direction direction) {
@@ -131,7 +131,7 @@ public class ChessGame {
         }
         try {
             Position kingPosition = board.findKingPosition(turn);
-            return cannotMoveKing(board.takePositionPiece(kingPosition), kingPosition);
+            return cannotMoveKing(board.takePieceByPosition(kingPosition), kingPosition);
         } catch (IllegalArgumentException e) {
             return true;
         }
@@ -152,14 +152,14 @@ public class ChessGame {
         return board.createResult();
     }
 
-    public GameStatus checkGameStatus(){
-        if(isCheckmate()){
+    public GameStatus checkGameStatus() {
+        if (isCheckmate()) {
             gameStatus = CHECK_MATE;
         }
         return gameStatus;
     }
 
-    public Result stepGame(){
+    public Result stepGame() {
         gameStatus = END;
         return new Result(getBoard());
     }

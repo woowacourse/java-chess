@@ -54,7 +54,7 @@ public class Board {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Piece takePositionPiece(Position position) {
+    public Piece takePieceByPosition(Position position) {
         return board.get(position);
     }
 

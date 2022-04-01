@@ -56,10 +56,10 @@ public class Result {
     }
 
     public Map<Team, Double> getValue() {
-        return value;
+        return Map.copyOf(value);
     }
 
     public List<Team> getWinnerResult() {
-        return winnerResult;
+        return List.copyOf(winnerResult);
     }
 }

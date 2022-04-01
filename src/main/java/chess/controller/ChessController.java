@@ -39,12 +39,11 @@ public class ChessController {
         printBoard();
     }
 
-    public void makeEnd() {
+    public void end() {
         OutputView.printStatus(chessGame.stepGame());
     }
 
-    public void createStatus() {
-
+    public void status() {
         OutputView.printStatus(chessGame.createResult());
     }
 
