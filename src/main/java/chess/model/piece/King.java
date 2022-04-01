@@ -13,8 +13,8 @@ public class King extends Piece {
     private static final double SCORE = 0D;
     private static final List<Direction> directions = Direction.all();
 
-    public King(Position position, Team team) {
-        super(position, team);
+    public King(Team team) {
+        super(team);
     }
 
     @Override

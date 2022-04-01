@@ -14,16 +14,16 @@ public class Pawn extends Piece {
     private static final double SCORE = 1D;
     private static final double DUPLICATED_PAWN_SCORE = 0.5D;
 
-    public Pawn(Position position, Team team) {
-        super(position, team);
+    public Pawn(Team team) {
+        super(team);
     }
 
-    public double getScore(long size) {
-        if (size == 1) {
-            return SCORE;
-        }
-        return DUPLICATED_PAWN_SCORE;
-    }
+//    public double getScore(long size) {
+//        if (size == 1) {
+//            return SCORE;
+//        }
+//        return DUPLICATED_PAWN_SCORE;
+//    }
 
     @Override
     public double getScore() {
@@ -37,7 +37,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position source, Position target) {
-        if (isInitPosition()) {
+        if (isInitPosition(source)) {
             return source.isStepForward(target, team.getForwardDirection(), ONE_STEP) ||
                     source.isStepForward(target, team.getForwardDirection(), INIT_DISTANCE);
         }
@@ -61,11 +61,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isKill(Piece other) {
-        return this.position.isOneStepDiagonal(other.position, team.getForwardDirection()) && isOtherTeam(other);
+    public boolean isKill(Position source, Position target, Piece targetPiece) {
+        return source.isOneStepDiagonal(target, team.getForwardDirection()) && isOtherTeam(targetPiece);
     }
 
-    private boolean isInitPosition() {
+    private boolean isInitPosition(Position position) {
         if (Team.BLACK.equals(team)) {
             return position.isInitPawnPosition(Rank.SEVEN);
         }

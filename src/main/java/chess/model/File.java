@@ -1,6 +1,8 @@
 package chess.model;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum File {
     A(1, "a"),
@@ -32,6 +34,13 @@ public enum File {
                 .filter(file -> file.value.equals(value.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다 "));
+    }
+
+    public static List<String> getValues() {
+        return Arrays.stream(values())
+                .map(File::getValue)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public int absMinus(File file) {

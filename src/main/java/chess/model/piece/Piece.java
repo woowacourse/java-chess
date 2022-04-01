@@ -7,25 +7,11 @@ import chess.model.Turn;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Comparable<Piece> {
-    protected final Team team;
-    protected Position position;
+public abstract class Piece {
+    protected Team team;
 
-    protected Piece(Position position, Team team) {
-        this.position = position;
+    protected Piece(Team team) {
         this.team = team;
-    }
-
-    public final boolean isLastFile() {
-        return position.isLastFile();
-    }
-
-    public final boolean findPosition(Position position) {
-        return this.position.equals(position);
-    }
-
-    public final void moveTo(Piece targetPiece) {
-        position = targetPiece.position;
     }
 
     public final boolean isSameTeam(Piece targetPiece) {
@@ -34,6 +20,10 @@ public abstract class Piece implements Comparable<Piece> {
 
     public final boolean isOtherTeam(Piece targetPiece) {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
+    }
+
+    public final boolean isTeam(Team team) {
+        return this.team == team;
     }
 
     public final boolean isCurrentTurn(Turn turn) {
@@ -48,7 +38,7 @@ public abstract class Piece implements Comparable<Piece> {
         return false;
     }
 
-    public boolean isKill(Piece piece) {
+    public boolean isKill(Position source, Position target, Piece targetPiece) {
         return false;
     }
 
@@ -63,34 +53,15 @@ public abstract class Piece implements Comparable<Piece> {
     public abstract String getName();
 
     @Override
-    public int compareTo(Piece piece) {
-        if (this.position.isLessRankThan(piece.position)) {
-            return 1;
-        }
-        if (isFileComparison(piece)) {
-            return 1;
-        }
-        return -1;
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Objects.equals(position, piece.position) && team == piece.team;
+        return team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, team);
-    }
-
-    private boolean isFileComparison(Piece piece) {
-        return this.position.getRank() == piece.position.getRank() && this.position.isBiggerFileThan(piece.position);
+        return Objects.hash(team);
     }
 }

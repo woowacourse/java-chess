@@ -13,17 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DirectionTest {
 
-    @ParameterizedTest
-    @MethodSource("getDirections")
-    @DisplayName("source와 target의 방향이 올바른지 확인한다.")
-    void getDirectionTest(String targetPos, Direction direction) {
-        Position source = Position.from("d3");
-        Position target = Position.from(targetPos);
-        Direction expected = Direction.of(source, target);
-
-        assertThat(expected).isEqualTo(direction);
-    }
-
     static Stream<Arguments> getDirections() {
         return Stream.of(
                 Arguments.of("d6", Direction.N),
@@ -35,5 +24,16 @@ class DirectionTest {
                 Arguments.of("c2", Direction.SW),
                 Arguments.of("f1", Direction.SE)
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getDirections")
+    @DisplayName("source와 target의 방향이 올바른지 확인한다.")
+    void getDirectionTest(String targetPos, Direction direction) {
+        Position source = Position.from("d3");
+        Position target = Position.from(targetPos);
+        Direction expected = Direction.of(source, target);
+
+        assertThat(expected).isEqualTo(direction);
     }
 }

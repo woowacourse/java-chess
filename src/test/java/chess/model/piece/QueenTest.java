@@ -1,13 +1,12 @@
 package chess.model.piece;
 
-import chess.model.Board;
-import chess.model.Position;
-import chess.model.Team;
-import chess.model.Turn;
+import chess.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,7 +24,6 @@ class QueenTest {
         Position targetVertical = Position.from("a5");
         Position targetHorizontal = Position.from("f1");
 
-
         assertAll(
                 () -> assertThat(queen.isMovable(source, targetDiagonal)).isTrue(),
                 () -> assertThat(queen.isMovable(source, targetVertical)).isTrue(),
@@ -36,57 +34,60 @@ class QueenTest {
     @Test
     @DisplayName("퀸의 target위치에 아군 말이 없으면 움직임에 성공한다")
     void moveKingTest() {
-        List<Piece> pieces = List.of(
-                new Queen(Position.of('a', '8'), Team.BLACK),
-                new Pawn(Position.of('a', '7'), Team.WHITE)
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("a8"), new Queen(Team.BLACK));
+        boardMap.put(Position.from("a7"), new Knight(Team.WHITE));
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "a8";
         String target = "a7";
 
         assertDoesNotThrow(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         );
     }
 
     @Test
     @DisplayName("퀸의 target위치가 빈칸이면 움직임에 성공한다")
     void moveKingTest2() {
-        List<Piece> pieces = List.of(
-                new Queen(Position.of('a', '8'), Team.BLACK),
-                new Empty(Position.of('b', '7')),
-                new Empty(Position.of('c', '6'))
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("a8"), new Queen(Team.BLACK));
+        boardMap.put(Position.from("b7"), new Empty());
+        boardMap.put(Position.from("c6"), new Empty());
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "a8";
         String target = "c6";
 
         assertDoesNotThrow(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         );
     }
 
     @Test
     @DisplayName("퀸의 target위치에 아군 말이 있으면 예외처리")
     void moveFailureKingTest() {
-        List<Piece> pieces = List.of(
-                new Queen(Position.of('c', '6'), Team.WHITE),
-                new Empty(Position.of('d', '7')),
-                new Pawn(Position.of('e', '8'), Team.WHITE)
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("c6"), new Queen(Team.WHITE));
+        boardMap.put(Position.from("d7"), new Empty());
+        boardMap.put(Position.from("e8"), new Pawn(Team.WHITE));
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "c6";
         String target = "e8";
 
         assertThatThrownBy(
-                () -> board.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.move(source, target, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("source와 target사이의 position들을 얻는다.")
-    void getIntervalPositionTest(){
-        Piece queen = new Queen(Position.of('h','8'),Team.BLACK);
+    void getIntervalPositionTest() {
+        Piece queen = new Queen(Position.of('h', '8'), Team.BLACK);
         List<Position> intervalPosition = queen.getIntervalPosition(Position.from("h8"), Position.from("e5"));
 
         assertThat(intervalPosition.contains(Position.from("f6"))).isTrue();

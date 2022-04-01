@@ -1,13 +1,12 @@
 package chess.model.piece;
 
-import chess.model.Board;
-import chess.model.Position;
-import chess.model.Team;
-import chess.model.Turn;
+import chess.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,7 +17,7 @@ class RookTest {
     @Test
     @DisplayName("룩의 진행 방향이 맞는다면 true 반환")
     void correctMove() {
-        Rook rook = new Rook(Position.of('a', '1'), Team.WHITE);
+        Rook rook = new Rook(Team.WHITE);
         Position source = Position.from("a1");
         Position target = Position.from("f1");
 
@@ -27,18 +26,18 @@ class RookTest {
 
     @Test
     @DisplayName("source와 target사이의 position들을 얻는다.(가로)")
-    void getIntervalPositionTest(){
-        Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
+    void getIntervalPositionTest() {
+        Piece rook = new Rook(Team.BLACK);
         List<Position> intervalPosition = rook.getIntervalPosition(Position.from("h8"), Position.from("e8"));
 
-        assertThat(intervalPosition.contains(Position.of('f','8'))).isTrue();
-        assertThat(intervalPosition.contains(Position.of('g','8'))).isTrue();
+        assertThat(intervalPosition.contains(Position.from("f8"))).isTrue();
+        assertThat(intervalPosition.contains(Position.from("g8"))).isTrue();
     }
 
     @Test
     @DisplayName("source와 target사이의 position들을 얻는다.(세로)")
-    void getIntervalPositionVerticalTest(){
-        Piece rook = new Rook(Position.of('h','8'),Team.BLACK);
+    void getIntervalPositionVerticalTest() {
+        Piece rook = new Rook(Team.BLACK);
         List<Position> intervalPosition = rook.getIntervalPosition(Position.from("h8"), Position.from("h5"));
 
         assertThat(intervalPosition.contains(Position.from("h7"))).isTrue();
@@ -48,43 +47,46 @@ class RookTest {
     @Test
     @DisplayName("룩의 진행방향에 말이 있으면 예외 처리")
     void moveFailureWhenExistPieceTest() {
-        Board board = Board.create(Pieces.create());
+        Board board = new Board(BoardFactory.create());
+        ChessGame chessGame = new ChessGame(board);
         String source = "a8";
         String target = "a5";
 
         assertThatThrownBy(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("룩의 target위치에 아군 말이 있으면 예외 처리")
     void moveFailureTest() {
-        Board board = Board.create(Pieces.create());
+        Board board = new Board(BoardFactory.create());
+        ChessGame chessGame = new ChessGame(board);
         String source = "a8";
         String target = "a7";
 
         assertThatThrownBy(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("룩의 target위치에 아군 말이 없으면 움직임에 성공한다")
     void moveTest() {
-        List<Piece> pieces = List.of(
-                new Rook(Position.of('a', '8'), Team.BLACK),
-                new Empty(Position.of('a', '7')),
-                new Empty(Position.of('a', '6')),
-                new Pawn(Position.of('a', '5'), Team.WHITE)
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("a8"), new Rook(Team.BLACK));
+        boardMap.put(Position.from("a7"), new Empty());
+        boardMap.put(Position.from("a6"), new Empty());
+        boardMap.put(Position.from("a5"), new Pawn(Team.WHITE));
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "a8";
         String target = "a5";
 
 
         assertDoesNotThrow(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         );
     }
 }

@@ -1,13 +1,11 @@
 package chess.model.piece;
 
-import chess.model.Board;
-import chess.model.Position;
-import chess.model.Team;
-import chess.model.Turn;
+import chess.model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,46 +36,49 @@ class KnightTest {
     @Test
     @DisplayName("나이트의 target위치에 아군 말이 없으면 움직임에 성공한다")
     void moveKnightTest() {
-        List<Piece> pieces = List.of(
-                new Knight(Position.of('a', '8'), Team.BLACK),
-                new Pawn(Position.of('b', '6'), Team.WHITE)
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("a8"), new Knight(Team.BLACK));
+        boardMap.put(Position.from("b6"), new Pawn(Team.WHITE));
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "a8";
         String target = "b6";
 
         assertDoesNotThrow(
-                () -> board.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.move(source, target, new Turn(Team.BLACK))
         );
     }
 
     @Test
     @DisplayName("나이트가 target위치로 진행할때 방해물이 있으면 넘어서 진행한다.")
     void moveKnightTest2() {
+        Board board = new Board(BoardFactory.create());
+        ChessGame chessGame = new ChessGame(board);
 
-        Board board = Board.create(Pieces.create());
         String source = "g1";
         String target = "h3";
 
         assertDoesNotThrow(
-                () -> board.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.move(source, target, new Turn(Team.WHITE))
         );
     }
 
     @Test
     @DisplayName("나이트의 target위치에 아군 말이 있으면 예외처리")
     void moveFailureKnightTest() {
-        List<Piece> pieces = List.of(
-                new Knight(Position.of('a', '8'), Team.WHITE),
-                new Pawn(Position.of('c', '7'), Team.WHITE)
-        );
-        Board board = Board.create(Pieces.of(pieces));
+        Map<Position, Piece> boardMap = new HashMap<>();
+        boardMap.put(Position.from("a8"), new Knight(Team.WHITE));
+        boardMap.put(Position.from("c7"), new Pawn(Team.WHITE));
+        Board board = new Board(boardMap);
+        ChessGame chessGame = new ChessGame(board);
+
         String source = "a8";
         String target = "c7";
 
 
         assertThatThrownBy(
-                () -> board.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.move(source, target, new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -11,8 +11,8 @@ public class Knight extends Piece {
     private static final String WHITE_NAME = "n";
     private static final double SCORE = 2.5D;
 
-    public Knight(Position position, Team team) {
-        super(position, team);
+    public Knight(Team team) {
+        super(team);
     }
 
     @Override

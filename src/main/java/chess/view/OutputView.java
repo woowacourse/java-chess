@@ -1,10 +1,10 @@
 package chess.view;
 
+import chess.model.Board;
+import chess.model.Position;
 import chess.model.Team;
-import chess.model.piece.Piece;
-import chess.model.piece.Pieces;
 
-import java.util.Collections;
+import java.util.Map;
 
 public class OutputView {
 
@@ -15,16 +15,18 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(Pieces board) {
-        Collections.sort(board.getPieces());
-        for (Piece piece : board.getPieces()) {
-            System.out.print(piece.getName());
-            makeNewLine(piece);
-        }
+    public static void printBoard(Board board) {
+        board.getBoard().entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach((entry) -> {
+                    System.out.print(entry.getValue().getName());
+                    makeNewLine(entry.getKey());
+                });
     }
 
-    private static void makeNewLine(Piece piece) {
-        if (piece.isLastFile()) {
+    private static void makeNewLine(Position position) {
+        if (position.isLastFile()) {
             System.out.println();
         }
     }

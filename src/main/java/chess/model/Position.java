@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private static final Map<String, Position> CACHE_POSITION;
 
     static {
@@ -100,6 +100,21 @@ public class Position {
 
     private boolean isOneStepDiagonal(Position position) {
         return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
+    }
+
+    @Override
+    public int compareTo(Position position) {
+        if (isLessRankThan(position)) {
+            return 1;
+        }
+        if (isFileComparison(position)) {
+            return 1;
+        }
+        return -1;
+    }
+
+    private boolean isFileComparison(Position position) {
+        return getRank() == position.getRank() && isBiggerFileThan(position);
     }
 
     @Override

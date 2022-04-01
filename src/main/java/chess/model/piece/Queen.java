@@ -13,8 +13,8 @@ public class Queen extends Piece {
     private static final double SCORE = 9D;
     private static final List<Direction> directions = Direction.all();
 
-    public Queen(Position position, Team team) {
-        super(position, team);
+    public Queen(Team team) {
+        super(team);
     }
 
     @Override

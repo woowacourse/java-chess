@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Rank {
     EIGHT(8, "8"),
@@ -32,6 +33,10 @@ public enum Rank {
                 .filter(rank -> rank.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다."));
+    }
+
+    public static List<String> getEmptyRank() {
+        return List.of("6", "5", "4", "3");
     }
 
     public int absMinus(Rank rank) {

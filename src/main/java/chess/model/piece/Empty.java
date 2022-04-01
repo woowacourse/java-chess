@@ -10,8 +10,8 @@ public class Empty extends Piece {
     private static final String NAME = ".";
     private static final double SCORE = 0D;
 
-    public Empty(Position position) {
-        super(position, Team.NONE);
+    public Empty() {
+        super(Team.NONE);
     }
 
     @Override

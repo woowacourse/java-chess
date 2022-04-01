@@ -13,8 +13,8 @@ public class Rook extends Piece {
     private static final double SCORE = 5D;
     private static final List<Direction> directions = Direction.linear();
 
-    public Rook(Position position, Team team) {
-        super(position, team);
+    public Rook(Team team) {
+        super(team);
     }
 
     @Override
