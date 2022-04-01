@@ -71,10 +71,7 @@ public class ChessBoard {
     }
 
     private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {
-        List<Position> positions = movablePositions.get(Direction.NORTH);
-        if (piece.isBlack()) {
-            positions = movablePositions.get(Direction.SOUTH);
-        }
+        List<Position> positions = movablePositions.get(Direction.pawnDirection(piece.getColor()));
         if (positions.size() == SECOND_MOVE_SIZE) {
             positions.remove(SECOND_MOVE_INDEX);
         }
@@ -126,7 +123,7 @@ public class ChessBoard {
 
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
         if (piece.isSamePieceName(PieceName.PAWN)) {
-            Direction direction = getPawnDirection(piece);
+            Direction direction = Direction.pawnDirection(piece.getColor());
             List<Direction> diagonalDirections = direction.getDiagonal();
             List<Position> targetPositions = diagonalDirections.stream()
                     .map(nowPosition::toDirection)
@@ -134,16 +131,6 @@ public class ChessBoard {
 
             addPositionsIfEnemy(piece, result, targetPositions);
         }
-    }
-
-    private Direction getPawnDirection(Piece piece) {
-        if (!piece.isSamePieceName(PieceName.PAWN)) {
-            throw new IllegalStateException("폰만 해당 메서드를 사용 가능합니다.");
-        }
-        if (piece.isWhite()) {
-            return Direction.NORTH;
-        }
-        return Direction.SOUTH;
     }
 
     private void addPositionsIfEnemy(Piece piece, List<Position> result, List<Position> targetPositions) {
