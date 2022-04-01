@@ -4,8 +4,7 @@ import chess.domain.piece.Direction;
 import java.util.Objects;
 
 public class Position {
-
-
+    
     private final Column column;
     private final Row row;
 
