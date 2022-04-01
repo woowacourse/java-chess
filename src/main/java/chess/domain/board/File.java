@@ -16,6 +16,9 @@ public enum File {
     G("G", 7),
     H("H", 8);
 
+    private static final String NO_FILE_MATCHED = "File 입력을 확인해주세요 (a-h 입력 가능)";
+    private static final String NO_MATCHED_FILE_FOUND_BY_POSITION = "해당 포지션의 File을 찾지 못했습니다";
+
     private final String fileName;
     private final int fileNumber;
 
@@ -28,7 +31,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.fileName.equalsIgnoreCase(fileInput))
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new NoSuchElementException(NO_FILE_MATCHED));
     }
 
     public int dx(File another) {
@@ -76,6 +79,6 @@ public enum File {
         return Arrays.stream(values())
                 .filter(position::isSameFile)
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_FILE_FOUND_BY_POSITION));
     }
 }

@@ -8,6 +8,8 @@ public final class Pawn extends Piece {
     private static final List<List<Integer>> PAWN_CAPTURE_MOVE = List.of(List.of(1, 1), List.of(-1, 1));
     private static final List<List<Integer>> PAWN_FIRST_MOVE = List.of(List.of(0, 1), List.of(0, 2));
     private static final List<List<Integer>> PAWN_BASIC_MOVE = List.of(List.of(0, 1));
+    private static final String FAILED_TO_MOVE_PAWN = "폰 이동에 실패했습니다";
+    private static final String ILLEGAL_MOVE_FOR_PAWN = "폰이 이동할 수 있는 지점이 아닙니다";
 
     private boolean isFirstMove = true;
 
@@ -61,7 +63,7 @@ public final class Pawn extends Piece {
         final int dx = from.dx(to);
         final int dy = getDy(from, to);
         if (!PAWN_FIRST_MOVE.contains(List.of(dx, dy))) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(ILLEGAL_MOVE_FOR_PAWN);
         }
         if (dy == 2) {
             validatePieceOnWay(from, to, board);
@@ -74,7 +76,7 @@ public final class Pawn extends Piece {
         final int dy = getDy(from, to);
 
         if (!PAWN_BASIC_MOVE.contains(List.of(dx, dy)) || board.exists(to)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(FAILED_TO_MOVE_PAWN);
         }
     }
 }

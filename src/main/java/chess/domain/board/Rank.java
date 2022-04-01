@@ -16,6 +16,9 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
+    private static final String NO_MATCHED_RANK_FOUND = "일치하는 Rank를 찾지 못했습니다 (1-8 입력 가능)";
+    private static final String NO_RANK_FOUND_BY_POSITION = "해당 포지션의 Rank를 찾지 못했습니다";
+
     private final int rankNumber;
 
     Rank(int rankNumber) {
@@ -26,7 +29,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.rankNumber == number)
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_RANK_FOUND));
     }
 
     public static Rank from(String input) {
@@ -59,6 +62,6 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(position::isSameRank)
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new NoSuchElementException(NO_RANK_FOUND_BY_POSITION));
     }
 }

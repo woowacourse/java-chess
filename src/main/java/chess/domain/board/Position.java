@@ -6,10 +6,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Position {
-    private static final String POSITION_INPUT_DELIMITER = "";
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
     private static final int ZERO_FOR_NO_CHANGE = 0;
+    private static final int BEGIN_INDEX = 0;
+    private static final int FILE_INDEX = 1;
 
     private final File file;
     private final Rank rank;
@@ -20,8 +19,8 @@ public final class Position {
     }
 
     public static Position from(String input) {
-        final String[] splitInput = input.trim().split(POSITION_INPUT_DELIMITER);
-        return new Position(File.from(splitInput[FILE_INDEX]), Rank.from(splitInput[RANK_INDEX]));
+        return new Position(File.from(input.substring(BEGIN_INDEX, FILE_INDEX)),
+                Rank.from(input.substring(FILE_INDEX)));
     }
 
     public static Position of(File file, Rank rank) {

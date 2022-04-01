@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 
 public final class King extends Piece {
     private static final int MAXIMUM_SUM_OF_DX_AND_DY = 2;
+    private static final String EXCEEDED_MAXIMUM_DISTANCE_OF_KING = "King의 이동 범위를 초과했습니다";
 
     public King(Color color) {
         super(color);
@@ -23,7 +24,7 @@ public final class King extends Piece {
 
     private void validateDistance(Position from, Position to) {
         if (from.dx(to) + from.dy(to) > MAXIMUM_SUM_OF_DX_AND_DY) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(EXCEEDED_MAXIMUM_DISTANCE_OF_KING);
         }
     }
 

@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private static final int TWO_FOR_NO_BETWEEN = 2;
     public static final Piece EMPTY = new Empty();
+    private static final int TWO_FOR_NO_BETWEEN = 2;
+    private static final String SAME_COLOR_PIECE_IS_ON_TARGET = "목적지에 아군 기물이 존재합니다";
+    private static final String CAN_NOT_MOVE_FOR_PIECE_ON_THE_WAY = "이동 경로에 기물이 존재합니다";
+    private static final String CAN_NOT_MOVE_TO_THE_DIRECTION = "이동할 수 없는 방향입니다";
 
     private static class Empty extends Piece {
         public Empty() {
@@ -50,7 +53,7 @@ public abstract class Piece {
 
     protected void validateAngle(List<Integer> validAngles, Position from, Position to) {
         if (!validAngles.contains(angle(from, to))) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(CAN_NOT_MOVE_TO_THE_DIRECTION);
         }
     }
 
@@ -62,13 +65,13 @@ public abstract class Piece {
         if (from.between(to)
                 .stream()
                 .anyMatch(board::exists)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(CAN_NOT_MOVE_FOR_PIECE_ON_THE_WAY);
         }
     }
 
     protected void validateTarget(Board board, Position to) {
         if (board.isSameColorOnTarget(this, to)) {
-            throw new IllegalStateException("목적지에 아군 기물이 존재합니다");
+            throw new IllegalStateException(SAME_COLOR_PIECE_IS_ON_TARGET);
         }
     }
 
