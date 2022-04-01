@@ -13,9 +13,9 @@ public class ChessGame {
         this.state = state;
     }
 
-    public ChessGame(Long id, GameState state) {
-        this.id = id;
+    public ChessGame(GameState state, Participant participant) {
         this.state = state;
+        this.participant = participant;
     }
 
     public ChessGame(Long id, GameState state, Participant participant) {

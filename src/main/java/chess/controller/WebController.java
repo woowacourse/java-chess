@@ -7,6 +7,7 @@ import static spark.Spark.staticFiles;
 import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.Member;
+import chess.domain.Participant;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.state.WhiteTurn;
@@ -32,7 +33,6 @@ public class WebController {
 
     public void run() {
         staticFiles.location("/static");
-        gameRepository.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard()))));
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -77,7 +77,9 @@ public class WebController {
         get("/lobby", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<ChessGame> games = gameRepository.findAll();
+            List<Member> members = memberRepository.findAll();
             model.put("games", games);
+            model.put("members", members);
             return render(model, "lobby.html");
         });
 
@@ -102,10 +104,20 @@ public class WebController {
         });
 
         post("/member", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             memberRepository.save(new Member(name));
-            return render(model, "index.html");
+            return "";
+        });
+
+        post("/game", (req, res) -> {
+            String body = req.body();
+            String[] ids = body.split(",");
+            Long whiteId = Long.valueOf(ids[0]);
+            Long blackId = Long.valueOf(ids[1]);
+            Member white = memberRepository.findById(whiteId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
+            Member black = memberRepository.findById(blackId).orElseThrow(() -> new RuntimeException("찾는 멤버가 없음!"));
+            gameRepository.save(new ChessGame(new WhiteTurn(new Board(BoardInitializer.initBoard())), new Participant(white, black)));
+            return "";
         });
     }
 

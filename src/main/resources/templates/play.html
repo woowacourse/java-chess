@@ -88,7 +88,7 @@
     const getScoreData = async () => {
         let response = await fetch("/score/{{gameId}}");
         let data = await response.json();
-        alert("백팀 : " + data.whiteScore + "\n흑팀 : " + data.blackScore);
+        alert(`백팀 : ${data.whiteScore} \n흑팀 : ${data.blackScore}`);
     }
 
     let clickCount = 0;

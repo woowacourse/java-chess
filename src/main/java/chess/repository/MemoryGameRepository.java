@@ -15,7 +15,7 @@ public class MemoryGameRepository implements GameRepository {
 
     @Override
     public void save(ChessGame game) {
-        game = new ChessGame((long) nextId++, game.getState());
+        game = new ChessGame((long) nextId++, game.getState(), game.getParticipant());
         store.put(game.getId(), game);
     }
 

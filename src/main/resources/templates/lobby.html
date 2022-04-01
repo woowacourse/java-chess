@@ -7,7 +7,9 @@
     <title>체스 로비</title>
 </head>
 <body>
-    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#createGame">
+        게임 생성
+    </button>
     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMemberModal">
         멤버 추가
     </button>
@@ -16,18 +18,48 @@
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">{{id}} 번째 게임</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{participant.white}} vs {{participant.black}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{{participant.white.name}} vs {{participant.black.name}}</h6>
                 <a href="/play/{{id}}" class="btn btn-dark">입장</a>
             </div>
         </div>
     {{/games}}
 
-    <!-- Modal -->
+    <!-- 게임 생성 Modal -->
+    <div class="modal fade" id="createGame" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">게임 생성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>백팀</div>
+                    <select id="white" class="form-control">
+                        {{#members}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/members}}
+                    </select>
+                    <div>흑팀</div>
+                    <select id="black" class="form-control">
+                        {{#members}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/members}}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="createGame()">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 멤버 추가 Modal -->
     <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">멤버 추가</h5>
+                    <h5 class="modal-title">멤버 추가</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -51,6 +83,23 @@
         }).then(response => {
             if (response.ok) {
                 alert("멤버 추가 성공!");
+                location.reload();
+            }
+            if (!response.ok) {
+                alert(response.statusText);
+            }
+        });
+    }
+
+    const createGame = () => {
+        let whiteId = document.getElementById("white").value;
+        let blackId = document.getElementById("black").value;
+        fetch("/game", {
+            method: "POST",
+            body: `${whiteId},${blackId}`
+        }).then(response => {
+            if (response.ok) {
+                alert("게임이 생성되었습니다.");
                 location.reload();
             }
             if (!response.ok) {
