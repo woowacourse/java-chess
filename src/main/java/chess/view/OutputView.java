@@ -54,9 +54,9 @@ public class OutputView {
 		return pieceString;
 	}
 
-	public void printResult(final double statusOfBlack, final double statusOfWhite, final Winner winner) {
+	public void printResult(final double statusOfWhite, final double statusOfBlack, final Winner winner) {
 		printFinishMessage();
-		printStatus(statusOfBlack, statusOfWhite);
+		printStatus(statusOfWhite, statusOfBlack);
 		printWinner(winner);
 	}
 
