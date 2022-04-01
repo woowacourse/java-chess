@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 
 public class Pawn extends Piece {
@@ -13,8 +13,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to, SquareType squareType) {
-        if (squareType == SquareType.ENEMY) {
+    public boolean isMovable(Position from, Position to, TargetType targetType) {
+        if (targetType == TargetType.ENEMY) {
             return from.isDiagonal(to) &&
                     to.rankDisplacement(from) == pieceTeam.direction() &&
                     to.fileDistance(from) == 1;

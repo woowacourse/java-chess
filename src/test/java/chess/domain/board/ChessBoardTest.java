@@ -183,7 +183,7 @@ public class ChessBoardTest {
 
         chessBoard.movePiece(Positions.findPositionBy(E, FOUR), Positions.findPositionBy(E, SIX)); // 흰 룩
 
-        assertThat(gameFlow.isRunning()).isFalse();
+        assertThat(chessBoard.isGamePlaying()).isFalse();
     }
 
     @Test

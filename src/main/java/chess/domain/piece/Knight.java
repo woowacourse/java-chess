@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.board.position.MoveDirection.*;
 
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.MoveDirection;
 import chess.domain.board.position.Position;
 import java.util.List;
@@ -28,8 +28,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to, SquareType squareType) {
-        return super.isMovable(from, to, squareType, POSSIBLE_MOVE_DIRECTIONS);
+    public boolean isMovable(Position from, Position to, TargetType targetType) {
+        return super.isMovable(from, to, targetType, POSSIBLE_MOVE_DIRECTIONS);
     }
 
     @Override

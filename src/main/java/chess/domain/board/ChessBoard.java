@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.piece.PieceTeam.EMPTY;
 
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
@@ -67,22 +67,22 @@ public class ChessBoard {
     }
 
     private void validateMovable(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        SquareType squareType = decideMoveType(targetPiece);
-        if (!sourcePiece.isMovable(sourcePosition, targetPosition, squareType) ||
+        TargetType targetType = decideMoveType(targetPiece);
+        if (!sourcePiece.isMovable(sourcePosition, targetPosition, targetType) ||
                 isBlocked(sourcePosition, targetPosition) ||
                 targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
     }
 
-    private SquareType decideMoveType(Piece piece) {
+    private TargetType decideMoveType(Piece piece) {
         if (piece.equals(EMPTY_PIECE)) {
-            return SquareType.EMPTY;
+            return TargetType.EMPTY;
         }
         if (gameFlow.isCorrectTurn(piece)) {
-            return SquareType.FRIENDLY;
+            return TargetType.FRIENDLY;
         }
-        return SquareType.ENEMY;
+        return TargetType.ENEMY;
     }
 
     private boolean isBlocked(Position sourcePosition, Position targetPosition) {

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.position.File;
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Rank;
 
 public class QueenTest {
@@ -24,7 +24,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceTeam.WHITE);
 
         //when
-        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), SquareType.EMPTY);
+        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -38,7 +38,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceTeam.WHITE);
 
         //when
-        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), SquareType.EMPTY);
+        boolean actual = queen.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

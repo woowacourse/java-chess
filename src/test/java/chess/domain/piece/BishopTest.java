@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.position.File;
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 
@@ -26,7 +26,7 @@ class BishopTest {
         Position target = Positions.findPositionBy(file, rank);
 
         //when
-        boolean actual = bishop.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = bishop.isMovable(source, target, TargetType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -42,7 +42,7 @@ class BishopTest {
         Position target = Positions.findPositionBy(file, rank);
 
         //when
-        boolean actual = bishop.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = bishop.isMovable(source, target, TargetType.EMPTY);
 
         //then
         assertThat(actual).isFalse();

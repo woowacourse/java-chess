@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 
 public class EmptyPiece extends Piece {
@@ -18,7 +18,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target, SquareType squareType) {
+    public boolean isMovable(Position source, Position target, TargetType targetType) {
         return false;
     }
 

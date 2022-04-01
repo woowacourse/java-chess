@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.position.File;
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
 
@@ -24,7 +24,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceTeam.WHITE);
         Position source = Positions.findPositionBy(A, TWO);
         Position target = Positions.findPositionBy(A, rank);
-        boolean actual = pawn.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = pawn.isMovable(source, target, TargetType.EMPTY);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -34,7 +34,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceTeam.WHITE);
         Position source = Positions.findPositionBy(A, FOUR);
         Position target = Positions.findPositionBy(A, SIX);
-        boolean actual = pawn.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = pawn.isMovable(source, target, TargetType.EMPTY);
         assertThat(actual).isFalse();
     }
 
@@ -44,7 +44,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceTeam.WHITE);
         Position source = Positions.findPositionBy(A, FOUR);
         Position target = Positions.findPositionBy(A, THREE);
-        boolean actual = pawn.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = pawn.isMovable(source, target, TargetType.EMPTY);
 
         assertThat(actual).isFalse();
     }
@@ -55,7 +55,7 @@ class PawnTest {
         Pawn pawn = new Pawn(PieceTeam.BLACK);
         Position source = Positions.findPositionBy(A, FIVE);
         Position target = Positions.findPositionBy(A, SIX);
-        boolean actual = pawn.isMovable(source, target, SquareType.EMPTY);
+        boolean actual = pawn.isMovable(source, target, TargetType.EMPTY);
 
         assertThat(actual).isFalse();
     }
@@ -69,7 +69,7 @@ class PawnTest {
         Position source = Positions.findPositionBy(A, FOUR);
         Position target = Positions.findPositionBy(file, FIVE);
 
-        boolean actual = pawn.isMovable(source, target, SquareType.ENEMY);
+        boolean actual = pawn.isMovable(source, target, TargetType.ENEMY);
         assertThat(actual).isEqualTo(expected);
     }
 }

@@ -6,7 +6,7 @@ import chess.domain.board.position.MoveDirection;
 import java.util.List;
 import java.util.Objects;
 
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 
 public abstract class Piece {
@@ -17,7 +17,7 @@ public abstract class Piece {
         this.pieceTeam = pieceTeam;
     }
 
-    public abstract boolean isMovable(Position source, Position target, SquareType squareType);
+    public abstract boolean isMovable(Position source, Position target, TargetType targetType);
 
     public abstract double getScore();
 
@@ -50,7 +50,7 @@ public abstract class Piece {
         return getConcreteEmblem();
     }
 
-    boolean isMovable(Position from, Position to, SquareType squareType, List<MoveDirection> possibleMoveDirections) {
+    boolean isMovable(Position from, Position to, TargetType targetType, List<MoveDirection> possibleMoveDirections) {
         MoveDirection moveDirection = of(from, to);
 
         if (moveDirection.isNothing()) {

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import chess.domain.board.position.File;
-import chess.constant.SquareType;
+import chess.constant.TargetType;
 import chess.domain.board.position.Rank;
 
 public class KingTest {
@@ -23,7 +23,7 @@ public class KingTest {
         King king = new King(PieceTeam.WHITE);
 
         //when
-        boolean actual = king.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), SquareType.EMPTY);
+        boolean actual = king.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isTrue();
@@ -37,7 +37,7 @@ public class KingTest {
         King king = new King(PieceTeam.WHITE);
 
         //when
-        boolean actual = king.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), SquareType.EMPTY);
+        boolean actual = king.isMovable(Positions.findPositionBy(C, THREE), Positions.findPositionBy(file, rank), TargetType.EMPTY);
 
         //then
         assertThat(actual).isFalse();
