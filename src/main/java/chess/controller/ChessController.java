@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.Board;
+import chess.Exception;
 import chess.Turn;
 import chess.command.Command;
 import chess.command.Init;
@@ -30,7 +31,7 @@ public class ChessController {
             command = command.turnState(input);
             return command;
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            Exception.printCommandException(e);
             return startGame();
         }
 
@@ -66,7 +67,7 @@ public class ChessController {
             }
             return turn;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
+            Exception.printTurnException(e);
             OutputView.printBoard(convertToPieceDtos(board.getPieces()));
             command = turnState(command);
             return nextTurn(command, board, turn);
@@ -84,7 +85,7 @@ public class ChessController {
         try {
             return command.turnState(InputView.inputCommand());
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            Exception.printCommandException(e);
             return turnState(command);
         }
     }
