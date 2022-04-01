@@ -49,7 +49,7 @@ public class Queen extends Piece {
     private boolean isPossibleMoveStraightLine(Position source, Position target, Map<Position, Piece> board) {
         List<List<Integer>> possibleDot = List.of(List.of(0, 1), List.of(1, 0));
         List<Position> positions = new ArrayList<>(List.of(source, target));
-        if (PossibleMoveLinePositionChecker.isPossibleMovePosition( positions, possibleDot, board)) {
+        if (PossibleMoveLinePositionChecker.isPossibleMovePosition(positions, possibleDot, board)) {
             return true;
         }
         Collections.reverse(positions);

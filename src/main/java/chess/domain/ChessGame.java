@@ -34,7 +34,7 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public double computeScore(Color color){
+    public double computeScore(Color color) {
         return state.computeScore(color);
     }
 

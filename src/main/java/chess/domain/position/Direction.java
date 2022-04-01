@@ -6,7 +6,7 @@ public enum Direction {
 
     ONE_UP_R(1, 0),
     ONE_DOWN_R(-1, 0),
-    ONE_UP_C(0 ,1),
+    ONE_UP_C(0, 1),
     ONE_DOWN_C(0, -1),
 
     ONE_UP_R_UP_C(1, 1),
@@ -22,8 +22,7 @@ public enum Direction {
     ONE_UP_R_TWO_UP_C(1, 2),
     ONE_UP_R_TWO_DOWN_C(1, -2),
     ONE_DOWN_R_TWO_UP_C(-1, 2),
-    ONE_DOWN_R_TWO_DOWN_C(-1, -2)
-    ;
+    ONE_DOWN_R_TWO_DOWN_C(-1, -2);
 
     private final int row;
     private final int column;

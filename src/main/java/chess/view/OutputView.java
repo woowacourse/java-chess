@@ -40,7 +40,7 @@ public class OutputView {
     public static void printProgressScore(double scoreOfBlack, double scoreOfWhite) {
         System.out.println(SCORE_MESSAGE);
         System.out.println(BLACK + DELIMITER + scoreOfBlack);
-        System.out.println(WHITE +DELIMITER+ scoreOfWhite);
+        System.out.println(WHITE + DELIMITER + scoreOfWhite);
     }
 
     public static void printFinalScore(double scoreOfBlack, double scoreOfWhite) {

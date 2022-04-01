@@ -4,9 +4,12 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.utils.PossiblePositionChecker;
 
+import java.util.List;
 import java.util.Map;
 
 public class Knight extends Piece {
+
+    private static final List<Direction> DIRECTIONS = Direction.knight();
 
     public Knight(Color color) {
         super(Type.KNIGHT, color);
@@ -14,7 +17,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovableDot(Position source, Position target) {
-        return PossiblePositionChecker.isMovablePositions(Direction.knight(), source, target);
+        return PossiblePositionChecker.isMovablePositions(DIRECTIONS, source, target);
     }
 
     @Override

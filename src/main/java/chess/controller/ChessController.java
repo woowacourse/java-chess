@@ -22,7 +22,7 @@ public class ChessController {
             String input = inputCommand();
             executeCommand(chessGame, input);
         }
-        OutputView.printFinalScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
+        OutputView.printFinalScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
     }
 
     private void executeCommand(ChessGame chessGame, String input) {

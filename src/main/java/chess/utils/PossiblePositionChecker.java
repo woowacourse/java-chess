@@ -21,5 +21,3 @@ public class PossiblePositionChecker {
                 && source.findPossiblePosition(direction).isSameColumn(target);
     }
 }
-
-
