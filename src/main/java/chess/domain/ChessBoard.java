@@ -63,10 +63,12 @@ public class ChessBoard {
                                                             Map<Direction, List<Position>> movablePositions) {
         List<Position> result = new ArrayList<>();
         for (Map.Entry<Direction, List<Position>> entry : movablePositions.entrySet()) {
-            List<Position> positions = entry.getValue();
-            addMovablePositionsWithBlock(piece, result, positions);
+            addMovablePositionsWithBlock(piece, result, entry.getValue());
         }
-        addDiagonalMoveForPawn(nowPosition, piece, result);
+
+        if (piece.isSamePieceName(PieceName.PAWN)) {
+            addDiagonalMoveForPawn(nowPosition, piece, result);
+        }
         return Collections.unmodifiableList(result);
     }
 
@@ -79,34 +81,40 @@ public class ChessBoard {
 
     private int getCutIndex(Piece nowPiece, List<Position> positions) {
         int cutIndex = 0;
-        while (cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty()) {
+        while (isInRangeAndEmptyPosition(positions, cutIndex)) {
             cutIndex++;
         }
         Piece target = selectPiece(positions.get(cutIndex));
-        if (target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceName.PAWN) && !target.isEmpty())) {
+        if (isBlockedByTargetPiece(nowPiece, target)) {
             return cutIndex;
         }
         return cutIndex + 1;
     }
 
+    private boolean isInRangeAndEmptyPosition(List<Position> positions, int cutIndex) {
+        return cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty();
+    }
+
+    private boolean isBlockedByTargetPiece(Piece nowPiece, Piece target) {
+        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceName.PAWN) && !target.isEmpty());
+    }
+
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
-        if (piece.isSamePieceName(PieceName.PAWN)) {
-            Direction direction = Direction.pawnDirection(piece.getColor());
-            List<Direction> diagonalDirections = direction.getDiagonal();
-            List<Position> targetPositions = diagonalDirections.stream()
-                    .map(nowPosition::toDirection)
-                    .collect(Collectors.toList());
-            addPositionsIfEnemy(piece, result, targetPositions);
-        }
+        Direction direction = Direction.pawnDirection(piece.getColor());
+        List<Direction> diagonalDirections = direction.getDiagonal();
+        List<Position> targetPositions = diagonalDirections.stream()
+                .map(nowPosition::toDirection)
+                .collect(Collectors.toList());
+        addDiagonalPositionsIfEnemyForPawn(piece, result, targetPositions);
     }
 
-    private void addPositionsIfEnemy(Piece piece, List<Position> result, List<Position> targetPositions) {
+    private void addDiagonalPositionsIfEnemyForPawn(Piece piece, List<Position> result, List<Position> targetPositions) {
         for (Position position : targetPositions) {
-            addPositionIfEnemy(piece, result, position);
+            addDiagonalPositionIfEnemyForPawn(piece, result, position);
         }
     }
 
-    private void addPositionIfEnemy(Piece piece, List<Position> result, Position position) {
+    private void addDiagonalPositionIfEnemyForPawn(Piece piece, List<Position> result, Position position) {
         Piece targetPiece = selectPiece(position);
         if (!targetPiece.isSameColor(piece) && !targetPiece.isEmpty()) {
             result.add(position);
