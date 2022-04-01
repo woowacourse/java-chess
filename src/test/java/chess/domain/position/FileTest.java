@@ -9,15 +9,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FileTest {
 
     @Test
-    @DisplayName("문자열에 해당하는 File을 찾는다.")
+    @DisplayName("숫자에 해당하는 File을 찾아, Rank와 병합하기 위해 문자열로 값을 반환한다.")
     void of() {
         // given
         int value = 1;
         // when
-        File file = File.of(value);
-        String actual = file.getValue();
+        String actual = File.of(value).getValue();
+        String expected = "1";
         // then
-        assertThat(actual).isEqualTo(value);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
