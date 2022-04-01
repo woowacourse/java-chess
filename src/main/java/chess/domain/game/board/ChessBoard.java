@@ -99,7 +99,6 @@ public class ChessBoard {
     private void checkMate(Position to) {
         ChessPiece pieceOfTo = chessBoard.get(to);
         if (pieceOfTo != null && pieceOfTo.isKing()) {
-            System.out.println("sdf");
             gameStatus = GameStatus.END;
         }
     }
