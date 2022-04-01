@@ -40,8 +40,10 @@ public final class Board {
     }
 
     private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
-        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition,
-                toPosition)) {
+        if (piece.isPawn() && piece.isMovable(fromPosition, toPosition) && board.containsKey(toPosition)) {
+            throw new IllegalArgumentException(NON_MOVABLE_POSITION);
+        }
+        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition, toPosition)) {
             throw new IllegalArgumentException(NON_MOVABLE_POSITION);
         }
     }

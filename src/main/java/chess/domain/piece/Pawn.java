@@ -18,33 +18,19 @@ public class Pawn extends Piece {
     @Override
     public boolean isMovable(Position fromPosition, Position toPosition) {
         Direction direction = Direction.giveDirection(fromPosition, toPosition);
-        if (isWhiteInitialMovable(fromPosition, toPosition, direction)) {
-            return direction == Direction.UP
-                    && toPosition.getRankDifference(fromPosition) <= INITIAL_MOVABLE_SCOPE;
+        if (color == Color.WHITE && fromPosition.isSameRank(Rank.TWO)) {
+            return direction == Direction.UP && toPosition.getRankDifference(fromPosition) <= INITIAL_MOVABLE_SCOPE;
         }
         if (color == Color.WHITE) {
-            return direction == Direction.UP
-                    && toPosition.getRankDifference(fromPosition) == RANK_DIFFERENCE;
+            return direction == Direction.UP && toPosition.getRankDifference(fromPosition) == RANK_DIFFERENCE;
         }
-        if (isBlackInitialMovable(fromPosition, toPosition, direction)) {
-            return direction == Direction.DOWN && toPosition.getRankDifference(fromPosition) >= -2;
+        if (color == Color.BLACK && fromPosition.isSameRank(Rank.SEVEN)) {
+            return direction == Direction.DOWN && toPosition.getRankDifference(fromPosition) >= -INITIAL_MOVABLE_SCOPE;
         }
-
         if (color == Color.BLACK) {
-            return direction == Direction.DOWN
-                    && toPosition.getRankDifference(fromPosition) == -RANK_DIFFERENCE;
+            return direction == Direction.DOWN && toPosition.getRankDifference(fromPosition) == -RANK_DIFFERENCE;
         }
         return false;
-    }
-
-    private boolean isWhiteInitialMovable(Position fromPosition, Position toPosition,
-                                          Direction direction) {
-        return color == Color.WHITE && fromPosition.isSameRank(Rank.TWO);
-    }
-
-    private boolean isBlackInitialMovable(Position fromPosition, Position toPosition,
-                                          Direction direction) {
-        return color == Color.BLACK && fromPosition.isSameRank(Rank.SEVEN);
     }
 
     @Override
