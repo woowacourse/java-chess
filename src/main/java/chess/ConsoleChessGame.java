@@ -26,8 +26,13 @@ public class ConsoleChessGame {
     }
 
     public void move(Position from, Position to) {
-        board.move(from, to);
-        currentTurn = currentTurn.opposite();
+        if (!board.isTurnOf(from, currentTurn)) {
+            return;
+        }
+
+        if (board.move(from, to)) {
+            currentTurn = currentTurn.opposite();
+        }
     }
 
     public Map<Color, Double> score() {

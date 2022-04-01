@@ -1,6 +1,9 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Position {
     private static final String POSITION_INPUT_DELIMITER = "";
@@ -30,6 +33,36 @@ public final class Position {
 
     public int dy(Position another) {
         return rank.dy(another.rank);
+    }
+
+    public List<Position> between(Position to) {
+        List<File> fileBetween = file.between(to.file);
+        List<Rank> rankBetween = rank.between(to.rank);
+
+        if (isDiagonal(to)) {
+            return diagonalBetweens(fileBetween, rankBetween);
+        }
+
+        return verticalBetweens(fileBetween, rankBetween);
+    }
+
+    private boolean isDiagonal(Position to) {
+        return this.dx(to) == this.dy(to);
+    }
+
+    private List<Position> diagonalBetweens(List<File> fileBetween, List<Rank> rankBetween) {
+        List<Position> betweens = new ArrayList<>();
+        for (int i = 0; i < rankBetween.size(); i++) {
+            betweens.add(Position.of(fileBetween.get(i), rankBetween.get(i)));
+        }
+        return betweens;
+    }
+
+    private List<Position> verticalBetweens(List<File> fileBetween, List<Rank> rankBetween) {
+        return fileBetween.stream()
+                .flatMap(file -> rankBetween.stream()
+                        .map(rank -> Position.of(file, rank)))
+                .collect(Collectors.toList());
     }
 
     @Override

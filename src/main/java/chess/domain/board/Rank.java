@@ -1,7 +1,10 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public enum Rank {
     ONE(1),
@@ -32,5 +35,23 @@ public enum Rank {
 
     public int dy(Rank another) {
         return another.rankNumber - this.rankNumber;
+    }
+
+    public List<Rank> between(Rank target) {
+        final List<Rank> rankBetweens = Arrays.stream(values())
+                .filter(rank -> rank.rankNumber > this.rankNumber && rank.rankNumber < target.rankNumber)
+                .collect(Collectors.toList());
+
+        return order(rankBetweens, target);
+    }
+
+    private List<Rank> order(List<Rank> ranks, Rank target) {
+        if (this.rankNumber > target.rankNumber) {
+            return ranks.stream()
+                    .sorted(Comparator.reverseOrder())
+                    .collect(Collectors.toList());
+        }
+
+        return ranks;
     }
 }
