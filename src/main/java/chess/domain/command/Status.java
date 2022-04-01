@@ -2,7 +2,7 @@ package chess.domain.command;
 
 import chess.ChessGame;
 
-public final class Status implements CommandStrategy {
+public final class Status implements CommandGenerator {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,

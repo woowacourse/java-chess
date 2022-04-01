@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.ChessGame;
 import chess.domain.board.Positions;
 
-public final class Move implements CommandStrategy {
+public final class Move implements CommandGenerator {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,

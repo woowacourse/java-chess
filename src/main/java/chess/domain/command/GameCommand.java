@@ -16,9 +16,9 @@ public enum GameCommand {
     private static final String WRONG_COMMAND_MESSAGE = "잘못된 명령어를 입력하였습니다.";
 
     private final String command;
-    private final Supplier<CommandStrategy> commandGenerator;
+    private final Supplier<CommandGenerator> commandGenerator;
 
-    GameCommand(String command, Supplier<CommandStrategy> commandGenerator) {
+    GameCommand(String command, Supplier<CommandGenerator> commandGenerator) {
         this.command = command;
         this.commandGenerator = commandGenerator;
     }
@@ -30,7 +30,8 @@ public enum GameCommand {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_MESSAGE));
     }
 
-    public void execute(final String command, final ChessGame chessGame, final Runnable runnable) {
-        commandGenerator.get().execute(command, chessGame, runnable);
+    public void execute(final String command, final ChessGame chessGame, final Runnable printBoardToState) {
+        final CommandGenerator gameCommand = commandGenerator.get();
+        gameCommand.execute(command, chessGame, printBoardToState);
     }
 }

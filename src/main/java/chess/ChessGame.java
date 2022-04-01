@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.GameSwitch;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
@@ -26,7 +27,7 @@ public class ChessGame {
         while (gameSwitch.isOn()) {
             final String command = InputView.inputCommand();
             final GameCommand gameCommand = GameCommand.from(command);
-            gameCommand.execute(command, this, printBoardInfo());
+            gameCommand.execute(command, this, printBoardToState());
         }
     }
 
@@ -42,6 +43,10 @@ public class ChessGame {
         state = state.status();
     }
 
+    public StatusScore calculateStatus() {
+        return state.calculateStatus();
+    }
+
     public boolean isNotRunning() {
         return !state.isRunning();
     }
@@ -54,9 +59,9 @@ public class ChessGame {
         state = state.end();
     }
 
-    private Runnable printBoardInfo() {
+    private Runnable printBoardToState() {
         return () -> {
-            if (isReadyOrRunning()) {
+            if (isRunning()) {
                 OutputView.printBoard(getBoard());
             }
             if (isStatusInRunning()) {
@@ -65,14 +70,14 @@ public class ChessGame {
             if (isEndInRunning()) {
                 OutputView.printFinalStatus(calculateStatus());
             }
-            if (gameSwitch.isOff()) {
+            if (isEndInGameOff()) {
                 OutputView.printEndMessage();
             }
         };
     }
 
-    private boolean isReadyOrRunning() {
-        return gameSwitch.isOn() && !state.isFinished() && !state.isStatus();
+    private boolean isRunning() {
+        return gameSwitch.isOn() && state.isRunning();
     }
 
     private boolean isStatusInRunning() {
@@ -83,8 +88,8 @@ public class ChessGame {
         return gameSwitch.isOn() && state.isFinished();
     }
 
-    public StatusScore calculateStatus() {
-        return state.calculateStatus();
+    private boolean isEndInGameOff() {
+        return gameSwitch.isOff();
     }
 
     public Map<Position, Piece> getBoard() {

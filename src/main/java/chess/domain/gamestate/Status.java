@@ -11,7 +11,6 @@ import java.util.TreeMap;
 
 public final class Status implements State {
 
-    private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
     private static final String CANT_MOVE_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
     private static final String CANT_END_WHEN_STATUS = "status 상태에서는 end 명령어를 입력할 수 없습니다.";
 
