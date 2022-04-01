@@ -5,6 +5,7 @@ import static chess.domain.position.Direction.BOTTOM_RIGHT;
 import static chess.domain.position.Direction.TOP_LEFT;
 import static chess.domain.position.Direction.TOP_RIGHT;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.LinearMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
@@ -21,7 +22,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public void validateMove(Board board, Position sourcePosition, Position targetPosition) {
         MOVING_STRATEGY.validateMove(board, sourcePosition, targetPosition);
     }
 }

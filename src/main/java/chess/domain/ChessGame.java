@@ -1,9 +1,7 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import java.util.List;
 
 public class ChessGame {
 
@@ -38,7 +36,7 @@ public class ChessGame {
         return state.winner();
     }
 
-    public List<List<Piece>> board() {
+    public Board board() {
         ChessBoard chessBoard = state.chessBoard();
         return chessBoard.getBoard();
     }

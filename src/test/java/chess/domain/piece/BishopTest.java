@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.Board;
 import chess.domain.BoardFixtures;
 import chess.domain.Color;
 import chess.domain.position.Position;
@@ -16,7 +17,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class BishopTest {
 
-    private static final Position bishopSourcePosition = new Position("c1");
+    private static final Bishop BISHOP = new Bishop(Color.WHITE);
+    private static final Position BISHOP_SOURCE_POSITION = new Position("c1");
 
     private static Stream<Arguments> generatePossiblePositions() {
         return Stream.of("b2", "a3", "d2", "e3", "f4", "g5", "h6")
@@ -40,24 +42,22 @@ public class BishopTest {
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
     void 이동_가능한_경우_예외를_던지지_않는다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Bishop bishop = new Bishop(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
 
-        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+        board.place(BISHOP_SOURCE_POSITION, BISHOP);
 
-        assertDoesNotThrow(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition));
+        assertDoesNotThrow(() -> BISHOP.validateMove(board, BISHOP_SOURCE_POSITION, targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
     @ParameterizedTest
     @MethodSource("generateImpossiblePositions")
     void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Bishop bishop = new Bishop(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
 
-        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+        board.place(BISHOP_SOURCE_POSITION, BISHOP);
 
-        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> BISHOP.validateMove(board, BISHOP_SOURCE_POSITION, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,12 +65,11 @@ public class BishopTest {
     @ParameterizedTest
     @ValueSource(strings = {"a3", "e3", "f4", "g5", "h6"})
     void 이동_가능하고_기물이_위치한_경우_예외를_던진다(String target) {
-        List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
-        Bishop bishop = new Bishop(Color.WHITE);
+        Board board = BoardFixtures.generateInitChessBoard().getBoard();
 
-        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
+        board.place(BISHOP_SOURCE_POSITION, BISHOP);
 
-        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, new Position(target)))
+        Assertions.assertThatThrownBy(() -> BISHOP.validateMove(board, BISHOP_SOURCE_POSITION, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
     }
@@ -79,13 +78,13 @@ public class BishopTest {
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
     void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Bishop bishop = new Bishop(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
+        Pawn pawn = new Pawn(Color.WHITE);
 
-        board.get(bishopSourcePosition.getRankIndex()).set(bishopSourcePosition.getFileIndex(), bishop);
-        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+        board.place(BISHOP_SOURCE_POSITION, BISHOP);
+        board.place(targetPosition, pawn);
 
-        Assertions.assertThatThrownBy(() -> bishop.validateMove(board, bishopSourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> BISHOP.validateMove(board, BISHOP_SOURCE_POSITION, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
     }

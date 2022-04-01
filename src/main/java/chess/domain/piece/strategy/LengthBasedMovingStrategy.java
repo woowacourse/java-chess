@@ -1,8 +1,8 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.function.IntPredicate;
 
 public class LengthBasedMovingStrategy implements MovingStrategy {
@@ -14,7 +14,7 @@ public class LengthBasedMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public void validateMove(Board board, Position sourcePosition, Position targetPosition) {
         validateTargetPosition(sourcePosition, targetPosition);
         validateSameColor(board, sourcePosition, targetPosition);
     }
@@ -32,19 +32,12 @@ public class LengthBasedMovingStrategy implements MovingStrategy {
         return value * value;
     }
 
-    private void validateSameColor(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = findPiece(board, sourcePosition);
-        Piece targetPiece = findPiece(board, targetPosition);
+    private void validateSameColor(Board board, Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = board.findPiece(sourcePosition);
+        Piece targetPiece = board.findPiece(targetPosition);
 
         if (sourcePiece.isSameColor(targetPiece)) {
             throw new IllegalArgumentException("같은 진영 기물은 공격할 수 없습니다.");
         }
-    }
-
-    private Piece findPiece(List<List<Piece>> board, Position position) {
-        int rankIndex = position.getRankIndex();
-        int fileIndex = position.getFileIndex();
-
-        return board.get(rankIndex).get(fileIndex);
     }
 }

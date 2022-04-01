@@ -8,6 +8,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.position.Position;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -17,7 +18,8 @@ public class BoardFixtures {
     private static final int END_INCLUSIVE = 7;
 
     public static ChessBoard generateEmptyChessBoard() {
-        return new ChessBoard(() -> generateEmptyBoard());
+        Board board = new Board(generateEmptyBoard());
+        return new ChessBoard(board);
     }
 
     private static List<List<Piece>> generateEmptyBoard() {
@@ -33,41 +35,36 @@ public class BoardFixtures {
     }
 
     public static ChessBoard generateInitChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(new InitBoardGenerator());
-
-        return chessBoard;
+        return new ChessBoard(new InitBoardGenerator());
     }
 
     public static ChessBoard generatePawnChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = new Board(generateEmptyBoard());
 
-        board.get(0).set(0, new Pawn(Color.BLACK));
-        board.get(1).set(0, new Pawn(Color.BLACK));
-        board.get(2).set(0, new Pawn(Color.BLACK));
+        board.place(new Position("a8"), new Pawn(Color.BLACK));
+        board.place(new Position("a7"), new Pawn(Color.BLACK));
+        board.place(new Position("a6"), new Pawn(Color.BLACK));
 
-        return chessBoard;
+        return new ChessBoard(board);
     }
 
     public static ChessBoard generateWhiteKingChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = new Board(generateEmptyBoard());
 
-        board.get(0).set(0, new King(Color.WHITE));
-        board.get(1).set(0, new Queen(Color.BLACK));
-        board.get(2).set(0, new King(Color.BLACK));
+        board.place(new Position("a8"), new King(Color.WHITE));
+        board.place(new Position("a7"), new Queen(Color.BLACK));
+        board.place(new Position("a6"), new King(Color.BLACK));
 
-        return chessBoard;
+        return new ChessBoard(board);
     }
 
     public static ChessBoard generateBlackKingChessBoard() {
-        ChessBoard chessBoard = new ChessBoard(() -> generateEmptyBoard());
-        List<List<Piece>> board = chessBoard.getBoard();
+        Board board = new Board(generateEmptyBoard());
 
-        board.get(0).set(0, new King(Color.BLACK));
-        board.get(1).set(0, new Queen(Color.WHITE));
-        board.get(2).set(0, new King(Color.WHITE));
+        board.place(new Position("a8"), new King(Color.BLACK));
+        board.place(new Position("a7"), new Queen(Color.WHITE));
+        board.place(new Position("a6"), new King(Color.WHITE));
 
-        return chessBoard;
+        return new ChessBoard(board);
     }
 }

@@ -11,7 +11,7 @@ public enum Command {
 
     START("start", (chessGame, arguments) -> {
         chessGame.start();
-        OutputView.printChessBoard(chessGame.board());
+        OutputView.printChessBoard(chessGame.board().getBoard());
     }),
 
     END("end", (chessGame, arguments) -> {
@@ -20,7 +20,7 @@ public enum Command {
 
     MOVE("move", (chessGame, arguments) -> {
         chessGame.move(arguments.get(0), arguments.get(1));
-        OutputView.printChessBoard(chessGame.board());
+        OutputView.printChessBoard(chessGame.board().getBoard());
     }),
 
     STATUS("status", (chessGame, arguments) -> {

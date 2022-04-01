@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.Board;
 import chess.domain.BoardFixtures;
 import chess.domain.Color;
 import chess.domain.position.Position;
@@ -16,7 +17,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class QueenTest {
 
-    private static final Position queenSourcePosition = new Position("d1");
+    private static final Queen QUEEN = new Queen(Color.WHITE);
+    private static final Position QUEEN_SOURCE_POSITION = new Position("d1");
 
     private static Stream<Arguments> generatePossiblePositions() {
         List<String> positions = List.of(
@@ -37,24 +39,22 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
     void 이동_가능한_경우_예외를_던지지_않는다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Queen queen = new Queen(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
+        board.place(QUEEN_SOURCE_POSITION, QUEEN);
 
-        assertDoesNotThrow(() -> queen.validateMove(board, queenSourcePosition, targetPosition));
+        assertDoesNotThrow(() -> QUEEN.validateMove(board, QUEEN_SOURCE_POSITION, targetPosition));
     }
 
     @DisplayName("이동 불가능한 위치인 경우 예외를 던진다.")
     @ParameterizedTest
     @MethodSource("generateImpossiblePositions")
     void 이동_불가능한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Queen queen = new Queen(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
+        board.place(QUEEN_SOURCE_POSITION, QUEEN);
 
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> QUEEN.validateMove(board, QUEEN_SOURCE_POSITION, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -62,12 +62,11 @@ class QueenTest {
     @ParameterizedTest
     @ValueSource(strings = {"d3", "d4", "d5", "d6", "d7", "d8", "b3", "a4", "f3", "g4", "h5"})
     void 이동_가능하고_기물이_위치한_경우_예외를_던진다(String target) {
-        List<List<Piece>> board = BoardFixtures.generateInitChessBoard().getBoard();
-        Queen queen = new Queen(Color.WHITE);
+        Board board = BoardFixtures.generateInitChessBoard().getBoard();
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
+        board.place(QUEEN_SOURCE_POSITION, new Pawn(Color.BLACK));
 
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, new Position(target)))
+        Assertions.assertThatThrownBy(() -> QUEEN.validateMove(board, QUEEN_SOURCE_POSITION, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 존재하여 이동할 수 없습니다.");
     }
@@ -76,13 +75,12 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("generatePossiblePositions")
     void 이동_가능하고_같은진영의_기물이_위치한_경우_예외를_던진다(Position targetPosition) {
-        List<List<Piece>> board = BoardFixtures.generateEmptyChessBoard().getBoard();
-        Queen queen = new Queen(Color.WHITE);
+        Board board = BoardFixtures.generateEmptyChessBoard().getBoard();
 
-        board.get(queenSourcePosition.getRankIndex()).set(queenSourcePosition.getFileIndex(), queen);
-        board.get(targetPosition.getRankIndex()).set(targetPosition.getFileIndex(), new Pawn(Color.WHITE));
+        board.place(QUEEN_SOURCE_POSITION, QUEEN);
+        board.place(targetPosition, new Pawn(Color.WHITE));
 
-        Assertions.assertThatThrownBy(() -> queen.validateMove(board, queenSourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> QUEEN.validateMove(board, QUEEN_SOURCE_POSITION, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 진영 기물은 공격할 수 없습니다.");
     }

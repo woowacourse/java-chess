@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class EmptyPiece extends Piece {
 
@@ -11,7 +11,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public void validateMove(Board board, Position sourcePosition, Position targetPosition) {
         throw new UnsupportedOperationException();
     }
 

@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.LengthBasedMovingStrategy;
 import chess.domain.piece.strategy.MovingStrategy;
 import chess.domain.position.Position;
-import java.util.List;
 
 public class Knight extends Piece {
 
@@ -16,7 +16,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public void validateMove(Board board, Position sourcePosition, Position targetPosition) {
         MOVING_STRATEGY.validateMove(board, sourcePosition, targetPosition);
     }
 }

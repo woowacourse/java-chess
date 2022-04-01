@@ -1,10 +1,9 @@
 package chess.domain.generator;
 
-import chess.domain.piece.Piece;
-import java.util.List;
+import chess.domain.Board;
 
 @FunctionalInterface
 public interface BoardGenerator {
 
-    List<List<Piece>> generate();
+    Board generate();
 }

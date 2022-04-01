@@ -1,5 +1,6 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -16,7 +17,7 @@ public abstract class PawnMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public final void validateMove(List<List<Piece>> board, Position sourcePosition, Position targetPosition) {
+    public final void validateMove(Board board, Position sourcePosition, Position targetPosition) {
         MovingInfo movingInfo = new MovingInfo(sourcePosition, targetPosition);
 
         validateDirection(movingInfo);
@@ -35,11 +36,11 @@ public abstract class PawnMovingStrategy implements MovingStrategy {
         }
     }
 
-    private boolean canMovingForward(List<List<Piece>> board, Position sourcePosition, Position targetPosition,
+    private boolean canMovingForward(Board board, Position sourcePosition, Position targetPosition,
                                      MovingInfo movingInfo) {
         if (isMovableLengthAtMove(sourcePosition, movingInfo)) {
-            Piece pieceInPath = findPiece(board, sourcePosition.add(movingInfo.getDirection()));
-            Piece targetPiece = findPiece(board, targetPosition);
+            Piece pieceInPath = board.findPiece(sourcePosition.add(movingInfo.getDirection()));
+            Piece targetPiece = board.findPiece(targetPosition);
 
             validateMoveTop(sourcePosition, movingInfo, pieceInPath);
             validateExistPiece(targetPiece);
@@ -70,9 +71,9 @@ public abstract class PawnMovingStrategy implements MovingStrategy {
         }
     }
 
-    private boolean canCapture(List<List<Piece>> board, Position targetPosition, MovingInfo movingInfo) {
+    private boolean canCapture(Board board, Position targetPosition, MovingInfo movingInfo) {
         if (isMovableLengthAtCapture(movingInfo)) {
-            Piece targetPiece = findPiece(board, targetPosition);
+            Piece targetPiece = board.findPiece(targetPosition);
 
             validateEmptyPiece(targetPiece);
             validateSameColor(targetPiece);
@@ -89,13 +90,6 @@ public abstract class PawnMovingStrategy implements MovingStrategy {
         if (piece.isEmpty()) {
             throw new IllegalArgumentException("target 위치에 기물이 존재하지 않아 공격할 수 없습니다.");
         }
-    }
-
-    private Piece findPiece(List<List<Piece>> board, Position position) {
-        int rankIndex = position.getRankIndex();
-        int fileIndex = position.getFileIndex();
-
-        return board.get(rankIndex).get(fileIndex);
     }
 
     abstract void validateSameColor(Piece targetPiece);
