@@ -40,8 +40,8 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException(NON_MOVABLE_DIRECTION));
     }
 
-    public static Position step(Position from, Direction direction) {
-        return from.getIncreasedOneStepPosition(direction.xPoint, direction.yPoint);
+    public Position step(Position from) {
+        return from.getIncreasedOneStepPosition(xPoint, yPoint);
     }
 
     public static List<Direction> rowAndColumns() {

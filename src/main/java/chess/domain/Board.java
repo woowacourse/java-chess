@@ -54,7 +54,7 @@ public final class Board {
         Position initialPosition = fromPosition;
         Direction direction = Direction.giveDirection(fromPosition, toPosition);
         while (initialPosition != toPosition) {
-            initialPosition = Direction.step(initialPosition, direction);
+            initialPosition = direction.step(initialPosition);
             validateRoute(initialPosition, toPosition);
         }
     }
