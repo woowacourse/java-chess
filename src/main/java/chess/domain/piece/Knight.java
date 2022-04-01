@@ -35,9 +35,4 @@ public class Knight extends ChessPiece {
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return Collections.emptyList();
     }
-
-    @Override
-    public ChessPiece hardCopy() {
-        return new Knight(this.team);
-    }
 }

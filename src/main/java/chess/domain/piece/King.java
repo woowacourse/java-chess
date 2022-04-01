@@ -33,9 +33,4 @@ public class King extends ChessPiece {
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return Collections.emptyList();
     }
-
-    @Override
-    public ChessPiece hardCopy() {
-        return new King(this.team);
-    }
 }

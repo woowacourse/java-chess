@@ -41,9 +41,4 @@ public class Queen extends ChessPiece {
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return movingStrategy.makePath(sourcePosition, targetPosition);
     }
-
-    @Override
-    public ChessPiece hardCopy() {
-        return new Queen(this.team);
-    }
 }

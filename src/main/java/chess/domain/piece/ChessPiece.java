@@ -19,8 +19,6 @@ public abstract class ChessPiece {
 
     public abstract List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
 
-    public abstract ChessPiece hardCopy();
-
     public boolean isSameTeam(Team other) {
         return this.team == other;
     }
