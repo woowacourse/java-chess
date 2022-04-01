@@ -12,7 +12,7 @@ class CommandTest {
     @DisplayName("Command가 start 또는 end가 아니면 예외가 발생한다.")
     void validateMenu() {
         assertThatThrownBy(() -> {
-            new Init("aaa");
+            new Start("aaa");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

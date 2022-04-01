@@ -20,7 +20,7 @@ class StartTest {
     @Test
     @DisplayName("end를 입력하면 End를 반환한다.")
     void inputEnd() {
-        Command command = new Start("end");
+        Command command = new Start("start");
         command = command.turnState("end");
 
         assertThat(command).isInstanceOf(End.class);
@@ -29,7 +29,7 @@ class StartTest {
     @Test
     @DisplayName("move를 입력하면 Move를 반환한다.")
     void inputMove() {
-        Command command = new Start("move a1 b2");
+        Command command = new Start("start");
         command = command.turnState("move a1 b2");
 
         assertThat(command).isInstanceOf(Move.class);
@@ -38,7 +38,7 @@ class StartTest {
     @Test
     @DisplayName("status를 입력하면 예외처리를 한다.")
     void inputStatus() {
-        Command command = new Start("status");
+        Command command = new Start("start");
 
         assertThatThrownBy(() -> {
             command.turnState("status");
