@@ -16,8 +16,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
 
-    Position initialPosition = new Position("d5");
-    ChessPiece queen = new Queen(Color.BLACK);
+    private Position initialPosition = new Position("d5");
+    private ChessPiece queen = new Queen(Color.BLACK);
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")

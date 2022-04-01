@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
-    Position initialPosition = new Position("d5");
+    private Position initialPosition = new Position("d5");
 
     @ParameterizedTest
     @CsvSource(value = {"BLACK:d6", "WHITE:d4"}, delimiter = ':')

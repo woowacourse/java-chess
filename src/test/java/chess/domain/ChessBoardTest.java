@@ -28,7 +28,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("체스판을 초기화하고 기물을 배치한다.")
+    @DisplayName("체스판을 초기화하고 배치한 기물의 갯수를 확인한다.")
     void init() {
         int actual = chessBoard.countPiece();
         int expected = 32;

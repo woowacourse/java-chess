@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PositionTest {
 
-    Position position = new Position("a1");
+    private Position position = new Position("a1");
 
     @ParameterizedTest
     @CsvSource(value = {"1", "b"})

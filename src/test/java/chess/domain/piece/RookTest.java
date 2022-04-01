@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
-    Position initialPosition = new Position("d5");
+    private Position initialPosition = new Position("d5");
 
     @Test
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
