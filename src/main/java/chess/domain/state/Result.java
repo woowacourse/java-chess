@@ -1,6 +1,6 @@
-package chess.domain.board;
+package chess.domain.state;
 
-import chess.domain.piece.notation.Color;
+import chess.domain.piece.Color;
 
 public enum Result {
     BLACK_WIN,

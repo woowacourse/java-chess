@@ -1,10 +1,6 @@
 package chess.domain.state;
 
-import chess.domain.board.BoardCalculator;
-import chess.domain.board.Result;
-import chess.domain.piece.Piece;
-import chess.domain.piece.notation.Color;
-import chess.domain.position.Position;
+import chess.domain.piece.Color;
 
 import java.util.Map;
 import java.util.Objects;
@@ -14,11 +10,10 @@ public final class Status {
     private final Map<Color, Double> blackScore;
     private final Result result;
 
-    public Status(final Color winnerColor, final Map<Position, Piece> board) {
-        final var boardCalculator = new BoardCalculator(board);
-        this.result = Result.from(winnerColor);
-        this.whiteScore = boardCalculator.sumScore(Color.WHITE);
-        this.blackScore = boardCalculator.sumScore(Color.BLACK);
+    public Status(final Result result, final Map<Color, Double> whiteScore, final Map<Color, Double> blackScore) {
+        this.result = result;
+        this.whiteScore = whiteScore;
+        this.blackScore = blackScore;
     }
 
     @Override
