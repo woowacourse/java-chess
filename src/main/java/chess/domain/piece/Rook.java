@@ -25,7 +25,7 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
+    public void checkMovable(Position from, Position to) {
         boolean sameFile = from.isSameFile(to);
         boolean sameRank = from.isSameRank(to);
 

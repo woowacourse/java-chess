@@ -23,7 +23,7 @@ public abstract class ChessPiece {
 
     public abstract List<Position> getInitBlackPosition();
 
-    public abstract void canMove(Position from, Position to);
+    public abstract void checkMovable(Position from, Position to);
 
     public Stack<Position> findRoute(final Position from, Position to) {
         Stack<Position> routes = new Stack<>();

@@ -40,7 +40,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public void canMove(Position from, Position to) {
+    public void checkMovable(Position from, Position to) {
         if (from.isSameRank(to)) {
             if (isBlack() && checkMove(from, to, BLACK_MOVABLE_DISTANCE, BLACK_INIT_FILE)) {
                 return;
@@ -69,7 +69,7 @@ public class Pawn extends ChessPiece {
 
     public void checkCrossMove(Position from, Position to) {
         int fileDistance = from.fileDistance(to);
-        if (isPawnMoveableDistanceRange(from, to)) {
+        if (isPawnMovableDistanceRange(from, to)) {
             if (isBlack() && fileDistance == BLACK_MOVABLE_DISTANCE) {
                 return;
             }
@@ -81,7 +81,7 @@ public class Pawn extends ChessPiece {
         throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
     }
 
-    private boolean isPawnMoveableDistanceRange(Position from, Position to) {
+    private boolean isPawnMovableDistanceRange(Position from, Position to) {
         return Math.abs(from.rankDistance(to)) == PAWN_MOVE_RANGE;
     }
 

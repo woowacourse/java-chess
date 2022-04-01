@@ -50,7 +50,7 @@ public class Score {
     private double countSameRankPawn(Color color, Rank rank) {
         return Arrays.stream(File.values())
                 .map((file) -> searchPieceInFile(rank, file))
-                .filter((possiblePiece) -> isMyPawn(color, possiblePiece))
+                .filter((possiblePiece) -> isSameColorPawn(color, possiblePiece))
                 .count();
     }
 
@@ -62,20 +62,20 @@ public class Score {
         return rank.getValue() + file.getValue();
     }
 
-    private boolean isMyPawn(Color color, Optional<ChessPiece> possiblePiece) {
+    private boolean isSameColorPawn(Color color, Optional<ChessPiece> possiblePiece) {
         if (possiblePiece.isEmpty()) {
             return false;
         }
 
         ChessPiece chessPiece = possiblePiece.get();
-        if (isNotPawn(chessPiece) || isNotMyPiece(color, chessPiece)) {
+        if (isNotPawn(chessPiece) || isNotSameColor(color, chessPiece)) {
             return false;
         }
 
         return true;
     }
 
-    private boolean isNotMyPiece(Color color, ChessPiece chessPiece) {
+    private boolean isNotSameColor(Color color, ChessPiece chessPiece) {
         return !chessPiece.isSameColor(color);
     }
 
