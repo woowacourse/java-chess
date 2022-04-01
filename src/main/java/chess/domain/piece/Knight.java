@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.KNIGHT;
+
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
@@ -27,7 +29,7 @@ public class Knight extends Piece {
 
     @Override
     protected String baseSignature() {
-        return "n";
+        return KNIGHT.getSignature();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Knight extends Piece {
 
     @Override
     public double score() {
-        return 2.5;
+        return KNIGHT.getScore();
     }
 
     @Override

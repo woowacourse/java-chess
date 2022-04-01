@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.QUEEN;
+
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
@@ -37,7 +39,7 @@ public class Queen extends Piece {
 
     @Override
     protected String baseSignature() {
-        return "q";
+        return QUEEN.getSignature();
     }
 
     @Override
@@ -55,7 +57,7 @@ public class Queen extends Piece {
 
     @Override
     public double score() {
-        return 9;
+        return QUEEN.getScore();
     }
 
     @Override

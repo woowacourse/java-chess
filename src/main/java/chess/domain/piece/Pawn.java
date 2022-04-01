@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.PAWN;
+
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
@@ -38,7 +40,7 @@ public class Pawn extends Piece {
 
     @Override
     protected String baseSignature() {
-        return "p";
+        return PAWN.getSignature();
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Pawn extends Piece {
 
     @Override
     public double score() {
-        return 1;
+        return PAWN.getScore();
     }
 
     @Override

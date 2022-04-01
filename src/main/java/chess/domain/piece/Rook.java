@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.PieceType.ROOK;
+
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
@@ -29,7 +31,7 @@ public class Rook extends Piece {
 
     @Override
     protected String baseSignature() {
-        return "r";
+        return ROOK.getSignature();
     }
 
     @Override
@@ -47,7 +49,7 @@ public class Rook extends Piece {
 
     @Override
     public double score() {
-        return 5;
+        return ROOK.getScore();
     }
 
     @Override

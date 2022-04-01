@@ -50,7 +50,7 @@ public enum Movement {
         return Arrays.stream(values())
                 .filter(movement -> movement.findPredicate.test(columnDifference, rowDifference))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("게임에서 허용되지 않은 이동입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("체스에서 허용되지 않은 이동 방입니다."));
     }
 
     private static boolean isDiagonal(int columnDiff, int rowDiff) {
