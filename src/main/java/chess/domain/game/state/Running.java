@@ -28,7 +28,7 @@ public class Running implements GameState {
         if (board().isKingDead()) {
             return new End(board);
         }
-        return new Running(board, color);
+        return this;
     }
 
     private void validateTurn(Position fromPosition) {
