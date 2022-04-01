@@ -2,7 +2,6 @@ package chess.domain.game.board;
 
 import chess.domain.game.Color;
 import chess.domain.game.GameStatus;
-import chess.domain.game.Result;
 import chess.domain.game.Score;
 import chess.domain.piece.ChessPiece;
 import chess.domain.position.Direction;
@@ -35,10 +34,6 @@ public class ChessBoard {
         }
     }
 
-    private boolean isEmptyDestination(Position to) {
-        return findPiece(to).isEmpty();
-    }
-
     private ChessPiece checkPiece(Position from, Position to) {
         ChessPiece me = findPiece(from)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
@@ -47,9 +42,29 @@ public class ChessBoard {
         return me;
     }
 
-    private void catchAndMove(Position from, Position to, ChessPiece me) {
-        checkPawnCrossMove(from, to, me);
-        movePiece(from, to, me);
+    private void checkMove(Position from, Position to, ChessPiece me) {
+        validateTurn(me);
+        me.checkMovable(from, to);
+        Stack<Position> routes = me.findRoute(from, to);
+
+        while (!routes.isEmpty()) {
+            checkHurdle(routes.pop());
+        }
+    }
+
+    private void validateTurn(ChessPiece me) {
+        if (currentTurn != me.getColor()) {
+            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
+        }
+    }
+    private void checkHurdle(Position position) {
+        if (findPiece(position).isPresent()) {
+            throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
+        }
+    }
+
+    private boolean isEmptyDestination(Position to) {
+        return findPiece(to).isEmpty();
     }
 
     private void moveEmptyPosition(Position from, Position to, ChessPiece me) {
@@ -57,10 +72,9 @@ public class ChessBoard {
         movePiece(from, to, me);
     }
 
-    private void validateTurn(ChessPiece me) {
-        if (currentTurn != me.getColor()) {
-            throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
-        }
+    private void catchAndMove(Position from, Position to, ChessPiece me) {
+        checkPawnCrossMove(from, to, me);
+        movePiece(from, to, me);
     }
 
     private void checkPawnStraightMove(Position from, Position to, ChessPiece me) {
@@ -78,25 +92,8 @@ public class ChessBoard {
             throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
         }
     }
-
     private boolean isStraight(Position from, Position to) {
         return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
-    }
-
-    private void checkMove(Position from, Position to, ChessPiece me) {
-        validateTurn(me);
-        me.checkMovable(from, to);
-        Stack<Position> routes = me.findRoute(from, to);
-
-        while (!routes.isEmpty()) {
-            checkHurdle(routes.pop());
-        }
-    }
-
-    private void checkHurdle(Position position) {
-        if (findPiece(position).isPresent()) {
-            throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
-        }
     }
 
     private void movePiece(Position from, Position to, ChessPiece me) {
@@ -112,6 +109,7 @@ public class ChessBoard {
             gameStatus = GameStatus.END;
         }
     }
+
 
     public int countPiece() {
         return chessBoard.size();

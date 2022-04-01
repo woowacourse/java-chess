@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.game.Color;
-import chess.domain.game.Result;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.ChessPiece;
 import chess.domain.position.Position;
@@ -68,9 +67,6 @@ public class OutputView {
         }
     }
 
-    public static void printError(String errorMessage) {
-        System.out.println(ERROR + errorMessage);
-    }
 
     public static void printStatus(Map<Color, Double> scoreByColor) {
         System.out.println(STATUS);
@@ -102,5 +98,9 @@ public class OutputView {
             return;
         }
         System.out.printf("%s%n", score);
+    }
+
+    public static void printError(String errorMessage) {
+        System.out.println(ERROR + errorMessage);
     }
 }

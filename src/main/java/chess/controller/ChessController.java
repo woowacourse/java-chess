@@ -39,18 +39,6 @@ public class ChessController {
         }
     }
 
-    private void playingGame(ChessBoard chessBoard, String text, Command command) {
-        if (command == Command.MOVE) {
-            runMoveCommand(chessBoard, text);
-            playTurn(chessBoard);
-        }
-
-        if (command == Command.STATUS) {
-            runStatusCommand(chessBoard);
-            playTurn(chessBoard);
-        }
-    }
-
     private void runStartCommand(ChessBoard chessBoard) {
         try {
             checkBeforeStart(chessBoard);
@@ -64,6 +52,18 @@ public class ChessController {
     private void checkBeforeStart(ChessBoard chessBoard) {
         if (chessBoard.isPlaying()) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
+        }
+    }
+
+    private void playingGame(ChessBoard chessBoard, String text, Command command) {
+        if (command == Command.MOVE) {
+            runMoveCommand(chessBoard, text);
+            playTurn(chessBoard);
+        }
+
+        if (command == Command.STATUS) {
+            runStatusCommand(chessBoard);
+            playTurn(chessBoard);
         }
     }
 
