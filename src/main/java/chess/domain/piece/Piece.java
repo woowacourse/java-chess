@@ -33,9 +33,9 @@ public abstract class Piece {
 
     public final String convertPieceToString() {
         if (this.isBlank()) {
-            return " ";
+            return "blank";
         }
-        return String.format("%s %s", team.getValue(), getName());
+        return String.format("%s_%s", team.getValue(), getName());
     }
 
     public abstract boolean isBlank();

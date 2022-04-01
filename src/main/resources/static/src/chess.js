@@ -35,9 +35,23 @@ async function endGame() {
 
 async function initializeBoard(board) {
     board.then(res => Object.keys(res).forEach(function (value) {
-        let eachDiv = document.querySelector("#" + value);
-        eachDiv.innerHTML = res[value];
+        let eachDiv = document.querySelector("#" + value)
+        putPiece(eachDiv, res, value)
+        //eachDiv.innerHTML = res[value];
     }))
+}
+
+function putPiece(eachDiv, board, value) {
+    if (eachDiv.hasChildNodes()) {
+        eachDiv.removeChild(eachDiv.firstChild)
+    }
+    const img = document.createElement("img")
+    img.style.width = '30px'
+    img.style.height = '40px'
+    img.src = "/images/" + board[value] + ".png"
+    img.style.display = 'block'
+    img.style.margin = 'auto'
+    eachDiv.appendChild(img)
 }
 
 function clickMovePosition(e) {
@@ -70,7 +84,7 @@ async function movePiece(source, target) {
 async function updateBoard(board) {
     Object.keys(board).forEach(function (value) {
         let eachDiv = document.querySelector("#" + value);
-        eachDiv.innerHTML = board[value];
+        putPiece(eachDiv, board, value)
     })
 }
 
