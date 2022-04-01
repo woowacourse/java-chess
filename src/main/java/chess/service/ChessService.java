@@ -35,8 +35,8 @@ public class ChessService {
     }
 
     public StatusDto createStatus() {
-        // dao에서 현재 보드 가져옴
-        Score score = new Score(new Board(BoardFactory.initialize()).getBoard());
+        Board board = BoardFactory.createBoard(boardDao.getBoard());
+        Score score = new Score(board.getBoard());
         return StatusDto.of(score);
     }
 
