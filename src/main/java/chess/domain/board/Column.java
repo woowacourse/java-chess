@@ -5,17 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-	A(0, "a"),
-	B(1, "b"),
-	C(2, "c"),
-	D(3, "d"),
-	E(4, "e"),
-	F(5, "f"),
-	G(6, "g"),
-	H(7, "h"),
+	A(1, "a"),
+	B(2, "b"),
+	C(3, "c"),
+	D(4, "d"),
+	E(5, "e"),
+	F(6, "f"),
+	G(7, "g"),
+	H(8, "h"),
 	;
 
 	private static final String INVALID_COLUMN_EXCEPTION = "존재하지 않는 열입니다.";
+	private static final int MAX_COLUMN_VALUE = 8;
 
 	private final int value;
 	private final String name;
@@ -41,7 +42,7 @@ public enum Column {
 
 	public Column flip() {
 		return Arrays.stream(Column.values())
-			.filter(it -> it.value == (7 - this.value))
+			.filter(it -> it.value == (MAX_COLUMN_VALUE - this.value + 1))
 			.findFirst()
 			.orElseThrow();
 	}

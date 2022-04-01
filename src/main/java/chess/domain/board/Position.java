@@ -77,19 +77,19 @@ public class Position implements Comparable<Position> {
 
 	private List<Position> findHorizontalPath(List<Column> columnPath) {
 		return columnPath.stream()
-			.map(column -> new Position(column, this.row))
+			.map(column -> Position.of(column, this.row))
 			.collect(Collectors.toList());
 	}
 
 	private List<Position> findVerticalPath(List<Row> rowPath) {
 		return rowPath.stream()
-			.map(row -> new Position(this.column, row))
+			.map(row -> Position.of(this.column, row))
 			.collect(Collectors.toList());
 	}
 
 	private List<Position> findDiagonalPath(List<Row> rowPath, List<Column> columnPath) {
 		return IntStream.range(0, rowPath.size())
-			.mapToObj(index -> new Position(columnPath.get(index), rowPath.get(index)))
+			.mapToObj(index -> Position.of(columnPath.get(index), rowPath.get(index)))
 			.collect(Collectors.toList());
 	}
 

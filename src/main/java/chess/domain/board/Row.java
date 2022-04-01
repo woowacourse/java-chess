@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public enum Row {
-	ONE(0),
-	TWO(1),
-	THREE(2),
-	FOUR(3),
-	FIVE(4),
-	SIX(5),
-	SEVEN(6),
-	EIGHT(7),
+	ONE(1),
+	TWO(2),
+	THREE(3),
+	FOUR(4),
+	FIVE(5),
+	SIX(6),
+	SEVEN(7),
+	EIGHT(8),
 	;
 
 	private static final Pattern ROW_PATTERN = Pattern.compile("[1-8]");
 	private static final String INVALID_ROW_EXCEPTION = "존재하지 않는 행입니다.";
-	private static final int MAX_ROW_VALUE = 7;
+	private static final int MAX_ROW_VALUE = 8;
 
 	private final int value;
 
@@ -30,7 +30,7 @@ public enum Row {
 		if (!ROW_PATTERN.matcher(rawRow).matches()) {
 			throw new IllegalArgumentException(INVALID_ROW_EXCEPTION);
 		}
-		return from(Integer.parseInt(rawRow) - 1);
+		return from(Integer.parseInt(rawRow));
 	}
 
 	private static Row from(int value) {
@@ -42,7 +42,7 @@ public enum Row {
 
 	public Row flip() {
 		return Arrays.stream(Row.values())
-			.filter(row -> row.value == (MAX_ROW_VALUE - this.value))
+			.filter(row -> row.value == (MAX_ROW_VALUE - this.value + 1))
 			.findFirst()
 			.orElseThrow();
 	}
