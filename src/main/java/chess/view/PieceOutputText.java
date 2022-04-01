@@ -7,8 +7,7 @@ import java.util.function.Predicate;
 
 public enum PieceOutputText {
 
-    Pawn("P", piece -> piece.isSameType(chess.domain.piece.BlackPawn.class)
-            || piece.isSameType(chess.domain.piece.WhitePawn.class)),
+    Pawn("P", piece -> piece.isSameType(chess.domain.piece.Pawn.class)),
     Bishop("B", piece -> piece.isSameType(chess.domain.piece.Bishop.class)),
     Knight("N", piece -> piece.isSameType(chess.domain.piece.Knight.class)),
     ROOK("R", piece -> piece.isSameType(chess.domain.piece.Rook.class)),

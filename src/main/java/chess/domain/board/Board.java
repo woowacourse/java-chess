@@ -1,10 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.WhitePawn;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -91,7 +90,7 @@ public class Board {
     }
 
     private boolean isPawn(Piece piece) {
-        return piece.isSameType(BlackPawn.class) || piece.isSameType(WhitePawn.class);
+        return piece.isSameType(Pawn.class);
     }
 
     private void checkObstacle(Position source, Position destination, Direction direction) {

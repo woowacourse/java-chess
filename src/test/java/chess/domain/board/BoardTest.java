@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -12,7 +11,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -45,14 +43,14 @@ class BoardTest {
                 Arguments.of(Position.of("g8"), Knight.class, Color.BLACK),
                 Arguments.of(Position.of("h8"), Rook.class, Color.BLACK),
 
-                Arguments.of(Position.of("a7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("b7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("c7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("d7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("e7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("f7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("g7"), BlackPawn.class, Color.BLACK),
-                Arguments.of(Position.of("h7"), BlackPawn.class, Color.BLACK),
+                Arguments.of(Position.of("a7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("b7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("c7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("d7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("e7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("f7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("g7"), Pawn.class, Color.BLACK),
+                Arguments.of(Position.of("h7"), Pawn.class, Color.BLACK),
 
                 Arguments.of(Position.of("a1"), Rook.class, Color.WHITE),
                 Arguments.of(Position.of("b1"), Knight.class, Color.WHITE),
@@ -63,14 +61,14 @@ class BoardTest {
                 Arguments.of(Position.of("g1"), Knight.class, Color.WHITE),
                 Arguments.of(Position.of("h1"), Rook.class, Color.WHITE),
 
-                Arguments.of(Position.of("a2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("b2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("c2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("d2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("e2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("f2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("g2"), WhitePawn.class, Color.WHITE),
-                Arguments.of(Position.of("h2"), WhitePawn.class, Color.WHITE)
+                Arguments.of(Position.of("a2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("b2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("c2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("d2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("e2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("f2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("g2"), Pawn.class, Color.WHITE),
+                Arguments.of(Position.of("h2"), Pawn.class, Color.WHITE)
         );
     }
 
