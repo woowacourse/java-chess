@@ -37,7 +37,6 @@ async function initializeBoard(board) {
     board.then(res => Object.keys(res).forEach(function (value) {
         let eachDiv = document.querySelector("#" + value)
         putPiece(eachDiv, res, value)
-        //eachDiv.innerHTML = res[value];
     }))
 }
 
@@ -48,9 +47,9 @@ function putPiece(eachDiv, board, value) {
     const img = document.createElement("img")
     img.style.width = '30px'
     img.style.height = '40px'
-    img.src = "/images/" + board[value] + ".png"
     img.style.display = 'block'
     img.style.margin = 'auto'
+    img.src = "/images/" + board[value] + ".png"
     eachDiv.appendChild(img)
 }
 
