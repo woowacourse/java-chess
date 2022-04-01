@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.member;
 
 public class Member {
     private final String id;

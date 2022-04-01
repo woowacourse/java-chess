@@ -96,7 +96,6 @@ public class ChessBoard {
             List<Position> targetPositions = diagonalDirections.stream()
                     .map(nowPosition::toDirection)
                     .collect(Collectors.toList());
-
             addPositionsIfEnemy(piece, result, targetPositions);
         }
     }

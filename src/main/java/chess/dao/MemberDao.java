@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.Member;
-import chess.Role;
+import chess.domain.member.Member;
+import chess.domain.member.Role;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
