@@ -75,15 +75,18 @@ public class Board {
     public int countDeductedPawns(final Color color) {
         return (int) board.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSamePiece(PAWN)
-                        && entry.getValue().isSameColor(color))
-                .filter(this::hasAnotherPawnInSameColumn)
+                .filter(entry -> isPawnWithAnotherPawnInSameColumn(entry.getKey(), entry.getValue(), color))
                 .count();
     }
 
-    private boolean hasAnotherPawnInSameColumn(final Map.Entry<Position, Piece> entry) {
-        Position current = entry.getKey();
-        Piece piece = entry.getValue();
+    private boolean isPawnWithAnotherPawnInSameColumn(final Position current, final Piece piece, final Color color) {
+        if (!piece.isSamePiece(PAWN) || !piece.isSameColor(color)) {
+            return false;
+        }
+        return hasAnotherPawnInSameColumn(current, piece);
+    }
+
+    private boolean hasAnotherPawnInSameColumn(final Position current, final Piece piece) {
         return Arrays.stream(Row.values())
                 .map(row -> new Position(current.getColumn(), row))
                 .anyMatch(position -> !current.equals(position) && getPiece(position).equals(piece));
