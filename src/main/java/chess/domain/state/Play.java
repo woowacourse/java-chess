@@ -12,7 +12,7 @@ public class Play implements State {
 
     public Play(Turn turn) {
         this.turn = turn;
-        this.chessboard = Chessboard.initializedChessboard();
+        this.chessboard = Chessboard.create();
     }
 
     public Play(Turn turn, Chessboard chessboard) {

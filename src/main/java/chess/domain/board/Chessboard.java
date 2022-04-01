@@ -5,7 +5,6 @@ import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,20 +25,12 @@ public class Chessboard {
 
     private final Map<Position, Piece> board;
 
-    private Chessboard(Map<Position, Piece> pieces) {
-        this.board = pieces;
+    public Chessboard(Map<Position, Piece> board) {
+        this.board = board;
     }
 
-    private Chessboard() {
-        this.board = BoardCache.create();
-    }
-
-    public static Chessboard emptyChessboard() {
-        return new Chessboard(new LinkedHashMap<>());
-    }
-
-    public static Chessboard initializedChessboard() {
-        return new Chessboard();
+    public static Chessboard create() {
+        return new Chessboard(BoardCache.create());
     }
 
     public void movePiece(Position source, Position target, Turn turn) {

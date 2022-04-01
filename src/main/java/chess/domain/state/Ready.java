@@ -3,16 +3,20 @@ package chess.domain.state;
 import chess.domain.Turn;
 import chess.domain.board.Chessboard;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Ready implements State {
 
-    private final Chessboard chessboard;
+    private final Map<Position, Piece> chessboard;
     private final Turn turn;
 
     public Ready() {
-        chessboard = Chessboard.emptyChessboard();
-        turn = new Turn();
+        this.chessboard = new LinkedHashMap<>();
+        this.turn = new Turn();
     }
 
     @Override
@@ -27,7 +31,7 @@ public class Ready implements State {
 
     @Override
     public State end() {
-        return new Finish(chessboard);
+        return new Finish(new Chessboard(chessboard));
     }
 
     @Override
@@ -42,6 +46,6 @@ public class Ready implements State {
 
     @Override
     public Chessboard getChessboard() {
-        return chessboard;
+        return new Chessboard(chessboard);
     }
 }
