@@ -5,7 +5,7 @@ public enum Color {
     BLACK;
 
     public boolean isBlack() {
-        return this.equals(BLACK);
+        return this == BLACK;
     }
 
     public String convertByColor(String name) {
@@ -16,7 +16,7 @@ public enum Color {
     }
 
     public Color toOpposite() {
-        if (this.equals(WHITE)) {
+        if (this == WHITE) {
             return BLACK;
         }
         return WHITE;

@@ -42,12 +42,12 @@ public abstract class ChessPiece {
         return routes;
     }
 
-    public boolean isSameColor(ChessPiece chessPiece) {
-        return this.color.equals(chessPiece.color);
+    public boolean isSameColorPiece(ChessPiece chessPiece) {
+        return this.color == chessPiece.color;
     }
 
     public boolean isSameColor(Color color) {
-        return this.color.equals(color);
+        return this.color == color;
     }
 
     public boolean isEnemyTurn(Color color) {

@@ -70,7 +70,7 @@ public class ChessBoard {
     }
 
     private boolean isStraight(Position from, Position to) {
-        return to.findDirection(from).equals(Direction.N) || to.findDirection(from).equals(Direction.S);
+        return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
     }
 
     private void checkMove(Position from, Position to, ChessPiece me) {
@@ -119,7 +119,7 @@ public class ChessBoard {
         }
 
         ChessPiece piece = possiblePiece.get();
-        if (piece.isSameColor(me)) {
+        if (piece.isSameColorPiece(me)) {
             throw new IllegalArgumentException("같은색 기물입니다.");
         }
 

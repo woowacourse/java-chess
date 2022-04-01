@@ -7,14 +7,14 @@ public enum GameStatus {
     ;
 
     public boolean isReady() {
-        return this.equals(READY);
+        return this == READY;
     }
 
     public boolean isPlaying() {
-        return this.equals(PLAYING);
+        return this == PLAYING;
     }
 
     public boolean isEnd() {
-        return this.equals(END);
+        return this == END;
     }
 }
