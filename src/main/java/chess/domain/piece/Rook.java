@@ -5,11 +5,11 @@ import static chess.domain.location.Direction.L;
 import static chess.domain.location.Direction.R;
 import static chess.domain.location.Direction.U;
 
-import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
+import chess.domain.location.LocationDiff;
 import java.util.List;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(Team team) {

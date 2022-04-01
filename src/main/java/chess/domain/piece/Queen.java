@@ -9,11 +9,11 @@ import static chess.domain.location.Direction.U;
 import static chess.domain.location.Direction.UL;
 import static chess.domain.location.Direction.UR;
 
-import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
+import chess.domain.location.LocationDiff;
 import java.util.List;
 
-public class Queen extends Piece{
+public class Queen extends Piece {
     private static final double SCORE = 9;
 
     public Queen(Team team) {

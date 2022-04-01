@@ -9,11 +9,11 @@ import static chess.domain.location.Direction.URR;
 import static chess.domain.location.Direction.UUL;
 import static chess.domain.location.Direction.UUR;
 
-import chess.domain.location.LocationDiff;
 import chess.domain.location.Direction;
+import chess.domain.location.LocationDiff;
 import java.util.List;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
     private static final double SCORE = 2.5;
     public static final int MOVABLE_DISTANCE = 1;
 
