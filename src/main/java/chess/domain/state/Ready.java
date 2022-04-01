@@ -25,7 +25,12 @@ public final class Ready extends State {
     }
 
     @Override
-    public Status status() {
+    public double score(final Color color) {
         throw new IllegalStateException(ERROR_MESSAGE);
+    }
+
+    @Override
+    public Result getWinner() {
+        return Result.EMPTY;
     }
 }

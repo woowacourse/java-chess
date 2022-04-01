@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
@@ -35,7 +36,11 @@ public final class ChessGame {
     }
 
     public Status status() {
-        return state.status();
+        return new Status(
+                state.getWinner(),
+                Map.of(Color.WHITE, state.score(Color.WHITE)),
+                Map.of(Color.BLACK, state.score(Color.BLACK))
+        );
     }
 
     public boolean isExit() {

@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -16,7 +17,9 @@ public abstract class State {
 
     public abstract State move(final Position from, final Position to);
 
-    public abstract Status status();
+    public abstract double score(final Color color);
+
+    public abstract Result getWinner();
 
     public final State exit() {
         return new Exit();

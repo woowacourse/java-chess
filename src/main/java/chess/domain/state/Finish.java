@@ -1,12 +1,11 @@
 package chess.domain.state;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardCalculator;
 import chess.domain.board.BoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public final class Finish extends State {
+public final class Finish extends CalculableState {
 
     private final Color winnerColor;
 
@@ -31,8 +30,7 @@ public final class Finish extends State {
     }
 
     @Override
-    public Status status() {
-        final var boardCalculator = new BoardCalculator(board.getValue());
-        return new Status(Result.from(winnerColor), boardCalculator.sumScore(Color.WHITE), boardCalculator.sumScore(Color.BLACK));
+    public Result getWinner() {
+        return Result.from(winnerColor);
     }
 }
