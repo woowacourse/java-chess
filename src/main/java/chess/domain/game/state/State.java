@@ -4,7 +4,7 @@ import chess.dto.CommandDto;
 
 public interface State {
 
-    State go(CommandDto input);
+    State go(String input);
 
     State execute(CommandDto input);
 
@@ -12,5 +12,5 @@ public interface State {
 
     boolean isPlay();
 
-    boolean isStatusFinished();
+    boolean isStatus();
 }

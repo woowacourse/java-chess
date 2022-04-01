@@ -51,7 +51,20 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
+        if (isPlaying) {
+            return getWinnerByScore();
+        }
         return turn;
+    }
+
+    private Team getWinnerByScore() {
+        if (getScoreOfTeams().get(Team.BLACK) > getScoreOfTeams().get(Team.WHITE)) {
+            return Team.BLACK;
+        }
+        if (getScoreOfTeams().get(Team.BLACK) < getScoreOfTeams().get(Team.WHITE)) {
+            return Team.WHITE;
+        }
+        return Team.NONE;
     }
 
     public boolean isPlaying() {

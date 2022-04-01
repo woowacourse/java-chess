@@ -21,10 +21,6 @@ public final class Board {
         this.squares = squares;
     }
 
-    private static double scoreOfPiece(Entry<Position, Piece> entry) {
-        return entry.getValue().getScore();
-    }
-
     public Piece findByPosition(Position position) {
         return squares.get(position);
     }
@@ -86,6 +82,10 @@ public final class Board {
                 .filter(entry -> isSameColor(entry.getKey(), team))
                 .mapToDouble(Board::scoreOfPiece)
                 .sum();
+    }
+
+    private static double scoreOfPiece(Entry<Position, Piece> entry) {
+        return entry.getValue().getScore();
     }
 
     private double getPawnMinusScore(Team team) {

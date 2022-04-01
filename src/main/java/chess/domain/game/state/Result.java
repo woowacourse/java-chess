@@ -13,7 +13,7 @@ public final class Result extends AbstractState {
     @Override
     public AbstractState execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.STATUS) {
-            return new StatusFinished(chessGame);
+            return new Status(chessGame);
         }
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }

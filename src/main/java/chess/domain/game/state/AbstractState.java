@@ -11,9 +11,9 @@ public abstract class AbstractState implements State {
         this.chessGame = chessGame;
     }
 
-    public State go(CommandDto input) {
+    public State go(String input) {
         try {
-            return execute(input);
+            return execute(new CommandDto(input));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return this;
@@ -28,7 +28,7 @@ public abstract class AbstractState implements State {
         return false;
     }
 
-    public boolean isStatusFinished() {
+    public boolean isStatus() {
         return false;
     }
 }

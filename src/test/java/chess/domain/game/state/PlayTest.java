@@ -79,7 +79,7 @@ class PlayTest {
         BoardStrategy boardStrategy = new InjectBoardStrategy(boardString);
         State state = new Play(new ChessGame(boardStrategy));
 
-        state = state.go(new CommandDto("move h1 h4"));
+        state = state.go("move h1 h4");
         assertThat(state)
                 .isInstanceOf(Result.class);
     }
@@ -94,7 +94,7 @@ class PlayTest {
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusFinished())
+        assertThat(state.isStatus())
                 .isFalse();
     }
 }

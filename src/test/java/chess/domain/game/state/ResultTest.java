@@ -6,7 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ class ResultTest {
     void execute() {
         state = state.execute(new CommandDto("status"));
         assertThat(state)
-                .isInstanceOf(StatusFinished.class);
+                .isInstanceOf(Status.class);
     }
 
     @Test
@@ -47,7 +46,7 @@ class ResultTest {
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatusFinished())
+        assertThat(state.isStatus())
                 .isFalse();
     }
 }

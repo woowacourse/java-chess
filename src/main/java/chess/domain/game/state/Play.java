@@ -16,7 +16,7 @@ public final class Play extends AbstractState {
             return new ExitFinished(chessGame);
         }
         if (commandDto.getCommand() == Command.STATUS) {
-            return new StatusFinished(chessGame);
+            return new Status(chessGame);
         }
         if (commandDto.getCommand() == Command.MOVE) {
             chessGame.play(commandDto.toSourcePosition(), commandDto.toTargetPosition());
