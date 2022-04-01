@@ -7,6 +7,11 @@
     <title>체스 로비</title>
 </head>
 <body>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+        멤버 추가
+    </button>
+
     {{#games}}
         <div class="card" style="width: 18rem;">
             <div class="card-body">
@@ -16,5 +21,43 @@
             </div>
         </div>
     {{/games}}
+
+    <!-- Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">멤버 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="플레이어 이름을 입력하세요." id="memberName" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="addMember()">추가 하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    const addMember = () => {
+        let memberName = document.getElementById("memberName").value;
+        fetch("/member", {
+            method: "POST",
+            body: memberName
+        }).then(response => {
+            if (response.ok) {
+                alert("멤버 추가 성공!");
+                location.reload();
+            }
+            if (!response.ok) {
+                alert(response.statusText);
+            }
+        });
+    }
+</script>
+
 </html>

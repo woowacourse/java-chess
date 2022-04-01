@@ -95,9 +95,10 @@ public class WebController {
             return JsonUtil.serialize(jsonData);
         });
 
-        get("/add-member", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "add-member.html");
+        post("/member", (req, res) -> {
+            String memberName = req.body();
+            memberRepository.save(new Member(memberName));
+            return "";
         });
 
         post("/member", (req, res) -> {
