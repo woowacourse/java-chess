@@ -41,6 +41,10 @@ public final class Position {
         return this.file == other;
     }
 
+    public Position nextPosition(final int fileGrowth, final int rankGrowth) {
+        return Position.of(File.findByOrder(file.getOrder() + fileGrowth), Rank.from(rank.getRank() + rankGrowth));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
