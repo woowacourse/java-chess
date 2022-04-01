@@ -46,7 +46,18 @@ public class Finished implements State {
 		if (this.board.hasWhiteKingCaptured()) {
 			return Winner.BLACK;
 		}
-		return Winner.of(this.board.scoreOfBlack(), this.board.scoreOfWhite());
+		return findWinnerByScore();
+	}
+
+	private Winner findWinnerByScore() {
+		final int compared = Double.compare(this.board.scoreOfBlack(), this.board.scoreOfWhite());
+		if (compared > 0) {
+			return Winner.BLACK;
+		}
+		if (compared < 0) {
+			return Winner.WHITE;
+		}
+		return Winner.DRAW;
 	}
 
 	@Override
