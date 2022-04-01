@@ -10,7 +10,7 @@ import chess.domain.state.Status;
 import java.util.Locale;
 import java.util.Map;
 
-public class Output {
+public final class Output {
 
     private static final String EXCEPTION_PREFIX = "[ERROR] ";
 
