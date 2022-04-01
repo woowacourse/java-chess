@@ -3,31 +3,26 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.staticFiles;
 
-import chess.domain.game.Game;
-import chess.domain.game.NewGame;
-import chess.dto.BoardViewDto;
-import java.util.HashMap;
-import java.util.Map;
+import chess.controller.WebController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
 
+    private static final WebController controller = new WebController();
+
     public static void main(String[] args) {
         staticFiles.location("/static");
-
-        get("/", (req, res) -> {
-            Game game = new NewGame().init();
-            BoardViewDto boardView = game.boardView();
-
-            Map<String, Object> model = new HashMap<>();
-            model.put("game_id", 1);
-            model.put("board", boardView.webDisplay());
-            return render(model, "game.html");
+        get("/", (req, res) -> render(null, "home.html"));
+        get("/new-game", (req, res) -> render(controller.initGame(), "new-game.html"));
+        get("/game/:id", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("id"));
+            return render(controller.findGame(gameId), "game.html");
         });
+        get("/search", (req, res) -> "TBA");
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private static String render(Object model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

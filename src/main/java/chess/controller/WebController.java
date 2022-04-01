@@ -6,14 +6,19 @@ import chess.domain.game.Game;
 import chess.domain.game.NewGame;
 import chess.dto.BoardViewDto;
 import chess.model.GameModel;
+import chess.model.NewGameModel;
 
 public class WebController {
 
     private final GameRepository gameRepository = new GameRepository();
 
-    public GameModel initGame() {
+    public NewGameModel initGame() {
         Game game = new NewGame().init();
-        int gameId = gameRepository.add(game);
+        return new NewGameModel(gameRepository.add(game));
+    }
+
+    public GameModel findGame(int gameId) {
+        Game game = gameRepository.findById(gameId);
 
         Color currentTurn = game.getCurrentTurnColor();
         BoardViewDto board = game.boardView();
