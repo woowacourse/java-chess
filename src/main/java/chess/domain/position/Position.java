@@ -33,20 +33,12 @@ public class Position {
         return false;
     }
 
-    public boolean isRow(int row) {
-        return this.row == row;
+    public boolean isSamePosition(int row, int column) {
+        return (this.row == row) && (this.column == column);
     }
 
-    public boolean isColumn(int column) {
-        return this.column == column;
-    }
-
-    public boolean isSameRow(Position position) {
-        return this.row == position.row;
-    }
-
-    public boolean isSameColumn(Position position) {
-        return this.column == position.column;
+    public boolean isSamePosition(Position position) {
+        return (this.row == position.row) && (this.column == position.column);
     }
 
     public boolean isOverRange() {

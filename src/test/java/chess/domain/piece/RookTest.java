@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,11 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RookTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"1:0", "-1:0", "0:1", "0:-2"}, delimiter = ':')
+    @CsvSource(value = {"2:0"}, delimiter = ':')
     @DisplayName("rook 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(rook.isMovablePosition(new Position(3, 3), new Position(3 + a, 3 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -22,6 +24,7 @@ class RookTest {
     @DisplayName("rook 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Rook rook = new Rook(Color.BLACK);
-        assertThat(rook.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(rook.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 }

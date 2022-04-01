@@ -51,7 +51,7 @@ public class BoardCache {
     public static Position findPosition(int row, int column) {
         return CACHE.keySet()
                 .stream()
-                .filter(position -> position.isRow(row) && position.isColumn(column))
+                .filter(position -> position.isSamePosition(row, column))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_POSITION));
     }

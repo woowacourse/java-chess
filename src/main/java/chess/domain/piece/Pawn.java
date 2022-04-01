@@ -6,8 +6,6 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-import static chess.utils.PossiblePositionChecker.isMovablePositions;
-
 public class Pawn extends Piece {
 
     private static final List<Direction> WHITE_FIRST_DIRECTIONS = Direction.pawnWhiteFirstTurn();
@@ -22,7 +20,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovableDot(Position source, Position target) {
+    public boolean isMovablePosition(Position source, Position target, Map<Position, Piece> board) {
         if (color == Color.WHITE) {
             return isMovableWhenWhite(source, target);
         }
@@ -34,32 +32,22 @@ public class Pawn extends Piece {
 
     private boolean isMovableWhenWhite(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovablePositions(WHITE_FIRST_DIRECTIONS, source, target);
+            return isMovableDot(WHITE_FIRST_DIRECTIONS, source, target);
         }
-        return isMovablePositions(WHITE_DIRECTIONS, source, target);
+        return isMovableDot(WHITE_DIRECTIONS, source, target);
     }
 
     private boolean isMovableWhenBlack(Position source, Position target) {
         if (source.isFirstPosition(color)) {
-            return isMovablePositions(BLACK_FIRST_DIRECTIONS, source, target);
+            return isMovableDot(BLACK_FIRST_DIRECTIONS, source, target);
         }
-        return isMovablePositions(BLACK_DIRECTIONS, source, target);
+        return isMovableDot(BLACK_DIRECTIONS, source, target);
     }
 
     public boolean isMovableDiagonal(Position source, Position target) {
         if (color == Color.WHITE) {
-            return isMovablePositions(WHITE_DIAGONAL_DIRECTIONS, source, target);
+            return isMovableDot(WHITE_DIAGONAL_DIRECTIONS, source, target);
         }
-        return isMovablePositions(BLACK_DIAGONAL_DIRECTIONS, source, target);
-    }
-
-    @Override
-    public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
-        return false;
-    }
-
-    @Override
-    public boolean isDotPiece() {
-        return true;
+        return isMovableDot(BLACK_DIAGONAL_DIRECTIONS, source, target);
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,7 +51,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> true")
     void checkPositionWhenWhiteFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovableDot(new Position(6, 6), new Position(6 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovablePosition(new Position(6, 6), new Position(6 + a, 6 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -58,7 +60,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴) -> false")
     void checkPositionWhenWhiteFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovableDot(new Position(6, 6), new Position(6 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovablePosition(new Position(6, 6), new Position(6 + a, 6 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 
     @ParameterizedTest
@@ -66,7 +69,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> true")
     void checkPositionWhenBlackFirstTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovableDot(new Position(1, 1), new Position(1 + a, 1 + b))).isTrue();
+        assertThat(pawn.isMovablePosition(new Position(1, 1), new Position(1 + a, 1 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -74,7 +78,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴) -> false")
     void checkPositionWhenBlackFirstTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovableDot(new Position(1, 1), new Position(1 + a, 1 + b))).isFalse();
+        assertThat(pawn.isMovablePosition(new Position(1, 1), new Position(1 + a, 1 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 
     @ParameterizedTest
@@ -82,7 +87,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> true")
     void checkPositionWhenWhiteTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovableDot(new Position(7, 6), new Position(7 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovablePosition(new Position(7, 6), new Position(7 + a, 6 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -90,7 +96,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (white , 첫번째 턴 X) -> false")
     void checkPositionWhenWhiteTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.isMovableDot(new Position(7, 6), new Position(7 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovablePosition(new Position(7, 6), new Position(7 + a, 6 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 
     @ParameterizedTest
@@ -98,7 +105,8 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> true")
     void checkPositionWhenBlackTurnTrue(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovableDot(new Position(2, 6), new Position(2 + a, 6 + b))).isTrue();
+        assertThat(pawn.isMovablePosition(new Position(2, 6), new Position(2 + a, 6 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -106,6 +114,7 @@ public class PawnTest {
     @DisplayName("pawn 기물 이동 위치 검증 -  (black , 첫번째 턴 X) -> false")
     void checkPositionWhenBlackTurnFalse(int a, int b) {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.isMovableDot(new Position(2, 6), new Position(2 + a, 6 + b))).isFalse();
+        assertThat(pawn.isMovablePosition(new Position(2, 6), new Position(2 + a, 6 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 }

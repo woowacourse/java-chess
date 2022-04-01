@@ -21,7 +21,7 @@ public class Chessboard {
     private static final String ERROR_EMPTY_SOURCE_PIECE = "이동하려는 위치에 기물이 없습니다.";
     private static final String ERROR_CATCH_PIECE_SAME_TEAM = "같은편의 기물을 공격할 수 없습니다.";
     private static final String ERROR_MOVE_OPPOSITE_TEAM_PIECE = "상대편의 기물은 움직일 수 없습니다.";
-    private static final String ERROR_IMPOSSIBLE_MOVE_PIECE = "움직일 수 없는 기물입니다.";
+    private static final String ERROR_IMPOSSIBLE_MOVE = "해당 위치로 이동할 수 없습니다.";
 
     private final Map<Position, Piece> board;
 
@@ -35,16 +35,8 @@ public class Chessboard {
 
     public void movePiece(Position source, Position target, Turn turn) {
         validate(source, target, turn);
-        Piece piece = board.get(source);
-        if (piece.isDotPiece()) {
-            board.put(target, board.get(source));
-            board.put(source, new Blank());
-            return;
-        }
-        if (isMovableLine(source, target)) {
-            board.put(target, board.get(source));
-            board.put(source, new Blank());
-        }
+        board.put(target, board.get(source));
+        board.put(source, new Blank());
     }
 
     private void validate(Position source, Position target, Turn turn) {
@@ -52,7 +44,7 @@ public class Chessboard {
         validateBlank(source);
         validateTurn(source, turn);
         validateSameTeam(source, target);
-        validateMovableDot(source, target);
+        validateMovable(source, target);
     }
 
     private void validateSamePosition(Position source, Position target) {
@@ -79,18 +71,18 @@ public class Chessboard {
         }
     }
 
-    private void validateMovableDot(Position source, Position target) {
-        if (!isMovableDot(source, target)) {
-            throw new IllegalArgumentException(ERROR_IMPOSSIBLE_MOVE_PIECE);
+    private void validateMovable(Position source, Position target) {
+        if (!isMovablePosition(source, target)) {
+            throw new IllegalArgumentException(ERROR_IMPOSSIBLE_MOVE);
         }
     }
 
-    public boolean isMovableDot(Position source, Position target) {
+    public boolean isMovablePosition(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         if (isExistPiece(target) && isPawn(sourcePiece, source, target)) {
             return true;
         }
-        return sourcePiece.isMovableDot(source, target);
+        return sourcePiece.isMovablePosition(source, target, board);
     }
 
     public boolean isExistPiece(Position target) {
@@ -103,11 +95,6 @@ public class Chessboard {
         }
         Pawn pawn = (Pawn) sourcePiece;
         return pawn.isMovableDiagonal(source, target);
-    }
-
-    public boolean isMovableLine(Position source, Position target) {
-        Piece sourcePiece = board.get(source);
-        return sourcePiece.isMovableLine(source, target, board);
     }
 
     public boolean isKing(Position target) {

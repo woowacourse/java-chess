@@ -11,17 +11,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isMovableDot(Position source, Position target) {
-        return false;
-    }
-
-    @Override
-    public boolean isMovableLine(Position source, Position target, Map<Position, Piece> board) {
-        return false;
-    }
-
-    @Override
-    public boolean isDotPiece() {
+    public boolean isMovablePosition(Position source, Position target, Map<Position, Piece> board) {
         return false;
     }
 }

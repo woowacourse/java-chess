@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,8 @@ public class QueenTest {
     @DisplayName("queen 기물 대각선 이동 위치 검증 - true")
     void checkQueenPositionDiagonal(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -22,7 +24,8 @@ public class QueenTest {
     @DisplayName("queen 기물 상하좌우 이동 위치 검증 - true")
     void checkQueenPositionUpDownLeftRight(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(queen.isMovablePosition(new Position(4, 4),
+                new Position(4 + a, 4 + b), Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -30,6 +33,7 @@ public class QueenTest {
     @DisplayName("queen 기물 이동 위치 검증 - false")
     void checkBishopPositionWhenFalse(int a, int b) {
         Queen queen = new Queen(Color.BLACK);
-        assertThat(queen.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(queen.isMovablePosition(new Position(4, 4),
+                new Position(4 + a, 4 + b), Chessboard.create().getBoard())).isFalse();
     }
 }

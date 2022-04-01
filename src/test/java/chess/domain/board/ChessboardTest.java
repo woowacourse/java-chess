@@ -59,15 +59,4 @@ public class ChessboardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대편의 기물은 움직일 수 없습니다.");
     }
-
-    @Test
-    @DisplayName("주어진 좌표 후보들중에 기물이 있는 좌표가 있다면 예외 발생")
-    void checkCandidatesOfPossibleCoordinates() {
-        Chessboard chessboard = Chessboard.create();
-        Turn turn = new Turn();
-        assertThatThrownBy(() -> chessboard.movePiece(new Position(7, 0),
-                new Position(5, 0), turn))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("가로막는 기물이 있습니다.");
-    }
 }

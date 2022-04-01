@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,8 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isTrue();
+        assertThat(bishop.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+                Chessboard.create().getBoard())).isTrue();
     }
 
     @ParameterizedTest
@@ -22,6 +24,7 @@ public class BishopTest {
     @DisplayName("bishop 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Bishop bishop = new Bishop(Color.BLACK);
-        assertThat(bishop.isMovableDot(new Position(4, 4), new Position(4 + a, 4 + b))).isFalse();
+        assertThat(bishop.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
+                Chessboard.create().getBoard())).isFalse();
     }
 }
