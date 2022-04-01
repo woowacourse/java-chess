@@ -19,6 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class GameTest {
 
     @Test
+    @DisplayName("전달된 위치의 Piece를 반환한다")
+    void return_positionPiece() {
+        Game game = new Game(new BoardInitializer());
+        assertThat(game.piece(Position.of("a2")).get()).isEqualTo(new Piece(WHITE, new Pawn()));
+    }
+
+    @Test
     @DisplayName("출발지와 목적지가 같으면 예외를 발생한다")
     void thrown_sourceEqualsTarget() {
         Game game = new Game(new BoardInitializer());
@@ -81,6 +88,23 @@ public class GameTest {
         });
 
         assertThat(game.calculateScore(WHITE)).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("점수합을 비교하여 승자를 반환한다")
+    void calculate_scoreWinner() {
+        Game game = new Game(() -> {
+            Map<Position, Piece> pieces = new HashMap<>();
+            pieces.put(Position.of("g7"), new Piece(BLACK, new King()));
+            pieces.put(Position.of("d4"), new Piece(WHITE, new King()));
+            pieces.put(Position.of("a1"), new Piece(BLACK, new Pawn()));
+            pieces.put(Position.of("a5"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("a4"), new Piece(WHITE, new Pawn()));
+            pieces.put(Position.of("b4"), new Piece(WHITE, new Pawn()));
+            return pieces;
+        });
+        final Map<Result, Color> result = game.calculateScoreWinner();
+        assertThat(result.get(Result.WIN)).isEqualTo(WHITE);
     }
 
     @Test
