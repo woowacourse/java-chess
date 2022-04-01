@@ -1,10 +1,7 @@
 package chess.model.piece;
 
-import chess.model.Position;
 import chess.model.Team;
 import chess.model.strategy.NotMoveStrategy;
-
-import java.util.List;
 
 public class Empty extends Piece {
 
@@ -23,10 +20,5 @@ public class Empty extends Piece {
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public List<Position> getIntervalPosition(Position source, Position target) {
-        throw new IllegalArgumentException("Empty 말은 움직일 수 없습니다.");
     }
 }

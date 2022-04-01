@@ -30,18 +30,4 @@ public class Queen extends Piece {
         }
         return WHITE_NAME;
     }
-
-    @Override
-    public List<Position> getIntervalPosition(Position source, Position target) {
-        Direction direction = Direction.of(source, target);
-        List<Position> positions = new ArrayList<>();
-        Position next = source;
-
-        while (!next.equals(target)) {
-            next = next.getNext(direction);
-            positions.add(next);
-        }
-        positions.remove(target);
-        return positions;
-    }
 }

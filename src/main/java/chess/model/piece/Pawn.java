@@ -42,12 +42,4 @@ public class Pawn extends Piece {
         }
         return WHITE_NAME;
     }
-
-    @Override
-    public List<Position> getIntervalPosition(Position source, Position target) {
-        if (source.isTwoStepAway(target)) {
-            return List.of(source.getUpVerticalPosition(team.getForwardDirection()));
-        }
-        return Collections.emptyList();
-    }
 }

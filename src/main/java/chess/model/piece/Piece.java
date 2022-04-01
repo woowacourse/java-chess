@@ -1,10 +1,12 @@
 package chess.model.piece;
 
+import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
 import chess.model.Turn;
 import chess.model.strategy.MoveStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +45,19 @@ public abstract class Piece {
 
     public abstract double getScore();
 
-    public abstract List<Position> getIntervalPosition(Position source, Position target);
+    public final List<Position> getIntervalPosition(Position source, Position target) {
+        Direction direction = Direction.of(source, target);
+        List<Position> positions = new ArrayList<>();
+        Position next = source;
+
+        while (!next.equals(target)) {
+            next = next.getNext(direction);
+            positions.add(next);
+        }
+        positions.remove(target);
+        return positions;
+    }
+
 
     public final boolean isMovable(Position source, Position target, boolean isKill) {
         return moveStrategy.movable(source, target, isKill);

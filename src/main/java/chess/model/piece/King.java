@@ -31,10 +31,6 @@ public class King extends Piece {
         return WHITE_NAME;
     }
 
-    public List<Position> getIntervalPosition(Position source, Position target) {
-        return Collections.emptyList();
-    }
-
     @Override
     public boolean isKing() {
         return true;

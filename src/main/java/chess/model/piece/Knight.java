@@ -30,9 +30,4 @@ public class Knight extends Piece {
         }
         return WHITE_NAME;
     }
-
-    @Override
-    public List<Position> getIntervalPosition(Position source, Position target) {
-        return Collections.emptyList();
-    }
 }

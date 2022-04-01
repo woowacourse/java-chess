@@ -97,7 +97,7 @@ class KingTest {
     @DisplayName("킹은 source와 target사이에 말들이 없다.")
     void getIntervalPositionTest() {
         Piece king = new King(Team.BLACK);
-        List<Position> intervalPosition = king.getIntervalPosition(Position.from("e8"), Position.from("h8"));
+        List<Position> intervalPosition = king.getIntervalPosition(Position.from("e8"), Position.from("f8"));
 
         assertThat(intervalPosition.isEmpty()).isTrue();
     }
