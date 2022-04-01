@@ -33,7 +33,7 @@ public final class King extends Piece {
 		if (columnDistance + rowDistance == MOVABLE_DISTANCE) {
 			return true;
 		}
-		return columnDistance == 1 && rowDistance == 1;
+		return columnDistance == MOVABLE_DISTANCE && rowDistance == MOVABLE_DISTANCE;
 	}
 
 	@Override
