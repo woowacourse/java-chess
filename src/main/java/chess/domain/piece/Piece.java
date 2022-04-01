@@ -19,6 +19,10 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Position source, Position target, SquareType squareType);
 
+    public abstract double getScore();
+
+    public abstract String getConcreteEmblem();
+
     public boolean isMyTeam(Piece other) {
         return this.pieceTeam == other.pieceTeam;
     }
@@ -38,10 +42,6 @@ public abstract class Piece {
     public boolean isKnight() {
         return this instanceof Knight;
     }
-
-    public abstract double getScore();
-
-    public abstract String getConcreteEmblem();
 
     public String getEmblem() {
         if (pieceTeam == PieceTeam.WHITE) {

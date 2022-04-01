@@ -29,11 +29,11 @@ public class ChessController {
 
         OutputView.printChessBoard(chessBoard.getBoard());
 
-        startGame(gameFlow, chessBoard);
+        startGame(chessBoard);
     }
 
-    private void startGame(GameFlow gameFlow, ChessBoard chessBoard) {
-        while (gameFlow.isRunning()) {
+    private void startGame(ChessBoard chessBoard) {
+        while (chessBoard.isGamePlaying()) {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand().isEnd()) {
                 break;

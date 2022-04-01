@@ -34,6 +34,18 @@ public class ChessBoard {
         gameFlow.nextState(isGameFinished);
     }
 
+    public double calculateScore() {
+        return board.values()
+                .stream()
+                .filter(gameFlow::isCorrectTurn)
+                .mapToDouble(Piece::getScore)
+                .sum() - adjustPawnScore();
+    }
+
+    public boolean isGamePlaying() {
+        return gameFlow.isRunning();
+    }
+
     private boolean isTargetKing(Position position) {
         return board.get(position).isKing();
     }
@@ -93,15 +105,7 @@ public class ChessBoard {
         }
     }
 
-    public double calculateScore() {
-        return board.values()
-                .stream()
-                .filter(gameFlow::isCorrectTurn)
-                .mapToDouble(Piece::getScore)
-                .sum() - adjustPawnScore();
-    }
-
-    public double adjustPawnScore() {
+    private double adjustPawnScore() {
         return File.stream()
                 .map(this::duplicatePieceCountByRank)
                 .filter(count -> count >= 2)

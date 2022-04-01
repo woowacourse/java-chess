@@ -4,7 +4,6 @@ import static chess.domain.board.position.MoveDirection.DOWN_LEFT;
 import static chess.domain.board.position.MoveDirection.DOWN_RIGHT;
 import static chess.domain.board.position.MoveDirection.UP_LEFT;
 import static chess.domain.board.position.MoveDirection.UP_RIGHT;
-import static chess.domain.board.position.MoveDirection.of;
 
 import chess.constant.SquareType;
 import chess.domain.board.position.MoveDirection;
