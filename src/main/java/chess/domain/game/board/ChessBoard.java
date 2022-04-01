@@ -22,12 +22,9 @@ public class ChessBoard {
     }
 
     public void move(Position from, Position to) {
-        ChessPiece me = findPiece(from)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
+        ChessPiece me = checkPiece(from, to);
 
-        checkMove(from, to, me);
-
-        if (findPiece(to).isEmpty()) {
+        if (isEmptyDestination(to)) {
             moveEmptyPosition(from, to, me);
             return;
         }
@@ -35,6 +32,18 @@ public class ChessBoard {
         if (enemyExist(me, to)) {
             catchAndMove(from, to, me);
         }
+    }
+
+    private boolean isEmptyDestination(Position to) {
+        return findPiece(to).isEmpty();
+    }
+
+    private ChessPiece checkPiece(Position from, Position to) {
+        ChessPiece me = findPiece(from)
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다."));
+
+        checkMove(from, to, me);
+        return me;
     }
 
     private void catchAndMove(Position from, Position to, ChessPiece me) {
