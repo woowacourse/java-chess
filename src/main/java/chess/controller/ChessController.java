@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
@@ -15,34 +16,37 @@ public class ChessController {
     private static final String ERROR_WRONG_COMMAND = "잘못된 명령어 입력입니다.";
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
         printStartMessage();
+        ChessGame chessGame = new ChessGame();
         while (!chessGame.isFinished()) {
-            playTurn(chessGame);
+            String input = inputCommand();
+            executeCommand(chessGame, input);
         }
         OutputView.printFinalScore(chessGame.computeScore(Color.BLACK),chessGame.computeScore(Color.WHITE));
     }
 
-    private void playTurn(ChessGame chessGame) {
-        String input = inputCommand();
-        if (START.isValue(input)) {
-            chessGame.start();
-            OutputView.printBoard(chessGame.getChessBoard());
-        }
-        if (MOVE.isValue(input)) {
-            chessGame.move(input);
-            OutputView.printBoard(chessGame.getChessBoard());
-        }
-        if (STATUS.isValue(input)) {
-            OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
-        }
-        if (END.isValue(input)) {
-            chessGame.end();
-            OutputView.printBoard(chessGame.getChessBoard());
-        }
+    private void executeCommand(ChessGame chessGame, String input) {
         if (!isExistCommand(input)) {
             throw new IllegalArgumentException(ERROR_WRONG_COMMAND);
         }
+        if (STATUS.isValue(input)) {
+            OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
+            return;
+        }
+        playTurn(chessGame, input);
+    }
+
+    private void playTurn(ChessGame chessGame, String input) {
+        if (START.isValue(input)) {
+            chessGame.start();
+        }
+        if (MOVE.isValue(input)) {
+            chessGame.move(Command.toMoveSourceFormat(input), Command.toMoveTargetFormat(input));
+        }
+        if (END.isValue(input)) {
+            chessGame.end();
+        }
+        OutputView.printBoard(chessGame.getChessBoard());
     }
 
     private boolean isExistCommand(String input) {

@@ -18,7 +18,7 @@ public class ChessboardTest {
 
     @BeforeEach
     void setUp() {
-        board = Chessboard.initializedChessboard().getBoard();
+        board = Chessboard.create().getBoard();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class ChessboardTest {
     @Test
     @DisplayName("현재 위치와 이동하려는 위치가 같은 경우 예외 발생")
     void checkSamePosition() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
+        Chessboard chessboard = Chessboard.create();
 
         assertThatThrownBy(() -> chessboard.movePiece(new Position(0, 0),
                 new Position(0, 0), new Turn()))
@@ -41,7 +41,7 @@ public class ChessboardTest {
     @Test
     @DisplayName("이동하려는 위치에 기물이 없는 경우 예외 발생")
     void checkBlankTarget() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
+        Chessboard chessboard = Chessboard.create();
 
         assertThatThrownBy(() -> chessboard.movePiece(new Position(2, 0),
                 new Position(3, 0), new Turn()))
@@ -52,7 +52,7 @@ public class ChessboardTest {
     @Test
     @DisplayName("상대편의 기물을 움직이려는 경우 예외 발생")
     void checkWrongTurn() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
+        Chessboard chessboard = Chessboard.create();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0),
                 new Position(1, 1), turn))
@@ -63,7 +63,7 @@ public class ChessboardTest {
     @Test
     @DisplayName("주어진 좌표 후보들중에 기물이 있는 좌표가 있다면 예외 발생")
     void checkCandidatesOfPossibleCoordinates() {
-        Chessboard chessboard = Chessboard.initializedChessboard();
+        Chessboard chessboard = Chessboard.create();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.movePiece(new Position(7, 0),
                 new Position(5, 0), turn))

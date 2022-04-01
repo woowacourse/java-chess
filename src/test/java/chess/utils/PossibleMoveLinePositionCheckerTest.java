@@ -16,7 +16,7 @@ class PossibleMoveLinePositionCheckerTest {
     void checkMove() {
         assertThat(PossibleMoveLinePositionChecker.isPossibleMovePosition(List.of(new Position(6, 0),
                         new Position(5, 0)), List.of(List.of(-1, 0)),
-                Chessboard.initializedChessboard().getBoard()))
+                Chessboard.create().getBoard()))
                 .isTrue();
     }
 }
