@@ -9,6 +9,7 @@ import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +105,6 @@ public class Board {
     }
 
     public Map<Position, Piece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 }

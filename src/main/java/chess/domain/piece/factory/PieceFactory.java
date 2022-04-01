@@ -16,27 +16,19 @@ import chess.domain.piece.common.Queen;
 import chess.domain.piece.common.Rook;
 import chess.domain.piece.ranged.King;
 import chess.domain.piece.ranged.Knight;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 public class PieceFactory {
 
-    private static final Map<PieceType, Function<Color, Piece>> factory = new HashMap<>();
+    private static final Map<PieceType, Function<Color, Piece>> factory =
+            Map.of(PAWN, Pawn::new, ROOK, Rook::new, KNIGHT, Knight::new,
+                    BISHOP, Bishop::new, QUEEN, Queen::new, KING, King::new);
 
-    static {
-        factory.put(PAWN, Pawn::new);
-        factory.put(ROOK, Rook::new);
-        factory.put(KNIGHT, Knight::new);
-        factory.put(BISHOP, Bishop::new);
-        factory.put(QUEEN, Queen::new);
-        factory.put(KING, King::new);
+    private PieceFactory() {
     }
 
     public static Piece createPiece(final PieceType pieceType, final Color color) {
         return factory.get(pieceType).apply(color);
-    }
-
-    private PieceFactory() {
     }
 }

@@ -4,7 +4,6 @@ import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +23,8 @@ public class CommandFactory {
     private static final String INVALID_COMMAND_INPUT = "입력에 맞는 명령을 찾을 수 없습니다.";
     private static final String INVALID_MOVING_ARGUMENTS = "잘못된 이동 명령입니다.";
 
-    private static final Map<String, Command> commands = new HashMap<>();
-
-    static {
-        commands.put("start", new Start());
-        commands.put("status", new Status());
-        commands.put("end", new End());
-    }
+    private static final Map<String, Command> commands =
+            Map.of("start", new Start(), "status", new Status(), "end", new End());
 
     private CommandFactory() {
     }
