@@ -43,15 +43,23 @@ public final class Board {
         Square sourceSquare = Square.fromString(source);
         Square targetSquare = Square.fromString(target);
         Piece piece = board.get(sourceSquare);
+        checkMovable(sourceSquare, targetSquare, piece);
+        moveTo(sourceSquare, targetSquare, piece);
+        status = checkAliveTwoKings();
+    }
+
+    private void moveTo(Square sourceSquare, Square targetSquare, Piece piece) {
+        board.put(targetSquare, piece);
+        board.put(sourceSquare, new Empty());
+    }
+
+    private void checkMovable(Square sourceSquare, Square targetSquare, Piece piece) {
         if (!piece.movable(this, sourceSquare, targetSquare)) {
             throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
-        if (!piece.isObstacleOnRoute(this, sourceSquare, targetSquare)) {
+        if (!piece.canMoveWithoutObstacle(this, sourceSquare, targetSquare)) {
             throw new IllegalArgumentException("경로 중 기물이 있습니다.");
         }
-        board.put(targetSquare, piece);
-        board.put(sourceSquare, new Empty());
-        status = checkAliveTwoKings();
     }
 
     public ScoreResult calculateScore() {
@@ -69,12 +77,20 @@ public final class Board {
 
     private void initEmpty() {
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Square square = Square.of(file, rank);
-                if (!board.containsKey(square)) {
-                    board.put(square, new Empty());
-                }
-            }
+            fillSquareByFile(rank);
+        }
+    }
+
+    private void fillSquareByFile(Rank rank) {
+        for (File file : File.values()) {
+            Square square = Square.of(file, rank);
+            checkEmpty(square);
+        }
+    }
+
+    private void checkEmpty(Square square) {
+        if (!board.containsKey(square)) {
+            board.put(square, new Empty());
         }
     }
 
@@ -102,13 +118,6 @@ public final class Board {
                 new Knight(color),
                 new Rook(color)
         );
-    }
-
-    @Override
-    public String toString() {
-        return "Board{" +
-                "board=" + board +
-                '}';
     }
 
     public Piece get(Square square) {

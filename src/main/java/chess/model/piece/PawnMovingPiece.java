@@ -40,7 +40,7 @@ public abstract class PawnMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
         Optional<List<Square>> route = getRoute(source, target);
         if (route.isPresent()) {
             Piece targetPiece = board.get(target);

@@ -1,9 +1,7 @@
 package chess.model.square;
 
-import chess.model.piece.Piece;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 public enum File {

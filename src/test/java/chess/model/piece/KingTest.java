@@ -69,6 +69,6 @@ public class KingTest {
         King king = new King(Color.BLACK);
         Square source = Square.of(File.E, Rank.EIGHT);
         Square target = Square.of(File.E, Rank.SEVEN);
-        assertThat(king.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(king.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

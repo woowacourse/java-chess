@@ -52,7 +52,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SEVEN);
-        assertThat(bishop.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
     @Test
@@ -60,6 +60,6 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SIX);
-        assertThat(bishop.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

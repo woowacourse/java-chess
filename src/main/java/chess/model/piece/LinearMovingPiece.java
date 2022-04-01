@@ -18,13 +18,17 @@ public abstract class LinearMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
         Piece targetPiece = board.get(target);
         Optional<List<Square>> route = getRoute(source, target);
         if (route.isEmpty()) {
             return false;
         }
-        for (Square square : route.get()) {
+        return checkEachSquare(board, targetPiece, route.get());
+    }
+
+    private boolean checkEachSquare(Board board, Piece targetPiece, List<Square> route) {
+        for (Square square : route) {
             Piece tempPiece = board.get(square);
             if (tempPiece.equals(targetPiece) && isNotAlly(targetPiece)) {
                 return true;

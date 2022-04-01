@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class ChessController {
 
-    private Board board;
+    private final Board board;
 
     public ChessController() {
         this.board = new Board();
@@ -40,14 +40,18 @@ public class ChessController {
         List<Rank> ranks = Arrays.asList(Rank.values());
         Collections.reverse(ranks);
         for (Rank rank : ranks) {
-            List<String> tempLine = new ArrayList<>();
-            for (File file : File.values()) {
-                Piece piece = board.get(Square.of(file, rank));
-                tempLine.add(toPieceDto(piece));
-            }
-            boardDto.add(tempLine);
+            boardDto.add(makeLineByFile(board, rank));
         }
         return boardDto;
+    }
+
+    private List<String> makeLineByFile(Board board, Rank rank) {
+        List<String> tempLine = new ArrayList<>();
+        for (File file : File.values()) {
+            Piece piece = board.get(Square.of(file, rank));
+            tempLine.add(toPieceDto(piece));
+        }
+        return tempLine;
     }
 
     private String toPieceDto(Piece piece) {

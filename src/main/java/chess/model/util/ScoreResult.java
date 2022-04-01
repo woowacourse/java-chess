@@ -70,7 +70,6 @@ public class ScoreResult {
                 .collect(Collectors.toMap(square -> square, board::get));
     }
 
-
     private static double sumChivalryPoint(Map<Square, Piece> board, Color color) {
         return board.values().stream()
                 .filter(piece -> !piece.isPawn() && piece.isSameColor(color))

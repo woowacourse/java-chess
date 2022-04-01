@@ -70,6 +70,6 @@ public class KnightTest {
         Knight knight = new Knight(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SEVEN);
-        assertThat(knight.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(knight.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

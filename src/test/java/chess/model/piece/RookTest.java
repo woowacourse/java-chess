@@ -59,7 +59,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Square source = Square.of(File.A, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SEVEN);
-        assertThat(rook.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(rook.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
     @Test
@@ -67,6 +67,6 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Square source = Square.of(File.A, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SIX);
-        assertThat(rook.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(rook.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

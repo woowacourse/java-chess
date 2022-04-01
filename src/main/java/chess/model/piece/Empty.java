@@ -22,7 +22,7 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
         return false;
     }
 

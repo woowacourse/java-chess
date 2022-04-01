@@ -16,7 +16,7 @@ public abstract class PointMovingPiece extends AbstractPiece {
     }
 
     @Override
-    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
+    public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
         Piece targetPiece = board.get(target);
         return isNotAlly(targetPiece);
     }

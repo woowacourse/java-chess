@@ -70,7 +70,7 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         Square source = Square.of(File.D, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SEVEN);
-        assertThat(queen.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(queen.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
     @Test
@@ -78,6 +78,6 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         Square source = Square.of(File.D, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SIX);
-        assertThat(queen.isObstacleOnRoute(board, source, target)).isFalse();
+        assertThat(queen.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

@@ -15,7 +15,7 @@ public interface Piece {
 
     boolean movable(Board board, Square source, Square target);
 
-    boolean isObstacleOnRoute(Board board, Square source, Square target);
+    boolean canMoveWithoutObstacle(Board board, Square source, Square target);
 
     List<Direction> getDirection();
 
