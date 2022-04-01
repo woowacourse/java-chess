@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
+import static chess.domain.position.direction.DirectionUtil.*;
+
 import chess.domain.position.Position;
 import chess.domain.position.YAxis;
 import chess.domain.position.direction.DiagonalDirection;
-import chess.domain.position.direction.VerticalDirection;
+import chess.domain.position.direction.Direction;
 
 public class Pawn extends AbstractPiece {
 
@@ -29,7 +31,8 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public boolean isAbleToAttack(Position from, Position to) {
-        boolean isDiagonalOneDistance = DiagonalDirection.isOnDiagonal(from, to) && VerticalDirection.isInVerticalRange(from, to, 1);
+        Direction direction = new DiagonalDirection();
+        boolean isDiagonalOneDistance = direction.isOnDirection(from, to) && isInVerticalRange(from, to, 1);
 
         if (isPieceColor(PieceColor.BLACK)) {
             return isDiagonalOneDistance && from.isUpperThan(to);

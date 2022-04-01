@@ -12,18 +12,18 @@ public abstract class AbstractPiece {
         this.pieceType = pieceType;
     }
 
+    public abstract boolean isMovable(Position from, Position to);
+
+    public boolean isAbleToAttack(Position from, Position to) {
+        return isMovable(from, to);
+    }
+
     public PieceColor getPieceColor() {
         return pieceColor;
     }
 
     public PieceType getPieceType() {
         return pieceType;
-    }
-
-    public abstract boolean isMovable(Position from, Position to);
-
-    public boolean isAbleToAttack(Position from, Position to) {
-        return isMovable(from, to);
     }
 
     public boolean isAbleToJump() {

@@ -19,7 +19,7 @@ class DiagonalDirectionTest {
         Position position2 = Position.from(XAxis.D, YAxis.FOUR);
 
         // when
-        List<Position> positions = DiagonalDirection.getPositionsSameDirectionDiagonalBetween(position1, position2);
+        List<Position> positions = DirectionUtil.getPositionsSameDirectionDiagonalBetween(position1, position2);
 
         // then
         assertThat(positions).containsAll(List.of(

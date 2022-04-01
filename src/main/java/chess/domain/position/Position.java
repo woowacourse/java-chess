@@ -1,12 +1,12 @@
 package chess.domain.position;
 
-import chess.domain.position.direction.VerticalDirection;
+import static chess.domain.position.direction.DirectionUtil.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Position {
 
@@ -63,7 +63,7 @@ public class Position {
     }
 
     public boolean isInVerticalRangeAndSameXAxis(Position other, int range) {
-        return VerticalDirection.isInVerticalRange(this, other, range) && isSameXAxis(other);
+        return isInVerticalRange(this, other, range) && isSameXAxis(other);
     }
 
     public boolean isFarFromMoreThanOne(Position other) {

@@ -3,6 +3,7 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.direction.DiagonalDirection;
+import chess.domain.position.direction.Direction;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ class PositionTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("isSameYAxis 는 현재 위치가 다른 위치와 동일 대각선상에 존재하면 true를 반환한다.")
+    @DisplayName("isOnDiagonal 는 현재 위치가 다른 위치와 동일 대각선상에 존재하면 true를 반환한다.")
     @Test
     void isOnDiagonal_returnsTrueIfOnDiagonal() {
         // given
@@ -81,7 +82,8 @@ class PositionTest {
         Position position2 = Position.from(XAxis.H, YAxis.EIGHT);
 
         // when
-        boolean actual = DiagonalDirection.isOnDiagonal(position1, position2);
+        Direction direction = new DiagonalDirection();
+        boolean actual = direction.isOnDirection(position1, position2);
 
         // then
         assertThat(actual).isTrue();
