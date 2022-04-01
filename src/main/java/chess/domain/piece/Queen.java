@@ -18,7 +18,7 @@ public class Queen extends ChessPiece {
         whiteTeamInitialPosition.put(ChessBoardPosition.of(4, 1), new Queen(Team.WHITE));
     }
 
-    private Queen(Team team) {
+    Queen(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
                 List.of(ChessBoardPosition.ofDirection(1, 1),
                         ChessBoardPosition.ofDirection(1, -1),

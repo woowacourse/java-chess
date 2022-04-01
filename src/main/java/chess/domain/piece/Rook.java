@@ -20,7 +20,7 @@ public class Rook extends ChessPiece {
         whiteTeamInitialPosition.put(ChessBoardPosition.of(8, 1), new Rook(Team.WHITE));
     }
 
-    private Rook(Team team) {
+    Rook(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
                 List.of(ChessBoardPosition.ofDirection(1, 0),
                         ChessBoardPosition.ofDirection(-1, 0),

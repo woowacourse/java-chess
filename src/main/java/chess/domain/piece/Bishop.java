@@ -19,7 +19,7 @@ public class Bishop extends ChessPiece {
         whiteTeamInitialPosition.put(ChessBoardPosition.of(6, 1), new Bishop(Team.WHITE));
     }
 
-    private Bishop(Team team) {
+    Bishop(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
                 List.of(ChessBoardPosition.ofDirection(1, 1),
                         ChessBoardPosition.ofDirection(1, -1),

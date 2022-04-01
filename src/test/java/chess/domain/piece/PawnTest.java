@@ -150,7 +150,7 @@ public class PawnTest {
 
     @Test
     @DisplayName("이동 불가능 한곳이면 예외를 발생한다")
-    void makePathTest11() {
+    void makePathTest9() {
         Pawn pawn = new Pawn(Team.BLACK,
                 List.of(ChessBoardPosition.ofDirection(0, -1)), Collections.emptyList(),
                 List.of(ChessBoardPosition.ofDirection(1, -1),
