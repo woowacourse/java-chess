@@ -3,6 +3,7 @@ package chess.command;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,11 @@ public class CommandFactory {
     private static final int POSITION_ARGUMENT_LENGTH = 2;
     private static final int ROW_INDEX = 0;
     private static final int COLUMN_INDEX = 1;
+    private static final int COMMAND_INDEX = 0;
+    private static final int MOVE_ARGUMENT_START_INDEX = 1;
+    private static final int MOVE_COMMAND_SIZE = 3;
+    private static final String COMMAND_DISTRIBUTOR = " ";
+    private static final String INVALID_COMMAND = "올바르지 명령입니다.";
     private static final String INVALID_COMMAND_INPUT = "입력에 맞는 명령을 찾을 수 없습니다.";
     private static final String INVALID_MOVING_ARGUMENTS = "잘못된 이동 명령입니다.";
 
@@ -31,17 +37,26 @@ public class CommandFactory {
 
     }
 
-    public static Command find(final String command, final List<String> moveArgs) {
+    public static Command find(final String commandString) {
+        final List<String> args = Arrays.asList(commandString
+                .split(COMMAND_DISTRIBUTOR, -1));
+        if (args.size() != 1 && args.size() != MOVE_COMMAND_SIZE) {
+            throw new IllegalArgumentException(INVALID_COMMAND);
+        }
+        return create(args.get(COMMAND_INDEX), args.subList(MOVE_ARGUMENT_START_INDEX, args.size()));
+    }
+
+    private static Command create(final String command, final List<String> moveArgs) {
         if (commands.containsKey(command)) {
             return commands.get(command).get();
         }
         if (command.equals("move")) {
-            return move(moveArgs);
+            return createMove(moveArgs);
         }
         throw new IllegalArgumentException(INVALID_COMMAND_INPUT);
     }
 
-    private static Command move(final List<String> moveArgs) {
+    private static Command createMove(final List<String> moveArgs) {
         if (moveArgs.size() != MOVE_ARGUMENTS_SIZE) {
             throw new IllegalArgumentException(INVALID_MOVING_ARGUMENTS);
         }
