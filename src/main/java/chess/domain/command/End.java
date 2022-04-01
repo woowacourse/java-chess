@@ -6,7 +6,7 @@ public final class End implements CommandStrategy {
     @Override
     public void execute(final String command, final ChessGame chessGame) {
         if (chessGame.isNotRunning()) {
-            chessGame.turnOff();
+            chessGame.gameSwitchOff();
             return;
         }
         chessGame.end();

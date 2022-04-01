@@ -14,7 +14,7 @@ import java.util.Map;
 public class ChessGame {
 
     private State state;
-    public boolean isNotEnd = true;
+    public GameSwitch gameSwitch = GameSwitch.ON;
 
     public ChessGame() {
         state = new Ready();
@@ -23,7 +23,7 @@ public class ChessGame {
     public void run() {
         OutputView.printStartMessage();
 
-        while (isNotEnd) {
+        while (gameSwitch.isOn()) {
             final String command = InputView.inputCommand();
             final GameCommand gameCommand = GameCommand.from(command);
             gameCommand.execute(command, this);
@@ -48,8 +48,8 @@ public class ChessGame {
         return !state.isRunning();
     }
 
-    public void turnOff() {
-        isNotEnd = false;
+    public void gameSwitchOff() {
+        gameSwitch = gameSwitch.off();
     }
 
     public void end() {
@@ -71,15 +71,15 @@ public class ChessGame {
     }
 
     private boolean isFinishedAndGameEnd() {
-        return isNotEnd && state.isFinished();
+        return gameSwitch.isOn() && state.isFinished();
     }
 
     private boolean isStatusInRunning() {
-        return isNotEnd && state.isStatus();
+        return gameSwitch.isOn() && state.isStatus();
     }
 
     private boolean isReadyOrRunning() {
-        return isNotEnd && !state.isStatus();
+        return gameSwitch.isOn() && !state.isStatus();
     }
 
     public StatusScore calculateStatus() {
