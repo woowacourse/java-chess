@@ -3,7 +3,7 @@ package chess.controller;
 import static java.lang.System.err;
 
 import chess.constant.Command;
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.factory.BoardFactory;
 import chess.domain.board.factory.RegularBoardFactory;
 import chess.dto.Request;
@@ -20,19 +20,19 @@ public class ChessController {
         BoardFactory boardFactory = RegularBoardFactory.getInstance();
 
         GameFlow gameFlow = new AlternatingGameFlow();
-        Board board = new Board(boardFactory.create(), gameFlow);
+        ChessBoard chessBoard = new ChessBoard(boardFactory.create(), gameFlow);
         Command beginCommand = InputView.inputStartCommand();
 
         if (beginCommand.isEnd()) {
             return;
         }
 
-        OutputView.printChessBoard(board.getBoard());
+        OutputView.printChessBoard(chessBoard.getBoard());
 
-        startGame(gameFlow, board);
+        startGame(gameFlow, chessBoard);
     }
 
-    private void startGame(GameFlow gameFlow, Board board) {
+    private void startGame(GameFlow gameFlow, ChessBoard chessBoard) {
         while (gameFlow.isRunning()) {
             Request request = InputView.inputCommandInGaming();
             if (request.getCommand().isEnd()) {
@@ -40,21 +40,21 @@ public class ChessController {
             }
 
             if (request.getCommand().isStatus()) {
-                OutputView.printCurrentTeamScore(board.calculateScore());
+                OutputView.printCurrentTeamScore(chessBoard.calculateScore());
                 continue;
             }
 
-            movePiece(board, request);
-            OutputView.printChessBoard(board.getBoard());
+            movePiece(chessBoard, request);
+            OutputView.printChessBoard(chessBoard.getBoard());
         }
     }
 
-    private void movePiece(Board board, Request request) {
+    private void movePiece(ChessBoard chessBoard, Request request) {
         try {
-            board.movePiece(request.getSourcePosition(), request.getTargetPosition());
+            chessBoard.movePiece(request.getSourcePosition(), request.getTargetPosition());
         } catch (RuntimeException e) {
             err.println(e.getMessage());
-            movePiece(board, InputView.inputCommandInGaming());
+            movePiece(chessBoard, InputView.inputCommandInGaming());
         }
     }
 }

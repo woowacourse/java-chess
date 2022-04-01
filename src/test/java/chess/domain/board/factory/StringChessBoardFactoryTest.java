@@ -25,7 +25,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class StringBoardFactoryTest {
+public class StringChessBoardFactoryTest {
 
     @Test
     @DisplayName("입력이 비정상이면 예외을 발생시킨다: Rank 크기")

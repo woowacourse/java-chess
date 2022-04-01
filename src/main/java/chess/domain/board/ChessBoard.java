@@ -13,7 +13,7 @@ import chess.turndecider.GameFlow;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Board {
+public class ChessBoard {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
     private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
@@ -21,7 +21,7 @@ public class Board {
     private final Map<Position, Piece> board;
     private final GameFlow gameFlow;
 
-    public Board(Map<Position, Piece> board, GameFlow gameFlow) {
+    public ChessBoard(Map<Position, Piece> board, GameFlow gameFlow) {
         this.board = board;
         this.gameFlow = gameFlow;
     }
