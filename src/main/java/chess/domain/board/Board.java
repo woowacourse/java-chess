@@ -26,10 +26,7 @@ public class Board {
 
     public Optional<Piece> findPieceBy(Position position) {
         Piece piece = value.get(position);
-        if (piece == null) {
-            return Optional.empty();
-        }
-        return Optional.of(piece);
+        return Optional.ofNullable(piece);
     }
 
     public void move(Position source, Position destination, Color color) {
