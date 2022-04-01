@@ -19,12 +19,19 @@ public abstract class FixedMovablePiece extends Piece {
 
     @Override
     public boolean isMovable(Position from, Position to, ChessBoard chessBoard) {
-        return isMovableByFixed(from, to) && chessBoard.isEmptyPosition(to);
+        return isMovableByFixed(from, to) && !isToSameColor(from, to, chessBoard);
     }
 
     private boolean isMovableByFixed(Position from, Position to) {
         return directions.stream()
                 .map(direction -> direction.route(from, to))
                 .anyMatch(route -> route.size() == FIXED_MOVE_SIZE);
+    }
+
+    private boolean isToSameColor(Position from, Position to, ChessBoard chessBoard) {
+        if (chessBoard.isEmptyPosition(to)) {
+            return false;
+        }
+        return chessBoard.findByPiece(to).isSameTeamPiece(chessBoard.findByPiece(from));
     }
 }
