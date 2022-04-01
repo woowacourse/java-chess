@@ -17,7 +17,7 @@ public class ChessController {
 
     private void playTurn(ChessBoard chessBoard) {
         if (chessBoard.isEnd()) {
-            OutputView.printResult(chessBoard.calculateScore());
+            OutputView.printResult(chessBoard.calculateScore(), chessBoard.decideWinner());
             return;
         }
 
@@ -29,7 +29,6 @@ public class ChessController {
         }
 
         readyGame(chessBoard, command);
-
         playingGame(chessBoard, text, command);
     }
 

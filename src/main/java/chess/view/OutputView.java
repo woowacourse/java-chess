@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.game.Color;
+import chess.domain.game.Result;
 import chess.domain.game.board.ChessBoard;
 import chess.domain.piece.ChessPiece;
 import chess.domain.position.Position;
@@ -76,9 +77,14 @@ public class OutputView {
         printTotalScore(scoreByColor);
     }
 
-    public static void printResult(Map<Color, Double> scoreByColor) {
+    public static void printResult(Map<Color, Double> scoreByColor, Color color) {
         System.out.println(RESULT);
         printTotalScore(scoreByColor);
+        printWinner(color);
+    }
+
+    private static void printWinner(Color winnerColor) {
+        System.out.println(String.format("승자는 %s 입니다.", winnerColor.name()));
     }
 
     private static void printTotalScore(Map<Color, Double> scoreByColor) {

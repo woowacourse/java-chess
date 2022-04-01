@@ -2,6 +2,7 @@ package chess.domain.game.board;
 
 import chess.domain.game.Color;
 import chess.domain.game.GameStatus;
+import chess.domain.game.Result;
 import chess.domain.game.Score;
 import chess.domain.piece.ChessPiece;
 import chess.domain.position.Direction;
@@ -137,6 +138,10 @@ public class ChessBoard {
     public Map<Color, Double> calculateScore() {
         Score score = new Score(chessBoard);
         return score.calculateScore();
+    }
+
+    public Color decideWinner(){
+        return currentTurn.toOpposite();
     }
 
     public boolean isReady() {
