@@ -120,4 +120,13 @@ public class ChessBoard {
                 .map(mapInformation::get)
                 .orElse(null);
     }
+
+    public boolean isKingDie() {
+        int kingNumber = (int) mapInformation.keySet()
+                .stream()
+                .map(mapInformation::get)
+                .filter(King.class::isInstance)
+                .count();
+        return kingNumber != 2;
+    }
 }

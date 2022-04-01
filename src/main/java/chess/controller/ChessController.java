@@ -26,9 +26,9 @@ public class ChessController {
         ChessGame chessGame = ChessGame.create();
         sendDataForPrintCurrentChessBoard(chessGame);
 
-        /*while (!chessGame.isGameEnd()) {
+        while (!chessGame.isGameEnd()) {
             doTurn(chessGame);
-        }*/
+        }
     }
 
     private void sendDataForPrintCurrentChessBoard(ChessGame chessGame) {

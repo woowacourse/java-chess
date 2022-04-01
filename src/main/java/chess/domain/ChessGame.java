@@ -18,4 +18,10 @@ public class ChessGame {
     public Map<ChessBoardPosition, ChessPiece> getChessBoardInformation() {
         return new HashMap<>(chessBoard.getMapInformation());
     }
+
+    public boolean isGameEnd() {
+        return chessBoard.isKingDie();
+    }
+
+
 }
