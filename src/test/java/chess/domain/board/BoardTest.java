@@ -222,9 +222,9 @@ class BoardTest {
     @Test
     void count_Specific_Piece() {
         Board board = new Board(new CreateCompleteBoardStrategy());
-        final double actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
+        final int actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
 
-        assertThat(actualCount).isEqualTo(2.0);
+        assertThat(actualCount).isEqualTo(2);
     }
 
     @DisplayName("같은 열에 또다른 폰이 있는 경우의 개수를 센다.")
