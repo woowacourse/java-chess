@@ -76,6 +76,16 @@
 - [x] `KnightTest` - DisplayName 수정
 - [x] `PawnTest` - 첫 이동 시 두 칸이동에 대한 테스트 없음.
 
+## 3차 피드백
+
+- [ ] `Piece`
+    - [ ] `calculateAvailablePosition` 함수 리팩터링
+        - `move()`메서드가 해당 로직을 `Navigator`객체에게 위임.
+    - [ ] `createPositionByDirection` 함수 리팩터링
+        - `Position` 객체에 메세지를 보내는 것은 어떨지.
+- [ ] `ChessBoard`
+    - [ ] 체스보드 역할 비중이 크기 때문에 `Score`객체를 통해 분리하는 것은 어떨지.
+
 ## 참고 자료
 
 - [Null Object Pattern](https://johngrib.github.io/wiki/pattern/null-object/)
