@@ -1,6 +1,8 @@
 package chess.model.strategy;
 
-import chess.model.*;
+import chess.model.position.Direction;
+import chess.model.position.Distance;
+import chess.model.position.Position;
 
 import java.util.List;
 

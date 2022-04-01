@@ -1,12 +1,8 @@
 package chess.model.piece;
 
-import chess.model.Direction;
-import chess.model.Position;
+import chess.model.position.Direction;
 import chess.model.Team;
 import chess.model.strategy.UnlimitedMoveStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Bishop extends Piece {
     private static final String BLACK_NAME = "B";

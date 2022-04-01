@@ -1,13 +1,9 @@
 package chess.model.piece;
 
-import chess.model.Direction;
-import chess.model.Distance;
-import chess.model.Position;
+import chess.model.position.Direction;
+import chess.model.position.Distance;
 import chess.model.Team;
 import chess.model.strategy.LimitedMoveStrategy;
-
-import java.util.Collections;
-import java.util.List;
 
 public class King extends Piece {
     private static final String BLACK_NAME = "K";

@@ -1,7 +1,7 @@
 package chess.model.piece;
 
-import chess.model.Direction;
-import chess.model.Position;
+import chess.model.position.Direction;
+import chess.model.position.Position;
 import chess.model.Team;
 import chess.model.Turn;
 import chess.model.strategy.MoveStrategy;
@@ -57,7 +57,6 @@ public abstract class Piece {
         positions.remove(target);
         return positions;
     }
-
 
     public final boolean isMovable(Position source, Position target, boolean isKill) {
         return moveStrategy.movable(source, target, isKill);

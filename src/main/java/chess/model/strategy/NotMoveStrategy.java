@@ -1,6 +1,6 @@
 package chess.model.strategy;
 
-import chess.model.Position;
+import chess.model.position.Position;
 
 public class NotMoveStrategy implements MoveStrategy {
     @Override

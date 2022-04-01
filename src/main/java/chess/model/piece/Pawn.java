@@ -1,10 +1,8 @@
 package chess.model.piece;
 
 import chess.model.*;
+import chess.model.position.Direction;
 import chess.model.strategy.PawnMoveStrategy;
-
-import java.util.Collections;
-import java.util.List;
 
 public class Pawn extends Piece {
     private static final int ONE_STEP = 1;

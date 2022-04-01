@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.model.Board;
-import chess.model.BoardFactory;
+import chess.model.board.Board;
+import chess.model.board.BoardFactory;
 import chess.model.ChessGame;
 import chess.model.Turn;
 import chess.model.command.Command;

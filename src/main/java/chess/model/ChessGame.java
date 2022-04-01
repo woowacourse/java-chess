@@ -1,7 +1,9 @@
 package chess.model;
 
+import chess.model.board.Board;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.position.Position;
 
 import java.util.List;
 

@@ -1,5 +1,9 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.position.File;
+import chess.model.position.Position;
+import chess.model.position.Rank;
+import chess.model.Team;
 import chess.model.piece.*;
 
 import java.util.LinkedHashMap;

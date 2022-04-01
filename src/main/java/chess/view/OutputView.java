@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.model.Board;
-import chess.model.Position;
+import chess.model.board.Board;
+import chess.model.position.Position;
 import chess.model.Team;
 
 import java.util.Map;

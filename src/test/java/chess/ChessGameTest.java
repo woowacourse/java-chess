@@ -1,7 +1,7 @@
 package chess;
 
-import chess.model.Board;
-import chess.model.BoardFactory;
+import chess.model.board.Board;
+import chess.model.board.BoardFactory;
 import chess.model.ChessGame;
 import chess.model.Team;
 import org.junit.jupiter.api.DisplayName;

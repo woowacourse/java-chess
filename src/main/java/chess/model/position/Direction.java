@@ -1,4 +1,6 @@
-package chess.model;
+package chess.model.position;
+
+import chess.model.Team;
 
 import java.util.Arrays;
 import java.util.List;
