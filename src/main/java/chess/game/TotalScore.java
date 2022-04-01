@@ -6,12 +6,11 @@ import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TotalScore {
+public abstract class TotalScore {
 
     private static final double SAME_FILE_PAWN_SUBTRACT_VALUE = 0.5;
 
     private TotalScore() {
-        throw new AssertionError();
     }
 
     public static double getTotalPoint(final List<Piece> pieces) {

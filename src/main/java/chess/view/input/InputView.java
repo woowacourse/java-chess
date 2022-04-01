@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public abstract class InputView {
 
     private static final String COMMAND_SPLIT_DELIMITER = " ";
 
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
-        throw new AssertionError();
     }
 
     public static List<String> inputCommand() {
