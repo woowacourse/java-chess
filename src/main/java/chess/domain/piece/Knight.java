@@ -7,7 +7,7 @@ import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends AbstractPiece {
 
     public Knight(Color color) {
         super(color);

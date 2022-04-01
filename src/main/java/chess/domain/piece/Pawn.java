@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import java.util.List;
 
-public class Pawn extends Piece {
+public class Pawn extends AbstractPiece {
 
     private static final Row BLACK_FIRST_ROW = Row.RANK_7;
     private static final Row WHITE_FIRST_ROW = Row.RANK_2;

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Queen;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -19,7 +19,7 @@ public class ScoreTest {
     @Test
     @DisplayName("기물들의 점수를 잘 계산하는지 1")
     void calculateScore1() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK)); // 9
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK)); // 1
         pieces.put(Position.of(Column.H, Row.RANK_3), new Pawn(Color.BLACK)); // 0.5
@@ -34,7 +34,7 @@ public class ScoreTest {
     @Test
     @DisplayName("기물들의 점수를 잘 계산하는지 2")
     void calculateScore2() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK)); // 9
         pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK)); // 0
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK)); // 1

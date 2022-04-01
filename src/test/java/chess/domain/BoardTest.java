@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Queen;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -22,7 +22,7 @@ public class BoardTest {
     @Test
     @DisplayName("King 이 모두 살아있는 경우 true를 반환하는지")
     void checkAliveAllKings() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK));
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK));
         pieces.put(Position.of(Column.H, Row.RANK_3), new Pawn(Color.BLACK));
@@ -37,7 +37,7 @@ public class BoardTest {
     @Test
     @DisplayName("King 이 하나라도 없는 경우 false를 반환하는지")
     void checkDeadKing() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK));
         pieces.put(Position.of(Column.C, Row.RANK_6), new Pawn(Color.BLACK));
         pieces.put(Position.of(Column.C, Row.RANK_1), new King(Color.WHITE));
@@ -54,10 +54,10 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e2 e4");
         Position targetPosition = Position.of("e4");
-        Map<Position, Piece> beforePieces = board.getPieces();
+        Map<Position, AbstractPiece> beforePieces = board.getPieces();
 
         board.movePiece(Color.WHITE, moveCommand);
-        Map<Position, Piece> afterPieces = board.getPieces();
+        Map<Position, AbstractPiece> afterPieces = board.getPieces();
 
         assertAll(
                 () -> assertThat(beforePieces.get(targetPosition)).isNull(),

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.piece.Queen;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -20,7 +20,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("점수를 잘 계산하는지")
     void calculateScore() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK)); // 9
         pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK)); // 0
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK)); // 1
@@ -43,7 +43,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("게임이 실행중이다.")
     void isRunning() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK));
         pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK));
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK));
@@ -59,7 +59,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("King 이 잡혀서 게임이 종료됐다.")
     void isFinished() {
-        Map<Position, Piece> pieces = new HashMap<>();
+        Map<Position, AbstractPiece> pieces = new HashMap<>();
         pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK));
         pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK));
         pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK));

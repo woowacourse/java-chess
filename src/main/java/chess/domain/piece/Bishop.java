@@ -7,7 +7,7 @@ import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Bishop extends AbstractPiece {
 
     public Bishop(Color color) {
         super(color);

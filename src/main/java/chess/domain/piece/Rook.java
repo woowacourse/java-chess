@@ -7,7 +7,7 @@ import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Rook extends Piece {
+public class Rook extends AbstractPiece {
 
     public Rook(Color color) {
         super(color);

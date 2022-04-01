@@ -5,12 +5,12 @@ import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
-public abstract class Piece {
+public abstract class AbstractPiece {
 
     protected final Color color;
     protected final List<Movement> movements;
 
-    public Piece(Color color) {
+    public AbstractPiece(Color color) {
         this.color = color;
         this.movements = chooseMovements();
     }

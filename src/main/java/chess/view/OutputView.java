@@ -6,7 +6,7 @@ import chess.dto.StatusDto;
 import java.util.Map;
 
 import chess.domain.Color;
-import chess.domain.piece.Piece;
+import chess.domain.piece.AbstractPiece;
 import chess.domain.position.Position;
 import chess.domain.position.Column;
 import chess.domain.position.Row;
@@ -28,7 +28,7 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
     }
 
-    public static void printBoard(Map<Position, Piece> pieces) {
+    public static void printBoard(Map<Position, AbstractPiece> pieces) {
         System.out.println("------------------------");
         for (int rank = 0; rank < 8; rank++) {
             printBoardOnRow(pieces, rank);
@@ -38,14 +38,14 @@ public class OutputView {
         System.out.println("------------------------");
     }
 
-    private static void printBoardOnRow(Map<Position, Piece> pieces, int rank) {
+    private static void printBoardOnRow(Map<Position, AbstractPiece> pieces, int rank) {
         for (int column = 0; column < 8; column++) {
             Position position = Position.of(Column.of(column), Row.of(rank));
             System.out.print(makeSignature(pieces, position));
         }
     }
 
-    private static String makeSignature(Map<Position, Piece> pieces, Position position) {
+    private static String makeSignature(Map<Position, AbstractPiece> pieces, Position position) {
         if (!pieces.containsKey(position)) {
             return ".";
         }
