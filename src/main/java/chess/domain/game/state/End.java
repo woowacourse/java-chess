@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import java.util.Map;
 
 import chess.domain.board.Board;
-import chess.domain.game.Score;
+import chess.domain.game.ScoreCalculator;
 import chess.domain.game.Winner;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -35,7 +35,8 @@ public class End implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        return Score.from(board.getValue());
+        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getValue());
+        return scoreCalculator.calculateAllTeamScore();
     }
 
     @Override

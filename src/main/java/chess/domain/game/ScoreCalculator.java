@@ -12,37 +12,44 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 
-public class Score {
+public class ScoreCalculator {
 
     private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
     private static final double PAWN_PENALTY_RATE = 0.5;
 
-    private Score() {
+    Map<Position, Piece> boardPieces;
+
+    public ScoreCalculator(Map<Position, Piece> boardPieces) {
+        this.boardPieces = new HashMap<>(boardPieces);
     }
 
-    public static Map<Color, Double> from(Map<Position, Piece> boardPieces) {
+    public Map<Color, Double> calculateAllTeamScore() {
         Map<Color, Double> score = new HashMap<>();
-        score.put(Color.BLACK, calculateColorScore(boardPieces, Color.BLACK));
-        score.put(Color.WHITE, calculateColorScore(boardPieces, Color.WHITE));
+        score.put(Color.BLACK, calculateScore(Color.BLACK));
+        score.put(Color.WHITE, calculateScore(Color.WHITE));
         return score;
     }
 
-    private static double calculateColorScore(Map<Position, Piece> boardPieces, Color color) {
+    private double calculateScore(Color color) {
         return boardPieces.values().stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)
-            .sum() - calculateSameLinePawnSubtraction(boardPieces, color);
+            .sum() - calculateSameLinePawnSubtraction(color);
     }
 
-    private static double calculateSameLinePawnSubtraction(Map<Position, Piece> boardPieces, Color color) {
-        List<File> pawnFiles = boardPieces.keySet().stream()
-            .filter(position -> boardPieces.get(position).isPawn() && boardPieces.get(position).isSameColor(color))
-            .map(Position::getFile)
-            .collect(Collectors.toList());
+    private double calculateSameLinePawnSubtraction(Color color) {
+        List<File> pawnFiles = getPawnFiles(color);
 
         return new HashSet<>(pawnFiles).stream()
             .filter(file -> Collections.frequency(pawnFiles, file) >= ALLOWED_ONE_LINE_PAWN_COUNT)
             .mapToDouble(file -> Collections.frequency(pawnFiles, file) * PAWN_PENALTY_RATE)
             .sum();
+    }
+
+    private List<File> getPawnFiles(Color color) {
+        return boardPieces.keySet().stream()
+            .filter(position -> boardPieces.get(position).isPawn() && boardPieces.get(position).isSameColor(color))
+            .map(Position::getFile)
+            .collect(Collectors.toList());
     }
 }
