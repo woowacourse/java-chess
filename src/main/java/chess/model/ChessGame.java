@@ -23,9 +23,7 @@ public class ChessGame {
         return turn;
     }
 
-    public void move(String sourcePosition, String targetPosition, Turn thisTurn) {
-        Position source = Position.from(sourcePosition);
-        Position target = Position.from(targetPosition);
+    public void move(Position source, Position target, Turn thisTurn) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         validateCurrentTurn(thisTurn, sourcePiece);
@@ -39,13 +37,6 @@ public class ChessGame {
     private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
         boolean isAttack = sourcePiece.isOtherTeam(targetPiece);
         return sourcePiece.isMovable(sourcePosition, targetPosition, isAttack) && !hasBlock(sourcePosition, targetPosition, sourcePiece, targetPiece);
-    }
-
-    public void move(Position source, Position target, Turn thisTurn) {
-        Piece sourcePiece = board.get(source);
-        Piece targetPiece = board.get(target);
-        validateCurrentTurn(thisTurn, sourcePiece);
-
     }
 
     public boolean isKingDead() {

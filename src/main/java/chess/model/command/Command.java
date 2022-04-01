@@ -1,5 +1,7 @@
 package chess.model.command;
 
+import chess.model.position.Position;
+
 public abstract class Command implements State {
     protected static final String START = "start";
     protected static final String MOVE = "move";
@@ -40,12 +42,12 @@ public abstract class Command implements State {
     }
 
     @Override
-    public String getSourcePosition() {
+    public Position getSourcePosition() {
         throw new IllegalArgumentException("명령어에서 위치를 얻을수 없습니다.");
     }
 
     @Override
-    public String getTargetPosition() {
+    public Position getTargetPosition() {
         throw new IllegalArgumentException("명령어에서 위치를 얻을수 없습니다.");
     }
 }

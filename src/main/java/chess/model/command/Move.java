@@ -1,5 +1,7 @@
 package chess.model.command;
 
+import chess.model.position.Position;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,13 +39,13 @@ public class Move extends Command {
     }
 
     @Override
-    public String getSourcePosition() {
-        return getCommandPosition().get(0);
+    public Position getSourcePosition() {
+        return Position.from(getCommandPosition().get(0));
     }
 
     @Override
-    public String getTargetPosition() {
-        return getCommandPosition().get(1);
+    public Position getTargetPosition() {
+        return Position.from(getCommandPosition().get(1));
     }
 
     private List<String> getCommandPosition() {

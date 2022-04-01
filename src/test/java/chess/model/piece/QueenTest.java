@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.*;
 import chess.model.board.Board;
+import chess.model.command.Move;
 import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,11 +43,8 @@ class QueenTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "a7";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 a7"), new Turn(Team.BLACK))
         );
     }
 
@@ -60,11 +58,8 @@ class QueenTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "c6";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 c6"), new Turn(Team.BLACK))
         );
     }
 
@@ -78,11 +73,8 @@ class QueenTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "c6";
-        String target = "e8";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.progress(new Move("move c6 e8"), new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 

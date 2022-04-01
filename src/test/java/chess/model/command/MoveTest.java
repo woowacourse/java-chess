@@ -1,5 +1,6 @@
 package chess.model.command;
 
+import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -87,7 +88,7 @@ public class MoveTest {
     void getSourcePosition() {
         Command command = new Move("move a1 b2");
 
-        assertThat(command.getSourcePosition()).isEqualTo("a1");
+        assertThat(command.getSourcePosition()).isEqualTo(Position.from("a1"));
     }
 
     @Test
@@ -95,6 +96,6 @@ public class MoveTest {
     void getTargetPosition() {
         Command command = new Move("move a1 b2");
 
-        assertThat(command.getTargetPosition()).isEqualTo("b2");
+        assertThat(command.getTargetPosition()).isEqualTo(Position.from("b2"));
     }
 }

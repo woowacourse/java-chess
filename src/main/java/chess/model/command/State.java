@@ -1,5 +1,7 @@
 package chess.model.command;
 
+import chess.model.position.Position;
+
 public interface State {
     Command turnState(String input);
 
@@ -11,7 +13,7 @@ public interface State {
 
     boolean isStatus();
 
-    String getSourcePosition();
+    Position getSourcePosition();
 
-    String getTargetPosition();
+    Position getTargetPosition();
 }

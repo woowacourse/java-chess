@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.*;
 import chess.model.board.Board;
+import chess.model.command.Move;
 import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,11 +81,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "a7";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 a7"), new Turn(Team.BLACK))
         );
     }
 
@@ -97,11 +95,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a2";
-        String target = "a3";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.progress(new Move("move a2 a3"), new Turn(Team.WHITE))
         );
     }
 
@@ -114,11 +109,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "a7";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 a7"), new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -141,11 +133,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a6";
-        String target = "a4";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a6 a4"), new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -158,11 +147,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a6";
-        String target = "a7";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a6 a7"), new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -175,11 +161,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "b7";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 b7"), new Turn(Team.BLACK))
         );
     }
 
@@ -192,11 +175,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a2";
-        String target = "b3";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.progress(new Move("move a2 b3"), new Turn(Team.WHITE))
         );
     }
 
@@ -209,11 +189,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "b7";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 b7"), new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -226,11 +203,8 @@ class PawnTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "b7";
-        String target = "a8";
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move b7 a8"), new Turn(Team.BLACK))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }

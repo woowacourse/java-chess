@@ -3,6 +3,7 @@ package chess.model.piece;
 import chess.model.*;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
+import chess.model.command.Move;
 import chess.model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,11 +46,8 @@ class KnightTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "b6";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 b6"), new Turn(Team.BLACK))
         );
     }
 
@@ -59,11 +57,8 @@ class KnightTest {
         Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "g1";
-        String target = "h3";
-
         assertDoesNotThrow(
-                () -> chessGame.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.progress(new Move("move g1 h3"), new Turn(Team.WHITE))
         );
     }
 
@@ -76,12 +71,8 @@ class KnightTest {
         Board board = new Board(boardMap);
         ChessGame chessGame = new ChessGame(board);
 
-        String source = "a8";
-        String target = "c7";
-
-
         assertThatThrownBy(
-                () -> chessGame.move(source, target, new Turn(Team.WHITE))
+                () -> chessGame.progress(new Move("move a8 c7"), new Turn(Team.WHITE))
         ).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 }
