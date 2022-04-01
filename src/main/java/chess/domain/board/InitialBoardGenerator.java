@@ -33,28 +33,28 @@ public class InitialBoardGenerator implements BoardGenerator {
         return pointPieces;
     }
 
-    private Map<Point, Piece> generateSpecialLine(int lineNumber, Color color) {
+    private Map<Point, Piece> generateSpecialLine(int verticalIndex, Color color) {
         Map<Point, Piece> pointPieces = new HashMap<>();
-        pointPieces.put(Point.of(1, lineNumber), new Rook(color));
-        pointPieces.put(Point.of(2, lineNumber), new Knight(color));
-        pointPieces.put(Point.of(3, lineNumber), new Bishop(color));
-        pointPieces.put(Point.of(4, lineNumber), new Queen(color));
-        pointPieces.put(Point.of(5, lineNumber), new King(color));
-        pointPieces.put(Point.of(6, lineNumber), new Bishop(color));
-        pointPieces.put(Point.of(7, lineNumber), new Knight(color));
-        pointPieces.put(Point.of(8, lineNumber), new Rook(color));
+        pointPieces.put(Point.of(1, verticalIndex), new Rook(color));
+        pointPieces.put(Point.of(2, verticalIndex), new Knight(color));
+        pointPieces.put(Point.of(3, verticalIndex), new Bishop(color));
+        pointPieces.put(Point.of(4, verticalIndex), new Queen(color));
+        pointPieces.put(Point.of(5, verticalIndex), new King(color));
+        pointPieces.put(Point.of(6, verticalIndex), new Bishop(color));
+        pointPieces.put(Point.of(7, verticalIndex), new Knight(color));
+        pointPieces.put(Point.of(8, verticalIndex), new Rook(color));
         return pointPieces;
     }
 
-    private Map<Point, Piece> generatePawnLine(int lineNumber, Color color) {
+    private Map<Point, Piece> generatePawnLine(int verticalIndex, Color color) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-            .mapToObj(i -> Point.of(i, lineNumber))
+            .mapToObj(horizontalIndex -> Point.of(horizontalIndex, verticalIndex))
             .collect(toMap(Function.identity(), it -> new Pawn(color)));
     }
 
-    private Map<Point, Piece> generateEmptyLine(int lineNumber) {
+    private Map<Point, Piece> generateEmptyLine(int verticalIndex) {
         return IntStream.rangeClosed(LineNumber.MIN, LineNumber.MAX)
-            .mapToObj(i -> Point.of(i, lineNumber))
+            .mapToObj(horizontalIndex -> Point.of(horizontalIndex, verticalIndex))
             .collect(toMap(Function.identity(), it -> Empty.getInstance()));
     }
 }

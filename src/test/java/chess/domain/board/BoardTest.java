@@ -39,7 +39,7 @@ class BoardTest {
         Color turnColor = Color.BLACK;
         Board board = BoardFixtures.INITIAL;
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(IllegalStateException.class)
             .isThrownBy(() -> board.move(route, turnColor));
     }
 

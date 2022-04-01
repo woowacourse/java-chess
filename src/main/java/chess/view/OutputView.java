@@ -47,22 +47,22 @@ public class OutputView {
 
     private String toBoard(Map<String, String> information) {
         StringBuilder builder = new StringBuilder();
-        for (int i = LineNumber.MAX; i >= LineNumber.MIN; i--) {
-            builder.append(toLine(information, i)).append("\n");
+        for (int verticalIndex = LineNumber.MAX; verticalIndex >= LineNumber.MIN; verticalIndex--) {
+            builder.append(toLine(information, verticalIndex)).append("\n");
         }
         return builder.toString();
     }
 
-    private String toLine(Map<String, String> information, int i) {
+    private String toLine(Map<String, String> information, int verticalIndex) {
         StringBuilder builder = new StringBuilder();
-        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            builder.append(information.get(toKey(i, j)));
+        for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
+            builder.append(information.get(toKey(verticalIndex, horizontalIndex)));
         }
         return builder.toString();
     }
 
-    private static String toKey(int i, int j) {
-        return String.valueOf(i * BoardResponse.DECIMAL + j);
+    private static String toKey(int verticalIndex, int horizontalIndex) {
+        return String.valueOf(verticalIndex * BoardResponse.DECIMAL + horizontalIndex);
     }
 
     private void printScore(Response response) {

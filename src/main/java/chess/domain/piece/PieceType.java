@@ -28,16 +28,16 @@ public enum PieceType {
 
     public static double calculateScore(Map<Point, Piece> pointPieces, Color color) {
         double totalScore = 0;
-        for (int i = LineNumber.MIN; i <= LineNumber.MAX; i++) {
-            totalScore = calculateVerticalScore(pointPieces, color, totalScore, i);
+        for (int verticalIndex = LineNumber.MIN; verticalIndex <= LineNumber.MAX; verticalIndex++) {
+            totalScore = calculateVerticalScore(pointPieces, color, totalScore, verticalIndex);
         }
         return totalScore;
     }
 
-    private static double calculateVerticalScore(Map<Point, Piece> pointPieces, Color color, double totalScore, int i) {
+    private static double calculateVerticalScore(Map<Point, Piece> pointPieces, Color color, double totalScore, int verticalIndex) {
         int pawnCount = 0;
-        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            Piece piece = pointPieces.get(Point.of(i, j));
+        for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
+            Piece piece = pointPieces.get(Point.of(verticalIndex, horizontalIndex));
             totalScore += getPieceScore(piece, color);
             pawnCount = getPawnCount(pawnCount, piece, color);
         }

@@ -23,21 +23,22 @@ public class BoardResponse extends Response {
 
     private static Map<String, String> toInformation(Map<Point, Piece> pointPieces) {
         Map<String, String> information = new HashMap<>();
-        for (int i = LineNumber.MIN; i <= LineNumber.MAX; i++) {
-            information.putAll(toLine(pointPieces, i));
+        for (int verticalIndex = LineNumber.MIN; verticalIndex <= LineNumber.MAX; verticalIndex++) {
+            information.putAll(toLine(pointPieces, verticalIndex));
         }
         return information;
     }
 
-    private static Map<String, String> toLine(Map<Point, Piece> pointPieces, int i) {
+    private static Map<String, String> toLine(Map<Point, Piece> pointPieces, int verticalIndex) {
         Map<String, String> lineInformation = new HashMap<>();
-        for (int j = LineNumber.MIN; j <= LineNumber.MAX; j++) {
-            lineInformation.put(toKey(i, j), PieceRepresentation.convertType(pointPieces.get(Point.of(j, i))));
+        for (int horizontalIndex = LineNumber.MIN; horizontalIndex <= LineNumber.MAX; horizontalIndex++) {
+            lineInformation.put(toKey(verticalIndex, horizontalIndex),
+                PieceRepresentation.convertType(pointPieces.get(Point.of(horizontalIndex, verticalIndex))));
         }
         return lineInformation;
     }
 
-    private static String toKey(int i, int j) {
-        return String.valueOf(i * DECIMAL + j);
+    private static String toKey(int verticalIndex, int horizontalIndex) {
+        return String.valueOf(verticalIndex * DECIMAL + horizontalIndex);
     }
 }
