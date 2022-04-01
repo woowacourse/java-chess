@@ -1,0 +1,52 @@
+@import "global.css";
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 10px 0;
+}
+
+.header__container > h1 {
+    font-size: 32px;
+}
+
+.buttons__container {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons__container > a {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 7px;
+
+    font-size: 20px;
+    background-color: #3a3a3a;
+    color: white;
+    text-decoration: none;
+}
+
+.buttons__container > a:active {
+    background-color: #5d5c5c;
+}
+
+.buttons__container > a:hover {
+    background-color: black;
+}
+
+.buttons__container > a:first-child {
+    margin-right: 10px;
+}
