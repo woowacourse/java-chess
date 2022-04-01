@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.movingstrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class KingTest {
+class KingMovingStrategyTest {
 
     @DisplayName("처음과 같은 위치로 이동할 수 없다.")
     @Test

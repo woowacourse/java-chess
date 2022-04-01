@@ -1,15 +1,16 @@
-package chess.domain.piece;
+package chess.domain.piece.movingstrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PawnTest {
+class PawnMovingStrategyTest {
 
     @DisplayName("같은 위치로 이동할 수 없다.")
     @Test

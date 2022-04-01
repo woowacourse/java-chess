@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.movingstrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.XAxis;
 import chess.domain.position.YAxis;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class KnightTest {
+class KnightMovingStrategyTest {
 
     @DisplayName("한쪽 좌표의 차이가 1, 그리고 다른쪽 좌표의 차이가 2가 나는 위치로 이동가능하다.")
     @ParameterizedTest
