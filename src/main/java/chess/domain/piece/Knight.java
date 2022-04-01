@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
+import chess.domain.strategy.NoPathMovingStrategy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Knight extends ChessPiece {
     }
 
     private Knight(Team team) {
-        super(team, SCORE, null);
+        super(team, SCORE, new NoPathMovingStrategy());
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
