@@ -70,15 +70,8 @@ public class Score {
         }
 
         ChessPiece chessPiece = possiblePiece.get();
-        if (isNotPawn(chessPiece) || isNotSameColor(color, chessPiece)) {
-            return false;
-        }
 
-        return true;
-    }
-
-    private boolean isNotSameColor(Color color, ChessPiece chessPiece) {
-        return !chessPiece.isSameColor(color);
+        return chessPiece.isPawn() && chessPiece.isSameColor(color);
     }
 
     private boolean isNotPawn(ChessPiece chessPiece) {
