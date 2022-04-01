@@ -57,6 +57,7 @@ public class ChessBoard {
             throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
     }
+
     private void checkHurdle(Position position) {
         if (findPiece(position).isPresent()) {
             throw new IllegalArgumentException("이동 경로 사이에 다른 기물이 있습니다.");
@@ -92,6 +93,7 @@ public class ChessBoard {
             throw new IllegalArgumentException("폰은 대각선 이동으로 적을 잡을 수 있습니다.");
         }
     }
+
     private boolean isStraight(Position from, Position to) {
         return to.findDirection(from) == Direction.N || to.findDirection(from) == Direction.S;
     }
@@ -138,7 +140,7 @@ public class ChessBoard {
         return score.calculateScore();
     }
 
-    public Color decideWinner(){
+    public Color decideWinner() {
         return currentTurn.toOpposite();
     }
 

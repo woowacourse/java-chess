@@ -66,5 +66,7 @@ public abstract class ChessPiece {
         return false;
     }
 
-    public Color getColor(){ return color; }
+    public Color getColor() {
+        return color;
+    }
 }
