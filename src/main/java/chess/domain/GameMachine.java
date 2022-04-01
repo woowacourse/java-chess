@@ -8,7 +8,7 @@ import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameMachine {
+public final class GameMachine {
 
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int COMMAND_INDEX = 0;

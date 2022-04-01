@@ -2,7 +2,7 @@ package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 
-public class Rook implements Role {
+public final class Rook implements Role {
 
     private static final int SCORE = 5;
 

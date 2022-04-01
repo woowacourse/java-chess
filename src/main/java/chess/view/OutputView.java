@@ -11,7 +11,7 @@ import chess.domain.position.Row;
 import java.util.Map;
 import java.util.Optional;
 
-public class OutputView {
+public final class OutputView {
 
     private OutputView() {
     }

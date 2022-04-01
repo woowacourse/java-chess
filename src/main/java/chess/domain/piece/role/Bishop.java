@@ -2,7 +2,7 @@ package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 
-public class Bishop implements Role {
+public final class Bishop implements Role {
 
     private static final double SCORE = 3;
 

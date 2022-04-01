@@ -2,7 +2,7 @@ package chess.domain.piece.role;
 
 import chess.domain.position.Position;
 
-public class King implements Role {
+public final class King implements Role {
 
     private static final int MOVEMENT_LIMIT = 1;
     private static final double SCORE = 0;
