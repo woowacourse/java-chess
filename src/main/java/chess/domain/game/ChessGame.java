@@ -12,10 +12,14 @@ public class ChessGame {
     private final GameSwitch gameSwitch;
     private final Turn turn;
 
-    public ChessGame(final Board board) {
+    public ChessGame(final Board board, final Turn turn) {
         this.board = board;
         this.gameSwitch = new GameSwitch();
-        this.turn = new Turn();
+        this.turn = turn;
+    }
+
+    public ChessGame(final Board board) {
+        this(board, new Turn());
     }
 
     public void move(final String rawSource, final String rawTarget) {
@@ -56,6 +60,10 @@ public class ChessGame {
 
     public void turnOff() {
         gameSwitch.turnOff();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public Map<Position, Piece> getCurrentBoard() {

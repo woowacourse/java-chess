@@ -17,12 +17,24 @@ public class BoardDto {
         this.board = board;
     }
 
-    public static BoardDto of(final Board board) {
+    public static BoardDto of(final boolean isOn, final Board board) {
         Map<String, String> map = new HashMap<>();
         for (final Entry<Position, Piece> boardEntry : board.getBoard().entrySet()) {
             map.put(boardEntry.getKey().convertPositionToString(),
                     boardEntry.getValue().convertPieceToString());
         }
-        return new BoardDto("false", map);
+
+        return new BoardDto(extractGameOverStatus(isOn), map);
+    }
+
+    public static BoardDto of(final Board board) {
+        return BoardDto.of(false, board);
+    }
+
+    private static String extractGameOverStatus(final boolean isOn) {
+        if (isOn) {
+            return "false";
+        }
+        return "true";
     }
 }

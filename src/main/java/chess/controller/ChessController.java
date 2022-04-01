@@ -45,11 +45,8 @@ public class ChessController {
         });
 
         post("/move", (req, res) -> {
-            //gson fromJson request body를 MoveDto로 변환
-            gson.fromJson(req.body(), MoveDto.class);
-            // ChessGameService의 move 로직 실행 BoardDto 반환
-            // gson.toJson(BoardDto) 반환
-            return render(new HashMap<>(), "index.html");
+            MoveDto moveDto = gson.fromJson(req.body(), MoveDto.class);
+            return gson.toJson(chessService.move(moveDto));
         });
     }
 }
