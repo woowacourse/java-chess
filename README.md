@@ -201,3 +201,15 @@
     - Direction에서 각 기물의 이동 방향을 반환하는 `getBlackPawnDirections()`같은 메서드의 기능도 Piece가 하도록 수정했다.
 - [x] (Direction) `getBlackPawnDirections()`와 같은 메서드들은 Piece의 타입을 잘 관리하면 분리가 될 수 있을 것 같아요!
     - 이해한게 맞는지 모르겠지만 이 부분들도 다 Piece의 각 타입이 가지고 있게 수정했다.
+
+---
+
+- [ ] 사용하지 않는 코드는 지우기!
+- [ ] `isSameType()`과 같은 메서드는 instanceOf와 다를게 없다. 객체지향적인 설계에 좋지않은 것 같아요.
+- [ ] Optional.ofNullable 메서드를 찾아보면 어떨까요?
+- [ ] 여러번 사용하는 변수는 로컬 변수로 만들면 더 가독성이 좋아질 것 같다.
+- [ ] getter의 양식을 맞춰서 구현해보면 좋을 것 같다.
+- [ ] 상수 네이밍을 지켜주세요
+- [ ] Position의 정적 팩토리 메서드를 개선해볼 수 있을까요?
+- [ ] Pawn의 of에서 적절한 정보를 관리하면 BlackPawn, WhitePawn을 만들지 않아도 될 것 같아요.
+- [ ] 기물의 directions가 상수 네이밍이 잘 적용되지 않은 것 같아요!
