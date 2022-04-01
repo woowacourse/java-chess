@@ -33,10 +33,6 @@ public abstract class Piece {
     public void checkPawn(Position source, Position target, Direction direction, Piece other) {
     }
 
-    public boolean isPawn() {
-        return false;
-    }
-
     public Team team() {
         return team;
     }

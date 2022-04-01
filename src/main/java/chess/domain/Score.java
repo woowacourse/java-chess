@@ -42,14 +42,14 @@ public final class Score {
                 .stream()
                 .filter(position
                         -> team.equals(cells.get(position).team())
-                        && cells.get(position).isPawn())
+                        && cells.get(position) instanceof Pawn)
                 .collect(Collectors.toMap(position -> position, cells::get));
     }
 
     private static List<Piece> getPiecesExceptPawns(final Team team, final Map<Position, Piece> cells) {
         return cells.values()
                 .stream()
-                .filter(piece -> team.equals(piece.team()) && !piece.isPawn())
+                .filter(piece -> team.equals(piece.team()) && !(piece instanceof Pawn))
                 .collect(Collectors.toList());
     }
 
