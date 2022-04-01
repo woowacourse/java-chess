@@ -1,0 +1,11 @@
+package chess.repository;
+
+import java.util.Optional;
+
+import chess.domain.ChessGame;
+
+public interface GameRepository {
+	void save(ChessGame state);
+
+	Optional<ChessGame> findByName(String name);
+}

@@ -5,7 +5,7 @@ import java.util.Map;
 import chess.converter.File;
 import chess.converter.Rank;
 import chess.controller.dto.BoardDto;
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.piece.Color;
 
 public class OutputView {

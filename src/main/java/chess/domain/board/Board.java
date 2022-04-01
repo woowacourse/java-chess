@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import chess.domain.ChessScore;
 import chess.domain.direction.Direction;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;

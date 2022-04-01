@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 import chess.converter.console.StringToCommandConverter;
 import chess.controller.dto.BoardDto;
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.state.Ready;

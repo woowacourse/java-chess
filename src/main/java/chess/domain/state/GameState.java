@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import java.util.Map;
 
-import chess.domain.ChessScore;
+import chess.domain.board.ChessScore;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.piece.Color;
