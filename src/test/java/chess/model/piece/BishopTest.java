@@ -28,12 +28,14 @@ public class BishopTest {
     @Test
     void createBishop() {
         Bishop bishop = new Bishop(Color.BLACK);
+
         assertThat(bishop).isInstanceOf(Bishop.class);
     }
 
     @Test
     void movable() {
         Bishop bishop = new Bishop(Color.BLACK);
+
         assertAll(
                 () -> assertThat(bishop.movable(D4, B6)).isTrue(),
                 () -> assertThat(bishop.movable(D4, B2)).isTrue(),
@@ -44,6 +46,7 @@ public class BishopTest {
     @Test
     void cannotMovable() {
         Bishop bishop = new Bishop(Color.BLACK);
+
         assertThat(bishop.movable(D4, D5)).isFalse();
     }
 
@@ -52,6 +55,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SEVEN);
+
         assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
@@ -60,6 +64,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SIX);
+
         assertThat(bishop.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

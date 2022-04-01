@@ -39,6 +39,7 @@ public class QueenTest {
     @Test
     void movable() {
         Queen queen = new Queen(Color.BLACK);
+
         assertAll(
                 () -> assertThat(queen.movable(D4, B6)).isTrue(),
                 () -> assertThat(queen.movable(D4, B2)).isTrue(),
@@ -53,6 +54,7 @@ public class QueenTest {
     @Test
     void cannotMovable() {
         Queen queen = new Queen(Color.BLACK);
+
         assertAll(
                 () -> assertThat(queen.movable(D4, E6)).isFalse(),
                 () -> assertThat(queen.movable(D4, F5)).isFalse(),
@@ -70,6 +72,7 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         Square source = Square.of(File.D, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SEVEN);
+
         assertThat(queen.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
@@ -78,6 +81,7 @@ public class QueenTest {
         Queen queen = new Queen(Color.BLACK);
         Square source = Square.of(File.D, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SIX);
+
         assertThat(queen.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

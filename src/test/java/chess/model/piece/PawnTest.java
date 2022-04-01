@@ -26,6 +26,7 @@ class PawnTest {
     @Test
     void createPawn() {
         Pawn pawn = new Pawn(Color.BLACK);
+
         assertThat(pawn).isInstanceOf(Pawn.class);
     }
 
@@ -33,6 +34,7 @@ class PawnTest {
     @Test
     void firstSquareMovable() {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertAll(
                 () -> assertThat(pawn.movable(board, E2, E4)).isTrue(),
                 () -> assertThat(pawn.movable(board, C2, C3)).isTrue());
@@ -41,6 +43,7 @@ class PawnTest {
     @Test
     void firstSquareCannotMovable() {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertAll(
                 () -> assertThat(pawn.movable(board, E2, E5)).isFalse(),
                 () -> assertThat(pawn.movable(board, E2, D3)).isFalse());
@@ -49,6 +52,7 @@ class PawnTest {
     @Test
     void WhitePawnCannotMoveInLastColumn() {
         Pawn pawn = new Pawn(Color.WHITE);
+
         assertThat(pawn.movable(board, E2, E1)).isFalse();
     }
 }

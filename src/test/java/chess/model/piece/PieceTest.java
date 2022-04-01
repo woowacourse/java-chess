@@ -10,6 +10,7 @@ class PieceTest {
     @Test
     void createPiece() {
         Piece rook = new Rook(Color.WHITE);
+
         assertThat(rook).isInstanceOf(Piece.class);
     }
 
@@ -18,6 +19,7 @@ class PieceTest {
         Piece blackPiece = new Rook(Color.BLACK);
         Piece whitePiece = new Rook(Color.WHITE);
         Piece nothing = new Empty();
+
         assertAll(
                 () -> assertThat(blackPiece.isBlack()).isTrue(),
                 () -> assertThat(whitePiece.isBlack()).isFalse(),

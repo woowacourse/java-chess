@@ -31,12 +31,14 @@ public class RookTest {
     @Test
     void createRook() {
         Rook rook = new Rook(Color.BLACK);
+
         assertThat(rook).isInstanceOf(Rook.class);
     }
 
     @Test
     void movable() {
         Rook rook = new Rook(Color.BLACK);
+
         assertAll(
                 () -> assertThat(rook.movable(D4, H4)).isTrue(),
                 () -> assertThat(rook.movable(D4, A4)).isTrue(),
@@ -47,6 +49,7 @@ public class RookTest {
     @Test
     void cannotMovable() {
         Rook rook = new Rook(Color.BLACK);
+
         assertAll(
                 () -> assertThat(rook.movable(D4, B6)).isFalse(),
                 () -> assertThat(rook.movable(D4, B2)).isFalse(),
@@ -59,6 +62,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Square source = Square.of(File.A, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SEVEN);
+
         assertThat(rook.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 
@@ -67,6 +71,7 @@ public class RookTest {
         Rook rook = new Rook(Color.BLACK);
         Square source = Square.of(File.A, Rank.EIGHT);
         Square target = Square.of(File.A, Rank.SIX);
+
         assertThat(rook.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

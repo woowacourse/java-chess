@@ -15,6 +15,7 @@ class GameCommandTest {
     @CsvSource(value = {"start:START", "end:END"}, delimiter = ':')
     void findCommand(String commandLine, ChessCommand command) {
         List<String> commandInput = List.of(commandLine);
+
         assertThat(ChessCommand.findCommand(commandInput)).isEqualTo(command);
     }
 
@@ -22,6 +23,7 @@ class GameCommandTest {
     @ValueSource(strings = {"sTaRT", "End", "hello"})
     void throwInvalidCommand(String commandLine) {
         List<String> command = List.of(commandLine);
+
         assertThatThrownBy(() -> ChessCommand.findCommand(command))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(String.format("잘못된 커맨드입니다. %s", command));

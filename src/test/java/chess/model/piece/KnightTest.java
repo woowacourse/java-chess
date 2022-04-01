@@ -35,12 +35,14 @@ public class KnightTest {
     @Test
     void createKnight() {
         Knight knight = new Knight(Color.BLACK);
+
         assertThat(knight).isInstanceOf(Knight.class);
     }
 
     @Test
     void movable() {
         Knight knight = new Knight(Color.BLACK);
+
         assertAll(
                 () -> assertThat(knight.movable(D4, E6)).isTrue(),
                 () -> assertThat(knight.movable(D4, F5)).isTrue(),
@@ -70,6 +72,7 @@ public class KnightTest {
         Knight knight = new Knight(Color.BLACK);
         Square source = Square.of(File.B, Rank.EIGHT);
         Square target = Square.of(File.D, Rank.SEVEN);
+
         assertThat(knight.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }

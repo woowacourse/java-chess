@@ -35,6 +35,7 @@ public class KingTest {
     @Test
     void createKing() {
         King king = new King(Color.BLACK);
+
         assertThat(king).isInstanceOf(King.class);
     }
 
@@ -67,8 +68,10 @@ public class KingTest {
     @Test
     void cannotMovableToSameColor() {
         King king = new King(Color.BLACK);
+
         Square source = Square.of(File.E, Rank.EIGHT);
         Square target = Square.of(File.E, Rank.SEVEN);
+
         assertThat(king.canMoveWithoutObstacle(board, source, target)).isFalse();
     }
 }
