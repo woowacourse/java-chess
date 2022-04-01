@@ -14,7 +14,7 @@ final class WhiteTurn extends Running {
     }
 
     @Override
-    protected Color currentTurnColor() {
+    public Color getCurrentTurnColor() {
         return WHITE;
     }
 

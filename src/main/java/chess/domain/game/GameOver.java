@@ -1,17 +1,25 @@
 package chess.domain.game;
 
+import chess.domain.board.piece.Color;
 import chess.dto.MoveCommandDto;
 import chess.domain.board.Board;
 
 final class GameOver extends Started {
+
+    private static final String GAME_NOT_RUNNING_EXCEPTION_MESSAGE = "이미 종료된 게임입니다.";
 
     GameOver(Board board) {
         super(board);
     }
 
     @Override
+    public Color getCurrentTurnColor() {
+        throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
+    }
+
+    @Override
     public Game moveChessmen(MoveCommandDto moveCommand) {
-        throw new UnsupportedOperationException("이미 종료된 게임입니다.");
+        throw new UnsupportedOperationException(GAME_NOT_RUNNING_EXCEPTION_MESSAGE);
     }
 
     @Override

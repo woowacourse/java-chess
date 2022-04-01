@@ -13,7 +13,7 @@ final class BlackTurn extends Running {
     }
 
     @Override
-    protected Color currentTurnColor() {
+    public Color getCurrentTurnColor() {
         return BLACK;
     }
 

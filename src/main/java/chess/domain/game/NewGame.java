@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.piece.Color;
 import chess.dto.MoveCommandDto;
 import chess.dto.BoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
@@ -13,6 +14,11 @@ public final class NewGame implements Game {
     public Game init() {
         Board board = new Board(BoardMapGeneratorUtil.initFullChessBoard());
         return new WhiteTurn(board);
+    }
+
+    @Override
+    public Color getCurrentTurnColor() {
+        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override
