@@ -30,3 +30,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker/db/mysql/data/
+docker/db/mysql/init/*
+!docker/db/mysql/init/init.sql
+
+.DS_Store
