@@ -106,14 +106,6 @@ public class Position {
         return Position.from(xAxis1, yAxis1);
     }
 
-    public XAxis getXAxis() {
-        return xAxis;
-    }
-
-    public YAxis getYAxis() {
-        return yAxis;
-    }
-
     @Override
     public String toString() {
         return "Position{" +
