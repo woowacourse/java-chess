@@ -65,7 +65,7 @@ public final class ChessBoard {
                 .anyMatch(position -> board.get(position) != null);
     }
 
-    private void validateMove(Position source, Position target) {
+    private void validateMove(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
         boolean targetIsNull = board.get(target) == null;
         if (!sourcePiece.availableMove(source, target, targetIsNull)) {

@@ -18,15 +18,15 @@ public enum OrderCase {
         return input.equals(START.getValue());
     }
 
-    public static boolean checkEnd(String input) {
+    public static boolean checkEnd(final String input) {
         return input.equals(END.getValue());
     }
 
-    public static boolean checkStatus(String input) {
+    public static boolean checkStatus(final String input) {
         return input.equals(STATUS.getValue());
     }
 
-    public static boolean checkMove(String input) {
+    public static boolean checkMove(final String input) {
         return input.contains(MOVE.getValue());
     }
 

@@ -9,7 +9,7 @@ import view.OutputView;
 
 public final class Application {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final BoardGenerator boardGenerator = new ChessBoardGenerator();
         final ChessBoard chessBoard = new ChessBoard(boardGenerator);
 
@@ -18,7 +18,7 @@ public final class Application {
         playGame(chessBoard, order);
     }
 
-    private static void startGame(ChessBoard chessBoard, Order order) {
+    private static void startGame(final ChessBoard chessBoard, Order order) {
         try {
             order = InputView.responseUserStartCommand();
             OutputView.printBoard(chessBoard);
@@ -28,7 +28,7 @@ public final class Application {
         }
     }
 
-    private static void playGame(ChessBoard chessBoard, Order order) {
+    private static void playGame(final ChessBoard chessBoard, Order order) {
         try {
             order = InputView.responseUserCommand();
             if (order.isEnd()){

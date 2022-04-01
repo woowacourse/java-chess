@@ -26,23 +26,23 @@ public final class Order {
     private final OrderCase orderCase;
     private final List<Position> moves;
 
-    private Order(OrderCase orderCase, List<Position> moves) {
+    private Order(final OrderCase orderCase, final List<Position> moves) {
         this.orderCase = orderCase;
         this.moves = moves;
     }
 
-    public static Order of(OrderCase orderCase) {
+    public static Order of(final OrderCase orderCase) {
         validateElseCase(orderCase);
-        return new Order(orderCase, null);
+        return new Order(orderCase, new ArrayList<>());
     }
 
-    private static void validateElseCase(OrderCase orderCase) {
-        if (orderCase.equals(ELSE)){
+    private static void validateElseCase(final OrderCase orderCase) {
+        if (orderCase.equals(ELSE)) {
             throw new IllegalArgumentException("[ERROR] 요구하는 입력값이 아닙니다.");
         }
     }
 
-    public static Order of(OrderCase orderCase, String input) {
+    public static Order of(final OrderCase orderCase, final String input) {
         List<String> moveOrder = Arrays.asList(input.split(DELIMITER));
         validateMoveOrder(moveOrder);
         List<Position> moves = new ArrayList<>();
@@ -74,7 +74,7 @@ public final class Order {
         validateInputPositionSize(moveOrder, INPUT_TARGET_POSITION_INDEX);
     }
 
-    private static void validateInputPositionSize(final List<String> moveOrder, int index) {
+    private static void validateInputPositionSize(final List<String> moveOrder, final int index) {
         if (moveOrder.get(index).length() != POSITION_SIZE) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }

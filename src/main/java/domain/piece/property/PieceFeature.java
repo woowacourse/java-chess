@@ -16,7 +16,7 @@ public enum PieceFeature {
     private String symbol;
     private double score;
 
-    PieceFeature(String symbol, double score) {
+    PieceFeature(final String symbol, final double score) {
         this.symbol = symbol;
         this.score = score;
     }

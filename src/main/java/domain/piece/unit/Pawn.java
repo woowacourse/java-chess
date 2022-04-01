@@ -87,12 +87,12 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     @Override
-    public List<Direction> getDirections() {
-        return directions;
+    public boolean isPawn() {
+        return true;
     }
 
     @Override
-    public boolean isPawn() {
-        return true;
+    public List<Direction> getDirections() {
+        return directions;
     }
 }

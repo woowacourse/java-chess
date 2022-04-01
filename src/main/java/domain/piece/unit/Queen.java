@@ -24,9 +24,4 @@ public final class Queen extends CommonMovablePiece {
     public List<Direction> getDirections() {
         return directions;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

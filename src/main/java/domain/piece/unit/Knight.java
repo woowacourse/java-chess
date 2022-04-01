@@ -25,9 +25,4 @@ public final class Knight extends SpecificMovablePiece {
     public List<Direction> getDirections() {
         return directions;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

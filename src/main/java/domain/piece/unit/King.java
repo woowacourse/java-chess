@@ -24,9 +24,4 @@ public final class King extends SpecificMovablePiece {
     public List<Direction> getDirections() {
         return directions;
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 }

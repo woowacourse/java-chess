@@ -21,7 +21,7 @@ public enum Result {
 
     private static final int PAWN_DUPLICATE_CONDITION_FOR_SCORE = 2;
 
-    public static Result calculateWinner(ChessBoard chessBoard) {
+    public static Result calculateWinner(final ChessBoard chessBoard) {
         final double currentTeamScore = Result.calculateTeamScore(chessBoard.getBoard(), chessBoard.getCurrentTurn());
         final double opponentTeamScore = Result.calculateTeamScore(chessBoard.getBoard(), chessBoard.getOpponentTeam());
 
@@ -67,7 +67,7 @@ public enum Result {
         return Result.DRAW;
     }
 
-    private static boolean checkDuplicatePawn(List<Piece> pieces) {
+    private static boolean checkDuplicatePawn(final List<Piece> pieces) {
         return pieces.stream()
                 .filter(piece -> piece.symbol().equals(PieceFeature.PAWN.symbol()))
                 .count() >= PAWN_DUPLICATE_CONDITION_FOR_SCORE;
