@@ -79,14 +79,18 @@ public final class Position {
         return this.row.isSame(row);
     }
 
-    public List<Position> calculatePath(final Position target, final Direction direction) {
-        if (rowGap(target) <= AROUND_DISTANCE && columnGap(target) <= AROUND_DISTANCE) {
+    public List<Position> positionsInPathToTarget(final Position target, final Direction direction) {
+        if (isAdjoining(target)) {
             return Collections.emptyList();
         }
-        return calculateByDirection(target, direction);
+        return findAllPositionsInPath(target, direction);
     }
 
-    private List<Position> calculateByDirection(final Position target, final Direction direction) {
+    private boolean isAdjoining(Position target) {
+        return rowGap(target) <= AROUND_DISTANCE && columnGap(target) <= AROUND_DISTANCE;
+    }
+
+    private List<Position> findAllPositionsInPath(final Position target, final Direction direction) {
         if (direction.isVertical()) {
             return verticalPaths(target);
         }

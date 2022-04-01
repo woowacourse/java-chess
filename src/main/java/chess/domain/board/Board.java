@@ -129,7 +129,7 @@ public final class Board {
         if (direction.isUnrelated()) {
             return;
         }
-        validatePiecesNotExistOnPath(source.calculatePath(target, direction));
+        validatePiecesNotExistOnPath(source.positionsInPathToTarget(target, direction));
     }
 
     private void validatePiecesNotExistOnPath(List<Position> positions) {
