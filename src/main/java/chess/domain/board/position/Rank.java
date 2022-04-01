@@ -50,7 +50,7 @@ public enum Rank {
     }
 
     public int displacement(Rank other) {
-        return other.index - this.index;
+        return this.index - other.index;
     }
 
     public static List<Rank> traceGroup(Rank source, Rank target) {

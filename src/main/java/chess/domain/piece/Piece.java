@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import static chess.domain.board.position.MoveDirection.of;
+
+import chess.domain.board.position.MoveDirection;
+import java.util.List;
 import java.util.Objects;
 
 import chess.constant.SquareType;
@@ -44,6 +48,16 @@ public abstract class Piece {
             return getConcreteEmblem().toLowerCase();
         }
         return getConcreteEmblem();
+    }
+
+    boolean isMovable(Position from, Position to, SquareType squareType, List<MoveDirection> possibleMoveDirections) {
+        MoveDirection moveDirection = of(from, to);
+
+        if (moveDirection.isNothing()) {
+            return false;
+        }
+
+        return possibleMoveDirections.contains(moveDirection);
     }
 
     @Override

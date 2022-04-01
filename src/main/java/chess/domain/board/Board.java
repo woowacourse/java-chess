@@ -48,15 +48,19 @@ public class Board {
         Piece sourcePiece = board.get(sourcePosition);
         Piece targetPiece = board.get(targetPosition);
 
+        validateMovable(sourcePosition, targetPosition, sourcePiece, targetPiece);
+
+        board.put(targetPosition, sourcePiece);
+        board.put(sourcePosition, EMPTY_PIECE);
+    }
+
+    private void validateMovable(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
         SquareType squareType = decideMoveType(targetPiece);
         if (!sourcePiece.isMovable(sourcePosition, targetPosition, squareType) ||
                 isBlocked(sourcePosition, targetPosition) ||
                 targetPiece.isMyTeam(sourcePiece)) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다.");
         }
-
-        board.put(targetPosition, sourcePiece);
-        board.put(sourcePosition, EMPTY_PIECE);
     }
 
     private SquareType decideMoveType(Piece piece) {

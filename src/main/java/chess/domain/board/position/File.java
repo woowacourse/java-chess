@@ -59,6 +59,6 @@ public enum File {
     }
 
     public int displacement(File other) {
-        return other.text.compareTo(this.text);
+        return this.index - other.index;
     }
 }

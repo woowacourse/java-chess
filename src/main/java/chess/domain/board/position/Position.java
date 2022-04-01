@@ -20,6 +20,10 @@ public class Position {
         return rank.displacement(other.rank);
     }
 
+    public int fileDisplacement(Position other) {
+        return file.displacement(other.file);
+    }
+
     public boolean isSameFile(Position other) {
         return this.file == other.file;
     }

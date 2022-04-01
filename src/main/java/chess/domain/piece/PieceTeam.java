@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.position.Rank;
 
 public enum PieceTeam {
-    WHITE(1, Rank.TWO),
+    WHITE(+1, Rank.TWO),
     BLACK(-1, Rank.SEVEN),
     EMPTY(0, Rank.ONE);
 
