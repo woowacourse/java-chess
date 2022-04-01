@@ -1,9 +1,12 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PositionTest {
 
@@ -12,6 +15,14 @@ class PositionTest {
     void position_createWithColumnAndRow() {
         final var position = Position.of("a5");
         assertThat(position).isInstanceOf(Position.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aa", "12", "a9", "z1", "a12"})
+    @DisplayName("올바르지 않은 열 또는 행 입력 시 예외 발생")
+    void position_wrongColumnOrRow_throwException(String source) {
+        assertThatThrownBy(() -> Position.of(source))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
