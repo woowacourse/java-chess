@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
-import chess.domain.piece.notation.Color;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.piece.notation.Color;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 public final class Ready extends State {
