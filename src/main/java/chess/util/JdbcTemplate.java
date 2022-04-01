@@ -19,7 +19,6 @@ public class JdbcTemplate {
         try {
             Class.forName(SQL_DRIVER);
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            conn.setAutoCommit(false);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -46,23 +45,4 @@ public class JdbcTemplate {
         return false;
     }
 
-    public static void commit(final Connection conn) {
-        try {
-            if (isConnected(conn)) {
-                conn.commit();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void rollBack(final Connection conn) {
-        try {
-            if (isConnected(conn)) {
-                conn.rollback();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

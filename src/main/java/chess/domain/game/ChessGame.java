@@ -64,7 +64,7 @@ public class ChessGame {
     }
 
     public String getPieceName(final String rawPosition) {
-        return board.getPiece(Position.valueOf(rawPosition)).getName();
+        return board.getPiece(Position.valueOf(rawPosition)).convertPieceToString();
     }
 
     public Board getBoard() {

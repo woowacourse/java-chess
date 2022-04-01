@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
+import chess.domain.game.Turn;
 import chess.domain.piece.Team;
 import chess.dto.ChessDto;
 import chess.dto.MoveDto;
@@ -37,7 +38,11 @@ public class ChessService {
         for (final Entry<String, String> boardEntry : convertedBoard.entrySet()) {
             boardDao.updatePosition(boardEntry.getKey(), boardEntry.getValue());
         }
-        return ChessDto.of(true, board, "white");
+
+        if (turnDao.getCurrentTurn().equals("black")) {
+            turnDao.updateTurn("white", "black");
+        }
+        return chessDto;
     }
 
     public StatusDto createStatus() {
@@ -47,7 +52,7 @@ public class ChessService {
     }
 
     public ChessDto move(final MoveDto moveDto) {
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()));
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()), new Turn(Team.of(turnDao.getCurrentTurn())));
         String sourcePosition = moveDto.getSource();
         String targetPosition = moveDto.getTarget();
         chessGame.move(sourcePosition, targetPosition);
