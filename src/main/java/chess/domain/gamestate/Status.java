@@ -26,7 +26,7 @@ public final class Status implements State {
 
     @Override
     public State start() {
-        throw new IllegalStateException(DONT_START_WHEN_RUNNING);
+        return new Running(board, camp);
     }
 
     @Override

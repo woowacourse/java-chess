@@ -26,9 +26,7 @@ public class ChessGame {
         while (gameSwitch.isOn()) {
             final String command = InputView.inputCommand();
             final GameCommand gameCommand = GameCommand.from(command);
-            gameCommand.execute(command, this);
-
-            printBoardAndBeRunningIfStatus();
+            gameCommand.execute(command, this, printBoardInfo());
         }
     }
 
@@ -56,18 +54,18 @@ public class ChessGame {
         state = state.end();
     }
 
-    private void printBoardAndBeRunningIfStatus() {
-        if (isReadyOrRunning()) {
-            OutputView.printBoard(getBoard());
-        }
-        if (isStatusInRunning()) {
-            OutputView.printStatus(calculateStatus());
-
-            beRunningIfStatus();
-        }
-        if (isFinishedAndGameEnd()) {
-            OutputView.printFinalStatus(calculateStatus());
-        }
+    private Runnable printBoardInfo() {
+        return () -> {
+            if (isReadyOrRunning()) {
+                OutputView.printBoard(getBoard());
+            }
+            if (isStatusInRunning()) {
+                OutputView.printStatus(calculateStatus());
+            }
+            if (isFinishedAndGameEnd()) {
+                OutputView.printFinalStatus(calculateStatus());
+            }
+        };
     }
 
     private boolean isFinishedAndGameEnd() {
@@ -86,13 +84,11 @@ public class ChessGame {
         return state.calculateStatus();
     }
 
-    private void beRunningIfStatus() {
-        if (state.isStatus()) {
-            state = state.toRunningState();
-        }
-    }
-
     public Map<Position, Piece> getBoard() {
         return state.getBoard();
+    }
+
+    public void toRunningState() {
+        state = state.toRunningState();
     }
 }

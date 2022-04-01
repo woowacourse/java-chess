@@ -31,7 +31,7 @@ public enum GameCommand {
             .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_MESSAGE));
     }
 
-    public void execute(final String command, final ChessGame chessGame) {
-        commandGenerator.get().execute(command, chessGame);
+    public void execute(final String command, final ChessGame chessGame, final Runnable runnable) {
+        commandGenerator.get().execute(command, chessGame, runnable);
     }
 }
