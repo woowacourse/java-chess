@@ -10,8 +10,7 @@ public enum File {
     E("e", 4),
     F("f", 5),
     G("g", 6),
-    H("h", 7)
-    ;
+    H("h", 7);
 
     private final String notation;
     private final int index;

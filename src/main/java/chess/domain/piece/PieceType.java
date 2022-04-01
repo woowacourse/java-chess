@@ -10,8 +10,7 @@ public enum PieceType {
     BISHOP("B", 3),
     KNIGHT("N", 2.5),
     PAWN("P", 1),
-    EMPTY(".", 0)
-    ;
+    EMPTY(".", 0);
 
     private final String notation;
     private final double score;

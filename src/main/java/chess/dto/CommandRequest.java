@@ -36,7 +36,7 @@ public class CommandRequest {
     }
 
     private static void validateLength(List<String> inputs) {
-        if(!(inputs.size() == DEFAULT_COMMAND_SIZE || inputs.size() == MOVE_COMMAND_SIZE)) {
+        if (!(inputs.size() == DEFAULT_COMMAND_SIZE || inputs.size() == MOVE_COMMAND_SIZE)) {
             throw new IllegalArgumentException("명령어의 형식이 잘못되었습니다.");
         }
     }

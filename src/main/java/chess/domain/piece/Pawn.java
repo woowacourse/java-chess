@@ -10,9 +10,9 @@ import static chess.domain.position.Direction.TOP_RIGHT;
 import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.piece.strategy.MovingStrategy;
-import chess.domain.piece.strategy.pawn.PawnStartingPointMovingStrategy;
 import chess.domain.piece.strategy.pawn.PawnCaptureMovingStrategy;
 import chess.domain.piece.strategy.pawn.PawnDefaultMovingStrategy;
+import chess.domain.piece.strategy.pawn.PawnStartingPointMovingStrategy;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class Pawn extends Piece {
     @Override
     public void validateMove(Board board, Position source, Position target) {
         boolean canMove = movingStrategies.stream()
-                .anyMatch(pawnMovingStrategy -> pawnMovingStrategy.canMove(board, source, target));
+                .anyMatch(movingStrategy -> movingStrategy.canMove(board, source, target));
 
         if (!canMove) {
             throw new IllegalArgumentException();

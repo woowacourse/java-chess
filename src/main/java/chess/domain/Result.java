@@ -7,8 +7,7 @@ public enum Result {
 
     WHITE(weight -> weight > 0),
     DRAW(weight -> weight == 0),
-    BLACK(weight -> weight < 0)
-    ;
+    BLACK(weight -> weight < 0);
 
     private final DoublePredicate condition;
 

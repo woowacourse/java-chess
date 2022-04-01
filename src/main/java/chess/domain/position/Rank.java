@@ -10,8 +10,7 @@ public enum Rank {
     FIVE("5", 3),
     SIX("6", 2),
     SEVEN("7", 1),
-    EIGHT("8", 0)
-    ;
+    EIGHT("8", 0);
 
     private final String notation;
     private final int index;

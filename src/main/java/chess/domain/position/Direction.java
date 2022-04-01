@@ -12,8 +12,7 @@ public enum Direction {
     TOP_LEFT(-1, -1, true),
     BOTTOM_RIGHT(1, 1, true),
     BOTTOM_LEFT(1, -1, true),
-    NONE(0, 0, false)
-    ;
+    NONE(0, 0, false);
 
     private final int row;
     private final int col;
