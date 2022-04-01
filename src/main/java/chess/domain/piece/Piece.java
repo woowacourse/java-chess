@@ -51,7 +51,8 @@ public abstract class Piece {
     }
 
     protected void validatePieceOnWay(Position from, Position to, Board board) {
-        if (Math.abs(from.dx(to)) + Math.abs(from.dy(to)) <= TWO_FOR_NO_BETWEEN) { // 중간 포지션이 존재하지 않는 1칸 이동의 경우 검증 탈출
+        if (Math.abs(from.dx(to)) < TWO_FOR_NO_BETWEEN
+                && Math.abs(from.dy(to)) < TWO_FOR_NO_BETWEEN) { // 중간 포지션이 존재하지 않는 1칸 이동의 경우 검증 탈출
             return;
         }
 

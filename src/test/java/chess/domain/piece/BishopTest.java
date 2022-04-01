@@ -42,7 +42,7 @@ class BishopTest {
     @Test
     @DisplayName("비숍은 3점으로 계산된다")
     void getScore() {
-        final Bishop bishop = BISHOP_WHITE;
+        final Piece bishop = BISHOP_WHITE;
         final double score = bishop.getScore();
         assertThat(score).isEqualTo(3.0);
     }
