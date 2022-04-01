@@ -8,6 +8,7 @@ public class InputView {
 	private static final String MOVE_COMMAND_INPUT_EXCEPTION = "이동 명령을 형식에 맞게 입력하세요.";
 	private static final String EMPTY_INPUT_EXCEPTION = "명령을 입력하세요.";
 	private static final String COMMAND_DELIMITER = " ";
+	private static final int MOVE_COMMAND_SIZE = 3;
 	private static final Scanner SCANNER = new Scanner(System.in);
 
 	public List<String> inputCommand() {
@@ -21,9 +22,8 @@ public class InputView {
 	}
 
 	private List<String> splitCommand(final String input) {
-		List<String> command;
 		validateEmpty(input);
-		command = Arrays.asList(input.split(COMMAND_DELIMITER));
+		final List<String> command = Arrays.asList(input.split(COMMAND_DELIMITER));
 		if (isMoveCommand(command)) {
 			validateMoveCommandSize(command);
 		}
@@ -41,7 +41,7 @@ public class InputView {
 	}
 
 	private void validateMoveCommandSize(final List<String> command) {
-		if (command.size() != 3) {
+		if (command.size() != MOVE_COMMAND_SIZE) {
 			throw new IllegalArgumentException(MOVE_COMMAND_INPUT_EXCEPTION);
 		}
 	}
