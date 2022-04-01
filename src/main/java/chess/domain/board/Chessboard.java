@@ -34,17 +34,16 @@ public class Chessboard {
     }
 
     public void movePiece(Position source, Position target, Turn turn) {
-        validate(source, target, turn);
-        board.put(target, board.get(source));
-        board.put(source, new Blank());
-    }
-
-    private void validate(Position source, Position target, Turn turn) {
-        validateSamePosition(source, target);
+        if (board.containsKey(target)) {
+            validateSamePosition(source, target);
+            validateSameTeam(source, target);
+        }
         validateBlank(source);
         validateTurn(source, turn);
-        validateSameTeam(source, target);
         validateMovable(source, target);
+
+        board.put(target, board.get(source));
+        board.remove(source);
     }
 
     private void validateSamePosition(Position source, Position target) {
@@ -54,7 +53,7 @@ public class Chessboard {
     }
 
     private void validateBlank(Position source) {
-        if (board.get(source).isSameType(Type.BLANK)) {
+        if (!board.containsKey(source)) {
             throw new IllegalArgumentException(ERROR_EMPTY_SOURCE_PIECE);
         }
     }
@@ -86,7 +85,7 @@ public class Chessboard {
     }
 
     public boolean isExistPiece(Position target) {
-        return !board.get(target).isSameType(Type.BLANK);
+        return board.containsKey(target);
     }
 
     private boolean isPawn(Piece sourcePiece, Position source, Position target) {

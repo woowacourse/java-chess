@@ -5,20 +5,21 @@ import chess.domain.position.Position;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class BoardCache {
 
     private static final Map<Position, Piece> CACHE = new LinkedHashMap<>();
     private static final String NOT_EXIST_POSITION = "존재하지 않는 좌표입니다.";
+    private static final int BLACK_PIECE = 0;
+    private static final int BLACK_PAWN = 1;
+    private static final int WHITE_PIECE = 6;
+    private static final int WHITE_PAWN = 7;
 
     static {
-        initializePiece(0, Color.BLACK);
-        initializePiecePawn(1, Color.BLACK);
-        IntStream.range(2, 6)
-                .forEach(BoardCache::initializeBlank);
-        initializePiecePawn(6, Color.WHITE);
-        initializePiece(7, Color.WHITE);
+        initializePiece(BLACK_PIECE, Color.BLACK);
+        initializePiecePawn(BLACK_PAWN, Color.BLACK);
+        initializePiecePawn(WHITE_PIECE, Color.WHITE);
+        initializePiece(WHITE_PAWN, Color.WHITE);
     }
 
     public static Map<Position, Piece> create() {
@@ -39,12 +40,6 @@ public class BoardCache {
     private static void initializePiecePawn(int row, Color color) {
         for (int index = 0; index < Chessboard.SIZE.size(); index++) {
             CACHE.put(new Position(row, index), new Pawn(color));
-        }
-    }
-
-    private static void initializeBlank(int row) {
-        for (int index = 0; index < Chessboard.SIZE.size(); index++) {
-            CACHE.put(new Position(row, index), new Blank());
         }
     }
 

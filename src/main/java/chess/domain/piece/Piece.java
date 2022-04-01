@@ -57,7 +57,11 @@ public abstract class Piece {
     }
 
     private static boolean isBlankPosition(Piece piece) {
-        return piece.isSameType(Type.BLANK);
+        if (piece == null) {
+            return true;
+        }
+        return false;
+        //return piece.isSameType(Type.BLANK);
     }
 
     public boolean isSameType(Type type) {

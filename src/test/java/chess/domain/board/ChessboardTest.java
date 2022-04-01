@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessboardTest {
@@ -19,12 +18,6 @@ public class ChessboardTest {
     @BeforeEach
     void setUp() {
         board = Chessboard.create().getBoard();
-    }
-
-    @Test
-    @DisplayName("체스판 map 사이즈 확인")
-    void checkSizeOfChessboard() {
-        assertThat(board.keySet().size()).isEqualTo(64);
     }
 
     @Test
@@ -50,13 +43,13 @@ public class ChessboardTest {
     }
 
     @Test
-    @DisplayName("상대편의 기물을 움직이려는 경우 예외 발생")
+    @DisplayName("같은편의 기물을 공격하는 경우")
     void checkWrongTurn() {
         Chessboard chessboard = Chessboard.create();
         Turn turn = new Turn();
         assertThatThrownBy(() -> chessboard.movePiece(new Position(1, 0),
                 new Position(1, 1), turn))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("상대편의 기물은 움직일 수 없습니다.");
+                .hasMessageContaining("같은편의 기물을 공격할 수 없습니다.");
     }
 }

@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.board.Chessboard;
-import chess.domain.board.BoardCache;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -17,6 +16,7 @@ public class OutputView {
     private static final String WHITE = "화이트";
     private static final String DELIMITER = " : ";
     private static final String WINNER = "우승";
+    private static final String BLANK = ".";
 
     public static void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -33,7 +33,11 @@ public class OutputView {
 
     private static void printPiece(Map<Position, Piece> board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
-            System.out.print(board.get(BoardCache.findPosition(row, column)).getSymbolByColor());
+            if (board.containsKey(new Position(row, column))) {
+                System.out.print(board.get(new Position(row, column)).getSymbolByColor());
+                continue;
+            }
+            System.out.print(BLANK);
         }
     }
 
