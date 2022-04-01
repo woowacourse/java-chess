@@ -17,17 +17,17 @@ public final class Board {
     private static final String INVALID_MOVING_PATH_EXCEPTION = "경로에 기물이 있어 움직일 수 없습니다.";
     private static final int ALL_THE_NUMBER_OF_KING = 2;
 
-    private final Map<Position, Piece> value;
+    private final Map<Position, Piece> piecesByPosition;
 
     private Color currentTurnColor;
 
     public Board() {
-        this.value = BoardInitializer.createBoard();
+        this.piecesByPosition = BoardInitializer.createBoard();
         this.currentTurnColor = Color.WHITE;
     }
 
     public void move(Position beforePosition, Position afterPosition) {
-        final Piece piece = this.value.get(beforePosition);
+        final Piece piece = this.piecesByPosition.get(beforePosition);
         validateMovable(beforePosition, afterPosition, piece);
 
         if (isBlank(afterPosition)) {
@@ -60,7 +60,7 @@ public final class Board {
     }
 
     private boolean isBlank(Position afterPosition) {
-        return value.get(afterPosition) == null;
+        return piecesByPosition.get(afterPosition) == null;
     }
 
     private boolean isInvalidTurn(final Piece piece) {
@@ -73,13 +73,13 @@ public final class Board {
 
     private Consumer<Piece> moveFunction(Position beforePosition, Position afterPosition) {
         return (piece) -> {
-            this.value.put(afterPosition, piece);
-            this.value.put(beforePosition, null);
+            this.piecesByPosition.put(afterPosition, piece);
+            this.piecesByPosition.put(beforePosition, null);
         };
     }
 
     private boolean isCapturing(Piece piece, Position afterPosition) {
-        return !piece.isSameColorWith(value.get(afterPosition));
+        return !piece.isSameColorWith(piecesByPosition.get(afterPosition));
     }
 
     public boolean hasKingCaptured() {
@@ -87,7 +87,7 @@ public final class Board {
     }
 
     private List<Piece> collectKing() {
-        return this.value.values()
+        return this.piecesByPosition.values()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(Piece::isKing)
@@ -95,15 +95,15 @@ public final class Board {
     }
 
     public double scoreOfBlack() {
-        return ScoreCalculator.calculateScoreOfBlack(getValue());
+        return ScoreCalculator.calculateScoreOfBlack(getPiecesByPosition());
     }
 
     public double scoreOfWhite() {
-        return ScoreCalculator.calculateScoreOfWhite(getValue());
+        return ScoreCalculator.calculateScoreOfWhite(getPiecesByPosition());
     }
 
-    public Map<Position, Piece> getValue() {
-        return Collections.unmodifiableMap(value);
+    public Map<Position, Piece> getPiecesByPosition() {
+        return Collections.unmodifiableMap(piecesByPosition);
     }
 
     public boolean hasBlackKingCaptured() {

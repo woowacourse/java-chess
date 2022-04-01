@@ -53,7 +53,7 @@ public class ChessGameController {
 
 	private void executeStartCommand(final ChessGame chessGame) {
 		chessGame.start();
-		outputView.printBoard(chessGame.getBoard().getValue());
+		outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
 	}
 
 	private void executeMoveCommand(final ChessGame chessGame, final List<String> commandInput) {
@@ -66,7 +66,7 @@ public class ChessGameController {
 			return;
 		}
 
-		outputView.printBoard(chessGame.getBoard().getValue());
+		outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
 	}
 
 	private boolean isEndSystem(final ChessGame chessGame, final Command command) {
