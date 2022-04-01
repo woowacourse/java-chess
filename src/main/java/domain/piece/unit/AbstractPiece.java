@@ -31,14 +31,13 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public boolean availableMove(final Position source, final Position target) {
-        this.directionalPositions = calculateAvailableDirectionalPositions(source);
-        return containsPosition(target);
+    public boolean availableMove(Position source, Position target, boolean isTarget) {
+        return availableMove(source, target);
     }
 
-    @Override
-    public boolean availableMove(Position source, Position target, boolean isNullRoute, boolean isTarget) {
-        return false;
+    public boolean availableMove(final Position source, final Position target) {
+        directionalPositions = calculateAvailableDirectionalPositions(source);
+        return containsPosition(target);
     }
 
     protected Map<Direction, List<Position>> calculateAvailableDirectionalPositions(final Position source) {
@@ -60,26 +59,41 @@ public abstract class AbstractPiece implements Piece {
                 .anyMatch(positions -> positions.contains(position));
     }
 
-    public List<Position> calculateRoute(final Position target) {
-        return getDirections().stream()
-                .map(direction -> directionalPositions.get(direction))
-                .filter(positions -> positions.contains(target))
-                .findFirst()
-                .orElse(new ArrayList<>());
-    }
-
     @Override
     public List<Position> calculateRoute(final Position source, final Position target) {
+        if (!isPawn()) {
+            return calculateRoute(target);
+        }
         List<Position> routePositions = new ArrayList<>();
         Direction direction = getDirection(target);
+        final Position wayPoint = createWayPoint(source, direction);
+        addRoutePosition(source, target, routePositions, wayPoint);
+        return routePositions;
+    }
+
+    private List<Position> calculateRoute(final Position target) {
+        List<Position> positions = getDirections().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .filter(p -> p.contains(target))
+                .findFirst()
+                .orElse(new ArrayList<>());
+        return positions.stream()
+                .filter(position -> !position.equals(target))
+                .collect(Collectors.toList());
+    }
+
+    private Position createWayPoint(Position source, Direction direction) {
         final Position wayPoint = Position.of(
                 XPosition.of(source.getXPosition() + direction.getXPosition() / 2),
                 YPosition.of(source.getYPosition() + direction.getYPosition() / 2)
         );
+        return wayPoint;
+    }
+
+    private void addRoutePosition(Position source, Position target, List<Position> routePositions, Position wayPoint) {
         if (!wayPoint.equals(source) && !wayPoint.equals(target)) {
             routePositions.add(wayPoint);
         }
-        return routePositions;
     }
 
     @Override

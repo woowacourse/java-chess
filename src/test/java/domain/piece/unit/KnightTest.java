@@ -18,7 +18,7 @@ class KnightTest {
     void moveKnight(Position target) {
         Piece piece = new Knight(WHITE);
 
-        Assertions.assertThat(piece.availableMove(D4, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(D4, target, true)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
@@ -31,7 +31,7 @@ class KnightTest {
     void nonMoveKnight(Position target) {
         Piece piece = new Knight(WHITE);
 
-        Assertions.assertThat(piece.availableMove(D4, target)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(D4, target, true)).isEqualTo(false);
     }
 
     private static Stream<Position> disablePositions() {
