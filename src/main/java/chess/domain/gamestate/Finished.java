@@ -10,8 +10,9 @@ import java.util.Map;
 
 public class Finished implements State {
 
-    private static final int RESULT_CRITERIA = 0;
     private static final String CANT_MOVE_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 기물을 이동할 수 없습니다.";
+    private static final String CANT_SWITCH_CAMP_IF_NOT_RUNNING = "진행 중이 아닐 때는 턴(진영)을 바꿀 수 없습니다.";
+    private static final String CANT_STATUS_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.";
 
     private final Board board;
 
@@ -36,12 +37,17 @@ public class Finished implements State {
 
     @Override
     public Camp switchCamp() {
-        throw new IllegalStateException(CANT_MOVE_WHEN_NOT_RUNNING);
+        throw new IllegalStateException(CANT_SWITCH_CAMP_IF_NOT_RUNNING);
     }
 
     @Override
-    public State end() {
-        return new Finished(board);
+    public State status() {
+        throw new IllegalStateException(CANT_STATUS_WHEN_NOT_RUNNING);
+    }
+
+    @Override
+    public State toRunningState() {
+        throw new IllegalStateException();
     }
 
     @Override
@@ -50,7 +56,17 @@ public class Finished implements State {
     }
 
     @Override
+    public State end() {
+        return new Finished(board);
+    }
+
+    @Override
     public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public boolean isStatus() {
         return false;
     }
 
@@ -62,20 +78,5 @@ public class Finished implements State {
     @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
-    }
-
-    @Override
-    public State status() {
-        throw new IllegalStateException("종료된 상황에서 status를 확인할 수 없습니다.");
-    }
-
-    @Override
-    public boolean isStatus() {
-        return false;
-    }
-
-    @Override
-    public State returnState() {
-        throw new IllegalStateException();
     }
 }

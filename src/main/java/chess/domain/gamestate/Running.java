@@ -13,7 +13,6 @@ import java.util.TreeMap;
 public class Running implements State {
 
     private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
-    private static final String CANT_GET_RESULT_WHEN_NOW = "아직 승패를 판정할 수 없습니다.";
     private static final String NO_PIECE_TO_MOVE = "이동할 수 있는 기물이 없습니다.";
     private static final String TURN_OPPOSITE_CAMP = "상대 진영의 차례입니다.";
     private static final String CANT_MOVE_WHEN_OBSTACLE_IN_PATH = "경로에 기물이 있어 움직일 수 없습니다.";
@@ -101,6 +100,21 @@ public class Running implements State {
     }
 
     @Override
+    public State status() {
+        return new Status(board, camp);
+    }
+
+    @Override
+    public StatusScore calculateStatus() {
+        return StatusScore.from(board);
+    }
+
+    @Override
+    public State toRunningState() {
+        throw new IllegalStateException();
+    }
+
+    @Override
     public State end() {
         return new Finished(board);
     }
@@ -111,32 +125,17 @@ public class Running implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public StatusScore calculateStatus() {
-        return StatusScore.from(board);
-    }
-
-    @Override
-    public Map<Position, Piece> getBoard() {
-        return new TreeMap<>(board.getBoard());
-    }
-
-    @Override
-    public State status() {
-        return new Status(board, camp);
-    }
-
-    @Override
     public boolean isStatus() {
         return false;
     }
 
     @Override
-    public State returnState() {
-        throw new IllegalStateException();
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public Map<Position, Piece> getBoard() {
+        return new TreeMap<>(board.getBoard());
     }
 }

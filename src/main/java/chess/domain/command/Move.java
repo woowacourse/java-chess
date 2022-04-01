@@ -1,4 +1,4 @@
-package chess.command;
+package chess.domain.command;
 
 import chess.ChessGame;
 import chess.domain.board.Positions;

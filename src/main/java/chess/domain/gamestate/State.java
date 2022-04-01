@@ -17,19 +17,19 @@ public interface State {
 
     Camp switchCamp();
 
-    State end();
+    State status();
+
+    State toRunningState();
 
     StatusScore calculateStatus();
 
-    Map<Position, Piece> getBoard();
+    State end();
 
     boolean isRunning();
 
-    boolean isFinished();
-
-    State status();
-
     boolean isStatus();
 
-    State returnState();
+    boolean isFinished();
+
+    Map<Position, Piece> getBoard();
 }

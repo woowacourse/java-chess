@@ -1,4 +1,4 @@
-package chess.command;
+package chess.domain.command;
 
 import chess.ChessGame;
 
@@ -10,6 +10,5 @@ public final class End implements CommandStrategy {
             return;
         }
         chessGame.end();
-//        OutputView.printStatus(chessGame.calculateStatus());
     }
 }
