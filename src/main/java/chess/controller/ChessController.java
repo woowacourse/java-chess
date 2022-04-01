@@ -32,14 +32,11 @@ public class ChessController {
         });
 
         get("/start", (req, res) -> {
-            BoardDto boardDto = chessService.initializeBoard();
-            return gson.toJson(boardDto);
+            return gson.toJson(chessService.initializeGame());
         });
 
         get("/end", (req, res) -> {
-            // ChessGameService의 endBoard 로직 실행 -> BoardDto 반환
-            // gson.toJson(BoardDto) 반환
-            return render(new HashMap<>(), "index.html");
+            return gson.toJson(chessService.endGame());
         });
 
         get("/status", (req, res) -> {
