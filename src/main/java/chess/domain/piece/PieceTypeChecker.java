@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 
-public final class PieceCondition {
+public final class PieceTypeChecker {
 
     private final File file;
     private final Rank rank;
 
-    PieceCondition(File file, Rank rank) {
+    PieceTypeChecker(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
