@@ -19,12 +19,13 @@ public class Pawn extends Piece {
 
     private static final int OTHER_PIECE_MOVE_SIZE = 1;
     private static final int MAXIMUM_PIECE_MOVE = 2;
+    private static final String PAWN_INITIAL = "P";
 
     private final Direction defaultDirection;
     private final List<Direction> initDirections;
 
     public Pawn(Color color) {
-        super(color, "P");
+        super(color, PAWN_INITIAL);
         this.defaultDirection = defaultDirectionDecision(color);
         this.initDirections = initDirectionDecision(color);
     }

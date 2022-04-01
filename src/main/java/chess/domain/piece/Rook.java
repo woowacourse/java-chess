@@ -11,8 +11,10 @@ import java.util.Arrays;
 
 public class Rook extends MultipleMovablePiece {
 
+    private static final String ROOK_INITIAL = "R";
+
     public Rook(Color color) {
-        super(color, "R", Arrays.asList(TOP, DOWN, LEFT, RIGHT));
+        super(color, ROOK_INITIAL, Arrays.asList(TOP, DOWN, LEFT, RIGHT));
     }
 
     @Override

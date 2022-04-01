@@ -10,8 +10,10 @@ import java.util.Arrays;
 
 public class Bishop extends MultipleMovablePiece {
 
+    private static final String BISHOP_INITIAL = "B";
+
     public Bishop(Color color) {
-        super(color, "B", Arrays.asList(TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
+        super(color, BISHOP_INITIAL, Arrays.asList(TOP_LEFT, TOP_RIGHT, DOWN_LEFT, DOWN_RIGHT));
     }
 
     @Override

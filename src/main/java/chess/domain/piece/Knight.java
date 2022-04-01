@@ -14,8 +14,10 @@ import java.util.Arrays;
 
 public class Knight extends FixedMovablePiece {
 
+    private static final String NIGHT_INITIAL = "N";
+
     public Knight(Color color) {
-        super(color, "N", Arrays.asList(
+        super(color, NIGHT_INITIAL, Arrays.asList(
                 TOP_TOP_RIGHT, TOP_TOP_LEFT, TOP_RIGHT_RIGHT, TOP_LEFT_LEFT,
                 DOWN_DOWN_RIGHT, DOWN_DOWN_LEFT, DOWN_RIGHT_RIGHT, DOWN_LEFT_LEFT
         ));

@@ -14,8 +14,10 @@ import java.util.Arrays;
 
 public class Queen extends MultipleMovablePiece {
 
+    private static final String QUEEN_INITIAL = "Q";
+
     public Queen(Color color) {
-        super(color, "Q", Arrays.asList(TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
+        super(color, QUEEN_INITIAL, Arrays.asList(TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
     }
 
     @Override

@@ -14,8 +14,10 @@ import java.util.Arrays;
 
 public class King extends FixedMovablePiece {
 
+    private static final String KING_INITIAL = "K";
+
     public King(Color color) {
-        super(color, "K", Arrays.asList(
+        super(color, KING_INITIAL, Arrays.asList(
                 TOP, DOWN, RIGHT, LEFT, TOP_RIGHT, TOP_LEFT, DOWN_RIGHT, DOWN_LEFT));
     }
 
