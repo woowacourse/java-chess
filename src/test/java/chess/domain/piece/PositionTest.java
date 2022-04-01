@@ -77,4 +77,13 @@ public class PositionTest {
         assertThat(Position.calculateStraightDistance(position1, position2))
                 .isEqualTo(7);
     }
+
+    @Test
+    @DisplayName("포지션이 자신의 위치를 a1 형식으로 반환한다.")
+    void getPositionString() {
+        Position position1 = new Position(0, 4);
+        Position position2 = new Position(0, 3);
+        assertThat(position1.getPositionString()).isEqualTo("a5");
+        assertThat(position2.getPositionString()).isEqualTo("a4");
+    }
 }

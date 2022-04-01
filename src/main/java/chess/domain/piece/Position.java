@@ -75,6 +75,12 @@ public class Position {
                 this.y + direction.getYDegree() * product);
     }
 
+    public String getPositionString() {
+        String alphabet = (char)(x + ASCII_ALPHABET) + "";
+        String number = (char)(y + ASCII_NUMBER) + "";
+        return alphabet + number;
+    }
+
     public int getX() {
         return x;
     }

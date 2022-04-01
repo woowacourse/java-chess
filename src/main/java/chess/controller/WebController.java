@@ -41,6 +41,9 @@ public class WebController {
         get("/play/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
+            if (chessGame.isEnd()) {
+                res.redirect(String.format("/result/%d", gameId));
+            }
             Map<String, Object> model = new HashMap<>();
             Board board = chessGame.getBoard();
             List<RankDTO> ranks = new ArrayList<>();
@@ -49,20 +52,15 @@ public class WebController {
             }
             model.put("turn", chessGame.getTurn());
             model.put("ranks", ranks);
-            model.put("id", gameId);
+            model.put("gameId", gameId);
             return render(model, "play.html");
         });
 
         post("/command/:gameId", (req, res) -> {
             Long gameId = Long.valueOf(req.params("gameId"));
             ChessGame chessGame = gameRepository.findById(gameId).get();
-            Map<String, Object> model = new HashMap<>();
-            String command = req.queryParams("command");
+            String command = req.body();
             executeCommand(chessGame, command);
-            if (chessGame.isEnd()) {
-                res.redirect(String.format("/result/%d", gameId));
-            }
-            res.redirect(String.format("/play/%d", gameId));
             return "";
         });
 

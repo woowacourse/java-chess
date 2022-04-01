@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RankDTO {
-    private final List<String> pieces;
+    private final List<PieceDTO> pieces; // PieceDTO 로 바꿔서 positionString 가지게 하기
     private final int rankLine;
 
-    public RankDTO(List<String> pieces, int rankLine) {
+    public RankDTO(List<PieceDTO> pieces, int rankLine) {
         this.pieces = pieces;
         this.rankLine = rankLine;
     }
@@ -18,24 +18,14 @@ public class RankDTO {
         return new RankDTO(toPieceSignature(rank), rankLine);
     }
 
-    private static List<String> toPieceSignature(Rank rank) {
+    private static List<PieceDTO> toPieceSignature(Rank rank) {
         return rank.getPieces()
                 .stream()
-                .map(RankDTO::createTeamSignature)
+                .map(PieceDTO::toDTO)
                 .collect(Collectors.toList());
     }
 
-    private static String createTeamSignature(Piece piece) {
-        if (piece.isBlank()) {
-            return "blank";
-        }
-        if (piece.isBlack()) {
-            return "black_" + piece.getSignature();
-        }
-        return "white_" + piece.getSignature();
-    }
-
-    public List<String> getPieces() {
+    public List<PieceDTO> getPieces() {
         return pieces;
     }
 

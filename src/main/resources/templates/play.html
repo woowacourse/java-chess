@@ -44,6 +44,7 @@
     {{turn}} 차례입니다.
         <table class="chess-board">
             <thead>
+                <th></th>
                 <th>a</th>
                 <th>b</th>
                 <th>c</th>
@@ -57,29 +58,64 @@
             <tbody style="border: solid 1px black">
             {{#ranks}}
             <tr>
+                <td style="background: black">{{rankLine}}</td>
                 {{#pieces}}
-                <td><img class="chess-piece-img" src="/piece_image/{{this}}.png"></td>
+                <td><img onclick="pieceClickHandler(this)" id="{{positionString}}" class="chess-piece-img" src="/piece_image/{{this.name}}.png"></td>
                 {{/pieces}}
                 <td style="background: black">{{rankLine}}</td>
             </tr>
             {{/ranks}}
+            <tr>
+                <th></th>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th>g</th>
+                <th>h</th>
+                <th></th>
+            </tr>
             </tbody>
         </table>
 
         <button class="btn btn-info" id="scoreBtn" onclick="getScoreData()">점수 보기</button>
         <button class="btn btn-danger" id="terminateBtn">강제 종료</button>
-
-        <form action="/command/{{id}}" method="post" class="form-control">
-            <input class="form-control" type="text" name="command" id="command" placeholder="명령어를 입력하세요."/>
-            <input class="btn btn-dark" type="submit" value="명령어 입력">
-        </form>
 </body>
 
 <script>
     const getScoreData = async () => {
-        let response = await fetch("/score/{{id}}");
+        let response = await fetch("/score/{{gameId}}");
         let data = await response.json();
         alert("백팀 : " + data.whiteScore + "\n흑팀 : " + data.blackScore);
     }
+
+    let clickCount = 0;
+    let moveCommand = "move";
+    const pieceClickHandler = (target) => {
+        let position = target.id;
+        target.style.border = "aqua 2px solid";
+        clickCount++;
+        moveCommand += ` ${position}`;
+
+        if (clickCount !== 2) {
+            return;
+        }
+
+        fetch("/command/{{gameId}}", {
+            method: "POST",
+            body: moveCommand
+        }).then(response => {
+            if(response.ok) {
+                location.reload();
+            }
+            if (!response.ok) {
+                alert("이동 실패");
+            }
+            clickCount = 0;
+        })
+    }
+
 </script>
 </html>
