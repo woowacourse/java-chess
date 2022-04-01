@@ -75,10 +75,11 @@ public class ChessBoard {
     }
 
     private void killEnemyInTargetPositionIfExist(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        ChessPiece chessPiece = pickChessPiece(targetPosition);
-        if (Objects.isNull(chessPiece)) {
+        ChessPiece enemyChessPiece = pickChessPiece(targetPosition);
+        if (Objects.isNull(enemyChessPiece)) {
             return;
         }
+        ChessPiece chessPiece = pickChessPiece(sourcePosition);
         if (!chessPiece.isKillMovement(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException(IMPOSSIBLE_TO_KILL_EXCEPTION);
         }

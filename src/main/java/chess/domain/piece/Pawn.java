@@ -94,6 +94,9 @@ public class Pawn extends ChessPiece {
 
     @Override
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        if (isKillMovement(sourcePosition, targetPosition)) {
+            return Collections.emptyList();
+        }
         return movingStrategy.makePath(sourcePosition, targetPosition);
     }
 
