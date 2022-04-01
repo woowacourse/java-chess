@@ -48,10 +48,6 @@ public abstract class ChessPiece {
         return this.color == color;
     }
 
-    public boolean isEnemyTurn(Color color) {
-        return !this.color.equals(color);
-    }
-
     public boolean isBlack() {
         return color.isBlack();
     }
@@ -70,5 +66,5 @@ public abstract class ChessPiece {
         return false;
     }
 
-    public Color getColor(){ return color; };
+    public Color getColor(){ return color; }
 }

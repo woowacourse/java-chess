@@ -13,7 +13,7 @@ import java.util.Stack;
 
 public class ChessBoard {
 
-    private Map<Position, ChessPiece> chessBoard;
+    private final Map<Position, ChessPiece> chessBoard;
     private Color currentTurn = Color.WHITE;
     private GameStatus gameStatus = GameStatus.READY;
 
@@ -48,7 +48,7 @@ public class ChessBoard {
     }
 
     private void validateTurn(ChessPiece me) {
-        if (currentTurn == me.getColor()) {
+        if (currentTurn != me.getColor()) {
             throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
     }
