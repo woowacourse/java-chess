@@ -54,10 +54,21 @@ public class WebApplication {
         path("/command", () -> {
 
             post("/move", (req, res) -> {
-                chessController.move(
-                        Position.from(req.queryParams("from")),
-                        Position.from(req.queryParams("to"))
-                );
+                try {
+                    chessController.move(
+                            Position.from(req.queryParams("from")),
+                            Position.from(req.queryParams("to"))
+                    );
+                } catch (IllegalArgumentException e) {
+                    final Map<Position, ChessPiece> pieceByPosition = chessController.findAllPiece();
+                    final Map<String, Object> model = toModel(pieceByPosition);
+                    final Score score = chessController.status();
+                    for (Color color : Color.values()) {
+                        model.put(color.name(), score.findScore(color));
+                    }
+                    model.put("error", e.getMessage());
+                    return render(model, "board.html");
+                }
                 res.redirect("/board");
                 return null;
             });
