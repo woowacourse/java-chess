@@ -102,23 +102,14 @@ public class ChessBoard {
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
         Direction direction = Direction.pawnDirection(piece.getColor());
         List<Direction> diagonalDirections = direction.getDiagonal();
+
         List<Position> targetPositions = diagonalDirections.stream()
                 .map(nowPosition::toDirection)
+                .filter(targetPosition -> !selectPiece(targetPosition).isSameColor(piece)
+                        && !selectPiece(targetPosition).isEmpty())
                 .collect(Collectors.toList());
-        addDiagonalPositionsIfEnemyForPawn(piece, result, targetPositions);
-    }
 
-    private void addDiagonalPositionsIfEnemyForPawn(Piece piece, List<Position> result, List<Position> targetPositions) {
-        for (Position position : targetPositions) {
-            addDiagonalPositionIfEnemyForPawn(piece, result, position);
-        }
-    }
-
-    private void addDiagonalPositionIfEnemyForPawn(Piece piece, List<Position> result, Position position) {
-        Piece targetPiece = selectPiece(position);
-        if (!targetPiece.isSameColor(piece) && !targetPiece.isEmpty()) {
-            result.add(position);
-        }
+        result.addAll(targetPositions);
     }
 
     public List<Piece> getPiecesOnColumn(Column column, Color color) {
