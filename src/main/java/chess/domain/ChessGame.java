@@ -50,6 +50,7 @@ public class ChessGame {
     }
 
     public Map<Position, ChessPiece> findAllPiece() {
+        gameStatus.checkPlaying();
         return chessBoard.findAllPiece();
     }
 }

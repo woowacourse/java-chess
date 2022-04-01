@@ -36,8 +36,13 @@ public class WebApplication {
         });
 
         get("/board", (req, res) -> {
-            final Map<Position, ChessPiece> pieceByPosition = chessController.findAllPiece();
-            final Map<String, Object> model = toModel(pieceByPosition);
+            Map<String, Object> model = new HashMap<>();
+            try {
+                model = toModel(chessController.findAllPiece());
+            } catch (IllegalArgumentException e) {
+                model.put("error", e.getMessage());
+                return render(model, "index.html");
+            }
             final Score score = chessController.status();
             for (Color color : Color.values()) {
                 model.put(color.name(), score.findScore(color));
@@ -47,6 +52,7 @@ public class WebApplication {
         });
 
         path("/command", () -> {
+
             post("/move", (req, res) -> {
                 chessController.move(
                         Position.from(req.queryParams("from")),
@@ -56,7 +62,6 @@ public class WebApplication {
                 return null;
             });
         });
-
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
