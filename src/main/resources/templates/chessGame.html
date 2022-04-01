@@ -1,10 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
-Hello World!!
+
+<h1 id="title"> Chess Game</h1>
+
+<form action="/start" method="get">
+    <button>시작</button>
+</form>
+
+<form action="/end" method="get">
+    <button>종료</button>
+</form>
+
+<form action="/score" method="get">
+    <button>점수</button>
+</form>
+
+<br/><br/>
+
+<table class="chessboard">
+    <tr>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+    </tr>
+    <tr>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+    </tr>
+    <tr>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+    </tr>
+    <tr>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+    </tr>
+    <tr>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+    </tr>
+    <tr>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+    </tr>
+    <tr>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+    </tr>
+    <tr>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+        <td class="black"></td>
+        <td class="white"></td>
+    </tr>
+</table>
+
+<form action="/move" method="post">
+    움직일 말의 위치와 움직일 위치를 입력하고 이동 버튼을 눌러주세요.
+    <table class="move">
+        <tr>
+            <td>움직일 말의 위치</td>
+            <td><input type="text" name="from"></td>
+        </tr>
+        <tr>
+            <td>움직일 위치</td>
+            <td><input type="text" name="to"></td>
+        </tr>
+    </table>
+    <input type="submit" value="이동">
+</form>
+
 </body>
+
 </html>
