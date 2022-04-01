@@ -1,7 +1,7 @@
 package chess.command;
 
+import chess.domain.ChessGame;
 import chess.domain.board.Position;
-import chess.domain.state.ChessState;
 import chess.view.OutputView;
 
 public class Move implements Command {
@@ -15,12 +15,11 @@ public class Move implements Command {
     }
 
     @Override
-    public ChessState execute(ChessState chessState) {
-        ChessState movedState = chessState.move(start, target);
-        OutputView.printBoard(movedState.getPieces());
-        if (movedState.isFinished()) {
-            OutputView.printStatus(movedState.createStatus());
+    public void execute(final ChessGame chessGame) {
+        chessGame.move(start, target);
+        OutputView.printBoard(chessGame.getBoard());
+        if (chessGame.isFinished()) {
+            OutputView.printStatus(chessGame.createStatus());
         }
-        return movedState;
     }
 }

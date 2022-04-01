@@ -34,7 +34,7 @@ class BoardTest {
     @MethodSource("providePieceAndExpectedCount")
     void valid_Count(final Piece piece, final int expected) {
         Board board = new Board(new CreateCompleteBoardStrategy());
-        Map<Position, Piece> pieces = board.getPieces();
+        Map<Position, Piece> pieces = board.getBoard();
         final int actual = (int) pieces.values()
                 .stream()
                 .filter(piece::equals)
@@ -68,7 +68,7 @@ class BoardTest {
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece, target, existPiece)));
 
             board.move(start, target, Color.WHITE);
-            Map<Position, Piece> pieces = board.getPieces();
+            Map<Position, Piece> pieces = board.getBoard();
 
             Assertions.assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
@@ -130,7 +130,7 @@ class BoardTest {
 
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
             board.move(start, target, Color.WHITE);
-            Map<Position, Piece> pieces = board.getPieces();
+            Map<Position, Piece> pieces = board.getBoard();
             Assertions.assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),
                     () -> assertThat(pieces.get(start)).isNull());
@@ -195,7 +195,7 @@ class BoardTest {
             Board board = new Board(new CreateMockBoardStrategy(Map.of(start, startPiece)));
 
             board.move(start, target, Color.BLACK);
-            Map<Position, Piece> pieces = board.getPieces();
+            Map<Position, Piece> pieces = board.getBoard();
 
             Assertions.assertAll(
                     () -> assertThat(pieces.get(target)).isEqualTo(startPiece),

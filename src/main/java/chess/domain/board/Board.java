@@ -20,10 +20,10 @@ public class Board {
     private static final String ANOTHER_PIECE_EXIST_IN_PATH = "다른 말이 경로에 존재해 이동할 수 없습니다.";
     private static final double PAWN_MINUS_SCORE = 0.5;
 
-    private final Map<Position, Piece> pieces;
+    private final Map<Position, Piece> board;
 
     public Board(final CreateBoardStrategy strategy) {
-        pieces = new HashMap<>(strategy.createPieces());
+        board = new HashMap<>(strategy.createPieces());
     }
 
     public Piece move(final Position start, final Position target, final Color currentColor) {
@@ -31,8 +31,8 @@ public class Board {
         final Piece targetPiece = getPiece(target);
         validatePieceExistIn(movingPiece, currentColor);
         validateMoving(start, target);
-        pieces.put(target, movingPiece);
-        pieces.remove(start);
+        board.put(target, movingPiece);
+        board.remove(start);
         return targetPiece;
     }
 
@@ -62,18 +62,18 @@ public class Board {
     }
 
     private Piece getPiece(final Position position) {
-        return pieces.getOrDefault(position, new EmptySpace());
+        return board.getOrDefault(position, new EmptySpace());
     }
 
     public int countPiece(final PieceType pieceType, final Color color) {
-        return (int) pieces.values()
+        return (int) board.values()
                 .stream()
                 .filter(piece -> piece.isSamePiece(pieceType) && piece.isSameColor(color))
                 .count();
     }
 
     public int countDeductedPawns(final Color color) {
-        return (int) pieces.entrySet()
+        return (int) board.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isSamePiece(PAWN)
                         && entry.getValue().isSameColor(color))
@@ -100,7 +100,7 @@ public class Board {
         return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
     }
 
-    public Map<Position, Piece> getPieces() {
-        return pieces;
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }

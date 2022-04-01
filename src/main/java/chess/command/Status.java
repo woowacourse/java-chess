@@ -1,13 +1,12 @@
 package chess.command;
 
-import chess.domain.state.ChessState;
+import chess.domain.ChessGame;
 import chess.view.OutputView;
 
 public class Status implements Command {
 
     @Override
-    public ChessState execute(ChessState chessState) {
-        OutputView.printStatus(chessState.createStatus());
-        return chessState;
+    public void execute(ChessGame chessGame) {
+        OutputView.printStatus(chessGame.createStatus());
     }
 }

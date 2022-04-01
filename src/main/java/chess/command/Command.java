@@ -1,8 +1,8 @@
 package chess.command;
 
-import chess.domain.state.ChessState;
+import chess.domain.ChessGame;
 
 public interface Command {
 
-    ChessState execute(ChessState chessState);
+    void execute(final ChessGame chessGame);
 }
