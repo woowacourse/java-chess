@@ -7,7 +7,7 @@ import java.util.List;
 import chess.domain.position.Direction;
 import chess.domain.position.UnitDirection;
 
-public final class Pawn extends Piece {
+public final class Pawn extends MovingUnitPiece {
     private final static String BUG_MESSAGE_COLOR = "[BUG] 폰은 색상을 가져야합니다.";
     private static final String WHITE_PAWN = "♟";
     private static final String BLACK_PAWN = "♙";
@@ -23,7 +23,7 @@ public final class Pawn extends Piece {
     private boolean start;
 
     Pawn(Color color) {
-        super(color, 1);
+        super(color, 1, MOVABLE_DIRECTIONS);
         this.start = true;
     }
 
@@ -43,6 +43,11 @@ public final class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 
     @Override

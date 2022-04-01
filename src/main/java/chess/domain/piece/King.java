@@ -34,6 +34,11 @@ public final class King extends MovingUnitPiece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public boolean isKing() {
         return true;
     }

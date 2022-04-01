@@ -33,17 +33,11 @@ public abstract class Piece {
         return color == this.color;
     }
 
-    public boolean isNone() {
-        return false;
-    }
+    abstract public boolean isNone();
 
-    public boolean isPawn() {
-        return false;
-    }
+    abstract public boolean isPawn();
 
-    public boolean isKing() {
-        return false;
-    }
+    abstract public boolean isKing();
 
     public double getScore() {
         return score;

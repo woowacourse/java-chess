@@ -23,4 +23,14 @@ public final class None extends Piece {
     public boolean isNone() {
         return true;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

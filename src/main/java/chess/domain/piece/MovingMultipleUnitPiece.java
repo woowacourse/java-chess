@@ -17,4 +17,19 @@ public abstract class MovingMultipleUnitPiece extends Piece {
     public boolean canMove(Direction direction, Piece target) {
         return direction.hasMultiple(movableDirections);
     }
+
+    @Override
+    public boolean isNone() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

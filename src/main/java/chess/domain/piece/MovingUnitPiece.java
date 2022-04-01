@@ -17,4 +17,15 @@ public abstract class MovingUnitPiece extends Piece {
     public boolean canMove(Direction direction, Piece target) {
         return direction.hasSame(movableDirections);
     }
+
+    @Override
+    public boolean isNone() {
+        return false;
+    }
+
+    @Override
+    abstract public boolean isPawn();
+
+    @Override
+    abstract public boolean isKing();
 }
