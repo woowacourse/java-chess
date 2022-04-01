@@ -20,6 +20,7 @@ public class ChessGame {
     public void execute(Command command) {
         if (command.isEnd()) {
             state = state.finished();
+            return;
         }
         if (command.isMove()) {
             state = state.move(command.from(), command.to());
