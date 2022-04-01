@@ -5,13 +5,16 @@ import java.util.List;
 
 public class Rook extends LinearMovingPiece {
 
+    private static final String NAME = "r";
+    private static final double POINT = 5;
+
     public Rook(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "r";
+        return NAME;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class Rook extends LinearMovingPiece {
 
     @Override
     public double getPoint() {
-        return 5;
+        return POINT;
     }
 
     @Override

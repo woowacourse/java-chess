@@ -5,13 +5,16 @@ import java.util.List;
 
 public class Queen extends LinearMovingPiece {
 
+    private static final String NAME = "q";
+    private static final double POINT = 9;
+
     public Queen(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "q";
+        return NAME;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class Queen extends LinearMovingPiece {
 
     @Override
     public double getPoint() {
-        return 9;
+        return POINT;
     }
 
     @Override

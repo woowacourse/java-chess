@@ -24,6 +24,8 @@ import java.util.Map;
 
 public final class Board {
 
+    private static final int LINE_RANGE = 8;
+    private static final int KING_COUNT = 2;
     private final Map<Square, Piece> board;
     private Status status;
 
@@ -69,7 +71,7 @@ public final class Board {
     public Status checkAliveTwoKings() {
         if (board.values().stream()
                 .filter(Piece::isKing)
-                .count() != 2) {
+                .count() != KING_COUNT) {
             status = new End();
         }
         return status;
@@ -95,7 +97,7 @@ public final class Board {
     }
 
     private void initPawns(Color color, Rank rank, List<File> files) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < LINE_RANGE; i++) {
             board.put(Square.of(files.get(i), rank), new Pawn(color));
         }
     }

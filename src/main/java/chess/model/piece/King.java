@@ -5,13 +5,16 @@ import java.util.List;
 
 public class King extends PointMovingPiece {
 
+    private static final String NAME = "k";
+    private static final double POINT = 0;
+
     public King(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "k";
+        return NAME;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class King extends PointMovingPiece {
 
     @Override
     public double getPoint() {
-        return 0;
+        return POINT;
     }
 
     @Override

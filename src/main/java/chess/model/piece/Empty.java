@@ -7,13 +7,16 @@ import java.util.List;
 
 public class Empty extends AbstractPiece {
 
+    private static final String NAME = ".";
+    private static final double POINT = 0;
+
     public Empty() {
         super(Color.EMPTY);
     }
 
     @Override
     public String name() {
-        return ".";
+        return NAME;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class Empty extends AbstractPiece {
 
     @Override
     public double getPoint() {
-        return 0;
+        return POINT;
     }
 
     @Override

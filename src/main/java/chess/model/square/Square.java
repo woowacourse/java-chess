@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Square {
 
+    private static final int ROW_INDEX = 0;
+    private static final int COL_INDEX = 1;
     private final File file;
     private final Rank rank;
 
@@ -19,8 +21,8 @@ public class Square {
     }
 
     public static Square fromString(String square) {
-        File file = File.findFile(Character.toString(square.charAt(0)));
-        Rank rank = Rank.findRank(Integer.parseInt(String.valueOf(square.charAt(1))));
+        File file = File.findFile(Character.toString(square.charAt(ROW_INDEX)));
+        Rank rank = Rank.findRank(Integer.parseInt(String.valueOf(square.charAt(COL_INDEX))));
         return new Square(file, rank);
     }
 
@@ -43,13 +45,13 @@ public class Square {
 
     @Override
     public int hashCode() {
-        int result = rank != null ? rank.hashCode() : 0;
-        result = 31 * result + (file != null ? file.hashCode() : 0);
+        int result = rank != null ? rank.hashCode() : ROW_INDEX;
+        result = 31 * result + (file != null ? file.hashCode() : ROW_INDEX);
         return result;
     }
 
     public List<Square> findRoad(Direction direction, int maxDistance) {
-        int distance = 1;
+        int distance = COL_INDEX;
         List<Square> roads = new ArrayList<>();
         List<Integer> coordinates = direction.getDistanceFrom(distance);
         while (isValidLocation(coordinates) && distance <= maxDistance) {
@@ -61,7 +63,7 @@ public class Square {
     }
 
     public boolean findLocation(Direction direction, Square target) {
-        List<Integer> coordinates = direction.getDistanceFrom(1);
+        List<Integer> coordinates = direction.getDistanceFrom(COL_INDEX);
         if (isValidLocation(coordinates)) {
             return distanceFrom(coordinates).equals(target);
         }
@@ -69,11 +71,11 @@ public class Square {
     }
 
     private Square distanceFrom(List<Integer> coordinates) {
-        return Square.of(file.nextTo(coordinates.get(0)), rank.nextTo(coordinates.get(1)));
+        return Square.of(file.nextTo(coordinates.get(ROW_INDEX)), rank.nextTo(coordinates.get(COL_INDEX)));
     }
 
     private boolean isValidLocation(List<Integer> coordinates) {
-        return file.availableLocation(coordinates.get(0)) && rank.availableLocation(coordinates.get(1));
+        return file.availableLocation(coordinates.get(ROW_INDEX)) && rank.availableLocation(coordinates.get(COL_INDEX));
     }
 
     public boolean isPawnOnFirstLine(Color color) {

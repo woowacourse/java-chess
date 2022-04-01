@@ -5,13 +5,16 @@ import java.util.List;
 
 public class Pawn extends PawnMovingPiece {
 
+    private static final String NAME = "p";
+    private static final double POINT = 1;
+
     public Pawn(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "p";
+        return NAME;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class Pawn extends PawnMovingPiece {
 
     @Override
     public double getPoint() {
-        return 1;
+        return POINT;
     }
 
     @Override

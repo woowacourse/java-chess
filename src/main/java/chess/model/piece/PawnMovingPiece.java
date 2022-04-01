@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public abstract class PawnMovingPiece extends AbstractPiece {
 
+    private static final int PAWN_FIRST_LINE_MAX_DISTANCE = 2;
+
     protected PawnMovingPiece(Color color) {
         super(color);
     }
@@ -34,7 +36,7 @@ public abstract class PawnMovingPiece extends AbstractPiece {
 
     private Optional<List<Square>> getRoute(Square source, Square target) {
         return getDirection().stream()
-                .map(direction -> source.findRoad(direction, 2))
+                .map(direction -> source.findRoad(direction, PAWN_FIRST_LINE_MAX_DISTANCE))
                 .filter(squares -> squares.contains(target))
                 .findFirst();
     }

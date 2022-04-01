@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public abstract class LinearMovingPiece extends AbstractPiece {
 
+    private static final int LINEAR_MOVING_PIECE_MAX_DISTANCE = 7;
+
     protected LinearMovingPiece(Color color) {
         super(color);
     }
@@ -42,7 +44,7 @@ public abstract class LinearMovingPiece extends AbstractPiece {
 
     private Optional<List<Square>> getRoute(Square source, Square target) {
         return getDirection().stream()
-                .map(direction -> source.findRoad(direction, 7))
+                .map(direction -> source.findRoad(direction, LINEAR_MOVING_PIECE_MAX_DISTANCE))
                 .filter(squares -> squares.contains(target))
                 .findFirst();
     }

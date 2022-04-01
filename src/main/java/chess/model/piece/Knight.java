@@ -5,13 +5,16 @@ import java.util.List;
 
 public class Knight extends PointMovingPiece {
 
+    private static final String NAME = "n";
+    private static final double POINT = 2.5;
+
     public Knight(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "n";
+        return NAME;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class Knight extends PointMovingPiece {
 
     @Override
     public double getPoint() {
-        return 2.5;
+        return POINT;
     }
 
     @Override

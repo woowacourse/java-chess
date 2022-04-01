@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class ScoreResult {
 
+    private static final int PAWN_SAME_LINE_COUNT = 2;
+    private static final double PAWN_SAME_LINE_POINT = 0.5;
     private final Map<Color, Double> scoreResult;
 
     private static final String CANNOT_FOUND_WINNER_ERROR_MESSAGE = "우승자를 찾을 수 없습니다.";
@@ -78,8 +80,8 @@ public class ScoreResult {
     }
 
     private static double calculatePawnPoint(int count) {
-        if (count >= 2) {
-            return count * 0.5;
+        if (count >= PAWN_SAME_LINE_COUNT) {
+            return count * PAWN_SAME_LINE_POINT;
         }
         return count;
     }

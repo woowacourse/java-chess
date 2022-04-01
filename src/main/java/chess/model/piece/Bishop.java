@@ -5,13 +5,16 @@ import java.util.List;
 
 public class Bishop extends LinearMovingPiece {
 
+    private static final String NAME = "b";
+    private static final double POINT = 3;
+
     public Bishop(Color color) {
         super(color);
     }
 
     @Override
     public String name() {
-        return "b";
+        return NAME;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class Bishop extends LinearMovingPiece {
 
     @Override
     public double getPoint() {
-        return 3;
+        return POINT;
     }
 
     @Override
