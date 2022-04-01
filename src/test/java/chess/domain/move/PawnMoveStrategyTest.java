@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.board.CatchPieces;
+import chess.domain.game.CatchPieces;
 import chess.domain.board.Position;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;

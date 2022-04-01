@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.game.CatchPieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
