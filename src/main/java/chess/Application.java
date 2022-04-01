@@ -4,6 +4,7 @@ import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.PieceFactory;
+import chess.dto.BoardDto;
 import chess.dto.StatusDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -29,7 +30,8 @@ public class Application {
 
     private static void startGame() {
         ChessGame game = new ChessGame(PieceFactory.createChessPieces());
-        OutputView.printBoard(game.getPieces());
+        OutputView.printBoard(new BoardDto(game));
+
         while (game.isRunning()) {
             OutputView.printPlayingCommandMessage();
             String commandValue = InputView.getCommand();
@@ -49,7 +51,7 @@ public class Application {
     private static void playTurn(String command, ChessGame game) {
         try {
             game.proceedWith(MoveCommand.of(command));
-            OutputView.printBoard(game.getPieces());
+            OutputView.printBoard(new BoardDto(game));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

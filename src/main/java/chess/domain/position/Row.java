@@ -46,4 +46,8 @@ public enum Row {
     public String getName() {
         return name;
     }
+
+    public int getRank() {
+        return rank;
+    }
 }

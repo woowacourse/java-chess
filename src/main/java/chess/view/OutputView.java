@@ -2,14 +2,10 @@ package chess.view;
 
 import chess.domain.Score;
 import chess.domain.WinResult;
+import chess.domain.piece.PieceColor;
+import chess.dto.BoardDto;
 import chess.dto.StatusDto;
 import java.util.Map;
-
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.AbstractPiece;
-import chess.domain.position.Position;
-import chess.domain.position.Column;
-import chess.domain.position.Row;
 
 public class OutputView {
 
@@ -28,40 +24,14 @@ public class OutputView {
         System.out.println("> 게임 종료 : end");
     }
 
-    public static void printBoard(Map<Position, AbstractPiece> pieces) {
+    public static void printBoard(BoardDto board) {
+        Map<Integer, String> piecesByRow = board.getPiecesByRow();
         System.out.println("------------------------");
-        for (int rank = 0; rank < 8; rank++) {
-            printBoardOnRow(pieces, rank);
-            printRank(rank);
+        for (int rank = board.getFirstRank(); rank <= board.getLastRank(); rank++) {
+            System.out.println(piecesByRow.get(rank) + "\t(rank" + rank + ")");
         }
-        printFile();
+        System.out.println(board.getFileNames());
         System.out.println("------------------------");
-    }
-
-    private static void printBoardOnRow(Map<Position, AbstractPiece> pieces, int rank) {
-        for (int column = 0; column < 8; column++) {
-            Position position = Position.of(Column.of(column), Row.of(rank));
-            System.out.print(makeSignature(pieces, position));
-        }
-    }
-
-    private static String makeSignature(Map<Position, AbstractPiece> pieces, Position position) {
-        if (!pieces.containsKey(position)) {
-            return ".";
-        }
-        return pieces.get(position).signature();
-    }
-
-    private static void printRank(int rank) {
-        System.out.println("\t(rank" + Row.of(rank).getName() + ")");
-    }
-
-    private static void printFile() {
-        System.out.println();
-        for (Column column : Column.values()) {
-            System.out.print(column.getName());
-        }
-        System.out.println();
     }
 
     public static void printErrorMessage(String message) {
