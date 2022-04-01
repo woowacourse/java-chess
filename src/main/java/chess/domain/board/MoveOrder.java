@@ -17,10 +17,7 @@ public final class MoveOrder {
         this.positions = positions;
         this.from = from;
         this.to = to;
-        this.direction = Direction.of(
-                to.getFileOrder() - from.getFileOrder(),
-                to.getRankNumber() - from.getRankNumber()
-        );
+        this.direction = Direction.of(from, to);
     }
 
     public boolean isEmptyDestination() {

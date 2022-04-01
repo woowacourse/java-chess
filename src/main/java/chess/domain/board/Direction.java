@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.position.Position;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +39,10 @@ public enum Direction {
         this.y = y;
     }
 
-    public static Direction of(final int xDifference, final int yDifference) {
+    public static Direction of(final Position from, final Position to) {
+        final var xDifference = to.getFileOrder() - from.getFileOrder();
+        final var yDifference = to.getRankNumber() - from.getRankNumber();
+
         if (isLine(xDifference, yDifference)) {
             return findDirection(calculateLineDifference(xDifference), calculateLineDifference(yDifference));
         }
