@@ -33,7 +33,7 @@ class GameResultTest {
             put(SAME_FILE_POSITION4, new NonPawn(WHITE, QUEEN));
         }});
 
-        Color actual = whiteKingKilled.winnerColor();
+        Color actual = whiteKingKilled.getWinnerColor();
 
         assertThat(actual).isEqualTo(BLACK);
     }
@@ -46,7 +46,7 @@ class GameResultTest {
             put(SAME_FILE_POSITION3, new Pawn(BLACK));
         }});
 
-        double actual = pawnsOfSameFile.blackScore();
+        double actual = pawnsOfSameFile.getBlackScore();
         double expected = 2.5 + 1;
 
         assertThat(actual).isEqualTo(expected);
@@ -61,7 +61,7 @@ class GameResultTest {
             put(SAME_FILE_POSITION4, new Pawn(BLACK));
         }});
 
-        double actual = pawnsOfSameFile.blackScore();
+        double actual = pawnsOfSameFile.getBlackScore();
         double expected = 0.5 * 3;
 
         assertThat(actual).isEqualTo(expected);

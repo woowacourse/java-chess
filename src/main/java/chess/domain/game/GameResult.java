@@ -44,13 +44,13 @@ public class GameResult {
     }
 
     public double calculateScore(Map<Position, Piece> board, Color color) {
-        double defaultScore = defaultScore(board, color);
+        double defaultScore = calculateDefaultScore(board, color);
         int sameFilePawnCount = countAllSameFilePawns(board, color);
 
         return defaultScore - (sameFilePawnCount * SAME_FILE_PAWN_DISADVANTAGE);
     }
 
-    private double defaultScore(Map<Position, Piece> board, Color color) {
+    private double calculateDefaultScore(Map<Position, Piece> board, Color color) {
         return board.values()
                 .stream()
                 .filter(piece -> piece.hasColorOf(color))
@@ -61,12 +61,12 @@ public class GameResult {
     private int countAllSameFilePawns(Map<Position, Piece> board, Color color) {
         return  File.allFilesAscending()
                 .stream()
-                .mapToInt(file -> countSameFilePawns(board, file, color))
+                .mapToInt(file -> countPawnsOfSameFile(board, file, color))
                 .filter(sameFilePawnCount -> sameFilePawnCount >= SAME_FILE_PAWN_MIN_COUNT)
                 .sum();
     }
 
-    private int countSameFilePawns(Map<Position, Piece> board, File file, Color color) {
+    private int countPawnsOfSameFile(Map<Position, Piece> board, File file, Color color) {
         return (int) Rank.allRanksDescending()
                 .stream()
                 .map(rank -> Position.of(file, rank))
@@ -77,15 +77,15 @@ public class GameResult {
                 .count();
     }
 
-    public Color winnerColor() {
+    public Color getWinnerColor() {
         return winnerColor;
     }
 
-    public double whiteScore() {
+    public double getWhiteScore() {
         return scoreResult.whiteScore();
     }
 
-    public double blackScore() {
+    public double getBlackScore() {
         return scoreResult.blackScore();
     }
 }

@@ -49,9 +49,9 @@ public class OutputView {
     }
 
     public void printStatus(GameResult gameResult) {
-        Color winnerColor = gameResult.winnerColor();
-        double whiteScore = gameResult.whiteScore();
-        double blackScore = gameResult.blackScore();
+        Color winnerColor = gameResult.getWinnerColor();
+        double whiteScore = gameResult.getWhiteScore();
+        double blackScore = gameResult.getBlackScore();
 
         String statusText = String.format(WINNER_ANNOUNCEMENT_FORMAT, winnerColor)
                 + String.format(SCORE_DISPLAY_FORMAT, WHITE, whiteScore)

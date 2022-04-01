@@ -97,5 +97,3 @@ public class InputView {
         return input.trim();
     }
 }
-
-
