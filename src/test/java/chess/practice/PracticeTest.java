@@ -1,4 +1,4 @@
-package chess;
+package chess.practice;
 
 import chess.domain.board.File;
 import chess.domain.board.Position;
@@ -6,7 +6,7 @@ import chess.domain.board.Rank;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
-public class MapKeyTest {
+public class PracticeTest {
     @Test
     void mapKeyTest() {
         Position position = Position.of(File.A, Rank.ONE);
