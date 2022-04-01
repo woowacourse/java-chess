@@ -32,12 +32,12 @@ public abstract class Piece {
         return color == Color.BLACK;
     }
 
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-
     public boolean isEmpty() {
         return color == Color.EMPTY;
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     public boolean isSameColor(Piece otherPiece) {
@@ -50,9 +50,5 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
-    }
-
-    public boolean isSameColor(Color color) {
-        return this.color == color;
     }
 }
