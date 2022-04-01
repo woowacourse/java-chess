@@ -36,6 +36,10 @@ public abstract class Piece {
         return pieceType.getScore();
     }
 
+    public String getColor() {
+        return color.getValue();
+    }
+
     public boolean isSamePieceType(PieceType pieceType) {
         return this.pieceType == pieceType;
     }

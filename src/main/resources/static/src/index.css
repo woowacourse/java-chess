@@ -18,15 +18,7 @@ body {
     background-color: #441a03;
 }
 
-.white-square {
-    background-color: #b5915f;
-}
-
-.black-square {
-    background-color: #321a0d;
-}
-
-.white-square:hover, .black-square:hover {
+.box:hover {
     background-color: #c29e8a;
 }
 
@@ -34,4 +26,15 @@ img {
     width: 80%;
     padding: 10%;
     margin: 0 auto;
+}
+
+.box:nth-child(-2n + 8),
+.box:nth-child(8) ~ .box:nth-child(-2n + 15),
+.box:nth-child(16) ~ .box:nth-child(-2n + 24),
+.box:nth-child(23) ~ .box:nth-child(-2n + 31),
+.box:nth-child(32) ~ .box:nth-child(-2n + 40),
+.box:nth-child(39) ~ .box:nth-child(-2n + 47),
+.box:nth-child(48) ~ .box:nth-child(-2n + 56),
+.box:nth-child(55) ~ .box:nth-child(-2n + 63) {
+    background-color: #b5915f;
 }
