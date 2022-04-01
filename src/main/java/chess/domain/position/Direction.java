@@ -4,46 +4,40 @@ import java.util.Arrays;
 
 public enum Direction {
 
-    RIGHT(0, 1, false),
-    LEFT(0, -1, false),
-    TOP(-1, 0, false),
-    BOTTOM(1, 0, false),
-    TOP_RIGHT(-1, 1, true),
-    TOP_LEFT(-1, -1, true),
-    BOTTOM_RIGHT(1, 1, true),
-    BOTTOM_LEFT(1, -1, true)
+    RIGHT(0, 1, 180),
+    LEFT(0, -1, 0),
+    TOP(-1, 0, 90),
+    BOTTOM(1, 0, -90),
+    TOP_RIGHT(-1, 1, 135),
+    TOP_LEFT(-1, -1, 45),
+    BOTTOM_RIGHT(1, 1, -135),
+    BOTTOM_LEFT(1, -1, -45)
     ;
 
     private final int row;
     private final int col;
-    private final boolean isDiagonal;
+    private final double degree;
 
-    Direction(int row, int col, boolean isDiagonal) {
+    Direction(int row, int col, double degree) {
         this.row = row;
         this.col = col;
-        this.isDiagonal = isDiagonal;
+        this.degree = degree;
     }
-
+    
     public static Direction of(Position source, Position target) {
-        int rowWeight = calculateWeight(source.getRankIndex() - target.getRankIndex());
-        int colWeight = calculateWeight(source.getFileIndex() - target.getFileIndex());
+        int ordinateCoordinate = source.getRankIndex() - target.getRankIndex();
+        int abscissaCoordinate = source.getFileIndex() - target.getFileIndex();
+        double degree = getDegree(ordinateCoordinate, abscissaCoordinate);
 
         return Arrays.stream(values())
-                .filter(direction -> direction.row == rowWeight && direction.col == colWeight
-                        && direction.isDiagonal == isDiagonal(source, target))
+                .filter(direction -> direction.degree == degree)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static int calculateWeight(int value) {
-        return Integer.compare(0, value);
-    }
-
-    private static boolean isDiagonal(Position source, Position target) {
-        int absRankIndex = Math.abs(source.getRankIndex() - target.getRankIndex());
-        int absFileIndex = Math.abs(source.getFileIndex() - target.getFileIndex());
-
-        return absRankIndex == absFileIndex;
+    private static double getDegree(int ordinateCoordinate, int abscissaCoordinate) {
+        double radian = Math.atan2(ordinateCoordinate, abscissaCoordinate);
+        return radian * 180 / Math.PI;
     }
 
     public int getRow() {

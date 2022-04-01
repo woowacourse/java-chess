@@ -34,6 +34,13 @@ public class Position {
         return new Position(fileIndex, rankIndex);
     }
 
+    public boolean isDiagonal(Position position) {
+        int absRankIndex = Math.abs(this.getRankIndex() - position.getRankIndex());
+        int absFileIndex = Math.abs(this.getFileIndex() - position.getFileIndex());
+
+        return absRankIndex == absFileIndex;
+    }
+
     public int getFileIndex() {
         return file.getIndex();
     }
