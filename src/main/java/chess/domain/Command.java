@@ -83,8 +83,8 @@ public class Command {
     }
 
     private Position makePosition(String[] token, int index) {
-        File file = File.toFile(token[index].charAt(0));
-        Rank rank = Rank.toRank(token[index].charAt(1));
+        File file = File.toFile(token[index].charAt(FILE_INDEX));
+        Rank rank = Rank.toRank(token[index].charAt(RANK_INDEX));
 
         return Position.of(file, rank);
     }
