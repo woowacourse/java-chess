@@ -3,9 +3,9 @@ package chess.domain.board;
 import java.util.Objects;
 
 public final class Position {
+    private static final String POSITION_INPUT_DELIMITER = "";
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
-    private static final String POSITION_INPUT_DELIMITER = "";
 
     private final File file;
     private final Rank rank;

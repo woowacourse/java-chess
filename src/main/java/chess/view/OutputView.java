@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 public final class OutputView {
     private static final String START_MESSAGE = "> 체스 게임을 시작합니다.%n> 게임 시작 : start%n> 게임 종료 : end%n> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n> 점수 확인 : status%n";
+    private static final String SCORE_PRINT_TEMPLATE = "> 점수%n> 백 : %f%n> 흑 : %f";
+    private static final String GAME_FINISH_MESSAGE = "게임이 종료되었습니다";
+    private static final int PIECE_NUMBER_FOR_A_LINE = 8;
+    private static final int ADDITION_FOR_INDEX = 1;
     private static final List<Position> POSITIONS_ORDERED;
 
     static {
@@ -38,18 +42,16 @@ public final class OutputView {
     }
 
     private static void addLineBreakEveryFileEnded(int number) {
-        if ((number + 1) % 8 == 0) {
+        if ((number + ADDITION_FOR_INDEX) % PIECE_NUMBER_FOR_A_LINE == 0) {
             System.out.println();
         }
     }
 
     public static void printScore(Map<Color, Double> score) {
-        System.out.println("> 점수");
-        System.out.println("> 백 : ");
-        System.out.println("> 흑 : ");
+        System.out.printf(SCORE_PRINT_TEMPLATE, score.get(Color.WHITE), score.get(Color.BLACK));
     }
 
     public static void printFinished() {
-        System.out.println("게임이 종료되었습니다");
+        System.out.println(GAME_FINISH_MESSAGE);
     }
 }
