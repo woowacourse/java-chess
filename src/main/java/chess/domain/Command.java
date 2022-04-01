@@ -41,16 +41,17 @@ public class Command {
 
         String[] token = command.split(" ");
 
-        if ((!isPosition(token[SOURCE_INDEX])) || (!isPosition(token[TARGET_INDEX]))) {
-            throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
-        }
+        validatePosition(token[SOURCE_INDEX]);
+        validatePosition(token[TARGET_INDEX]);
     }
 
-    private static boolean isPosition(String token) {
+    private static void validatePosition(String token) {
         char first = token.charAt(FILE_INDEX);
         char second = token.charAt(RANK_INDEX);
 
-        return File.isFile(first) && Rank.isRank(Character.getNumericValue(second));
+        if (!File.isFile(first) || !Rank.isRank(Character.getNumericValue(second))) {
+            throw new IllegalArgumentException("형식이 잘못되었거나 범위를 벗어났습니다.");
+        }
     }
 
     public boolean isEnd() {
