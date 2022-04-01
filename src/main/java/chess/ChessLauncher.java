@@ -20,15 +20,11 @@ public class ChessLauncher {
 
     private void proceed(final ChessGame chessGame) {
         try {
-            proceedTurn(chessGame);
+            Command command = CommandFactory.find(InputView.input());
+            command.execute(chessGame);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             proceed(chessGame);
         }
-    }
-
-    private void proceedTurn(final ChessGame chessGame) {
-        Command command = CommandFactory.find(InputView.input());
-        command.execute(chessGame);
     }
 }
