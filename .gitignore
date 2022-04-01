@@ -30,3 +30,22 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker/db/mysql/data/
+docker/db/mysql/init/*
+!docker/db/mysql/init/init.sql
+
+
+/docker/docker-compose.yml
+/docker/db/mysql/init/init.sql
+/src/main/java/chess/Member.java
+/src/main/java/chess/dao/MemberDao.java
+/src/test/java/chess/dao/MemberDaoTest.java
+/src/main/java/chess/Role.java
+/src/test/java/chess/dao/
+
+
+/src/main/java/chess/MyApplication.java
+/src/main/java/chess/MyCommand.java
+/src/main/java/chess/Cf.java
