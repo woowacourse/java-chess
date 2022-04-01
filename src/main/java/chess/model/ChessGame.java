@@ -27,16 +27,17 @@ public class ChessGame {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         validateCurrentTurn(thisTurn, sourcePiece);
-        if (canMove(source, target, sourcePiece, targetPiece)) {
+        MoveType moveType = MoveType.of(sourcePiece, targetPiece);
+        if (canMove(source, target, sourcePiece, moveType)) {
             board.move(sourcePiece, source, target);
             return;
         }
         throw new IllegalArgumentException("움직일 수 없습니다.");
     }
 
-    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        boolean isAttack = sourcePiece.isOtherTeam(targetPiece);
-        return sourcePiece.isMovable(sourcePosition, targetPosition, isAttack) && !hasBlock(sourcePosition, targetPosition, sourcePiece, targetPiece);
+    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, MoveType moveType) {
+        return sourcePiece.isMovable(sourcePosition, targetPosition, moveType)
+                && !hasBlock(sourcePosition, targetPosition, sourcePiece);
     }
 
     public boolean isKingDead() {
@@ -61,10 +62,7 @@ public class ChessGame {
         return Team.NONE;
     }
 
-    private boolean hasBlock(Position source, Position target, Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isSameTeam(targetPiece)) {
-            return true;
-        }
+    private boolean hasBlock(Position source, Position target, Piece sourcePiece) {
         List<Position> positions = sourcePiece.getIntervalPosition(source, target);
         return positions.stream()
                 .anyMatch(position -> !board.get(position).equals(new Empty()));

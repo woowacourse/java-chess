@@ -24,7 +24,7 @@ class KnightTest {
         Position source = Position.from("a1");
         Position target = Position.from("b3");
 
-        assertThat(knight.isMovable(source, target, true)).isTrue();
+        assertThat(knight.isMovable(source, target, MoveType.MOVE)).isTrue();
     }
 
     @Test
@@ -34,7 +34,7 @@ class KnightTest {
         Position source = Position.from("a1");
         Position target = Position.from("b2");
 
-        assertThat(knight.isMovable(source, target, true)).isFalse();
+        assertThat(knight.isMovable(source, target, MoveType.MOVE)).isFalse();
     }
 
     @Test

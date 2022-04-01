@@ -27,8 +27,8 @@ class PawnTest {
         Position target2Step = Position.from("a4");
 
         assertAll(
-                () -> assertThat(pawn.isMovable(source, target1Step, false)).isTrue(),
-                () -> assertThat(pawn.isMovable(source, target2Step, false)).isTrue()
+                () -> assertThat(pawn.isMovable(source, target1Step, MoveType.MOVE)).isTrue(),
+                () -> assertThat(pawn.isMovable(source, target2Step, MoveType.MOVE)).isTrue()
         );
     }
 
@@ -39,7 +39,7 @@ class PawnTest {
         Position source = Position.from("a2");
         Position target = Position.from("a5");
 
-        assertThat(pawn.isMovable(source, target, false)).isFalse();
+        assertThat(pawn.isMovable(source, target, MoveType.MOVE)).isFalse();
     }
 
     @Test
@@ -49,7 +49,7 @@ class PawnTest {
         Position source = Position.from("a3");
         Position target = Position.from("a5");
 
-        assertThat(pawn.isMovable(source, target, false)).isFalse();
+        assertThat(pawn.isMovable(source, target, MoveType.MOVE)).isFalse();
     }
 
     @Test
@@ -59,7 +59,7 @@ class PawnTest {
         Position source = Position.from("a3");
         Position target = Position.from("a2");
 
-        assertThat(pawn.isMovable(source, target, false)).isFalse();
+        assertThat(pawn.isMovable(source, target, MoveType.MOVE)).isFalse();
     }
 
     @Test
@@ -69,7 +69,7 @@ class PawnTest {
         Position source = Position.from("a7");
         Position target = Position.from("a6");
 
-        assertThat(pawn.isMovable(source, target, false)).isTrue();
+        assertThat(pawn.isMovable(source, target, MoveType.MOVE)).isTrue();
     }
 
     @Test

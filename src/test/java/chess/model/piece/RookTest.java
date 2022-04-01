@@ -1,6 +1,7 @@
 package chess.model.piece;
 
 import chess.model.ChessGame;
+import chess.model.MoveType;
 import chess.model.Team;
 import chess.model.Turn;
 import chess.model.board.Board;
@@ -27,7 +28,7 @@ class RookTest {
         Position source = Position.from("a1");
         Position target = Position.from("f1");
 
-        assertThat(rook.isMovable(source, target, true)).isTrue();
+        assertThat(rook.isMovable(source, target, MoveType.MOVE)).isTrue();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package chess.model.strategy;
 
+import chess.model.MoveType;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 
@@ -14,7 +15,7 @@ public class UnlimitedMoveStrategy implements MoveStrategy{
     }
 
     @Override
-    public boolean movable(Position source, Position target, boolean isKill) {
+    public boolean movable(Position source, Position target, MoveType moveType) {
         Direction direction = Direction.of(source, target);
         return directions.contains(direction);
     }

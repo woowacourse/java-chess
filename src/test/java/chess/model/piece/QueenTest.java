@@ -28,9 +28,9 @@ class QueenTest {
         Position targetHorizontal = Position.from("f1");
 
         assertAll(
-                () -> assertThat(queen.isMovable(source, targetDiagonal, true)).isTrue(),
-                () -> assertThat(queen.isMovable(source, targetVertical, true)).isTrue(),
-                () -> assertThat(queen.isMovable(source, targetHorizontal, true)).isTrue()
+                () -> assertThat(queen.isMovable(source, targetDiagonal, MoveType.MOVE)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetVertical, MoveType.MOVE)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetHorizontal, MoveType.MOVE)).isTrue()
         );
     }
 

@@ -1,5 +1,6 @@
 package chess.model.strategy;
 
+import chess.model.MoveType;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
 import chess.model.position.Position;
@@ -16,7 +17,7 @@ public class LimitedMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public boolean movable(Position source, Position target, boolean isKill) {
+    public boolean movable(Position source, Position target, MoveType moveType) {
         Direction direction = Direction.of(source, target);
         Distance distance = Distance.of(source, target, direction);
         return directions.contains(direction) && distances.contains(distance);

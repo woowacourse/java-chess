@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.MoveType;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 import chess.model.Team;
@@ -19,11 +20,28 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
+    public final boolean isMovable(Position source, Position target, MoveType moveType) {
+        return moveStrategy.movable(source, target, moveType);
+    }
+
+    public final List<Position> getIntervalPosition(Position source, Position target) {
+        Direction direction = Direction.of(source, target);
+        List<Position> positions = new ArrayList<>();
+        Position next = source;
+
+        while (!next.equals(target)) {
+            next = next.getNext(direction);
+            positions.add(next);
+        }
+        positions.remove(target);
+        return positions;
+    }
+
     public final boolean isSameTeam(Piece targetPiece) {
         return team.equals(targetPiece.team);
     }
 
-    public final boolean isOtherTeam(Piece targetPiece) {
+    public final boolean isEnemy(Piece targetPiece) {
         return team.getForwardDirection() + targetPiece.team.getForwardDirection() == 0;
     }
 
@@ -44,23 +62,6 @@ public abstract class Piece {
     }
 
     public abstract double getScore();
-
-    public final List<Position> getIntervalPosition(Position source, Position target) {
-        Direction direction = Direction.of(source, target);
-        List<Position> positions = new ArrayList<>();
-        Position next = source;
-
-        while (!next.equals(target)) {
-            next = next.getNext(direction);
-            positions.add(next);
-        }
-        positions.remove(target);
-        return positions;
-    }
-
-    public final boolean isMovable(Position source, Position target, boolean isKill) {
-        return moveStrategy.movable(source, target, isKill);
-    }
 
     public abstract String getName();
 
