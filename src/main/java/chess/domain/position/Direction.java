@@ -27,34 +27,34 @@ public enum Direction {
 
     private static final int NEXT = 1;
 
-    private final int fileGrowth;
-    private final int rankGrowth;
+    private final int x;
+    private final int y;
 
-    Direction(final int fileGrowth, final int rankGrowth) {
-        this.fileGrowth = fileGrowth;
-        this.rankGrowth = rankGrowth;
+    Direction(final int x, final int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public static Direction of(final Position from, final Position to) {
-        final var fileDifference = to.getFileOrder() - from.getFileOrder();
-        final var rankDifference = to.getRankNumber() - from.getRankNumber();
+        final var xDifference = to.getFileOrder() - from.getFileOrder();
+        final var yDifference = to.getRankNumber() - from.getRankNumber();
 
-        if (isLine(fileDifference, rankDifference)) {
-            return of(calculateLineDifference(fileDifference), calculateLineDifference(rankDifference));
+        if (isLine(xDifference, yDifference)) {
+            return of(calculateLineDifference(xDifference), calculateLineDifference(yDifference));
         }
-        return of(fileDifference, rankDifference);
+        return of(xDifference, yDifference);
     }
 
-    private static boolean isLine(final int fileDifference, final int rankDifference) {
-        return isDiagonal(fileDifference, rankDifference) || isHorizontalOrVertical(fileDifference, rankDifference);
+    private static boolean isLine(final int xDifference, final int yDifference) {
+        return isDiagonal(xDifference, yDifference) || isHorizontalOrVertical(xDifference, yDifference);
     }
 
-    private static boolean isDiagonal(final int fileDifference, final int rankDifference) {
-        return Math.abs(fileDifference) == Math.abs(rankDifference);
+    private static boolean isDiagonal(final int xDifference, final int yDifference) {
+        return Math.abs(xDifference) == Math.abs(yDifference);
     }
 
-    private static boolean isHorizontalOrVertical(final int fileDifference, final int rankDifference) {
-        return fileDifference == 0 || rankDifference == 0;
+    private static boolean isHorizontalOrVertical(final int xDifference, final int yDifference) {
+        return xDifference == 0 || yDifference == 0;
     }
 
     private static int calculateLineDifference(final int difference) {
@@ -64,9 +64,9 @@ public enum Direction {
         return difference / Math.abs(difference);
     }
 
-    private static Direction of(final int fileDifference, final int rankDifference) {
+    private static Direction of(final int xDifference, final int yDifference) {
         return Arrays.stream(values())
-                .filter(direction -> direction.fileGrowth == fileDifference && direction.rankGrowth == rankDifference)
+                .filter(direction -> direction.x == xDifference && direction.y == yDifference)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("정의되지 않은 방향입니다."));
     }
@@ -106,10 +106,10 @@ public enum Direction {
         final var rankDifference = Math.abs(start.getRankNumber() - end.getRankNumber());
         final var fileDifference = Math.abs(start.getFileOrder() - end.getFileOrder());
         final var endCount = Math.max(rankDifference, fileDifference);
-        var file = start.getFileOrder() + fileGrowth;
-        var rank = start.getRankNumber() + rankGrowth;
+        var file = start.getFileOrder() + x;
+        var rank = start.getRankNumber() + y;
         final List<Position> positions = new ArrayList<>();
-        for (int i = NEXT; i < endCount; i++, file += fileGrowth, rank += rankGrowth) {
+        for (int i = NEXT; i < endCount; i++, file += x, rank += y) {
             positions.add(Position.of(File.findByOrder(file), Rank.from(rank)));
         }
         return positions;
