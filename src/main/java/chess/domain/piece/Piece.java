@@ -23,7 +23,7 @@ public abstract class Piece {
 
     abstract public boolean canMove(Direction direction, Piece otherPiece);
 
-    void checkSameTeam(Piece otherPiece) {
+    public void checkSameTeam(Piece otherPiece) {
         if (isSameColor(otherPiece.color)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_SAME_TEAM);
         }

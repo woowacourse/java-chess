@@ -15,7 +15,6 @@ public abstract class MovingMultipleUnitPiece extends Piece {
 
     @Override
     public boolean canMove(Direction direction, Piece target) {
-        checkSameTeam(target);
         return direction.hasMultiple(movableDirections);
     }
 }

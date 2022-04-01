@@ -50,8 +50,9 @@ public final class Board {
         Piece targetPiece = board.get(target);
         Direction direction = source.getGap(target);
 
+        sourcePiece.checkSameTeam(targetPiece);
         checkCapablePosition(direction, sourcePiece, targetPiece);
-        checkCapableDirection(source, target, direction);
+        checkCapableRoute(source, target, direction);
     }
 
     private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
@@ -60,7 +61,7 @@ public final class Board {
         }
     }
 
-    private void checkCapableDirection(Square source, Square target, Direction direction) {
+    private void checkCapableRoute(Square source, Square target, Direction direction) {
         Direction unitDirection = direction.getUnitDirection();
         Square road = source.add(unitDirection);
 
