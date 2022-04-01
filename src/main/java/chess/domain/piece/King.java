@@ -19,8 +19,17 @@ public class King extends ChessPiece {
         whiteTeamInitialPosition.put(ChessBoardPosition.of(5, 1), new King(Team.WHITE));
     }
 
-    private King(Team team) {
-        super(team, SCORE, new NoPathMovingStrategy());
+    King(Team team) {
+        super(team, SCORE, new NoPathMovingStrategy(
+                List.of(ChessBoardPosition.ofDirection(1, 0)
+                , ChessBoardPosition.ofDirection(1, 1)
+                , ChessBoardPosition.ofDirection(0, 1)
+                , ChessBoardPosition.ofDirection(-1, 1)
+                , ChessBoardPosition.ofDirection(-1, 0)
+                , ChessBoardPosition.ofDirection(-1, -1)
+                , ChessBoardPosition.ofDirection(0, -1)
+                , ChessBoardPosition.ofDirection(1, -1))
+        ));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
@@ -32,6 +41,6 @@ public class King extends ChessPiece {
 
     @Override
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        return Collections.emptyList();
+        return movingStrategy.makePath(sourcePosition, targetPosition);
     }
 }
