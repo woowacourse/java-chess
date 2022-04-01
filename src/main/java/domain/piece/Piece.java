@@ -2,9 +2,7 @@ package domain.piece;
 
 import domain.Player;
 import domain.direction.Direction;
-import domain.position.File;
 import domain.position.Position;
-import domain.position.Rank;
 import java.util.List;
 
 public abstract class Piece {
@@ -32,15 +30,6 @@ public abstract class Piece {
         final Direction direction);
 
     protected abstract List<Direction> getDirections();
-
-    protected Position createPositionByDirection(final Position source, final Direction direction) {
-        int rank = source.getRank() + direction.getRank();
-        int file = source.getFile() + direction.getFile();
-        if (File.isFileRange(file) && Rank.isRankRange(rank)) {
-            return Position.of(File.of(file), Rank.of(rank));
-        }
-        return null;
-    }
 
     public abstract double score(boolean isSeveralPawn);
 

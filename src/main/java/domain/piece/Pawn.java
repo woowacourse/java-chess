@@ -69,7 +69,7 @@ public class Pawn extends SpecificLocationPiece {
     @Override
     protected List<Position> calculateAvailablePosition(final Position source, final Direction direction) {
         List<Position> positions = generateTwoSpaceMoveRoute(source, direction);
-        Position nextPosition = createPositionByDirection(source, direction);
+        Position nextPosition = source.createNextPosition(direction);
         if (nextPosition != null) {
             positions.add(nextPosition);
         }
@@ -91,7 +91,7 @@ public class Pawn extends SpecificLocationPiece {
 
     private Position calculatePawnWayPoint(final Position source, final Direction direction) {
         Direction addDirection = generateAddDirection(direction);
-        return createPositionByDirection(source, addDirection);
+        return source.createNextPosition(addDirection);
     }
 
     private Direction generateAddDirection(final Direction direction) {

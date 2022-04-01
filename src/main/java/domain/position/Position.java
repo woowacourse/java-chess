@@ -1,5 +1,6 @@
 package domain.position;
 
+import domain.direction.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -18,6 +19,15 @@ public class Position {
 
     public static Position of(final String file, final String rank) {
         return new Position(File.of(file), Rank.of(rank));
+    }
+
+    public Position createNextPosition(final Direction direction) {
+        int rank = this.getRank() + direction.getRank();
+        int file = this.getFile() + direction.getFile();
+        if (File.isFileRange(file) && Rank.isRankRange(rank)) {
+            return Position.of(File.of(file), Rank.of(rank));
+        }
+        return null;
     }
 
     @Override
