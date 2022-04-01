@@ -9,11 +9,11 @@ import java.util.Stack;
 public class Knight extends ChessPiece {
 
     private static final String NAME = "N";
-    private static final Double VALUE = 2.5;
+    private static final Double SCORE = 2.5;
     private static final int SUM_OF_MOVABLE_DISTANCE = 3;
 
     public Knight(Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     @Override
@@ -43,5 +43,10 @@ public class Knight extends ChessPiece {
     @Override
     public Stack<Position> findRoute(final Position from, Position to) {
         return new Stack<>();
+    }
+
+    @Override
+    public double getValue() {
+        return SCORE;
     }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 public class King extends ChessPiece {
 
     private static final String NAME = "K";
-    private static final Double VALUE = 0.0;
+    private static final Double SCORE = 0.0;
 
     public King(Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     @Override
@@ -32,6 +32,11 @@ public class King extends ChessPiece {
         if (Math.abs(fileDistance) > 1 || Math.abs(rankDistance) > 1) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public double getValue() {
+        return SCORE;
     }
 
     @Override

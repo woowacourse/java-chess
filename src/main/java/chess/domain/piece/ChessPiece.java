@@ -11,12 +11,10 @@ public abstract class ChessPiece {
 
     private final Color color;
     private final String name;
-    private final double value;
 
-    protected ChessPiece(Color color, String name, double value) {
+    protected ChessPiece(Color color, String name) {
         this.color = color;
         this.name = color.convertByColor(name);
-        this.value = value;
     }
 
     public abstract List<Position> getInitWhitePosition();
@@ -58,9 +56,7 @@ public abstract class ChessPiece {
         return color.isBlack();
     }
 
-    public double getValue() {
-        return value;
-    }
+    public abstract double getValue();
 
     public String getName() {
         return name;
@@ -74,4 +70,5 @@ public abstract class ChessPiece {
         return false;
     }
 
+    public Color getColor(){ return color; };
 }

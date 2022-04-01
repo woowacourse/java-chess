@@ -8,10 +8,10 @@ import java.util.List;
 public class Bishop extends ChessPiece {
 
     private static final String NAME = "B";
-    private static final Double VALUE = 3.0;
+    private static final Double SCORE = 3.0;
 
     public Bishop(Color color) {
-        super(color, NAME, VALUE);
+        super(color, NAME);
     }
 
     @Override
@@ -32,5 +32,10 @@ public class Bishop extends ChessPiece {
         if (fileDistance != rankDistance) {
             throw new IllegalArgumentException("해당 기물이 갈 수 없는 위치입니다.");
         }
+    }
+
+    @Override
+    public double getValue() {
+        return SCORE;
     }
 }
