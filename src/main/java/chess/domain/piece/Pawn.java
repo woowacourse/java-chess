@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.PAWN;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -13,7 +12,7 @@ public class Pawn extends AbstractPiece {
     private static final Row BLACK_FIRST_ROW = Row.RANK_7;
     private static final Row WHITE_FIRST_ROW = Row.RANK_2;
 
-    public Pawn(Color color) {
+    public Pawn(PieceColor color) {
         super(color);
     }
 

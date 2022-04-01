@@ -2,14 +2,13 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.KNIGHT;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class Knight extends AbstractPiece {
 
-    public Knight(Color color) {
+    public Knight(PieceColor color) {
         super(color);
     }
 

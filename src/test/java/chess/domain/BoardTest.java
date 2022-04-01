@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.command.MoveCommand;
+import chess.domain.ChessGame.Board;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.AbstractPiece;
@@ -23,11 +25,11 @@ public class BoardTest {
     @DisplayName("King 이 모두 살아있는 경우 true를 반환하는지")
     void checkAliveAllKings() {
         Map<Position, AbstractPiece> pieces = new HashMap<>();
-        pieces.put(Position.of(Column.C, Row.RANK_3), new King(Color.BLACK));
-        pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(Color.BLACK));
-        pieces.put(Position.of(Column.H, Row.RANK_3), new Pawn(Color.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_1), new King(Color.WHITE));
-        pieces.put(Position.of(Column.A, Row.RANK_7), new Pawn(Color.WHITE));
+        pieces.put(Position.of(Column.C, Row.RANK_3), new King(PieceColor.BLACK));
+        pieces.put(Position.of(Column.H, Row.RANK_4), new Pawn(PieceColor.BLACK));
+        pieces.put(Position.of(Column.H, Row.RANK_3), new Pawn(PieceColor.BLACK));
+        pieces.put(Position.of(Column.C, Row.RANK_1), new King(PieceColor.WHITE));
+        pieces.put(Position.of(Column.A, Row.RANK_7), new Pawn(PieceColor.WHITE));
 
         Board board = new Board(pieces);
 
@@ -38,10 +40,10 @@ public class BoardTest {
     @DisplayName("King 이 하나라도 없는 경우 false를 반환하는지")
     void checkDeadKing() {
         Map<Position, AbstractPiece> pieces = new HashMap<>();
-        pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(Color.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_6), new Pawn(Color.BLACK));
-        pieces.put(Position.of(Column.C, Row.RANK_1), new King(Color.WHITE));
-        pieces.put(Position.of(Column.A, Row.RANK_2), new Pawn(Color.WHITE));
+        pieces.put(Position.of(Column.C, Row.RANK_2), new Queen(PieceColor.BLACK));
+        pieces.put(Position.of(Column.C, Row.RANK_6), new Pawn(PieceColor.BLACK));
+        pieces.put(Position.of(Column.C, Row.RANK_1), new King(PieceColor.WHITE));
+        pieces.put(Position.of(Column.A, Row.RANK_2), new Pawn(PieceColor.WHITE));
 
         Board board = new Board(pieces);
 
@@ -56,14 +58,14 @@ public class BoardTest {
         Position targetPosition = Position.of("e4");
         Map<Position, AbstractPiece> beforePieces = board.getPieces();
 
-        board.movePiece(Color.WHITE, moveCommand);
+        board.movePiece(PieceColor.WHITE, moveCommand);
         Map<Position, AbstractPiece> afterPieces = board.getPieces();
 
         assertAll(
                 () -> assertThat(beforePieces.get(targetPosition)).isNull(),
                 () -> assertThat(afterPieces.get(targetPosition)).isNotNull(),
                 () -> assertThat(afterPieces.get(targetPosition).isPawn()).isTrue(),
-                () -> assertThat(afterPieces.get(targetPosition).isSameColor(Color.WHITE)).isTrue()
+                () -> assertThat(afterPieces.get(targetPosition).isSameColor(PieceColor.WHITE)).isTrue()
         );
     }
 
@@ -73,7 +75,7 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e5 e4");
 
-        Assertions.assertThatThrownBy(() -> board.movePiece(Color.BLACK, moveCommand))
+        Assertions.assertThatThrownBy(() -> board.movePiece(PieceColor.BLACK, moveCommand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("source 위치에 기물이 존재하지 않습니다.");
     }
@@ -84,7 +86,7 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e2 e4");
 
-        Assertions.assertThatThrownBy(() -> board.movePiece(Color.BLACK, moveCommand))
+        Assertions.assertThatThrownBy(() -> board.movePiece(PieceColor.BLACK, moveCommand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("현재 순서 진영의 기물이 아닙니다.");
     }
@@ -95,7 +97,7 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e1 e2");
 
-        Assertions.assertThatThrownBy(() -> board.movePiece(Color.WHITE, moveCommand))
+        Assertions.assertThatThrownBy(() -> board.movePiece(PieceColor.WHITE, moveCommand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("target 위치에 자신의 기물이 있습니다.");
     }
@@ -107,7 +109,7 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move e2 d3");
 
-        Assertions.assertThatThrownBy(() -> board.movePiece(Color.WHITE, moveCommand))
+        Assertions.assertThatThrownBy(() -> board.movePiece(PieceColor.WHITE, moveCommand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 움직일 수 있는 행마법이 아닙니다.");
     }
@@ -118,7 +120,7 @@ public class BoardTest {
         Board board = new Board(PiecesUtil.createChessPieces());
         MoveCommand moveCommand = MoveCommand.of("move d1 d4");
 
-        Assertions.assertThatThrownBy(() -> board.movePiece(Color.WHITE, moveCommand))
+        Assertions.assertThatThrownBy(() -> board.movePiece(PieceColor.WHITE, moveCommand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 존재합니다.");
     }

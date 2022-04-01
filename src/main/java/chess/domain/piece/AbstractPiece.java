@@ -1,16 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
 public abstract class AbstractPiece {
 
-    protected final Color color;
+    protected final PieceColor color;
     protected final List<Movement> movements;
 
-    public AbstractPiece(Color color) {
+    public AbstractPiece(PieceColor color) {
         this.color = color;
         this.movements = chooseMovements();
     }
@@ -19,7 +18,7 @@ public abstract class AbstractPiece {
         return color.correctSignature(baseSignature());
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(PieceColor color) {
         return this.color == color;
     }
 

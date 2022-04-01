@@ -1,23 +1,23 @@
 package chess.dto;
 
-import chess.domain.Color;
+import chess.domain.piece.PieceColor;
 import chess.domain.Score;
 import chess.domain.WinResult;
 import java.util.Map;
 
 public class StatusDto {
 
-    private final Map<Color, Score> scores;
+    private final Map<PieceColor, Score> scores;
     private final WinResult winResult;
 
-    public StatusDto(Map<Color, Score> scores) {
+    public StatusDto(Map<PieceColor, Score> scores) {
         this.scores = scores;
-        Score blackScore = scores.get(Color.BLACK);
-        Score whiteScore = scores.get(Color.WHITE);
+        Score blackScore = scores.get(PieceColor.BLACK);
+        Score whiteScore = scores.get(PieceColor.WHITE);
         this.winResult = WinResult.of(blackScore, whiteScore);
     }
 
-    public Map<Color, Score> getScoresByColor() {
+    public Map<PieceColor, Score> getScoresByColor() {
         return scores;
     }
 

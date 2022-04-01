@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -18,15 +19,15 @@ public class PiecesUtil {
     public static Map<Position, AbstractPiece> createChessPieces() {
         Map<Position, AbstractPiece> pieces = new HashMap<>();
 
-        putPiecesExceptPawnOnRow(pieces, Row.RANK_1, Color.WHITE);
-        putPawnOnRank(pieces, Row.RANK_2, Color.WHITE);
-        putPawnOnRank(pieces, Row.RANK_7, Color.BLACK);
-        putPiecesExceptPawnOnRow(pieces, Row.RANK_8, Color.BLACK);
+        putPiecesExceptPawnOnRow(pieces, Row.RANK_1, PieceColor.WHITE);
+        putPawnOnRank(pieces, Row.RANK_2, PieceColor.WHITE);
+        putPawnOnRank(pieces, Row.RANK_7, PieceColor.BLACK);
+        putPiecesExceptPawnOnRow(pieces, Row.RANK_8, PieceColor.BLACK);
 
         return pieces;
     }
 
-    private static void putPiecesExceptPawnOnRow(Map<Position, AbstractPiece> pieces, Row row, Color color) {
+    private static void putPiecesExceptPawnOnRow(Map<Position, AbstractPiece> pieces, Row row, PieceColor color) {
         pieces.put(Position.of(Column.A, row), new Rook(color));
         pieces.put(Position.of(Column.B, row), new Knight(color));
         pieces.put(Position.of(Column.C, row), new Bishop(color));
@@ -37,7 +38,7 @@ public class PiecesUtil {
         pieces.put(Position.of(Column.H, row), new Rook(color));
     }
 
-    private static void putPawnOnRank(Map<Position, AbstractPiece> pieces, Row row, Color color) {
+    private static void putPawnOnRank(Map<Position, AbstractPiece> pieces, Row row, PieceColor color) {
         for (Column column : Column.values()) {
             Position position = Position.of(column, row);
             pieces.put(position, new Pawn(color));

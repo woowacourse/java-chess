@@ -2,14 +2,13 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.QUEEN;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class Queen extends AbstractPiece {
 
-    public Queen(Color color) {
+    public Queen(PieceColor color) {
         super(color);
     }
 

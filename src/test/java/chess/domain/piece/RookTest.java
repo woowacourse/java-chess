@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Color;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -16,7 +15,7 @@ public class RookTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK:R", "WHITE:r"}, delimiter = ':')
     @DisplayName("Rook 의 색깔에 맞는 이름을 반환하는지")
-    void checkNameByColor(Color color, String pieceName) {
+    void checkNameByColor(PieceColor color, String pieceName) {
         Rook rook = new Rook(color);
 
         assertThat(rook.signature()).isEqualTo(pieceName);
@@ -27,7 +26,7 @@ public class RookTest {
             delimiter = ':')
     @DisplayName("Rook 이 대각선으로 1칸 움직일 경우 - 불가능")
     void canMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -38,7 +37,7 @@ public class RookTest {
     @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Rook 이 대각선으로 2칸 이상 움직일 경우 - 불가능")
     void canNotMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -50,7 +49,7 @@ public class RookTest {
             delimiter = ':')
     @DisplayName("Rook 이 상하좌우로 1칸 움직일 경우 - 가능")
     void canNotMoveWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -61,7 +60,7 @@ public class RookTest {
     @CsvSource(value = {"C:RANK_5:C:RANK_2", "C:RANK_5:A:RANK_5", "A:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Rook 이 상하좌우로 2칸 이상 움직일 경우 - 가능")
     void canMoveWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -71,7 +70,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook 은 기물을 넘을 수 없다.")
     void canNotJumpOverPieces() {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
 
         assertThat(rook.canJumpOverPieces()).isFalse();
     }
@@ -79,7 +78,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook 은 Pawn 이 아니다.")
     void isNotPawn() {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
 
         assertThat(rook.isPawn()).isFalse();
     }
@@ -87,7 +86,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook 은 King 이 아니다.")
     void isNotKing() {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
 
         assertThat(rook.isKing()).isFalse();
     }
@@ -95,7 +94,7 @@ public class RookTest {
     @Test
     @DisplayName("Rook 의 점수는 5 이다.")
     void isScore5() {
-        Rook rook = new Rook(Color.BLACK);
+        Rook rook = new Rook(PieceColor.BLACK);
 
         assertThat(rook.score()).isEqualTo(5);
     }

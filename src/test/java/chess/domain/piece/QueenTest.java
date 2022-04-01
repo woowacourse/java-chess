@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Color;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -16,7 +15,7 @@ public class QueenTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK:Q", "WHITE:q"}, delimiter = ':')
     @DisplayName("Queen 의 색깔에 맞는 이름을 반환하는지")
-    void checkNameByColor(Color color, String pieceName) {
+    void checkNameByColor(PieceColor color, String pieceName) {
         Queen queen = new Queen(color);
 
         assertThat(queen.signature()).isEqualTo(pieceName);
@@ -27,7 +26,7 @@ public class QueenTest {
             delimiter = ':')
     @DisplayName("Queen 이 대각선으로 1칸 움직일 경우 - 가능")
     void canMoveWithDiagonal1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -38,7 +37,7 @@ public class QueenTest {
     @CsvSource(value = {"C:RANK_5:F:RANK_2", "C:RANK_5:E:RANK_3", "C:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Queen 이 대각선으로 2칸 이상 움직일 경우 - 가능")
     void canMoveWithDiagonal(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -50,7 +49,7 @@ public class QueenTest {
             delimiter = ':')
     @DisplayName("Queen 이 상하좌우로 1칸 움직일 경우 - 가능")
     void canMoveWithStraight1Step(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -61,7 +60,7 @@ public class QueenTest {
     @CsvSource(value = {"C:RANK_5:C:RANK_2", "C:RANK_5:A:RANK_5", "A:RANK_5:A:RANK_3"}, delimiter = ':')
     @DisplayName("Queen 이 상하좌우로 2칸 이상 움직일 경우 - 가능")
     void canMoveWithStraight(Column sourceColumn, Row sourceRow, Column targetColumn, Row targetRow) {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
         Position source = Position.of(sourceColumn, sourceRow);
         Position target = Position.of(targetColumn, targetRow);
 
@@ -71,7 +70,7 @@ public class QueenTest {
     @Test
     @DisplayName("Queen 은 기물을 넘을 수 없다.")
     void canNotJumpOverPieces() {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
 
         assertThat(queen.canJumpOverPieces()).isFalse();
     }
@@ -79,7 +78,7 @@ public class QueenTest {
     @Test
     @DisplayName("Queen 은 Pawn 이 아니다.")
     void isNotPawn() {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
 
         assertThat(queen.isPawn()).isFalse();
     }
@@ -87,7 +86,7 @@ public class QueenTest {
     @Test
     @DisplayName("Queen 은 King 이 아니다.")
     void isNotKing() {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
 
         assertThat(queen.isKing()).isFalse();
     }
@@ -95,7 +94,7 @@ public class QueenTest {
     @Test
     @DisplayName("Queen 의 점수는 9 이다.")
     void isScore9() {
-        Queen queen = new Queen(Color.BLACK);
+        Queen queen = new Queen(PieceColor.BLACK);
 
         assertThat(queen.score()).isEqualTo(9);
     }

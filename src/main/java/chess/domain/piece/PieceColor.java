@@ -1,25 +1,25 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.function.Function;
 
-public enum Color {
+public enum PieceColor {
 
     BLACK(String::toUpperCase) {
         @Override
-        public Color enemyColor() {
+        public PieceColor enemyColor() {
             return WHITE;
         }
     },
     WHITE(String::toLowerCase) {
         @Override
-        public Color enemyColor() {
+        public PieceColor enemyColor() {
             return BLACK;
         }
     };
 
     private final Function<String, String> signatureFunction;
 
-    Color(Function<String, String> signatureFunction) {
+    PieceColor(Function<String, String> signatureFunction) {
         this.signatureFunction = signatureFunction;
     }
 
@@ -35,5 +35,5 @@ public enum Color {
         return this == WHITE;
     }
 
-    public abstract Color enemyColor();
+    public abstract PieceColor enemyColor();
 }

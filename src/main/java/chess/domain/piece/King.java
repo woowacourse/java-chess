@@ -2,14 +2,13 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.KING;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class King extends AbstractPiece {
 
-    public King(Color color) {
+    public King(PieceColor color) {
         super(color);
     }
 

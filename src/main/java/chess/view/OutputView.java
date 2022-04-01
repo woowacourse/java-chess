@@ -5,7 +5,7 @@ import chess.domain.WinResult;
 import chess.dto.StatusDto;
 import java.util.Map;
 
-import chess.domain.Color;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.AbstractPiece;
 import chess.domain.position.Position;
 import chess.domain.position.Column;
@@ -69,10 +69,10 @@ public class OutputView {
     }
 
     public static void printStatus(StatusDto status) {
-        Map<Color, Score> scores = status.getScoresByColor();
+        Map<PieceColor, Score> scores = status.getScoresByColor();
         WinResult winResult = status.getWinResult();
 
-        for (Color color : scores.keySet()) {
+        for (PieceColor color : scores.keySet()) {
             Score score = scores.get(color);
             System.out.println(color.name() + ": " + score.getValue() + "점");
         }

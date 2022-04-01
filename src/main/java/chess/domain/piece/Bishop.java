@@ -2,14 +2,13 @@ package chess.domain.piece;
 
 import static chess.domain.piece.PieceType.BISHOP;
 
-import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class Bishop extends AbstractPiece {
 
-    public Bishop(Color color) {
+    public Bishop(PieceColor color) {
         super(color);
     }
 

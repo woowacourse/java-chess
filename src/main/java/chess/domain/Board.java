@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.command.MoveCommand;
 import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +17,21 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void movePiece(Color turnColor, MoveCommand command) {
+    public void movePiece(PieceColor turnColor, MoveCommand command) {
         validateMovement(turnColor, command);
         AbstractPiece sourcePiece = pieces.get(command.from());
         pieces.remove(command.from());
         pieces.put(command.to(), sourcePiece);
     }
 
-    private void validateMovement(Color turnColor, MoveCommand command) {
+    private void validateMovement(PieceColor turnColor, MoveCommand command) {
         validateSourceChoice(turnColor, command.from());
         validateTargetChoice(turnColor, command.to());
         validateMovable(command.from(), command.to());
         validateRoute(command.from(), command.to());
     }
 
-    private void validateSourceChoice(Color turnColor, Position source) {
+    private void validateSourceChoice(PieceColor turnColor, Position source) {
         if (!pieces.containsKey(source)) {
             throw new IllegalArgumentException("source 위치에 기물이 존재하지 않습니다.");
         }
@@ -40,7 +41,7 @@ public class Board {
         }
     }
 
-    private void validateTargetChoice(Color turnColor, Position target) {
+    private void validateTargetChoice(PieceColor turnColor, Position target) {
         if (pieces.containsKey(target) && pieces.get(target).isSameColor(turnColor)) {
             throw new IllegalArgumentException("target 위치에 자신의 기물이 있습니다.");
         }
@@ -95,7 +96,7 @@ public class Board {
                 .count();
     }
 
-    public Map<Position, AbstractPiece> getPiecesOf(Color color) {
+    public Map<Position, AbstractPiece> getPiecesOf(PieceColor color) {
         return pieces.keySet()
                 .stream()
                 .filter(position -> pieces.get(position).isSameColor(color))
