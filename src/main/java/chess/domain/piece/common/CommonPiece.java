@@ -33,4 +33,13 @@ public abstract class CommonPiece extends Piece {
         }
         return path;
     }
+
+    @Override
+    protected Direction findValidDirection(final Position current, final Position target) {
+        final int columnDifference = target.calculateColumnDifference(current);
+        final int rowDifference = target.calculateRowDifference(current);
+        final Direction direction = Direction.calculate(columnDifference, rowDifference);
+        validateDirection(direction);
+        return direction;
+    }
 }

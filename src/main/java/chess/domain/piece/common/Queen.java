@@ -9,7 +9,6 @@ import static chess.domain.piece.Direction.SE;
 import static chess.domain.piece.Direction.SW;
 import static chess.domain.piece.Direction.W;
 
-import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
@@ -26,15 +25,6 @@ public class Queen extends CommonPiece {
     @Override
     public boolean isEmpty() {
         return false;
-    }
-
-    @Override
-    public Direction findValidDirection(final Position current, final Position target) {
-        final int columnDifference = target.calculateColumnDifference(current);
-        final int rowDifference = target.calculateRowDifference(current);
-        final Direction direction = Direction.calculate(columnDifference, rowDifference);
-        validateDirection(direction);
-        return direction;
     }
 
     @Override
