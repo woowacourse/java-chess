@@ -24,7 +24,7 @@ class RankTest {
     @DisplayName("입력된 value가 유효하지 않은 범위이면 예외를 발생시킨다.")
     void of_exception() {
         // given
-        String value = "i";
+        int value = 10;
         // then
         assertThatThrownBy(() -> File.of(value))
                 .isInstanceOf(IllegalArgumentException.class)

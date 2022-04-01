@@ -12,7 +12,7 @@ class FileTest {
     @DisplayName("문자열에 해당하는 File을 찾는다.")
     void of() {
         // given
-        String value = "1";
+        int value = 1;
         // when
         File file = File.of(value);
         String actual = file.getValue();
@@ -24,7 +24,7 @@ class FileTest {
     @DisplayName("입력된 value가 유효하지 않은 범위이면 예외를 발생시킨다.")
     void of_exception() {
         // given
-        String value = "9";
+        int value = 9;
         // then
         assertThatThrownBy(() -> File.of(value))
                 .isInstanceOf(IllegalArgumentException.class)

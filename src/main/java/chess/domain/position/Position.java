@@ -9,7 +9,7 @@ public class Position {
     public Position(String text) {
         validate(text);
         this.rank = Rank.of(String.valueOf(text.charAt(0)));
-        this.file = File.of(String.valueOf(text.charAt(1)));
+        this.file = File.of(Character.getNumericValue(text.charAt(1)));
     }
 
     private void validate(String text) {
@@ -31,7 +31,7 @@ public class Position {
     }
 
     public boolean isSameFile(String target) {
-        return file.equals(File.of(target));
+        return file.equals(File.of(Integer.parseInt(target)));
     }
 
     public boolean isSameRank(Position target) {
