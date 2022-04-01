@@ -37,4 +37,8 @@ public class BoardDto {
         }
         return "true";
     }
+
+    public Map<String, String> getBoard() {
+        return board;
+    }
 }

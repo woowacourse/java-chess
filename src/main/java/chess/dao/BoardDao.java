@@ -23,4 +23,15 @@ public class BoardDao {
         }
         return null;
     }
+
+    public void updatePosition(final String position, final String piece) {
+        String sql = "update board set piece = ? where position = ?";
+        try (PreparedStatement preparedStatement = JdbcTemplate.getConnection().prepareStatement(sql)){
+            preparedStatement.setString(1, piece);
+            preparedStatement.setString(2, position);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

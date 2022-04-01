@@ -11,6 +11,8 @@ import chess.domain.piece.Team;
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ChessService {
 
@@ -30,8 +32,14 @@ public class ChessService {
     }
 
     public BoardDto endGame() {
-        // dao에서 기존 보드 상태를 모두 최초의 상태로 업데이트
-        return BoardDto.of(false, new Board(BoardFactory.initialize()));
+        Board board = new Board(BoardFactory.initialize());
+        BoardDto boardDto = BoardDto.of(false, board);
+
+        Map<String, String> convertedBoard = boardDto.getBoard();
+        for (final Entry<String, String> boardEntry : convertedBoard.entrySet()) {
+            boardDao.updatePosition(boardEntry.getKey(), boardEntry.getValue());
+        }
+        return BoardDto.of(false, board);
     }
 
     public StatusDto createStatus() {
@@ -41,8 +49,8 @@ public class ChessService {
     }
 
     public BoardDto move(final MoveDto moveDto) {
-        // dao에서 현재 보드를 가져와야함
-        ChessGame chessGame = new ChessGame(new Board(BoardFactory.initialize()));
+        Board board = BoardFactory.createBoard(boardDao.getBoard());
+        ChessGame chessGame = new ChessGame(board);
         chessGame.move(moveDto.getSource(), moveDto.getTarget());
 
         // Boarddao에 포지션 업데이트 (왕이 죽으면 chessGame은 종료됨)
