@@ -58,4 +58,9 @@ public class King extends Piece {
 	public double getScore() {
 		return KING_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "KING";
+	}
 }

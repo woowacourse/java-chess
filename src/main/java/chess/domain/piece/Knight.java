@@ -46,4 +46,9 @@ public class Knight extends Piece {
 	public double getScore() {
 		return KNIGHT_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "KNIGHT";
+	}
 }

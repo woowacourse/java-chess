@@ -46,4 +46,9 @@ public class Queen extends Piece {
 	public double getScore() {
 		return QUEEN_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "QUEEN";
+	}
 }

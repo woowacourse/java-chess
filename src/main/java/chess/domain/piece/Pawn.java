@@ -86,4 +86,9 @@ public class Pawn extends Piece {
 	public double getScore() {
 		return PAWN_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "PAWN";
+	}
 }

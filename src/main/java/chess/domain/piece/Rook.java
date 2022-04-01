@@ -46,4 +46,9 @@ public class Rook extends Piece {
 	public double getScore() {
 		return ROOK_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "ROOK";
+	}
 }

@@ -46,4 +46,9 @@ public class Bishop extends Piece {
 	public double getScore() {
 		return BISHOP_SCORE;
 	}
+
+	@Override
+	public String toString() {
+		return color.name() + "_" + "BISHOP";
+	}
 }
