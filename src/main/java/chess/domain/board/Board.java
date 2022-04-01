@@ -1,11 +1,10 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.notation.Color;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public final class Board {
@@ -23,18 +22,9 @@ public final class Board {
     public void move(final Position from, final Position to) {
         final var fromPiece = value.get(from);
 
-        fromPiece.checkMoveRange(this, from, to);
+        fromPiece.checkMoveRange(new MoveOrder(value.keySet(), from, to));
 
         value.put(to, value.remove(from));
-    }
-
-    public boolean hasPiece(final Position position) {
-        return value.get(position) != null;
-    }
-
-    public boolean hasPiece(final List<Position> positions) {
-        return positions.stream()
-                .anyMatch(this::hasPiece);
     }
 
     public boolean hasKing(final Color color) {
