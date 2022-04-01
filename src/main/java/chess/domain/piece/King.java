@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 public final class King extends Piece {
     private static final int MAXIMUM_SUM_OF_DX_AND_DY = 2;
-    private static final int SCORE = 0;
+    private static final double SCORE = 0.0;
     private static final String EXCEEDED_MAXIMUM_DISTANCE_OF_KING = "King의 이동 범위를 초과했습니다";
 
     public King(Color color) {

@@ -49,7 +49,7 @@ public final class Position {
     }
 
     private boolean isDiagonal(Position to) {
-        return this.dx(to) == this.dy(to);
+        return Math.abs(this.dx(to)) == Math.abs(this.dy(to));
     }
 
     private List<Position> diagonalBetweens(List<File> fileBetween, List<Rank> rankBetween) {

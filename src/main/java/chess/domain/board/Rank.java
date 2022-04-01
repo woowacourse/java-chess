@@ -48,11 +48,30 @@ public enum Rank {
     }
 
     public List<Rank> between(Rank target) {
+        Rank higherRank = getHigherRank(target);
+        Rank lowerRank = getLowerRank(target);
+
         final List<Rank> rankBetweens = Arrays.stream(values())
-                .filter(rank -> rank.rankNumber > this.rankNumber && rank.rankNumber < target.rankNumber)
+                .filter(rank -> rank.rankNumber > lowerRank.rankNumber && rank.rankNumber < higherRank.rankNumber)
                 .collect(Collectors.toList());
 
         return order(rankBetweens, target);
+    }
+
+    private Rank getHigherRank(Rank another) {
+        if (this.rankNumber > another.rankNumber) {
+            return this;
+        }
+
+        return another;
+    }
+
+    private Rank getLowerRank(Rank another) {
+        if (this.rankNumber < another.rankNumber) {
+            return this;
+        }
+
+        return another;
     }
 
     private List<Rank> order(List<Rank> ranks, Rank target) {

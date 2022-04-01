@@ -50,7 +50,7 @@ public enum File {
         File lowerFile = getLowerFile(target);
 
         final List<File> fileBetweens = Arrays.stream(values())
-                .filter(file -> file.fileNumber > lowerFile.fileNumber && higherFile.fileNumber < target.fileNumber)
+                .filter(file -> (file.fileNumber > lowerFile.fileNumber) && (file.fileNumber < higherFile.fileNumber))
                 .collect(Collectors.toList());
 
         return order(fileBetweens, target);

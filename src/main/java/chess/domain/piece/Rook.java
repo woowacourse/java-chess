@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Rook extends Piece {
     private static final List<Integer> ROOK_ANGLES = List.of(90, 0, -90, 180);
-    private static final int SCORE = 5;
+    private static final double SCORE = 5.0;
 
     public Rook(Color color) {
         super(color);

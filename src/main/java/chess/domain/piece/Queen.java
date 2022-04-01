@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Queen extends Piece {
     private static final List<Integer> QUEEN_ANGLES = List.of(90, 45, 0, -45, -90, -135, 180, 135);
-    private static final int SCORE = 9;
+    private static final double SCORE = 9.0;
 
     public Queen(Color color) {
         super(color);
