@@ -14,7 +14,7 @@ public abstract class ChessPiece {
         this.score = score;
     }
 
-    public abstract List<ChessBoard> makePath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
+    public abstract List<ChessBoard> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
 
     public abstract ChessPiece hardCopy();
 

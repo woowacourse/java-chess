@@ -44,7 +44,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public List<ChessBoard> makePath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+    public List<ChessBoard> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return null;
     }
 
