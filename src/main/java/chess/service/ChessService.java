@@ -53,18 +53,18 @@ public class ChessService {
 
     public ChessDto move(final MoveDto moveDto) {
         ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()), new Turn(Team.of(turnDao.getCurrentTurn())));
+
         String sourcePosition = moveDto.getSource();
         String targetPosition = moveDto.getTarget();
         chessGame.move(sourcePosition, targetPosition);
 
         boardDao.updatePosition(sourcePosition, chessGame.getPieceName(sourcePosition));
         boardDao.updatePosition(targetPosition, chessGame.getPieceName(targetPosition));
+
         Team turn = chessGame.getCurrentTurn();
         Team previous = turn.oppositeTeam();
-
         String currentTurn = turn.getValue();
         turnDao.updateTurn(currentTurn, previous.getValue());
-
         return ChessDto.of(chessGame.isOn(),chessGame.getBoard(), currentTurn);
     }
 
