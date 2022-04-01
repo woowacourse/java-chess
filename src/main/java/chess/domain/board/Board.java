@@ -65,6 +65,13 @@ public class Board {
         return board.getOrDefault(position, new EmptySpace());
     }
 
+    public double calculateScore(Color color) {
+        double score = Arrays.stream(PieceType.values())
+                .mapToDouble(piece -> piece.calculateScore(countPiece(piece, color)))
+                .sum();
+        return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
+    }
+
     public int countPiece(final PieceType pieceType, final Color color) {
         return (int) board.values()
                 .stream()
@@ -94,13 +101,6 @@ public class Board {
 
     public boolean isKingCaught(Color color) {
         return countPiece(KING, color) == 0;
-    }
-
-    public double calculateScore(Color color) {
-        double score = Arrays.stream(PieceType.values())
-                .mapToDouble(piece -> piece.calculateScore(countPiece(piece, color)))
-                .sum();
-        return score - countDeductedPawns(color) * PAWN_MINUS_SCORE;
     }
 
     public Map<Position, Piece> getBoard() {
