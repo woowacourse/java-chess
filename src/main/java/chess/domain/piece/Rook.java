@@ -36,4 +36,9 @@ public class Rook extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String toString() {
+        return "Rook{}";
+    }
 }

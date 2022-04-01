@@ -36,4 +36,11 @@ public class King extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String toString() {
+        return "King{" +
+                "pieceTeam=" + pieceTeam +
+                '}';
+    }
 }

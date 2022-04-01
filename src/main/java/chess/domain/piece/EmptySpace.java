@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.constant.TargetType;
 import chess.domain.board.position.Position;
 
-public class EmptyPiece extends Piece {
+public class EmptySpace extends Piece {
 
     private static final String EMBLEM = ".";
     private static final double SCORE = 0;
 
-    public EmptyPiece(PieceTeam pieceTeam) {
+    public EmptySpace(PieceTeam pieceTeam) {
         super(pieceTeam);
     }
 
@@ -25,5 +25,10 @@ public class EmptyPiece extends Piece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public String toString() {
+        return "EmptyPiece{}";
     }
 }

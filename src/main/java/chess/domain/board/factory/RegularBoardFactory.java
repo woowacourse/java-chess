@@ -13,7 +13,7 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
 import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.EmptySpace;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -33,7 +33,7 @@ public class RegularBoardFactory extends BoardFactory {
 
     private final static BoardFactory CACHE = new RegularBoardFactory();
 
-    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+    private static final EmptySpace EMPTY_PIECE = new EmptySpace(EMPTY);
 
     private static final Function<PieceTeam, List<Piece>> PIECES_CREATOR_BY_COLOR =
             (PieceTeam color) -> List.of(

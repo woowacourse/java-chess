@@ -1,28 +1,34 @@
 package chess.domain.board.factory;
 
+import static chess.domain.piece.PieceTeam.BLACK;
+import static chess.domain.piece.PieceTeam.EMPTY;
+import static chess.domain.piece.PieceTeam.WHITE;
+
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.EmptySpace;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceTeam;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class StringBoardFactory extends BoardFactory {
 
     private static final int BOARD_RANK_SIZE = 8;
     private static final int BOARD_FILE_SIZE = 8;
-    private static final List<String> PIECE_SYMBOLS = List.of("R", "N", "B", "Q", "K", "P",".");
-    private static final Map<String, Function<PieceTeam, ? extends Piece>> pieceCreator = new HashMap<>();
+    private static final String EMPTY_SPACE_SYMBOL = ".";
+    private static final List<String> UPPER_CASE_PIECE_SYMBOLS = List.of("R", "N", "B", "Q", "K", "P", EMPTY_SPACE_SYMBOL);
+    private static final Map<String, Supplier<? extends Piece>> whitePieceCreator;
+    private static final Map<String, Supplier<? extends Piece>> blackPieceCreator;
+    private static final Supplier<? extends Piece> emptySpaceCreator = () -> new EmptySpace(EMPTY);
 
     static final String INVALID_RANK_SIZE_MESSAGE = "RANK 크기가 올바르지 않습니다.";
     static final String INVALID_FILE_SIZE_MESSAGE = "FILE 크기가 올바르지 않습니다.";
@@ -31,17 +37,38 @@ public class StringBoardFactory extends BoardFactory {
     private final List<String> stringChessBoard;
 
     static {
-        pieceCreator.put("R", Rook::new);
-        pieceCreator.put("N", Knight::new);
-        pieceCreator.put("B", Bishop::new);
-        pieceCreator.put("Q", Queen::new);
-        pieceCreator.put("K", King::new);
-        pieceCreator.put("P", Pawn::new);
-        pieceCreator.put(".", EmptyPiece::new);
+        whitePieceCreator = initWhitePieceCreator();
+        blackPieceCreator = initBlackPieceCreator();
     }
 
     private StringBoardFactory(List<String> stringChessBoard) {
         this.stringChessBoard = stringChessBoard;
+    }
+
+    private static Map<String, Supplier<? extends Piece>> initWhitePieceCreator() {
+        Map<String, Supplier<? extends Piece>> pieceCreator = new HashMap<>();
+
+        pieceCreator.put("r", () -> new Rook(WHITE));
+        pieceCreator.put("n", () -> new Knight(WHITE));
+        pieceCreator.put("b", () -> new Bishop(WHITE));
+        pieceCreator.put("q", () -> new Queen(WHITE));
+        pieceCreator.put("k", () -> new King(WHITE));
+        pieceCreator.put("p", () -> new Pawn(WHITE));
+
+        return pieceCreator;
+    }
+
+    private static Map<String, Supplier<? extends Piece>> initBlackPieceCreator() {
+        Map<String, Supplier<? extends Piece>> pieceCreator = new HashMap<>();
+
+        pieceCreator.put("R", () -> new Rook(BLACK));
+        pieceCreator.put("N", () -> new Knight(BLACK));
+        pieceCreator.put("B", () -> new Bishop(BLACK));
+        pieceCreator.put("Q", () -> new Queen(BLACK));
+        pieceCreator.put("K", () -> new King(BLACK));
+        pieceCreator.put("P", () -> new Pawn(BLACK));
+
+        return pieceCreator;
     }
 
     public static BoardFactory getInstance(List<String> stringChessBoard) {
@@ -76,7 +103,9 @@ public class StringBoardFactory extends BoardFactory {
         boolean noneMatchSymbol = stringChessBoard
                 .stream()
                 .flatMap(file -> Arrays.stream(file.split("")))
-                .anyMatch(symbol -> !PIECE_SYMBOLS.contains(symbol));
+                .map(String::toUpperCase)
+                .anyMatch(pieceSymbol -> !UPPER_CASE_PIECE_SYMBOLS.contains(pieceSymbol) &&
+                        !pieceSymbol.equals(EMPTY_SPACE_SYMBOL));
 
         if (noneMatchSymbol) {
             throw new IllegalArgumentException(NOW_ALLOWED_SYMBOL_MESSAGE);
@@ -101,16 +130,31 @@ public class StringBoardFactory extends BoardFactory {
 
     private void makeBoardForFile(Map<Position, Piece> board, int rankCount) {
 
-        String stringRank = stringChessBoard.get(rankCount - 1);
+        String stringRank = stringChessBoard.get(BOARD_RANK_SIZE - rankCount);
 
         for (int fileCount = 1; fileCount <= stringRank.length(); fileCount++) {
 
-            String square = String.valueOf(stringRank.charAt(fileCount - 1));
-
-            Piece createdPiece = pieceCreator.get(square).apply(PieceTeam.BLACK);
+            String pieceSymbol = String.valueOf(stringRank.charAt(fileCount - 1));
+            Piece createdPiece = createPiece(pieceSymbol);
             Position createdPosition = Positions.findPositionBy(fileCount, rankCount);
 
             board.put(createdPosition, createdPiece);
         }
+    }
+
+    private Piece createPiece(String pieceSymbol) {
+        if (pieceSymbol.equals(EMPTY_SPACE_SYMBOL)) {
+            return emptySpaceCreator.get();
+        }
+
+        if (isUpperCase(pieceSymbol)) {
+            return blackPieceCreator.get(pieceSymbol).get();
+        }
+
+        return whitePieceCreator.get(pieceSymbol).get();
+    }
+
+    private boolean isUpperCase(String pieceSymbol) {
+        return UPPER_CASE_PIECE_SYMBOLS.contains(pieceSymbol);
     }
 }

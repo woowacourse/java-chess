@@ -41,4 +41,11 @@ public class Queen extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String toString() {
+        return "Queen{" +
+                "pieceTeam=" + pieceTeam +
+                '}';
+    }
 }

@@ -36,4 +36,9 @@ public class Knight extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String toString() {
+        return "Knight{}";
+    }
 }

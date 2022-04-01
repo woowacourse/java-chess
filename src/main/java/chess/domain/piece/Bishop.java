@@ -37,4 +37,10 @@ public class Bishop extends Piece {
         return SCORE;
     }
 
+    @Override
+    public String toString() {
+        return "Bishop{" +
+                "pieceTeam=" + pieceTeam +
+                '}';
+    }
 }

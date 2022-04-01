@@ -45,4 +45,9 @@ public class Pawn extends Piece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public String toString() {
+        return "Pawn{}";
+    }
 }

@@ -7,7 +7,7 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Positions;
 import chess.domain.board.position.Rank;
-import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.EmptySpace;
 import chess.domain.piece.Piece;
 import chess.turndecider.GameFlow;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class ChessBoard {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
-    private static final EmptyPiece EMPTY_PIECE = new EmptyPiece(EMPTY);
+    private static final EmptySpace EMPTY_PIECE = new EmptySpace(EMPTY);
 
     private final Map<Position, Piece> board;
     private final GameFlow gameFlow;

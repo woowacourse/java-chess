@@ -62,16 +62,25 @@ public abstract class Piece {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
-        Piece piece = (Piece)o;
+        }
+        Piece piece = (Piece) o;
         return pieceTeam == piece.pieceTeam;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(pieceTeam);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "pieceTeam=" + pieceTeam +
+                '}';
     }
 }
