@@ -39,28 +39,36 @@ public enum Direction {
         final var fileDifference = to.getFileOrder() - from.getFileOrder();
         final var rankDifference = to.getRankNumber() - from.getRankNumber();
 
-        return Arrays.stream(values())
-                .filter(direction -> direction.fileGrowth == fileDifference && direction.rankGrowth == rankDifference)
-                .findFirst()
-                .orElseGet(() -> getGrowthDirection(from, to));
+        if (isLine(fileDifference, rankDifference)) {
+            return of(calculateLineDifference(fileDifference), calculateLineDifference(rankDifference));
+        }
+        return of(fileDifference, rankDifference);
     }
 
-    private static Direction getGrowthDirection(final Position from, final Position to) {
-        final var fileDifference = calculateDifference(from.getFileOrder(), to.getFileOrder());
-        final var rankDifference = calculateDifference(from.getRankNumber(), to.getRankNumber());
-
-        return Arrays.stream(values())
-                .filter(direction -> direction.fileGrowth == fileDifference && direction.rankGrowth == rankDifference)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("정의되지 않은 방향입니다."));
+    private static boolean isLine(final int fileDifference, final int rankDifference) {
+        return isDiagonal(fileDifference, rankDifference) || isHorizontalOrVertical(fileDifference, rankDifference);
     }
 
-    private static int calculateDifference(final int from, final int to) {
-        final var difference = to - from;
+    private static boolean isDiagonal(final int fileDifference, final int rankDifference) {
+        return Math.abs(fileDifference) == Math.abs(rankDifference);
+    }
+
+    private static boolean isHorizontalOrVertical(final int fileDifference, final int rankDifference) {
+        return fileDifference == 0 || rankDifference == 0;
+    }
+
+    private static int calculateLineDifference(final int difference) {
         if (difference == 0) {
             return difference;
         }
         return difference / Math.abs(difference);
+    }
+
+    private static Direction of(final int fileDifference, final int rankDifference) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.fileGrowth == fileDifference && direction.rankGrowth == rankDifference)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("정의되지 않은 방향입니다."));
     }
 
     public static List<Direction> PawnDirection(final Color color) {
