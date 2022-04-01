@@ -1,6 +1,6 @@
-package chess.console.board;
+package chess.domain.board;
 
-import chess.console.piece.Piece;
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public final class BoardFactory {

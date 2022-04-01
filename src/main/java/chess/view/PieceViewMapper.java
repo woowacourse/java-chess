@@ -1,13 +1,13 @@
-package chess.console.view;
+package chess.view;
 
-import chess.console.piece.Bishop;
-import chess.console.piece.Color;
-import chess.console.piece.King;
-import chess.console.piece.Knight;
-import chess.console.piece.Pawn;
-import chess.console.piece.Piece;
-import chess.console.piece.Queen;
-import chess.console.piece.Rook;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

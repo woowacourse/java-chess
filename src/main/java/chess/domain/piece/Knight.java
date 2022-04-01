@@ -1,4 +1,4 @@
-package chess.console.piece;
+package chess.domain.piece;
 
 public final class Knight extends Piece {
     public Knight(Color color) {

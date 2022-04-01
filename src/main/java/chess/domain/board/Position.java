@@ -1,4 +1,4 @@
-package chess.console.board;
+package chess.domain.board;
 
 import java.util.Objects;
 
@@ -22,6 +22,14 @@ public final class Position {
 
     public static Position of(File file, Rank rank) {
         return new Position(file, rank);
+    }
+
+    public int dx(Position another) {
+        return file.dx(another.file);
+    }
+
+    public int dy(Position another) {
+        return rank.dy(another.rank);
     }
 
     @Override

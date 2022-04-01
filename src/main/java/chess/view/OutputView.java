@@ -1,10 +1,10 @@
-package chess.console.view;
+package chess.view;
 
-import chess.console.board.Board;
-import chess.console.board.File;
-import chess.console.board.Position;
-import chess.console.board.Rank;
-import chess.console.piece.Piece;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -30,11 +30,9 @@ public final class OutputView {
         System.out.printf(START_MESSAGE);
     }
 
-    public static void printBoard(Board board) {
-        final Map<Position, Piece> boardData = board.getBoard();
-
+    public static void printBoard(Map<Position, Piece> board) {
         for (int i = 0; i < POSITIONS_ORDERED.size(); i++) {
-            System.out.print(PieceViewMapper.parse(boardData.get(POSITIONS_ORDERED.get(i))));
+            System.out.print(PieceViewMapper.parse(board.get(POSITIONS_ORDERED.get(i))));
             addLineBreakEveryFileEnded(i);
         }
     }
@@ -43,5 +41,15 @@ public final class OutputView {
         if ((number + 1) % 8 == 0) {
             System.out.println();
         }
+    }
+
+    public static void printScore(Map<Color, Double> score) {
+        System.out.println("> 점수");
+        System.out.println("> 백 : ");
+        System.out.println("> 흑 : ");
+    }
+
+    public static void printFinished() {
+        System.out.println("게임이 종료되었습니다");
     }
 }

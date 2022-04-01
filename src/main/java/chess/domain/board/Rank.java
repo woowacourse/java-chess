@@ -1,4 +1,4 @@
-package chess.console.board;
+package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -28,5 +28,9 @@ public enum Rank {
 
     public static Rank from(String input) {
         return from(Integer.parseInt(input.trim()));
+    }
+
+    public int dy(Rank another) {
+        return another.rankNumber - this.rankNumber;
     }
 }

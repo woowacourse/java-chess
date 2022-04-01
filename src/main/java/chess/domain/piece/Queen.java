@@ -1,4 +1,4 @@
-package chess.console.piece;
+package chess.domain.piece;
 
 public final class Queen extends Piece {
     public Queen(Color color) {
