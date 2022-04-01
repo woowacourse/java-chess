@@ -53,7 +53,7 @@ public class GameController {
     public void printGameOver(Game game) {
         outputView.printGameOverInstructions();
         while (inputView.requestValidStatusOrEndInput()) {
-            GameResult gameResult = game.result();
+            GameResult gameResult = game.getResult();
             outputView.printStatus(gameResult);
         }
     }

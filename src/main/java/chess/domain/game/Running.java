@@ -36,7 +36,7 @@ abstract class Running extends Started {
     protected abstract Game continueGame();
 
     @Override
-    public final GameResult result() {
+    public final GameResult getResult() {
         throw new UnsupportedOperationException("아직 종료되지 않은 게임입니다.");
     }
 

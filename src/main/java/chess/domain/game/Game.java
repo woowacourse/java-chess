@@ -11,7 +11,7 @@ public interface Game {
 
     boolean isEnd();
 
-    GameResult result();
+    GameResult getResult();
 
     BoardViewDto boardView();
 }
