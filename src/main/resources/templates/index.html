@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title> 체스 게임 </title>
+    <link rel="stylesheet" href="/src/index.css">
+    <script src="/src/index.js"></script>
 </head>
 <body>
-Hello World!!
+<div ip="app">
+    <h1> 체스 게임 </h1>
+    <section id="chess-ui">
+        <table id="chess-board">
+
+        </table>
+    </section>
+    <section id="command">
+        <form action="/start" method="get" enctype="text/plain">
+            <input type="submit" value="start">
+        </form>
+        <form action="/end" method="get" enctype="text/plain">
+            <input type="submit" value="end">
+        </form>
+        <form action="/move" method="post" enctype="text/plain">
+            <label for="move_src"> 출발 </label>
+            <input type="text" name="source" id="move_src">
+            <label for="move_dest"> 출발 </label>
+            <input type="text" name="source" id="move_dest">
+            <input type="submit" value="move">
+        </form>
+        <form action="/status" method="get" enctype="text/plain">
+            <input type="submit" value="status">
+        </form>
+    </section>
+</div>
+
 </body>
 </html>
