@@ -25,25 +25,36 @@ public class Pawn extends Piece {
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         Map<Direction, List<Position>> movable = new EnumMap<>(Direction.class);
-        Direction pawnDirectionByColor = Direction.pawnDirection(color);
-        movable.put(pawnDirectionByColor, new ArrayList<>());
-        putFirstMovablePositionByDirection(movable, position, pawnDirectionByColor);
+        movable.put(Direction.pawnDirection(color), new ArrayList<>());
+        putMovablePositions(movable, position);
         return movable;
     }
 
-    private void putFirstMovablePositionByDirection(Map<Direction, List<Position>> movable, Position position,
-                                                    Direction direction) {
-        putMovablePositionByDirection(movable, position, direction);
-        putMovablePositionByDirection(movable, position.toDirection(direction), direction);
-    }
-
-    private void putMovablePositionByDirection(Map<Direction, List<Position>> movable, Position position,
-                                               Direction direction) {
-        Position nextPosition = position.toDirection(direction);
-        if (nextPosition == position) {
+    private void putMovablePositions(Map<Direction, List<Position>> movable, Position position) {
+        Position nextPosition = position.toDirection(Direction.pawnDirection(color));
+        if (!hasMovablePosition(position, nextPosition)) {
             return;
         }
-        movable.get(direction).add(nextPosition);
+        movable.get(Direction.pawnDirection(color)).add(nextPosition);
+        if (isFirstMove(position)) {
+            putMovablePositions(movable, nextPosition);
+        }
+    }
+
+    private boolean hasMovablePosition(Position position, Position nextPosition) {
+        return nextPosition != position;
+    }
+
+    private boolean isFirstMove(Position position) {
+        return isBlackFirstMovePawn(position) || isWhiteFirstMovePawn(position);
+    }
+
+    private boolean isBlackFirstMovePawn(Position position) {
+        return color == Color.BLACK && BLACK_INIT_LOCATIONS.contains(position);
+    }
+
+    private boolean isWhiteFirstMovePawn(Position position) {
+        return color == Color.WHITE && WHITE_INIT_LOCATIONS.contains(position);
     }
 
     @Override

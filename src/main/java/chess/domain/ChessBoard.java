@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceName;
 import chess.domain.piece.generator.PiecesGenerator;
@@ -18,22 +17,13 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private static final int SECOND_MOVE_INDEX = 1;
-    private static final int SECOND_MOVE_SIZE = 2;
     private static final int RUNNING_KING_COUNT = 2;
 
     private final Map<Position, Piece> pieces;
-    private final List<Position> firstPositionsOfPawn = new ArrayList<>();
 
     public ChessBoard(PiecesGenerator piecesGenerator) {
         this.pieces = piecesGenerator.generate();
-        initFirstPositionsOfPawn();
         fillEmptyPieceIfAbsent();
-    }
-
-    private void initFirstPositionsOfPawn() {
-        firstPositionsOfPawn.addAll(Pawn.BLACK_INIT_LOCATIONS);
-        firstPositionsOfPawn.addAll(Pawn.WHITE_INIT_LOCATIONS);
     }
 
     private void fillEmptyPieceIfAbsent() {
@@ -53,28 +43,9 @@ public class ChessBoard {
         Position to = gameCommand.getToPosition();
         Piece piece = selectPiece(from);
         Map<Direction, List<Position>> movablePositions = piece.getMovablePositions(from);
-        refinePawnMovablePositions(from, piece, movablePositions);
         List<Position> finalMovablePositions = generateMovablePositionsWithBlock(from, piece, movablePositions);
         checkMovable(to, finalMovablePositions);
         movePiece(from, to, piece);
-    }
-
-    private void refinePawnMovablePositions(Position from, Piece piece,
-                                            Map<Direction, List<Position>> movablePositions) {
-        if (!isFirstMovePawn(from) && piece.isSamePieceName(PieceName.PAWN)) {
-            removeSecondMove(piece, movablePositions);
-        }
-    }
-
-    public boolean isFirstMovePawn(Position position) {
-        return firstPositionsOfPawn.contains(position);
-    }
-
-    private void removeSecondMove(Piece piece, Map<Direction, List<Position>> movablePositions) {
-        List<Position> positions = movablePositions.get(Direction.pawnDirection(piece.getColor()));
-        if (positions.size() == SECOND_MOVE_SIZE) {
-            positions.remove(SECOND_MOVE_INDEX);
-        }
     }
 
     private void checkMovable(Position to, List<Position> finalMovablePositions) {
@@ -86,9 +57,6 @@ public class ChessBoard {
     private void movePiece(Position from, Position to, Piece piece) {
         pieces.put(to, piece);
         pieces.put(from, EmptyPiece.getInstance());
-        if (piece.isSamePieceName(PieceName.PAWN)) {
-            firstPositionsOfPawn.remove(from);
-        }
     }
 
     public List<Position> generateMovablePositionsWithBlock(Position nowPosition, Piece piece,
