@@ -27,7 +27,8 @@ public class ChessGame {
         return chessBoard.isExistKing();
     }
 
-    public String getWinTeam(Map<Team, Double> teamScores) {
+    public String getWinTeam() {
+        Map<Team, Double> teamScores = calculateResult();
         return chessBoard.findWinTeam(teamScores);
     }
 
@@ -39,6 +40,16 @@ public class ChessGame {
         Map<Position, Piece> cells = chessBoard.getCells();
 
         return Collections.unmodifiableSet(cells.keySet());
+    }
+
+    public boolean isEnd() {
+        return state.isEnd();
+    }
+
+    public String getSymbolByPosition(Position position) {
+        Piece piece = chessBoard.getPieceByPosition(position);
+
+        return piece.getSymbol();
     }
 
     public Map<Team, Double> calculateResult() {
@@ -54,15 +65,5 @@ public class ChessGame {
 
     private double calculateScore(Team team) {
         return chessBoard.calculateByTeam(team);
-    }
-
-    public boolean isEnd() {
-        return state.isEnd();
-    }
-
-    public String getSymbolByPosition(Position position) {
-        Piece piece = chessBoard.getPieceByPosition(position);
-
-        return piece.getSymbol();
     }
 }

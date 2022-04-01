@@ -100,9 +100,7 @@ public class ChessController {
     }
 
     private void showWinTeam(ChessGame chessGame) {
-        Map<Team, Double> teamScores = chessGame.calculateResult();
-
-        String winTeamName = chessGame.getWinTeam(teamScores);
+        String winTeamName = chessGame.getWinTeam();
 
         outputView.printWinTeam(winTeamName);
 
