@@ -63,6 +63,10 @@ public class ChessGame {
         gameSwitch.turnOff();
     }
 
+    public String getPieceName(final String rawPosition) {
+        return board.getPiece(Position.valueOf(rawPosition)).getName();
+    }
+
     public Board getBoard() {
         return board;
     }

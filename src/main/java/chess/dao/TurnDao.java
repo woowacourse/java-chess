@@ -16,4 +16,15 @@ public class TurnDao {
         }
         return null;
     }
+
+    public void updateTurn(final String currentTurn, final String previousTurn) {
+        String sql = "update turn set team = ? where team = ?";
+        try (PreparedStatement preparedStatement = JdbcTemplate.getConnection().prepareStatement(sql)){
+            preparedStatement.setString(1, currentTurn);
+            preparedStatement.setString(2, previousTurn);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

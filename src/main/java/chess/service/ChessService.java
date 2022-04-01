@@ -6,7 +6,6 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
-import chess.domain.game.Turn;
 import chess.domain.piece.Team;
 import chess.dto.ChessDto;
 import chess.dto.MoveDto;
@@ -48,13 +47,20 @@ public class ChessService {
     }
 
     public ChessDto move(final MoveDto moveDto) {
-        Board board = BoardFactory.createBoard(boardDao.getBoard());
-        ChessGame chessGame = new ChessGame(board);
-        chessGame.move(moveDto.getSource(), moveDto.getTarget());
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()));
+        String sourcePosition = moveDto.getSource();
+        String targetPosition = moveDto.getTarget();
+        chessGame.move(sourcePosition, targetPosition);
 
-        // Boarddao에 포지션 업데이트 (왕이 죽으면 chessGame은 종료됨)
-        // Turndao 턴 업데이트
+        boardDao.updatePosition(sourcePosition, chessGame.getPieceName(sourcePosition));
+        boardDao.updatePosition(targetPosition, chessGame.getPieceName(targetPosition));
+        Team turn = chessGame.getCurrentTurn();
+        Team previous = turn.oppositeTeam();
 
-        return ChessDto.of(chessGame.isOn(),chessGame.getBoard());
+        String currentTurn = turn.getValue();
+        turnDao.updateTurn(currentTurn, previous.getValue());
+
+        return ChessDto.of(chessGame.isOn(),chessGame.getBoard(), currentTurn);
     }
+
 }
