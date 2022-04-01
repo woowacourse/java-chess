@@ -14,7 +14,7 @@ public abstract class Piece {
     private static final int COLUMN = 1;
 
     private final double score;
-    protected Color color;
+    protected final Color color;
 
     public Piece(double score, Color color) {
         this.score = score;
@@ -37,14 +37,14 @@ public abstract class Piece {
         return source.findPossiblePosition(direction).isSamePosition(target);
     }
 
-    public static boolean isMovableLine(List<Position> positions, List<List<Integer>> move,
+    public static boolean isMovableLine(List<Position> positions, List<Direction> move,
                                                  Map<Position, Piece> board) {
         Position source = positions.get(SOURCE);
         Position target = positions.get(TARGET);
 
         return move.stream()
                 .anyMatch(moveUnit -> isMovablePositionByRecursion(source, target,
-                        List.of(moveUnit.get(ROW), moveUnit.get(COLUMN)), board));
+                        List.of(moveUnit.row(), moveUnit.column()), board));
     }
 
     private static boolean isMovablePositionByRecursion(Position source, Position target, List<Integer> moveUnit,

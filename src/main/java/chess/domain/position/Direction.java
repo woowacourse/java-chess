@@ -50,6 +50,14 @@ public enum Direction {
                 ONE_UP_R_DOWN_C, ONE_DOWN_R_UP_C, ONE_DOWN_R_DOWN_C);
     }
 
+    public static List<Direction> diagonal() {
+        return List.of(ONE_UP_R_UP_C, ONE_UP_R_DOWN_C, ONE_DOWN_R_UP_C, ONE_DOWN_R_DOWN_C);
+    }
+
+    public static List<Direction> straightLine() {
+        return List.of(ONE_UP_R, ONE_DOWN_R, ONE_UP_C, ONE_DOWN_C);
+    }
+
     public static List<Direction> pawnWhiteDiagonal() {
         return List.of(ONE_DOWN_R_DOWN_C, ONE_DOWN_R_UP_C);
     }
@@ -72,5 +80,13 @@ public enum Direction {
 
     public static List<Direction> pawnBlackTurn() {
         return List.of(ONE_UP_R);
+    }
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
     }
 }
