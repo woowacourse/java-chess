@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.strategy.ContinuousMovingStrategy;
@@ -38,5 +37,10 @@ public class Bishop extends ChessPiece {
     @Override
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return movingStrategy.makePath(sourcePosition, targetPosition);
+    }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        return movingStrategy.isKillMovement(sourcePosition, targetPosition);
     }
 }

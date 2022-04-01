@@ -16,44 +16,52 @@ public class Pawn extends ChessPiece {
     static {
         List<ChessBoardPosition> blackTeamAbleMovement = List.of(ChessBoardPosition.ofDirection(0, -1));
         List<ChessBoardPosition> whiteTeamAbleMovement = List.of(ChessBoardPosition.ofDirection(0, 1));
+        List<ChessBoardPosition> blackTeamKillMovement = List.of(
+                ChessBoardPosition.ofDirection(-1, 1),
+                ChessBoardPosition.ofDirection(-1, -1));
+        List<ChessBoardPosition> whiteTeamKillMovement = List.of(
+                ChessBoardPosition.ofDirection(1, 1),
+                ChessBoardPosition.ofDirection(1, -1));
         blackTeamInitialPosition.put(ChessBoardPosition.of(1, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(2, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(3, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(4, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(5, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(6, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(7, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
         blackTeamInitialPosition.put(ChessBoardPosition.of(8, 7)
-                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList()));
+                , new Pawn(Team.BLACK, blackTeamAbleMovement, Collections.emptyList(), blackTeamKillMovement));
 
         whiteTeamInitialPosition.put(ChessBoardPosition.of(1, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(2, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(3, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(4, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(5, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(6, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(7, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
         whiteTeamInitialPosition.put(ChessBoardPosition.of(8, 2)
-                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement));
+                , new Pawn(Team.WHITE, Collections.emptyList(), whiteTeamAbleMovement, whiteTeamKillMovement));
     }
 
-    Pawn(Team team
-            , List<ChessBoardPosition> blackTeamAbleMovement, List<ChessBoardPosition> whiteTeamAbleMovement) {
-        super(team, SCORE, new PawnMovingStrategy(blackTeamAbleMovement, whiteTeamAbleMovement));
+    Pawn(Team team,
+         List<ChessBoardPosition> blackTeamAbleMovement,
+         List<ChessBoardPosition> whiteTeamAbleMovement,
+         List<ChessBoardPosition> killMovement) {
+        super(team, SCORE, new PawnMovingStrategy(blackTeamAbleMovement, whiteTeamAbleMovement, killMovement));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
@@ -69,6 +77,11 @@ public class Pawn extends ChessPiece {
             return movingStrategy.makePath(sourcePosition, targetPosition);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        return movingStrategy.isKillMovement(sourcePosition, targetPosition);
     }
 
     private boolean isInitialPosition(ChessBoardPosition sourcePosition) {

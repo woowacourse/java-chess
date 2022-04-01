@@ -24,6 +24,13 @@ public class ContinuousMovingStrategy implements MovingStrategy {
         return path;
     }
 
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessBoardPosition direction = targetPosition.minus(sourcePosition);
+        return ableMovement.stream()
+                .anyMatch(it -> it.equals(direction));
+    }
+
     private ChessBoardPosition getUnitMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessBoardPosition direction = targetPosition.minus(sourcePosition);
         return ableMovement.stream()

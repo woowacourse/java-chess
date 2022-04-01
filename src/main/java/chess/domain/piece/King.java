@@ -43,4 +43,9 @@ public class King extends ChessPiece {
     public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return movingStrategy.makePath(sourcePosition, targetPosition);
     }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        return movingStrategy.isKillMovement(sourcePosition, targetPosition);
+    }
 }

@@ -22,4 +22,6 @@ public abstract class ChessPiece {
     public boolean isSameTeam(Team other) {
         return this.team == other;
     }
+
+    public abstract boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
 }

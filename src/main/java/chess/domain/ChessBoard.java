@@ -17,6 +17,7 @@ public class ChessBoard {
     private static final String OBSTACLE_IN_PATH_EXCEPTION = "[ERROR] 장애물이 경로에 존재합니다.";
     private static final String UNVALID_SOURCE_POSITION_EXCEPTION = "[ERROR] sourcePosition에 체스 기물이 없습니다.";
     private static final String SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION = "[ERROR] targetPosition에 같은 팀 체스 기물이 있습니다.";
+    private static final String IMPOSSIBLE_TO_KILL_EXCEPTION = "[ERROR] 잡을 수 없는 위치에 있는 말입니다.";
     private final Map<ChessBoardPosition, ChessPiece> mapInformation;
     private Team turn;
 
@@ -55,7 +56,7 @@ public class ChessBoard {
         isChessPieceSameTeam(chessPiece);
         isObstacleExist(chessPiece, sourcePosition, targetPosition);
         isTargetPositionOccupiedBySameTeam(targetPosition);
-        killEnemyInTargetPositionIfExist(targetPosition);
+        killEnemyInTargetPositionIfExist(sourcePosition, targetPosition);
         moveChessPiece(chessPiece, sourcePosition, targetPosition);
         nextTurn();
     }
@@ -73,10 +74,13 @@ public class ChessBoard {
         mapInformation.put(targetPosition, chessPiece);
     }
 
-    private void killEnemyInTargetPositionIfExist(ChessBoardPosition targetPosition) {
+    private void killEnemyInTargetPositionIfExist(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessPiece chessPiece = pickChessPiece(targetPosition);
         if (Objects.isNull(chessPiece)) {
             return;
+        }
+        if (!chessPiece.isKillMovement(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException(IMPOSSIBLE_TO_KILL_EXCEPTION);
         }
         mapInformation.remove(targetPosition, chessPiece);
     }
