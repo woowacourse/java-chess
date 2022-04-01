@@ -42,9 +42,9 @@ public abstract class Piece {
 
     public abstract void capture(Position beforePosition, Position afterPosition, Consumer<Piece> moveFunction);
 
-    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
-
     public abstract double getScore();
 
     public abstract String getSymbol();
+
+    protected abstract boolean canMove(Position beforePosition, Position afterPosition);
 }
