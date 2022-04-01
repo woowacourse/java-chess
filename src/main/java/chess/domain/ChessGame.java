@@ -1,10 +1,12 @@
 package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
+import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -45,5 +47,9 @@ public class ChessGame {
 
     public boolean canPlay() {
         return !gameStatus.isEnd();
+    }
+
+    public Map<Position, ChessPiece> findAllPiece() {
+        return chessBoard.findAllPiece();
     }
 }
