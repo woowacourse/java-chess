@@ -150,4 +150,8 @@ public class Board {
                 .filter(piece -> piece.isPieceType(PieceType.PAWN))
                 .count();
     }
+
+    public Map<Position, AbstractPiece> getValue() {
+        return new HashMap<>(value);
+    }
 }
