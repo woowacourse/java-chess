@@ -66,6 +66,10 @@ public final class Command {
         return command.equals(STATUS);
     }
 
+    public boolean isEnd() {
+        return command.equals(END);
+    }
+
     public List<Position> makeSourceTargetPosition() {
         List<String> move = Arrays.stream(command.split(MOVE_DELIMITER))
                 .collect(Collectors.toList());
@@ -104,9 +108,5 @@ public final class Command {
 
     private int inputToRank(char input) {
         return Character.getNumericValue(input);
-    }
-
-    public boolean isEnd() {
-        return command.equals(END);
     }
 }
