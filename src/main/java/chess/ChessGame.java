@@ -2,13 +2,10 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.BoardInitializer;
-import chess.domain.postion.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
 
 public final class ChessGame {
 
@@ -33,21 +30,13 @@ public final class ChessGame {
     }
 
     private State progress(Command command, State state) {
-        if (command.isStart()) {
-            return state.start();
+        if (command.isStatus()) {
+            OutputView.printStatus(state.status());
         }
 
-        if (command.isMove()) {
-            final List<Position> positions = command.makeSourceTargetPosition();
-            return state.changeTurn(positions);
-        }
+        final State newState = CommandChecker.check(command, state);
 
-        if (command.isEnd()) {
-            return state.end();
-        }
-
-        OutputView.printStatus(state.status());
-        return state;
+        return newState;
     }
 
     private void printBoard(final Command command, final State state) {
