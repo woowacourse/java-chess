@@ -28,7 +28,7 @@ body {
     align-items: center;
 }
 
-.buttons__container > a {
+.buttons__container > * {
     border: 1px solid gray;
     border-radius: 10px;
     padding: 7px;
@@ -37,16 +37,18 @@ body {
     background-color: #3a3a3a;
     color: white;
     text-decoration: none;
+
+    cursor: pointer;
 }
 
-.buttons__container > a:active {
+.buttons__container > *:active {
     background-color: #5d5c5c;
 }
 
-.buttons__container > a:hover {
+.buttons__container > *:hover {
     background-color: black;
 }
 
-.buttons__container > a:first-child {
+.buttons__container > *:first-child {
     margin-right: 10px;
 }

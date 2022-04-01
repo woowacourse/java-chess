@@ -1,9 +1,11 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.WebController;
+import chess.model.NewGameModel;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -14,7 +16,11 @@ public class WebApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
         get("/", (req, res) -> render(null, "home.html"));
-        get("/new-game", (req, res) -> render(controller.initGame(), "new-game.html"));
+        post("/new-game", (req, res) -> {
+            res.type("application/json");
+            NewGameModel newGameModel = controller.initGame();
+            return newGameModel.toJson();
+        });
         get("/game/:id", (req, res) -> {
             int gameId = Integer.parseInt(req.params("id"));
             return render(controller.findGame(gameId), "game.html");
