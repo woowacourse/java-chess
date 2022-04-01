@@ -10,6 +10,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
 import chess.game.TotalScore;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,9 +62,9 @@ public class Board {
         if (hasPieceInPosition(targetPosition)) {
             removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
         }
-
-        pieces.set(pieces.indexOf(sourcePiece), movedPiece);
-        return new Board(pieces, currentTurnTeamColor.nextTurn());
+        List<Piece> movedPieces = new ArrayList<>(pieces);
+        movedPieces.set(movedPieces.indexOf(sourcePiece), movedPiece);
+        return new Board(movedPieces, currentTurnTeamColor.nextTurn());
     }
 
     private void validateTurn(final Piece sourcePiece) {

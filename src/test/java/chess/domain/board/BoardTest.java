@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.vo.TeamColor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,5 +69,20 @@ class BoardTest {
         double actual = board.getTotalPoint(teamColor);
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("기물에 하나의 킹만 있는지 반환한다.")
+    void hasOneKing() {
+        // given
+        Board boardHasTwoKing = new Board();
+        Board boardHasOneKing = boardHasTwoKing.movePiece(Position.from("e2"), Position.from("e4"))
+            .movePiece(Position.from("f7"), Position.from("f6"))
+            .movePiece(Position.from("d1"), Position.from("h5"))
+            .movePiece(Position.from("f6"), Position.from("f5"))
+            .movePiece(Position.from("h5"), Position.from("e8"));
+        // when, then
+        Assertions.assertThat(boardHasTwoKing.hasOneKing()).isFalse();
+        assertThat(boardHasOneKing.hasOneKing()).isTrue();
     }
 }

@@ -1,19 +1,17 @@
 package chess;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.Rank.ONE;
-
-import java.util.Objects;
-import org.assertj.core.api.Assertions;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 public class MapKeyTest {
     @Test
     void mapKeyTest() {
-
-        int key1 = Objects.hash(A, ONE);
-        int key2 = Objects.hash(A, ONE);
-
-        Assertions.assertThat(key1).isEqualTo(key2);
+        Position position = Position.of(File.A, Rank.ONE);
+        System.out.println(position.hashCode());
+        Object[] objects = {Rank.ONE, File.A};
+        System.out.println(Arrays.hashCode(objects));
     }
 }
