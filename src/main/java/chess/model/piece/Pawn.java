@@ -3,6 +3,7 @@ package chess.model.piece;
 import chess.model.*;
 import chess.model.strategy.PawnMoveStrategy;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -45,8 +46,8 @@ public class Pawn extends Piece {
     @Override
     public List<Position> getIntervalPosition(Position source, Position target) {
         if (source.isTwoStepAway(target)) {
-            return List.of(target, source.getUpVerticalPosition(team.getForwardDirection()));
+            return List.of(source.getUpVerticalPosition(team.getForwardDirection()));
         }
-        return List.of(target);
+        return Collections.emptyList();
     }
 }

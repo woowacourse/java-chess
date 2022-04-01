@@ -121,12 +121,12 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("폰은 source와 target사이에 말들이 없다.")
+    @DisplayName("폰은 source와 target사이에 말의 수 반환")
     void getIntervalPositionTest() {
         Piece pawn = new Pawn(Team.BLACK);
         List<Position> intervalPosition = pawn.getIntervalPosition(Position.from("a8"), Position.from("a6"));
 
-        assertThat(intervalPosition.size()).isEqualTo(2);
+        assertThat(intervalPosition.size()).isEqualTo(1);
     }
 
     @Test
