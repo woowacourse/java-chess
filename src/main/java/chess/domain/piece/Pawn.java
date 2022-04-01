@@ -12,6 +12,7 @@ public final class Pawn extends AbstractPiece {
     private static final String NO_MOVE_MESSAGE_DIAGONAL = "대각선 방향에 상대 기물이 없으면 이동할 수 없습니다.";
     private static final int INIT_MAX_DISTANCE = 2;
     private static final double SCORE = 1;
+    private static final int STRAIGHT_INDEX = 0;
 
     public Pawn(Team team) {
         super(new Name("P"), team);
@@ -25,10 +26,14 @@ public final class Pawn extends AbstractPiece {
         if (Direction.isInvalidDistance(from, to, directions)) {
             validateInitDirection(team, from, to, directions);
         }
-        if (isDiagonal(nowDirection, directions) && targetPiece.isSameTeamOrEmpty(team)) {
+        validateDiagonal(targetPiece, nowDirection);
+        return nowDirection != pawnStraightDirection();
+    }
+
+    private void validateDiagonal(Piece targetPiece, Direction nowDirection) {
+        if (isDiagonal(nowDirection, pawnDiagonalDirection()) && targetPiece.isSameTeamOrEmpty(team)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE_DIAGONAL);
         }
-        return nowDirection != Direction.TOP && nowDirection != Direction.DOWN;
     }
 
     public List<Direction> pawnDirection() {
@@ -36,6 +41,14 @@ public final class Pawn extends AbstractPiece {
             return List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
         }
         return List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
+    }
+
+    private Direction pawnStraightDirection() {
+        return pawnDirection().get(STRAIGHT_INDEX);
+    }
+
+    private List<Direction> pawnDiagonalDirection() {
+        return pawnDirection().subList(STRAIGHT_INDEX + 1, pawnDirection().size());
     }
 
     private void validateInitDirection(Team team, Position from, Position to, List<Direction> directions) {
@@ -56,7 +69,7 @@ public final class Pawn extends AbstractPiece {
     }
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {
-        return now == directions.get(1) || now == directions.get(2);
+        return directions.contains(now);
     }
 
     @Override
