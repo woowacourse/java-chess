@@ -14,7 +14,7 @@ class ChessGameTest {
     @Test
     @DisplayName("체스판을 생성하는 테스트")
     void createBoard() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
         assertThat(chessGame).isExactlyInstanceOf(ChessGame.class);
@@ -23,7 +23,7 @@ class ChessGameTest {
     @Test
     @DisplayName("왕이 죽었는지를 확인하는 테스트")
     void isKingDead() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
         assertThat(chessGame.isKingDead()).isFalse();
     }
@@ -31,7 +31,7 @@ class ChessGameTest {
     @Test
     @DisplayName("체스판 초기상태에서는 팀상태가 같다.")
     void getTeamScore() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
         assertThat(chessGame.getWhiteTeamScore())
@@ -41,7 +41,7 @@ class ChessGameTest {
     @Test
     @DisplayName("체스판 초기상태에서는 무승부이다.")
     void getWinningTeam() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
         Team winningTeam = chessGame.getWinTeam();

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class BoardFactory {
 
-    public static Map<Position, Piece> create() {
+    public static Board create() {
         Map<Position, Piece> board = new LinkedHashMap<>(64);
         List<String> files = File.getValues();
         board.putAll(initPieces("8", Team.BLACK));
@@ -22,7 +22,7 @@ public class BoardFactory {
         board.putAll(initPawns(files, "2", Team.WHITE));
         board.putAll(initPieces("1", Team.WHITE));
 
-        return board;
+        return new Board(board);
     }
 
     private static Map<Position, Piece> initPieces(String rank, Team team) {

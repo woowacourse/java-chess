@@ -56,7 +56,7 @@ class KnightTest {
     @Test
     @DisplayName("나이트가 target위치로 진행할때 방해물이 있으면 넘어서 진행한다.")
     void moveKnightTest2() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
         String source = "g1";

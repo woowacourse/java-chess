@@ -50,7 +50,7 @@ class RookTest {
     @Test
     @DisplayName("룩의 진행방향에 말이 있으면 예외 처리")
     void moveFailureWhenExistPieceTest() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
         String source = "a8";
         String target = "a5";
@@ -63,7 +63,7 @@ class RookTest {
     @Test
     @DisplayName("룩의 target위치에 아군 말이 있으면 예외 처리")
     void moveFailureTest() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
         String source = "a8";
         String target = "a7";

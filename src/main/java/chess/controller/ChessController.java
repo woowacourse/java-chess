@@ -10,13 +10,17 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+    public void start() {
+        ChessGame chessGame = new ChessGame(BoardFactory.create());
+        OutputView.startGame();
+
+    }
+
     public void run() {
         OutputView.startGame();
         String input = InputView.inputCommand();
         Command command = new Init(input);
-
-        Board board = new Board(BoardFactory.create());
-        ChessGame chessGame = new ChessGame(board);
+        ChessGame chessGame = new ChessGame(BoardFactory.create());
         Turn turn = Turn.init();
         command = command.turnState(input);
         command = progressGame(command, chessGame, turn);

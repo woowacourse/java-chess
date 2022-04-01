@@ -19,7 +19,7 @@ class BoardTest {
     @Test
     @DisplayName("말의 위치를 확인하여 체스판 초기화 테스트")
     void findByPosition() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         Piece piece = board.get(Position.from("a8"));
 
         Rook rook = new Rook(Team.BLACK);
@@ -29,7 +29,7 @@ class BoardTest {
     @Test
     @DisplayName("판에 남은 King의 개수를 반환한다.")
     void countKingTest() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
 
         assertThat(board.countKing()).isEqualTo(2);
     }
@@ -37,7 +37,7 @@ class BoardTest {
     @Test
     @DisplayName("체스판에 남은 말들의 점수를 계산한다. - 폰이 전부 가로로 있을 때")
     void getTotalScoreWhenPawnIsWithHorizontalTest() {
-        Board board = new Board(BoardFactory.create());
+        Board board = BoardFactory.create();
         double totalScore = board.getTotalScore(Team.BLACK);
         assertThat(totalScore).isEqualTo(38D);
     }
