@@ -18,10 +18,7 @@ public class Position {
     }
 
     public static Position from(XAxis xAxis, YAxis yAxis) {
-        return Cache.cache.stream()
-                .filter(position -> position.xAxis == xAxis && position.yAxis == yAxis)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("좌표가 존재하지 않습니다."));
+        return Cache.findByXAxisAndYAxis(xAxis, yAxis);
     }
 
     // TODO: 리팩토링
@@ -158,6 +155,14 @@ public class Position {
                     flatMap(xAxis -> Arrays.stream(YAxis.values())
                             .map(yAxis -> new Position(xAxis, yAxis)))
                     .collect(Collectors.toList());
+        }
+
+        public static Position findByXAxisAndYAxis(XAxis xAxis, YAxis yAxis) {
+            return cache.stream()
+                    .filter(position -> position.xAxis.equals(xAxis))
+                    .filter(position -> position.yAxis.equals(yAxis))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException("좌표가 존재하지 않습니다."));
         }
     }
 }
