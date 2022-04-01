@@ -45,10 +45,9 @@ class BoardTest {
 
         // when
         Optional<Piece> actual = board.find(Position.from(XAxis.A, YAxis.THREE));
-        Optional<Piece> expected = Optional.empty();
 
         // when & then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.isEmpty()).isEqualTo(true);
     }
 
     @DisplayName("이동할 위치가 빈 칸인 경우 말을 이동시킨다.")
