@@ -14,46 +14,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("createPieces")
     @DisplayName("말의 종류에 Pawn이 있다.")
-    void piece_createWith_blackPawn() {
-        Piece piece = new Piece(BLACK, new Pawn());
+    void piece_createWith_blackPawn(Piece piece) {
         assertThat(piece).isInstanceOf(Piece.class);
     }
 
-    @Test
-    @DisplayName("말의 종류에 knight가 있다.")
-    void piece_createWith_whiteKnight() {
-        Piece piece = new Piece(WHITE, new Knight());
-        assertThat(piece).isInstanceOf(Piece.class);
-    }
-
-    @Test
-    @DisplayName("말의 종류에 bishop이 있다.")
-    void piece_createWith_blackBishop() {
-        Piece piece = new Piece(BLACK, new Bishop());
-        assertThat(piece).isInstanceOf(Piece.class);
-    }
-
-    @Test
-    @DisplayName("말의 종류에 rook이 있다.")
-    void piece_createWith_whiteRook() {
-        Piece piece = new Piece(WHITE, new Rook());
-        assertThat(piece).isInstanceOf(Piece.class);
-    }
-
-    @Test
-    @DisplayName("말의 종류에 queen이 있다.")
-    void piece_createWith_blackQueen() {
-        Piece piece = new Piece(BLACK, new Queen());
-        assertThat(piece).isInstanceOf(Piece.class);
-    }
-
-    @Test
-    @DisplayName("말의 종류에 king이 있다.")
-    void piece_createWith_whiteKing() {
-        Piece piece = new Piece(WHITE, new King());
-        assertThat(piece).isInstanceOf(Piece.class);
+    private static Stream<Piece> createPieces() {
+        return Stream.of(
+                new Piece(BLACK, new Pawn()),
+                new Piece(WHITE, new Knight()),
+                new Piece(BLACK, new Bishop()),
+                new Piece(WHITE, new Rook()),
+                new Piece(BLACK, new Queen()),
+                new Piece(WHITE, new King())
+        );
     }
 
     @ParameterizedTest
