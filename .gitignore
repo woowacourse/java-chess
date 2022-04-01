@@ -30,3 +30,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/src/test/java/chess/practice
