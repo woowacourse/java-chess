@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class CommandFactory {
 
@@ -25,16 +24,15 @@ public class CommandFactory {
     private static final String INVALID_COMMAND_INPUT = "입력에 맞는 명령을 찾을 수 없습니다.";
     private static final String INVALID_MOVING_ARGUMENTS = "잘못된 이동 명령입니다.";
 
-    private static final Map<String, Supplier<Command>> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
     static {
-        commands.put("start", Start::new);
-        commands.put("status", Status::new);
-        commands.put("end", End::new);
+        commands.put("start", new Start());
+        commands.put("status", new Status());
+        commands.put("end", new End());
     }
 
     private CommandFactory() {
-
     }
 
     public static Command find(final String commandString) {
@@ -48,7 +46,7 @@ public class CommandFactory {
 
     private static Command create(final String command, final List<String> moveArgs) {
         if (commands.containsKey(command)) {
-            return commands.get(command).get();
+            return commands.get(command);
         }
         if (command.equals("move")) {
             return createMove(moveArgs);
