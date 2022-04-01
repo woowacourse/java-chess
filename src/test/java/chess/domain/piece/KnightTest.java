@@ -20,9 +20,10 @@ public class KnightTest {
         Position from = new Position(fromValue);
 
         Knight knight = new Knight(Team.BLACK);
+        Bishop toPiece = new Bishop(Team.WHITE);
 
         // then
-        assertThatNoException().isThrownBy(() -> knight.movable(to, from));
+        assertThatNoException().isThrownBy(() -> knight.movable(to, from, toPiece));
     }
 
     @DisplayName("이동 불가능")
@@ -34,9 +35,9 @@ public class KnightTest {
         Position from = new Position(fromValue);
 
         Knight knight = new Knight(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatThrownBy(() -> knight.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> knight.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

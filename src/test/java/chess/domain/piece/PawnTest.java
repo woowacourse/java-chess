@@ -12,18 +12,34 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class PawnTest {
 
-    @DisplayName("흰색 팀일 때 이동 가능 확인")
+    @DisplayName("흰색 팀일 때 직진 이동 가능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e2,d3", "e2,e3", "e2,f3", "a2,a4"})
-    void movable_while(String toValue, String fromValue) {
+    @CsvSource(value = {"e2,e3", "a2,a4"})
+    void movable_while_straight(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
         Pawn pawn = new WhitePawn();
+        Bishop toPiece = new Bishop(Team.BLACK);
 
         // then
-        assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, null));
+    }
+
+    @DisplayName("흰색 팀일 때 대각선 이동 가능 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e2,d3", "e2,f3"})
+    void movable_while_diagonal(String toValue, String fromValue) {
+        // given
+        Position to = new Position(toValue);
+        Position from = new Position(fromValue);
+
+        Pawn pawn = new WhitePawn();
+        Bishop toPiece = new Bishop(Team.BLACK);
+
+        // then
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, toPiece));
     }
 
     @DisplayName("흰색 팀일 때 이동 불가 확인")
@@ -35,9 +51,10 @@ public class PawnTest {
         Position from = new Position(fromValue);
 
         Pawn pawn = new WhitePawn();
+        Bishop toPiece = new Bishop(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> pawn.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("첫수 외 두칸 이동 불가 확인")
@@ -49,15 +66,16 @@ public class PawnTest {
         Position from = new Position(fromValue);
 
         Pawn pawn = new WhitePawn();
+        Bishop toPiece = new Bishop(Team.BLACK);
 
         // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("첫수일 경우만 가능합니다.");
+        assertThatThrownBy(() -> pawn.movable(to, from, toPiece)).hasMessageContaining("첫수일 경우만 가능합니다.");
     }
 
-    @DisplayName("검은 팀일 때 이동 가능 확인")
+    @DisplayName("검은 팀일 때 직진 가능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6"})
-    void movable_black(String toValue, String fromValue) {
+    @CsvSource(value = {"e7,e6"})
+    void movable_black_straight(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
@@ -65,7 +83,22 @@ public class PawnTest {
         Pawn pawn = new BlackPawn();
 
         // then
-        assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, null));
+    }
+
+    @DisplayName("검은 팀일 때 대각선 이동 가능 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"e7,d6", "e7,f6"})
+    void movable_black_diagonal(String toValue, String fromValue) {
+        // given
+        Position to = new Position(toValue);
+        Position from = new Position(fromValue);
+
+        Pawn pawn = new BlackPawn();
+        Bishop toPiece = new Bishop(Team.WHITE);
+
+        // then
+        assertThatNoException().isThrownBy(() -> pawn.movable(to, from, toPiece));
     }
 
     @DisplayName("검은 팀일 때 이동 불가 확인")
@@ -76,9 +109,9 @@ public class PawnTest {
         Position from = new Position("a2");
 
         Pawn pawn = new BlackPawn();
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> pawn.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

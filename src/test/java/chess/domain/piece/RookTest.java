@@ -21,9 +21,9 @@ class RookTest {
         Position from = new Position(fromValue);
 
         Rook rook = new Rook(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatNoException().isThrownBy(() -> rook.movable(to, from));
+        assertThatNoException().isThrownBy(() -> rook.movable(to, from, toPiece));
     }
 
     @DisplayName("이동 불가 확인")
@@ -34,9 +34,9 @@ class RookTest {
         Position from = new Position("b3");
 
         Rook rook = new Rook(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatThrownBy(() -> rook.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> rook.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

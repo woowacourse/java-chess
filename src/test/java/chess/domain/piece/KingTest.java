@@ -20,9 +20,9 @@ class KingTest {
         Position from = new Position("a2");
 
         King king = new King(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatNoException().isThrownBy(() -> king.movable(to, from));
+        assertThatNoException().isThrownBy(() -> king.movable(to, from, toPiece));
     }
 
     @DisplayName("올바르지 않은 이동")
@@ -33,9 +33,10 @@ class KingTest {
         Position from = new Position("a5");
 
         King king = new King(Team.BLACK);
+        Bishop toPiece = new Bishop(Team.WHITE);
 
         // then
-        assertThatThrownBy(() -> king.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> king.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

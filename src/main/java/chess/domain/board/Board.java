@@ -58,10 +58,6 @@ public class Board {
         return board.get(position);
     }
 
-    public boolean isEmpty() {
-        return board.isEmpty();
-    }
-
     public Result createResult() {
         return new Result(board);
     }

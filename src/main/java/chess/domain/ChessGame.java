@@ -1,21 +1,18 @@
 package chess.domain;
 
 import static chess.domain.GameStatus.*;
-import static chess.domain.piece.Direction.NORTH;
-import static chess.domain.piece.Direction.SOUTH;
-import static chess.domain.piece.Direction.pullDiagonalDirections;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardGenerationStrategy;
 import chess.domain.board.Result;
 import chess.domain.piece.Direction;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChessGame {
 
@@ -31,12 +28,15 @@ public class ChessGame {
     public void move(Position from, Position to) {
         Piece fromPiece = board.takePieceByPosition(from);
         Piece toPiece = board.takePieceByPosition(to);
-        Direction direction = fromPiece.findDirection(from, to);
 
-        fromPiece.movable(from, to);
-        validatePath(from, to, direction);
-        validateMoveByPieceType(fromPiece, toPiece, direction);
+        validateNowTurn(fromPiece);
+        fromPiece.movable(from, to, toPiece);
+        validatePath(from, to, fromPiece.findDirection(from, to));
 
+        tryMove(from, to, fromPiece, toPiece);
+    }
+
+    private void tryMove(Position from, Position to, Piece fromPiece, Piece toPiece) {
         if (isFailMove(from, to, fromPiece)) {
             doRollBack(from, to, fromPiece, toPiece);
         }
@@ -52,16 +52,6 @@ public class ChessGame {
             }
             current = current.move(direction);
         }
-    }
-
-    private void validateMoveByPieceType(Piece from, Piece to, Direction direction) {
-        validateNowTurn(from);
-
-        if (from.isPawn()) {
-            checkStraightCondition(to, direction);
-            checkDiagonalCondition(from, to, direction);
-        }
-        checkDifferentTeam(from, to);
     }
 
     private boolean isFailMove(Position from, Position to, Piece fromPiece) {
@@ -83,7 +73,7 @@ public class ChessGame {
     }
 
     public boolean isCheck() {
-        if (board.isEmpty()) {
+        if (gameStatus.isReady()) {
             return false;
         }
         Position to = board.findKingPosition(turn);
@@ -98,7 +88,7 @@ public class ChessGame {
 
     private boolean canKillKing(Position from, Position to, Piece fromPiece) {
         try {
-            fromPiece.movable(from, to);
+            fromPiece.movable(from, to, new King(turn));
             board.validatePath(from, to, fromPiece.findDirection(from, to));
             return true;
         } catch (IllegalArgumentException e) {
@@ -106,27 +96,8 @@ public class ChessGame {
         }
     }
 
-    private void checkStraightCondition(Piece to, Direction direction) {
-        if ((direction == NORTH || direction == SOUTH) && Objects.nonNull(to)) {
-            throw new IllegalArgumentException("직진은 도착 지점에 말이 없을 때만 가능합니다.");
-        }
-    }
-
-    private void checkDiagonalCondition(Piece from, Piece to, Direction direction) {
-        if (pullDiagonalDirections().contains(direction)
-                && (Objects.isNull(to) || from.isSameTeam(to))) {
-            throw new IllegalArgumentException("대각선 이동은 상대편의 말을 잡을 때만 가능합니다.");
-        }
-    }
-
-    private void checkDifferentTeam(Piece from, Piece to) {
-        if (Objects.nonNull(to) && from.isSameTeam(to)) {
-            throw new IllegalArgumentException("도착 지점에 아군 말이 있어 이동이 불가능합니다.");
-        }
-    }
-
     public boolean isCheckmate() {
-        if (board.isEmpty()) {
+        if (gameStatus.isReady()) {
             return false;
         }
         try {

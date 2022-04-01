@@ -21,9 +21,9 @@ class QueenTest {
         Position from = new Position(fromValue);
 
         Queen queen = new Queen(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatNoException().isThrownBy(() -> queen.movable(to, from));
+        assertThatNoException().isThrownBy(() -> queen.movable(to, from, toPiece));
     }
 
     @DisplayName("이동 불가 확인")
@@ -34,9 +34,9 @@ class QueenTest {
         Position from = new Position("b3");
 
         Queen queen = new Queen(Team.BLACK);
-
+        Bishop toPiece = new Bishop(Team.WHITE);
         // then
-        assertThatThrownBy(() -> queen.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
+        assertThatThrownBy(() -> queen.movable(to, from, toPiece)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
     }
 
     @DisplayName("이름")

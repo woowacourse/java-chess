@@ -20,23 +20,6 @@ public class BoardTest {
         board = new Board();
     }
 
-    @DisplayName("체스판이 비어있는지 확인한다.")
-    @Test
-    void empty_board() {
-        // then
-        assertThat(board.isEmpty()).isTrue();
-    }
-
-    @DisplayName("체스판이 초기화 되었는지 확인한다.")
-    @Test
-    void empty_board_false() {
-        // given
-        board.initBoard(new BasicBoardStrategy());
-
-        // then
-        assertThat(board.isEmpty()).isFalse();
-    }
-
     @DisplayName("무사히 이동됨")
     @Test
     void move() {
