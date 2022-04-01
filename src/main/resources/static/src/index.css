@@ -1,0 +1,37 @@
+body {
+    background-color: #5d5d5d;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+.chess-ui {
+    display: grid;
+    width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    grid-template-columns: repeat(8, 100px);
+    grid-template-rows: repeat(8, 100px);
+    grid-auto-flow: row;
+    background-color: #441a03;
+}
+
+.white-square {
+    background-color: #b5915f;
+}
+
+.black-square {
+    background-color: #321a0d;
+}
+
+.white-square:hover, .black-square:hover {
+    background-color: #c29e8a;
+}
+
+img {
+    width: 80%;
+    padding: 10%;
+    margin: 0 auto;
+}
