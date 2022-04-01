@@ -1,14 +1,26 @@
 package chess.domain.position;
 
+import chess.view.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PositionTest {
 
     Position position = new Position("a1");
+
+    @ParameterizedTest
+    @CsvSource(value = {"1", "b"})
+    void makePosition(String text){
+        String input = text;
+                // then
+        assertThatThrownBy(() -> new Position(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("위치는 가로줄과 세로줄의 정보를 전부 포함해야합니다.");
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"b1:true", "a2:false"}, delimiter = ':')
