@@ -43,8 +43,7 @@ public enum MoveDirection {
         final double unitDifferentialRank = getUnitDifferential(rankDisplacement, fileDisplacement);
 
         return Arrays.stream(values())
-                .filter(moveDirection ->
-                        findMoveDirection(moveDirection, unitDifferentialFile, unitDifferentialRank))
+                .filter(moveDirection -> findMoveDirection(moveDirection, unitDifferentialFile, unitDifferentialRank))
                 .findAny()
                 .orElse(NOTHING);
     }

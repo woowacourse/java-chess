@@ -16,7 +16,7 @@ import java.util.Map;
 public class ChessBoard {
 
     static final String SOURCE_POSITION_SHOULD_HAVE_PIECE_MESSAGE = "[ERROR] 출발 위치에는 말이 있어야 합니다.";
-    private static final EmptySpace EMPTY_PIECE = new EmptySpace(EMPTY);
+    private static final EmptySpace EMPTY_SPACE = new EmptySpace(EMPTY);
 
     private final Map<Position, Piece> board;
     private final GameFlow gameFlow;
@@ -63,7 +63,7 @@ public class ChessBoard {
         validateMovable(sourcePosition, targetPosition, sourcePiece, targetPiece);
 
         board.put(targetPosition, sourcePiece);
-        board.put(sourcePosition, EMPTY_PIECE);
+        board.put(sourcePosition, EMPTY_SPACE);
     }
 
     private void validateMovable(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
@@ -76,7 +76,7 @@ public class ChessBoard {
     }
 
     private TargetType decideMoveType(Piece piece) {
-        if (piece.equals(EMPTY_PIECE)) {
+        if (piece.equals(EMPTY_SPACE)) {
             return TargetType.EMPTY;
         }
         if (gameFlow.isCorrectTurn(piece)) {
@@ -96,7 +96,7 @@ public class ChessBoard {
     }
 
     private boolean isEmpty(Position position) {
-        return board.get(position).equals(EMPTY_PIECE);
+        return board.get(position).equals(EMPTY_SPACE);
     }
 
     private void validateSourceNotEmpty(Position position) {

@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position from, Position to, TargetType targetType) {
-        if (targetType == TargetType.ENEMY) {
+        if (targetType.isEnemy()) {
             return from.isDiagonal(to) &&
                     to.rankDisplacement(from) == pieceTeam.direction() &&
                     to.fileDistance(from) == 1;

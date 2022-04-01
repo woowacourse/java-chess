@@ -57,14 +57,6 @@ public class RegularBoardFactory extends BoardFactory {
     }
 
     private static void placeAllEmptyPieces() {
-/*
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Position findPosition = Positions.findPositionBy(file, rank);
-                BOARD.put(findPosition, EMPTY_PIECE);
-            }
-        }
-*/
 
         Map<Position, Piece> emptyPiecesByPositions = Arrays.stream(Rank.values())
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> Positions.findPositionBy(file, rank)))

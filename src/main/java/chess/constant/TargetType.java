@@ -10,4 +10,8 @@ public enum TargetType {
     TargetType(String description) {
         this.description = description;
     }
+
+    public boolean isEnemy() {
+        return this == ENEMY;
+    }
 }
