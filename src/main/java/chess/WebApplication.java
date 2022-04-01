@@ -12,6 +12,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.result.EndResult;
+import chess.result.MoveResult;
 import chess.result.StartResult;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,23 +61,27 @@ public class WebApplication {
             });
 
             post("/move", (req, res) -> {
+                Map<String, Object> model = new HashMap<>();
                 try {
-                    chessController.move(
+                    model = toModel(chessController.findAllPiece());
+                    Score score = chessController.status();
+                    for (final Color color : Color.values()) {
+                        model.put(color.name(), score.findScore(color));
+                    }
+                    final MoveResult result = chessController.move(
                             Position.from(req.queryParams("from")),
                             Position.from(req.queryParams("to"))
                     );
-                } catch (IllegalArgumentException e) {
-                    final Map<Position, ChessPiece> pieceByPosition = chessController.findAllPiece();
-                    final Map<String, Object> model = toModel(pieceByPosition);
-                    final Score score = chessController.status();
-                    for (Color color : Color.values()) {
+                    model = toModel(result.getPieceByPosition());
+                    model.put("isKingDie", result.isKingDie());
+                    score = chessController.status();
+                    for (final Color color : Color.values()) {
                         model.put(color.name(), score.findScore(color));
                     }
+                } catch (IllegalArgumentException e) {
                     model.put("error", e.getMessage());
-                    return render(model, "board.html");
                 }
-                res.redirect("/board");
-                return null;
+                return render(model, "board.html");
             });
 
             post("/end", (req, res) -> {
