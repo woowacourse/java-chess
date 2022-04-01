@@ -1,5 +1,12 @@
 package chess.domain.board;
 
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.THREE;
+
 import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -20,31 +27,31 @@ public class BoardFixtures {
 
 	public static Map<Position, Piece> createBoardWithBlackBlocking(Piece piece) {
 		final Map<Position, Piece> board = createBlankBoard();
-		board.put(Position.of(4, 4), piece);
-		board.put(Position.of(3, 4), new Pawn(Team.BLACK));
-		board.put(Position.of(5, 4), new Pawn(Team.BLACK));
-		board.put(Position.of(4, 3), new Pawn(Team.BLACK));
-		board.put(Position.of(4, 5), new Pawn(Team.BLACK));
-		board.put(Position.of(5, 5), new Pawn(Team.BLACK));
-		board.put(Position.of(3, 3), new Pawn(Team.BLACK));
-		board.put(Position.of(3, 5), new Pawn(Team.BLACK));
-		board.put(Position.of(5, 3), new Pawn(Team.BLACK));
+		board.put(Position.of(FOUR, D), piece);
+		board.put(Position.of(THREE, D), new Pawn(Team.BLACK));
+		board.put(Position.of(FIVE, D), new Pawn(Team.BLACK));
+		board.put(Position.of(FOUR, C), new Pawn(Team.BLACK));
+		board.put(Position.of(FOUR, E), new Pawn(Team.BLACK));
+		board.put(Position.of(FIVE, E), new Pawn(Team.BLACK));
+		board.put(Position.of(THREE, C), new Pawn(Team.BLACK));
+		board.put(Position.of(THREE, E), new Pawn(Team.BLACK));
+		board.put(Position.of(FIVE, C), new Pawn(Team.BLACK));
 
 		return board;
 	}
 
-	public static Map<Position, Piece> createSameColumnPawnBoard() {
+	public static Map<Position, Piece> createSameFilePawnBoard() {
 		final Map<Position, Piece> board = createBlankBoard();
-		board.put(Position.of(3, 4), new Pawn(Team.WHITE));
-		board.put(Position.of(4, 4), new Pawn(Team.WHITE));
-		board.put(Position.of(5, 4), new Pawn(Team.WHITE));
+		board.put(Position.of(THREE, D), new Pawn(Team.WHITE));
+		board.put(Position.of(FOUR, D), new Pawn(Team.WHITE));
+		board.put(Position.of(FIVE, D), new Pawn(Team.WHITE));
 		return board;
 	}
 
 	public static Map<Position, Piece> createCatchKingBoard() {
 		final Map<Position, Piece> board = createBlankBoard();
-		board.put(Position.of(4, 4), new King(Team.WHITE));
-		board.put(Position.of(5, 5), new King(Team.BLACK));
+		board.put(Position.of(FOUR, D), new King(Team.WHITE));
+		board.put(Position.of(FIVE, E), new King(Team.BLACK));
 		return board;
 	}
 }

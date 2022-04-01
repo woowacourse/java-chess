@@ -1,9 +1,14 @@
 package chess.domain.board;
 
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,17 +18,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 class DirectionTest {
 
 	@Test
-	void addRow() {
+	void addRank() {
 		Direction direction = Direction.N;
+		Optional<Rank> rank = direction.addRank(ONE);
 
-		assertThat(direction.addRow(2)).isEqualTo(3);
+		assertThat(rank).hasValue(TWO);
 	}
 
 	@Test
-	void addColumn() {
-		Direction direction = Direction.N;
+	void addFile() {
+		Direction direction = Direction.E;
+		Optional<File> file = direction.addFile(B);
 
-		assertThat(direction.addColumn(2)).isEqualTo(2);
+		assertThat(file).hasValue(C);
 	}
 
 	@Test
@@ -35,8 +42,8 @@ class DirectionTest {
 
 	@ParameterizedTest
 	@MethodSource("createDirection")
-	void find(int row, int column, Direction direction) {
-		assertThat(Direction.find(row, column)).isEqualTo(direction);
+	void find(int rank, int file, Direction direction) {
+		assertThat(Direction.find(rank, file)).isEqualTo(direction);
 	}
 
 	private static Stream<Arguments> createDirection() {

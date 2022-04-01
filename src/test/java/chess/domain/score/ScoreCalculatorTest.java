@@ -1,6 +1,6 @@
 package chess.domain.score;
 
-import static chess.domain.board.BoardFixtures.createSameColumnPawnBoard;
+import static chess.domain.board.BoardFixtures.createSameFilePawnBoard;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -25,7 +25,7 @@ class ScoreCalculatorTest {
 	@Test
 	void calculateScoreWithSameColumnPawn() {
 		ScoreCalculator scoreCalculator = new ScoreCalculator();
-		Board board = new Board(createSameColumnPawnBoard());
+		Board board = new Board(createSameFilePawnBoard());
 
 		assertThat(scoreCalculator.calculate(board, Team.WHITE)).isEqualTo(1.5);
 	}

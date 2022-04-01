@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.Rank.FOUR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -11,8 +14,8 @@ class BlankTest {
 	@Test
 	void validateMovement() {
 		Piece blank = new Blank();
-		Position source = Position.of(4, 4);
-		Position target = Position.of(4, 5);
+		Position source = Position.of(FOUR, D);
+		Position target = Position.of(FOUR, E);
 
 		assertThatThrownBy(() -> blank.validateMovement(source, target, new Blank()))
 				.isInstanceOf(IllegalArgumentException.class)

@@ -28,7 +28,7 @@ public class OutputView {
 	}
 
 	private static void printBlank(final Position position) {
-		if (position.isEndColumn()) {
+		if (position.isEndFile()) {
 			System.out.println();
 		}
 	}

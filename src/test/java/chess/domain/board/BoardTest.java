@@ -2,6 +2,11 @@ package chess.domain.board;
 
 import static chess.domain.board.BoardFixtures.createBlankBoard;
 import static chess.domain.board.BoardFixtures.createBoardWithBlackBlocking;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
 import static chess.domain.board.PositionFixtures.initialBlackKing;
 import static chess.domain.board.PositionFixtures.initialBlackQueen;
 import static chess.domain.board.PositionFixtures.initialWhiteBishop;
@@ -9,6 +14,9 @@ import static chess.domain.board.PositionFixtures.initialWhiteKing;
 import static chess.domain.board.PositionFixtures.initialWhiteKnight;
 import static chess.domain.board.PositionFixtures.initialWhiteQueen;
 import static chess.domain.board.PositionFixtures.initialWhiteRook;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -53,7 +61,7 @@ class BoardTest {
 	void moveWithWrongSource() {
 		Board board = new Board(createBlankBoard());
 
-		assertThatThrownBy(() -> board.move(Position.of(4, 4), Position.of(5, 5)))
+		assertThatThrownBy(() -> board.move(Position.of(FOUR, D), Position.of(FIVE, E)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치에 기물이 없어 움직일 수 없습니다.");
 	}
@@ -84,47 +92,47 @@ class BoardTest {
 
 	private static Stream<Arguments> createSourceAndTarget() {
 		return Stream.of(
-				Arguments.of(initialWhiteQueen, Position.of(3, 6)),
-				Arguments.of(initialWhiteBishop, Position.of(3, 5)),
-				Arguments.of(initialWhiteRook, Position.of(3, 1))
+				Arguments.of(initialWhiteQueen, Position.of(THREE, F)),
+				Arguments.of(initialWhiteBishop, Position.of(THREE, E)),
+				Arguments.of(initialWhiteRook, Position.of(THREE, A))
 		);
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"2, 4", "6, 4", "4, 6", "4, 2", "6, 6", "2, 2", "6, 2", "2, 6"})
-	void moveWithEnemyBlocking(int targetRow, int targetColumn) {
+	@CsvSource(value = {"TWO, D", "SIX, D", "FOUR, F", "FOUR, B", "SIX, F", "TWO, B", "SIX, B", "TWO, F"})
+	void moveWithEnemyBlocking(Rank rank, File file) {
 		Board board = new Board(createBoardWithBlackBlocking(new Queen(Team.WHITE)));
-		Position whiteQueen = Position.of(4, 4);
+		Position whiteQueen = Position.of(FOUR, D);
 
-		assertThatThrownBy(() -> board.move(whiteQueen, Position.of(targetRow, targetColumn)))
+		assertThatThrownBy(() -> board.move(whiteQueen, Position.of(rank, file)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 위치로 기물을 옮길 수 없습니다.");
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"2, 5", "2, 3", "6, 5", "6, 3", "5, 6", "3, 6", "5, 2", "3, 2"})
-	void moveKnightWithBlocking(int targetRow, int targetColumn) {
+	@CsvSource(value = {"TWO, E", "TWO, C", "SIX, E", "SIX, C", "FIVE, F", "THREE, F", "FIVE, B", "THREE, B"})
+	void moveKnightWithBlocking(Rank rank, File file) {
 		Board board = new Board(createBoardWithBlackBlocking(new Knight(Team.WHITE)));
-		Position whiteKnight = Position.of(4, 4);
+		Position whiteKnight = Position.of(FOUR, D);
 
-		assertDoesNotThrow(() -> board.move(whiteKnight, Position.of(targetRow, targetColumn)));
+		assertDoesNotThrow(() -> board.move(whiteKnight, Position.of(rank, file)));
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"5, 5", "5, 3"})
-	void movePawnToEnemy(int targetRow, int targetColumn) {
+	@CsvSource(value = {"FIVE, E", "FIVE, C"})
+	void movePawnToEnemy(Rank rank, File file) {
 		Board board = new Board(createBoardWithBlackBlocking(new Pawn(Team.WHITE)));
-		Position whitePawn = Position.of(4, 4);
+		Position whitePawn = Position.of(FOUR, D);
 
-		assertDoesNotThrow(() -> board.move(whitePawn, Position.of(targetRow, targetColumn)));
+		assertDoesNotThrow(() -> board.move(whitePawn, Position.of(rank, file)));
 	}
 
 	@Test
-	void movePawnToSameColumnEnemy() {
+	void movePawnToSameFileEnemy() {
 		Board board = new Board(createBoardWithBlackBlocking(new Pawn(Team.WHITE)));
-		Position whitePawn = Position.of(4, 4);
+		Position whitePawn = Position.of(FOUR, D);
 
-		assertThatThrownBy(() -> board.move(whitePawn, Position.of(5, 4)))
+		assertThatThrownBy(() -> board.move(whitePawn, Position.of(FIVE, D)))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessageContaining("해당 기물이 움직일 수 있는 위치가 아닙니다.");
 	}
@@ -133,13 +141,13 @@ class BoardTest {
 	void startWithWhiteTeam() {
 		Board board = new Board(BoardFactory.initiate());
 
-		assertDoesNotThrow(() -> board.move(initialWhiteKnight, Position.of(3, 3)));
+		assertDoesNotThrow(() -> board.move(initialWhiteKnight, Position.of(THREE, C)));
 	}
 
 	@Test
-	void getAllyPiecesByColumn() {
+	void getAllyPiecesByFile() {
 		Board board = new Board(BoardFactory.initiate());
-		List<Piece> blackPieces = board.getAllyPiecesByColumn(Team.BLACK, 1);
+		List<Piece> blackPieces = board.getAllyPiecesByFile(Team.BLACK, A);
 
 		assertThat(blackPieces.size()).isEqualTo(2);
 	}

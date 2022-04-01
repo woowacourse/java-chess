@@ -4,6 +4,7 @@ import chess.domain.piece.Team;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public enum Direction {
 
@@ -28,12 +29,12 @@ public enum Direction {
 
 	private static final String NOT_SEARCH_DIRECTION_ERROR = "해당 방향이 없습니다.";
 
-	private final int rowMovement;
-	private final int columnMovement;
+	private final int rankMovement;
+	private final int fileMovement;
 
-	Direction(int rowMovement, int columnMovement) {
-		this.rowMovement = rowMovement;
-		this.columnMovement = columnMovement;
+	Direction(int rankMovement, int fileMovement) {
+		this.rankMovement = rankMovement;
+		this.fileMovement = fileMovement;
 	}
 
 	public static List<Direction> getKnightDirection() {
@@ -64,18 +65,18 @@ public enum Direction {
 		return NN;
 	}
 
-	public static Direction find(final int differenceRow, final int differenceColumn) {
+	public static Direction find(final int differenceRank, final int differenceFile) {
 		return Arrays.stream(values())
-				.filter(value -> value.rowMovement == differenceRow && value.columnMovement == differenceColumn)
+				.filter(value -> value.rankMovement == differenceRank && value.fileMovement == differenceFile)
 				.findAny()
 				.orElseThrow(() -> new NoSuchElementException(NOT_SEARCH_DIRECTION_ERROR));
 	}
 
-	public int addRow(final int row) {
-		return row + rowMovement;
+	public Optional<Rank> addRank(final Rank rank) {
+		return rank.add(rankMovement);
 	}
 
-	public int addColumn(final int column) {
-		return column + columnMovement;
+	public Optional<File> addFile(final File file) {
+		return file.add(fileMovement);
 	}
 }

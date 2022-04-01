@@ -1,6 +1,8 @@
 package chess.domain.state;
 
+import static chess.domain.board.File.A;
 import static chess.domain.board.PositionFixtures.initialWhitePawn;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -29,7 +31,7 @@ class EndGameTest {
 		State state = new WhiteTurn(board);
 		State endGame = state.finish();
 
-		assertThatThrownBy(() -> endGame.play(initialWhitePawn, Position.of(3, 1)))
+		assertThatThrownBy(() -> endGame.play(initialWhitePawn, Position.of(THREE, A)))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임이 이미 종료되었습니다.");
 	}

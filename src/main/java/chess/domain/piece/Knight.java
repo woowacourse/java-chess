@@ -38,9 +38,9 @@ public final class Knight extends Piece {
 
 	@Override
 	public Direction getDirection(final Position source, final Position target) {
-		int rowDifference = target.subtractRow(source);
-		int columnDifference = target.subtractColumn(source);
-		return Direction.find(rowDifference, columnDifference);
+		int rankDifference = target.subtractRank(source);
+		int fileDifference = target.subtractFile(source);
+		return Direction.find(rankDifference, fileDifference);
 	}
 
 	@Override

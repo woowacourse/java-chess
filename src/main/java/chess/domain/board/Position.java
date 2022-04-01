@@ -1,62 +1,51 @@
 package chess.domain.board;
 
-import static chess.domain.board.BoardFactory.INITIAL_BLACK_PAWN_ROW;
-import static chess.domain.board.BoardFactory.INITIAL_WHITE_PAWN_ROW;
-
 import chess.domain.piece.Team;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Position {
 
-	public static final int MIN_POSITION = 1;
-	public static final int MAX_POSITION = 8;
-
 	private static final String OVER_RANGE_ERROR = "체스판 범위를 벗어나는 입력입니다.";
 
-	private static final Map<Integer, Map<Integer, Position>> cachedPositions = new HashMap<>();
+	private static final Map<Rank, Map<File, Position>> cachedPositions = new HashMap<>();
 
-	private final int row;
-	private final int column;
-	
-	private Position(final int row, final int column) {
-		validateRange(row, column);
-		this.row = row;
-		this.column = column;
+	private final Rank rank;
+	private final File file;
+
+	private Position(final Rank rank, final File file) {
+		this.rank = rank;
+		this.file = file;
 	}
 
-	public static Position of(final int row, final int column) {
-		cachedPositions.putIfAbsent(row, new HashMap<>());
-		cachedPositions.get(row).putIfAbsent(column, new Position(row, column));
-		return cachedPositions.get(row).get(column);
-	}
-
-	private void validateRange(final int row, final int column) {
-		if (isOverRange(row, column)) {
-			throw new IllegalArgumentException(OVER_RANGE_ERROR);
-		}
-	}
-
-	private boolean isOverRange(final int row, final int column) {
-		return row < MIN_POSITION || row > MAX_POSITION || column < MIN_POSITION || column > MAX_POSITION;
+	public static Position of(final Rank rank, final File file) {
+		cachedPositions.putIfAbsent(rank, new HashMap<>());
+		cachedPositions.get(rank).putIfAbsent(file, new Position(rank, file));
+		return cachedPositions.get(rank).get(file);
 	}
 
 	public Position addDirection(Direction direction) {
-		int row = direction.addRow(this.row);
-		int column = direction.addColumn(this.column);
-		return Position.of(row, column);
+		Optional<Rank> rank = direction.addRank(this.rank);
+		Optional<File> file = direction.addFile(this.file);
+		if (rank.isEmpty() || file.isEmpty()) {
+			throw new IllegalArgumentException(OVER_RANGE_ERROR);
+		}
+		return Position.of(rank.get(), file.get());
 	}
 
 	public boolean isLinerMove(Position position) {
-		return this.row == position.row || this.column == position.column;
+		return this.rank.equals(position.rank) || this.file.equals(position.file);
 	}
 
 	public boolean isDiagonalMove(Position position) {
-		return Math.abs(this.row - position.row) == Math.abs(this.column - position.column);
+		return this.rank.abs(position.rank) == this.file.abs(position.file);
 	}
 
 	public List<Position> getArrivalPositionsByDirections(List<Direction> directions) {
@@ -67,60 +56,55 @@ public class Position {
 	}
 
 	private boolean canMoveToDirection(Direction direction) {
-		int row = direction.addRow(this.row);
-		int column = direction.addColumn(this.column);
-		return !isOverRange(row, column);
+		Optional<Rank> rank = direction.addRank(this.rank);
+		Optional<File> file = direction.addFile(this.file);
+		return rank.isPresent() && file.isPresent();
 	}
 
-	public int calculateRowDifference(Position position) {
-		return Integer.compare(this.row, position.row);
+	public int calculateRankDifference(Position position) {
+		return this.rank.calculateDifference(position.rank);
 	}
 
-	public int calculateColumnDifference(Position position) {
-		return Integer.compare(this.column, position.column);
+	public int calculateFileDifference(Position position) {
+		return this.file.calculateDifference(position.file);
 	}
 
-	public int subtractRow(Position position) {
-		return this.row - position.row;
+	public int subtractRank(Position position) {
+		return this.rank.subtract(position.rank);
 	}
 
-	public int subtractColumn(Position position) {
-		return this.column - position.column;
+	public int subtractFile(Position position) {
+		return this.file.subtract(position.file);
 	}
 
-	public boolean isEndColumn() {
-		return column == MAX_POSITION;
+	public boolean isEndFile() {
+		return file.equals(File.H);
 	}
 
-	public boolean isInitialPawnRow(final Team team) {
+	public boolean isInitialPawnRank(final Team team) {
 		if (team.isBlack()) {
-			return this.row == INITIAL_BLACK_PAWN_ROW;
+			return this.rank.equals(Rank.SEVEN);
 		}
-		return this.row == INITIAL_WHITE_PAWN_ROW;
+		return this.rank.equals(Rank.TWO);
 	}
 
 	public static List<Position> getPositions() {
-		List<Position> positions = new ArrayList<>();
-		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
-			positions.addAll(createRowPositions(i));
-		}
-		return positions;
+		return Arrays.stream(Rank.values())
+				.flatMap(Position::createRankPositions)
+				.collect(Collectors.toList());
 	}
 
-	private static List<Position> createRowPositions(final int row) {
-		List<Position> rowPositions = new ArrayList<>();
-		for (int j = MIN_POSITION; j <= MAX_POSITION; j++) {
-			rowPositions.add(Position.of(row, j));
-		}
-		return rowPositions;
+	private static Stream<Position> createRankPositions(final Rank rank) {
+		return Arrays.stream(File.values())
+				.map(file -> Position.of(rank, file))
+				.collect(Collectors.toList()).stream();
 	}
 
 	public static List<Position> getReversePositions() {
-		List<Position> positions = new ArrayList<>();
-		for (int i = MAX_POSITION; i >= MIN_POSITION; i--) {
-			positions.addAll(createRowPositions(i));
-		}
-		return positions;
+		return Arrays.stream(Rank.values())
+				.sorted(Collections.reverseOrder())
+				.flatMap(Position::createRankPositions)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -132,19 +116,19 @@ public class Position {
 			return false;
 		}
 		final Position position = (Position) o;
-		return row == position.row && column == position.column;
+		return rank == position.rank && file == position.file;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(row, column);
+		return Objects.hash(rank, file);
 	}
 
 	@Override
 	public String toString() {
 		return "Position{" +
-				"row=" + row +
-				", column=" + column +
+				"rank=" + rank +
+				", file=" + file +
 				'}';
 	}
 }

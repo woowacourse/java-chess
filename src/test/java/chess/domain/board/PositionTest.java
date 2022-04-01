@@ -1,7 +1,13 @@
 package chess.domain.board;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.H;
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.ONE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Team;
@@ -15,35 +21,27 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionTest {
 
-	@ParameterizedTest
-	@CsvSource(value = {"0, 0", "9, 9", "1, 0", "9, 1"})
-	void overRangeInput(int row, int column) {
-		assertThatThrownBy(() -> Position.of(row, column))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("체스판 범위를 벗어나는 입력입니다.");
-	}
-
 	@Test
 	void addDirection() {
-		Position position = Position.of(4, 4);
+		Position position = Position.of(FOUR, D);
 
-		assertThat(position.addDirection(Direction.N)).isEqualTo(Position.of(5, 4));
+		assertThat(position.addDirection(Direction.N)).isEqualTo(Position.of(FIVE, D));
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"4, 5", "5, 4", "4, 3", "3, 4"})
-	void isLinerMove(int targetRow, int targetColumn) {
-		Position source = Position.of(4, 4);
+	@CsvSource(value = {"FOUR, E", "FIVE, D", "FOUR, C", "THREE, D"})
+	void isLinerMove(Rank rank, File file) {
+		Position source = Position.of(FOUR, D);
 
-		assertThat(source.isLinerMove(Position.of(targetRow, targetColumn))).isTrue();
+		assertThat(source.isLinerMove(Position.of(rank, file))).isTrue();
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"5, 5", "3, 3", "3, 5", "5, 3"})
-	void isDiagonalMove(int targetRow, int targetColumn) {
-		Position source = Position.of(4, 4);
+	@CsvSource(value = {"FIVE, E", "THREE, C", "THREE, E", "FIVE, C"})
+	void isDiagonalMove(Rank rank, File file) {
+		Position source = Position.of(FOUR, D);
 
-		assertThat(source.isDiagonalMove(Position.of(targetRow, targetColumn))).isTrue();
+		assertThat(source.isDiagonalMove(Position.of(rank, file))).isTrue();
 	}
 
 
@@ -58,59 +56,60 @@ class PositionTest {
 
 	private static Stream<Arguments> createArrivalPositionCount() {
 		return Stream.of(
-				Arguments.of(Position.of(4, 4), 8),
-				Arguments.of(Position.of(1, 1), 3)
+				Arguments.of(Position.of(FOUR, D), 8),
+				Arguments.of(Position.of(ONE, A), 3)
 		);
 	}
 
 	@Test
-	void calculateRowDifference() {
-		Position source = Position.of(4, 4);
-		Position target = Position.of(8, 8);
+	void calculateRankDifference() {
+		Position source = Position.of(FOUR, D);
+		Position target = Position.of(EIGHT, H);
 
-		assertThat(target.calculateRowDifference(source)).isEqualTo(1);
+		assertThat(target.calculateRankDifference(source)).isEqualTo(1);
 	}
 
 	@Test
-	void calculateColumnDifference() {
-		Position source = Position.of(8, 8);
-		Position target = Position.of(4, 4);
+	void calculateFileDifference() {
+		Position source = Position.of(EIGHT, H);
+		Position target = Position.of(FOUR, D);
 
-		assertThat(target.calculateRowDifference(source)).isEqualTo(-1);
+		assertThat(target.calculateFileDifference(source)).isEqualTo(-1);
 	}
 
 	@Test
-	void subtractRow() {
-		Position source = Position.of(4, 4);
-		Position target = Position.of(8, 8);
+	void subtractRank() {
+		Position source = Position.of(FOUR, D);
+		Position target = Position.of(EIGHT, H);
 
-		assertThat(target.subtractRow(source)).isEqualTo(4);
+		assertThat(target.subtractRank(source)).isEqualTo(4);
 	}
 
 	@Test
-	void subtractColumn() {
-		Position source = Position.of(8, 8);
-		Position target = Position.of(4, 4);
+	void subtractFile() {
+		Position source = Position.of(EIGHT, H);
+		Position target = Position.of(FOUR, D);
 
-		assertThat(target.subtractColumn(source)).isEqualTo(-4);
+		assertThat(target.subtractFile(source)).isEqualTo(-4);
 	}
 
 	@Test
-	void isEndColumn() {
-		Position endColumn = Position.of(1, 8);
-		Position center = Position.of(4, 4);
+	void isEndFile() {
+		Position endColumn = Position.of(ONE, H);
+		Position center = Position.of(FOUR, D);
 
 		assertAll(
-				() -> assertThat(endColumn.isEndColumn()).isTrue(),
-				() -> assertThat(center.isEndColumn()).isFalse()
+				() -> assertThat(endColumn.isEndFile()).isTrue(),
+				() -> assertThat(center.isEndFile()).isFalse()
 		);
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"7, 1, BLACK, true", "2, 1, WHITE, true", "4, 1, BLACK, false", "4, 1, WHITE, false"})
-	void isDefaultRow(int row, int column, Team team, boolean expectedValue) {
-		Position position = Position.of(row, column);
+	@CsvSource(value = {"SEVEN, A, BLACK, true", "TWO, A, WHITE, true", "FOUR, A, BLACK, false",
+			"FOUR, A, WHITE, false"})
+	void isInitialPawnRank(Rank rank, File file, Team team, boolean expectedValue) {
+		Position position = Position.of(rank, file);
 
-		assertThat(position.isInitialPawnRow(team)).isEqualTo(expectedValue);
+		assertThat(position.isInitialPawnRank(team)).isEqualTo(expectedValue);
 	}
 }

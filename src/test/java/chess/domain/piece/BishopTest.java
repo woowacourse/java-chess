@@ -1,21 +1,30 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.File;
 import chess.domain.board.Position;
+import chess.domain.board.Rank;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
-	
+
 	@ParameterizedTest
-	@CsvSource(value = {"8, 8", "3, 5", "3, 3", "5, 3"})
-	void validateMovement(int targetRow, int targetCol) {
-		Position source = Position.of(4, 4);
+	@CsvSource(value = {"EIGHT, H", "THREE, E", "THREE, C", "FIVE, C"})
+	void validateMovement(Rank rank, File file) {
+		Position source = Position.of(FOUR, D);
 		Piece sourceBishop = new Bishop(Team.BLACK);
-		Position target = Position.of(targetRow, targetCol);
+		Position target = Position.of(rank, file);
 		Piece targetBishop = new Bishop(Team.WHITE);
 
 		assertDoesNotThrow(() -> sourceBishop.validateMovement(source, target, targetBishop));
@@ -23,9 +32,9 @@ class BishopTest {
 
 	@Test
 	void validateDirectionException() {
-		Position source = Position.of(1, 1);
+		Position source = Position.of(ONE, A);
 		Piece bishop = new Bishop(Team.BLACK);
-		Position target = Position.of(1, 2);
+		Position target = Position.of(ONE, B);
 		Piece blank = new Blank();
 
 		assertThatThrownBy(() -> bishop.validateMovement(source, target, blank))
@@ -35,9 +44,9 @@ class BishopTest {
 
 	@Test
 	void validateCatchAllyException() {
-		Position source = Position.of(4, 4);
+		Position source = Position.of(FOUR, D);
 		Piece sourceBishop = new Bishop(Team.BLACK);
-		Position target = Position.of(3, 5);
+		Position target = Position.of(THREE, E);
 		Piece targetBishop = new Bishop(Team.BLACK);
 
 		assertThatThrownBy(() -> sourceBishop.validateMovement(source, target, targetBishop))

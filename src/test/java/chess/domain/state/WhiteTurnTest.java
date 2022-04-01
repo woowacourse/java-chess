@@ -1,10 +1,17 @@
 package chess.domain.state;
 
 import static chess.domain.board.BoardFixtures.createCatchKingBoard;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
 import static chess.domain.board.PositionFixtures.initialBlackPawn;
 import static chess.domain.board.PositionFixtures.initialWhiteKing;
 import static chess.domain.board.PositionFixtures.initialWhitePawn;
 import static chess.domain.board.PositionFixtures.initialWhiteQueen;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.SIX;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -31,7 +38,7 @@ class WhiteTurnTest {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		Position whitePawn = initialWhitePawn;
-		Position target = Position.of(3, 1);
+		Position target = Position.of(THREE, A);
 
 		assertThat(state.play(whitePawn, target)).isInstanceOf(BlackTurn.class);
 	}
@@ -40,8 +47,8 @@ class WhiteTurnTest {
 	void playWhiteCatchKing() {
 		Board board = new Board(createCatchKingBoard());
 		State state = new WhiteTurn(board);
-		Position whiteKing = Position.of(4, 4);
-		Position blackKing = Position.of(5, 5);
+		Position whiteKing = Position.of(FOUR, D);
+		Position blackKing = Position.of(FIVE, E);
 
 		assertThat(state.play(whiteKing, blackKing)).isInstanceOf(KingDeath.class);
 	}
@@ -51,7 +58,7 @@ class WhiteTurnTest {
 		Board board = new Board(BoardFactory.initiate());
 		State state = new WhiteTurn(board);
 		Position blackPawn = initialBlackPawn;
-		Position target = Position.of(6, 1);
+		Position target = Position.of(SIX, A);
 
 		assertThatThrownBy(() -> state.play(blackPawn, target))
 				.isInstanceOf(IllegalArgumentException.class)

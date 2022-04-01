@@ -1,5 +1,9 @@
 package chess.domain.board;
 
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.piece.Bishop;
@@ -21,29 +25,29 @@ class BoardFactoryTest {
 	private final Map<Position, Piece> board = BoardFactory.initiate();
 
 	@ParameterizedTest
-	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
-	void checkStartPawn(int column) {
-		assertThat(board.get(Position.of(2, column))).isInstanceOf(Pawn.class);
-		assertThat(board.get(Position.of(7, column))).isInstanceOf(Pawn.class);
+	@ValueSource(strings = {"A", "B", "C", "D", "E", "F", "G", "H"})
+	void checkStartPawn(File file) {
+		assertThat(board.get(Position.of(TWO, file))).isInstanceOf(Pawn.class);
+		assertThat(board.get(Position.of(SEVEN, file))).isInstanceOf(Pawn.class);
 	}
 
 	@ParameterizedTest
 	@MethodSource("createPositionAndPiece")
-	void checkStartSpecialPiece(int column, Class<Piece> piece) {
-		assertThat(board.get(Position.of(1, column))).isInstanceOf(piece);
-		assertThat(board.get(Position.of(8, column))).isInstanceOf(piece);
+	void checkStartSpecialPiece(File file, Class<Piece> piece) {
+		assertThat(board.get(Position.of(ONE, file))).isInstanceOf(piece);
+		assertThat(board.get(Position.of(EIGHT, file))).isInstanceOf(piece);
 	}
 
 	private static Stream<Arguments> createPositionAndPiece() {
 		return Stream.of(
-				Arguments.of(1, Rook.class),
-				Arguments.of(2, Knight.class),
-				Arguments.of(3, Bishop.class),
-				Arguments.of(4, Queen.class),
-				Arguments.of(5, King.class),
-				Arguments.of(6, Bishop.class),
-				Arguments.of(7, Knight.class),
-				Arguments.of(8, Rook.class)
+				Arguments.of("A", Rook.class),
+				Arguments.of("B", Knight.class),
+				Arguments.of("C", Bishop.class),
+				Arguments.of("D", Queen.class),
+				Arguments.of("E", King.class),
+				Arguments.of("F", Bishop.class),
+				Arguments.of("G", Knight.class),
+				Arguments.of("H", Rook.class)
 		);
 	}
 }

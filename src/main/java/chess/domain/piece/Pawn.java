@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
-	
+
 	private static final int PAWN_SCORE = 1;
 
 	public Pawn(final Team team) {
@@ -17,7 +17,7 @@ public final class Pawn extends Piece {
 	protected void validateDirection(final Position source, final Position target, final Piece targetPiece) {
 		boolean isAttack = !targetPiece.isBlank();
 		List<Direction> directions = new ArrayList<>(Direction.getPawnDirection(team, isAttack));
-		if (source.isInitialPawnRow(team)) {
+		if (source.isInitialPawnRank(team)) {
 			directions.add(Direction.getDefaultPawnByTeam(team));
 		}
 

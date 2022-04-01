@@ -1,16 +1,13 @@
 package chess.domain.board;
 
-import static chess.domain.board.Position.MAX_POSITION;
-import static chess.domain.board.Position.MIN_POSITION;
-
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 public class Board {
@@ -59,9 +56,9 @@ public class Board {
 		}
 	}
 
-	public List<Piece> getAllyPiecesByColumn(final Team team, final int column) {
-		return IntStream.rangeClosed(MIN_POSITION, MAX_POSITION)
-				.mapToObj(row -> Position.of(row, column))
+	public List<Piece> getAllyPiecesByFile(final Team team, final File file) {
+		return Arrays.stream(Rank.values())
+				.map(rank -> Position.of(rank, file))
 				.map(board::get)
 				.filter(piece -> piece.isAlly(team))
 				.collect(Collectors.toList());

@@ -1,6 +1,8 @@
 package chess.domain.state;
 
+import static chess.domain.board.File.A;
 import static chess.domain.board.PositionFixtures.initialWhitePawn;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -23,7 +25,7 @@ class ReadyTest {
 	void play() {
 		State state = new Ready();
 
-		assertThatThrownBy(() -> state.play(initialWhitePawn, Position.of(3, 1)))
+		assertThatThrownBy(() -> state.play(initialWhitePawn, Position.of(THREE, A)))
 				.isInstanceOf(IllegalStateException.class)
 				.hasMessageContaining("게임 시작을 먼저 해야 합니다.");
 	}

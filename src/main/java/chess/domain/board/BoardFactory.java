@@ -1,7 +1,17 @@
 package chess.domain.board;
 
-import static chess.domain.board.Position.MAX_POSITION;
-import static chess.domain.board.Position.MIN_POSITION;
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
+import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
+import static chess.domain.board.File.G;
+import static chess.domain.board.File.H;
+import static chess.domain.board.Rank.EIGHT;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.TWO;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -12,18 +22,11 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BoardFactory {
-
-	public static final int INITIAL_BLACK_PAWN_ROW = 7;
-	public static final int INITIAL_WHITE_PAWN_ROW = 2;
-	private static final int INITIAL_BLACK_ROW = 8;
-	private static final int INITIAL_WHITE_ROW = 1;
-
+	
 	private BoardFactory() {
 		throw new AssertionError();
 	}
@@ -48,32 +51,31 @@ public class BoardFactory {
 	}
 
 	private static void addBlackPieces(final Map<Position, Piece> board) {
-		List<Piece> specialPieces = createInitSpecialPieces(Team.BLACK);
-		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
-			board.put(Position.of(INITIAL_BLACK_ROW, i), specialPieces.get(i));
-			board.put(Position.of(INITIAL_BLACK_PAWN_ROW, i), new Pawn(Team.BLACK));
-		}
+		createInitSpecialPieces(board, EIGHT, Team.BLACK);
+		createInitPawn(board, SEVEN, Team.BLACK);
 	}
 
 	private static void addWhitePieces(final Map<Position, Piece> board) {
-		List<Piece> whiteSpecials = createInitSpecialPieces(Team.WHITE);
-		for (int i = MIN_POSITION; i <= MAX_POSITION; i++) {
-			board.put(Position.of(INITIAL_WHITE_ROW, i), whiteSpecials.get(i));
-			board.put(Position.of(INITIAL_WHITE_PAWN_ROW, i), new Pawn(Team.WHITE));
-		}
+		createInitSpecialPieces(board, ONE, Team.WHITE);
+		createInitPawn(board, TWO, Team.WHITE);
 	}
 
-	private static List<Piece> createInitSpecialPieces(Team team) {
-		List<Piece> pieces = new ArrayList<>();
-		pieces.add(new Blank());
-		pieces.add(new Rook(team));
-		pieces.add(new Knight(team));
-		pieces.add(new Bishop(team));
-		pieces.add(new Queen(team));
-		pieces.add(new King(team));
-		pieces.add(new Bishop(team));
-		pieces.add(new Knight(team));
-		pieces.add(new Rook(team));
-		return pieces;
+	private static void createInitSpecialPieces(final Map<Position, Piece> board, final Rank rank,
+												final Team team) {
+		board.put(Position.of(rank, A), new Rook(team));
+		board.put(Position.of(rank, B), new Knight(team));
+		board.put(Position.of(rank, C), new Bishop(team));
+		board.put(Position.of(rank, D), new Queen(team));
+		board.put(Position.of(rank, E), new King(team));
+		board.put(Position.of(rank, F), new Bishop(team));
+		board.put(Position.of(rank, G), new Knight(team));
+		board.put(Position.of(rank, H), new Rook(team));
+	}
+
+	private static void createInitPawn(final Map<Position, Piece> board, final Rank rank,
+									   final Team team) {
+		for (File file : File.values()) {
+			board.put(Position.of(rank, file), new Pawn(team));
+		}
 	}
 }

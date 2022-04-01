@@ -32,9 +32,9 @@ public abstract class Piece {
 	}
 
 	public Direction getDirection(final Position source, final Position target) {
-		int differenceRow = target.calculateRowDifference(source);
-		int differenceColumn = target.calculateColumnDifference(source);
-		return Direction.find(differenceRow, differenceColumn);
+		int rankDifference = target.calculateRankDifference(source);
+		int fileDifference = target.calculateFileDifference(source);
+		return Direction.find(rankDifference, fileDifference);
 	}
 
 	protected abstract void validateDirection(final Position source, final Position target, final Piece targetPiece);

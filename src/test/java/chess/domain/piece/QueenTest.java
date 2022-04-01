@@ -1,9 +1,18 @@
 package chess.domain.piece;
 
+import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.D;
+import static chess.domain.board.Rank.FIVE;
+import static chess.domain.board.Rank.FOUR;
+import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.THREE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.domain.board.File;
 import chess.domain.board.Position;
+import chess.domain.board.Rank;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -11,11 +20,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class QueenTest {
 
 	@ParameterizedTest
-	@CsvSource(value = {"8, 8", "3, 5", "3, 3", "5, 3", "8, 4", "3, 4", "4, 5", "4, 3"})
-	void validateMovement(int targetRow, int targetCol) {
-		Position source = Position.of(4, 4);
+	@CsvSource(value = {"EIGHT, H", "THREE, E", "THREE, C", "FIVE, C", "EIGHT, D", "THREE, D", "FOUR, E", "FOUR, C"})
+	void validateMovement(Rank rank, File file) {
+		Position source = Position.of(FOUR, D);
 		Piece sourceQueen = new Queen(Team.BLACK);
-		Position target = Position.of(targetRow, targetCol);
+		Position target = Position.of(rank, file);
 		Piece targetQueen = new Queen(Team.WHITE);
 
 		assertDoesNotThrow(() -> sourceQueen.validateMovement(source, target, targetQueen));
@@ -23,9 +32,9 @@ public class QueenTest {
 
 	@Test
 	void validateDirectionException() {
-		Position source = Position.of(1, 1);
+		Position source = Position.of(ONE, A);
 		Piece queen = new Queen(Team.BLACK);
-		Position target = Position.of(3, 2);
+		Position target = Position.of(THREE, B);
 		Piece blank = new Blank();
 
 		assertThatThrownBy(() -> queen.validateMovement(source, target, blank))
@@ -35,9 +44,9 @@ public class QueenTest {
 
 	@Test
 	void validateCatchAllyException() {
-		Position source = Position.of(4, 4);
+		Position source = Position.of(FOUR, D);
 		Piece sourceQueen = new Queen(Team.BLACK);
-		Position target = Position.of(5, 4);
+		Position target = Position.of(FIVE, D);
 		Piece targetQueen = new Queen(Team.BLACK);
 
 		assertThatThrownBy(() -> sourceQueen.validateMovement(source, target, targetQueen))
