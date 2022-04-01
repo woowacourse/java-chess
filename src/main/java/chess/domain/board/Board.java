@@ -75,10 +75,10 @@ public class Board {
         }
     }
 
-    public boolean isAllKingAlive() {
+    public boolean isKingDead() {
         return value.values().stream()
             .filter(Piece::isKing)
-            .count() == TOTAL_KING_COUNT;
+            .count() < TOTAL_KING_COUNT;
     }
 
     public Map<Position, Piece> getValue() {

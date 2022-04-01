@@ -8,7 +8,6 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -16,7 +15,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-class WinnerTest {
+class WinnerCalculatorTest {
 
     @Test
     @DisplayName("블랙 킹이 없을 경우 화이트가 우승한다.")
@@ -24,10 +23,9 @@ class WinnerTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.WHITE));
 
-        Board board = new Board(initialPieces);
-        Winner winner = new Winner(board);
+        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.WHITE);
+        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.WHITE);
     }
 
     @Test
@@ -36,10 +34,9 @@ class WinnerTest {
         Map<Position, Piece> initialPieces = new HashMap<>();
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
 
-        Board board = new Board(initialPieces);
-        Winner winner = new Winner(board);
+        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.BLACK);
+        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.BLACK);
     }
 
     @Test
@@ -49,9 +46,8 @@ class WinnerTest {
         initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
         initialPieces.put(Position.valueOf(File.A, Rank.TWO), new King(Color.WHITE));
 
-        Board board = new Board(initialPieces);
-        Winner winner = new Winner(board);
+        WinnerCalculator winnerCalculator = new WinnerCalculator(initialPieces);
 
-        assertThat(winner.getColor()).isEqualTo(Color.NONE);
+        assertThat(winnerCalculator.judgeWinner()).isEqualTo(Color.NONE);
     }
 }

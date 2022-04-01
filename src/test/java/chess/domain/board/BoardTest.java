@@ -77,4 +77,25 @@ public class BoardTest {
 
         assertThat(board.getPieceColor(Position.valueOf(File.A, Rank.ONE))).isEqualTo(Color.BLACK);
     }
+
+    @Test
+    @DisplayName("킹이 하나라도 죽었음을 판단한다")
+    void isKingDead() {
+        Map<Position, Piece> initialPieces = new HashMap<>();
+        initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
+        Board board = new Board(initialPieces);
+
+        assertThat(board.isKingDead()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 모두 살았음을 판단한다")
+    void isKingAllAlive() {
+        Map<Position, Piece> initialPieces = new HashMap<>();
+        initialPieces.put(Position.valueOf(File.A, Rank.ONE), new King(Color.BLACK));
+        initialPieces.put(Position.valueOf(File.A, Rank.EIGHT), new King(Color.WHITE));
+        Board board = new Board(initialPieces);
+
+        assertThat(board.isKingDead()).isFalse();
+    }
 }

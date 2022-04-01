@@ -17,7 +17,7 @@ public class ScoreCalculator {
     private static final int ALLOWED_ONE_LINE_PAWN_COUNT = 2;
     private static final double PAWN_PENALTY_RATE = 0.5;
 
-    Map<Position, Piece> boardPieces;
+    private final Map<Position, Piece> boardPieces;
 
     public ScoreCalculator(Map<Position, Piece> boardPieces) {
         this.boardPieces = new HashMap<>(boardPieces);
