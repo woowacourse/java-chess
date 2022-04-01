@@ -24,24 +24,28 @@ public class Position {
 
     private static void putAllRankOfFile(Map<Integer, Position> allPositions, File file) {
         for(Rank rank : Rank.values()) {
-            allPositions.put(Objects.hash(file, rank), new Position(file, rank));
+            allPositions.put(getKey(file, rank), new Position(file, rank));
         }
     }
 
     private final File file;
-    private final Rank rank;
 
+    private final Rank rank;
     private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
     public static Position of(final File file, final Rank rank) {
-        int key = Objects.hash(file, rank);
+        int key = getKey(file, rank);
         if (allPosition.containsKey(key)) {
             return allPosition.get(key);
         }
         return new Position(file, rank);
+    }
+
+    private static int getKey(File file, Rank rank) {
+        return Objects.hash(file, rank);
     }
 
     public static Position from(final String positionValue) {
