@@ -1,6 +1,6 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessGame;
+import chess.ChessGame;
 
 public interface CommandStrategy {
     void execute(final String command, final ChessGame chessGame);

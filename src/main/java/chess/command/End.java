@@ -1,13 +1,13 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessGame;
+import chess.ChessGame;
 import chess.view.OutputView;
 
 public final class End implements CommandStrategy {
     @Override
     public void execute(final String command, final ChessGame chessGame) {
         OutputView.printFinishMessage();
-        
+
         if (chessGame.isNotRunning()) {
             chessGame.turnOff();
             return;

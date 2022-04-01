@@ -1,8 +1,10 @@
-package chess.domain;
+package chess;
 
+import chess.domain.GameCommand;
+import chess.domain.GameResult;
+import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
-import chess.domain.command.GameCommand;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.domain.piece.Piece;

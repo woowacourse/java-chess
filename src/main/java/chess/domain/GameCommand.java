@@ -1,6 +1,11 @@
-package chess.domain.command;
+package chess.domain;
 
-import chess.domain.ChessGame;
+import chess.ChessGame;
+import chess.command.CommandStrategy;
+import chess.command.End;
+import chess.command.Move;
+import chess.command.Start;
+import chess.command.Status;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;

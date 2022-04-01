@@ -1,6 +1,6 @@
-package chess.domain.command;
+package chess.command;
 
-import chess.domain.ChessGame;
+import chess.ChessGame;
 import chess.view.OutputView;
 
 public final class Start implements CommandStrategy {
