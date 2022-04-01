@@ -62,8 +62,8 @@ class PawnTest {
         @ParameterizedTest
         @CsvSource(value = {"SECOND, FOURTH", "FOURTH, FIFTH"})
         void valid_Direction(Row start, Row end) {
-            Position current = new Position(Column.a, start);
-            Position target = new Position(Column.a, end);
+            Position current = new Position(Column.A, start);
+            Position target = new Position(Column.A, end);
             Pawn pawn = new Pawn(Color.WHITE);
 
             Direction actual = pawn.findValidDirection(current, target);

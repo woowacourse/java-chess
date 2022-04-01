@@ -1,17 +1,18 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Column {
 
-    a(1),
-    b(2),
-    c(3),
-    d(4),
-    e(5),
-    f(6),
-    g(7),
-    h(8);
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
     private final int value;
 
@@ -28,7 +29,7 @@ public enum Column {
 
     public static Column from(final String name) {
         try {
-            return Column.valueOf(name);
+            return Column.valueOf(name.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("올바르지 않은 위치입니다.");
         }
