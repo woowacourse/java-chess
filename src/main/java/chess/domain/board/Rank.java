@@ -37,7 +37,8 @@ public enum Rank {
     }
 
     public boolean canMove(int y) {
-        return (MINIMUM <= this.y + y) && (this.y + y <= MAXIMUM);
+        int nextY = this.y + y;
+        return (MINIMUM <= nextY) && (nextY <= MAXIMUM);
     }
 
     private Rank findByY(int input) {

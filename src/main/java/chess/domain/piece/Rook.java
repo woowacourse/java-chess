@@ -10,11 +10,11 @@ import java.util.List;
 
 public final class Rook extends AbstractStraightPiece {
 
-    private static final List<Direction> directions = List.of(NORTH, WEST, SOUTH, EAST);
+    private static final List<Direction> DIRECTIONS = List.of(NORTH, WEST, SOUTH, EAST);
     private static final double POINT = 5.0;
 
     public Rook(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override

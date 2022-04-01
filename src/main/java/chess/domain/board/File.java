@@ -37,7 +37,8 @@ public enum File {
     }
 
     public boolean canMove(int x) {
-        return (MINIMUM <= this.x + x) && (this.x + x <= MAXIMUM);
+        int nextX = this.x + x;
+        return (MINIMUM <= nextX) && (nextX <= MAXIMUM);
     }
 
     private File findByX(int input) {

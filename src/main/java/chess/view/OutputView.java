@@ -28,15 +28,15 @@ public class OutputView {
     }
 
     public static void printStatus(StatusResult status) {
-        System.out.println("블랙 진영의 점수는 " + status.getBlackScore().get() + "입니다.");
-        System.out.println("화이트 진영의 점수는 " + status.getWhiteScore().get() + "입니다.");
+        System.out.println("블랙 진영의 점수는 " + status.getBlackScore().getScore() + "입니다.");
+        System.out.println("화이트 진영의 점수는 " + status.getWhiteScore().getScore() + "입니다.");
 
         printWinner(status);
     }
 
     private static void printWinner(StatusResult status) {
-        double whiteScore = status.getWhiteScore().get();
-        double blackScore = status.getBlackScore().get();
+        double whiteScore = status.getWhiteScore().getScore();
+        double blackScore = status.getBlackScore().getScore();
 
         if (whiteScore > blackScore) {
             System.out.println("블랙 진영이 이기고 있습니다.");

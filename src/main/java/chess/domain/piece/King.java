@@ -14,12 +14,12 @@ import java.util.List;
 
 public final class King extends AbstractOncePiece {
 
-    private static final List<Direction> directions = List
+    private static final List<Direction> DIRECTIONS = List
             .of(NORTH, WEST, SOUTH, EAST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 0.0;
 
     public King(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override

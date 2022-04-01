@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Position {
 
-    // key의 형식은 "File.name() + Rank.name()"으로 한다.
     private static final Map<String, Position> cachePosition = new HashMap<>(64);
 
     private static final int FILE_INDEX = 0;

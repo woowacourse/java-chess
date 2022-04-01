@@ -14,12 +14,12 @@ import java.util.List;
 
 public final class Queen extends AbstractStraightPiece {
 
-    private static final List<Direction> directions = List
+    private static final List<Direction> DIRECTIONS = List
             .of(NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 9.0;
 
     public Queen(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override

@@ -42,8 +42,4 @@ public enum Command {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NO_SUCH_INPUT_ERROR_MESSAGE));
     }
-
-    public String get() {
-        return command;
-    }
 }

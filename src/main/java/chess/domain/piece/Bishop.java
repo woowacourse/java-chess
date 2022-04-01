@@ -10,11 +10,11 @@ import java.util.List;
 
 public final class Bishop extends AbstractStraightPiece {
 
-    private static final List<Direction> directions = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    private static final List<Direction> DIRECTIONS = List.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
     private static final double POINT = 3.0;
 
     public Bishop(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override

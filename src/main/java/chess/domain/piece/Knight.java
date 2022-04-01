@@ -14,7 +14,7 @@ import java.util.List;
 
 public final class Knight extends AbstractOncePiece {
 
-    private static final List<Direction> directions = List.of(
+    private static final List<Direction> DIRECTIONS = List.of(
             NORTH_NORTH_EAST,
             NORTH_NORTH_WEST,
             EAST_NORTH_EAST,
@@ -27,7 +27,7 @@ public final class Knight extends AbstractOncePiece {
     private static final double POINT = 2.5;
 
     public Knight(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override

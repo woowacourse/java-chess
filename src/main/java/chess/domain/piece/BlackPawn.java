@@ -10,11 +10,11 @@ import java.util.List;
 
 public final class BlackPawn extends Pawn {
 
-    private static final List<Direction> directions = List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final List<Direction> DIRECTIONS = List.of(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final Rank BLACK_PAWN_START_RANK = Rank.RANK_7;
 
     BlackPawn(Color color) {
-        super(color, directions);
+        super(color, DIRECTIONS);
     }
 
     @Override
