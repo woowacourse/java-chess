@@ -16,15 +16,17 @@ public enum ChessCommand {
     END((chessController, param1) -> end(chessController)),
     ;
 
+    private static final int COMMAND_INDEX = 0;
+
     private final CommandRun<ChessController, List<String>> run;
 
     ChessCommand(CommandRun<ChessController, List<String>> run) {
         this.run = run;
     }
 
-    public static ChessCommand findCommand(String rawCommand) {
+    public static ChessCommand findCommand(List<String> rawCommand) {
         return Arrays.stream(ChessCommand.values())
-                .filter(chessCommand -> chessCommand.name().toLowerCase(Locale.ROOT).equals(rawCommand))
+                .filter(chessCommand -> chessCommand.name().toLowerCase(Locale.ROOT).equals(rawCommand.get(0)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(String.format("잘못된 커맨드입니다. %s", rawCommand)));
     }

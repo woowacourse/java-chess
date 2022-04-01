@@ -7,13 +7,11 @@ import java.util.List;
 
 public class Main {
 
-    private static final int COMMAND_INDEX = 0;
-
     public static void main(String[] args) {
         ChessController chessController = new ChessController();
         while (!chessController.isEnd()) {
             List<String> inputCommand = Arrays.asList(InputView.inputStartOrEndGame());
-            ChessCommand command = ChessCommand.findCommand(inputCommand.get(COMMAND_INDEX));
+            ChessCommand command = ChessCommand.findCommand(inputCommand);
             command.accept(chessController, inputCommand);
         }
     }
