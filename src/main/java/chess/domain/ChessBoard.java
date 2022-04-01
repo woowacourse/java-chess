@@ -23,10 +23,11 @@ public class ChessBoard {
     private static final int FIRST_MOVE_POSITION_INDEX_FOR_PAWN = 1;
 
     private final Map<Position, Piece> pieces;
-    private final List<Position> firstPositionsOfPawn = new ArrayList<>();
+    private final List<Position> firstPositionsOfPawn;
 
     public ChessBoard(final PiecesGenerator piecesGenerator) {
         this.pieces = piecesGenerator.generate();
+        firstPositionsOfPawn = new ArrayList<>();
         initFirstPositionsOfPawn();
         fillEmptyPieceIfAbsent();
     }
@@ -173,8 +174,11 @@ public class ChessBoard {
         return pieces.get(position);
     }
 
-    public Map<Position, Piece> getPieces() {
-        return Collections.unmodifiableMap(pieces);
+    public boolean isEnd() {
+        long kingCount = pieces.values().stream()
+                .filter(p -> p.isSameSymbol(Symbol.KING))
+                .count();
+        return kingCount != KING_COUNTS;
     }
 
     public List<Pieces> getPiecesOnColumns(final Color color) {
@@ -196,10 +200,7 @@ public class ChessBoard {
         return new Pieces(value);
     }
 
-    public boolean isEnd() {
-        long kingCount = pieces.values().stream()
-                .filter(p -> p.isSameSymbol(Symbol.KING))
-                .count();
-        return kingCount != KING_COUNTS;
+    public Map<Position, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }
