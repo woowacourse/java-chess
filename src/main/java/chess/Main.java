@@ -21,7 +21,8 @@ public class Main {
                 OutputView.announce(boardDto);
             }
             if (command.equals("status")) {
-                chessController.score();
+                ScoreDto scoreDto = chessController.score();
+                OutputView.announceScoreDto(scoreDto);
             }
         }
     }

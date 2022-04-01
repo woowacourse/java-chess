@@ -24,8 +24,8 @@ public class ChessController {
         return new BoardDto(toBoardDto(board));
     }
 
-    public void score() {
-        board.calculateScore();
+    public ScoreDto score() {
+        return new ScoreDto(board.calculateScore());
     }
 
     private List<List<String>> toBoardDto(Board board) {

@@ -48,47 +48,8 @@ public final class Board {
         board.put(sourceSquare, new Empty());
     }
 
-    public void calculateScore() {
-        Map<Square, Piece> blackPawns = collectPawns(Color.BLACK);
-        Map<Square, Piece> whitePawns = collectPawns(Color.WHITE);
-        double blackSumWithoutPawns = sumChivalryPoint(Color.BLACK);
-        double whiteSumWithoutPawns = sumChivalryPoint(Color.WHITE);
-        Map<File, Integer> pawnCountByFiles = Arrays.stream(File.values())
-                .collect(Collectors.toMap(file -> file, file -> file.countPawnsInSameFile(blackPawns.keySet())));
-        for (File file : pawnCountByFiles.keySet()) {
-            Integer count = pawnCountByFiles.get(file);
-            if (count >= 2) {
-                blackSumWithoutPawns += count * 0.5;
-                continue;
-            }
-            blackSumWithoutPawns += count;
-        }
-        whiteSumWithoutPawns += Arrays.stream(File.values())
-                .mapToInt(file -> file.countPawnsInSameFile(whitePawns.keySet()))
-                .mapToDouble(this::calculatePawnPoint)
-                .sum();
-        System.out.println(blackSumWithoutPawns);
-        System.out.println(whiteSumWithoutPawns);
-    }
-
-    private double calculatePawnPoint(int count) {
-        if (count >= 2) {
-            return count * 0.5;
-        }
-        return count;
-    }
-
-    private double sumChivalryPoint(Color color) {
-        return board.values().stream()
-                .filter(piece -> !piece.isPawn() && piece.isSameColor(color))
-                .mapToDouble(Piece::getPoint)
-                .sum();
-    }
-
-    private Map<Square, Piece> collectPawns(Color color) {
-        return board.keySet().stream()
-                .filter(square -> board.get(square).isPawn() && board.get(square).isSameColor(color))
-                .collect(Collectors.toMap(square -> square, board::get));
+    public ScoreResult calculateScore() {
+        return ScoreResult.of(board);
     }
 
     private void initEmpty() {
