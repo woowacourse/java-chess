@@ -27,7 +27,7 @@ public class Chessboard {
 
     public double computeScore(Color color, double minusScoreOfSameYPawn) {
         double score = computeTotalScore(color);
-        score -= computeMinusScore(minusScoreOfSameYPawn);
+        score += computeMinusScore(minusScoreOfSameYPawn);
         return score;
     }
 
@@ -88,7 +88,7 @@ public class Chessboard {
     }
 
     private void validateMiddleBlank(Position position) {
-        if (board.get(position).isSameType(Type.BLANK)) {
+        if (!board.get(position).isSameType(Type.BLANK)) {
             throw new IllegalArgumentException("가로막는 기물이 있습니다.");
         }
     }

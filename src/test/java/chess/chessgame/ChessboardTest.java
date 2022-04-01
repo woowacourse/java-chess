@@ -1,7 +1,22 @@
 package chess.chessgame;
 
+import chess.piece.*;
+import chess.utils.InitializedChessboardGenerator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 public class ChessboardTest {
-    /*
 
     private Chessboard chessboard;
 
@@ -10,25 +25,37 @@ public class ChessboardTest {
         chessboard = new Chessboard(new InitializedChessboardGenerator());
     }
 
-    @Test
-    @DisplayName("체스판 row 사이즈 확인")
-    void checkSizeOfChessboard() {
-        assertThat(chessboard.getBoard().size()).isEqualTo(8);
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
+    @DisplayName("체스판 column 사이즈 확인")
+    void checkColSizeOfChessboard(int row) {
+        int colCount = (int) chessboard.getBoard()
+                .keySet()
+                .stream()
+                .filter(position -> position.isSameX(row))
+                .count();
+
+        assertThat(colCount).isEqualTo(8);
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
-    @DisplayName("체스판 column 사이즈 확인")
-    void checkSizeOfChessboard(int col) {
+    @DisplayName("체스판 row 사이즈 확인")
+    void checkRowSizeOfChessboard(int col) {
+        int rowCount = (int) chessboard.getBoard()
+                .keySet()
+                .stream()
+                .filter(position -> position.isSameY(col))
+                .count();
 
-        assertThat(chessboard.getBoard().get(col).size()).isEqualTo(8);
+        assertThat(rowCount).isEqualTo(8);
     }
 
     @ParameterizedTest
     @MethodSource("pieces")
     @DisplayName("초기 기물 위치 확인")
     void checkPiece(int x, int y, Type type, Color color) {
-        Piece piece = chessboard.getBoard().get(x).get(y);
+        Piece piece = chessboard.getBoard().get(new Position(x, y));
 
         assertThat(piece.isSameType(type)).isTrue();
         assertThat(piece.isSameColor(color)).isTrue();
@@ -72,13 +99,13 @@ public class ChessboardTest {
     @Test
     @DisplayName("올바르게 점수를 계산하는지 확인")
     void computeScore() {
-        chessboard = new Chessboard(() -> List.of(List.of(
-                new Queen(Color.BLACK),
-                new Rook(Color.BLACK),
-                new Bishop(Color.BLACK),
-                new Knight(Color.BLACK),
-                new Pawn(Color.BLACK)
-        )));
+        chessboard = new Chessboard(() -> Map.of(
+                new Position(0, 1), new Queen(Color.BLACK),
+                new Position(0, 2), new Rook(Color.BLACK),
+                new Position(0, 3), new Bishop(Color.BLACK),
+                new Position(0, 4), new Knight(Color.BLACK),
+                new Position(0, 5), new Pawn(Color.BLACK)
+        ));
         assertThat(chessboard.computeScore(Color.BLACK, 0.5))
                 .isEqualTo(20.5);
     }
@@ -86,10 +113,10 @@ public class ChessboardTest {
     @Test
     @DisplayName("같은 세로줄에 같은 폰이 있는 경우 0.5점으로 계산하는지 확인")
     void computeScorePawn() {
-        chessboard = new Chessboard(() -> List.of(
-                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE)),
-                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE)),
-                List.of(new Pawn(Color.BLACK), new Pawn(Color.WHITE), new Pawn(Color.WHITE))
+        chessboard = new Chessboard(() -> Map.of(
+                new Position(1, 0), new Pawn(Color.BLACK),
+                new Position(2, 0), new Pawn(Color.BLACK),
+                new Position(3, 0), new Pawn(Color.BLACK)
         ));
         assertThat(chessboard.computeScore(Color.BLACK, 0.5))
                 .isEqualTo(1.5);
@@ -110,7 +137,5 @@ public class ChessboardTest {
                 Arguments.of(6, 5, Type.PAWN, Color.WHITE)
         );
     }
-
-     */
 
 }

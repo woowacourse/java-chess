@@ -13,6 +13,8 @@ public interface State {
 
     Chessboard getChessboard();
 
+    State end();
+
     boolean isFinished();
 
     double computeScore(Color color, double minusScoreOfSameColumnPawn);

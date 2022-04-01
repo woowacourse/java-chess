@@ -29,6 +29,11 @@ public class Finish implements State {
     }
 
     @Override
+    public State end() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }

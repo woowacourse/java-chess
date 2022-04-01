@@ -25,6 +25,11 @@ public class Ready implements State {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public State end() {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
     public Chessboard getChessboard() {

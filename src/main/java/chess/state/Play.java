@@ -42,6 +42,11 @@ public class Play implements State {
     }
 
     @Override
+    public State end() {
+        return new Finish(chessboard);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }
