@@ -41,7 +41,7 @@ class QueenTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,Q", "WHITE,q"})
+    @CsvSource(value = {"BLACK,Q"})
     void name(Team team, String expect) {
         // given
         Queen queen = new Queen(team);

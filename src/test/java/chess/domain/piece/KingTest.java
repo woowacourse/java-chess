@@ -40,7 +40,7 @@ class KingTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,K", "WHITE,k"})
+    @CsvSource(value = {"BLACK,K"})
     void name(Team team, String expect) {
         // given
         King king = new King(team);

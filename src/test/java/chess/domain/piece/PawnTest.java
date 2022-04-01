@@ -83,7 +83,7 @@ public class PawnTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,P", "WHITE,p"})
+    @CsvSource(value = {"BLACK,P"})
     void name(Team team, String expect) {
         // given
         Pawn pawn = new Pawn(team);
