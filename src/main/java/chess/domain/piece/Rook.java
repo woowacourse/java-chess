@@ -22,10 +22,10 @@ public class Rook extends ChessPiece {
 
     private Rook(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
-                List.of(ChessBoardPosition.of(1, 0),
-                        ChessBoardPosition.of(-1, 0),
-                        ChessBoardPosition.of(0, 1),
-                        ChessBoardPosition.of(0, -1))));
+                List.of(ChessBoardPosition.ofDirection(1, 0),
+                        ChessBoardPosition.ofDirection(-1, 0),
+                        ChessBoardPosition.ofDirection(0, 1),
+                        ChessBoardPosition.ofDirection(0, -1))));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

@@ -22,10 +22,10 @@ public class Bishop extends ChessPiece {
 
     private Bishop(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
-                List.of(ChessBoardPosition.of(1, 1),
-                        ChessBoardPosition.of(1, -1),
-                        ChessBoardPosition.of(-1, 1),
-                        ChessBoardPosition.of(-1, -1))));
+                List.of(ChessBoardPosition.ofDirection(1, 1),
+                        ChessBoardPosition.ofDirection(1, -1),
+                        ChessBoardPosition.ofDirection(-1, 1),
+                        ChessBoardPosition.ofDirection(-1, -1))));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

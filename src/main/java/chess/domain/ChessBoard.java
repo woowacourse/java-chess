@@ -8,13 +8,21 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChessBoard {
+    private static final String ENEMY_CHESS_PIECE_SELECTED_EXCEPTION = "[ERROR] 적 체스 기물을 골랐습니다.";
+    private static final String OBSTACLE_IN_PATH_EXCEPTION = "[ERROR] 장애물이 경로에 존재합니다.";
+    private static final String UNVALID_SOURCE_POSITION_EXCEPTION = "[ERROR] sourcePosition에 체스 기물이 없습니다.";
+    private static final String SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION = "[ERROR] targetPosition에 같은 팀 체스 기물이 있습니다.";
     private final Map<ChessBoardPosition, ChessPiece> mapInformation;
+    private Team turn;
 
     private ChessBoard(final Map<ChessBoardPosition, ChessPiece> mapInformation) {
         this.mapInformation = mapInformation;
+        turn = Team.WHITE;
     }
 
     public static ChessBoard initialize() {
@@ -40,5 +48,76 @@ public class ChessBoard {
 
     public Map<ChessBoardPosition, ChessPiece> getMapInformation() {
         return mapInformation;
+    }
+
+    public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessPiece chessPiece = pickChessPiece(sourcePosition);
+        isChessPieceSameTeam(chessPiece);
+        isObstacleExist(chessPiece, sourcePosition, targetPosition);
+        isTargetPositionOccupiedBySameTeam(targetPosition);
+        killEnemyInTargetPositionIfExist(targetPosition);
+        moveChessPiece(chessPiece, sourcePosition, targetPosition);
+        nextTurn();
+    }
+
+    private void nextTurn() {
+        if (turn.isSame(Team.BLACK)) {
+            turn = Team.WHITE;
+            return;
+        }
+        turn = Team.BLACK;
+    }
+
+    private void moveChessPiece(ChessPiece chessPiece, ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        mapInformation.remove(sourcePosition);
+        mapInformation.put(targetPosition, chessPiece);
+    }
+
+    private void killEnemyInTargetPositionIfExist(ChessBoardPosition targetPosition) {
+        ChessPiece chessPiece = pickChessPiece(targetPosition);
+        if (Objects.isNull(chessPiece)) {
+            return;
+        }
+        mapInformation.remove(targetPosition, chessPiece);
+    }
+
+    private void isChessPieceSameTeam(ChessPiece chessPiece) {
+        if (Objects.isNull(chessPiece)) {
+            throw new IllegalArgumentException(UNVALID_SOURCE_POSITION_EXCEPTION);
+        }
+        if (!chessPiece.isSameTeam(turn)) {
+            throw new IllegalArgumentException(ENEMY_CHESS_PIECE_SELECTED_EXCEPTION);
+        }
+    }
+
+    private void isTargetPositionOccupiedBySameTeam(ChessBoardPosition targetPosition) {
+        ChessPiece chessPiece = pickChessPiece(targetPosition);
+        if (Objects.nonNull(chessPiece) && chessPiece.isSameTeam(turn)) {
+            throw new IllegalArgumentException(SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION);
+        }
+
+    }
+
+    private void isObstacleExist(ChessPiece chessPiece, ChessBoardPosition sourcePosition,
+                                 ChessBoardPosition targetPosition) {
+        List<ChessBoardPosition> path = chessPiece.getPath(sourcePosition, targetPosition);
+        for (ChessBoardPosition chessBoardPosition : path) {
+            isEmptyBoardSpace(chessBoardPosition);
+        }
+    }
+
+    private void isEmptyBoardSpace(ChessBoardPosition chessBoardPosition) {
+        if (mapInformation.containsKey(chessBoardPosition)) {
+            throw new IllegalArgumentException(OBSTACLE_IN_PATH_EXCEPTION);
+        }
+    }
+
+    ChessPiece pickChessPiece(ChessBoardPosition sourcePosition) {
+        return mapInformation.keySet()
+                .stream()
+                .filter(it -> it.equals(sourcePosition))
+                .findFirst()
+                .map(mapInformation::get)
+                .orElse(null);
     }
 }
