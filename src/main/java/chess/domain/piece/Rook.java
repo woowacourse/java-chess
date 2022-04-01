@@ -35,7 +35,7 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public double getValue() {
+    public double getScore() {
         return SCORE;
     }
 }

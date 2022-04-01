@@ -46,7 +46,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public double getValue() {
+    public double getScore() {
         return SCORE;
     }
 }

@@ -91,7 +91,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public double getValue() {
+    public double getScore() {
         return SCORE;
     }
 }

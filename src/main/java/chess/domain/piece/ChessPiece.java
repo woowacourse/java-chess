@@ -52,7 +52,7 @@ public abstract class ChessPiece {
         return color.isBlack();
     }
 
-    public abstract double getValue();
+    public abstract double getScore();
 
     public String getName() {
         return name;

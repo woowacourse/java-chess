@@ -34,7 +34,7 @@ public class Score {
         double sumExceptPawnScore = chessBoard.values().stream()
                 .filter((chessPiece) -> chessPiece.isSameColor(color))
                 .filter(this::isNotPawn)
-                .mapToDouble(ChessPiece::getValue)
+                .mapToDouble(ChessPiece::getScore)
                 .sum();
 
         return sumExceptPawnScore + getSumPawn(color);
