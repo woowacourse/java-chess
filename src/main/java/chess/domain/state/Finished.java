@@ -10,17 +10,17 @@ public abstract class Finished extends Started {
 
     @Override
     public final State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
     }
 
     @Override
     public final State end() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
     }
 
     @Override
     public final State move(String source, String target) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
     }
 
     @Override

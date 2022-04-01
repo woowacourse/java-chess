@@ -11,7 +11,7 @@ public abstract class Running extends Started {
 
     @Override
     public final State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
     }
 
     @Override
@@ -26,6 +26,6 @@ public abstract class Running extends Started {
 
     @Override
     public final Result winner() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_ERROR_MASSAGE);
     }
 }
