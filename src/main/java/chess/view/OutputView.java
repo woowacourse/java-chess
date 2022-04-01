@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String SEPARATOR = System.lineSeparator();
     private static final String ARROW = "> ";
+    private static final String COMMA = ".";
     private static final String TEAM_STATUS = "%s 점수 : %.1f졈" + SEPARATOR;
     private static final String WINNER_TEAM = "게임 결과 : %s 승" + SEPARATOR;
     private static final String DRAW = "무승부";
@@ -38,17 +39,20 @@ public class OutputView {
 
         for (Rank rank : ranks) {
             for (File file : File.values()) {
-                Position position = new Position(file, rank);
-                if (board.containsKey(position)) {
-                    System.out.print(board.get(position).getName());
-                }
-                else {
-                    System.out.print(".");
-                }
+                printPiece(board, rank, file);
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printPiece(Map<Position, Article> board, Rank rank, File file) {
+        Position position = new Position(file, rank);
+        if (board.containsKey(position)) {
+            System.out.print(board.get(position).getName());
+            return;
+        }
+        System.out.print(COMMA);
     }
 
     public static void printStatus(Map<Color, Double> colorsTotalScore) {
