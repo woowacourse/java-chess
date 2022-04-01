@@ -47,7 +47,7 @@ class ReadyTest {
     void checkScore() {
         Ready ready = new Ready();
 
-        assertThatThrownBy(() -> new Ready().computeScore(Color.WHITE))
+        assertThatThrownBy(() -> ready.computeScore(Color.WHITE))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

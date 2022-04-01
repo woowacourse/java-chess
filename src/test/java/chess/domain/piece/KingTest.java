@@ -16,6 +16,7 @@ class KingTest {
     @DisplayName("king 기물 이동 위치 검증")
     void checkKingPosition(int a, int b) {
         King king = new King(Color.BLACK);
+
         assertThat(king.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
@@ -25,6 +26,7 @@ class KingTest {
     @DisplayName("king 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         King king = new King(Color.BLACK);
+
         assertThat(king.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
@@ -33,6 +35,7 @@ class KingTest {
     @DisplayName("같은 타입인지 검사")
     void checkSameType() {
         King king = new King(Color.BLACK);
+
         assertThat(king.isSameType(King.class)).isTrue();
     }
 }

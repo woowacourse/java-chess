@@ -39,6 +39,7 @@ class PlayTest {
     @DisplayName("move하고 Play를 반환하는지 확인")
     void checkMove() {
         Play play = new Play(new Turn());
+
         assertThat(play.move(new Position(6, 0), new Position(5, 0)).getClass())
                 .isEqualTo(Play.class);
     }

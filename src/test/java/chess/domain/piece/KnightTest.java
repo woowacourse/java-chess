@@ -16,6 +16,7 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - true")
     void checkPositionWhenTrue(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
+
         assertThat(knight.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isTrue();
     }
@@ -25,6 +26,7 @@ class KnightTest {
     @DisplayName("knight 기물 이동 위치 검증 - false")
     void checkPositionWhenFalse(int a, int b) {
         Knight knight = new Knight(Color.BLACK);
+
         assertThat(knight.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
     }
@@ -33,6 +35,7 @@ class KnightTest {
     @DisplayName("같은 타입인지 검사")
     void checkSameType() {
         Knight knight = new Knight(Color.BLACK);
+
         assertThat(knight.isSameType(Knight.class)).isTrue();
     }
 }

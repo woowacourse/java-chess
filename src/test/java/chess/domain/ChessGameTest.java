@@ -13,6 +13,7 @@ class ChessGameTest {
     void checkScore() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
+
         assertThat(chessGame.computeScore(Color.WHITE)).isEqualTo(38);
     }
 
@@ -20,6 +21,7 @@ class ChessGameTest {
     @DisplayName("ready: 체스 게임이 끝난 상태인지 확인")
     void checkReadyFinish() {
         ChessGame chessGame = new ChessGame();
+
         assertThat(chessGame.isFinished()).isFalse();
     }
 
@@ -28,6 +30,7 @@ class ChessGameTest {
     void checkPlayFinish() {
         ChessGame chessGame = new ChessGame();
         chessGame.start();
+
         assertThat(chessGame.isFinished()).isFalse();
     }
 
@@ -36,6 +39,7 @@ class ChessGameTest {
     void checkFinish() {
         ChessGame chessGame = new ChessGame();
         chessGame.end();
+
         assertThat(chessGame.isFinished()).isTrue();
     }
 }
