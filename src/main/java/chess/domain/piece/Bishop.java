@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
+import chess.domain.strategy.ContinuousMovingStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,11 @@ public class Bishop extends ChessPiece {
     }
 
     private Bishop(Team team) {
-        super(team, SCORE);
+        super(team, SCORE, new ContinuousMovingStrategy(
+                List.of(ChessBoardPosition.of(1, 1),
+                        ChessBoardPosition.of(1, -1),
+                        ChessBoardPosition.of(-1, 1),
+                        ChessBoardPosition.of(-1, -1))));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
@@ -31,8 +36,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public List<ChessBoard> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        return null;
+    public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        return movingStrategy.makePath(sourcePosition, targetPosition);
     }
 
     @Override

@@ -11,20 +11,40 @@ public class ChessBoardPosition {
     private final int row;
 
     public ChessBoardPosition(int column, int row) {
-        validateRange(column);
-        validateRange(row);
         this.column = column;
         this.row = row;
     }
 
     public static ChessBoardPosition of(int column, int row) {
+        validateRange(column);
+        validateRange(row);
         return new ChessBoardPosition(column, row);
     }
 
-    private void validateRange(int target) {
+    public static ChessBoardPosition ofDirection(int column, int row) {
+        return new ChessBoardPosition(column, row);
+    }
+
+    private static void validateRange(int target) {
         if (target < MINIMUM || MAXIMUM < target) {
             throw new IllegalArgumentException(POSITION_OUT_OF_RANGE);
         }
+    }
+
+    public ChessBoardPosition minus(ChessBoardPosition position) {
+        return new ChessBoardPosition(column - position.column, row - position.row);
+    }
+
+    public ChessBoardPosition hardCopy() {
+        return new ChessBoardPosition(column, row);
+    }
+
+    public ChessBoardPosition plus(ChessBoardPosition unitMovement) {
+        return new ChessBoardPosition(column + unitMovement.column, row + unitMovement.row);
+    }
+
+    public double slope() {
+        return Math.atan2(column, row);
     }
 
     @Override

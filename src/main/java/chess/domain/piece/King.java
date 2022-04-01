@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class King extends ChessPiece {
     }
 
     private King(Team team) {
-        super(team, SCORE);
+        super(team, SCORE, null);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
@@ -29,8 +30,8 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public List<ChessBoard> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        return null;
+    public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        return Collections.emptyList();
     }
 
     @Override

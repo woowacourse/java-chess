@@ -33,7 +33,7 @@ public class Pawn extends ChessPiece {
     }
 
     private Pawn(Team team) {
-        super(team, SCORE);
+        super(team, SCORE, null);
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {
@@ -44,7 +44,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public List<ChessBoard> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+    public List<ChessBoardPosition> getPath(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         return null;
     }
 

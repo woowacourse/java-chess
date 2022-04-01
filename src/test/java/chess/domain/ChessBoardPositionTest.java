@@ -32,4 +32,20 @@ class ChessBoardPositionTest {
         ChessBoardPosition chessBoardPosition = new ChessBoardPosition('a', 3);
         assertThat(chessBoardPosition.equals(new ChessBoardPosition('a', 4))).isFalse();
     }
+
+    @Test
+    @DisplayName("기울기가 같은지 테스트")
+    void slopeTest() {
+        ChessBoardPosition position1 = ChessBoardPosition.of(1, 1);
+        ChessBoardPosition position2 = ChessBoardPosition.of(2, 2);
+        assertThat(position1.slope() == position2.slope()).isTrue();
+    }
+
+    @Test
+    @DisplayName("기울기가 다른지 테스트")
+    void slopeTest2() {
+        ChessBoardPosition position1 = ChessBoardPosition.of(1, 1);
+        ChessBoardPosition position2 = ChessBoardPosition.of(4, 2);
+        assertThat(position1.slope() == position2.slope()).isFalse();
+    }
 }
