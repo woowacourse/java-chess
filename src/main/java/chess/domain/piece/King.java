@@ -9,9 +9,10 @@ import java.util.Map;
 public class King extends Piece {
 
     private static final List<Direction> DIRECTIONS = Direction.king();
+    private static final int SCORE = 0;
 
     public King(Color color) {
-        super(Type.KING, color);
+        super(SCORE, color);
     }
 
     @Override

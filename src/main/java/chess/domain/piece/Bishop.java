@@ -8,8 +8,10 @@ import java.util.Map;
 
 public class Bishop extends Piece {
 
+    private static final int SCORE = 3;
+
     public Bishop(Color color) {
-        super(Type.BISHOP, color);
+        super(SCORE, color);
     }
 
     @Override

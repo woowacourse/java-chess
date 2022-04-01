@@ -14,9 +14,10 @@ public class Pawn extends Piece {
     private static final List<Direction> BLACK_DIRECTIONS = Direction.pawnBlackTurn();
     private static final List<Direction> WHITE_DIAGONAL_DIRECTIONS = Direction.pawnWhiteDiagonal();
     private static final List<Direction> BLACK_DIAGONAL_DIRECTIONS = Direction.pawnBlackDiagonal();
+    private static final int SCORE = 1;
 
     public Pawn(Color color) {
-        super(Type.PAWN, color);
+        super(SCORE, color);
     }
 
     @Override

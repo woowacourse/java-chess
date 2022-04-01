@@ -1,4 +1,4 @@
-package chess;
+package chess.view;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -12,7 +12,6 @@ public enum Command {
 
     private static final String COMMAND_DELIMITER = " ";
     private static final String LOCATION_DELIMITER = "";
-
     private static final int SOURCE = 1;
     private static final int TARGET = 2;
 

@@ -8,8 +8,10 @@ import java.util.Map;
 
 public class Rook extends Piece {
 
+    private static final int SCORE = 5;
+
     public Rook(Color color) {
-        super(Type.ROOK, color);
+        super(SCORE, color);
     }
 
     @Override

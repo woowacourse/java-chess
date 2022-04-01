@@ -8,8 +8,10 @@ import java.util.Map;
 
 public class Queen extends Piece {
 
+    private static final int SCORE = 9;
+
     public Queen(Color color) {
-        super(Type.QUEEN, color);
+        super(SCORE, color);
     }
 
     @Override

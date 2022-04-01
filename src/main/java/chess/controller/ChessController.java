@@ -1,13 +1,13 @@
 package chess.controller;
 
-import chess.Command;
+import chess.view.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
 
 import java.util.Arrays;
 
-import static chess.Command.*;
+import static chess.view.Command.*;
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printStartMessage;
 

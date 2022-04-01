@@ -9,7 +9,6 @@ import java.util.Map;
 public class BoardCache {
 
     private static final Map<Position, Piece> CACHE = new LinkedHashMap<>();
-    private static final String NOT_EXIST_POSITION = "존재하지 않는 좌표입니다.";
     private static final int BLACK_PIECE = 0;
     private static final int BLACK_PAWN = 1;
     private static final int WHITE_PIECE = 6;
@@ -41,13 +40,5 @@ public class BoardCache {
         for (int index = 0; index < Chessboard.SIZE.size(); index++) {
             CACHE.put(new Position(row, index), new Pawn(color));
         }
-    }
-
-    public static Position findPosition(int row, int column) {
-        return CACHE.keySet()
-                .stream()
-                .filter(position -> position.isSamePosition(row, column))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_POSITION));
     }
 }

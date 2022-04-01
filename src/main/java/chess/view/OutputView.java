@@ -1,10 +1,6 @@
 package chess.view;
 
 import chess.domain.board.Chessboard;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-
-import java.util.Map;
 
 public class OutputView {
 
@@ -23,18 +19,17 @@ public class OutputView {
     }
 
     public static void printBoard(Chessboard chessboard) {
-        Map<Position, Piece> board = chessboard.getBoard();
         for (int row = 0; row < Chessboard.SIZE.size(); row++) {
-            printPiece(board, row);
+            printPiece(chessboard, row);
             System.out.println();
         }
         System.out.println();
     }
 
-    private static void printPiece(Map<Position, Piece> board, int row) {
+    private static void printPiece(Chessboard board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
-            if (board.containsKey(new Position(row, column))) {
-                System.out.print(board.get(new Position(row, column)).getSymbolByColor());
+            if (board.isExistKey(row, column)) {
+                System.out.print(Symbol.findSymbol(board.getPosition(row, column)).symbol());
                 continue;
             }
             System.out.print(BLANK);

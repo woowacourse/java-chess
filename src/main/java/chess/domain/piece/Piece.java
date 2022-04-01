@@ -13,15 +13,19 @@ public abstract class Piece {
     private static final int ROW = 0;
     private static final int COLUMN = 1;
 
-    private final Type type;
+    private final double score;
     protected Color color;
 
-    public Piece(Type type, Color color) {
-        this.type = type;
+    public Piece(double score, Color color) {
+        this.score = score;
         this.color = color;
     }
 
     public abstract boolean isMovablePosition(Position source, Position target, Map<Position, Piece> board);
+
+    public boolean isSameType(Class<? extends Piece> piece) {
+        return this.getClass() == piece;
+    }
 
     public static boolean isMovableDot(List<Direction> coordinatesOfMovable, Position source, Position target) {
         return coordinatesOfMovable
@@ -51,21 +55,9 @@ public abstract class Piece {
             return false;
         }
         if (source.isSamePosition(target)) {
-            return isBlankPosition(board.get(source));
+            return !board.containsKey(source);
         }
         return isMovablePositionByRecursion(source.findPossiblePosition(row, column), target, moveUnit, board);
-    }
-
-    private static boolean isBlankPosition(Piece piece) {
-        if (piece == null) {
-            return true;
-        }
-        return false;
-        //return piece.isSameType(Type.BLANK);
-    }
-
-    public boolean isSameType(Type type) {
-        return this.type == type;
     }
 
     public boolean isColor(Color color) {
@@ -76,15 +68,11 @@ public abstract class Piece {
         return this.color == piece.color;
     }
 
-    public String getSymbolByColor() {
-        return type.getSymbol(color);
-    }
-
-    public Type getType() {
-        return type;
-    }
-
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

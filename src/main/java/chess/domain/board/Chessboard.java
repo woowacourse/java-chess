@@ -89,7 +89,7 @@ public class Chessboard {
     }
 
     private boolean isPawn(Piece sourcePiece, Position source, Position target) {
-        if (!sourcePiece.isSameType(Type.PAWN)) {
+        if (!sourcePiece.isSameType(Pawn.class)) {
             return false;
         }
         Pawn pawn = (Pawn) sourcePiece;
@@ -97,14 +97,20 @@ public class Chessboard {
     }
 
     public boolean isKing(Position target) {
-        return board.get(target).isSameType(Type.KING);
+        return board.get(target).isSameType(King.class);
+    }
+
+    public boolean isExistKey(int row, int column) {
+        return board.keySet()
+                .stream()
+                .anyMatch(position -> position.isSamePosition(row, column));
     }
 
     public double computeScore(Color color) {
         double score = board.keySet()
                 .stream()
                 .filter(piece -> board.get(piece).isColor(color))
-                .mapToDouble(piece -> board.get(piece).getType().getScore())
+                .mapToDouble(piece -> board.get(piece).getScore())
                 .sum();
 
         for (int column = 0; column < SIZE.size(); column++) {
@@ -115,8 +121,9 @@ public class Chessboard {
 
     private long countSameColumnPawn(int column, Color color) {
         long count = SIZE.stream()
-                .filter(row -> board.get(BoardCache.findPosition(row, column)).isColor(color)
-                        && board.get(BoardCache.findPosition(row, column)).isSameType(Type.PAWN))
+                .filter(row -> board.containsKey(new Position(row, column)))
+                .filter(row -> board.get(new Position(row, column)).isColor(color)
+                        && board.get(new Position(row, column)).isSameType(Pawn.class))
                 .count();
         if (count < DUPLICATE) {
             return 0;
@@ -126,5 +133,14 @@ public class Chessboard {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Piece getPosition(int row, int column) {
+        return board.keySet()
+                .stream()
+                .filter(position -> position.isSamePosition(row, column))
+                .map(board::get)
+                .findAny()
+                .orElseThrow();
     }
 }
