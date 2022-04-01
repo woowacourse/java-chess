@@ -6,13 +6,16 @@ public final class End implements CommandStrategy {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,
-                        final Runnable runnable) {
+                        final Runnable printBoardToState) {
+
         if (chessGame.isNotRunning()) {
             chessGame.gameSwitchOff();
+
+            printBoardToState.run();
             return;
         }
         chessGame.end();
 
-        runnable.run();
+        printBoardToState.run();
     }
 }

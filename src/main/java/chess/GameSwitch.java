@@ -5,11 +5,15 @@ public enum GameSwitch {
     OFF,
     ;
 
+    public GameSwitch off() {
+        return OFF;
+    }
+
     public boolean isOn() {
         return this == ON;
     }
 
-    public GameSwitch off() {
-        return OFF;
+    public boolean isOff() {
+        return this == OFF;
     }
 }

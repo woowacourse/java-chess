@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface State {
 
-    State start();
+    State run();
 
     State move(Positions positions);
 

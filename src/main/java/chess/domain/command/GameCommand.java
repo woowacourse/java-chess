@@ -23,7 +23,6 @@ public enum GameCommand {
         this.commandGenerator = commandGenerator;
     }
 
-
     public static GameCommand from(final String command) {
         return Arrays.stream(GameCommand.values())
             .filter(it -> Pattern.matches(it.command, command))

@@ -18,7 +18,7 @@ public class RunningTest {
     void running_start_exception() {
         State state = new Running(new Board());
 
-        assertThatThrownBy(state::start)
+        assertThatThrownBy(state::run)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("진행 중일 때는 시작할 수 없습니다.");
     }

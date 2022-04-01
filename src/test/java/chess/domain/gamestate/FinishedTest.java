@@ -18,7 +18,7 @@ public class FinishedTest {
     void finished_start_running() {
         State state = new Finished(new Board());
 
-        assertThat(state.start()).isInstanceOf(Running.class);
+        assertThat(state.run()).isInstanceOf(Running.class);
     }
 
     @DisplayName("Finished 상태에서 move 명령 호출시 예외 발생")

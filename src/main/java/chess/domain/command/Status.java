@@ -6,11 +6,11 @@ public final class Status implements CommandStrategy {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,
-                        final Runnable runnable) {
+                        final Runnable printBoardToState) {
         chessGame.status();
 
-        runnable.run();
+        printBoardToState.run();
         
-        chessGame.start();
+        chessGame.run();
     }
 }

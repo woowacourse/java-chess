@@ -30,7 +30,7 @@ public class Running implements State {
     }
 
     @Override
-    public State start() {
+    public State run() {
         throw new IllegalStateException(DONT_START_WHEN_RUNNING);
     }
 

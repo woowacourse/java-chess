@@ -24,7 +24,7 @@ public class Ready implements State {
     }
 
     @Override
-    public State start() {
+    public State run() {
         return new Running(board, camp);
     }
 

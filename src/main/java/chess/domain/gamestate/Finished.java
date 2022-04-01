@@ -21,7 +21,7 @@ public class Finished implements State {
     }
 
     @Override
-    public State start() {
+    public State run() {
         return new Running(new Board());
     }
 

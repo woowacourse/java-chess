@@ -6,6 +6,7 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static String inputCommand() {
+        System.out.print(">> ");
         return SCANNER.nextLine();
     }
 }

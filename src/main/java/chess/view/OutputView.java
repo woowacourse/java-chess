@@ -18,8 +18,9 @@ public class OutputView {
     private static final String RESULT_MESSAGE_SUFFIX = "입니다.";
     private static final int BOARD_ROW_AND_COLUMN_UNIT = 8;
     private static final int UNIT_DIVISION_REMAINDER = 0;
-    private static final String END_GAME_MESSAGE = "해당 게임이 종료되었습니다.";
+    private static final String CURRENT_GAME_END_MESSAGE = "해당 게임이 종료되었습니다.";
     private static final String RESULT_SCORE_FORMAT = "백 진영 점수 : %.1f%n흑 진영 점수 : %.1f%n";
+    private static final String CHESS_GAME_END_MESSAGE = "체스 게임을 완전히 종료합니다.";
 
     public static void printStartMessage() {
         System.out.println(GAME_START_MESSAGE);
@@ -53,8 +54,12 @@ public class OutputView {
     }
 
     public static void printFinalStatus(final StatusScore statusScore) {
-        System.out.println(END_GAME_MESSAGE);
+        System.out.println(CURRENT_GAME_END_MESSAGE);
         System.out.printf(RESULT_SCORE_FORMAT, statusScore.getWhite(), statusScore.getBlack());
         System.out.println(statusScore.getGameResult() + RESULT_MESSAGE_SUFFIX);
+    }
+
+    public static void printEndMessage() {
+        System.out.println(CHESS_GAME_END_MESSAGE);
     }
 }
