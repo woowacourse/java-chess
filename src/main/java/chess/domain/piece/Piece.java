@@ -12,11 +12,15 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return this.color == color;
     }
 
-    public abstract boolean isMovable(Position fromPosition, Position toPosition);
+    public abstract boolean isMovable(final Position source, final Position target);
+
+    public boolean isCatchable(Position fromPosition, Position toPosition) {
+        return isMovable(fromPosition, toPosition);
+    }
 
     public boolean isKing() {
         return false;
@@ -30,12 +34,8 @@ public abstract class Piece {
         return false;
     }
 
-    public boolean isSameTeam(Piece piece) {
+    public boolean isSameTeam(final Piece piece) {
         return color == piece.color;
-    }
-
-    public boolean isCatchable(Position fromPosition, Position toPosition) {
-        return isMovable(fromPosition, toPosition);
     }
 
     public double getScore() {

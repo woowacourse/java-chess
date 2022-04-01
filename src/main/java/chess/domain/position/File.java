@@ -17,7 +17,7 @@ public enum File {
 
     private final int value;
 
-    File(int value) {
+    File(final int value) {
         this.value = value;
     }
 
@@ -25,7 +25,7 @@ public enum File {
         return value;
     }
 
-    public static File findFile(int value) {
+    public static File findFile(final int value) {
         return Arrays.stream(File.values())
             .filter(file -> file.value == value)
             .findAny()

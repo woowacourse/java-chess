@@ -20,12 +20,12 @@ public class ChessGame {
     }
 
     public void start() {
-        Board board = new Board(BoardFactory.getInitialPieces());
+        final Board board = new Board(BoardFactory.getInitialPieces());
         state = new Running(board, Color.WHITE);
     }
 
-    public void movePiece(String from, String to) {
-        state = state.movePiece(Position.valueOf(from), Position.valueOf(to));
+    public void movePiece(final String source, final String target) {
+        state = state.movePiece(Position.valueOf(source), Position.valueOf(target));
     }
 
     public void end() {

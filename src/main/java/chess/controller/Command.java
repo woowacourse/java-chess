@@ -22,7 +22,7 @@ public enum Command {
         this.controllerFunction = controllerFunction;
     }
 
-    public static void run(ChessGame chessGame, String input) {
+    public static void run(final ChessGame chessGame, final String input) {
         Command command = Arrays.stream(Command.values())
             .filter(inputOption -> input.matches(inputOption.regex))
             .findAny()
@@ -30,7 +30,7 @@ public enum Command {
         command.execute(chessGame, input);
     }
 
-    private void execute(ChessGame chessGame, String input) {
+    private void execute(final ChessGame chessGame, final String input) {
         controllerFunction.accept(chessGame, input);
     }
 }

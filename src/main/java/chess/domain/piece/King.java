@@ -7,22 +7,22 @@ public class King extends Piece {
     private static final double KING_SCORE = 0;
     private static final int RANGE = 1;
 
-    public King(Color color) {
+    public King(final Color color) {
         super(color, KING_SCORE);
     }
 
     @Override
-    public boolean isMovable(Position fromPosition, Position toPosition) {
-        return isMovableDirection(fromPosition, toPosition) && isMovableRange(fromPosition, toPosition);
+    public boolean isMovable(final Position source, final Position target) {
+        return isMovableDirection(source, target) && isMovableRange(source, target);
     }
 
-    private boolean isMovableDirection(Position fromPosition, Position toPosition) {
-        return fromPosition.isCross(toPosition) || fromPosition.isDiagonal(toPosition);
+    private boolean isMovableDirection(final Position source, final Position target) {
+        return source.isCross(target) || source.isDiagonal(target);
     }
 
-    private boolean isMovableRange(Position fromPosition, Position toPosition) {
-        return Math.abs(fromPosition.getFileDifference(toPosition)) == RANGE
-            || Math.abs(fromPosition.getRankDifference(toPosition)) == RANGE;
+    private boolean isMovableRange(final Position source, final Position target) {
+        return Math.abs(source.getFileDifference(target)) == RANGE
+            || Math.abs(source.getRankDifference(target)) == RANGE;
     }
 
     @Override

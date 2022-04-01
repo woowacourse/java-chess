@@ -19,26 +19,26 @@ public class ScoreCalculator {
 
     private final Map<Position, Piece> boardPieces;
 
-    public ScoreCalculator(Map<Position, Piece> boardPieces) {
+    public ScoreCalculator(final Map<Position, Piece> boardPieces) {
         this.boardPieces = new HashMap<>(boardPieces);
     }
 
     public Map<Color, Double> calculateAllTeamScore() {
-        Map<Color, Double> score = new HashMap<>();
+        final Map<Color, Double> score = new HashMap<>();
         score.put(Color.BLACK, calculateScore(Color.BLACK));
         score.put(Color.WHITE, calculateScore(Color.WHITE));
         return score;
     }
 
-    private double calculateScore(Color color) {
+    private double calculateScore(final Color color) {
         return boardPieces.values().stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)
             .sum() - calculateSameLinePawnSubtraction(color);
     }
 
-    private double calculateSameLinePawnSubtraction(Color color) {
-        List<File> pawnFiles = getPawnFiles(color);
+    private double calculateSameLinePawnSubtraction(final Color color) {
+        final List<File> pawnFiles = getPawnFiles(color);
 
         return new HashSet<>(pawnFiles).stream()
             .filter(file -> Collections.frequency(pawnFiles, file) >= ALLOWED_ONE_LINE_PAWN_COUNT)
@@ -46,7 +46,7 @@ public class ScoreCalculator {
             .sum();
     }
 
-    private List<File> getPawnFiles(Color color) {
+    private List<File> getPawnFiles(final Color color) {
         return boardPieces.keySet().stream()
             .filter(position -> boardPieces.get(position).isPawn() && boardPieces.get(position).isSameColor(color))
             .map(Position::getFile)

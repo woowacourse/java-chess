@@ -14,7 +14,7 @@ public class Waiting implements GameState {
     private static final String UNSUPPORTED_GET_BOARD = "[ERROR] 대기중이라 보드를 가져올 수 없습니다";
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
+    public GameState movePiece(Position source, Position target) {
         throw new UnsupportedOperationException(GAME_IS_WAITING_AND_NOT_MOVABLE_PIECE);
     }
 

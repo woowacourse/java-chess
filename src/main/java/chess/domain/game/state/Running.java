@@ -15,15 +15,15 @@ public class Running implements GameState {
     private final Board board;
     private Color color;
 
-    public Running(Board board, Color color) {
+    public Running(final Board board, final Color color) {
         this.board = board;
         this.color = color;
     }
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
-        validateTurn(fromPosition);
-        board.movePiece(fromPosition, toPosition);
+    public GameState movePiece(final Position source, final Position target) {
+        validateTurn(source);
+        board.movePiece(source, target);
         switchColor();
         if (board().isKingDead()) {
             return new End(board);
@@ -31,8 +31,8 @@ public class Running implements GameState {
         return this;
     }
 
-    private void validateTurn(Position fromPosition) {
-        if (board.getPieceColor(fromPosition) != color) {
+    private void validateTurn(final Position source) {
+        if (board.getPieceColor(source) != color) {
             throw new IllegalStateException(NOT_CORRECT_TURN_MOVE_PIECE);
         }
     }
@@ -57,13 +57,13 @@ public class Running implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getValue());
+        final ScoreCalculator scoreCalculator = new ScoreCalculator(board.getValue());
         return scoreCalculator.calculateAllTeamScore();
     }
 
     @Override
     public Color getWinTeamColor() {
-        WinnerCalculator winnerCalculator = new WinnerCalculator(board.getValue());
+        final WinnerCalculator winnerCalculator = new WinnerCalculator(board.getValue());
         return winnerCalculator.judgeWinner();
     }
 

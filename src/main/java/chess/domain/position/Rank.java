@@ -25,7 +25,7 @@ public enum Rank {
         return value;
     }
 
-    public static Rank findRank(int value) {
+    public static Rank findRank(final int value) {
         return Arrays.stream(Rank.values())
             .filter(rank -> rank.value == value)
             .findAny()

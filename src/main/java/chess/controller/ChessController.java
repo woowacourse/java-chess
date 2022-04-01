@@ -2,10 +2,8 @@ package chess.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -16,27 +14,26 @@ public class ChessController {
     private static final String DELIMITER = " ";
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        final ChessGame chessGame = new ChessGame();
         OutputView.printGameInitMessage();
 
         while (!chessGame.isFinish()) {
-            String input = InputView.inputOption();
-            Command.run(chessGame, input);
+            Command.run(chessGame, InputView.inputOption());
         }
     }
 
-    static void start(ChessGame chessGame, String optionInput) {
+    static void start(final ChessGame chessGame, final String optionInput) {
         chessGame.start();
         OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 
-    static void move(ChessGame chessGame, String optionInput) {
-        List<String> inputs = Arrays.asList(optionInput.split(DELIMITER));
+    static void move(final ChessGame chessGame, final String optionInput) {
+        final List<String> inputs = Arrays.asList(optionInput.split(DELIMITER));
         chessGame.movePiece(inputs.get(MOVE_INPUT_FROM_INDEX), inputs.get(MOVE_INPUT_TO_INDEX));
         OutputView.printInitialChessBoard(chessGame.getBoard().getValue());
     }
 
-    static void end(ChessGame chessGame, String optionInput) {
+    static void end(final ChessGame chessGame, final String optionInput) {
         if (!chessGame.isWaiting()) {
             printScore(chessGame);
             OutputView.printWinner(chessGame.judgeWinner());
@@ -44,13 +41,12 @@ public class ChessController {
         chessGame.end();
     }
 
-    static void status(ChessGame chessGame, String optionInput) {
+    static void status(final ChessGame chessGame, final String optionInput) {
         printScore(chessGame);
     }
 
-    private static void printScore(ChessGame chessGame) {
-        Map<Color, Double> scores = chessGame.calculateScore();
-        OutputView.printScore(scores);
+    private static void printScore(final ChessGame chessGame) {
+        OutputView.printScore(chessGame.calculateScore());
     }
 }
 

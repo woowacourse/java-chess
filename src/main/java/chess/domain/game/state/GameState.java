@@ -7,7 +7,7 @@ import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
 public interface GameState {
-    GameState movePiece(Position fromPosition, Position toPosition);
+    GameState movePiece(Position source, Position target);
 
     boolean isFinish();
 

@@ -28,20 +28,20 @@ public enum Direction {
     private final int rankIncrement;
     private final BiPredicate<Position, Position> condition;
 
-    Direction(int fileIncrement, int rankIncrement, BiPredicate<Position, Position> condition) {
+    Direction(final int fileIncrement, final int rankIncrement, final BiPredicate<Position, Position> condition) {
         this.fileIncrement = fileIncrement;
         this.rankIncrement = rankIncrement;
         this.condition = condition;
     }
 
-    public static Direction judge(Position p1, Position p2) {
+    public static Direction judge(final Position source, final Position target) {
         return Arrays.stream(Direction.values())
-            .filter(direction -> direction.condition.test(p1, p2))
+            .filter(direction -> direction.condition.test(source, target))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(CAN_NOT_JUDGE_DIRECTION));
     }
 
-    public static Position getNextPosition(Position from, Direction direction) {
-        return from.getIncreasedPositionByDifference(direction.fileIncrement, direction.rankIncrement);
+    public static Position getIncreasedPositionByDirection(final Position source, final Direction direction) {
+        return source.getIncreasedPositionByDifference(direction.fileIncrement, direction.rankIncrement);
     }
 }

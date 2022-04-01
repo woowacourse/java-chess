@@ -26,50 +26,50 @@ public class Board {
         this.value = new HashMap<>(value);
     }
 
-    public Color getPieceColor(Position position) {
+    public Color getPieceColor(final Position position) {
         return findPiece(position).getColor();
     }
 
-    private Piece findPiece(Position position) {
+    private Piece findPiece(final Position position) {
         if (!value.containsKey(position)) {
             throw new IllegalStateException(NOT_EXIST_PIECE);
         }
         return value.get(position);
     }
 
-    public void movePiece(Position fromPosition, Position toPosition) {
-        Piece pieceToMove = findPiece(fromPosition);
-        validateMovablePosition(pieceToMove, fromPosition, toPosition);
+    public void movePiece(final Position source, final Position target) {
+        final Piece pieceToMove = findPiece(source);
+        validateMovablePosition(pieceToMove, source, target);
         if (!pieceToMove.isKnight()) {
-            validateNotExistOtherPieceInRoute(fromPosition, toPosition);
+            validateNotExistOtherPieceInRoute(source, target);
         }
-        value.remove(fromPosition);
-        value.put(toPosition, pieceToMove);
+        value.remove(source);
+        value.put(target, pieceToMove);
     }
 
-    private void validateMovablePosition(Piece piece, Position fromPosition, Position toPosition) {
-        if (!piece.isMovable(fromPosition, toPosition) && !isCatchable(piece, fromPosition, toPosition)) {
+    private void validateMovablePosition(final Piece piece, final Position source, final Position target) {
+        if (!piece.isMovable(source, target) && !isCatchable(piece, source, target)) {
             throw new IllegalStateException(CAN_NOT_MOVE_PIECE);
         }
-        if (value.containsKey(toPosition) && piece.isSameTeam(value.get(toPosition))) {
+        if (value.containsKey(target) && piece.isSameTeam(value.get(target))) {
             throw new IllegalStateException(CAN_NOT_CATCH_PIECE);
         }
     }
 
-    private boolean isCatchable(Piece piece, Position fromPosition, Position toPosition) {
-        return value.containsKey(toPosition) && piece.isCatchable(fromPosition, toPosition);
+    private boolean isCatchable(final Piece piece, final Position source, final Position target) {
+        return value.containsKey(target) && piece.isCatchable(source, target);
     }
 
-    private void validateNotExistOtherPieceInRoute(Position fromPosition, Position toPosition) {
-        Direction direction = Direction.judge(fromPosition, toPosition);
-        Position nextPosition = Direction.getNextPosition(fromPosition, direction);
-        while (nextPosition != toPosition) {
+    private void validateNotExistOtherPieceInRoute(final Position source, final Position target) {
+        final Direction direction = Direction.judge(source, target);
+        Position nextPosition = Direction.getIncreasedPositionByDirection(source, direction);
+        while (nextPosition != target) {
             validateNotExistPiecePosition(nextPosition);
-            nextPosition = Direction.getNextPosition(nextPosition, direction);
+            nextPosition = Direction.getIncreasedPositionByDirection(nextPosition, direction);
         }
     }
 
-    private void validateNotExistPiecePosition(Position nextPosition) {
+    private void validateNotExistPiecePosition(final Position nextPosition) {
         if (value.containsKey(nextPosition)) {
             throw new IllegalStateException(CAN_NOT_PLACE_PIECE);
         }

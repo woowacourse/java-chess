@@ -1,5 +1,8 @@
 package chess.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -8,8 +11,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PieceMapper {
 
@@ -30,9 +31,9 @@ public class PieceMapper {
         MAPPER.put(Rook.class.getName(), ROOK_LETTER);
     }
 
-    public static String from(Piece piece) {
-        String letter = MAPPER.get(piece.getClass().getName());
-        if(piece.isSameColor(Color.WHITE)) {
+    public static String from(final Piece piece) {
+        final String letter = MAPPER.get(piece.getClass().getName());
+        if (piece.isSameColor(Color.WHITE)) {
             return letter;
         }
         return letter.toUpperCase();

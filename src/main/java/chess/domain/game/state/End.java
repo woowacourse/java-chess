@@ -14,12 +14,12 @@ public class End implements GameState {
 
     private final Board board;
 
-    public End(Board board) {
+    public End(final Board board) {
         this.board = board;
     }
 
     @Override
-    public GameState movePiece(Position fromPosition, Position toPosition) {
+    public GameState movePiece(Position source, Position target) {
         throw new UnsupportedOperationException(GAME_IS_END_AND_NOT_MOVABLE_PIECE);
     }
 
@@ -35,13 +35,13 @@ public class End implements GameState {
 
     @Override
     public Map<Color, Double> calculateScore() {
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board.getValue());
+        final ScoreCalculator scoreCalculator = new ScoreCalculator(board.getValue());
         return scoreCalculator.calculateAllTeamScore();
     }
 
     @Override
     public Color getWinTeamColor() {
-        WinnerCalculator winnerCalculator = new WinnerCalculator(board.getValue());
+        final WinnerCalculator winnerCalculator = new WinnerCalculator(board.getValue());
         return winnerCalculator.judgeWinner();
     }
 

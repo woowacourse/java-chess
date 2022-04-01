@@ -42,19 +42,19 @@ public class Position {
         return valueOf(makeKey(file, rank));
     }
 
-    public boolean isCross(Position position) {
+    public boolean isCross(final Position position) {
         return isSameFile(position) || isSameRank(position);
     }
 
-    public boolean isDiagonal(Position position) {
+    public boolean isDiagonal(final Position position) {
         return Math.abs(getRankDifference(position)) == Math.abs(getFileDifference(position));
     }
 
-    public boolean isSameFile(Position position) {
+    public boolean isSameFile(final Position position) {
         return file == position.file;
     }
 
-    public boolean isSameRank(Position position) {
+    public boolean isSameRank(final Position position) {
         return rank == position.rank;
     }
 
@@ -62,17 +62,17 @@ public class Position {
         return this.rank == rank;
     }
 
-    public int getRankDifference(Position position) {
+    public int getRankDifference(final Position position) {
         return rank.getValue() - position.rank.getValue();
     }
 
-    public int getFileDifference(Position position) {
+    public int getFileDifference(final Position position) {
         return file.getValue() - position.file.getValue();
     }
 
-    public Position getIncreasedPositionByDifference(int fileDifference, int rankDifference) {
-        int newFile = file.getValue() + fileDifference;
-        int newRank = rank.getValue() + rankDifference;
+    public Position getIncreasedPositionByDifference(final int fileDifference, final int rankDifference) {
+        final int newFile = file.getValue() + fileDifference;
+        final int newRank = rank.getValue() + rankDifference;
 
         return Position.valueOf(File.findFile(newFile), Rank.findRank(newRank));
     }

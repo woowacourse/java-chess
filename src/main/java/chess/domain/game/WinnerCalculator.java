@@ -14,7 +14,7 @@ public class WinnerCalculator {
 
     private final Map<Position, Piece> boardPieces;
 
-    public WinnerCalculator(Map<Position, Piece> boardPieces) {
+    public WinnerCalculator(final Map<Position, Piece> boardPieces) {
         this.boardPieces = new HashMap(boardPieces);
     }
 

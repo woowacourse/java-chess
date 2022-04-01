@@ -27,35 +27,35 @@ public class OutputView {
         System.out.println(EXAMPLE_MOVE_MESSAGE);
     }
 
-    public static void printInitialChessBoard(Map<Position, Piece> board) {
+    public static void printInitialChessBoard(final Map<Position, Piece> board) {
         Arrays.stream(Rank.values())
             .forEach(rank -> printBoardRowLine(rank, board));
         System.out.print(System.lineSeparator());
     }
 
-    public static void printBoardRowLine(Rank rank, Map<Position, Piece> board) {
+    public static void printBoardRowLine(final Rank rank, final Map<Position, Piece> board) {
         Arrays.stream(File.values())
             .map(file -> getPiecePrintFormat(board, rank, file))
             .forEach(System.out::print);
         System.out.print(System.lineSeparator());
     }
 
-    private static String getPiecePrintFormat(Map<Position, Piece> board, Rank rank, File file) {
+    private static String getPiecePrintFormat(final Map<Position, Piece> board, final Rank rank, final File file) {
         String printFormat = NONE_PIECE;
         if (board.containsKey(Position.valueOf(file, rank))) {
-            Piece piece = board.get(Position.valueOf(file, rank));
+            final Piece piece = board.get(Position.valueOf(file, rank));
             printFormat = PieceMapper.from(piece);
         }
         return printFormat;
     }
 
-    public static void printScore(Map<Color, Double> scores) {
+    public static void printScore(final Map<Color, Double> scores) {
         scores.keySet()
             .forEach(color -> System.out.printf(SCORE_FORMAT + System.lineSeparator(), color, scores.get(color)));
         System.out.print(System.lineSeparator());
     }
 
-    public static void printWinner(Color color) {
+    public static void printWinner(final Color color) {
         if (color == Color.NONE) {
             System.out.print(WINNER_NOT_EXIST + System.lineSeparator());
             return;
