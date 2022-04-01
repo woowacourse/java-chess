@@ -20,6 +20,8 @@ public abstract class Piece {
 
     public abstract double getPoint();
 
+    public abstract Direction getPawnDirection();
+
     public final String getSymbol() {
         final String value = symbol.getValue();
         if (color == Color.WHITE) {
@@ -48,11 +50,11 @@ public abstract class Piece {
         return this.symbol == symbol;
     }
 
-    public final Color getColor() {
-        return color;
-    }
-
     public final boolean isSameColor(final Color color) {
         return this.color == color;
+    }
+
+    public final Color getColor() {
+        return color;
     }
 }

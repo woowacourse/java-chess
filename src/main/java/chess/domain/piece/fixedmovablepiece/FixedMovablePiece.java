@@ -46,4 +46,9 @@ public abstract class FixedMovablePiece extends Piece {
         final List<Position> positionsToDirection = movablePositions.get(direction);
         positionsToDirection.add(nextPosition);
     }
+
+    @Override
+    public Direction getPawnDirection() {
+        throw new IllegalStateException("폰만 방향을 얻을 수 있습니다.");
+    }
 }

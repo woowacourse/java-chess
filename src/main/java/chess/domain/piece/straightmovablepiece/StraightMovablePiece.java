@@ -47,4 +47,9 @@ public abstract class StraightMovablePiece extends Piece {
         positionsToDirection.add(nextPosition);
         putMovablePositionsByDirection(movablePositions, nextPosition, direction);
     }
+
+    @Override
+    public Direction getPawnDirection() {
+        throw new IllegalStateException("폰만 방향을 얻을 수 있습니다.");
+    }
 }

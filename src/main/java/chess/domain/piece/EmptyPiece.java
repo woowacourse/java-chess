@@ -31,4 +31,9 @@ public class EmptyPiece extends Piece {
     public double getPoint() {
         return EMPTY_POINT;
     }
+
+    @Override
+    public Direction getPawnDirection() {
+        throw new IllegalStateException("폰만 방향을 얻을 수 있습니다.");
+    }
 }

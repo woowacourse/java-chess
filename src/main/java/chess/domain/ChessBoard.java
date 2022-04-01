@@ -21,6 +21,7 @@ public class ChessBoard {
 
     private static final int KING_COUNTS = 2;
     private static final int FIRST_MOVE_POSITION_INDEX_FOR_PAWN = 1;
+    private static final int NUMBER_OF_POSITIONS_FIRST_MOVE_PAWN_CAN_MOVE = 2;
 
     private final Map<Position, Piece> pieces;
     private final List<Position> firstPositionsOfPawn;
@@ -79,12 +80,10 @@ public class ChessBoard {
     }
 
     private void removeFirstMovablePositionForPawn(final Piece piece, final Map<Direction, List<Position>> movablePositions) {
-        List<Position> positions = movablePositions.get(Direction.NORTH);
-        if (piece.isBlack()) {
-            positions = movablePositions.get(Direction.SOUTH);
-        }
+        final Direction pawnDirection = piece.getPawnDirection();
+        final List<Position> positions = movablePositions.get(pawnDirection);
 
-        if (positions.size() == 2) {
+        if (positions.size() == NUMBER_OF_POSITIONS_FIRST_MOVE_PAWN_CAN_MOVE) {
             positions.remove(FIRST_MOVE_POSITION_INDEX_FOR_PAWN);
         }
     }
@@ -106,38 +105,42 @@ public class ChessBoard {
     public List<Position> generateMovablePositionsExceptObstacles(final Position nowPosition, final Piece piece,
                                                                   final Map<Direction, List<Position>> movablePositions) {
         final List<Position> result = new ArrayList<>();
+
         for (final Direction direction : movablePositions.keySet()) {
             final List<Position> positions = movablePositions.get(direction);
-            addMovablePositionsWithBlock(piece, result, positions);
+            addMovablePositionsExceptObstacles(piece, result, positions);
         }
+
         addDiagonalMoveForPawn(nowPosition, piece, result);
         return Collections.unmodifiableList(result);
     }
 
-    private void addMovablePositionsWithBlock(final Piece piece, final List<Position> result, final List<Position> positions) {
+    private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result, final List<Position> positions) {
         if (positions.size() != 0) {
             final int removeIndex = getRemoveIndex(piece, positions);
             result.addAll(positions.subList(0, removeIndex));
         }
     }
 
-    private int getRemoveIndex(final Piece nowPiece, final List<Position> positions) {
+    private int getRemoveIndex(final Piece piece, final List<Position> positions) {
         int removeIndex = 0;
         while (removeIndex < positions.size() - 1
                 && selectPiece(positions.get(removeIndex)).isEmpty()) {
             removeIndex++;
         }
 
-        Piece target = selectPiece(positions.get(removeIndex));
-        if (target.isSameColor(nowPiece) || (nowPiece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
+        Position positionWithObstacle = positions.get(removeIndex);
+        final Piece target = selectPiece(positionWithObstacle);
+
+        if (target.isSameColor(piece) || (piece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
             return removeIndex;
         }
-        return removeIndex + FIRST_MOVE_POSITION_INDEX_FOR_PAWN;
+        return removeIndex + 1;
     }
 
     private void addDiagonalMoveForPawn(final Position nowPosition, final Piece piece, final List<Position> result) {
         if (piece.isSameSymbol(Symbol.PAWN)) {
-            final Direction direction = getPawnDirection(piece);
+            final Direction direction = piece.getPawnDirection();
             final List<Direction> diagonalDirections = direction.getDiagonal();
             final List<Position> targetPositions = diagonalDirections.stream()
                     .map(nowPosition::toDirection)
@@ -145,16 +148,6 @@ public class ChessBoard {
 
             addPositionsIfEnemy(piece, result, targetPositions);
         }
-    }
-
-    private Direction getPawnDirection(final Piece piece) {
-        if (!piece.isSameSymbol(Symbol.PAWN)) {
-            throw new IllegalStateException("폰만 해당 메서드를 사용 가능합니다.");
-        }
-        if (piece.isWhite()) {
-            return Direction.NORTH;
-        }
-        return Direction.SOUTH;
     }
 
     private void addPositionsIfEnemy(final Piece piece, final List<Position> result, final List<Position> targetPositions) {

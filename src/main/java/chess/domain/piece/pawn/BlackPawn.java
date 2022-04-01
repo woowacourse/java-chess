@@ -22,4 +22,9 @@ public final class BlackPawn extends Pawn {
     public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         return super.getMovablePositionsByDirection(position, DIRECTION);
     }
+
+    @Override
+    public Direction getPawnDirection() {
+        return DIRECTION;
+    }
 }
