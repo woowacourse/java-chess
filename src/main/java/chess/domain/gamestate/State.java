@@ -6,19 +6,19 @@ import chess.domain.board.Position;
 
 public interface State {
 
-	State start();
+    State start();
 
-	State move(Position beforePosition, Position afterPosition);
+    State move(Position beforePosition, Position afterPosition);
 
-	State end();
+    State end();
 
-	double statusOfBlack();
+    double statusOfBlack();
 
-	double statusOfWhite();
+    double statusOfWhite();
 
-	boolean isRunning();
+    boolean isRunning();
 
-	Board getBoard();
+    Board getBoard();
 
-	Winner findWinner();
+    Winner findWinner();
 }

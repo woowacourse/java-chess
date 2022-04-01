@@ -9,87 +9,88 @@ import chess.view.OutputView;
 
 public class ChessGameController {
 
-	private final InputView inputView;
-	private final OutputView outputView;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-	public ChessGameController(InputView inputView, OutputView outputView) {
-		this.inputView = inputView;
-		this.outputView = outputView;
-	}
+    public ChessGameController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
 
-	public void run() {
-		outputView.printStartMessage();
-		final ChessGame chessGame = new ChessGame();
-		
-		play(chessGame);
-	}
+    public void run() {
+        outputView.printStartMessage();
+        final ChessGame chessGame = new ChessGame();
 
-	private void play(final ChessGame chessGame) {
-		try {
-			final List<String> commandInput = inputView.inputCommand();
-			final Command command = Command.from(commandInput.get(0));
-			executeCommandWithoutEnd(chessGame, command, commandInput);
-			if (isEndSystem(chessGame, command)) {
-				return;
-			}
-			play(chessGame);
-		} catch (Exception e) {
-			outputView.printException(e.getMessage());
-			play(chessGame);
-		}
-	}
+        play(chessGame);
+    }
 
-	private void executeCommandWithoutEnd(final ChessGame chessGame, final Command command, final List<String> commandInput) {
-		if (command == Command.START) {
-			executeStartCommand(chessGame);
-		}
-		if (command == Command.MOVE) {
-			executeMoveCommand(chessGame, commandInput);
-		}
-		if (command == Command.STATUS) {
-			executeStatusCommand(chessGame);
-		}
-	}
+    private void play(final ChessGame chessGame) {
+        try {
+            final List<String> commandInput = inputView.inputCommand();
+            final Command command = Command.from(commandInput.get(0));
+            executeCommandWithoutEnd(chessGame, command, commandInput);
+            if (isEndSystem(chessGame, command)) {
+                return;
+            }
+            play(chessGame);
+        } catch (Exception e) {
+            outputView.printException(e.getMessage());
+            play(chessGame);
+        }
+    }
 
-	private void executeStartCommand(final ChessGame chessGame) {
-		chessGame.start();
-		outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
-	}
+    private void executeCommandWithoutEnd(final ChessGame chessGame, final Command command,
+                                          final List<String> commandInput) {
+        if (command == Command.START) {
+            executeStartCommand(chessGame);
+        }
+        if (command == Command.MOVE) {
+            executeMoveCommand(chessGame, commandInput);
+        }
+        if (command == Command.STATUS) {
+            executeStatusCommand(chessGame);
+        }
+    }
 
-	private void executeMoveCommand(final ChessGame chessGame, final List<String> commandInput) {
-		Position sourcePosition = Position.from(commandInput.get(1));
-		Position targetPosition = Position.from(commandInput.get(2));
+    private void executeStartCommand(final ChessGame chessGame) {
+        chessGame.start();
+        outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
+    }
 
-		chessGame.move(sourcePosition, targetPosition);
-		if (!chessGame.isRunning()) {
-			printResult(chessGame);
-			return;
-		}
+    private void executeMoveCommand(final ChessGame chessGame, final List<String> commandInput) {
+        Position sourcePosition = Position.from(commandInput.get(1));
+        Position targetPosition = Position.from(commandInput.get(2));
 
-		outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
-	}
+        chessGame.move(sourcePosition, targetPosition);
+        if (!chessGame.isRunning()) {
+            printResult(chessGame);
+            return;
+        }
 
-	private boolean isEndSystem(final ChessGame chessGame, final Command command) {
-		if (command == Command.END) {
-			return executeEndCommand(chessGame);
-		}
-		return false;
-	}
+        outputView.printBoard(chessGame.getBoard().getPiecesByPosition());
+    }
 
-	private boolean executeEndCommand(final ChessGame chessGame) {
-		if (!chessGame.isRunning()) {
-			return true;
-		}
-		chessGame.end();
-		printResult(chessGame);
-		return false;
-	}
+    private boolean isEndSystem(final ChessGame chessGame, final Command command) {
+        if (command == Command.END) {
+            return executeEndCommand(chessGame);
+        }
+        return false;
+    }
 
-	private void executeStatusCommand(final ChessGame chessGame) {
-		outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
-	}
+    private boolean executeEndCommand(final ChessGame chessGame) {
+        if (!chessGame.isRunning()) {
+            return true;
+        }
+        chessGame.end();
+        printResult(chessGame);
+        return false;
+    }
 
-	private void printResult(final ChessGame chessGame) {
-		outputView.printResult(chessGame.statusOfWhite(), chessGame.statusOfBlack(), chessGame.findWinner());
-	}
+    private void executeStatusCommand(final ChessGame chessGame) {
+        outputView.printStatus(chessGame.statusOfWhite(), chessGame.statusOfBlack());
+    }
+
+    private void printResult(final ChessGame chessGame) {
+        outputView.printResult(chessGame.statusOfWhite(), chessGame.statusOfBlack(), chessGame.findWinner());
+    }
 }

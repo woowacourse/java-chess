@@ -1,8 +1,8 @@
 package chess.domain;
 
 public enum Color {
-	WHITE,
-	BLACK;
+    WHITE,
+    BLACK;
 
     public Color opponentColor() {
         if (this == WHITE) {
