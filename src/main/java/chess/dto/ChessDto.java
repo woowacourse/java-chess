@@ -30,7 +30,7 @@ public class ChessDto {
     }
 
     public static ChessDto of(final Board board, final String turn) {
-        return ChessDto.of(true, board, turn);
+        return of(true, board, turn);
     }
 
     public static ChessDto of(final Board board) {
