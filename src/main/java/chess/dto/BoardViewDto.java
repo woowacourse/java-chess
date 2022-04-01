@@ -26,7 +26,7 @@ public class BoardViewDto {
     }
 
     private static String toRowDisplay(Map<Position, Piece> board, Rank rank) {
-        return  File.allFilesAscending()
+        return File.allFilesAscending()
                 .stream()
                 .map(file -> Position.of(file, rank))
                 .map(board::get)
@@ -36,5 +36,11 @@ public class BoardViewDto {
 
     public List<String> display() {
         return boardDisplay;
+    }
+
+    public List<RowDto> webDisplay() {
+        return boardDisplay.stream()
+                .map(RowDto::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 }

@@ -1,0 +1,11 @@
+body {
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <title>게임 {{game_id}} | 체스 시뮬레이터</title>
+    <link rel="stylesheet" href="/styles/game.css"/>
+</head>
+<body>
+<section class="header__wrapper">
+    <h1>White Turn</h1>
+</section>
+<section id="chess_board">
+    {{#board}}
+    <div class="row">
+        {{#squares}}
+        <div class="square">
+            <span class="piece">{{value}}</span>
+        </div>
+        {{/squares}}
+    </div>
+    {{/board}}
+</section>
+</body>
+</html>
