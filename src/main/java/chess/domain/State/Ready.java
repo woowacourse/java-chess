@@ -8,7 +8,7 @@ import chess.domain.piece.Color;
 public final class Ready implements State {
 
     @Override
-    public State proceed(ChessBoard chessBoard, GameCommand gameCommand) {
+    public State proceed(final ChessBoard chessBoard, final GameCommand gameCommand) {
         if (gameCommand.isSameCommandType(CommandType.START)) {
             return start();
         }

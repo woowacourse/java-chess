@@ -1,7 +1,7 @@
 package chess.domain.piece.straightmovablepiece;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -17,12 +17,12 @@ public final class Bishop extends StraightMovablePiece {
 
     private static final int BISHOP_POINT = 3;
 
-    public Bishop(Color color) {
-        super(color, PieceName.BISHOP);
+    public Bishop(final Color color) {
+        super(color, Symbol.BISHOP);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         return super.getMovablePositionsByDirections(position, DIRECTIONS);
     }
 

@@ -18,15 +18,16 @@ public class ScoreCalculator {
         return instance;
     }
 
-    public double calculateColumns(List<Pieces> pieces) {
-        return pieces.stream()
+    public double calculateColumns(final List<Pieces> piecesOfAllColumns) {
+        return piecesOfAllColumns.stream()
                 .mapToDouble(this::calculateOneColumn)
                 .sum();
     }
 
-    public double calculateOneColumn(Pieces pieces) {
-        long pawnCount = pieces.getPawnCount();
-        double sum = pieces.getSumOfScore();
+    public double calculateOneColumn(final Pieces pieces) {
+        final long pawnCount = pieces.getPawnCount();
+        final double sum = pieces.getSumOfScore();
+
         if (pawnCount == 1) {
             return sum;
         }

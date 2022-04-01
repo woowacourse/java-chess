@@ -40,7 +40,7 @@ public class ReadyTest {
         final var state = new Ready();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b1" ,"b2")))
+                state.proceed(chessBoard, new GameCommand("move", "b1", "b2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("준비 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }

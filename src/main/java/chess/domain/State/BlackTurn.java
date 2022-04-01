@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 public final class BlackTurn extends Start {
 
     @Override
-    public State move(ChessBoard chessBoard, GameCommand gameCommand) {
+    public State move(final ChessBoard chessBoard, final GameCommand gameCommand) {
         if (isBlackTurn(chessBoard, gameCommand)) {
             chessBoard.move(gameCommand);
             return new WhiteTurn();
@@ -20,15 +20,9 @@ public final class BlackTurn extends Start {
         throw new IllegalStateException("흰색 차례가 아닙니다.");
     }
 
-    private boolean isEmpty(ChessBoard chessBoard, GameCommand gameCommand) {
-        Position fromPosition = gameCommand.getFromPosition();
-        Piece piece = chessBoard.selectPiece(fromPosition);
-        return piece.isEmpty();
-    }
-
-    private boolean isBlackTurn(ChessBoard chessBoard, GameCommand gameCommand) {
-        Position fromPosition = gameCommand.getFromPosition();
-        Piece piece = chessBoard.selectPiece(fromPosition);
+    private boolean isBlackTurn(final ChessBoard chessBoard, final GameCommand gameCommand) {
+        final Position fromPosition = gameCommand.getFromPosition();
+        final Piece piece = chessBoard.selectPiece(fromPosition);
         return piece.isBlack();
     }
 

@@ -41,7 +41,7 @@ public class StartTest {
         final var state = new BlackTurn();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b2" ,"b4")))
+                state.proceed(chessBoard, new GameCommand("move", "b2", "b4")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("흰색 차례가 아닙니다.");
     }

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.Symbol;
 import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.fixedmovablepiece.Knight;
 import chess.domain.piece.generator.NormalPiecesGenerator;
@@ -33,33 +33,35 @@ public class ChessBoardTest {
     @Test
     @DisplayName("체스판을 생성한다.")
     void construct() {
-        Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+        final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new WhitePawn()),
                 Map.entry(Position.of("a2"), new BlackPawn())
         ));
-        ChessBoard chessBoard = new ChessBoard(() -> pieces);
+        final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+        final Map<Position, Piece> actual = chessBoard.getPieces();
 
-        assertThat(chessBoard.getPieces()).containsAllEntriesOf(pieces);
+        assertThat(actual).containsAllEntriesOf(pieces);
     }
 
     @Test
     @DisplayName("체스판을 생성할 때 빈 칸은 EmptyPiece를 삽입한다.")
     void constructEmptyPieces() {
-        Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+        final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new WhitePawn()),
                 Map.entry(Position.of("a2"), new BlackPawn())
         ));
-        ChessBoard chessBoard = new ChessBoard(() -> pieces);
+        final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+        final Map<Position, Piece> actual = chessBoard.getPieces();
 
-        assertThat(chessBoard.getPieces()).contains(Map.entry(Position.of("a3"), EmptyPiece.getInstance()));
+        assertThat(actual).contains(Map.entry(Position.of("a3"), EmptyPiece.getInstance()));
     }
 
     @Test
     @DisplayName("위치가 들어왔을 때 해당 위치의 말이 어떤 말인지 확인한다.")
     void selectPiece() {
-        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-        ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-        Piece piece = chessBoard.selectPiece(Position.of("a1"));
+        final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+        final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+        final Piece piece = chessBoard.selectPiece(Position.of("a1"));
 
         assertThat(piece).isInstanceOf(Rook.class);
     }
@@ -67,11 +69,12 @@ public class ChessBoardTest {
     @ParameterizedTest
     @CsvSource(value = {"a2, true", "a3, false", "h7, true", "h8, false"})
     @DisplayName("해당 위치에 움직이지 않은 폰이 있는지 확인한다.")
-    void isFirstMovePawn(String position, boolean expected) {
-        PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-        ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+    void isFirstMovePawn(final String position, final boolean expected) {
+        final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+        final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+        boolean actual = chessBoard.isFirstMovePawn(Position.of(position));
 
-        assertThat(chessBoard.isFirstMovePawn(Position.of(position))).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Nested
@@ -81,14 +84,14 @@ public class ChessBoardTest {
         @Test
         @DisplayName("킹일때")
         void king() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new King(Color.WHITE));
             testBoard.put(Position.of("d5"), new WhitePawn());
             testBoard.put(Position.of("e3"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -100,14 +103,14 @@ public class ChessBoardTest {
         @Test
         @DisplayName("퀸일때")
         void queen() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Queen(Color.WHITE));
             testBoard.put(Position.of("g4"), new WhitePawn());
             testBoard.put(Position.of("d2"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -124,14 +127,14 @@ public class ChessBoardTest {
         @Test
         @DisplayName("룩일 때")
         void rook() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Rook(Color.WHITE));
             testBoard.put(Position.of("g4"), new WhitePawn());
             testBoard.put(Position.of("d2"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -144,14 +147,14 @@ public class ChessBoardTest {
         @Test
         @DisplayName("비숍일때")
         void bishop() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Bishop(Color.WHITE));
             testBoard.put(Position.of("g7"), new WhitePawn());
             testBoard.put(Position.of("f2"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -164,14 +167,14 @@ public class ChessBoardTest {
         @Test
         @DisplayName("나이트일때")
         void knight() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new Knight(Color.WHITE));
             testBoard.put(Position.of("f3"), new WhitePawn());
             testBoard.put(Position.of("c2"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -183,13 +186,13 @@ public class ChessBoardTest {
         @Test
         @DisplayName("폰일때")
         void pawn() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             testBoard.put(Position.of("d4"), new WhitePawn());
             testBoard.put(Position.of("e5"), new BlackPawn()); // 갈 수 있음
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(Position.of("d4"));
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(Position.of("d4"));
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(Position.of("d4"), piece,
                     piece.getMovablePositions(Position.of("d4")));
 
             assertThat(positions).contains(
@@ -199,15 +202,15 @@ public class ChessBoardTest {
         @Test
         @DisplayName("처음 움직이는 폰일때")
         void pawnFirstMove() {
-            Map<Position, Piece> testBoard = new HashMap<>();
-            Position pawnPosition = Position.of("d2");
+            final Map<Position, Piece> testBoard = new HashMap<>();
+            final Position pawnPosition = Position.of("d2");
 
             testBoard.put(pawnPosition, new WhitePawn());
             testBoard.put(Position.of("e3"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(pawnPosition);
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(pawnPosition);
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
 
             assertThat(positions).contains(
@@ -217,16 +220,16 @@ public class ChessBoardTest {
         @Test
         @DisplayName("폰일 때 앞이 가로막혀있으면 앞으로 갈 수 없다")
         void pawnFirstMoveButSameTeamBlock() {
-            Map<Position, Piece> testBoard = new HashMap<>();
+            final Map<Position, Piece> testBoard = new HashMap<>();
             Position pawnPosition = Position.of("d2");
 
             testBoard.put(pawnPosition, new WhitePawn());
             testBoard.put(Position.of("d3"), new BlackPawn());
             testBoard.put(Position.of("e3"), new BlackPawn());
 
-            ChessBoard chessBoard = new ChessBoard(() -> testBoard);
-            Piece piece = chessBoard.selectPiece(pawnPosition);
-            List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
+            final ChessBoard chessBoard = new ChessBoard(() -> testBoard);
+            final Piece piece = chessBoard.selectPiece(pawnPosition);
+            final List<Position> positions = chessBoard.generateMovablePositionsExceptObstacles(pawnPosition, piece,
                     piece.getMovablePositions(pawnPosition));
 
             assertThat(positions).containsExactly(Position.of("e3"));
@@ -239,60 +242,69 @@ public class ChessBoardTest {
         @Test
         @DisplayName("킹을 이동시킬 수 있다.")
         void king() {
-            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+            final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new King(Color.WHITE)),
                     Map.entry(Position.of("d3"), new WhitePawn()),
                     Map.entry(Position.of("d5"), new BlackPawn())
             ));
-            ChessBoard chessBoard = new ChessBoard(() -> pieces);
-            GameCommand gameCommand = new GameCommand("move", "d4", "d5");
+
+            final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+            final GameCommand gameCommand = new GameCommand("move", "d4", "d5");
+
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.KING)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.KING)).isTrue()
             );
         }
 
         @Test
         @DisplayName("퀸을 이동시킬 수 있다.")
         void queen() {
-            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+            final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new Queen(Color.WHITE)),
                     Map.entry(Position.of("g4"), new WhitePawn()),
                     Map.entry(Position.of("d2"), new BlackPawn())
             ));
-            ChessBoard chessBoard = new ChessBoard(() -> pieces);
-            GameCommand gameCommand = new GameCommand("move", "d4", "d2");
+
+            final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+            final GameCommand gameCommand = new GameCommand("move", "d4", "d2");
+
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.QUEEN)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.QUEEN)).isTrue()
             );
         }
 
         @Test
         @DisplayName("룩을 이동시킬 수 있다.")
         void rook() {
-            Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
+            final Map<Position, Piece> pieces = new HashMap<>(Map.ofEntries(
                     Map.entry(Position.of("d4"), new Rook(Color.WHITE)),
                     Map.entry(Position.of("g4"), new WhitePawn()),
                     Map.entry(Position.of("d2"), new BlackPawn())
             ));
-            ChessBoard chessBoard = new ChessBoard(() -> pieces);
-            GameCommand gameCommand = new GameCommand("move", "d4", "d2");
+
+            final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+            final GameCommand gameCommand = new GameCommand("move", "d4", "d2");
+
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.ROOK)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.ROOK)).isTrue()
             );
         }
 
@@ -304,59 +316,62 @@ public class ChessBoardTest {
                     Map.entry(Position.of("g7"), new WhitePawn()),
                     Map.entry(Position.of("f2"), new BlackPawn())
             ));
-            ChessBoard chessBoard = new ChessBoard(() -> pieces);
-            GameCommand gameCommand = new GameCommand("move", "d4", "f2");
+
+            final ChessBoard chessBoard = new ChessBoard(() -> pieces);
+            final GameCommand gameCommand = new GameCommand("move", "d4", "f2");
+
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.BISHOP)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.BISHOP)).isTrue()
             );
         }
 
         @ParameterizedTest
         @CsvSource(value = {"b1,c3", "b8,c6"})
         @DisplayName("나이트를 이동시킬 수 있다.")
-        void knight(String from, String to) {
-            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-            ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+        void knight(final String from, final String to) {
+            final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+            final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+            final GameCommand gameCommand = new GameCommand("move", from, to);
 
-            GameCommand gameCommand = new GameCommand("move", from, to);
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.KNIGHT)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.KNIGHT)).isTrue()
             );
         }
 
         @Test
         @DisplayName("폰을 이동시킬 수 있다.")
         void pawn() {
-            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-            ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+            final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+            final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+            final GameCommand gameCommand = new GameCommand("move", "b2", "b4");
 
-            GameCommand gameCommand = new GameCommand("move", "b2", "b4");
             chessBoard.move(gameCommand);
-            Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
-            Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
+            final Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
+            final Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
 
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.PAWN)).isTrue()
+                    () -> assertThat(fromPiece.isSameSymbol(Symbol.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSameSymbol(Symbol.PAWN)).isTrue()
             );
         }
 
         @Test
         @DisplayName("이동할 수 없는 곳으로 이동명령을 내렸을 때 예외가 발생한다.")
         void pawnCannotMoveThrowException() {
-            PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
-            ChessBoard chessBoard = new ChessBoard(piecesGenerator);
-            GameCommand gameCommand = new GameCommand("move", "b2", "c3");
+            final PiecesGenerator piecesGenerator = new NormalPiecesGenerator();
+            final ChessBoard chessBoard = new ChessBoard(piecesGenerator);
+            final GameCommand gameCommand = new GameCommand("move", "b2", "c3");
 
             assertThatThrownBy(() -> chessBoard.move(gameCommand))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -367,19 +382,20 @@ public class ChessBoardTest {
     @Test
     @DisplayName("한 컬럼의 흑팀 말들을 반환한다.")
     void getPiecesOnColumnByColor() {
-        ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
-        Piece rook = chessBoard.selectPiece(Position.of("a8"));
-        Piece pawn = chessBoard.selectPiece(Position.of("a7"));
-        Pieces pieces = chessBoard.getPiecesOnColumn(Column.A, Color.BLACK);
+        final ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
+        final Piece rook = chessBoard.selectPiece(Position.of("a8"));
+        final Piece pawn = chessBoard.selectPiece(Position.of("a7"));
+        final Pieces pieces = chessBoard.getPiecesOnColumn(Column.A, Color.BLACK);
+        final List<Piece> actual = pieces.getValue();
 
-        assertThat(pieces.getValue()).containsExactly(pawn, rook);
+        assertThat(actual).containsExactly(pawn, rook);
     }
 
     @Test
     @DisplayName("여러 컬럼의 흑팀 말들을 반환한다.")
     void getPiecesOnColumnsByColor() {
 
-        Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new Queen(Color.WHITE)),
                 Map.entry(Position.of("b3"), new WhitePawn()),
                 Map.entry(Position.of("c4"), new WhitePawn()),
@@ -389,14 +405,14 @@ public class ChessBoardTest {
                 Map.entry(Position.of("b8"), new BlackPawn())
 
         ));
-        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
-        Piece a = chessBoard.selectPiece(Position.of("a4"));
-        Piece a2 = chessBoard.selectPiece(Position.of("a7"));
-        Piece b = chessBoard.selectPiece(Position.of("b8"));
-        Piece c = chessBoard.selectPiece(Position.of("c5"));
+        final Piece a = chessBoard.selectPiece(Position.of("a4"));
+        final Piece a2 = chessBoard.selectPiece(Position.of("a7"));
+        final Piece b = chessBoard.selectPiece(Position.of("b8"));
+        final Piece c = chessBoard.selectPiece(Position.of("c5"));
 
-        List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(Color.BLACK);
+        final List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(Color.BLACK);
 
         assertThat(piecesOnColumns).contains(
                 new Pieces(List.of(a, a2)),
@@ -408,7 +424,7 @@ public class ChessBoardTest {
     @Test
     @DisplayName("킹이 1개일 때, 게임은 끝난다.")
     void isEndTrue() {
-        Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new King(Color.WHITE)),
                 Map.entry(Position.of("b3"), new WhitePawn()),
                 Map.entry(Position.of("c4"), new WhitePawn()),
@@ -417,15 +433,16 @@ public class ChessBoardTest {
                 Map.entry(Position.of("c5"), new BlackPawn()),
                 Map.entry(Position.of("b8"), new BlackPawn())
         ));
-        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final boolean actual = chessBoard.isEnd();
 
-        assertThat(chessBoard.isEnd()).isTrue();
+        assertThat(actual).isTrue();
     }
 
     @Test
     @DisplayName("킹이 2개일 때, 게임은 끝나지 않는다.")
     void isEndFalse() {
-        Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
                 Map.entry(Position.of("a1"), new King(Color.WHITE)),
                 Map.entry(Position.of("b3"), new WhitePawn()),
                 Map.entry(Position.of("c4"), new WhitePawn()),
@@ -434,8 +451,9 @@ public class ChessBoardTest {
                 Map.entry(Position.of("c5"), new BlackPawn()),
                 Map.entry(Position.of("b8"), new BlackPawn())
         ));
-        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final boolean actual = chessBoard.isEnd();
 
-        assertThat(chessBoard.isEnd()).isFalse();
+        assertThat(actual).isFalse();
     }
 }

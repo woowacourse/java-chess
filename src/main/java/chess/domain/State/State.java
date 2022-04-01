@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 
 public interface State {
 
-    State proceed(ChessBoard chessBoard, GameCommand gameCommand);
+    State proceed(final ChessBoard chessBoard, final GameCommand gameCommand);
 
     boolean isFinished();
 

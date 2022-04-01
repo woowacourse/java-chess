@@ -8,20 +8,20 @@ import java.util.Map;
 
 public abstract class Piece {
 
-    protected final PieceName name;
+    protected final Symbol symbol;
     protected final Color color;
 
-    protected Piece(Color color, PieceName name) {
+    protected Piece(final Color color, final Symbol symbol) {
         this.color = color;
-        this.name = name;
+        this.symbol = symbol;
     }
 
-    public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
+    public abstract Map<Direction, List<Position>> getMovablePositions(final Position position);
 
     public abstract double getPoint();
 
-    public final String getName() {
-        String value = name.getValue();
+    public final String getSymbol() {
+        final String value = symbol.getValue();
         if (color == Color.WHITE) {
             return value.toLowerCase(Locale.ROOT);
         }
@@ -40,19 +40,19 @@ public abstract class Piece {
         return color == Color.EMPTY;
     }
 
-    public final boolean isSameColor(Piece otherPiece) {
+    public final boolean isSameColor(final Piece otherPiece) {
         return color == otherPiece.color;
     }
 
-    public final boolean isSamePieceName(PieceName pieceName) {
-        return this.name == pieceName;
+    public final boolean isSameSymbol(final Symbol symbol) {
+        return this.symbol == symbol;
     }
 
     public final Color getColor() {
         return color;
     }
 
-    public final boolean isSameColor(Color color) {
+    public final boolean isSameColor(final Color color) {
         return this.color == color;
     }
 }

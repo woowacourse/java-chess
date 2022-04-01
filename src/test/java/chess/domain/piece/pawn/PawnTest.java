@@ -23,9 +23,9 @@ public class PawnTest {
     @Test
     @DisplayName("폰은 2칸 움직일 수 있다.")
     void firstMove() {
-        Pawn pawn = new WhitePawn();
-        Position position = Position.of("d4");
-        Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
+        final Pawn pawn = new WhitePawn();
+        final Position position = Position.of("d4");
+        final Map<Direction, List<Position>> positions = pawn.getMovablePositions(position);
 
         assertThat(positions).containsEntry(
                 Direction.NORTH, List.of(Position.of("d5"), Position.of("d6"))
@@ -35,7 +35,7 @@ public class PawnTest {
     @Test
     @DisplayName("폰은 1점이다.")
     void getPoint() {
-        Piece pawn = new BlackPawn();
+        final Piece pawn = new BlackPawn();
 
         assertThat(pawn.getPoint()).isEqualTo(1);
     }

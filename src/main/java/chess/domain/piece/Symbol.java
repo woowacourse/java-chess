@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum PieceName {
+public enum Symbol {
 
     KING("K"),
     QUEEN("Q"),
@@ -12,7 +12,7 @@ public enum PieceName {
 
     private final String value;
 
-    PieceName(String value) {
+    Symbol(final String value) {
         this.value = value;
     }
 

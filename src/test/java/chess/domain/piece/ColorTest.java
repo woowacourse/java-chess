@@ -9,8 +9,8 @@ class ColorTest {
 
     @ParameterizedTest
     @CsvSource(value = {"BLACK, WHITE", "WHITE, BLACK", "EMPTY, EMPTY"})
-    void getReverseColor(Color origin, Color expected) {
-        Color reverseColor = origin.getReverseColor();
+    void getReverseColor(final Color origin, final Color expected) {
+        final Color reverseColor = origin.getReverseColor();
 
         assertThat(reverseColor).isEqualTo(expected);
     }

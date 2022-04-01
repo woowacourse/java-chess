@@ -25,9 +25,9 @@ public class BishopTest {
     @Test
     @DisplayName("비숍이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByBishop() {
-        Bishop bishop = new Bishop(Color.BLACK);
-        Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
-        Map<Direction, List<Position>> expected = new HashMap<>(
+        final Bishop bishop = new Bishop(Color.BLACK);
+        final Map<Direction, List<Position>> positions = bishop.getMovablePositions(Position.of("d4"));
+        final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.NORTH_EAST, List.of(
                                 Position.of("e5"), Position.of("f6"),
@@ -43,13 +43,15 @@ public class BishopTest {
                                 Position.of("a1")))
                 )
         );
+
         assertThat(positions).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("비숍은 3점이다.")
     void getPoint() {
-        Piece bishop = new Bishop(Color.BLACK);
+        final Piece bishop = new Bishop(Color.BLACK);
+
         assertThat(bishop.getPoint()).isEqualTo(3);
     }
 }

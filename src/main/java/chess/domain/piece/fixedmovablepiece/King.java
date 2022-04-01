@@ -1,7 +1,7 @@
 package chess.domain.piece.fixedmovablepiece;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -18,12 +18,12 @@ public final class King extends FixedMovablePiece {
 
     private static final int KING_POINT = 0;
 
-    public King(Color color) {
-        super(color, PieceName.KING);
+    public King(final Color color) {
+        super(color, Symbol.KING);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         return super.getMovablePositionsByDirections(position, DIRECTIONS);
     }
 

@@ -13,9 +13,9 @@ public class PieceTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK, true", "WHITE, false"})
     @DisplayName("말끼리 서로 같은 편인지 확인한다.")
-    void isSameColor(Color color, boolean expected) {
-        Rook rook = new Rook(Color.BLACK);
-        King king = new King(color);
+    void isSameColor(final Color color, final boolean expected) {
+        final Rook rook = new Rook(Color.BLACK);
+        final King king = new King(color);
 
         assertThat(rook.isSameColor(king)).isEqualTo(expected);
     }

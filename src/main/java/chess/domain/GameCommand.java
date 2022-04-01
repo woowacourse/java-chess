@@ -16,7 +16,7 @@ public class GameCommand {
     private final CommandType type;
     private final List<Position> movePositions = new ArrayList<>();
 
-    public GameCommand(String... rawCommand) {
+    public GameCommand(final String... rawCommand) {
         type = CommandType.of(rawCommand[RAW_COMMAND_TYPE_INDEX]);
         validateCommand(rawCommand);
         if (type == CommandType.MOVE) {
@@ -25,7 +25,7 @@ public class GameCommand {
         }
     }
 
-    private void validateCommand(String[] rawCommand) {
+    private void validateCommand(final String[] rawCommand) {
         if (type == CommandType.MOVE && rawCommand.length != 3) {
             throw new IllegalArgumentException("해당 타입의 커맨드는 인자가 3개여야합니다.");
         }
@@ -34,7 +34,7 @@ public class GameCommand {
         }
     }
 
-    public boolean isSameCommandType(CommandType commandType) {
+    public boolean isSameCommandType(final CommandType commandType) {
         return type == commandType;
     }
 

@@ -19,7 +19,7 @@ public final class BlackPawn extends Pawn {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         return super.getMovablePositionsByDirection(position, DIRECTION);
     }
 }

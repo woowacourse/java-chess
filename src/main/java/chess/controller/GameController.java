@@ -13,14 +13,14 @@ import chess.view.OutputView;
 public class GameController {
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
-        ChessGame chessGame = new ChessGame(chessBoard);
+        final ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
+        final ChessGame chessGame = new ChessGame(chessBoard);
 
-        OutputView.printStartMessage();
         play(chessGame);
     }
 
-    private void play(ChessGame chessGame) {
+    private void play(final ChessGame chessGame) {
+        OutputView.printStartMessage();
         while (!chessGame.isFinished()) {
             requestCommand(chessGame);
             printChessBoard(chessGame);
@@ -28,9 +28,9 @@ public class GameController {
         }
     }
 
-    private void requestCommand(ChessGame chessGame) {
+    private void requestCommand(final ChessGame chessGame) {
         try {
-            GameCommand gameCommand = new GameCommand(InputView.inputCommand());
+            final GameCommand gameCommand = new GameCommand(InputView.inputCommand());
             chessGame.playGameByCommand(gameCommand);
             checkStatus(chessGame, gameCommand);
         } catch (RuntimeException exception) {
@@ -39,28 +39,29 @@ public class GameController {
         }
     }
 
-    private void checkStatus(ChessGame chessGame, GameCommand gameCommand) {
+    private void checkStatus(final ChessGame chessGame, final GameCommand gameCommand) {
         if (gameCommand.isSameCommandType(CommandType.STATUS)) {
             printStatus(chessGame);
         }
     }
 
-    private void printStatus(ChessGame chessGame) {
-        double whiteScore = chessGame.calculateScore(Color.WHITE);
-        double blackScore = chessGame.calculateScore(Color.BLACK);
+    private void printStatus(final ChessGame chessGame) {
+        final double whiteScore = chessGame.calculateScore(Color.WHITE);
+        final double blackScore = chessGame.calculateScore(Color.BLACK);
+
         OutputView.printStatus(Color.WHITE, whiteScore);
         OutputView.printStatus(Color.BLACK, blackScore);
     }
 
-    private void printChessBoard(ChessGame chessGame) {
+    private void printChessBoard(final ChessGame chessGame) {
         if (!chessGame.isFinished()) {
             OutputView.printChessBoard(chessGame.getChessBoard().getPieces());
         }
     }
 
-    private void printWinner(ChessGame chessGame) {
-        if (chessGame.isEndGame()) {
-            State state = chessGame.checkFinished();
+    private void printWinner(final ChessGame chessGame) {
+        if (chessGame.isEndGameByPiece()) {
+            final State state = chessGame.getWinnerState();
             OutputView.printWinner(state.getWinner());
         }
     }

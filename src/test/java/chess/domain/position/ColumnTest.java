@@ -13,7 +13,7 @@ public class ColumnTest {
     @Test
     @DisplayName("문자열로 Column 상수를 얻는다.")
     void ofByString() {
-        Column column = Column.of("a");
+        final Column column = Column.of("a");
 
         assertThat(column).isEqualTo(Column.A);
     }
@@ -21,7 +21,8 @@ public class ColumnTest {
     @Test
     @DisplayName("지정되지 않은 문자열로는 Column 상수를 얻을 수 없다.")
     void ofByStringThrowException() {
-        assertThatThrownBy(() -> Column.of("i"))
+        assertThatThrownBy(() ->
+                Column.of("i"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 열 이름이 들어왔습니다.");
     }
@@ -29,7 +30,7 @@ public class ColumnTest {
     @Test
     @DisplayName("인덱스로 Column 상수를 얻는다.")
     void ofByInt() {
-        Column column = Column.of(1);
+        final Column column = Column.of(1);
 
         assertThat(column).isEqualTo(Column.A);
     }
@@ -37,7 +38,8 @@ public class ColumnTest {
     @Test
     @DisplayName("범위를 벗어난 인덱스로는 Column 상수를 얻을 수 없다.")
     void ofByIntThrowException() {
-        assertThatThrownBy(() -> Column.of(0))
+        assertThatThrownBy(() ->
+                Column.of(0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 인덱스의 열은 존재하지 않습니다.");
     }
@@ -45,8 +47,8 @@ public class ColumnTest {
     @ParameterizedTest
     @CsvSource(value = {"-1,C", "1,E"})
     @DisplayName("이동 후 Column을 반환한다.")
-    void move(int moveValue, Column expected) {
-        Column move = Column.D.move(moveValue);
+    void move(final int moveValue, final Column expected) {
+        final Column move = Column.D.move(moveValue);
 
         assertThat(move).isEqualTo(expected);
     }
@@ -54,8 +56,9 @@ public class ColumnTest {
     @ParameterizedTest
     @CsvSource(value = {"A,-1", "H,1"})
     @DisplayName("이동할 수 없는 Column일 경우, 예외를 발생한다.")
-    void moveThrowException(Column column, int moveValue) {
-        assertThatThrownBy(() -> column.move(moveValue))
+    void moveThrowException(final Column column, final int moveValue) {
+        assertThatThrownBy(() ->
+                column.move(moveValue))
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("범위를 벗어났습니다.");
     }

@@ -11,18 +11,18 @@ public enum CommandType {
 
     private final boolean isSingleCommand;
 
-    CommandType(boolean isSingleCommand) {
+    CommandType(final boolean isSingleCommand) {
         this.isSingleCommand = isSingleCommand;
     }
 
-    public static CommandType of(String commandName) {
+    public static CommandType of(final String commandName) {
         return Arrays.stream(values())
                 .filter(commandType -> commandName.equalsIgnoreCase(commandType.name()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효한 커맨드가 아닙니다."));
     }
 
-    public static boolean isSingleCommand(CommandType command) {
+    public static boolean isSingleCommand(final CommandType command) {
         return command.isSingleCommand;
     }
 }

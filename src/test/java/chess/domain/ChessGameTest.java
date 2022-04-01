@@ -15,11 +15,12 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ChessGameTest {
 
-    Map<Position, Piece> testBoard = new HashMap<>();
+    private final Map<Position, Piece> testBoard = new HashMap<>();
 
     @BeforeEach
     void init() {
@@ -29,24 +30,28 @@ public class ChessGameTest {
     }
 
     @Test
+    @DisplayName("start 명령어로 게임을 시작하면 흰색 턴이다.")
     void playGameByCommandWithStart() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        State state = chessGame.playGameByCommand(new GameCommand("start"));
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final State state = chessGame.playGameByCommand(new GameCommand("start"));
 
         assertThat(state).isInstanceOf(WhiteTurn.class);
     }
 
     @Test
+    @DisplayName("end 명령어로 게임을 종료한다.")
     void playGameByCommandWithEnd() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
-        State state = chessGame.playGameByCommand(new GameCommand("end"));
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final State state = chessGame.playGameByCommand(new GameCommand("end"));
 
         assertThat(state).isInstanceOf(Finish.class);
     }
 
     @Test
+    @DisplayName("move 명령어를 입력하면 예외가 발생한다.")
     void playGameByCommandWithMove() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+
         assertThatThrownBy(() ->
                 chessGame.playGameByCommand(new GameCommand("move", "b2", "b4")))
                 .isInstanceOf(IllegalStateException.class)
@@ -54,8 +59,10 @@ public class ChessGameTest {
     }
 
     @Test
+    @DisplayName("status 명령어를 입력하면 예외가 발생한다.")
     void playGameByCommandWithStatus() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+
         assertThatThrownBy(() ->
                 chessGame.playGameByCommand(new GameCommand("status")))
                 .isInstanceOf(IllegalStateException.class)
@@ -63,20 +70,22 @@ public class ChessGameTest {
     }
 
     @Test
-    void checkFinished() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+    @DisplayName("킹이 없을 때, 게임이 종료됐는지 확인한다.")
+    void isFinished() {
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
         chessGame.playGameByCommand(new GameCommand("start"));
-        boolean finished = chessGame.isFinished();
+        final boolean finished = chessGame.isFinished();
 
         assertThat(finished).isEqualTo(false);
     }
 
 
     @Test
+    @DisplayName("점수를 계산한다.")
     void calculateScore() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
+        final double score = chessGame.calculateScore(Color.WHITE);
 
-        double score = chessGame.calculateScore(Color.WHITE);
         assertThat(score).isEqualTo(1.0);
     }
 }

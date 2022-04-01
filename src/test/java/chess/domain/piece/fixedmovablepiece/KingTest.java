@@ -25,9 +25,9 @@ public class KingTest {
     @Test
     @DisplayName("킹이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByKing() {
-        King king = new King(Color.BLACK);
-        Map<Direction, List<Position>> positions = king.getMovablePositions(Position.of("d4"));
-        Map<Direction, List<Position>> expected = new HashMap<>(
+        final King king = new King(Color.BLACK);
+        final Map<Direction, List<Position>> positions = king.getMovablePositions(Position.of("d4"));
+        final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.EAST, List.of(Position.of("e4"))),
                         Map.entry(Direction.WEST, List.of(Position.of("c4"))),
@@ -46,7 +46,7 @@ public class KingTest {
     @Test
     @DisplayName("킹은 0점이다.")
     void getPoint() {
-        Piece king = new King(Color.BLACK);
+        final Piece king = new King(Color.BLACK);
 
         assertThat(king.getPoint()).isEqualTo(0);
     }

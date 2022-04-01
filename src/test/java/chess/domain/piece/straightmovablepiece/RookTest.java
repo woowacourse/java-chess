@@ -25,9 +25,9 @@ public class RookTest {
     @Test
     @DisplayName("룩이 갈 수있는 방향으로 위치리스트를 반환한다.")
     void getMovablePositionsByRook() {
-        Rook rook = new Rook(Color.BLACK);
-        Map<Direction, List<Position>> positions = rook.getMovablePositions(Position.of("d4"));
-        Map<Direction, List<Position>> expected = new HashMap<>(
+        final Rook rook = new Rook(Color.BLACK);
+        final Map<Direction, List<Position>> positions = rook.getMovablePositions(Position.of("d4"));
+        final Map<Direction, List<Position>> expected = new HashMap<>(
                 Map.ofEntries(
                         Map.entry(Direction.EAST, List.of(
                                 Position.of("e4"), Position.of("f4"),
@@ -43,13 +43,15 @@ public class RookTest {
                                 Position.of("d1")))
                 )
         );
+
         assertThat(positions).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("룩은 5점이다.")
     void getPoint() {
-        Piece rook = new Rook(Color.BLACK);
+        final Piece rook = new Rook(Color.BLACK);
+
         assertThat(rook.getPoint()).isEqualTo(5);
     }
 }

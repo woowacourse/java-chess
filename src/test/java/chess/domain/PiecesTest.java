@@ -23,7 +23,7 @@ public class PiecesTest {
     @DisplayName("폰의 갯수를 계산한다")
     void getPawnCount() {
         final var pieces = new Pieces(List.of(new Rook(Color.WHITE), new WhitePawn(), new WhitePawn()));
-        long pawnCount = pieces.getPawnCount();
+        final long pawnCount = pieces.getPawnCount();
 
         assertThat(pawnCount).isEqualTo(2);
     }
@@ -32,7 +32,7 @@ public class PiecesTest {
     @DisplayName("점수의 합을 계산한다.")
     void getSumOfScore() {
         final var pieces = new Pieces(List.of(new Rook(Color.WHITE), new WhitePawn(), new WhitePawn()));
-        double score = pieces.getSumOfScore();
+        final double score = pieces.getSumOfScore();
 
         assertThat(score).isEqualTo(7);
     }

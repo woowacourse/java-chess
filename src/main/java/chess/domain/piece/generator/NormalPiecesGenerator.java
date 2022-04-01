@@ -1,11 +1,11 @@
 package chess.domain.piece.generator;
 
-import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
 import chess.domain.piece.straightmovablepiece.Queen;
 import chess.domain.piece.straightmovablepiece.Rook;

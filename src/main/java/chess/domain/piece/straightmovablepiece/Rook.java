@@ -1,7 +1,7 @@
 package chess.domain.piece.straightmovablepiece;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
@@ -17,12 +17,12 @@ public final class Rook extends StraightMovablePiece {
 
     private static final int ROOK_POINT = 5;
 
-    public Rook(Color color) {
-        super(color, PieceName.ROOK);
+    public Rook(final Color color) {
+        super(color, Symbol.ROOK);
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         return super.getMovablePositionsByDirections(position, DIRECTIONS);
     }
 

@@ -18,11 +18,11 @@ public enum Row {
 
     private final int value;
 
-    Row(int value) {
+    Row(final int value) {
         this.value = value;
     }
 
-    public static Row of(int value) {
+    public static Row of(final int value) {
         return Arrays.stream(values())
                 .filter(row -> row.value == value)
                 .findFirst()
@@ -30,15 +30,15 @@ public enum Row {
     }
 
     public static List<Row> getRowsReverseOrder() {
-        Row[] values = Row.values();
-        List<Row> reverse = Arrays.stream(values)
+        final Row[] values = Row.values();
+        final List<Row> reverse = Arrays.stream(values)
                 .collect(Collectors.toList());
         Collections.reverse(reverse);
         return reverse;
     }
 
-    public Row move(int value) {
-        int indexAfterMove = this.value + value;
+    public Row move(final int value) {
+        final int indexAfterMove = this.value + value;
         if (indexAfterMove > EIGHT.value || indexAfterMove < ONE.value) {
             throw new IndexOutOfBoundsException("범위를 벗어났습니다.");
         }

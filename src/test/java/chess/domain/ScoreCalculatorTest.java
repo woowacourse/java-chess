@@ -16,9 +16,9 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("한 컬럼의 점수를 계산한다.")
     void calculateOneColumn() {
-        Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK)));
-        ScoreCalculator calculator = ScoreCalculator.getInstance();
-        double score = calculator.calculateOneColumn(pieces);
+        final Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK)));
+        final ScoreCalculator calculator = ScoreCalculator.getInstance();
+        final double score = calculator.calculateOneColumn(pieces);
 
         assertThat(score).isEqualTo(5.5);
     }
@@ -26,10 +26,10 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("폰이 두 개 이상 포함된 한 컬럼의 점수를 계산한다.")
     void calculateOneColumnWithPawns() {
-        Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
+        final Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
                 new BlackPawn(), new BlackPawn(), new BlackPawn()));
-        ScoreCalculator calculator = ScoreCalculator.getInstance();
-        double score = calculator.calculateOneColumn(pieces);
+        final ScoreCalculator calculator = ScoreCalculator.getInstance();
+        final double score = calculator.calculateOneColumn(pieces);
 
         assertThat(score).isEqualTo(7);
     }
@@ -37,13 +37,17 @@ public class ScoreCalculatorTest {
     @Test
     @DisplayName("여러 컬럼의 점수를 계산한다.")
     void calculateColumns() {
-        List<Pieces> pieces = List.of(
-                new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                        new BlackPawn(), new BlackPawn(), new BlackPawn())),
-                new Pieces(List.of(new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK)))
+        final List<Pieces> pieces = List.of(
+                new Pieces(List.of(
+                        new Knight(Color.BLACK), new Bishop(Color.BLACK),
+                        new BlackPawn(), new BlackPawn(), new BlackPawn())
+                ),
+                new Pieces(List.of(
+                        new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK))
+                )
         );
-        ScoreCalculator calculator = ScoreCalculator.getInstance();
-        double score = calculator.calculateColumns(pieces);
+        final ScoreCalculator calculator = ScoreCalculator.getInstance();
+        final double score = calculator.calculateColumns(pieces);
 
         assertThat(score).isEqualTo(17);
     }

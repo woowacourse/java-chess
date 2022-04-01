@@ -20,14 +20,15 @@ public class PositionTest {
         @Test
         @DisplayName("포지션을 생성한다.")
         void constructPosition() {
-            assertThatCode(() -> Position.of(Column.A, Row.ONE))
+            assertThatCode(() ->
+                    Position.of(Column.A, Row.ONE))
                     .doesNotThrowAnyException();
         }
 
         @Test
         @DisplayName("포지션을 문자열로 생성한다.")
         void constructPositionByString() {
-            Position position = Position.of("a1");
+            final Position position = Position.of("a1");
 
             assertThat(position).isEqualTo(Position.of(Column.A, Row.ONE));
         }
@@ -35,16 +36,18 @@ public class PositionTest {
         @ParameterizedTest
         @ValueSource(strings = {"i1", "a9", "aa"})
         @DisplayName("생성할 때 지정된 문자열 외의 문자열이 들어오면 안된다.")
-        void throwOutOfRange(String value) {
-            assertThatThrownBy(() -> Position.of(value))
+        void throwOutOfRange(final String value) {
+            assertThatThrownBy(() ->
+                    Position.of(value))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
         @ParameterizedTest
         @ValueSource(strings = {" ", ""})
         @DisplayName("생성할 때 빈 문자열이나 공백이 들어오면 안된다.")
-        void throwBlank(String value) {
-            assertThatThrownBy(() -> Position.of(value))
+        void throwBlank(final String value) {
+            assertThatThrownBy(() ->
+                    Position.of(value))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("공백 또는 빈 문자열이면 안됩니다.");
         }
@@ -52,8 +55,9 @@ public class PositionTest {
         @ParameterizedTest
         @ValueSource(strings = {"a", "a11"})
         @DisplayName("생성할 때 길이가 2가 아니면 안된다.")
-        void throwLength(String value) {
-            assertThatThrownBy(() -> Position.of(value))
+        void throwLength(final String value) {
+            assertThatThrownBy(() ->
+                    Position.of(value))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("포지션은 두 글자입니다.");
         }
@@ -62,18 +66,20 @@ public class PositionTest {
     @ParameterizedTest
     @CsvSource(value = {"EAST,e4", "NORTH,d5", "NORTH_EAST,e5"})
     @DisplayName("Direction에 따라서 움직인 후의 Position을 얻을 수 있다.")
-    void toDirection(Direction direction, String expected) {
-        Position position = Position.of("d4");
+    void toDirection(final Direction direction, final String expected) {
+        final Position position = Position.of("d4");
+        final Position nextPosition = position.toDirection(direction);
 
-        assertThat(position.toDirection(direction)).isEqualTo(Position.of(expected));
+        assertThat(nextPosition).isEqualTo(Position.of(expected));
     }
 
     @ParameterizedTest
     @CsvSource(value = {"a1, WEST", "a1, SOUTH", "h8, EAST", "h8, NORTH", "h8, NORTH_EAST"})
     @DisplayName("Direction에 따라서 범위를 벗어나 Position을 얻을 수 없는 경우, 자기 자신을 반환한다.")
-    void toDirectionNotMove(String expected, Direction direction) {
-        Position position = Position.of(expected);
+    void toDirectionNotMove(final String expected, final Direction direction) {
+        final Position position = Position.of(expected);
+        final Position nextPosition = position.toDirection(direction);
 
-        assertThat(position.toDirection(direction)).isEqualTo(position);
+        assertThat(nextPosition).isEqualTo(position);
     }
 }

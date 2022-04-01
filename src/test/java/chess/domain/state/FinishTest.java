@@ -41,7 +41,7 @@ public class FinishTest {
         final var state = new Finish();
 
         assertThatThrownBy(() ->
-                state.proceed(chessBoard, new GameCommand("move", "b1" ,"b2")))
+                state.proceed(chessBoard, new GameCommand("move", "b1", "b2")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }

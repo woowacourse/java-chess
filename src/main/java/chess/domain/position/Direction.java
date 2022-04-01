@@ -29,13 +29,13 @@ public enum Direction {
     private final int columnValue;
     private final int rowValue;
 
-    Direction(int columnValue, int rowValue) {
+    Direction(final int columnValue, final int rowValue) {
         this.columnValue = columnValue;
         this.rowValue = rowValue;
     }
 
     public List<Direction> getDiagonal() {
-        List<Direction> directions = new ArrayList<>();
+        final List<Direction> directions = new ArrayList<>();
         if (this == NORTH || this == SOUTH) {
             directions.add(getDirectionByValues(-1, rowValue));
             directions.add(getDirectionByValues(1, rowValue));
@@ -49,7 +49,7 @@ public enum Direction {
         throw new IllegalStateException("해당 디렉션의 대각선을 구할 수 없습니다");
     }
 
-    public static Direction getDirectionByValues(int columnValue, int rowValue) {
+    public static Direction getDirectionByValues(final int columnValue, final int rowValue) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.columnValue == columnValue && direction.rowValue == rowValue)
                 .findFirst()

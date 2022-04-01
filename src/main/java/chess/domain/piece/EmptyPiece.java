@@ -8,11 +8,11 @@ import java.util.Map;
 public class EmptyPiece extends Piece {
 
     private static EmptyPiece instance;
-    
+
     private static final int EMPTY_POINT = 0;
 
     private EmptyPiece() {
-        super(Color.EMPTY, PieceName.EMPTY);
+        super(Color.EMPTY, Symbol.EMPTY);
     }
 
     public static EmptyPiece getInstance() {
@@ -23,7 +23,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public Map<Direction, List<Position>> getMovablePositions(Position position) {
+    public Map<Direction, List<Position>> getMovablePositions(final Position position) {
         throw new IllegalStateException("해당 자리에는 말이 존재하지 않습니다.");
     }
 

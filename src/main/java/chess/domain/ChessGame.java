@@ -9,40 +9,39 @@ import java.util.List;
 public class ChessGame {
 
     private State state;
-    private ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
 
-    public ChessGame(ChessBoard chessBoard) {
+    public ChessGame(final ChessBoard chessBoard) {
         this.state = new Ready();
         this.chessBoard = chessBoard;
     }
 
-    public State playGameByCommand(GameCommand gameCommand) {
+    public State playGameByCommand(final GameCommand gameCommand) {
         return state = state.proceed(chessBoard, gameCommand);
-    }
-
-    public State checkFinished() {
-        if (isEndGame()) {
-            State winnerState = state;
-            state = new Finish();
-            return winnerState;
-        }
-        return state;
-    }
-
-    public boolean isEndGame() {
-        return chessBoard.isEnd();
     }
 
     public boolean isFinished() {
         return state.isFinished();
     }
 
-    public double calculateScore(Color color) {
-        List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
-        ScoreCalculator calculator = ScoreCalculator.getInstance();
+    public State getWinnerState() {
+        if (isEndGameByPiece()) {
+            final State winnerState = state;
+            state = new Finish();
+            return winnerState;
+        }
+        return state;
+    }
 
-        double score = calculator.calculateColumns(piecesOnColumns);
-        return score;
+    public boolean isEndGameByPiece() {
+        return chessBoard.isEnd();
+    }
+
+    public double calculateScore(final Color color) {
+        final List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
+        final ScoreCalculator calculator = ScoreCalculator.getInstance();
+
+        return calculator.calculateColumns(piecesOnColumns);
     }
 
     public ChessBoard getChessBoard() {

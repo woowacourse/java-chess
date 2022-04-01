@@ -7,7 +7,7 @@ import chess.domain.piece.Color;
 public final class Finish implements State {
 
     @Override
-    public State proceed(ChessBoard chessBoard, GameCommand gameCommand) {
+    public State proceed(final ChessBoard chessBoard, final GameCommand gameCommand) {
         throw new IllegalStateException("종료 상태에서는 해당 명령어를 사용할 수 없습니다.");
     }
 

@@ -20,32 +20,32 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printChessBoard(Map<Position, Piece> board) {
-        for (Row row : Row.getRowsReverseOrder()) {
+    public static void printChessBoard(final Map<Position, Piece> board) {
+        for (final Row row : Row.getRowsReverseOrder()) {
             printBoardInRow(board, row);
             System.out.println();
         }
         System.out.println();
     }
 
-    private static void printBoardInRow(Map<Position, Piece> board, Row row) {
+    private static void printBoardInRow(final Map<Position, Piece> board, Row row) {
         for (Column column : Column.values()) {
-            Position position = Position.of(column, row);
-            Piece piece = board.get(position);
-            System.out.print(piece.getName());
+            final Position position = Position.of(column, row);
+            final Piece piece = board.get(position);
+            System.out.print(piece.getSymbol());
         }
     }
 
-    public static void printReplay(String exceptionMessage) {
+    public static void printReplay(final String exceptionMessage) {
         System.out.println(exceptionMessage);
         System.out.println("다시 입력 바랍니다." + System.lineSeparator());
     }
 
-    public static void printStatus(Color color, double score) {
+    public static void printStatus(final Color color, final double score) {
         System.out.println(color.name() + " : " + score);
     }
 
-    public static void printWinner(Color color) {
+    public static void printWinner(final Color color) {
         System.out.println(color.name() + "팀이 이겼습니다.");
     }
 }

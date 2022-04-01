@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.Symbol;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +10,7 @@ public class Pieces {
 
     private final List<Piece> value;
 
-    public Pieces(List<Piece> value) {
+    public Pieces(final List<Piece> value) {
         this.value = value;
     }
 
@@ -20,7 +20,7 @@ public class Pieces {
 
     public long getPawnCount() {
         return value.stream()
-                .filter(p -> p.isSamePieceName(PieceName.PAWN))
+                .filter(p -> p.isSameSymbol(Symbol.PAWN))
                 .count();
     }
 
