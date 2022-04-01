@@ -14,6 +14,7 @@ public final class Board {
 
     private static final double PAWN_PENALTY_SCORE = 0.5;
     private static final int KING_TOTAL_COUNT = 2;
+    private static final int SINGLE_COUNT = 1;
 
     private final Map<Position, Piece> pieces;
 
@@ -123,7 +124,7 @@ public final class Board {
     private int countPawnsOnSameColumns(final Color color) {
         return Arrays.stream(Column.values())
                 .mapToInt(column -> countPawnsOnSameColumn(column, color))
-                .filter(count -> count > 1)
+                .filter(count -> count > SINGLE_COUNT)
                 .sum();
     }
 

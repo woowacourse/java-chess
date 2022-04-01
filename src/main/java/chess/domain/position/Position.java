@@ -5,6 +5,7 @@ import java.util.*;
 public final class Position {
 
     private static final int AROUND_DISTANCE = 1;
+    private static final int COLUMN_ROW_LENGTH = 2;
     private static final Map<String, Position> caches = new HashMap<>();
 
     private final Column column;
@@ -22,7 +23,7 @@ public final class Position {
     }
 
     private static void validateValue(final String value) {
-        if (value.length() != 2) {
+        if (value.length() != COLUMN_ROW_LENGTH) {
             throw new IllegalArgumentException("위치는 열과 행으로 이루어져야 합니다.");
         }
     }
