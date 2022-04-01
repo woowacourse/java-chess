@@ -12,6 +12,7 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.result.EndResult;
+import chess.result.StartResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,29 +31,33 @@ public class WebApplication {
             return render(model, "index.html");
         });
 
-        post("/start", (req, res) -> {
-            chessController.start();
-            res.redirect("/board");
-            return null;
-        });
-
         get("/board", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
                 model = toModel(chessController.findAllPiece());
+                final Score score = chessController.status();
+                for (Color color : Color.values()) {
+                    model.put(color.name(), score.findScore(color));
+                }
             } catch (IllegalArgumentException e) {
                 model.put("error", e.getMessage());
-                return render(model, "index.html");
-            }
-            final Score score = chessController.status();
-            for (Color color : Color.values()) {
-                model.put(color.name(), score.findScore(color));
             }
 
             return render(model, "board.html");
         });
 
         path("/command", () -> {
+
+            post("/start", (req, res) -> {
+                Map<String, Object> model = new HashMap<>();
+                try {
+                    final StartResult result = chessController.start();
+                    model = toModel(result.getPieceByPosition());
+                } catch (IllegalArgumentException e) {
+                    model.put("error", e.getMessage());
+                }
+                return render(model, "board.html");
+            });
 
             post("/move", (req, res) -> {
                 try {
