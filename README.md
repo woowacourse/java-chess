@@ -46,7 +46,26 @@
 - [x] 기물이 점수를 갖는다.
 - [x] 체스게임에서 점수를 계산한다. (일반 피스, 폰 분리해서 계산)
 
+## 4단계 : 웹 UI 적용, 5단계 : DB 적용
 
+- [ ] api
+  - [ ] get "/" 최초 접속
+  - [ ] get "/start" db에 저장된 Board 가져옴
+  - [ ] get "/end" db의 Board를 최초 상태로 초기화
+  - [ ] get "/status" 저장된 Board를 가져와 현재 점수를 계산
+  - [ ] post "/move" source와 target을 가져와 이동
+
+
+- [ ] dto
+  - [ ] BoardDto - Map<String, String> position, piece / gameOver (true, false)
+  - [ ] MoveDto - source, target ("a7", "a5")
+  - [ ] StatusDto - whitePoint, BlackPoint, WinningTeam (15.5, 17.5, black)
+  - [ ] TurnDto - turn (black or white)
+
+
+- [ ] db
+  - [ ] Board - position, piece ("a1", "black pawn")
+  - [ ] turn - 현재 턴 (black, white)
 
 # 페어 체크리스트
 
