@@ -26,10 +26,10 @@ public final class Play extends AbstractState {
     }
 
     private State playOrResult(ChessGame chessGame) {
-        if (chessGame.isPlaying()) {
-            return new Play(chessGame);
+        if (chessGame.isFinished()) {
+            return new Result(chessGame);
         }
-        return new Result(chessGame);
+        return new Play(chessGame);
     }
 
     @Override

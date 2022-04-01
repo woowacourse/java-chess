@@ -10,7 +10,7 @@ public final class ChessGame {
     private static final String NO_TURN_MESSAGE = "현재 진영에 속해있지 않는 위치입니다.";
 
     private final Board board;
-    private boolean isPlaying = true;
+    private boolean isFinished = false;
     private Team turn = Team.WHITE;
 
     public ChessGame(Board board) {
@@ -26,7 +26,7 @@ public final class ChessGame {
         boolean isCheckmate = isCheckmate(to);
         board.move(from, to);
         if (isCheckmate) {
-            isPlaying = false;
+            isFinished = true;
             return;
         }
         turn = turn.changeTeam();
@@ -51,7 +51,7 @@ public final class ChessGame {
     }
 
     public Team getWinner() {
-        if (isPlaying) {
+        if (isFinished) {
             return getWinnerByScore();
         }
         return turn;
@@ -67,8 +67,8 @@ public final class ChessGame {
         return Team.NONE;
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
+    public boolean isFinished() {
+        return isFinished;
     }
 
     public Board getBoard() {

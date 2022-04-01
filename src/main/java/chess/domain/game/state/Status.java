@@ -10,10 +10,10 @@ public final class Status extends AbstractState {
 
     @Override
     public State execute(CommandDto commandDto) {
-        if (chessGame.isPlaying()) {
-            return new Play(chessGame).execute(commandDto);
+        if (chessGame.isFinished()) {
+            return new ExitFinished(chessGame);
         }
-        return new ExitFinished(chessGame);
+        return new Play(chessGame).execute(commandDto);
     }
 
     @Override
