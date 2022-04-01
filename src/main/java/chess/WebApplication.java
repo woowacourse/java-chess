@@ -1,12 +1,12 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebApplication {
     public static void main(String[] args) {
