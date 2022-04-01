@@ -79,7 +79,8 @@ public class ChessBoard {
         return firstPositionsOfPawn.contains(position);
     }
 
-    private void removeFirstMovablePositionForPawn(final Piece piece, final Map<Direction, List<Position>> movablePositions) {
+    private void removeFirstMovablePositionForPawn(final Piece piece,
+                                                   final Map<Direction, List<Position>> movablePositions) {
         final Direction pawnDirection = piece.getPawnDirection();
         final List<Position> positions = movablePositions.get(pawnDirection);
 
@@ -102,7 +103,7 @@ public class ChessBoard {
         }
     }
 
-    public List<Position> generateMovablePositionsExceptObstacles(final Position nowPosition, final Piece piece,
+    public List<Position> generateMovablePositionsExceptObstacles(final Position position, final Piece piece,
                                                                   final Map<Direction, List<Position>> movablePositions) {
         final List<Position> result = new ArrayList<>();
 
@@ -111,47 +112,62 @@ public class ChessBoard {
             addMovablePositionsExceptObstacles(piece, result, positions);
         }
 
-        addDiagonalMoveForPawn(nowPosition, piece, result);
+        addDiagonalMoveForPawn(position, piece, result);
         return Collections.unmodifiableList(result);
     }
 
-    private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result, final List<Position> positions) {
+    private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result,
+                                                    final List<Position> positions) {
         if (positions.size() != 0) {
             final int removeIndex = getRemoveIndex(piece, positions);
-            result.addAll(positions.subList(0, removeIndex));
+            final List<Position> movablePositions = positions.subList(0, removeIndex);
+            result.addAll(movablePositions);
         }
     }
 
     private int getRemoveIndex(final Piece piece, final List<Position> positions) {
-        int removeIndex = 0;
-        while (removeIndex < positions.size() - 1
-                && selectPiece(positions.get(removeIndex)).isEmpty()) {
-            removeIndex++;
+        int removeIndex = positions.size() - 1;
+
+        for (Position position : positions) {
+            removeIndex = getRemoveIndex(positions, position, removeIndex);
         }
 
-        Position positionWithObstacle = positions.get(removeIndex);
+        final Position positionWithObstacle = positions.get(removeIndex);
         final Piece target = selectPiece(positionWithObstacle);
 
+        return checkSameColor(piece, target, removeIndex);
+    }
+
+    private int getRemoveIndex(final List<Position> positions, final Position position, int removeIndex) {
+        final Piece nextPiece = selectPiece(position);
+        if (!nextPiece.isEmpty()) {
+            removeIndex = positions.indexOf(position);
+        }
+        return removeIndex;
+    }
+
+    private int checkSameColor(final Piece piece, final Piece target, final int removeIndex) {
         if (target.isSameColor(piece) || (piece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
             return removeIndex;
         }
         return removeIndex + 1;
     }
 
-    private void addDiagonalMoveForPawn(final Position nowPosition, final Piece piece, final List<Position> result) {
+    private void addDiagonalMoveForPawn(final Position position, final Piece piece, final List<Position> result) {
         if (piece.isSameSymbol(Symbol.PAWN)) {
             final Direction direction = piece.getPawnDirection();
             final List<Direction> diagonalDirections = direction.getDiagonal();
-            final List<Position> targetPositions = diagonalDirections.stream()
-                    .map(nowPosition::toDirection)
+            final List<Position> diagonalPositions = diagonalDirections.stream()
+                    .map(position::toDirection)
                     .collect(Collectors.toList());
 
-            addPositionsIfEnemy(piece, result, targetPositions);
+            addPositionsIfEnemy(piece, result, diagonalPositions);
         }
     }
 
-    private void addPositionsIfEnemy(final Piece piece, final List<Position> result, final List<Position> targetPositions) {
-        for (final Position position : targetPositions) {
+    private void addPositionsIfEnemy(final Piece piece, final List<Position> result,
+                                     final List<Position> diagonalPositions) {
+        for (final Position position : diagonalPositions) {
             addPositionIfEnemy(piece, result, position);
         }
     }
@@ -169,7 +185,7 @@ public class ChessBoard {
 
     public boolean isEnd() {
         long kingCount = pieces.values().stream()
-                .filter(p -> p.isSameSymbol(Symbol.KING))
+                .filter(piece -> piece.isSameSymbol(Symbol.KING))
                 .count();
         return kingCount != KING_COUNTS;
     }
@@ -185,7 +201,8 @@ public class ChessBoard {
     public Pieces getPiecesOnColumn(final Column column, final Color color) {
         final List<Piece> result = new ArrayList<>();
         for (final Row row : Row.values()) {
-            result.add(pieces.get(Position.of(column, row)));
+            final Piece piece = pieces.get(Position.of(column, row));
+            result.add(piece);
         }
         final List<Piece> value = result.stream()
                 .filter(piece -> piece.isSameColor(color))
