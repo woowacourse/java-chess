@@ -18,6 +18,9 @@ public final class Ready implements State {
         if (command.isEnd()) {
             return new End();
         }
+        if (command.isStatus()) {
+            throw new IllegalArgumentException("게임 시작 이후 점수 출력이 가능합니다.");
+        }
         return new Ready();
     }
 }
