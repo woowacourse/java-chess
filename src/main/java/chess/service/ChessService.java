@@ -39,8 +39,8 @@ public class ChessService {
             boardDao.updatePosition(boardEntry.getKey(), boardEntry.getValue());
         }
 
-        if (turnDao.getCurrentTurn().equals("black")) {
-            turnDao.updateTurn("white", "black");
+        if (Team.of(turnDao.getCurrentTurn()) == Team.BLACK) {
+            turnDao.updateTurn(Team.WHITE.getValue(), Team.BLACK.getValue());
         }
         return chessDto;
     }
