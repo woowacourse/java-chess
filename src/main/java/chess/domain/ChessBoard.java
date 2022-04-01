@@ -10,6 +10,7 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,11 +42,11 @@ public class ChessBoard {
     }
 
     public void move(Command command) {
-        Map<String, Position> positions = command.makePositions();
+        Positions positions = command.makePositions();
 
-        Position source = positions.get("source");
+        Position source = positions.getSource();
 
-        Position target = positions.get("target");
+        Position target = positions.getTarget();
 
         Piece piece = cells.get(source);
 

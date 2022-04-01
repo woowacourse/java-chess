@@ -6,7 +6,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Command;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import java.util.Map;
+import chess.domain.position.Positions;
 
 public class Black implements State {
 
@@ -31,9 +31,9 @@ public class Black implements State {
     }
 
     private void checkTeam(Command command, ChessBoard chessBoard) {
-        Map<String, Position> positions = command.makePositions();
+        Positions positions = command.makePositions();
 
-        Position source = positions.get("source");
+        Position source = positions.getSource();
 
         Team team = chessBoard.findTeam(source);
 
