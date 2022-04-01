@@ -1,22 +1,17 @@
 package chess.view;
 
-import chess.dto.ChessMenDto;
-import chess.dto.ChessPieceDto;
+import chess.domain.ChessBoardPosition;
+import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
-import com.google.common.base.Joiner;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
-    private static final int ADJUST_ROW_INDEX = 1;
-    private static final int LAST_CHESSBOARD_INDEX = 7;
+    private static final int FIRST_ROW_INDEX = 1;
+    private static final int LAST_ROW_INDEX = 8;
+    private static final char FIRST_COLUMN_INDEX = 'a';
+    private static final char LAST_COLUMN_INDEX = 'h';
     private static final char EMPTY_CHESS_BLOCK = '.';
-    private static final char ADJUST_COLUMN_INDEX = 'a';
-    private static final String EMPTY_STRING = "";
     private static final String CHESS_GAME_START_MESSAGE = "체스 게임을 시작합니다.";
     private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
@@ -25,17 +20,6 @@ public class OutputView {
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
     private static final String TEAM_SCORE_DELIMITER = ": ";
     private static final String IN_GAME_COMMAND_EXCEPTION = "[ERROR] move, status 중 하나를 입력해주세요.";
-    private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
-    private static final int CHESSBOARD_SIZE = 8;
-
-    static {
-        chessPieceNameToCharacter.put("PAWN", 'p');
-        chessPieceNameToCharacter.put("BISHOP", 'b');
-        chessPieceNameToCharacter.put("KNIGHT", 'n');
-        chessPieceNameToCharacter.put("ROOK", 'r');
-        chessPieceNameToCharacter.put("KING", 'k');
-        chessPieceNameToCharacter.put("QUEEN", 'q');
-    }
 
     private OutputView() {
     }
@@ -54,53 +38,23 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printCurrentChessBoard(ChessMenDto blackChessMenDto, ChessMenDto whiteChessMenDto) {
-        List<List<Character>> chessBoard = initializeChessBoard();
-        setBlackChessMenOnBoard(chessBoard, blackChessMenDto);
-        setWhiteChessMenOnBoard(chessBoard, whiteChessMenDto);
-
-        for (int i = LAST_CHESSBOARD_INDEX; i >= 0 ; i--) {
-            List<Character> chessBoardRow = chessBoard.get(i);
-            String visualizedRow = Joiner.on(EMPTY_STRING).join(chessBoardRow);
-            System.out.println(visualizedRow);
+    public static void printCurrentChessBoard(ChessBoardDto chessBoardDto) {
+        Map<ChessBoardPosition, Character> board = chessBoardDto.getBoardDto();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int row = LAST_ROW_INDEX; row >= FIRST_ROW_INDEX; row--) {
+            stringBuilder.append(makeRow(board, row))
+                    .append(System.lineSeparator());
         }
+        System.out.println(stringBuilder);
     }
 
-    private static List<List<Character>> initializeChessBoard() {
-        List<List<Character>> chessBoard = new ArrayList<>();
-        for (int i = 0; i < CHESSBOARD_SIZE; i++) {
-            List<Character> emptyRow = new ArrayList<>(Collections.nCopies(CHESSBOARD_SIZE, EMPTY_CHESS_BLOCK));
-            chessBoard.add(emptyRow);
+    private static String makeRow(Map<ChessBoardPosition, Character> board, int row) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char column = FIRST_COLUMN_INDEX; column <= LAST_COLUMN_INDEX; column++) {
+            ChessBoardPosition position = ChessBoardPosition.of(column, row);
+            stringBuilder.append(board.getOrDefault(position, EMPTY_CHESS_BLOCK));
         }
-        return chessBoard;
-    }
-
-    private static void setBlackChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
-        for (ChessPieceDto chessPieceDto : chessMenDto) {
-            String name = chessPieceDto.getName();
-            char chessPieceAbbreviation = chessTypeToUpperCase(chessPieceNameToCharacter.get(name));
-            chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
-        }
-    }
-
-    private static Character chessTypeToUpperCase(Character type) {
-        return Character.toUpperCase(type);
-    }
-
-    private static void setWhiteChessMenOnBoard(List<List<Character>> chessBoard, ChessMenDto chessMenDto) {
-        for (ChessPieceDto chessPieceDto : chessMenDto) {
-            String name = chessPieceDto.getName();
-            Character chessPieceAbbreviation = chessPieceNameToCharacter.get(name);
-            chessBoard.get(getRowIndex(chessPieceDto)).set(getColumnIndex(chessPieceDto), chessPieceAbbreviation);
-        }
-    }
-
-    private static int getRowIndex(ChessPieceDto chessPieceDto) {
-        return chessPieceDto.getRow() - ADJUST_ROW_INDEX;
-    }
-
-    private static int getColumnIndex(ChessPieceDto chessPieceDto) {
-        return chessPieceDto.getColumn() - ADJUST_COLUMN_INDEX;
+        return stringBuilder.toString();
     }
 
     public static void printStatus(ChessStatusDto chessStatusDto) {

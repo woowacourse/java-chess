@@ -1,51 +1,32 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.ChessMen;
 import chess.domain.Team;
 import java.util.Objects;
 
 public abstract class ChessPiece {
-    protected final String name;
     protected final double score;
     protected final Team team;
-    protected ChessBoardPosition position;
 
-    protected ChessPiece(String name, double score, Team team, ChessBoardPosition position) {
-        this.name = name;
+    protected ChessPiece(double score, Team team) {
         this.score = score;
         this.team = team;
-        this.position = position;
     }
 
-    public abstract boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen);
+    public abstract boolean isMovable(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition,
+                               ChessBoard chessBoard);
 
-    public void move(ChessBoardPosition targetPosition) {
-        this.position = targetPosition;
-    }
-
-    public boolean isSamePosition(ChessBoardPosition other) {
-        return position.equals(other);
-    }
-
-    public boolean myTeamExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen myTeamChessMen) {
-        return myTeamChessMen.existChessPieceAt(targetPosition);
-    }
-
-    public boolean enemyExistsInTargetPosition(ChessBoardPosition targetPosition, ChessMen enemyChessMen) {
-        return enemyChessMen.existChessPieceAt(targetPosition);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ChessBoardPosition getPosition() {
-        return position;
+    public boolean isSameTeam(Team otherTeam) {
+        return team.isSame(otherTeam);
     }
 
     public double getScore() {
         return score;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     @Override
@@ -57,12 +38,11 @@ public abstract class ChessPiece {
             return false;
         }
         ChessPiece that = (ChessPiece) o;
-        return Objects.equals(name, that.name) && team == that.team && Objects.equals(position,
-                that.position);
+        return Double.compare(that.score, score) == 0 && team == that.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, team, position);
+        return Objects.hash(score, team);
     }
 }

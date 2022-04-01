@@ -1,11 +1,16 @@
 package chess.controller;
 
-import static chess.view.InputView.*;
-import static chess.view.OutputView.*;
+import static chess.view.InputView.requestMoveOrStatus;
+import static chess.view.InputView.requestPlay;
+import static chess.view.OutputView.printChessGameStart;
+import static chess.view.OutputView.printCurrentChessBoard;
+import static chess.view.OutputView.printExceptionMessage;
+import static chess.view.OutputView.printInGameCommandExceptionMessage;
+import static chess.view.OutputView.printStatus;
 
 import chess.domain.ChessBoardPosition;
 import chess.domain.ChessGame;
-import chess.dto.ChessMenDto;
+import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
 import java.util.List;
 
@@ -26,20 +31,19 @@ public class ChessController {
 
     private void playChessGame() {
         ChessGame chessGame = ChessGame.create();
-        ChessMenDto blackChessMenDto = ChessMenDto.of(chessGame.getBlackChessMen());
-        ChessMenDto whiteChessMenDto = ChessMenDto.of(chessGame.getWhiteChessMen());
-        printCurrentChessBoard(blackChessMenDto, whiteChessMenDto);
+
+        printCurrentChessBoard(ChessBoardDto.of(chessGame.getChessBoard().getBoard()));
 
         while (!chessGame.end()) {
             executeCommand(chessGame);
         }
-        printStatus(ChessStatusDto.of(chessGame));
+        printStatus(ChessStatusDto.of(chessGame.getChessBoard(), chessGame.judgeWinner()));
     }
 
     private void executeCommand(ChessGame chessGame) {
         List<String> command = requestMoveOrStatus();
         if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
-            printStatus(ChessStatusDto.of(chessGame));
+            printStatus(ChessStatusDto.of(chessGame.getChessBoard(), chessGame.judgeWinner()));
             return;
         }
         if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
@@ -52,12 +56,11 @@ public class ChessController {
 
     private void executeMoveCommand(ChessGame chessGame, List<String> command) {
         try {
-            ChessBoardPosition sourcePosition = ChessBoardPosition.of(command.get(SOURCE_POSITION_INDEX));
-            ChessBoardPosition targetPosition = ChessBoardPosition.of(command.get(TARGET_POSITION_INDEX));
+            ChessBoardPosition sourcePosition = ChessBoardPosition.from(command.get(SOURCE_POSITION_INDEX));
+            ChessBoardPosition targetPosition = ChessBoardPosition.from(command.get(TARGET_POSITION_INDEX));
 
             chessGame.move(sourcePosition, targetPosition);
-            printCurrentChessBoard(ChessMenDto.of(chessGame.getBlackChessMen()),
-                    ChessMenDto.of(chessGame.getWhiteChessMen()));
+            printCurrentChessBoard(ChessBoardDto.of(chessGame.getChessBoard().getBoard()));
         } catch (Exception e) {
             printExceptionMessage(e.getMessage());
             executeCommand(chessGame);

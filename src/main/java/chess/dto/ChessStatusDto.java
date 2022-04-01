@@ -1,6 +1,8 @@
 package chess.dto;
 
-import chess.domain.ChessGame;
+import static chess.domain.Team.*;
+
+import chess.domain.ChessBoard;
 import chess.domain.Team;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +16,12 @@ public class ChessStatusDto {
         this.winner = winner;
     }
 
-    public static ChessStatusDto of(ChessGame chessGame) {
+    public static ChessStatusDto of(ChessBoard chessBoard, Team winner) {
         Map<String, Double> teamScore = new HashMap<>();
-        teamScore.put("흑팀", chessGame.getWhiteChessMen().calculateScore());
-        teamScore.put("백팀", chessGame.getBlackChessMen().calculateScore());
-        Team winner = chessGame.judgeWinner();
+        double blackScore = chessBoard.calculateScore(BLACK);
+        teamScore.put("흑팀", blackScore);
+        double whiteScore = chessBoard.calculateScore(WHITE);
+        teamScore.put("백팀", whiteScore);
         return new ChessStatusDto(teamScore, winner.name());
     }
 

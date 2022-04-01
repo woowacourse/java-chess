@@ -1,146 +1,60 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.ChessPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChessGame {
-    private static final int WHITE_PIECE_ROW = 1;
-    private static final int WHITE_PAWN_ROW = 2;
-    private static final int BLACK_PIECE_ROW = 8;
-    private static final int BLACK_PAWN_ROW = 7;
-    private static final char COLUMN_FIRST_INDEX = 'a';
-    private static final char COLUMN_LAST_INDEX = 'h';
-    private static final char ROOK_COLUMN = 'a';
-    private static final char KNIGHT_COLUMN = 'b';
-    private static final char BISHOP_COLUMN = 'c';
-    private static final char QUEEN_COLUMN = 'd';
-    private static final char KING_COLUMN = 'e';
-    private static final int PAIR_COLUMN_SUM = 'a' + 'h';
     private static final String NOT_MOVABLE_PATH_EXCEPTION = "[ERROR] 체스피스가 이동할 수 없는 위치입니다.";
     private static final String MY_TEAM_EXISTS_IN_TARGET_POSITION_EXCEPTION = "[ERROR] 도착 위치에 우리 팀 체스피스가 있어 이동할 수 없습니다.";
 
-    private final ChessMen blackChessMen;
-    private final ChessMen whiteChessMen;
+    private final ChessBoard chessBoard;
     private Team turn;
 
-    private ChessGame(ChessMen blackChessMen, ChessMen whiteChessMen) {
-        this.blackChessMen = blackChessMen;
-        this.whiteChessMen = whiteChessMen;
+    private ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
         this.turn = Team.WHITE;
     }
 
     public static ChessGame create() {
-        ChessMen blackChessMen = initializeChessMen(Team.BLACK, BLACK_PAWN_ROW, BLACK_PIECE_ROW);
-        ChessMen whiteChessMen = initializeChessMen(Team.WHITE, WHITE_PAWN_ROW, WHITE_PIECE_ROW);
-        return new ChessGame(blackChessMen, whiteChessMen);
-    }
-
-    private static ChessMen initializeChessMen(Team team, int pawnRow, int pieceRow) {
-        List<ChessPiece> chessPieces = new ArrayList<>();
-        addPawns(chessPieces, team, pawnRow);
-        addRooks(chessPieces, team, pieceRow);
-        addKnights(chessPieces, team, pieceRow);
-        addBishops(chessPieces, team, pieceRow);
-        addKingAndQueen(chessPieces, team, pieceRow);
-        return new ChessMen(chessPieces);
-    }
-
-    private static void addPawns(List<ChessPiece> chessPieces, Team team, int row) {
-        for (char column = COLUMN_FIRST_INDEX; column <= COLUMN_LAST_INDEX; column++) {
-            chessPieces.add(new Pawn(team, new ChessBoardPosition(column, row)));
-        }
-    }
-
-    private static void addRooks(List<ChessPiece> chessPieces, Team team, int row) {
-        chessPieces.add(new Rook(team, new ChessBoardPosition(ChessGame.ROOK_COLUMN, row)));
-        chessPieces.add(new Rook(team, new ChessBoardPosition(calculatePairColumn(ROOK_COLUMN), row)));
-    }
-
-    private static void addKnights(List<ChessPiece> chessPieces, Team team, int row) {
-        chessPieces.add(new Knight(team, new ChessBoardPosition(ChessGame.KNIGHT_COLUMN, row)));
-        chessPieces.add(new Knight(team, new ChessBoardPosition(calculatePairColumn(KNIGHT_COLUMN), row)));
-    }
-
-    private static void addBishops(List<ChessPiece> chessPieces, Team team, int row) {
-        chessPieces.add(new Bishop(team, new ChessBoardPosition(ChessGame.BISHOP_COLUMN, row)));
-        chessPieces.add(new Bishop(team, new ChessBoardPosition(calculatePairColumn(BISHOP_COLUMN), row)));
-    }
-
-    private static void addKingAndQueen(List<ChessPiece> whiteChessPieces, Team team, int row) {
-        whiteChessPieces.add(new Queen(team, new ChessBoardPosition(QUEEN_COLUMN, row)));
-        whiteChessPieces.add(new King(team, new ChessBoardPosition(KING_COLUMN, row)));
-    }
-
-    private static char calculatePairColumn(char column) {
-        return (char) (PAIR_COLUMN_SUM - column);
-    }
-
-    public ChessMen getBlackChessMen() {
-        return blackChessMen;
-    }
-
-    public ChessMen getWhiteChessMen() {
-        return whiteChessMen;
+        ChessBoard chessBoard = ChessBoard.create();
+        return new ChessGame(chessBoard);
     }
 
     public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        ChessPiece chessPiece = getChessPiece(sourcePosition);
+        ChessPiece chessPiece = chessBoard.getChessPiece(sourcePosition, turn);
 
-        if (!chessPiece.isMovable(targetPosition, whiteChessMen, blackChessMen)) {
+        if (!chessPiece.isMovable(sourcePosition, targetPosition, chessBoard)) {
             throw new IllegalArgumentException(NOT_MOVABLE_PATH_EXCEPTION);
         }
 
-        if (chessPiece.myTeamExistsInTargetPosition(targetPosition, getMyTeam())) {
+        if (chessBoard.existChessPieceOf(targetPosition, turn)) {
             throw new IllegalArgumentException(MY_TEAM_EXISTS_IN_TARGET_POSITION_EXCEPTION);
         }
 
-        ChessMen enemy = getEnemy();
-        if (chessPiece.enemyExistsInTargetPosition(targetPosition, enemy)) {
-            enemy.removeChessPieceAt(targetPosition);
+        if (chessBoard.existChessPieceOf(targetPosition, turn.reverse())) {
+            chessBoard.removeChessPieceAt(targetPosition);
         }
 
-        chessPiece.move(targetPosition);
+        chessBoard.move(sourcePosition, targetPosition);
         turn = turn.reverse();
     }
 
-    private ChessMen getMyTeam() {
-        if (turn.isWhite()) {
-            return whiteChessMen;
-        }
-        return blackChessMen;
-    }
-
-    private ChessMen getEnemy() {
-        if (turn.isWhite()) {
-            return blackChessMen;
-        }
-        return whiteChessMen;
-    }
-
-    private ChessPiece getChessPiece(ChessBoardPosition sourcePosition) {
-        if (turn.isSame(Team.WHITE)) {
-            return whiteChessMen.getChessPieceAt(sourcePosition);
-        }
-        return blackChessMen.getChessPieceAt(sourcePosition);
-    }
-
     public boolean end() {
-        return blackChessMen.isKingDead() || whiteChessMen.isKingDead();
+        return chessBoard.isKingDead();
     }
 
     public Team judgeWinner() {
-        if (blackChessMen.calculateScore() == whiteChessMen.calculateScore()) {
+        double blackTeamScore = chessBoard.calculateScore(Team.BLACK);
+        double whiteTeamScore = chessBoard.calculateScore(Team.WHITE);
+        if (blackTeamScore == whiteTeamScore) {
             return Team.NONE;
-        }if (blackChessMen.calculateScore() > whiteChessMen.calculateScore()) {
+        }
+        if (blackTeamScore > whiteTeamScore) {
             return Team.BLACK;
         }
         return Team.WHITE;
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
     }
 }

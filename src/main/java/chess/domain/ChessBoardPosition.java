@@ -15,16 +15,20 @@ public class ChessBoardPosition {
     private final char column;
     private final int row;
 
-    public ChessBoardPosition(char column, int row) {
+    private ChessBoardPosition(char column, int row) {
         validateRange(column, row);
         this.column = column;
         this.row = row;
     }
 
-    public static ChessBoardPosition of(String positionInput) {
+    public static ChessBoardPosition of(char column, int row) {
+        return new ChessBoardPosition(column, row);
+    }
+
+    public static ChessBoardPosition from(String positionInput) {
         char column = extractColumn(positionInput);
         int row = extractRow(positionInput);
-        return new ChessBoardPosition(column, row);
+        return of(column, row);
     }
 
     private static char extractColumn(String positionInput) {
@@ -57,7 +61,7 @@ public class ChessBoardPosition {
     }
 
     public ChessBoardPosition move(int columnChange, int rowChange) {
-        return new ChessBoardPosition((char)(this.column + columnChange), this.row + rowChange);
+        return new ChessBoardPosition((char) (this.column + columnChange), this.row + rowChange);
     }
 
     public boolean isSameRow(int row) {

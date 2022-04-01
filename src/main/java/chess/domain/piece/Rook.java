@@ -1,48 +1,45 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.ChessMen;
 import chess.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends ChessPiece {
     private static final int NO_DIFFERENCE = 0;
-    private static final String NAME = "ROOK";
     private static final double SCORE = 5.0;
 
-    public Rook(Team team, ChessBoardPosition position) {
-        super(NAME, SCORE, team, position);
+    public Rook(Team team) {
+        super(SCORE, team);
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
-        return isReachable(targetPosition) && isUnobstructed(targetPosition, whiteChessMen, blackChessMen);
+    public boolean isMovable(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition,
+                             ChessBoard chessBoard) {
+        return isReachable(sourcePosition, targetPosition) && isUnobstructed(sourcePosition, targetPosition,
+                chessBoard);
     }
 
-    private boolean isReachable(ChessBoardPosition targetPosition) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
-        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
+    private boolean isReachable(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        int rowDistance = calculateRowDistance(sourcePosition.getRow(), targetPosition.getRow());
+        int columnDistance = calculateColumnDistance(sourcePosition.getColumn(), targetPosition.getColumn());
         return rowDistance == NO_DIFFERENCE || columnDistance == NO_DIFFERENCE;
     }
 
-    private boolean isUnobstructed(ChessBoardPosition targetChessBoardPosition, ChessMen whiteChessMen,
-                                   ChessMen blackChessMen) {
-        return noChessMenInPath(targetChessBoardPosition, whiteChessMen)
-                && noChessMenInPath(targetChessBoardPosition, blackChessMen);
-    }
-
-    private boolean noChessMenInPath(ChessBoardPosition targetChessBoardPosition, ChessMen chessMen) {
-        return createPathPositions(targetChessBoardPosition)
+    private boolean isUnobstructed(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition,
+                                   ChessBoard chessBoard) {
+        return createPathPositions(sourcePosition, targetPosition)
                 .stream()
-                .noneMatch(chessMen::existChessPieceAt);
+                .noneMatch(chessBoard::existChessPieceAt);
     }
 
-    private List<ChessBoardPosition> createPathPositions(ChessBoardPosition targetChessBoardPosition) {
-        int rowUnitChange = calculateUnitChange(targetChessBoardPosition.getRow(), position.getRow());
-        int columnUnitChange = calculateUnitChange(targetChessBoardPosition.getColumn(), position.getColumn());
+    private List<ChessBoardPosition> createPathPositions(ChessBoardPosition sourcePosition,
+                                                         ChessBoardPosition targetChessBoardPosition) {
+        int rowUnitChange = calculateUnitChange(targetChessBoardPosition.getRow(), sourcePosition.getRow());
+        int columnUnitChange = calculateUnitChange(targetChessBoardPosition.getColumn(), sourcePosition.getColumn());
         List<ChessBoardPosition> pathPositions = new ArrayList<>();
-        ChessBoardPosition currentBoardPosition = position.move(columnUnitChange, rowUnitChange);
+        ChessBoardPosition currentBoardPosition = sourcePosition.move(columnUnitChange, rowUnitChange);
         while (!currentBoardPosition.equals(targetChessBoardPosition)) {
             pathPositions.add(currentBoardPosition);
             currentBoardPosition = currentBoardPosition.move(columnUnitChange, rowUnitChange);

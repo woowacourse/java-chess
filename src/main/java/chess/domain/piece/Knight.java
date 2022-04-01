@@ -1,15 +1,14 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
-import chess.domain.ChessMen;
 import chess.domain.Team;
 
 public class Knight extends ChessPiece {
-    private static final String NAME = "KNIGHT";
     private static final double SCORE = 2.5;
 
-    public Knight(Team team, ChessBoardPosition position) {
-        super(NAME, SCORE, team, position);
+    public Knight(Team team) {
+        super(SCORE, team);
     }
 
     private int calculateRowDistance(int highRow, int lowRow) {
@@ -21,9 +20,10 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public boolean isMovable(ChessBoardPosition targetPosition, ChessMen whiteChessMen, ChessMen blackChessMen) {
-        int rowDistance = calculateRowDistance(position.getRow(), targetPosition.getRow());
-        int columnDistance = calculateColumnDistance(position.getColumn(), targetPosition.getColumn());
+    public boolean isMovable(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition,
+                             ChessBoard chessBoard) {
+        int rowDistance = calculateRowDistance(sourcePosition.getRow(), targetPosition.getRow());
+        int columnDistance = calculateColumnDistance(sourcePosition.getColumn(), targetPosition.getColumn());
         return (rowDistance == 2 && columnDistance == 1) || (rowDistance == 1 && columnDistance == 2);
     }
 }
