@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.move.MoveStrategy;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.Map;
 
 public class ChessGame {
@@ -64,6 +65,10 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Team getCurrentTurn() {
+        return turn.getTeam();
     }
 
     public Map<Position, Piece> getCurrentBoard() {

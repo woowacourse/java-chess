@@ -1,10 +1,13 @@
 package chess.service;
 
 import chess.dao.BoardDao;
+import chess.dao.TurnDao;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
+import chess.domain.game.Turn;
+import chess.domain.piece.Team;
 import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
@@ -12,16 +15,18 @@ import chess.dto.StatusDto;
 public class ChessService {
 
     private final BoardDao boardDao;
+    private final TurnDao turnDao;
 
     public ChessService() {
         boardDao = new BoardDao();
+        turnDao = new TurnDao();
     }
 
     public BoardDto initializeGame() {
-        // dao에서 현재 보드를 가져와야함
-        boardDao.getBoard();
-        ChessGame chessGame = new ChessGame(new Board(BoardFactory.initialize()));
-        return BoardDto.of(new Board(BoardFactory.initialize()));
+        Board board = BoardFactory.createBoard(boardDao.getBoard());
+        Team team = Team.of(turnDao.getCurrentTurn());
+        ChessGame chessGame = new ChessGame(board, new Turn(team));
+        return BoardDto.of(board);
     }
 
     public BoardDto endGame() {
