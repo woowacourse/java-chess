@@ -17,6 +17,7 @@ import java.util.stream.LongStream;
 public class GameResult {
 
     public static final double PAWN_PENALTY_SCORE = -0.5;
+    public static final int DUPLICATE_CHECK_PAWN_COUNT = 2;
     private final Map<Team, Double> scores = new HashMap<>();
 
     public void createScoreResult(final Map<Position, Piece> board) {
@@ -39,8 +40,8 @@ public class GameResult {
 
     private List<Position> searchPositionOfPawns(Team team, Map<Position, Piece> board) {
         return board.keySet().stream()
-                .filter(position -> board.get(position).isPawn())
                 .filter(position -> board.get(position).isSameTeam(team))
+                .filter(position -> board.get(position).isPawn())
                 .collect(Collectors.toList());
     }
 
@@ -48,7 +49,7 @@ public class GameResult {
         return positionOfPawns.stream()
                 .flatMapToLong(positionOfPawn -> calculateSameRankCount(positionOfPawn, positionOfPawns))
                 .filter(count -> count > 1)
-                .sum();
+                .sum() / DUPLICATE_CHECK_PAWN_COUNT;
     }
 
     private LongStream calculateSameRankCount(Position position, List<Position> positionOfPawns) {
