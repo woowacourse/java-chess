@@ -18,23 +18,8 @@ public class Rook extends LinearMovingPiece {
     }
 
     @Override
-    public List<Direction> getDirection() {
-        return List.of(
-                Direction.EAST,
-                Direction.WEST,
-                Direction.SOUTH,
-                Direction.NORTH
-        );
-    }
-
-    @Override
     public boolean isNotEmpty() {
         return true;
-    }
-
-    @Override
-    public double getPoint() {
-        return POINT;
     }
 
     @Override
@@ -45,5 +30,20 @@ public class Rook extends LinearMovingPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection() {
+        return List.of(
+                Direction.EAST,
+                Direction.WEST,
+                Direction.SOUTH,
+                Direction.NORTH
+        );
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

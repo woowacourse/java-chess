@@ -34,13 +34,6 @@ public abstract class PawnMovingPiece extends AbstractPiece {
                 .anyMatch(direction -> source.findLocation(direction, target));
     }
 
-    private Optional<List<Square>> getRoute(Square source, Square target) {
-        return getDirection().stream()
-                .map(direction -> source.findRoad(direction, PAWN_FIRST_LINE_MAX_DISTANCE))
-                .filter(squares -> squares.contains(target))
-                .findFirst();
-    }
-
     @Override
     public boolean canMoveWithoutObstacle(Board board, Square source, Square target) {
         Optional<List<Square>> route = getRoute(source, target);
@@ -49,6 +42,13 @@ public abstract class PawnMovingPiece extends AbstractPiece {
             return isNotAlly(targetPiece);
         }
         return true;
+    }
+
+    private Optional<List<Square>> getRoute(Square source, Square target) {
+        return getDirection().stream()
+                .map(direction -> source.findRoad(direction, PAWN_FIRST_LINE_MAX_DISTANCE))
+                .filter(squares -> squares.contains(target))
+                .findFirst();
     }
 
     private List<Direction> getDiagonalDirection() {

@@ -35,6 +35,14 @@ public class ChessController {
         return new ScoreDto(board.calculateScore());
     }
 
+    public boolean isEnd() {
+        return board.isEnd();
+    }
+
+    public void finishGame() {
+        board.finishGame();
+    }
+
     private List<List<String>> toBoardDto(Board board) {
         List<List<String>> boardDto = new ArrayList<>();
         List<Rank> ranks = Arrays.asList(Rank.values());
@@ -59,13 +67,5 @@ public class ChessController {
             return piece.name().toUpperCase(Locale.ROOT);
         }
         return piece.name();
-    }
-
-    public boolean isEnd() {
-        return board.isEnd();
-    }
-
-    public void finishGame() {
-        board.finishGame();
     }
 }

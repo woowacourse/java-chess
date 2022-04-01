@@ -18,18 +18,8 @@ public class Bishop extends LinearMovingPiece {
     }
 
     @Override
-    public List<Direction> getDirection() {
-        return List.of(Direction.NORTH_WEST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.SOUTH_EAST);
-    }
-
-    @Override
     public boolean isNotEmpty() {
         return true;
-    }
-
-    @Override
-    public double getPoint() {
-        return POINT;
     }
 
     @Override
@@ -40,5 +30,15 @@ public class Bishop extends LinearMovingPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection() {
+        return List.of(Direction.NORTH_WEST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.SOUTH_EAST);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

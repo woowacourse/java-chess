@@ -18,21 +18,8 @@ public class Pawn extends PawnMovingPiece {
     }
 
     @Override
-    public List<Direction> getDirection() {
-        if (color.isBlack()) {
-            return List.of(Direction.SOUTH);
-        }
-        return List.of(Direction.NORTH);
-    }
-
-    @Override
     public boolean isNotEmpty() {
         return true;
-    }
-
-    @Override
-    public double getPoint() {
-        return POINT;
     }
 
     @Override
@@ -43,5 +30,18 @@ public class Pawn extends PawnMovingPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection() {
+        if (color.isBlack()) {
+            return List.of(Direction.SOUTH);
+        }
+        return List.of(Direction.NORTH);
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

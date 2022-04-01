@@ -18,6 +18,21 @@ public class Knight extends PointMovingPiece {
     }
 
     @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public List<Direction> getDirection() {
         return List.of(
                 Direction.NNE,
@@ -31,22 +46,7 @@ public class Knight extends PointMovingPiece {
     }
 
     @Override
-    public boolean isNotEmpty() {
-        return true;
-    }
-
-    @Override
     public double getPoint() {
         return POINT;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
     }
 }

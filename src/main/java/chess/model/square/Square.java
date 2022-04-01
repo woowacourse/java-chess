@@ -26,30 +26,6 @@ public class Square {
         return new Square(file, rank);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Square square = (Square) o;
-
-        if (rank != square.rank) {
-            return false;
-        }
-        return file == square.file;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = rank != null ? rank.hashCode() : ROW_INDEX;
-        result = 31 * result + (file != null ? file.hashCode() : ROW_INDEX);
-        return result;
-    }
-
     public List<Square> findRoad(Direction direction, int maxDistance) {
         int distance = COL_INDEX;
         List<Square> roads = new ArrayList<>();
@@ -87,5 +63,29 @@ public class Square {
 
     public boolean sameFile(File file) {
         return this.file.equals(file);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Square square = (Square) o;
+
+        if (rank != square.rank) {
+            return false;
+        }
+        return file == square.file;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = rank != null ? rank.hashCode() : ROW_INDEX;
+        result = 31 * result + (file != null ? file.hashCode() : ROW_INDEX);
+        return result;
     }
 }

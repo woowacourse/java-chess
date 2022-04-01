@@ -18,6 +18,21 @@ public class King extends PointMovingPiece {
     }
 
     @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public List<Direction> getDirection() {
         return List.of(
                 Direction.EAST,
@@ -32,22 +47,7 @@ public class King extends PointMovingPiece {
     }
 
     @Override
-    public boolean isNotEmpty() {
-        return true;
-    }
-
-    @Override
     public double getPoint() {
         return POINT;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
     }
 }

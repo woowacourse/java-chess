@@ -30,18 +30,8 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public List<Direction> getDirection() {
-        return null;
-    }
-
-    @Override
     public boolean isNotEmpty() {
         return false;
-    }
-
-    @Override
-    public double getPoint() {
-        return POINT;
     }
 
     @Override
@@ -52,5 +42,15 @@ public class Empty extends AbstractPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public List<Direction> getDirection() {
+        return null;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }
