@@ -23,5 +23,7 @@ public class ChessGame {
         return chessBoard.isKingDie();
     }
 
-
+    public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        chessBoard.move(sourcePosition, targetPosition);
+    }
 }
