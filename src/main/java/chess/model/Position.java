@@ -38,6 +38,14 @@ public class Position implements Comparable<Position> {
         return file.getValue() + rank.getValue();
     }
 
+    public int getRankGap(Position other) {
+        return rank.absMinus(other.rank);
+    }
+
+    public int getFileGap(Position other) {
+        return file.absMinus(other.file);
+    }
+
     public boolean isOneStepAway(Position position) {
         return isOneStepHorizontalOrVertical(position) || isOneStepDiagonal(position);
     }
@@ -148,5 +156,25 @@ public class Position implements Comparable<Position> {
     public boolean isInitPawn(Direction direction) {
         return  (direction == Direction.N && rank == Rank.TWO)
                 || (direction == Direction.S && rank == Rank.SEVEN);
+    }
+
+    public int getGcd(Position other) {
+        int rankGap = rank.absMinus(other.rank);
+        int fileGap = file.absMinus(other.file);
+        if (rankGap == 0) {
+            return fileGap;
+        }
+        if (fileGap == 0) {
+            return rankGap;
+        }
+        return Math.min(fileGap, rankGap);
+    }
+
+    public int getFileGapDividedByGcd(Position other) {
+        return file.minus(other.file) / getGcd(other);
+    }
+
+    public int getRankGapDividedByGcd(Position other) {
+        return rank.minus(other.rank) / getGcd(other);
     }
 }

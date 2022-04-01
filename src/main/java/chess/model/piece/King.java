@@ -13,7 +13,6 @@ public class King extends Piece {
     private static final String BLACK_NAME = "K";
     private static final String WHITE_NAME = "k";
     private static final double SCORE = 0D;
-    private static final List<Direction> directions = Direction.all();
 
     public King(Team team) {
         super(team, new LimitedMoveStrategy(Direction.all(), Distance.oneStep()));

@@ -22,8 +22,6 @@ public enum Direction {
     SSW(-1, -2),
     SSE(1, -2);
 
-
-
     private final int fileGap;
     private final int rankGap;
 
@@ -33,8 +31,8 @@ public enum Direction {
     }
 
     public static Direction of(Position source, Position target) {
-        int fileGap = target.getFile().getGap(source.getFile());
-        int rankGap = target.getRank().getGap(source.getRank());
+        int fileGap = target.getFileGapDividedByGcd(source);
+        int rankGap = target.getRankGapDividedByGcd(source);
 
         return Arrays.stream(values())
                 .filter(direction -> direction.fileGap == fileGap)
@@ -45,6 +43,14 @@ public enum Direction {
 
     public static List<Direction> linear() {
         return List.of(N, S, W, E);
+    }
+
+    public static List<Direction> vertical() {
+        return List.of(N, S);
+    }
+
+    public static List<Direction> horizontal() {
+        return List.of(W, E);
     }
 
     public static List<Direction> diagonal() {

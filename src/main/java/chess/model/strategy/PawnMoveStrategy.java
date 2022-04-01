@@ -16,13 +16,13 @@ public class PawnMoveStrategy implements MoveStrategy {
     @Override
     public boolean movable(Position source, Position target, boolean isKill) {
         Direction direction = Direction.of(source, target);
-        Distance distance = Distance.of(source, target);
+        Distance distance = Distance.of(source, target, direction);
 
         if (isKill) {
             return attackDirections.contains(direction) && Distance.oneStep().contains(distance);
         }
         if (source.isInitPawn(direction)) {
-            return moveDirections.contains(direction) && Distance.pawn().contains(distance);
+            return moveDirections.contains(direction) && Distance.oneAndTwoStep().contains(distance);
         }
         return moveDirections.contains(direction) && Distance.oneStep().contains(distance);
 

@@ -22,7 +22,15 @@ class DirectionTest {
                 Arguments.of("b5", Direction.NW),
                 Arguments.of("g6", Direction.NE),
                 Arguments.of("c2", Direction.SW),
-                Arguments.of("f1", Direction.SE)
+                Arguments.of("f1", Direction.SE),
+                Arguments.of("e5", Direction.NNE),
+                Arguments.of("c5", Direction.NNW),
+                Arguments.of("e1", Direction.SSE),
+                Arguments.of("c1", Direction.SSW),
+                Arguments.of("f4", Direction.EEN),
+                Arguments.of("f2", Direction.EES),
+                Arguments.of("b4", Direction.WWN),
+                Arguments.of("b2", Direction.WWS)
         );
     }
 
