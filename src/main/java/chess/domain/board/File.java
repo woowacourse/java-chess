@@ -34,6 +34,13 @@ public enum File {
                 .orElseThrow(() -> new NoSuchElementException(NO_FILE_MATCHED));
     }
 
+    public static File from(Position position) {
+        return Arrays.stream(values())
+                .filter(position::isSameFile)
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_FILE_FOUND_BY_POSITION));
+    }
+
     public int dx(File another) {
         return another.fileNumber - this.fileNumber;
     }
@@ -73,12 +80,5 @@ public enum File {
         }
 
         return files;
-    }
-
-    public static File from(Position position) {
-        return Arrays.stream(values())
-                .filter(position::isSameFile)
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException(NO_MATCHED_FILE_FOUND_BY_POSITION));
     }
 }

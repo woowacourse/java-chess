@@ -48,18 +48,6 @@ public final class Position {
         return verticalBetweens(this, rankBetween);
     }
 
-    private List<Position> horizontalBetweens(Position from, List<File> fileBetween) {
-        Rank rank = Rank.from(from);
-
-        return fileBetween.stream()
-                .map(file -> Position.of(file, rank))
-                .collect(Collectors.toList());
-    }
-
-    private boolean isHorizontal(Position to) {
-        return this.dx(to) != ZERO_FOR_NO_CHANGE && this.dy(to) == ZERO_FOR_NO_CHANGE;
-    }
-
     private boolean isDiagonal(Position to) {
         return this.dx(to) == this.dy(to);
     }
@@ -70,6 +58,18 @@ public final class Position {
             betweens.add(Position.of(fileBetween.get(i), rankBetween.get(i)));
         }
         return betweens;
+    }
+
+    private boolean isHorizontal(Position to) {
+        return this.dx(to) != ZERO_FOR_NO_CHANGE && this.dy(to) == ZERO_FOR_NO_CHANGE;
+    }
+
+    private List<Position> horizontalBetweens(Position from, List<File> fileBetween) {
+        Rank rank = Rank.from(from);
+
+        return fileBetween.stream()
+                .map(file -> Position.of(file, rank))
+                .collect(Collectors.toList());
     }
 
     private List<Position> verticalBetweens(Position from, List<Rank> rankBetween) {

@@ -25,11 +25,6 @@ public final class Board {
         return false;
     }
 
-    public Map<Color, Double> getScore() {
-        //TODO 점수 계산
-        return null;
-    }
-
     public boolean isFinished() {
         return board.values()
                 .stream()
@@ -49,11 +44,16 @@ public final class Board {
         return board.containsKey(position);
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public boolean isTurnOf(Position from, Color currentTurn) {
         return board.getOrDefault(from, Piece.EMPTY).isSameColor(currentTurn);
+    }
+
+    public Map<Color, Double> getScore() {
+        //TODO 점수 계산
+        return null;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }

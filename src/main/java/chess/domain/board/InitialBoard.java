@@ -53,7 +53,7 @@ public final class InitialBoard {
     private InitialBoard() {
     }
 
-    static Map<Position, Piece> getInstance() {
+    static Map<Position, Piece> newInstance() {
         return new HashMap<>(INITIAL_BOARD);
     }
 }

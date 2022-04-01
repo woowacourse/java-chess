@@ -36,6 +36,13 @@ public enum Rank {
         return from(Integer.parseInt(input.trim()));
     }
 
+    public static Rank from(Position position) {
+        return Arrays.stream(values())
+                .filter(position::isSameRank)
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException(NO_RANK_FOUND_BY_POSITION));
+    }
+
     public int dy(Rank another) {
         return another.rankNumber - this.rankNumber;
     }
@@ -56,12 +63,5 @@ public enum Rank {
         }
 
         return ranks;
-    }
-
-    public static Rank from(Position position) {
-        return Arrays.stream(values())
-                .filter(position::isSameRank)
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException(NO_RANK_FOUND_BY_POSITION));
     }
 }

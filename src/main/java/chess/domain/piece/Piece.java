@@ -31,30 +31,14 @@ public abstract class Piece {
 
     public abstract boolean movable(Position from, Position to, Board board);
 
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
-    public int angle(Position from, Position to) {
-        return (int) (Math.atan2(from.dy(to), from.dx(to)) * (180.0 / Math.PI));
-    }
-
-    public boolean isSameColor(Color color) {
-        return this.color == color;
-    }
-
-    public boolean isSameColor(Piece another) {
-        return this.color == another.color;
-    }
-
     protected void validateAngle(List<Integer> validAngles, Position from, Position to) {
         if (!validAngles.contains(angle(from, to))) {
             throw new IllegalStateException(CAN_NOT_MOVE_TO_THE_DIRECTION);
         }
+    }
+
+    private int angle(Position from, Position to) {
+        return (int) (Math.atan2(from.dy(to), from.dx(to)) * (180.0 / Math.PI));
     }
 
     protected void validatePieceOnWay(Position from, Position to, Board board) {
@@ -73,6 +57,22 @@ public abstract class Piece {
         if (board.isSameColorOnTarget(this, to)) {
             throw new IllegalStateException(SAME_COLOR_PIECE_IS_ON_TARGET);
         }
+    }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    public boolean isSameColor(Piece another) {
+        return this.color == another.color;
     }
 
     public boolean isEnemy(Piece piece) {

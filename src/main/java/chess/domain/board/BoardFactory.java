@@ -8,7 +8,7 @@ public final class BoardFactory {
     }
 
     public static Board newInstance() {
-        return new Board(InitialBoard.getInstance());
+        return new Board(InitialBoard.newInstance());
     }
 
     public static Board newInstance(Map<Position, Piece> board) {
