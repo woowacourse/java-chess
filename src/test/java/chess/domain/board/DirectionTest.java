@@ -35,7 +35,7 @@ class DirectionTest {
 
 	@Test
 	void findException() {
-		assertThatThrownBy(() -> Direction.find(8, 8))
+		assertThatThrownBy(() -> Direction.find(7, 1))
 				.isInstanceOf(NoSuchElementException.class)
 				.hasMessageContaining("해당 방향이 없습니다.");
 	}
@@ -52,9 +52,6 @@ class DirectionTest {
 				Arguments.of(0, -1, "W"),
 				Arguments.of(1, 0, "N"),
 				Arguments.of(0, 1, "E"),
-
-				Arguments.of(-2, 0, "SS"),
-				Arguments.of(2, 0, "NN"),
 
 				Arguments.of(-1, -1, "SW"),
 				Arguments.of(-1, 1, "SE"),

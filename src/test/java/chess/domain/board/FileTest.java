@@ -25,11 +25,6 @@ class FileTest {
 	}
 
 	@Test
-	void calculateDifference() {
-		assertThat(B.calculateDifference(E)).isEqualTo(-1);
-	}
-
-	@Test
 	void subtract() {
 		assertThat(B.subtract(E)).isEqualTo(-3);
 	}

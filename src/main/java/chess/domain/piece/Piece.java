@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.Objects;
 
@@ -29,12 +28,6 @@ public abstract class Piece {
 
 	public final boolean isAlly(final Team team) {
 		return this.team == team;
-	}
-
-	public Direction getDirection(final Position source, final Position target) {
-		int rankDifference = target.calculateRankDifference(source);
-		int fileDifference = target.calculateFileDifference(source);
-		return Direction.find(rankDifference, fileDifference);
 	}
 
 	protected abstract void validateDirection(final Position source, final Position target, final Piece targetPiece);

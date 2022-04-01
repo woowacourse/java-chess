@@ -31,6 +31,14 @@ public class Position {
 		return cachedPositions.get(rank).get(file);
 	}
 
+	public boolean isLinerMove(Position position) {
+		return this.rank.equals(position.rank) || this.file.equals(position.file);
+	}
+
+	public boolean isDiagonalMove(Position position) {
+		return this.rank.abs(position.rank) == this.file.abs(position.file);
+	}
+
 	public Position addDirection(Direction direction) {
 		Optional<Rank> rank = direction.addRank(this.rank);
 		Optional<File> file = direction.addFile(this.file);
@@ -40,12 +48,12 @@ public class Position {
 		return Position.of(rank.get(), file.get());
 	}
 
-	public boolean isLinerMove(Position position) {
-		return this.rank.equals(position.rank) || this.file.equals(position.file);
-	}
-
-	public boolean isDiagonalMove(Position position) {
-		return this.rank.abs(position.rank) == this.file.abs(position.file);
+	public Position addDirection(Direction direction, int count) {
+		Position movedPosition = this;
+		for (int i = 0; i < count; i++) {
+			movedPosition = movedPosition.addDirection(direction);
+		}
+		return movedPosition;
 	}
 
 	public List<Position> getArrivalPositionsByDirections(List<Direction> directions) {
@@ -61,20 +69,10 @@ public class Position {
 		return rank.isPresent() && file.isPresent();
 	}
 
-	public int calculateRankDifference(Position position) {
-		return this.rank.calculateDifference(position.rank);
-	}
-
-	public int calculateFileDifference(Position position) {
-		return this.file.calculateDifference(position.file);
-	}
-
-	public int subtractRank(Position position) {
-		return this.rank.subtract(position.rank);
-	}
-
-	public int subtractFile(Position position) {
-		return this.file.subtract(position.file);
+	public Direction calculateDirection(final Position position) {
+		int rankDifference = position.rank.subtract(this.rank);
+		int fileDifference = position.file.subtract(this.file);
+		return Direction.find(rankDifference, fileDifference);
 	}
 
 	public boolean isEndFile() {

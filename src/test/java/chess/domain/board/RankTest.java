@@ -26,11 +26,6 @@ class RankTest {
 	}
 
 	@Test
-	void calculateDifference() {
-		assertThat(TWO.calculateDifference(FIVE)).isEqualTo(-1);
-	}
-
-	@Test
 	void subtract() {
 		assertThat(TWO.subtract(FIVE)).isEqualTo(-3);
 	}

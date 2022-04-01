@@ -37,13 +37,6 @@ public final class Knight extends Piece {
 	}
 
 	@Override
-	public Direction getDirection(final Position source, final Position target) {
-		int rankDifference = target.subtractRank(source);
-		int fileDifference = target.subtractFile(source);
-		return Direction.find(rankDifference, fileDifference);
-	}
-
-	@Override
 	public double getScore() {
 		return KNIGHT_SCORE;
 	}

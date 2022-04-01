@@ -1,12 +1,19 @@
 package chess.domain.board;
 
 import static chess.domain.board.File.A;
+import static chess.domain.board.File.B;
+import static chess.domain.board.File.C;
 import static chess.domain.board.File.D;
+import static chess.domain.board.File.E;
+import static chess.domain.board.File.F;
 import static chess.domain.board.File.H;
-import static chess.domain.board.Rank.EIGHT;
 import static chess.domain.board.Rank.FIVE;
 import static chess.domain.board.Rank.FOUR;
 import static chess.domain.board.Rank.ONE;
+import static chess.domain.board.Rank.SEVEN;
+import static chess.domain.board.Rank.SIX;
+import static chess.domain.board.Rank.THREE;
+import static chess.domain.board.Rank.TWO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -26,6 +33,13 @@ class PositionTest {
 		Position position = Position.of(FOUR, D);
 
 		assertThat(position.addDirection(Direction.N)).isEqualTo(Position.of(FIVE, D));
+	}
+
+	@Test
+	void addDirectionRepeat() {
+		Position position = Position.of(FOUR, D);
+
+		assertThat(position.addDirection(Direction.N, 3)).isEqualTo(Position.of(SEVEN, D));
 	}
 
 	@ParameterizedTest
@@ -61,36 +75,36 @@ class PositionTest {
 		);
 	}
 
-	@Test
-	void calculateRankDifference() {
+	@ParameterizedTest
+	@MethodSource("createTargetAndDirection")
+	void calculateDirection(Rank rank, File file, Direction direction) {
 		Position source = Position.of(FOUR, D);
-		Position target = Position.of(EIGHT, H);
+		Position target = Position.of(rank, file);
 
-		assertThat(target.calculateRankDifference(source)).isEqualTo(1);
+		assertThat(source.calculateDirection(target)).isEqualTo(direction);
 	}
 
-	@Test
-	void calculateFileDifference() {
-		Position source = Position.of(EIGHT, H);
-		Position target = Position.of(FOUR, D);
+	private static Stream<Arguments> createTargetAndDirection() {
+		return Stream.of(
+				Arguments.of(THREE, D, "S"),
+				Arguments.of(FOUR, C, "W"),
+				Arguments.of(FIVE, D, "N"),
+				Arguments.of(FOUR, E, "E"),
 
-		assertThat(target.calculateFileDifference(source)).isEqualTo(-1);
-	}
+				Arguments.of(TWO, B, "SW"),
+				Arguments.of(TWO, F, "SE"),
+				Arguments.of(SIX, B, "NW"),
+				Arguments.of(SIX, F, "NE"),
 
-	@Test
-	void subtractRank() {
-		Position source = Position.of(FOUR, D);
-		Position target = Position.of(EIGHT, H);
-
-		assertThat(target.subtractRank(source)).isEqualTo(4);
-	}
-
-	@Test
-	void subtractFile() {
-		Position source = Position.of(EIGHT, H);
-		Position target = Position.of(FOUR, D);
-
-		assertThat(target.subtractFile(source)).isEqualTo(-4);
+				Arguments.of(SIX, E, "NNE"),
+				Arguments.of(SIX, C, "NNW"),
+				Arguments.of(TWO, E, "SSE"),
+				Arguments.of(TWO, C, "SSW"),
+				Arguments.of(FIVE, F, "EEN"),
+				Arguments.of(THREE, F, "EES"),
+				Arguments.of(FIVE, B, "WWN"),
+				Arguments.of(THREE, B, "WWS")
+		);
 	}
 
 	@Test

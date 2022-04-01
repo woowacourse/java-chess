@@ -49,10 +49,6 @@ public enum Rank {
 		return Math.abs(this.value - rank.value);
 	}
 
-	public int calculateDifference(final Rank rank) {
-		return Integer.compare(this.value, rank.value);
-	}
-
 	public int subtract(final Rank rank) {
 		return this.value - rank.value;
 	}

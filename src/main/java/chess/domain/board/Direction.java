@@ -12,8 +12,6 @@ public enum Direction {
 	W(0, -1),
 	N(1, 0),
 	E(0, 1),
-	SS(-2, 0),
-	NN(2, 0),
 	SW(-1, -1),
 	SE(-1, 1),
 	NW(1, -1),
@@ -58,16 +56,10 @@ public enum Direction {
 		return List.of(N);
 	}
 
-	public static Direction getDefaultPawnByTeam(final Team team) {
-		if (team.isBlack()) {
-			return SS;
-		}
-		return NN;
-	}
-
 	public static Direction find(final int differenceRank, final int differenceFile) {
 		return Arrays.stream(values())
-				.filter(value -> value.rankMovement == differenceRank && value.fileMovement == differenceFile)
+				.filter(value -> Math.atan2(value.rankMovement, value.fileMovement) ==
+						Math.atan2(differenceRank, differenceFile))
 				.findAny()
 				.orElseThrow(() -> new NoSuchElementException(NOT_SEARCH_DIRECTION_ERROR));
 	}

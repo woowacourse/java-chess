@@ -37,11 +37,11 @@ public class Board {
 
 	private void validateMove(final Position source, final Position target, final Piece piece) {
 		piece.validateMovement(source, target, board.get(target));
-		validateBlocking(source, target, piece);
+		validateBlocking(source, target);
 	}
 
-	private void validateBlocking(final Position source, final Position target, final Piece piece) {
-		Direction direction = piece.getDirection(source, target);
+	private void validateBlocking(final Position source, final Position target) {
+		Direction direction = source.calculateDirection(target);
 		Position checkPosition = source;
 		while (checkPosition != target) {
 			checkPosition = checkPosition.addDirection(direction);

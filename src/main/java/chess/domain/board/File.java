@@ -49,10 +49,6 @@ public enum File {
 		return Math.abs(this.value - file.value);
 	}
 
-	public int calculateDifference(final File file) {
-		return Integer.compare(this.value, file.value);
-	}
-
 	public int subtract(final File file) {
 		return this.value - file.value;
 	}
