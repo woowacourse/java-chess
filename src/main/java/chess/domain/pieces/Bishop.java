@@ -21,7 +21,7 @@ public final class Bishop implements Type {
 
     @Override
     public double score() {
-        return 3;
+        return Symbol.BISHOP.score();
     }
 
     @Override

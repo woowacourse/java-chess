@@ -23,7 +23,7 @@ public final class King implements Type {
 
     @Override
     public double score() {
-        return 0;
+        return Symbol.KING.score();
     }
 
     @Override
