@@ -19,7 +19,7 @@ public abstract class Running implements State {
 
     @Override
     public State start() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 실행중입니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 실행중입니다.");
     }
 
     @Override

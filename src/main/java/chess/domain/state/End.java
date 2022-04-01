@@ -14,12 +14,12 @@ public class End implements State {
 
     @Override
     public State start() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
     public State end() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
@@ -34,11 +34,11 @@ public class End implements State {
 
     @Override
     public State move(Location source, Location target) {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
     public TeamScore getScore() {
-        throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 }

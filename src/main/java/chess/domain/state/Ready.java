@@ -13,7 +13,7 @@ public class Ready implements State {
 
     @Override
     public State end() {
-        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Override
@@ -23,17 +23,17 @@ public class Ready implements State {
 
     @Override
     public Board getBoard() {
-        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Override
     public State move(Location source, Location target) {
-        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
     }
 
     @Override
     public TeamScore getScore() {
-        throw new IllegalArgumentException("[ERROR] 게임이 시작되지 않았습니다.");
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
 
     }
 }
