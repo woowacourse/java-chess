@@ -21,7 +21,7 @@ class RookTest {
         Position source = Position.from("a1");
         Position target = Position.from("f1");
 
-        assertThat(rook.isMovable(source, target)).isTrue();
+        assertThat(rook.isMovable(source, target, true)).isTrue();
     }
 
     @Test

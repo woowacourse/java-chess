@@ -16,21 +16,21 @@ class KnightTest {
     @Test
     @DisplayName("나이트의 진행 방향이 맞는다면 true 반환")
     void isCorrectMovable() {
-        Knight knight = new Knight(Position.of('a', '1'), Team.WHITE);
+        Knight knight = new Knight(Team.WHITE);
         Position source = Position.from("a1");
         Position target = Position.from("b3");
 
-        assertThat(knight.isMovable(source, target)).isTrue();
+        assertThat(knight.isMovable(source, target, true)).isTrue();
     }
 
     @Test
     @DisplayName("나이트의 진행 방향이 틀리다면 false 반환")
     void isNotCorrectMovable() {
-        Knight knight = new Knight(Position.of('a', '1'), Team.WHITE);
+        Knight knight = new Knight(Team.WHITE);
         Position source = Position.from("a1");
         Position target = Position.from("b2");
 
-        assertThat(knight.isMovable(source, target)).isFalse();
+        assertThat(knight.isMovable(source, target, true)).isFalse();
     }
 
     @Test

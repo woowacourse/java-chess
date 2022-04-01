@@ -33,7 +33,6 @@ public class Board {
                 .stream()
                 .filter(Piece::isKing)
                 .count();
-
     }
 
     public double getTotalScore(Team team) {

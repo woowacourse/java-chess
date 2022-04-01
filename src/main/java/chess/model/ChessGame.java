@@ -25,6 +25,18 @@ public class ChessGame {
         throw new IllegalArgumentException("움직일 수 없습니다.");
     }
 
+    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        boolean isAttack = sourcePiece.isOtherTeam(targetPiece);
+        return sourcePiece.isMovable(sourcePosition, targetPosition, isAttack) && !hasBlock(sourcePosition, targetPosition, sourcePiece, targetPiece);
+    }
+
+    public void move(Position source, Position target, Turn thisTurn) {
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
+        validateCurrentTurn(thisTurn, sourcePiece);
+
+    }
+
     public boolean isKingDead() {
         return board.countKing() == 1;
     }
@@ -45,11 +57,6 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.NONE;
-    }
-
-    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
-        return (sourcePiece.isMovable(sourcePosition, targetPosition) && !hasBlock(sourcePosition, targetPosition, sourcePiece, targetPiece))
-                || sourcePiece.isKill(sourcePosition, targetPosition, targetPiece);
     }
 
     private boolean hasBlock(Position source, Position target, Piece sourcePiece, Piece targetPiece) {

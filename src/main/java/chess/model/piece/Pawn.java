@@ -1,8 +1,7 @@
 package chess.model.piece;
 
-import chess.model.Position;
-import chess.model.Rank;
-import chess.model.Team;
+import chess.model.*;
+import chess.model.strategy.PawnMoveStrategy;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class Pawn extends Piece {
     private static final double DUPLICATED_PAWN_SCORE = 0.5D;
 
     public Pawn(Team team) {
-        super(team);
+        super(team, new PawnMoveStrategy(Direction.movePawn(team), Direction.attackPawn(team)));
     }
 
 //    public double getScore(long size) {
@@ -36,12 +35,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        if (isInitPosition(source)) {
-            return source.isStepForward(target, team.getForwardDirection(), ONE_STEP) ||
-                    source.isStepForward(target, team.getForwardDirection(), INIT_DISTANCE);
-        }
-        return source.isStepForward(target, team.getForwardDirection(), ONE_STEP);
+    public boolean isKill(Position source, Position target, Piece targetPiece) {
+        return source.isOneStepDiagonal(target, team.getForwardDirection()) && isOtherTeam(targetPiece);
     }
 
     @Override
@@ -58,17 +53,5 @@ public class Pawn extends Piece {
             return List.of(target, source.getUpVerticalPosition(team.getForwardDirection()));
         }
         return List.of(target);
-    }
-
-    @Override
-    public boolean isKill(Position source, Position target, Piece targetPiece) {
-        return source.isOneStepDiagonal(target, team.getForwardDirection()) && isOtherTeam(targetPiece);
-    }
-
-    private boolean isInitPosition(Position position) {
-        if (Team.BLACK.equals(team)) {
-            return position.isInitPawnPosition(Rank.SEVEN);
-        }
-        return position.isInitPawnPosition(Rank.TWO);
     }
 }

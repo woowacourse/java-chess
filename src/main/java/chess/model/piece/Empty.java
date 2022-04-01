@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.Position;
 import chess.model.Team;
+import chess.model.strategy.NotMoveStrategy;
 
 import java.util.List;
 
@@ -11,12 +12,7 @@ public class Empty extends Piece {
     private static final double SCORE = 0D;
 
     public Empty() {
-        super(Team.NONE);
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return false;
+        super(Team.NONE, new NotMoveStrategy());
     }
 
     @Override

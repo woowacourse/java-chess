@@ -23,14 +23,6 @@ public class Position implements Comparable<Position> {
         this.rank = rank;
     }
 
-    public static Position of(char... position) {
-        String key = position[0] + String.valueOf(position[1]);
-        if (CACHE_POSITION.containsKey(key)) {
-            return CACHE_POSITION.get(key);
-        }
-        throw new IllegalArgumentException("유효하지 않은 위치입니다.");
-    }
-
     public static Position from(String position) {
         if (CACHE_POSITION.containsKey(position)) {
             return CACHE_POSITION.get(position);
@@ -62,14 +54,6 @@ public class Position implements Comparable<Position> {
         return position.rank.minus(rank) == direction * distance && file.absMinus(position.file) == 0;
     }
 
-    public boolean isBiggerFileThan(Position position) {
-        return this.file.isBiggerThan(position.file);
-    }
-
-    public boolean isLessRankThan(Position position) {
-        return this.rank.isLessThan(position.rank);
-    }
-
     public boolean isLastFile() {
         return file.equals(File.H);
     }
@@ -84,6 +68,17 @@ public class Position implements Comparable<Position> {
 
     public boolean isOneStepDiagonal(Position position, int forwardDirection) {
         return position.rank.minus(rank) == forwardDirection && file.absMinus(position.file) == 1;
+    }
+
+    public Position getNext(Direction direction) {
+        File nextFile = file.getNext(direction.getFileGap());
+        Rank nextRank = rank.getNext(direction.getRankGap());
+
+        return Position.of(nextFile, nextRank);
+    }
+
+    private String getKey() {
+        return file.getValue() + rank.getValue();
     }
 
     private boolean isOneFileTwoRankStep(Position position) {
@@ -111,6 +106,14 @@ public class Position implements Comparable<Position> {
             return 1;
         }
         return -1;
+    }
+
+    private boolean isBiggerFileThan(Position position) {
+        return this.file.isBiggerThan(position.file);
+    }
+
+    private boolean isLessRankThan(Position position) {
+        return this.rank.isLessThan(position.rank);
     }
 
     private boolean isFileComparison(Position position) {
@@ -142,14 +145,8 @@ public class Position implements Comparable<Position> {
         return file;
     }
 
-    public Position getNext(Direction direction) {
-        File nextFile = file.getNext(direction.getFileGap());
-        Rank nextRank = rank.getNext(direction.getRankGap());
-
-        return Position.of(nextFile, nextRank);
-    }
-
-    private String getKey() {
-        return file.getValue() + rank.getValue();
+    public boolean isInitPawn(Direction direction) {
+        return  (direction == Direction.N && rank == Rank.TWO)
+                || (direction == Direction.S && rank == Rank.SEVEN);
     }
 }

@@ -3,6 +3,7 @@ package chess.model.piece;
 import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
+import chess.model.strategy.UnlimitedMoveStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +15,12 @@ public class Rook extends Piece {
     private static final List<Direction> directions = Direction.linear();
 
     public Rook(Team team) {
-        super(team);
+        super(team, new UnlimitedMoveStrategy(Direction.linear()));
     }
 
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return directions.contains(Direction.of(source, target));
     }
 
     @Override

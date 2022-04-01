@@ -18,16 +18,16 @@ class QueenTest {
     @Test
     @DisplayName("퀸의 진행 방향이 맞는다면 true 반환")
     void correctMove() {
-        Queen queen = new Queen(Position.of('a', '1'), Team.WHITE);
+        Queen queen = new Queen(Team.WHITE);
         Position source = Position.from("a1");
         Position targetDiagonal = Position.from("f6");
         Position targetVertical = Position.from("a5");
         Position targetHorizontal = Position.from("f1");
 
         assertAll(
-                () -> assertThat(queen.isMovable(source, targetDiagonal)).isTrue(),
-                () -> assertThat(queen.isMovable(source, targetVertical)).isTrue(),
-                () -> assertThat(queen.isMovable(source, targetHorizontal)).isTrue()
+                () -> assertThat(queen.isMovable(source, targetDiagonal, true)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetVertical, true)).isTrue(),
+                () -> assertThat(queen.isMovable(source, targetHorizontal, true)).isTrue()
         );
     }
 
@@ -87,7 +87,7 @@ class QueenTest {
     @Test
     @DisplayName("source와 target사이의 position들을 얻는다.")
     void getIntervalPositionTest() {
-        Piece queen = new Queen(Position.of('h', '8'), Team.BLACK);
+        Piece queen = new Queen(Team.BLACK);
         List<Position> intervalPosition = queen.getIntervalPosition(Position.from("h8"), Position.from("e5"));
 
         assertThat(intervalPosition.contains(Position.from("f6"))).isTrue();

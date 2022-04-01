@@ -3,6 +3,7 @@ package chess.model.piece;
 import chess.model.Direction;
 import chess.model.Position;
 import chess.model.Team;
+import chess.model.strategy.UnlimitedMoveStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +12,14 @@ public class Bishop extends Piece {
     private static final String BLACK_NAME = "B";
     private static final String WHITE_NAME = "b";
     private static final double SCORE = 3D;
-    private static final List<Direction> directions = Direction.diagonal();
 
     public Bishop(Team team) {
-        super(team);
+        super(team, new UnlimitedMoveStrategy(Direction.diagonal()));
     }
 
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return directions.contains(Direction.of(source, target));
     }
 
     @Override

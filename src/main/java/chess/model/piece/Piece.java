@@ -3,15 +3,18 @@ package chess.model.piece;
 import chess.model.Position;
 import chess.model.Team;
 import chess.model.Turn;
+import chess.model.strategy.MoveStrategy;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
     protected Team team;
+    private MoveStrategy moveStrategy;
 
-    protected Piece(Team team) {
+    protected Piece(Team team, MoveStrategy moveStrategy) {
         this.team = team;
+        this.moveStrategy = moveStrategy;
     }
 
     public final boolean isSameTeam(Piece targetPiece) {
@@ -46,9 +49,9 @@ public abstract class Piece {
 
     public abstract List<Position> getIntervalPosition(Position source, Position target);
 
-    public boolean isMovable(Position source, Position target) {
-        return false;
-    } // abstract로 변경 필요
+    public final boolean isMovable(Position source, Position target, boolean isKill) {
+        return moveStrategy.movable(source, target, isKill);
+    }
 
     public abstract String getName();
 

@@ -1,8 +1,10 @@
 package chess.model.piece;
 
 import chess.model.Direction;
+import chess.model.Distance;
 import chess.model.Position;
 import chess.model.Team;
+import chess.model.strategy.LimitedMoveStrategy;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,18 +16,12 @@ public class King extends Piece {
     private static final List<Direction> directions = Direction.all();
 
     public King(Team team) {
-        super(team);
+        super(team, new LimitedMoveStrategy(Direction.all(), Distance.oneStep()));
     }
 
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    @Override
-    public boolean isMovable(Position source, Position target) {
-        return directions.contains(Direction.of(source, target))
-                && source.isOneStepAway(target);
     }
 
     @Override

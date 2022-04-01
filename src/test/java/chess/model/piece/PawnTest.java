@@ -18,55 +18,55 @@ class PawnTest {
     @Test
     @DisplayName("폰은 처음 상태에서 1칸 또는 2칸 전진할 수 있으면 true 반환")
     void isCorrectMovable() {
-        Pawn pawn = new Pawn(Position.of('a', '2'), Team.WHITE);
+        Pawn pawn = new Pawn(Team.WHITE);
         Position source = Position.from("a2");
         Position target1Step = Position.from("a3");
         Position target2Step = Position.from("a4");
 
         assertAll(
-                () -> assertThat(pawn.isMovable(source, target1Step)).isTrue(),
-                () -> assertThat(pawn.isMovable(source, target2Step)).isTrue()
+                () -> assertThat(pawn.isMovable(source, target1Step, false)).isTrue(),
+                () -> assertThat(pawn.isMovable(source, target2Step, false)).isTrue()
         );
     }
 
     @Test
     @DisplayName("폰은 처음 상태에서 3칸 전진하려면 false 반환")
     void isNotCorrectInitMovable() {
-        Pawn pawn = new Pawn(Position.of('a', '2'), Team.WHITE);
+        Pawn pawn = new Pawn(Team.WHITE);
         Position source = Position.from("a2");
         Position target = Position.from("a5");
 
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(source, target, false)).isFalse();
     }
 
     @Test
     @DisplayName("폰은 한번 이동한 후, 2칸 움직이면 false 반환")
     void isNotCorrectMovable() {
-        Pawn pawn = new Pawn(Position.of('a', '3'), Team.WHITE);
+        Pawn pawn = new Pawn(Team.WHITE);
         Position source = Position.from("a3");
         Position target = Position.from("a5");
 
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(source, target, false)).isFalse();
     }
 
     @Test
     @DisplayName("폰이 뒤로 움직이면 false 반환")
     void isNotCorrectBackMovable() {
-        Pawn pawn = new Pawn(Position.of('a', '3'), Team.WHITE);
+        Pawn pawn = new Pawn(Team.WHITE);
         Position source = Position.from("a3");
         Position target = Position.from("a2");
 
-        assertThat(pawn.isMovable(source, target)).isFalse();
+        assertThat(pawn.isMovable(source, target, false)).isFalse();
     }
 
     @Test
     @DisplayName("폰이 블랙팀이면 Rank가 감소하는 방향으로 알맞게 움직이면 true 반환")
     void isCorrectMovableWhenTeamIsBlack() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), Team.BLACK);
+        Pawn pawn = new Pawn(Team.BLACK);
         Position source = Position.from("a7");
         Position target = Position.from("a6");
 
-        assertThat(pawn.isMovable(source, target)).isTrue();
+        assertThat(pawn.isMovable(source, target, false)).isTrue();
     }
 
     @Test
@@ -123,7 +123,7 @@ class PawnTest {
     @Test
     @DisplayName("폰은 source와 target사이에 말들이 없다.")
     void getIntervalPositionTest() {
-        Piece pawn = new Pawn(Position.of('a', '8'), Team.BLACK);
+        Piece pawn = new Pawn(Team.BLACK);
         List<Position> intervalPosition = pawn.getIntervalPosition(Position.from("a8"), Position.from("a6"));
 
         assertThat(intervalPosition.size()).isEqualTo(2);

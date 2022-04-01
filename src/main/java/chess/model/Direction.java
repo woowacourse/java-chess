@@ -11,7 +11,18 @@ public enum Direction {
     NW(-1, 1),
     NE(1, 1),
     SW(-1, -1),
-    SE(1, -1);
+    SE(1, -1),
+
+    NNE(1, 2),
+    NNW(-1, 2),
+    WWN(-2, 1),
+    WWS(-2, -1),
+    EEN(2, 1),
+    EES(2, -1),
+    SSW(-1, -2),
+    SSE(1, -2);
+
+
 
     private final int fileGap;
     private final int rankGap;
@@ -42,6 +53,24 @@ public enum Direction {
 
     public static List<Direction> all() {
         return List.of(N, S, W, E, NW, NE, SW, SE);
+    }
+
+    public static List<Direction> knight() {
+        return List.of(NNW, NNE, SSW, SSE, WWN, EEN, WWS, EES);
+    }
+
+    public static List<Direction> movePawn(Team team) {
+        if (team == Team.BLACK) {
+            return List.of(S);
+        }
+        return List.of(N);
+    }
+
+    public static List<Direction> attackPawn(Team team) {
+        if (team == Team.BLACK) {
+            return List.of(SW, SE);
+        }
+        return List.of(NW, NE);
     }
 
     public int getFileGap() {

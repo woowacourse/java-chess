@@ -25,9 +25,9 @@ class KingTest {
         Position targetHorizontal = Position.from("b1");
 
         assertAll(
-                () -> assertThat(king.isMovable(source, targetDiagonal)).isTrue(),
-                () -> assertThat(king.isMovable(source, targetVertical)).isTrue(),
-                () -> assertThat(king.isMovable(source, targetHorizontal)).isTrue()
+                () -> assertThat(king.isMovable(source, targetDiagonal, true)).isTrue(),
+                () -> assertThat(king.isMovable(source, targetVertical,true)).isTrue(),
+                () -> assertThat(king.isMovable(source, targetHorizontal, true)).isTrue()
         );
     }
 
@@ -38,7 +38,7 @@ class KingTest {
         Position source = Position.from("a1");
         Position target = Position.from("c3");
 
-        assertThat(king.isMovable(source, target)).isFalse();
+        assertThat(king.isMovable(source, target, true)).isFalse();
     }
 
 

@@ -21,7 +21,7 @@ class BishopTest {
         Position source = Position.from("a1");
         Position target = Position.from("f6");
 
-        assertThat(bishop.isMovable(source, target)).isTrue();
+        assertThat(bishop.isMovable(source, target, true)).isTrue();
     }
 
     @Test
