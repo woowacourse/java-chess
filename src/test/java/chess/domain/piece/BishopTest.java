@@ -1,36 +1,18 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.piece.notation.Color;
+import chess.domain.board.MoveOrder;
 import chess.domain.position.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BishopTest {
-
-    private static final Board emptyBoard = new Board(HashMap::new);
-    private static Board board;
-
-    @BeforeEach
-    void beforeEach() {
-        Map<Position, Piece> pieceExistBoard = new HashMap<>();
-
-        final Bishop bishop = new Bishop(Color.BLACK);
-
-        pieceExistBoard.put(Position.from("d6"), bishop);
-        pieceExistBoard.put(Position.from("f6"), bishop);
-        pieceExistBoard.put(Position.from("d4"), bishop);
-        pieceExistBoard.put(Position.from("f4"), bishop);
-        board = new Board(() -> pieceExistBoard);
-    }
 
     @DisplayName("비숍 대각선 한 칸 이동")
     @ParameterizedTest
@@ -38,7 +20,7 @@ public class BishopTest {
     void diagonal(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatCode(() -> bishop.checkMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
+        assertThatCode(() -> bishop.checkMoveRange(new MoveOrder(new HashSet<>(), Position.from("b3"), Position.from(to))))
                 .doesNotThrowAnyException();
     }
 
@@ -48,18 +30,23 @@ public class BishopTest {
     void notDiagonal(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatThrownBy(() -> bishop.checkMoveRange(emptyBoard, Position.from("b3"), Position.from(to)))
+        assertThatThrownBy(() -> bishop.checkMoveRange(new MoveOrder(new HashSet<>(), Position.from("b3"), Position.from(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 불가한 위치입니다.");
     }
 
     @DisplayName("비숍 이동 경로에 기물이 있을 경우 예외발생")
     @ParameterizedTest
-    @ValueSource(strings = {"b8", "h8", "a1", "h2"})
+    @ValueSource(strings = {"c7", "g7", "c3", "g3"})
     void invalid(String to) {
         Piece bishop = new Bishop(Color.WHITE);
 
-        assertThatThrownBy(() -> bishop.checkMoveRange(board, Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> bishop.checkMoveRange(new MoveOrder(new HashSet<>(Set.of(
+                Position.from("d6"),
+                Position.from("f6"),
+                Position.from("d4"),
+                Position.from("f4")
+        )), Position.from("e5"), Position.from(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 불가한 위치입니다.");
     }

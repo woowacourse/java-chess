@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.piece.notation.Color;
-import chess.domain.piece.notation.ColorNotation;
-import chess.domain.piece.notation.PieceNotation;
-import chess.domain.position.Direction;
+import chess.domain.board.Direction;
+import chess.domain.piece.movestrategy.DefaultMoveStrategy;
 
 public final class Queen extends Piece {
 
     public Queen(final Color color) {
-        super(new ColorNotation(color, PieceNotation.QUEEN), Direction.EVERY_DIRECTION);
+        super(Notation.QUEEN, color, new DefaultMoveStrategy(Direction.EVERY_DIRECTION));
     }
 }

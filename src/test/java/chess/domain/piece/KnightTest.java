@@ -1,20 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.piece.notation.Color;
+import chess.domain.board.MoveOrder;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
-
-    private static final Board emptyBoard = new Board(HashMap::new);
 
     @DisplayName("나이트는 두 칸 이동 후 90도 방향으로 한 칸 이동 가능")
     @ParameterizedTest
@@ -22,7 +19,7 @@ class KnightTest {
     void move(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatCode(() -> knight.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
+        assertThatCode(() -> knight.checkMoveRange(new MoveOrder(new HashSet<>(), Position.from("e5"), Position.from(to))))
                 .doesNotThrowAnyException();
     }
 
@@ -32,7 +29,7 @@ class KnightTest {
     void invalidMove(String to) {
         Piece knight = new Knight(Color.WHITE);
 
-        assertThatThrownBy(() -> knight.checkMoveRange(emptyBoard, Position.from("e5"), Position.from(to)))
+        assertThatThrownBy(() -> knight.checkMoveRange(new MoveOrder(new HashSet<>(), Position.from("e5"), Position.from(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 불가한 위치입니다.");
     }

@@ -1,6 +1,6 @@
-package chess.domain.piece.notation;
+package chess.domain.piece;
 
-public enum PieceNotation {
+public enum Notation {
     PAWN("p", 1),
     ROOK("r", 5),
     BISHOP("b", 3),
@@ -12,7 +12,7 @@ public enum PieceNotation {
     private final String value;
     private final double score;
 
-    PieceNotation(final String value, final double score) {
+    Notation(final String value, final double score) {
         this.value = value;
         this.score = score;
     }

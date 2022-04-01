@@ -1,43 +1,39 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.piece.notation.Color;
-import chess.domain.piece.notation.ColorNotation;
-import chess.domain.piece.notation.PieceNotation;
-import chess.domain.position.Direction;
-import chess.domain.position.Position;
+import chess.domain.board.MoveOrder;
+import chess.domain.piece.movestrategy.MoveStrategy;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
 
-    protected final ColorNotation notation;
-    protected final List<Direction> directions;
+    protected final Notation notation;
+    private final Color color;
+    private final MoveStrategy moveStrategy;
 
-    protected Piece(final ColorNotation notation, final List<Direction> directions) {
+    protected Piece(final Notation notation, final Color color, final MoveStrategy moveStrategy) {
         this.notation = notation;
-        this.directions = directions;
+        this.color = color;
+        this.moveStrategy = moveStrategy;
+
     }
 
-    public final PieceNotation getNotation() {
-        return notation.getPieceNotation();
+    public final Notation getNotation() {
+        return notation;
     }
 
     public final boolean isSameColor(final Color other) {
-        return notation.isSameColor(other);
+        return color == other;
     }
 
     public final double getScore() {
         return notation.getScore();
     }
 
-    public void checkMoveRange(final Board board, final Position from, final Position to) {
-        final var direction = Direction.of(from, to);
-        if (directions.contains(direction) && !board.hasPiece(direction.getPositions(from, to))) {
-            return;
+    public final void checkMoveRange(final MoveOrder moverOrder) {
+        if (!moveStrategy.canMove(moverOrder)) {
+            throw new IllegalArgumentException("이동 불가한 위치입니다.");
         }
-        throw new IllegalArgumentException("이동 불가한 위치입니다.");
     }
 
     public boolean isKing() {
@@ -53,11 +49,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Objects.equals(notation, piece.notation);
+        return notation == piece.notation && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(notation);
+        return Objects.hash(notation, color);
     }
 }

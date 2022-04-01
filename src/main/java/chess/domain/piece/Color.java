@@ -1,4 +1,4 @@
-package chess.domain.piece.notation;
+package chess.domain.piece;
 
 public enum Color {
     BLACK, WHITE, EMPTY;
