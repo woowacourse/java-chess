@@ -5,7 +5,7 @@ import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
 
-public class Empty extends Piece {
+public class Empty extends AbstractPiece {
 
     public Empty() {
         super(Color.EMPTY);
@@ -27,7 +27,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    List<Direction> getDirection() {
+    public List<Direction> getDirection() {
         return null;
     }
 

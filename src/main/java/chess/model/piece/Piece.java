@@ -5,55 +5,31 @@ import chess.model.square.Direction;
 import chess.model.square.Square;
 import java.util.List;
 
-public abstract class Piece {
+public interface Piece {
 
-    protected final Color color;
+    boolean isBlack();
 
-    protected Piece(Color color) {
-        this.color = color;
-    }
+    String name();
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "color=" + color +
-                '}';
-    }
+    boolean movable(Square source, Square target);
 
-    public boolean isBlack() {
-        return color.equals(Color.BLACK);
-    }
+    boolean movable(Board board, Square source, Square target);
 
-    public boolean isWhite() {
-        return color.equals(Color.WHITE);
-    }
+    boolean isObstacleOnRoute(Board board, Square source, Square target);
 
-    public abstract String name();
+    List<Direction> getDirection();
 
-    public abstract boolean movable(Square source, Square target);
+    boolean isNotAlly(Piece target);
 
-    public boolean movable(Board board, Square source, Square target) {
-        return movable(source, target);
-    };
+    boolean isNotEmpty();
 
-    public abstract boolean isObstacleOnRoute(Board board, Square source, Square target);
+    double getPoint();
 
-    abstract List<Direction> getDirection();
+    boolean isPawn();
 
-    protected boolean isNotAlly(Piece target) {
-        return this.color != target.color;
-    }
+    boolean isKing();
 
-    public abstract boolean isNotEmpty();
+    boolean isSameColor(Color color);
 
-    public abstract double getPoint();
-
-    public abstract boolean isPawn();
-
-    public abstract boolean isKing();
-
-    public boolean isSameColor(Color color) {
-        return this.color.equals(color);
-    }
-
+    Color color();
 }

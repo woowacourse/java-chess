@@ -1,11 +1,9 @@
 package chess.model.piece;
 
-import chess.model.Board;
 import chess.model.square.Direction;
-import chess.model.square.Square;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends PointMovingPiece {
 
     public Knight(Color color) {
         super(color);
@@ -17,19 +15,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean movable(Square source, Square target) {
-        return getDirection().stream()
-                .anyMatch(direction -> source.findLocation(direction, target));
-    }
-
-    @Override
-    public boolean isObstacleOnRoute(Board board, Square source, Square target) {
-        Piece targetPiece = board.get(target);
-        return isNotAlly(targetPiece);
-    }
-
-    @Override
-    List<Direction> getDirection() {
+    public List<Direction> getDirection() {
         return List.of(
                 Direction.NNE,
                 Direction.NNW,
