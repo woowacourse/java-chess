@@ -31,9 +31,9 @@ abstract class Running extends Started {
         return continueGame();
     }
 
-    abstract protected Color currentTurnColor();
+    protected abstract Color currentTurnColor();
 
-    abstract protected Game continueGame();
+    protected abstract Game continueGame();
 
     @Override
     public final GameResult result() {

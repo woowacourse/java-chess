@@ -9,12 +9,12 @@ public abstract class Piece {
     protected final Color color;
     protected final PieceType type;
 
-    public Piece(Color color, PieceType type) {
+    protected Piece(Color color, PieceType type) {
         this.color = color;
         this.type = type;
     }
 
-    abstract public boolean canMove(Position from, Position to);
+    public abstract boolean canMove(Position from, Position to);
 
     public final boolean canAttack(Position from, Position to, Piece targetPiece) {
         if (targetPiece.hasColorOf(color)) {
@@ -23,7 +23,7 @@ public abstract class Piece {
         return isAttackableRoute(from, to);
     }
 
-    abstract protected boolean isAttackableRoute(Position from, Position to);
+    protected abstract boolean isAttackableRoute(Position from, Position to);
 
     public final boolean hasColorOf(Color color) {
         return this.color == color;
