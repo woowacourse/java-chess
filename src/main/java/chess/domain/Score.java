@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class Score {
 
     private static final double PENALTY_MULTIPLIER = 0.5;
+    private static final int PENALTY_SIZE_STANDARD = 1;
 
     private final double value;
 
@@ -41,7 +42,7 @@ public class Score {
     }
 
     private static double calculateScoreOnSameRow(Map<Position, AbstractPiece> pieces, List<Position> positions) {
-        if (positions.size() > 1) {
+        if (positions.size() > PENALTY_SIZE_STANDARD) {
             return positions.stream()
                     .mapToDouble(position -> pieces.get(position).score() * PENALTY_MULTIPLIER)
                     .sum();
