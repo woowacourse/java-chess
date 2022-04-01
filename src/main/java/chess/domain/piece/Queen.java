@@ -8,6 +8,6 @@ import chess.domain.position.Direction;
 public final class Queen extends Piece {
 
     public Queen(final Color color) {
-        super(new ColorNotation(color, PieceNotation.QUEEN), Direction.everyDirection());
+        super(new ColorNotation(color, PieceNotation.QUEEN), Direction.EVERY_DIRECTION);
     }
 }

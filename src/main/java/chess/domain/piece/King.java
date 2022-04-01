@@ -12,7 +12,7 @@ public final class King extends Piece {
     private static final int ONE_STEP = 1;
 
     public King(final Color color) {
-        super(new ColorNotation(color, PieceNotation.KING), Direction.everyDirection());
+        super(new ColorNotation(color, PieceNotation.KING), Direction.EVERY_DIRECTION);
     }
 
     @Override

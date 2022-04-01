@@ -8,6 +8,6 @@ import chess.domain.position.Direction;
 public final class Knight extends Piece {
 
     public Knight(final Color color) {
-        super(new ColorNotation(color, PieceNotation.KNIGHT), Direction.knightDirection());
+        super(new ColorNotation(color, PieceNotation.KNIGHT), Direction.KNIGHT_DIRECTION);
     }
 }

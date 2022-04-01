@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.piece.notation.Color;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +23,12 @@ public enum Direction {
     WEST_WEST_NORTH(-2, 1),
     WEST_WEST_SOUTH(-2, -1);
 
+    public static final List<Direction> LINEAR_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST);
+    public static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+    public static final List<Direction> EVERY_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
+    public static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
+    public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+    public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
     private static final int NEXT = 1;
 
     private final int x;
@@ -71,35 +75,12 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("정의되지 않은 방향입니다."));
     }
 
-    public static List<Direction> PawnDirection(final Color color) {
-        if (color.isWhite()) {
-            return whitePawnDirection();
-        }
-        return blackPawnDirection();
+    public boolean isVertical() {
+        return this == Direction.NORTH || this == Direction.SOUTH;
     }
 
-    public static List<Direction> linearDirection() {
-        return Arrays.asList(NORTH, EAST, SOUTH, WEST);
-    }
-
-    public static List<Direction> diagonalDirection() {
-        return Arrays.asList(NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
-    }
-
-    public static List<Direction> everyDirection() {
-        return Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST);
-    }
-
-    public static List<Direction> knightDirection() {
-        return Arrays.asList(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
-    }
-
-    private static List<Direction> whitePawnDirection() {
-        return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
-    }
-
-    private static List<Direction> blackPawnDirection() {
-        return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    public boolean isDiagonal() {
+        return this == Direction.NORTH_EAST || this == Direction.SOUTH_EAST || this == Direction.SOUTH_WEST || this == Direction.NORTH_WEST;
     }
 
     public List<Position> getPositions(final Position start, final Position end) {
@@ -113,13 +94,5 @@ public enum Direction {
             positions.add(Position.of(File.findByOrder(file), Rank.from(rank)));
         }
         return positions;
-    }
-
-    public boolean isVertical() {
-        return this == Direction.NORTH || this == Direction.SOUTH;
-    }
-
-    public boolean isDiagonal() {
-        return this == Direction.NORTH_EAST || this == Direction.SOUTH_EAST || this == Direction.SOUTH_WEST || this == Direction.NORTH_WEST;
     }
 }

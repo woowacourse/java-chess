@@ -8,6 +8,6 @@ import chess.domain.position.Direction;
 public final class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(new ColorNotation(color, PieceNotation.BISHOP), Direction.diagonalDirection());
+        super(new ColorNotation(color, PieceNotation.BISHOP), Direction.DIAGONAL_DIRECTION);
     }
 }

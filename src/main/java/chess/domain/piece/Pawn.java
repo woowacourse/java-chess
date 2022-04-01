@@ -17,7 +17,14 @@ public final class Pawn extends Piece {
     private static final int ONE_PIECE_ON_ROUTE = 1;
 
     public Pawn(final Color color) {
-        super(new ColorNotation(color, PieceNotation.PAWN), Direction.PawnDirection(color));
+        super(new ColorNotation(color, PieceNotation.PAWN), PawnDirection(color));
+    }
+
+    private static List<Direction> PawnDirection(final Color color) {
+        if (color.isWhite()) {
+            return Direction.WHITE_PAWN_DIRECTION;
+        }
+        return Direction.BLACK_PAWN_DIRECTION;
     }
 
     @Override

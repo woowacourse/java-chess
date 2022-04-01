@@ -8,6 +8,6 @@ import chess.domain.position.Direction;
 public final class Rook extends Piece {
 
     public Rook(final Color color) {
-        super(new ColorNotation(color, PieceNotation.ROOK), Direction.linearDirection());
+        super(new ColorNotation(color, PieceNotation.ROOK), Direction.LINEAR_DIRECTION);
     }
 }
