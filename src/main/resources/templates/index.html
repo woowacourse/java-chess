@@ -3,8 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>로또</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
-Hello World!!
+<h1 class="game-name">체스 게임</h1>
+<div class="buttons">
+    <button class="btn" id="startButton" type="button">Start</button>
+    <button class="btn" id="statusButton" type="button" onclick="getScore()">Score</button>
+</div>
+<div class="chess-board">
+    <div class="board-rank">
+        <div id="a8" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="b8" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="c8" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="d8" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="e8" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="f8" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="g8" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="h8" onclick="clickPosition(id)" class="board-square black-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a7" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="b7" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="c7" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="d7" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="e7" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="f7" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="g7" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="h7" onclick="clickPosition(id)" class="board-square white-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a6" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="b6" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="c6" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="d6" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="e6" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="f6" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="g6" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="h6" onclick="clickPosition(id)" class="board-square black-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a5" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="b5" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="c5" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="d5" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="e5" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="f5" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="g5" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="h5" onclick="clickPosition(id)" class="board-square white-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a4" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="b4" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="c4" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="d4" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="e4" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="f4" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="g4" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="h4" onclick="clickPosition(id)" class="board-square black-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a3" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="b3" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="c3" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="d3" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="e3" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="f3" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="g3" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="h3" onclick="clickPosition(id)" class="board-square white-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a2" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="b2" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="c2" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="d2" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="e2" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="f2" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="g2" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="h2" onclick="clickPosition(id)" class="board-square black-box"></div>
+    </div>
+
+    <div class="board-rank">
+        <div id="a1" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="b1" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="c1" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="d1" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="e1" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="f1" onclick="clickPosition(id)" class="board-square white-box"></div>
+        <div id="g1" onclick="clickPosition(id)" class="board-square black-box"></div>
+        <div id="h1" onclick="clickPosition(id)" class="board-square white-box"></div>
+    </div>
+</div>
 </body>
 </html>
