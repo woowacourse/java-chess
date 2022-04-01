@@ -9,7 +9,7 @@ import chess.view.OutputView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConsoleChessGame {
+public final class ConsoleChessGame {
     private final Board board;
     private Color currentTurn;
 

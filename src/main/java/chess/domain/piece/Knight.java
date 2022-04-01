@@ -12,6 +12,7 @@ public final class Knight extends Piece {
             List.of(-1, -2), List.of(-2, -1),
             List.of(-2, 1), List.of(-1, 2)
     );
+    private static final double SCORE = 2.5;
     private static final String KNIGHT_CAN_NOT_GET_THERE = "나이트가 이동할 수 없는 지점입니다";
 
     public Knight(Color color) {
@@ -36,5 +37,10 @@ public final class Knight extends Piece {
         if (!KNIGHT_MOVES.contains(differential)) {
             throw new IllegalStateException(KNIGHT_CAN_NOT_GET_THERE);
         }
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

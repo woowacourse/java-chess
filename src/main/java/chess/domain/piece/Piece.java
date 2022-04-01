@@ -13,6 +13,7 @@ public abstract class Piece {
     private static final String CAN_NOT_MOVE_TO_THE_DIRECTION = "이동할 수 없는 방향입니다";
 
     private static class Empty extends Piece {
+
         public Empty() {
             super(Color.EMPTY);
         }
@@ -21,6 +22,12 @@ public abstract class Piece {
         public boolean movable(Position from, Position to, Board board) {
             return false;
         }
+
+        @Override
+        public double getScore() {
+            return 0;
+        }
+
     }
 
     private final Color color;
@@ -30,6 +37,8 @@ public abstract class Piece {
     }
 
     public abstract boolean movable(Position from, Position to, Board board);
+
+    public abstract double getScore();
 
     protected void validateAngle(List<Integer> validAngles, Position from, Position to) {
         if (!validAngles.contains(angle(from, to))) {
@@ -80,6 +89,10 @@ public abstract class Piece {
     }
 
     public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
         return false;
     }
 

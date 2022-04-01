@@ -6,6 +6,7 @@ import chess.view.OutputView;
 
 public final class King extends Piece {
     private static final int MAXIMUM_SUM_OF_DX_AND_DY = 2;
+    private static final int SCORE = 0;
     private static final String EXCEEDED_MAXIMUM_DISTANCE_OF_KING = "King의 이동 범위를 초과했습니다";
 
     public King(Color color) {
@@ -22,6 +23,11 @@ public final class King extends Piece {
             OutputView.printError(exception);
             return false;
         }
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     private void validateDistance(Position from, Position to) {

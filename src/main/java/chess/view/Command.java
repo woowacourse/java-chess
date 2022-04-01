@@ -3,6 +3,10 @@ package chess.view;
 import java.util.List;
 
 public final class Command {
+    private static final int THREE_FOR_MOVE_COMMAND = 3;
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
     private final String action;
     private final String from;
     private final String to;
@@ -18,11 +22,11 @@ public final class Command {
     }
 
     public static Command from(List<String> input) {
-        if (input.size() == 3) {
-            return new Command(input.get(0), input.get(1), input.get(2));
+        if (input.size() == THREE_FOR_MOVE_COMMAND) {
+            return new Command(input.get(COMMAND_INDEX), input.get(SOURCE_INDEX), input.get(TARGET_INDEX));
         }
 
-        return new Command(input.get(0));
+        return new Command(input.get(COMMAND_INDEX));
     }
 
     public boolean isStart() {

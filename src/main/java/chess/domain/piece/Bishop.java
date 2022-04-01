@@ -7,6 +7,7 @@ import java.util.List;
 
 public final class Bishop extends Piece {
     private static final List<Integer> BISHOP_ANGLES = List.of(45, -45, -135, 135);
+    private static final int SCORE = 3;
 
     public Bishop(Color color) {
         super(color);
@@ -23,5 +24,10 @@ public final class Bishop extends Piece {
             OutputView.printError(exception);
             return false;
         }
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

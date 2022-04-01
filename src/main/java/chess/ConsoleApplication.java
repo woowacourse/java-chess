@@ -5,7 +5,7 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ConsoleApplication {
+public final class ConsoleApplication {
     public static void main(String[] args) {
         OutputView.startMessage();
         final ConsoleChessGame consoleChessGame = new ConsoleChessGame();
