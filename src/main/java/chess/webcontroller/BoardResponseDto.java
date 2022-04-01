@@ -15,14 +15,29 @@ public class BoardResponseDto {
 
 	private final Map<String, Object> value;
 
-	public BoardResponseDto(Map<Position, Piece> board) {
+	private BoardResponseDto() {
 		value = new HashMap<>();
 		for (File file : File.values()) {
-			initialize(board, file);
+			initializeEmpty(value, file);
 		}
 	}
 
-	private void initialize(Map<Position, Piece> board, File file) {
+	private void initializeEmpty(Map<String, Object> board, File file) {
+		for (Rank rank : Rank.values()) {
+			String key = file.getName() + rank.getName();
+			board.put(key, EMPTY);
+		}
+	}
+
+	private BoardResponseDto(Map<Position, Piece> board) {
+		value = new HashMap<>();
+		for (File file : File.values()) {
+			initializePiece(board, file);
+		}
+	}
+
+	private void initializePiece(Map<Position, Piece> board, File file) {
+
 		for (Rank rank : Rank.values()) {
 			String key = file.getName() + rank.getName();
 
@@ -33,6 +48,14 @@ public class BoardResponseDto {
 				piece -> value.put(key, piece),
 				() -> value.put(key, EMPTY));
 		}
+	}
+
+	public static BoardResponseDto from(Map<Position, Piece> board) {
+		return new BoardResponseDto(board);
+	}
+	
+	public static BoardResponseDto empty() {
+		return new BoardResponseDto();
 	}
 
 	public Map<String, Object> getValue() {

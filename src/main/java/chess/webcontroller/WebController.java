@@ -24,37 +24,38 @@ public class WebController {
 		port(8081);
 		staticFileLocation("/static");
 
-		showMain();
-		enterGame();
-		startGame();
-		move();
+		showMain(new HashMap<>());
+		enterGame(new HashMap<>());
+		startGame(new HashMap<>());
+		move(new HashMap<>());
 
 		exception(Exception.class, (exception, request, response) ->
 			response.body(exception.getMessage()));
 	}
 
-	private static void showMain() {
-		get("/", (req, res) -> render(new HashMap<>(), "index.html"));
+	private static void showMain(Map<String, Object> model) {
+		get("/", (req, res) -> render(model, "index.html"));
 	}
 
-	private static void enterGame() {
-		get("/new_game", (request, response) -> render(
-			new HashMap<>(), "game.html"
-		));
+	private static void enterGame(Map<String, Object> model) {
+		get("/new_game", (request, response) -> {
+			model.putAll(BoardResponseDto.empty().getValue());
+			return render(model, "game.html");
+		});
 	}
 
-	private static void startGame() {
+	private static void startGame(Map<String, Object> model) {
 		get("/start", (request, response) -> {
 			GameState state = new Ready(BoardInitializer.generate())
 				.proceed(new Start());
 			states.add(state);
-			return render(
-				new BoardResponseDto(state.getBoard()).getValue(), "game.html"
-			);
+
+			fillModel(model, state);
+			return render(model, "game.html");
 		});
 	}
 
-	private static void move() {
+	private static void move(Map<String, Object> model) {
 		post("/move", (request, response) -> {
 			Command command = RequestToCommandConverter.from(request);
 
@@ -64,10 +65,17 @@ public class WebController {
 			GameState state = states.peek().proceed(command);
 			states.pop();
 			states.add(state);
-			return render(
-				new BoardResponseDto(state.getBoard()).getValue(), "game.html"
-			);
+
+			fillModel(model, state);
+			return render(model, "game.html");
 		});
+	}
+
+	private static void fillModel(Map<String, Object> model, GameState state) {
+		BoardResponseDto dto = BoardResponseDto.from(state.getBoard());
+		model.putAll(dto.getValue());
+		model.put("TURN", state.getColor());
+		model.put("ChessScore", state.generateScore());
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
