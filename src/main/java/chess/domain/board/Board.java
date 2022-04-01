@@ -126,7 +126,7 @@ public final class Board {
 
     private void validatePathEmpty(Position source, Position target) {
         Direction direction = Direction.calculate(source, target);
-        if (direction.isIgnore()) {
+        if (direction.isUnrelated()) {
             return;
         }
         validatePiecesNotExistOnPath(source.calculatePath(target, direction));

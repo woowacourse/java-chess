@@ -8,7 +8,7 @@ public enum Direction {
     VERTICAL(Position::isVertical),
     HORIZONTAL(Position::isHorizontal),
     DIAGONAL(Position::isDiagonal),
-    IGNORE((source, target) -> true);
+    UNRELATED((source, target) -> true);
 
     private final BiPredicate<Position, Position> judgeDirection;
 
@@ -20,11 +20,11 @@ public enum Direction {
         return Stream.of(values())
                 .filter(direction -> direction.judgeDirection.test(source, target))
                 .findFirst()
-                .orElseGet(() -> IGNORE);
+                .orElse(UNRELATED);
     }
 
-    public boolean isIgnore() {
-        return this == IGNORE;
+    public boolean isUnrelated() {
+        return this == UNRELATED;
     }
 
     public boolean isVertical() {

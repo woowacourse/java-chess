@@ -32,6 +32,6 @@ class DirectionTest {
     @DisplayName("source와 target이 아무 관계도 아니면 IGNORE을 반환한다")
     void noRelation_returnIgnoreDirection() {
         assertThat(Direction.calculate(Position.of("a1"), Position.of("c2")))
-                .isEqualTo(Direction.IGNORE);
+                .isEqualTo(Direction.UNRELATED);
     }
 }
