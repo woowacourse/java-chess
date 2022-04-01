@@ -1,6 +1,7 @@
 package chess.model;
 
 import chess.model.board.Board;
+import chess.model.command.Command;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
@@ -12,6 +13,14 @@ public class ChessGame {
 
     public ChessGame(Board board) {
         this.board = board;
+    }
+
+    public Turn progress(Command command, Turn turn) {
+        if (command.isMove()) {
+            move(command.getSourcePosition(), command.getTargetPosition(), turn);
+            turn = turn.change();
+        }
+        return turn;
     }
 
     public void move(String sourcePosition, String targetPosition, Turn thisTurn) {

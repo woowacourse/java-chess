@@ -1,11 +1,10 @@
 package chess.controller;
 
-import chess.model.board.Board;
-import chess.model.board.BoardFactory;
 import chess.model.ChessGame;
 import chess.model.Turn;
+import chess.model.board.BoardFactory;
 import chess.model.command.Command;
-import chess.model.command.Init;
+import chess.model.command.Start;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -13,38 +12,25 @@ public class ChessController {
     public void start() {
         ChessGame chessGame = new ChessGame(BoardFactory.create());
         OutputView.startGame();
-
+        Command command = new Start(InputView.inputCommand());
+        Turn turn = Turn.init();
+        run(chessGame, command, turn);
     }
 
-    public void run() {
-        OutputView.startGame();
-        String input = InputView.inputCommand();
-        Command command = new Init(input);
-        ChessGame chessGame = new ChessGame(BoardFactory.create());
-        Turn turn = Turn.init();
-        command = command.turnState(input);
-        command = progressGame(command, chessGame, turn);
+    private void run(ChessGame chessGame, Command command, Turn turn) {
+        while (!command.isEnd() || chessGame.isKingDead()) {
+            turn = chessGame.progress(command, turn);
+            OutputView.printBoard(chessGame.getBoard());
+            command = command.turnState(InputView.inputCommand());
+        }
+        end(chessGame, command);
+    }
+
+    private void end(ChessGame chessGame, Command command) {
         OutputView.printFinishMessage();
         command = command.turnFinalState(InputView.inputCommand());
         if (command.isStatus()) {
             OutputView.printFinalResult(chessGame.getWinTeam(), chessGame.getWhiteTeamScore(), chessGame.getBlackTeamScore());
         }
-    }
-
-    private Command progressGame(Command command, ChessGame chessGame, Turn turn) {
-        while (!command.isEnd() || chessGame.isKingDead()) {
-            turn = move(command, chessGame, turn);
-            OutputView.printBoard(chessGame.getBoard());
-            command = command.turnState(InputView.inputCommand());
-        }
-        return command;
-    }
-
-    private Turn move(Command command, ChessGame chessGame, Turn turn) {
-        if (command.isMove()) {
-            chessGame.move(command.getSourcePosition(), command.getTargetPosition(), turn);
-            turn = turn.change();
-        }
-        return turn;
     }
 }
