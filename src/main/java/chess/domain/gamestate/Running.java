@@ -1,7 +1,6 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.GameResult;
 import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -112,17 +111,32 @@ public class Running implements State {
     }
 
     @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
     public StatusScore calculateStatus() {
         return StatusScore.from(board);
     }
 
     @Override
-    public GameResult calculateResult() {
-        throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
+    public Map<Position, Piece> getBoard() {
+        return new TreeMap<>(board.getBoard());
     }
 
     @Override
-    public Map<Position, Piece> getBoard() {
-        return new TreeMap<>(board.getBoard());
+    public State status() {
+        return new Status(board, camp);
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
+
+    @Override
+    public State returnState() {
+        throw new IllegalStateException();
     }
 }

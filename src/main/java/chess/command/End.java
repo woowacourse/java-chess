@@ -1,7 +1,6 @@
 package chess.command;
 
 import chess.ChessGame;
-import chess.view.OutputView;
 
 public final class End implements CommandStrategy {
     @Override
@@ -11,7 +10,6 @@ public final class End implements CommandStrategy {
             return;
         }
         chessGame.end();
-
-        OutputView.printStatus(chessGame.calculateStatus());
+//        OutputView.printStatus(chessGame.calculateStatus());
     }
 }

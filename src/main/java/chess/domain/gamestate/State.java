@@ -1,7 +1,6 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.GameResult;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
@@ -24,7 +23,13 @@ public interface State {
 
     Map<Position, Piece> getBoard();
 
-    GameResult calculateResult();
-
     boolean isRunning();
+
+    boolean isFinished();
+
+    State status();
+
+    boolean isStatus();
+
+    State returnState();
 }

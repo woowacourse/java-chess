@@ -1,10 +1,8 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.GameResult;
 import chess.domain.StatusScore;
 import chess.domain.board.Board;
-import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
@@ -47,44 +45,8 @@ public class Finished implements State {
     }
 
     @Override
-    public GameResult calculateResult() {
-        final double statusOfWhite = statusOfWhite();
-        final double statusOfBlack = statusOfBlack();
-        return calculateResult(statusOfWhite, statusOfBlack);
-    }
-
-    private GameResult calculateResult(final double statusOfWhite, final double statusOfBlack) {
-        if (board.hasBlackKingCaptured()) {
-            return GameResult.BLACK_LOSE;
-        }
-        if (board.hasWhiteKingCaptured()) {
-            return GameResult.BLACK_WIN;
-        }
-        return getResultWhenNoKingCaptured(statusOfWhite, statusOfBlack);
-    }
-
-    private GameResult getResultWhenNoKingCaptured(final double statusOfWhite, final double statusOfBlack) {
-        final int resultNumber = Double.compare(statusOfWhite, statusOfBlack);
-        if (resultNumber < RESULT_CRITERIA) {
-            return GameResult.BLACK_WIN;
-        }
-        if (resultNumber > RESULT_CRITERIA) {
-            return GameResult.BLACK_LOSE;
-        }
-        return GameResult.DRAW;
-    }
-
-    @Override
     public StatusScore calculateStatus() {
         return StatusScore.from(board);
-    }
-
-    private double statusOfWhite() {
-        return new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack());
-    }
-
-    private double statusOfBlack() {
-        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
 
     @Override
@@ -93,7 +55,27 @@ public class Finished implements State {
     }
 
     @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         return board.getBoard();
+    }
+
+    @Override
+    public State status() {
+        throw new IllegalStateException("종료된 상황에서 status를 확인할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
+
+    @Override
+    public State returnState() {
+        throw new IllegalStateException();
     }
 }

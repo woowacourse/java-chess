@@ -1,7 +1,6 @@
 package chess.domain.gamestate;
 
 import chess.domain.Camp;
-import chess.domain.GameResult;
 import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
@@ -55,17 +54,32 @@ public class Ready implements State {
     }
 
     @Override
-    public GameResult calculateResult() {
-        throw new IllegalStateException(CANT_GET_RESULT_WHEN_NOW);
+    public boolean isRunning() {
+        return false;
     }
 
     @Override
-    public boolean isRunning() {
+    public boolean isFinished() {
         return false;
     }
 
     @Override
     public Map<Position, Piece> getBoard() {
         throw new IllegalStateException(NOT_INIT_CHESS_BOARD);
+    }
+
+    @Override
+    public State status() {
+        throw new IllegalStateException("경기 전에 status를 확인할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
+
+    @Override
+    public State returnState() {
+        throw new IllegalStateException();
     }
 }
