@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
@@ -24,7 +24,7 @@ class ChessGameTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(new Board(BoardInitializer.initialize()));
+        chessGame = new ChessGame(new Board(BoardFactory.initialize()));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
+import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.domain.piece.Team;
@@ -21,7 +21,7 @@ public class ChessGameController {
         Command command = InputView.inputInitialCommand();
         validateInitialCommand(command);
         if (command == Command.START) {
-            ChessGame chessGame = new ChessGame(new Board(BoardInitializer.initialize()));
+            ChessGame chessGame = new ChessGame(new Board(BoardFactory.initialize()));
             printCurrentBoard(chessGame);
             progressChessGame(chessGame);
         }

@@ -12,10 +12,11 @@ import chess.domain.piece.Rook;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
-public class BoardInitializer {
+public class BoardFactory {
 
-    private BoardInitializer() {
+    private BoardFactory() {
 
     }
 
@@ -27,6 +28,14 @@ public class BoardInitializer {
         initFirstLine(Team.WHITE, Row.ONE, board);
         initPawn(Team.WHITE, Row.TWO, board);
         return board;
+    }
+
+    public static Board createBoard(final Map<String, String> board) {
+        Map<Position, Piece> boards = board.keySet()
+                .stream()
+                .collect(Collectors.toMap(key -> Position.valueOf(key),
+                        key -> PieceFactory.createPiece(board.get(key))));
+        return new Board(boards);
     }
 
     private static Map<Position, Piece> initEmptyBoard() {
