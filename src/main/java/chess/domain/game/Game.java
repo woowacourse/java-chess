@@ -54,14 +54,14 @@ public final class Game {
     }
 
     public double calculateScore(final Color color) {
-        return board.calculateScore(color);
+        return ResultCalculator.calculateScore(board, color);
     }
 
     public Map<Result, Color> calculateScoreWinner() {
-        return board.calculateScoreWinner();
+        return ResultCalculator.calculateScoreWinner(board);
     }
 
     public Map<Result, Color> calculateFinalWinner() {
-        return board.calculateFinalWinner();
+        return ResultCalculator.calculateFinalWinner(board);
     }
 }

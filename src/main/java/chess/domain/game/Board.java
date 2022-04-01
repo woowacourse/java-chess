@@ -1,20 +1,15 @@
 package chess.domain.game;
 
 import chess.domain.pieces.Piece;
-import chess.machine.Result;
 import chess.domain.pieces.Color;
-import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 import java.util.*;
 
 public final class Board {
 
-    private static final double PAWN_PENALTY_SCORE = 0.5;
     private static final int KING_TOTAL_COUNT = 2;
-    private static final int SINGLE_COUNT = 1;
 
     private final Map<Position, Piece> pieces;
 
@@ -109,64 +104,13 @@ public final class Board {
                 .count() != KING_TOTAL_COUNT;
     }
 
-    public double calculateScore(final Color color) {
-        return calculateDefaultScore(color) - countPawnsOnSameColumns(color) * PAWN_PENALTY_SCORE;
-    }
-
-    private double calculateDefaultScore(Color color) {
-        return pieces.values()
-                .stream()
-                .filter(piece -> piece.isSameColor(color))
-                .mapToDouble(Piece::score)
-                .sum();
-    }
-
-    private int countPawnsOnSameColumns(final Color color) {
-        return Arrays.stream(Column.values())
-                .mapToInt(column -> countPawnsOnSameColumn(column, color))
-                .filter(count -> count > SINGLE_COUNT)
-                .sum();
-    }
-
-    private int countPawnsOnSameColumn(final Column column, final Color color) {
-        return (int) Arrays.stream(Row.values())
-                .map(row -> piece(Position.valueOf(column, row)))
-                .filter(piece -> piece.isPresent() && piece.get().isPawn() && piece.get().isSameColor(color))
-                .count();
-    }
-
-    public Map<Result, Color> calculateScoreWinner() {
-        Map<Result, Color> gameResult = new HashMap<>();
-        if (calculateScore(Color.WHITE) > calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.WHITE);
-        }
-        if (calculateScore(Color.WHITE) < calculateScore(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.BLACK);
-        }
-        return gameResult;
-    }
-
-    public Map<Result, Color> calculateFinalWinner() {
-        if (isKingAlive(Color.WHITE) && isKingAlive(Color.BLACK)) {
-            return calculateScoreWinner();
-        }
-        return calculateWinnerWithKing();
-    }
-
-    private Map<Result, Color> calculateWinnerWithKing() {
-        Map<Result, Color> gameResult = new HashMap<>();
-        if (isKingAlive(Color.WHITE)) {
-            gameResult.put(Result.WIN, Color.WHITE);
-        }
-        if (isKingAlive(Color.BLACK)) {
-            gameResult.put(Result.WIN, Color.BLACK);
-        }
-        return gameResult;
-    }
-
-    private boolean isKingAlive(Color color) {
+    public boolean isKingAlive(Color color) {
         return pieces.values()
                 .stream()
                 .anyMatch(piece -> piece.isKing() && piece.isSameColor(color));
+    }
+
+    public Collection<Piece> existPieces() {
+        return pieces.values();
     }
 }
