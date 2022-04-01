@@ -11,6 +11,7 @@ import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
+import chess.result.EndResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,6 +72,21 @@ public class WebApplication {
                 }
                 res.redirect("/board");
                 return null;
+            });
+
+            post("/end", (req, res) -> {
+                Map<String, Object> model = new HashMap<>();
+                try {
+                    final EndResult result = chessController.end();
+                    final Score score = result.getScore();
+                    for (final Color color : Color.values()) {
+                        model.put(color.name(), score.findScore(color));
+                    }
+                    return render(model, "board.html");
+                } catch (IllegalArgumentException e) {
+                    model.put("error", e.getMessage());
+                    return render(model, "/");
+                }
             });
         });
     }

@@ -107,19 +107,28 @@
     <div class="inner_box black "><div>{{g1}}</div></div>
     <div class="inner_box white "><div>{{h1}}</div></div>
 </div>
-<form method="post" action="/command/move">
-    <input type="text" name="from"/>
-    <input type="text" name="to"/>
-    <button type="submit">move!!</button>
-</form>
+
+<div>
+    <form method="post" action="/command/move">
+        <input type="text" name="from"/>
+        <input type="text" name="to"/>
+        <button type="submit">move!!</button>
+    </form>
+    <form method="post" action="/command/end">
+        <button type="submit">end</button>
+    </form>
+</div>
+
 <div>
     <div>
         white score : {{WHITE}}
         black score : {{BLACK}}
     </div>
 </div>
+
 <div>
     {{error}}
 </div>
+
 </body>
 </html>
