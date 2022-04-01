@@ -3,7 +3,6 @@ package chess.domain.board;
 import static java.util.stream.Collectors.toMap;
 
 import chess.domain.piece.Team;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ public class Position implements Comparable<Position> {
 
     static {
         CACHE = createAll().stream()
-                .collect(toMap(Position::createKey, position -> position));
+                .collect(toMap(Position::convertPositionToString, position -> position));
     }
 
     private final Column column;
@@ -66,7 +65,7 @@ public class Position implements Comparable<Position> {
         return Position.valueOf(this.column.move(horizon), this.row.move(vertical));
     }
 
-    private String createKey() {
+    public String convertPositionToString() {
         return column.getName() + row.getValue();
     }
 

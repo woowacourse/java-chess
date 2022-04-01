@@ -6,9 +6,10 @@ import chess.domain.move.MoveStrategy;
 public final class Knight extends ValidPiece {
 
     private static final double POINT = 2.5;
+    private static final String NAME = "knight";
 
     public Knight(final Team team) {
-        super(team, POINT);
+        super(team, NAME, POINT);
     }
 
     @Override

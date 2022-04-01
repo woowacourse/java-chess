@@ -5,9 +5,10 @@ import chess.domain.move.MoveStrategy;
 public final class Blank extends Piece {
 
     private static final double POINT = 0;
+    private static final String NAME = " ";
 
     public Blank() {
-        super(Team.NONE, POINT);
+        super(Team.NONE, NAME ,POINT);
     }
 
     @Override

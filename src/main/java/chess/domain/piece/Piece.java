@@ -6,10 +6,12 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Team team;
+    private final String name;
     private final double point;
 
-    protected Piece(final Team team, final double point) {
+    protected Piece(final Team team, final String name, final double point) {
         this.team = team;
+        this.name = name;
         this.point = point;
     }
 
@@ -23,6 +25,17 @@ public abstract class Piece {
 
     public final double getPoint() {
         return point;
+    }
+
+    public final String getName() {
+        return name;
+    }
+
+    public final String convertPieceToString() {
+        if (this.isBlank()) {
+            return " ";
+        }
+        return String.format("%s %s", team, getName());
     }
 
     public abstract boolean isBlank();
