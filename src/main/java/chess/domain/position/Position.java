@@ -86,6 +86,10 @@ public class Position {
         return Position.of(nextFile, nextRank);
     }
 
+    public String getValue() {
+        return file.value() + rank.value();
+    }
+
     @Override
     public String toString() {
         return "Position{" +
