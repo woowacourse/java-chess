@@ -7,4 +7,8 @@ const initGameAndGetId = async () => {
 
 const newGameBtn = document.querySelector("button#init_game");
 
-newGameBtn.addEventListener("click", initGameAndGetId);
+const init = () => {
+    newGameBtn.addEventListener("click", initGameAndGetId);
+}
+
+init();
