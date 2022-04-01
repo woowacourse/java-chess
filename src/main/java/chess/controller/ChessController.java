@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.dto.BoardDto;
+import chess.dto.MoveDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -40,13 +41,12 @@ public class ChessController {
         });
 
         get("/status", (req, res) -> {
-            // ChessGameService의 createStatus 로직 실행 -> StatusdDto 반환
-            // gson.toJson(StatusdDto) 반환
-            return render(new HashMap<>(), "index.html");
+            return gson.toJson(chessService.createStatus());
         });
 
         post("/move", (req, res) -> {
             //gson fromJson request body를 MoveDto로 변환
+            gson.fromJson(req.body(), MoveDto.class);
             // ChessGameService의 move 로직 실행 BoardDto 반환
             // gson.toJson(BoardDto) 반환
             return render(new HashMap<>(), "index.html");
