@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Chessboard;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -26,5 +27,12 @@ class KnightTest {
         Knight knight = new Knight(Color.BLACK);
         assertThat(knight.isMovablePosition(new Position(4, 4), new Position(4 + a, 4 + b),
                 Chessboard.create().getBoard())).isFalse();
+    }
+
+    @Test
+    @DisplayName("같은 타입인지 검사")
+    void checkSameType() {
+        Knight knight = new Knight(Color.BLACK);
+        assertThat(knight.isSameType(Knight.class)).isTrue();
     }
 }

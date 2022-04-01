@@ -1,7 +1,10 @@
 package chess.domain.board;
 
 import chess.domain.Turn;
-import chess.domain.piece.*;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -84,7 +87,7 @@ public class Chessboard {
         return sourcePiece.isMovablePosition(source, target, board);
     }
 
-    public boolean isExistPiece(Position target) {
+    private boolean isExistPiece(Position target) {
         return board.containsKey(target);
     }
 
@@ -131,16 +134,16 @@ public class Chessboard {
         return count;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
-
-    public Piece getPosition(int row, int column) {
+    public Piece getPiece(int row, int column) {
         return board.keySet()
                 .stream()
                 .filter(position -> position.isSamePosition(row, column))
                 .map(board::get)
                 .findAny()
                 .orElseThrow();
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
