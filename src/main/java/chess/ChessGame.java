@@ -2,6 +2,8 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.BoardInitializer;
+import chess.domain.command.Command;
+import chess.domain.command.StatusCommand;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.InputView;
@@ -30,17 +32,16 @@ public final class ChessGame {
     }
 
     private State progress(Command command, State state) {
-        if (command.isStatus()) {
+        if (command instanceof StatusCommand) {
             OutputView.printStatus(state.status());
         }
 
-        final State newState = CommandChecker.check(command, state);
-
+        final State newState = command.changeChessState(state);
         return newState;
     }
 
     private void printBoard(final Command command, final State state) {
-        if (!command.isStatus()) {
+        if (!(command instanceof StatusCommand)) {
             Board currentBoard = state.board();
             OutputView.printBoard(currentBoard.cells());
         }
