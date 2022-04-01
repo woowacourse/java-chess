@@ -2,13 +2,17 @@ package chess.domain.piece;
 
 public enum Color {
     BLACK,
-    WHITE;
+    WHITE,
+    EMPTY;
 
     public Color opposite() {
         if (this == BLACK) {
             return WHITE;
         }
+        if (this == WHITE) {
+            return BLACK;
+        }
 
-        return BLACK;
+        return EMPTY;
     }
 }

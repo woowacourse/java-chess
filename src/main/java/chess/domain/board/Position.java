@@ -9,6 +9,7 @@ public final class Position {
     private static final String POSITION_INPUT_DELIMITER = "";
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final int ZERO_FOR_NO_CHANGE = 0;
 
     private final File file;
     private final Rank rank;
@@ -42,8 +43,22 @@ public final class Position {
         if (isDiagonal(to)) {
             return diagonalBetweens(fileBetween, rankBetween);
         }
+        if (isHorizontal(to)) {
+            return horizontalBetweens(this, fileBetween);
+        }
+        return verticalBetweens(this, rankBetween);
+    }
 
-        return verticalBetweens(fileBetween, rankBetween);
+    private List<Position> horizontalBetweens(Position from, List<File> fileBetween) {
+        Rank rank = Rank.from(from);
+
+        return fileBetween.stream()
+                .map(file -> Position.of(file, rank))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isHorizontal(Position to) {
+        return this.dx(to) != ZERO_FOR_NO_CHANGE && this.dy(to) == ZERO_FOR_NO_CHANGE;
     }
 
     private boolean isDiagonal(Position to) {
@@ -52,17 +67,26 @@ public final class Position {
 
     private List<Position> diagonalBetweens(List<File> fileBetween, List<Rank> rankBetween) {
         List<Position> betweens = new ArrayList<>();
-        for (int i = 0; i < rankBetween.size(); i++) {
+        for (int i = ZERO_FOR_NO_CHANGE; i < rankBetween.size(); i++) {
             betweens.add(Position.of(fileBetween.get(i), rankBetween.get(i)));
         }
         return betweens;
     }
 
-    private List<Position> verticalBetweens(List<File> fileBetween, List<Rank> rankBetween) {
-        return fileBetween.stream()
-                .flatMap(file -> rankBetween.stream()
-                        .map(rank -> Position.of(file, rank)))
+    private List<Position> verticalBetweens(Position from, List<Rank> rankBetween) {
+        File file = File.from(from);
+
+        return rankBetween.stream()
+                .map(rank -> Position.of(file, rank))
                 .collect(Collectors.toList());
+    }
+
+    public boolean isSameFile(File file) {
+        return this.file == file;
+    }
+
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
     }
 
     @Override

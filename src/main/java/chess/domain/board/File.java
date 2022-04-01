@@ -36,11 +36,30 @@ public enum File {
     }
 
     public List<File> between(File target) {
+        File higherFile = getHigherFile(target);
+        File lowerFile = getLowerFile(target);
+
         final List<File> fileBetweens = Arrays.stream(values())
-                .filter(file -> file.fileNumber > this.fileNumber && file.fileNumber < target.fileNumber)
+                .filter(file -> file.fileNumber > lowerFile.fileNumber && higherFile.fileNumber < target.fileNumber)
                 .collect(Collectors.toList());
 
         return order(fileBetweens, target);
+    }
+
+    private File getHigherFile(File target) {
+        if (this.fileNumber > target.fileNumber) {
+            return this;
+        }
+
+        return target;
+    }
+
+    private File getLowerFile(File target) {
+        if (this.fileNumber < target.fileNumber) {
+            return this;
+        }
+
+        return target;
     }
 
     private List<File> order(List<File> files, File target) {
@@ -51,5 +70,12 @@ public enum File {
         }
 
         return files;
+    }
+
+    public static File from(Position position) {
+        return Arrays.stream(values())
+                .filter(position::isSameFile)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

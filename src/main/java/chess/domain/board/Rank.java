@@ -54,4 +54,11 @@ public enum Rank {
 
         return ranks;
     }
+
+    public static Rank from(Position position) {
+        return Arrays.stream(values())
+                .filter(position::isSameRank)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
 }

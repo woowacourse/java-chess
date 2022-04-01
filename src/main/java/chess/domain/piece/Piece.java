@@ -7,6 +7,18 @@ import java.util.Objects;
 
 public abstract class Piece {
     private static final int TWO_FOR_NO_BETWEEN = 2;
+    public static final Piece EMPTY = new Empty();
+
+    private static class Empty extends Piece {
+        public Empty() {
+            super(Color.EMPTY);
+        }
+
+        @Override
+        public boolean movable(Position from, Position to, Board board) {
+            return false;
+        }
+    }
 
     private final Color color;
 
@@ -43,15 +55,15 @@ public abstract class Piece {
     }
 
     protected void validatePieceOnWay(Position from, Position to, Board board) {
-        if (from.dx(to) + from.dy(to) <= TWO_FOR_NO_BETWEEN) { // 중간 포지션이 존재하지 않는 1칸 이동의 경우 검증 탈출
+        if (Math.abs(from.dx(to)) + Math.abs(from.dy(to)) <= TWO_FOR_NO_BETWEEN) { // 중간 포지션이 존재하지 않는 1칸 이동의 경우 검증 탈출
             return;
         }
 
-        from.between(to)
+        if (from.between(to)
                 .stream()
-                .filter(board::exists)
-                .findAny()
-                .ifPresent((position) -> new IllegalStateException("이동 경로에 기물이 존재합니다"));
+                .anyMatch(board::exists)) {
+            throw new IllegalStateException();
+        }
     }
 
     protected void validateTarget(Board board, Position to) {

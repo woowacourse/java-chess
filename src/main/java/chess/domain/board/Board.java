@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public final class Board {
     }
 
     public boolean move(Position from, Position to) {
-        final Piece piece = board.get(from);
+        final Piece piece = board.getOrDefault(from, EmptyPiece.EMPTY_PIECE);
         if (piece.movable(from, to, this)) {
             board.put(to, piece);
             board.remove(from);
@@ -37,11 +38,11 @@ public final class Board {
     }
 
     public boolean isSameColorOnTarget(Piece source, Position target) {
-        return source.isSameColor(board.get(target));
+        return source.isSameColor(board.getOrDefault(target, Piece.EMPTY));
     }
 
     public boolean isEnemyOnTarget(Piece source, Position target) {
-        return source.isEnemy(board.get(target));
+        return source.isEnemy(board.getOrDefault(target, Piece.EMPTY));
     }
 
     public boolean exists(Position position) {
@@ -53,6 +54,6 @@ public final class Board {
     }
 
     public boolean isTurnOf(Position from, Color currentTurn) {
-        return board.get(from).isSameColor(currentTurn);
+        return board.getOrDefault(from, Piece.EMPTY).isSameColor(currentTurn);
     }
 }
