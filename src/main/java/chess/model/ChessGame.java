@@ -23,7 +23,15 @@ public class ChessGame {
         return turn;
     }
 
-    public void move(Position source, Position target, Turn thisTurn) {
+    public boolean isKingDead() {
+        return board.countKing() == 1;
+    }
+
+    public GameResult getWinningResult() {
+        return GameResult.from(board);
+    }
+
+    private void move(Position source, Position target, Turn thisTurn) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
         validateCurrentTurn(thisTurn, sourcePiece);
@@ -38,28 +46,6 @@ public class ChessGame {
     private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, MoveType moveType) {
         return sourcePiece.isMovable(sourcePosition, targetPosition, moveType)
                 && !hasBlock(sourcePosition, targetPosition, sourcePiece);
-    }
-
-    public boolean isKingDead() {
-        return board.countKing() == 1;
-    }
-
-    public double getWhiteTeamScore() {
-        return board.getTotalScore(Team.WHITE);
-    }
-
-    public double getBlackTeamScore() {
-        return board.getTotalScore(Team.BLACK);
-    }
-
-    public Team getWinTeam() {
-        if (getWhiteTeamScore() > getBlackTeamScore()) {
-            return Team.WHITE;
-        }
-        if (getBlackTeamScore() > getWhiteTeamScore()) {
-            return Team.BLACK;
-        }
-        return Team.NONE;
     }
 
     private boolean hasBlock(Position source, Position target, Piece sourcePiece) {

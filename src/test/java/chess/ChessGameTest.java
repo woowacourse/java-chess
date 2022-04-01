@@ -27,25 +27,4 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(board);
         assertThat(chessGame.isKingDead()).isFalse();
     }
-
-    @Test
-    @DisplayName("체스판 초기상태에서는 팀상태가 같다.")
-    void getTeamScore() {
-        Board board = BoardFactory.create();
-        ChessGame chessGame = new ChessGame(board);
-
-        assertThat(chessGame.getWhiteTeamScore())
-                .isEqualTo(chessGame.getBlackTeamScore());
-    }
-
-    @Test
-    @DisplayName("체스판 초기상태에서는 무승부이다.")
-    void getWinningTeam() {
-        Board board = BoardFactory.create();
-        ChessGame chessGame = new ChessGame(board);
-
-        Team winningTeam = chessGame.getWinTeam();
-
-        assertThat(winningTeam).isEqualTo(Team.NONE);
-    }
 }

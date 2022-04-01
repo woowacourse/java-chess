@@ -30,7 +30,7 @@ public class ChessController {
         OutputView.printFinishMessage();
         command = command.turnFinalState(InputView.inputCommand());
         if (command.isStatus()) {
-            OutputView.printFinalResult(chessGame.getWinTeam(), chessGame.getWhiteTeamScore(), chessGame.getBlackTeamScore());
+            OutputView.printFinalResult(chessGame.getWinningResult());
         }
     }
 }

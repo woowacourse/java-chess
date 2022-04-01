@@ -1,8 +1,8 @@
 package chess.view;
 
+import chess.model.GameResult;
 import chess.model.board.Board;
 import chess.model.position.Position;
-import chess.model.Team;
 
 import java.util.Map;
 
@@ -31,10 +31,10 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(Team team, double whiteScore, double blackScore) {
-        System.out.println("우승팀은 " + team.name() + "입니다.");
-        System.out.println("블랙 팀: " + blackScore);
-        System.out.println("화이트 팀: " + whiteScore);
+    public static void printFinalResult(GameResult result) {
+        System.out.println("우승팀은 " + result.getWinningTeam() + "입니다.");
+        System.out.println("블랙 팀: " + result.getBlackScore());
+        System.out.println("화이트 팀: " + result.getWhiteScore());
     }
 
     public static void printFinishMessage() {
