@@ -17,26 +17,32 @@ public final class GameMachine {
 
     public void run() {
         InputView.announceStart();
-        Game game = null;
-        String command = "";
+        Game game = initializeGame();
+        String command;
         do {
             command = InputView.requestCommand();
-            game = play(game, command);
+            play(game, command);
         } while (!Command.isEnd(command) && !game.isEnd());
         printFinalResult(game);
     }
 
-    private Game play(Game game, final String command) {
-        if (Command.isStart(command)) {
-            return makeGame();
+    private Game initializeGame() {
+        while (!Command.isStart(InputView.requestCommand())) {
+            OutputView.printNotStarted();
         }
+        return makeGame();
+    }
+
+    private void play(Game game, final String command) {
         if (Command.isMove(command)) {
             movePiece(game, Arrays.asList(command.split(MOVE_DELIMITER)));
+            return;
         }
         if (Command.isStatus(command)) {
             OutputView.printScoreResult(game);
+            return;
         }
-        return game;
+        OutputView.printBoard(game);
     }
 
     private Game makeGame() {
@@ -67,7 +73,7 @@ public final class GameMachine {
     }
 
     private void printFinalResult(Game game) {
-        if(game != null) {
+        if (game != null) {
             OutputView.printFinalResult(game);
         }
     }

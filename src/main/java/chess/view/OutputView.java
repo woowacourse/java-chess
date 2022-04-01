@@ -81,4 +81,8 @@ public class OutputView {
         }
         System.out.println("무승부입니다.");
     }
+
+    public static void printNotStarted() {
+        System.out.println("게임을 먼저 Start 해주세요.");
+    }
 }
