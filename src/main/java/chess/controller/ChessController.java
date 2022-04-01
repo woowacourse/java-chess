@@ -23,15 +23,24 @@ public class ChessController {
 
         String text = InputView.requestCommand();
         Command command = Command.splitCommand(text);
+
         if (command == Command.END) {
             return;
         }
 
+        readyGame(chessBoard, command);
+
+        playingGame(chessBoard, text, command);
+    }
+
+    private void readyGame(ChessBoard chessBoard, Command command) {
         if (command == Command.START) {
             runStartCommand(chessBoard);
             playTurn(chessBoard);
         }
+    }
 
+    private void playingGame(ChessBoard chessBoard, String text, Command command) {
         if (command == Command.MOVE) {
             runMoveCommand(chessBoard, text);
             playTurn(chessBoard);
