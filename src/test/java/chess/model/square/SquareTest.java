@@ -6,7 +6,6 @@ import static chess.model.piece.Fixtures.C5;
 import static chess.model.piece.Fixtures.D4;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.piece.Direction;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
