@@ -2,6 +2,7 @@ package chess.domain.gamestate;
 
 import chess.domain.Camp;
 import chess.domain.GameResult;
+import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
@@ -49,12 +50,7 @@ public class Ready implements State {
     }
 
     @Override
-    public double statusOfBlack() {
-        throw new IllegalStateException(CANT_STATUS_WHEN_NOT_RUNNING);
-    }
-
-    @Override
-    public double statusOfWhite() {
+    public StatusScore calculateStatus() {
         throw new IllegalStateException(CANT_STATUS_WHEN_NOT_RUNNING);
     }
 

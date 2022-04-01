@@ -55,9 +55,7 @@ public class ChessGame {
     }
 
     public StatusScore calculateStatus() {
-        final double statusOfWhite = state.statusOfWhite();
-        final double statusOfBlack = state.statusOfBlack();
-        return new StatusScore(statusOfWhite, statusOfBlack);
+        return state.calculateStatus();
     }
 
     public String getResultMessage() {

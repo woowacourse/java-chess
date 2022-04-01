@@ -46,7 +46,7 @@ public class RunningTest {
     void running_status_no_exception() {
         State state = new Running(new Board());
 
-        assertThatNoException().isThrownBy(state::statusOfBlack);
+        assertThatNoException().isThrownBy(state::calculateStatus);
     }
 
     @DisplayName("기물이 없는 시작 위치를 입력할 경우 움직일 수 없다.")
@@ -79,7 +79,7 @@ public class RunningTest {
         final State state = new Running(new Board());
         Position a1 = Position.of(Column.A, Row.ONE);
         Position a4 = Position.of(Column.A, Row.FOUR);
-        
+
         assertThatThrownBy(() -> state.move(a1, a4))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 기물이 있어 움직일 수 없습니다.");

@@ -38,6 +38,6 @@ public class FinishedTest {
     void finished_status_no_exception() {
         State state = new Finished(new Board());
 
-        assertThatNoException().isThrownBy(state::statusOfBlack);
+        assertThatNoException().isThrownBy(state::calculateStatus);
     }
 }

@@ -36,7 +36,7 @@ public class ReadyTest {
     void ready_status_exception() {
         State state = new Ready();
 
-        assertThatThrownBy(state::statusOfBlack)
+        assertThatThrownBy(state::calculateStatus)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.");
     }

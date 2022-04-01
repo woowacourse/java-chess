@@ -2,6 +2,7 @@ package chess.domain.gamestate;
 
 import chess.domain.Camp;
 import chess.domain.GameResult;
+import chess.domain.StatusScore;
 import chess.domain.board.Board;
 import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
@@ -74,12 +75,15 @@ public class Finished implements State {
     }
 
     @Override
-    public double statusOfWhite() {
+    public StatusScore calculateStatus() {
+        return new StatusScore(statusOfWhite(), statusOfBlack());
+    }
+
+    private double statusOfWhite() {
         return new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack());
     }
 
-    @Override
-    public double statusOfBlack() {
+    private double statusOfBlack() {
         return new BoardStatusCalculator(board).calculate(Piece::isBlack);
     }
 

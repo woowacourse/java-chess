@@ -2,8 +2,8 @@ package chess.domain.gamestate;
 
 import chess.domain.Camp;
 import chess.domain.GameResult;
+import chess.domain.StatusScore;
 import chess.domain.board.Board;
-import chess.domain.board.BoardStatusCalculator;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
 import chess.domain.piece.Piece;
@@ -14,6 +14,7 @@ import java.util.TreeMap;
 public class Running implements State {
 
     private static final String DONT_START_WHEN_RUNNING = "진행 중일 때는 시작할 수 없습니다.";
+    private static final String CANT_STATUS_WHEN_NOT_RUNNING = "게임이 진행중이 아닐때는 상태를 확인할 수 없습니다.";
     private static final String CANT_GET_RESULT_WHEN_NOW = "아직 승패를 판정할 수 없습니다.";
     private static final String NO_PIECE_TO_MOVE = "이동할 수 있는 기물이 없습니다.";
     private static final String TURN_OPPOSITE_CAMP = "상대 진영의 차례입니다.";
@@ -112,13 +113,8 @@ public class Running implements State {
     }
 
     @Override
-    public double statusOfBlack() {
-        return new BoardStatusCalculator(board).calculate(Piece::isBlack);
-    }
-
-    @Override
-    public double statusOfWhite() {
-        return new BoardStatusCalculator(board).calculate(piece -> !piece.isBlack());
+    public StatusScore calculateStatus() {
+        throw new IllegalStateException(CANT_STATUS_WHEN_NOT_RUNNING);
     }
 
     @Override
