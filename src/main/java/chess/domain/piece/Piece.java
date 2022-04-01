@@ -35,7 +35,7 @@ public abstract class Piece {
         if (this.isBlank()) {
             return " ";
         }
-        return String.format("%s %s", team, getName());
+        return String.format("%s %s", team.getValue(), getName());
     }
 
     public abstract boolean isBlank();

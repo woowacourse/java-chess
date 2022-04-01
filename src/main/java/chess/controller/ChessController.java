@@ -3,7 +3,9 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import chess.dto.BoardDto;
 import chess.service.ChessService;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -23,15 +25,15 @@ public class ChessController {
 
     public void run() {
 
+        Gson gson = new Gson();
+
         get("/", (req, res) -> {
             return render(new HashMap<>(), "index.html");
         });
 
         get("/start", (req, res) -> {
-            chessService.initializeBoard();
-            // ChessGameService의 initializeBoard 로직 실행 -> BoardDto 반환
-            // gson.toJson(BoardDto) 반환
-            return render(new HashMap<>(), "index.html");
+            BoardDto boardDto = chessService.initializeBoard();
+            return gson.toJson(boardDto);
         });
 
         get("/end", (req, res) -> {
