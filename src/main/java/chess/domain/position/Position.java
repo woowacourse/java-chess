@@ -17,9 +17,7 @@ public final class Position {
 
     public static Position of(final String value) {
         validateValue(value);
-        if (!caches.containsKey(value)) {
-            caches.put(value, new Position(Column.of(value.substring(0, 1)), Row.of(value.substring(1))));
-        }
+        caches.computeIfAbsent(value, it -> new Position(Column.of(value.substring(0, 1)), Row.of(value.substring(1))));
         return caches.get(value);
     }
 
@@ -93,8 +91,8 @@ public final class Position {
 
     private List<Position> verticalPaths(final Position target) {
         final List<Position> positions = new ArrayList<>();
-        for (Row row : row.rowPaths(target.row)) {
-            positions.add(Position.valueOf(this.column, row));
+        for (Row pathsRow : row.rowPaths(target.row)) {
+            positions.add(Position.valueOf(this.column, pathsRow));
         }
         return positions;
     }
