@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.view.OutputView;
 import java.util.List;
 
 public final class Rook extends Piece {
@@ -19,6 +20,7 @@ public final class Rook extends Piece {
             validateTarget(board, to);              // 3. 목표 기물 확인
             return true;
         } catch (IllegalStateException exception) {
+            OutputView.printError(exception);
             return false;
         }
     }

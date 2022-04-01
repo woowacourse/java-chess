@@ -5,6 +5,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.view.OutputView;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class ConsoleChessGame {
 
     public void move(Position from, Position to) {
         if (!board.isTurnOf(from, currentTurn)) {
+            OutputView.printError(new IllegalStateException(currentTurn + "차례입니다."));
             return;
         }
 

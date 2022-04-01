@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.view.OutputView;
 import java.util.List;
 
 public final class Pawn extends Piece {
@@ -28,6 +29,7 @@ public final class Pawn extends Piece {
             isFirstMove = false;
             return true;
         } catch (IllegalStateException exception) {
+            OutputView.printError(exception);
             return false;
         }
     }

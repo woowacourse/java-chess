@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.view.OutputView;
 
 public final class King extends Piece {
     private static final int MAXIMUM_SUM_OF_DX_AND_DY = 2;
@@ -18,6 +19,7 @@ public final class King extends Piece {
             validateTarget(board, to);  // 2. 목표 기물 확인
             return true;
         } catch (IllegalStateException exception) {
+            OutputView.printError(exception);
             return false;
         }
     }
