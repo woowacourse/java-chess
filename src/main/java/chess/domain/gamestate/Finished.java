@@ -76,7 +76,7 @@ public class Finished implements State {
 
     @Override
     public StatusScore calculateStatus() {
-        return new StatusScore(statusOfWhite(), statusOfBlack());
+        return StatusScore.from(board);
     }
 
     private double statusOfWhite() {

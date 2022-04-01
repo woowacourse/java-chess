@@ -1,7 +1,6 @@
 package chess;
 
 import chess.domain.GameCommand;
-import chess.domain.GameResult;
 import chess.domain.StatusScore;
 import chess.domain.board.Position;
 import chess.domain.board.Positions;
@@ -58,10 +57,6 @@ public class ChessGame {
 
     public StatusScore calculateStatus() {
         return state.calculateStatus();
-    }
-
-    public String getResultMessage() {
-        return GameResult.from(state.calculateResult()).getMessage();
     }
 
     public Map<Position, Piece> getBoard() {

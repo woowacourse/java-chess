@@ -12,9 +12,7 @@ public final class Move implements CommandStrategy {
 
         OutputView.printBoard(chessGame.getBoard());
         if (chessGame.isNotRunning()) {
-            OutputView.printFinishMessage();
             OutputView.printStatus(chessGame.calculateStatus());
-            OutputView.printResultMessage(chessGame.getResultMessage());
         }
     }
 }

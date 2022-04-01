@@ -6,8 +6,6 @@ import chess.view.OutputView;
 public final class End implements CommandStrategy {
     @Override
     public void execute(final String command, final ChessGame chessGame) {
-        OutputView.printFinishMessage();
-
         if (chessGame.isNotRunning()) {
             chessGame.turnOff();
             return;
@@ -15,6 +13,5 @@ public final class End implements CommandStrategy {
         chessGame.end();
 
         OutputView.printStatus(chessGame.calculateStatus());
-        OutputView.printResultMessage(chessGame.getResultMessage());
     }
 }
