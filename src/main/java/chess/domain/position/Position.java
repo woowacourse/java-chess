@@ -39,8 +39,8 @@ public final class Position {
     }
 
     private static void validateColumnAndRowValue(String value) {
-        Column column = Column.of(value.substring(0, 1));
-        Row row = Row.of(value.substring(1, 2));
+        Column.of(value.substring(0, 1));
+        Row.of(value.substring(1, 2));
     }
 
     public boolean isStraight(final Position target) {
