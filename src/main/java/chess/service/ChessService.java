@@ -8,7 +8,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.Score;
 import chess.domain.game.Turn;
 import chess.domain.piece.Team;
-import chess.dto.BoardDto;
+import chess.dto.ChessDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
 import java.util.Map;
@@ -24,22 +24,21 @@ public class ChessService {
         turnDao = new TurnDao();
     }
 
-    public BoardDto initializeGame() {
+    public ChessDto initializeGame() {
         Board board = BoardFactory.createBoard(boardDao.getBoard());
         Team team = Team.of(turnDao.getCurrentTurn());
-        ChessGame chessGame = new ChessGame(board, new Turn(team));
-        return BoardDto.of(board);
+        return ChessDto.of(board, team.getValue());
     }
 
-    public BoardDto endGame() {
+    public ChessDto endGame() {
         Board board = new Board(BoardFactory.initialize());
-        BoardDto boardDto = BoardDto.of(false, board);
+        ChessDto chessDto = ChessDto.of(board);
 
-        Map<String, String> convertedBoard = boardDto.getBoard();
+        Map<String, String> convertedBoard = chessDto.getBoard();
         for (final Entry<String, String> boardEntry : convertedBoard.entrySet()) {
             boardDao.updatePosition(boardEntry.getKey(), boardEntry.getValue());
         }
-        return BoardDto.of(false, board);
+        return ChessDto.of(true, board, "white");
     }
 
     public StatusDto createStatus() {
@@ -48,7 +47,7 @@ public class ChessService {
         return StatusDto.of(score);
     }
 
-    public BoardDto move(final MoveDto moveDto) {
+    public ChessDto move(final MoveDto moveDto) {
         Board board = BoardFactory.createBoard(boardDao.getBoard());
         ChessGame chessGame = new ChessGame(board);
         chessGame.move(moveDto.getSource(), moveDto.getTarget());
@@ -56,6 +55,6 @@ public class ChessService {
         // Boarddao에 포지션 업데이트 (왕이 죽으면 chessGame은 종료됨)
         // Turndao 턴 업데이트
 
-        return BoardDto.of(chessGame.isOn(),chessGame.getBoard());
+        return ChessDto.of(chessGame.isOn(),chessGame.getBoard());
     }
 }

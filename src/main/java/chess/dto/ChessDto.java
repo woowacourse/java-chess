@@ -7,28 +7,34 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class BoardDto {
+public class ChessDto {
 
     private String gameOver;
     private Map<String, String> board;
+    private String turn;
 
-    private BoardDto(String gameOver, Map<String, String> board) {
+    private ChessDto(String gameOver, Map<String, String> board, String turn) {
         this.gameOver = gameOver;
         this.board = board;
+        this.turn = turn;
     }
 
-    public static BoardDto of(final boolean isOn, final Board board) {
+    public static ChessDto of(final boolean isOn, final Board board, final String turn) {
         Map<String, String> map = new HashMap<>();
         for (final Entry<Position, Piece> boardEntry : board.getBoard().entrySet()) {
             map.put(boardEntry.getKey().convertPositionToString(),
                     boardEntry.getValue().convertPieceToString());
         }
 
-        return new BoardDto(extractGameOverStatus(isOn), map);
+        return new ChessDto(extractGameOverStatus(isOn), map, turn);
     }
 
-    public static BoardDto of(final Board board) {
-        return BoardDto.of(false, board);
+    public static ChessDto of(final Board board, final String turn) {
+        return ChessDto.of(false, board, turn);
+    }
+
+    public static ChessDto of(final Board board) {
+        return of(false, board, "white");
     }
 
     private static String extractGameOverStatus(final boolean isOn) {

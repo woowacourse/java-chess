@@ -3,7 +3,6 @@ package chess.controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.dto.BoardDto;
 import chess.dto.MoveDto;
 import chess.service.ChessService;
 import com.google.gson.Gson;
