@@ -7,6 +7,7 @@ public final class Command {
     private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
+    
     private final String action;
     private final String from;
     private final String to;

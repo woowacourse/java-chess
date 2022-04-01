@@ -15,13 +15,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class InitialBoard {
+    private static final int RANK_EIGHT = 8;
+    private static final int RANK_SEVEN = 7;
+    private static final int RANK_TWO = 2;
+    private static final int RANK_ONE = 1;
     private static final Map<Position, Piece> INITIAL_BOARD = new HashMap<>();
 
     static {
-        setupOthersPieces(8, Color.BLACK);
-        setupPawns(7, Color.BLACK);
-        setupPawns(2, Color.WHITE);
-        setupOthersPieces(1, Color.WHITE);
+        setupOthersPieces(RANK_EIGHT, Color.BLACK);
+        setupPawns(RANK_SEVEN, Color.BLACK);
+        setupPawns(RANK_TWO, Color.WHITE);
+        setupOthersPieces(RANK_ONE, Color.WHITE);
     }
 
     private static void setupOthersPieces(int rank, Color color) {

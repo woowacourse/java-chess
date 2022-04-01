@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public final class Board {
     private static final int TWO_KINGS_MEAN_NOT_FINISHED = 2;
+    private static final int DISCOUNT_PAWN_CRITERIA = 1;
+    private static final double DISCOUNT_UNIT = 0.5;
 
     private final Map<Position, Piece> board;
 
@@ -59,7 +61,7 @@ public final class Board {
         return scoreByColor;
     }
 
-    private EnumMap<Color, Double> calculateRawSum() {
+    private Map<Color, Double> calculateRawSum() {
         return board.values()
                 .stream()
                 .collect(Collectors.groupingBy(
@@ -90,8 +92,8 @@ public final class Board {
     }
 
     private double discount(double discount, long count) {
-        if (count > 1) {
-            discount -= count * 0.5;
+        if (count > DISCOUNT_PAWN_CRITERIA) {
+            discount -= count * DISCOUNT_UNIT;
         }
         return discount;
     }

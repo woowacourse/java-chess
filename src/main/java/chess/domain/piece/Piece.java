@@ -68,10 +68,6 @@ public abstract class Piece {
         }
     }
 
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-
     public boolean isBlack() {
         return color == Color.BLACK;
     }
