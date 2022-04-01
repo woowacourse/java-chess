@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.strategy.BishopMoveStrategy;
 
 public final class Bishop extends Piece {
-    public static final int BISHOP_SCORE = 3;
+    private static final int BISHOP_SCORE = 3;
     private final String symbol;
 
     public Bishop(Team team, String symbol) {

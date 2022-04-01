@@ -4,13 +4,11 @@ import chess.domain.strategy.KnightMoveStrategy;
 
 public final class Knight extends Piece {
 
-    public static final double KNIGHT_SOCRE = 2.5;
-    private final Team team;
+    private static final double KNIGHT_SCORE = 2.5;
     private final String symbol;
 
     public Knight(Team team, String symbol) {
         super(new KnightMoveStrategy(), team);
-        this.team = team;
         this.symbol = symbol;
     }
 
@@ -21,7 +19,7 @@ public final class Knight extends Piece {
 
     @Override
     public double getScore() {
-        return KNIGHT_SOCRE;
+        return KNIGHT_SCORE;
     }
 
     @Override

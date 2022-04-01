@@ -3,13 +3,11 @@ package chess.domain.piece;
 import chess.domain.strategy.RookMoveStrategy;
 
 public final class Rook extends Piece {
-    public static final int ROOK_SCORE = 5;
-    private final Team team;
+    private static final int ROOK_SCORE = 5;
     private final String symbol;
 
     public Rook(Team team, String symbol) {
         super(new RookMoveStrategy(), team);
-        this.team = team;
         this.symbol = symbol;
     }
 
