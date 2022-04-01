@@ -53,7 +53,7 @@ function clickMovePosition(e) {
 
     if (source !== "" && target === "") {
         target = e
-        document.getElementById(source).style.backgroundColor = '#eeeed2'
+        document.getElementById(source).style.backgroundColor = ''
         movePiece(source, target)
         source = ""
         target = ""
