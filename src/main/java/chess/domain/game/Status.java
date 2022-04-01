@@ -5,11 +5,9 @@ import java.util.Map;
 
 public class Status {
 
-    private final Map<Color, Double> colorsTotalScore;
     private final Color winnerColor;
 
     public Status(Map<Color, Double> colorsTotalScore) {
-        this.colorsTotalScore = colorsTotalScore;
         this.winnerColor = judgeWinner(colorsTotalScore);
     }
 
@@ -21,10 +19,6 @@ public class Status {
             return Color.BLACK;
         }
         return Color.NONE;
-    }
-
-    public Map<Color, Double> getColorsTotalScore() {
-        return colorsTotalScore;
     }
 
     public Color getWinnerColor() {

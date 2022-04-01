@@ -25,13 +25,6 @@ public enum File {
         this.number = number;
     }
 
-    public static File numberOf(int number) {
-        return Arrays.stream(File.values())
-                .filter(file -> file.number == number)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
-    }
-
     public static File letterOf(String letter) {
         return Arrays.stream(File.values())
                 .filter(file -> file.letter.equals(letter))

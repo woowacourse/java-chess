@@ -24,13 +24,6 @@ public enum Rank {
         this.letter = letter;
     }
 
-    public static Rank numberOf(int value) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.number == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 위치 값 입니다."));
-    }
-
     public static Rank letterOf(String value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.letter.equals(value))
@@ -47,10 +40,6 @@ public enum Rank {
 
     public boolean isMoveInRange(int value) {
         return MINIMUM <= value && value <= MAXIMUM;
-    }
-
-    public String getLetter() {
-        return letter;
     }
 
     public int getNumber() {
