@@ -20,7 +20,7 @@ public class PawnTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new WhitePawn();
 
         // then
         assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
@@ -34,7 +34,7 @@ public class PawnTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new WhitePawn();
 
         // then
         assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
@@ -48,7 +48,7 @@ public class PawnTest {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new WhitePawn();
 
         // then
         assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("첫수일 경우만 가능합니다.");
@@ -56,13 +56,13 @@ public class PawnTest {
 
     @DisplayName("검은 팀일 때 이동 가능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6", "a7,a5"})
+    @CsvSource(value = {"e7,e6", "e7,d6", "e7,f6"})
     void movable_black(String toValue, String fromValue) {
         // given
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
-        Pawn pawn = new Pawn(Team.BLACK);
+        Pawn pawn = new BlackPawn();
 
         // then
         assertThatNoException().isThrownBy(() -> pawn.movable(to, from));
@@ -75,7 +75,7 @@ public class PawnTest {
         Position to = new Position("a1");
         Position from = new Position("a2");
 
-        Pawn pawn = new Pawn(Team.BLACK);
+        Pawn pawn = new BlackPawn();
 
         // then
         assertThatThrownBy(() -> pawn.movable(to, from)).hasMessageContaining("움직일 수 있는 방향이 아닙니다.");
@@ -83,10 +83,10 @@ public class PawnTest {
 
     @DisplayName("이름")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,P"})
-    void name(Team team, String expect) {
+    @CsvSource(value = {"P"})
+    void name(String expect) {
         // given
-        Pawn pawn = new Pawn(team);
+        Pawn pawn = new BlackPawn();
 
         // then
         assertThat(pawn.getName()).isEqualTo(expect);
@@ -97,7 +97,7 @@ public class PawnTest {
     @CsvSource(value = {"a2,a3", "a2,a4"})
     void findDirection_white(Position from, Position to) {
         // given
-        Pawn pawn = new Pawn(Team.WHITE);
+        Pawn pawn = new WhitePawn();
 
         // when
         Direction find = pawn.findDirection(from, to);
@@ -111,7 +111,7 @@ public class PawnTest {
     @CsvSource(value = {"a2,a1", "a7,a5"})
     void findDirection_black_while_direction(Position from, Position to) {
         // given
-        Pawn pawn = new Pawn(Team.BLACK);
+        Pawn pawn = new BlackPawn();
 
         // when
         Direction find = pawn.findDirection(from, to);

@@ -3,11 +3,13 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -35,11 +37,11 @@ class ResultTest {
     @Test
     void test2() {
         Map<Position, Piece> board = new HashMap<>();
-        board.put(new Position(Column.A, Row.ONE), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.A, Row.TWO), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.A, Row.THREE), new Pawn(Team.BLACK)); // 0.5
-        board.put(new Position(Column.B, Row.THREE), new Pawn(Team.BLACK)); // 1.0
-        board.put(new Position(Column.A, Row.FOUR), new Pawn(Team.WHITE)); // 1.0
+        board.put(new Position(Column.A, Row.ONE), new BlackPawn()); // 0.5
+        board.put(new Position(Column.A, Row.TWO), new BlackPawn()); // 0.5
+        board.put(new Position(Column.A, Row.THREE), new BlackPawn()); // 0.5
+        board.put(new Position(Column.B, Row.THREE), new BlackPawn()); // 1.0
+        board.put(new Position(Column.A, Row.FOUR), new WhitePawn()); // 1.0
 
         Result result = new Result(board);
         Map<Team, Double> value = result.getValue();

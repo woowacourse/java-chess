@@ -3,8 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Team;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -48,6 +47,6 @@ public class BoardTest {
 
         // then
         assertThatNoException()
-                .isThrownBy(() -> board.move(to, new Pawn(Team.WHITE)));
+                .isThrownBy(() -> board.move(to, new WhitePawn()));
     }
 }

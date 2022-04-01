@@ -11,8 +11,8 @@ import chess.domain.board.boardGenerator.CheckmateBoardStrategy;
 import chess.domain.board.boardGenerator.NotCheckmateBoardStrategy;
 import chess.domain.board.boardGenerator.TestBoardStrategy;
 import chess.domain.board.boardGenerator.WhiteCheckBoardStrategy;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Team;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -90,7 +90,7 @@ class ChessGameTest {
         Position whiteKingPosition = new Position("b2");
 
         TestBoardStrategy boardGenerator = new TestBoardStrategy();
-        boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
+        boardGenerator.put(blackPawnPosition, new BlackPawn());
         boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
 
         game.startGame(boardGenerator);
@@ -107,7 +107,7 @@ class ChessGameTest {
         Position whiteKingPosition = new Position("b2");
 
         TestBoardStrategy boardGenerator = new TestBoardStrategy();
-        boardGenerator.put(blackPawnPosition, new Pawn(Team.BLACK));
+        boardGenerator.put(blackPawnPosition, new BlackPawn());
         boardGenerator.put(whiteKingPosition, new King(Team.WHITE));
 
         game.startGame(boardGenerator);

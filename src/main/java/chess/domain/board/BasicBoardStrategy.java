@@ -1,13 +1,14 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -34,7 +35,7 @@ public class BasicBoardStrategy implements BoardGenerationStrategy {
         board.put(new Position(Column.G, Row.EIGHT), new Knight(Team.BLACK));
         board.put(new Position(Column.H, Row.EIGHT), new Rook(Team.BLACK));
 
-        initOneLine(Row.SEVEN, new Pawn(Team.BLACK));
+        initOneLine(Row.SEVEN, new BlackPawn());
     }
 
     private void initWhitePieces() {
@@ -47,7 +48,7 @@ public class BasicBoardStrategy implements BoardGenerationStrategy {
         board.put(new Position(Column.G, Row.ONE), new Knight(Team.WHITE));
         board.put(new Position(Column.H, Row.ONE), new Rook(Team.WHITE));
 
-        initOneLine(Row.TWO, new Pawn(Team.WHITE));
+        initOneLine(Row.TWO, new WhitePawn());
     }
 
     private void initOneLine(Row row, Piece piece) {
