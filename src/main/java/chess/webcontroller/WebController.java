@@ -64,6 +64,12 @@ public class WebController {
 			}
 			GameState state = states.peek().proceed(command);
 			states.pop();
+
+			if (state.isFinished()) {
+				response.redirect("/");
+				return null;
+			}
+
 			states.add(state);
 
 			fillModel(model, state);
