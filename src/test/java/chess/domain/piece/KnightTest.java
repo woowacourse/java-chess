@@ -23,7 +23,7 @@ class KnightTest {
         // given
         ChessPiece knight = new Knight(Color.BLACK);
         // then
-        assertThatThrownBy(() -> knight.canMove(initialPosition, new Position("d7")))
+        assertThatThrownBy(() -> knight.checkMovable(initialPosition, new Position("d7")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -35,7 +35,7 @@ class KnightTest {
         // given
         ChessPiece knight = new Knight(Color.BLACK);
         // then
-        Assertions.assertThatCode(() -> knight.canMove(initialPosition, new Position(target)))
+        Assertions.assertThatCode(() -> knight.checkMovable(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
 
     }

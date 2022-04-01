@@ -21,7 +21,7 @@ class PawnTest {
         // given
         ChessPiece pawn = new Pawn(color);
         // then
-        assertThatThrownBy(() -> pawn.canMove(initialPosition, new Position(target)))
+        assertThatThrownBy(() -> pawn.checkMovable(initialPosition, new Position(target)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -32,7 +32,7 @@ class PawnTest {
         // given
         ChessPiece pawn = new Pawn(Color.BLACK);
         // then
-        Assertions.assertThatCode(() -> pawn.canMove(initialPosition, new Position("d4")))
+        Assertions.assertThatCode(() -> pawn.checkMovable(initialPosition, new Position("d4")))
                 .doesNotThrowAnyException();
 
     }
@@ -44,7 +44,7 @@ class PawnTest {
         // given
         ChessPiece pawn = new Pawn(color);
         // then
-        Assertions.assertThatCode(() -> pawn.canMove(new Position(from), new Position(to)))
+        Assertions.assertThatCode(() -> pawn.checkMovable(new Position(from), new Position(to)))
                 .doesNotThrowAnyException();
     }
 

@@ -23,7 +23,7 @@ class QueenTest {
     @DisplayName("이동 할 수 없는 위치로 이동하면 예외를 던진다.")
     void canMove_cantGo() {
         // then
-        assertThatThrownBy(() -> queen.canMove(initialPosition, new Position("c2")))
+        assertThatThrownBy(() -> queen.checkMovable(initialPosition, new Position("c2")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -33,7 +33,7 @@ class QueenTest {
     @DisplayName("이동 할 수 있는 위치라면 예외를 던지지 않는다.")
     void canMove_canGo(String target) {
         // then
-        Assertions.assertThatCode(() -> queen.canMove(initialPosition, new Position(target)))
+        Assertions.assertThatCode(() -> queen.checkMovable(initialPosition, new Position(target)))
                 .doesNotThrowAnyException();
 
     }

@@ -13,6 +13,8 @@ import java.util.Optional;
 public class Score {
 
     private static final int INIT_PAWN_SCORE = 0;
+    private static final double HALF_SCORE_OF_PAWN = 0.5;
+    private static final int SCORE_OF_PAWN = 1;
 
     private final Map<Position, ChessPiece> currentChessboard;
 
@@ -85,9 +87,9 @@ public class Score {
 
     private double sumPawnScore(double pawnCount) {
         if (isOnlyPawnInFile(pawnCount)) {
-            return 1;
+            return SCORE_OF_PAWN;
         }
-        return pawnCount * 0.5;
+        return pawnCount * HALF_SCORE_OF_PAWN;
     }
 
     private boolean isOnlyPawnInFile(double pawnCount) {

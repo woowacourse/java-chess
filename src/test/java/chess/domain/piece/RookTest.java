@@ -22,7 +22,7 @@ class RookTest {
         // given
         ChessPiece rook = new Rook(Color.BLACK);
         // then
-        assertThatThrownBy(() -> rook.canMove(initialPosition, new Position("c6")))
+        assertThatThrownBy(() -> rook.checkMovable(initialPosition, new Position("c6")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 기물이 갈 수 없는 위치입니다.");
     }
@@ -33,7 +33,7 @@ class RookTest {
         // given
         ChessPiece rook = new Rook(Color.BLACK);
         // then
-        Assertions.assertThatCode(() -> rook.canMove(initialPosition, new Position("c5")))
+        Assertions.assertThatCode(() -> rook.checkMovable(initialPosition, new Position("c5")))
                 .doesNotThrowAnyException();
 
     }

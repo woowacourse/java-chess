@@ -75,7 +75,7 @@ public class ChessBoard {
 
     private void checkMove(Position from, Position to, ChessPiece me) {
         validateTurn(me);
-        me.canMove(from, to);
+        me.checkMovable(from, to);
         Stack<Position> routes = me.findRoute(from, to);
 
         while (!routes.isEmpty()) {
