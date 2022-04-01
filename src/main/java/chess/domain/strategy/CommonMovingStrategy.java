@@ -16,7 +16,7 @@ public abstract class CommonMovingStrategy implements MoveStrategy {
     }
 
     private void checkStay(Position source, Position target) {
-        if (source.isSameFile(target) && source.isSameRank(target)) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException("제자리에 머무를 수 없습니다.");
         }
     }
