@@ -48,7 +48,7 @@ public class ChessBoard {
     }
 
     private void validateTurn(ChessPiece me) {
-        if (me.isEnemyTurn(currentTurn)) {
+        if (currentTurn == me.getColor()) {
             throw new IllegalArgumentException(currentTurn.name() + "의 차례입니다.");
         }
     }
