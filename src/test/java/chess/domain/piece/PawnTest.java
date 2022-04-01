@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.Board;
 import chess.domain.BoardFixture;
-import chess.domain.Direction;
 import chess.domain.postion.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class PawnTest {
     void overTwoSquare() {
         Pawn pawn = WHITE_PAWN;
 
-        assertThatThrownBy(() -> pawn.canMove(new Position(A, TWO), new Position(A, SIX)))
+        assertThatThrownBy(() -> pawn.direction(new Position(A, TWO), new Position(A, SIX), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -31,7 +30,7 @@ public class PawnTest {
     void top_whitePawn() {
         Pawn pawn = WHITE_PAWN;
 
-        assertDoesNotThrow(() -> pawn.canMove(new Position(A, TWO), new Position(A, THREE)));
+        assertDoesNotThrow(() -> pawn.direction(new Position(A, TWO), new Position(A, THREE), new Nothing()));
     }
 
     @DisplayName("검은색 폰이 아래로 한 칸 움직이는지 테스트")
@@ -39,7 +38,7 @@ public class PawnTest {
     void bottom_blackPawn() {
         Pawn pawn = BLACK_PAWN;
 
-        assertDoesNotThrow(() -> pawn.canMove(new Position(A, TWO), new Position(A, ONE)));
+        assertDoesNotThrow(() -> pawn.direction(new Position(A, TWO), new Position(A, ONE), new Nothing()));
     }
 
     @DisplayName("흰색 폰이 아래로 한 칸 움직이면 에러 테스트")
@@ -66,7 +65,7 @@ public class PawnTest {
         Pawn pawn = WHITE_PAWN;
 
         assertDoesNotThrow(()
-                -> pawn.checkPawn(new Position(A, TWO), new Position(A, FOUR), Direction.TOP, BLACK_PAWN));
+                -> pawn.direction(new Position(A, TWO), new Position(A, FOUR), new Nothing()));
     }
 
     @DisplayName("검은색 폰이 처음에 아래로 두 칸 이동할 수 있는지 테스트")
@@ -75,7 +74,7 @@ public class PawnTest {
         Pawn pawn = BLACK_PAWN;
 
         assertDoesNotThrow(()
-                -> pawn.checkPawn(new Position(A, SEVEN), new Position(A, FIVE), Direction.TOP, WHITE_PAWN));
+                -> pawn.direction(new Position(A, SEVEN), new Position(A, FIVE), new Nothing()));
     }
 
     @DisplayName("흰색 폰이 처음이 아닐 때 두 칸 이동하면 에러 테스트")
@@ -84,7 +83,7 @@ public class PawnTest {
         Pawn pawn = WHITE_PAWN;
 
         assertThatThrownBy(()
-                -> pawn.checkPawn(new Position(A, THREE), new Position(A, FIVE), Direction.TOP, BLACK_PAWN))
+                -> pawn.direction(new Position(A, THREE), new Position(A, FIVE), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -94,7 +93,7 @@ public class PawnTest {
         Pawn pawn = WHITE_PAWN;
 
         assertDoesNotThrow(()
-                -> pawn.checkPawn(new Position(A, TWO), new Position(B, THREE), Direction.TOP, BLACK_PAWN));
+                -> pawn.direction(new Position(A, TWO), new Position(B, THREE), BLACK_PAWN));
     }
 
     @DisplayName("흰색 폰이 target에 상대 말이 없을 때 대각선으로 이동하면 에러 테스트")
@@ -103,6 +102,6 @@ public class PawnTest {
         Pawn pawn = WHITE_PAWN;
 
         assertDoesNotThrow(()
-                -> pawn.checkPawn(new Position(A, TWO), new Position(B, THREE), Direction.TOP, new Nothing()));
+                -> pawn.direction(new Position(A, TWO), new Position(B, THREE), new Nothing()));
     }
 }

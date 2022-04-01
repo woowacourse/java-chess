@@ -18,7 +18,7 @@ public class KingTest {
     void notOneSquare() {
         King king = WHITE_KING;
 
-        assertThatThrownBy(() -> king.canMove(new Position(A, TWO), new Position(A, FIVE)))
+        assertThatThrownBy(() -> king.direction(new Position(A, TWO), new Position(A, FIVE), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -27,7 +27,7 @@ public class KingTest {
     void possibleMove1() {
         King king = WHITE_KING;
 
-        assertDoesNotThrow(() -> king.canMove(new Position(A, TWO), new Position(File.B, THREE)));
+        assertDoesNotThrow(() -> king.direction(new Position(A, TWO), new Position(File.B, THREE), new Nothing()));
     }
 
     @DisplayName("source와 target이 위로 한 칸 차이일 때 테스트")
@@ -35,6 +35,6 @@ public class KingTest {
     void possibleMove2() {
         King king = WHITE_KING;
 
-        assertDoesNotThrow(() -> king.canMove(new Position(A, TWO), new Position(A, THREE)));
+        assertDoesNotThrow(() -> king.direction(new Position(A, TWO), new Position(A, THREE), new Nothing()));
     }
 }

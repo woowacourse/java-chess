@@ -17,7 +17,7 @@ public class KnightTest {
     void notTopBottomRightLeft() {
         Knight knight = WHITE_KNIGHT;
 
-        assertThatThrownBy(() -> knight.canMove(new Position(A, TWO), new Position(A, THREE)))
+        assertThatThrownBy(() -> knight.direction(new Position(A, TWO), new Position(A, THREE), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -26,7 +26,7 @@ public class KnightTest {
     void notDiagonal() {
         Knight knight = WHITE_KNIGHT;
 
-        assertThatThrownBy(() -> knight.canMove(new Position(A, TWO), new Position(C, FOUR)))
+        assertThatThrownBy(() -> knight.direction(new Position(A, TWO), new Position(C, FOUR), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -35,7 +35,7 @@ public class KnightTest {
     void correct1() {
         Knight knight = WHITE_KNIGHT;
 
-        assertDoesNotThrow(() -> knight.canMove(new Position(A, TWO), new Position(B, FOUR)));
+        assertDoesNotThrow(() -> knight.direction(new Position(A, TWO), new Position(B, FOUR), new Nothing()));
     }
 
     @DisplayName("나이트대로 움직였을 때 테스트")
@@ -43,6 +43,6 @@ public class KnightTest {
     void correct2() {
         Knight knight = WHITE_KNIGHT;
 
-        assertDoesNotThrow(() -> knight.canMove(new Position(B, FOUR), new Position(C, TWO)));
+        assertDoesNotThrow(() -> knight.direction(new Position(B, FOUR), new Position(C, TWO), new Nothing()));
     }
 }

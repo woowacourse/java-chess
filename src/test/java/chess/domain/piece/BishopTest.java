@@ -17,7 +17,7 @@ public class BishopTest {
     void notSameDiagonal() {
         Bishop bishop = WHITE_BISHOP;
 
-        assertThatThrownBy(() -> bishop.canMove(new Position(A, TWO), new Position(C, FIVE)))
+        assertThatThrownBy(() -> bishop.direction(new Position(A, TWO), new Position(C, FIVE), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

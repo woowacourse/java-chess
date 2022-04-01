@@ -7,7 +7,6 @@ import chess.domain.piece.Team;
 import chess.domain.postion.Position;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public final class Board {
@@ -45,17 +44,10 @@ public final class Board {
     }
 
     private void validateMoving(final Piece piece, final Position source, final Position target) {
-        piece.canMove(source, target);
-        List<Direction> directions = piece.possibleDirections();
-
-        Direction direction = Direction.beMoveDirection(directions, source, target);
-
         Piece pieceInTarget = cells.getOrDefault(target, new Nothing());
-
-        piece.checkPawn(source, target, direction, pieceInTarget);
+        Direction direction = piece.direction(source, target, pieceInTarget);
 
         validateIsMovablePath(direction, source, target);
-        validateSameTeamInTarget(piece, target);
     }
 
     private void validateIsMovablePath(final Direction direction, final Position source, final Position target) {
@@ -69,12 +61,6 @@ public final class Board {
     private void hasPieceInPosition(final Position position) {
         if (cells.containsKey(position)) {
             throw new IllegalArgumentException("경로에 기물이 존재합니다.");
-        }
-    }
-
-    private void validateSameTeamInTarget(final Piece piece, final Position target) {
-        if (cells.containsKey(target) && !piece.isEnemy(cells.get(target))) {
-            throw new IllegalArgumentException("목적지에 같은 팀 기물이 있습니다.");
         }
     }
 

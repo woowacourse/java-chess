@@ -16,7 +16,7 @@ public class RookTest {
     void samePosition() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(A, TWO)))
+        assertThatThrownBy(() -> rook.direction(new Position(A, TWO), new Position(A, TWO), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -25,7 +25,7 @@ public class RookTest {
     void notSameFile() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(C, THREE), new Position(B, TWO)))
+        assertThatThrownBy(() -> rook.direction(new Position(C, THREE), new Position(B, TWO), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -34,7 +34,7 @@ public class RookTest {
     void notSameRank() {
         Rook rook = WHITE_ROOK;
 
-        assertThatThrownBy(() -> rook.canMove(new Position(A, TWO), new Position(B, EIGHT)))
+        assertThatThrownBy(() -> rook.direction(new Position(A, TWO), new Position(B, EIGHT), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

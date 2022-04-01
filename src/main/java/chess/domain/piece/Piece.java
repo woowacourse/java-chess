@@ -22,15 +22,27 @@ public abstract class Piece {
 
     public abstract double score();
 
-    public void canMove(final Position source, final Position target) {
+    public Direction direction(final Position source, final Position target, final Piece pieceInTarget) {
+        validateSameTeamInTarget(pieceInTarget);
+
         moveStrategy.isMovable(source, target);
+        Direction direction = Direction.beMoveDirection(possibleDirections(), source, target);
+        checkPawn(source, target, direction, pieceInTarget);
+
+        return direction;
+    }
+
+    private void validateSameTeamInTarget(final Piece pieceInTarget) {
+        if (!isEnemy(pieceInTarget)) {
+            throw new IllegalArgumentException("목적지에 같은 팀 기물이 있습니다.");
+        }
     }
 
     public boolean isEnemy(Piece other) {
-        return !this.team.equals(other.team);
+        return !team.equals(other.team);
     }
 
-    public void checkPawn(Position source, Position target, Direction direction, Piece other) {
+    protected void checkPawn(Position source, Position target, Direction direction, Piece other) {
     }
 
     public Team team() {

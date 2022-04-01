@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.postion.File;
 import chess.domain.postion.Position;
-import chess.domain.postion.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +18,7 @@ public class QueenTest {
     void notTopBottomRightLeftAndDiagonal() {
         Queen queen = WHITE_QUEEN;
 
-        assertThatThrownBy(() -> queen.canMove(new Position(A, TWO), new Position(H, THREE)))
+        assertThatThrownBy(() -> queen.direction(new Position(A, TWO), new Position(H, THREE), new Nothing()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -29,6 +27,6 @@ public class QueenTest {
     void diagonal() {
         Queen queen = WHITE_QUEEN;
 
-        assertDoesNotThrow(() -> queen.canMove(new Position(H, FOUR), new Position(E, ONE)));
+        assertDoesNotThrow(() -> queen.direction(new Position(H, FOUR), new Position(E, ONE), new Nothing()));
     }
 }
