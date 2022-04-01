@@ -14,8 +14,12 @@ public class ChessController {
 
     private Board board;
 
+    public ChessController() {
+        this.board = new Board();
+    }
+
     public BoardDto startGame() {
-        board = new Board();
+        board.startGame();
         return new BoardDto(toBoardDto(board));
     }
 
@@ -48,5 +52,13 @@ public class ChessController {
             return piece.name().toUpperCase(Locale.ROOT);
         }
         return piece.name();
+    }
+
+    public boolean isEnd() {
+        return board.isEnd();
+    }
+
+    public void finishGame() {
+        board.finishGame();
     }
 }

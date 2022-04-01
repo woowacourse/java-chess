@@ -7,10 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
         ChessController chessController = new ChessController();
-        String command = "";
-        while (!command.equals("end")) {
+        while (!chessController.isEnd()) {
             List<String> inputCommand = Arrays.asList(InputView.inputStartOrEndGame());
-            command = inputCommand.get(0);
+            String command = inputCommand.get(0);
             if (command.equals("start")) {
                 BoardDto boardDto = chessController.startGame();
                 OutputView.announce(boardDto);
@@ -23,6 +22,9 @@ public class Main {
             if (command.equals("status")) {
                 ScoreDto scoreDto = chessController.score();
                 OutputView.announceScoreDto(scoreDto);
+            }
+            if (command.equals("end")) {
+                chessController.finishGame();
             }
         }
     }

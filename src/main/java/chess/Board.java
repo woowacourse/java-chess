@@ -12,18 +12,22 @@ import chess.model.piece.Rook;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;
-import java.util.ArrayList;
+import chess.model.status.End;
+import chess.model.status.Ready;
+import chess.model.status.Running;
+import chess.model.status.Status;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class Board {
 
     private final Map<Square, Piece> board;
+    private Status status;
 
     public Board() {
+        this.status = new Ready();
         this.board = new HashMap<>();
         final List<File> files = Arrays.asList(File.values());
 
@@ -46,10 +50,20 @@ public final class Board {
         }
         board.put(targetSquare, piece);
         board.put(sourceSquare, new Empty());
+        status = checkAliveTwoKings();
     }
 
     public ScoreResult calculateScore() {
         return ScoreResult.of(board);
+    }
+
+    public Status checkAliveTwoKings() {
+        if (board.values().stream()
+                .filter(Piece::isKing)
+                .count() != 2) {
+            status = new End();
+        }
+        return status;
     }
 
     private void initEmpty() {
@@ -98,5 +112,17 @@ public final class Board {
 
     public Piece get(Square square) {
         return board.get(square);
+    }
+
+    public boolean isEnd() {
+        return status.isEnd();
+    }
+
+    public void startGame() {
+        status = new Running();
+    }
+
+    public void finishGame() {
+        status = new End();
     }
 }

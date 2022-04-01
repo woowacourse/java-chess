@@ -51,8 +51,14 @@ public class King extends Piece {
     public double getPoint() {
         return 0;
     }
+
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }
