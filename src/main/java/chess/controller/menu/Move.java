@@ -6,19 +6,19 @@ import chess.view.OutputView;
 
 public class Move implements Menu {
 
-    private final Position before;
-    private final Position after;
+    private final Position from;
+    private final Position to;
 
-    public Move(String before, String after) {
-        this.before = new Position(before);
-        this.after = new Position(after);
+    public Move(String from, String to) {
+        this.from = new Position(from);
+        this.to = new Position(to);
     }
 
     @Override
     public void play(ChessController chessController) {
         chessController.checkReady();
         try {
-            chessController.move(before, after);
+            chessController.move(from, to);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
