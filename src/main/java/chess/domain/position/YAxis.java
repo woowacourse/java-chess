@@ -29,11 +29,11 @@ public enum YAxis {
     }
 
     public static List<YAxis> getBetween(YAxis from, YAxis to) {
-        int startOrdinal = Math.min(from.ordinal(), to.ordinal()) + 1;
-        int endOrdinal = Math.max(from.ordinal(), to.ordinal());
+        int startValue = Math.min(from.getValue(), to.getValue());
+        int endValue = Math.max(from.getValue(), to.getValue());
 
-        return IntStream.range(startOrdinal, endOrdinal)
-                .mapToObj(ordinal -> getByValue(ordinal + 1))
+        return IntStream.range(startValue + 1, endValue)
+                .mapToObj(YAxis::getByValue)
                 .collect(Collectors.toList());
     }
 
