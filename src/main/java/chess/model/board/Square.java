@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class Square {
-    private static final Map<String, Square> squareCache = new HashMap<>();
+    private static final Map<String, Square> SQUARE_CACHE = new HashMap<>();
     private static final int SQUARE_NAME_LENGTH = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
@@ -33,10 +33,10 @@ public final class Square {
 
     public static Square of(File file, Rank rank) {
         String squareName = file.getName() + rank.getName();
-        if (!squareCache.containsKey(squareName)) {
-            squareCache.put(squareName, new Square(file, rank));
+        if (!SQUARE_CACHE.containsKey(squareName)) {
+            SQUARE_CACHE.put(squareName, new Square(file, rank));
         }
-        return squareCache.get(squareName);
+        return SQUARE_CACHE.get(squareName);
     }
 
     private static int gcd(int fileDistance, int rankDistance) {
