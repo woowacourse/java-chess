@@ -1,4 +1,4 @@
-package chess.utils;
+package chess.view;
 
 import chess.domain.Position;
 import chess.domain.piece.Piece;

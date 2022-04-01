@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
-import chess.utils.ChessMap;
+import chess.view.ChessMap;
 
 import java.util.List;
 
