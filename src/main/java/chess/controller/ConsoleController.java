@@ -10,7 +10,7 @@ import chess.dto.MoveCommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class GameController {
+public class ConsoleController {
 
     private static final int EXIT_STATUS_CODE = 0;
 
