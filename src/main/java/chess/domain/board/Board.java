@@ -22,8 +22,8 @@ public final class Board {
     private final Pieces pieces;
     private Color turn = Color.WHITE;
 
-    public Board(final Initiator initiator) {
-        pieces = new Pieces(initiator);
+    public Board(final PiecesMaker piecesMaker) {
+        pieces = new Pieces(piecesMaker);
     }
 
     public void move(String source, String target) {

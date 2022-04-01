@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitiator;
+import chess.domain.board.RegularRuleMaker;
 import chess.domain.piece.*;
 import chess.domain.piece.role.Bishop;
 import chess.domain.piece.role.King;
@@ -25,14 +25,14 @@ class BoardTest {
     @Test
     @DisplayName("보드는 체스판을 입력받는다")
     void board_createdByGenerator() {
-        Board board = new Board(new BoardInitiator());
+        Board board = new Board(new RegularRuleMaker());
         assertThat(board).isNotNull();
     }
 
     @Test
     @DisplayName("존재하지 않는 source를 움직이면 예외를 발생한다")
     void thrown_sourceNotExist() {
-        Board board = new Board(new BoardInitiator());
+        Board board = new Board(new RegularRuleMaker());
         assertThatThrownBy(() -> board.move("a3", "a4"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 말이 존재하지 않습니다.");
@@ -41,7 +41,7 @@ class BoardTest {
     @Test
     @DisplayName("출발지와 목적지가 같으면 예외를 발생한다")
     void thrown_sourceEqualsTarget() {
-        Board board = new Board(new BoardInitiator());
+        Board board = new Board(new RegularRuleMaker());
         assertThatThrownBy(() -> board.move("a3", "a3"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발지와 목적지가 동일합니다.");

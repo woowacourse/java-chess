@@ -17,15 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class BoardInitiator implements Initiator {
+public final class RegularRuleMaker implements PiecesMaker {
 
-    public Map<Position, Piece> initiate() {
+    public Map<Position, Piece> initialize() {
         final Map<Position, Piece> pieces = new HashMap<>();
-        initBoard(pieces);
+        initPieces(pieces);
         return pieces;
     }
 
-    private void initBoard(final Map<Position, Piece> pieces) {
+    private void initPieces(final Map<Position, Piece> pieces) {
         initRooks(pieces);
         initKnights(pieces);
         initBishops(pieces);
