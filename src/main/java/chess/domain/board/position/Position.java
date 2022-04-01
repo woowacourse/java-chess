@@ -70,12 +70,12 @@ public class Position {
     private List<Position> possiblePositions(ListIterator<Rank> rankIterator, ListIterator<File> fileIterator) {
         List<Position> positions = new ArrayList<>();
 
-        if (!rankIterator.hasNext()) {
+        if (isOnlyMoveFile(rankIterator)) {
             fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, this.rank)));
             return positions;
         }
 
-        if (!fileIterator.hasNext()) {
+        if (isOnlyMoveRank(fileIterator)) {
             rankIterator.forEachRemaining(rank -> positions.add(Positions.findPositionBy(this.file, rank)));
             return positions;
         }
@@ -84,9 +84,21 @@ public class Position {
             fileIterator.forEachRemaining(file -> positions.add(Positions.findPositionBy(file, rankIterator.next())));
         }
 
+        return getPositionsAllDirectional(positions);
+    }
+
+    private List<Position> getPositionsAllDirectional(List<Position> positions) {
         return positions.stream()
             .filter(this::isAllDirectional)
             .collect(Collectors.toList());
+    }
+
+    private boolean isOnlyMoveRank(ListIterator<File> fileIterator) {
+        return !fileIterator.hasNext();
+    }
+
+    private boolean isOnlyMoveFile(ListIterator<Rank> rankIterator) {
+        return !rankIterator.hasNext();
     }
 
     @Override

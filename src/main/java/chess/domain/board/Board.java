@@ -103,7 +103,7 @@ public class Board {
 
     public double adjustPawnScore() {
         return File.stream()
-                .map(file -> duplicatePieceCountByRank(file))
+                .map(this::duplicatePieceCountByRank)
                 .filter(count -> count >= 2)
                 .mapToDouble(point -> point * 0.5)
                 .sum();
