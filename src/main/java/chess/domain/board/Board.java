@@ -72,7 +72,7 @@ public class Board {
                 .count();
     }
 
-    public int countDeductedPawns(final Color color) {
+    private int countDeductedPawns(final Color color) {
         return (int) board.entrySet()
                 .stream()
                 .filter(entry -> isPawnWithAnotherPawnInSameColumn(entry.getKey(), entry.getValue(), color))

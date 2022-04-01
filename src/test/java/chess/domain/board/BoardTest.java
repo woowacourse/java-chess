@@ -218,24 +218,11 @@ class BoardTest {
                 .hasMessageContaining("상대편 말은 욺직일 수 없습니다.");
     }
 
-    @DisplayName("특정 말의 개수가 제대로 카운트 되는지 확인")
+    @DisplayName("특정 말의 개수가 제대로 카운트 되는지 확인한다.")
     @Test
     void count_Specific_Piece() {
         Board board = new Board(new CreateCompleteBoardStrategy());
         final int actualCount = board.countPiece(PieceType.ROOK, Color.BLACK);
-
-        assertThat(actualCount).isEqualTo(2);
-    }
-
-    @DisplayName("같은 열에 또다른 폰이 있는 경우의 개수를 센다.")
-    @Test
-    void count_Pawns_With_Another_Pawns_In_The_Same_Column() {
-        Piece pawn = new Pawn(Color.WHITE);
-        Position start = CachedPosition.a1;
-        Position target = CachedPosition.a3;
-        Board board = new Board(new CreateMockBoardStrategy(Map.of(start, pawn, target, pawn)));
-
-        final int actualCount = board.countDeductedPawns(Color.WHITE);
 
         assertThat(actualCount).isEqualTo(2);
     }
