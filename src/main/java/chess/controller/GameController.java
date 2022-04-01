@@ -34,7 +34,7 @@ public class GameController {
             chessGame.playGameByCommand(gameCommand);
             checkStatus(chessGame, gameCommand);
         } catch (RuntimeException exception) {
-            OutputView.printReplay(exception.getMessage());
+            OutputView.printReplay(exception);
             requestCommand(chessGame);
         }
     }
@@ -55,7 +55,7 @@ public class GameController {
 
     private void printChessBoard(final ChessGame chessGame) {
         if (!chessGame.isFinished()) {
-            OutputView.printChessBoard(chessGame.getChessBoard().getPieces());
+            OutputView.printChessBoard(chessGame);
         }
     }
 
