@@ -29,11 +29,21 @@ class PawnTest {
         );
     }
 
-    @Test
-    @DisplayName("폰은 직진으로 2칸 움직일 수 있다")
-    void move_first_allowVerticalTwoStep() {
+    @ParameterizedTest
+    @MethodSource("pawnFirstMovement")
+    @DisplayName("폰은 처음에만 직진으로 2칸 움직일 수 있다")
+    void move_first_allowVerticalTwoStep(Position source, Position target, boolean result) {
         Type pawn = new Pawn();
-        assertThat(pawn.isMovable(Position.of("a2"), Position.of("a4"))).isTrue();
+        assertThat(pawn.isMovable(source, target)).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> pawnFirstMovement() {
+        return Stream.of(
+                Arguments.of(Position.of("a2"), Position.of("a4"), true),
+                Arguments.of(Position.of("a4"), Position.of("a6"), false),
+                Arguments.of(Position.of("b7"), Position.of("b5"), true),
+                Arguments.of(Position.of("b5"), Position.of("b3"), false)
+        );
     }
 
     @ParameterizedTest
