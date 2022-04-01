@@ -1,20 +1,10 @@
 package chess.domain.board.strategy;
 
-import static chess.domain.board.Column.a;
-import static chess.domain.board.Column.b;
-import static chess.domain.board.Column.c;
-import static chess.domain.board.Column.d;
-import static chess.domain.board.Column.e;
-import static chess.domain.board.Column.f;
-import static chess.domain.board.Column.g;
-import static chess.domain.board.Column.h;
 import static chess.domain.piece.PieceType.BISHOP;
 import static chess.domain.piece.PieceType.KING;
 import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.QUEEN;
 import static chess.domain.piece.PieceType.ROOK;
-import static java.util.Map.Entry;
-import static java.util.Map.entry;
 
 import chess.domain.board.Column;
 import chess.domain.board.Position;
@@ -33,10 +23,8 @@ import java.util.stream.Collectors;
 
 public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
 
-    private static final List<Entry<Column, PieceType>> lineOrder =
-            List.of(entry(a, ROOK), entry(b, KNIGHT), entry(c, BISHOP),
-                    entry(d, QUEEN), entry(e, KING), entry(f, BISHOP),
-                    entry(g, KNIGHT), entry(h, ROOK));
+    private static final List<PieceType> lineOrder =
+            List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
 
     public CreateCompleteBoardStrategy() {
     }
@@ -70,8 +58,13 @@ public class CreateCompleteBoardStrategy implements CreateBoardStrategy {
     }
 
     private Map<Position, Piece> createLineOf(final Row row, final Color color) {
-        return lineOrder.stream()
-                .collect(Collectors.toMap(entry -> new Position(entry.getKey(), row),
-                        entry -> PieceFactory.createPiece(entry.getValue(), color)));
+        int columnIndex = 1;
+        Map<Position, Piece> line = new HashMap<>();
+        for (PieceType pieceType : lineOrder) {
+            Position position = new Position(Column.from(columnIndex++), row);
+            Piece piece = PieceFactory.createPiece(pieceType, color);
+            line.put(position, piece);
+        }
+        return line;
     }
 }
