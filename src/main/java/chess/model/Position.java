@@ -46,22 +46,6 @@ public class Position implements Comparable<Position> {
         return file.absMinus(other.file);
     }
 
-    public boolean isOneStepAway(Position position) {
-        return isOneStepHorizontalOrVertical(position) || isOneStepDiagonal(position);
-    }
-
-    public boolean isKnightDirection(Position position) {
-        return isTwoFileOneRankStep(position) || isOneFileTwoRankStep(position);
-    }
-
-    public boolean isInitPawnPosition(Rank rank) {
-        return this.rank.equals(rank);
-    }
-
-    public boolean isStepForward(Position position, int direction, int distance) {
-        return position.rank.minus(rank) == direction * distance && file.absMinus(position.file) == 0;
-    }
-
     public boolean isLastFile() {
         return file.equals(File.H);
     }
@@ -74,10 +58,6 @@ public class Position implements Comparable<Position> {
         return new Position(file, rank.getNext(distance));
     }
 
-    public boolean isOneStepDiagonal(Position position, int forwardDirection) {
-        return position.rank.minus(rank) == forwardDirection && file.absMinus(position.file) == 1;
-    }
-
     public Position getNext(Direction direction) {
         File nextFile = file.getNext(direction.getFileGap());
         Rank nextRank = rank.getNext(direction.getRankGap());
@@ -85,24 +65,28 @@ public class Position implements Comparable<Position> {
         return Position.of(nextFile, nextRank);
     }
 
+    public int getFileGapDividedByGcd(Position other) {
+        return file.minus(other.file) / getGcd(other);
+    }
+
+    public int getRankGapDividedByGcd(Position other) {
+        return rank.minus(other.rank) / getGcd(other);
+    }
+
+    private int getGcd(Position other) {
+        int rankGap = rank.absMinus(other.rank);
+        int fileGap = file.absMinus(other.file);
+        if (rankGap == 0) {
+            return fileGap;
+        }
+        if (fileGap == 0) {
+            return rankGap;
+        }
+        return Math.min(fileGap, rankGap);
+    }
+
     private String getKey() {
         return file.getValue() + rank.getValue();
-    }
-
-    private boolean isOneFileTwoRankStep(Position position) {
-        return rank.absMinus(position.rank) == 2 && file.absMinus(position.file) == 1;
-    }
-
-    private boolean isTwoFileOneRankStep(Position position) {
-        return file.absMinus(position.file) == 2 && rank.absMinus(position.rank) == 1;
-    }
-
-    private boolean isOneStepHorizontalOrVertical(Position position) {
-        return rank.absMinus(position.rank) + file.absMinus(position.file) == 1;
-    }
-
-    private boolean isOneStepDiagonal(Position position) {
-        return rank.absMinus(position.rank) == 1 && file.absMinus(position.file) == 1;
     }
 
     @Override
@@ -156,25 +140,5 @@ public class Position implements Comparable<Position> {
     public boolean isInitPawn(Direction direction) {
         return  (direction == Direction.N && rank == Rank.TWO)
                 || (direction == Direction.S && rank == Rank.SEVEN);
-    }
-
-    public int getGcd(Position other) {
-        int rankGap = rank.absMinus(other.rank);
-        int fileGap = file.absMinus(other.file);
-        if (rankGap == 0) {
-            return fileGap;
-        }
-        if (fileGap == 0) {
-            return rankGap;
-        }
-        return Math.min(fileGap, rankGap);
-    }
-
-    public int getFileGapDividedByGcd(Position other) {
-        return file.minus(other.file) / getGcd(other);
-    }
-
-    public int getRankGapDividedByGcd(Position other) {
-        return rank.minus(other.rank) / getGcd(other);
     }
 }

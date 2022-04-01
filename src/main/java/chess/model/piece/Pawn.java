@@ -35,11 +35,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isKill(Position source, Position target, Piece targetPiece) {
-        return source.isOneStepDiagonal(target, team.getForwardDirection()) && isOtherTeam(targetPiece);
-    }
-
-    @Override
     public String getName() {
         if (Team.BLACK.equals(team)) {
             return BLACK_NAME;

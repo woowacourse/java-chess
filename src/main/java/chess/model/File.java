@@ -59,14 +59,6 @@ public enum File {
         return index - file.index;
     }
 
-    public int getGap(File file) {
-        int gap = minus(file);
-        if (gap == 0) {
-            return gap;
-        }
-        return gap / absMinus(file);
-    }
-
     public String getValue() {
         return value;
     }

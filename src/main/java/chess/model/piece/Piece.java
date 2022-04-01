@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public abstract class Piece {
     protected Team team;
-    private MoveStrategy moveStrategy;
+    private final MoveStrategy moveStrategy;
 
     protected Piece(Team team, MoveStrategy moveStrategy) {
         this.team = team;
@@ -38,10 +38,6 @@ public abstract class Piece {
     }
 
     public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isKill(Position source, Position target, Piece targetPiece) {
         return false;
     }
 

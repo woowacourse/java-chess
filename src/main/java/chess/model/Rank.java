@@ -55,14 +55,6 @@ public enum Rank {
         return Rank.indexOf(index + distance);
     }
 
-    public int getGap(Rank rank) {
-        int gap = minus(rank);
-        if (gap == 0) {
-            return gap;
-        }
-        return gap / absMinus(rank);
-    }
-
     public String getValue() {
         return value;
     }
