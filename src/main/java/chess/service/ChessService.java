@@ -35,10 +35,7 @@ public class ChessService {
         ChessDto chessDto = ChessDto.of(board);
 
         Map<String, String> convertedBoard = chessDto.getBoard();
-        for (final Entry<String, String> boardEntry : convertedBoard.entrySet()) {
-            boardDao.updatePosition(boardEntry.getKey(), boardEntry.getValue());
-        }
-
+        boardDao.updateBatchPositions(convertedBoard);
         if (Team.of(turnDao.getCurrentTurn()) == Team.BLACK) {
             turnDao.updateTurn(Team.WHITE.getValue(), Team.BLACK.getValue());
         }
