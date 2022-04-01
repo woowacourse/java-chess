@@ -31,10 +31,13 @@ public enum Direction {
 
     public static Direction calculate(final int columnDifference, final int rowDifference) {
         return Arrays.stream(Direction.values())
-                .filter(direction ->
-                        Math.atan2(direction.row, direction.column) == Math.atan2(rowDifference, columnDifference))
+                .filter(direction -> isSameAngle(direction, columnDifference, rowDifference))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 방향입니다."));
+    }
+
+    private static boolean isSameAngle(Direction direction, int columnDifference, int rowDifference) {
+        return Math.atan2(direction.row, direction.column) == Math.atan2(rowDifference, columnDifference);
     }
 
     public boolean isDiagonal() {
