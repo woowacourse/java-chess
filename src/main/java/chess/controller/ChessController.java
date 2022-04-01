@@ -1,5 +1,8 @@
-package chess;
+package chess.controller;
 
+import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
+import chess.model.Board;
 import chess.model.piece.Piece;
 import chess.model.square.File;
 import chess.model.square.Rank;

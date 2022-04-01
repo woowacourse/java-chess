@@ -1,6 +1,7 @@
-package chess;
+package chess.dto;
 
 import chess.model.piece.Color;
+import chess.model.util.ScoreResult;
 import java.util.HashMap;
 import java.util.Map;
 

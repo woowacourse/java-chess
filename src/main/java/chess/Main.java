@@ -1,5 +1,10 @@
 package chess;
 
+import chess.controller.ChessController;
+import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 

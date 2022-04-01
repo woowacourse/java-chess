@@ -1,5 +1,7 @@
-package chess;
+package chess.view;
 
+import chess.dto.BoardDto;
+import chess.dto.ScoreDto;
 import java.util.List;
 
 public class OutputView {

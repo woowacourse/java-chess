@@ -1,6 +1,6 @@
 package chess.model.square;
 
-import chess.Direction;
+import chess.model.piece.Direction;
 import chess.model.piece.Color;
 import java.util.ArrayList;
 import java.util.List;
