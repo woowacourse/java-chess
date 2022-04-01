@@ -125,7 +125,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("직선 이동경로에 다른 기물이 있으면 움직일 수 없다")
+    @DisplayName("룩의 직선 이동경로에 다른 기물이 있으면 움직일 수 없다")
     void rookCannotMove_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
@@ -141,7 +141,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("대각선 이동경로에 다른 기물이 있으면 움직일 수 없다")
+    @DisplayName("비숍의 대각선 이동경로에 다른 기물이 있으면 움직일 수 없다")
     void bishopCannotMove_anotherPiecesExistOnPath() {
         Board board = new Board(() -> {
             Map<Position, Piece> pieces = new HashMap<>();
