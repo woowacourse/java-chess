@@ -1,17 +1,15 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.piece.role.Queen;
 import chess.domain.piece.role.Role;
 import chess.domain.position.Position;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 

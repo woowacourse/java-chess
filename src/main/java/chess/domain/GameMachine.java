@@ -6,7 +6,6 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameMachine {
