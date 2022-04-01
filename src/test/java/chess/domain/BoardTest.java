@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.command.MoveCommand;
-import chess.domain.ChessGame.Board;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
