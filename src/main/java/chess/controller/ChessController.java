@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Position;
+import chess.domain.Board;
 import chess.domain.game.state.ChessGame;
 import chess.domain.game.state.Ready;
 import chess.dto.RequestDto;
@@ -25,23 +25,21 @@ public class ChessController {
 
     public ChessGame selectMenu(ChessGame chessGame, RequestDto dto) {
         InputOption option = dto.getInputOption();
-        if (option == InputOption.MOVE) {
-            return move(chessGame, dto.getFromPosition(), dto.getToPosition());
-        }
         Command command = CommandFactory.playCommand(option);
-        return command.run(chessGame);
-    }
-
-    public ChessGame move(ChessGame chessGame, String fromPosition, String toPosition) {
         try {
-            ChessGame movedGame = chessGame.movePiece(Position.valueOf(fromPosition),
-                    Position.valueOf(toPosition));
-            OutputView.printInitialChessBoard(movedGame.getBoard());
-            return movedGame;
+            return command.run(chessGame,dto.getFromPosition(), dto.getToPosition());
         } catch (IllegalStateException | IllegalArgumentException exception) {
             OutputView.printError(exception.getMessage());
         }
         return chessGame;
+    }
+
+    public static void showBoard(Board board) {
+        OutputView.printInitialChessBoard(board);
+    }
+
+    public static void showScore(double whiteScore, double blackScore) {
+        OutputView.printScore(whiteScore, blackScore);
     }
 }
 

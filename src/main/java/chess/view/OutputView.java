@@ -49,9 +49,9 @@ public final class OutputView {
     }
 
     public static void printScore(double whiteScore, double blackScore) {
-        System.out.printf(SCORE_FORMAT, BLACK_TEAM_NAME, blackScore);
-        System.out.print(System.lineSeparator());
         System.out.printf(SCORE_FORMAT, WHITE_TEAM_NAME, whiteScore);
+        System.out.print(System.lineSeparator());
+        System.out.printf(SCORE_FORMAT, BLACK_TEAM_NAME, blackScore);
         System.out.print(System.lineSeparator());
         System.out.print(System.lineSeparator());
     }
