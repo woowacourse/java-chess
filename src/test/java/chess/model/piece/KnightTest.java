@@ -16,7 +16,7 @@ import static chess.model.piece.Fixtures.F6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.Board;
+import chess.model.Board;
 import chess.model.square.File;
 import chess.model.square.Rank;
 import chess.model.square.Square;

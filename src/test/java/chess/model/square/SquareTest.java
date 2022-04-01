@@ -6,10 +6,7 @@ import static chess.model.piece.Fixtures.C5;
 import static chess.model.piece.Fixtures.D4;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.Direction;
-import chess.model.square.File;
-import chess.model.square.Rank;
-import chess.model.square.Square;
+import chess.model.piece.Direction;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -25,5 +22,10 @@ class SquareTest {
     void findLocation() {
         boolean location = D4.findLocation(Direction.SSE, Square.of(File.E, Rank.TWO));
         assertThat(location).isTrue();
+    }
+
+    @Test
+    void fromString() {
+        assertThat(Square.fromString("a4")).isEqualTo(Square.of(File.A, Rank.FOUR));
     }
 }

@@ -3,9 +3,14 @@ package chess.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.Board;
+import chess.model.Board;
+import chess.model.piece.Color;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.square.File;
+import chess.model.square.Rank;
+import chess.model.square.Square;
+import chess.model.util.ScoreResult;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
@@ -19,50 +24,46 @@ public class BoardTest {
     @Test
     void findPiece() {
         Board board = new Board();
-        Piece a2 = board.findPieceBySquare(new Square(File.A, Rank.TWO));
-        assertThat(a2).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.TWO)));
+        Piece a2 = board.get(Square.of(File.A, Rank.TWO));
+        assertThat(a2.isPawn()).isTrue();
     }
 
     @Test
     void getTest() {
         Board board = new Board();
-        Piece a1Piece = board.findPieceBySquare(new Square(File.A, Rank.ONE));
-        Piece h8Piece = board.findPieceBySquare(new Square(File.H, Rank.EIGHT));
+        Piece a1Piece = board.get(Square.of(File.A, Rank.ONE));
+        Piece h8Piece = board.get(Square.of(File.H, Rank.EIGHT));
 
         assertAll(
-                () -> assertThat(a1Piece.getLetter()).isEqualTo("r"),
-                () -> assertThat(h8Piece.getLetter()).isEqualTo("r")
+                () -> assertThat(a1Piece.name()).isEqualTo("r"),
+                () -> assertThat(h8Piece.name()).isEqualTo("r")
         );
     }
 
     @Test
     void move() {
         Board board = new Board();
-        board.move(new Square(File.A, Rank.TWO), new Square(File.A, Rank.THREE));
-        Piece a3Piece = board.findPieceBySquare(new Square(File.A, Rank.THREE));
-        board.move(Square.of("e2"), Square.of("e3"));
-        Piece e3 = board.findPieceBySquare(Square.of("e3"));
-        assertThat(a3Piece).isEqualTo(new Pawn(Color.WHITE, new Square(File.A, Rank.THREE)));
-        assertThat(e3).isEqualTo(new Pawn(Color.WHITE, Square.of("e3")));
+        board.move("a2", "a3");
+        Piece a3Piece = board.get(Square.of(File.A, Rank.THREE));
+        assertThat(a3Piece.isPawn()).isTrue();
     }
 
     @Test
     void point() {
         Board board = new Board();
-        double score = board.calculatePoint(Color.WHITE);
-        assertThat(score).isEqualTo(38);
+        ScoreResult scoreResult = board.calculateScore();
+        assertThat(scoreResult.get(Color.WHITE)).isEqualTo(38);
     }
 
     @Test
     void pointWithPawn() {
         Board board = new Board();
-        board.move(Square.of("b8"), Square.of("c6"));
-        board.move(Square.of("c6"), Square.of("b4"));
-        board.move(Square.of("b4"), Square.of("d3"));
-        board.move(Square.of("c2"), Square.of("d3"));
-        double score = board.calculatePoint(Color.WHITE);
-        double blackScore = board.calculatePoint(Color.BLACK);
-        assertThat(score).isEqualTo(37);
-        assertThat(blackScore).isEqualTo(35.5);
+        board.move("b8", ("c6"));
+        board.move(("c6"), ("b4"));
+        board.move(("b4"), ("d3"));
+        board.move(("c2"), ("d3"));
+        ScoreResult score = board.calculateScore();
+        assertThat(score.get(Color.WHITE)).isEqualTo(37);
+        assertThat(score.get(Color.BLACK)).isEqualTo(35.5);
     }
 }
