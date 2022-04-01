@@ -12,6 +12,10 @@ public class Command {
     private static final int TARGET_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final String START = "start";
+    private static final String END = "end";
+    private static final String STATUS = "status";
+    private static final String MOVE = "move";
 
     private final String command;
 
@@ -29,13 +33,13 @@ public class Command {
     }
 
     private static void checkStartOrEnd(String command) {
-        if (!command.equals("start") && !command.equals("end") && !command.equals("status")) {
+        if (!command.equals(START) && !command.equals(END) && !command.equals(STATUS)) {
             checkMove(command);
         }
     }
 
     private static void checkMove(String command) {
-        if (!command.startsWith("move")) {
+        if (!command.startsWith(MOVE)) {
             throw new IllegalArgumentException("잘못된 커멘드 입니다.");
         }
 
@@ -55,19 +59,19 @@ public class Command {
     }
 
     public boolean isEnd() {
-        return command.equals("end");
+        return command.equals(END);
     }
 
     public boolean isMoveCommand() {
-        return command.startsWith("move");
+        return command.startsWith(MOVE);
     }
 
     public boolean isStart() {
-        return command.equals("start");
+        return command.equals(START);
     }
 
     public boolean isStatus() {
-        return command.equals("status");
+        return command.equals(STATUS);
     }
 
     public Map<String, Position> makePositions() {
