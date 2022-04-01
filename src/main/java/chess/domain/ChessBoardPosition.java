@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ChessBoardPosition {
@@ -11,6 +13,7 @@ public class ChessBoardPosition {
     private static final int ROW_INDEX = 1;
     private static final String INVALID_POSITION = "[ERROR] 체스판 위치 입력 형식에 맞지 않습니다.";
     private static final String POSITION_OUT_OF_RANGE = "[ERROR] 체스판 범위를 벗어나는 위치가 입력되었습니다.";
+    private static final Map<String, ChessBoardPosition> CACHE = new HashMap<>();
 
     private final char column;
     private final int row;
@@ -22,7 +25,8 @@ public class ChessBoardPosition {
     }
 
     public static ChessBoardPosition of(char column, int row) {
-        return new ChessBoardPosition(column, row);
+        String key = String.valueOf(column) + row;
+        return CACHE.computeIfAbsent(key, ignored -> new ChessBoardPosition(column, row));
     }
 
     public static ChessBoardPosition from(String positionInput) {
