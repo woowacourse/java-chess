@@ -16,9 +16,19 @@ public abstract class Command implements State {
     }
 
     private void validateCommand(String input) {
-        if (!input.contains(MOVE) && !START.equals(input) && !END.equals(input) && !STATUS.equals(input)) {
-            throw new IllegalArgumentException("명령어는 start, move, end, status 중 하나여야합니다.");
+        if (input.contains(MOVE)) {
+            return;
         }
+        if (START.equals(input)) {
+            return;
+        }
+        if (END.equals(input)) {
+            return;
+        }
+        if (STATUS.equals(input)) {
+            return;
+        }
+        throw new IllegalArgumentException("명령어는 start, move, end, status 중 하나여야합니다.");
     }
 
     @Override
