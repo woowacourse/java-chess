@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int ALL_KING_COUNT = 2;
+
     private final Map<Position, AbstractPiece> pieces;
 
     public Board(Map<Position, AbstractPiece> pieces) {
@@ -86,7 +88,7 @@ public class Board {
     }
 
     public boolean hasBothKings() {
-        return countKingsOnBoard() == 2;
+        return countKingsOnBoard() == ALL_KING_COUNT;
     }
 
     private long countKingsOnBoard() {
