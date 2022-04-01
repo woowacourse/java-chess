@@ -28,7 +28,7 @@ public class OutputView {
 
     private static void printPiece(Chessboard board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
-            if (board.isExistKey(row, column)) {
+            if (board.isExistPosition(row, column)) {
                 System.out.print(Symbol.findSymbol(board.getPiece(row, column)).symbol());
                 continue;
             }

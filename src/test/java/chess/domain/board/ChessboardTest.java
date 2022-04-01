@@ -68,7 +68,7 @@ public class ChessboardTest {
     void isExistPosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.isExistKey(7, 0)).isTrue();
+        assertThat(chessboard.isExistPosition(7, 0)).isTrue();
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ChessboardTest {
     void isNotExistPosition() {
         Chessboard chessboard = Chessboard.create();
 
-        assertThat(chessboard.isExistKey(5, 0)).isFalse();
+        assertThat(chessboard.isExistPosition(5, 0)).isFalse();
     }
 
     @Test

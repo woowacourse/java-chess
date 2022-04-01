@@ -81,7 +81,7 @@ public class Chessboard {
 
     public boolean isMovablePosition(Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        if (isExistPiece(target) && isPawn(sourcePiece, source, target)) {
+        if (isExistPiece(target) && isPawnMovable(sourcePiece, source, target)) {
             return true;
         }
         return sourcePiece.isMovablePosition(source, target, board);
@@ -91,7 +91,13 @@ public class Chessboard {
         return board.containsKey(target);
     }
 
-    private boolean isPawn(Piece sourcePiece, Position source, Position target) {
+    public boolean isExistPosition(int row, int column) {
+        return board.keySet()
+                .stream()
+                .anyMatch(position -> position.isSamePosition(row, column));
+    }
+
+    private boolean isPawnMovable(Piece sourcePiece, Position source, Position target) {
         if (!sourcePiece.isSameType(Pawn.class)) {
             return false;
         }
@@ -101,12 +107,6 @@ public class Chessboard {
 
     public boolean isKing(Position target) {
         return board.get(target).isSameType(King.class);
-    }
-
-    public boolean isExistKey(int row, int column) {
-        return board.keySet()
-                .stream()
-                .anyMatch(position -> position.isSamePosition(row, column));
     }
 
     public double computeScore(Color color) {
