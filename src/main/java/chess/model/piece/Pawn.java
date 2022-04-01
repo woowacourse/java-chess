@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.*;
+import chess.model.Team;
 import chess.model.position.Direction;
 import chess.model.strategy.PawnMoveStrategy;
 

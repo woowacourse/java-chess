@@ -1,10 +1,10 @@
 package chess.model.piece;
 
 import chess.model.MoveType;
-import chess.model.position.Direction;
-import chess.model.position.Position;
 import chess.model.Team;
 import chess.model.Turn;
+import chess.model.position.Direction;
+import chess.model.position.Position;
 import chess.model.strategy.MoveStrategy;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected Team team;
     private final MoveStrategy moveStrategy;
+    protected Team team;
 
     protected Piece(Team team, MoveStrategy moveStrategy) {
         this.team = team;

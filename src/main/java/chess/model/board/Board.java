@@ -1,10 +1,10 @@
 package chess.model.board;
 
-import chess.model.position.File;
-import chess.model.position.Position;
 import chess.model.Team;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.position.File;
+import chess.model.position.Position;
 
 import java.util.Map;
 import java.util.stream.Collectors;

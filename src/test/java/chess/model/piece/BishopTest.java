@@ -1,6 +1,9 @@
 package chess.model.piece;
 
-import chess.model.*;
+import chess.model.ChessGame;
+import chess.model.MoveType;
+import chess.model.Team;
+import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.command.Move;
 import chess.model.position.Position;
@@ -52,7 +55,7 @@ class BishopTest {
         ChessGame chessGame = new ChessGame(board);
 
         assertDoesNotThrow(
-                () -> chessGame.progress(new Move("move a8 c6"),new Turn(Team.BLACK))
+                () -> chessGame.progress(new Move("move a8 c6"), new Turn(Team.BLACK))
         );
     }
 

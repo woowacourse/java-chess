@@ -1,7 +1,7 @@
 package chess.model.piece;
 
-import chess.model.position.Direction;
 import chess.model.Team;
+import chess.model.position.Direction;
 import chess.model.strategy.UnlimitedMoveStrategy;
 
 import java.util.List;

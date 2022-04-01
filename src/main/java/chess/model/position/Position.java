@@ -138,7 +138,7 @@ public class Position implements Comparable<Position> {
     }
 
     public boolean isInitPawn(Direction direction) {
-        return  (direction == Direction.N && rank == Rank.TWO)
+        return (direction == Direction.N && rank == Rank.TWO)
                 || (direction == Direction.S && rank == Rank.SEVEN);
     }
 }

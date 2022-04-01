@@ -20,13 +20,13 @@ public class GameResult {
     }
 
     private static Team findWinningTeam(double whiteScore, double blackScore) {
-            if (whiteScore > blackScore) {
-                return Team.WHITE;
-            }
-            if (blackScore > whiteScore) {
-                return Team.BLACK;
-            }
-            return Team.NONE;
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+        if (blackScore > whiteScore) {
+            return Team.BLACK;
+        }
+        return Team.NONE;
     }
 
     public double getWhiteScore() {

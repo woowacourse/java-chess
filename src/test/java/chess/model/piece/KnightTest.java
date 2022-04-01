@@ -1,6 +1,9 @@
 package chess.model.piece;
 
-import chess.model.*;
+import chess.model.ChessGame;
+import chess.model.MoveType;
+import chess.model.Team;
+import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.command.Move;

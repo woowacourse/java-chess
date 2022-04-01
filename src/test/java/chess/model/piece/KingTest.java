@@ -1,6 +1,9 @@
 package chess.model.piece;
 
-import chess.model.*;
+import chess.model.ChessGame;
+import chess.model.MoveType;
+import chess.model.Team;
+import chess.model.Turn;
 import chess.model.board.Board;
 import chess.model.command.Move;
 import chess.model.position.Position;
@@ -29,7 +32,7 @@ class KingTest {
 
         assertAll(
                 () -> assertThat(king.isMovable(source, targetDiagonal, MoveType.MOVE)).isTrue(),
-                () -> assertThat(king.isMovable(source, targetVertical,MoveType.MOVE)).isTrue(),
+                () -> assertThat(king.isMovable(source, targetVertical, MoveType.MOVE)).isTrue(),
                 () -> assertThat(king.isMovable(source, targetHorizontal, MoveType.MOVE)).isTrue()
         );
     }

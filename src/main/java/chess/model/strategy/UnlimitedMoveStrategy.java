@@ -6,7 +6,7 @@ import chess.model.position.Position;
 
 import java.util.List;
 
-public class UnlimitedMoveStrategy implements MoveStrategy{
+public class UnlimitedMoveStrategy implements MoveStrategy {
 
     private final List<Direction> directions;
 

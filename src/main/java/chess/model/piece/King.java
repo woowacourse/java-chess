@@ -1,8 +1,8 @@
 package chess.model.piece;
 
+import chess.model.Team;
 import chess.model.position.Direction;
 import chess.model.position.Distance;
-import chess.model.Team;
 import chess.model.strategy.LimitedMoveStrategy;
 
 public class King extends Piece {

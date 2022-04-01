@@ -19,9 +19,9 @@ public class ChessController {
 
     private void run(ChessGame chessGame, Command command, Turn turn) {
         while (!command.isEnd() || chessGame.isKingDead()) {
-            turn = chessGame.progress(command, turn);
             OutputView.printBoard(chessGame.getBoard());
             command = command.turnState(InputView.inputCommand());
+            turn = chessGame.progress(command, turn);
         }
         end(chessGame, command);
     }

@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Distance {
-    private final int value;
-
     private static final Distance DISTANCE_ONE = new Distance(1);
     private static final Distance DISTANCE_TWO = new Distance(2);
+    private final int value;
 
     public Distance(int value) {
         this.value = value;
