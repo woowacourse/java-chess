@@ -1,14 +1,16 @@
 package chess;
 
 import static spark.Spark.get;
+import static spark.Spark.path;
 import static spark.Spark.post;
 
 import chess.controller.ChessController;
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.domain.chessboard.ChessBoardFactory;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
-import chess.result.MoveResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,16 +37,26 @@ public class WebApplication {
 
         get("/board", (req, res) -> {
             final Map<Position, ChessPiece> pieceByPosition = chessController.findAllPiece();
-            return render(toModel(pieceByPosition), "board.html");
+            final Map<String, Object> model = toModel(pieceByPosition);
+            final Score score = chessController.status();
+            for (Color color : Color.values()) {
+                model.put(color.name(), score.findScore(color));
+            }
+
+            return render(model, "board.html");
         });
 
-        post("/board", (req, res) -> {
-            final MoveResult result = chessController.move(
-                    Position.from(req.queryParams("from")),
-                    Position.from(req.queryParams("to"))
-            );
-            return render(toModel(result.getPieceByPosition()), "board.html");
+        path("/command", () -> {
+            post("/move", (req, res) -> {
+                chessController.move(
+                        Position.from(req.queryParams("from")),
+                        Position.from(req.queryParams("to"))
+                );
+                res.redirect("/board");
+                return null;
+            });
         });
+
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
