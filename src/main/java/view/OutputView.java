@@ -1,6 +1,7 @@
 package view;
 
 import domain.board.ChessBoard;
+import domain.dto.GameStatus;
 import domain.dto.StatusDto;
 import domain.piece.property.Team;
 import domain.position.XPosition;
@@ -30,8 +31,9 @@ public final class OutputView {
     }
 
     public static void printStatus(final StatusDto statusDto) {
-        System.out.printf("%s 점수 : %.1f (%s)" + System.lineSeparator(), statusDto.getTurn(), statusDto.getScore(),
-                statusDto.getResult());
+        GameStatus gameStatus = statusDto.getGameStatus();
+        System.out.printf("%s 점수 : %.1f (%s)" + System.lineSeparator(), gameStatus.getTurn(), gameStatus.getScore(),
+                gameStatus.getResult());
     }
 
     public static void printWinner(final Team team) {

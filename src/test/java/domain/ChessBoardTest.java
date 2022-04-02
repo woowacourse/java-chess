@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import domain.board.ChessBoard;
 import domain.board.ChessBoardGenerator;
+import domain.dto.GameStatus;
 import domain.piece.unit.Bishop;
 import domain.piece.unit.Pawn;
 import domain.piece.unit.Piece;
@@ -216,10 +217,11 @@ class ChessBoardTest {
     @DisplayName("처음 각 팀의 점수는 38점이다.")
     void checkCurrentTeamScore() {
         ChessBoard chessBoard = new ChessBoard(new ChessBoardGenerator());
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
         assertAll(
-                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), WHITE), 38),
-                () -> assertEquals(Result.calculateTeamScore(chessBoard.getBoard(), BLACK), 38)
+                () -> assertEquals(gameStatus.calculateTeamScore(chessBoard.getBoard(), WHITE), 38),
+                () -> assertEquals(gameStatus.calculateTeamScore(chessBoard.getBoard(), BLACK), 38)
         );
     }
 
@@ -230,8 +232,9 @@ class ChessBoardTest {
         customBoardGenerator.add(A1, new Pawn(WHITE));
         customBoardGenerator.add(A2, new Pawn(WHITE));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateTeamScore(chessBoard.getBoard(), WHITE)).isEqualTo(1.0);
+        assertThat(gameStatus.calculateTeamScore(chessBoard.getBoard(), WHITE)).isEqualTo(1.0);
     }
 
     @Test
@@ -242,8 +245,9 @@ class ChessBoardTest {
         customBoardGenerator.add(B2, new Pawn(WHITE));
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.WIN);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -254,8 +258,9 @@ class ChessBoardTest {
         customBoardGenerator.add(A7, new Pawn(BLACK));
         customBoardGenerator.add(B7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.LOSE);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -265,7 +270,8 @@ class ChessBoardTest {
         customBoardGenerator.add(A1, new Pawn(WHITE));
         customBoardGenerator.add(A7, new Pawn(BLACK));
         ChessBoard chessBoard = new ChessBoard(customBoardGenerator);
+        GameStatus gameStatus = new GameStatus(chessBoard);
 
-        assertThat(Result.calculateWinner(chessBoard)).isEqualTo(Result.DRAW);
+        assertThat(gameStatus.calculateWinner(chessBoard)).isEqualTo(Result.DRAW);
     }
 }

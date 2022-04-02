@@ -3,6 +3,7 @@ import domain.board.BoardGenerator;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardGenerator;
 import domain.classification.Command;
+import domain.dto.GameStatus;
 import domain.dto.StatusDto;
 import view.InputView;
 import view.OutputView;
@@ -35,7 +36,8 @@ public final class Application {
                 return;
             }
             if (command.isStatus()) {
-                OutputView.printStatus(new StatusDto(chessBoard));
+                GameStatus gameStatus = new GameStatus(chessBoard);
+                OutputView.printStatus(new StatusDto(gameStatus));
                 playGame(chessBoard, command);
             }
             if (command.isMove()) {
