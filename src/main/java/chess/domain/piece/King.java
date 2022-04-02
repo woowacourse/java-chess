@@ -11,7 +11,7 @@ public final class King extends DefaultPiece {
     private static final double SCORE = 0;
 
     public King(Team team) {
-        super(new Name("K"), team);
+        super(Name.KING, team);
     }
 
     @Override
@@ -20,11 +20,6 @@ public final class King extends DefaultPiece {
         if (Direction.isInvalidDistance(from, to, directions)) {
             throw new IllegalArgumentException(NO_MOVE_MESSAGE);
         }
-        return true;
-    }
-
-    @Override
-    public boolean isKing() {
         return true;
     }
 

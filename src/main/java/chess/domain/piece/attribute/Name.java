@@ -1,32 +1,25 @@
 package chess.domain.piece.attribute;
 
-import java.util.Objects;
+import java.util.Locale;
 
-public final class Name {
+public enum Name {
+    PAWN("P"),
+    BISHOP("B"),
+    KING("K"),
+    QUEEN("Q"),
+    KNIGHT("N"),
+    ROOK("R"),
+    NONE(".");
     private final String value;
 
-    public Name(String value) {
+    Name(String value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public String getValue(Team team) {
+        if (team == Team.WHITE) {
+            return value.toLowerCase(Locale.ROOT);
+        }
         return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Name)) {
-            return false;
-        }
-        Name name = (Name) o;
-        return Objects.equals(value, name.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 }

@@ -11,7 +11,7 @@ public final class Rook extends DefaultPiece {
     private static final double SCORE = 5;
 
     public Rook(Team team) {
-        super(new Name("R"), team);
+        super(Name.ROOK, team);
     }
 
     public List<Direction> rookDirection() {

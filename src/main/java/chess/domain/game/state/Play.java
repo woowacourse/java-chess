@@ -1,20 +1,21 @@
 package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
-import chess.view.Command;
+import chess.domain.game.state.attribute.StateType;
 import chess.dto.CommandDto;
+import chess.view.Command;
 
 public final class Play extends DefaultState {
     private static final String INVALID_COMMEND_MESSAGE = "end, status, move 만 입력할 수 있습니다.";
 
     public Play(ChessGame chessGame) {
-        super(chessGame);
+        super(StateType.PLAY, chessGame);
     }
 
     @Override
     public State execute(CommandDto commandDto) {
         if (commandDto.getCommand() == Command.END) {
-            return new ExitFinished(chessGame);
+            return new End(chessGame);
         }
         if (commandDto.getCommand() == Command.STATUS) {
             return new Status(chessGame);
@@ -31,10 +32,5 @@ public final class Play extends DefaultState {
             return new Result(chessGame);
         }
         return new Play(chessGame);
-    }
-
-    @Override
-    public boolean isPlay() {
-        return true;
     }
 }

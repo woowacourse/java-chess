@@ -12,7 +12,7 @@ public final class Knight extends DefaultPiece {
     private static final double SCORE = 2.5;
 
     public Knight(Team team) {
-        super(new Name("N"), team);
+        super(Name.KNIGHT, team);
     }
 
     @Override

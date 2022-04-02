@@ -1,11 +1,9 @@
 package chess.domain.board.position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Position {
     private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
@@ -37,10 +35,10 @@ public final class Position {
         List<Position> positions = new ArrayList<>();
         positions.add(from.advancePosition(direction));
 
-        while (!positions.get(positions.size()-1).equals(to)) {
-            positions.add(positions.get(positions.size()-1).advancePosition(direction));
+        while (!positions.get(positions.size() - 1).equals(to)) {
+            positions.add(positions.get(positions.size() - 1).advancePosition(direction));
         }
-        return positions.subList(0, positions.size()-1);
+        return positions.subList(0, positions.size() - 1);
     }
 
     private Position advancePosition(Direction direction) {

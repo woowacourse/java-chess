@@ -1,14 +1,11 @@
 package chess.domain.game.state;
 
+import chess.domain.game.state.attribute.StateType;
 import chess.dto.CommandDto;
 
 public interface State {
 
     State execute(CommandDto input);
 
-    boolean isRun();
-
-    boolean isPlay();
-
-    boolean isStatus();
+    StateType getType();
 }

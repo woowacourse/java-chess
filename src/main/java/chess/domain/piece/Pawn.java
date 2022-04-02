@@ -15,7 +15,7 @@ public final class Pawn extends DefaultPiece {
     private static final int STRAIGHT_INDEX = 0;
 
     public Pawn(Team team) {
-        super(new Name("P"), team);
+        super(Name.PAWN, team);
     }
 
     @Override
@@ -70,11 +70,6 @@ public final class Pawn extends DefaultPiece {
 
     private boolean isDiagonal(Direction now, List<Direction> directions) {
         return directions.contains(now);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
     }
 
     @Override

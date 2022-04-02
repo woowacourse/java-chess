@@ -11,7 +11,7 @@ public final class Bishop extends DefaultPiece {
     private static final int SCORE = 3;
 
     public Bishop(Team team) {
-        super(new Name("B"), team);
+        super(Name.BISHOP, team);
     }
 
     public List<Direction> bishopDirection() {

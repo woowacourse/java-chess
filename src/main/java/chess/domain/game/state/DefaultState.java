@@ -1,23 +1,18 @@
 package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.attribute.StateType;
 
 public abstract class DefaultState implements State {
     protected final ChessGame chessGame;
+    protected final StateType stateType;
 
-    public DefaultState(ChessGame chessGame) {
+    public DefaultState(StateType stateType, ChessGame chessGame) {
+        this.stateType = stateType;
         this.chessGame = chessGame;
     }
 
-    public boolean isRun() {
-        return true;
-    }
-
-    public boolean isPlay() {
-        return false;
-    }
-
-    public boolean isStatus() {
-        return false;
+    public StateType getType() {
+        return stateType;
     }
 }

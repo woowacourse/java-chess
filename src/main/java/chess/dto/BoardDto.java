@@ -28,7 +28,8 @@ public class BoardDto {
     private String ChessBoardOfRankToString(Map<Position, Piece> squares, Rank rank) {
         StringBuilder result = new StringBuilder();
         for (Column column : Column.values()) {
-            result.append(squares.get(new Position(column, rank)).getName());
+            Piece piece = squares.get(new Position(column, rank));
+            result.append(piece.getName().getValue(piece.getTeam()));
         }
         return result + System.lineSeparator();
     }

@@ -11,7 +11,7 @@ public final class Queen extends DefaultPiece {
     private static final double SCORE = 9;
 
     public Queen(Team team) {
-        super(new Name("Q"), team);
+        super(Name.QUEEN, team);
     }
 
     @Override

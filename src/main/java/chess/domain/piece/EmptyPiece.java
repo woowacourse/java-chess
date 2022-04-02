@@ -10,17 +10,12 @@ public final class EmptyPiece extends DefaultPiece {
     private static final double SCORE = 0;
 
     public EmptyPiece() {
-        super(new Name("."), Team.NONE);
+        super(Name.NONE, Team.NONE);
     }
 
     @Override
     public boolean canMove(Piece targetPiece, Position from, Position to) {
         throw new IllegalArgumentException(NO_MOVE_MESSAGE);
-    }
-
-    @Override
-    public boolean isPiece() {
-        return false;
     }
 
     @Override

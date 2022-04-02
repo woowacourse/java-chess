@@ -4,6 +4,7 @@ import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
+import chess.domain.game.state.attribute.StateType;
 import chess.dto.BoardDto;
 import chess.dto.CommandDto;
 import chess.view.InputView;
@@ -17,10 +18,22 @@ public class Controller {
     }
 
     private void play(State state, ChessGame chessGame) {
-        while (state.isRun()) {
+        while (state.getType() != StateType.END) {
             printPlayingChessBoard(state, chessGame);
             printStatus(state, chessGame);
             state = go(state, InputView.inputCommend());
+        }
+    }
+
+    private void printPlayingChessBoard(State state, ChessGame chessGame) {
+        if (state.getType() == StateType.PLAY) {
+            OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
+        }
+    }
+
+    private void printStatus(State state, ChessGame chessGame) {
+        if (state.getType() == StateType.STATUS) {
+            OutputView.printStatus(chessGame.getScoreOfTeams(), chessGame.getWinner());
         }
     }
 
@@ -30,18 +43,6 @@ public class Controller {
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return state;
-        }
-    }
-
-    private void printStatus(State state, ChessGame chessGame) {
-        if (state.isStatus()) {
-            OutputView.printStatus(chessGame.getScoreOfTeams(), chessGame.getWinner());
-        }
-    }
-
-    private void printPlayingChessBoard(State state, ChessGame chessGame) {
-        if (state.isPlay()) {
-            OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
         }
     }
 }

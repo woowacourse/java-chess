@@ -5,18 +5,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.boardstrategy.InitBoardStrategy;
 import chess.domain.game.ChessGame;
+import chess.domain.game.state.attribute.StateType;
 import chess.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ExitFinishedTest {
+class EndTest {
     private final ChessGame chessGame = new ChessGame(new InitBoardStrategy());
     private State state;
 
     @BeforeEach
     void setup() {
-        state = new ExitFinished(chessGame);
+        state = new End(chessGame);
     }
 
 
@@ -31,21 +32,21 @@ class ExitFinishedTest {
     @Test
     @DisplayName("isRun()이 false 를 리턴한다.")
     void isRun() {
-        assertThat(state.isRun())
+        assertThat(state.getType() != StateType.END)
                 .isFalse();
     }
 
     @Test
     @DisplayName("해당 상태가 Status 가 아님을 확인할 수 있다.")
     void isStatus() {
-        assertThat(state.isStatus())
+        assertThat(state.getType() == StateType.STATUS)
                 .isFalse();
     }
 
     @Test
     @DisplayName("isPlay() 실행 시 false 를 리턴한다")
     void isPlay() {
-        assertThat(state.isPlay())
+        assertThat(state.getType() == StateType.PLAY)
                 .isFalse();
     }
 }

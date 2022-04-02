@@ -4,6 +4,7 @@ import chess.domain.board.position.Column;
 import chess.domain.board.position.Position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.piece.attribute.Name;
 import chess.domain.piece.attribute.Team;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -19,6 +20,10 @@ public final class Board {
 
     public Board(Map<Position, Piece> squares) {
         this.squares = squares;
+    }
+
+    private static double scoreOfPiece(Entry<Position, Piece> entry) {
+        return entry.getValue().getScore();
     }
 
     public Piece findByPosition(Position position) {
@@ -43,7 +48,8 @@ public final class Board {
     }
 
     private void checkCanMove(Position from, Position to) {
-        if (!squares.get(from).canMove(squares.get(to), from, to) && squares.get(to).isPiece()) {
+        if (!squares.get(from).canMove(squares.get(to), from, to)
+                && squares.get(to).getName() != Name.NONE) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
     }
@@ -56,7 +62,7 @@ public final class Board {
     }
 
     private void checkIsPiece(Position position) {
-        if (findByPosition(position).isPiece()) {
+        if (findByPosition(position).getName() != Name.NONE) {
             throw new IllegalArgumentException(NO_MOVE_ERROR_MESSAGE);
         }
     }
@@ -84,13 +90,9 @@ public final class Board {
                 .sum();
     }
 
-    private static double scoreOfPiece(Entry<Position, Piece> entry) {
-        return entry.getValue().getScore();
-    }
-
     private double getPawnMinusScore(Team team) {
         List<Column> pawnsColumns = squares.entrySet().stream()
-                .filter(entry -> isSameColor(entry.getKey(), team) && entry.getValue().isPawn())
+                .filter(entry -> isSameColor(entry.getKey(), team) && entry.getValue().getName() == Name.PAWN)
                 .map(entry -> entry.getKey().getColumn())
                 .collect(Collectors.toList());
 
@@ -103,7 +105,7 @@ public final class Board {
     private int countSameColumnPawn(Column column, Team team) {
         return (int) squares.entrySet().stream()
                 .filter(entry -> entry.getKey().isEqualColumn(column)
-                        && entry.getValue().isPawn()
+                        && entry.getValue().getName() == Name.PAWN
                         && entry.getValue().isSameTeamOrEmpty(team))
                 .count();
     }
@@ -113,6 +115,6 @@ public final class Board {
     }
 
     public boolean isCheckmate(Position to) {
-        return findByPosition(to).isKing();
+        return findByPosition(to).getName() == Name.KING;
     }
 }

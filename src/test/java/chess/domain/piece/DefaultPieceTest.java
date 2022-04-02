@@ -68,16 +68,4 @@ class DefaultPieceTest {
 
         assertThat(knight).isInstanceOf(Knight.class);
     }
-
-    @Test
-    @DisplayName("체스 말이 킹인지 확인할 수 있다.")
-    void testKingAlive() {
-        DefaultPiece defaultPiece = new King(Team.WHITE);
-        DefaultPiece rook = new Rook(Team.BLACK);
-
-        assertAll(
-                () -> assertThat(defaultPiece.isKing()).isTrue(),
-                () -> assertThat(rook.isKing()).isFalse()
-        );
-    }
 }
