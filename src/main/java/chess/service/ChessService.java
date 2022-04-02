@@ -91,6 +91,17 @@ public class ChessService {
         return model;
     }
 
+    public Map<String, Object> findCurrentTurn() {
+        final Map<String, Object> model = new HashMap<>();
+        try {
+            final Color currentTurn = chessGame.findCurrentTurn();
+            model.put("current_turn", currentTurn.getValue());
+        } catch (IllegalArgumentException e) {
+            model.put("error", e.getMessage());
+        }
+        return model;
+    }
+
     private Map<String, Object> toModel(final Map<Position, ChessPiece> pieceByPosition) {
         return pieceByPosition.entrySet()
                 .stream()

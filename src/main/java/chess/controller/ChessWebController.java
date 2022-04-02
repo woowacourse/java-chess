@@ -38,6 +38,11 @@ public class ChessWebController {
             return gson.toJson(model);
         });
 
+        get("/turn", (req, res) -> {
+            final Map<String, Object> model = chessService.findCurrentTurn();
+            return gson.toJson(model);
+        });
+
         path("/command", () -> {
 
             post("/start", (req, res) -> {

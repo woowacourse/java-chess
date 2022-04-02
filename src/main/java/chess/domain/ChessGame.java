@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.Color;
 import chess.domain.position.Position;
 import chess.result.EndResult;
 import chess.result.MoveResult;
@@ -52,5 +53,10 @@ public class ChessGame {
     public Map<Position, ChessPiece> findAllPiece() {
         gameStatus.checkPlaying();
         return chessBoard.findAllPiece();
+    }
+
+    public Color findCurrentTurn() {
+        gameStatus.checkPlaying();
+        return chessBoard.currentTurn();
     }
 }
