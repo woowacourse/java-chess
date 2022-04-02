@@ -44,7 +44,7 @@ public final class OutputView {
     }
 
     public static void announceWrongMoveCommand() {
-        System.out.println("목적지와 출발지가 둘 다 필요합니다.");
+        System.out.println("이동은 move 출발지 목적지 형태로 입력하세요.");
     }
 
     public static void announceBadMovement(String message) {

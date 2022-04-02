@@ -2,27 +2,20 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.RegularRuleMaker;
+import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class GameMachine {
-
-    private static final int MOVE_COMMAND_SIZE = 3;
-    private static final int COMMAND_INDEX = 0;
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
 
     public void run() {
         InputView.announceStart();
         Board board = null;
-        List<String> commands = new ArrayList<>();
+        Commands commands;
         do {
-            commands = InputView.requestCommand();
+            commands = InputView.requestCommands();
             board = play(board, commands);
-        } while (!Command.isEnd(commands.get(COMMAND_INDEX)) && !gameEnd(board));
+        } while (!commands.isEnd() && !gameEnd(board));
 
         if (board != null) {
             OutputView.printFinalResult(board);
@@ -33,16 +26,15 @@ public final class GameMachine {
         return board != null && board.isEnd();
     }
 
-    private Board play(Board board, List<String> commands) {
-        String command = commands.get(COMMAND_INDEX);
-        if (Command.isStart(command)) {
+    private Board play(Board board, Commands commands) {
+        if (commands.isStart()) {
             board = new Board(new RegularRuleMaker());
             OutputView.printBoard(board);
         }
-        if (Command.isMove(command)) {
+        if (commands.isMove()) {
             movePiece(board, commands);
         }
-        if (Command.isStatus(command)) {
+        if (commands.isStatus()) {
             showStatus(board);
         }
         return board;
@@ -56,12 +48,12 @@ public final class GameMachine {
         OutputView.printScoreAndResult(board);
     }
 
-    private void movePiece(Board board, List<String> commands) {
+    private void movePiece(Board board, Commands commands) {
         if (board == null) {
             OutputView.announceNotStarted();
             return;
         }
-        if (commands.size() != MOVE_COMMAND_SIZE) {
+        if (commands.isRightMoveCommand()) {
             OutputView.announceWrongMoveCommand();
             return;
         }
@@ -69,9 +61,9 @@ public final class GameMachine {
         OutputView.printBoard(board);
     }
 
-    private void movePieceOnBoard(Board board, List<String> commands) {
+    private void movePieceOnBoard(Board board, Commands command) {
         try {
-            board.move(commands.get(SOURCE_INDEX), commands.get(TARGET_INDEX));
+            board.move(command.getSource(), command.getTarget());
         } catch (IllegalArgumentException e) {
             OutputView.announceBadMovement(e.getMessage());
         }
