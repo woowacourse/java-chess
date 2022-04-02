@@ -57,4 +57,14 @@ public class JdbcTemplate {
         return false;
     }
 
+    public static void rollBack(Connection conn) {
+        try {
+            if (isConnected(conn)) {
+                conn.rollback();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
