@@ -16,7 +16,7 @@ public class Positions {
 
     public static Positions from(final String command) {
         return new Positions(Arrays.stream(command.split(SPLIT_DELIMITER))
-            .skip(1) // move a2 a4 -> a2, a4만 추출
+            .skip(1)
             .map(Position::from)
             .collect(Collectors.toList()));
     }

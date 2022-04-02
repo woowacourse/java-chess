@@ -6,15 +6,15 @@ public final class End implements CommandGenerator {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,
-                        final Runnable printBoardToState) {
+                        final Runnable printBoardInfoToState) {
 
         if (chessGame.isNotRunning()) {
             chessGame.gameSwitchOff();
-            printBoardToState.run();
+            printBoardInfoToState.run();
             return;
         }
 
         chessGame.end();
-        printBoardToState.run();
+        printBoardInfoToState.run();
     }
 }

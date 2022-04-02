@@ -6,9 +6,9 @@ public final class Start implements CommandGenerator {
     @Override
     public void execute(final String command,
                         final ChessGame chessGame,
-                        final Runnable printBoardToState) {
+                        final Runnable printBoardInfoToState) {
         chessGame.run();
 
-        printBoardToState.run();
+        printBoardInfoToState.run();
     }
 }
