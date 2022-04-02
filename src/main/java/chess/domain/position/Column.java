@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum File {
+public enum Column {
     A('a', 1),
     B('b', 2),
     C('c', 3),
@@ -16,23 +16,23 @@ public enum File {
     private final char value;
     private final int index;
 
-    File(char value, int index) {
+    Column(char value, int index) {
         this.value = value;
         this.index = index;
     }
 
-    static File find(char value) {
+    static Column find(char value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(BUG_MESSAGE_BOUND));
     }
 
-    int getGap(File target) {
+    int getGap(Column target) {
         return target.index - this.index;
     }
 
-    File add(int dFile) {
+    Column add(int dFile) {
         return Arrays.stream(values())
                 .filter(file -> file.index == this.index + dFile)
                 .findFirst()

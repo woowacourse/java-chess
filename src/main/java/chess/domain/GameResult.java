@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
+import chess.domain.position.Column;
 import chess.domain.position.Square;
 
 public final class GameResult {
@@ -31,21 +31,21 @@ public final class GameResult {
     }
 
     private double adjustSum(double sum, List<Map.Entry<Square, Piece>> survives) {
-        for (File file : File.values()) {
-            int count = countPawnInSameFile(survives, file);
+        for (Column column : Column.values()) {
+            int count = countPawnInSameFile(survives, column);
             sum = subtractPawnInSameFile(sum, count);
         }
         return sum;
     }
 
-    private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, File file) {
+    private int countPawnInSameFile(List<Map.Entry<Square, Piece>> survives, Column column) {
         return (int) survives.stream()
-                .filter(hasPawnInSamFile(file))
+                .filter(hasPawnInSamFile(column))
                 .count();
     }
 
-    private Predicate<Map.Entry<Square, Piece>> hasPawnInSamFile(File file) {
-        return entry -> entry.getValue().isPawn() && entry.getKey().checkFile(file);
+    private Predicate<Map.Entry<Square, Piece>> hasPawnInSamFile(Column column) {
+        return entry -> entry.getValue().isPawn() && entry.getKey().checkFile(column);
     }
 
     private double subtractPawnInSameFile(double sum, int count) {

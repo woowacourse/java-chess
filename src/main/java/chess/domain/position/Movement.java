@@ -12,8 +12,8 @@ public final class Movement {
         this.dRank = dRank;
     }
 
-    Square add(File file, Rank rank) {
-        return new Square(file.add(dFile), rank.add(dRank));
+    Square add(Column column, Row row) {
+        return new Square(column.add(dFile), row.add(dRank));
     }
 
     public Movement flipAboutX() {

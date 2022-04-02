@@ -6,30 +6,30 @@ public class Square {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
-    private final File file;
-    private final Rank rank;
+    private final Column column;
+    private final Row row;
 
     public Square(String position) {
-        this(File.find(position.charAt(FILE_INDEX)), Rank.find(position.charAt(RANK_INDEX)));
+        this(Column.find(position.charAt(FILE_INDEX)), Row.find(position.charAt(RANK_INDEX)));
     }
 
-    public Square(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    public Square(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     public Movement getGap(Square target) {
-        int gapOfFile = file.getGap(target.file);
-        int gapOfRank = rank.getGap(target.rank);
+        int gapOfFile = column.getGap(target.column);
+        int gapOfRank = row.getGap(target.row);
         return new Movement(gapOfFile, gapOfRank);
     }
 
     public Square add(Movement movement) {
-        return movement.add(file, rank);
+        return movement.add(column, row);
     }
 
-    public boolean checkFile(File file) {
-        return this.file == file;
+    public boolean checkFile(Column column) {
+        return this.column == column;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class Square {
             return false;
         }
         Square square = (Square)o;
-        return file == square.file && rank == square.rank;
+        return column == square.column && row == square.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(file, rank);
+        return Objects.hash(column, row);
     }
 
 }

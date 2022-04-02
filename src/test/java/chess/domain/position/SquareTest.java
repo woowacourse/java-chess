@@ -17,6 +17,6 @@ public class SquareTest {
     @Test
     @DisplayName("String으로 생성된 스퀘어가 올바른 파일과 랭크를 가진다")
     void makeSquareFromString() {
-        assertThat(new Square("h3")).isEqualTo(new Square(File.H, Rank.THREE));
+        assertThat(new Square("h3")).isEqualTo(new Square(Column.H, Row.THREE));
     }
 }

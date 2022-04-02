@@ -10,7 +10,7 @@ import chess.domain.board.Board;
 import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 import chess.domain.position.Square;
 
 public class OutputView {
@@ -41,7 +41,7 @@ public class OutputView {
 
     private static List<List<Piece>> splitByRank(Map<Square, Piece> board) {
         List<Piece> pieces = new ArrayList<>(board.values());
-        List<List<Piece>> splitPieces = Lists.partition(pieces, Rank.values().length);
+        List<List<Piece>> splitPieces = Lists.partition(pieces, Row.values().length);
         return reverse(splitPieces);
     }
 

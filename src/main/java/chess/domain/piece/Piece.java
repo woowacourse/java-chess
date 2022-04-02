@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Movement;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
+import chess.domain.position.Row;
 
 public abstract class Piece {
     private static final String ERROR_MESSAGE_POSITION_SAME_TEAM = "[ERROR] 사격 중지!! 아군이다!! ><";
@@ -15,8 +15,8 @@ public abstract class Piece {
         this.score = score;
     }
 
-    public static Piece from(File file, Rank rank) {
-        return PieceGenerator.generatePiece(file, rank);
+    public static Piece from(Column column, Row row) {
+        return PieceGenerator.generatePiece(column, row);
     }
 
     public abstract String getEmoji();

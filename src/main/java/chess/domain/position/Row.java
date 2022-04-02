@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum Rank {
+public enum Row {
     ONE('1', 1),
     TWO('2', 2),
     THREE('3', 3),
@@ -16,23 +16,23 @@ public enum Rank {
     private final char value;
     private final int index;
 
-    Rank(char value, int index) {
+    Row(char value, int index) {
         this.value = value;
         this.index = index;
     }
 
-    static Rank find(char value) {
+    static Row find(char value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(BUG_MESSAGE_BOUND));
     }
 
-    int getGap(Rank target) {
+    int getGap(Row target) {
         return target.index - this.index;
     }
 
-    Rank add(int dRank) {
+    Row add(int dRank) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == this.index + dRank)
                 .findFirst()

@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-import chess.domain.position.File;
-import chess.domain.position.Rank;
+import chess.domain.position.Column;
+import chess.domain.position.Row;
 
 public enum PieceGenerator {
     KING((file, rank) -> new PieceTypeChecker(file, rank).isKing(), rank -> new King(getColor(rank))),
@@ -16,27 +16,27 @@ public enum PieceGenerator {
     PAWN((file, rank) -> new PieceTypeChecker(file, rank).isPawn(), rank -> new Pawn(getColor(rank))),
     NONE((file, rank) -> new PieceTypeChecker(file, rank).isNone(), rank -> new None(getColor(rank)));
 
-    private final BiPredicate<File, Rank> condition;
-    private final Function<Rank, Piece> of;
+    private final BiPredicate<Column, Row> condition;
+    private final Function<Row, Piece> of;
 
-    PieceGenerator(BiPredicate<File, Rank> condition, Function<Rank, Piece> of) {
+    PieceGenerator(BiPredicate<Column, Row> condition, Function<Row, Piece> of) {
         this.condition = condition;
         this.of = of;
     }
 
-    static Piece generatePiece(File file, Rank rank) {
+    static Piece generatePiece(Column column, Row row) {
         return Arrays.stream(PieceGenerator.values())
-                .filter(piece -> piece.condition.test(file, rank))
-                .map(piece -> piece.of.apply(rank))
+                .filter(piece -> piece.condition.test(column, row))
+                .map(piece -> piece.of.apply(row))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static Color getColor(Rank rank) {
-        if (rank == Rank.SEVEN || rank == Rank.EIGHT) {
+    private static Color getColor(Row row) {
+        if (row == Row.SEVEN || row == Row.EIGHT) {
             return Color.BLACK;
         }
-        if (rank == Rank.ONE || rank == Rank.TWO) {
+        if (row == Row.ONE || row == Row.TWO) {
             return Color.WHITE;
         }
         return Color.NONE;

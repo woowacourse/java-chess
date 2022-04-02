@@ -1,47 +1,47 @@
 package chess.domain.piece;
 
-import chess.domain.position.File;
-import chess.domain.position.Rank;
+import chess.domain.position.Column;
+import chess.domain.position.Row;
 
 public final class PieceTypeChecker {
 
-    private final File file;
-    private final Rank rank;
+    private final Column column;
+    private final Row row;
 
-    PieceTypeChecker(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
+    PieceTypeChecker(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     boolean isKing() {
-        return file == File.E && isNotPawnOrNone();
+        return column == Column.E && isNotPawnOrNone();
     }
 
     boolean isQueen() {
-        return file == File.D && isNotPawnOrNone();
+        return column == Column.D && isNotPawnOrNone();
     }
 
     boolean isRook() {
-        return (file == File.A || file == File.H) && isNotPawnOrNone();
+        return (column == Column.A || column == Column.H) && isNotPawnOrNone();
     }
 
     boolean isBishop() {
-        return (file == File.C || file == File.F) && isNotPawnOrNone();
+        return (column == Column.C || column == Column.F) && isNotPawnOrNone();
     }
 
     boolean isKnight() {
-        return (file == File.B || file == File.G) && isNotPawnOrNone();
+        return (column == Column.B || column == Column.G) && isNotPawnOrNone();
     }
 
     private boolean isNotPawnOrNone() {
-        return rank == Rank.ONE || rank == Rank.EIGHT;
+        return row == Row.ONE || row == Row.EIGHT;
     }
 
     boolean isPawn() {
-        return rank == Rank.TWO || rank == Rank.SEVEN;
+        return row == Row.TWO || row == Row.SEVEN;
     }
 
     boolean isNone() {
-        return rank == Rank.THREE || rank == Rank.FOUR || rank == Rank.FIVE || rank == Rank.SIX;
+        return row == Row.THREE || row == Row.FOUR || row == Row.FIVE || row == Row.SIX;
     }
 }
