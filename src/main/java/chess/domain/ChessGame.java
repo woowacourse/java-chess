@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Location;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
@@ -27,7 +29,9 @@ public class ChessGame {
     }
 
     public void move(Location source, Location target) {
-        this.state = state.move(source, target);
+        Team team = state.getTeam();
+        Piece targetPiece = state.move(team, source, target);
+        this.state = state.getNextState(targetPiece);
         OutputView.printChessBoard(state.getBoard());
     }
 

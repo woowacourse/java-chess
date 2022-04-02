@@ -66,13 +66,8 @@ public class Board {
         return chessBoard.get(location);
     }
 
-
     public Map<Location, Piece> getBoard() {
         return chessBoard;
-    }
-
-    public boolean isEmpty(Location location) {
-        return chessBoard.get(location).isEmpty();
     }
 
     public void move(Location source, Location target) {
@@ -105,6 +100,12 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    private double computeScore(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
     private double computeDuplicatePawnScore(List<Piece> pieceList) {
         if (countPawn(pieceList) > 1) {
             return countPawn(pieceList) * 0.5;
@@ -116,12 +117,6 @@ public class Board {
         return pieceList.stream()
                 .filter(Piece::isPawn)
                 .count();
-    }
-
-    private double computeScore(List<Piece> pieces) {
-        return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .sum();
     }
 
     public List<Piece> getPiecesByRank(Rank rank) {

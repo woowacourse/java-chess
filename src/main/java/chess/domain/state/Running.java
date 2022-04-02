@@ -1,10 +1,14 @@
 package chess.domain.state;
 
+import static chess.domain.state.PieceMovementValidator.*;
+
 import chess.domain.board.Board;
-import chess.domain.board.Direction;
 import chess.domain.board.Location;
 import chess.domain.board.LocationDiff;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Running implements State {
     private final Board board;
@@ -13,6 +17,7 @@ public abstract class Running implements State {
         this.board = board;
     }
 
+    @Override
     public Board getBoard() {
         return board;
     }
@@ -32,38 +37,37 @@ public abstract class Running implements State {
         return new End(board);
     }
 
-    public void checkMovable(Location source, Location target) {
+    @Override
+    public Piece move(Team currentTeam, Location source, Location target) {
+        checkMovable(currentTeam, source, target);
+        Piece targetPiece = board.getPiece(target);
+        board.move(source, target);
+        return targetPiece;
+    }
+
+    public void checkMovable(Team team, Location source, Location target) {
         LocationDiff locationDiff = source.computeDiff(target);
         Piece sourcePiece = board.getPiece(source);
+        Piece targetPiece = board.getPiece(target);
 
+        checkSourceColor(sourcePiece, team);
         checkDirection(sourcePiece, locationDiff.computeDirection());
         checkDistance(sourcePiece, locationDiff);
-        checkRoute(source, locationDiff);
+        checkRoute(getRoutePiece(source, locationDiff));
+        checkTarget(targetPiece, team);
 
         if (sourcePiece.isPawn()) {
             sourcePiece.checkPawnMovable(locationDiff.computeDirection(), board.getPiece(target));
         }
     }
 
-    private void checkDirection(Piece sourcePiece, Direction computeDirection) {
-        if (!sourcePiece.isMovableDirection(computeDirection)) {
-            throw new IllegalArgumentException("[ERROR] 해당 방향으로 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkDistance(Piece sourcePiece, LocationDiff locationDiff) {
-        if (!sourcePiece.isMovableDistance(locationDiff)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치까지 이동할 수 없습니다.");
-        }
-    }
-
-    private void checkRoute(Location source, LocationDiff locationDiff) {
+    private List<Piece> getRoutePiece(Location source, LocationDiff locationDiff) {
         Location routeLocation = source.copyOf();
+        List<Piece> routePieces = new ArrayList<>();
         for (int i = 0; i < locationDiff.computeDistance() - 1; i++) {
             routeLocation = routeLocation.add(locationDiff.computeDirection());
-            if (!getBoard().isEmpty(routeLocation)) {
-                throw new IllegalArgumentException("[ERROR] 해당 경로를 지나갈 수 없습니다. ");
-            }
+            routePieces.add(board.getPiece(routeLocation));
         }
+        return routePieces;
     }
 }

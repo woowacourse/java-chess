@@ -3,6 +3,8 @@ package chess.domain.state;
 import chess.domain.board.Board;
 import chess.domain.board.Location;
 import chess.domain.board.TeamScore;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 
 public class Ready implements State {
 
@@ -27,12 +29,24 @@ public class Ready implements State {
     }
 
     @Override
-    public State move(Location source, Location target) {
+    public Piece move(Team currentTeam, Location source, Location target) {
         throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
+
     }
 
     @Override
     public TeamScore getScore() {
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
+
+    }
+
+    @Override
+    public Team getTeam() {
+        throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public State getNextState(Piece piece) {
         throw new IllegalStateException("[ERROR] 게임이 시작되지 않았습니다.");
 
     }
