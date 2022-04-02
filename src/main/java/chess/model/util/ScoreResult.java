@@ -26,7 +26,7 @@ public class ScoreResult {
 
     public static ScoreResult of(Map<Square, Piece> board) {
         Map<Color, Double> scoreResult = Arrays.stream(Color.values())
-                .collect(Collectors.toMap(color -> color, color -> sumChivalryPoint(board, color)));
+                .collect(Collectors.toMap(color -> color, color -> sumMajorPiecesPoint(board, color)));
         for (Color color : Color.values()) {
             scoreResult.put(color, scoreResult.get(color) + pawnScore(collectPawns(board, color)));
         }
@@ -72,7 +72,7 @@ public class ScoreResult {
                 .collect(Collectors.toMap(square -> square, board::get));
     }
 
-    private static double sumChivalryPoint(Map<Square, Piece> board, Color color) {
+    private static double sumMajorPiecesPoint(Map<Square, Piece> board, Color color) {
         return board.values().stream()
                 .filter(piece -> !piece.isPawn() && piece.isSameColor(color))
                 .mapToDouble(Piece::getPoint)

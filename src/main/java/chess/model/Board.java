@@ -34,8 +34,8 @@ public final class Board {
         this.board = new HashMap<>();
         final List<File> files = Arrays.asList(File.values());
 
-        initChivalry(Color.WHITE, Rank.ONE, files);
-        initChivalry(Color.BLACK, Rank.EIGHT, files);
+        initMajorPieces(Color.WHITE, Rank.ONE, files);
+        initMajorPieces(Color.BLACK, Rank.EIGHT, files);
         initPawns(Color.WHITE, Rank.TWO, files);
         initPawns(Color.BLACK, Rank.SEVEN, files);
         initEmpty();
@@ -102,14 +102,14 @@ public final class Board {
         }
     }
 
-    private void initChivalry(Color color, Rank rank, List<File> files) {
-        List<Piece> chivalryLineup = chivalryLineup(color);
-        for (int i = 0; i < chivalryLineup.size(); i++) {
-            board.put(Square.of(files.get(i), rank), chivalryLineup.get(i));
+    private void initMajorPieces(Color color, Rank rank, List<File> files) {
+        List<Piece> majorPiecesLineup = majorPiecesLineup(color);
+        for (int i = 0; i < majorPiecesLineup.size(); i++) {
+            board.put(Square.of(files.get(i), rank), majorPiecesLineup.get(i));
         }
     }
 
-    private List<Piece> chivalryLineup(final Color color) {
+    private List<Piece> majorPiecesLineup(final Color color) {
         return List.of(
                 new Rook(color),
                 new Knight(color),
