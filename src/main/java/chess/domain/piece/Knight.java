@@ -12,19 +12,12 @@ public class Knight extends FixedMovablePiece {
     public static final List<Position> WHITE_INIT_LOCATIONS = List.of(
             Position.of("b1"), Position.of("g1"));
 
-    private static final double KNIGHT_POINT = 2.5;
-
     public Knight(Color color) {
-        super(color, PieceName.KNIGHT);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         return super.getMovablePositionsByDirections(position, Direction.knightDirections());
-    }
-
-    @Override
-    public double getPoint() {
-        return KNIGHT_POINT;
     }
 }

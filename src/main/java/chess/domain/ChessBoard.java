@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
@@ -66,7 +66,7 @@ public class ChessBoard {
             addMovablePositionsWithBlock(piece, result, entry.getValue());
         }
 
-        if (piece.isSamePieceName(PieceName.PAWN)) {
+        if (piece.isSamePieceName(PieceType.PAWN)) {
             addDiagonalMoveForPawn(nowPosition, piece, result);
         }
         return Collections.unmodifiableList(result);
@@ -96,7 +96,7 @@ public class ChessBoard {
     }
 
     private boolean isBlockedByTargetPiece(Piece nowPiece, Piece target) {
-        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceName.PAWN) && !target.isEmpty());
+        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceType.PAWN) && !target.isEmpty());
     }
 
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
@@ -132,7 +132,7 @@ public class ChessBoard {
 
     public boolean isEnd() {
         long kingCount = pieces.values().stream()
-                .filter(p -> p.isSamePieceName(PieceName.KING))
+                .filter(p -> p.isSamePieceName(PieceType.KING))
                 .count();
         return kingCount != RUNNING_KING_COUNT;
     }

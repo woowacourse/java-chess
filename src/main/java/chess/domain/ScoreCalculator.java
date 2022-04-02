@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class ScoreCalculator {
@@ -24,7 +24,7 @@ public class ScoreCalculator {
 
     public double calculateOneColumn(List<Piece> pieces) {
         long pawnCount = pieces.stream()
-                .filter(p -> p.isSamePieceName(PieceName.PAWN))
+                .filter(p -> p.isSamePieceName(PieceType.PAWN))
                 .count();
         double sum = pieces.stream()
                 .mapToDouble(Piece::getPoint)

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public abstract class StraightMovablePiece extends Piece {
 
-    protected StraightMovablePiece(Color color, PieceName name) {
+    protected StraightMovablePiece(Color color, PieceType name) {
         super(color, name);
     }
 

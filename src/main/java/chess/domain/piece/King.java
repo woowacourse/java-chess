@@ -10,19 +10,12 @@ public class King extends FixedMovablePiece {
     public static final Position BLACK_INIT_LOCATION = Position.of("e8");
     public static final Position WHITE_INIT_LOCATION = Position.of("e1");
 
-    private static final int KING_POINT = 0;
-
     public King(Color color) {
-        super(color, PieceName.KING);
+        super(color, PieceType.KING);
     }
 
     @Override
     public Map<Direction, List<Position>> getMovablePositions(Position position) {
         return super.getMovablePositionsByDirections(position, Direction.kingDirections());
-    }
-
-    @Override
-    public double getPoint() {
-        return KING_POINT;
     }
 }

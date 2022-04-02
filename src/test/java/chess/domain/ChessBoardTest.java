@@ -12,7 +12,7 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.generator.PiecesGenerator;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -228,8 +228,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.KING)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.KING)).isTrue()
             );
         }
 
@@ -247,8 +247,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.QUEEN)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.QUEEN)).isTrue()
             );
         }
 
@@ -266,8 +266,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.ROOK)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.ROOK)).isTrue()
             );
         }
 
@@ -285,8 +285,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.BISHOP)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.BISHOP)).isTrue()
             );
         }
 
@@ -302,8 +302,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.KNIGHT)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.KNIGHT)).isTrue()
             );
         }
 
@@ -318,8 +318,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceName.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceName.PAWN)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceName(PieceType.PAWN)).isTrue()
             );
         }
 

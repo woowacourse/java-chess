@@ -16,10 +16,8 @@ public class Pawn extends Piece {
             Position.of("a2"), Position.of("b2"), Position.of("c2"), Position.of("d2"),
             Position.of("e2"), Position.of("f2"), Position.of("g2"), Position.of("h2"));
 
-    private static final int PAWN_POINT = 1;
-
     public Pawn(Color color) {
-        super(color, PieceName.PAWN);
+        super(color, PieceType.PAWN);
     }
 
     @Override
@@ -55,10 +53,5 @@ public class Pawn extends Piece {
 
     private boolean isWhiteFirstMovePawn(Position position) {
         return color == Color.WHITE && WHITE_INIT_LOCATIONS.contains(position);
-    }
-
-    @Override
-    public double getPoint() {
-        return PAWN_POINT;
     }
 }
