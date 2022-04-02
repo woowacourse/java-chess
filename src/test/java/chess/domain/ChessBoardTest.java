@@ -3,8 +3,6 @@ package chess.domain;
 import static chess.domain.piece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Team;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,7 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
 
         //when
-        double score = chessBoard.calculateByTeam(WHITE);
+        double score = chessBoard.calculateScoreByTeam(WHITE);
 
         //then
         assertThat(score).isEqualTo(38);
@@ -34,7 +32,7 @@ public class ChessBoardTest {
         chessBoard.move(Command.from("move a4 b5"));
 
         //when
-        double score = chessBoard.calculateByTeam(WHITE);
+        double score = chessBoard.calculateScoreByTeam(WHITE);
 
         //then
         assertThat(score).isEqualTo(37);
@@ -85,10 +83,8 @@ public class ChessBoardTest {
         chessGame.progress(Command.from("move a7 a5"));
         chessGame.progress(Command.from("move h5 e8"));
 
-        Map<Team, Double> teamScores = chessGame.calculateResult();
-
         //when
-        String winTeam = chessGame.getWinTeam(teamScores);
+        String winTeam = chessGame.getWinTeamName();
 
         //then
         assertThat(winTeam).isEqualTo("WHITE");

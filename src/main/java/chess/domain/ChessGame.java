@@ -77,7 +77,7 @@ public class ChessGame {
     }
 
     private double calculateScore(Team team) {
-        return chessBoard.calculateByTeam(team);
+        return chessBoard.calculateScoreByTeam(team);
     }
 
     public List<String> getSymbols() {

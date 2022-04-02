@@ -21,6 +21,7 @@ import java.util.Set;
 public class ChessBoard {
 
     private static final int TOTAL_KING_COUNT = 2;
+
     private final Map<Position, Piece> cells = new LinkedHashMap<>();
 
     public ChessBoard() {
@@ -47,12 +48,9 @@ public class ChessBoard {
         Positions positions = command.makePositions();
 
         Position source = positions.getSource();
-
         Position target = positions.getTarget();
 
-        Piece piece = cells.get(source);
-
-        movePiece(source, target, piece);
+        moveSourceToTarget(source, target);
     }
 
     public boolean isContainPiece(List<Position> paths) {
@@ -65,7 +63,7 @@ public class ChessBoard {
         return count > 0;
     }
 
-    public double calculateByTeam(Team team) {
+    public double calculateScoreByTeam(Team team) {
         int sameRankPawn = countSameRankPawn(team);
 
         double sameRankPawnScore = sameRankPawn * 0.5;
@@ -77,8 +75,8 @@ public class ChessBoard {
         return cells.get(position);
     }
 
-    public boolean isExist(Position target) {
-        return cells.containsKey(target);
+    public boolean isExist(Position position) {
+        return cells.containsKey(position);
     }
 
     public boolean isExistKing() {
@@ -102,18 +100,13 @@ public class ChessBoard {
         return Result.of(winTeam);
     }
 
-    private void movePiece(Position source, Position target, Piece piece) {
+    private void moveSourceToTarget(Position source, Position target) {
+        Piece piece = cells.get(source);
+
         piece.move(source, target, this);
+
         cells.remove(source);
         cells.put(target, piece);
-    }
-
-    private double calculateEntireScore(Team team) {
-        return cells.values()
-                .stream()
-                .filter(piece -> piece.getTeam() == team)
-                .mapToDouble(Piece::getScore)
-                .sum();
     }
 
     private int countSameRankPawn(Team team) {
@@ -123,6 +116,14 @@ public class ChessBoard {
 
         return Arrays.stream(values)
                 .mapToInt(file -> countPawn(pawns, file))
+                .sum();
+    }
+
+    private double calculateEntireScore(Team team) {
+        return cells.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .mapToDouble(Piece::getScore)
                 .sum();
     }
 

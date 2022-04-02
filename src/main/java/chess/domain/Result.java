@@ -3,9 +3,9 @@ package chess.domain;
 import chess.domain.piece.Team;
 
 public enum Result {
-    BLACK_WIN("검은팀"),
-    DRAW("무승부"),
-    WHITE_WIN("흰팀");
+    BLACK_WIN("BLACK"),
+    DRAW("DRAW"),
+    WHITE_WIN("WHITE");
 
     private final String teamName;
 
