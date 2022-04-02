@@ -31,20 +31,20 @@ public class ChessGame {
         }
     }
 
-    public void movePiece(Position source, Position target) {
-        RunningState runningState = convertToRunningState(gameState);
-        MoveCommand moveCommand = MoveCommand.of(runningState, source, target);
+    public void movePiece(final Position source, final Position target) {
+        final RunningState runningState = convertToRunningState(gameState);
+        final MoveCommand moveCommand = MoveCommand.of(runningState, source, target);
         gameState = moveCommand.execute();
     }
 
-    public void promotePiece(String pieceInitial) {
-        RunningState runningState = convertToRunningState(gameState);
-        PromotionCommand promotionCommand = PromotionCommand.of(runningState, pieceInitial);
+    public void promotePiece(final String pieceInitial) {
+        final RunningState runningState = convertToRunningState(gameState);
+        final PromotionCommand promotionCommand = PromotionCommand.of(runningState, pieceInitial);
         gameState = promotionCommand.execute();
     }
 
     public Map<Color, Double> getPlayerScores() {
-        RunningState runningState = convertToRunningState(gameState);
+        final RunningState runningState = convertToRunningState(gameState);
         return runningState.getPlayerScores(new ScoreCalculator());
     }
 
@@ -57,7 +57,7 @@ public class ChessGame {
     }
 
     public boolean isPromotable() {
-        RunningState runningState = convertToRunningState(gameState);
+        final RunningState runningState = convertToRunningState(gameState);
         return runningState.isPromotable();
     }
 
@@ -65,7 +65,7 @@ public class ChessGame {
         return gameState.getPlayers();
     }
 
-    private RunningState convertToRunningState(GameState gameState) {
+    private RunningState convertToRunningState(final GameState gameState) {
         validateGameIsRunning();
         return (RunningState) gameState;
     }
