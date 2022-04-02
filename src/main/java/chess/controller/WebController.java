@@ -7,7 +7,7 @@ import chess.dto.MoveCommandDto;
 import chess.dto.SearchResultDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.PlayGameRequestDto;
-import chess.model.RunningGameModel;
+import chess.model.FullGameModel;
 
 public class WebController {
 
@@ -22,12 +22,12 @@ public class WebController {
         return new SearchResultDto(gameId, gameRepository.checkById(gameId));
     }
 
-    public RunningGameModel findGame(int gameId) {
+    public FullGameModel findGame(int gameId) {
         Game game = gameRepository.findById(gameId);
-        return new RunningGameModel(gameId, game);
+        return new FullGameModel(gameId, game);
     }
 
-    public RunningGameModel playGame(PlayGameRequestDto request) {
+    public FullGameModel playGame(PlayGameRequestDto request) {
         int gameId = request.getGameId();
         MoveCommandDto moveCommand = request.getMoveCommand();
 

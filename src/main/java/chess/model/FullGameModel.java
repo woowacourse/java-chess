@@ -5,14 +5,18 @@ import chess.dto.response.RowDto;
 import chess.dto.response.WebBoardViewDto;
 import java.util.List;
 
-public class RunningGameModel {
+public class FullGameModel {
 
     private final GameModel game;
     private final List<RowDto> board;
 
-    public RunningGameModel(int gameId, Game game) {
-        this.game = GameModel.ofRunning(gameId, game);
+    public FullGameModel(int gameId, Game game) {
+        this.game = toModel(gameId, game);
         this.board = toBoard(game);
+    }
+
+    private GameModel toModel(int gameId, Game game) {
+        return new GameModel(gameId, game.getState());
     }
 
     private List<RowDto> toBoard(Game game) {
