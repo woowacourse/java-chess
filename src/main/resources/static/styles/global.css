@@ -22,6 +22,10 @@ body {
     font-size: 32px;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 a, button {
     border: 1px solid gray;
     border-radius: 10px;

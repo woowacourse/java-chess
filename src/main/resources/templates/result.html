@@ -10,9 +10,11 @@
 <section class="header__container">
     <h1>체스 시뮬레이터</h1>
     <div class="game_info__container">
-        <div>게임 ID: {{gameInfo.game.id}}</div>
-        {{#result}}
-        <div>승자: {{winner}}</div>
+        <div>
+            <span>게임 ID: {{gameInfo.game.id}} | </span>
+            {{#result}}
+            <span class="bold">승자: {{winner}}</span>
+        </div>
         <div>White 점수: {{whiteScore}}점</div>
         <div>Black 점수: {{blackScore}}점</div>
         {{/result}}
