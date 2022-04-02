@@ -23,16 +23,16 @@ public class ChessController {
 
     public BoardDto startGame() {
         board.startGame();
-        return new BoardDto(toBoardDto(board));
+        return BoardDto.of(board);
     }
 
     public BoardDto move(String source, String target) {
         board.move(source, target);
-        return new BoardDto(toBoardDto(board));
+        return BoardDto.of(board);
     }
 
     public ScoreDto score() {
-        return new ScoreDto(board.calculateScore());
+        return ScoreDto.of(board.calculateScore());
     }
 
     public boolean isEnd() {
@@ -41,31 +41,5 @@ public class ChessController {
 
     public void finishGame() {
         board.finishGame();
-    }
-
-    private List<List<String>> toBoardDto(Board board) {
-        List<List<String>> boardDto = new ArrayList<>();
-        List<Rank> ranks = Arrays.asList(Rank.values());
-        Collections.reverse(ranks);
-        for (Rank rank : ranks) {
-            boardDto.add(makeLineByFile(board, rank));
-        }
-        return boardDto;
-    }
-
-    private List<String> makeLineByFile(Board board, Rank rank) {
-        List<String> tempLine = new ArrayList<>();
-        for (File file : File.values()) {
-            Piece piece = board.get(Square.of(file, rank));
-            tempLine.add(toPieceDto(piece));
-        }
-        return tempLine;
-    }
-
-    private String toPieceDto(Piece piece) {
-        if (piece.isBlack()) {
-            return piece.name().toUpperCase(Locale.ROOT);
-        }
-        return piece.name();
     }
 }
