@@ -21,10 +21,6 @@ public abstract class Piece {
         return this.position == position;
     }
 
-    public final boolean isBlackTeam() {
-        return teamColor.isBlack();
-    }
-
     final List<Position> convertToPositions(final List<Piece> pieces) {
         return pieces.stream()
                 .map(piece -> piece.position)
