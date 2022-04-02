@@ -124,7 +124,7 @@
 
 ### TODO
 
-- [ ] Abstract -> Default 이름변경
+- [x] Abstract -> Default 이름변경
 - [x] state.go 메소드를 컨트롤러로 이동
 - [ ] is... 메서드를 enum으로 변환 후 저장, 반환!
 - [ ] 가능하면 추상클래스 제거

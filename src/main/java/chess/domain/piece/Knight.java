@@ -7,7 +7,7 @@ import chess.domain.piece.attribute.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Knight extends AbstractPiece {
+public final class Knight extends DefaultPiece {
     private static final String NO_MOVE_MESSAGE = "나이트가 이동할 수 없는 위치입니다.";
     private static final double SCORE = 2.5;
 

@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
 
-public final class Status extends AbstractState {
+public final class Status extends DefaultState {
     public Status(ChessGame chessGame) {
         super(chessGame);
     }

@@ -6,11 +6,11 @@ import chess.domain.piece.attribute.Team;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class AbstractPiece implements Piece {
+public abstract class DefaultPiece implements Piece {
     protected final Name name;
     protected final Team team;
 
-    public AbstractPiece(Name name, Team team) {
+    public DefaultPiece(Name name, Team team) {
         this.name = name;
         this.team = team;
     }
@@ -27,6 +27,10 @@ public abstract class AbstractPiece implements Piece {
     }
 
     public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
         return false;
     }
 
@@ -47,9 +51,5 @@ public abstract class AbstractPiece implements Piece {
 
     public Team getTeam() {
         return team;
-    }
-
-    public boolean isPawn() {
-        return false;
     }
 }

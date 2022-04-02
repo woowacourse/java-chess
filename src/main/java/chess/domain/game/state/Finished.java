@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import chess.domain.game.ChessGame;
 import chess.dto.CommandDto;
 
-public abstract class Finished extends AbstractState {
+public abstract class Finished extends DefaultState {
     protected static final String INVALID_COMMEND_MESSAGE = "게임이 종료되었습니다.";
 
     public Finished(ChessGame chessGame) {
@@ -11,7 +11,7 @@ public abstract class Finished extends AbstractState {
     }
 
     @Override
-    public AbstractState execute(CommandDto commandDto) {
+    public DefaultState execute(CommandDto commandDto) {
         throw new IllegalArgumentException(INVALID_COMMEND_MESSAGE);
     }
 
