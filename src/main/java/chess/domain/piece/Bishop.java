@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.*;
-
-import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
+import chess.domain.board.LocationDiff;
 import java.util.List;
 
 public class Bishop extends Piece {
-    private static final List<Direction> BISHOP_DIRECTION = List.of(UR, UL, DR, DL);
+    private static final List<Direction> BISHOP_DIRECTION = Direction.getDiagonalDirections();
     private static final double SCORE = 3;
 
     public Bishop(Team team) {

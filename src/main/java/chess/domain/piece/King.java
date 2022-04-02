@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.*;
-
-import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
+import chess.domain.board.LocationDiff;
 import java.util.List;
 
 public class King extends Piece {
-    private static final List<Direction> KING_DIRECTION = List.of(U, D, R, L, UR, UL, DR, DL);
+    private static final List<Direction> KING_DIRECTION = Direction.getEveryDirection();
     private static final double SCORE = 0;
     private static final int MAX_DISTANCE = 1;
 

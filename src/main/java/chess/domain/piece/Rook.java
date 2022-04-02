@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.*;
-
-import chess.domain.board.LocationDiff;
 import chess.domain.board.Direction;
+import chess.domain.board.LocationDiff;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final List<Direction> ROOK_DIRECTIONS = List.of(U, D, R, L);
+    private static final List<Direction> ROOK_DIRECTIONS = Direction.getCardinalDirections();
     private static final double SCORE = 5;
 
     public Rook(Team team) {
