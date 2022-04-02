@@ -51,7 +51,7 @@ public class OutputView {
             System.out.print(EMPTY);
             return;
         }
-        System.out.print(chessPiece.name());
+        System.out.print(PieceName.findConsoleName(chessPiece));
     }
 
     public static void printResult(final Score score) {

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public final class Queen extends ChessPiece {
 
     private static final Map<Color, Queen> cache;
-    private static final String NAME = "Q";
     private static final Double VALUE = 9.0;
 
     static {
@@ -20,7 +19,7 @@ public final class Queen extends ChessPiece {
     }
 
     private Queen(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static Queen from(final Color color) {

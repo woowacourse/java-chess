@@ -18,15 +18,4 @@ class ColorTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
-
-    @ParameterizedTest
-    @DisplayName("기물의 색깔에 맞는 이름으로 변환한다.")
-    @CsvSource(value = {"BLACK:abc:ABC", "WHITE:ABC:abc"}, delimiter = ':')
-    void convertByColor(final Color color, final String name, final String expected) {
-        // when
-        final String actual = color.convertByColor(name);
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
 }

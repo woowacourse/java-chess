@@ -2,18 +2,17 @@ package chess.domain.chesspiece;
 
 public enum Color {
 
-    WHITE,
-    BLACK;
+    WHITE("white"),
+    BLACK("black");
+
+    private final String value;
+
+    Color(final String value) {
+        this.value = value;
+    }
 
     public boolean isBlack() {
         return this.equals(BLACK);
-    }
-
-    public String convertByColor(final String name) {
-        if (isBlack()) {
-            return name.toUpperCase();
-        }
-        return name.toLowerCase();
     }
 
     public Color toOpposite() {
@@ -21,5 +20,9 @@ public enum Color {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

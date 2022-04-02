@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public final class Pawn extends ChessPiece {
 
     private static final Map<Color, Pawn> cache;
-    private static final String NAME = "P";
     private static final Double VALUE = 1.0;
     private static final Double VALUE_BY_SAME_RANK = 0.5;
     private static final String WHITE_INIT_RANK = "2";
@@ -38,7 +37,7 @@ public final class Pawn extends ChessPiece {
     }
 
     private Pawn(final Color color) {
-        super(color, NAME);
+        super(color);
     }
 
     public static Pawn from(final Color color) {
