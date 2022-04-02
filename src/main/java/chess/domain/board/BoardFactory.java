@@ -12,17 +12,22 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BoardFactory {
-    private static final Position ROOK_INITIAL_POSITION = Position.of(Column.A, Row.ONE);
-    private static final Position KNIGHT_INITIAL_POSITION = Position.of(Column.B, Row.ONE);
-    private static final Position BISHOP_INITIAL_POSITION = Position.of(Column.C, Row.ONE);
-    private static final Position QUEEN_INITIAL_POSITION = Position.of(Column.D, Row.ONE);
-    private static final Position KING_INITIAL_POSITION = Position.of(Column.E, Row.ONE);
-    private static final Row PAWN_INITIAL_ROW = Row.TWO;
+    private static final Position WHITE_ROOK_INITIAL_POSITION = Position.of(Column.A, Row.ONE);
+    private static final Position WHITE_KNIGHT_INITIAL_POSITION = Position.of(Column.B, Row.ONE);
+    private static final Position WHITE_BISHOP_INITIAL_POSITION = Position.of(Column.C, Row.ONE);
+    private static final Position WHITE_QUEEN_INITIAL_POSITION = Position.of(Column.D, Row.ONE);
+    private static final Position WHITE_KING_INITIAL_POSITION = Position.of(Column.E, Row.ONE);
+    private static final Row WHITE_PAWN_INITIAL_ROW = Row.TWO;
+    public static final List<Position> WHITE_PAWN_INITIAL_POSITIONS = getWhitePawnInitialPositions();
+    public static final List<Position> BLACK_PAWN_INITIAL_POSITIONS = getBlackPawnInitialPositions();
     private static final int BLANK_INITIAL_START_ROW_INDEX = 2;
     private static final int BLANK_INITIAL_END_ROW_INDEX = 5;
 
@@ -39,9 +44,9 @@ public class BoardFactory {
     }
 
     private static void initializeEveryFourPiece(final TreeMap<Position, Piece> value) {
-        initializeFourPiecesOf(value, ROOK_INITIAL_POSITION, Rook::new);
-        initializeFourPiecesOf(value, KNIGHT_INITIAL_POSITION, Knight::new);
-        initializeFourPiecesOf(value, BISHOP_INITIAL_POSITION, Bishop::new);
+        initializeFourPiecesOf(value, WHITE_ROOK_INITIAL_POSITION, Rook::new);
+        initializeFourPiecesOf(value, WHITE_KNIGHT_INITIAL_POSITION, Knight::new);
+        initializeFourPiecesOf(value, WHITE_BISHOP_INITIAL_POSITION, Bishop::new);
     }
 
     private static void initializeFourPiecesOf(
@@ -55,8 +60,8 @@ public class BoardFactory {
     }
 
     private static void initializeEveryTwoPiece(final TreeMap<Position, Piece> value) {
-        initializeTwoPiecesOf(value, QUEEN_INITIAL_POSITION, Queen::new);
-        initializeTwoPiecesOf(value, KING_INITIAL_POSITION, King::new);
+        initializeTwoPiecesOf(value, WHITE_QUEEN_INITIAL_POSITION, Queen::new);
+        initializeTwoPiecesOf(value, WHITE_KING_INITIAL_POSITION, King::new);
     }
 
     private static void initializeTwoPiecesOf(
@@ -67,9 +72,21 @@ public class BoardFactory {
     }
 
     private static void initializePawn(final TreeMap<Position, Piece> value) {
-        for (Column column : Column.values()) {
-            initializeTwoPiecesOf(value, Position.of(column, PAWN_INITIAL_ROW), Pawn::new);
+        for (final Position whitePawnPosition : WHITE_PAWN_INITIAL_POSITIONS) {
+            initializeTwoPiecesOf(value, whitePawnPosition, Pawn::new);
         }
+    }
+
+    private static List<Position> getWhitePawnInitialPositions() {
+        return Arrays.stream(Column.values())
+            .map(column -> Position.of(column, WHITE_PAWN_INITIAL_ROW))
+            .collect(Collectors.toList());
+    }
+
+    private static List<Position> getBlackPawnInitialPositions() {
+        return WHITE_PAWN_INITIAL_POSITIONS.stream()
+            .map(Position::flipVertically)
+            .collect(Collectors.toList());
     }
 
     private static void initializeBlanks(final TreeMap<Position, Piece> value) {
@@ -78,9 +95,7 @@ public class BoardFactory {
         }
     }
 
-    private static void initializeBlankColumn(
-        final TreeMap<Position, Piece> value,
-        Column column) {
+    private static void initializeBlankColumn(final TreeMap<Position, Piece> value, Column column) {
         for (int i = BLANK_INITIAL_START_ROW_INDEX; i <= BLANK_INITIAL_END_ROW_INDEX; i++) {
             value.put(Position.of(column, Row.values()[i]), new NullPiece(null));
         }
