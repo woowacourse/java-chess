@@ -46,11 +46,6 @@ public class Finished implements State {
     }
 
     @Override
-    public State toRunningState() {
-        throw new IllegalStateException();
-    }
-
-    @Override
     public StatusScore calculateStatus() {
         return StatusScore.from(board);
     }

@@ -19,8 +19,6 @@ public interface State {
 
     State status();
 
-    State toRunningState();
-
     StatusScore calculateStatus();
 
     State end();

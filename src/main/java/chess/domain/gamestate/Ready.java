@@ -59,11 +59,6 @@ public class Ready implements State {
     }
 
     @Override
-    public State toRunningState() {
-        throw new IllegalStateException();
-    }
-
-    @Override
     public boolean isRunning() {
         return false;
     }

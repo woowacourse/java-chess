@@ -59,11 +59,6 @@ public final class Status implements State {
     }
 
     @Override
-    public State toRunningState() {
-        return new Running(board, camp);
-    }
-
-    @Override
     public boolean isRunning() {
         return false;
     }

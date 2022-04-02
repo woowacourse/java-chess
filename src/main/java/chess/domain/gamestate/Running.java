@@ -110,11 +110,6 @@ public class Running implements State {
     }
 
     @Override
-    public State toRunningState() {
-        throw new IllegalStateException();
-    }
-
-    @Override
     public State end() {
         return new Finished(board);
     }
