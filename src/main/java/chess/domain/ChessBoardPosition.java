@@ -63,4 +63,8 @@ public class ChessBoardPosition {
     public int hashCode() {
         return Objects.hash(column, row);
     }
+
+    public int getColumn() {
+        return column;
+    }
 }

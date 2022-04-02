@@ -7,10 +7,14 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessBoard {
     private static final String ENEMY_CHESS_PIECE_SELECTED_EXCEPTION = "[ERROR] 적 체스 기물을 골랐습니다.";
@@ -69,12 +73,14 @@ public class ChessBoard {
         turn = Team.BLACK;
     }
 
-    private void moveChessPiece(ChessPiece chessPiece, ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+    private void moveChessPiece(ChessPiece chessPiece, ChessBoardPosition sourcePosition,
+                                ChessBoardPosition targetPosition) {
         mapInformation.remove(sourcePosition);
         mapInformation.put(targetPosition, chessPiece);
     }
 
-    private void killEnemyInTargetPositionIfExist(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+    private void killEnemyInTargetPositionIfExist(ChessBoardPosition sourcePosition,
+                                                  ChessBoardPosition targetPosition) {
         ChessPiece enemyChessPiece = pickChessPiece(targetPosition);
         if (Objects.isNull(enemyChessPiece)) {
             return;
@@ -133,5 +139,58 @@ public class ChessBoard {
                 .filter(King.class::isInstance)
                 .count();
         return kingNumber != 2;
+    }
+
+    public Double calculateScore(Team team) {
+        Map<ChessBoardPosition, ChessPiece> specificTeamInformation = extractSpecificTeamInformation(team);
+        return calculateOptimizeScore(specificTeamInformation);
+    }
+
+    private Map<ChessBoardPosition, ChessPiece> extractSpecificTeamInformation(Team team) {
+        return mapInformation.entrySet()
+                .stream()
+                .filter(it -> it.getValue().isSameTeam(team))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private Double calculateOptimizeScore(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
+        double score = specificTeamInformation.values()
+                .stream()
+                .mapToDouble(ChessPiece::score)
+                .sum();
+        return score - calculatePawnPenalty(specificTeamInformation);
+    }
+
+    private Double calculatePawnPenalty(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
+        return countSameRowPawn(specificTeamInformation) * 0.5;
+    }
+
+    private int countSameRowPawn(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
+        List<Integer> pawnColumns = collectPawnColumns(specificTeamInformation);
+        return IntStream.rangeClosed(1, 8)
+                .boxed()
+                .map(it -> Collections.frequency(pawnColumns, it))
+                .collect(Collectors.toList())
+                .stream()
+                .filter(it -> it > 1)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    private List<Integer> collectPawnColumns(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
+        return specificTeamInformation.entrySet()
+                .stream()
+                .filter(it -> it.getValue() instanceof Pawn)
+                .map(it -> it.getKey().getColumn())
+                .collect(Collectors.toList());
+    }
+
+    public Team judgeWinner() {
+        double whiteTeamScore = calculateScore(Team.WHITE);
+        double blackTeamScore = calculateScore(Team.BLACK);
+        if (whiteTeamScore > blackTeamScore) {
+            return Team.WHITE;
+        }
+        return Team.BLACK;
     }
 }

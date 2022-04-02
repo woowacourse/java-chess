@@ -4,6 +4,7 @@ import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
+import chess.dto.ChessStatusDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -83,10 +84,10 @@ public class OutputView {
 
 
 
-    /*public static void printStatus(ChessStatusDto chessStatusDto) {
-        for (Entry<String, Double> entry : chessStatusDto.getTeamScore().entrySet()) {
+    public static void printStatus(ChessStatusDto chessStatusDto) {
+        for (Entry<Team, Double> entry : chessStatusDto.getTeamScore().entrySet()) {
             System.out.println(entry.getKey() + TEAM_SCORE_DELIMITER + entry.getValue());
         }
         System.out.printf(WINNER_FORMAT, chessStatusDto.getWinner());
-    }*/
+    }
 }

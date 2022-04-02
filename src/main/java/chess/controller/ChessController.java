@@ -57,17 +57,17 @@ public class ChessController {
     }
 
     private void inGameCommand(ChessGame chessGame, List<String> command) {
-        /*if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+        if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
             statusCommand(chessGame);
-        }*/
+        }
         if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
             moveCommand(chessGame, command);
         }
     }
 
-    /*private void statusCommand(ChessGame chessGame) {
-        OutputView.printStatus(ChessStatusDto.of(chessGame));
-    }*/
+    private void statusCommand(ChessGame chessGame) {
+        OutputView.printStatus(chessGame.getStatusInformation());
+    }
 
     private void moveCommand(ChessGame chessGame, List<String> command) {
         ChessBoardPosition sourcePosition = ChessBoardPosition.of(extractColumn(command.get(SOURCE_POSITION_INDEX)), extractRow(command.get(SOURCE_POSITION_INDEX)));

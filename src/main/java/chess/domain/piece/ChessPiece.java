@@ -24,4 +24,8 @@ public abstract class ChessPiece {
     }
 
     public abstract boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition);
+
+    public double score() {
+        return score;
+    }
 }

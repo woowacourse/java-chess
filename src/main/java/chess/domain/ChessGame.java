@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.ChessPiece;
+import chess.dto.ChessStatusDto;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,5 +26,10 @@ public class ChessGame {
 
     public void move(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         chessBoard.move(sourcePosition, targetPosition);
+    }
+
+    public ChessStatusDto getStatusInformation() {
+        ChessStatusDto chessStatusDto = ChessStatusDto.of(chessBoard);
+        return chessStatusDto;
     }
 }
