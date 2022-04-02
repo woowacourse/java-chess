@@ -5,7 +5,7 @@ import static chess.domain.piece.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Stream;

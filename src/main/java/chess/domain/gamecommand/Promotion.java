@@ -3,7 +3,7 @@ package chess.domain.gamecommand;
 import static chess.domain.gamecommand.Movement.COMMAND_DELIMITER;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 
 public class Promotion implements CommandStrategy {
 

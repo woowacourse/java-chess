@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.piece.TeamColor.WHITE;
 
+import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamColor;
 import java.util.List;

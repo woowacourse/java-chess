@@ -1,14 +1,17 @@
 package chess.domain.board;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.File.B;
-import static chess.domain.board.File.C;
-import static chess.domain.board.File.D;
-import static chess.domain.board.File.E;
-import static chess.domain.board.File.F;
-import static chess.domain.board.File.G;
-import static chess.domain.board.File.H;
+import static chess.domain.board.position.File.A;
+import static chess.domain.board.position.File.B;
+import static chess.domain.board.position.File.C;
+import static chess.domain.board.position.File.D;
+import static chess.domain.board.position.File.E;
+import static chess.domain.board.position.File.F;
+import static chess.domain.board.position.File.G;
+import static chess.domain.board.position.File.H;
 
+import chess.domain.board.position.File;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

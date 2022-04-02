@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.function.BiPredicate;
 

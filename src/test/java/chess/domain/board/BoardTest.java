@@ -1,13 +1,15 @@
 package chess.domain.board;
 
-import static chess.domain.board.File.A;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.SIX;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.board.position.File.A;
+import static chess.domain.board.position.Rank.ONE;
+import static chess.domain.board.position.Rank.SEVEN;
+import static chess.domain.board.position.Rank.SIX;
+import static chess.domain.board.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.TeamColor;

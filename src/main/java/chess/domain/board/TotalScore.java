@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.board.position.File;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;

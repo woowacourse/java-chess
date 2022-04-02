@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Rank;
+import chess.domain.board.position.Rank;
 
 public enum TeamColor {
     WHITE,

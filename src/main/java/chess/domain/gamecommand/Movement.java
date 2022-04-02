@@ -1,7 +1,7 @@
 package chess.domain.gamecommand;
 
 import chess.domain.board.Board;
-import chess.domain.board.Position;
+import chess.domain.board.position.Position;
 
 public class Movement implements CommandStrategy {
     static final String COMMAND_DELIMITER = " ";
