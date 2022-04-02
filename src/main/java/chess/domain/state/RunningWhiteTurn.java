@@ -11,7 +11,7 @@ public class RunningWhiteTurn extends Running {
 
 	private static final Color COLOR = Color.WHITE;
 
-	RunningWhiteTurn(Map<Position, Piece> pieces) {
+	public RunningWhiteTurn(Map<Position, Piece> pieces) {
 		super(pieces);
 	}
 

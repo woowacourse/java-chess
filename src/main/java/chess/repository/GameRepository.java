@@ -3,9 +3,12 @@ package chess.repository;
 import java.util.Optional;
 
 import chess.domain.ChessGame;
+import chess.domain.state.GameState;
 
 public interface GameRepository {
-	void save(ChessGame state);
+	void save(ChessGame game);
 
 	Optional<ChessGame> findByName(String name);
+
+	void update(String id, GameState state);
 }

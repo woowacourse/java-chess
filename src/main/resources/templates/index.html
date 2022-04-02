@@ -25,7 +25,17 @@
 <body>
 <div class="container">
     <h1>체스 게임</h1>
-    <p><a class="btn" href="/new_game">입장하기</a></p>
+    <p>새 게임 만들기</p>
+    <form action="/new_game" method="post">
+        이름을 입력하세요. <input type="text" name="GAME_NAME"/>
+        <input type="submit" value="생성">
+    </form>
+
+    <p>이어하기</p>
+    <form action="/continue_game" method="post">
+        이름을 입력하세요. <input type="text" name="GAME_NAME"/>
+        <input type="submit" value="입장">
+    </form>
 </div>
 </body>
 </html>

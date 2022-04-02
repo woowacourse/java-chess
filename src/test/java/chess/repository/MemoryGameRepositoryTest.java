@@ -10,10 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.ChessGame;
 import chess.domain.state.Ready;
+import chess.domain.state.RunningBlackTurn;
+import chess.domain.state.RunningWhiteTurn;
 
-class MapGameRepositoryTest {
+class MemoryGameRepositoryTest {
 
-	private final GameRepository gameRepository = new MapGameRepository();
+	private final GameRepository gameRepository = new MemoryGameRepository();
 
 	@Test
 	@DisplayName("체스 게임 저장")
@@ -43,5 +45,18 @@ class MapGameRepositoryTest {
 
 		assertThatThrownBy(() -> gameRepository.save(game2))
 			.isInstanceOf(IllegalStateException.class);
+	}
+
+	@Test
+	@DisplayName("상태 업데이트")
+	void update() {
+		ChessGame newGame = new ChessGame("does의 게임", new Ready(new HashMap<>()));
+		gameRepository.save(newGame);
+
+		gameRepository.update(newGame.getId(), new RunningBlackTurn(new HashMap<>()));
+
+		gameRepository.findByName("does의 게임")
+			.ifPresent(game -> assertThat(game.getState())
+				.isInstanceOf(RunningBlackTurn.class));
 	}
 }

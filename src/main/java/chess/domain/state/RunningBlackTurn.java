@@ -11,7 +11,7 @@ public class RunningBlackTurn extends Running {
 
 	private static final Color COLOR = Color.BLACK;
 
-	RunningBlackTurn(Map<Position, Piece> pieces) {
+	public RunningBlackTurn(Map<Position, Piece> pieces) {
 		super(pieces);
 	}
 

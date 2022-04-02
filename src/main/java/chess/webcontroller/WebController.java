@@ -2,89 +2,105 @@ package chess.webcontroller;
 
 import static spark.Spark.*;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
 import chess.converter.web.RequestToCommandConverter;
+import chess.converter.web.RequestToMapConverter;
+import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;
 import chess.domain.command.Start;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
+import chess.service.GameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
 
-	private final static Deque<GameState> states = new ArrayDeque<>();
+	private static final String MAIN_PAGE = "index.html";
+	private static final String GAME_PAGE = "game.html";
 
-	public static void main(String[] args) {
+	private final GameService gameService = new GameService();
+
+	public void run() {
 		port(8081);
 		staticFileLocation("/static");
 
 		showMain(new HashMap<>());
-		enterGame(new HashMap<>());
+		enterNewGame(new HashMap<>());
 		startGame(new HashMap<>());
+		continueGame(new HashMap<>());
 		move(new HashMap<>());
 
 		exception(Exception.class, (exception, request, response) ->
 			response.body(exception.getMessage()));
 	}
 
-	private static void showMain(Map<String, Object> model) {
-		get("/", (req, res) -> render(model, "index.html"));
+	private void showMain(Map<String, Object> model) {
+		get("/", (req, res) -> render(model, MAIN_PAGE));
 	}
 
-	private static void enterGame(Map<String, Object> model) {
-		get("/new_game", (request, response) -> {
+	private void enterNewGame(Map<String, Object> model) {
+		post("/new_game", (request, response) -> {
+			Map<String, String> name = RequestToMapConverter.ofSingle(request);
+			ChessGame game = new ChessGame(name.get("GAME_NAME"), new Ready(BoardInitializer.generate()));
+
+			gameService.saveGame(game);
+
 			model.putAll(BoardResponseDto.empty().getValue());
-			return render(model, "game.html");
+			model.put("GAME_NAME", game.getName());
+			return render(model, GAME_PAGE);
 		});
 	}
 
-	private static void startGame(Map<String, Object> model) {
-		get("/start", (request, response) -> {
-			GameState state = new Ready(BoardInitializer.generate())
-				.proceed(new Start());
-			states.add(state);
+	private void continueGame(Map<String, Object> model) {
+		post("/continue_game", (request, response) -> {
+			Map<String, String> name = RequestToMapConverter.ofSingle(request);
 
-			fillModel(model, state);
-			return render(model, "game.html");
+			ChessGame findGame = gameService.findGame(name.get("GAME_NAME"));
+			fillModel(model, findGame);
+			return render(model, GAME_PAGE);
 		});
 	}
 
-	private static void move(Map<String, Object> model) {
-		post("/move", (request, response) -> {
+	private void startGame(Map<String, Object> model) {
+		get("/start/:GAME_NAME", (request, response) -> {
+			ChessGame updatedGame = gameService.updateGame(new Start(), request.params(":GAME_NAME"));
+			fillModel(model, updatedGame);
+			return render(model, GAME_PAGE);
+		});
+	}
+
+	private void move(Map<String, Object> model) {
+		post("/move/:GAME_NAME", (request, response) -> {
 			Command command = RequestToCommandConverter.from(request);
 
-			if (states.isEmpty()) {
-				throw new IllegalStateException("상태가 비었습니다.");
-			}
-			GameState state = states.peek().proceed(command);
-			states.pop();
+			ChessGame updatedGame = gameService.updateGame(command, request.params(":GAME_NAME"));
 
-			if (state.isFinished()) {
+			if (updatedGame.isFinished()) {
 				response.redirect("/");
 				return null;
 			}
 
-			states.add(state);
-
-			fillModel(model, state);
-			return render(model, "game.html");
+			fillModel(model, updatedGame);
+			return render(model, GAME_PAGE);
 		});
 	}
 
-	private static void fillModel(Map<String, Object> model, GameState state) {
+	private void fillModel(Map<String, Object> model, ChessGame game) {
+		GameState state = game.getState();
+
 		BoardResponseDto dto = BoardResponseDto.from(state.getBoard());
 		model.putAll(dto.getValue());
+
+		model.put("GAME_NAME", game.getName());
 		model.put("TURN", state.getColor());
 		model.put("ChessScore", state.generateScore());
 	}
 
-	private static String render(Map<String, Object> model, String templatePath) {
+	private String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }

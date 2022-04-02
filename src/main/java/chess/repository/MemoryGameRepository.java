@@ -5,12 +5,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import chess.domain.ChessGame;
+import chess.domain.state.GameState;
 
-public class MapGameRepository implements GameRepository {
+public class MemoryGameRepository implements GameRepository {
 
 	private final Map<String, ChessGame> repository;
 
-	public MapGameRepository() {
+	public MemoryGameRepository() {
 		repository = new HashMap<>();
 	}
 
@@ -32,5 +33,12 @@ public class MapGameRepository implements GameRepository {
 			.filter(entry -> entry.getValue().getName().equals(name))
 			.findAny()
 			.map(Map.Entry::getValue);
+	}
+
+	@Override
+	public void update(String id, GameState state) {
+		ChessGame game = repository.get(id);
+		game.updateState(state);
+		repository.put(game.getId(), game);
 	}
 }
