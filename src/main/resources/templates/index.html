@@ -46,6 +46,15 @@
             background-color: #C4A082;
         }
     </style>
+
+    <script>
+        function move() {
+            fetch("/move", {
+                method: "POST",
+                body: "a2,a3"
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -64,6 +73,12 @@
     </div>
     {{/each}}
 </div>
+
+<form action="/move" method="POST">
+    <input name="from"/>
+    <input name="to"/>
+    <button type="submit">이동</button>
+</form>
 
 </body>
 </html>
