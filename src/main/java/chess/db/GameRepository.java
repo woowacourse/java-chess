@@ -12,8 +12,7 @@ public class GameRepository {
     private int id = 0;
 
     public int add(Game game) {
-        id++;
-        database.put(id, game);
+        database.put(++id, game);
         return id;
     }
 
