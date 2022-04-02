@@ -72,6 +72,10 @@ public class Position {
         }
     }
 
+    public boolean isInRow(Row row) {
+        return this.row == row;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
