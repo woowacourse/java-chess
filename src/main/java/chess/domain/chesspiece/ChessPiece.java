@@ -53,4 +53,8 @@ public abstract class ChessPiece {
     }
 
     public abstract double value();
+
+    public Color color() {
+        return color;
+    };
 }

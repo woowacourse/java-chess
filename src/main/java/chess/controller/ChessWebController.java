@@ -43,6 +43,11 @@ public class ChessWebController {
             return gson.toJson(model);
         });
 
+        get("/result", (req, res) -> {
+            final Map<String, Object> model = chessService.result();
+            return gson.toJson(model);
+        });
+
         path("/command", () -> {
 
             post("/start", (req, res) -> {

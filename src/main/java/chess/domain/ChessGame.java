@@ -59,4 +59,9 @@ public class ChessGame {
         gameStatus.checkPlaying();
         return chessBoard.currentTurn();
     }
+
+    public Color findWinColor() {
+        gameStatus.checkEnd();
+        return chessBoard.findWinColor();
+    }
 }

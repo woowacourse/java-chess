@@ -76,4 +76,27 @@ public class ChessBoard {
     public Color currentTurn() {
         return currentTurnColor;
     }
+
+    public Color findWinColor() {
+        if (isKingDie()) {
+            final ChessPiece aliveKing = findAliveKing();
+            return aliveKing.color();
+        }
+        final Score score = calculateScore();
+        if (score.findScore(Color.BLACK) > score.findScore(Color.WHITE)) {
+            return Color.BLACK;
+        }
+        if (score.findScore(Color.WHITE) > score.findScore(Color.BLACK)) {
+            return Color.WHITE;
+        }
+        return null;
+    }
+
+    private ChessPiece findAliveKing() {
+        return pieceByPosition.values()
+                .stream()
+                .filter(ChessPiece::isKing)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("킹이 존재하지 않습니다."));
+    }
 }

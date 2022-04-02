@@ -23,6 +23,12 @@ public enum GameStatus {
         }
     }
 
+    public void checkEnd() {
+        if (!isEnd()) {
+            throw new IllegalArgumentException("게임이 종료되지 않았습니다.");
+        }
+    }
+
     public boolean isEnd() {
         return this.equals(END) || this.equals(KING_DIE);
     }

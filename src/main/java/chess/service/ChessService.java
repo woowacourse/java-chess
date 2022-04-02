@@ -12,6 +12,7 @@ import chess.result.StartResult;
 import chess.view.PieceName;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -96,6 +97,21 @@ public class ChessService {
         try {
             final Color currentTurn = chessGame.findCurrentTurn();
             model.put("current_turn", currentTurn.getValue());
+        } catch (IllegalArgumentException e) {
+            model.put("error", e.getMessage());
+        }
+        return model;
+    }
+
+    public Map<String, Object> result() {
+        final Map<String, Object> model = new HashMap<>();
+        try {
+            final Color winColor = chessGame.findWinColor();
+            if (Objects.isNull(winColor)) {
+                model.put("win_color", "draw");
+                return model;
+            }
+            model.put("win_color", winColor.getValue());
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
