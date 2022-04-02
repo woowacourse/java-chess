@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.view;
 
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;

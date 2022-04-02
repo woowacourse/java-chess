@@ -6,12 +6,12 @@ import chess.Controller.command.ParsedCommand;
 import chess.Controller.dto.PiecesDto;
 import chess.Controller.dto.ScoreDto;
 import chess.Controller.dto.StateDto;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.strategy.CreateCompleteBoardStrategy;
 import chess.domain.piece.Piece;
-import chess.view.InputView;
-import chess.view.OutputView;
 import java.util.Map;
 
 public class ConsoleApplication {
