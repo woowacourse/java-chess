@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.role.Queen;
 import chess.domain.piece.role.Role;
 import chess.domain.piece.role.Rook;
 import chess.domain.position.Position;
@@ -11,56 +12,44 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
     @ParameterizedTest
-    @MethodSource("rookVerticalMovement")
-    @DisplayName("룩은 상하 직진한다")
-    void move_goVertical(Position source, Position target, boolean result) {
+    @MethodSource("rookRightMovement")
+    @DisplayName("룩은 수직, 수평 직진한다")
+    void move_verticalHorizonTal(Position source, Position target) {
         Role rook = new Rook();
-        assertThat(rook.isMovable(source, target)).isEqualTo(result);
+        assertThatCode(() -> rook.checkMovable(source, target))
+                .doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> rookVerticalMovement() {
+    private static Stream<Arguments> rookRightMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a8"), true
-                ),
-                Arguments.of(
-                        Position.of("a1"), Position.of("b2"), false
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("a7"), true
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("b7"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("a8")),
+                Arguments.of(Position.of("d8"), Position.of("b8")),
+                Arguments.of(Position.of("c4"), Position.of("h4")),
+                Arguments.of(Position.of("g7"), Position.of("g2"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("rookHorizontalMovement")
-    @DisplayName("룩은 좌우 직진한다")
-    void move_goHorizontal(Position source, Position target, boolean result) {
-        Rook rook = new Rook();
-        assertThat(rook.isMovable(source, target)).isEqualTo(result);
+    @MethodSource("rookWrongMovement")
+    @DisplayName("룩이 수직, 수평이 아닌 곳으로 이동하려 할 시, 예외를 발생한다")
+    void targetNotOn_VerticalHorizontal_throwException(Position source, Position target) {
+        Role rook = new Rook();
+        assertThatThrownBy(() -> rook.checkMovable(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("룩");
     }
 
-    private static Stream<Arguments> rookHorizontalMovement() {
+    private static Stream<Arguments> rookWrongMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a7"), Position.of("c7"), true
-                ),
-                Arguments.of(
-                        Position.of("c1"), Position.of("d7"), false
-                ),
-                Arguments.of(
-                        Position.of("d8"), Position.of("b8"), true
-                ),
-                Arguments.of(
-                        Position.of("d7"), Position.of("c6"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("e5")),
+                Arguments.of(Position.of("h8"), Position.of("g1")),
+                Arguments.of(Position.of("f5"), Position.of("e4"))
         );
     }
 }

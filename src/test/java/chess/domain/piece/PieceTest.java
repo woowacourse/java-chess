@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.domain.Color;
 import chess.domain.piece.role.Bishop;
 import chess.domain.piece.role.King;
@@ -8,15 +12,12 @@ import chess.domain.piece.role.Pawn;
 import chess.domain.piece.role.Queen;
 import chess.domain.piece.role.Rook;
 import chess.domain.position.Position;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
 
@@ -63,121 +64,76 @@ class PieceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("blackPawnMovement")
-    @DisplayName("폰이 블랙이면 아래로만 이동한다")
-    void blackPawn_moveBelow(Position source, Position target, boolean result) {
+    @MethodSource("blackPawnRightDirection")
+    @DisplayName("검은 폰은 수직, 대각 아래 방향으로만 이동한다")
+    void blackPawn_moveBelow(Position source, Position target) {
         Piece piece = new Piece(Color.BLACK, new Pawn());
-        assertThat(piece.isMovable(source, target)).isEqualTo(result);
+        assertThatCode(() -> piece.checkMovable(source, target))
+                .doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> blackPawnMovement() {
+    private static Stream<Arguments> blackPawnRightDirection() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a3"), Position.of("a2"), true
-                ),
-                Arguments.of(
-                        Position.of("a2"), Position.of("a3"), false
-                ),
-                Arguments.of(
-                        Position.of("a3"), Position.of("a1"), false
-                )
+                Arguments.of(Position.of("a3"), Position.of("a2")),
+                Arguments.of(Position.of("h7"), Position.of("h5")),
+                Arguments.of(Position.of("d6"), Position.of("c5")),
+                Arguments.of(Position.of("d6"), Position.of("e5"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("whitePawnMovement")
-    @DisplayName("폰이 흰색이면 아래로만 이동한다")
-    void whitePawn_moveAbove(Position source, Position target, boolean result) {
-        Piece piece = new Piece(Color.WHITE, new Pawn());
-        assertThat(piece.isMovable(source, target)).isEqualTo(result);
-    }
-
-    private static Stream<Arguments> whitePawnMovement() {
-        return Stream.of(
-                Arguments.of(
-                        Position.of("a2"), Position.of("a3"), true
-                ),
-                Arguments.of(
-                        Position.of("a3"), Position.of("a2"), false
-                ),
-                Arguments.of(
-                        Position.of("a4"), Position.of("a2"), false
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("pawnFirstMovement")
-    @DisplayName("폰은 초기에만 두 칸 움직일 수 있다")
-    void pawn_firstMove_allowTwoSteps() {
-        Piece piece = new Piece(Color.WHITE, new Pawn());
-        assertThat(piece.isMovable(Position.of("a3"), Position.of("a5"))).isFalse();
-    }
-
-    private static Stream<Arguments> pawnFirstMovement() {
-        return Stream.of(
-                Arguments.of(
-                        Color.WHITE, Position.of("a2"), Position.of("a4"), true
-                ),
-                Arguments.of(
-                        Color.WHITE, Position.of("a7"), Position.of("a5"), false
-                ),
-                Arguments.of(
-                        Color.BLACK, Position.of("a7"), Position.of("a5"), true
-                ),
-                Arguments.of(
-                        Color.BLACK, Position.of("a2"), Position.of("a4"), false
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("blackPawnDiagonalMovement")
-    @DisplayName("폰이 블랙이면 대각 아래로만 이동한다")
-    void blackPawn_moveDiagonalBelow(Position source, Position target, boolean result) {
+    @MethodSource("blackPawnWrongDirection")
+    @DisplayName("검은 폰이 수직, 대각 위 방향 이동 시, 예외를 발생한다")
+    void blackPawn_moveAbove_throwException(Position source, Position target) {
         Piece piece = new Piece(Color.BLACK, new Pawn());
-        assertThat(piece.isMovable(source, target)).isEqualTo(result);
+        assertThatThrownBy(() -> piece.checkMovable(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폰");
     }
 
-    private static Stream<Arguments> blackPawnDiagonalMovement() {
+    private static Stream<Arguments> blackPawnWrongDirection() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("c3"), Position.of("d2"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("d4"), false
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b2"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b4"), false
-                )
+                Arguments.of(Position.of("a2"), Position.of("a3")),
+                Arguments.of(Position.of("a2"), Position.of("a4")),
+                Arguments.of(Position.of("d4"), Position.of("c5")),
+                Arguments.of(Position.of("d4"), Position.of("f5"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("whitePawnDiagonalMovement")
-    @DisplayName("폰이 흰색이면 대각 위로만 이동한다")
-    void whitePawn_moveDiagonalAbove(Position source, Position target, boolean result) {
+    @MethodSource("whitePawnRightDirection")
+    @DisplayName("흰 폰은 수직, 대각 아래 윗방향으로만 이동한다")
+    void whitePawn_moveAbove(Position source, Position target) {
         Piece piece = new Piece(Color.WHITE, new Pawn());
-        assertThat(piece.isMovable(source, target)).isEqualTo(result);
+        assertThatCode(() -> piece.checkMovable(source, target))
+                .doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> whitePawnDiagonalMovement() {
+    private static Stream<Arguments> whitePawnRightDirection() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("c3"), Position.of("d4"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("d2"), false
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b4"), true
-                ),
-                Arguments.of(
-                        Position.of("c3"), Position.of("b2"), false
-                )
+                Arguments.of(Position.of("h2"), Position.of("h4")),
+                Arguments.of(Position.of("e5"), Position.of("e6")),
+                Arguments.of(Position.of("c3"), Position.of("d4")),
+                Arguments.of(Position.of("c3"), Position.of("b4"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("whitePawnWrongDirection")
+    @DisplayName("흰 폰이 수직, 대각 아래 방향 이동 시, 예외를 발생한다")
+    void whitePawn_moveBelow_throwException(Position source, Position target) {
+        Piece piece = new Piece(Color.WHITE, new Pawn());
+        assertThatThrownBy(() -> piece.checkMovable(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폰");
+    }
+
+    private static Stream<Arguments> whitePawnWrongDirection() {
+        return Stream.of(
+                Arguments.of(Position.of("a6"), Position.of("a5")),
+                Arguments.of(Position.of("f3"), Position.of("f2")),
+                Arguments.of(Position.of("d4"), Position.of("c3")),
+                Arguments.of(Position.of("d4"), Position.of("e3"))
         );
     }
 }

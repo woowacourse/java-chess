@@ -6,7 +6,7 @@ public interface Role {
 
     String getSymbol();
 
-    boolean isMovable(Position source, Position target);
+    void checkMovable(Position source, Position target);
 
     boolean isPawn();
 

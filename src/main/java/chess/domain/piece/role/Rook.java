@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 public final class Rook implements Role {
 
     private static final int SCORE = 5;
+    private static final String RULE = "룩은 수직, 수평 이동만 가능합니다.";
 
     @Override
     public String getSymbol() {
@@ -12,8 +13,10 @@ public final class Rook implements Role {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
-        return source.isStraight(target);
+    public void checkMovable(Position source, Position target) {
+        if (!(source.isStraight(target))) {
+            throw new IllegalArgumentException(RULE);
+        }
     }
 
     @Override

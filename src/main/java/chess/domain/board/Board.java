@@ -90,11 +90,10 @@ public final class Board {
 
     private void checkMovableAndMovePiece(Position source, Position target, Piece piece) {
         validateCorrectTurn(piece);
-        if (piece.isMovable(source, target)) {
-            checkPawnMovement(source, target, piece);
-            validatePathEmpty(source, target);
-            movePiece(source, target);
-        }
+        piece.checkMovable(source, target);
+        checkPawnMovement(source, target, piece);
+        validatePathEmpty(source, target);
+        movePiece(source, target);
     }
 
     private void validateCorrectTurn(Piece piece) {

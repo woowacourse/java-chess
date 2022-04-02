@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.role.Queen;
 import chess.domain.piece.role.Role;
@@ -14,65 +15,38 @@ import org.junit.jupiter.params.provider.MethodSource;
 class QueenTest {
 
     @ParameterizedTest
-    @MethodSource("queenVerticalMovement")
-    @DisplayName("퀸은 상하 이동을 할 수 있다")
-    void move_vertical(Position source, Position target, boolean result) {
+    @MethodSource("queenRightMovement")
+    @DisplayName("퀸은 상하좌우 대각선 이동할 수 있다")
+    void move_verticalHorizonTalDiagonal(Position source, Position target) {
         Role queen = new Queen();
-        assertThat(queen.isMovable(source, target)).isEqualTo(result);
+        assertThatCode(() -> queen.checkMovable(source, target))
+                .doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> queenVerticalMovement() {
+    private static Stream<Arguments> queenRightMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("a8"), true
-                ),
-                Arguments.of(
-                        Position.of("a8"), Position.of("a7"), true
-                )
+                Arguments.of(Position.of("a1"), Position.of("a8")),
+                Arguments.of(Position.of("d8"), Position.of("b8")),
+                Arguments.of(Position.of("a1"), Position.of("d4")),
+                Arguments.of(Position.of("c6"), Position.of("b5"))
         );
     }
 
     @ParameterizedTest
-    @MethodSource("queenHorizontalMovement")
-    @DisplayName("퀸은 좌우 이동을 할 수 있다")
-    void move_horizontal(Position source, Position target, boolean result) {
+    @MethodSource("queenWrongMovement")
+    @DisplayName("퀸이 상하좌우 대각선이 아닌 곳으로 이동하려 할 시, 예외를 발생한다")
+    void targetNotOn_VerticalHorizontalDiagonal_throwException(Position source, Position target) {
         Role queen = new Queen();
-        assertThat(queen.isMovable(source, target)).isEqualTo(result);
+        assertThatThrownBy(() -> queen.checkMovable(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("퀸");
     }
 
-    private static Stream<Arguments> queenHorizontalMovement() {
+    private static Stream<Arguments> queenWrongMovement() {
         return Stream.of(
-                Arguments.of(
-                        Position.of("a7"), Position.of("c7"), true
-                ),
-                Arguments.of(
-                        Position.of("d8"), Position.of("b8"), true
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("queenDiagonalMovement")
-    @DisplayName("퀸은 대각선으로 이동할 수 있다")
-    void move_diagonal(Position source, Position target, boolean result) {
-        Role queen = new Queen();
-        assertThat(queen.isMovable(source, target)).isEqualTo(result);
-    }
-
-    private static Stream<Arguments> queenDiagonalMovement() {
-        return Stream.of(
-                Arguments.of(
-                        Position.of("a1"), Position.of("d4"), true
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("f8"), false
-                ),
-                Arguments.of(
-                        Position.of("c6"), Position.of("b5"), true
-                ),
-                Arguments.of(
-                        Position.of("d6"), Position.of("a8"), false
-                )
+                Arguments.of(Position.of("a1"), Position.of("b3")),
+                Arguments.of(Position.of("b2"), Position.of("g8")),
+                Arguments.of(Position.of("f8"), Position.of("c3"))
         );
     }
 }
