@@ -7,6 +7,8 @@ import chess.domain.position.Position;
 
 public class Play implements State {
 
+    private static final String EXCEPTION_START_IMPOSSIBLE = "Play 상태에서 start할 수 없습니다.";
+
     private final Chessboard chessboard;
     private final Turn turn;
 
@@ -21,7 +23,7 @@ public class Play implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(EXCEPTION_START_IMPOSSIBLE);
     }
 
     @Override

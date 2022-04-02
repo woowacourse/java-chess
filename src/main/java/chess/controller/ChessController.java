@@ -13,7 +13,7 @@ import static chess.view.OutputView.printStartMessage;
 
 public class ChessController {
 
-    private static final String ERROR_WRONG_COMMAND = "잘못된 명령어 입력입니다.";
+    private static final String EXCEPTION_WRONG_COMMAND = "잘못된 명령어 입력입니다.";
 
     public void run() {
         printStartMessage();
@@ -27,7 +27,7 @@ public class ChessController {
 
     private void executeCommand(ChessGame chessGame, String input) {
         if (!isExistCommand(input)) {
-            throw new IllegalArgumentException(ERROR_WRONG_COMMAND);
+            throw new IllegalArgumentException(EXCEPTION_WRONG_COMMAND);
         }
         if (STATUS.isValue(input)) {
             OutputView.printProgressScore(chessGame.computeScore(Color.BLACK), chessGame.computeScore(Color.WHITE));
