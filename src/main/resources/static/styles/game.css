@@ -36,12 +36,12 @@ body {
     font-size: 50px;
 
     border: 1px black solid;
-    background-color: rgb(255, 240, 215);
+    background-color: rgb(234, 178, 80);
 }
 
 .row:nth-child(odd) > .square:nth-child(even),
 .row:nth-child(even) > .square:nth-child(odd) {
-    background-color: rgb(248, 201, 117);
+    background-color: rgb(183, 121, 19);
 }
 
 .occupied:hover {
@@ -55,4 +55,8 @@ body {
 .piece {
     color: black;
     pointer-events: none;
+}
+
+.white {
+    color: white;
 }
