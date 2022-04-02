@@ -39,7 +39,7 @@ public class ChessGame {
     private void validateMovable(final Player currentPlayer, final Position currentPosition,
                                  final Position destinationPosition) {
         if (!currentPlayer.hasPiece(currentPosition)) {
-            throw new IllegalArgumentException("선택한 출발 위치에 체스말이 존재하지 않습니다.");
+            throw new IllegalArgumentException("선택한 출발 위치에 현재 턴에 해당하는 팀의 체스말이 존재하지 않습니다.");
         }
         if (currentPlayer.hasPiece(destinationPosition)) {
             throw new IllegalArgumentException("선택한 도착 위치에 이미 체스말이 존재합니다.");

@@ -31,7 +31,7 @@ class ChessGameTest {
 
         assertThatThrownBy(() -> chessGame.move(currentPlayer, opponentPlayer, currentPosition, destinationPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("선택한 출발 위치에 체스말이 존재하지 않습니다.");
+                .hasMessage("선택한 출발 위치에 현재 턴에 해당하는 팀의 체스말이 존재하지 않습니다.");
     }
 
     @Test
