@@ -44,6 +44,8 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract String fileName();
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

@@ -12,6 +12,7 @@ import chess.domain.Team;
 import chess.domain.result.StatusResult;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessController {
 
@@ -20,11 +21,11 @@ public class ChessController {
 
     public ChessController() {
         state = new Ready();
+        board = new Board(new PieceBuilder());
     }
 
     public Map<Position, Piece> start() {
         state = state.execute(Command.START);
-        board = new Board(new PieceBuilder());
         return board.getBoard();
     }
 
@@ -55,5 +56,12 @@ public class ChessController {
 
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    public Map<String, String> getCurrentImages() {
+        return board.getBoard()
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().toString(), e->e.getValue().fileName()));
     }
 }

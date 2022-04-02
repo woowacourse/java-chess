@@ -1,9 +1,8 @@
 package chess.view;
 
-import chess.domain.board.Board;
+import chess.domain.Team;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
-import chess.domain.Team;
 import chess.domain.result.StatusResult;
 
 import java.util.Map;

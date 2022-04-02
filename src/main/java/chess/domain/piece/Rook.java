@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Team;
 import chess.domain.board.Position;
 
+import java.util.Locale;
+
 public class Rook extends Piece {
 
     private static final String BLACK_SYMBOL = "R";
@@ -46,5 +48,10 @@ public class Rook extends Piece {
     @Override
     public double getScore() {
         return ROOK_SCORE;
+    }
+
+    @Override
+    public String fileName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + "rook.png";
     }
 }

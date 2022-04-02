@@ -5,6 +5,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Position;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class King extends Piece {
@@ -60,5 +61,10 @@ public class King extends Piece {
     @Override
     public double getScore() {
         return KING_SCORE;
+    }
+
+    @Override
+    public String fileName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + "king.png";
     }
 }

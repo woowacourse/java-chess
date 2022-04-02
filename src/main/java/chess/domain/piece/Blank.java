@@ -42,4 +42,9 @@ public class Blank extends Piece {
     public double getScore() {
         return NO_SCORE;
     }
+
+    @Override
+    public String fileName() {
+        return "blank.png";
+    }
 }

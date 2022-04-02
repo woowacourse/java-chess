@@ -15,7 +15,7 @@ public class Board {
     private static final String BLANK_ERROR = "해당 위치에 기물이 없습니다.";
     private static final String NOT_FINISHED_ERROR = "아직 종료되지 않은 게임입니다.";
     private static final String CATCH_SAME_TEAM_EXCEPTION = "같은 팀의 기물을 잡을 수 없습니다.";
-    public static final String INVALID_ORDER_ERROR = "[ERROR] 알맞는 순서가 아닙니다.";
+    private static final String INVALID_ORDER_ERROR = "[ERROR] 알맞는 순서가 아닙니다.";
 
     private final Map<Position, Piece> board;
     private State state;

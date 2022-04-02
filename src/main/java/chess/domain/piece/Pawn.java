@@ -6,6 +6,7 @@ import chess.domain.board.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class Pawn extends Piece {
@@ -111,5 +112,10 @@ public class Pawn extends Piece {
     @Override
     public double getScore() {
         return 1;
+    }
+
+    @Override
+    public String fileName() {
+        return team.name().toLowerCase(Locale.ROOT) + "_" + "pawn.png";
     }
 }

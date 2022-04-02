@@ -1,13 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>미니 체스 게임</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-    <form method="post" action="/move">
-        <input type="text" name="position" placeholder="좌표를 입력해 주세요.">
-        <button type="submit" value="제출">제출</button>
-    </form>
+    <div id="app">
+        <h1>😎 라쿤의 재미있는 체스 게임 😎</h1>
+
+        <section class="chess-ui">
+            <img class="img" src="images/{{a8}}">
+            <img class="img" src="images/{{b8}}">
+            <img class="img" src="images/{{c8}}">
+            <img class="img" src="images/{{d8}}">
+            <img class="img" src="images/{{e8}}">
+            <img class="img" src="images/{{f8}}">
+            <img class="img" src="images/{{g8}}">
+            <img class="img" src="images/{{h8}}">
+
+            <img class="img" src="images/{{a7}}">
+            <img class="img" src="images/{{b7}}">
+            <img class="img" src="images/{{c7}}">
+            <img class="img" src="images/{{d7}}">
+            <img class="img" src="images/{{e7}}">
+            <img class="img" src="images/{{f7}}">
+            <img class="img" src="images/{{g7}}">
+            <img class="img" src="images/{{h7}}">
+
+            <img class="img" src="images/{{a6}}">
+            <img class="img" src="images/{{b6}}">
+            <img class="img" src="images/{{c6}}">
+            <img class="img" src="images/{{d6}}">
+            <img class="img" src="images/{{e6}}">
+            <img class="img" src="images/{{f6}}">
+            <img class="img" src="images/{{g6}}">
+            <img class="img" src="images/{{h6}}">
+
+            <img class="img" src="images/{{a5}}">
+            <img class="img" src="images/{{b5}}">
+            <img class="img" src="images/{{c5}}">
+            <img class="img" src="images/{{d5}}">
+            <img class="img" src="images/{{e5}}">
+            <img class="img" src="images/{{f5}}">
+            <img class="img" src="images/{{g5}}">
+            <img class="img" src="images/{{h5}}">
+
+            <img class="img" src="images/{{a4}}">
+            <img class="img" src="images/{{b4}}">
+            <img class="img" src="images/{{c4}}">
+            <img class="img" src="images/{{d4}}">
+            <img class="img" src="images/{{e4}}">
+            <img class="img" src="images/{{f4}}">
+            <img class="img" src="images/{{g4}}">
+            <img class="img" src="images/{{h4}}">
+
+            <img class="img" src="images/{{a3}}">
+            <img class="img" src="images/{{b3}}">
+            <img class="img" src="images/{{c3}}">
+            <img class="img" src="images/{{d3}}">
+            <img class="img" src="images/{{e3}}">
+            <img class="img" src="images/{{f3}}">
+            <img class="img" src="images/{{g3}}">
+            <img class="img" src="images/{{h3}}">
+
+            <img class="img" src="images/{{a2}}">
+            <img class="img" src="images/{{b2}}">
+            <img class="img" src="images/{{c2}}">
+            <img class="img" src="images/{{d2}}">
+            <img class="img" src="images/{{e2}}">
+            <img class="img" src="images/{{f2}}">
+            <img class="img" src="images/{{g2}}">
+            <img class="img" src="images/{{h2}}">
+
+            <img class="img" src="images/{{a1}}">
+            <img class="img" src="images/{{b1}}">
+            <img class="img" src="images/{{c1}}">
+            <img class="img" src="images/{{d1}}">
+            <img class="img" src="images/{{e1}}">
+            <img class="img" src="images/{{f1}}">
+            <img class="img" src="images/{{g1}}">
+            <img class="img" src="images/{{h1}}">
+        </section>
+        <section>
+            <h2>체스 form</h2>
+            <form method="post" action="/start">
+                <button type="submit" value="시작">시작시작</button>
+            </form>
+            <form method="post" action="/move">
+                <input type="text" name="position" placeholder="좌표를 입력해 주세요.">
+                <button type="submit" value="제출">제출제출</button>
+            </form>
+        </section>
+    </div>
 </body>
 </html>

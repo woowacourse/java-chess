@@ -1,0 +1,12 @@
+.chess-ui {
+  width: 640px;
+  border: 4px solid slategrey;
+  display: grid;
+  grid-template-columns: repeat(8, 80px);
+  grid-template-rows: repeat(8, 80px);
+}
+
+.img {
+    width: 80px;
+    height: 80px;
+}
