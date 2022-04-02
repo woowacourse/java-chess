@@ -15,10 +15,14 @@ public final class ChessGame {
         this.turn = GameTurn.READY;
     }
 
+    public void startGame() {
+        turn = GameTurn.WHITE;
+    }
+
     public void move(Square source, Square target) {
-        turn = turn.switchColor();
         checkTurn(source);
         board.checkCanMove(source, target);
+        turn = turn.switchColor();
         checkKingDie(target);
         board = board.move(source, target);
     }
@@ -37,6 +41,10 @@ public final class ChessGame {
 
     public boolean isKingDie() {
         return turn == GameTurn.FINISHED;
+    }
+
+    public boolean isInGame() {
+        return turn != GameTurn.READY;
     }
 
     public Board getBoard() {

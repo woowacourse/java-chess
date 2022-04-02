@@ -1,13 +1,10 @@
 package chess.view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Scanner;
 
-import chess.Command;
-import chess.domain.position.Square;
+import chess.command.CommandType;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -23,7 +20,7 @@ public class InputView {
     private static final int POSITION_SIZE = 2;
     private static final int COMMAND_NOT_MOVE_FORMAT_SIZE = 1;
 
-    public static Map.Entry<Command, List<Square>> getCommand() {
+    public static List<String> getCommand() {
         List<String> commands = getCommands();
         try {
             return convertInputToCommand(commands);
@@ -38,13 +35,13 @@ public class InputView {
         return List.of(answer.split(SPLIT_REGEX));
     }
 
-    private static Map.Entry<Command, List<Square>> convertInputToCommand(List<String> commands) {
-        Command command = Command.find(commands.get(COMMAND_INDEX));
-        if (commands.size() == COMMAND_NOT_MOVE_FORMAT_SIZE && command != Command.MOVE) {
-            return Map.entry(command, new ArrayList<>());
+    private static List<String> convertInputToCommand(List<String> commands) {
+        CommandType command = CommandType.find(commands.get(COMMAND_INDEX));
+        if (commands.size() == COMMAND_NOT_MOVE_FORMAT_SIZE && command != CommandType.MOVE) {
+            return commands;
         }
         validateMoveCommandSize(commands);
-        return getMoveCommand(commands, command);
+        return getMoveCommand(commands);
     }
 
     private static void validateMoveCommandSize(List<String> commands) {
@@ -56,11 +53,11 @@ public class InputView {
         }
     }
 
-    private static Map.Entry<Command, List<Square>> getMoveCommand(List<String> commands, Command command) {
+    private static List<String> getMoveCommand(List<String> commands) {
         String source = commands.get(COMMAND_MOVE_SOURCE_INDEX);
         String target = commands.get(COMMAND_MOVE_TARGET_INDEX);
         validatePositionFormat(source, target);
-        return Map.entry(command, List.of(new Square(source), new Square(target)));
+        return commands;
     }
 
     private static void validatePositionFormat(String source, String target) {
