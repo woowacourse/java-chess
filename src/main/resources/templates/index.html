@@ -4,10 +4,110 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>체스</title>
+    <title>체스 로비</title>
 </head>
 <body>
-    <a class="btn btn-info" href="/lobby">로비로</a>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#createGame">
+        게임 생성
+    </button>
+    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+        멤버 추가
+    </button>
     <a class="btn btn-dark" href="/history">기록 확인</a>
+
+    {{#games}}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{id}} 번째 게임</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{participant.white.name}} vs {{participant.black.name}}</h6>
+                <a href="/play/{{id}}" class="btn btn-dark">입장</a>
+            </div>
+        </div>
+    {{/games}}
+
+    <!-- 게임 생성 Modal -->
+    <div class="modal fade" id="createGame" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">게임 생성</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>백팀</div>
+                    <select id="white" class="form-control">
+                        {{#members}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/members}}
+                    </select>
+                    <div>흑팀</div>
+                    <select id="black" class="form-control">
+                        {{#members}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/members}}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="createGame()">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 멤버 추가 Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">멤버 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="플레이어 이름을 입력하세요." id="memberName" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" onclick="addMember()">추가 하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    const addMember = () => {
+        let memberName = document.getElementById("memberName").value;
+        fetch("/member", {
+            method: "POST",
+            body: memberName
+        }).then(response => {
+            if (response.ok) {
+                alert("멤버 추가 성공!");
+                location.reload();
+            }
+            if (!response.ok) {
+                alert(response.statusText);
+            }
+        });
+    }
+
+    const createGame = () => {
+        let whiteId = document.getElementById("white").value;
+        let blackId = document.getElementById("black").value;
+        fetch("/game", {
+            method: "POST",
+            body: `${whiteId},${blackId}`
+        }).then(response => {
+            if (response.ok) {
+                alert("게임이 생성되었습니다.");
+                location.reload();
+            }
+            if (!response.ok) {
+                alert(response.statusText);
+            }
+        });
+    }
+</script>
+
 </html>

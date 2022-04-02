@@ -33,8 +33,13 @@ public class WebController {
 
     public void run() {
         staticFiles.location("/static");
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            List<ChessGame> games = gameRepository.findAll();
+            List<Member> members = memberRepository.findAll();
+            model.put("games", games);
+            model.put("members", members);
             return render(model, "index.html");
         });
 
@@ -72,15 +77,6 @@ public class WebController {
             model.put("whiteScore", chessGame.getWhiteScore());
             model.put("blackScore", chessGame.getBlackScore());
             return render(model, "result.html");
-        });
-
-        get("/lobby", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            List<ChessGame> games = gameRepository.findAll();
-            List<Member> members = memberRepository.findAll();
-            model.put("games", games);
-            model.put("members", members);
-            return render(model, "lobby.html");
         });
 
         /**
