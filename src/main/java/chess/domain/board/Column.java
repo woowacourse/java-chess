@@ -5,15 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0, 'a'),
-    B(1, 'b'),
-    C(2, 'c'),
-    D(3, 'd'),
-    E(4, 'e'),
-    F(5, 'f'),
-    G(6, 'g'),
-    H(7, 'h'),
+    A(1, 'a'),
+    B(2, 'b'),
+    C(3, 'c'),
+    D(4, 'd'),
+    E(5, 'e'),
+    F(6, 'f'),
+    G(7, 'g'),
+    H(8, 'h'),
     ;
+
+    private static final int COLUMN_FLIP_CRITERIA = 9;
+    private static final int DECIMAL_RADIX = 10;
+    private static final String INVALID_COLUMN_MESSAGE = "존재하지 않는 열입니다.";
 
     private final int number;
     private final char name;
@@ -23,23 +27,20 @@ public enum Column {
         this.name = name;
     }
 
+    private static Column from(int number) {
+        return from(Character.forDigit(number, DECIMAL_RADIX));
+    }
+
     public static Column from(char name) {
         return Arrays.stream(values())
             .filter(column -> column.name == name)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
-    }
-
-    private static Column from(int number) {
-        return Arrays.stream(values())
-            .filter(column -> column.number == number)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_MESSAGE));
     }
 
     public Column flip() {
         return Arrays.stream(Column.values())
-            .filter(it -> it.number == (7 - number))
+            .filter(it -> it.number == (COLUMN_FLIP_CRITERIA - number))
             .findFirst()
             .orElseThrow();
     }

@@ -58,15 +58,12 @@ public class Position implements Comparable<Position> {
     public List<Position> pathTo(Position otherPosition) {
         List<Row> rowPath = row.pathTo(otherPosition.row);
         List<Column> columnPath = column.pathTo(otherPosition.column);
-        // 2. [ not A ] row(X) -> rowSize == 0 (자동으로 col) 부터 한다
         if (rowPath.size() == NO_SIZE) {
             return getVerticalPositions(columnPath);
         }
-        // 3. (A &&) [ not B ] col(X) -> colSize == 0 (자동으로 row) 을 한다
         if (columnPath.size() == NO_SIZE) {
             return getHorizontalPositions(rowPath);
         }
-        // 1. [ ( A && B ) ] row && col == 대각선 -> 맨 뒤에서 자동으로
         return getDiagonalPositions(rowPath, columnPath);
     }
 
