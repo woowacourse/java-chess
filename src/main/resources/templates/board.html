@@ -29,7 +29,7 @@
 
 .turn {
     width: 300px;
-    height: 150px;
+    height: 200px;
     margin-bottom: 20px;
     float: top;
     text-align: center;
@@ -40,6 +40,25 @@
     height: 130px;
     float: left;
     padding: 10px;
+}
+
+.win_text {
+    width: 140px;
+    height: 50px;
+    text-align: center;
+    font-size: xxx-large;
+    font-weight: bolder;
+    visibility: hidden;
+}
+
+.draw_text {
+    width: 300px;
+    height: 50px;
+    padding-top: 160px;
+    text-align: center;
+    font-size: xxx-large;
+    font-weight: bolder;
+    visibility: hidden;
 }
 
 .inner_box {
@@ -164,18 +183,21 @@
     <div class="turn" id="turn">
         <div class="turn_box" id="black_turn">
             <img src="/images/king_black.png" height="128" width="128"/>
+            <div class="win_text" id="black_win">WIN!</div>
         </div>
         <div class="turn_box" id="white_turn">
             <img src="/images/king_white.png" height="128" width="128"/>
+            <div class="win_text" id="white_win">WIN!</div>
         </div>
-    </div>
-    <div class="inner_score">
-        <button class="ui-button" id="start" onclick="start()">start</button>
-        <button class="ui-button" id="end" onclick="end()">end</button>
+        <div class="draw_text" id="draw">DRAW!</div>
     </div>
     <div class="inner_score">
         <div class="score" id="white"></div>
         <div class="score" id="black"></div>
+    </div>
+    <div class="inner_score">
+        <button class="ui-button" id="start" onclick="start()">start</button>
+        <button class="ui-button" id="end" onclick="end()">end</button>
     </div>
     <div class="inner_score">
         <div class="error" id="error"></div>
@@ -215,6 +237,7 @@
         const response = await fetch("/command/end", {method: "POST"});
         const json = response.json();
         drawBoard(json);
+        await fetchResult();
     }
 
     async function fetchPiece() {
@@ -250,6 +273,18 @@
                 const currentTurn = document.getElementById(res[value] + "_turn");
                 currentTurn.style.boxShadow = "0 0 10px 2px darkred";
             }
+        }))
+    }
+
+    async function fetchResult() {
+        const data = await fetch("/result");
+        data.json().then(res => Object.keys(res).forEach(function (value) {
+            const winColor = res[value];
+            let element = document.getElementById(winColor);
+            if (winColor !== "draw") {
+                element = document.getElementById(winColor + "_win");
+            }
+            element.style.visibility = "visible";
         }))
     }
 
