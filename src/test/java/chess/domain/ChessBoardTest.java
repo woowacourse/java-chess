@@ -378,47 +378,6 @@ public class ChessBoardTest {
         }
     }
 
-//    @Test
-//    @DisplayName("한 컬럼의 흑팀 말들을 반환한다.")
-//    void getPiecesOnColumnByColor() {
-//        final ChessBoard chessBoard = new ChessBoard(new NormalPiecesGenerator());
-//        final Piece rook = chessBoard.selectPiece(Position.of("a8"));
-//        final Piece pawn = chessBoard.selectPiece(Position.of("a7"));
-//        final Pieces pieces = chessBoard.getPiecesOnColumn(Column.A, Color.BLACK);
-//        final List<Piece> actual = pieces.getValue();
-//
-//        assertThat(actual).containsExactly(pawn, rook);
-//    }
-//
-//    @Test
-//    @DisplayName("여러 컬럼의 흑팀 말들을 반환한다.")
-//    void getPiecesOnColumnsByColor() {
-//
-//        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
-//                Map.entry(Position.of("a1"), new Queen(Color.WHITE)),
-//                Map.entry(Position.of("b3"), new WhitePawn()),
-//                Map.entry(Position.of("c4"), new WhitePawn()),
-//                Map.entry(Position.of("a4"), new BlackPawn()),
-//                Map.entry(Position.of("a7"), new BlackPawn()),
-//                Map.entry(Position.of("c5"), new BlackPawn()),
-//                Map.entry(Position.of("b8"), new BlackPawn())
-//        ));
-//        final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
-//
-//        final Piece a = chessBoard.selectPiece(Position.of("a4"));
-//        final Piece a2 = chessBoard.selectPiece(Position.of("a7"));
-//        final Piece b = chessBoard.selectPiece(Position.of("b8"));
-//        final Piece c = chessBoard.selectPiece(Position.of("c5"));
-//
-//        final List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(Color.BLACK);
-//
-//        assertThat(piecesOnColumns).contains(
-//                new Pieces(List.of(a, a2)),
-//                new Pieces(List.of(b)),
-//                new Pieces(List.of(c))
-//        );
-//    }
-
     @Test
     @DisplayName("킹이 1개일 때, 게임은 끝난다.")
     void isEndTrue() {
@@ -453,5 +412,22 @@ public class ChessBoardTest {
         final boolean actual = chessBoard.isEnd();
 
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("검은색 킹이 없으면, 승자는 흰색이다.")
+    void getWinner() {
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+                Map.entry(Position.of("a1"), new King(Color.WHITE)),
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("c4"), new WhitePawn()),
+                Map.entry(Position.of("a7"), new BlackPawn()),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
+        ));
+        final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
+        final Color winner = chessBoard.getWinner();
+
+        assertThat(winner).isEqualTo(Color.WHITE);
     }
 }

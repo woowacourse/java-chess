@@ -4,11 +4,10 @@ import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import chess.domain.state.State;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.generator.NormalPiecesGenerator;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.Map;
@@ -66,8 +65,7 @@ public class GameController {
 
     private void printWinner(final ChessGame chessGame) {
         if (chessGame.isEndGameByPiece()) {
-            final State state = chessGame.getWinnerState();
-            OutputView.printWinner(state.getWinner());
+            OutputView.printWinner(chessGame.getWinner());
         }
     }
 }

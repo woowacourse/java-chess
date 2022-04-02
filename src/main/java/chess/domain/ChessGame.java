@@ -23,16 +23,14 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public State getWinnerState() {
-        if (isEndGameByPiece()) {
-            final State winnerState = state;
-            state = new Finish();
-            return winnerState;
-        }
-        return state;
+    public Color getWinner() {
+        return chessBoard.getWinner();
     }
 
     public boolean isEndGameByPiece() {
+        if (chessBoard.isEnd()) {
+            state = new Finish();
+        }
         return chessBoard.isEnd();
     }
 

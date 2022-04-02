@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
@@ -174,6 +175,14 @@ public class ChessBoard {
                 .filter(piece -> piece.isSameSymbol(Symbol.KING))
                 .count();
         return kingCount;
+    }
+
+    public Color getWinner() {
+        return pieces.values().stream()
+                .filter(piece -> piece.isSameSymbol(Symbol.KING))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("킹이 보드에 존재하지 않습니다."))
+                .getColor();
     }
 
     public Map<Position, Piece> getPieces() {
