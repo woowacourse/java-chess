@@ -40,4 +40,9 @@ public enum Rank {
     public Rank getNext(int distance) {
         return Rank.valueOf(index + distance);
     }
+
+    public int getIndex() {
+        return index;
+    }
+
 }

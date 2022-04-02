@@ -12,6 +12,15 @@ public enum Team {
         this.forwardDirection = forwardDirection;
     }
 
+    public static Team from(String name){
+        if("black".equals(name)){
+            return Team.BLACK;
+        }
+        if("white".equals(name)){
+            return Team.WHITE;
+        }
+        return Team.NONE;
+    }
     public int getForwardDirection() {
         return this.forwardDirection;
     }

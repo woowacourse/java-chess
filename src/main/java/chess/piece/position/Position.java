@@ -23,6 +23,10 @@ public final class Position {
         return CACHE.computeIfAbsent(createKey(file, rank), absent -> new Position(file, rank));
     }
 
+    public String name(){
+        return file.name().toLowerCase() + rank.getIndex();
+    }
+
     private static String createKey(File file, Rank rank) {
         return file.name() + rank.name();
     }

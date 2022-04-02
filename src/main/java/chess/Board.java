@@ -10,17 +10,23 @@ import java.util.List;
 public final class Board {
 
     private final Pieces pieces;
+    private final Turn turn;
 
-    private Board(Pieces pieces) {
+    private Board(Pieces pieces, Turn turn) {
         this.pieces = pieces;
+        this.turn = turn;
     }
 
     public static Board create(Pieces pieces) {
-        return new Board(pieces);
+        return new Board(pieces, Turn.init());
     }
 
     public Pieces getPieces() {
         return pieces;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 
     public void move(List<String> commandPosition, Turn thisTurn) {

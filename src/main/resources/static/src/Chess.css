@@ -1,0 +1,38 @@
+.centered {
+    text-align: center;
+    width: auto;
+
+}
+
+.chess-board {
+    text-align: center;
+}
+
+.white-square {
+    width: 70px;
+    height: 70px;
+    background-color: burlywood;
+    color: burlywood;
+}
+
+.black-square {
+    width: 70px;
+    height: 70px;
+    background-color: darkgreen;
+    color: darkgreen;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
+    position: absolute;
+    left: 600px;
+    top: 100px;
+}
+
+.start-button {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+}

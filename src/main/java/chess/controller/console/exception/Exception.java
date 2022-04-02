@@ -1,4 +1,4 @@
-package chess;
+package chess.controller.console.exception;
 
 public class Exception {
     public static void printCommandException(IllegalArgumentException e){

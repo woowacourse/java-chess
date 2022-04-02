@@ -1,11 +1,11 @@
-package chess.controller;
+package chess.controller.console;
 
 import chess.Board;
-import chess.Exception;
+import chess.controller.console.exception.Exception;
 import chess.Turn;
 import chess.command.Command;
 import chess.command.Init;
-import chess.controller.dto.PieceDto;
+import chess.controller.console.dto.PieceDto;
 import chess.piece.Pieces;
 import chess.view.InputView;
 import chess.view.OutputView;

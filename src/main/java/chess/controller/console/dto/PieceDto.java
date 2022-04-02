@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.controller.console.dto;
 
 public class PieceDto {
     private final String name;

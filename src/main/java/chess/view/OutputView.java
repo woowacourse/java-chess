@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.Team;
-import chess.controller.dto.PieceDto;
+import chess.controller.console.dto.PieceDto;
 
 import java.util.List;
 

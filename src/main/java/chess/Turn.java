@@ -24,6 +24,10 @@ public final class Turn {
         return new Turn(Team.BLACK);
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
