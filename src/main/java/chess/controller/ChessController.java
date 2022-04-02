@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.view.Command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Color;
+import chess.view.MoveCommand;
 import chess.view.OutputView;
 
 import java.util.Arrays;
@@ -41,12 +41,17 @@ public class ChessController {
             chessGame.start();
         }
         if (MOVE.isValue(input)) {
-            chessGame.move(Command.toMoveSourceFormat(input), Command.toMoveTargetFormat(input));
+            executeMove(chessGame, input);
         }
         if (END.isValue(input)) {
             chessGame.end();
         }
         OutputView.printBoard(chessGame.getChessBoard());
+    }
+
+    private void executeMove(ChessGame chessGame, String input) {
+        MoveCommand moveCommand = new MoveCommand(input);
+        chessGame.move(moveCommand.getSource(), moveCommand.getTarget());
     }
 
     private boolean isExistCommand(String input) {

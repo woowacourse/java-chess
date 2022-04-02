@@ -8,9 +8,6 @@ import chess.domain.state.State;
 
 public class ChessGame {
 
-    private static final int ROW = 1;
-    private static final int COLUMN = 0;
-
     private State state;
 
     public ChessGame() {
@@ -21,9 +18,8 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void move(String[] source, String[] target) {
-        state = state.move(Position.of(source[ROW], source[COLUMN]),
-                Position.of(target[ROW], target[COLUMN]));
+    public void move(Position source, Position target) {
+        state = state.move(source, target);
     }
 
     public void end() {
