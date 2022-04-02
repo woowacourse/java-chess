@@ -18,7 +18,7 @@ class QueenTest {
     void moveQueen(Position target) {
         Piece piece = new Queen(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target, true)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {

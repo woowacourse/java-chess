@@ -18,7 +18,7 @@ class KingTest {
     void moveKing(Position target) {
         Piece piece = new King(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target, true)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
@@ -31,7 +31,7 @@ class KingTest {
     void dontMoveKing(Position target) {
         Piece piece = new King(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(false);
+        Assertions.assertThat(piece.availableMove(B2, target, true)).isEqualTo(false);
     }
 
     private static Stream<Position> disablePositions() {

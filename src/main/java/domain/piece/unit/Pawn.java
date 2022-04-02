@@ -27,20 +27,28 @@ public final class Pawn extends SpecificMovablePiece {
     }
 
     @Override
-    public boolean availableMove(Position source, Position target, boolean isNullTarget) {
-        if (!availableMove(source, target)) {
+    public boolean availableMove(Position source, Position target, boolean targetIsNull) {
+        if (!checkPawnFirstStart(source, target)) {
             return false;
         }
         if (checkOneAndTwoSouthNorthDirections(target)) {
-            validateBoardPositionIsNull(isNullTarget);
+            validateBoardPositionIsNull(targetIsNull);
             return true;
         }
-        validatePawnAttack(isNullTarget);
+        validatePawnAttack(targetIsNull);
         return true;
     }
 
     @Override
     public boolean availableMove(final Position source, final Position target) {
+        directionalPositions = calculateAvailableDirectionalPositions(source);
+        if (availableFirstStartPosition(source, target)) {
+            return true;
+        }
+        return containsPosition(target) && !checkFirstStart(target) && !checkFirstDistance(source, target);
+    }
+
+    public boolean checkPawnFirstStart(final Position source, final Position target) {
         directionalPositions = calculateAvailableDirectionalPositions(source);
         if (availableFirstStartPosition(source, target)) {
             return true;

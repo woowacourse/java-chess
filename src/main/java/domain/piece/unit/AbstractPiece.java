@@ -22,20 +22,11 @@ public abstract class AbstractPiece implements Piece {
         this.pieceInfo = pieceInfo;
     }
 
-    protected boolean checkOverRange(final int xPosition, final int yPosition) {
-        return XPosition.checkRange(xPosition) && YPosition.checkRange(yPosition);
-    }
-
-    public boolean checkSameTeam(final Team team) {
-        return pieceInfo.checkSameTeam(team);
-    }
-
     @Override
-    public boolean availableMove(final Position source, final Position target, final boolean isTarget) {
+    public boolean availableMove(final Position source, final Position target, final boolean targetIsNull) {
         return availableMove(source, target);
     }
 
-    @Override
     public boolean availableMove(final Position source, final Position target) {
         directionalPositions = calculateAvailableDirectionalPositions(source);
         return containsPosition(target);
@@ -53,12 +44,6 @@ public abstract class AbstractPiece implements Piece {
 
     protected abstract List<Position> calculateAvailableDirectionByPosition(final Position source,
                                                                             final Direction direction);
-
-    protected boolean containsPosition(final Position position) {
-        return getDirections().stream()
-                .map(direction -> directionalPositions.get(direction))
-                .anyMatch(positions -> positions.contains(position));
-    }
 
     @Override
     public List<Position> calculateRoute(final Position source, final Position target) {
@@ -96,6 +81,20 @@ public abstract class AbstractPiece implements Piece {
         if (!wayPoint.equals(source) && !wayPoint.equals(target)) {
             routePositions.add(wayPoint);
         }
+    }
+
+    public boolean checkSameTeam(final Team team) {
+        return pieceInfo.checkSameTeam(team);
+    }
+
+    protected boolean checkOverRange(final int xPosition, final int yPosition) {
+        return XPosition.checkRange(xPosition) && YPosition.checkRange(yPosition);
+    }
+
+    protected boolean containsPosition(final Position position) {
+        return getDirections().stream()
+                .map(direction -> directionalPositions.get(direction))
+                .anyMatch(positions -> positions.contains(position));
     }
 
     @Override

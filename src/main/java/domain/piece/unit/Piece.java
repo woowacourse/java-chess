@@ -7,15 +7,13 @@ import java.util.List;
 
 public interface Piece {
 
-    boolean checkSameTeam(final Team team);
-
-    boolean availableMove(final Position source, final Position target);
-
-    boolean availableMove(Position source, Position target, boolean isNotNullTarget);
+    boolean availableMove(Position source, Position target, boolean targetIsNull);
 
     boolean isPawn();
 
     boolean checkOneAndTwoSouthNorthDirections(Position target);
+
+    boolean checkSameTeam(final Team team);
 
     void calculateDirections(Position source);
 

@@ -18,7 +18,7 @@ class BishopTest {
     void moveBishop(Position target) {
         Piece piece = new Bishop(WHITE);
 
-        Assertions.assertThat(piece.availableMove(B2, target)).isEqualTo(true);
+        Assertions.assertThat(piece.availableMove(B2, target, true)).isEqualTo(true);
     }
 
     private static Stream<Position> availablePositions() {
