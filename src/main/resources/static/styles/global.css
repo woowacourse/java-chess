@@ -21,3 +21,26 @@ body {
 .header__container > h1 {
     font-size: 32px;
 }
+
+a, button {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 7px;
+
+    font-size: 20px;
+    background-color: #3a3a3a;
+    color: white;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+a:active,
+button:active {
+    background-color: #5d5c5c;
+}
+
+a:hover,
+button:hover {
+    background-color: black;
+}
