@@ -26,7 +26,7 @@ public class ChessDto {
                     boardEntry.getValue().convertPieceToString());
         }
 
-        return new ChessDto(extractGameOverStatus(isOn), map, turn);
+        return new ChessDto(convertGameOverStatusToString(isOn), map, turn);
     }
 
     public static ChessDto of(final Board board, final String turn) {
@@ -37,7 +37,7 @@ public class ChessDto {
         return of(false, board, "white");
     }
 
-    private static String extractGameOverStatus(final boolean isOn) {
+    private static String convertGameOverStatusToString(final boolean isOn) {
         if (isOn) {
             return "false";
         }
