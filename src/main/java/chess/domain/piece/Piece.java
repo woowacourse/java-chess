@@ -30,7 +30,7 @@ public abstract class Piece {
         return color == otherPiece.color;
     }
 
-    public boolean isSamePieceName(PieceType pieceType) {
+    public boolean isSamePieceType(PieceType pieceType) {
         return this.type == pieceType;
     }
 

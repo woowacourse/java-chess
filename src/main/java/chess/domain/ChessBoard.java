@@ -66,7 +66,7 @@ public class ChessBoard {
             addMovablePositionsWithBlock(piece, result, entry.getValue());
         }
 
-        if (piece.isSamePieceName(PieceType.PAWN)) {
+        if (piece.isSamePieceType(PieceType.PAWN)) {
             addDiagonalMoveForPawn(nowPosition, piece, result);
         }
         return Collections.unmodifiableList(result);
@@ -96,7 +96,7 @@ public class ChessBoard {
     }
 
     private boolean isBlockedByTargetPiece(Piece nowPiece, Piece target) {
-        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceName(PieceType.PAWN) && !target.isEmpty());
+        return target.isSameColor(nowPiece) || (nowPiece.isSamePieceType(PieceType.PAWN) && !target.isEmpty());
     }
 
     private void addDiagonalMoveForPawn(Position nowPosition, Piece piece, List<Position> result) {
@@ -132,7 +132,7 @@ public class ChessBoard {
 
     public boolean isEnd() {
         long kingCount = pieces.values().stream()
-                .filter(p -> p.isSamePieceName(PieceType.KING))
+                .filter(p -> p.isSamePieceType(PieceType.KING))
                 .count();
         return kingCount != RUNNING_KING_COUNT;
     }

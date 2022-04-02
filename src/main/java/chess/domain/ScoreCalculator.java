@@ -24,7 +24,7 @@ public class ScoreCalculator {
 
     public double calculateOneColumn(List<Piece> pieces) {
         long pawnCount = pieces.stream()
-                .filter(p -> p.isSamePieceName(PieceType.PAWN))
+                .filter(p -> p.isSamePieceType(PieceType.PAWN))
                 .count();
         double sum = pieces.stream()
                 .mapToDouble(Piece::getPoint)

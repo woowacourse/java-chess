@@ -229,8 +229,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.KING)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.KING)).isTrue()
             );
         }
 
@@ -248,8 +248,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.QUEEN)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.QUEEN)).isTrue()
             );
         }
 
@@ -267,8 +267,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.ROOK)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.ROOK)).isTrue()
             );
         }
 
@@ -286,8 +286,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.BISHOP)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.BISHOP)).isTrue()
             );
         }
 
@@ -303,8 +303,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.KNIGHT)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.KNIGHT)).isTrue()
             );
         }
 
@@ -319,8 +319,8 @@ public class ChessBoardTest {
             Piece fromPiece = chessBoard.selectPiece(gameCommand.getFromPosition());
             Piece toPiece = chessBoard.selectPiece(gameCommand.getToPosition());
             assertAll(
-                    () -> assertThat(fromPiece.isSamePieceName(PieceType.EMPTY)).isTrue(),
-                    () -> assertThat(toPiece.isSamePieceName(PieceType.PAWN)).isTrue()
+                    () -> assertThat(fromPiece.isSamePieceType(PieceType.EMPTY)).isTrue(),
+                    () -> assertThat(toPiece.isSamePieceType(PieceType.PAWN)).isTrue()
             );
         }
 
