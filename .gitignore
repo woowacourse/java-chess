@@ -32,7 +32,6 @@ out/
 .vscode/
 
 ### Docker ###
-docker/*
 docker/db/mysql/data/
 docker/db/mysql/init/*
 !docker/db/mysql/init/init.sql
