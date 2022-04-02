@@ -1,3 +1,5 @@
+-- 운영 db : chess,  test db : chess_dev
+-- 각 데이터 베이스를 만들고 chess에는 전부 복사 붙여넣기, chess_dev에는 board의 포지션 g2, h2 에 해당하는 피스를 blank로 변경해주세요
 
 CREATE TABLE board (
    position VARCHAR(5) NOT NULL,
