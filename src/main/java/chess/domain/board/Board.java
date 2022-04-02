@@ -46,7 +46,7 @@ public final class Board {
     }
 
     private void checkCapableRoute(Square source, Square target, Movement movement) {
-        Movement unitMovement = movement.getUnitDirection();
+        Movement unitMovement = movement.getUnitMovement();
         Square road = source.add(unitMovement);
 
         while (!road.equals(target)) {

@@ -29,18 +29,18 @@ public final class Movement {
     public boolean hasMultiple(List<UnitDirection> directions) {
         return directions.stream()
                 .map(UnitDirection::getDirection)
-                .anyMatch(direction -> this.getUnitDirection().equals(direction));
+                .anyMatch(direction -> this.getUnitMovement().equals(direction));
     }
 
-    public Movement getUnitDirection() {
+    public Movement getUnitMovement() {
         if (dFile == 0 || dRank == 0) {
-            return getUnitDirectionWithZero();
+            return getUpDownLeftRightMovement();
         }
 
-        return getUnitDirectionWithOutZero();
+        return getDiagonalMovement();
     }
 
-    private Movement getUnitDirectionWithZero() {
+    private Movement getUpDownLeftRightMovement() {
         if (dFile == 0 && dRank == 0) {
             return new Movement(dFile, dRank);
         }
@@ -52,7 +52,7 @@ public final class Movement {
         return new Movement(dFile / Math.abs(dFile), dRank);
     }
 
-    private Movement getUnitDirectionWithOutZero() {
+    private Movement getDiagonalMovement() {
         int gcd = gcd(Math.abs(dFile), Math.abs(dRank));
         return new Movement(dFile / gcd, dRank / gcd);
     }

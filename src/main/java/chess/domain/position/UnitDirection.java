@@ -1,10 +1,10 @@
 package chess.domain.position;
 
 public enum UnitDirection {
-    N(new Movement(0 ,1)),
+    N(new Movement(0, 1)),
     S(new Movement(0, -1)),
     W(new Movement(-1, 0)),
-    E(new Movement(1,0)),
+    E(new Movement(1, 0)),
     WN(new Movement(-1, 1)),
     EN(new Movement(1, 1)),
     WS(new Movement(-1, -1)),
@@ -17,8 +17,7 @@ public enum UnitDirection {
     EEN(new Movement(2, 1)),
     EES(new Movement(2, -1)),
     WWN(new Movement(-2, 1)),
-    WWS(new Movement(-2, -1))
-    ;
+    WWS(new Movement(-2, -1));
 
     private final Movement movement;
 
