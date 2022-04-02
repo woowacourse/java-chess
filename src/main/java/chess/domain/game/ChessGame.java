@@ -12,25 +12,26 @@ import java.util.List;
 
 public class ChessGame {
 
-    public Board start(BoardGenerator boardGenerator) {
-        return boardGenerator.create();
+    private Board board;
+
+    public void start(BoardGenerator boardGenerator) {
+        board = boardGenerator.create();
     }
 
-    public Board move(List<String> inputs, Board board) {
+    public void move(List<String> inputs) {
         try {
-            validCheck(board);
+            validCheck();
             board.move(Position.of(inputs.get(FROM_POSITION_INDEX))
                     , Position.of(inputs.get(TO_POSITION_INDEX)));
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-        return board;
     }
 
-    public Score status(Board board) {
+    public Score status() {
         Score score = null;
         try {
-            validCheck(board);
+            validCheck();
             score = board.createResult();
 
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -39,17 +40,21 @@ public class ChessGame {
         return score;
     }
 
-    private void validCheck(Board board) {
+    private void validCheck() {
         if (board != null && board.check()) {
             throw new IllegalStateException("현재 check 상황입니다.");
         }
     }
 
-    public boolean isEnd(Command command, Board board) {
-        return command.isEnd() || isCheckmate(board);
+    public boolean isEnd(Command command) {
+        return command.isEnd() || isCheckmate();
     }
 
-    private boolean isCheckmate(Board board) {
+    private boolean isCheckmate() {
         return board != null && board.checkmate();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

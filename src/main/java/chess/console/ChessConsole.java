@@ -13,8 +13,6 @@ import java.util.List;
 
 public class ChessConsole {
 
-    private Board board;
-
     private final ChessGame chessGame = new ChessGame();
 
     public void play(BoardGenerator boardGenerator) {
@@ -64,7 +62,7 @@ public class ChessConsole {
     private boolean isExceedPlay(List<String> inputs) {
         Command command = Command.of(inputs.get(COMMAND_INDEX));
 
-        if (chessGame.isEnd(command, board)) {
+        if (chessGame.isEnd(command)) {
             return false;
         }
 
@@ -75,25 +73,25 @@ public class ChessConsole {
     }
 
     private void start(BoardGenerator boardGenerator) {
-        board = chessGame.start(boardGenerator);
-        printBoard();
+        chessGame.start(boardGenerator);
+        printBoard(chessGame.getBoard());
     }
 
     private void move(Command command, List<String> inputs) {
         if (command.isMove()) {
-            board = chessGame.move(inputs, board);
-            printBoard();
+            chessGame.move(inputs);
+            printBoard(chessGame.getBoard());
         }
     }
 
     private void status(Command command) {
         if (command.isStatus()) {
-            Score score = chessGame.status(board);
+            Score score = chessGame.status();
             OutputView.printStatus(score.getValue(), score.findWinTeam());
         }
     }
 
-    private void printBoard() {
+    private void printBoard(Board board) {
         if (board != null) {
             OutputView.printBoard(board.getBoard());
         }
