@@ -56,7 +56,7 @@ public class OutputView {
     public static void printFinalStatus(final StatusScore statusScore) {
         System.out.println(CURRENT_GAME_END_MESSAGE);
         System.out.printf(RESULT_SCORE_FORMAT, statusScore.getWhite(), statusScore.getBlack());
-        System.out.println(statusScore.getGameResult() + RESULT_MESSAGE_SUFFIX);
+        System.out.println(statusScore.getGameResultMessage() + RESULT_MESSAGE_SUFFIX);
     }
 
     public static void printEndMessage() {
