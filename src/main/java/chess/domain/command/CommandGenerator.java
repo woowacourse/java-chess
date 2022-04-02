@@ -5,5 +5,5 @@ import chess.ChessGame;
 public interface CommandGenerator {
     void execute(final String command,
                  final ChessGame chessGame,
-                 final Runnable printBoardToState);
+                 final Runnable printBoardInfoToState);
 }

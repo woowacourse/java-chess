@@ -21,9 +21,9 @@ public class Position implements Comparable<Position> {
         this.row = row;
     }
 
-    public static Position from(String rawPosition) {
-        final Column column = Column.from(rawPosition.substring(0, 1));
-        final Row row = Row.from(rawPosition.substring(1));
+    public static Position from(String position) {
+        final Column column = Column.from(position.charAt(0));
+        final Row row = Row.from(position.charAt(1));
         return Position.of(column, row);
     }
 

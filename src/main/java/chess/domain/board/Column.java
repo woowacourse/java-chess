@@ -5,34 +5,34 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Column {
-    A(0, "a"),
-    B(1, "b"),
-    C(2, "c"),
-    D(3, "d"),
-    E(4, "e"),
-    F(5, "f"),
-    G(6, "g"),
-    H(7, "h"),
+    A(0, 'a'),
+    B(1, 'b'),
+    C(2, 'c'),
+    D(3, 'd'),
+    E(4, 'e'),
+    F(5, 'f'),
+    G(6, 'g'),
+    H(7, 'h'),
     ;
 
     private final int number;
-    private final String name;
+    private final char name;
 
-    Column(final int number, String name) {
+    Column(final int number, char name) {
         this.number = number;
         this.name = name;
     }
 
-    public static Column from(String rawColumn) {
+    public static Column from(char name) {
         return Arrays.stream(values())
-            .filter(column -> column.name.equals(rawColumn))
+            .filter(column -> column.name == name)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }
 
-    private static Column from(int value) {
+    private static Column from(int number) {
         return Arrays.stream(values())
-            .filter(column -> column.number == value)
+            .filter(column -> column.number == number)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다."));
     }

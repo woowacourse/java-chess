@@ -21,8 +21,8 @@ public enum Row {
         this.number = number;
     }
 
-    public static Row from(String rawRow) {
-        return from(Integer.parseInt(rawRow) - 1);
+    public static Row from(char number) {
+        return from(Character.getNumericValue(number) - 1);
     }
 
     private static Row from(int value) {
