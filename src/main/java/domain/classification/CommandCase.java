@@ -1,6 +1,6 @@
 package domain.classification;
 
-public enum OrderCase {
+public enum CommandCase {
 
     START("start"),
     END("end"),
@@ -10,7 +10,7 @@ public enum OrderCase {
 
     private final String value;
 
-    OrderCase(final String value) {
+    CommandCase(final String value) {
         this.value = value;
     }
 

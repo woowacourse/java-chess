@@ -1,6 +1,6 @@
 package domain.classification;
 
-import static domain.classification.OrderCase.*;
+import static domain.classification.CommandCase.*;
 
 import domain.position.Position;
 import domain.position.XPosition;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Order {
+public final class Command {
 
     private static final String DELIMITER = " ";
     private static final int MOVE_COMMAND_INDEX = 0;
@@ -23,59 +23,59 @@ public final class Order {
     private static final int POSITION_SIZE = 2;
     private static final String ERROR_MOVE = "[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.";
 
-    private final OrderCase orderCase;
+    private final CommandCase orderCase;
     private final List<Position> moves;
 
-    private Order(final OrderCase orderCase, final List<Position> moves) {
+    private Command(final CommandCase orderCase, final List<Position> moves) {
         this.orderCase = orderCase;
         this.moves = moves;
     }
 
-    public static Order of(final OrderCase orderCase) {
+    public static Command of(final CommandCase orderCase) {
         validateElseCase(orderCase);
-        return new Order(orderCase, new ArrayList<>());
+        return new Command(orderCase, new ArrayList<>());
     }
 
-    private static void validateElseCase(final OrderCase orderCase) {
+    private static void validateElseCase(final CommandCase orderCase) {
         if (orderCase.equals(ELSE)) {
             throw new IllegalArgumentException("[ERROR] 요구하는 입력값이 아닙니다.");
         }
     }
 
-    public static Order of(final OrderCase orderCase, final String input) {
-        List<String> moveOrder = Arrays.asList(input.split(DELIMITER));
-        validateMoveOrder(moveOrder);
+    public static Command of(final CommandCase orderCase, final String input) {
+        List<String> moveCommand = Arrays.asList(input.split(DELIMITER));
+        validateMoveCommand(moveCommand);
         List<Position> moves = new ArrayList<>();
-        moves.add(generatePosition(moveOrder.get(INPUT_SOURCE_POSITION_INDEX)));
-        moves.add(generatePosition(moveOrder.get(INPUT_TARGET_POSITION_INDEX)));
-        return new Order(orderCase, moves);
+        moves.add(generatePosition(moveCommand.get(INPUT_SOURCE_POSITION_INDEX)));
+        moves.add(generatePosition(moveCommand.get(INPUT_TARGET_POSITION_INDEX)));
+        return new Command(orderCase, moves);
     }
 
-    private static void validateMoveOrder(final List<String> moveOrder) {
-        validateMoveOrderFirstIsMove(moveOrder);
-        validateMoveOrderSize(moveOrder);
-        validateEachPosition(moveOrder);
+    private static void validateMoveCommand(final List<String> moveCommand) {
+        validateMoveCommandFirstIsMove(moveCommand);
+        validateMoveCommandSize(moveCommand);
+        validateEachPosition(moveCommand);
     }
 
-    private static void validateMoveOrderFirstIsMove(final List<String> moveOrder) {
-        if (!moveOrder.get(MOVE_COMMAND_INDEX).equals(MOVE.getValue())) {
+    private static void validateMoveCommandFirstIsMove(final List<String> moveCommand) {
+        if (!moveCommand.get(MOVE_COMMAND_INDEX).equals(MOVE.getValue())) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }
     }
 
-    private static void validateMoveOrderSize(final List<String> moveOrder) {
-        if (moveOrder.size() != MOVE_COMMAND_LENGTH) {
+    private static void validateMoveCommandSize(final List<String> moveCommand) {
+        if (moveCommand.size() != MOVE_COMMAND_LENGTH) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }
     }
 
-    private static void validateEachPosition(final List<String> moveOrder) {
-        validateInputPositionSize(moveOrder, INPUT_SOURCE_POSITION_INDEX);
-        validateInputPositionSize(moveOrder, INPUT_TARGET_POSITION_INDEX);
+    private static void validateEachPosition(final List<String> moveCommand) {
+        validateInputPositionSize(moveCommand, INPUT_SOURCE_POSITION_INDEX);
+        validateInputPositionSize(moveCommand, INPUT_TARGET_POSITION_INDEX);
     }
 
-    private static void validateInputPositionSize(final List<String> moveOrder, final int index) {
-        if (moveOrder.get(index).length() != POSITION_SIZE) {
+    private static void validateInputPositionSize(final List<String> moveCommand, final int index) {
+        if (moveCommand.get(index).length() != POSITION_SIZE) {
             throw new IllegalArgumentException(ERROR_MOVE);
         }
     }
@@ -107,7 +107,7 @@ public final class Order {
         return orderCase.equals(MOVE);
     }
 
-    public static void validateStartOrder(final String input) {
+    public static void validateStartCommand(final String input) {
         if (!(input.equals(START.getValue()))) {
             throw new IllegalArgumentException("[ERROR] start 이외의 문자는 입력할 수 없습니다.");
         }
