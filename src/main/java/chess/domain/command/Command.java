@@ -6,13 +6,16 @@ import java.util.List;
 
 public class Command {
 
+    public static final int SECOND_INDEX = 1;
+    public static final int AFTER_THIRD_INDEX = 3;
+
     private CommandType commandType;
     private List<String> extraInputs = new ArrayList<>();
 
     public Command(List<String> commands) {
         commandType = CommandType.from(commands.get(0));
         if (CommandType.from(commands.get(0)) == CommandType.MOVE) {
-            this.extraInputs = commands.subList(1, 3);
+            this.extraInputs = commands.subList(SECOND_INDEX, AFTER_THIRD_INDEX);
         }
     }
     public boolean isStart() {
