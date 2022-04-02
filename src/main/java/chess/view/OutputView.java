@@ -29,7 +29,7 @@ public class OutputView {
     private static void printPiece(Chessboard board, int row) {
         for (int column = 0; column < Chessboard.SIZE.size(); column++) {
             if (board.isExistPosition(row, column)) {
-                System.out.print(Symbol.findSymbol(board.getPiece(row, column)).symbol());
+                System.out.print(Symbol.findSymbol(board.getPiece(row, column)).symbol(board.getPiece(row, column)));
                 continue;
             }
             System.out.print(BLANK);
