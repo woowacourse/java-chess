@@ -17,6 +17,8 @@ public enum Direction {
     TWO_UP_R(2, 0),
     TWO_DOWN_R(-2, 0),
 
+    TWO_UP_R_ONE_UP_C(2, 1),
+    TWO_UP_R_ONE_DOWN_C(2, -1),
     TWO_DOWN_R_ONE_UP_C(-2, 1),
     TWO_DOWN_R_ONE_DOWN_C(-2, -1),
     ONE_UP_R_TWO_UP_C(1, 2),
@@ -41,12 +43,12 @@ public enum Direction {
     }
 
     public static List<Direction> knight() {
-        return List.of(TWO_DOWN_R_ONE_UP_C, ONE_DOWN_R_TWO_UP_C, ONE_UP_R_TWO_UP_C,
-                ONE_UP_R_UP_C, TWO_DOWN_R_ONE_DOWN_C, ONE_UP_R_TWO_DOWN_C, ONE_DOWN_R_TWO_DOWN_C);
+        return List.of(TWO_UP_R_ONE_UP_C, TWO_UP_R_ONE_DOWN_C, TWO_DOWN_R_ONE_UP_C, TWO_DOWN_R_ONE_DOWN_C,
+                ONE_UP_R_TWO_DOWN_C, ONE_DOWN_R_TWO_UP_C, ONE_UP_R_TWO_UP_C, ONE_UP_R_UP_C, ONE_DOWN_R_TWO_DOWN_C);
     }
 
     public static List<Direction> king() {
-        return List.of(ONE_UP_R, ONE_DOWN_R, ONE_UP_C, ONE_DOWN_C, ONE_UP_R_UP_C,
+        return List.of(ONE_UP_R, ONE_UP_C, ONE_UP_R_UP_C, ONE_DOWN_R, ONE_DOWN_C,
                 ONE_UP_R_DOWN_C, ONE_DOWN_R_UP_C, ONE_DOWN_R_DOWN_C);
     }
 
