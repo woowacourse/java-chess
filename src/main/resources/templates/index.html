@@ -6,15 +6,19 @@
 </head>
 <body>
 <table>
-    {{#pieces}}
+    {{#board}}
+    {{#boardSymbols}}
     <tr>
         {{#this}}
-        <td>
-            {{this}}
+        {{#this}}
+        <td id={{position}}>
+            {{symbol}}
         </td>
         {{/this}}
+        {{/this}}
     </tr>
-    {{/pieces}}
+    {{/boardSymbols}}
+    {{/board}}
 </table>
 </body>
 </html>

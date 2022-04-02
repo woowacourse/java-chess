@@ -11,24 +11,24 @@ import java.util.Map;
 
 public class BoardDto {
 
-    private final List<List<String>> boardSymbols;
+    private final List<List<PieceDto>> boardSymbols;
 
-    private BoardDto(List<List<String>> boardSymbols) {
+    private BoardDto(List<List<PieceDto>> boardSymbols) {
         this.boardSymbols = boardSymbols;
     }
 
     public static BoardDto of(Map<String, Piece> pieces) {
-        List<List<String>> boardSymbols = new ArrayList<>();
+        List<List<PieceDto>> boardSymbols = new ArrayList<>();
         for (Integer row : Row.valuesByDescending()) {
             boardSymbols.add(makeLine(pieces, row));
         }
         return new BoardDto(boardSymbols);
     }
 
-    private static List<String> makeLine(Map<String, Piece> pieces, Integer row) {
-        List<String> symbols = new ArrayList<>();
+    private static List<PieceDto> makeLine(Map<String, Piece> pieces, Integer row) {
+        List<PieceDto> symbols = new ArrayList<>();
         for (Column column : Column.values()) {
-            symbols.add(findByKey(pieces, row, column));
+            symbols.add(new PieceDto(findByKey(pieces, row, column), row + column.name()));
         }
         return symbols;
     }
@@ -40,7 +40,7 @@ public class BoardDto {
         return Symbol.BLANK.value();
     }
 
-    public List<List<String>> get() {
+    public List<List<PieceDto>> getBoardSymbols() {
         return boardSymbols;
     }
 }

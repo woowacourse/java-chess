@@ -11,8 +11,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.port;
+import static spark.Spark.*;
 
 public class WebApplication {
 
@@ -21,7 +20,7 @@ public class WebApplication {
         Game game = new Game(new BoardInitializer());
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("pieces", BoardDto.of(game.toMap()).get());
+            model.put("board", BoardDto.of(game.toMap()));
             return render(model, "index.html");
         });
     }
