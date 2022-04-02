@@ -15,11 +15,11 @@ public final class Pawn extends NotNullPiece {
     private static final int DIRECTION_CRITERIA = 0;
     private static final int NO_DISTANCE = 0;
 
-    private boolean firstMove;
+    private PawnFirstMove pawnFirstMove;
 
     public Pawn(Camp camp) {
         super(camp, PAWN);
-        this.firstMove = true;
+        this.pawnFirstMove = PawnFirstMove.YES;
     }
 
     @Override
@@ -28,7 +28,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
-        firstMove = false;
+        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
-        firstMove = false;
+        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -47,7 +47,7 @@ public final class Pawn extends NotNullPiece {
         if (columnDistance != NO_DISTANCE) {
             return false;
         }
-        if (firstMove) {
+        if (pawnFirstMove.isYes()) {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
@@ -59,7 +59,7 @@ public final class Pawn extends NotNullPiece {
         if (columnDistance != NO_DISTANCE) {
             return false;
         }
-        if (firstMove) {
+        if (pawnFirstMove.isYes()) {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
@@ -71,7 +71,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        firstMove = false;
+        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -80,7 +80,7 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        firstMove = false;
+        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     private boolean canCapture(Position beforePosition, Position afterPosition) {
