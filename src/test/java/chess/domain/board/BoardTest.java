@@ -73,28 +73,6 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("위치 값을 받아, 해당 위치에 프로모션 가능한 폰이 있는지 반환한다.")
-    void hasPromotionPawn() {
-        //given
-        Board board = new Board();
-        board = board.movePiece(Position.from("f2"), Position.from("f4"));
-        board = board.movePiece(Position.from("b7"), Position.from("b5"));
-        board = board.movePiece(Position.from("f4"), Position.from("f5"));
-        board = board.movePiece(Position.from("b5"), Position.from("b4"));
-        board = board.movePiece(Position.from("f5"), Position.from("f6"));
-        board = board.movePiece(Position.from("b4"), Position.from("b3"));
-        board = board.movePiece(Position.from("f6"), Position.from("g7"));
-        board = board.movePiece(Position.from("b3"), Position.from("c2"));
-        board = board.movePiece(Position.from("g7"), Position.from("h8"));
-        //when
-        boolean whiteTeamPawnPromotion = board.hasPromotionPawn(Position.from("h8"));
-        boolean blackTeamPawnPromotion = board.hasPromotionPawn(Position.from("c2"));
-        //then
-        assertThat(whiteTeamPawnPromotion).isTrue();
-        assertThat(blackTeamPawnPromotion).isFalse();
-    }
-
-    @Test
     @DisplayName("폰을 프로모션 할 수 있다.")
     void promotePawn() {
         //given
@@ -113,5 +91,31 @@ class BoardTest {
         final Piece piece = board.findPieceInPosition(Position.from("h8"));
         //then
         assertThat(piece).isInstanceOf(Rook.class);
+    }
+
+    @Test
+    @DisplayName("프로모션 할 수 없는 기물을 프로모션 하려고 하면 예외를 발생시킨다.")
+    void promoteException() {
+        //given
+        final Board board = new Board();
+        final Position invalidPromotionPiecePosition = Position.from("a1");
+        final String promotionType = "q";
+        //when, then
+        assertThatThrownBy(() -> board.promotePawn(invalidPromotionPiecePosition, promotionType))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물은 프로모션 할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("끝에 도달하지 않은 폰을 프로모션 하려고 하면 예외를 발생시킨다.")
+    void a_Test() {
+        //given
+        final Board board = new Board();
+        final Position invalidPromotionPiecePosition = Position.from("a2");
+        final String promotionType = "q";
+        //when, then
+        assertThatThrownBy(() -> board.promotePawn(invalidPromotionPiecePosition, promotionType))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 기물은 프로모션 할 수 없습니다.");
     }
 }

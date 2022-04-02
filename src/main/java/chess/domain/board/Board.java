@@ -4,7 +4,6 @@ import static chess.domain.piece.TeamColor.WHITE;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamColor;
-import chess.game.TotalScore;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,17 +83,16 @@ public class Board {
         return TotalScore.getTotalPoint(teamPieces);
     }
 
-    public boolean hasPromotionPawn(final Position position) {
-        final Piece piece = findPieceInPosition(position);
-        if (!piece.isPawn()) {
-            return false;
-        }
-        return piece.canPromote();
-    }
-
     public Board promotePawn(final Position position, final String promotionType) {
         final Piece piece = findPieceInPosition(position);
+        validatePromoteCondition(piece);
         pieces.set(pieces.indexOf(piece), piece.promote(promotionType));
         return new Board(pieces, currentTurnTeamColor);
+    }
+
+    private void validatePromoteCondition(final Piece piece) {
+        if (!piece.canPromote()) {
+            throw new IllegalArgumentException("해당 기물은 프로모션 할 수 없습니다.");
+        }
     }
 }
