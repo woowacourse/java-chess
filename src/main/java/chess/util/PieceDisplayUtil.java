@@ -23,11 +23,11 @@ public class PieceDisplayUtil {
 
     private static class PieceDisplayMap {
 
-        static final String BLACK_DISPLAY_FORMATS = "♗♘♙♖♕♔";
-        static final String WHITE_DISPLAY_FORMATS = "♝♞♟♜♛♚";
+        static final String BLACK_DISPLAY_FORMATS = "♙♘♗♖♕♔";
+        static final String WHITE_DISPLAY_FORMATS = "♟♞♝♜♛♚";
         static final String EMPTY_DISPLAY_FORMAT = ".";
 
-        static final String COLORLESS_DISPLAY_FORMATS = "♝♞♟♜♛♚";
+        static final String COLORLESS_DISPLAY_FORMATS = "♟♞♝♜♛♚";
         static final String WEB_EMPTY_DISPLAY_FORMAT = "";
 
         static final int PAWN_IDX = 0;
@@ -45,14 +45,14 @@ public class PieceDisplayUtil {
             colorlessDisplayMap = initColorlessDisplayMap();
         }
 
-         static Map<Piece, String> initDisplayMap() {
+        static Map<Piece, String> initDisplayMap() {
             Map<Piece, String> displayMap = new HashMap<>();
             putEachPiece(BLACK_DISPLAY_FORMATS, displayMap, Color.BLACK);
             putEachPiece(WHITE_DISPLAY_FORMATS, displayMap, Color.WHITE);
             return displayMap;
         }
 
-         static Map<Piece, String> initColorlessDisplayMap() {
+        static Map<Piece, String> initColorlessDisplayMap() {
             Map<Piece, String> colorlessDisplayMap = new HashMap<>();
             for (Color color : Color.values()) {
                 putEachPiece(COLORLESS_DISPLAY_FORMATS, colorlessDisplayMap, color);
@@ -60,7 +60,7 @@ public class PieceDisplayUtil {
             return colorlessDisplayMap;
         }
 
-         static void putEachPiece(String displayFormat, Map<Piece, String> displayMap, Color color) {
+        static void putEachPiece(String displayFormat, Map<Piece, String> displayMap, Color color) {
             String[] displayFormats = displayFormat.split("");
             displayMap.put(new Pawn(color), displayFormats[PAWN_IDX]);
             displayMap.put(new NonPawn(color, PieceType.KNIGHT), displayFormats[KNIGHT_IDX]);
