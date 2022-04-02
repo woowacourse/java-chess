@@ -5,15 +5,31 @@
     <title>체스</title>
 </head>
 <body style="background: dimgray">
-<style> .outer_box {
-    width: 240px;
-    height: 240px;
-    margin: 50px auto;
+<style>.outer_box {
+    width: 800px;
+    height: 800px;
+    margin: 50px auto 50px 200px;
+    float: left;
+}
+
+.score_board {
+    width: 300px;
+    height: 600px;
+    margin: 150px 50px;
+    float: left;
+}
+
+.inner_score {
+    width: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    float: top;
+    text-align: center;
 }
 
 .inner_box {
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 100px;
     float: left;
     text-align: center;
     display: table;
@@ -32,103 +48,186 @@
 .white {
     background-color: white;
     color: black;
-} </style>
-<div class="outer_box">
+}
 
-    <div class="inner_box white "><div>{{a8}}</div></div>
-    <div class="inner_box black "><div>{{b8}}</div></div>
-    <div class="inner_box white "><div>{{c8}}</div></div>
-    <div class="inner_box black "><div>{{d8}}</div></div>
-    <div class="inner_box white "><div>{{e8}}</div></div>
-    <div class="inner_box black "><div>{{f8}}</div></div>
-    <div class="inner_box white "><div>{{g8}}</div></div>
-    <div class="inner_box black "><div>{{h8}}</div></div>
+.ui-button {
+    width: 100px;
+    height: 50px;
+    font-size: x-large;
+}
 
-    <div class="inner_box black "><div>{{a7}}</div></div>
-    <div class="inner_box white "><div>{{b7}}</div></div>
-    <div class="inner_box black "><div>{{c7}}</div></div>
-    <div class="inner_box white "><div>{{d7}}</div></div>
-    <div class="inner_box black "><div>{{e7}}</div></div>
-    <div class="inner_box white "><div>{{f7}}</div></div>
-    <div class="inner_box black "><div>{{g7}}</div></div>
-    <div class="inner_box white "><div>{{h7}}</div></div>
+.score {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+}
 
-    <div class="inner_box white "><div>{{a6}}</div></div>
-    <div class="inner_box black "><div>{{b6}}</div></div>
-    <div class="inner_box white "><div>{{c6}}</div></div>
-    <div class="inner_box black "><div>{{d6}}</div></div>
-    <div class="inner_box white "><div>{{e6}}</div></div>
-    <div class="inner_box black "><div>{{f6}}</div></div>
-    <div class="inner_box white "><div>{{g6}}</div></div>
-    <div class="inner_box black "><div>{{h6}}</div></div>
+.error {
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    color: darkred;
+}
 
-    <div class="inner_box black "><div>{{a5}}</div></div>
-    <div class="inner_box white "><div>{{b5}}</div></div>
-    <div class="inner_box black "><div>{{c5}}</div></div>
-    <div class="inner_box white "><div>{{d5}}</div></div>
-    <div class="inner_box black "><div>{{e5}}</div></div>
-    <div class="inner_box white "><div>{{f5}}</div></div>
-    <div class="inner_box black "><div>{{g5}}</div></div>
-    <div class="inner_box white "><div>{{h5}}</div></div>
+</style>
 
-    <div class="inner_box white "><div>{{a4}}</div></div>
-    <div class="inner_box black "><div>{{b4}}</div></div>
-    <div class="inner_box white "><div>{{c4}}</div></div>
-    <div class="inner_box black "><div>{{d4}}</div></div>
-    <div class="inner_box white "><div>{{e4}}</div></div>
-    <div class="inner_box black "><div>{{f4}}</div></div>
-    <div class="inner_box white "><div>{{g4}}</div></div>
-    <div class="inner_box black "><div>{{h4}}</div></div>
+<div id="chessBoard" class="outer_box">
 
-    <div class="inner_box black "><div>{{a3}}</div></div>
-    <div class="inner_box white "><div>{{b3}}</div></div>
-    <div class="inner_box black "><div>{{c3}}</div></div>
-    <div class="inner_box white "><div>{{d3}}</div></div>
-    <div class="inner_box black "><div>{{e3}}</div></div>
-    <div class="inner_box white "><div>{{f3}}</div></div>
-    <div class="inner_box black "><div>{{g3}}</div></div>
-    <div class="inner_box white "><div>{{h3}}</div></div>
+    <div class="inner_box white" id="a8"></div>
+    <div class="inner_box black" id="b8"></div>
+    <div class="inner_box white" id="c8"></div>
+    <div class="inner_box black" id="d8"></div>
+    <div class="inner_box white" id="e8"></div>
+    <div class="inner_box black" id="f8"></div>
+    <div class="inner_box white" id="g8"></div>
+    <div class="inner_box black" id="h8"></div>
 
-    <div class="inner_box white "><div>{{a2}}</div></div>
-    <div class="inner_box black "><div>{{b2}}</div></div>
-    <div class="inner_box white "><div>{{c2}}</div></div>
-    <div class="inner_box black "><div>{{d2}}</div></div>
-    <div class="inner_box white "><div>{{e2}}</div></div>
-    <div class="inner_box black "><div>{{f2}}</div></div>
-    <div class="inner_box white "><div>{{g2}}</div></div>
-    <div class="inner_box black "><div>{{h2}}</div></div>
+    <div class="inner_box black" id="a7"></div>
+    <div class="inner_box white" id="b7"></div>
+    <div class="inner_box black" id="c7"></div>
+    <div class="inner_box white" id="d7"></div>
+    <div class="inner_box black" id="e7"></div>
+    <div class="inner_box white" id="f7"></div>
+    <div class="inner_box black" id="g7"></div>
+    <div class="inner_box white" id="h7"></div>
 
-    <div class="inner_box black "><div>{{a1}}</div></div>
-    <div class="inner_box white "><div>{{b1}}</div></div>
-    <div class="inner_box black "><div>{{c1}}</div></div>
-    <div class="inner_box white "><div>{{d1}}</div></div>
-    <div class="inner_box black "><div>{{e1}}</div></div>
-    <div class="inner_box white "><div>{{f1}}</div></div>
-    <div class="inner_box black "><div>{{g1}}</div></div>
-    <div class="inner_box white "><div>{{h1}}</div></div>
+    <div class="inner_box white" id="a6"></div>
+    <div class="inner_box black" id="b6"></div>
+    <div class="inner_box white" id="c6"></div>
+    <div class="inner_box black" id="d6"></div>
+    <div class="inner_box white" id="e6"></div>
+    <div class="inner_box black" id="f6"></div>
+    <div class="inner_box white" id="g6"></div>
+    <div class="inner_box black" id="h6"></div>
+
+    <div class="inner_box black" id="a5"></div>
+    <div class="inner_box white" id="b5"></div>
+    <div class="inner_box black" id="c5"></div>
+    <div class="inner_box white" id="d5"></div>
+    <div class="inner_box black" id="e5"></div>
+    <div class="inner_box white" id="f5"></div>
+    <div class="inner_box black" id="g5"></div>
+    <div class="inner_box white" id="h5"></div>
+
+    <div class="inner_box white" id="a4"></div>
+    <div class="inner_box black" id="b4"></div>
+    <div class="inner_box white" id="c4"></div>
+    <div class="inner_box black" id="d4"></div>
+    <div class="inner_box white" id="e4"></div>
+    <div class="inner_box black" id="f4"></div>
+    <div class="inner_box white" id="g4"></div>
+    <div class="inner_box black" id="h4"></div>
+
+    <div class="inner_box black" id="a3"></div>
+    <div class="inner_box white" id="b3"></div>
+    <div class="inner_box black" id="c3"></div>
+    <div class="inner_box white" id="d3"></div>
+    <div class="inner_box black" id="e3"></div>
+    <div class="inner_box white" id="f3"></div>
+    <div class="inner_box black" id="g3"></div>
+    <div class="inner_box white" id="h3"></div>
+
+    <div class="inner_box white" id="a2"></div>
+    <div class="inner_box black" id="b2"></div>
+    <div class="inner_box white" id="c2"></div>
+    <div class="inner_box black" id="d2"></div>
+    <div class="inner_box white" id="e2"></div>
+    <div class="inner_box black" id="f2"></div>
+    <div class="inner_box white" id="g2"></div>
+    <div class="inner_box black" id="h2"></div>
+
+    <div class="inner_box black" id="a1"></div>
+    <div class="inner_box white" id="b1"></div>
+    <div class="inner_box black" id="c1"></div>
+    <div class="inner_box white" id="d1"></div>
+    <div class="inner_box black" id="e1"></div>
+    <div class="inner_box white" id="f1"></div>
+    <div class="inner_box black" id="g1"></div>
+    <div class="inner_box white" id="h1"></div>
 </div>
-
-<div>
-    <form method="post" action="/command/move">
-        <input type="text" name="from"/>
-        <input type="text" name="to"/>
-        <button type="submit">move!!</button>
-    </form>
-    <form method="post" action="/command/end">
-        <button type="submit">end</button>
-    </form>
-</div>
-
-<div>
-    <div>
-        white score : {{WHITE}}
-        black score : {{BLACK}}
+<div class="score_board">
+    <div class="inner_score">
+        <button class="ui-button" id="start" onclick="start()">start</button>
+        <button class="ui-button" id="end" onclick="end()">end</button>
+    </div>
+    <div class="inner_score">
+        <div class="score" id="white"></div>
+        <div class="score" id="black"></div>
+    </div>
+    <div class="inner_score">
+        <div class="error" id="error"></div>
     </div>
 </div>
 
-<div>
-    {{error}}
-</div>
+<script>
+    let fromTo = "";
+
+    chessBoard.addEventListener("click", ({target: {id}}) => {
+        fromTo = fromTo + id + " ";
+        if (fromTo.length === 6) {
+            move();
+            fromTo = "";
+        }
+    })
+
+    async function move() {
+        const response = await fetch("/command/move", {method: "POST", body: fromTo});
+        const json = response.json();
+        await drawBoard(json);
+    }
+
+    async function start() {
+        const response = await fetch("/command/start", {method: "POST"});
+        const json = response.json();
+        await drawBoard(json);
+    }
+
+    async function end() {
+        const response = await fetch("/command/end", {method: "POST"});
+        const json = response.json();
+        await drawBoard(json);
+    }
+
+    async function updateBoard() {
+        const data = fetchData();
+        await drawBoard(data);
+    }
+
+    async function fetchData() {
+        const data = await fetch("/pieces")
+        return await data.json();
+    }
+
+    async function removeElement() {
+        document.getElementById("error").innerText = "";
+        const chessBoard = document.getElementById("chessBoard");
+        for (let i = 0; i < chessBoard.children.length; i++) {
+            chessBoard.children[i].innerHTML = `<div id=${chessBoard.children[i].id}></div>`
+        }
+    }
+
+    async function drawBoard(data) {
+        await removeElement();
+        data.then(res => Object.keys(res).forEach(function (value) {
+            if (value === "isKingDie") {
+                if (res[value] === true)
+                    console.log("King Die");
+                return;
+            }
+            const element = document.getElementById(value);
+            if (value === "white" || value === "black") {
+                element.innerText = `${value} 점수 : ${res[value]}`;
+            } else if (value === "error") {
+                element.innerText = `${res[value]}`;
+            } else {
+                element.innerHTML = `<img src=${res[value]} id=${value} alt="piece" height="80px" width="80px" style="padding: 5px"/>`;
+            }
+
+        }));
+    }
+
+    updateBoard();
+</script>
 
 </body>
 </html>
