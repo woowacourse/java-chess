@@ -19,11 +19,11 @@ public abstract class Piece {
     public abstract boolean isMovable(Position fromPosition, Position toPosition);
 
     public boolean isKing() {
-        return false;
+        return this instanceof King;
     }
 
     public boolean isPawn() {
-        return false;
+        return this instanceof Pawn;
     }
 
     public boolean isMyTeam(Piece piece) {

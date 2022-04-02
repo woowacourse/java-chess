@@ -43,9 +43,4 @@ public class Pawn extends Piece {
         return List.of(Direction.RIGHTDOWN, Direction.LEFTDOWN).contains(direction)
                 && toPosition.getRankDifference(fromPosition) == -RANK_DIFFERENCE;
     }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
 }
