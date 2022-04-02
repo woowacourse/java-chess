@@ -16,14 +16,30 @@ public class WebApplication {
 
     public static void main(String[] args) {
         staticFiles.location("/static");
+        initHomeRouteHandler();
+        initSearchRouteHandler();
+        initGameRouterHandler();
+    }
 
+    private static void initHomeRouteHandler() {
         get("/", (req, res) -> render(null, "home.html"));
-        post("/new-game", (req, res) -> {
+        post("/", (req, res) -> {
             res.type("application/json");
             NewGameModel newGameModel = controller.initGame();
             return newGameModel.toJson();
         });
+    }
 
+    private static void initSearchRouteHandler() {
+        get("/search", (req, res) -> render(null, "search.html"));
+        post("/search", (req, res) -> {
+            res.type("application/json");
+            int gameId = Integer.parseInt(req.queryParams("game_id"));
+            return controller.searchGame(gameId).toJson();
+        });
+    }
+
+    private static void initGameRouterHandler() {
         get("/game/:id", (req, res) -> {
             int gameId = Integer.parseInt(req.params("id")); // TODO: handle exception on non int input
             return render(controller.findGame(gameId), "game.html");
@@ -31,13 +47,6 @@ public class WebApplication {
         post("/game/:id", (req, res) -> {
             PlayGameRequestDto request = new PlayGameRequestDto(req.params("id"), req.body());
             return render(controller.playGame(request), "game.html");
-        });
-
-        get("/search", (req, res) -> render(null, "search.html"));
-        post("/search-result", (req, res) -> {
-            res.type("application/json");
-            int gameId = Integer.parseInt(req.queryParams("game_id"));
-            return controller.searchGame(gameId).toJson();
         });
     }
 
