@@ -75,17 +75,18 @@ public class Position {
     }
 
     public void checkOtherPiecesInPathToTarget(final Position targetPosition, final List<Position> positions) {
-        if (this == targetPosition) {
-            return;
+        Position currentPosition = this;
+        while (currentPosition != targetPosition) {
+            currentPosition.checkOtherPiecesInCurrentPosition(positions);
+            currentPosition = currentPosition.nextPosition(targetPosition);
         }
+    }
 
+    private void checkOtherPiecesInCurrentPosition(final List<Position> positions) {
         if (positions.stream()
                 .anyMatch(another -> this == another)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
-
-        nextPosition(targetPosition)
-                .checkOtherPiecesInPathToTarget(targetPosition, positions);
     }
 
     private Position nextPosition(final Position targetPosition) {
