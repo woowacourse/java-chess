@@ -1,10 +1,9 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.state.Finish;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.domain.piece.Color;
-import java.util.List;
 
 public class ChessGame {
 
@@ -38,10 +37,8 @@ public class ChessGame {
     }
 
     public double calculateScore(final Color color) {
-        final List<Pieces> piecesOnColumns = chessBoard.getPiecesOnColumns(color);
-        final ScoreCalculator calculator = ScoreCalculator.getInstance();
-
-        return calculator.calculateColumns(piecesOnColumns);
+        final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
+        return calculator.calculate(color);
     }
 
     public ChessBoard getChessBoard() {

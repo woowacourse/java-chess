@@ -3,52 +3,59 @@ package chess.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.fixedmovablepiece.Knight;
+import chess.domain.piece.Piece;
+import chess.domain.piece.fixedmovablepiece.King;
 import chess.domain.piece.pawn.BlackPawn;
+import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.straightmovablepiece.Bishop;
-import chess.domain.piece.straightmovablepiece.Queen;
-import java.util.List;
+import chess.domain.piece.straightmovablepiece.Rook;
+import chess.domain.position.Position;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ScoreCalculatorTest {
 
     @Test
-    @DisplayName("한 컬럼의 점수를 계산한다.")
-    void calculateOneColumn() {
-        final Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK)));
-        final ScoreCalculator calculator = ScoreCalculator.getInstance();
-        final double score = calculator.calculateOneColumn(pieces);
+    @DisplayName("여러 컬럼의 검은색 점수를 계산한다.")
+    void calculateColumnsForBlack() {
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+                Map.entry(Position.of("a1"), new King(Color.WHITE)),
+                Map.entry(Position.of("a8"), new King(Color.BLACK)),
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("c4"), new WhitePawn()),
+                Map.entry(Position.of("a4"), new BlackPawn()),
+                Map.entry(Position.of("a7"), new BlackPawn()),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
+        ));
+        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
-        assertThat(score).isEqualTo(5.5);
+        final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
+        final double score = calculator.calculate(Color.BLACK);
+
+        assertThat(score).isEqualTo(3);
     }
 
     @Test
-    @DisplayName("폰이 두 개 이상 포함된 한 컬럼의 점수를 계산한다.")
-    void calculateOneColumnWithPawns() {
-        final Pieces pieces = new Pieces(List.of(new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                new BlackPawn(), new BlackPawn(), new BlackPawn()));
-        final ScoreCalculator calculator = ScoreCalculator.getInstance();
-        final double score = calculator.calculateOneColumn(pieces);
+    @DisplayName("여러 컬럼의 한약색 점수를 계산한다.")
+    void calculateColumnsForWhite() {
+        final Map<Position, Piece> testPieces = new HashMap<>(Map.ofEntries(
+                Map.entry(Position.of("a1"), new King(Color.WHITE)),
+                Map.entry(Position.of("a8"), new King(Color.BLACK)),
+                Map.entry(Position.of("b3"), new WhitePawn()),
+                Map.entry(Position.of("b4"), new WhitePawn()),
+                Map.entry(Position.of("a4"), new Bishop(Color.WHITE)),
+                Map.entry(Position.of("a7"), new Rook(Color.WHITE)),
+                Map.entry(Position.of("c5"), new BlackPawn()),
+                Map.entry(Position.of("b8"), new BlackPawn())
+        ));
+        ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 
-        assertThat(score).isEqualTo(7);
-    }
+        final ScoreCalculator calculator = new ScoreCalculator(chessBoard.getPieces());
+        final double score = calculator.calculate(Color.WHITE);
 
-    @Test
-    @DisplayName("여러 컬럼의 점수를 계산한다.")
-    void calculateColumns() {
-        final List<Pieces> pieces = List.of(
-                new Pieces(List.of(
-                        new Knight(Color.BLACK), new Bishop(Color.BLACK),
-                        new BlackPawn(), new BlackPawn(), new BlackPawn())
-                ),
-                new Pieces(List.of(
-                        new BlackPawn(), new BlackPawn(), new Queen(Color.BLACK))
-                )
-        );
-        final ScoreCalculator calculator = ScoreCalculator.getInstance();
-        final double score = calculator.calculateColumns(pieces);
-
-        assertThat(score).isEqualTo(17);
+        assertThat(score).isEqualTo(9);
     }
 }

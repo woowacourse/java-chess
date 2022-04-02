@@ -19,7 +19,7 @@ public class ReadyTest {
         final var state = new Ready();
         final var actual = state.proceed(chessBoard, new GameCommand("start"));
 
-        assertThat(actual).isInstanceOf(Start.class);
+        assertThat(actual).isInstanceOf(Running.class);
     }
 
     @Test

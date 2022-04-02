@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Symbol;
@@ -50,10 +49,7 @@ public class ChessBoard {
         }
     }
 
-    public void move(final GameCommand gameCommand) {
-        final Position from = gameCommand.getFromPosition();
-        final Position to = gameCommand.getToPosition();
-
+    public void move(final Position from, final Position to) {
         final Piece piece = selectPiece(from);
         final List<Position> finalMovablePositions = getMovablePositions(from, piece);
 
@@ -170,30 +166,14 @@ public class ChessBoard {
     }
 
     public boolean isEnd() {
-        long kingCount = pieces.values().stream()
+        return getKingCount() != KING_COUNTS;
+    }
+
+    private long getKingCount() {
+        final long kingCount = pieces.values().stream()
                 .filter(piece -> piece.isSameSymbol(Symbol.KING))
                 .count();
-        return kingCount != KING_COUNTS;
-    }
-
-    public List<Pieces> getPiecesOnColumns(final Color color) {
-        final List<Pieces> result = new ArrayList<>();
-        for (final Column column : Column.values()) {
-            result.add(getPiecesOnColumn(column, color));
-        }
-        return result;
-    }
-
-    public Pieces getPiecesOnColumn(final Column column, final Color color) {
-        final List<Piece> result = new ArrayList<>();
-        for (final Row row : Row.values()) {
-            final Piece piece = pieces.get(Position.of(column, row));
-            result.add(piece);
-        }
-        final List<Piece> value = result.stream()
-                .filter(piece -> piece.isSameColor(color))
-                .collect(Collectors.toList());
-        return new Pieces(value);
+        return kingCount;
     }
 
     public Map<Position, Piece> getPieces() {

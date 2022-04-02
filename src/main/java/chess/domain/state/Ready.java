@@ -19,7 +19,7 @@ public final class Ready implements State {
     }
 
     private State start() {
-        return new WhiteTurn();
+        return new WhiteRunning();
     }
 
     private State end() {

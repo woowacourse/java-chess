@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.state.Finish;
 import chess.domain.state.State;
-import chess.domain.state.WhiteTurn;
+import chess.domain.state.WhiteRunning;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.fixedmovablepiece.King;
@@ -35,7 +35,7 @@ public class ChessGameTest {
         final ChessGame chessGame = new ChessGame(new ChessBoard(() -> testBoard));
         final State state = chessGame.playGameByCommand(new GameCommand("start"));
 
-        assertThat(state).isInstanceOf(WhiteTurn.class);
+        assertThat(state).isInstanceOf(WhiteRunning.class);
     }
 
     @Test

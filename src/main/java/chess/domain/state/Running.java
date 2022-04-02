@@ -7,7 +7,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public abstract class Start implements State {
+public abstract class Running implements State {
 
     public abstract State move(final ChessBoard chessBoard, final GameCommand gameCommand);
 
