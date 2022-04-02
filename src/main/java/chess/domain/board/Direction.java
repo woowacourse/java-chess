@@ -39,8 +39,6 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 체스 기물이 움직일 수 없는 방향입니다."));
     }
 
-<<<<<<< HEAD
-=======
     public static List<Direction> getCardinalDirections() {
         return List.of(U, D, R, L);
     }
@@ -53,7 +51,6 @@ public enum Direction {
         return List.of(U, D, R, L, UR, UL, DR, DL);
     }
 
->>>>>>> step1
     public boolean isForward() {
         return List.of(D, U).contains(this);
     }

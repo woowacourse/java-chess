@@ -7,10 +7,8 @@ import chess.domain.board.Board;
 import chess.domain.board.File;
 import chess.domain.board.Location;
 import chess.domain.board.Rank;
-<<<<<<< HEAD
-=======
+
 import chess.domain.piece.Team;
->>>>>>> step1
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,11 +22,7 @@ class RunningTest {
     @DisplayName("white상태에서 start를 하면 예외가 발생한다.")
     void whiteStartTest() {
         State state = new White(new Board());
-<<<<<<< HEAD
-        assertThatThrownBy(state::start).isInstanceOf(IllegalArgumentException.class);
-=======
         assertThatThrownBy(state::start).isInstanceOf(IllegalStateException.class);
->>>>>>> step1
     }
 
     @Test
@@ -56,12 +50,8 @@ class RunningTest {
     @DisplayName("White 상태에서 White가 아닌 기물을 움직이면 예외발생.")
     void WhiteMoveTest() {
         State state = new White(new Board());
-<<<<<<< HEAD
-        assertThatThrownBy(() -> state.move(Location.of(File.F, Rank.SEVEN), Location.of(File.F, Rank.FIVE)))
-=======
         assertThatThrownBy(
                 () -> state.move(Team.WHITE, Location.of(File.F, Rank.SEVEN), Location.of(File.F, Rank.FIVE)))
->>>>>>> step1
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -70,12 +60,7 @@ class RunningTest {
     @MethodSource
     void checkSourcePiece(Location source, Location target) {
         White white = new White(new Board());
-<<<<<<< HEAD
-        assertThatThrownBy(() -> white.move(source, target)).isInstanceOf(
-=======
-        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(
->>>>>>> step1
-                IllegalArgumentException.class);
+        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(IllegalArgumentException.class);
     }
 
     public static Stream<Arguments> checkSourcePiece() {
@@ -89,12 +74,7 @@ class RunningTest {
     @MethodSource
     void checkDirection(Location source, Location target) {
         White white = new White(new Board());
-<<<<<<< HEAD
-        assertThatThrownBy(() -> white.move(source, target)).isInstanceOf(
-=======
-        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(
->>>>>>> step1
-                IllegalArgumentException.class);
+        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(IllegalArgumentException.class);
     }
 
     public static Stream<Arguments> checkDirection() {
@@ -111,12 +91,7 @@ class RunningTest {
     @MethodSource
     void checkDistance(Location source, Location target) {
         White white = new White(new Board());
-<<<<<<< HEAD
-        assertThatThrownBy(() -> white.move(source, target)).isInstanceOf(
-=======
-        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(
->>>>>>> step1
-                IllegalArgumentException.class);
+        assertThatThrownBy(() -> white.move(Team.WHITE, source, target)).isInstanceOf(IllegalArgumentException.class);
     }
 
     public static Stream<Arguments> checkDistance() {
@@ -127,9 +102,4 @@ class RunningTest {
                 Arguments.arguments(Location.of("c1"), Location.of("c7"))
         );
     }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> step1
 }
