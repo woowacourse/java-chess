@@ -31,16 +31,16 @@ public class ChessBoardPosition {
         }
     }
 
+    public ChessBoardPosition plus(ChessBoardPosition unitMovement) {
+        return new ChessBoardPosition(column + unitMovement.column, row + unitMovement.row);
+    }
+
     public ChessBoardPosition minus(ChessBoardPosition position) {
         return new ChessBoardPosition(column - position.column, row - position.row);
     }
 
     public ChessBoardPosition hardCopy() {
         return new ChessBoardPosition(column, row);
-    }
-
-    public ChessBoardPosition plus(ChessBoardPosition unitMovement) {
-        return new ChessBoardPosition(column + unitMovement.column, row + unitMovement.row);
     }
 
     public double slope() {

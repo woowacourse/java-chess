@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BishopTest {
+class BishopTest {
     @Test
     @DisplayName("(1, 1) 방향으로 이동할때 경로 반환")
     void makePathTest() {

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class PawnTest {
+class PawnTest {
     List<ChessBoardPosition> blackTeamInitialPosition;
     List<ChessBoardPosition> whiteTeamInitialPosition;
 

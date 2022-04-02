@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.*;
 
 class ChessBoardPositionTest {
-
     @ParameterizedTest
     @CsvSource(value = {"1:0", "1:9", "10:3", "3:10"}, delimiter = ':')
     @DisplayName("유효하지 않은 체스판 내부 위치를 생성하면 에외를 발생한다.")
@@ -24,7 +23,6 @@ class ChessBoardPositionTest {
         ChessBoardPosition chessBoardPosition = ChessBoardPosition.of(1, 3);
         assertThat(chessBoardPosition.equals(ChessBoardPosition.of(1, 3))).isTrue();
     }
-
 
     @Test
     @DisplayName("인자로 들어온 위치가 현재 내 위치랑 다른지 확인하는 테스트한다.")

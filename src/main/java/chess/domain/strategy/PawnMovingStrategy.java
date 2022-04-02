@@ -1,7 +1,6 @@
 package chess.domain.strategy;
 
 import chess.domain.ChessBoardPosition;
-import chess.domain.piece.Pawn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,17 +61,17 @@ public class PawnMovingStrategy implements MovingStrategy {
         }
     }
 
-    @Override
-    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        ChessBoardPosition direction = targetPosition.minus(sourcePosition);
-        return killMovement.contains(direction);
-    }
-
     private ChessBoardPosition getUnitMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessBoardPosition direction = targetPosition.minus(sourcePosition);
         return ableMovement.stream()
                 .filter(it -> it.slope() == direction.slope())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(CANT_MOVE_EXCEPTION));
+    }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessBoardPosition direction = targetPosition.minus(sourcePosition);
+        return killMovement.contains(direction);
     }
 }

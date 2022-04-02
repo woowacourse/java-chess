@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class QueenTest {
+class QueenTest {
     @Test
     @DisplayName("(1, 0) 방향으로 이동할때 경로 반환")
     void makePathTest() {

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class MovingStrategyTest {
+class MovingStrategyTest {
 
     @Test
     @DisplayName("연속적 움직임 전략을 가질 때 두 위치 사이 경로를 구한다")

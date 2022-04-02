@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.domain.ChessBoard;
-import chess.domain.ChessGame;
 import chess.domain.Team;
 import java.util.HashMap;
 import java.util.Map;

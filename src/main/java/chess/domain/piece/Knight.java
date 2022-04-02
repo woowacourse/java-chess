@@ -1,18 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.ChessBoardPosition;
 import chess.domain.Team;
 import chess.domain.strategy.NoPathMovingStrategy;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Knight extends ChessPiece {
-    private static final double SCORE = 2.5;
-    private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
-    private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
     private static final int LEFT_KNIGHT_COLUMN = 2;
     private static final int RIGHT_KNIGHT_COLUMN = 7;
     private static final int BLACK_TEAM_ROW = 8;
@@ -21,6 +16,10 @@ public class Knight extends ChessPiece {
     private static final int NORTH = 1;
     private static final int SOUTH = -1;
     private static final int WEST = -1;
+
+    private static final double SCORE = 2.5;
+    private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
+    private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
 
     static {
         blackTeamInitialPosition.put(ChessBoardPosition.of(LEFT_KNIGHT_COLUMN, BLACK_TEAM_ROW), new Knight(Team.BLACK));

@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ChessBoardTest {
-
+class ChessBoardTest {
     @Test
     @DisplayName("체스기물을 이동한다")
     void moveTest() {

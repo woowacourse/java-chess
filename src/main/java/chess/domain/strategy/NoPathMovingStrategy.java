@@ -18,17 +18,17 @@ public class NoPathMovingStrategy implements MovingStrategy {
         return Collections.emptyList();
     }
 
-    @Override
-    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        ChessBoardPosition movement = targetPosition.minus(sourcePosition);
-        return ableMovement.stream()
-                .anyMatch(it -> it.equals(movement));
-    }
-
     private void validateMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessBoardPosition movement = targetPosition.minus(sourcePosition);
         if (!ableMovement.contains(movement)) {
             throw new IllegalArgumentException(CANT_MOVE_EXCEPTION);
         }
+    }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessBoardPosition movement = targetPosition.minus(sourcePosition);
+        return ableMovement.stream()
+                .anyMatch(it -> it.equals(movement));
     }
 }

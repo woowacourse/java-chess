@@ -24,18 +24,18 @@ public class ContinuousMovingStrategy implements MovingStrategy {
         return path;
     }
 
-    @Override
-    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
-        ChessBoardPosition direction = targetPosition.minus(sourcePosition);
-        return ableMovement.stream()
-                .anyMatch(it -> it.slope() == direction.slope());
-    }
-
     private ChessBoardPosition getUnitMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
         ChessBoardPosition direction = targetPosition.minus(sourcePosition);
         return ableMovement.stream()
                 .filter(it -> it.slope() == direction.slope())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(CANT_MOVE_EXCEPTION));
+    }
+
+    @Override
+    public boolean isKillMovement(ChessBoardPosition sourcePosition, ChessBoardPosition targetPosition) {
+        ChessBoardPosition direction = targetPosition.minus(sourcePosition);
+        return ableMovement.stream()
+                .anyMatch(it -> it.slope() == direction.slope());
     }
 }

@@ -10,10 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Pawn extends ChessPiece {
-    private static final double SCORE = 1;
-    private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPawn = new HashMap<>();
-    private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPawn = new HashMap<>();
-
     private static final int EAST = 1;
     private static final int NORTH = 1;
     private static final int SOUTH = -1;
@@ -21,6 +17,9 @@ public class Pawn extends ChessPiece {
     private static final int STAY = 0;
     private static final int BLACK_TEAM_ROW = 7;
     private static final int WHITE_TEAM_ROW = 2;
+    private static final double SCORE = 1;
+    private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPawn = new HashMap<>();
+    private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPawn = new HashMap<>();
     private static final List<Integer> initialColumn = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 
     static {

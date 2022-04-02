@@ -5,9 +5,6 @@ import chess.domain.Team;
 import chess.domain.piece.ChessPiece;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessStatusDto;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,33 +14,22 @@ public class OutputView {
     private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
     private static final String GAME_MOVE_COMMAND_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final Map<String, Character> chessPieceNameToCharacter = new HashMap<>();
     private static final String TEAM_SCORE_DELIMITER = ": ";
     private static final String WINNER_FORMAT = "우승 팀: %s\n";
-
+    private static final String EMPTY_SPACE = ".";
     private static final List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
     private static final List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
-    private static final String EMPTY_SPACE = ".";
 
-
-    static {
-        chessPieceNameToCharacter.put("PAWN", 'p');
-        chessPieceNameToCharacter.put("BISHOP", 'b');
-        chessPieceNameToCharacter.put("KNIGHT", 'n');
-        chessPieceNameToCharacter.put("ROOK", 'r');
-        chessPieceNameToCharacter.put("KING", 'k');
-        chessPieceNameToCharacter.put("QUEEN", 'q');
-    }
+    private OutputView() {}
 
     public static void printChessGameStart() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(CHESS_GAME_START_MESSAGE)
-                .append(System.lineSeparator())
-                .append(GAME_START_COMMAND_MESSAGE)
-                .append(System.lineSeparator())
-                .append(GAME_END_COMMAND_MESSAGE)
-                .append(System.lineSeparator())
-                .append(GAME_MOVE_COMMAND_MESSAGE);
+        String stringBuilder = CHESS_GAME_START_MESSAGE
+                + System.lineSeparator()
+                + GAME_START_COMMAND_MESSAGE
+                + System.lineSeparator()
+                + GAME_END_COMMAND_MESSAGE
+                + System.lineSeparator()
+                + GAME_MOVE_COMMAND_MESSAGE;
         System.out.println(stringBuilder);
     }
 
@@ -63,7 +49,7 @@ public class OutputView {
 
     private static void printSector(Map<ChessBoardPosition, ChessPiece> mapInformation, int row, int column) {
         ChessBoardPosition target = ChessBoardPosition.of(column, row);
-        if (mapInformation.keySet().contains(target)) {
+        if (mapInformation.containsKey(target)) {
             printChessPiece(mapInformation.get(target));
             return;
         }

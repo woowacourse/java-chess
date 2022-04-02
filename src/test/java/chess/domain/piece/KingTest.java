@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class KingTest {
+class KingTest {
     @Test
     @DisplayName("(1,0)방향으로 이동할때 사이의 경로를 반환한다")
     void makePathTest() {
