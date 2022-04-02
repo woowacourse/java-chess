@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import chess.controller.WebController;
+import chess.dto.SearchResultDto;
 import chess.dto.response.PlayGameRequestDto;
 import chess.dto.response.CreateGameDto;
 import spark.ModelAndView;
@@ -27,7 +28,8 @@ public class WebRouter {
         post("/search", (req, res) -> {
             res.type("application/json");
             int gameId = Integer.parseInt(req.queryParams("game_id"));
-            return controller.searchGame(gameId).toJson();
+            SearchResultDto searchResult = controller.searchGame(gameId);
+            return searchResult.toJson();
         });
     }
 
@@ -39,6 +41,13 @@ public class WebRouter {
         post("/game/:id", (req, res) -> {
             PlayGameRequestDto request = new PlayGameRequestDto(req.params("id"), req.body());
             return render(controller.playGame(request), "game.html");
+        });
+    }
+
+    public void initResultRouterHandler() {
+        get("/result/:id", (req, res) -> {
+            int gameId = Integer.parseInt(req.params("id"));
+            return render(controller.findGameResult(gameId), "result.html");
         });
     }
 

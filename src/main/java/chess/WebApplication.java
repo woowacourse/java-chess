@@ -13,5 +13,6 @@ public class WebApplication {
         router.initHomeRouteHandler();
         router.initSearchRouteHandler();
         router.initGameRouterHandler();
+        router.initResultRouterHandler();
     }
 }
