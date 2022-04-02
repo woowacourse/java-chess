@@ -74,7 +74,7 @@ class BoardTest {
         });
 
         board.move("a2", "b3");
-        assertThat(board.piece(Position.of("b3")).get()).isEqualTo(whitePawn);
+        assertThat(board.findPiece(Position.of("b3")).get()).isEqualTo(whitePawn);
     }
 
     @Test
@@ -170,7 +170,7 @@ class BoardTest {
         });
 
         board.move("b8", "d7");
-        assertThat(board.piece(Position.of("d7")).get()).isEqualTo(piece);
+        assertThat(board.findPiece(Position.of("d7")).get()).isEqualTo(piece);
     }
 
     @Test

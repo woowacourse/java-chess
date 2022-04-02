@@ -31,7 +31,7 @@ public final class OutputView {
     }
 
     private static void printSymbol(Board board, Position position) {
-        Optional<Piece> wrappedPiece = board.piece(position);
+        Optional<Piece> wrappedPiece = board.findPiece(position);
         if (wrappedPiece.isPresent()) {
             System.out.print(wrappedPiece.get().symbol());
             return;

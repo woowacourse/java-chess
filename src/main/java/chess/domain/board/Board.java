@@ -31,7 +31,7 @@ public final class Board {
         Position targetPosition = Position.of(target);
         validatePositionsNotEquals(sourcePosition, targetPosition);
 
-        Piece piece = findPiece(sourcePosition);
+        Piece piece = pickPiece(sourcePosition);
         validateTargetNotSameColor(targetPosition, piece);
 
         checkMovableAndMovePiece(sourcePosition, targetPosition, piece);
@@ -64,7 +64,7 @@ public final class Board {
         return gameResult;
     }
 
-    public Optional<Piece> piece(final Position position) {
+    public Optional<Piece> findPiece(final Position position) {
         return pieces.findPiece(position);
     }
 
@@ -74,8 +74,8 @@ public final class Board {
         }
     }
 
-    private Piece findPiece(Position source) {
-        Optional<Piece> piece = piece(source);
+    private Piece pickPiece(Position source) {
+        Optional<Piece> piece = findPiece(source);
         if (piece.isEmpty()) {
             throw new IllegalArgumentException(ERROR_PIECE_NOT_EXIST);
         }
@@ -83,7 +83,7 @@ public final class Board {
     }
 
     private void validateTargetNotSameColor(Position target, Piece piece) {
-        if (pieces.pieceExist(target) && piece.isSameColor(findPiece(target))) {
+        if (pieces.pieceExist(target) && piece.isSameColor(pickPiece(target))) {
             throw new IllegalArgumentException(ERROR_CANNOT_CATCH_SAME_COLOR);
         }
     }
