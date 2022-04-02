@@ -2,12 +2,10 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Score;
-import chess.domain.chesspiece.ChessPiece;
 import chess.domain.position.Position;
 import chess.result.EndResult;
 import chess.result.MoveResult;
 import chess.result.StartResult;
-import java.util.Map;
 
 public class ChessController {
 
@@ -35,9 +33,5 @@ public class ChessController {
 
     public EndResult end() {
         return chessGame.end();
-    }
-
-    public Map<Position, ChessPiece> findAllPiece() {
-        return chessGame.findAllPiece();
     }
 }
