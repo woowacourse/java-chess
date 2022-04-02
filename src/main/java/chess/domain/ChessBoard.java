@@ -19,6 +19,7 @@ import java.util.Set;
 
 public class ChessBoard {
 
+    private static final int TOTAL_KING_COUNT = 2;
     private final Map<Position, Piece> cells = new LinkedHashMap<>();
 
     public ChessBoard() {
@@ -85,26 +86,33 @@ public class ChessBoard {
                 .filter(Piece::isKing)
                 .count();
 
-        return kingCount == 2;
+        return kingCount == TOTAL_KING_COUNT;
     }
 
-    public String findWinTeam(Map<Team, Double> teamScores) {
+    public Result findWinTeam(Map<Team, Double> teamScores) {
         Double whiteScore = teamScores.get(WHITE);
         Double blackScore = teamScores.get(BLACK);
 
         if (isExistKing() && whiteScore.equals(blackScore)) {
-            return "무승부";
+            return Result.DRAW;
         }
 
-        Piece winKing = getWinKing();
-
-        return winKing.getTeam().toString();
+        Team winTeam = getWinTeam();
+        return Result.of(winTeam);
     }
 
     private void movePiece(Position source, Position target, Piece piece) {
         piece.move(source, target, this);
         cells.remove(source);
         cells.put(target, piece);
+    }
+
+    private double calculateEntireScore(Team team) {
+        return cells.values()
+                .stream()
+                .filter(piece -> piece.getTeam() == team)
+                .mapToDouble(Piece::getScore)
+                .sum();
     }
 
     private int countSameRankPawn(Team team) {
@@ -114,14 +122,6 @@ public class ChessBoard {
 
         return Arrays.stream(values)
                 .mapToInt(file -> countPawn(pawns, file))
-                .sum();
-    }
-
-    private double calculateEntireScore(Team team) {
-        return cells.values()
-                .stream()
-                .filter(piece -> piece.getTeam() == team)
-                .mapToDouble(Piece::getScore)
                 .sum();
     }
 
@@ -145,11 +145,13 @@ public class ChessBoard {
         return 0;
     }
 
-    private Piece getWinKing() {
-        return cells.values()
+    private Team getWinTeam() {
+        Piece winPiece = cells.values()
                 .stream()
                 .filter(Piece::isKing)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+
+        return winPiece.getTeam();
     }
 }

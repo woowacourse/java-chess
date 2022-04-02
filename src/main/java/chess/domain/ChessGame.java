@@ -38,9 +38,11 @@ public class ChessGame {
         return chessBoard.isExistKing();
     }
 
-    public String getWinTeam() {
+    public String getWinTeamName() {
         Map<Team, Double> teamScores = calculateResult();
-        return chessBoard.findWinTeam(teamScores);
+        Result winTeam = chessBoard.findWinTeam(teamScores);
+
+        return winTeam.getTeamName();
     }
 
     public void progress(Command command) {

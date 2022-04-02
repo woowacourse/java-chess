@@ -91,7 +91,7 @@ public class ChessController {
     }
 
     private void showWinTeam(ChessGame chessGame) {
-        String winTeamName = chessGame.getWinTeam();
+        String winTeamName = chessGame.getWinTeamName();
 
         outputView.printWinTeam(winTeamName);
 
