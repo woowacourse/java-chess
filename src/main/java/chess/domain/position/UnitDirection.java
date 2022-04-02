@@ -1,32 +1,32 @@
 package chess.domain.position;
 
 public enum UnitDirection {
-    N(new Direction(0 ,1)),
-    S(new Direction(0, -1)),
-    W(new Direction(-1, 0)),
-    E(new Direction(1,0)),
-    WN(new Direction(-1, 1)),
-    EN(new Direction(1, 1)),
-    WS(new Direction(-1, -1)),
-    ES(new Direction(1, -1)),
-    NN(new Direction(0, 2)),
-    ENN(new Direction(1, 2)),
-    ESS(new Direction(1, -2)),
-    WNN(new Direction(-1, 2)),
-    WSS(new Direction(-1, -2)),
-    EEN(new Direction(2, 1)),
-    EES(new Direction(2, -1)),
-    WWN(new Direction(-2, 1)),
-    WWS(new Direction(-2, -1))
+    N(new Movement(0 ,1)),
+    S(new Movement(0, -1)),
+    W(new Movement(-1, 0)),
+    E(new Movement(1,0)),
+    WN(new Movement(-1, 1)),
+    EN(new Movement(1, 1)),
+    WS(new Movement(-1, -1)),
+    ES(new Movement(1, -1)),
+    NN(new Movement(0, 2)),
+    ENN(new Movement(1, 2)),
+    ESS(new Movement(1, -2)),
+    WNN(new Movement(-1, 2)),
+    WSS(new Movement(-1, -2)),
+    EEN(new Movement(2, 1)),
+    EES(new Movement(2, -1)),
+    WWN(new Movement(-2, 1)),
+    WWS(new Movement(-2, -1))
     ;
 
-    private final Direction direction;
+    private final Movement movement;
 
-    UnitDirection(Direction direction) {
-        this.direction = direction;
+    UnitDirection(Movement movement) {
+        this.movement = movement;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public Movement getDirection() {
+        return movement;
     }
 }

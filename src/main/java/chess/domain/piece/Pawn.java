@@ -4,7 +4,7 @@ import static chess.domain.position.UnitDirection.*;
 
 import java.util.List;
 
-import chess.domain.position.Direction;
+import chess.domain.position.Movement;
 import chess.domain.position.UnitDirection;
 
 public final class Pawn extends MovingUnitPiece {
@@ -51,31 +51,31 @@ public final class Pawn extends MovingUnitPiece {
     }
 
     @Override
-    public boolean canMove(Direction direction, Piece target) {
+    public boolean canMove(Movement movement, Piece target) {
         if (color == Color.BLACK) {
-            direction = direction.flipAboutX();
+            movement = movement.flipAboutX();
         }
 
-        if (checkCanAttack(direction, target) || checkIsStart(direction, target)
-                || checkCanMove(direction, target)) {
+        if (checkCanAttack(movement, target) || checkIsStart(movement, target)
+                || checkCanMove(movement, target)) {
             this.start = false;
             return true;
         }
         return false;
     }
 
-    private boolean checkCanAttack(Direction direction, Piece target) {
-        return direction.hasSame(ATTACK_DIRECTIONS) && !target.isNone();
+    private boolean checkCanAttack(Movement movement, Piece target) {
+        return movement.hasSame(ATTACK_DIRECTIONS) && !target.isNone();
     }
 
-    private boolean checkIsStart(Direction direction, Piece target) {
+    private boolean checkIsStart(Movement movement, Piece target) {
         checkTarget(target);
-        return start && direction.hasSame(START_DIRECTIONS);
+        return start && movement.hasSame(START_DIRECTIONS);
     }
 
-    private boolean checkCanMove(Direction direction, Piece target) {
+    private boolean checkCanMove(Movement movement, Piece target) {
         checkTarget(target);
-        return direction.hasSame(MOVABLE_DIRECTIONS);
+        return movement.hasSame(MOVABLE_DIRECTIONS);
     }
 
     private void checkTarget(Piece target) {

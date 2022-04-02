@@ -18,14 +18,14 @@ public class Square {
         this.rank = rank;
     }
 
-    public Direction getGap(Square target) {
+    public Movement getGap(Square target) {
         int gapOfFile = file.getGap(target.file);
         int gapOfRank = rank.getGap(target.rank);
-        return new Direction(gapOfFile, gapOfRank);
+        return new Movement(gapOfFile, gapOfRank);
     }
 
-    public Square add(Direction direction) {
-        return direction.add(file, rank);
+    public Square add(Movement movement) {
+        return movement.add(file, rank);
     }
 
     public boolean checkFile(File file) {

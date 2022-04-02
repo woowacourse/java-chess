@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import chess.domain.piece.Color;
 import chess.domain.piece.None;
 import chess.domain.piece.Piece;
-import chess.domain.position.Direction;
+import chess.domain.position.Movement;
 import chess.domain.position.Square;
 
 public final class Board {
@@ -32,26 +32,26 @@ public final class Board {
     public void checkCanMove(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
-        Direction direction = source.getGap(target);
+        Movement movement = source.getGap(target);
 
-        checkCapablePosition(direction, sourcePiece, targetPiece);
-        checkCapableRoute(source, target, direction);
+        checkCapablePosition(movement, sourcePiece, targetPiece);
+        checkCapableRoute(source, target, movement);
         sourcePiece.checkSameTeam(targetPiece);
     }
 
-    private void checkCapablePosition(Direction direction, Piece sourcePiece, Piece targetPiece) {
-        if (!sourcePiece.canMove(direction, targetPiece)) {
+    private void checkCapablePosition(Movement movement, Piece sourcePiece, Piece targetPiece) {
+        if (!sourcePiece.canMove(movement, targetPiece)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_INCAPABLE);
         }
     }
 
-    private void checkCapableRoute(Square source, Square target, Direction direction) {
-        Direction unitDirection = direction.getUnitDirection();
-        Square road = source.add(unitDirection);
+    private void checkCapableRoute(Square source, Square target, Movement movement) {
+        Movement unitMovement = movement.getUnitDirection();
+        Square road = source.add(unitMovement);
 
         while (!road.equals(target)) {
             checkNone(board.get(road));
-            road = road.add(unitDirection);
+            road = road.add(unitMovement);
         }
     }
 

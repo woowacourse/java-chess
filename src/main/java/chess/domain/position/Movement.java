@@ -3,11 +3,11 @@ package chess.domain.position;
 import java.util.List;
 import java.util.Objects;
 
-public final class Direction {
+public final class Movement {
     private final int dFile;
     private final int dRank;
 
-    public Direction(int dFile, int dRank) {
+    public Movement(int dFile, int dRank) {
         this.dFile = dFile;
         this.dRank = dRank;
     }
@@ -16,8 +16,8 @@ public final class Direction {
         return new Square(file.add(dFile), rank.add(dRank));
     }
 
-    public Direction flipAboutX() {
-        return new Direction(dFile, -1 * dRank);
+    public Movement flipAboutX() {
+        return new Movement(dFile, -1 * dRank);
     }
 
     public boolean hasSame(List<UnitDirection> directions) {
@@ -32,7 +32,7 @@ public final class Direction {
                 .anyMatch(direction -> this.getUnitDirection().equals(direction));
     }
 
-    public Direction getUnitDirection() {
+    public Movement getUnitDirection() {
         if (dFile == 0 || dRank == 0) {
             return getUnitDirectionWithZero();
         }
@@ -40,21 +40,21 @@ public final class Direction {
         return getUnitDirectionWithOutZero();
     }
 
-    private Direction getUnitDirectionWithZero() {
+    private Movement getUnitDirectionWithZero() {
         if (dFile == 0 && dRank == 0) {
-            return new Direction(dFile, dRank);
+            return new Movement(dFile, dRank);
         }
 
         if (dFile == 0) {
-            return new Direction(dFile, dRank / Math.abs(dRank));
+            return new Movement(dFile, dRank / Math.abs(dRank));
         }
 
-        return new Direction(dFile / Math.abs(dFile), dRank);
+        return new Movement(dFile / Math.abs(dFile), dRank);
     }
 
-    private Direction getUnitDirectionWithOutZero() {
+    private Movement getUnitDirectionWithOutZero() {
         int gcd = gcd(Math.abs(dFile), Math.abs(dRank));
-        return new Direction(dFile / gcd, dRank / gcd);
+        return new Movement(dFile / gcd, dRank / gcd);
     }
 
     private int gcd(int a, int b) {
@@ -72,8 +72,8 @@ public final class Direction {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Direction direction = (Direction)o;
-        return dFile == direction.dFile && dRank == direction.dRank;
+        Movement movement = (Movement)o;
+        return dFile == movement.dFile && dRank == movement.dRank;
     }
 
     @Override

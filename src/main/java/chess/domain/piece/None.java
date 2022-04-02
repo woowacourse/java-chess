@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Direction;
+import chess.domain.position.Movement;
 
 public final class None extends Piece {
     private static final String NONE = "·";
@@ -15,7 +15,7 @@ public final class None extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction, Piece target) {
+    public boolean canMove(Movement movement, Piece target) {
         return false;
     }
 

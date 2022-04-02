@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 
-import chess.domain.position.Direction;
+import chess.domain.position.Movement;
 import chess.domain.position.UnitDirection;
 
 public abstract class MovingMultipleUnitPiece extends Piece {
@@ -14,8 +14,8 @@ public abstract class MovingMultipleUnitPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(Direction direction, Piece target) {
-        return direction.hasMultiple(movableDirections);
+    public boolean canMove(Movement movement, Piece target) {
+        return movement.hasMultiple(movableDirections);
     }
 
     @Override
