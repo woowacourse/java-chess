@@ -19,9 +19,4 @@ public class PieceResponse {
     public String getColor() {
         return color;
     }
-
-    public PieceResponse(String notation, String color) {
-        this.notation = notation;
-        this.color = color;
-    }
 }
