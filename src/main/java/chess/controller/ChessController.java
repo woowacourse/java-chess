@@ -14,11 +14,12 @@ public class ChessController {
     private static final int SOURCE_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
     private static final int COMMAND_INDEX = 0;
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
     private static final String STATUS_COMMAND = "status";
     private static final String MOVE_COMMAND = "move";
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
-    private static final int COLUMN_INDEX = 0;
-    private static final int ROW_INDEX = 1;
+    private static final String ONLY_START_OR_END_COMMAND_EXCEPTION = "[ERROR] start, end 명령 중 하나를 입력해주세요";
 
     static {
         convertColumn.put('a', 1);
@@ -34,8 +35,19 @@ public class ChessController {
     public void run() {
         OutputView.printChessGameStart();
 
-        while (InputView.requestPlay()) {
+        while (isCommandStart(InputView.requestPlay())) {
             playChessGame();
+        }
+    }
+
+    private boolean isCommandStart(String command) {
+        validateStartOrEndCommand(command);
+        return Command.of(command).equals(Command.START);
+    }
+
+    private void validateStartOrEndCommand(String command) {
+        if (Command.of(command) != Command.START && Command.of(command) != Command.END) {
+            throw new IllegalArgumentException(ONLY_START_OR_END_COMMAND_EXCEPTION);
         }
     }
 
@@ -59,10 +71,10 @@ public class ChessController {
     }
 
     private void inGameCommand(ChessGame chessGame, List<String> command) {
-        if (command.get(COMMAND_INDEX).equals(STATUS_COMMAND)) {
+        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.STATUS)) {
             statusCommand(chessGame);
         }
-        if (command.get(COMMAND_INDEX).equals(MOVE_COMMAND)) {
+        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.START)) {
             moveCommand(chessGame, command);
         }
     }
@@ -72,8 +84,10 @@ public class ChessController {
     }
 
     private void moveCommand(ChessGame chessGame, List<String> command) {
-        ChessBoardPosition sourcePosition = ChessBoardPosition.of(extractColumn(command.get(SOURCE_POSITION_INDEX)), extractRow(command.get(SOURCE_POSITION_INDEX)));
-        ChessBoardPosition targetPosition = ChessBoardPosition.of(extractColumn(command.get(TARGET_POSITION_INDEX)), extractRow(command.get(TARGET_POSITION_INDEX)));
+        ChessBoardPosition sourcePosition = ChessBoardPosition.of(extractColumn(command.get(SOURCE_POSITION_INDEX))
+                , extractRow(command.get(SOURCE_POSITION_INDEX)));
+        ChessBoardPosition targetPosition = ChessBoardPosition.of(extractColumn(command.get(TARGET_POSITION_INDEX))
+                , extractRow(command.get(TARGET_POSITION_INDEX)));
         chessGame.move(sourcePosition, targetPosition);
         sendDataForPrintCurrentChessBoard(chessGame);
     }
