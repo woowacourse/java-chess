@@ -20,6 +20,7 @@ public class Chessboard {
             .collect(Collectors.toList());
     private static final double EXIST_PAWN_SAME_COLUMN = 0.5;
     private static final int DUPLICATE = 2;
+    private static final int KING_COUNT = 2;
     private static final String ERROR_SOURCE_TARGET_SAME_POSITION = "현재 위치와 같은 위치로 이동할 수 없습니다.";
     private static final String ERROR_EMPTY_SOURCE_PIECE = "이동하려는 위치에 기물이 없습니다.";
     private static final String ERROR_CATCH_PIECE_SAME_TEAM = "같은편의 기물을 공격할 수 없습니다.";
@@ -105,8 +106,11 @@ public class Chessboard {
                 .anyMatch(position -> position.isSamePosition(row, column));
     }
 
-    public boolean isKing(Position target) {
-        return board.get(target).isSameType(King.class);
+    public boolean isKingAlive() {
+        return board.keySet()
+                .stream()
+                .filter(position -> board.get(position).isSameType(King.class))
+                .count() == KING_COUNT;
     }
 
     public double computeScore(Color color) {
