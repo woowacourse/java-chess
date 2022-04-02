@@ -64,4 +64,8 @@ public final class Game {
     public Map<Result, Color> calculateFinalWinner() {
         return ResultCalculator.calculateFinalWinner(board);
     }
+
+    public Map<String, Piece> toMap() {
+        return board.toMap();
+    }
 }

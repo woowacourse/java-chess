@@ -7,7 +7,9 @@ public enum Symbol {
     KNIGHT("N", 2.5),
     PAWN("P", 1),
     QUEEN("Q", 9),
-    ROOK("R", 5);
+    ROOK("R", 5),
+    BLANK(".", 0),
+    ;
 
     private final String value;
     private final double score;

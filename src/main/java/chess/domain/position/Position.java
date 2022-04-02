@@ -128,4 +128,9 @@ public final class Position {
     public int hashCode() {
         return Objects.hash(column, row);
     }
+
+    @Override
+    public String toString() {
+        return row.value() + column.name();
+    }
 }

@@ -6,6 +6,7 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class Board {
 
@@ -112,5 +113,11 @@ public final class Board {
 
     public Collection<Piece> existPieces() {
         return pieces.values();
+    }
+
+    public Map<String, Piece> toMap() {
+        return pieces.entrySet()
+                .stream()
+                .collect(Collectors.toMap(m -> m.getKey().toString(), Map.Entry::getValue));
     }
 }

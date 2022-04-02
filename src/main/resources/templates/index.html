@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<table>
+    {{#pieces}}
+    <tr>
+        {{#this}}
+        <td>
+            {{this}}
+        </td>
+        {{/this}}
+    </tr>
+    {{/pieces}}
+</table>
 </body>
 </html>
