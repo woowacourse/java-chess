@@ -22,11 +22,15 @@ public final class GameMachine {
         do {
             commands = InputView.requestCommand();
             board = play(board, commands);
-        } while (!Command.isEnd(commands.get(COMMAND_INDEX)) && !board.isEnd());
+        } while (!Command.isEnd(commands.get(COMMAND_INDEX)) && !gameEnd(board));
 
         if (board != null) {
             OutputView.printFinalResult(board);
         }
+    }
+
+    private boolean gameEnd(Board board) {
+        return board != null && board.isEnd();
     }
 
     private Board play(Board board, List<String> commands) {
@@ -39,9 +43,17 @@ public final class GameMachine {
             movePiece(board, commands);
         }
         if (Command.isStatus(command)) {
-            OutputView.printScoreAndResult(board);
+            showStatus(board);
         }
         return board;
+    }
+
+    private void showStatus(Board board) {
+        if (board == null) {
+            OutputView.announceNotStarted();
+            return;
+        }
+        OutputView.printScoreAndResult(board);
     }
 
     private void movePiece(Board board, List<String> commands) {
