@@ -1,10 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Chess Game</title>
+    <link rel="stylesheet" href="/src/index.css">
 </head>
+
 <body>
-Hello World!!
+    <div id="app">
+        <h1>♟️ 체스</h1>
+        <section class="chess-ui">
+            <!--      홀수 줄      -->
+            <div class="white-square">
+                <img src="images/piece-rook-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-knight-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-bishop-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-queen-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-king-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-bishop-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-knight-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-rook-black.png" class="pawn-img" />
+            </div>
+            <!--      //홀수 줄      -->
+            <!--      짝수 줄      -->
+            <div class="black-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-black.png" class="pawn-img" />
+            </div>
+            <!--      //짝수 줄      -->
+            <!--      홀수 줄      -->
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <!--      //홀수 줄      -->
+            <!--      짝수 줄      -->
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <!--      //짝수 줄      -->
+            <!--      홀수 줄      -->
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <!--      //홀수 줄      -->
+            <!--      짝수 줄      -->
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <div class="black-square">
+            </div>
+            <div class="white-square">
+            </div>
+            <!--      //짝수 줄      -->
+            <!--      홀수 줄      -->
+            <div class="white-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-pawn-white.png" class="pawn-img" />
+            </div>
+            <!--      //홀수 줄      -->
+            <!--      짝수 줄      -->
+            <div class="black-square">
+                <img src="images/piece-rook-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-knight-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-bishop-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-queen-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-king-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-bishop-white.png" class="pawn-img" />
+            </div>
+            <div class="black-square">
+                <img src="images/piece-knight-white.png" class="pawn-img" />
+            </div>
+            <div class="white-square">
+                <img src="images/piece-rook-white.png" class="pawn-img" />
+            </div>
+            <!--      //짝수 줄      -->
+        </section>
+        <section class="player-ui">
+            <div class="player-square black">
+                <div class="player-name">
+                    <img src="images/piece-pawn-black.png"> player2
+                </div>
+                <div>
+                    점수: 0
+                </div>
+            </div>
+            <div class="player-square white">
+                <div class="player-name">
+                    <img src="images/piece-pawn-white.png"> player1
+                </div>
+                <div>
+                    점수: 0
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
