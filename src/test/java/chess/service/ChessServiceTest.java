@@ -15,6 +15,7 @@ import chess.domain.piece.Team;
 import chess.dto.ChessDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
+import chess.util.JdbcTestFixture;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,11 +47,9 @@ class ChessServiceTest {
     @DisplayName("게임이 실행되면 저장된 턴, 보드값을 가져온다.")
     void startGame() {
         ChessDto chessDto = chessService.initializeGame();
-        Map<Position, Piece> expected = FakeBoardDao.getPositionPieceMap();
-
         assertAll(
                 () -> assertThat(chessDto.getTurn()).isEqualTo("white"),
-                () -> assertThat(chessDto.getBoard()).isEqualTo(ChessDto.of(new Board(expected)).getBoard())
+                () -> assertThat(chessDto.getBoard()).isEqualTo(JdbcTestFixture.getMovedTestBoard())
         );
     }
 
@@ -71,13 +70,13 @@ class ChessServiceTest {
     void move() {
         ChessDto chessDto = chessService.move(new MoveDto("a4", "a5"));
 
-        Map<Position, Piece> expected = FakeBoardDao.getPositionPieceMap();
-        expected.put(Position.valueOf("a5"), new Pawn(Team.WHITE));
-        expected.put(Position.valueOf("a4"), new Blank());
+        Map<String, String> expected = JdbcTestFixture.getMovedTestBoard();
+        expected.put("a5", "white_pawn");
+        expected.put("a4", "blank");
         assertAll(
                 () -> assertThat(chessDto.getTurn()).isEqualTo("black"),
                 () -> assertThat(chessDto.getGameOver()).isEqualTo("false"),
-                () -> assertThat(chessDto.getBoard()).isEqualTo(ChessDto.of(new Board(expected)).getBoard())
+                () -> assertThat(chessDto.getBoard()).isEqualTo(expected)
         );
     }
 

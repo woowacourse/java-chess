@@ -26,6 +26,18 @@ public class JdbcTemplate {
         return conn;
     }
 
+    public static Connection getConnection(String url) {
+        Connection conn = null;
+        try {
+            Class.forName(SQL_DRIVER);
+            conn = DriverManager.getConnection(url, USER, PASSWORD);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
     public static void close(final Connection conn) {
         try {
             if (isConnected(conn)) {
