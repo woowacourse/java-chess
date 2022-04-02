@@ -41,7 +41,7 @@ public enum Row {
     private static int convertValue(final String value) {
         try {
             return Integer.parseInt(value);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 행은 숫자로 입력되어야 합니다.");
         }
     }
