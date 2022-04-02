@@ -4,10 +4,6 @@ import static chess.domain.board.position.File.A;
 import static chess.domain.board.position.File.B;
 import static chess.domain.board.position.File.C;
 import static chess.domain.board.position.File.D;
-import static chess.domain.board.position.File.E;
-import static chess.domain.board.position.File.F;
-import static chess.domain.board.position.File.G;
-import static chess.domain.board.position.File.H;
 
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
@@ -23,8 +19,6 @@ import chess.domain.piece.TeamColor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class BoardFactory {
@@ -52,12 +46,21 @@ public class BoardFactory {
     }
 
     private Piece createInitial(final File file, final Rank rank) {
-        final Map<File, BiFunction<TeamColor, Position, Piece>> initialPieceCreationStrategy =
-                Map.of(A, Rook::new, B, Knight::new, C, Bishop::new, D, Queen::new,
-                        E, King::new, F, Bishop::new, G, Knight::new, H, Rook::new);
-
         final TeamColor teamColor = TeamColor.findByRank(rank);
-        return initialPieceCreationStrategy.get(file)
-                .apply(teamColor, Position.of(file, rank));
+        final Position position = Position.of(file, rank);
+
+        if (file == A) {
+            return new Rook(teamColor, position);
+        }
+        if (file == B) {
+            return new Knight(teamColor, position);
+        }
+        if (file == C) {
+            return new Bishop(teamColor, position);
+        }
+        if (file == D) {
+            return new Queen(teamColor, position);
+        }
+        return new King(teamColor, position);
     }
 }
