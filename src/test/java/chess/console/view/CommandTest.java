@@ -2,7 +2,7 @@ package chess.console.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.console.Command;
+import chess.domain.game.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
