@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.board.BoardFactory.BLACK_PAWN_INITIAL_POSITIONS;
+import static chess.domain.board.BoardFactory.WHITE_PAWN_INITIAL_POSITIONS;
 import static chess.domain.piece.PieceProperty.PAWN;
 
 import chess.domain.Camp;
@@ -15,11 +17,8 @@ public final class Pawn extends NotNullPiece {
     private static final int DIRECTION_CRITERIA = 0;
     private static final int NO_DISTANCE = 0;
 
-    private PawnFirstMove pawnFirstMove;
-
     public Pawn(Camp camp) {
         super(camp, PAWN);
-        this.pawnFirstMove = PawnFirstMove.YES;
     }
 
     @Override
@@ -28,7 +27,6 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
-        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -37,7 +35,6 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         movePiece.accept(this);
-        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -47,10 +44,17 @@ public final class Pawn extends NotNullPiece {
         if (columnDistance != NO_DISTANCE) {
             return false;
         }
-        if (pawnFirstMove.isYes()) {
+        if (isFirstMove(beforePosition)) {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
+    }
+
+    private boolean isFirstMove(final Position beforePosition) {
+        if (isSameCampWith(Camp.WHITE)) {
+            return WHITE_PAWN_INITIAL_POSITIONS.contains(beforePosition);
+        }
+        return BLACK_PAWN_INITIAL_POSITIONS.contains(beforePosition);
     }
 
     private boolean canMove(final Positions positions) {
@@ -59,7 +63,7 @@ public final class Pawn extends NotNullPiece {
         if (columnDistance != NO_DISTANCE) {
             return false;
         }
-        if (pawnFirstMove.isYes()) {
+        if (isFirstMove(positions.before())) {
             return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE_AT_FIRST_TURN);
         }
         return checkMovableLimitByCamp(rowDirectedDistance, MOVABLE_DISTANCE);
@@ -71,7 +75,6 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     @Override
@@ -80,7 +83,6 @@ public final class Pawn extends NotNullPiece {
             throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
         moveFunction.accept(this);
-        pawnFirstMove = pawnFirstMove.checkNo();
     }
 
     private boolean canCapture(Position beforePosition, Position afterPosition) {

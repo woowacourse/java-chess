@@ -35,12 +35,12 @@ public abstract class Piece {
     public abstract void capture(final Positions positions,
                                  final Consumer<Piece> moveFunction);
 
-    public boolean isNotSameCampWith(final Piece targetPiece) {
-        return camp != targetPiece.camp;
+    public boolean isSameCampWith(final Camp otherCamp) {
+        return camp == otherCamp;
     }
 
-    public boolean isNotSameCampWith(final Camp otherCamp) {
-        return this.camp != otherCamp;
+    public boolean isSameCampWith(final Piece targetPiece) {
+        return isSameCampWith(targetPiece.camp);
     }
 
     public abstract boolean isNullPiece();

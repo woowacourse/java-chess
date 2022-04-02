@@ -27,7 +27,7 @@ public final class Board {
     }
 
     public boolean isNotValidCamp(final Position position, final Camp camp) {
-        return board.get(position).isNotSameCampWith(camp);
+        return !board.get(position).isSameCampWith(camp);
     }
 
     public boolean isBlankPosition(final Position position) {
@@ -89,13 +89,13 @@ public final class Board {
     private boolean isMoveToOtherCampPiece(Position beforePosition, Position afterPosition) {
         Piece beforePiece = board.get(beforePosition);
         Piece afterPiece = board.get(afterPosition);
-        return beforePiece.isNotSameCampWith(afterPiece);
+        return !beforePiece.isSameCampWith(afterPiece);
     }
 
     private boolean isMoveToOtherCampPiece(final Positions positions) {
         Piece beforePiece = board.get(positions.before());
         Piece afterPiece = board.get(positions.after());
-        return beforePiece.isNotSameCampWith(afterPiece);
+        return !beforePiece.isSameCampWith(afterPiece);
     }
 
     public boolean hasKingCaptured() {
