@@ -19,9 +19,9 @@ public abstract class Piece {
         return PieceGenerator.generatePiece(file, rank);
     }
 
-    abstract public String getEmoji();
+    public abstract String getEmoji();
 
-    abstract public boolean canMove(Direction direction, Piece otherPiece);
+    public abstract boolean canMove(Direction direction, Piece otherPiece);
 
     public void checkSameTeam(Piece otherPiece) {
         if (isSameColor(otherPiece.color)) {
@@ -33,11 +33,11 @@ public abstract class Piece {
         return color == this.color;
     }
 
-    abstract public boolean isNone();
+    public abstract boolean isNone();
 
-    abstract public boolean isPawn();
+    public abstract boolean isPawn();
 
-    abstract public boolean isKing();
+    public abstract boolean isKing();
 
     public double getScore() {
         return score;
