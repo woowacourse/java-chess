@@ -79,7 +79,7 @@ class PlayTest {
         BoardStrategy boardStrategy = new InjectBoardStrategy(boardString);
         State state = new Play(new ChessGame(boardStrategy));
 
-        state = state.go("move h1 h4");
+        state = state.execute(new CommandDto("move h1 h4"));
         assertThat(state)
                 .isInstanceOf(Result.class);
     }

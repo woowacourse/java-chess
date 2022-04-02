@@ -34,7 +34,7 @@ class InitTest {
     void exitEnd() {
         assertThat(state)
                 .isInstanceOf(Init.class);
-        state = state.go("end");
+        state = state.execute(new CommandDto("end"));
         assertThat(state)
                 .isInstanceOf(ExitFinished.class);
     }

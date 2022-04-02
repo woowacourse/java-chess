@@ -5,6 +5,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
 import chess.dto.BoardDto;
+import chess.dto.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -19,7 +20,16 @@ public class Controller {
         while (state.isRun()) {
             printPlayingChessBoard(state, chessGame);
             printStatus(state, chessGame);
-            state = state.go(InputView.inputCommend());
+            state = go(state, InputView.inputCommend());
+        }
+    }
+
+    private State go(State state, String input) {
+        try {
+            return state.execute(new CommandDto(input));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return state;
         }
     }
 
