@@ -1,17 +1,21 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import java.util.Arrays;
+import java.util.function.IntPredicate;
 
 public enum GameResult {
-    BLACK_WIN("흑색 진영의 승리"),
-    WHITE_WIN("백색 진영의 승리"),
-    DRAW("무승부");
+    BLACK_WIN("흑색 진영의 승리", (resultScore) -> resultScore < 0),
+    WHITE_WIN("백색 진영의 승리", (resultScore) -> resultScore > 0),
+    DRAW("무승부", (resultScore) -> resultScore == 0),
+    ;
 
-    private static final int RESULT_CRITERIA = 0;
     private final String message;
+    private final IntPredicate winnerFinder;
 
-    GameResult(final String message) {
+    GameResult(final String message, final IntPredicate winnerFinder) {
         this.message = message;
+        this.winnerFinder = winnerFinder;
     }
 
     public static GameResult findWinner(final Board board,
@@ -28,13 +32,10 @@ public enum GameResult {
 
     public static GameResult of(final double statusOfWhite, final double statusOfBlack) {
         final int resultScore = Double.compare(statusOfWhite, statusOfBlack);
-        if (resultScore < RESULT_CRITERIA) {
-            return GameResult.BLACK_WIN;
-        }
-        if (resultScore > RESULT_CRITERIA) {
-            return GameResult.WHITE_WIN;
-        }
-        return GameResult.DRAW;
+        return Arrays.stream(GameResult.values())
+            .filter(gameResult -> gameResult.winnerFinder.test(resultScore))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new);
     }
 
     public String getMessage() {
