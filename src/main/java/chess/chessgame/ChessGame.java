@@ -6,8 +6,11 @@ import chess.piece.Piece;
 import chess.state.Finish;
 import chess.state.Ready;
 import chess.state.State;
+import chess.utils.UnicodeConverter;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessGame {
 
@@ -55,5 +58,13 @@ public class ChessGame {
         return new ScoreDto(scoreOfBlack, scoreOfWhite);
     }
 
+    public List<String> getPiecesByUnicode() {
+        return state.getChessboard()
+                .getBoard()
+                .values()
+                .stream()
+                .map(piece -> UnicodeConverter.convert(piece.getSymbolByColor()))
+                .collect(Collectors.toList());
+    }
 
 }

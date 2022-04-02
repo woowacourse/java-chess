@@ -1,12 +1,22 @@
-body{
-    width: 500px;
-    height: 500px;
-    margin:0 auto;
+body {
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
     text-align: center;
 }
 
 form {
     display: inline;
+}
+
+div.left {
+    width: 55%;
+    float: left;
+}
+
+div.right {
+    width: 45%;
+    float: right;
 }
 
 .chessboard {
@@ -26,7 +36,11 @@ form {
     background-color: #d2d2d2;
 }
 
-.move{
-    margin-left:auto;
-    margin-right:auto;
+.move {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.score {
+    font-size: 30px;
 }

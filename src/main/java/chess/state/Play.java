@@ -21,7 +21,7 @@ public class Play implements State {
 
     @Override
     public State start() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(UNSUPPORTED_STATE);
     }
 
     @Override
