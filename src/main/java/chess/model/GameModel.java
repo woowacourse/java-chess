@@ -1,31 +1,50 @@
 package chess.model;
 
 import chess.domain.board.piece.Color;
-import chess.dto.response.RowDto;
-import chess.dto.response.WebBoardViewDto;
-import java.util.List;
+import chess.domain.game.Game;
 
 public class GameModel {
 
     private final int id;
-    private final Color currentTurn;
-    private final List<RowDto> board;
+    private final GameState state;
 
-    public GameModel(int id, Color currentTurn, WebBoardViewDto boardView) {
+    private GameModel(int id, GameState state) {
         this.id = id;
-        this.currentTurn = currentTurn;
-        this.board = boardView.toDisplay();
+        this.state = state;
+    }
+
+    public static GameModel ofRunning(int gameId, Game game) {
+        if (game.getCurrentTurnColor() == Color.WHITE) {
+            return new GameModel(gameId, GameState.WHITE_TURN);
+        }
+        return new GameModel(gameId, GameState.BLACK_TURN);
+    }
+
+    public static GameModel ofOver(int gameId) {
+        return new GameModel(gameId, GameState.OVER);
     }
 
     public int getId() {
         return id;
     }
 
-    public Color getCurrentTurn() {
-        return currentTurn;
+    public GameState getState() {
+        return state;
     }
 
-    public List<RowDto> getBoard() {
-        return board;
+    private enum GameState {
+        WHITE_TURN("White"),
+        BLACK_TURN("Black"),
+        OVER("게임 종료");
+
+        private final String value;
+
+        GameState(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return this.value;
+        }
     }
 }

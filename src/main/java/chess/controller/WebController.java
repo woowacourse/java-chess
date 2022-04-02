@@ -1,15 +1,13 @@
 package chess.controller;
 
 import chess.db.GameRepository;
-import chess.domain.board.piece.Color;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
 import chess.dto.MoveCommandDto;
-import chess.dto.response.PlayGameRequestDto;
 import chess.dto.SearchResultDto;
-import chess.dto.response.WebBoardViewDto;
-import chess.model.GameModel;
 import chess.dto.response.CreateGameDto;
+import chess.dto.response.PlayGameRequestDto;
+import chess.model.RunningGameModel;
 
 public class WebController {
 
@@ -24,16 +22,12 @@ public class WebController {
         return new SearchResultDto(gameId, gameRepository.checkById(gameId));
     }
 
-    public GameModel findGame(int gameId) {
+    public RunningGameModel findGame(int gameId) {
         Game game = gameRepository.findById(gameId);
-
-        Color currentTurn = game.getCurrentTurnColor();
-        WebBoardViewDto board = game.toBoardWebView();
-
-        return new GameModel(gameId, currentTurn, board);
+        return new RunningGameModel(gameId, game);
     }
 
-    public GameModel playGame(PlayGameRequestDto request) {
+    public RunningGameModel playGame(PlayGameRequestDto request) {
         int gameId = request.getGameId();
         MoveCommandDto moveCommand = request.getMoveCommand();
 
