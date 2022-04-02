@@ -37,10 +37,6 @@ public class Rook extends UnpromotablePiece {
         return false;
     }
 
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
 
     @Override
     public double getScore() {

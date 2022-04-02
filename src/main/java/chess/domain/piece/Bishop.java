@@ -38,11 +38,6 @@ public class Bishop extends UnpromotablePiece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
     public double getScore() {
         return SCORE;
     }
