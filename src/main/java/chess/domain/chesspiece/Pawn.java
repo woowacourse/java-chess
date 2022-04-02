@@ -6,7 +6,9 @@ import static chess.domain.position.Direction.SE;
 import static chess.domain.position.Direction.SW;
 
 import chess.domain.position.Direction;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -109,21 +111,27 @@ public final class Pawn extends ChessPiece {
     }
 
     private boolean isCross(final Position from, final Position to) {
-        try {
-            return findCrossDirection()
-                    .stream()
-                    .map(from::toNextPosition)
-                    .anyMatch(position -> position.equals(to));
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        return findCrossDirection(from)
+                .stream()
+                .map(from::toNextPosition)
+                .anyMatch(position -> position.equals(to));
     }
 
-    private List<Direction> findCrossDirection() {
-        if (color.isBlack()) {
-            return List.of(SE, SW);
+    private List<Direction> findCrossDirection(final Position from) {
+        final List<Direction> directions = new ArrayList<>();
+        if (color.isBlack() && !from.isSameFile(File.A)) {
+            directions.add(SW);
         }
-        return List.of(NE, NW);
+        if (color.isBlack() && !from.isSameFile(File.H)) {
+            directions.add(SE);
+        }
+        if (!color.isBlack() && !from.isSameFile(File.A)) {
+            directions.add(NW);
+        }
+        if (!color.isBlack() && !from.isSameFile(File.H)) {
+            directions.add(NE);
+        }
+        return directions;
     }
 
     private void validateCrossMove(final ChessPiece targetPiece) {
