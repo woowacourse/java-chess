@@ -23,32 +23,32 @@ public final class Command {
     private static final int POSITION_SIZE = 2;
     private static final String ERROR_MOVE = "[ERROR] 게임 이동은 move source위치 target위치(예. move b2 b3) 형식으로 입력해주세요.";
 
-    private final CommandCase orderCase;
+    private final CommandCase commandCase;
     private final List<Position> moves;
 
-    private Command(final CommandCase orderCase, final List<Position> moves) {
-        this.orderCase = orderCase;
+    private Command(final CommandCase commandCase, final List<Position> moves) {
+        this.commandCase = commandCase;
         this.moves = moves;
     }
 
-    public static Command of(final CommandCase orderCase) {
-        validateElseCase(orderCase);
-        return new Command(orderCase, new ArrayList<>());
+    public static Command of(final CommandCase commandCase) {
+        validateElseCase(commandCase);
+        return new Command(commandCase, new ArrayList<>());
     }
 
-    private static void validateElseCase(final CommandCase orderCase) {
-        if (orderCase.equals(ELSE)) {
+    private static void validateElseCase(final CommandCase commandCase) {
+        if (commandCase.equals(ELSE)) {
             throw new IllegalArgumentException("[ERROR] 요구하는 입력값이 아닙니다.");
         }
     }
 
-    public static Command of(final CommandCase orderCase, final String input) {
+    public static Command of(final CommandCase commandCase, final String input) {
         List<String> moveCommand = Arrays.asList(input.split(DELIMITER));
         validateMoveCommand(moveCommand);
         List<Position> moves = new ArrayList<>();
         moves.add(generatePosition(moveCommand.get(INPUT_SOURCE_POSITION_INDEX)));
         moves.add(generatePosition(moveCommand.get(INPUT_TARGET_POSITION_INDEX)));
-        return new Command(orderCase, moves);
+        return new Command(commandCase, moves);
     }
 
     private static void validateMoveCommand(final List<String> moveCommand) {
@@ -92,19 +92,19 @@ public final class Command {
     }
 
     public boolean isStart() {
-        return orderCase.equals(START);
+        return commandCase.equals(START);
     }
 
     public boolean isEnd() {
-        return orderCase.equals(END);
+        return commandCase.equals(END);
     }
 
     public boolean isStatus() {
-        return orderCase.equals(STATUS);
+        return commandCase.equals(STATUS);
     }
 
     public boolean isMove() {
-        return orderCase.equals(MOVE);
+        return commandCase.equals(MOVE);
     }
 
     public static void validateStartCommand(final String input) {

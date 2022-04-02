@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 public final class GameStatus {
 
+    private static final int PAWN_DUPLICATE_CONDITION_FOR_SCORE = 2;
+
     private final Result result;
     private final Team turn;
     private final double score;
@@ -25,7 +27,6 @@ public final class GameStatus {
         this.turn = chessBoard.getCurrentTurn();
         this.score = calculateTeamScore(chessBoard.getBoard(), turn);
     }
-    private static final int PAWN_DUPLICATE_CONDITION_FOR_SCORE = 2;
 
     public static Result calculateWinner(final ChessBoard chessBoard) {
         final double currentTeamScore = calculateTeamScore(chessBoard.getBoard(), chessBoard.getCurrentTurn());

@@ -35,13 +35,13 @@ public final class InputView {
     public static Command responseUserCommand() {
         String input = sc.nextLine();
         validateNullCheck(input);
-        if (CommandCase.checkEnd(input)){
+        if (CommandCase.checkEnd(input)) {
             return Command.of(END);
         }
-        if (CommandCase.checkStatus(input)){
+        if (CommandCase.checkStatus(input)) {
             return Command.of(STATUS);
         }
-        if (CommandCase.checkMove(input)){
+        if (CommandCase.checkMove(input)) {
             return Command.of(MOVE, input);
         }
         return Command.of(ELSE);
