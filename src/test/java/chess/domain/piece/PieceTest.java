@@ -119,7 +119,11 @@ public class PieceTest {
     }
 
     @ParameterizedTest
+<<<<<<< HEAD
     @DisplayName("기물별로 이동할 수 있는 방향인지 확인한다.")
+=======
+    @DisplayName("기물별로 이동할 수 없는 방향인지 확인한다.")
+>>>>>>> step1
     @MethodSource("notMovableDirectionParameter")
     void checkNotMovableDirection(Piece piece, Direction direction) {
         assertThat(piece.isMovableDirection(direction)).isFalse();
@@ -154,7 +158,11 @@ public class PieceTest {
         );
     }
 
+<<<<<<< HEAD
     @DisplayName("기물별로 이동할 수 있는 거리인지 확인한다.")
+=======
+    @DisplayName("기물별로 이동할 수 없는 거리인지 확인한다.")
+>>>>>>> step1
     @ParameterizedTest
     @MethodSource("notMovableDistanceParameter")
     void checkNotMovableDistance(Piece piece, LocationDiff locationDiff) {

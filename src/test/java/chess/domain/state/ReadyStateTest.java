@@ -19,14 +19,22 @@ class ReadyStateTest {
     @DisplayName("ready상태에서 end를 하면 예외가 발생한다..")
     void readyEndTest() {
         State state = new Ready();
+<<<<<<< HEAD
         assertThatThrownBy(state::end).isInstanceOf(IllegalArgumentException.class);
+=======
+        assertThatThrownBy(state::end).isInstanceOf(IllegalStateException.class);
+>>>>>>> step1
     }
 
     @Test
     @DisplayName("ready상태에서 getBoard를 실행하면 예외가 발생한다.")
     void readyGetBoardTest() {
         State state = new Ready();
+<<<<<<< HEAD
         assertThatThrownBy(state::getBoard).isInstanceOf(IllegalArgumentException.class);
+=======
+        assertThatThrownBy(state::getBoard).isInstanceOf(IllegalStateException.class);
+>>>>>>> step1
     }
 
     @Test
@@ -36,4 +44,8 @@ class ReadyStateTest {
         assertThat(state.isRunning()).isFalse();
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> step1

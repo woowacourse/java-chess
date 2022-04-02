@@ -66,15 +66,21 @@ public class Board {
         return chessBoard.get(location);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> step1
     public Map<Location, Piece> getBoard() {
         return chessBoard;
     }
 
+<<<<<<< HEAD
     public boolean isEmpty(Location location) {
         return chessBoard.get(location).isEmpty();
     }
 
+=======
+>>>>>>> step1
     public void move(Location source, Location target) {
         checkIsFirst(chessBoard.get(source));
         chessBoard.put(target, chessBoard.get(source));
@@ -105,6 +111,15 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
+=======
+    private double computeScore(List<Piece> pieces) {
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+>>>>>>> step1
     private double computeDuplicatePawnScore(List<Piece> pieceList) {
         if (countPawn(pieceList) > 1) {
             return countPawn(pieceList) * 0.5;
@@ -118,12 +133,15 @@ public class Board {
                 .count();
     }
 
+<<<<<<< HEAD
     private double computeScore(List<Piece> pieces) {
         return pieces.stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
     }
 
+=======
+>>>>>>> step1
     public List<Piece> getPiecesByRank(Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> Location.of(file, rank))
