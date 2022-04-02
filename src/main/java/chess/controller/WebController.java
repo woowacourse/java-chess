@@ -7,6 +7,7 @@ import chess.domain.game.NewGame;
 import chess.dto.BoardViewDto;
 import chess.dto.MoveCommandDto;
 import chess.dto.PlayGameRequestDto;
+import chess.dto.SearchResultDto;
 import chess.model.GameModel;
 import chess.model.NewGameModel;
 
@@ -17,6 +18,10 @@ public class WebController {
     public NewGameModel initGame() {
         Game game = new NewGame().init();
         return new NewGameModel(gameRepository.add(game));
+    }
+
+    public SearchResultDto searchGame(int gameId) {
+        return new SearchResultDto(gameId, gameRepository.checkById(gameId));
     }
 
     public GameModel findGame(int gameId) {

@@ -16,6 +16,10 @@ public class GameRepository {
         return id;
     }
 
+    public boolean checkById(int id) {
+        return database.containsKey(id);
+    }
+
     public Game findById(int id) {
         if (!database.containsKey(id)) {
             throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION_MESSAGE);
