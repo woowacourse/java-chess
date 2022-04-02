@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceName.QUEEN;
+import static chess.domain.piece.PieceProperty.QUEEN;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
@@ -11,7 +11,6 @@ public final class Queen extends NotNullPiece {
 
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int NOT_MOVED_DISTANCE = 0;
-    private static final double SCORE = 9;
 
     public Queen(Camp camp) {
         super(camp, QUEEN);
@@ -66,10 +65,5 @@ public final class Queen extends NotNullPiece {
     @Override
     public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
         move(positions, moveFunction);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

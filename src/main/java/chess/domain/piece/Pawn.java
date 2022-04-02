@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceName.PAWN;
+import static chess.domain.piece.PieceProperty.PAWN;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
@@ -12,7 +12,6 @@ public final class Pawn extends NotNullPiece {
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int MOVABLE_DISTANCE_AT_FIRST_TURN = 2;
     private static final int MOVABLE_DISTANCE = 1;
-    private static final double SCORE = 1;
     private static final int DIRECTION_CRITERIA = 0;
     private static final int NO_DISTANCE = 0;
 
@@ -101,10 +100,5 @@ public final class Pawn extends NotNullPiece {
             return -movableDistance <= distance && distance < DIRECTION_CRITERIA;
         }
         return DIRECTION_CRITERIA < distance && distance <= movableDistance;
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 }

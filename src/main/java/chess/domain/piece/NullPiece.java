@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.PieceName.NULL_PIECE;
+import static chess.domain.piece.PieceProperty.NULL_PIECE;
 
 import chess.domain.Camp;
 import chess.domain.board.Position;
@@ -41,11 +41,6 @@ public final class NullPiece extends Piece {
     @Override
     public void capture(final Positions positions, final Consumer<Piece> moveFunction) {
         throw new IllegalStateException(CANT_MOVE_EMPTY_PIECE);
-    }
-
-    @Override
-    public double getScore() {
-        return SCORE;
     }
 
     @Override

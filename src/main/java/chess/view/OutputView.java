@@ -44,9 +44,9 @@ public class OutputView {
 
     private static String makeBoardContentString(Piece piece) {
         if (piece.isBlack()) {
-            return piece.getPieceNameCharacter().toUpperCase();
+            return piece.getCharacter().toUpperCase();
         }
-        return piece.getPieceNameCharacter();
+        return piece.getCharacter();
     }
 
     public static void printStatus(final StatusScore statusScore) {

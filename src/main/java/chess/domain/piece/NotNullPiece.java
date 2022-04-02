@@ -4,8 +4,8 @@ import chess.domain.Camp;
 
 public abstract class NotNullPiece extends Piece {
 
-    protected NotNullPiece(final Camp camp, final PieceName pieceName) {
-        super(camp, pieceName);
+    protected NotNullPiece(final Camp camp, final PieceProperty pieceProperty) {
+        super(camp, pieceProperty);
     }
 
     @Override

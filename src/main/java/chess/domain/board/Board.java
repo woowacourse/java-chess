@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.Camp;
 import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceName;
+import chess.domain.piece.PieceProperty;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public final class Board {
 
     public boolean checkNotKnight(final Position position) {
         final Piece piece = board.get(position);
-        return piece.pieceName() != PieceName.KNIGHT;
+        return piece.getPieceProperty() != PieceProperty.KNIGHT;
     }
 
     public boolean isNotValidCamp(final Position position, final Camp camp) {
@@ -105,7 +105,7 @@ public final class Board {
     private List<Piece> collectKing() {
         return board.values()
             .stream()
-            .filter(piece -> piece.pieceName() == PieceName.KING)
+            .filter(piece -> piece.getPieceProperty() == PieceProperty.KING)
             .collect(Collectors.toList());
     }
 

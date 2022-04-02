@@ -8,11 +8,11 @@ import java.util.function.Consumer;
 public abstract class Piece {
 
     private final Camp camp;
-    private final PieceName pieceName;
+    private final PieceProperty pieceProperty;
 
-    protected Piece(final Camp camp, final PieceName pieceName) {
+    protected Piece(final Camp camp, final PieceProperty pieceProperty) {
         this.camp = camp;
-        this.pieceName = pieceName;
+        this.pieceProperty = pieceProperty;
     }
 
     public final boolean isBlack() {
@@ -43,15 +43,17 @@ public abstract class Piece {
         return this.camp != otherCamp;
     }
 
-    public PieceName pieceName() {
-        return pieceName;
-    }
-
-    public final String getPieceNameCharacter() {
-        return pieceName.getCharacter();
-    }
-
-    public abstract double getScore();
-
     public abstract boolean isNullPiece();
+
+    public final PieceProperty getPieceProperty() {
+        return pieceProperty;
+    }
+
+    public final double getScore() {
+        return pieceProperty.getScore();
+    }
+
+    public final String getCharacter() {
+        return pieceProperty.getCharacter();
+    }
 }
