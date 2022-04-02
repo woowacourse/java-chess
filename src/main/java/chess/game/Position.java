@@ -80,6 +80,14 @@ public class Position {
         return this.column.distance(to.column) == NOT_MOVE;
     }
 
+    public Column getColumn() {
+        return column;
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

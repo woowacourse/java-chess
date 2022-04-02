@@ -8,143 +8,337 @@
 <body>
 <h1>♟️ 체스</h1>
 <section class="chess-ui">
+    {{#this}}
     <div class="black-square pawn">
-        <img src="images/rook_black.png" class="pawn-img"/>
+        {{#a8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a8}}
     </div>
     <div class="white-square pawn">
-        <img src="images/knight_black.png" class="pawn-img"/>
+        {{#b8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b8}}
     </div>
     <div class="black-square pawn">
-        <img src="images/bishop_black.png" class="pawn-img"/>
+        {{#c8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c8}}
     </div>
     <div class="white-square pawn">
-        <img src="images/queen_black.png" class="pawn-img"/>
+        {{#d8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d8}}
     </div>
     <div class="black-square pawn">
-        <img src="images/king_black.png" class="pawn-img"/>
+        {{#e8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e8}}
     </div>
     <div class="white-square pawn">
-        <img src="images/bishop_black.png" class="pawn-img"/>
+        {{#f8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f8}}
     </div>
     <div class="black-square pawn">
-        <img src="images/knight_black.png" class="pawn-img"/>
+        {{#g8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g8}}
     </div>
     <div class="white-square pawn">
-        <img src="images/rook_black.png" class="pawn-img"/>
+        {{#h8}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h8}}
     </div>
 
     <div class="white-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#a7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a7}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#b7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b7}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#c7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c7}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#d7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d7}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#e7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e7}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#f7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f7}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#g7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g7}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_black.png" class="pawn-img"/>
+        {{#h7}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h7}}
     </div>
 
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-    <div class="white-square pawn"></div>
-    <div class="black-square pawn"></div>
-
     <div class="black-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#a6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a6}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#b6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b6}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#c6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c6}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#d6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d6}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#e6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e6}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#f6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f6}}
     </div>
     <div class="black-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#g6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g6}}
     </div>
     <div class="white-square pawn">
-        <img src="images/pawn_white.png" class="pawn-img"/>
+        {{#h6}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h6}}
     </div>
 
     <div class="white-square pawn">
-        <img src="images/rook_white.png" class="pawn-img"/>
+        {{#a5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a5}}
     </div>
     <div class="black-square pawn">
-        <img src="images/knight_white.png" class="pawn-img"/>
+        {{#b5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b5}}
     </div>
     <div class="white-square pawn">
-        <img src="images/bishop_white.png" class="pawn-img"/>
+        {{#c5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c5}}
     </div>
     <div class="black-square pawn">
-        <img src="images/queen_white.png" class="pawn-img"/>
+        {{#d5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d5}}
     </div>
     <div class="white-square pawn">
-        <img src="images/king_white.png" class="pawn-img"/>
+        {{#e5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e5}}
     </div>
     <div class="black-square pawn">
-        <img src="images/bishop_white.png" class="pawn-img"/>
+        {{#f5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f5}}
     </div>
     <div class="white-square pawn">
-        <img src="images/knight_white.png" class="pawn-img"/>
+        {{#g5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g5}}
     </div>
     <div class="black-square pawn">
-        <img src="images/rook_white.png" class="pawn-img"/>
+        {{#h5}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h5}}
     </div>
 
+    <div class="black-square pawn">
+        {{#a4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a4}}
+    </div>
+    <div class="white-square pawn">
+        {{#b4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b4}}
+    </div>
+    <div class="black-square pawn">
+        {{#c4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c4}}
+    </div>
+    <div class="white-square pawn">
+        {{#d4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d4}}
+    </div>
+    <div class="black-square pawn">
+        {{#e4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e4}}
+    </div>
+    <div class="white-square pawn">
+        {{#f4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f4}}
+    </div>
+    <div class="black-square pawn">
+        {{#g4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g4}}
+    </div>
+    <div class="white-square pawn">
+        {{#h4}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h4}}
+    </div>
+
+    <div class="white-square pawn">
+        {{#a3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a3}}
+    </div>
+    <div class="black-square pawn">
+        {{#b3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b3}}
+    </div>
+    <div class="white-square pawn">
+        {{#c3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c3}}
+    </div>
+    <div class="black-square pawn">
+        {{#d3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d3}}
+    </div>
+    <div class="white-square pawn">
+        {{#e3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e3}}
+    </div>
+    <div class="black-square pawn">
+        {{#f3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f3}}
+    </div>
+    <div class="white-square pawn">
+        {{#g3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g3}}
+    </div>
+    <div class="black-square pawn">
+        {{#h3}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h3}}
+    </div>
+
+    <div class="black-square pawn">
+        {{#a2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a2}}
+    </div>
+    <div class="white-square pawn">
+        {{#b2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b2}}
+    </div>
+    <div class="black-square pawn">
+        {{#c2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c2}}
+    </div>
+    <div class="white-square pawn">
+        {{#d2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d2}}
+    </div>
+    <div class="black-square pawn">
+        {{#e2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e2}}
+    </div>
+    <div class="white-square pawn">
+        {{#f2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f2}}
+    </div>
+    <div class="black-square pawn">
+        {{#g2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g2}}
+    </div>
+    <div class="white-square pawn">
+        {{#h2}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h2}}
+    </div>
+
+    <div class="white-square pawn">
+        {{#a1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/a1}}
+    </div>
+    <div class="black-square pawn">
+        {{#b1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/b1}}
+    </div>
+    <div class="white-square pawn">
+        {{#c1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/c1}}
+    </div>
+    <div class="black-square pawn">
+        {{#d1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/d1}}
+    </div>
+    <div class="white-square pawn">
+        {{#e1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/e1}}
+    </div>
+    <div class="black-square pawn">
+        {{#f1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/f1}}
+    </div>
+    <div class="white-square pawn">
+        {{#g1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/g1}}
+    </div>
+    <div class="black-square pawn">
+        {{#h1}}
+        <img src="images/{{name}}_{{color}}.png" class="piece-img" />
+        {{/h1}}
+    </div>
+    {{/this}}
 </section>
+
 
 </body>
 </html>

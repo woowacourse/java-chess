@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     private static void printByColor(final Name value, final Color color) {
-        final String name = value.getName();
+        final String name = value.getValue();
         if (color.isBlack()) {
             System.out.print(name);
             return;
