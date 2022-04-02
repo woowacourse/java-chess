@@ -403,7 +403,6 @@ public class ChessBoardTest {
                 Map.entry(Position.of("a7"), new BlackPawn()),
                 Map.entry(Position.of("c5"), new BlackPawn()),
                 Map.entry(Position.of("b8"), new BlackPawn())
-
         ));
         final ChessBoard chessBoard = new ChessBoard(() -> testPieces);
 

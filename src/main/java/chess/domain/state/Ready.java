@@ -1,4 +1,4 @@
-package chess.domain.State;
+package chess.domain.state;
 
 import chess.domain.ChessBoard;
 import chess.domain.CommandType;

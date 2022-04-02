@@ -20,7 +20,7 @@ class CommandTypeTest {
     @ParameterizedTest
     @CsvSource(value = {"START, true", "END, true", "STATUS, true", "MOVE, false"})
     void isSingleCommand(final CommandType commandType, final boolean expected) {
-        final boolean isSingleCommand = CommandType.isSingleCommand(commandType);
+        final boolean isSingleCommand = commandType.isSingleCommand();
 
         assertThat(isSingleCommand).isEqualTo(expected);
     }

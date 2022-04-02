@@ -4,11 +4,14 @@ import chess.domain.ChessBoard;
 import chess.domain.ChessGame;
 import chess.domain.CommandType;
 import chess.domain.GameCommand;
-import chess.domain.State.State;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.domain.state.State;
 import chess.domain.piece.Color;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Map;
 
 public class GameController {
 
@@ -55,7 +58,9 @@ public class GameController {
 
     private void printChessBoard(final ChessGame chessGame) {
         if (!chessGame.isFinished()) {
-            OutputView.printChessBoard(chessGame);
+            final ChessBoard chessBoard = chessGame.getChessBoard();
+            final Map<Position, Piece> pieces = chessBoard.getPieces();
+            OutputView.printChessBoard(pieces);
         }
     }
 

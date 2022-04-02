@@ -29,7 +29,7 @@ public class GameCommand {
         if (type == CommandType.MOVE && rawCommand.length != 3) {
             throw new IllegalArgumentException("해당 타입의 커맨드는 인자가 3개여야합니다.");
         }
-        if (CommandType.isSingleCommand(type) && rawCommand.length > 1) {
+        if (type.isSingleCommand() && rawCommand.length > 1) {
             throw new IllegalArgumentException("해당 타입의 커맨드는 인자가 하나여야합니다.");
         }
     }

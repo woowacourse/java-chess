@@ -1,8 +1,8 @@
 package chess.domain;
 
-import chess.domain.State.Finish;
-import chess.domain.State.Ready;
-import chess.domain.State.State;
+import chess.domain.state.Finish;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.domain.piece.Color;
 import java.util.List;
 

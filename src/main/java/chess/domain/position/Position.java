@@ -29,7 +29,7 @@ public class Position {
     public static Position of(final String value) {
         validatePosition(value);
         final Column column = Column.of(value.substring(0, 1));
-        final Row row = Row.of(Integer.parseInt(value.substring(1, 2)));
+        final Row row = Row.of(getRow(value));
         return cache.computeIfAbsent(value.toLowerCase(Locale.ROOT), ignored -> new Position(column, row));
     }
 
@@ -47,6 +47,15 @@ public class Position {
     private static void validateLength(final String value) {
         if (value.length() != STANDARD_VALUE_LENGTH) {
             throw new IllegalArgumentException("포지션은 두 글자입니다.");
+        }
+    }
+
+    private static int getRow(final String value) {
+        final String row = value.substring(1, 2);
+        try {
+            return Integer.parseInt(row);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 행이름이 들어왔습니다.");
         }
     }
 

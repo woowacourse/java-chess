@@ -119,38 +119,24 @@ public class ChessBoard {
     private void addMovablePositionsExceptObstacles(final Piece piece, final List<Position> result,
                                                     final List<Position> positions) {
         if (positions.size() != 0) {
-            final int removeIndex = calculateRemoveIndex(piece, positions);
+            final int removeIndex = getRemoveIndex(piece, positions);
             final List<Position> movablePositions = positions.subList(0, removeIndex);
             result.addAll(movablePositions);
         }
     }
 
-    private int calculateRemoveIndex(final Piece piece, final List<Position> positions) {
-        int removeIndex = positions.size() - 1;
+    private int getRemoveIndex(Piece nowPiece, List<Position> positions) {
+        int cutIndex = 0;
 
-        for (Position position : positions) {
-            removeIndex = getRemoveIndex(positions, position, removeIndex);
+        while (cutIndex < positions.size() - 1 && selectPiece(positions.get(cutIndex)).isEmpty()) {
+            cutIndex++;
         }
 
-        final Position positionWithObstacle = positions.get(removeIndex);
-        final Piece target = selectPiece(positionWithObstacle);
-
-        return checkSameColor(piece, target, removeIndex);
-    }
-
-    private int getRemoveIndex(final List<Position> positions, final Position position, int removeIndex) {
-        final Piece nextPiece = selectPiece(position);
-        if (!nextPiece.isEmpty()) {
-            removeIndex = positions.indexOf(position);
+        final Piece target = selectPiece(positions.get(cutIndex));
+        if (target.isSameColor(nowPiece) || (nowPiece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
+            return cutIndex;
         }
-        return removeIndex;
-    }
-
-    private int checkSameColor(final Piece piece, final Piece target, final int removeIndex) {
-        if (target.isSameColor(piece) || (piece.isSameSymbol(Symbol.PAWN) && !target.isEmpty())) {
-            return removeIndex;
-        }
-        return removeIndex + 1;
+        return cutIndex + 1;
     }
 
     private void addDiagonalMoveForPawn(final Position position, final Piece piece, final List<Position> result) {

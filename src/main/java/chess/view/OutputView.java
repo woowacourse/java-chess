@@ -1,12 +1,12 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
-import chess.domain.ChessGame;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Symbol;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.Locale;
 import java.util.Map;
 
 public class OutputView {
@@ -22,9 +22,7 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printChessBoard(final ChessGame chessGame) {
-        ChessBoard chessBoard = chessGame.getChessBoard();
-        Map<Position, Piece> pieces = chessBoard.getPieces();
+    public static void printChessBoard(final Map<Position, Piece> pieces) {
         for (final Row row : Row.getRowsReverseOrder()) {
             printBoardInRow(pieces, row);
             System.out.println();
@@ -32,12 +30,24 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printBoardInRow(final Map<Position, Piece> pieces, Row row) {
+    private static void printBoardInRow(final Map<Position, Piece> pieces, final Row row) {
         for (Column column : Column.values()) {
             final Position position = Position.of(column, row);
             final Piece piece = pieces.get(position);
-            System.out.print(piece.getSymbol());
+            final String symbol = getSymbolByColor(piece);
+            System.out.print(symbol);
         }
+    }
+
+    private static String getSymbolByColor(final Piece piece) {
+        final Symbol symbol = piece.getSymbol();
+        final Color color = piece.getColor();
+        final String value = symbol.getValue();
+
+        if (color == Color.WHITE) {
+            return value.toLowerCase(Locale.ROOT);
+        }
+        return value;
     }
 
     public static void printReplay(final Exception exception) {

@@ -3,9 +3,9 @@ package chess.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import chess.domain.State.Finish;
-import chess.domain.State.State;
-import chess.domain.State.WhiteTurn;
+import chess.domain.state.Finish;
+import chess.domain.state.State;
+import chess.domain.state.WhiteTurn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.fixedmovablepiece.King;
@@ -87,5 +87,6 @@ public class ChessGameTest {
         final double score = chessGame.calculateScore(Color.WHITE);
 
         assertThat(score).isEqualTo(1.0);
+
     }
 }

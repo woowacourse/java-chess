@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
 import chess.domain.GameCommand;
-import chess.domain.State.BlackTurn;
-import chess.domain.State.Finish;
 import chess.domain.piece.generator.NormalPiecesGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

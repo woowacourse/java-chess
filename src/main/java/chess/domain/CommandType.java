@@ -22,7 +22,7 @@ public enum CommandType {
                 .orElseThrow(() -> new IllegalArgumentException("유효한 커맨드가 아닙니다."));
     }
 
-    public static boolean isSingleCommand(final CommandType command) {
-        return command.isSingleCommand;
+    public boolean isSingleCommand() {
+        return isSingleCommand;
     }
 }

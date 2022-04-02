@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public abstract class Piece {
@@ -22,12 +21,8 @@ public abstract class Piece {
 
     public abstract Direction getPawnDirection();
 
-    public final String getSymbol() {
-        final String value = symbol.getValue();
-        if (color == Color.WHITE) {
-            return value.toLowerCase(Locale.ROOT);
-        }
-        return value;
+    public final Symbol getSymbol() {
+        return symbol;
     }
 
     public final boolean isBlack() {

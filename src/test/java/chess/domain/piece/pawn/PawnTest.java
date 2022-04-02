@@ -21,7 +21,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("폰은 2칸 움직일 수 있다.")
+    @DisplayName("폰은 처음에 2칸 움직일 수 있다.")
     void firstMove() {
         final Piece pawn = new WhitePawn();
         final Position position = Position.of("d4");
@@ -51,7 +51,7 @@ public class PawnTest {
     }
 
     @Test
-    @DisplayName("흰색 폰의 방향은 SOUTH이다.")
+    @DisplayName("흰색 폰의 방향은 NORTH이다.")
     void getWhitePawnDirection() {
         final Piece pawn = new WhitePawn();
         final Direction actual = pawn.getPawnDirection();
