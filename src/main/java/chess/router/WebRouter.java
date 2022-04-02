@@ -15,7 +15,7 @@ public class WebRouter {
     private final WebController controller = new WebController();
 
     public void initHomeRouteHandler() {
-        get("/", (req, res) -> render(null, "home.html"));
+        get("/", (req, res) -> render(controller.countGames(), "home.html"));
         post("/", (req, res) -> {
             res.type("application/json");
             CreateGameDto gameCreated = controller.initGame();
@@ -24,7 +24,7 @@ public class WebRouter {
     }
 
     public void initSearchRouteHandler() {
-        get("/search", (req, res) -> render(null, "search.html"));
+        get("/search", (req, res) -> render(controller.countGames(), "search.html"));
         post("/search", (req, res) -> {
             res.type("application/json");
             int gameId = Integer.parseInt(req.queryParams("game_id"));
