@@ -7,6 +7,11 @@ body {
     align-items: center;
 }
 
+.game_info__container{
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
 #chess_board {
     width: 400px;
     height: 400px;
@@ -39,6 +44,11 @@ body {
     background-color: rgb(248, 201, 117);
 }
 
+.selected {
+    border: 2px red solid;
+}
+
 .piece {
     color: black;
+    pointer-events: none;
 }

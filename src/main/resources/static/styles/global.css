@@ -9,3 +9,15 @@ body {
     box-sizing: border-box;
     user-select: none;
 }
+
+.header__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 10px 0;
+}
+
+.header__container > h1 {
+    font-size: 32px;
+}

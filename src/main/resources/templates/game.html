@@ -6,24 +6,27 @@
     <link rel="stylesheet" href="/styles/game.css"/>
 </head>
 <body>
-<section>
-    <h1>Current Turn: {{currentTurn}}</h1>
-</section>
-<section id="chess_board">
-    {{#board}}
-    <div class="row">
-        {{#squares}}
-        <div class="square">
-            <span class="piece">{{value}}</span>
+    <section class="header__container">
+        <h1>체스 시뮬레이터</h1>
+        <div class="game_info__container">
+            게임 ID: {{id}} | 현재 턴: {{currentTurn}}
         </div>
-        {{/squares}}
-    </div>
-    {{/board}}
-</section>
-<script src="/scripts/update-game.js"></script>
-<script>
-
-
-</script>
+    </section>
+    <section id="chess_board">
+        {{#board}}
+        <div class="row">
+            {{#squares}}
+            <div class="square">
+                <span class="piece">{{value}}</span>
+            </div>
+            {{/squares}}
+        </div>
+        {{/board}}
+    </section>
+    <section>
+        <p>현재 턴에 맞는 색상의 체스말을 클릭한 후, 이동하고 싶은 장소를 클릭!</p>
+        <p>다른 체스말을 이동하고 싶다면 선택된 체스말을 다시 한번 클릭!</p>
+    </section>
+    <script src="/scripts/update-game.js"></script>
 </body>
 </html>

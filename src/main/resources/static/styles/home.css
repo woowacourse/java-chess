@@ -6,18 +6,6 @@ body {
     align-items: center;
 }
 
-.header__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    margin: 10px 0;
-}
-
-.header__container > h1 {
-    font-size: 32px;
-}
-
 .buttons__container {
     width: 100%;
     height: 50px;
