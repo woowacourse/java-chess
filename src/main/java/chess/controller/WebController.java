@@ -8,6 +8,7 @@ import chess.dto.SearchResultDto;
 import chess.dto.response.CreateGameDto;
 import chess.dto.response.PlayGameRequestDto;
 import chess.model.FullGameModel;
+import chess.model.FullResultModel;
 
 public class WebController {
 
@@ -36,5 +37,13 @@ public class WebController {
         gameRepository.update(gameId, game);
 
         return findGame(gameId);
+    }
+
+    public FullResultModel findGameResult(int gameId) {
+        Game game = gameRepository.findById(gameId);
+        if (!game.isEnd()) {
+            throw new IllegalArgumentException("아직 게임 결과가 산출되지 않았습니다.");
+        }
+        return new FullResultModel(gameId, game);
     }
 }
