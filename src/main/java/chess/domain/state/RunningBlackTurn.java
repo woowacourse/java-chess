@@ -24,4 +24,9 @@ public class RunningBlackTurn extends Running {
 	public Color getColor() {
 		return COLOR;
 	}
+
+	@Override
+	public String toString() {
+		return "RUNNING_BLACK";
+	}
 }

@@ -18,7 +18,7 @@ public class MemoryGameRepository implements GameRepository {
 	@Override
 	public void save(ChessGame game) {
 		validateDuplicateName(game);
-		repository.put(game.getId(), game);
+		repository.put(game.getName(), game);
 	}
 
 	private void validateDuplicateName(ChessGame game) {
@@ -39,6 +39,11 @@ public class MemoryGameRepository implements GameRepository {
 	public void update(String id, GameState state) {
 		ChessGame game = repository.get(id);
 		game.updateState(state);
-		repository.put(game.getId(), game);
+		repository.put(game.getName(), game);
+	}
+
+	@Override
+	public void removeAll() {
+
 	}
 }

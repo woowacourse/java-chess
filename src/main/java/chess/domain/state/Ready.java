@@ -52,4 +52,9 @@ public class Ready extends GameState {
 	public Color getColor() {
 		throw new UnsupportedOperationException(CANNOT_GET_COLOR);
 	}
+
+	@Override
+	public String toString() {
+		return "READY";
+	}
 }

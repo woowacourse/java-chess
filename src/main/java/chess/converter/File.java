@@ -30,6 +30,13 @@ public enum File {
 			.orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_INPUT));
 	}
 
+	public static File from(int column) {
+		return Arrays.stream(values())
+			.filter(file -> file.column ==  column)
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_FILE_INPUT));
+	}
+
 	public int getColumn() {
 		return column;
 	}

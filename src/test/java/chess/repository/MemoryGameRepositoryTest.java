@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import chess.domain.ChessGame;
 import chess.domain.state.Ready;
 import chess.domain.state.RunningBlackTurn;
-import chess.domain.state.RunningWhiteTurn;
 
 class MemoryGameRepositoryTest {
 
@@ -53,7 +52,7 @@ class MemoryGameRepositoryTest {
 		ChessGame newGame = new ChessGame("does의 게임", new Ready(new HashMap<>()));
 		gameRepository.save(newGame);
 
-		gameRepository.update(newGame.getId(), new RunningBlackTurn(new HashMap<>()));
+		gameRepository.update(newGame.getName(), new RunningBlackTurn(new HashMap<>()));
 
 		gameRepository.findByName("does의 게임")
 			.ifPresent(game -> assertThat(game.getState())

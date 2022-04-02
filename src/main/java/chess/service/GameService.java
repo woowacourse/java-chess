@@ -22,7 +22,7 @@ public class GameService {
 
 	public ChessGame updateGame(Command command, String name) {
 		ChessGame updatedGame = findGame(name).execute(command);
-		gameRepository.update(updatedGame.getId(), updatedGame.getState());
+		gameRepository.update(updatedGame.getName(), updatedGame.getState());
 		return updatedGame;
 	}
 }

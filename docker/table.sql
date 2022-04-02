@@ -1,0 +1,13 @@
+--create table game (
+--    game_id int primary key auto_increment,
+--    name varchar(20) not null,
+--    state varchar(20) not null
+--);
+--
+--create table tile (
+--    tile_id int primary key auto_increment,
+--    position varchar(2) not null,
+--    piece varchar(20) not null,
+--    game_id int not null,
+--    foreign key (game_id) references game (game_id)
+--);

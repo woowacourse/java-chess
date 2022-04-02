@@ -10,5 +10,7 @@ public interface GameRepository {
 
 	Optional<ChessGame> findByName(String name);
 
-	void update(String id, GameState state);
+	void update(String name, GameState state);
+
+	void removeAll();
 }

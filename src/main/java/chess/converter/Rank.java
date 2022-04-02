@@ -33,6 +33,13 @@ public enum Rank {
 			.orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_INPUT));
 	}
 
+	public static Rank from(int row) {
+		return Arrays.stream(values())
+			.filter(rank -> rank.row == row)
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException(INVALID_RANK_INPUT));
+	}
+
 	public static List<Rank> reverseValues() {
 		return Arrays.stream(values())
 			.sorted(Comparator.reverseOrder())

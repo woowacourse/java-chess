@@ -24,4 +24,9 @@ public class RunningWhiteTurn extends Running {
 	public Color getColor() {
 		return COLOR;
 	}
+
+	@Override
+	public String toString() {
+		return "RUNNING_WHITE";
+	}
 }
