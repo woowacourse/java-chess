@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 
 public class BoardDaoImpl implements BoardDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     public BoardDaoImpl() {
         connection = JdbcTemplate.getConnection();
@@ -24,7 +24,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public Map<String, String> getBoard() {
         try (PreparedStatement preparedStatement = connection.prepareStatement("select * from board");
-             ResultSet resultSet = preparedStatement.executeQuery();){
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             Map<String, String> board = new HashMap<>();
             while (resultSet.next()) {
@@ -40,7 +40,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void updatePosition(final String position, final String piece) {
         String sql = "update board set piece = ? where position = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, piece);
             preparedStatement.setString(2, position);
             preparedStatement.executeUpdate();
@@ -52,7 +52,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void updateBatchPositions(final Map<String, String> board) {
         String sql = "update board set piece = ? where position = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             for (Entry<String, String> boardEntry : board.entrySet()) {
                 preparedStatement.setString(1, boardEntry.getValue());

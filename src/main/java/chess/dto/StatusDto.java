@@ -5,9 +5,9 @@ import chess.domain.piece.Team;
 
 public class StatusDto {
 
-    private double whiteScore;
-    private double blackScore;
-    private String winningTeam;
+    private final double whiteScore;
+    private final double blackScore;
+    private final String winningTeam;
 
     private StatusDto(final double whiteScore, final double blackScore, final String winningTeam) {
         this.whiteScore = whiteScore;

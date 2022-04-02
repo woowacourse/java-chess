@@ -9,9 +9,9 @@ import java.util.Map.Entry;
 
 public class ChessDto {
 
-    private String gameOver;
-    private Map<String, String> board;
-    private String turn;
+    private final String gameOver;
+    private final Map<String, String> board;
+    private final String turn;
 
     private ChessDto(String gameOver, Map<String, String> board, String turn) {
         this.gameOver = gameOver;

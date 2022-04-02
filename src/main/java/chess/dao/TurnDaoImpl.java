@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class TurnDaoImpl implements TurnDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     public TurnDaoImpl() {
         connection = JdbcTemplate.getConnection();
@@ -21,7 +21,7 @@ public class TurnDaoImpl implements TurnDao {
     @Override
     public String getCurrentTurn() {
         try (PreparedStatement preparedStatement = connection.prepareStatement("select * from turn");
-             ResultSet resultSet = preparedStatement.executeQuery()){
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 return resultSet.getString(1);
             }
@@ -35,8 +35,8 @@ public class TurnDaoImpl implements TurnDao {
     @Override
     public void updateTurn(final String currentTurn, final String previousTurn) {
         String sql = "update turn set team = ? where team = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            System.out.println("업데이트 턴 log " + currentTurn +" " + previousTurn);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            System.out.println("업데이트 턴 log " + currentTurn + " " + previousTurn);
             preparedStatement.setString(1, currentTurn);
             preparedStatement.setString(2, previousTurn);
             preparedStatement.executeUpdate();

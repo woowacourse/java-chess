@@ -69,7 +69,7 @@ public class ChessService {
         Team previous = turn.oppositeTeam();
         String currentTurn = turn.getValue();
         turnDao.updateTurn(currentTurn, previous.getValue());
-        return ChessDto.of(chessGame.isOn(),chessGame.getBoard(), currentTurn);
+        return ChessDto.of(chessGame.isOn(), chessGame.getBoard(), currentTurn);
     }
 
 }

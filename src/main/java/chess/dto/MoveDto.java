@@ -2,8 +2,8 @@ package chess.dto;
 
 public class MoveDto {
 
-    private String source;
-    private String target;
+    private final String source;
+    private final String target;
 
     public MoveDto(final String source, final String target) {
         this.source = source;

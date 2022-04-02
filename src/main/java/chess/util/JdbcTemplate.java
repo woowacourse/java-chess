@@ -2,10 +2,7 @@ package chess.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class JdbcTemplate {
 
@@ -26,7 +23,7 @@ public class JdbcTemplate {
         return conn;
     }
 
-    public static Connection getConnection(String url) {
+    public static Connection getConnection(final String url) {
         Connection conn = null;
         try {
             Class.forName(SQL_DRIVER);
