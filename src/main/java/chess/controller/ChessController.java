@@ -48,6 +48,7 @@ public class ChessController {
                 board.calculateScore(Team.WHITE),
                 board.getCurrentWinner()
         );
+
         state = state.execute(Command.STATUS);
         return result;
     }
