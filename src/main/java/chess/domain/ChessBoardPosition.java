@@ -1,6 +1,8 @@
 package chess.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -96,4 +98,25 @@ public class ChessBoardPosition {
     public int hashCode() {
         return Objects.hash(column, row);
     }
+
+    public List<ChessBoardPosition> createPathPositions(ChessBoardPosition targetPosition) {
+        int rowUnitChange = calculateUnitChange(targetPosition.getRow(), row);
+        int columnUnitChange = calculateUnitChange(targetPosition.getColumn(), column);
+        List<ChessBoardPosition> pathPositions = new ArrayList<>();
+        ChessBoardPosition currentBoardPosition = move(columnUnitChange, rowUnitChange);
+        while (!currentBoardPosition.equals(targetPosition)) {
+            pathPositions.add(currentBoardPosition);
+            currentBoardPosition = currentBoardPosition.move(columnUnitChange, rowUnitChange);
+        }
+        return pathPositions;
+    }
+
+    private int calculateUnitChange(int source, int target) {
+        if (source == target) {
+            return 0;
+        }
+        return (source - target) / Math.abs(source - target);
+    }
+
+
 }
