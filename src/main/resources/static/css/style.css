@@ -1,0 +1,31 @@
+#chess-section {
+  border: 1px solid;
+  display: block;
+  position: absolute;
+  margin: 0 auto;
+  width: 800px;
+  height: 800px;
+}
+
+#chess-board {
+  display: block;
+  position: absolute;
+  margin: 0 auto;
+  width: 800px;
+  height: 800px;
+}
+
+div {
+  position: relative;
+}
+
+.row {
+  width: 800px;
+  height: 100px;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  float: left;
+}
