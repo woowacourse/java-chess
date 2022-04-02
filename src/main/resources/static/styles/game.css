@@ -60,3 +60,27 @@ body {
 .white {
     color: white;
 }
+
+.popup {
+    z-index: 80;
+    user-select: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#WHITE_TURN,
+#BLACK_TURN {
+    display:none;
+}
