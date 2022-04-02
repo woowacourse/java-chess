@@ -27,6 +27,21 @@
     text-align: center;
 }
 
+.turn {
+    width: 300px;
+    height: 150px;
+    margin-bottom: 20px;
+    float: top;
+    text-align: center;
+}
+
+.turn_box {
+    width: 130px;
+    height: 130px;
+    float: left;
+    padding: 10px;
+}
+
 .inner_box {
     width: 100px;
     height: 100px;
@@ -146,6 +161,14 @@
     <div class="inner_box white" id="h1"></div>
 </div>
 <div class="score_board">
+    <div class="turn" id="turn">
+        <div class="turn_box" id="black_turn">
+            <img src="/images/king_black.png" height="128" width="128"/>
+        </div>
+        <div class="turn_box" id="white_turn">
+            <img src="/images/king_white.png" height="128" width="128"/>
+        </div>
+    </div>
     <div class="inner_score">
         <button class="ui-button" id="start" onclick="start()">start</button>
         <button class="ui-button" id="end" onclick="end()">end</button>
@@ -176,6 +199,7 @@
         await removeElement();
         drawBoard(json);
         fetchScore();
+        fetchTurn();
     }
 
     async function start() {
@@ -184,6 +208,7 @@
         await removeElement();
         drawBoard(json);
         fetchScore();
+        fetchTurn();
     }
 
     async function end() {
@@ -209,6 +234,23 @@
                 element.innerText = `${value} 점수 : ${res[value]}`;
             }
         }));
+    }
+
+    async function fetchTurn() {
+        const data = await fetch("/turn");
+        data.json().then(res => Object.keys(res).forEach(function (value) {
+            if (value === "error") {
+                const element = document.getElementById(value);
+                element.innerText = `${res[value]}`;
+            } else {
+                const turns = document.getElementById("turn");
+                for (let i = 0; i < 2; i++) {
+                    turns.children[i].style.boxShadow = "none";
+                }
+                const currentTurn = document.getElementById(res[value] + "_turn");
+                currentTurn.style.boxShadow = "0 0 10px 2px darkred";
+            }
+        }))
     }
 
     function removeElement() {
