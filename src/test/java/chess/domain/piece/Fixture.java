@@ -8,4 +8,5 @@ public class Fixture {
     public static final Rook ROOK_WHITE = new Rook(Color.WHITE);
     public static final Queen QUEEN_WHITE = new Queen(Color.WHITE);
     public static final King KING_WHITE = new King(Color.WHITE);
+    public static final Knight KNIGHT_WHITE = new Knight(Color.WHITE);
 }
