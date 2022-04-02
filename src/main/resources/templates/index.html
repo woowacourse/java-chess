@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>♟체스 게임</title>
     <link rel="stylesheet" href="/src/index.css">
 </head>
 <body>
 <h1 class="game-name">체스 게임</h1>
 <div class="buttons">
-    <button class="btn" id="startButton" type="button">Start</button>
-    <button class="btn" id="statusButton" type="button" onclick="getScore()">Score</button>
+    <button class="btn" id="start" type="button">Start</button>
+    <button class="btn" id="status" type="button" onclick="getScore()">Score</button>
 </div>
+<div id="info">start를 눌러 게임을 시작해주세요.</div>
 <div class="chess-board">
     <div class="board-rank">
         <div id="a8" onclick="clickPosition(id)" class="board-square white-box"></div>
@@ -101,4 +102,5 @@
     </div>
 </div>
 </body>
+<script src="/src/chess.js"></script>
 </html>

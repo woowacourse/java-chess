@@ -94,4 +94,9 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    @Override
+    public String toString() {
+        return file.getValue() + rank.getValue();
+    }
 }

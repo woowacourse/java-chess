@@ -8,9 +8,14 @@ body {
     margin: 20px 0;
 }
 
+.info {
+    font-size: 1.3em;
+    margin: 10px 0;
+}
+
 .chess-board {
     height: 50%;
-    width: 50%;
+    width: 45%;
 }
 
 .board-rank {
@@ -19,14 +24,15 @@ body {
 
 .board-square {
     width: calc(100% / 8);
-    height: 60px;
-    display: inline-block;
+    height: 70px;
+    display: flex;
+    justify-content: center;
 }
 
 .board-square.white-box {
-    background: #eeeed2;
+    background: #FFFFFF;
 }
 
 .board-square.black-box {
-    background: #000000;
+    background: #cbcbcb;
 }

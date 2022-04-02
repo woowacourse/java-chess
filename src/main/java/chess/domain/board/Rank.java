@@ -72,4 +72,8 @@ public enum Rank {
     public int calculateDistance(Rank targetRank) {
         return order - targetRank.order;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
