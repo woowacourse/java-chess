@@ -65,7 +65,6 @@ public final class Pawn extends MovingUnitPiece {
     }
 
     private boolean checkCanAttack(Direction direction, Piece target) {
-        checkSameTeam(target);
         return direction.hasSame(ATTACK_DIRECTIONS) && !target.isNone();
     }
 
@@ -80,7 +79,6 @@ public final class Pawn extends MovingUnitPiece {
     }
 
     private void checkTarget(Piece target) {
-        checkSameTeam(target);
         if (!target.isNone()) {
             throw new IllegalArgumentException(ERROR_MESSAGE_ATTACK_DIRECTION);
         }

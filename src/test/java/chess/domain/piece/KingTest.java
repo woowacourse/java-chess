@@ -43,13 +43,4 @@ public class KingTest {
 
         assertThat(canMove).isFalse();
     }
-
-    @Test
-    @DisplayName("같은 편이 있는 위치로는 이동 불가능하다")
-    void cantMove_sameTeamPosition() {
-        King king = new King(Color.BLACK);
-        assertThatThrownBy(() -> king.canMove(new Direction(2, 2), new Bishop(Color.BLACK)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 사격 중지!! 아군이다!! ><");
-    }
 }
