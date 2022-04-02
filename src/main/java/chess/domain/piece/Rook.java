@@ -4,7 +4,7 @@ import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-public class Rook extends Piece {
+public class Rook extends UnpromotablePiece {
 
     static final String SYMBOL = "r";
     private static final double SCORE = 5;
@@ -40,16 +40,6 @@ public class Rook extends Piece {
     @Override
     public boolean isPawn() {
         return false;
-    }
-
-    @Override
-    public boolean canPromote() {
-        return false;
-    }
-
-    @Override
-    public Piece promote(final String promotionType) {
-        throw new IllegalStateException("Rook은 Promotion 할 수 없습니다.");
     }
 
     @Override

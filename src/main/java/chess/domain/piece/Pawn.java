@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.board.position.Rank.EIGHT;
-import static chess.domain.board.position.Rank.ONE;
 import static chess.domain.piece.TeamColor.BLACK;
 import static chess.domain.piece.TeamColor.WHITE;
 
@@ -12,7 +10,7 @@ import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
-public class Pawn extends Piece {
+public class Pawn extends PromotablePiece {
 
     private static final String SYMBOL = "p";
     private static final double SCORE = 1;
@@ -103,29 +101,10 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canPromote() {
-        return teamColor == WHITE && position.isInRank(EIGHT) ||
-                teamColor == BLACK && position.isInRank(ONE);
-    }
-
-    @Override
     public String getSymbol() {
         if (teamColor.isBlack()) {
             return SYMBOL.toUpperCase();
         }
         return SYMBOL;
-    }
-
-    public Piece promote(final String promotionType) {
-        if (promotionType.equals(Queen.SYMBOL)) {
-            return new Queen(teamColor, position);
-        }
-        if (promotionType.equals(Rook.SYMBOL)) {
-            return new Rook(teamColor, position);
-        }
-        if (promotionType.equals(Bishop.SYMBOL)) {
-            return new Bishop(teamColor, position);
-        }
-        return new Knight(teamColor, position);
     }
 }
