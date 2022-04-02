@@ -27,17 +27,17 @@ public abstract class Piece {
         return this.getClass() == piece;
     }
 
-    public static boolean isMovableDot(List<Direction> coordinatesOfMovable, Position source, Position target) {
+    public boolean isMovableDot(List<Direction> coordinatesOfMovable, Position source, Position target) {
         return coordinatesOfMovable
                 .stream()
                 .anyMatch(coordinate -> isTargetPosition(source, coordinate, target));
     }
 
-    private static boolean isTargetPosition(Position source, Direction direction, Position target) {
+    private boolean isTargetPosition(Position source, Direction direction, Position target) {
         return source.findPossiblePosition(direction).isSamePosition(target);
     }
 
-    public static boolean isMovableLine(List<Position> positions, List<Direction> move,
+    public boolean isMovableLine(List<Position> positions, List<Direction> move,
                                                  Map<Position, Piece> board) {
         Position source = positions.get(SOURCE);
         Position target = positions.get(TARGET);
@@ -47,7 +47,7 @@ public abstract class Piece {
                         List.of(moveUnit.row(), moveUnit.column()), board));
     }
 
-    private static boolean isMovablePositionByRecursion(Position source, Position target, List<Integer> moveUnit,
+    private boolean isMovablePositionByRecursion(Position source, Position target, List<Integer> moveUnit,
                                                   Map<Position, Piece> board) {
         int row = moveUnit.get(ROW);
         int column = moveUnit.get(COLUMN);
