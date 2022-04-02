@@ -12,6 +12,7 @@ import chess.result.StartResult;
 import chess.view.PieceName;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -26,22 +27,11 @@ public class ChessService {
         Map<String, Object> model = new HashMap<>();
         try {
             model = toModel(chessGame.findAllPiece());
-            final Score score = chessGame.calculateScore();
-            for (Color color : Color.values()) {
-                model.put(color.getValue(), score.findScore(color));
-            }
+            model = findScore(model);
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
         return model;
-    }
-
-    private Map<String, Object> toModel(final Map<Position, ChessPiece> pieceByPosition) {
-        return pieceByPosition.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getValue(),
-                        entry -> PieceName.findWebImagePath(entry.getValue())));
     }
 
     public Map<String, Object> startGame() {
@@ -67,6 +57,7 @@ public class ChessService {
             );
             model = toModel(result.getPieceByPosition());
             model.put("isKingDie", result.isKingDie());
+            model = findScore(model);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece();
@@ -88,5 +79,28 @@ public class ChessService {
             model.put("error", e.getMessage());
         }
         return model;
+    }
+
+    private Map<String, Object> findScore(Map<String, Object> model) {
+        if (Objects.isNull(model)) {
+            model = new HashMap<>();
+        }
+        if (!chessGame.canPlay()) {
+            return model;
+        }
+
+        final Score score = chessGame.calculateScore();
+        for (final Color color : Color.values()) {
+            model.put(color.getValue(), score.findScore(color));
+        }
+        return model;
+    }
+
+    private Map<String, Object> toModel(final Map<Position, ChessPiece> pieceByPosition) {
+        return pieceByPosition.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().getValue(),
+                        entry -> PieceName.findWebImagePath(entry.getValue())));
     }
 }
