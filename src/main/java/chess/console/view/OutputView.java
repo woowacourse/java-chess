@@ -1,4 +1,4 @@
-package chess.view;
+package chess.console.view;
 
 import static java.util.stream.Collectors.joining;
 

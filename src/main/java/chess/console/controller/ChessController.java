@@ -1,10 +1,10 @@
-package chess.controller;
+package chess.console.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.dto.CommandRequest;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.console.dto.CommandRequest;
+import chess.console.view.InputView;
+import chess.console.view.OutputView;
 
 public class ChessController {
 
