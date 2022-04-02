@@ -32,7 +32,7 @@ class GameResultTest {
             put(SAME_FILE_POSITION4, new NonPawn(WHITE, QUEEN));
         }});
 
-        Color actual = whiteKingKilled.getWinnerColor();
+        Color actual = whiteKingKilled.getWinner();
 
         assertThat(actual).isEqualTo(BLACK);
     }

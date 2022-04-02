@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public void printStatus(GameResult gameResult) {
-        Color winnerColor = gameResult.getWinnerColor();
+        Color winnerColor = gameResult.getWinner();
         double whiteScore = gameResult.getWhiteScore();
         double blackScore = gameResult.getBlackScore();
 

@@ -17,11 +17,11 @@ public class GameResult {
     private static final int SAME_FILE_PAWN_MIN_COUNT = 2;
     private static final double SAME_FILE_PAWN_DISADVANTAGE = 0.5;
 
-    private final Color winnerColor;
+    private final Color winner;
     private final GameScore scoreResult;
 
     public GameResult(Map<Position, Piece> board) {
-        this.winnerColor = chooseWinner(board);
+        this.winner = chooseWinner(board);
         this.scoreResult = new GameScore(calculateScore(board, WHITE), calculateScore(board, BLACK));
     }
 
@@ -75,8 +75,8 @@ public class GameResult {
                 .count();
     }
 
-    public Color getWinnerColor() {
-        return winnerColor;
+    public Color getWinner() {
+        return winner;
     }
 
     public double getWhiteScore() {
