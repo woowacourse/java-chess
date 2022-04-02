@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static chess.domain.piece.TeamColor.BLACK;
 import static chess.domain.piece.TeamColor.WHITE;
 
-import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +83,6 @@ public class Pawn extends PromotablePiece {
                 .noneMatch(enemyPosition -> enemyPosition == targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
-    }
-
-    public boolean isInFile(final File file) {
-        return position.isInFile(file);
     }
 
     @Override

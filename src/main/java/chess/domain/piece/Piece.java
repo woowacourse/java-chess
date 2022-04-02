@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,10 @@ public abstract class Piece {
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    public final boolean isInFile(final File file) {
+        return position.isInFile(file);
+    }
 
     public final boolean isTeamOf(final TeamColor teamColor) {
         return this.teamColor == teamColor;

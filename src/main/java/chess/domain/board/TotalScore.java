@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.board.position.File;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ public abstract class TotalScore {
 
     public static double getTotalPoint(final List<Piece> pieces) {
         double totalPoint = getDefaultPoints(pieces);
-        final List<Pawn> pawns = findPawns(pieces);
+        final List<Piece> pawns = findPawns(pieces);
 
         for (File file : File.values()) {
             totalPoint -= countSameFilePawn(pawns, file) * SAME_FILE_PAWN_SUBTRACT_VALUE;
@@ -23,10 +22,9 @@ public abstract class TotalScore {
         return totalPoint;
     }
 
-    private static List<Pawn> findPawns(final List<Piece> pieces) {
+    private static List<Piece> findPawns(final List<Piece> pieces) {
         return pieces.stream()
                 .filter(Piece::isPawn)
-                .map(Pawn.class::cast)
                 .collect(Collectors.toList());
     }
 
@@ -36,9 +34,8 @@ public abstract class TotalScore {
                 .sum();
     }
 
-    private static int countSameFilePawn(final List<Pawn> pawns, final File file) {
+    private static int countSameFilePawn(final List<Piece> pawns, final File file) {
         final int sameFilePawnCount = (int) pawns.stream()
-                .map(Pawn.class::cast)
                 .filter(pawn -> pawn.isInFile(file))
                 .count();
         if (sameFilePawnCount > 1) {
