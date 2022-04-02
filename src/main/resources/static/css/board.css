@@ -25,14 +25,14 @@
 }
 
 .pieceImg {
-  width: 100%;
+  height: 90%;
 }
 
-img {
+.user {
   width: 80px;
   height: 80px;
 }
 
 tr {
-    text-align:center;
+    text-align: center;
 }

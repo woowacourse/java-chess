@@ -8,18 +8,11 @@
 <body>
 <center>
     <div id="app">
-
-        <section>
-            <button type="button" class="statusButton">Status</button>
-            <button type="button" class="endButton" onclick="location.href='/';">End</button>
-            <br/>
-        </section>
-
         {{#this}}
         <section>
             <table>
-                <th><img src="images/white.svg"/></th>
-                <th><img src="images/black.svg"/></th>
+                <th><img src="images/white.svg" class="user"/></th>
+                <th><img src="images/black.svg" class="user"/></th>
                 <tr>
                     <td colspan="2">
                         <img src="images/{{turn}}/turn.png"/>
@@ -28,348 +21,345 @@
             </table>
         </section>
 
+        <section>
+            <button type="button" class="statusButton">Status</button>
+            <button type="button" class="endButton" onclick="location.href='/';">End</button>
+            <br/>
+
+            <form method="get" action="/move" id="moveForm" enctype="text/plain">
+                <input type="text" name="from" placeholder="이동 전 위치"/>
+                <input type="text" name="to" placeholder="이동 후 위치"/>
+                <button type="submit" form="moveForm">Move</button>
+            </form>
+            <br/>
+        </section>
+
         <section class="chess-ui">
             <div class="white-square pawn">
                 {{#a8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a8}}
             </div>
             <div class="black-square pawn">
                 {{#b8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b8}}
             </div>
             <div class="white-square pawn">
                 {{#c8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c8}}
             </div>
             <div class="black-square pawn">
                 {{#d8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d8}}
             </div>
             <div class="white-square pawn">
                 {{#e8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e8}}
             </div>
             <div class="black-square pawn">
                 {{#f8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f8}}
             </div>
             <div class="white-square pawn">
                 {{#g8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g8}}
             </div>
             <div class="black-square pawn">
                 {{#h8}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h8}}
             </div>
 
             <div class="black-square">
                 {{#a7}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a7}}
             </div>
             <div class="white-square">
                 {{#b7}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b7}}
             </div>
             <div class="black-square">
                 {{#c7}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c7}}
             </div>
             <div class="white-square">
                 {{#d7}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d7}}
             </div>
             <div class="black-square">
                 {{#e7}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e7}}
             </div>
             <div class="white-square">
                 {{#f7}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f7}}
             </div>
             <div class="black-square">
                 {{#g7}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g7}}
             </div>
             <div class="white-square">
                 {{#h7}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h7}}
             </div>
 
             <div class="white-square pawn">
                 {{#a6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a6}}
             </div>
             <div class="black-square pawn">
                 {{#b6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b6}}
             </div>
             <div class="white-square pawn">
                 {{#c6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c6}}
             </div>
             <div class="black-square pawn">
                 {{#d6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d6}}
             </div>
             <div class="white-square pawn">
                 {{#e6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e6}}
             </div>
             <div class="black-square pawn">
                 {{#f6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f6}}
             </div>
             <div class="white-square pawn">
                 {{#g6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g6}}
             </div>
             <div class="black-square pawn">
                 {{#h6}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h6}}
             </div>
 
             <div class="black-square">
                 {{#a5}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a5}}
             </div>
             <div class="white-square">
                 {{#b5}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b5}}
             </div>
             <div class="black-square">
                 {{#c5}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c5}}
             </div>
             <div class="white-square">
                 {{#d5}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d5}}
             </div>
             <div class="black-square">
                 {{#e5}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e5}}
             </div>
             <div class="white-square">
                 {{#f5}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f5}}
             </div>
             <div class="black-square">
                 {{#g5}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g5}}
             </div>
             <div class="white-square">
                 {{#h5}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h5}}
             </div>
 
             <div class="white-square pawn">
                 {{#a4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a4}}
             </div>
             <div class="black-square pawn">
                 {{#b4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b4}}
             </div>
             <div class="white-square pawn">
                 {{#c4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c4}}
             </div>
             <div class="black-square pawn">
                 {{#d4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d4}}
             </div>
             <div class="white-square pawn">
                 {{#e4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e4}}
             </div>
             <div class="black-square pawn">
                 {{#f4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f4}}
             </div>
             <div class="white-square pawn">
                 {{#g4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g4}}
             </div>
             <div class="black-square pawn">
                 {{#h4}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h4}}
             </div>
 
             <div class="black-square">
                 {{#a3}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a3}}
             </div>
             <div class="white-square">
                 {{#b3}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b3}}
             </div>
             <div class="black-square">
                 {{#c3}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c3}}
             </div>
             <div class="white-square">
                 {{#d3}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d3}}
             </div>
             <div class="black-square">
                 {{#e3}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e3}}
             </div>
             <div class="white-square">
                 {{#f3}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f3}}
             </div>
             <div class="black-square">
                 {{#g3}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g3}}
             </div>
             <div class="white-square">
                 {{#h3}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h3}}
             </div>
 
             <div class="white-square pawn">
                 {{#a2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a2}}
             </div>
             <div class="black-square pawn">
                 {{#b2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b2}}
             </div>
             <div class="white-square pawn">
                 {{#c2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c2}}
             </div>
             <div class="black-square pawn">
                 {{#d2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d2}}
             </div>
             <div class="white-square pawn">
                 {{#e2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e2}}
             </div>
             <div class="black-square pawn">
                 {{#f2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f2}}
             </div>
             <div class="white-square pawn">
                 {{#g2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g2}}
             </div>
             <div class="black-square pawn">
                 {{#h2}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h2}}
             </div>
 
             <div class="black-square">
                 {{#a1}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/a1}}
             </div>
             <div class="white-square">
                 {{#b1}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/b1}}
             </div>
             <div class="black-square">
                 {{#c1}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/c1}}
             </div>
             <div class="white-square">
                 {{#d1}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/d1}}
             </div>
             <div class="black-square">
                 {{#e1}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/e1}}
             </div>
             <div class="white-square">
                 {{#f1}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/f1}}
             </div>
             <div class="black-square">
                 {{#g1}}
-                <span>{{COLOR}}</span>
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/g1}}
             </div>
             <div class="white-square">
                 {{#h1}}
-                <img src="images/{{color}}/{{type}}.svg" class="pieceImg"/>
+                <img src="images/{{team}}/{{type}}.svg" class="pieceImg"/>
                 {{/h1}}
             </div>
         </section>
