@@ -2,17 +2,27 @@ package chess.controller;
 
 import chess.db.GameRepository;
 import chess.domain.game.Game;
+import chess.domain.game.GameState;
 import chess.domain.game.NewGame;
 import chess.dto.request.MoveCommandDto;
-import chess.dto.response.SearchResultDto;
-import chess.dto.response.CreateGameDto;
 import chess.dto.request.PlayGameRequestDto;
+import chess.dto.response.CreateGameDto;
+import chess.dto.response.SearchResultDto;
 import chess.model.FullGameModel;
 import chess.model.FullResultModel;
+import chess.model.GameCountModel;
 
 public class WebController {
 
     private final GameRepository gameRepository = new GameRepository();
+
+    public GameCountModel countGames() {
+        int totalCount = gameRepository.countAll();
+        int overCount = gameRepository.countByState(GameState.OVER);
+        int runningCount = totalCount - overCount;
+
+        return new GameCountModel(totalCount, runningCount);
+    }
 
     public CreateGameDto initGame() {
         Game game = new NewGame().init();
