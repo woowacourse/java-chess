@@ -1,7 +1,9 @@
 package chess.service;
 
 import chess.dao.BoardDao;
+import chess.dao.BoardDaoImpl;
 import chess.dao.TurnDao;
+import chess.dao.TurnDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.game.ChessGame;
@@ -12,7 +14,6 @@ import chess.dto.ChessDto;
 import chess.dto.MoveDto;
 import chess.dto.StatusDto;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChessService {
 
@@ -20,8 +21,13 @@ public class ChessService {
     private final TurnDao turnDao;
 
     public ChessService() {
-        boardDao = new BoardDao();
-        turnDao = new TurnDao();
+        boardDao = new BoardDaoImpl();
+        turnDao = new TurnDaoImpl();
+    }
+
+    public ChessService(final BoardDao boardDao, final TurnDao turnDao) {
+        this.boardDao = boardDao;
+        this.turnDao = turnDao;
     }
 
     public ChessDto initializeGame() {
@@ -49,7 +55,8 @@ public class ChessService {
     }
 
     public ChessDto move(final MoveDto moveDto) {
-        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()), new Turn(Team.of(turnDao.getCurrentTurn())));
+        ChessGame chessGame = new ChessGame(BoardFactory.createBoard(boardDao.getBoard()), new Turn(Team.of(
+                turnDao.getCurrentTurn())));
 
         String sourcePosition = moveDto.getSource();
         String targetPosition = moveDto.getTarget();

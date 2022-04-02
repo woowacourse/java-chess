@@ -47,4 +47,12 @@ public class ChessDto {
     public Map<String, String> getBoard() {
         return board;
     }
+
+    public String getGameOver() {
+        return gameOver;
+    }
+
+    public String getTurn() {
+        return turn;
+    }
 }
