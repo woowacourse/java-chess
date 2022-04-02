@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.RegularRuleMaker;
+import chess.domain.board.RegularRuleSetup;
 import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -28,7 +28,7 @@ public final class GameMachine {
 
     private Board play(Board board, Commands commands) {
         if (commands.isStart()) {
-            board = new Board(new RegularRuleMaker());
+            board = new Board(new RegularRuleSetup());
             OutputView.printBoard(board);
         }
         if (commands.isMove()) {

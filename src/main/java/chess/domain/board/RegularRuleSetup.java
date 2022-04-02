@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class RegularRuleMaker implements PiecesMaker {
+public final class RegularRuleSetup implements PiecesSetup {
 
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> pieces = new HashMap<>();

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.board.PiecesMaker;
+import chess.domain.board.PiecesSetup;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -15,8 +15,8 @@ public final class Pieces {
 
     private final Map<Position, Piece> pieces;
 
-    public Pieces(final PiecesMaker piecesMaker) {
-        pieces = piecesMaker.initialize();
+    public Pieces(final PiecesSetup piecesSetup) {
+        pieces = piecesSetup.initialize();
     }
 
     public Optional<Piece> findPiece(final Position position) {
