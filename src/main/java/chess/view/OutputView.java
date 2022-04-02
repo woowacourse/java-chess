@@ -13,11 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
-    private static final int ADJUST_ROW_INDEX = 1;
-    private static final int CHESSBOARD_SIZE = 8;
-    private static final char EMPTY_CHESS_BLOCK = '.';
-    private static final char ADJUST_COLUMN_INDEX = 'a';
-    private static final String EMPTY_STRING = "";
     private static final String CHESS_GAME_START_MESSAGE = "체스 게임을 시작합니다.";
     private static final String GAME_START_COMMAND_MESSAGE = "> 게임 시작 : start";
     private static final String GAME_END_COMMAND_MESSAGE = "> 게임 종료 : end";
@@ -28,6 +23,7 @@ public class OutputView {
 
     private static final List<Integer> rows = List.of(8, 7, 6, 5, 4, 3, 2, 1);
     private static final List<Integer> columns = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+    private static final String EMPTY_SPACE = ".";
 
 
     static {
@@ -71,7 +67,7 @@ public class OutputView {
             printChessPiece(mapInformation.get(target));
             return;
         }
-        System.out.print(".");
+        System.out.print(EMPTY_SPACE);
     }
 
     private static void printChessPiece(ChessPiece chessPiece) {
@@ -81,8 +77,6 @@ public class OutputView {
         }
         System.out.print(ChessPieceName.of(chessPiece));
     }
-
-
 
     public static void printStatus(ChessStatusDto chessStatusDto) {
         for (Entry<Team, Double> entry : chessStatusDto.getTeamScore().entrySet()) {

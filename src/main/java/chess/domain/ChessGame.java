@@ -29,7 +29,6 @@ public class ChessGame {
     }
 
     public ChessStatusDto getStatusInformation() {
-        ChessStatusDto chessStatusDto = ChessStatusDto.of(chessBoard);
-        return chessStatusDto;
+        return ChessStatusDto.of(chessBoard);
     }
 }

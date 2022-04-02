@@ -13,24 +13,32 @@ public class Knight extends ChessPiece {
     private static final double SCORE = 2.5;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static final int LEFT_KNIGHT_COLUMN = 2;
+    private static final int RIGHT_KNIGHT_COLUMN = 7;
+    private static final int BLACK_TEAM_ROW = 8;
+    private static final int WHITE_TEAM_ROW = 1;
+    private static final int EAST = 1;
+    private static final int NORTH = 1;
+    private static final int SOUTH = -1;
+    private static final int WEST = -1;
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of(2, 8), new Knight(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of(7, 8), new Knight(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of(2, 1), new Knight(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of(7, 1), new Knight(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(LEFT_KNIGHT_COLUMN, BLACK_TEAM_ROW), new Knight(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(RIGHT_KNIGHT_COLUMN, BLACK_TEAM_ROW), new Knight(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(LEFT_KNIGHT_COLUMN, WHITE_TEAM_ROW), new Knight(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(RIGHT_KNIGHT_COLUMN, WHITE_TEAM_ROW), new Knight(Team.WHITE));
     }
 
     Knight(Team team) {
         super(team, SCORE, new NoPathMovingStrategy(
-                List.of(ChessBoardPosition.of(2, 1)
-                , ChessBoardPosition.ofDirection(2, -1)
-                , ChessBoardPosition.ofDirection(-2, 1)
-                , ChessBoardPosition.ofDirection(-2, -1)
-                , ChessBoardPosition.ofDirection(1, 2)
-                , ChessBoardPosition.ofDirection(1, -2)
-                , ChessBoardPosition.ofDirection(-1, 2)
-                , ChessBoardPosition.ofDirection(-1, -2))
+                List.of(ChessBoardPosition.of(2*EAST, NORTH)
+                , ChessBoardPosition.ofDirection(2*EAST, SOUTH)
+                , ChessBoardPosition.ofDirection(2*WEST, NORTH)
+                , ChessBoardPosition.ofDirection(2*WEST, SOUTH)
+                , ChessBoardPosition.ofDirection(EAST, 2*NORTH)
+                , ChessBoardPosition.ofDirection(EAST, 2*SOUTH)
+                , ChessBoardPosition.ofDirection(WEST, 2*NORTH)
+                , ChessBoardPosition.ofDirection(WEST, 2*SOUTH))
         ));
     }
 

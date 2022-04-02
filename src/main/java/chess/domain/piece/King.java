@@ -13,22 +13,30 @@ public class King extends ChessPiece {
     private static final double SCORE = 0.0;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static int COLUMN = 5;
+    private static int BLACK_TEAM_ROW = 8;
+    private static int WHITE_TEAM_ROW = 1;
+    private static final int EAST = 1;
+    private static final int NORTH = 1;
+    private static final int SOUTH = -1;
+    private static final int WEST = -1;
+    private static final int STAY = 0;
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of(5, 8), new King(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of(5, 1), new King(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(COLUMN, BLACK_TEAM_ROW), new King(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(COLUMN, WHITE_TEAM_ROW), new King(Team.WHITE));
     }
 
     King(Team team) {
         super(team, SCORE, new NoPathMovingStrategy(
-                List.of(ChessBoardPosition.ofDirection(1, 0)
-                , ChessBoardPosition.ofDirection(1, 1)
-                , ChessBoardPosition.ofDirection(0, 1)
-                , ChessBoardPosition.ofDirection(-1, 1)
-                , ChessBoardPosition.ofDirection(-1, 0)
-                , ChessBoardPosition.ofDirection(-1, -1)
-                , ChessBoardPosition.ofDirection(0, -1)
-                , ChessBoardPosition.ofDirection(1, -1))
+                List.of(ChessBoardPosition.ofDirection(EAST, STAY)
+                , ChessBoardPosition.ofDirection(EAST, NORTH)
+                , ChessBoardPosition.ofDirection(STAY, NORTH)
+                , ChessBoardPosition.ofDirection(WEST, NORTH)
+                , ChessBoardPosition.ofDirection(WEST, STAY)
+                , ChessBoardPosition.ofDirection(WEST, SOUTH)
+                , ChessBoardPosition.ofDirection(STAY, SOUTH)
+                , ChessBoardPosition.ofDirection(EAST, SOUTH))
         ));
     }
 

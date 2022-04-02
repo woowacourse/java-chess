@@ -22,6 +22,10 @@ public class ChessBoard {
     private static final String UNVALID_SOURCE_POSITION_EXCEPTION = "[ERROR] sourcePosition에 체스 기물이 없습니다.";
     private static final String SAME_TEAM_EXIST_IN_TARGET_POSITION_EXCEPTION = "[ERROR] targetPosition에 같은 팀 체스 기물이 있습니다.";
     private static final String IMPOSSIBLE_TO_KILL_EXCEPTION = "[ERROR] 잡을 수 없는 위치에 있는 말입니다.";
+    private static final double PAWN_SAME_COLUMN_PENALTY = 0.5;
+    private static final int MAX_BOARD_INDEX = 8;
+    private static final int MIN_BOARD_INDEX = 1;
+    private static final int PAWN_PENALTY_CONDITION = 1;
     private final Map<ChessBoardPosition, ChessPiece> mapInformation;
     private Team turn;
 
@@ -162,17 +166,17 @@ public class ChessBoard {
     }
 
     private Double calculatePawnPenalty(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
-        return countSameRowPawn(specificTeamInformation) * 0.5;
+        return countSameRowPawn(specificTeamInformation) * PAWN_SAME_COLUMN_PENALTY;
     }
 
     private int countSameRowPawn(Map<ChessBoardPosition, ChessPiece> specificTeamInformation) {
         List<Integer> pawnColumns = collectPawnColumns(specificTeamInformation);
-        return IntStream.rangeClosed(1, 8)
+        return IntStream.rangeClosed(MIN_BOARD_INDEX, MAX_BOARD_INDEX)
                 .boxed()
                 .map(it -> Collections.frequency(pawnColumns, it))
                 .collect(Collectors.toList())
                 .stream()
-                .filter(it -> it > 1)
+                .filter(it -> it > PAWN_PENALTY_CONDITION)
                 .mapToInt(Integer::intValue)
                 .sum();
     }

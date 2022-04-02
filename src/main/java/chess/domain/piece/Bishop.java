@@ -11,20 +11,28 @@ public class Bishop extends ChessPiece {
     private static final double SCORE = 3.0;
     private static final Map<ChessBoardPosition, ChessPiece> blackTeamInitialPosition = new HashMap<>();
     private static final Map<ChessBoardPosition, ChessPiece> whiteTeamInitialPosition = new HashMap<>();
+    private static final int BLACK_TEAM_ROW = 8;
+    private static final int WHITE_TEAM_ROW = 1;
+    private static final int LEFT_COLUMN = 3;
+    private static final int RIGHT_COLUMN = 6;
+    private static final int EAST = 1;
+    private static final int NORTH = 1;
+    private static final int SOUTH = -1;
+    private static final int WEST = -1;
 
     static {
-        blackTeamInitialPosition.put(ChessBoardPosition.of(3, 8), new Bishop(Team.BLACK));
-        blackTeamInitialPosition.put(ChessBoardPosition.of(6, 8), new Bishop(Team.BLACK));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of(3, 1), new Bishop(Team.WHITE));
-        whiteTeamInitialPosition.put(ChessBoardPosition.of(6, 1), new Bishop(Team.WHITE));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(LEFT_COLUMN, BLACK_TEAM_ROW), new Bishop(Team.BLACK));
+        blackTeamInitialPosition.put(ChessBoardPosition.of(RIGHT_COLUMN, BLACK_TEAM_ROW), new Bishop(Team.BLACK));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(LEFT_COLUMN, WHITE_TEAM_ROW), new Bishop(Team.WHITE));
+        whiteTeamInitialPosition.put(ChessBoardPosition.of(RIGHT_COLUMN, WHITE_TEAM_ROW), new Bishop(Team.WHITE));
     }
 
     Bishop(Team team) {
         super(team, SCORE, new ContinuousMovingStrategy(
-                List.of(ChessBoardPosition.ofDirection(1, 1),
-                        ChessBoardPosition.ofDirection(1, -1),
-                        ChessBoardPosition.ofDirection(-1, 1),
-                        ChessBoardPosition.ofDirection(-1, -1))));
+                List.of(ChessBoardPosition.ofDirection(EAST, NORTH),
+                        ChessBoardPosition.ofDirection(EAST, SOUTH),
+                        ChessBoardPosition.ofDirection(WEST, NORTH),
+                        ChessBoardPosition.ofDirection(WEST, SOUTH))));
     }
 
     public static Map<ChessBoardPosition, ChessPiece> create(Team team) {

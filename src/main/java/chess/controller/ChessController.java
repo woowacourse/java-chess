@@ -17,6 +17,8 @@ public class ChessController {
     private static final String STATUS_COMMAND = "status";
     private static final String MOVE_COMMAND = "move";
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
+    private static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
 
     static {
         convertColumn.put('a', 1);
@@ -77,10 +79,10 @@ public class ChessController {
     }
 
     private int extractColumn(String input) {
-        return convertColumn.get(input.charAt(0));
+        return convertColumn.get(input.charAt(COLUMN_INDEX));
     }
 
     private int extractRow(String input) {
-        return Character.getNumericValue(input.charAt(1));
+        return Character.getNumericValue(input.charAt(ROW_INDEX));
     }
 }

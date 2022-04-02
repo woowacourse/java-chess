@@ -15,11 +15,4 @@ public enum Team {
     public boolean isSame(Team other) {
         return this.equals(other);
     }
-
-    public Team reverse() {
-        if (isWhite()) {
-            return BLACK;
-        }
-        return WHITE;
-    }
 }

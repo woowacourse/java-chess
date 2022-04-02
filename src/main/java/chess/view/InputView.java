@@ -38,20 +38,4 @@ public class InputView {
         return Arrays.stream(input.split(COMMAND_DELIMITER))
                 .collect(Collectors.toList());
     }
-
-    public static List<String> requestMove() {
-        System.out.println();
-        String input = scanner.nextLine();
-        validateMoveCommand(input);
-        return Arrays.stream(input.split(COMMAND_DELIMITER))
-                .collect(Collectors.toList())
-                .subList(SOURCE_POSITION_INDEX, TARGET_POSITION_INDEX + 1);
-    }
-
-    private static void validateMoveCommand(String input) {
-        String command = input.split(COMMAND_DELIMITER)[COMMAND_INDEX];
-        if (!command.equals(MOVE_COMMAND)) {
-            throw new IllegalArgumentException(NOT_MOVE_COMMAND_EXCEPTION);
-        }
-    }
 }
