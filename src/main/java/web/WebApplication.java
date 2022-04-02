@@ -1,4 +1,4 @@
-package chess;
+package web;
 
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;

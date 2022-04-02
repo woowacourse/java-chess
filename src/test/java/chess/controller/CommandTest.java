@@ -4,6 +4,7 @@ import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.domain.game.Running;
+import console.controller.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

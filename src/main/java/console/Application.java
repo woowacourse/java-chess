@@ -1,11 +1,11 @@
-package chess;
+package console;
 
-import chess.controller.ChessController;
+import console.controller.ChessConsoleController;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessController controller = new ChessController();
+        ChessConsoleController controller = new ChessConsoleController();
         controller.run();
     }
 }

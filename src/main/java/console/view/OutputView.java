@@ -1,4 +1,4 @@
-package chess.view;
+package console.view;
 
 import chess.domain.board.LineNumber;
 import chess.domain.board.Point;

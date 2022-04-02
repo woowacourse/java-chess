@@ -1,16 +1,16 @@
-package chess.controller;
+package console.controller;
 
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
 import chess.domain.game.Ready;
 import chess.dto.BoardAndTurnInfo;
 import chess.dto.ScoreResponse;
-import chess.view.InputView;
-import chess.view.OutputView;
+import console.view.InputView;
+import console.view.OutputView;
 
 import java.util.List;
 
-public class ChessController {
+public class ChessConsoleController {
 
     public void run() {
         OutputView.printIntroduction();

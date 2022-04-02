@@ -1,4 +1,4 @@
-package chess.controller;
+package console.controller;
 
 import chess.domain.board.Point;
 import chess.domain.game.GameState;
@@ -9,10 +9,10 @@ import java.util.function.BiFunction;
 
 public enum Command {
 
-    START("start", ChessController::start),
-    FINISH("end", ChessController::finish),
-    MOVE("move", ChessController::move),
-    STATUS("status", ChessController::status);
+    START("start", ChessConsoleController::start),
+    FINISH("end", ChessConsoleController::finish),
+    MOVE("move", ChessConsoleController::move),
+    STATUS("status", ChessConsoleController::status);
 
     private final String input;
     private final BiFunction<GameState, List<Point>, GameState> executor;

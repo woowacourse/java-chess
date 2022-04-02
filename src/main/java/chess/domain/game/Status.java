@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.controller.Request;
+import console.controller.Request;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;

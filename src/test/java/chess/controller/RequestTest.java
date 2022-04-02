@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Point;
+import console.controller.Request;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
