@@ -1,6 +1,7 @@
 package chess.db;
 
 import chess.domain.game.Game;
+import chess.domain.game.GameState;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,5 +33,17 @@ public class GameRepository {
             throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION_MESSAGE);
         }
         database.put(id, newGame);
+    }
+
+    public int countAll() {
+        return database.values()
+                .size();
+    }
+
+    public int countByState(GameState state) {
+        return (int) database.values()
+                .stream()
+                .filter(game -> game.getState() == state)
+                .count();
     }
 }
