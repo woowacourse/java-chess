@@ -14,7 +14,7 @@ class PlayTest {
     @Test
     @DisplayName("play -> finish")
     void playToFinish() {
-        Play play = new Play(new Turn());
+        Play play = Play.from(new Turn());
 
         assertThat(play.end()).isInstanceOf(Finish.class);
     }
@@ -22,7 +22,7 @@ class PlayTest {
     @Test
     @DisplayName("end 메서드 실행시 Finish 반환")
     void checkEnd() {
-        Play play = new Play(new Turn());
+        Play play = Play.from(new Turn());
 
         assertThat(play.end()).isInstanceOf(Finish.class);
     }
@@ -30,7 +30,7 @@ class PlayTest {
     @Test
     @DisplayName("Finish 상태 확인")
     void checkFinish() {
-        Play play = new Play(new Turn());
+        Play play = Play.from(new Turn());
 
         assertThat(play.isFinished()).isFalse();
     }
@@ -38,7 +38,7 @@ class PlayTest {
     @Test
     @DisplayName("move하고 Play를 반환하는지 확인")
     void checkMove() {
-        Play play = new Play(new Turn());
+        Play play = Play.from(new Turn());
 
         assertThat(play.move(new Position(6, 0), new Position(5, 0)).getClass())
                 .isEqualTo(Play.class);
@@ -47,14 +47,14 @@ class PlayTest {
     @Test
     @DisplayName("Play 상태에서 start를 하는 경우")
     void checkStartException() {
-        assertThatThrownBy(() -> new Play(new Turn()).start())
+        assertThatThrownBy(() -> Play.from(new Turn()).start())
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     @DisplayName("점수 확인")
     void checkScore() {
-        Play play = new Play(new Turn());
+        Play play = Play.from(new Turn());
 
         assertThat(play.computeScore(Color.WHITE)).isEqualTo(38);
     }

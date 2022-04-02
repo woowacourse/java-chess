@@ -21,7 +21,7 @@ public class Ready implements State {
 
     @Override
     public State start() {
-        return new Play(turn);
+        return Play.from(turn);
     }
 
     @Override

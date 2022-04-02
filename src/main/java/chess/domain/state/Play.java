@@ -10,14 +10,13 @@ public class Play implements State {
     private final Chessboard chessboard;
     private final Turn turn;
 
-    public Play(Turn turn) {
-        this.turn = turn;
-        this.chessboard = Chessboard.create();
-    }
-
-    public Play(Turn turn, Chessboard chessboard) {
+    private Play(Turn turn, Chessboard chessboard) {
         this.turn = turn;
         this.chessboard = chessboard;
+    }
+
+    public static Play from(Turn turn) {
+        return new Play(turn, Chessboard.create());
     }
 
     @Override
