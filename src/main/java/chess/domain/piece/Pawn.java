@@ -9,17 +9,15 @@ import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
 
+    private static final String SYMBOL = "p";
     private static final double SCORE = 1;
+
     private static final Map<TeamColor, Integer> DIRECTION_VALUE_BY_TEAM = Map.of(BLACK, 1, WHITE, -1);
-    private static final Map<String, BiFunction<TeamColor, Position, Piece>> promotionStrategy =
-            Map.of("q", Queen::new, "n", Knight::new,
-                    "r", Rook::new, "b", Bishop::new);
 
     private boolean isFirstMove = true;
 
@@ -110,7 +108,24 @@ public class Pawn extends Piece {
                 teamColor == BLACK && position.isInRank(ONE);
     }
 
+    @Override
+    public String getSymbol() {
+        if (teamColor.isBlack()) {
+            return SYMBOL.toUpperCase();
+        }
+        return SYMBOL;
+    }
+
     public Piece promote(final String promotionType) {
-        return promotionStrategy.get(promotionType).apply(teamColor, position);
+        if (promotionType.equals(Queen.SYMBOL)) {
+            return new Queen(teamColor, position);
+        }
+        if (promotionType.equals(Rook.SYMBOL)) {
+            return new Rook(teamColor, position);
+        }
+        if (promotionType.equals(Bishop.SYMBOL)) {
+            return new Bishop(teamColor, position);
+        }
+        return new Knight(teamColor, position);
     }
 }
