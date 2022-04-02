@@ -1,7 +1,7 @@
 package chess.dto;
 
 import chess.domain.board.position.Position;
-import chess.domain.game.state.Command;
+import chess.view.Command;
 
 public class CommandDto {
     private static final String NOT_MOVE_ERROR_MESSAGE = "move 커멘드가 아닙니다";

@@ -1,6 +1,7 @@
 package chess.domain.game.state;
 
 import chess.domain.game.ChessGame;
+import chess.view.Command;
 import chess.dto.CommandDto;
 
 public final class Play extends AbstractState {
