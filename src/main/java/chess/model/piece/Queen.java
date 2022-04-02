@@ -10,7 +10,6 @@ public class Queen extends Piece {
     private static final String BLACK_NAME = "Q";
     private static final String WHITE_NAME = "q";
     private static final double SCORE = 9D;
-    private static final List<Direction> directions = Direction.all();
 
     public Queen(Team team) {
         super(team, new UnlimitedMoveStrategy(Direction.all()));

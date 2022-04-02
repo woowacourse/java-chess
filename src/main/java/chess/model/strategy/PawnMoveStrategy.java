@@ -28,18 +28,5 @@ public class PawnMoveStrategy implements MoveStrategy {
             return moveDirections.contains(direction) && Distance.oneAndTwoStep().contains(distance);
         }
         return moveDirections.contains(direction) && Distance.oneStep().contains(distance);
-
-        /*
-        if (죽이려고 함):
-            방향이 대각선이어야함
-            거리가 1이어야함
-        else (그냥 이동일 경우):
-            if (첫번째 이동인 경우):
-                방향이 직진이어야함
-                거리가 1 또는 2여야 함
-            else (n번째 이동일 경우 n>1):
-                방향이 직진이어야함
-                거리가 1이어야함
-         */
     }
 }
