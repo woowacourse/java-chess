@@ -1,0 +1,14 @@
+@import "global.css";
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form > label{
+    margin-right: 8px;
+}
+form > #num_input{
+    margin-right: 10px;
+}

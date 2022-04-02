@@ -33,7 +33,12 @@ public class WebApplication {
             return render(controller.playGame(request), "game.html");
         });
 
-        get("/search", (req, res) -> "TBA");
+        get("/search", (req, res) -> render(null, "search.html"));
+        post("/search-result", (req, res) -> {
+            res.type("application/json");
+            int gameId = Integer.parseInt(req.queryParams("game_id"));
+            return controller.searchGame(gameId).toJson();
+        });
     }
 
     private static String render(Object model, String templatePath) {
