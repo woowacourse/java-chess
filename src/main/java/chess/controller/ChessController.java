@@ -10,7 +10,9 @@ import chess.domain.game.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import spark.ModelAndView;
@@ -28,9 +30,8 @@ public class ChessController {
             return render(model, "index.html");
         });
 
-        // 새로운 보드 생성
-        post("/new", (request, response) -> {
-            chessGame.start(boardGenerator);
+        // 보드 출력
+        get("/board", (request, response) -> {
             Board board = chessGame.getBoard();
 
             Map<String, Object> model = new HashMap<>();
@@ -41,6 +42,26 @@ public class ChessController {
             model.put("turn", chessGame.getTurn());
 
             return render(model, "board.html");
+        });
+
+        // 새로운 보드 생성
+        post("/new", (request, response) -> {
+            chessGame.start(boardGenerator);
+            response.redirect("/board");
+            return null;
+        });
+
+        // 기물 이동
+        get("/move", (request, response) -> {
+            List<String> inputs = new ArrayList<>();
+            inputs.add("move");
+            inputs.add(request.queryParams("from"));
+            inputs.add(request.queryParams("to"));
+
+            chessGame.move(inputs);
+
+            response.redirect("/board");
+            return null;
         });
     }
 
