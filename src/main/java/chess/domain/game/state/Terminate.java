@@ -5,7 +5,7 @@ import chess.domain.piece.Color;
 
 public class Terminate extends End {
 
-    private static final String NOT_EXIST_WINNER = "게임이 종료되어 승자가 존재하지 않습니다.";
+    private static final String NOT_EXIST_WINNER = "[ERROR] 게임이 종료되어 승자가 존재하지 않습니다.";
 
     public Terminate(Board board) {
         super(board);
@@ -14,5 +14,10 @@ public class Terminate extends End {
     @Override
     public Color judgeWinner() {
         throw new IllegalStateException(NOT_EXIST_WINNER);
+    }
+
+    @Override
+    public boolean isTerminate() {
+        return true;
     }
 }

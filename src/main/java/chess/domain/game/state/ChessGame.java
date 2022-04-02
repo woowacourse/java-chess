@@ -18,5 +18,7 @@ public interface ChessGame {
 
     Color judgeWinner();
 
+    boolean isTerminate();
+
     Board getBoard();
 }

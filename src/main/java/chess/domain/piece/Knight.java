@@ -17,7 +17,8 @@ public class Knight extends Piece {
     public boolean isMovable(Position fromPosition, Position toPosition) {
         Direction direction = Direction.giveDirection(fromPosition, toPosition);
         List<Direction> directions = Direction.knightDirections();
-        return directions.contains(direction) && Math.abs(toPosition.getRankDifference(fromPosition)) <= MAXIMUM_DIFFERENCE
+        return directions.contains(direction)
+                && Math.abs(toPosition.getRankDifference(fromPosition)) <= MAXIMUM_DIFFERENCE
                 && Math.abs(toPosition.getFileDifference(fromPosition)) <= MAXIMUM_DIFFERENCE;
     }
 

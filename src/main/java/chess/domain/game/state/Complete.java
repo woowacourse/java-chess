@@ -13,4 +13,9 @@ public final class Complete extends End {
     public Color judgeWinner() {
         return board.getWinnerTeamColor();
     }
+
+    @Override
+    public boolean isTerminate() {
+        return false;
+    }
 }

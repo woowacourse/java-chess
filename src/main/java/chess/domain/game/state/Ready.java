@@ -44,6 +44,11 @@ public final class Ready implements ChessGame {
     }
 
     @Override
+    public boolean isTerminate() {
+        return false;
+    }
+
+    @Override
     public Board getBoard() {
         throw new IllegalStateException(NOT_STARTED_GAME);
     }

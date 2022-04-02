@@ -16,10 +16,8 @@ public class ChessController {
         while (!chessGame.isFinish()) {
             chessGame = selectMenu(chessGame, InputView.inputOption());
         }
-        try {
+        if (!chessGame.isTerminate()) {
             OutputView.printWinner(chessGame.judgeWinner());
-        } catch (IllegalStateException exception) {
-            OutputView.printError(exception.getMessage());
         }
     }
 
@@ -27,7 +25,7 @@ public class ChessController {
         InputOption option = dto.getInputOption();
         Command command = CommandFactory.playCommand(option);
         try {
-            return command.run(chessGame,dto.getFromPosition(), dto.getToPosition());
+            return command.run(chessGame, dto.getFromPosition(), dto.getToPosition());
         } catch (IllegalStateException | IllegalArgumentException exception) {
             OutputView.printError(exception.getMessage());
         }
@@ -42,4 +40,3 @@ public class ChessController {
         OutputView.printScore(whiteScore, blackScore);
     }
 }
-

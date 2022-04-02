@@ -40,6 +40,11 @@ public abstract class Running implements ChessGame {
     }
 
     @Override
+    public boolean isTerminate() {
+        return false;
+    }
+
+    @Override
     public Board getBoard() {
         return board;
     }
