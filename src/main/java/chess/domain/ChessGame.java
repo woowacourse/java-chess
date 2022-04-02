@@ -10,7 +10,7 @@ public final class ChessGame {
     private Color turn;
 
     public ChessGame() {
-        this(new Board(), Color.WHITE);
+        this(new Board(new InitialBoardGenerator()), Color.WHITE);
     }
 
     public ChessGame(Board board, Color turn) {
@@ -43,6 +43,6 @@ public final class ChessGame {
     }
 
     public Board getBoard() {
-        return new Board(board.getBoard());
+        return board;
     }
 }

@@ -9,8 +9,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.None;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 public final class Board {
@@ -19,26 +17,12 @@ public final class Board {
 
     private final Map<Square, Piece> board;
 
-    Board() {
-        this(createBoard());
+    Board(BoardGenerator boardGenerator) {
+        this(boardGenerator.generate());
     }
 
-    Board(Map<Square, Piece> board) {
+    private Board(Map<Square, Piece> board) {
         this.board = new LinkedHashMap<>(board);
-    }
-
-    private static Map<Square, Piece> createBoard() {
-        Map<Square, Piece> board = new LinkedHashMap<>();
-        for (Rank rank : Rank.values()) {
-            createRow(board, rank);
-        }
-        return board;
-    }
-
-    private static void createRow(Map<Square, Piece> board, Rank rank) {
-        for (File file : File.values()) {
-            board.put(new Square(file, rank), Piece.from(file, rank));
-        }
     }
 
     boolean isRightTurn(Square source, Color turn) {
