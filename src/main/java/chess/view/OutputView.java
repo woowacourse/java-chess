@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.GameResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;

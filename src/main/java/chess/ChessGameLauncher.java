@@ -5,6 +5,7 @@ import java.util.Map;
 
 import chess.domain.ChessGame;
 import chess.domain.GameResult;
+import chess.domain.board.InitialBoardGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Square;
 import chess.view.InputView;
@@ -50,7 +51,7 @@ public final class ChessGameLauncher {
     private ChessGame initGame(ChessGame chessGame) {
         try {
             checkInGame(chessGame);
-            chessGame = new ChessGame();
+            chessGame = new ChessGame(new InitialBoardGenerator());
             OutputView.showBoard(chessGame.getBoard());
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());

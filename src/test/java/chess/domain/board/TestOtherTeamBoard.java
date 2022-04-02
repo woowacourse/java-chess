@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
-import static chess.domain.TestUtils.*;
+import static chess.domain.TestPieces.*;
 
 import java.util.Map;
 

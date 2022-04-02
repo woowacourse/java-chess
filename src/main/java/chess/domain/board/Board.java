@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ public final class Board {
 
     private final Map<Square, Piece> board;
 
-    Board(BoardGenerator boardGenerator) {
+    public Board(BoardGenerator boardGenerator) {
         this(boardGenerator.generate());
     }
 
@@ -25,7 +25,7 @@ public final class Board {
         this.board = new LinkedHashMap<>(board);
     }
 
-    boolean isRightTurn(Square source, Color turn) {
+    public boolean isRightTurn(Square source, Color turn) {
         return board.get(source).isSameColor(turn);
     }
 
@@ -61,18 +61,18 @@ public final class Board {
         }
     }
 
-    boolean isTargetKing(Square target) {
+    public boolean isTargetKing(Square target) {
         return board.get(target).isKing();
     }
 
-    Board move(Square source, Square target) {
+    public Board move(Square source, Square target) {
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.put(source, new None(Color.NONE));
         return new Board(board);
     }
 
-    List<Map.Entry<Square, Piece>> filterBy(Color color) {
+    public List<Map.Entry<Square, Piece>> filterBy(Color color) {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameColor(color))
                 .collect(Collectors.toList());

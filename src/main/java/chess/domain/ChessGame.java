@@ -1,6 +1,7 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
+import chess.domain.board.Board;
+import chess.domain.board.BoardGenerator;
 import chess.domain.position.Square;
 
 public final class ChessGame {
@@ -9,13 +10,9 @@ public final class ChessGame {
     private Board board;
     private Color turn;
 
-    public ChessGame() {
-        this(new Board(new InitialBoardGenerator()), Color.WHITE);
-    }
-
-    public ChessGame(Board board, Color turn) {
-        this.board = board;
-        this.turn = turn;
+    public ChessGame(BoardGenerator boardGenerator) {
+        this.board = new Board(boardGenerator);
+        this.turn = GameTurn.READY;
     }
 
     public void move(Square source, Square target) {
