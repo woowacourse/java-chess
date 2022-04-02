@@ -6,7 +6,9 @@ import java.util.function.BiPredicate;
 
 public class Rook extends Piece {
 
+    static final String SYMBOL = "r";
     private static final double SCORE = 5;
+
     static final BiPredicate<Integer, Integer> movingCondition =
             (rankMove, fileMove) -> fileMove == 0 || rankMove == 0;
 
@@ -20,6 +22,14 @@ public class Rook extends Piece {
         position.checkOtherPiecesInPathToTarget(targetPosition, convertToPositions(otherPieces));
 
         return new Rook(teamColor, targetPosition);
+    }
+
+    @Override
+    public String getSymbol() {
+        if (teamColor.isBlack()) {
+            return SYMBOL.toUpperCase();
+        }
+        return SYMBOL;
     }
 
     @Override

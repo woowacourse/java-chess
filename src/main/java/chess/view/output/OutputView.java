@@ -48,7 +48,7 @@ public abstract class OutputView {
     private static String getSymbolOfPosition(final Board board, final Position position) {
         if (board.hasPieceInPosition(position)) {
             final Piece piece = board.findPieceInPosition(position);
-            return PieceSymbol.findSymbol(piece);
+            return piece.getSymbol();
         }
         return EMPTY_SYMBOL;
     }

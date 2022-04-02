@@ -6,7 +6,9 @@ import java.util.function.BiPredicate;
 
 public class King extends Piece {
 
+    private static final String SYMBOL = "k";
     private static final double SCORE = 0;
+
     private static final BiPredicate<Integer, Integer> movingCondition =
             (rankMove, fileMove) -> Math.abs(rankMove) <= 1 && Math.abs(fileMove) <= 1;
 
@@ -18,6 +20,14 @@ public class King extends Piece {
     public Piece move(final List<Piece> otherPieces, final Position targetPosition) {
         position.validateTargetPosition(targetPosition, movingCondition);
         return new King(teamColor, targetPosition);
+    }
+
+    @Override
+    public String getSymbol() {
+        if (teamColor.isBlack()) {
+            return SYMBOL.toUpperCase();
+        }
+        return SYMBOL;
     }
 
     @Override

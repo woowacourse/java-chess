@@ -45,6 +45,8 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract String getSymbol();
+
     public abstract boolean canPromote();
 
     public abstract Piece promote(final String promotionType);
