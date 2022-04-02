@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.dto.MoveCommandDto;
 import chess.dto.BoardViewDto;
+import chess.dto.response.WebBoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
 
 public final class NewGame implements Game {
@@ -38,6 +39,11 @@ public final class NewGame implements Game {
 
     @Override
     public BoardViewDto boardView() {
+        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public WebBoardViewDto boardWebView() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 }

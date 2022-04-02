@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.piece.Color;
 import chess.dto.BoardViewDto;
 import chess.dto.MoveCommandDto;
+import chess.dto.response.WebBoardViewDto;
 
 public interface Game {
 
@@ -17,4 +18,6 @@ public interface Game {
     GameResult getResult();
 
     BoardViewDto boardView();
+
+    WebBoardViewDto boardWebView();
 }
