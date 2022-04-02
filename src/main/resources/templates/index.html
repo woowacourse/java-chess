@@ -9,349 +9,415 @@
 <div id="app">
     <section class="chess-ui">
         <div class="rank">
-            <div id="a8" class="brown-square">
+            <div id="a8" class="brown-square" onclick="clickPiece(id)">
                 {{#a8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a8}}
             </div>
-            <div id="b8" class="white-square">
+            <div id="b8" class="white-square" onclick="clickPiece(id)">
                 {{#b8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b8}}
             </div>
-            <div id="c8" class="brown-square">
+            <div id="c8" class="brown-square" onclick="clickPiece(id)">
                 {{#c8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c8}}
             </div>
-            <div id="d8" class="white-square">
+            <div id="d8" class="white-square" onclick="clickPiece(id)">
                 {{#d8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d8}}
             </div>
-            <div id="e8" class="brown-square">
+            <div id="e8" class="brown-square" onclick="clickPiece(id)">
                 {{#e8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e8}}
             </div>
-            <div id="f8" class="white-square">
+            <div id="f8" class="white-square" onclick="clickPiece(id)">
                 {{#f8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f8}}
             </div>
-            <div id="g8" class="brown-square">
+            <div id="g8" class="brown-square" onclick="clickPiece(id)">
                 {{#g8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g8}}
             </div>
-            <div id="h8" class="white-square">
+            <div id="h8" class="white-square" onclick="clickPiece(id)">
                 {{#h8}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h8-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h8}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a7" class="white-square">
+            <div id="a7" class="white-square" onclick="clickPiece(id)">
                 {{#a7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a7}}
             </div>
-            <div id="b7" class="brown-square">
+            <div id="b7" class="brown-square" onclick="clickPiece(id)">
                 {{#b7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b7}}
             </div>
-            <div id="c7" class="white-square">
+            <div id="c7" class="white-square" onclick="clickPiece(id)">
                 {{#c7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c7}}
             </div>
-            <div id="d7" class="brown-square">
+            <div id="d7" class="brown-square" onclick="clickPiece(id)">
                 {{#d7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d7}}
             </div>
-            <div id="e7" class="white-square">
+            <div id="e7" class="white-square" onclick="clickPiece(id)">
                 {{#e7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e7}}
             </div>
-            <div id="f7" class="brown-square">
+            <div id="f7" class="brown-square" onclick="clickPiece(id)">
                 {{#f7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f7}}
             </div>
-            <div id="g7" class="white-square">
+            <div id="g7" class="white-square" onclick="clickPiece(id)">
                 {{#g7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g7}}
             </div>
-            <div id="h7" class="brown-square">
+            <div id="h7" class="brown-square" onclick="clickPiece(id)">
                 {{#h7}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h7-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h7}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a6" class="brown-square">
+            <div id="a6" class="brown-square" onclick="clickPiece(id)">
                 {{#a6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a6}}
             </div>
-            <div id="b6" class="white-square">
+            <div id="b6" class="white-square" onclick="clickPiece(id)">
                 {{#b6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b6}}
             </div>
-            <div id="c6" class="brown-square">
+            <div id="c6" class="brown-square" onclick="clickPiece(id)">
                 {{#c6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c6}}
             </div>
-            <div id="d6" class="white-square">
+            <div id="d6" class="white-square" onclick="clickPiece(id)">
                 {{#d6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d6}}
             </div>
-            <div id="e6" class="brown-square">
+            <div id="e6" class="brown-square" onclick="clickPiece(id)">
                 {{#e6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e6}}
             </div>
-            <div id="f6" class="white-square">
+            <div id="f6" class="white-square" onclick="clickPiece(id)">
                 {{#f6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f6}}
             </div>
-            <div id="g6" class="brown-square">
+            <div id="g6" class="brown-square" onclick="clickPiece(id)">
                 {{#g6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g6}}
             </div>
-            <div id="h6" class="white-square">
+            <div id="h6" class="white-square" onclick="clickPiece(id)">
                 {{#h6}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h6-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h6}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a5" class="white-square">
+            <div id="a5" class="white-square" onclick="clickPiece(id)">
                 {{#a5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a5}}
             </div>
-            <div id="b5" class="brown-square">
+            <div id="b5" class="brown-square" onclick="clickPiece(id)">
                 {{#b5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b5}}
             </div>
-            <div id="c5" class="white-square">
+            <div id="c5" class="white-square" onclick="clickPiece(id)">
                 {{#c5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c5}}
             </div>
-            <div id="d5" class="brown-square">
+            <div id="d5" class="brown-square" onclick="clickPiece(id)">
                 {{#d5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d5}}
             </div>
-            <div id="e5" class="white-square">
+            <div id="e5" class="white-square" onclick="clickPiece(id)">
                 {{#e5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e5}}
             </div>
-            <div id="f5" class="brown-square">
+            <div id="f5" class="brown-square" onclick="clickPiece(id)">
                 {{#f5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f5}}
             </div>
-            <div id="g5" class="white-square">
+            <div id="g5" class="white-square" onclick="clickPiece(id)">
                 {{#g5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g5}}
             </div>
-            <div id="h5" class="brown-square">
+            <div id="h5" class="brown-square" onclick="clickPiece(id)">
                 {{#h5}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h5-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h5}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a4" class="brown-square">
+            <div id="a4" class="brown-square" onclick="clickPiece(id)">
                 {{#a4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a4}}
             </div>
-            <div id="b4" class="white-square">
+            <div id="b4" class="white-square" onclick="clickPiece(id)">
                 {{#b4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b4}}
             </div>
-            <div id="c4" class="brown-square">
+            <div id="c4" class="brown-square" onclick="clickPiece(id)">
                 {{#c4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c4}}
             </div>
-            <div id="d4" class="white-square">
+            <div id="d4" class="white-square" onclick="clickPiece(id)">
                 {{#d4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d4}}
             </div>
-            <div id="e4" class="brown-square">
+            <div id="e4" class="brown-square" onclick="clickPiece(id)">
                 {{#e4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e4}}
             </div>
-            <div id="f4" class="white-square">
+            <div id="f4" class="white-square" onclick="clickPiece(id)">
                 {{#f4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f4}}
             </div>
-            <div id="g4" class="brown-square">
+            <div id="g4" class="brown-square" onclick="clickPiece(id)">
                 {{#g4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g4}}
             </div>
-            <div id="h4" class="white-square">
+            <div id="h4" class="white-square" onclick="clickPiece(id)">
                 {{#h4}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h4-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h4}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a3" class="white-square">
+            <div id="a3" class="white-square" onclick="clickPiece(id)">
                 {{#a3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a3}}
             </div>
-            <div id="b3" class="brown-square">
+            <div id="b3" class="brown-square" onclick="clickPiece(id)">
                 {{#b3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b3}}
             </div>
-            <div id="c3" class="white-square">
+            <div id="c3" class="white-square" onclick="clickPiece(id)">
                 {{#c3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c3}}
             </div>
-            <div id="d3" class="brown-square">
+            <div id="d3" class="brown-square" onclick="clickPiece(id)">
                 {{#d3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d3}}
             </div>
-            <div id="e3" class="white-square">
+            <div id="e3" class="white-square" onclick="clickPiece(id)">
                 {{#e3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e3}}
             </div>
-            <div id="f3" class="brown-square">
+            <div id="f3" class="brown-square" onclick="clickPiece(id)">
                 {{#f3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f3}}
             </div>
-            <div id="g3" class="white-square">
+            <div id="g3" class="white-square" onclick="clickPiece(id)">
                 {{#g3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g3}}
             </div>
-            <div id="h3" class="brown-square">
+            <div id="h3" class="brown-square" onclick="clickPiece(id)">
                 {{#h3}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h3-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h3}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a2" class="brown-square">
+            <div id="a2" class="brown-square" onclick="clickPiece(id)">
                 {{#a2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a2}}
             </div>
-            <div id="b2" class="white-square">
+            <div id="b2" class="white-square" onclick="clickPiece(id)">
                 {{#b2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b2}}
             </div>
-            <div id="c2" class="brown-square">
+            <div id="c2" class="brown-square" onclick="clickPiece(id)">
                 {{#c2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c2}}
             </div>
-            <div id="d2" class="white-square">
+            <div id="d2" class="white-square" onclick="clickPiece(id)">
                 {{#d2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d2}}
             </div>
-            <div id="e2" class="brown-square">
+            <div id="e2" class="brown-square" onclick="clickPiece(id)">
                 {{#e2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e2}}
             </div>
-            <div id="f2" class="white-square">
+            <div id="f2" class="white-square" onclick="clickPiece(id)">
                 {{#f2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f2}}
             </div>
-            <div id="g2" class="brown-square">
+            <div id="g2" class="brown-square" onclick="clickPiece(id)">
                 {{#g2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g2}}
             </div>
-            <div id="h2" class="white-square">
+            <div id="h2" class="white-square" onclick="clickPiece(id)">
                 {{#h2}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h2-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h2}}
             </div>
         </div>
 
         <div class="rank">
-            <div id="a1" class="white-square">
+            <div id="a1" class="white-square" onclick="clickPiece(id)">
                 {{#a1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="a1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/a1}}
             </div>
-            <div id="b1" class="brown-square">
+            <div id="b1" class="brown-square" onclick="clickPiece(id)">
                 {{#b1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="b1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/b1}}
             </div>
-            <div id="c1" class="white-square">
+            <div id="c1" class="white-square" onclick="clickPiece(id)">
                 {{#c1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="c1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/c1}}
             </div>
-            <div id="d1" class="brown-square">
+            <div id="d1" class="brown-square" onclick="clickPiece(id)">
                 {{#d1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="d1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/d1}}
             </div>
-            <div id="e1" class="white-square">
+            <div id="e1" class="white-square" onclick="clickPiece(id)">
                 {{#e1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="e1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/e1}}
             </div>
-            <div id="f1" class="brown-square">
+            <div id="f1" class="brown-square" onclick="clickPiece(id)">
                 {{#f1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="f1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/f1}}
             </div>
-            <div id="g1" class="white-square">
+            <div id="g1" class="white-square" onclick="clickPiece(id)">
                 {{#g1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="g1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/g1}}
             </div>
-            <div id="h1" class="brown-square">
+            <div id="h1" class="brown-square" onclick="clickPiece(id)">
                 {{#h1}}
-                <img src="images/{{type}}_{{color}}.png" />
+                <span id="h1-span" hidden="hidden">{{color}}</span>
+                <img src="images/{{type}}_{{color}}.png"/>
                 {{/h1}}
             </div>
         </div>
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/src/chess.js"></script>
 </body>
 </html>
