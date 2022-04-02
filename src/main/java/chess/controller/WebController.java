@@ -9,15 +9,15 @@ import chess.dto.response.PlayGameRequestDto;
 import chess.dto.SearchResultDto;
 import chess.dto.response.WebBoardViewDto;
 import chess.model.GameModel;
-import chess.model.NewGameModel;
+import chess.dto.response.CreateGameDto;
 
 public class WebController {
 
     private final GameRepository gameRepository = new GameRepository();
 
-    public NewGameModel initGame() {
+    public CreateGameDto initGame() {
         Game game = new NewGame().init();
-        return new NewGameModel(gameRepository.add(game));
+        return new CreateGameDto(gameRepository.add(game));
     }
 
     public SearchResultDto searchGame(int gameId) {

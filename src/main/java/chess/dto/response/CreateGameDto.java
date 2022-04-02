@@ -1,10 +1,10 @@
-package chess.model;
+package chess.dto.response;
 
-public class NewGameModel {
+public class CreateGameDto {
 
     private final int id;
 
-    public NewGameModel(int id) {
+    public CreateGameDto(int id) {
         this.id = id;
     }
 

@@ -5,7 +5,7 @@ import static spark.Spark.post;
 
 import chess.controller.WebController;
 import chess.dto.response.PlayGameRequestDto;
-import chess.model.NewGameModel;
+import chess.dto.response.CreateGameDto;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -17,8 +17,8 @@ public class WebRouter {
         get("/", (req, res) -> render(null, "home.html"));
         post("/", (req, res) -> {
             res.type("application/json");
-            NewGameModel newGameModel = controller.initGame();
-            return newGameModel.toJson();
+            CreateGameDto gameCreated = controller.initGame();
+            return gameCreated.toJson();
         });
     }
 
