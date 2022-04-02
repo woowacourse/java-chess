@@ -1,14 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.board.Direction.EAST;
-import static chess.domain.board.Direction.NORTH;
-import static chess.domain.board.Direction.NORTH_EAST;
-import static chess.domain.board.Direction.NORTH_WEST;
-import static chess.domain.board.Direction.SOUTH;
-import static chess.domain.board.Direction.SOUTH_EAST;
-import static chess.domain.board.Direction.SOUTH_WEST;
-import static chess.domain.board.Direction.WEST;
-
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
 import java.util.List;
@@ -34,6 +25,14 @@ public abstract class Piece {
 
     public final boolean isSameColor(Piece piece) {
         return this.color == piece.color;
+    }
+
+    public final String getColor() {
+        return color.name().toUpperCase();
+    }
+
+    public final String getType() {
+        return this.getClass().getSimpleName().toUpperCase();
     }
 
     public abstract boolean canMove(Position source, Position destination);

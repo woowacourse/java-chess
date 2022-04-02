@@ -48,6 +48,10 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력값입니다."));
     }
 
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "Column{" +

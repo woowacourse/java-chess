@@ -96,6 +96,10 @@ public class Position {
         return file.canMove(x) && rank.canMove(y);
     }
 
+    public String getStringValue() {
+        return file.getValue() + rank.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

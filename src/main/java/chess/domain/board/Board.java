@@ -6,6 +6,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -159,5 +160,11 @@ public class Board {
 
     public boolean hasKing(Color color) {
         return value.containsValue(new King(color));
+    }
+
+    public Map<String, Object> toMap() {
+        return value.entrySet()
+                .stream()
+                .collect(Collectors.toMap(e -> e.getKey().getStringValue(), Map.Entry::getValue));
     }
 }
