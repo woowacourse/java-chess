@@ -409,4 +409,14 @@ public class ChessBoardTest {
 
         assertThat(chessBoard.isEnd()).isFalse();
     }
+
+    @Test
+    @DisplayName("해당 Position의 컬러를 확인한다.")
+    void getPositionColor() {
+        ChessBoard chessBoard = new ChessBoard(
+                () -> new HashMap<>(Map.ofEntries(
+                        Map.entry(Position.of("a1"), new King(Color.WHITE)))));
+        assertThat(chessBoard.getPositionColor(Position.of("a1")))
+                .isEqualTo(Color.WHITE);
+    }
 }

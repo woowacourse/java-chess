@@ -67,4 +67,12 @@ public class PieceTest {
             assertThat(rook.isSameColor(king)).isEqualTo(expected);
         }
     }
+
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
+    @CsvSource(value = {"WHITE, p", "BLACK, P"})
+    @DisplayName("색깔에 맞는 symbol을 반환한다.")
+    void getSymbol(Color color, String expected) {
+        Piece piece = new Pawn(color);
+        assertThat(piece.getSymbol()).isEqualTo(expected);
+    }
 }

@@ -137,7 +137,7 @@ public class ChessBoard {
         return kingCount != RUNNING_KING_COUNT;
     }
 
-    public Color getColor(Position position) {
+    public Color getPositionColor(Position position) {
         return selectPiece(position).getColor();
     }
 

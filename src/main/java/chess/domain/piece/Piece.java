@@ -18,10 +18,6 @@ public abstract class Piece {
 
     public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
-    public boolean isBlack() {
-        return color.isBlack();
-    }
-
     public boolean isEmpty() {
         return color.isEmpty();
     }
@@ -40,7 +36,7 @@ public abstract class Piece {
 
     public String getSymbol() {
         String symbol = type.getSymbol();
-        if (color == Color.WHITE) {
+        if (color.isWhite()) {
             return symbol.toLowerCase(Locale.ROOT);
         }
         return symbol;

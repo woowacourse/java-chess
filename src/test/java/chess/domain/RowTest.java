@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.position.Row;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,5 +60,15 @@ public class RowTest {
         assertThatThrownBy(() -> row.move(moveValue))
                 .isInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessage("범위를 벗어났습니다.");
+    }
+
+    @Test
+    @DisplayName("순서를 뒤집은 리스트를 반환한다.")
+    void getRowsReverseOrder() {
+        List<Row> rowsReverseOrder = Row.getRowsReverseOrder();
+        assertThat(rowsReverseOrder).containsExactly(
+                Row.EIGHT, Row.SEVEN, Row.SIX, Row.FIVE,
+                Row.FOUR, Row.THREE, Row.TWO, Row.ONE
+        );
     }
 }

@@ -112,7 +112,7 @@ public class ChessGame {
     }
 
     private void validatePlayerTurn(GameCommand gameCommand) {
-        if (chessBoard.getColor(gameCommand.getFromPosition()) != turn) {
+        if (chessBoard.getPositionColor(gameCommand.getFromPosition()) != turn) {
             throw new IllegalArgumentException("당신의 차례가 아닙니다.");
         }
     }
