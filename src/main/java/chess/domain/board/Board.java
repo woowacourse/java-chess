@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> value;
     private Team turn = Team.WHITE;
 
-    public Board(Map<Position, Piece> board) {
-        this.board = board;
+    public Board(Map<Position, Piece> value) {
+        this.value = value;
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
+    public Map<Position, Piece> getValue() {
+        return value;
     }
 
     public boolean check() {
@@ -29,7 +29,7 @@ public class Board {
 
     public boolean checkmate() {
         Position kingPosition = findKingPosition(turn);
-        List<Position> kingPaths = board.get(kingPosition).findMovablePosition(kingPosition);
+        List<Position> kingPaths = value.get(kingPosition).findMovablePosition(kingPosition);
 
         return kingPaths.stream()
                 .allMatch(this::checkAnyMatch);
@@ -42,14 +42,14 @@ public class Board {
     }
 
     private List<Entry<Position, Piece>> findSameTeamPieces(Team team) {
-        return board.entrySet()
+        return value.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     private Position findKingPosition(Team team) {
-        return board.entrySet()
+        return value.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() != null && entry.getValue().isSameTeam(team) && entry.getValue()
                         .isKing())
@@ -69,13 +69,13 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        Piece piece = board.get(from);
-        Piece toPiece = board.get(to);
+        Piece piece = value.get(from);
+        Piece toPiece = value.get(to);
 
         validBeforeMove(piece, from, to);
 
-        board.put(to, piece);
-        board.remove(from);
+        value.put(to, piece);
+        value.remove(from);
 
         validAfterMove(from, to, piece, toPiece);
     }
@@ -87,7 +87,7 @@ public class Board {
 
         validNowTurn(fromPiece);
         fromPiece.movable(from, to);
-        fromPiece.validArrive(board.get(to), direction);
+        fromPiece.validArrive(value.get(to), direction);
         validPath(from, to, direction);
     }
 
@@ -107,7 +107,7 @@ public class Board {
         Position current = from.move(direction);
 
         while (!current.equals(to)) {
-            haveOtherPiece(board.get(current));
+            haveOtherPiece(value.get(current));
             current = current.move(direction);
         }
     }
@@ -120,18 +120,18 @@ public class Board {
 
     private void validAfterMove(Position from, Position to, Piece piece, Piece toPiece) {
         if (check()) {
-            board.put(to, toPiece);
-            board.put(from, piece);
+            value.put(to, toPiece);
+            value.put(from, piece);
             throw new IllegalArgumentException("체크 상황을 벗어나야 합니다.");
         }
         turn = turn.findOpposite();
     }
 
     public boolean isEmpty() {
-        return board.isEmpty();
+        return value.isEmpty();
     }
 
     public Score createResult() {
-        return new Score(board);
+        return new Score(value);
     }
 }

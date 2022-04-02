@@ -93,7 +93,7 @@ public class ChessConsole {
 
     private void printBoard(Board board) {
         if (board != null) {
-            OutputView.printBoard(board.getBoard());
+            OutputView.printBoard(board.getValue());
         }
     }
 }
