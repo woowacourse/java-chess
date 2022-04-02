@@ -12,14 +12,13 @@ const updateGame = async (source, target) => {
         method: "post",
         body: JSON.stringify({source, target})
     };
-    const response = await fetch(window.location.pathname, config)
+    const response = await fetch(window.location.pathname, config);
     if (response.ok) {
-        window.location.reload();
+        return window.location.reload();
     }
 }
 
 const toggleSelection = ({target: {id: positionKey, classList}}) => {
-    console.log(positionKey);
     if (sourcePieceKey === null) {
         if (classList.contains(IS_OCCUPIED)) {
             sourcePieceKey = positionKey;
@@ -36,8 +35,10 @@ const toggleSelection = ({target: {id: positionKey, classList}}) => {
 }
 
 const formatSquare = (square, positionKey) => {
+    if (square.innerText.length > 0) {
+        square.classList.add(IS_OCCUPIED);
+    }
     square.id = positionKey;
-    square.classList.add(IS_OCCUPIED);
     square.addEventListener("click", toggleSelection);
 }
 
