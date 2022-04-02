@@ -17,4 +17,12 @@ public enum Color {
     public String convertToCase(String value) {
         return caseConverter.apply(value);
     }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
 }

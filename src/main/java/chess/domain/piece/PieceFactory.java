@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.Color.BLACK;
+import static chess.domain.Color.WHITE;
 import static chess.domain.piece.Piece.createBlackPiece;
 import static chess.domain.piece.Piece.createWhitePiece;
 
@@ -7,8 +9,7 @@ import chess.domain.Position;
 import chess.domain.piece.multiple.Bishop;
 import chess.domain.piece.multiple.Queen;
 import chess.domain.piece.multiple.Rook;
-import chess.domain.piece.pawn.BlackPawn;
-import chess.domain.piece.pawn.WhitePawn;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.single.King;
 import chess.domain.piece.single.Knight;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class PieceFactory {
                 Position.of('h', '8'), createBlackPiece(new Rook())
         ));
         for (char i = 0; i < 8; i++) {
-            blackPieces.put(Position.of((char) ('a' + i), '7'), createBlackPiece(new BlackPawn()));
+            blackPieces.put(Position.of((char) ('a' + i), '7'), createBlackPiece(new Pawn(BLACK)));
         }
         return blackPieces;
     }
@@ -56,7 +57,7 @@ public class PieceFactory {
                 Position.of('h', '1'), createWhitePiece(new Rook())
         ));
         for (char i = 0; i < 8; i++) {
-            whitePieces.put(Position.of((char) ('a' + i), '2'), createWhitePiece(new WhitePawn()));
+            whitePieces.put(Position.of((char) ('a' + i), '2'), createWhitePiece(new Pawn(WHITE)));
         }
         return whitePieces;
     }
