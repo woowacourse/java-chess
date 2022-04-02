@@ -23,7 +23,7 @@ public class OutputView {
 
     public static void printScore(final Map<Color, Double> score) {
         for (final Color color : score.keySet()) {
-            System.out.println(MessageFormat.format("{0}팀 스코어 : {1}점", color, score.get(color).intValue()));
+            System.out.println(MessageFormat.format("{0}팀 스코어 : {1}점", color, score.get(color)));
         }
     }
 
