@@ -125,7 +125,6 @@ public class Board {
                 .count();
     }
 
-
     private boolean isPawnWith(final Piece piece, final Color color) {
         return piece.isSamePiece(PAWN) && piece.isSameColor(color);
     }

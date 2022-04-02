@@ -42,3 +42,4 @@ public enum Row {
         return from(value + rowDifference);
     }
 }
+

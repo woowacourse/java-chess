@@ -32,3 +32,4 @@ public class King extends Piece {
         return POSSIBLE_DIRECTIONS;
     }
 }
+
