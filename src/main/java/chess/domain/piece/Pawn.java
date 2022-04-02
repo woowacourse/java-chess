@@ -22,7 +22,7 @@ public class Pawn extends AbstractPiece {
             return false;
         }
 
-        if (isInitialPosition(from)) {
+        if (isInitialPosition(from, getPieceColor())) {
             return getMovableIfInitialPosition(from, to);
         }
 
@@ -41,8 +41,12 @@ public class Pawn extends AbstractPiece {
         return isDiagonalOneDistance && from.isLowerThan(to);
     }
 
-    private boolean isInitialPosition(Position from) {
-        return from.isSameYAxis(YAxis.TWO) || from.isSameYAxis(YAxis.SEVEN);
+    private boolean isInitialPosition(Position from, PieceColor pieceColor) {
+        if (pieceColor == PieceColor.WHITE) {
+            return from.isSameYAxis(YAxis.TWO);
+        }
+
+        return from.isSameYAxis(YAxis.SEVEN);
     }
 
     private boolean getMovableIfInitialPosition(Position from, Position to) {
