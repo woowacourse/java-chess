@@ -1,19 +1,14 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Symbol.PAWN;
+
 import chess.domain.strategy.PawnMoveStrategy;
 
 public class Pawn extends Piece {
     private static final int PAWN_SCORE = 1;
-    private final String symbol;
 
-    public Pawn(Team team, String symbol) {
-        super(new PawnMoveStrategy(), team);
-        this.symbol = symbol;
-    }
-
-    @Override
-    public String getSymbol() {
-        return symbol;
+    public Pawn(Team team) {
+        super(team, PAWN, new PawnMoveStrategy());
     }
 
     @Override

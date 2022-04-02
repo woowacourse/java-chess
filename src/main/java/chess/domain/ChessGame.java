@@ -62,7 +62,7 @@ public class ChessGame {
     public String getSymbolByPosition(Position position) {
         Piece piece = chessBoard.getPieceByPosition(position);
 
-        return piece.getSymbol();
+        return piece.getSymbolByTeam();
     }
 
     public Map<Team, Double> calculateResult() {

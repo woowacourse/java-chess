@@ -1,19 +1,14 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.Symbol.ROOK;
+
 import chess.domain.strategy.RookMoveStrategy;
 
 public final class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
-    private final String symbol;
 
-    public Rook(Team team, String symbol) {
-        super(new RookMoveStrategy(), team);
-        this.symbol = symbol;
-    }
-
-    @Override
-    public String getSymbol() {
-        return symbol;
+    public Rook(Team team) {
+        super(team, ROOK, new RookMoveStrategy());
     }
 
     @Override

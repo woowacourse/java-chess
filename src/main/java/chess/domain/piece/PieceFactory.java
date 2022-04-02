@@ -38,54 +38,37 @@ public class PieceFactory {
     }
 
     private static Map<Position, Piece> whitePieces() {
-        Map<Position, Piece> pieces = createPawn(TWO, WHITE, "p");
+        Map<Position, Piece> pieces = createPawn(TWO, WHITE);
 
-        Map<String, String> symbols = Map.of(
-                "rook", "r",
-                "knight", "n",
-                "bishop", "b",
-                "queen", "q",
-                "king", "k"
-        );
-
-        createPieces(pieces, ONE, WHITE, symbols);
+        createPieces(pieces, ONE, WHITE);
 
         return pieces;
     }
 
     private static Map<Position, Piece> blackPieces() {
-        Map<Position, Piece> pieces = createPawn(SEVEN, BLACK, "P");
+        Map<Position, Piece> pieces = createPawn(SEVEN, BLACK);
 
-        Map<String, String> symbols = Map.of(
-                "rook", "R",
-                "knight", "N",
-                "bishop", "B",
-                "queen", "Q",
-                "king", "K"
-        );
-
-        createPieces(pieces, EIGHT, BLACK, symbols);
+        createPieces(pieces, EIGHT, BLACK);
 
         return pieces;
     }
 
-    private static Map<Position, Piece> createPawn(Rank two, Team white, String p) {
+    private static Map<Position, Piece> createPawn(Rank two, Team white) {
         Map<Position, Piece> pieces = Arrays.stream(File.values())
                 .collect(toMap(
-                        file -> Position.of(file, two), file -> new Pawn(white, p)
+                        file -> Position.of(file, two), file -> new Pawn(white)
                 ));
         return pieces;
     }
 
-    private static void createPieces(Map<Position, Piece> pieces, Rank rank, Team team,
-                                     Map<String, String> symbols) {
-        pieces.put(Position.of(A, rank), new Rook(team, symbols.get("rook")));
-        pieces.put(Position.of(B, rank), new Knight(team, symbols.get("knight")));
-        pieces.put(Position.of(C, rank), new Bishop(team, symbols.get("bishop")));
-        pieces.put(Position.of(D, rank), new Queen(team, symbols.get("queen")));
-        pieces.put(Position.of(E, rank), new King(team, symbols.get("king")));
-        pieces.put(Position.of(F, rank), new Bishop(team, symbols.get("bishop")));
-        pieces.put(Position.of(G, rank), new Knight(team, symbols.get("knight")));
-        pieces.put(Position.of(H, rank), new Rook(team, symbols.get("rook")));
+    private static void createPieces(Map<Position, Piece> pieces, Rank rank, Team team) {
+        pieces.put(Position.of(A, rank), new Rook(team));
+        pieces.put(Position.of(B, rank), new Knight(team));
+        pieces.put(Position.of(C, rank), new Bishop(team));
+        pieces.put(Position.of(D, rank), new Queen(team));
+        pieces.put(Position.of(E, rank), new King(team));
+        pieces.put(Position.of(F, rank), new Bishop(team));
+        pieces.put(Position.of(G, rank), new Knight(team));
+        pieces.put(Position.of(H, rank), new Rook(team));
     }
 }
