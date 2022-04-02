@@ -4,6 +4,9 @@ import static chess.domain.board.position.File.A;
 import static chess.domain.board.position.File.B;
 import static chess.domain.board.position.File.C;
 import static chess.domain.board.position.File.D;
+import static chess.domain.board.position.File.F;
+import static chess.domain.board.position.File.G;
+import static chess.domain.board.position.File.H;
 
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
@@ -49,13 +52,13 @@ public class BoardFactory {
         final TeamColor teamColor = TeamColor.findByRank(rank);
         final Position position = Position.of(file, rank);
 
-        if (file == A) {
+        if (file == A || file == H) {
             return new Rook(teamColor, position);
         }
-        if (file == B) {
+        if (file == B || file == G) {
             return new Knight(teamColor, position);
         }
-        if (file == C) {
+        if (file == C || file == F) {
             return new Bishop(teamColor, position);
         }
         if (file == D) {
