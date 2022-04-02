@@ -16,8 +16,6 @@ public class ChessController {
     private static final int COMMAND_INDEX = 0;
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
-    private static final String STATUS_COMMAND = "status";
-    private static final String MOVE_COMMAND = "move";
     private static final Map<Character, Integer> convertColumn = new HashMap<>();
     private static final String ONLY_START_OR_END_COMMAND_EXCEPTION = "[ERROR] start, end 명령 중 하나를 입력해주세요";
 
@@ -74,7 +72,7 @@ public class ChessController {
         if (Command.of(command.get(COMMAND_INDEX)).equals(Command.STATUS)) {
             statusCommand(chessGame);
         }
-        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.START)) {
+        if (Command.of(command.get(COMMAND_INDEX)).equals(Command.MOVE)) {
             moveCommand(chessGame, command);
         }
     }
