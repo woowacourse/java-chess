@@ -6,8 +6,8 @@ import static spark.Spark.post;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
+import chess.dto.ScoreResultDto;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,8 +24,8 @@ public class WebController {
 
         get("/", (req, res) -> {
             BoardDto boardDto = BoardDto.from(chessGame.getBoard());
-            List<List<String>> value = boardDto.getPieceImages();
-            model.put("boards", value);
+            model.put("boards", boardDto.getPieceImages());
+            model.put("score", ScoreResultDto.from(chessGame));
 
             return render(model);
         });

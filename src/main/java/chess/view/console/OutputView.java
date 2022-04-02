@@ -1,9 +1,8 @@
 package chess.view.console;
 
-import chess.domain.game.score.ScoreResult;
-import chess.domain.piece.PieceColor;
 import chess.dto.BoardDto;
 import chess.dto.PieceDto;
+import chess.dto.ScoreResultDto;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,10 +36,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScore(ScoreResult scoreResult) {
+    public static void printScore(ScoreResultDto scoreResultDto) {
         // TODO: 상수로 분리
-        System.out.println("흰색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.WHITE).getValue());
-        System.out.println("검정색팀 점수 : " + scoreResult.getScoreByPieceColor(PieceColor.BLACK).getValue());
+        System.out.println("흰색팀 점수 : " + scoreResultDto.getWhiteScore());
+        System.out.println("검정색팀 점수 : " + scoreResultDto.getBlackScore());
     }
 
     public static void printException(Exception exception) {

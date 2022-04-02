@@ -18,7 +18,7 @@ public class ChessGame {
         this.state = state.start();
     }
 
-    public ScoreResult showStatus() {
+    public ScoreResult getStatus() {
         return state.status();
     }
 

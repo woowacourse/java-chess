@@ -1,10 +1,10 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
-import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
 import chess.dto.BoardDto;
 import chess.dto.ConsoleCommandDto;
+import chess.dto.ScoreResultDto;
 import chess.view.console.InputView;
 import chess.view.console.OutputView;
 
@@ -61,8 +61,6 @@ public class ConsoleController {
     }
 
     private void executeStatus(ChessGame chessGame) {
-        ScoreResult scoreResult = chessGame.showStatus();
-
-        OutputView.printScore(scoreResult);
+        OutputView.printScore(ScoreResultDto.from(chessGame));
     }
 }
