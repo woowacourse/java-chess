@@ -19,11 +19,11 @@ public abstract class Piece {
     public abstract Map<Direction, List<Position>> getMovablePositions(Position position);
 
     public boolean isBlack() {
-        return color == Color.BLACK;
+        return color.isBlack();
     }
 
     public boolean isEmpty() {
-        return color == Color.EMPTY;
+        return color.isEmpty();
     }
 
     public boolean isSameColor(Color color) {

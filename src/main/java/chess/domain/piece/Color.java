@@ -22,4 +22,16 @@ public enum Color {
     };
 
     public abstract Color getReverseColor();
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }
