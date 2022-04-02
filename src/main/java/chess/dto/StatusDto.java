@@ -20,4 +20,16 @@ public class StatusDto {
         double blackScore = score.calculateScore(Team.BLACK);
         return new StatusDto(whiteScore, blackScore, score.calculateWinningTeam(whiteScore, blackScore).getValue());
     }
+
+    public double getWhiteScore() {
+        return whiteScore;
+    }
+
+    public double getBlackScore() {
+        return blackScore;
+    }
+
+    public String getWinningTeam() {
+        return winningTeam;
+    }
 }

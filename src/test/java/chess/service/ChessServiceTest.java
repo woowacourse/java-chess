@@ -3,20 +3,19 @@ package chess.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import chess.dao.BoardDaoImpl;
 import chess.dao.FakeBoardDao;
 import chess.dao.FakeTurnDao;
-import chess.dao.TurnDaoImpl;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.dto.ChessDto;
-import chess.util.JdbcTemplate;
-import java.sql.Connection;
-import java.sql.SQLException;
+import chess.dto.MoveDto;
+import chess.dto.StatusDto;
 import java.util.Map;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,18 +23,10 @@ import org.junit.jupiter.api.Test;
 class ChessServiceTest {
 
     private ChessService chessService;
-    private ChessService mockChessService;
 
     @BeforeEach
     void setUp() {
-        Connection connection = JdbcTemplate.getConnection();
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        chessService = new ChessService(new BoardDaoImpl(connection), new TurnDaoImpl(connection));
-        mockChessService = new ChessService(new FakeBoardDao(), new FakeTurnDao());
+        chessService = new ChessService(new FakeBoardDao(), new FakeTurnDao());
     }
 
     @Test
@@ -54,7 +45,7 @@ class ChessServiceTest {
     @Test
     @DisplayName("게임이 실행되면 저장된 턴, 보드값을 가져온다.")
     void startGame() {
-        ChessDto chessDto = mockChessService.initializeGame();
+        ChessDto chessDto = chessService.initializeGame();
         Map<Position, Piece> expected = FakeBoardDao.getPositionPieceMap();
 
         assertAll(
@@ -63,14 +54,31 @@ class ChessServiceTest {
         );
     }
 
-    @AfterEach
-    void teardown() {
-        Connection connection = JdbcTemplate.getConnection();
-        try {
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Test
+    @DisplayName("점수를 반환한다.")
+    void createStatus() {
+        StatusDto status = chessService.createStatus();
+
+        assertAll(
+                () -> assertThat(status.getWhiteScore()).isEqualTo(38.0),
+                () -> assertThat(status.getBlackScore()).isEqualTo(38.0),
+                () -> assertThat(status.getWinningTeam()).isEqualTo("black")
+        );
+    }
+
+    @Test
+    @DisplayName("움직인다.")
+    void move() {
+        ChessDto chessDto = chessService.move(new MoveDto("a4", "a5"));
+
+        Map<Position, Piece> expected = FakeBoardDao.getPositionPieceMap();
+        expected.put(Position.valueOf("a5"), new Pawn(Team.WHITE));
+        expected.put(Position.valueOf("a4"), new Blank());
+        assertAll(
+                () -> assertThat(chessDto.getTurn()).isEqualTo("black"),
+                () -> assertThat(chessDto.getGameOver()).isEqualTo("false"),
+                () -> assertThat(chessDto.getBoard()).isEqualTo(ChessDto.of(new Board(expected)).getBoard())
+        );
     }
 
 }
