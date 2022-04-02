@@ -1,13 +1,10 @@
 package chess.web.controller;
 
-import chess.dao.TurnDao;
-import chess.domain.Board;
-import chess.domain.ChessBoard;
-import chess.domain.state.State;
-import chess.domain.state.StateGenerator;
+import chess.domain.ChessGame;
+import chess.domain.piece.Piece;
 import chess.web.dto.BoardResponse;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.ModelAndView;
 import spark.Request;
@@ -15,10 +12,10 @@ import spark.Response;
 
 public class ChessWebController {
 
-    private final TurnDao turnDao;
+    private final ChessGame chessGame;
 
-    public ChessWebController(TurnDao turnDao) {
-        this.turnDao = turnDao;
+    public ChessWebController() {
+        this.chessGame = new ChessGame();
     }
 
     public ModelAndView index(Request request, Response response) {
@@ -26,13 +23,9 @@ public class ChessWebController {
     }
 
     public ModelAndView create(Request request, Response response) {
-        turnDao.save(StateGenerator.START.getValue());
+        chessGame.start();
 
-        StateGenerator stateGenerator = turnDao.findLastSaved();
-        State state = stateGenerator.parseState(new ChessBoard(() -> Collections.emptyList()));
-
-        ChessBoard chessBoard = state.chessBoard();
-        Board board = chessBoard.getBoard();
+        List<List<Piece>> board = chessGame.board();
 
         Map<String, Object> model = new HashMap<>();
         model.put("pieces", new BoardResponse(board).getValue());

@@ -2,16 +2,15 @@ package chess.web.dto;
 
 import static java.util.stream.Collectors.toList;
 
-import chess.domain.Board;
+import chess.domain.piece.Piece;
 import java.util.List;
 
 public class BoardResponse {
 
     private final List<PieceResponse> value;
 
-    public BoardResponse(Board board) {
-        this.value = board.getValue()
-                .stream()
+    public BoardResponse(List<List<Piece>> board) {
+        this.value = board.stream()
                 .flatMap(List::stream)
                 .map(PieceResponse::new)
                 .collect(toList());
