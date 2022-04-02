@@ -11,8 +11,7 @@ public enum Column {
     E(5),
     F(6),
     G(7),
-    H(8),
-    ;
+    H(8);
 
     private static final String NO_NUMBER_ERROR_MESSAGE = "잘못된 위치 값 입니다.";
 
