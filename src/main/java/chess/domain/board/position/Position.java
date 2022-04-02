@@ -9,12 +9,10 @@ import java.util.stream.Collectors;
 
 public final class Position {
     private static final String NO_POSITION_FORMAT_ERROR_MESSAGE = "위치 값의 길이는 2 여야 합니다";
-    private static final int POSITION_BEGIN_INDEX = 5;
-    private static final String SEPARATOR = " ";
     private static final int ATTRIBUTE_SIZE = 2;
 
-    private Column column;
-    private Rank rank;
+    private final Column column;
+    private final Rank rank;
 
     public Position(Column column, Rank rank) {
         this.column = column;
@@ -34,28 +32,22 @@ public final class Position {
         }
     }
 
-    public static List<Position> inputToPositions(String input) {
-        return Arrays.stream(input.substring(POSITION_BEGIN_INDEX).split(SEPARATOR))
-                .map(Position::from)
-                .collect(Collectors.toList());
-    }
-
     public static List<Position> calculateRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> positions = new ArrayList<>();
-        Position movedPosition = new Position(from.column, from.rank);
+        positions.add(from.advancePosition(direction));
 
-        while (!movedPosition.equals(to)) {
-            movedPosition.advancePosition(direction);
-            positions.add(new Position(movedPosition.column, movedPosition.rank));
+        while (!positions.get(positions.size()-1).equals(to)) {
+            positions.add(positions.get(positions.size()-1).advancePosition(direction));
         }
-
-        return positions.subList(0, positions.size() - 1);
+        return positions.subList(0, positions.size()-1);
     }
 
-    private void advancePosition(Direction direction) {
-        this.column = Column.numberOf(column.getNumber() + direction.getX());
-        this.rank = Rank.numberOf(rank.getNumber() + direction.getY());
+    private Position advancePosition(Direction direction) {
+        return new Position(
+                Column.numberOf(column.getNumber() + direction.getX()),
+                Rank.numberOf(rank.getNumber() + direction.getY())
+        );
     }
 
     public int getXDistance(Position to) {
