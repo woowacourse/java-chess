@@ -22,16 +22,27 @@ import org.junit.jupiter.api.Test;
 class BoardDaoTest {
 
     private BoardDao boardDao;
+    private Connection connection;
 
     @BeforeEach
     void setUp() {
-        Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
+        connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL);
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         boardDao = new BoardDaoImpl(connection);
+    }
+
+    @Test
+    @DisplayName("단건 업데이트 후 보드를 가져온다.")
+    void updateAndGet() {
+        boardDao.updatePosition("h2", "white_pawn");
+        Map<Position, Piece> initialBoard = BoardFactory.initialize();
+        initialBoard.put(Position.valueOf("g2"), new Blank());
+        Map<String, String> expected = ChessDto.of(new Board(initialBoard)).getBoard();
+        assertThat(boardDao.getBoard()).isEqualTo(expected);
     }
 
     @Test
@@ -46,7 +57,7 @@ class BoardDaoTest {
 
     @Test
     @DisplayName("배치 업데이트 후 보드를 가져온다.")
-    void updateBatchAndGet() {
+    void updateBatchAndGet() throws SQLException {
         Map<String, String> map = new HashMap<>();
 
         map.put("g2", "white_pawn");
@@ -55,16 +66,7 @@ class BoardDaoTest {
 
         Map<String, String> expected = ChessDto.of(new Board(BoardFactory.initialize())).getBoard();
         assertThat(boardDao.getBoard()).isEqualTo(expected);
-    }
-
-
-    @AfterEach
-    void teardown() {
-        try (Connection connection = JdbcTemplate.getConnection(JdbcTestFixture.DEV_URL)){
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connection.rollback();
     }
 
 }
