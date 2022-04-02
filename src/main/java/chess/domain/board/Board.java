@@ -55,8 +55,10 @@ public final class Board {
     public Map<Color, Double> getScore() {
         final Map<Color, Double> scoreByColor = calculateRawSum();
 
-        scoreByColor.compute(Color.BLACK, (color, currentValue) -> currentValue + discountPawnsInSameFile(Color.BLACK));
-        scoreByColor.compute(Color.WHITE, (color, currentValue) -> currentValue + discountPawnsInSameFile(Color.WHITE));
+        scoreByColor.computeIfPresent(Color.BLACK,
+                (color, currentValue) -> currentValue + discountPawnsInSameFile(Color.BLACK));
+        scoreByColor.computeIfPresent(Color.WHITE,
+                (color, currentValue) -> currentValue + discountPawnsInSameFile(Color.WHITE));
 
         return scoreByColor;
     }
