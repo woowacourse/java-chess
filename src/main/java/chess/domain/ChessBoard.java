@@ -2,6 +2,7 @@ package chess.domain;
 
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
+import static java.util.Collections.unmodifiableMap;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -29,7 +30,7 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getCells() {
-        return cells;
+        return unmodifiableMap(cells);
     }
 
     public Team findTeam(Position position) {
