@@ -38,33 +38,4 @@ public class JdbcTemplate {
         return conn;
     }
 
-    public static void close(final Connection conn) {
-        try {
-            if (isConnected(conn)) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static boolean isConnected(final Connection conn) {
-        try {
-            return conn.isClosed();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static void rollBack(Connection conn) {
-        try {
-            if (isConnected(conn)) {
-                conn.rollback();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
