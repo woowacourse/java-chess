@@ -5,7 +5,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFiles;
 
 import chess.controller.WebController;
-import chess.dto.PlayGameRequestDto;
+import chess.dto.response.PlayGameRequestDto;
 import chess.model.NewGameModel;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;

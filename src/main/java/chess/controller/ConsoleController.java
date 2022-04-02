@@ -5,7 +5,7 @@ import static chess.view.OutputView.print;
 import chess.domain.game.Game;
 import chess.domain.game.GameResult;
 import chess.domain.game.NewGame;
-import chess.dto.BoardViewDto;
+import chess.dto.response.ConsoleBoardViewDto;
 import chess.dto.MoveCommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -46,7 +46,7 @@ public class ConsoleController {
     }
 
     private void printBoardDisplay(Game game) {
-        BoardViewDto boardView = game.boardView();
+        ConsoleBoardViewDto boardView = game.toConsoleView();
         outputView.printBoard(boardView);
     }
 

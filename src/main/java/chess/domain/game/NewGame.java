@@ -3,7 +3,7 @@ package chess.domain.game;
 import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.dto.MoveCommandDto;
-import chess.dto.BoardViewDto;
+import chess.dto.response.ConsoleBoardViewDto;
 import chess.dto.response.WebBoardViewDto;
 import chess.util.BoardMapGeneratorUtil;
 
@@ -38,12 +38,12 @@ public final class NewGame implements Game {
     }
 
     @Override
-    public BoardViewDto boardView() {
+    public ConsoleBoardViewDto toConsoleView() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 
     @Override
-    public WebBoardViewDto boardWebView() {
+    public WebBoardViewDto toBoardWebView() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }
 }

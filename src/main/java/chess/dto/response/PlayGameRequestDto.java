@@ -1,5 +1,6 @@
-package chess.dto;
+package chess.dto.response;
 
+import chess.dto.MoveCommandDto;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,10 +29,6 @@ public class PlayGameRequestDto {
 
     private static Matcher toValidMatcher(String json) {
         Matcher matcher = PATTERN.matcher(json);
-
-        System.out.println("!!!!!!");
-        System.out.println(json);
-
         if (!matcher.matches()) {
             throw new IllegalArgumentException(INVALID_JSON_FORMAT);
         }

@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.dto.BoardViewDto;
+import chess.dto.response.ConsoleBoardViewDto;
 import chess.dto.response.WebBoardViewDto;
 
 abstract class Started implements Game {
@@ -18,12 +18,12 @@ abstract class Started implements Game {
     }
 
     @Override
-    public final BoardViewDto boardView() {
-        return new BoardViewDto(board);
+    public final ConsoleBoardViewDto toConsoleView() {
+        return new ConsoleBoardViewDto(board);
     }
 
     @Override
-    public WebBoardViewDto boardWebView() {
+    public WebBoardViewDto toBoardWebView() {
         return new WebBoardViewDto(board);
     }
 }

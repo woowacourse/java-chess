@@ -5,7 +5,7 @@ import chess.domain.board.piece.Color;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
 import chess.dto.MoveCommandDto;
-import chess.dto.PlayGameRequestDto;
+import chess.dto.response.PlayGameRequestDto;
 import chess.dto.SearchResultDto;
 import chess.dto.response.WebBoardViewDto;
 import chess.model.GameModel;
@@ -28,7 +28,7 @@ public class WebController {
         Game game = gameRepository.findById(gameId);
 
         Color currentTurn = game.getCurrentTurnColor();
-        WebBoardViewDto board = game.boardWebView();
+        WebBoardViewDto board = game.toBoardWebView();
 
         return new GameModel(gameId, currentTurn, board);
     }
