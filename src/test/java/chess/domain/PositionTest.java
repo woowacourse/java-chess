@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -35,7 +36,7 @@ public class PositionTest {
             assertThat(position).isEqualTo(Position.of(Column.A, Row.ONE));
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
         @ValueSource(strings = {"i1", "a9", "aa"})
         @DisplayName("생성할 때 지정된 문자열 외의 문자열이 들어오면 안된다.")
         void throwOutOfRange(String value) {
@@ -43,7 +44,7 @@ public class PositionTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
         @ValueSource(strings = {" ", ""})
         @DisplayName("생성할 때 빈 문자열이나 공백이 들어오면 안된다.")
         void throwBlank(String value) {
@@ -52,7 +53,7 @@ public class PositionTest {
                     .hasMessage("공백 또는 빈 문자열이면 안됩니다.");
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
         @ValueSource(strings = {"a", "a11"})
         @DisplayName("생성할 때 길이가 2가 아니면 안된다.")
         void throwLength(String value) {
@@ -62,7 +63,7 @@ public class PositionTest {
         }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"EAST,e4", "NORTH,d5", "NORTH_EAST,e5"})
     @DisplayName("Direction에 따라서 움직인 후의 Position을 얻을 수 있다.")
     void toDirection(Direction direction, String expected) {
@@ -70,7 +71,7 @@ public class PositionTest {
         assertThat(position.toDirection(direction)).isEqualTo(Position.of(expected));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"a1, WEST", "a1, SOUTH", "h8, EAST", "h8, NORTH", "h8, NORTH_EAST"})
     @DisplayName("Direction에 따라서 범위를 벗어나 Position을 얻을 수 없는 경우, 자기 자신을 반환한다.")
     void toDirectionNotMove(String expected, Direction direction) {

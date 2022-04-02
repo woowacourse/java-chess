@@ -1,9 +1,9 @@
 package chess.domain;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.position.Row;
 import chess.domain.position.Row;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +44,7 @@ public class RowTest {
                 .hasMessage("잘못된 행 이름이 들어왔습니다.");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"-1,FOUR", "1,SIX"})
     @DisplayName("이동 후 Row를 반환한다.")
     void move(int moveValue, Row expected) {
@@ -52,7 +52,7 @@ public class RowTest {
         Assertions.assertThat(move).isEqualTo(expected);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
     @CsvSource(value = {"ONE,-1", "EIGHT,1"})
     @DisplayName("이동할 수 없는 Row일 경우, 예외를 발생한다.")
     void moveThrowException(Row row, int moveValue) {

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import static chess.constants.TestConstants.PARAMETERIZED_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -290,7 +291,7 @@ public class ChessBoardTest {
             );
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = PARAMETERIZED_TEST_NAME)
         @CsvSource(value = {"b1,c3", "b8,c6"})
         @DisplayName("나이트를 이동시킬 수 있다.")
         void knight(String from, String to) {
