@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.dto;
 
 import chess.domain.board.Board;
 import chess.domain.position.Position;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BoardDto {
     private final List<List<Optional<PieceDto>>> value;
@@ -45,6 +46,16 @@ public class BoardDto {
 
     public List<List<Optional<PieceDto>>> getValue() {
         return value;
+    }
+
+    // TODO: 리팩토링
+    // TODO: DTO의 역할이 맞는지?
+    public List<List<String>> getPieceImages() {
+        return value.stream()
+                .map(row -> row.stream()
+                        .map(pieceDto -> pieceDto.map(PieceDto::getImageName)
+                                .orElse(null)).collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 
     @Override

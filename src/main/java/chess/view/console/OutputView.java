@@ -2,8 +2,8 @@ package chess.view.console;
 
 import chess.domain.game.score.ScoreResult;
 import chess.domain.piece.PieceColor;
-import chess.view.dto.BoardDto;
-import chess.view.dto.PieceDto;
+import chess.dto.BoardDto;
+import chess.dto.PieceDto;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +29,7 @@ public class OutputView {
 
     private static void printRowOfBoard(List<Optional<PieceDto>> row) {
         for (Optional<PieceDto> pieceDto : row) {
-            String notation = pieceDto.map(PieceDto::getConsoleNotation)
+            String notation = pieceDto.map(PieceDto::getConsoleText)
                     .orElse(EMPTY_PIECE_NOTATION);
             System.out.print(notation);
         }

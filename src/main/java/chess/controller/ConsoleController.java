@@ -3,10 +3,10 @@ package chess.controller;
 import chess.domain.game.ChessGame;
 import chess.domain.game.score.ScoreResult;
 import chess.domain.position.Position;
+import chess.dto.BoardDto;
+import chess.dto.ConsoleCommandDto;
 import chess.view.console.InputView;
 import chess.view.console.OutputView;
-import chess.view.dto.BoardDto;
-import chess.view.dto.ConsoleCommandDto;
 
 public class ConsoleController {
 
