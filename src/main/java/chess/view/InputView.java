@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.OutputView.print;
 
-import chess.dto.MoveCommandDto;
+import chess.dto.request.MoveCommandDto;
 import java.util.Scanner;
 
 public class InputView {

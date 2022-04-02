@@ -3,10 +3,10 @@ package chess.controller;
 import chess.db.GameRepository;
 import chess.domain.game.Game;
 import chess.domain.game.NewGame;
-import chess.dto.MoveCommandDto;
-import chess.dto.SearchResultDto;
+import chess.dto.request.MoveCommandDto;
+import chess.dto.response.SearchResultDto;
 import chess.dto.response.CreateGameDto;
-import chess.dto.response.PlayGameRequestDto;
+import chess.dto.request.PlayGameRequestDto;
 import chess.model.FullGameModel;
 import chess.model.FullResultModel;
 

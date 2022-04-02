@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.dto.response;
 
 public class SearchResultDto {
 

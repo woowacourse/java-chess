@@ -8,7 +8,7 @@ import chess.domain.board.Board;
 import chess.domain.board.piece.Color;
 import chess.domain.board.piece.NonPawn;
 import chess.domain.board.position.Position;
-import chess.dto.MoveCommandDto;
+import chess.dto.request.MoveCommandDto;
 import chess.util.BoardMapGeneratorUtil;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;

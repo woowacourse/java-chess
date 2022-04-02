@@ -1,6 +1,5 @@
-package chess.dto.response;
+package chess.dto.request;
 
-import chess.dto.MoveCommandDto;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
