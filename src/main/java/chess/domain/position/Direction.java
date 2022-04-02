@@ -42,14 +42,14 @@ public final class Direction {
 
     private Direction getUnitDirectionWithZero() {
         if (dFile == 0 && dRank == 0) {
-            return new Direction(0, 0);
+            return new Direction(dFile, dRank);
         }
 
         if (dFile == 0) {
-            return new Direction(0, dRank / Math.abs(dRank));
+            return new Direction(dFile, dRank / Math.abs(dRank));
         }
 
-        return new Direction(dFile / Math.abs(dFile), 0);
+        return new Direction(dFile / Math.abs(dFile), dRank);
     }
 
     private Direction getUnitDirectionWithOutZero() {
