@@ -49,6 +49,10 @@ public class Position {
         }
     }
 
+    public String getName() {
+        return column.getValue() + row.getValue();
+    }
+
     public Direction findDirection(Position position) {
         int x = position.column.calculateDifference(column);
         int y = position.row.calculateDifference(row);

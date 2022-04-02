@@ -134,4 +134,8 @@ public class Board {
     public Score createResult() {
         return new Score(value);
     }
+
+    public Team getTurn() {
+        return turn;
+    }
 }

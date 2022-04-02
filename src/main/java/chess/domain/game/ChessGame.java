@@ -57,4 +57,8 @@ public class ChessGame {
     public Board getBoard() {
         return board;
     }
+
+    public String getTurn() {
+        return board.getTurn().name();
+    }
 }
