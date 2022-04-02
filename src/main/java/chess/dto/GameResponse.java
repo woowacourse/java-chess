@@ -2,12 +2,12 @@ package chess.dto;
 
 import java.util.Map;
 
-public abstract class Response {
+public abstract class GameResponse {
 
     private final Map<String, String> information;
     private final String metaInformation;
 
-    public Response(Map<String, String> information, String metaInformation) {
+    public GameResponse(Map<String, String> information, String metaInformation) {
         this.information = information;
         this.metaInformation = metaInformation;
     }

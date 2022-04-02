@@ -6,25 +6,25 @@ import java.util.stream.Collectors;
 
 import chess.controller.Command;
 
-public class Request {
+public class GameRequest {
 
     private static final String DELIMITER = " ";
 
     private final Command command;
     private final List<String> arguments;
 
-    public Request(Command command, List<String> arguments) {
+    public GameRequest(Command command, List<String> arguments) {
         this.command = command;
         this.arguments = arguments;
     }
 
-    public static Request of(String input) {
+    public static GameRequest of(String input) {
         validateNull(input);
         String[] split = input.split(DELIMITER);
 
         Command command = Command.find(split[0]);
         List<String> arguments = toArguments(split);
-        return new Request(command, arguments);
+        return new GameRequest(command, arguments);
     }
 
     private static void validateNull(String input) {

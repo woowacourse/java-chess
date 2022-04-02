@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.dto.Request;
-import chess.dto.Response;
+import chess.dto.GameRequest;
+import chess.dto.GameResponse;
 
 class GameTest {
 
@@ -37,10 +37,10 @@ class GameTest {
         Game game = new Game();
 
         // when
-        Request request = Request.of("start");
+        GameRequest gameRequest = GameRequest.of("start");
 
         // then
-        assertThatCode(() -> game.run(request))
+        assertThatCode(() -> game.run(gameRequest))
             .doesNotThrowAnyException();
     }
 
@@ -49,11 +49,11 @@ class GameTest {
     public void getResponse() {
         // given
         Game game = new Game();
-        Request request = Request.of("start");
-        game.run(request);
+        GameRequest gameRequest = GameRequest.of("start");
+        game.run(gameRequest);
         // when
-        Response response = game.getResponse();
+        GameResponse gameResponse = game.getResponse();
         // then
-        assertThat(response).isNotNull();
+        assertThat(gameResponse).isNotNull();
     }
 }

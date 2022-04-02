@@ -4,7 +4,7 @@ import java.util.List;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
-import chess.dto.Response;
+import chess.dto.GameResponse;
 
 public abstract class GameState {
 
@@ -26,5 +26,5 @@ public abstract class GameState {
 
     public abstract GameState status();
 
-    public abstract Response getResponse();
+    public abstract GameResponse getResponse();
 }

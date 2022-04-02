@@ -5,8 +5,8 @@ import java.util.List;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.Route;
-import chess.dto.BoardResponse;
-import chess.dto.Response;
+import chess.dto.BoardGameResponse;
+import chess.dto.GameResponse;
 
 public class Running extends GameState {
 
@@ -44,7 +44,7 @@ public class Running extends GameState {
     }
 
     @Override
-    public Response getResponse() {
-        return BoardResponse.of(board.getPointPieces(), turnColor);
+    public GameResponse getResponse() {
+        return BoardGameResponse.of(board.getPointPieces(), turnColor);
     }
 }

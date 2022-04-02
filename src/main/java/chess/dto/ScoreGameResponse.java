@@ -5,13 +5,13 @@ import java.util.Map;
 
 import chess.domain.Color;
 
-public class ScoreResponse extends Response {
+public class ScoreGameResponse extends GameResponse {
 
-    private ScoreResponse(Map<String, String> information, String metaInformation) {
+    private ScoreGameResponse(Map<String, String> information, String metaInformation) {
         super(information, metaInformation);
     }
 
-    public static Response of(Map<Color, Double> scores) {
+    public static GameResponse of(Map<Color, Double> scores) {
         Map<String, String> information = new HashMap<>();
 
         double whiteScore = scores.get(Color.WHITE);
@@ -21,7 +21,7 @@ public class ScoreResponse extends Response {
         information.put(Color.BLACK.name(), String.format("%.1f", blackScore));
 
         String metaInformation = determineWinner(whiteScore, blackScore);
-        return new ScoreResponse(information, metaInformation);
+        return new ScoreGameResponse(information, metaInformation);
     }
 
     private static String determineWinner(double whiteScore, double blackScore) {

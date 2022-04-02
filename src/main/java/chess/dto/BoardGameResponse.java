@@ -9,16 +9,16 @@ import chess.domain.board.Point;
 import chess.domain.piece.Piece;
 import chess.view.PieceRepresentation;
 
-public class BoardResponse extends Response {
+public class BoardGameResponse extends GameResponse {
 
     public static final int DECIMAL = 10;
 
-    private BoardResponse(Map<String, String> information, String metaInformation) {
+    private BoardGameResponse(Map<String, String> information, String metaInformation) {
         super(information, metaInformation);
     }
 
-    public static Response of(Map<Point, Piece> pointPieces, Color turnColor) {
-        return new BoardResponse(toInformation(pointPieces), turnColor.name());
+    public static GameResponse of(Map<Point, Piece> pointPieces, Color turnColor) {
+        return new BoardGameResponse(toInformation(pointPieces), turnColor.name());
     }
 
     private static Map<String, String> toInformation(Map<Point, Piece> pointPieces) {

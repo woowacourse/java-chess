@@ -5,7 +5,7 @@ import java.util.List;
 import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.dto.Response;
+import chess.dto.GameResponse;
 
 public class Ready extends GameState {
 
@@ -39,7 +39,7 @@ public class Ready extends GameState {
     }
 
     @Override
-    public Response getResponse() {
+    public GameResponse getResponse() {
         throw new UnsupportedOperationException("[ERROR] 준비상태에서는 점수를 얻을 수 없습니다.");
     }
 }

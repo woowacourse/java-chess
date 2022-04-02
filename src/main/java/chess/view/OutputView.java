@@ -5,12 +5,12 @@ import java.util.function.BiConsumer;
 
 import chess.controller.Command;
 import chess.domain.board.LineNumber;
-import chess.dto.BoardResponse;
-import chess.dto.Response;
+import chess.dto.BoardGameResponse;
+import chess.dto.GameResponse;
 
 public class OutputView {
 
-    private static final Map<Command, BiConsumer<OutputView, Response>> RESPONSE_PRINTER = Map.of(
+    private static final Map<Command, BiConsumer<OutputView, GameResponse>> RESPONSE_PRINTER = Map.of(
         Command.START, (outputView, response) -> outputView.printBoard(response),
         Command.FINISH, (outputView, ignored) -> outputView.printEnd(),
         Command.MOVE, (outputView, response) -> outputView.printBoard(response),
@@ -25,24 +25,24 @@ public class OutputView {
             + "> 점수 확인 : status");
     }
 
-    public void printResponse(Command inputCommand, Response response) {
-        BiConsumer<OutputView, Response> printer = findPrinter(inputCommand);
-        printer.accept(this, response);
+    public void printResponse(Command inputCommand, GameResponse gameResponse) {
+        BiConsumer<OutputView, GameResponse> printer = findPrinter(inputCommand);
+        printer.accept(this, gameResponse);
     }
 
-    private BiConsumer<OutputView, Response> findPrinter(Command inputCommand) {
+    private BiConsumer<OutputView, GameResponse> findPrinter(Command inputCommand) {
         if (!RESPONSE_PRINTER.containsKey(inputCommand)) {
             throw new IllegalArgumentException("");
         }
         return RESPONSE_PRINTER.get(inputCommand);
     }
 
-    private void printBoard(Response response) {
-        Map<String, String> information = response.getInformation();
+    private void printBoard(GameResponse gameResponse) {
+        Map<String, String> information = gameResponse.getInformation();
 
         String board = toBoard(information);
         System.out.println(board);
-        System.out.println(response.getMetaInformation() + "의 차례입니다.");
+        System.out.println(gameResponse.getMetaInformation() + "의 차례입니다.");
     }
 
     private String toBoard(Map<String, String> information) {
@@ -62,14 +62,14 @@ public class OutputView {
     }
 
     private static String toKey(int verticalIndex, int horizontalIndex) {
-        return String.valueOf(verticalIndex * BoardResponse.DECIMAL + horizontalIndex);
+        return String.valueOf(verticalIndex * BoardGameResponse.DECIMAL + horizontalIndex);
     }
 
-    private void printScore(Response response) {
-        Map<String, String> information = response.getInformation();
+    private void printScore(GameResponse gameResponse) {
+        Map<String, String> information = gameResponse.getInformation();
         information.entrySet()
             .forEach(this::printScorePerColor);
-        System.out.println("현재 승부 결과는 " + response.getMetaInformation() + " 입니다.");
+        System.out.println("현재 승부 결과는 " + gameResponse.getMetaInformation() + " 입니다.");
     }
 
     private void printScorePerColor(Map.Entry<String, String> entry) {

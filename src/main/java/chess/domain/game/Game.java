@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import chess.controller.Command;
-import chess.dto.Request;
-import chess.dto.Response;
+import chess.dto.GameRequest;
+import chess.dto.GameResponse;
 
 public class Game {
 
@@ -26,9 +26,9 @@ public class Game {
         return state.isRunnable();
     }
 
-    public void run(Request request) {
-        BiFunction<GameState, List<String>, GameState> executor = findExecutor(request.getCommand());
-        state = executor.apply(state, request.getArguments());
+    public void run(GameRequest gameRequest) {
+        BiFunction<GameState, List<String>, GameState> executor = findExecutor(gameRequest.getCommand());
+        state = executor.apply(state, gameRequest.getArguments());
     }
 
     private BiFunction<GameState, List<String>, GameState> findExecutor(Command command) {
@@ -38,7 +38,7 @@ public class Game {
         return COMMAND_EXECUTOR.get(command);
     }
 
-    public Response getResponse() {
+    public GameResponse getResponse() {
         return state.getResponse();
     }
 

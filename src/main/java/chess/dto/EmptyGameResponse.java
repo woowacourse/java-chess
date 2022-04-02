@@ -2,11 +2,11 @@ package chess.dto;
 
 import java.util.HashMap;
 
-public class EmptyResponse extends Response {
+public class EmptyGameResponse extends GameResponse {
 
     private static final String EMPTY = "";
 
-    public EmptyResponse() {
+    public EmptyGameResponse() {
         super(new HashMap<>(), EMPTY);
     }
 }

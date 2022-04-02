@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.game.Game;
-import chess.dto.Request;
+import chess.dto.GameRequest;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -38,9 +38,9 @@ public class ChessController {
 
     private void execute(Game game) {
         String input = inputView.inputCommand();
-        Request request = Request.of(input);
+        GameRequest gameRequest = GameRequest.of(input);
 
-        game.run(request);
-        outputView.printResponse(request.getCommand(), game.getResponse());
+        game.run(gameRequest);
+        outputView.printResponse(gameRequest.getCommand(), game.getResponse());
     }
 }

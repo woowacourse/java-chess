@@ -4,8 +4,8 @@ import java.util.List;
 
 import chess.domain.Color;
 import chess.domain.board.Board;
-import chess.dto.EmptyResponse;
-import chess.dto.Response;
+import chess.dto.EmptyGameResponse;
+import chess.dto.GameResponse;
 
 public class Finished extends GameState {
 
@@ -39,7 +39,7 @@ public class Finished extends GameState {
     }
 
     @Override
-    public Response getResponse() {
-        return new EmptyResponse();
+    public GameResponse getResponse() {
+        return new EmptyGameResponse();
     }
 }

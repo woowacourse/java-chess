@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import chess.domain.Color;
 import chess.domain.board.BoardFixtures;
-import chess.dto.EmptyResponse;
-import chess.dto.Response;
+import chess.dto.EmptyGameResponse;
+import chess.dto.GameResponse;
 
 class FinishedTest {
 
@@ -68,8 +68,8 @@ class FinishedTest {
     void getEmptyResponse() {
         GameState state = new Finished(BoardFixtures.INITIAL, Color.WHITE);
 
-        Response response = state.getResponse();
+        GameResponse gameResponse = state.getResponse();
 
-        assertThat(response).isInstanceOf(EmptyResponse.class);
+        assertThat(gameResponse).isInstanceOf(EmptyGameResponse.class);
     }
 }

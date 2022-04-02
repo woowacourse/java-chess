@@ -13,8 +13,8 @@ import chess.domain.board.BoardFixtures;
 import chess.domain.board.Point;
 import chess.domain.piece.King;
 import chess.domain.piece.Queen;
-import chess.dto.Response;
-import chess.dto.ScoreResponse;
+import chess.dto.GameResponse;
+import chess.dto.ScoreGameResponse;
 
 class StatusTest {
 
@@ -86,8 +86,8 @@ class StatusTest {
     void gettingResponse() {
         GameState state = new Status(BoardFixtures.EMPTY, Color.WHITE);
 
-        Response response = state.getResponse();
+        GameResponse gameResponse = state.getResponse();
 
-        assertThat(response).isInstanceOf(ScoreResponse.class);
+        assertThat(gameResponse).isInstanceOf(ScoreGameResponse.class);
     }
 }
