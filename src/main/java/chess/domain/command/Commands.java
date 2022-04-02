@@ -30,7 +30,7 @@ public class Commands {
         return term().equals(Term.STATUS.value);
     }
 
-    public boolean isRightMoveCommand() {
+    public boolean isRightMoveCommands() {
         return commands.size() != MOVE_COMMAND_SIZE;
     }
 

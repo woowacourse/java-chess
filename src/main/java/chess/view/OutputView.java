@@ -43,7 +43,7 @@ public final class OutputView {
         System.out.println("게임을 먼저 start 해주세요.");
     }
 
-    public static void announceWrongMoveCommand() {
+    public static void announceWrongMoveCommands() {
         System.out.println("> 이동은 move source위치 target위치 형태로 입력하세요.\n> 예. move a2 a3");
     }
 

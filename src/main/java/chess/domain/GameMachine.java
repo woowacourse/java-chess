@@ -53,17 +53,17 @@ public final class GameMachine {
             OutputView.announceNotStarted();
             return;
         }
-        if (commands.isRightMoveCommand()) {
-            OutputView.announceWrongMoveCommand();
+        if (commands.isRightMoveCommands()) {
+            OutputView.announceWrongMoveCommands();
             return;
         }
         movePieceOnBoard(board, commands);
         OutputView.printBoard(board);
     }
 
-    private void movePieceOnBoard(Board board, Commands command) {
+    private void movePieceOnBoard(Board board, Commands commands) {
         try {
-            board.move(command.getSource(), command.getTarget());
+            board.move(commands.getSource(), commands.getTarget());
         } catch (IllegalArgumentException e) {
             OutputView.announceBadMovement(e.getMessage());
         }
