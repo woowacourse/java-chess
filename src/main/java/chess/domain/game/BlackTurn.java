@@ -9,7 +9,7 @@ import java.util.Objects;
 final class BlackTurn extends Running {
 
     BlackTurn(Board board) {
-        super(board);
+        super(board, GameState.BLACK_TURN);
     }
 
     @Override

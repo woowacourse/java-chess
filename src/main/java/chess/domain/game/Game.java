@@ -18,6 +18,8 @@ public interface Game {
 
     GameResult getResult();
 
+    GameState getState();
+
     ConsoleBoardViewDto toConsoleView();
 
     WebBoardViewDto toBoardWebView();

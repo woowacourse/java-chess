@@ -34,6 +34,11 @@ public final class NewGame implements Game {
     }
 
     @Override
+    public GameState getState() {
+        throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
+    }
+
+    @Override
     public GameResult getResult() {
         throw new UnsupportedOperationException(GAME_NOT_STARTED_EXCEPTION_MESSAGE);
     }

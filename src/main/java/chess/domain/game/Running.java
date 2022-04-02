@@ -11,8 +11,8 @@ abstract class Running extends Started {
 
     private static final int ONGOING_GAME_KING_COUNT = 2;
 
-    Running(Board board) {
-        super(board);
+    Running(Board board, GameState state) {
+        super(board, state);
     }
 
     @Override

@@ -7,14 +7,21 @@ import chess.dto.response.WebBoardViewDto;
 abstract class Started implements Game {
 
     protected final Board board;
+    private final GameState state;
 
-    protected Started(Board board) {
+    protected Started(Board board, GameState state) {
         this.board = board;
+        this.state = state;
     }
 
     @Override
     public final Game init() {
         return new NewGame().init();
+    }
+
+    @Override
+    public final GameState getState() {
+        return state;
     }
 
     @Override

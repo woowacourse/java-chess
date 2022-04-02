@@ -10,7 +10,7 @@ import java.util.Objects;
 final class WhiteTurn extends Running {
 
     WhiteTurn(Board board) {
-        super(board);
+        super(board, GameState.WHITE_TURN);
     }
 
     @Override

@@ -10,7 +10,7 @@ final class GameOver extends Started {
     private static final String GAME_NOT_RUNNING_EXCEPTION_MESSAGE = "이미 종료된 게임입니다.";
 
     GameOver(Board board) {
-        super(board);
+        super(board, GameState.OVER);
     }
 
     @Override
