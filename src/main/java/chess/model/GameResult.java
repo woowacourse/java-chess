@@ -1,4 +1,4 @@
-package chess.domain.game;
+package chess.model;
 
 import static chess.domain.board.piece.Color.BLACK;
 import static chess.domain.board.piece.Color.WHITE;
@@ -10,7 +10,6 @@ import chess.domain.board.piece.Piece;
 import chess.domain.board.position.File;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Rank;
-import chess.dto.GameScoreDto;
 import java.util.Map;
 
 public class GameResult {
@@ -19,11 +18,11 @@ public class GameResult {
     private static final double SAME_FILE_PAWN_DISADVANTAGE = 0.5;
 
     private final Color winnerColor;
-    private final GameScoreDto scoreResult;
+    private final GameScore scoreResult;
 
     public GameResult(Map<Position, Piece> board) {
         this.winnerColor = chooseWinner(board);
-        this.scoreResult = new GameScoreDto(calculateScore(board, WHITE), calculateScore(board, BLACK));
+        this.scoreResult = new GameScore(calculateScore(board, WHITE), calculateScore(board, BLACK));
     }
 
     private Color chooseWinner(Map<Position, Piece> board) {

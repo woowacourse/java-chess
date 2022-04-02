@@ -3,7 +3,7 @@ package chess.controller;
 import static chess.view.OutputView.print;
 
 import chess.domain.game.Game;
-import chess.domain.game.GameResult;
+import chess.model.GameResult;
 import chess.domain.game.NewGame;
 import chess.dto.response.ConsoleBoardViewDto;
 import chess.dto.MoveCommandDto;

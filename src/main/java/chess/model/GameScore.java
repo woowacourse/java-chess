@@ -1,11 +1,11 @@
-package chess.dto;
+package chess.model;
 
-public class GameScoreDto {
+public class GameScore {
 
     private final double whiteScore;
     private final double blackScore;
 
-    public GameScoreDto(double whiteScore, double blackScore) {
+    public GameScore(double whiteScore, double blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }

@@ -5,6 +5,7 @@ import static chess.domain.board.piece.PieceType.KING;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.dto.MoveCommandDto;
+import chess.model.GameResult;
 
 abstract class Running extends Started {
 
