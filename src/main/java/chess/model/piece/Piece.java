@@ -11,17 +11,9 @@ public interface Piece {
 
     String name();
 
-    boolean movable(Square source, Square target);
-
     boolean movable(Board board, Square source, Square target);
 
     boolean canMoveWithoutObstacle(Board board, Square source, Square target);
-
-    List<Direction> getDirection();
-
-    boolean isNotAlly(Piece target);
-
-    boolean isNotEmpty();
 
     double getPoint();
 
@@ -32,4 +24,6 @@ public interface Piece {
     boolean isSameColor(Color color);
 
     Color color();
+
+    boolean isNotEmpty();
 }

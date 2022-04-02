@@ -1,7 +1,9 @@
 package chess.model.piece;
 
 import chess.model.Board;
+import chess.model.square.Direction;
 import chess.model.square.Square;
+import java.util.List;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -21,7 +23,8 @@ public abstract class AbstractPiece implements Piece {
         return movable(source, target);
     }
 
-    @Override
+    abstract boolean movable(Square source, Square target);
+
     public boolean isNotAlly(Piece target) {
         return this.color != target.color();
     }
@@ -35,4 +38,8 @@ public abstract class AbstractPiece implements Piece {
     public Color color() {
         return color;
     }
+
+    public abstract boolean isNotEmpty();
+
+    abstract List<Direction> getDirection();
 }
