@@ -28,7 +28,7 @@
 
 | Method |      Url      |    Description    |
 |--------|---------------|-------------------|
-| GET    |/piece         | 존재하는 모든 기물    |
+|GET     |/piece         | 존재하는 모든 기물    |
 |GET     |/score         | 점수               |
 |GET     |/result        | 게임 결과           |
 |GET     |/turn          | 현재 턴의 색        |

@@ -12,7 +12,6 @@ import chess.result.StartResult;
 import chess.view.PieceName;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ChessService {
@@ -27,7 +26,6 @@ public class ChessService {
         Map<String, Object> model = new HashMap<>();
         try {
             model = toModel(chessGame.findAllPiece());
-            model = findScore(model);
         } catch (IllegalArgumentException e) {
             model.put("error", e.getMessage());
         }
@@ -57,7 +55,6 @@ public class ChessService {
             );
             model = toModel(result.getPieceByPosition());
             model.put("isKingDie", result.isKingDie());
-            model = findScore(model);
         } catch (IllegalArgumentException e) {
             if (chessGame.canPlay()) {
                 model = findAllPiece();
@@ -81,17 +78,15 @@ public class ChessService {
         return model;
     }
 
-    private Map<String, Object> findScore(Map<String, Object> model) {
-        if (Objects.isNull(model)) {
-            model = new HashMap<>();
-        }
-        if (!chessGame.canPlay()) {
-            return model;
-        }
-
-        final Score score = chessGame.calculateScore();
-        for (final Color color : Color.values()) {
-            model.put(color.getValue(), score.findScore(color));
+    public Map<String, Object> findScore() {
+        final Map<String, Object> model = new HashMap<>();
+        try {
+            final Score score = chessGame.calculateScore();
+            for (final Color color : Color.values()) {
+                model.put(color.getValue(), score.findScore(color));
+            }
+        } catch (IllegalArgumentException e) {
+            model.put("error", e.getMessage());
         }
         return model;
     }

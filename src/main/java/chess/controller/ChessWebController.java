@@ -28,8 +28,13 @@ public class ChessWebController {
             return render(model, "board.html");
         });
 
-        get("/pieces", (req, res) -> {
+        get("/piece", (req, res) -> {
             final Map<String, Object> model = chessService.findAllPiece();
+            return gson.toJson(model);
+        });
+
+        get("/score", (req, res) -> {
+            final Map<String, Object> model = chessService.findScore();
             return gson.toJson(model);
         });
 
