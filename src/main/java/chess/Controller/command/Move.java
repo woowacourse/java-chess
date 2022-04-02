@@ -1,17 +1,11 @@
-package chess.command;
+package chess.Controller.command;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
-import chess.view.OutputView;
-import java.util.Optional;
 
-public class Move extends CommandChain {
-
-    public Move(final CommandChain commandChain) {
-        super(Optional.ofNullable(commandChain));
-    }
+public class Move extends PieceCommand {
 
     @Override
     protected boolean canDoAction(final Command command, final Board board) {
@@ -19,7 +13,7 @@ public class Move extends CommandChain {
     }
 
     @Override
-    protected void doAction(final ParsedCommand parsedCommand, final Board board) {
+    protected Board doAction(final ParsedCommand parsedCommand, final Board board) {
         final Position start = parsedCommand.getStart();
         final Position target = parsedCommand.getDestination();
         final Color currentColor = board.getCurrentColor();
@@ -27,6 +21,6 @@ public class Move extends CommandChain {
             board.terminateGame();
         }
         board.changeTurn();
-        OutputView.printBoard(board.getPieces());
+        return board;
     }
 }

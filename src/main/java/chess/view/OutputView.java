@@ -1,6 +1,7 @@
 package chess.view;
 
-import chess.domain.Status;
+import chess.Controller.dto.PiecesDto;
+import chess.Controller.dto.ScoreDto;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -28,7 +29,8 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printBoard(final Map<Position, Piece> pieces) {
+    public static void printBoard(final PiecesDto piecesDto) {
+        final Map<Position, Piece> pieces = piecesDto.getPieces();
         for (int i = BOARD_ROW_MAX_POSITION; i >= BOARD_ROW_MIN_POSITION; i--) {
             printRow(pieces, i);
             System.out.print(System.lineSeparator());
@@ -51,9 +53,9 @@ public class OutputView {
         return symbol;
     }
 
-    public static void printStatus(final Status status) {
-        final double blackScore = status.getBlackScore();
-        final double whiteScore = status.getWhiteScore();
+    public static void printStatus(final ScoreDto score) {
+        final double blackScore = score.getBlackScore();
+        final double whiteScore = score.getWhiteScore();
         if (blackScore == KING_CAUGHT_AND_LOST || whiteScore == KING_CAUGHT_AND_LOST) {
             printWinner(blackScore);
             return;

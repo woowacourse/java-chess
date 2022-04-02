@@ -190,6 +190,10 @@ public class Board {
         return Color.WHITE;
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
     public Map<Position, Piece> getPieces() {
         return pieces;
     }

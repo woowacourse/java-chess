@@ -1,4 +1,4 @@
-package chess.command;
+package chess.Controller.command;
 
 import chess.domain.board.Position;
 import java.util.Optional;
