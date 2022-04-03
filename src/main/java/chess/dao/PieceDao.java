@@ -9,4 +9,6 @@ public interface PieceDao {
     Map<Position, Piece> findAllPieces();
 
     void savePieces(Map<Position, Piece> chessBoard);
+
+    void deletePiece(Position position);
 }

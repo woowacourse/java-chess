@@ -4,7 +4,6 @@ import static chess.domain.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pawn.Pawn;
@@ -16,21 +15,23 @@ import org.junit.jupiter.api.Test;
 
 class PieceDaoImplTest {
 
+    private PieceDao pieceDao;
+    private Position position;
+    private Piece pawn;
+
     @BeforeEach
     void setUp() {
         H2Connection.setUpTable();
+        pieceDao = new PieceDaoImpl(H2Connection.getConnection());
+        position = Position.of('a', '1');
+        pawn = new Piece(WHITE, new Pawn(WHITE));
     }
 
     @Test
     @DisplayName("piece를 저장하고 저장 확인")
     void test() {
-        // given
-        PieceDao pieceDao = new PieceDaoImpl(H2Connection.getConnection());
-        Position position = Position.of('a', '1');
-        ChessBoard chessBoard = new ChessBoard(Map.of(position, new Piece(WHITE, new Pawn(WHITE))));
-
         // when
-        pieceDao.savePieces(chessBoard.getPieces());
+        pieceDao.savePieces(Map.of(position, pawn));
         Piece result = pieceDao.findAllPieces().get(position);
 
         // then
@@ -38,5 +39,18 @@ class PieceDaoImplTest {
                 () -> assertThat(result.color()).isEqualTo(WHITE),
                 () -> assertThat(result.name()).isEqualTo("pawn")
         );
+    }
+
+    @Test
+    @DisplayName("저장한 piece를 삭제")
+    void saveAndDelecePiece() {
+        // given
+        pieceDao.savePieces(Map.of(position, pawn));
+
+        // when
+        pieceDao.deletePiece(position);
+
+        // then
+        assertThat(pieceDao.findAllPieces()).isEmpty();
     }
 }
