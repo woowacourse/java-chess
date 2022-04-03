@@ -220,7 +220,7 @@
     })
 
     async function move() {
-        const response = await fetch(`/command/move?room=${roomName}`, {method: "POST", body: fromTo});
+        const response = await fetch(`/protected/move?room=${roomName}`, {method: "POST", body: fromTo});
         const json = response.json();
         await removeElement();
         drawBoard(json);
@@ -230,7 +230,14 @@
 
     async function start() {
         roomName = document.getElementById("roomNameInput").value;
-        const response = await fetch(`/command/start?room=${roomName}`, {method: "POST"});
+        if (/^\s*$/.test(roomName)) {
+            const error = document.getElementById("error");
+            error.innerText = "방 이름을 입력하세요!";
+
+            document.getElementById("roomNameInput").value = "";
+            return;
+        }
+        const response = await fetch(`/start?room=${roomName}`, {method: "POST"});
         window.location.href = `/room/${roomName}`;
         const json = response.json();
         await removeElement();
@@ -248,21 +255,21 @@
     }
 
     async function end() {
-        const response = await fetch(`/command/end?room=${roomName}`, {method: "POST"});
+        const response = await fetch(`/protected/end?room=${roomName}`, {method: "POST"});
         const json = response.json();
         drawBoard(json);
         await fetchResult();
     }
 
     async function fetchPiece() {
-        const data = await fetch(`/piece?room=${roomName}`);
+        const data = await fetch(`/protected/piece?room=${roomName}`);
         const json = data.json();
         await removeElement();
         drawBoard(json);
     }
 
     async function fetchScore() {
-        const data = await fetch(`/score?room=${roomName}`);
+        const data = await fetch(`/protected/score?room=${roomName}`);
         data.json().then(res => Object.keys(res).forEach(function (value) {
             const element = document.getElementById(value);
             if (value === "error") {
@@ -274,7 +281,7 @@
     }
 
     async function fetchTurn() {
-        const data = await fetch(`/turn?room=${roomName}`);
+        const data = await fetch(`/protected/turn?room=${roomName}`);
         data.json().then(res => Object.keys(res).forEach(function (value) {
             if (value === "error") {
                 const element = document.getElementById(value);
@@ -291,7 +298,7 @@
     }
 
     async function fetchResult() {
-        const data = await fetch(`/result?room=${roomName}`);
+        const data = await fetch(`/protected/result?room=${roomName}`);
         data.json().then(res => Object.keys(res).forEach(function (value) {
             const winColor = res[value];
             let element = document.getElementById(winColor);
@@ -328,9 +335,20 @@
         }));
     }
 
-    fetchPiece();
-    fetchScore();
-    fetchTurn();
+    function checkRoomExist() {
+        const roomExist = "{{roomExist}}"
+        if (roomExist === "false") {
+            window.location.href = "/";
+        }
+        if (/^\s*$/.test(roomName) === false) {
+            fetchPiece();
+            fetchScore();
+            fetchTurn();
+        }
+    }
+
+    checkRoomExist();
+
 </script>
 
 </body>
