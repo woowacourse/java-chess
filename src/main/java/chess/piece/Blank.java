@@ -5,19 +5,19 @@ import chess.chessBoard.position.Position;
 
 import java.util.Map;
 
-public class Blank extends Piece {
+public final class Blank extends Piece {
 
-    public Blank(Player player, String symbol) {
+    public Blank(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
         return false;
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score;
     }
 }

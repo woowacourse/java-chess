@@ -6,12 +6,12 @@ import chess.state.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGame {
+public final class ChessGame {
 
     private final OutputView outputView;
     private final InputView inputView;
 
-    public ChessGame(OutputView outputView, InputView inputView) {
+    public ChessGame(final OutputView outputView, final InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
@@ -40,7 +40,7 @@ public class ChessGame {
         return state;
     }
 
-    private State proceed(State state) {
+    private State proceed(final State state) {
         try {
             return state.proceed(inputView.inputPlayerCommand());
         } catch (IllegalArgumentException exception) {

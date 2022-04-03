@@ -4,14 +4,14 @@ import chess.chessBoard.Board;
 
 import static chess.state.Command.*;
 
-public class End extends Finished {
+public final class End extends Finished {
 
-    protected End(Board board) {
+    End(Board board) {
         super(board);
     }
 
     @Override
-    public State proceed(String command) {
+    public State proceed(final String command) {
         if (STATUS.isUserInput(command)) {
             return new Status(board);
         }

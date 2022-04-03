@@ -10,18 +10,17 @@ import java.util.stream.Collectors;
 
 import static chess.chessBoard.Direction.*;
 
-public class King extends Piece {
+public final class King extends Piece {
 
     private static final double SCORE = 0;
 
-    public King(Player player, String symbol) {
+    public King(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Direction> directions = getDirections();
-        List<Position> positions = directions.stream()
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final List<Position> positions = getDirections().stream()
                 .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
                 .filter(position -> !board.get(position).isSame(player))
@@ -40,7 +39,7 @@ public class King extends Piece {
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score + SCORE;
     }
 }

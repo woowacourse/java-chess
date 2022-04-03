@@ -4,30 +4,28 @@ import chess.chessBoard.Direction;
 import chess.game.Player;
 import chess.chessBoard.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static chess.chessBoard.Direction.*;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     private static final double SCORE = 3;
-    public Bishop(Player player, String symbol) {
+    public Bishop(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
-        for (Direction direction : getDirections()) {
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final List<Position> positions = new ArrayList<>();
+        for (final Direction direction : getDirections()) {
             positions.addAll(createMovablePositions(direction, source, board));
         }
         return positions.contains(target);
     }
 
-    private List<Position> createMovablePositions(Direction direction, Position source, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
+    private Set<Position> createMovablePositions(final Direction direction, final Position source, final Map<Position, Piece> board) {
+        Set<Position> positions = new HashSet<>();
         if (!source.isInBoardAfterMoved(direction)) {
             return positions;
         }

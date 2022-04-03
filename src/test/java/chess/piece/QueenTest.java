@@ -29,10 +29,10 @@ class QueenTest {
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"SEVEN,D", "ONE,D", "SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
-    void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece queen = new Queen(Player.BLACK, "B");
-        boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
+    void canMove_false(final Rank rank, final File file) {
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece queen = new Queen(Player.BLACK, "B");
+        final boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isFalse();
     }
@@ -40,10 +40,10 @@ class QueenTest {
     @DisplayName("target 위치로 움직일 수 있으면 true를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B", "FOUR,H", "FOUR,A", "TWO,D", "SIX,D"})
-    void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece queen = new Queen(Player.BLACK, "R");
-        boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
+    void canMove_true(final Rank rank, final File file) {
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece queen = new Queen(Player.BLACK, "R");
+        final boolean actual = queen.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();
     }

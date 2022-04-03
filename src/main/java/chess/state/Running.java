@@ -4,7 +4,7 @@ import chess.chessBoard.Board;
 
 public abstract class Running extends Started {
 
-    public Running(Board board) {
+    public Running(final Board board) {
         super(board);
     }
 

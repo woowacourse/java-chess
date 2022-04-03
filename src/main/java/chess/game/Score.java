@@ -22,12 +22,12 @@ public final class Score {
         this.scores = new HashMap<>();
     }
 
-    public void calculateScore(Board board) {
+    public void calculateScore(final Board board) {
         scores.put(WHITE, calculateScore(board, WHITE));
         scores.put(BLACK, calculateScore(board, BLACK));
     }
 
-    private double calculateScore(Board board, Player player) {
+    private double calculateScore(final Board board, final Player player) {
         double score = STARTING_COUNT;
         for (Rank rank : Rank.values()) {
             score = scoresInRank(board, player, score, rank);
@@ -35,7 +35,7 @@ public final class Score {
         return score;
     }
 
-    private double scoresInRank(Board board, Player player, double score, Rank rank) {
+    private double scoresInRank(final Board board, final Player player, double score, final Rank rank) {
         int pawnCountInFile = STARTING_COUNT;
         for (File file : File.values()) {
             score = addScoreOfPiece(board, player, score, Position.of(rank, file));
@@ -47,14 +47,14 @@ public final class Score {
         return score;
     }
 
-    private int addPawnCount(Board board, Player player, Position position) {
+    private int addPawnCount(final Board board, final Player player, final Position position) {
         if (board.isSamePlayerIn(position, player) || board.isPawn(position)) {
             return COUNTS;
         }
         return NONE_SUM;
     }
 
-    private double addScoreOfPiece(Board board, Player player, double score, Position position) {
+    private double addScoreOfPiece(final Board board, final Player player, double score, final Position position) {
         if (board.isSamePlayerIn(position, player)) {
             score = board.addPieceScore(position, score);
         }

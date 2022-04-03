@@ -4,31 +4,31 @@ import chess.chessBoard.Direction;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
-    public static final int RANK_NAME_INDEX = 1;
-    public static final int FILE_NAME_INDEX = 0;
+    private static final int RANK_NAME_INDEX = 1;
+    private static final int FILE_NAME_INDEX = 0;
     private final Rank rank;
     private final File file;
 
-    private Position(Rank rank, File file) {
+    private Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
 
-    public static Position of(Rank rank, File file) {
+    public static Position of(final Rank rank, final File file) {
         return new Position(rank, file);
     }
 
-    public static Position from(String position) {
+    public static Position from(final String position) {
         return new Position(Rank.of(position.charAt(RANK_NAME_INDEX)), File.of(position.charAt(FILE_NAME_INDEX)));
     }
 
-    public boolean isInBoardAfterMoved(Direction direction) {
+    public boolean isInBoardAfterMoved(final Direction direction) {
         return direction.isMovablePosition(rank, file);
     }
 
-    public Position createMovablePosition(Direction direction) {
+    public Position createMovablePosition(final Direction direction) {
         return direction.createMovablePosition(rank, file);
     }
 

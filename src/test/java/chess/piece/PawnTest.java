@@ -31,9 +31,9 @@ class PawnTest {
     @ParameterizedTest()
     @EnumSource(File.class)
     void canMove_one_true(File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
-        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.SIX, file), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
+        final boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.SIX, file), chessBoard);
 
         assertThat(actual).isTrue();
     }
@@ -41,9 +41,9 @@ class PawnTest {
     @DisplayName("한 칸 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_one_false() {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.E), chessBoard);
 
         assertThat(actual).isFalse();
     }
@@ -52,9 +52,9 @@ class PawnTest {
     @ParameterizedTest()
     @EnumSource(File.class)
     void canMove_two_true(File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
-        boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.FIVE, file), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = chessBoard.get(Position.of(Rank.SEVEN, file));
+        final boolean actual = pawn.canMove(Position.of(Rank.SEVEN, file), Position.of(Rank.FIVE, file), chessBoard);
 
         assertThat(actual).isTrue();
     }
@@ -62,9 +62,9 @@ class PawnTest {
     @DisplayName("폰의 초기 위치에서 두 칸 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_two_false() {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final boolean actual = pawn.canMove(Position.of(Rank.SIX, File.E), Position.of(Rank.FOUR, File.E), chessBoard);
 
         assertThat(actual).isFalse();
     }
@@ -72,9 +72,9 @@ class PawnTest {
     @DisplayName("대각선 앞쪽에 상대편 기물이 있을 때 움직일 수 있으면 true를 반환한다.")
     @Test
     void canMove_side_true() {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final boolean actual = pawn.canMove(Position.of(Rank.THREE, File.E), Position.of(Rank.TWO, File.F), chessBoard);
 
         assertThat(actual).isTrue();
     }
@@ -82,9 +82,9 @@ class PawnTest {
     @DisplayName("대각선 앞쪽에 상대편 기물이 있을 때 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_side_false() {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece pawn = new Pawn(Player.BLACK, "p");
-        boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece pawn = new Pawn(Player.BLACK, "p");
+        final boolean actual = pawn.canMove(Position.of(Rank.FIVE, File.E), Position.of(Rank.FOUR, File.F), chessBoard);
 
         assertThat(actual).isFalse();
     }

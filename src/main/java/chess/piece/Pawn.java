@@ -11,23 +11,23 @@ import static chess.chessBoard.Direction.*;
 import static chess.game.Player.BLACK;
 import static chess.game.Player.NONE;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     private static final double SCORE = 1;
 
-    public Pawn(Player player, String symbol) {
+    public Pawn(final Player player, final String symbol) {
         super(player, symbol);
     }
 
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        Set<Position> positions = new HashSet<>();
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final Set<Position> positions = new HashSet<>();
         positions.addAll(findCatchPositions(source, board, getCatchingDirections()));
         positions.addAll(findMovedOnePosition(source, board, getForwardDirection()));
         positions.addAll(findMovedTwoPosition(source, board, getForwardDirection(), getForwardTwoDirection()));
         return positions.contains(target);
     }
 
-    private List<Position> findCatchPositions(Position source, Map<Position, Piece> board, List<Direction> directions) {
+    private List<Position> findCatchPositions(final Position source, final Map<Position, Piece> board, final List<Direction> directions) {
         return directions.stream()
                 .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
@@ -35,8 +35,8 @@ public class Pawn extends Piece {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> findMovedOnePosition(Position source, Map<Position, Piece> board, Direction direction) {
-        List<Direction> directions = List.of(direction);
+    private List<Position> findMovedOnePosition(final Position source, final Map<Position, Piece> board, final Direction direction) {
+        final List<Direction> directions = List.of(direction);
         return directions.stream()
                 .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
@@ -44,19 +44,22 @@ public class Pawn extends Piece {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private List<Position> findMovedTwoPosition(Position source, Map<Position, Piece> board, Direction forwardDirection, Direction forwardTwoDirection) {
+    private List<Position> findMovedTwoPosition(final Position source,
+                                                final Map<Position, Piece> board,
+                                                final Direction forwardDirection,
+                                                final Direction forwardTwoDirection) {
         if (!source.isInBoardAfterMoved(forwardTwoDirection)) {
             return List.of();
         }
-        Position oneForwardPosition = source.createMovablePosition(forwardDirection);
-        Position twoForwardPosition = source.createMovablePosition(forwardTwoDirection);
+        final Position oneForwardPosition = source.createMovablePosition(forwardDirection);
+        final Position twoForwardPosition = source.createMovablePosition(forwardTwoDirection);
         if (source.isStartingPositionOfPawn() && isMovedTwoPosition(board.get(oneForwardPosition), board.get(twoForwardPosition))) {
             return List.of(twoForwardPosition);
         }
         return List.of();
     }
 
-    private boolean isMovedTwoPosition(Piece pieceInOneForwardPosition, Piece pieceInTwoForwardPosition) {
+    private boolean isMovedTwoPosition(final Piece pieceInOneForwardPosition, final Piece pieceInTwoForwardPosition) {
         return pieceInOneForwardPosition.isSame(NONE) && !pieceInTwoForwardPosition.isSame(player);
     }
 

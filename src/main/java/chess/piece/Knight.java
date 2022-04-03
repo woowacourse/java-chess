@@ -14,14 +14,13 @@ public class Knight extends Piece {
 
     private static final double SCORE = 2.5;
 
-    public Knight(Player player, String symbol) {
+    public Knight(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Direction> directions = getDirections();
-        List<Position> positions = directions.stream()
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final List<Position> positions = getDirections().stream()
                 .filter(source::isInBoardAfterMoved)
                 .map(source::createMovablePosition)
                 .filter(position -> !board.get(position).isSame(player))

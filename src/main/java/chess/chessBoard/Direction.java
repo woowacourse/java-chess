@@ -31,16 +31,16 @@ public enum Direction {
     private final int row;
     private final int column;
 
-    Direction(int row, int column) {
+    Direction(final int row, final int column) {
         this.row = row;
         this.column = column;
     }
 
-    public boolean isMovablePosition(Rank rank, File file) {
+    public boolean isMovablePosition(final Rank rank, final File file) {
         return rank.canAdd(row) && file.canAdd(column);
     }
 
-    public Position createMovablePosition(Rank rank, File file) {
+    public Position createMovablePosition(final Rank rank, final File file) {
         return Position.of(rank.add(row), file.add(column));
     }
 }

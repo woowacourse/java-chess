@@ -8,7 +8,7 @@ import java.util.Map;
 public interface State {
     boolean isRunning();
 
-    State proceed(String command);
+    State proceed(final String command);
 
     Map<Position, Piece> getBoard();
 

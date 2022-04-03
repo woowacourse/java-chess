@@ -4,7 +4,7 @@ import chess.chessBoard.Board;
 
 public abstract class Finished extends Started {
 
-    public Finished(Board board) {
+    public Finished(final Board board) {
         super(board);
     }
 

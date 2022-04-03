@@ -29,9 +29,9 @@ class BishopTest {
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"SEVEN,G", "SEVEN,A", "ONE,A", "ONE,G"})
-    void canMove_false(Rank rank, File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece bishop = new Bishop(Player.BLACK, "B");
+    void canMove_false(final Rank rank, final File file) {
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece bishop = new Bishop(Player.BLACK, "B");
         boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isFalse();
@@ -40,9 +40,9 @@ class BishopTest {
     @DisplayName("target 위치로 움직일 수 있으면 true를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"SIX,F", "SIX,B", "TWO,B", "TWO,B"})
-    void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece bishop = new Bishop(Player.BLACK, "B");
+    void canMove_true(final Rank rank, final File file) {
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece bishop = new Bishop(Player.BLACK, "B");
         boolean actual = bishop.canMove(Position.of(Rank.FOUR, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();

@@ -10,25 +10,25 @@ import java.util.Map;
 
 import static chess.chessBoard.Direction.*;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     private static final double SCORE = 5;
 
-    public Rook(Player player, String symbol) {
+    public Rook(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final List<Position> positions = new ArrayList<>();
         for (Direction direction : getDirections()) {
             positions.addAll(createMovablePositions(direction, source, board));
         }
         return positions.contains(target);
     }
 
-    private List<Position> createMovablePositions(Direction direction, Position source, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
+    private List<Position> createMovablePositions(final Direction direction, final Position source, final Map<Position, Piece> board) {
+        final List<Position> positions = new ArrayList<>();
         if (!source.isInBoardAfterMoved(direction)) {
             return positions;
         }
@@ -49,7 +49,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public double addTo(double score) {
+    public double addTo(final double score) {
         return score + SCORE;
     }
 }

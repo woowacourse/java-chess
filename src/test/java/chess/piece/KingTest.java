@@ -30,9 +30,9 @@ public class KingTest {
     @DisplayName("target 위치로 움직일 수 없으면 false를 반환한다.")
     @Test
     void canMove_false() {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece king = chessBoard.get(Position.of(Rank.EIGHT, File.E));
-        boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece king = chessBoard.get(Position.of(Rank.EIGHT, File.E));
+        final boolean actual = king.canMove(Position.of(Rank.EIGHT, File.E), Position.of(Rank.SEVEN, File.E), chessBoard);
 
         assertThat(actual).isFalse();
     }
@@ -41,9 +41,9 @@ public class KingTest {
     @ParameterizedTest()
     @CsvSource(value = {"SIX,D", "FOUR,D", "FIVE,C", "FIVE,E", "SIX,E", "FOUR,E", "SIX,C", "FOUR,C"})
     void canMove_true(Rank rank, File file) {
-        Map<Position, Piece> chessBoard = board.getBoard();
-        Piece king = new King(Player.BLACK, "K");
-        boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), chessBoard);
+        final Map<Position, Piece> chessBoard = board.getBoard();
+        final Piece king = new King(Player.BLACK, "K");
+        final boolean actual = king.canMove(Position.of(Rank.FIVE, File.D), Position.of(rank, file), chessBoard);
 
         assertThat(actual).isTrue();
     }

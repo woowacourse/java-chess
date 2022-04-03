@@ -14,28 +14,28 @@ class DirectionTest {
     @DisplayName("보드판이 아닌 범위로 이동하려고 하면 true를 반환한다.")
     @Test
     void isMovablePosition_true() {
-        boolean actual = NORTH.isMovablePosition(Rank.FIVE, File.D);
+        final boolean actual = NORTH.isMovablePosition(Rank.FIVE, File.D);
         assertThat(actual).isTrue();
     }
 
     @DisplayName("보드판이 아닌 범위로 이동하려고 하면 false를 반환한다.")
     @Test
     void isMovablePosition_false_north() {
-        boolean actual = NORTH.isMovablePosition(Rank.EIGHT, File.D);
+        final boolean actual = NORTH.isMovablePosition(Rank.EIGHT, File.D);
         assertThat(actual).isFalse();
     }
 
     @DisplayName("보드판이 아닌 범위로 이동하려고 하면 false를 반환한다.")
     @Test
     void isMovablePosition_false_east() {
-        boolean actual = EAST.isMovablePosition(Rank.FOUR, File.H);
+        final boolean actual = EAST.isMovablePosition(Rank.FOUR, File.H);
         assertThat(actual).isFalse();
     }
 
     @Test
     void createMovablePosition() {
-        Position position = Position.of(Rank.FOUR, File.D);
-        Position movedPosition = NORTH.createMovablePosition(Rank.THREE, File.D);
+        final Position position = Position.of(Rank.FOUR, File.D);
+        final Position movedPosition = NORTH.createMovablePosition(Rank.THREE, File.D);
 
         assertThat(movedPosition).isEqualTo(position);
     }

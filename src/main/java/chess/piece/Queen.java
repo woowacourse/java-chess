@@ -9,25 +9,25 @@ import java.util.*;
 import static chess.chessBoard.Direction.*;
 import static chess.chessBoard.Direction.NORTH;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     private static final double SCORE = 9;
 
-    public Queen(Player player, String symbol) {
+    public Queen(final Player player, final String symbol) {
         super(player, symbol);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
-        Set<Position> positions = new HashSet<>();
-        for (Direction direction : getDirections()) {
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> board) {
+        final Set<Position> positions = new HashSet<>();
+        for (final Direction direction : getDirections()) {
             positions.addAll(createMovablePositions(direction, source, board));
         }
         return positions.contains(target);
     }
 
-    private List<Position> createMovablePositions(Direction direction, Position source, Map<Position, Piece> board) {
-        List<Position> positions = new ArrayList<>();
+    private List<Position> createMovablePositions(final Direction direction, final Position source, final Map<Position, Piece> board) {
+        final List<Position> positions = new ArrayList<>();
         if (!source.isInBoardAfterMoved(direction)) {
             return positions;
         }

@@ -6,14 +6,14 @@ import chess.game.Score;
 
 import java.util.HashMap;
 
-public class Status extends Finished {
+public final class Status extends Finished {
 
-    public Status(Board board) {
+    public Status(final Board board) {
         super(board);
     }
 
     @Override
-    public State proceed(String command) {
+    public State proceed(final String command) {
         throw new IllegalArgumentException("[ERROR] 올바른 명령을 입력해주세요.");
     }
 
@@ -23,7 +23,7 @@ public class Status extends Finished {
     }
 
     public HashMap<Player, Double> calculateScore() {
-        Score score = new Score();
+        final Score score = new Score();
         score.calculateScore(board);
         return score.getScores();
     }
