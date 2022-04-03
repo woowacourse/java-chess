@@ -12,5 +12,5 @@ public interface GameRepository {
 
 	void update(String name, GameState state);
 
-	void removeAll();
+	void remove(String name);
 }

@@ -30,11 +30,12 @@ public class ChessGameDao {
 		return key;
 	}
 
-	public void deleteAll() {
+	public void delete(String name) {
 		Connection connection = connectionManager.getConnection();
-		String sql = "delete from game";
+		String sql = "delete from game where name = ?";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, name);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

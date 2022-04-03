@@ -10,17 +10,19 @@ import chess.domain.state.Ready;
 
 class ChessGameRepositoryTest {
 
+	private static final String TEST_NAME = "does";
+
 	private final GameRepository gameRepository = new ChessGameRepository();
 
 	@AfterEach
 	void clear() {
-		gameRepository.removeAll();
+		gameRepository.remove(TEST_NAME);
 	}
 
 	@Test
-	@DisplayName("game 테이블에 저장")
+	@DisplayName("체스 게임 저장")
 	void save() {
-		ChessGame game = new ChessGame("does", new Ready(BoardInitializer.generate()));
+		ChessGame game = new ChessGame(TEST_NAME, new Ready(BoardInitializer.generate()));
 		gameRepository.save(game);
 	}
 }

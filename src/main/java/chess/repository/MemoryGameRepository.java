@@ -43,7 +43,6 @@ public class MemoryGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void removeAll() {
-
+	public void remove(String name) {
 	}
 }

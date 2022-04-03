@@ -15,8 +15,7 @@ class TileDaoTest {
 
 	@AfterEach
 	void clear() {
-		tileDao.deleteAll();
-		chessGameDao.deleteAll();
+		chessGameDao.delete(TEST_NAME);
 	}
 
 	@Test

@@ -53,8 +53,7 @@ public class ChessGameRepository implements GameRepository {
 	}
 
 	@Override
-	public void removeAll() {
-		tileDao.deleteAll();
-		chessGameDao.deleteAll();
+	public void remove(String name) {
+		chessGameDao.delete(name);
 	}
 }

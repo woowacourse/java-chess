@@ -13,7 +13,7 @@ class ChessGameDaoTest {
 
 	@AfterEach
 	void clear() {
-		chessGameDao.deleteAll();
+		chessGameDao.delete(TEST_NAME);
 	}
 
 	@Test
