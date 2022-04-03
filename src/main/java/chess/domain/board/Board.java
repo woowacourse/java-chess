@@ -10,7 +10,6 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.vo.TeamColor;
 import chess.game.TotalScore;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class Board {
     private static final List<Rank> INITIAL_PIECES_RANKS = Arrays.asList(ONE, TWO, SEVEN, EIGHT);
 
     private final List<Piece> pieces;
-    private final TeamColor currentTurnTeamColor;
+    private TeamColor currentTurnTeamColor;
 
     private Board(final List<Piece> pieces, final TeamColor currentTurnTeamColor) {
         this.pieces = pieces;
@@ -62,9 +61,9 @@ public class Board {
         if (hasPieceInPosition(targetPosition)) {
             removeTargetPositionPiece(findPieceInPosition(targetPosition), movedPiece);
         }
-        List<Piece> movedPieces = new ArrayList<>(pieces);
-        movedPieces.set(movedPieces.indexOf(sourcePiece), movedPiece);
-        return new Board(movedPieces, currentTurnTeamColor.nextTurn());
+        pieces.set(pieces.indexOf(sourcePiece), movedPiece);
+        currentTurnTeamColor = currentTurnTeamColor.nextTurn();
+        return new Board(pieces, currentTurnTeamColor.nextTurn());
     }
 
     private void validateTurn(final Piece sourcePiece) {
@@ -101,5 +100,9 @@ public class Board {
                 .filter(piece -> piece.isTeamOf(teamColor))
                 .collect(Collectors.toUnmodifiableList());
         return TotalScore.getTotalScore(teamPieces);
+    }
+
+    public TeamColor getCurrentTurnTeamColor() {
+        return currentTurnTeamColor;
     }
 }
