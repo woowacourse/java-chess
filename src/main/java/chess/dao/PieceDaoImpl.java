@@ -44,7 +44,7 @@ public class PieceDaoImpl implements PieceDao {
     }
 
     @Override
-    public void savePieces(final Map<Position, Piece> chessBoard) {
+    public void savePieces(Map<Position, Piece> chessBoard) {
         final String query = "insert into piece (type, color, position_col, position_row) values (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
