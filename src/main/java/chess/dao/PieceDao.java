@@ -10,5 +10,7 @@ public interface PieceDao {
 
     void savePieces(Map<Position, Piece> chessBoard);
 
+    void updatePiecePosition(Position position, Position movePosition);
+
     void deletePiece(Position position);
 }

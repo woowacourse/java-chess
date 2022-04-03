@@ -53,4 +53,22 @@ class PieceDaoImplTest {
         // then
         assertThat(pieceDao.findAllPieces()).isEmpty();
     }
+
+    @Test
+    @DisplayName("저장한 piece의 위치를 업데이트")
+    void saveAndUpdatePiecePosition() {
+        // given
+        pieceDao.savePieces(Map.of(position, pawn));
+        Position movePosition = Position.of('a', '2');
+
+        // when
+        pieceDao.updatePiecePosition(position, movePosition);
+        Piece result = pieceDao.findAllPieces().get(movePosition);
+
+        // then
+        assertAll(
+                () -> assertThat(result.color()).isEqualTo(WHITE),
+                () -> assertThat(result.name()).isEqualTo("pawn")
+        );
+    }
 }
