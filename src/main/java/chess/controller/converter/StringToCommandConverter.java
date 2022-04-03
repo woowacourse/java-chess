@@ -1,4 +1,4 @@
-package chess.converter.console;
+package chess.controller.converter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,6 @@ import chess.domain.command.End;
 import chess.domain.command.Move;
 import chess.domain.command.Start;
 import chess.domain.command.Status;
-import chess.domain.position.Position;
 
 public enum StringToCommandConverter {
 

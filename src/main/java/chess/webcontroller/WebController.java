@@ -5,8 +5,8 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.converter.web.RequestToCommandConverter;
-import chess.converter.web.RequestToMapConverter;
+import chess.webcontroller.converter.RequestToCommandConverter;
+import chess.webcontroller.converter.RequestToMapConverter;
 import chess.domain.ChessGame;
 import chess.domain.board.BoardInitializer;
 import chess.domain.command.Command;

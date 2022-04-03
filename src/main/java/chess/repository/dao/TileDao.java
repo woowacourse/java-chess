@@ -27,7 +27,7 @@ public class TileDao {
 			statement.setInt(3, foreignKey);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(e);
 		}
 	}
 
@@ -42,7 +42,7 @@ public class TileDao {
 			ResultSet result = statement.executeQuery();
 			makeResult(tiles, result);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException(e);
 		}
 		return tiles;
 	}

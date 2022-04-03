@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import chess.converter.File;
-import chess.converter.console.PieceToStringConverter;
+import chess.controller.converter.PieceToStringConverter;
 import chess.converter.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

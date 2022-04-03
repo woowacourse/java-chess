@@ -1,4 +1,4 @@
-package chess.converter;
+package chess.repository.converter;
 
 import java.util.Map;
 

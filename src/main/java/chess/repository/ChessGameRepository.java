@@ -7,9 +7,9 @@ import java.util.Optional;
 
 import chess.converter.File;
 import chess.converter.Rank;
-import chess.converter.StringToPieceConverter;
+import chess.repository.converter.StringToPieceConverter;
 import chess.converter.StringToPositionConverter;
-import chess.converter.StringToStateConverter;
+import chess.repository.converter.StringToStateConverter;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

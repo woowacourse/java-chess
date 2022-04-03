@@ -1,4 +1,4 @@
-package chess.converter.web;
+package chess.webcontroller.converter;
 
 import java.util.Map;
 
