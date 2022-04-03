@@ -42,6 +42,10 @@ public class Position {
         return this.row.calculateDistance(from.row);
     }
 
+    public String getName() {
+        return column.getName() + row.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

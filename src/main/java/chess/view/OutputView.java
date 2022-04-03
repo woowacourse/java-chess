@@ -1,16 +1,11 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import java.util.ArrayList;
+import chess.dto.ConsoleBoardDto;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-    private static final int FILE_SIZE = 8;
-    private static final int FILE_END_NUMBER = 7;
 
     public static void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다." + NEW_LINE +
@@ -19,24 +14,20 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(final Map<Position, Piece> board) {
-        final List<Position> pieces = new ArrayList<>(board.keySet());
+    public static void printBoard(final ConsoleBoardDto consoleBoardDto) {
+        final List<List<String>> names = consoleBoardDto.getNames();
         int rowIndex = 8;
-        System.out.println();
-        for (int i = 0; i < board.size(); i++) {
-            final Piece piece = board.get(pieces.get(i));
-            System.out.print(piece.getName());
-            rowIndex = separateRow(i, rowIndex);
+        for (List<String> namesOnSameRow : names) {
+            printNamesOnSameRow(namesOnSameRow, rowIndex--);
         }
         System.out.println("abcdefgh");
     }
 
-    private static int separateRow(final int index, int rowIndex) {
-        if (index % FILE_SIZE == FILE_END_NUMBER) {
-            System.out.println(" " + rowIndex);
-            return rowIndex - 1;
+    private static void printNamesOnSameRow(final List<String> names, final int index) {
+        for (String name : names) {
+            System.out.print(name);
         }
-        return rowIndex;
+        System.out.println(" " + index);
     }
 
     public static void printTurnMessage(final String name) {

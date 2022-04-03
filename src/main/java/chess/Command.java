@@ -3,6 +3,7 @@ package chess;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.domain.result.Score;
+import chess.dto.ConsoleBoardDto;
 import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public enum Command {
     }
 
     private static void start(final ChessGame chessGame) {
-        OutputView.printBoard(chessGame.getBoard());
+        OutputView.printBoard(new ConsoleBoardDto(chessGame.getBoard()));
         chessGame.start();
     }
 
@@ -51,7 +52,7 @@ public enum Command {
         final Position from = Position.create(toPosition(commands, SOURCE_INDEX));
         final Position to = Position.create(toPosition(commands, TARGET_INDEX));
         chessGame.move(from, to);
-        OutputView.printBoard(chessGame.getBoard());
+        OutputView.printBoard(new ConsoleBoardDto(chessGame.getBoard()));
     }
 
     private static String toPosition(final List<String> commands, final int index) {

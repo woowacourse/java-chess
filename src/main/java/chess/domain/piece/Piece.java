@@ -6,18 +6,11 @@ import java.util.Objects;
 public abstract class Piece {
 
     private final Color color;
-    private final String name;
+    private final Type type;
 
-    protected Piece(final Color color, final String name) {
+    protected Piece(final Color color, final Type type) {
         this.color = color;
-        this.name = decideName(name);
-    }
-
-    private String decideName(final String name) {
-        if (color == Color.WHITE) {
-            return name.toLowerCase();
-        }
-        return name;
+        this.type = type;
     }
 
     public abstract boolean isRightMovement(final Position from, final Position to, final boolean isEmptyTarget);
@@ -44,8 +37,16 @@ public abstract class Piece {
         return false;
     }
 
-    public String getName() {
-        return name;
+    public Color color() {
+        return color;
+    }
+
+    public Type type() {
+        return type;
+    }
+
+    public String getColor() {
+        return color.getName();
     }
 
     @Override
@@ -57,11 +58,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return Objects.equals(name, piece.name) && color == piece.color;
+        return color == piece.color && type == piece.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color);
+        return Objects.hash(color, type);
     }
 }

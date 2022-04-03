@@ -48,4 +48,8 @@ public enum Column {
             throw new IllegalArgumentException("[ERROR] Column을 해당 거리만큼 이동시킬 수 없습니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

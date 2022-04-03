@@ -7,13 +7,12 @@ import java.util.List;
 
 public final class BishopPiece extends Piece {
 
-    private static final String NAME = "B";
     private static final double SCORE = 3.0;
 
     private final List<Direction> movableDirections;
 
     public BishopPiece(final Color color) {
-        super(color, NAME);
+        super(color, Type.BISHOP);
         this.movableDirections = new ArrayList<>(
                 List.of(Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST,
                         Direction.SOUTH_WEST));

@@ -7,13 +7,12 @@ import java.util.List;
 
 public class KnightPiece extends Piece {
 
-    private static final String NAME = "N";
     private static final double SCORE = 2.5;
 
     private final List<Direction> movableDirections;
 
     public KnightPiece(final Color color) {
-        super(color, NAME);
+        super(color, Type.KNIGHT);
         this.movableDirections = new ArrayList<>(
                 List.of(Direction.KNIGHT_EAST_LEFT, Direction.KNIGHT_EAST_RIGHT,
                         Direction.KNIGHT_WEST_LEFT, Direction.KNIGHT_WEST_RIGHT,

@@ -4,11 +4,10 @@ import chess.domain.position.Position;
 
 public final class EmptyPiece extends Piece {
 
-    private static final String NAME = ".";
     private static final double SCORE = 0;
 
     public EmptyPiece() {
-        super(Color.NONE, NAME);
+        super(Color.NONE, Type.EMPTY);
     }
 
     @Override
