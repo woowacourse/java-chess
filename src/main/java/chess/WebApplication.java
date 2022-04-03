@@ -11,7 +11,6 @@ import chess.web.service.ChessWebService;
 import chess.web.utils.RequestToCommand;
 import com.google.gson.Gson;
 import java.util.Map;
-import org.eclipse.jetty.server.Response;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -32,6 +31,11 @@ public class WebApplication {
             service.initializeState();
             res.redirect("/");
             return null;
+        });
+
+        get("/status", (req, res) -> {
+            ApiResult statusResult = service.getStatus();
+            return gson.toJson(statusResult);
         });
 
         post("/move", (req, res) -> {

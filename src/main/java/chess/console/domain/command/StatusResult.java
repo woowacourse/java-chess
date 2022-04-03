@@ -6,17 +6,19 @@ import java.util.Map;
 
 public class StatusResult {
 
-    private final Map<Color, Score> result;
+    private final double blackScore;
+    private final double whiteScore;
 
     public StatusResult(Map<Color, Score> result) {
-        this.result = result;
+        this.blackScore = result.get(Color.BLACK).getScore();
+        this.whiteScore = result.get(Color.WHITE).getScore();
     }
 
-    public Score getBlackScore() {
-        return result.get(Color.BLACK);
+    public double getBlackScore() {
+        return blackScore;
     }
 
-    public Score getWhiteScore() {
-        return result.get(Color.WHITE);
+    public double getWhiteScore() {
+        return whiteScore;
     }
 }

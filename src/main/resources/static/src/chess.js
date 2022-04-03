@@ -55,6 +55,20 @@ function sendMoveCommand() {
     });
 }
 
+function printStatus() {
+    $.ajax({
+        type: 'GET',
+        url: '/status',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    }).done(function(res) {
+        var output = '블랙팀의 점수 : ' + res.response.blackScore + '\n' + '화이트팀의 점수 : ' + res.response.whiteScore;
+        alert(output);
+    }).fail(function(error) {
+        alert(JSON.stringify(error));
+    });
+}
+
 function initializePosition() {
     source = undefined;
     destination = undefined;

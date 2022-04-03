@@ -3,12 +3,16 @@ package chess.web.service;
 import chess.console.domain.board.BasicChessBoardGenerator;
 import chess.console.domain.board.Board;
 import chess.console.domain.board.Position;
+import chess.console.domain.board.Score;
+import chess.console.domain.command.StatusResult;
+import chess.console.domain.piece.Color;
 import chess.console.domain.state.Ready;
 import chess.console.domain.state.State;
 import chess.web.dto.ApiResult;
 import chess.web.dto.MoveCommand;
 import chess.web.dto.MoveResponseDto;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChessWebService {
 
@@ -20,6 +24,11 @@ public class ChessWebService {
 
     public Board getBoard() {
         return state.getBoard();
+    }
+
+    public ApiResult getStatus() {
+        Map<Color, Score> score = state.getScore();
+        return ApiResult.succeed(new StatusResult(score));
     }
 
     public void initializeState() {
