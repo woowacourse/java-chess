@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.vo.TeamColor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -82,7 +81,6 @@ class BoardTest {
             .movePiece(Position.from("f6"), Position.from("f5"))
             .movePiece(Position.from("h5"), Position.from("e8"));
         // when, then
-        Assertions.assertThat(boardHasTwoKing.hasOneKing()).isFalse();
         assertThat(boardHasOneKing.hasOneKing()).isTrue();
     }
 }
