@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스 게임</title>
+</head>
+<body>
+<table>
+    {{#board}}
+    {{#boardData}}
+    <tr>
+        {{#this}}
+        <td>{{this}}</td>
+        {{/this}}
+    </tr>
+    {{/boardData}}
+    {{/board}}
+</table>
+</body>
+</html>
