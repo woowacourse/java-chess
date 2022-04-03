@@ -41,7 +41,7 @@ public class Pawn extends Piece {
     }
 
     private boolean checkFirstMove(Position fromPosition, Position toPosition) {
-        int distance = fromPosition.getRowDifferenceWithTarget(toPosition);
+        int distance = Math.abs(fromPosition.getRowDifferenceWithTarget(toPosition));
         if (isFirstMove(fromPosition)) {
             return distance <= 2;
         }
