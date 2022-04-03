@@ -51,6 +51,10 @@ public class Position {
         return direction.hasAngleOf(x, y);
     }
 
+    public String toKey() {
+        return toKey(file, rank);
+    }
+
     private File toFile(Position position) {
         return position.file;
     }
@@ -67,7 +71,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" + toKey(file, rank) + '}';
+        return "Position{" + toKey() + '}';
     }
 
     private static class PositionCache {
