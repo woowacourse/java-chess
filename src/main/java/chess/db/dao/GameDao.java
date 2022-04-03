@@ -1,11 +1,9 @@
 package chess.db.dao;
 
-import static chess.util.DatabaseUtil.getConnection;
-
 import chess.db.entity.GameEntity;
 import chess.domain.game.GameState;
+import chess.util.DatabaseUtil;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -23,8 +21,8 @@ public class GameDao {
     public GameEntity findById(int gameId) {
         final String sql = "SELECT id, state FROM " + table + " WHERE id = " + gameId;
 
-        try (final Connection connection = getConnection()) {
-            final ResultSet resultSet = getQueryResult(sql, connection);
+        try (final Connection connection = DatabaseUtil.getConnection()) {
+            final ResultSet resultSet = DatabaseUtil.getQueryResult(sql, connection);
             if (!resultSet.next()) {
                 throw new IllegalArgumentException(GAME_NOT_FOUND_EXCEPTION);
             }
@@ -43,7 +41,7 @@ public class GameDao {
         }
         final String sql = "INSERT INTO " + table + " (id, state) VALUES "
                 + "(" + gameId + ", '" + gameEntity.getState() + "')";
-        executeCommand(sql);
+        DatabaseUtil.executeCommand(sql);
     }
 
     public void updateState(GameEntity gameEntity) {
@@ -53,48 +51,22 @@ public class GameDao {
         }
         final String sql = "UPDATE " + table +
                 " SET state = '" + gameEntity.getState() + "' WHERE id = " + gameId;
-        executeCommand(sql);
+        DatabaseUtil.executeCommand(sql);
     }
 
     public boolean checkById(int gameId) {
         final String sql = "SELECT COUNT(*) FROM " + table + " WHERE id = " + gameId;
-        return getCountResult(sql) > 0;
+        return DatabaseUtil.getCountResult(sql) > 0;
     }
 
     public int countAll() {
         final String sql = "SELECT COUNT(*) FROM " + table;
-        return getCountResult(sql);
+        return DatabaseUtil.getCountResult(sql);
     }
 
     public int countByState(GameState state) {
         final String sql = "SELECT COUNT(*) FROM " + table +
                 " WHERE state = '" + state + "'";
-        return getCountResult(sql);
-    }
-
-    private ResultSet getQueryResult(String sql, Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql);
-        return statement.executeQuery();
-    }
-
-    private void executeCommand(String sql) {
-        try (final Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 변경 작업에 실패하였습니다.");
-        }
-    }
-
-    private int getCountResult(String sql) {
-        try (final Connection connection = getConnection()) {
-            final ResultSet resultSet = getQueryResult(sql, connection);
-            resultSet.next();
-            return resultSet.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("데이터 계산 작업에 실패하였습니다.");
-        }
+        return DatabaseUtil.getCountResult(sql);
     }
 }
